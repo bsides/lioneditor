@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="LionEditor.Character">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Datatypes\Character.cs</FileName>
+      <HashCode>AAAAIBQAkAEAICAAAYAAAAIAAQEEkAAEAIBEAAEBOAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="LionEditor.Item">
+    <Position X="6.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Datatypes\Item.cs</FileName>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAgAA=</HashCode>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="LionEditor.Zodiac">
+    <Position X="4.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Zodiac.cs</FileName>
+      <HashCode>AYAAAAAAQBIAAIAAAAAAAAAAQAIACAABAAAAIAAAACA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+</ClassDiagram>

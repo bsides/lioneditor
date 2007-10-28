@@ -62,6 +62,28 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;Abilities&gt;
+        ///  &lt;Ability value=&quot;0&quot;&gt;&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;1&quot;&gt;Cure&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;2&quot;&gt;Cura&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;3&quot;&gt;Curaga&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;4&quot;&gt;Curaja&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;5&quot;&gt;Raise&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;6&quot;&gt;Arise&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;7&quot;&gt;Reraise&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;8&quot;&gt;Regen&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;9&quot;&gt;Protect&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;10&quot;&gt;Protectja&lt;/Ability&gt;
+        ///  &lt;Ability value=&quot;11&quot;&gt;Shell&lt;/Ability [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Abilities {
+            get {
+                return ResourceManager.GetString("Abilities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;Items&gt;
         ///  &lt;Item offset=&quot;0&quot; type=&quot;None&quot; subtype=&quot;None&quot;&gt;Nothing&lt;/Item&gt;
         ///  &lt;Item offset=&quot;1&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Dagger&lt;/Item&gt;
@@ -74,6 +96,36 @@ namespace LionEditor.Properties {
         internal static string Items {
             get {
                 return ResourceManager.GetString("Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;JobsWithAbilities&gt;
+        ///
+        ///  &lt;Job name=&quot;Squire&quot;&gt;
+        ///    &lt;bytes/&gt;
+        ///    &lt;action&gt;
+        ///      &lt;skill&gt;Focus&lt;/skill&gt;
+        ///      &lt;skill&gt;Rush&lt;/skill&gt;
+        ///      &lt;skill&gt;Stone&lt;/skill&gt;
+        ///      &lt;skill&gt;Salve&lt;/skill&gt;
+        ///      &lt;skill&gt;Tailwind&lt;/skill&gt;
+        ///      &lt;skill&gt;Chant&lt;/skill&gt;
+        ///    &lt;/action&gt;
+        ///    &lt;reaction&gt;
+        ///      &lt;skill&gt;Counter Tackle&lt;/skill&gt;
+        ///    &lt;/reaction&gt;
+        ///    &lt;support&gt;
+        ///      &lt;skill&gt;Equip Axes&lt;/skill&gt;
+        ///      &lt;skill&gt;Beastmaster&lt;/skill&gt;
+        ///      &lt;skill&gt;Defend&lt;/skill&gt;
+        ///      &lt;skill&gt;JP Boost&lt;/skill&gt;
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string JobsWithAbilities {
+            get {
+                return ResourceManager.GetString("JobsWithAbilities", resourceCulture);
             }
         }
     }

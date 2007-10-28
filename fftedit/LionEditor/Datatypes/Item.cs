@@ -32,6 +32,20 @@ namespace LionEditor
             }
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
+        /// <summary>
+        /// Converts this Item into a series of bytes appropriate for putting into a character's struct
+        /// </summary>
+        /// <remarks>Returned byte[] is little-endian (least significant byte is in 0th index)</remarks>
+        public byte[] ToByte()
+        {
+            return new byte[] { Offset & 0xFF, (Offset & 0xFF00) >> 8 };
+        }
+
         #region Static members
 
         private static List<Item> itemList;
@@ -54,7 +68,7 @@ namespace LionEditor
                     {
                         Item newItem;
                         newItem.Name = i.InnerText;
-                        newItem.Offset = i.Attributes["offset"].InnerText;
+                        newItem.Offset = Convert.ToUInt16( i.Attributes["offset"].InnerText );
                         newItem.Type = Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
                         newItem.SubType = Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
 

@@ -8,10 +8,12 @@ namespace LionEditor
         bool isGuest;
         bool isMale;
         Zodiac zodiacSign;
-        action secondaryAction;
-        ability reactAbility;
-        ability supportAbility;
-        ability movementAbility;
+        
+        skill secondaryAction;
+
+        Ability reactAbility;
+        Ability supportAbility;
+        Ability movementAbility;
 
         Item head;
         Item body;
@@ -32,6 +34,17 @@ namespace LionEditor
         int rawPA;
         int rawMA;
 
+
+
+        JobInfo jobInfo;
+
+        /// <summary>
+        /// Builds a Character from a 256 byte array
+        /// </summary>
+        /// <param name="charData"></param>
+        public Character( byte[] charData )
+        {
+        }
     }
 
 }

@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<JobsWithAbilities>
+
+  <Job name="Squire">
+    <bytes/>
+    <action>
+      <skill>Focus</skill>
+      <skill>Rush</skill>
+      <skill>Stone</skill>
+      <skill>Salve</skill>
+      <skill>Tailwind</skill>
+      <skill>Chant</skill>
+    </action>
+    <reaction>
+      <skill>Counter Tackle</skill>
+    </reaction>
+    <support>
+      <skill>Equip Axes</skill>
+      <skill>Beastmaster</skill>
+      <skill>Defend</skill>
+      <skill>JP Boost</skill>
+    </support>
+    <movement>
+      <skill>Move +1</skill>
+    </movement>
+  </Job>
+  <Job name="Chemist">
+    <bytes/>
+    <action>
+      <skill>Potion</skill>
+      <skill>Hi-Potion</skill>
+      <skill>X-Potion</skill>
+      <skill>Ether</skill>
+      <skill>Hi-Ether</skill>
+      <skill>Elixir</skill>
+      <skill>Antidote</skill>
+      <skill>Eye Drops</skill>
+      <skill>Echo Herbs</skill>
+      <skill>Maiden's Kiss</skill>
+      <skill>Gold Needle</skill>
+      <skill>Holy Water</skill>
+      <skill>Remedy</skill>
+      <skill>Phoenix Down</skill>
+    </action>
+    <reaction>
+      <skill>Auto-Potion</skill>
+    </reaction>
+    <support>
+      <skill>Throw Items</skill>
+      <skill>Safeguard</skill>
+      <skill>Reequip</skill>
+    </support>
+    <movement>
+      <skill>Treasure Hunter</skill>
+    </movement>
+  </Job>
+  <Job name="Knight">
+    <bytes/>
+    <action>
+      <skill>Rend Helm</skill>
+      <skill>Armor</skill>
+      <skill>Shield</skill>
+      <skill>Weapon</skill>
+      <skill>MP</skill>
+      <skill>Speed</skill>
+      <skill>Power</skill>
+      <skill>Magick</skill>
+    </action>
+    <reaction>
+      <skill>Parry</skill>
+    </reaction>
+    <support>
+      <skill>Equip Heavy Armor</skill>
+      <skill>Equip Shields</skill>
+      <skill>Equip Swords</skill>
+    </support>
+    <movement>
+    </movement>
+  </Job>
+  <Job name="Archer">
+    <bytes/>
+    <action>
+      <skill>Aim +1</skill>
+      <skill>Aim +2</skill>
+      <skill>Aim +3</skill>
+      <skill>Aim +4</skill>
+      <skill>Aim +5</skill>
+      <skill>Aim +7</skill>
+      <skill>Aim +10</skill>
+      <skill>Aim +20</skill>
+    </action>
+    <reaction>
+      <skill>Adrenaline Rush</skill>
+      <skill>Archer's Bane</skill>
+    </reaction>
+    <support>
+      <skill>Equip Crossbows</skill>
+      <skill>Concentration</skill>
+    </support>
+    <movement>
+      <skill>Jump +1</skill>
+    </movement>
+  </Job>
+  <Job name="Monk">
+    <bytes/>
+    <action>
+      <skill>Cyclone</skill>
+      <skill>Pummel</skill>
+      <skill>Aurablast</skill>
+      <skill>Shockwave</skill>
+      <skill>Doom Fist</skill>
+      <skill>Purification</skill>
+      <skill>Chakra</skill>
+      <skill>Revive</skill>
+    </action>
+    <reaction>
+      <skill>Critical: Recover HP</skill>
+      <skill>Counter</skill>
+      <skill>First Strike</skill>
+    </reaction>
+    <support>
+      <skill>Brawler</skill>
+    </support>
+    <movement>
+      <skill>Lifefont</skill>
+    </movement>
+  </Job>
+  <Job name="White Mage">
+    <bytes/>
+    <action>
+      <skill>Cure</skill>
+      <skill>Cura</skill>
+      <skill>Curaga</skill>
+      <skill>Curaja</skill>
+      <skill>Raise</skill>
+      <skill>Arise</skill>
+      <skill>Reraise</skill>
+      <skill>Regen</skill>
+      <skill>Protect</skill>
+      <skill>Protectja</skill>
+      <skill>Shell</skill>
+      <skill>Shellja</skill>
+      <skill>Wall</skill>
+      <skill>Esuna</skill>
+      <skill>Holy</skill>
+    </action>
+    <reaction>
+      <skill>Regenerate</skill>
+    </reaction>
+    <support>
+      <skill>Arcane Defense</skill>
+    </support>
+    <movement>
+    </movement>
+  </Job>
+  <Job name="Black Mage">
+    <bytes/>
+    <action>
+      <skill>Fire</skill>
+      <skill>Fira</skill>
+      <skill>Firaga</skill>
+      <skill>Firaja</skill>
+      <skill>Thunder</skill>
+      <skill>Thundara</skill>
+      <skill>Thundaga</skill>
+      <skill>Thundaja</skill>
+      <skill>Blizzard</skill>
+      <skill>Blizzara</skill>
+      <skill>Blizzaga</skill>
+      <skill>Blizzaja</skill>
+      <skill>Poison</skill>
+      <skill>Toad</skill>
+      <skill>Death</skill>
+      <skill>Flare</skill>
+    </action>
+    <reaction>
+      <skill>Magick Counter</skill>
+    </reaction>
+    <support>
+      <skill>Arcane Strength</skill>
+    </support>
+    <movement>
+    </movement>
+  </Job>
+  <Job name="Time Mage">
+    <bytes/>
+    <action>
+      <skill>Haste</skill>
+      <skill>Hasteja</skill>
+      <skill>Slow</skill>
+      <skill>Slowja</skill>
+      <skill>Stop</skill>
+      <skill>Immobilize</skill>
+      <skill>Float</skill>
+      <skill>Reflect</skill>
+      <skill>Quick</skill>
+      <skill>Gravity</skill>
+      <skill>Graviga</skill>
+      <skill>Meteor</skill>
+    </action>
+    <reaction>
+      <skill>Critical: Quick</skill>
+      <skill>Mana Shield</skill>
+    </reaction>
+    <support>
+      <skill>Swiftness</skill>
+    </support>
+    <movement>
+      <skill>Teleport</skill>
+      <skill>Levitate</skill>
+    </movement>
+  </Job>
+  <Job name="Summoner">
+    <bytes/>
+    <action>
+      <skill>Moogle</skill>
+      <skill>Shiva</skill>
+      <skill>Ramuh</skill>
+      <skill>Ifrit</skill>
+      <skill>Titan</skill>
+      <skill>Golem</skill>
+      <skill>Carbuncle</skill>
+      <skill>Bahamut</skill>
+      <skill>Odin</skill>
+      <skill>Leviathan</skill>
+      <skill>Salamander</skill>
+      <skill>Sylph</skill>
+      <skill>Faerie</skill>
+      <skill>Lich</skill>
+      <skill>Cyclops</skill>
+      <skill>------------</skill>
+    </action>
+    <reaction>
+      <skill>Critical: Recover MP</skill>
+    </reaction>
+    <support>
+      <skill>Halve MP</skill>
+    </support>
+    <movement>
+    </movement>
+  </Job>
+  <Job name="Thief">
+    <bytes/>
+    <action>
+      <skill>Steal Gil</skill>
+      <skill>Heart</skill>
+      <skill>Helm</skill>
+      <skill>Armor</skill>
+      <skill>Shield</skill>
+      <skill>Weapon</skill>
+      <skill>Accessory</skill>
+      <skill>EXP</skill>
+    </action>
+    <reaction>
+      <skill>Vigilance</skill>
+      <skill>Gil Snapper</skill>
+      <skill>Sticky Fingers</skill>
+    </reaction>
+    <support>
+      <skill>Poach</skill>
+    </support>
+    <movement>
+      <skill>Move +2</skill>
+      <skill>Jump +2</skill>
+    </movement>
+  </Job>
+  <Job name="Orator">
+    <bytes/>
+    <action>
+      <skill>Entice</skill>
+      <skill>Stall</skill>
+      <skill>Praise</skill>
+      <skill>Intimidate</skill>
+      <skill>Preach</skill>
+      <skill>Enlighten</skill>
+      <skill>Condemn</skill>
+      <skill>Beg</skill>
+      <skill>Insult</skill>
+      <skill>Mimic Darlavon</skill>
+    </action>
+    <reaction>
+      <skill>Earplug</skill>
+    </reaction>
+    <support>
+      <skill>Equip Guns</skill>
+      <skill>Tame</skill>
+      <skill>Beast Tongue</skill>
+    </support>
+    <movement>
+    </movement>
+  </Job>
+  <Job name="Mystic">
+    <bytes/>
+    <action>
+      <skill>Umbra</skill>
+      <skill>Empowerment</skill>
+      <skill>Invigoration</skill>
+      <skill>Belief</skill>
+      <skill>Disbelief</skill>
+      <skill>Corruption</skill>
+      <skill>Quiescence</skill>
+      <skill>Fervor</skill>
+      <skill>Trepidation</skill>
+      <skill>Delirium</skill>
+      <skill>Harmony</skill>
+      <skill>Hesitation</skill>
+      <skill>Repose</skill>
+      <skill>Induration</skill>
+    </action>
+    <reaction>
+      <skill>Absorb MP</skill>
+    </reaction>
+    <support>
+      <skill>Defense Boost</skill>
+    </support>
+    <movement>
+      <skill>Ignore Weather</skill>
+      <skill>Manafont</skill>
+    </movement>
+  </Job>
+  <Job name="Geomancer">
+    <bytes/>
+    <action>
+      <skill>Sinkhole</skill>
+      <skill>Torrent</skill>
+      <skill>Tanglevine</skill>
+      <skill>Contortion</skill>
+      <skill>Termor</skill>
+      <skill>Wind Slash</skill>
+      <skill>Will-o'-the-Wisp</skill>
+      <skill>Quicksand</skill>
+      <skill>Sandstorm</skill>
+      <skill>Snowstorm</skill>
+      <skill>Wind Blast</skill>
+      <skill>Magma Surge</skill>
+    </action>
+    <reaction>
+      <skill>Nature's Wrath</skill>
+    </reaction>
+    <support>
+      <skill>Attack Boost</skill>
+    </support>
+    <movement>
+      <skill>Ignore Turrain</skill>
+      <skill>Lavawalking</skill>
+    </movement>
+  </Job>
+  <Job name="Dragoon">
+    <bytes/>
+    <action>
+      <skill>Horizontal Jump 2</skill>
+      <skill>Horizontal Jump 3</skill>
+      <skill>Horizontal Jump 4</skill>
+      <skill>Horizontal Jump 5</skill>
+      <skill>Horizontal Jump 8</skill>
+      <skill>Vertical Jump 2</skill>
+      <skill>Vertical Jump 3</skill>
+      <skill>Vertical Jump 4</skill>
+      <skill>Vertical Jump 5</skill>
+      <skill>Vertical Jump 6</skill>
+      <skill>Vertical Jump 7</skill>
+      <skill>Vertical Jump 8</skill>
+    </action>
+    <reaction>
+      <skill>Dragonheart</skill>
+    </reaction>
+    <support>
+      <skill>Equip Polearms</skill>
+    </support>
+    <movement>
+      <skill>Ignore Elevation</skill>
+    </movement>
+  </Job>
+  <Job name="Samurai">
+    <bytes/>
+    <action>
+      <skill>Ashura</skill>
+      <skill>Kotetsu</skill>
+      <skill>Osafune</skill>
+      <skill>Murasame</skill>
+      <skill>Ama-no-Murakama</skill>
+      <skill>Kiyomori</skill>
+      <skill>Muramasa</skill>
+      <skill>Kiku-ichimonji</skill>
+      <skill>Masamune</skill>
+      <skill>Chirijiraden</skill>
+    </action>
+    <reaction>
+      <skill>Bonecrusher</skill>
+      <skill>Shirahadori</skill>
+    </reaction>
+    <support>
+      <skill>Equip Katana</skill>
+      <skill>Doublehand</skill>
+    </support>
+    <movement>
+      <skill>Swim</skill>
+    </movement>
+  </Job>
+  <Job name="Ninja">
+    <bytes/>
+    <action>
+      <skill>Shuriken</skill>
+      <skill>Bomb</skill>
+      <skill>Knife</skill>
+      <skill>Sword</skill>
+      <skill>Flail</skill>
+      <skill>Katana</skill>
+      <skill>Ninja Blade</skill>
+      <skill>Axe</skill>
+      <skill>Polearm</skill>
+      <skill>Pole</skill>
+      <skill>Knight's Sword</skill>
+      <skill>Book</skill>
+    </action>
+    <reaction>
+      <skill>Vanish</skill>
+      <skill>Reflexes</skill>
+    </reaction>
+    <support>
+      <skill>Dual Wield</skill>
+    </support>
+    <movement>
+      <skill>Waterwalking</skill>
+    </movement>
+  </Job>
+  <Job name="Arithmetician">
+    <bytes/>
+    <action>
+      <skill>CT</skill>
+      <skill>Level</skill>
+      <skill>EXP</skill>
+      <skill>Height</skill>
+      <skill>Prime</skill>
+      <skill>Multiple of 5</skill>
+      <skill>Multiple of 4</skill>
+      <skill>Multiple of 3</skill>
+    </action>
+    <reaction>
+      <skill>Cup of Life</skill>
+      <skill>Soulbind</skill>
+    </reaction>
+    <support>
+      <skill>EXP Boost</skill>
+    </support>
+    <movement>
+      <skill>Accrue EXP</skill>
+      <skill>Accrue JP</skill>
+    </movement>
+  </Job>
+  <Job name="Bard">
+    <bytes/>
+    <action>
+      <skill>Seraph Song</skill>
+      <skill>Life's Anthem</skill>
+      <skill>Rousing Melody</skill>
+      <skill>Battle Chant</skill>
+      <skill>Magickal Refrain</skill>
+      <skill>Nameless Song</skill>
+      <skill>Finale</skill>
+    </action>
+    <reaction>
+      <skill>Magick Boost</skill>
+      <skill>Faith Boost</skill>
+    </reaction>
+    <support>
+    </support>
+    <movement>
+      <skill>Move +3</skill>
+      <skill>Fly</skill>
+    </movement>
+  </Job>
+  <Job name="Dancer">
+    <bytes/>
+    <action>
+      <skill>Witch Hunt</skill>
+      <skill>Mincing Minuet</skill>
+      <skill>Slow Dance</skill>
+      <skill>Polka</skill>
+      <skill>Heathen Frolic</skill>
+      <skill>Forbidden Dance</skill>
+      <skill>Last Waltz</skill>
+    </action>
+    <reaction>
+      <skill>Fury</skill>
+      <skill>Bravery Boost</skill>
+    </reaction>
+    <support>
+    </support>
+    <movement>
+      <skill>Jump +3</skill>
+      <skill>Fly</skill>
+    </movement>
+  </Job>
+  <Job name="Mime">
+    <bytes/>
+    <action>
+      <skill></skill>
+    </action>
+    <reaction>
+    </reaction>
+    <support>
+    </support>
+    <movement>
+    </movement>
+  </Job>
+  <Job name="Onion Knight">
+    <bytes/>
+    <action>
+      <skill></skill>
+    </action>
+    <reaction>
+    </reaction>
+    <support>
+    </support>
+    <movement>
+    </movement>
+  </Job>
+  <Job name="Dark Knight">
+    <bytes/>
+    <action>
+      <skill>Sanguine Sword</skill>
+      <skill>Infernal Strike</skill>
+      <skill>Crushing Blow</skill>
+      <skill>Abyssal Blade</skill>
+      <skill>Unholy Sacrifice</skill>
+    </action>
+    <reaction>
+    </reaction>
+    <support>
+      <skill>HP Boost</skill>
+      <skill>Vehemence</skill>
+    </support>
+    <movement>
+      <skill>Jump +3</skill>
+    </movement>
+  </Job>
+</JobsWithAbilities>

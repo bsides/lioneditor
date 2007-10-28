@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Items>
+  <Item offset="0" type="None" subtype="None">Nothing</Item>
+  <Item offset="1" type="Hand" subtype="Knife">Dagger</Item>
+  <Item offset="2" type="Hand" subtype="Knife">Mythril Knife</Item>
+  <Item offset="3" type="Hand" subtype="Knife">Blind Knife</Item>
+  <Item offset="4" type="Hand" subtype="Knife">Mage Masher</Item>
+  <Item offset="5" type="Hand" subtype="Knife">Platinum Dagger</Item>
+  <Item offset="6" type="Hand" subtype="Knife">Main Gauche</Item>
+  <Item offset="7" type="Hand" subtype="Knife">Orichalcum Dirk</Item>
+  <Item offset="8" type="Hand" subtype="Knife">Assassin's Dagger</Item>
+  <Item offset="9" type="Hand" subtype="Knife">Air Knife</Item>
+  <Item offset="10" type="Hand" subtype="Knife">Zwill Straightblade</Item>
+  <Item offset="11" type="Hand" subtype="NinjaBlade">NinjaBlade</Item>
+  <Item offset="12" type="Hand" subtype="NinjaBlade">Kunai</Item>
+  <Item offset="13" type="Hand" subtype="NinjaBlade">Kodachi</Item>
+  <Item offset="14" type="Hand" subtype="NinjaBlade">Ninja Longblade</Item>
+  <Item offset="15" type="Hand" subtype="NinjaBlade">Spellbinder</Item>
+  <Item offset="16" type="Hand" subtype="NinjaBlade">Sasuke's Blade</Item>
+  <Item offset="17" type="Hand" subtype="NinjaBlade">Iga Blade</Item>
+  <Item offset="18" type="Hand" subtype="NinjaBlade">Koga Blade</Item>
+  <Item offset="19" type="Hand" subtype="Sword">Broadsword</Item>
+  <Item offset="20" type="Hand" subtype="Sword">Longsword</Item>
+  <Item offset="21" type="Hand" subtype="Sword">Iron Sword</Item>
+  <Item offset="22" type="Hand" subtype="Sword">Mythril Sword</Item>
+  <Item offset="23" type="Hand" subtype="Sword">Blood Sword</Item>
+  <Item offset="24" type="Hand" subtype="Sword">Coral Sword</Item>
+  <Item offset="25" type="Hand" subtype="Sword">Ancient Sword</Item>
+  <Item offset="26" type="Hand" subtype="Sword">Sleep Blade</Item>
+  <Item offset="27" type="Hand" subtype="Sword">Platinum Sword</Item>
+  <Item offset="28" type="Hand" subtype="Sword">Diamond Sword</Item>
+  <Item offset="29" type="Hand" subtype="Sword">Icebrand</Item>
+  <Item offset="30" type="Hand" subtype="Sword">Runeblade</Item>
+  <Item offset="31" type="Hand" subtype="Sword">Nagnarok</Item>
+  <Item offset="32" type="Hand" subtype="Sword">Materia Blade</Item>
+  <Item offset="33" type="Hand" subtype="KnightsSword">Defender</Item>
+  <Item offset="34" type="Hand" subtype="KnightsSword">Save the Queen</Item>
+  <Item offset="35" type="Hand" subtype="KnightsSword">Excalibur</Item>
+  <Item offset="36" type="Hand" subtype="KnightsSword">Ragnarok</Item>
+  <Item offset="37" type="Hand" subtype="KnightsSword">Chaos Blade</Item>
+  <Item offset="38" type="Hand" subtype="Katana">Ashura</Item>
+  <Item offset="39" type="Hand" subtype="Katana">Kotetsu</Item>
+  <Item offset="40" type="Hand" subtype="Katana">Osafune</Item>
+  <Item offset="41" type="Hand" subtype="Katana">Murasame</Item>
+  <Item offset="42" type="Hand" subtype="Katana">Ama-no-Murakamo</Item>
+  <Item offset="43" type="Hand" subtype="Katana">Kiyomori</Item>
+  <Item offset="44" type="Hand" subtype="Katana">Muramasa</Item>
+  <Item offset="45" type="Hand" subtype="Katana">Kiku-ichimonji</Item>
+  <Item offset="46" type="Hand" subtype="Katana">Masamune</Item>
+  <Item offset="47" type="Hand" subtype="Katana">Chirijiraden</Item>
+  <Item offset="48" type="Hand" subtype="Axe">Battle Axe</Item>
+  <Item offset="49" type="Hand" subtype="Axe">Giant's Axe</Item>
+  <Item offset="50" type="Hand" subtype="Axe">Slasher</Item>
+  <Item offset="51" type="Hand" subtype="Rod">Rod</Item>
+  <Item offset="52" type="Hand" subtype="Rod">Thunder Rod</Item>
+  <Item offset="53" type="Hand" subtype="Rod">Flame Rod</Item>
+  <Item offset="54" type="Hand" subtype="Rod">Ice Rod</Item>
+  <Item offset="55" type="Hand" subtype="Rod">Poison Rod</Item>
+  <Item offset="56" type="Hand" subtype="Rod">Wizard's Rod</Item>
+  <Item offset="57" type="Hand" subtype="Rod">Dragon Rod</Item>
+  <Item offset="58" type="Hand" subtype="Rod">Rod of Faith</Item>
+  <Item offset="59" type="Hand" subtype="Staff">Oak Staff</Item>
+  <Item offset="60" type="Hand" subtype="Staff">White Staff</Item>
+  <Item offset="61" type="Hand" subtype="Staff">Healing Staff</Item>
+  <Item offset="62" type="Hand" subtype="Staff">Serpent Staff</Item>
+  <Item offset="63" type="Hand" subtype="Staff">Mage's Staff</Item>
+  <Item offset="64" type="Hand" subtype="Staff">Golden Staff</Item>
+  <Item offset="65" type="Hand" subtype="Staff">Zeus Mace</Item>
+  <Item offset="66" type="Hand" subtype="Staff">Staff of the Magi</Item>
+  <Item offset="67" type="Hand" subtype="Flail">Iron Flail</Item>
+  <Item offset="68" type="Hand" subtype="Flail">Flame Mace</Item>
+  <Item offset="69" type="Hand" subtype="Flail">Morning Star</Item>
+  <Item offset="70" type="Hand" subtype="Flail">Scorpion Tail</Item>
+  <Item offset="71" type="Hand" subtype="Gun">Romandan Pistol</Item>
+  <Item offset="72" type="Hand" subtype="Gun">Mythril Gun</Item>
+  <Item offset="73" type="Hand" subtype="Gun">Stoneshooter</Item>
+  <Item offset="74" type="Hand" subtype="Gun">Glacial Gun</Item>
+  <Item offset="75" type="Hand" subtype="Gun">Blaze Gun</Item>
+  <Item offset="76" type="Hand" subtype="Gun">Blaster</Item>
+  <Item offset="77" type="Hand" subtype="Crossbow">Bowgun</Item>
+  <Item offset="78" type="Hand" subtype="Crossbow">Knightslayer</Item>
+  <Item offset="79" type="Hand" subtype="Crossbow">Crossbow</Item>
+  <Item offset="80" type="Hand" subtype="Crossbow">Poison Bow</Item>
+  <Item offset="81" type="Hand" subtype="Crossbow">Hunting Bow</Item>
+  <Item offset="82" type="Hand" subtype="Crossbow">Gastrophetes</Item>
+  <Item offset="83" type="Hand" subtype="Bow">Longbow</Item>
+  <Item offset="84" type="Hand" subtype="Bow">Silver Bow</Item>
+  <Item offset="85" type="Hand" subtype="Bow">Ice Bow</Item>
+  <Item offset="86" type="Hand" subtype="Bow">Lightning Bow</Item>
+  <Item offset="87" type="Hand" subtype="Bow">Windslash Bow</Item>
+  <Item offset="88" type="Hand" subtype="Bow">Mythril Bow</Item>
+  <Item offset="89" type="Hand" subtype="Bow">Artemis Bow</Item>
+  <Item offset="90" type="Hand" subtype="Bow">Yoichi Bow</Item>
+  <Item offset="91" type="Hand" subtype="Bow">Perseus Bow</Item>
+  <Item offset="92" type="Hand" subtype="Instrument">Lamia's Harp</Item>
+  <Item offset="93" type="Hand" subtype="Instrument">Bloodstring Harp</Item>
+  <Item offset="94" type="Hand" subtype="Instrument">Faerie Harp</Item>
+  <Item offset="95" type="Hand" subtype="Book">Battle Folio</Item>
+  <Item offset="96" type="Hand" subtype="Book">Bestiary</Item>
+  <Item offset="97" type="Hand" subtype="Book">Papyrus Codex</Item>
+  <Item offset="98" type="Hand" subtype="Book">Omnilex</Item>
+  <Item offset="99" type="Hand" subtype="Polearm">Javelin</Item>
+  <Item offset="100" type="Hand" subtype="Polearm">Spear</Item>
+  <Item offset="101" type="Hand" subtype="Polearm">Mythril Spear</Item>
+  <Item offset="102" type="Hand" subtype="Polearm">Partisan</Item>
+  <Item offset="103" type="Hand" subtype="Polearm">Obelisk</Item>
+  <Item offset="104" type="Hand" subtype="Polearm">Holy Lance</Item>
+  <Item offset="105" type="Hand" subtype="Polearm">Dragon Whisker</Item>
+  <Item offset="106" type="Hand" subtype="Polearm">Javelin (Strong)</Item>
+  <Item offset="107" type="Hand" subtype="Pole">Cypress Pole</Item>
+  <Item offset="108" type="Hand" subtype="Pole">Battle Bamboo</Item>
+  <Item offset="109" type="Hand" subtype="Pole">Musk Pole</Item>
+  <Item offset="110" type="Hand" subtype="Pole">Iron Fan</Item>
+  <Item offset="111" type="Hand" subtype="Pole">Gokuu Pole</Item>
+  <Item offset="112" type="Hand" subtype="Pole">Ivory Pole</Item>
+  <Item offset="113" type="Hand" subtype="Pole">Eight-fluted Pole</Item>
+  <Item offset="114" type="Hand" subtype="Pole">Whale Whisker</Item>
+  <Item offset="115" type="Hand" subtype="Bag">Croakadile Bag</Item>
+  <Item offset="116" type="Hand" subtype="Bag">Fallingstar Bag</Item>
+  <Item offset="117" type="Hand" subtype="Bag">Pantherskin Bag</Item>
+  <Item offset="118" type="Hand" subtype="Bag">Hydrascale Bag</Item>
+  <Item offset="119" type="Hand" subtype="Cloth">Damask Cloth</Item>
+  <Item offset="120" type="Hand" subtype="Cloth">Cashmere</Item>
+  <Item offset="121" type="Hand" subtype="Cloth">Wyrmweave Silk</Item>
+  <Item offset="122" type="Item" subtype="Throwing">Shuriken</Item>
+  <Item offset="123" type="Item" subtype="Throwing">Fuma Shuriken</Item>
+  <Item offset="124" type="Item" subtype="Throwing">Yagyu Darkrood</Item>
+  <Item offset="125" type="Item" subtype="Bomb">Flameburst Bomb</Item>
+  <Item offset="126" type="Item" subtype="Bomb">Snowmelt Bomb</Item>
+  <Item offset="127" type="Item" subtype="Bomb">Spark Bomb</Item>
+  <Item offset="128" type="Hand" subtype="Shield">Escutcheon (weak)</Item>
+  <Item offset="129" type="Hand" subtype="Shield">Buckler</Item>
+  <Item offset="130" type="Hand" subtype="Shield">Bronze Shield</Item>
+  <Item offset="131" type="Hand" subtype="Shield">Round Shield</Item>
+  <Item offset="132" type="Hand" subtype="Shield">Mythril Shield</Item>
+  <Item offset="133" type="Hand" subtype="Shield">Golden Shield</Item>
+  <Item offset="134" type="Hand" subtype="Shield">Ice Shield</Item>
+  <Item offset="135" type="Hand" subtype="Shield">Flame Shield</Item>
+  <Item offset="136" type="Hand" subtype="Shield">Aegis Shield</Item>
+  <Item offset="137" type="Hand" subtype="Shield">Diamond Shield</Item>
+  <Item offset="138" type="Hand" subtype="Shield">Platinum Shield</Item>
+  <Item offset="139" type="Hand" subtype="Shield">Crystal Shield</Item>
+  <Item offset="140" type="Hand" subtype="Shield">Genji Shield</Item>
+  <Item offset="141" type="Hand" subtype="Shield">Kaiser Shield</Item>
+  <Item offset="142" type="Hand" subtype="Shield">Venetian Shield</Item>
+  <Item offset="143" type="Hand" subtype="Shield">Escutcheon (strong)</Item>
+  <Item offset="144" type="Head" subtype="Helmet">Leather Helm</Item>
+  <Item offset="145" type="Head" subtype="Helmet">Bronze Helm</Item>
+  <Item offset="146" type="Head" subtype="Helmet">Iron Helm</Item>
+  <Item offset="147" type="Head" subtype="Helmet">Barbut</Item>
+  <Item offset="148" type="Head" subtype="Helmet">Mythril Helm</Item>
+  <Item offset="149" type="Head" subtype="Helmet">Golden Helm</Item>
+  <Item offset="150" type="Head" subtype="Helmet">Close Helmet</Item>
+  <Item offset="151" type="Head" subtype="Helmet">Diamond Helm</Item>
+  <Item offset="152" type="Head" subtype="Helmet">Platinum Helm</Item>
+  <Item offset="153" type="Head" subtype="Helmet">Circlet</Item>
+  <Item offset="154" type="Head" subtype="Helmet">Crystal Helm</Item>
+  <Item offset="155" type="Head" subtype="Helmet">Genji Helm</Item>
+  <Item offset="156" type="Head" subtype="Helmet">Grand Helm</Item>
+  <Item offset="157" type="Head" subtype="Hat">Leather Cap</Item>
+  <Item offset="158" type="Head" subtype="Hat">Plumed Hat</Item>
+  <Item offset="159" type="Head" subtype="Hat">Red Hood</Item>
+  <Item offset="160" type="Head" subtype="Hat">Headgear</Item>
+  <Item offset="161" type="Head" subtype="Hat">Wizard's Hat</Item>
+  <Item offset="162" type="Head" subtype="Hat">Green Beret</Item>
+  <Item offset="163" type="Head" subtype="Hat">Headband</Item>
+  <Item offset="164" type="Head" subtype="Hat">Celebrant's Miter</Item>
+  <Item offset="165" type="Head" subtype="Hat">Black Cowl</Item>
+  <Item offset="166" type="Head" subtype="Hat">Gold Hairpin</Item>
+  <Item offset="167" type="Head" subtype="Hat">Lambent Hat</Item>
+  <Item offset="168" type="Head" subtype="Hat">Thief's Cap</Item>
+  <Item offset="169" type="Head" subtype="Hair Adornment">Cachusha</Item>
+  <Item offset="170" type="Head" subtype="Hair Adornment">Barette</Item>
+  <Item offset="171" type="Head" subtype="Hair Adornment">Ribbon</Item>
+  <Item offset="172" type="Body" subtype="Armor">Leather Armor</Item>
+  <Item offset="173" type="Body" subtype="Armor">Linen Cuirass</Item>
+  <Item offset="174" type="Body" subtype="Armor">Bronze Armor</Item>
+  <Item offset="175" type="Body" subtype="Armor">Chainmail</Item>
+  <Item offset="176" type="Body" subtype="Armor">Mythril Armor</Item>
+  <Item offset="177" type="Body" subtype="Armor">Plate Mail</Item>
+  <Item offset="178" type="Body" subtype="Armor">Golden Armor</Item>
+  <Item offset="179" type="Body" subtype="Armor">Diamond Armor</Item>
+  <Item offset="180" type="Body" subtype="Armor">Platinum Armor</Item>
+  <Item offset="181" type="Body" subtype="Armor">Carabiner Mail</Item>
+  <Item offset="182" type="Body" subtype="Armor">Crystal Mail</Item>
+  <Item offset="183" type="Body" subtype="Armor">Genji Armor</Item>
+  <Item offset="184" type="Body" subtype="Armor">Mirror Mail</Item>
+  <Item offset="185" type="Body" subtype="Armor">Maximillian</Item>
+  <Item offset="186" type="Body" subtype="Clothing">Clothing</Item>
+  <Item offset="187" type="Body" subtype="Clothing">Leather Clothing</Item>
+  <Item offset="188" type="Body" subtype="Clothing">Leather Plate</Item>
+  <Item offset="189" type="Body" subtype="Clothing">Ringmail</Item>
+  <Item offset="190" type="Body" subtype="Clothing">Mythril Vest</Item>
+  <Item offset="191" type="Body" subtype="Clothing">Adamant Vest</Item>
+  <Item offset="192" type="Body" subtype="Clothing">Wizard Clothing</Item>
+  <Item offset="193" type="Body" subtype="Clothing">Brigandine</Item>
+  <Item offset="194" type="Body" subtype="Clothing">Jujitsu Gi</Item>
+  <Item offset="195" type="Body" subtype="Clothing">Power Garb</Item>
+  <Item offset="196" type="Body" subtype="Clothing">Gaia Gear</Item>
+  <Item offset="197" type="Body" subtype="Clothing">Ninja Gear</Item>
+  <Item offset="198" type="Body" subtype="Clothing">Black Garb</Item>
+  <Item offset="199" type="Body" subtype="Clothing">Rubber Suit</Item>
+  <Item offset="200" type="Body" subtype="Robe">Hempen Robe</Item>
+  <Item offset="201" type="Body" subtype="Robe">Silken Robe</Item>
+  <Item offset="202" type="Body" subtype="Robe">Wizard's Robe</Item>
+  <Item offset="203" type="Body" subtype="Robe">Chameleon Robe</Item>
+  <Item offset="204" type="Body" subtype="Robe">White Robe</Item>
+  <Item offset="205" type="Body" subtype="Robe">Black Robe</Item>
+  <Item offset="206" type="Body" subtype="Robe">Luminous Robe</Item>
+  <Item offset="207" type="Body" subtype="Robe">Lordly Robe</Item>
+  <Item offset="208" type="Accessory" subtype="Shoes">Battle Boots</Item>
+  <Item offset="209" type="Accessory" subtype="Shoes">Spiked Boots</Item>
+  <Item offset="210" type="Accessory" subtype="Shoes">Germinas Boots</Item>
+  <Item offset="211" type="Accessory" subtype="Shoes">Rubber Boots</Item>
+  <Item offset="212" type="Accessory" subtype="Shoes">Winged Boots</Item>
+  <Item offset="213" type="Accessory" subtype="Shoes">Hermes Shoes</Item>
+  <Item offset="214" type="Accessory" subtype="Shoes">Red Shoes</Item>
+  <Item offset="215" type="Accessory" subtype="Armguard">Power Gauntlet</Item>
+  <Item offset="216" type="Accessory" subtype="Armguard">Genji Glove</Item>
+  <Item offset="217" type="Accessory" subtype="Armguard">Magepower Glove</Item>
+  <Item offset="218" type="Accessory" subtype="Armguard">Bracer</Item>
+  <Item offset="219" type="Accessory" subtype="Ring">Reflect Ring</Item>
+  <Item offset="220" type="Accessory" subtype="Ring">Protect Ring</Item>
+  <Item offset="221" type="Accessory" subtype="Ring">Magick Ring</Item>
+  <Item offset="222" type="Accessory" subtype="Ring">Cursed Ring</Item>
+  <Item offset="223" type="Accessory" subtype="Ring">Angel Ring</Item>
+  <Item offset="224" type="Accessory" subtype="Armlet">Diamond Bracelet</Item>
+  <Item offset="225" type="Accessory" subtype="Armlet">Jade Armlet</Item>
+  <Item offset="226" type="Accessory" subtype="Armlet">Japa Mala</Item>
+  <Item offset="227" type="Accessory" subtype="Armlet">Nu Khai Armband</Item>
+  <Item offset="228" type="Accessory" subtype="Armlet">Guardian Bracelet</Item>
+  <Item offset="229" type="Accessory" subtype="Cloak">Shoulder Cape</Item>
+  <Item offset="230" type="Accessory" subtype="Cloak">Leather Cloak</Item>
+  <Item offset="231" type="Accessory" subtype="Cloak">Mage's Cloak</Item>
+  <Item offset="232" type="Accessory" subtype="Cloak">Elven Cloak</Item>
+  <Item offset="233" type="Accessory" subtype="Cloak">Vampire Cape</Item>
+  <Item offset="234" type="Accessory" subtype="Cloak">Featherweave Cape</Item>
+  <Item offset="235" type="Accessory" subtype="Cloak">Invisibility Cloak</Item>
+  <Item offset="236" type="Accessory" subtype="Perfume">Chantage</Item>
+  <Item offset="237" type="Accessory" subtype="Perfume">Cherche</Item>
+  <Item offset="238" type="Accessory" subtype="Perfume">Septième</Item>
+  <Item offset="239" type="Accessory" subtype="Perfume">Sortilége</Item>
+  <Item offset="240" type="Item" subtype="None">Potion</Item>
+  <Item offset="241" type="Item" subtype="None">Hi-Potion</Item>
+  <Item offset="242" type="Item" subtype="None">X-Potion</Item>
+  <Item offset="243" type="Item" subtype="None">Ether</Item>
+  <Item offset="244" type="Item" subtype="None">Hi-Ether</Item>
+  <Item offset="245" type="Item" subtype="None">Elixir</Item>
+  <Item offset="246" type="Item" subtype="None">Antidote</Item>
+  <Item offset="247" type="Item" subtype="None">Eye Drops</Item>
+  <Item offset="248" type="Item" subtype="None">Echo Herbs</Item>
+  <Item offset="249" type="Item" subtype="None">Maiden's Kiss</Item>
+  <Item offset="250" type="Item" subtype="None">Gold Needle</Item>
+  <Item offset="251" type="Item" subtype="None">Holy Water</Item>
+  <Item offset="252" type="Item" subtype="None">Remedy</Item>
+  <Item offset="253" type="Item" subtype="None">Phoenix Down</Item>
+  <Item offset="256" type="Hand" subtype="FellSword">Chaosbringer</Item>
+  <Item offset="257" type="Hand" subtype="FellSword">Deathbringer</Item>
+  <Item offset="258" type="Hand" subtype="FellSword">Arondight</Item>
+  <Item offset="259" type="Hand" subtype="FellSword">Balmung</Item>
+  <Item offset="260" type="Hand" subtype="FellSword">Valhalla</Item>
+  <Item offset="261" type="Hand" subtype="Sword">Moonblade</Item>
+  <Item offset="262" type="Hand" subtype="Sword">Onion Sword</Item>
+  <Item offset="263" type="Hand" subtype="Gun">Ras Algethi</Item>
+  <Item offset="264" type="Hand" subtype="Gun">Fomalhaut</Item>
+  <Item offset="265" type="Hand" subtype="Axe">Francisca</Item>
+  <Item offset="266" type="Hand" subtype="Axe">Golden Axe</Item>
+  <Item offset="267" type="Hand" subtype="NinjaBlade">Orochi</Item>
+  <Item offset="268" type="Hand" subtype="NinjaBlade">Moonsilk Blade</Item>
+  <Item offset="269" type="Hand" subtype="Staff">Nirvana</Item>
+  <Item offset="270" type="Hand" subtype="Staff">Dreamwaker</Item>
+  <Item offset="271" type="Hand" subtype="Rod">Stardust Rod</Item>
+  <Item offset="272" type="Hand" subtype="Rod">Crown Scepter</Item>
+  <Item offset="273" type="Hand" subtype="Flail">Vesper</Item>
+  <Item offset="274" type="Hand" subtype="Bow">Sagittarius Bow</Item>
+  <Item offset="275" type="Hand" subtype="KnightsSword">Durandal</Item>
+  <Item offset="276" type="Hand" subtype="Polearm">Gae Bolg</Item>
+  <Item offset="277" type="Hand" subtype="Polearm">Gungnir</Item>
+  <Item offset="278" type="Hand" subtype="None">Item 278</Item>
+  <Item offset="279" type="Hand" subtype="None">Item 279</Item>
+  <Item offset="280" type="Hand" subtype="None">Item 280</Item>
+  <Item offset="281" type="Hand" subtype="None">Item 281</Item>
+  <Item offset="282" type="Hand" subtype="None">Item 282</Item>
+  <Item offset="283" type="Hand" subtype="None">Item 283</Item>
+  <Item offset="284" type="Hand" subtype="None">Item 284</Item>
+  <Item offset="285" type="Hand" subtype="None">Item 285</Item>
+  <Item offset="286" type="Hand" subtype="None">Item 286</Item>
+  <Item offset="287" type="Hand" subtype="None">Item 287</Item>
+  <Item offset="288" type="Hand" subtype="Shield">Onion Shield</Item>
+  <Item offset="289" type="Hand" subtype="Shield">Reverie Shield</Item>
+  <Item offset="290" type="Hand" subtype="None">Item 290</Item>
+  <Item offset="291" type="Hand" subtype="None">Item 291</Item>
+  <Item offset="292" type="Head" subtype="Helmet">Vanguard Helm</Item>
+  <Item offset="293" type="Head" subtype="Helmet">Onion Helm</Item>
+  <Item offset="294" type="Head" subtype="Hat">Acacia Hat</Item>
+  <Item offset="295" type="Head" subtype="Hat">Brass Coronet</Item>
+  <Item offset="296" type="Head" subtype="None">Item 296</Item>
+  <Item offset="297" type="Head" subtype="None">Item 297</Item>
+  <Item offset="298" type="Head" subtype="None">Item 298</Item>
+  <Item offset="299" type="Head" subtype="None">Item 299</Item>
+  <Item offset="300" type="Body" subtype="Armor">Grand Armor</Item>
+  <Item offset="301" type="Body" subtype="Armor">Onion Armor</Item>
+  <Item offset="302" type="Body" subtype="Clothing">Minerva Bustier</Item>
+  <Item offset="303" type="Body" subtype="Clothing">Mirage Vest</Item>
+  <Item offset="304" type="Body" subtype="Clothing">Brave Suit</Item>
+  <Item offset="305" type="Body" subtype="Robe">Sage's Robe</Item>
+  <Item offset="306" type="Body" subtype="None">Item 306</Item>
+  <Item offset="307" type="Body" subtype="None">Item 307</Item>
+  <Item offset="308" type="Accessory" subtype="Shoes">Gaius Caligae</Item>
+  <Item offset="309" type="Accessory" subtype="Armguard">Brigand's Gloves</Item>
+  <Item offset="310" type="Accessory" subtype="Armguard">Onion Gloves</Item>
+  <Item offset="311" type="Accessory" subtype="Armlet">Empyreal Armband</Item>
+  <Item offset="312" type="Accessory" subtype="LipRouge">Tynar Rouge</Item>
+  <Item offset="313" type="Accessory" subtype="Ring">Sage's Ring</Item>
+  <Item offset="314" type="Accessory" subtype="None">Item 314</Item>
+  <Item offset="315" type="Accessory" subtype="None">Item 315</Item>
+</Items>

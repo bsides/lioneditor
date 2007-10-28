@@ -54,6 +54,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Datatypes\ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
@@ -66,6 +67,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Zodiac.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Items.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

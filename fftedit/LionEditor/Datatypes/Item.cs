@@ -2,19 +2,102 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using System.Xml;
+using System.Resources;
 
 namespace LionEditor
 {
     public struct Item
     {
-        ItemType Type;
+        public ItemType Type;
+        public ItemSubType SubType;
+        public UInt16 Offset;
 
-        ItemSubType SubType;
+        public string Name;
 
-        UInt16 Offset;
+        public Item( UInt16 offset )
+        {
+            Item? i = ItemList.Find(
+                delegate( Item j )
+                {
+                    return j.Offset == offset;
+                } );
+
+            if( i.HasValue )
+            {
+                this.Type = i.Value.Type;
+                this.SubType = i.Value.SubType;
+                this.Name = i.Value.Name;
+                this.Offset = offset;
+            }
+        }
+
+        #region Static members
+
+        private static List<Item> itemList;
+
+        public static List<Item> ItemList
+        {
+            get
+            {
+                if( itemList == null )
+                {
+                    XmlDocument d = new XmlDocument();
+                    System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
+                    d.Load( a.GetManifestResourceStream( "Items" ) );
+
+                    XmlNodeList items = d.SelectNodes( "//Item" );
+
+                    itemList = new List<Item>( items.Count );
+
+                    foreach( XmlNode i in items )
+                    {
+                        Item newItem;
+                        newItem.Name = i.InnerText;
+                        newItem.Offset = i.Attributes["offset"].InnerText;
+                        newItem.Type = Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
+                        newItem.SubType = Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
+
+                        itemList.Add( newItem );
+                    }
+                }
+
+                return itemList;
+            }
+        }
+
+        public static List<Item> GetAll( ItemType itemType )
+        {
+            List<Item> fullList = new List<Item>( ItemList );
+
+            foreach (Item i in fullList)
+            {
+                if( i.Type != itemType )
+                {
+                    fullList.Remove( i );
+                }
+            }
+
+            remove fullList;
+        }
+
+        public static List<Item> GetAll( ItemSubType itemSubType )
+        {
+            List<Item> fullList = new List<Item>( ItemList );
+
+            foreach( Item i in fullList )
+            {
+                if( i.Type != itemSubType )
+                {
+                    fullList.Remove( i );
+                }
+            }
+        }
+
+        #endregion
     }
 
-    enum ItemType
+    public enum ItemType
     {
         [Description("Hand")]
         Hand,
@@ -29,15 +112,18 @@ namespace LionEditor
         Body,
 
         [Description("Accessory")]
-        Accessory
+        Accessory,
+
+        [Description("None")]
+        None
     }
 
-    enum ItemSubType
+    public enum ItemSubType
     {
         [Description("Knife")]
         Knife,
         
-        [Description("NinjaB lade")]
+        [Description("Ninja Blade")]
         NinjaBlade,
         
         [Description("Sword")]
@@ -137,7 +223,10 @@ namespace LionEditor
         FellSword,
         
         [Description("Lip Rouge")]
-        LipRouge
+        LipRouge,
+
+        [Description("None")]
+        None
     }
 
 }

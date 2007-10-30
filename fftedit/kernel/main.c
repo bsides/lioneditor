@@ -271,6 +271,8 @@ int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 		sprintf(path, "ms0:/decryptedSaves/%s%s/SND1.PNG", params->gameName, params->saveName);
 		writeDataToFile(path, params->snd1FileData.buf, params->snd1FileData.bufSize);
 	}
+
+
 }
 
 int loadDecryptedSavedata(SceUtilitySavedataParam* params)

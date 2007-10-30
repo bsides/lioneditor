@@ -153,7 +153,7 @@ int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int*
 	int k1 = pspSdkSetK1(0);
 
 	SceModule* loadedModule = sceKernelFindModuleByUID(modid);
-	if (strstr(loadedModule->name, "sceUtility"))
+	if (strstr(loadedModule->modname, "sceUtility"))
 	{
 		set_savehook();
 	}

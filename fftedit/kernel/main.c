@@ -30,11 +30,10 @@ SceUID fd;
 #define NOP	0x00000000
 #define REDIRECT_FUNCTION(a, f) _sw(J_OPCODE | (((u32)(f) >> 2)  & 0x03ffffff), a);  _sw(NOP, a+4);
 
-// hooked function, function pointer, and saved instructions for generic_sce_function_name
-SceUID sceKernelLoadModule_patched(const char* path, int flags, SceKernelLMOption* option);
-SceUID (*sceKernelLoadModule_ptr)(const char* path, int flags, SceKernelLMOption* option);
-u32 sceKernelLoadModule_j;
-u32 sceKernelLoadModule_bd;
+int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int* status, SceKernelSMOption* options);
+int (*sceKernelStartModule_ptr)(SceUID modid, SceSize argsize, void* argp, int* status, SceKernelSMOption* options);
+u32 sceKernelStartModule_j;
+u32 sceKernelStartModule_bd;
 
 int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params);
 int (*sceUtilitySavedataInitStart_ptr)(SceUtilitySavedataParam* params);
@@ -123,10 +122,10 @@ void ClearCaches()
 
 void set_hook()
 {
-   sceKernelLoadModule_ptr = (void *)FindProc("sceModuleManager", "ModuleMgrForUser", 0x977DE386);
-   sceKernelLoadModule_j = ((u32*)sceKernelLoadModule_ptr)[0];
-   sceKernelLoadModule_bd = ((u32*)sceKernelLoadModule_ptr)[1];
-   REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x977DE386), sceKernelLoadModule_patched);
+   sceKernelStartModule_ptr = (void *)FindProc("sceModuleManager", "ModuleMgrForUser", 0x50F0C1EC);
+   sceKernelStartModule_j = ((u32*)sceKernelStartModule_ptr)[0];
+   sceKernelStartModule_bd = ((u32*)sceKernelStartModule_ptr)[1];
+   REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x50F0C1EC), sceKernelStartModule_patched);
    ClearCaches();
 }
 
@@ -148,26 +147,29 @@ void set_savehook()
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C), sceUtilitySavedataShutdownStart_patched);
 }
 
-SceUID sceKernelLoadModule_patched(const char* path, int flags, SceKernelLMOption* option)
-{
 
+int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int* status, SceKernelSMOption* options)
+{
 	int k1 = pspSdkSetK1(0);
-	if (strstr(path, "utility.prx"))
+
+	SceModule* loadedModule = sceKernelFindModuleByUID(modid);
+	if (strstr(loadedModule->name, "sceUtility"))
 	{
-	   set_savehook();
+		set_savehook();
 	}
 
 	pspSdkSetK1(k1);
 
-	// un-set the hook by returning the original jump/branch code to the NID resolution address
-	((u32*)sceKernelLoadModule_ptr)[0] = sceKernelLoadModule_j;
-	((u32*)sceKernelLoadModule_ptr)[1] = sceKernelLoadModule_bd;
+	((u32*)sceKernelStartModule_ptr)[0] = sceKernelStartModule_j;
+	((u32*)sceKernelStartModule_ptr)[1] = sceKernelStartModule_bd;
+
 	ClearCaches();
-	// get the return value
-	int ret = sceKernelLoadModule_ptr(path, flags, option);
-	// re-hook the function
-	REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x977DE386), sceKernelLoadModule_patched);
+
+	int ret = sceKernelStartModule_ptr(modid, argsize, argp, status, options);
+
+	REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x50F0C1EC), sceKernelStartModule_patched);
 	ClearCaches();
+
 	return ret;
 }
 

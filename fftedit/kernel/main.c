@@ -272,7 +272,7 @@ int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 		writeDataToFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
 	}
 
-
+	return 0;
 }
 
 int loadDecryptedSavedata(SceUtilitySavedataParam* params)
@@ -286,7 +286,7 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 		return ret;
 	}
 
-	sprint(path, "ms0:/decryptedSaves/%s%s/%s", params->gameName, params->saveName, params->fileName);
+	sprintf(path, "ms0:/decryptedSaves/%s%s/%s", params->gameName, params->saveName, params->fileName);
 	readDataFromFile(path, params->dataBuf, params->dataBufSize);
 
 	if (params->icon0FileData.buf)
@@ -309,7 +309,7 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 		sprintf(path, "ms0:/decryptedSaves/%s%s/SND1.PNG", params->gameName, params->saveName);
 		readDataFromFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
 	}
-
+	return 0;
 }
 
 int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)

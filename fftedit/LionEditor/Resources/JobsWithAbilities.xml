@@ -58,13 +58,13 @@
     <bytes/>
     <action>
       <skill>Rend Helm</skill>
-      <skill>Armor</skill>
-      <skill>Shield</skill>
-      <skill>Weapon</skill>
-      <skill>MP</skill>
-      <skill>Speed</skill>
-      <skill>Power</skill>
-      <skill>Magick</skill>
+      <skill>Rend Armor</skill>
+      <skill>Rend Shield</skill>
+      <skill>Rend Weapon</skill>
+      <skill>Rend MP</skill>
+      <skill>Rend Speed</skill>
+      <skill>Rend Power</skill>
+      <skill>Rend Magick</skill>
     </action>
     <reaction>
       <skill>Parry</skill>
@@ -494,27 +494,17 @@
   </Job>
   <Job name="Mime">
     <bytes/>
-    <action>
-      <skill></skill>
-    </action>
-    <reaction>
-    </reaction>
-    <support>
-    </support>
-    <movement>
-    </movement>
+    <action/>
+    <reaction/>
+    <support/>
+    <movement/>
   </Job>
   <Job name="Onion Knight">
     <bytes/>
-    <action>
-      <skill></skill>
-    </action>
-    <reaction>
-    </reaction>
-    <support>
-    </support>
-    <movement>
-    </movement>
+    <action/>
+    <reaction/>
+    <support/>
+    <movement/>
   </Job>
   <Job name="Dark Knight">
     <bytes/>

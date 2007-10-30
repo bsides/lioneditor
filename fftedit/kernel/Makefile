@@ -13,7 +13,7 @@ ASFLAGS = $(CFLAGS)
 
 LIBDIR = 
 LDFLAGS = -mno-crt0 -nostartfiles
-LIBS = 
+LIBS = -lpspsdk -lpspkernel
 
 PSPSDK=$(shell psp-config --pspsdk-path)
 include $(PSPSDK)/lib/build_prx.mak

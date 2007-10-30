@@ -141,8 +141,8 @@ void set_savehook()
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x8874DBE0), sceUtilitySavedataGetStatus_patched);
 
 	sceUtilitySavedataShutdownStart_ptr = (void*)FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C);
-	sceUtilitySavedataShutdownStart_j = ((u32*)sceUtilityShutdownStart_ptr)[0];
-	sceUtilitySavedataShutdownStart_bd = ((u32*)sceUtilityShutdownStart_ptr)[1];
+	sceUtilitySavedataShutdownStart_j = ((u32*)sceUtilitySavedataShutdownStart_ptr)[0];
+	sceUtilitySavedataShutdownStart_bd = ((u32*)sceUtilitySavedataShutdownStart_ptr)[1];
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C), sceUtilitySavedataShutdownStart_patched);
 }
 

@@ -16,17 +16,19 @@ PSP_MODULE_INFO("myhook", 0x1000, 1, 1);
 PSP_MAIN_THREAD_ATTR(0);
 PSP_MAIN_THREAD_STACK_SIZE_KB(0);
 
+/* 
 char buff[512];
 
 SceUID fd;
 
-//#define printf(format, args...) \
-//	sprintf(buff, format, ## args); \
-//	fd = sceIoOpen("ms0:/hook-log.txt", PSP_O_WRONLY | PSP_O_CREAT | PSP_O_APPEND, 0777); \
-//	sceIoWrite(fd, buff, strlen(buff)); \
-//	sceIoClose(fd);
+#define printf(format, args...) \
+	sprintf(buff, format, ## args); \
+	fd = sceIoOpen("ms0:/hook-log.txt", PSP_O_WRONLY | PSP_O_CREAT | PSP_O_APPEND, 0777); \
+	sceIoWrite(fd, buff, strlen(buff)); \
+	sceIoClose(fd); 
+*/
 
-#define J_OPCODE	0x08000000
+#define J_OPCODE 0x08000000
 #define NOP	0x00000000
 #define REDIRECT_FUNCTION(a, f) _sw(J_OPCODE | (((u32)(f) >> 2)  & 0x03ffffff), a);  _sw(NOP, a+4);
 
@@ -49,11 +51,6 @@ int sceUtilitySavedataShutdownStart_patched(void);
 int (*sceUtilitySavedataShutdownStart_ptr)(void);
 u32 sceUtilitySavedataShutdownStart_j;
 u32 sceUtilitySavedataShutdownStart_bd;
-
-void sceUtilitySavedataUpdate_patched(int unknown);
-void (sceUtilitySavedataUpdate_ptr)(int unknown);
-u32 sceUtilitySavedataUpdate_j;
-u32 sceUtilitySavedataUpdate_bd;
 
 SceUtilitySavedataParam* currentParams = NULL;
 
@@ -89,18 +86,13 @@ static u32 FindProc(const char* szMod, const char* szLib, u32 nid)
 		total = entry->stubcount + entry->vstubcount;
 		vars = entry->entrytable;
 
-		if (strcmp(entry->libname, szLib) == 0)
+		if ((strcmp(entry->libname, szLib) == 0) && (entry->stubcount > 0))
 		{
-			if(entry->stubcount > 0)
+			for(count = 0; count < entry->stubcount; count++)
 			{
-				//SHELL_PRINT("Function Exports:\n");
-				for(count = 0; count < entry->stubcount; count++)
+				if (vars[count] == nid)
 				{
-					if (vars[count] == nid)
-					{
-						printf("Found: %08X\n", vars[count+total]);
-						return vars[count+total];
-					}
+					return vars[count+total];
 				}
 			}
 		}
@@ -118,7 +110,7 @@ void ClearCaches()
 	sceKernelDcacheWritebackInvalidateAll();
 }
 
-void set_hook()
+void set_startModulehook()
 {
    sceKernelStartModule_ptr = (void *)FindProc("sceModuleManager", "ModuleMgrForUser", 0x50F0C1EC);
    sceKernelStartModule_j = ((u32*)sceKernelStartModule_ptr)[0];
@@ -127,33 +119,51 @@ void set_hook()
    ClearCaches();
 }
 
-void set_savehook()
+int set_savehook()
 {
 	sceUtilitySavedataInitStart_ptr = (void*)FindProc("sceUtility_Driver", "sceUtility", 0x50C4CD57);
+	if (sceUtilitySavedataInitStart_ptr == 0)
+	{
+		return -1;
+	}
 	sceUtilitySavedataInitStart_j = ((u32*)sceUtilitySavedataInitStart_ptr)[0];
 	sceUtilitySavedataInitStart_bd = ((u32*)sceUtilitySavedataInitStart_ptr)[1];
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x50C4CD57), sceUtilitySavedataInitStart_patched);
 
 	sceUtilitySavedataGetStatus_ptr = (void*)FindProc("sceUtility_Driver", "sceUtility", 0x8874DBE0);
+	if (sceUtilitySavedataGetStatus_ptr == 0)
+	{
+		return -1;
+	}
 	sceUtilitySavedataGetStatus_j = ((u32*)sceUtilitySavedataGetStatus_ptr)[0];
 	sceUtilitySavedataGetStatus_bd = ((u32*)sceUtilitySavedataGetStatus_ptr)[1];
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x8874DBE0), sceUtilitySavedataGetStatus_patched);
 
 	sceUtilitySavedataShutdownStart_ptr = (void*)FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C);
+	if (sceUtilitySavedataShutdownStart_ptr == 0)
+	{
+		return -1;
+	}
 	sceUtilitySavedataShutdownStart_j = ((u32*)sceUtilitySavedataShutdownStart_ptr)[0];
 	sceUtilitySavedataShutdownStart_bd = ((u32*)sceUtilitySavedataShutdownStart_ptr)[1];
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C), sceUtilitySavedataShutdownStart_patched);
+
+	return 0;
 }
 
 
 int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int* status, SceKernelSMOption* options)
 {
 	int k1 = pspSdkSetK1(0);
+	int success = 0;
 
 	SceModule* loadedModule = sceKernelFindModuleByUID(modid);
 	if (strstr(loadedModule->modname, "sceUtility"))
 	{
-		set_savehook();
+		if (set_savehook() != 0)
+		{
+			success = 1;
+		}
 	}
 
 	pspSdkSetK1(k1);
@@ -165,8 +175,11 @@ int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int*
 
 	int ret = sceKernelStartModule_ptr(modid, argsize, argp, status, options);
 
-	REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x50F0C1EC), sceKernelStartModule_patched);
-	ClearCaches();
+	if (success == 0)
+	{
+		REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x50F0C1EC), sceKernelStartModule_patched);
+		ClearCaches();
+	}
 
 	return ret;
 }
@@ -385,10 +398,10 @@ int sceUtilitySavedataGetStatus_patched(void)
 
 int threadMain(SceSize args, void *argp)
 {
-	//loadUsb();
-	printf("in thread 90\n");
-	//set_hook();
-	set_savehook();
+	if (set_savehook() == -1)
+	{
+		set_startModulehook();
+	}
 
 	return 0;
 }
@@ -398,14 +411,11 @@ int module_start(SceSize args, void *argp)
 	
 	int main_thid = sceKernelCreateThread("myhook", threadMain, 6, 0x04000, 0, NULL);
 
-	printf("Created thread 100\n");
-
 	if(main_thid >= 0) sceKernelStartThread(main_thid, args, argp);
-	printf("started 103\n");
 
 	return 0;
 
-	sceKernelExitDeleteThread(0);
+	sceKernelExitDeleteThread(0); // unreachable?
 }
 
 int module_stop(SceSize args, void *argp)

@@ -10,6 +10,7 @@
 #include <psputility.h>
 
 PSP_MODULE_INFO("myhook", 0x1000, 1, 1);
+
 PSP_MAIN_THREAD_ATTR(0);
 PSP_MAIN_THREAD_STACK_SIZE_KB(0);
 
@@ -38,6 +39,22 @@ int (*sceUtilitySavedataInitStart_ptr)(SceUtilitySavedataParam* params);
 u32 sceUtilitySavedataInitStart_j;
 u32 sceUtilitySavedataInitStart_bd;
 
+int sceUtilitySavedataGetStatus_patched(void);
+int (*sceUtilitySavedataGetStatus_ptr)(void);
+u32 sceUtilitySavedataGetStatus_j;
+u32 sceUtilitySavedataGetStatus_bd;
+
+int sceUtilitySavedataShutdownStart_patched(void);
+int (*sceUtilitySavedataShutdownStart_ptr)(void);
+u32 sceUtilitySavedataShutdownStart_j;
+u32 sceUtilitySavedataShutdownStart_bd;
+
+void sceUtilitySavedataUpdate_patched(int unknown);
+void (sceUtilitySavedataUpdate_ptr)(int unknown);
+u32 sceUtilitySavedataUpdate_j;
+u32 sceUtilitySavedataUpdate_bd;
+
+SceUtilitySavedataParam* currentParams = NULL;
 
 static u32 FindProc(const char* szMod, const char* szLib, u32 nid) 
 { 
@@ -117,41 +134,49 @@ void set_savehook()
 	sceUtilitySavedataInitStart_j = ((u32*)sceUtilitySavedataInitStart_ptr)[0];
 	sceUtilitySavedataInitStart_bd = ((u32*)sceUtilitySavedataInitStart_ptr)[1];
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x50C4CD57), sceUtilitySavedataInitStart_patched);
+
+	sceUtilitySavedataGetStatus_ptr = (void*)FindProc("sceUtility_Driver", "sceUtility", 0x8874DBE0);
+	sceUtilitySavedataGetStatus_j = ((u32*)sceUtilitySavedataGetStatus_ptr)[0];
+	sceUtilitySavedataGetStatus_bd = ((u32*)sceUtilitySavedataGetStatus_ptr)[1];
+	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x8874DBE0), sceUtilitySavedataGetStatus_patched);
+
+	sceUtilitySavedataShutdownStart_ptr = (void*)FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C);
+	sceUtilitySavedataShutdownStart_j = ((u32*)sceUtilityShutdownStart_ptr)[0];
+	sceUtilitySavedataShutdownStart_bd = ((u32*)sceUtilityShutdownStart_ptr)[1];
+	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C), sceUtilitySavedataShutdownStart_patched);
 }
 
 SceUID sceKernelLoadModule_patched(const char* path, int flags, SceKernelLMOption* option)
 {
-   // do stuff
-   if (strstr(path, "utility.prx"))
-   {
+
+	int k1 = pspSdkSetK1(0);
+	if (strstr(path, "utility.prx"))
+	{
 	   set_savehook();
-   }
+	}
 
-   printf("hooked!\n");
+	pspSdkSetK1(k1);
 
-   // un-set the hook by returning the original jump/branch code to the NID resolution address
-   ((u32*)sceKernelLoadModule_ptr)[0] = sceKernelLoadModule_j;
-   ((u32*)sceKernelLoadModule_ptr)[1] = sceKernelLoadModule_bd;
-   ClearCaches();
-   // get the return value
-   int ret = sceKernelLoadModule_ptr(path, flags, option);
-   // re-hook the function
-   REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x977DE386), sceKernelLoadModule_patched);
-   ClearCaches();
-   return ret;
+	// un-set the hook by returning the original jump/branch code to the NID resolution address
+	((u32*)sceKernelLoadModule_ptr)[0] = sceKernelLoadModule_j;
+	((u32*)sceKernelLoadModule_ptr)[1] = sceKernelLoadModule_bd;
+	ClearCaches();
+	// get the return value
+	int ret = sceKernelLoadModule_ptr(path, flags, option);
+	// re-hook the function
+	REDIRECT_FUNCTION(FindProc("sceModuleManager", "ModuleMgrForUser", 0x977DE386), sceKernelLoadModule_patched);
+	ClearCaches();
+	return ret;
 }
 
 int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 {
 	int k1 = pspSdkSetK1(0);
 
-	//printf("hooked savedatainitstart\n");
-
-	if (params->mode)
+	currentParams = params;
+	if (params->mode == 1)
 	{
-		//FILE* fp = fopen("ms0:/plain.bin", "wb");
-		//fwrite(params->dataBuf, sizeof(unsigned char), params->dataBufSize, fp);
-		//fclose(fp);
+		// Grab the data being saved and put it on memory stick
 
 		int fd = sceIoOpen("ms0:/plain.bin", PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);
 		if (fd)
@@ -162,7 +187,7 @@ int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 			{
 				int ret;
 
-				ret = sceIoWrite(fd, (void *) (params->dataBuf + written), size - written);
+				ret = sceIoWrite(fd, (void*)(params->dataBuf + written), size - written);
 				if(ret <= 0)
 				{
 					break;
@@ -172,7 +197,6 @@ int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 			}
 
 			sceIoClose(fd);
-
 		}
 	}
 
@@ -187,6 +211,64 @@ int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x50C4CD57), sceUtilitySavedataInitStart_patched);
 	ClearCaches();
 
+
+	return ret;
+}
+
+int sceUtilitySavedataShutdownStart_patched(void)
+{
+	currentParams = NULL;
+
+	((u32*)sceUtilitySavedataShutdownStart_ptr)[0] = sceUtilitySavedataShutdownStart_j;
+	((u32*)sceUtilitySavedataShutdownStart_ptr)[1] = sceUtilitySavedataShutdownStart_bd;
+	ClearCaches();
+
+	int ret = sceUtilitySavedataShutdownStart_ptr();
+
+	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C), sceUtilitySavedataShutdownStart_patched);
+	ClearCaches();
+
+	return ret;
+}
+
+int sceUtilitySavedataGetStatus_patched(void)
+{
+	((u32*)sceUtilitySavedataGetStatus_ptr)[0] = sceUtilitySavedataGetStatus_j;
+	((u32*)sceUtilitySavedataGetStatus_ptr)[1] = sceUtilitySavedataGetStatus_bd;
+	ClearCaches();
+
+	int ret = sceUtilitySavedataGetStatus_ptr();
+
+	// Inject our own data
+	if ((currentParams != NULL) && (currentParams->mode == 0) && (ret == 3))
+	{
+		int k1 = pspSdkSetK1(0);
+		int fd = sceIoOpen("ms0:/plain.bin", PSP_O_RDONLY, 0777);
+		if (fd >= 0)
+		{
+			int size = currentParams->dataBufSize;
+
+			int readbytes = 0;
+
+			while (readbytes < size)
+			{
+				int ret = sceIoRead(fd, (void*)(currentParams->dataBuf + readbytes), size - readbytes);
+				if (ret == 0)
+				{
+					break;
+				}
+
+				readbytes += ret;
+			}
+
+			sceIoClose(fd);
+		}
+		// read data into params->dataBuf
+		pspSdkSetK1(k1);
+	}
+
+	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x8874DBE0), sceUtilitySavedataGetStatus_patched);
+	ClearCaches();
 
 	return ret;
 }

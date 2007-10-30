@@ -1,4 +1,4 @@
-TARGET = myhook
+TARGET = FFTSaveHook
 OBJS = main.o 
 
 BUILD_PRX=1

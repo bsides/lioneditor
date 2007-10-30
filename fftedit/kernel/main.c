@@ -11,7 +11,7 @@
 #include <pspsdk.h>
 #include <psputilsforkernel.h>
 
-PSP_MODULE_INFO("myhook", 0x1000, 1, 1);
+PSP_MODULE_INFO("FFTSaveHook", 0x1000, 1, 1);
 
 PSP_MAIN_THREAD_ATTR(0);
 PSP_MAIN_THREAD_STACK_SIZE_KB(0);
@@ -148,6 +148,8 @@ int set_savehook()
 	sceUtilitySavedataShutdownStart_bd = ((u32*)sceUtilitySavedataShutdownStart_ptr)[1];
 	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x9790B33C), sceUtilitySavedataShutdownStart_patched);
 
+	printf("sceUtilitySavedata* hooks added\n");
+
 	return 0;
 }
 
@@ -239,24 +241,36 @@ int readDataFromFile(const char* path, void* data, int size)
 
 int makeDecryptedDirectory(const char* dir)
 {
-	int ret = sceIoChdir("ms0:/decryptedSaves");
-	if (ret < 0)
+	int d = sceIoDopen("ms0:/decryptedSaves");
+	if (d >= 0)
+	{
+		sceIoDclose(d);
+	}
+	else
 	{
 		sceIoMkdir("ms0:/decryptedSaves", 0777);
-		sceIoChdir("ms0:/decryptedSaves");
 	}
 
-	ret = sceIoChdir(dir);
-	if (ret < 0)
+	char buf[256];
+	sprintf(buf, "ms0:/decryptedSaves/%s", dir);
+
+	d = sceIoDopen(buf);
+	if (d >= 0)
 	{
-		sceIoMkdir(dir, 0777);
+		sceIoDclose(d);
+	}
+	else
+	{
+		sceIoMkdir(buf, 0777);
 	}
 
-	return ret;
+	return d;
 }
 
 int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 {
+	printf("saveDecryptedSavedata\n");
+
 	char path[256] = { '\0' };
 	sprintf(path, "%s%s", params->gameName, params->saveName);
 	makeDecryptedDirectory(path);
@@ -334,13 +348,24 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 
 int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 {
+	int badgame = 0;
 	int k1 = pspSdkSetK1(0);
 
 	currentParams = params;
-	if (params->mode == 1)
+
+	if (strstr(params->gameName, "ULUS10297") ||
+		strstr(params->gameName, "ULES00850") ||
+		strstr(params->gameName, "ULJM05194"))
 	{
-		// Grab the data being saved and put it on memory stick
-		writeDataToFile("ms0:/plain.bin", params->dataBuf, params->dataBufSize);
+		if (params->mode == 1)
+		{
+			// Grab the data being saved and put it on memory stick
+			saveDecryptedSavedata(params);
+		}
+	}
+	else
+	{
+		badgame = 1;
 	}
 
 	((u32*)sceUtilitySavedataInitStart_ptr)[0] = sceUtilitySavedataInitStart_j;
@@ -351,7 +376,21 @@ int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 
 	int ret = sceUtilitySavedataInitStart_ptr(params);
 
-	REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x50C4CD57), sceUtilitySavedataInitStart_patched);
+	if (badgame)
+	{
+		// Not interested in this game
+		// remove hooks
+		((u32*)sceUtilitySavedataGetStatus_ptr)[0] = sceUtilitySavedataGetStatus_j;
+		((u32*)sceUtilitySavedataGetStatus_ptr)[1] = sceUtilitySavedataGetStatus_bd;
+		((u32*)sceUtilitySavedataShutdownStart_ptr)[0] = sceUtilitySavedataShutdownStart_j;
+		((u32*)sceUtilitySavedataShutdownStart_ptr)[1] = sceUtilitySavedataShutdownStart_bd;
+	}
+	else
+	{
+		REDIRECT_FUNCTION(FindProc("sceUtility_Driver", "sceUtility", 0x50C4CD57), sceUtilitySavedataInitStart_patched);
+	}
+
+	
 	ClearCaches();
 
 
@@ -386,7 +425,7 @@ int sceUtilitySavedataGetStatus_patched(void)
 	if ((currentParams != NULL) && (currentParams->mode == 0) && (ret == 3))
 	{
 		int k1 = pspSdkSetK1(0);
-		readDataFromFile("ms0:/plain.bin", currentParams->dataBuf, currentParams->dataBufSize);
+		loadDecryptedSavedata(currentParams);
 		pspSdkSetK1(k1);
 	}
 
@@ -408,7 +447,7 @@ int threadMain(SceSize args, void *argp)
 
 int module_start(SceSize args, void *argp)
 {
-	
+	printf("Starting\n");
 	int main_thid = sceKernelCreateThread("myhook", threadMain, 6, 0x04000, 0, NULL);
 
 	if(main_thid >= 0) sceKernelStartThread(main_thid, args, argp);

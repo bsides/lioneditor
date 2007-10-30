@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <psputility.h>
+#include <pspsdk.h>
+#include <psputilsforkernel.h>
 
 PSP_MODULE_INFO("myhook", 0x1000, 1, 1);
 

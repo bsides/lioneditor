@@ -112,8 +112,6 @@ static u32 FindProc(const char* szMod, const char* szLib, u32 nid)
 
 }
 
-
-
 void ClearCaches()
 {
 	sceKernelIcacheInvalidateAll();
@@ -173,6 +171,145 @@ int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int*
 	return ret;
 }
 
+int writeDataToFile(const char* path, void* data, int size)
+{
+	int fd = sceIoOpen(path, PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);
+	if (fd >= 0)
+	{
+		int written = 0;
+		while (written < size)
+		{
+			int ret;
+			ret = sceIoWrite(fd, data + written, size - written);
+			if (ret <= 0)
+			{
+				break;
+			}
+			
+			written += ret;
+		}
+
+		sceIoClose(fd);
+
+		return 0;
+	}
+
+	return fd;
+}
+
+int readDataFromFile(const char* path, void* data, int size)
+{
+	int fd = sceIoOpen(path, PSP_O_RDONLY, 0777);
+	if (fd >= 0)
+	{
+		int readbytes = 0;
+
+		while (readbytes < size)
+		{
+			int ret = sceIoRead(fd, data + readbytes, size - readbytes);
+			if (ret == 0)
+			{
+				break;
+			}
+
+			readbytes += ret;
+		}
+
+		sceIoClose(fd);
+
+		return 0;
+	}
+
+	return fd;
+}
+
+
+int makeDecryptedDirectory(const char* dir)
+{
+	int ret = sceIoChdir("ms0:/decryptedSaves");
+	if (ret < 0)
+	{
+		sceIoMkdir("ms0:/decryptedSaves", 0777);
+		sceIoChdir("ms0:/decryptedSaves");
+	}
+
+	ret = sceIoChdir(dir);
+	if (ret < 0)
+	{
+		sceIoMkdir(dir, 0777);
+	}
+
+	return ret;
+}
+
+int saveDecryptedSavedata(SceUtilitySavedataParam* params)
+{
+	char path[256] = { '\0' };
+	sprintf(path, "%s%s", params->gameName, params->saveName);
+	makeDecryptedDirectory(path);
+
+	sprintf(path, "ms0:/decryptedSaves/%s%s/%s", params->gameName, params->saveName, params->fileName);
+	writeDataToFile(path, params->dataBuf, params->dataBufSize);
+
+	if (params->icon0FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON0.PNG", params->gameName, params->saveName);
+		writeDataToFile(path, params->icon0FileData.buf, params->icon0FileData.bufSize);
+	}
+	if (params->icon1FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON1.PNG", params->gameName, params->saveName);
+		writeDataToFile(path, params->icon1FileData.buf, params->icon1FileData.bufSize);
+	}
+	if (params->pic1FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/PIC1.PNG", params->gameName, params->saveName);
+		writeDataToFile(path, params->pic1FileData.buf, params->pic1FileData.bufSize);
+	}
+	if (params->snd1FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/SND1.PNG", params->gameName, params->saveName);
+		writeDataToFile(path, params->snd1FileData.buf, params->snd1FileData.bufSize);
+	}
+}
+
+int loadDecryptedSavedata(SceUtilitySavedataParam* params)
+{
+	char path[256] = { '\0' };
+	sprintf(path, "%s%s", params->gameName, params->saveName);
+
+	int ret = makeDecryptedDirectory(path);
+	if (ret < 0)
+	{
+		return ret;
+	}
+
+	sprint(path, "ms0:/decryptedSaves/%s%s/%s", params->gameName, params->saveName, params->fileName);
+	readDataFromFile(path, params->dataBuf, params->dataBufSize);
+
+	if (params->icon0FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON0.PNG", params->gameName, params->saveName);
+		readDataFromFile(path, params->icon0FileData.buf, params->icon0FileData.bufSize);
+	}
+	if (params->icon1FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON1.PNG", params->gameName, params->saveName);
+		readDataFromFile(path, params->icon1FileData.buf, params->icon1FileData.bufSize);
+	}
+	if (params->pic1FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/PIC1.PNG", params->gameName, params->saveName);
+		readDataFromFile(path, params->pic1FileData.buf, params->pic1FileData.bufSize);
+	}
+	if (params->snd1FileData.buf)
+	{
+		sprintf(path, "ms0:/decryptedSaves/%s%s/SND1.PNG", params->gameName, params->saveName);
+		readDataFromFile(path, params->snd1FileData.buf, params->snd1FileData.bufSize);
+	}
+
+}
+
 int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 {
 	int k1 = pspSdkSetK1(0);
@@ -181,27 +318,7 @@ int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 	if (params->mode == 1)
 	{
 		// Grab the data being saved and put it on memory stick
-
-		int fd = sceIoOpen("ms0:/plain.bin", PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);
-		if (fd)
-		{
-			int written = 0;
-			int size = params->dataBufSize;
-			while(written < size)
-			{
-				int ret;
-
-				ret = sceIoWrite(fd, (void*)(params->dataBuf + written), size - written);
-				if(ret <= 0)
-				{
-					break;
-				}
-
-				written += ret;
-			}
-
-			sceIoClose(fd);
-		}
+		writeDataToFile("ms0:/plain.bin", params->dataBuf, params->dataBufSize);
 	}
 
 	((u32*)sceUtilitySavedataInitStart_ptr)[0] = sceUtilitySavedataInitStart_j;
@@ -247,27 +364,7 @@ int sceUtilitySavedataGetStatus_patched(void)
 	if ((currentParams != NULL) && (currentParams->mode == 0) && (ret == 3))
 	{
 		int k1 = pspSdkSetK1(0);
-		int fd = sceIoOpen("ms0:/plain.bin", PSP_O_RDONLY, 0777);
-		if (fd >= 0)
-		{
-			int size = currentParams->dataBufSize;
-
-			int readbytes = 0;
-
-			while (readbytes < size)
-			{
-				int ret = sceIoRead(fd, (void*)(currentParams->dataBuf + readbytes), size - readbytes);
-				if (ret == 0)
-				{
-					break;
-				}
-
-				readbytes += ret;
-			}
-
-			sceIoClose(fd);
-		}
-		// read data into params->dataBuf
+		readDataFromFile("ms0:/plain.bin", currentParams->dataBuf, currentParams->dataBufSize);
 		pspSdkSetK1(k1);
 	}
 

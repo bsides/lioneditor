@@ -11,6 +11,12 @@
 #include <pspsdk.h>
 #include <psputilsforkernel.h>
 
+#ifdef DEBUG
+#define PATH(x) "host0:/" x
+#else
+#define PATH(x) "ms0:/" x
+#endif
+
 PSP_MODULE_INFO("FFTSaveHook", 0x1000, 1, 1);
 
 PSP_MAIN_THREAD_ATTR(0);
@@ -241,18 +247,18 @@ int readDataFromFile(const char* path, void* data, int size)
 
 int makeDecryptedDirectory(const char* dir)
 {
-	int d = sceIoDopen("ms0:/decryptedSaves");
+	int d = sceIoDopen(PATH("decryptedSaves"));
 	if (d >= 0)
 	{
 		sceIoDclose(d);
 	}
 	else
 	{
-		sceIoMkdir("ms0:/decryptedSaves", 0777);
+		sceIoMkdir(PATH("decryptedSaves"), 0777);
 	}
 
 	char buf[256];
-	sprintf(buf, "ms0:/decryptedSaves/%s", dir);
+	sprintf(buf, PATH("decryptedSaves/%s"), dir);
 
 	d = sceIoDopen(buf);
 	if (d >= 0)
@@ -275,31 +281,31 @@ int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 	sprintf(path, "%s%s", params->gameName, params->saveName);
 	makeDecryptedDirectory(path);
 
-	sprintf(path, "ms0:/decryptedSaves/%s%s/%s", params->gameName, params->saveName, params->fileName);
+	sprintf(path, PATH("decryptedSaves/%s%s/%s"), params->gameName, params->saveName, params->fileName);
 	writeDataToFile(path, params->dataBuf, params->dataBufSize);
 
 	if (params->icon0FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON0.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/ICON0.PNG"), params->gameName, params->saveName);
 		writeDataToFile(path, params->icon0FileData.buf, params->icon0FileData.bufSize);
 	}
 	if (params->icon1FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON1.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/ICON1.PNG"), params->gameName, params->saveName);
 		writeDataToFile(path, params->icon1FileData.buf, params->icon1FileData.bufSize);
 	}
 	if (params->pic1FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/PIC1.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/PIC1.PNG"), params->gameName, params->saveName);
 		writeDataToFile(path, params->pic1FileData.buf, params->pic1FileData.bufSize);
 	}
 	if (params->snd0FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/SND1.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/SND1.PNG"), params->gameName, params->saveName);
 		writeDataToFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
 	}
 	
-	sprintf(path, "ms0:/decryptedSaves/%s%s/PARAM", params->gameName, params->saveName);
+	sprintf(path, PATH("decryptedSaves/%s%s/PARAM"), params->gameName, params->saveName);
 	writeDataToFile(path, &(params->sfoParam), sizeof(params->sfoParam));
 
 	return 0;
@@ -316,31 +322,31 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 		return ret;
 	}
 
-	sprintf(path, "ms0:/decryptedSaves/%s%s/%s", params->gameName, params->saveName, params->fileName);
+	sprintf(path, PATH("decryptedSaves/%s%s/%s"), params->gameName, params->saveName, params->fileName);
 	readDataFromFile(path, params->dataBuf, params->dataBufSize);
 
 	if (params->icon0FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON0.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/ICON0.PNG"), params->gameName, params->saveName);
 		readDataFromFile(path, params->icon0FileData.buf, params->icon0FileData.bufSize);
 	}
 	if (params->icon1FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/ICON1.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/ICON1.PNG"), params->gameName, params->saveName);
 		readDataFromFile(path, params->icon1FileData.buf, params->icon1FileData.bufSize);
 	}
 	if (params->pic1FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/PIC1.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/PIC1.PNG"), params->gameName, params->saveName);
 		readDataFromFile(path, params->pic1FileData.buf, params->pic1FileData.bufSize);
 	}
 	if (params->snd0FileData.buf)
 	{
-		sprintf(path, "ms0:/decryptedSaves/%s%s/SND1.PNG", params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/SND1.PNG"), params->gameName, params->saveName);
 		readDataFromFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
 	}
 
-	sprintf(path, "ms0:/decryptedSaves/%s%s/PARAM", params->gameName, params->saveName);
+	sprintf(path, PATH("/%s%s/PARAM"), params->gameName, params->saveName);
 	readDataFromFile(path, &(params->sfoParam), sizeof(params->sfoParam));
 
 	return 0;

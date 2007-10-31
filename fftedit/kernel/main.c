@@ -34,6 +34,7 @@ SceUID fd;
 	sceIoClose(fd); 
 */
 
+// Hooking routine by FreePlay
 #define J_OPCODE 0x08000000
 #define NOP	0x00000000
 #define REDIRECT_FUNCTION(a, f) _sw(J_OPCODE | (((u32)(f) >> 2)  & 0x03ffffff), a);  _sw(NOP, a+4);
@@ -61,7 +62,8 @@ u32 sceUtilitySavedataShutdownStart_bd;
 SceUtilitySavedataParam* currentParams = NULL;
 
 static u32 FindProc(const char* szMod, const char* szLib, u32 nid) 
-{ 
+{
+	// This function based on PSPLink's code
     SceModule* modP = sceKernelFindModuleByName(szMod); 
 	struct SceLibraryEntryTable* entry;
 	void* entTab;
@@ -163,10 +165,10 @@ int set_savehook()
 int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int* status, SceKernelSMOption* options)
 {
 	int k1 = pspSdkSetK1(0);
-	int success = 0;
+	static int success = 0;
 
 	SceModule* loadedModule = sceKernelFindModuleByUID(modid);
-	if (strstr(loadedModule->modname, "sceUtility"))
+	if ((success == 0) && strstr(loadedModule->modname, "sceUtility"))
 	{
 		if (set_savehook() != 0)
 		{
@@ -301,7 +303,7 @@ int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 	}
 	if (params->snd0FileData.buf)
 	{
-		sprintf(path, PATH("decryptedSaves/%s%s/SND1.PNG"), params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/SND0.AC3"), params->gameName, params->saveName);
 		writeDataToFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
 	}
 	
@@ -342,7 +344,7 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 	}
 	if (params->snd0FileData.buf)
 	{
-		sprintf(path, PATH("decryptedSaves/%s%s/SND1.PNG"), params->gameName, params->saveName);
+		sprintf(path, PATH("decryptedSaves/%s%s/SND0.AC3"), params->gameName, params->saveName);
 		readDataFromFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
 	}
 

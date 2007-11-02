@@ -84,6 +84,39 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;Classes&gt;
+        ///  &lt;Class&gt;
+        ///    &lt;byte&gt;01&lt;/byte&gt;
+        ///    &lt;name&gt;Squire&lt;/name&gt;
+        ///    &lt;command&gt;Mettle&lt;/command&gt;
+        ///  &lt;/Class&gt;
+        ///  &lt;Class&gt;
+        ///    &lt;byte&gt;02&lt;/byte&gt;
+        ///    &lt;name&gt;Squire&lt;/name&gt;
+        ///    &lt;command&gt;Mettle&lt;/command&gt;
+        ///  &lt;/Class&gt;
+        ///  &lt;Class&gt;
+        ///    &lt;byte&gt;03&lt;/byte&gt;
+        ///    &lt;name&gt;Squire&lt;/name&gt;
+        ///    &lt;command&gt;Mettle&lt;/command&gt;
+        ///  &lt;/Class&gt;
+        ///  &lt;Class&gt;
+        ///    &lt;byte&gt;04&lt;/byte&gt;
+        ///    &lt;name&gt;Squire&lt;/name&gt;
+        ///    &lt;command&gt;Mettle&lt;/command&gt;
+        ///  &lt;/Class&gt;
+        ///  &lt;Class&gt;
+        ///    &lt;byte&gt;05&lt;/byte&gt;
+        ///    &lt;name&gt;Holy Knight&lt;/name&gt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Classes {
+            get {
+                return ResourceManager.GetString("Classes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;Items&gt;
         ///  &lt;Item offset=&quot;0&quot; type=&quot;None&quot; subtype=&quot;None&quot;&gt;Nothing&lt;/Item&gt;
         ///  &lt;Item offset=&quot;1&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Dagger&lt;/Item&gt;

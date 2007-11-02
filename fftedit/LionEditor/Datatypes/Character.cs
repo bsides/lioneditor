@@ -4,12 +4,12 @@ namespace LionEditor
     {
         byte index;
         string name;
-        job job;
+//        job job;
         bool isGuest;
         bool isMale;
         Zodiac zodiacSign;
         
-        skill secondaryAction;
+        //skill secondaryAction;
 
         Ability reactAbility;
         Ability supportAbility;
@@ -36,7 +36,7 @@ namespace LionEditor
 
 
 
-        JobInfo jobInfo;
+//        JobInfo jobInfo;
 
         /// <summary>
         /// Builds a Character from a 256 byte array

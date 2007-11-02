@@ -30,6 +30,13 @@ namespace LionEditor
                 this.Name = i.Value.Name;
                 this.Offset = offset;
             }
+            else
+            {
+                this.Type = ItemType.Accessory;
+                this.SubType = ItemSubType.Armguard;
+                this.Name = string.Empty;
+                this.Offset = 0;
+            }
         }
 
         public override string ToString()
@@ -43,7 +50,7 @@ namespace LionEditor
         /// <remarks>Returned byte[] is little-endian (least significant byte is in 0th index)</remarks>
         public byte[] ToByte()
         {
-            return new byte[] { Offset & 0xFF, (Offset & 0xFF00) >> 8 };
+            return new byte[] { (byte)(Offset & 0xFF), (byte)((Offset & 0xFF00) >> 8) };
         }
 
         #region Static members
@@ -69,8 +76,8 @@ namespace LionEditor
                         Item newItem;
                         newItem.Name = i.InnerText;
                         newItem.Offset = Convert.ToUInt16( i.Attributes["offset"].InnerText );
-                        newItem.Type = Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
-                        newItem.SubType = Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
+                        newItem.Type = (ItemType)Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
+                        newItem.SubType = (ItemSubType)Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
 
                         itemList.Add( newItem );
                     }
@@ -91,8 +98,7 @@ namespace LionEditor
                     fullList.Remove( i );
                 }
             }
-
-            remove fullList;
+            return fullList;
         }
 
         public static List<Item> GetAll( ItemSubType itemSubType )
@@ -101,12 +107,15 @@ namespace LionEditor
 
             foreach( Item i in fullList )
             {
-                if( i.Type != itemSubType )
+                if( i.SubType != itemSubType )
                 {
                     fullList.Remove( i );
                 }
             }
+
+            return fullList;
         }
+
 
         #endregion
     }

@@ -25,6 +25,11 @@ namespace LionEditor
                 this.Value = i.Value.Value;
                 this.Name = i.Value.Name;
             }
+            else
+            {
+                this.Value = 0;
+                this.Name = string.Empty;
+            }
         }
 
         public override string ToString()
@@ -38,15 +43,15 @@ namespace LionEditor
         /// <remarks>Returned byte[] is little-endian (least significant byte is in 0th index)</remarks>
         public byte[] ToByte()
         {
-            return new byte[] { Value & 0xFF, (Value & 0xFF00) >> 8 };
+            return new byte[] { (byte)(Value & 0xFF), (byte)((Value & 0xFF00) >> 8) };
         }
 
 
         #region Static members
 
-        private static List<Item> abilityList;
+        private static List<Ability> abilityList;
 
-        public static List<Item> AbilityList
+        public static List<Ability> AbilityList
         {
             get
             {
@@ -66,7 +71,7 @@ namespace LionEditor
                         newItem.Name = i.InnerText;
                         newItem.Value = Convert.ToUInt16( i.Attributes["offset"].InnerText );
 
-                        itemList.Add( newItem );
+                        abilityList.Add( newItem );
                     }
                 }
 

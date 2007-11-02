@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Abilities.xml" />
+    <Content Include="Resources\Classes.xml" />
     <Content Include="Resources\Items.xml" />
     <Content Include="Resources\JobsWithAbilities.xml" />
   </ItemGroup>

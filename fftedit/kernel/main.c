@@ -61,6 +61,79 @@ u32 sceUtilitySavedataShutdownStart_bd;
 
 SceUtilitySavedataParam* currentParams = NULL;
 
+
+int countBits(unsigned char b)
+{
+	int count = 0;
+
+	int i = 0;
+	for (i = 0; i < 8; i++) count += ((b >> i) & 0x01);
+
+	return count;
+}
+
+void calcChecksum(unsigned char* data, unsigned char* csum)
+{
+	int curbyte = 0;
+
+	int cbyte = 0;
+	for (cbyte = 0; cbyte < 10; cbyte++)
+	{
+		int cval = 0;
+		int cbit = 0;
+		for (cbit = 0; cbit < 8; cbit++)
+		{
+			int gbitsum = 0;
+			int gbyte = 0;
+			for (gbyte = 0; gbyte < 128; gbyte++)
+			{
+				gbitsum += countBits(data[curbyte]);
+				curbyte++;
+			}
+
+			cval = cval << 1;
+			cval += gbitsum%2;
+		}
+
+		csum[cbyte] = cval;
+	}
+}
+
+void addChecksum(unsigned char* savegame)
+{
+	unsigned char csum[10];
+
+	savegame[0x118] = 0x00;
+	calcChecksum(savegame, csum);
+
+	savegame[0x27] = csum[0] ^ 0xFF;
+
+	int i = 0;
+	for (i = 0; i < 10; i++)
+	{
+		savegame[0x118 + i] = csum[i];
+	}
+
+	unsigned char csum2[10];
+	calcChecksum(savegame, csum2);
+
+	if ((csum[0] != csum2[0]) && (countBits(csum[0]) == countBits(csum2[0])))
+	{
+		savegame[0x118] = csum2[0];
+	}
+
+	return;
+}
+
+void fixChecksums(unsigned char* data)
+{
+	int i = 0;
+	for (i = 0; i < 15; i++)
+	{
+		addChecksum(data + i*0x2a3c);
+	}
+}
+
 static u32 FindProc(const char* szMod, const char* szLib, u32 nid) 
 {
 	// This function based on PSPLink's code
@@ -88,7 +161,7 @@ static u32 FindProc(const char* szMod, const char* szLib, u32 nid)
 		int total;
 		unsigned int *vars;
 
-		entry = (struct SceLibraryEntryTable *) (entTab + i);
+		entry = (struct SceLibraryEntryTable*)(entTab + i);
 
 
 		total = entry->stubcount + entry->vstubcount;
@@ -326,6 +399,8 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 
 	sprintf(path, PATH("decryptedSaves/%s%s/%s"), params->gameName, params->saveName, params->fileName);
 	readDataFromFile(path, params->dataBuf, params->dataBufSize);
+
+	fixChecksums(params->dataBuf);
 
 	if (params->icon0FileData.buf)
 	{

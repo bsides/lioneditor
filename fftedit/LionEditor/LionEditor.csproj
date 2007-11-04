@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Datatypes\Ability.cs" />
     <Compile Include="Datatypes\Character.cs" />
+    <Compile Include="Datatypes\Class.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

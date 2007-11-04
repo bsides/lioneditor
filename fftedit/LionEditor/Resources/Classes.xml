@@ -2,6 +2,8 @@
 <Classes>
   <Class>
     <byte>01</byte>
+    <skillset>19</skillset>
+    <sprite>Ramza, chapter 1</sprite>
     <name>Squire</name>
     <command>Mettle</command>
     <hpm>125</hpm>
@@ -21,6 +23,8 @@
   </Class>
   <Class>
     <byte>02</byte>
+    <skillset>1A</skillset>
+    <sprite>Ramza, chapter 2 &amp; 3</sprite>
     <name>Squire</name>
     <command>Mettle</command>
     <hpm>125</hpm>
@@ -43,6 +47,8 @@
   <Class>
     <byte>03</byte>
     <name>Squire</name>
+    <skillset>1B</skillset>
+    <sprite>Ramza, chapter 4</sprite>
     <command>Mettle</command>
     <hpm>125</hpm>
     <mpm>105</mpm>
@@ -64,6 +70,8 @@
   <Class>
     <byte>04</byte>
     <name>Squire</name>
+    <skillset>1C</skillset>
+    <sprite>Delita, chapter 1</sprite>
     <command>Mettle</command>
     <hpm>130</hpm>
     <mpm>100</mpm>
@@ -85,6 +93,8 @@
   <Class>
     <byte>05</byte>
     <name>Holy Knight</name>
+    <skillset>1D</skillset>
+    <sprite>Delita, chapter 2 &amp; 3</sprite>
     <command>Holy Sword</command>
     <hpm>135</hpm>
     <mpm>100</mpm>
@@ -106,6 +116,8 @@
   <Class>
     <byte>06</byte>
     <name>Ark Knight</name>
+    <skillset>1E</skillset>
+    <sprite>Delita, chapter 1</sprite>
     <command>Unyielding Blade</command>
     <hpm>150</hpm>
     <mpm>100</mpm>
@@ -126,6 +138,8 @@
   </Class>
   <Class>
     <byte>07</byte>
+    <skillset>1F</skillset>
+    <sprite>Argath</sprite>
     <name>Squire</name>
     <command>Fundaments</command>
     <hpm>120</hpm>
@@ -147,6 +161,8 @@
   </Class>
   <Class>
     <byte>08</byte>
+    <skillset>4B</skillset>
+    <sprite>Zalbaag</sprite>
     <name>Ark Knight</name>
     <command>Blade of Ruin</command>
     <hpm>168</hpm>
@@ -168,6 +184,8 @@
   </Class>
   <Class>
     <byte>09</byte>
+    <skillset>46</skillset>
+    <sprite>Dycedarg</sprite>
     <name>Rune Knight</name>
     <command>Swordplay</command>
     <hpm>170</hpm>
@@ -190,6 +208,8 @@
   <Class>
     <byte>0A</byte>
     <name>Duke</name>
+    <skillset>00</skillset>
+    <sprite>Larg</sprite>
     <command>Blank</command>
     <hpm>100</hpm>
     <mpm>100</mpm>
@@ -211,6 +231,8 @@
   <Class>
     <byte>0B</byte>
     <name>Duke</name>
+    <skillset>00</skillset>
+    <sprite>Goltanna</sprite>
     <command>Blank</command>
     <hpm>100</hpm>
     <mpm>100</mpm>
@@ -232,6 +254,8 @@
   <Class>
     <byte>0C</byte>
     <name>Princess</name>
+    <skillset>24</skillset>
+    <sprite>Ovelia</sprite>
     <command>Holy Magicks</command>
     <hpm>100</hpm>
     <mpm>100</mpm>
@@ -253,6 +277,8 @@
   <Class>
     <byte>0D</byte>
     <name>Sword Saint</name>
+    <skillset>4A</skillset>
+    <sprite>Orlandeau</sprite>
     <command>Swordplay</command>
     <hpm>160</hpm>
     <mpm>120</mpm>
@@ -273,6 +299,8 @@
   </Class>
   <Class>
     <byte>0E</byte>
+    <skillset>00</skillset>
+    <sprite>Funebris</sprite>
     <name>High Confessor</name>
     <command>Blank</command>
     <hpm>100</hpm>
@@ -294,6 +322,8 @@
   </Class>
   <Class>
     <byte>0F</byte>
+    <skillset>2B</skillset>
+    <sprite>Reis (human)</sprite>
     <name>Dragonkin</name>
     <command>Dragon</command>
     <hpm>140</hpm>
@@ -315,6 +345,8 @@
   </Class>
   <Class>
     <byte>10</byte>
+    <skillset>2A</skillset>
+    <sprite>Zalmour</sprite>
     <name>Celebrant</name>
     <command>Priest Magicks</command>
     <hpm>160</hpm>
@@ -336,6 +368,8 @@
   </Class>
   <Class>
     <byte>11</byte>
+    <skillset>27</skillset>
+    <sprite>Gaffgarion</sprite>
     <name>Fell Knight</name>
     <command>Fell Sword</command>
     <hpm>150</hpm>
@@ -357,6 +391,8 @@
   </Class>
   <Class>
     <byte>12</byte>
+    <skillset>2E</skillset>
+    <sprite>Marach</sprite>
     <name>Netherseer</name>
     <command>Nether Mantra</command>
     <hpm>0</hpm>
@@ -378,6 +414,8 @@
   </Class>
   <Class>
     <byte>13</byte>
+    <skillset>00</skillset>
+    <sprite>Simon</sprite>
     <name>Elder</name>
     <command>Blank</command>
     <hpm>100</hpm>
@@ -399,6 +437,8 @@
   </Class>
   <Class>
     <byte>14</byte>
+    <skillset>4C</skillset>
+    <sprite>Alma</sprite>
     <name>Cleric</name>
     <command>Holy Magicks</command>
     <hpm>100</hpm>
@@ -420,6 +460,8 @@
   </Class>
   <Class>
     <byte>15</byte>
+    <skillset>2F</skillset>
+    <sprite>Orran</sprite>
     <name>Astrologer</name>
     <command>Astrology</command>
     <hpm>140</hpm>
@@ -441,6 +483,8 @@
   </Class>
   <Class>
     <byte>16</byte>
+    <skillset>26</skillset>
+    <sprite>Mustadio</sprite>
     <name>Machinist</name>
     <command>Aimed Shot</command>
     <hpm>100</hpm>
@@ -462,6 +506,8 @@
   </Class>
   <Class>
     <byte>17</byte>
+    <skillset>20</skillset>
+    <sprite>Gaffgarion</sprite>
     <name>Fell Knight</name>
     <command>Fell Sword</command>
     <hpm>150</hpm>
@@ -483,6 +529,8 @@
   </Class>
   <Class>
     <byte>18</byte>
+    <skillset>00</skillset>
+    <sprite>Delacroix</sprite>
     <name>Cardinal</name>
     <command>Blank</command>
     <hpm>100</hpm>
@@ -504,6 +552,8 @@
   </Class>
   <Class>
     <byte>19</byte>
+    <skillset>2D</skillset>
+    <sprite>Rapha</sprite>
     <name>Skyseer</name>
     <command>Sky Mantra</command>
     <hpm>90</hpm>
@@ -525,6 +575,8 @@
   </Class>
   <Class>
     <byte>1A</byte>
+    <skillset>2E</skillset>
+    <sprite>Marach</sprite>
     <name>Netherseer</name>
     <command>Nether Mantra</command>
     <hpm>100</hpm>
@@ -546,6 +598,8 @@
   </Class>
   <Class>
     <byte>1B</byte>
+    <skillset>3B</skillset>
+    <sprite>Elmdore</sprite>
     <name>Ark Knight</name>
     <command>Sword Spirit</command>
     <hpm>180</hpm>
@@ -569,6 +623,8 @@
     <byte>1C</byte>
     <name>Commoner</name>
     <command>Magicks</command>
+    <skillset>23</skillset>
+    <sprite>Teta</sprite>
     <hpm>0</hpm>
     <mpm>0</mpm>
     <spm>0</spm>
@@ -589,6 +645,8 @@
   <Class>
     <byte>1D</byte>
     <name>Grand Duke</name>
+    <skillset>00</skillset>
+    <sprite>Barrington</sprite>
     <hpm>100</hpm>
     <mpm>100</mpm>
     <spm>100</spm>
@@ -609,6 +667,8 @@
   <Class>
     <byte>1E</byte>
     <name>Holy Knight</name>
+    <skillset>28</skillset>
+    <sprite>Agrias</sprite>
     <command>Holy Sword</command>
     <hpm>140</hpm>
     <mpm>100</mpm>
@@ -631,6 +691,8 @@
     <byte>1F</byte>
     <name>Templar</name>
     <command>Spellblade</command>
+    <skillset>45</skillset>
+    <sprite>Beowulf</sprite>
     <hpm>122</hpm>
     <mpm>145</mpm>
     <spm>105</spm>
@@ -652,6 +714,8 @@
     <byte>20</byte>
     <name>White Knight</name>
     <command>Holy Sword</command>
+    <skillset>22</skillset>
+    <sprite>Wiegraf, chapter 1</sprite>
     <hpm>140</hpm>
     <mpm>150</mpm>
     <spm>100</spm>
@@ -672,6 +736,8 @@
   <Class>
     <byte>21</byte>
     <name>Witch of the Coven</name>
+    <skillset>00</skillset>
+    <sprite>Valmafra</sprite>
     <hpm>100</hpm>
     <mpm>100</mpm>
     <spm>100</spm>
@@ -693,6 +759,8 @@
     <byte>22</byte>
     <name>Machinist</name>
     <command>Aimed Shot</command>
+    <skillset>25</skillset>
+    <sprite>Mustadio</sprite>
     <hpm>100</hpm>
     <mpm>75</mpm>
     <spm>115</spm>
@@ -714,6 +782,8 @@
     <byte>23</byte>
     <name>Viscount</name>
     <command />
+    <skillset>00</skillset>
+    <sprite>Ludovich</sprite>
     <hpm>100</hpm>
     <mpm>100</mpm>
     <spm>100</spm>
@@ -735,6 +805,8 @@
     <byte>24</byte>
     <name>Divine Knight</name>
     <command>Unyielding Blade</command>
+    <skillset>40</skillset>
+    <sprite>Folmarv</sprite>
     <hpm>165</hpm>
     <mpm>100</mpm>
     <spm>115</spm>
@@ -756,6 +828,8 @@
     <byte>25</byte>
     <name>Divine Knight</name>
     <command>Unyielding Blade</command>
+    <skillset>3C</skillset>
+    <sprite>Loffrey</sprite>
     <hpm>150</hpm>
     <mpm>100</mpm>
     <spm>115</spm>
@@ -777,6 +851,8 @@
     <byte>26</byte>
     <name>Nightblade</name>
     <command>Arts of War</command>
+    <skillset>33</skillset>
+    <sprite>Isilud</sprite>
     <hpm>155</hpm>
     <mpm>50</mpm>
     <spm>110</spm>
@@ -798,6 +874,8 @@
     <byte>27</byte>
     <name>Sorceror</name>
     <command>Magicks</command>
+    <skillset>48</skillset>
+    <sprite>Cletienne</sprite>
     <hpm>125</hpm>
     <mpm>140</mpm>
     <spm>105</spm>
@@ -819,6 +897,8 @@
     <byte>28</byte>
     <name>White Knight</name>
     <command>Holy Sword</command>
+    <skillset>30</skillset>
+    <sprite>Wiegraf, chapter 3</sprite>
     <hpm>165</hpm>
     <mpm>150</mpm>
     <spm>110</spm>
@@ -840,6 +920,8 @@
     <byte>29</byte>
     <name>Skyseer</name>
     <command>Sky Mantra</command>
+    <skillset>32</skillset>
+    <sprite>Rapha</sprite>
     <hpm>100</hpm>
     <mpm>100</mpm>
     <spm>115</spm>
@@ -861,6 +943,8 @@
     <byte>2A</byte>
     <name>Divine Knight</name>
     <command>Unyielding Blade</command>
+    <skillset>43</skillset>
+    <sprite>Meliadoul</sprite>
     <hpm>125</hpm>
     <mpm>80</mpm>
     <spm>105</spm>
@@ -881,6 +965,8 @@
   <Class>
     <byte>2B</byte>
     <name>Machinist</name>
+    <skillset>44</skillset>
+    <sprite>Barich</sprite>
     <command>Aimed Shot</command>
     <hpm>125</hpm>
     <mpm>80</mpm>
@@ -903,6 +989,8 @@
     <byte>2C</byte>
     <name>Cleric</name>
     <command>Holy Magicks</command>
+    <skillset>4C</skillset>
+    <sprite>Alma</sprite>
     <hpm>0</hpm>
     <mpm>0</mpm>
     <spm>0</spm>
@@ -924,6 +1012,8 @@
     <byte>2D</byte>
     <name>Assassin</name>
     <command>Subdual Arts</command>
+    <skillset>36</skillset>
+    <sprite>Celia</sprite>
     <hpm>160</hpm>
     <mpm>125</mpm>
     <spm>110</spm>
@@ -944,6 +1034,8 @@
   <Class>
     <byte>2E</byte>
     <name>Assassin</name>
+    <skillset>37</skillset>
+    <sprite>Lettie</sprite>
     <command>Subdual Arts</command>
     <hpm>155</hpm>
     <mpm>125</mpm>
@@ -966,6 +1058,8 @@
     <byte>2F</byte>
     <name>Divine Knight</name>
     <command>Unyielding Blade</command>
+    <skillset>42</skillset>
+    <sprite>Meliadoul</sprite>
     <hpm>125</hpm>
     <mpm>80</mpm>
     <spm>105</spm>
@@ -987,6 +1081,8 @@
     <byte>30</byte>
     <name>Cleric</name>
     <command>Holy Magicks</command>
+    <skillset>31</skillset>
+    <sprite>Alma</sprite>
     <hpm>90</hpm>
     <mpm>100</mpm>
     <spm>105</spm>
@@ -1007,6 +1103,8 @@
   <Class>
     <byte>31</byte>
     <name>False Saint</name>
+    <skillset>00</skillset>
+    <sprite>Ajora</sprite>
     <hpm>100</hpm>
     <mpm>100</mpm>
     <spm>100</spm>
@@ -1028,6 +1126,8 @@
     <byte>32</byte>
     <name>Soldier</name>
     <command>Limit</command>
+    <skillset>29</skillset>
+    <sprite>Cloud</sprite>
     <hpm>125</hpm>
     <mpm>116</mpm>
     <spm>100</spm>
@@ -1049,6 +1149,8 @@
     <byte>33</byte>
     <name>Ark Knight</name>
     <command>Blade of Ruin</command>
+    <skillset>4B</skillset>
+    <sprite>Zalbaag, possessed</sprite>
     <hpm>170</hpm>
     <mpm>105</mpm>
     <spm>125</spm>
@@ -1070,6 +1172,8 @@
     <byte>34</byte>
     <name>Holy Knight</name>
     <command>Holy Sword</command>
+    <skillset>21</skillset>
+    <sprite>Agrias</sprite>
     <hpm>140</hpm>
     <mpm>100</mpm>
     <spm>100</spm>
@@ -1091,6 +1195,8 @@
     <byte>35</byte>
     <name>Chemist</name>
     <command>Items</command>
+    <skillset>06</skillset>
+    <sprite>Female Chemist</sprite>
     <hpm>75</hpm>
     <mpm>75</mpm>
     <spm>100</spm>
@@ -1112,6 +1218,8 @@
     <byte>36</byte>
     <name>White Mage</name>
     <command>White Magicks</command>
+    <skillset>0A</skillset>
+    <sprite>Female White Mage</sprite>
     <hpm>80</hpm>
     <mpm>120</mpm>
     <spm>110</spm>
@@ -1133,6 +1241,8 @@
     <byte>37</byte>
     <name>Black Mage</name>
     <command>Black Magicks</command>
+    <skillset>0B</skillset>
+    <sprite>Male Black Mage</sprite>
     <hpm>80</hpm>
     <mpm>120</mpm>
     <spm>110</spm>
@@ -1154,6 +1264,8 @@
     <byte>38</byte>
     <name>Mystic</name>
     <command>Mystic Arts</command>
+    <skillset>10</skillset>
+    <sprite>Male Mystic</sprite>
     <hpm>75</hpm>
     <mpm>110</mpm>
     <spm>100</spm>
@@ -1191,6 +1303,8 @@
     <byte>3C</byte>
     <name>Gigas</name>
     <command>Dread</command>
+    <skillset>67</skillset>
+    <sprite>Belias</sprite>
     <hpm>80</hpm>
     <mpm>86</mpm>
     <spm>132</spm>
@@ -1212,6 +1326,8 @@
     <byte>3D</byte>
     <name>Knight</name>
     <command>Swordplay</command>
+    <skillset>9B</skillset>
+    <sprite>Male Knight, undead</sprite>
     <hpm>130</hpm>
     <mpm>80</mpm>
     <spm>110</spm>
@@ -1233,6 +1349,8 @@
     <byte>3E</byte>
     <name>Death Seraph</name>
     <command>Dread</command>
+    <skillset>6B</skillset>
+    <sprite>Zalera</sprite>
     <hpm>85</hpm>
     <mpm>100</mpm>
     <spm>133</spm>
@@ -1254,6 +1372,8 @@
     <byte>3F</byte>
     <name>Archer</name>
     <command>Aim</command>
+    <skillset>9C</skillset>
+    <sprite>Male Archer, undead</sprite>
     <hpm>110</hpm>
     <mpm>65</mpm>
     <spm>105</spm>
@@ -1275,6 +1395,8 @@
     <byte>40</byte>
     <name>Bringer of Order</name>
     <command>Dread</command>
+    <skillset>6F</skillset>
+    <sprite>Hashmalum</sprite>
     <hpm>83</hpm>
     <mpm>87</mpm>
     <spm>148</spm>
@@ -1295,6 +1417,8 @@
   <Class>
     <byte>41</byte>
     <name>High Seraph</name>
+    <skillset>00</skillset>
+    <sprite>Altima, First Form</sprite>
     <hpm>70</hpm>
     <mpm>90</mpm>
     <spm>118</spm>
@@ -1316,6 +1440,8 @@
     <byte>42</byte>
     <name>Black Mage</name>
     <command>Black Magicks</command>
+    <skillset>9D</skillset>
+    <sprite>Male Black Mage, undead</sprite>
     <hpm>100</hpm>
     <mpm>120</mpm>
     <spm>105</spm>
@@ -1337,6 +1463,8 @@
     <byte>43</byte>
     <name>The Impure</name>
     <command>Dread</command>
+    <skillset>73</skillset>
+    <sprite>Cuchulainn</sprite>
     <hpm>50</hpm>
     <mpm>90</mpm>
     <spm>130</spm>
@@ -1358,6 +1486,8 @@
     <byte>44</byte>
     <name>Time Mage</name>
     <command>Time Magicks</command>
+    <skillset>9E</skillset>
+    <sprite>Female Time Mage, undead</sprite>
     <hpm>100</hpm>
     <mpm>120</mpm>
     <spm>110</spm>
@@ -1379,6 +1509,8 @@
     <byte>45</byte>
     <name>The Wroth</name>
     <command>Dread</command>
+    <skillset>77</skillset>
+    <sprite>Adremmelech</sprite>
     <hpm>90</hpm>
     <mpm>95</mpm>
     <spm>150</spm>
@@ -1400,6 +1532,8 @@
     <byte>46</byte>
     <name>Mystic</name>
     <command>Mystic Arts</command>
+    <skillset>9F</skillset>
+    <sprite>Male Mystic, undead</sprite>
     <hpm>90</hpm>
     <mpm>110</mpm>
     <spm>110</spm>
@@ -1421,6 +1555,8 @@
     <byte>47</byte>
     <name>Summoner</name>
     <command>Summon</command>
+    <skillset>A0</skillset>
+    <sprite>Female Summoner, undead</sprite>
     <hpm>85</hpm>
     <mpm>125</mpm>
     <spm>100</spm>
@@ -1442,6 +1578,8 @@
     <byte>48</byte>
     <name>Holy Dragon</name>
     <command>Breath</command>
+    <skillset>2C</skillset>
+    <sprite>Reis (Dragon)</sprite>
     <hpm>130</hpm>
     <mpm>115</mpm>
     <spm>132</spm>
@@ -1463,6 +1601,8 @@
     <byte>49</byte>
     <name>Arch Seraph</name>
     <command>Divine Magicks</command>
+    <skillset>7D</skillset>
+    <sprite>Altima, Second Form</sprite>
     <hpm>125</hpm>
     <mpm>100</mpm>
     <spm>150</spm>
@@ -1484,6 +1624,8 @@
     <byte>4A</byte>
     <name>Squire</name>
     <command>Fundaments</command>
+    <skillset>05</skillset>
+    <sprite>Generic</sprite>
     <hpm>100</hpm>
     <mpm>75</mpm>
     <spm>100</spm>
@@ -1505,6 +1647,8 @@
     <byte>4B</byte>
     <name>Chemist</name>
     <command>Items</command>
+    <skillset>06</skillset>
+    <sprite>Generic</sprite>
     <hpm>80</hpm>
     <mpm>75</mpm>
     <spm>100</spm>
@@ -1526,6 +1670,8 @@
     <byte>4C</byte>
     <name>Knight</name>
     <command>Arts of War</command>
+    <skillset>07</skillset>
+    <sprite>Generic</sprite>
     <hpm>120</hpm>
     <mpm>80</mpm>
     <spm>100</spm>
@@ -1547,6 +1693,8 @@
     <byte>4D</byte>
     <name>Archer</name>
     <command>Aim</command>
+    <skillset>08</skillset>
+    <sprite>Generic</sprite>
     <hpm>100</hpm>
     <mpm>65</mpm>
     <spm>100</spm>
@@ -1568,6 +1716,8 @@
     <byte>4E</byte>
     <name>Monk</name>
     <command>Martial Arts</command>
+    <skillset>09</skillset>
+    <sprite>Generic</sprite>
     <hpm>135</hpm>
     <mpm>80</mpm>
     <spm>110</spm>
@@ -1588,6 +1738,8 @@
   <Class>
     <byte>4F</byte>
     <name>White Mage</name>
+    <skillset>0A</skillset>
+    <sprite>Generic</sprite>
     <command>White Magicks</command>
     <hpm>80</hpm>
     <mpm>120</mpm>
@@ -1610,6 +1762,8 @@
     <byte>50</byte>
     <name>Black Mage</name>
     <command>Black Magicks</command>
+    <skillset>0B</skillset>
+    <sprite>Generic</sprite>
     <hpm>75</hpm>
     <mpm>120</mpm>
     <spm>100</spm>
@@ -1631,6 +1785,8 @@
     <byte>51</byte>
     <name>Time Mage</name>
     <command>Time Magicks</command>
+    <skillset>0C</skillset>
+    <sprite>Generic</sprite>
     <hpm>75</hpm>
     <mpm>120</mpm>
     <spm>100</spm>
@@ -1652,6 +1808,8 @@
     <byte>52</byte>
     <name>Summoner</name>
     <command>Summon</command>
+    <skillset>0D</skillset>
+    <sprite>Generic</sprite>
     <hpm>70</hpm>
     <mpm>125</mpm>
     <spm>90</spm>
@@ -1671,8 +1829,10 @@
   </Class>
   <Class>
     <byte>53</byte>
-    <name>Theif</name>
+    <name>Thief</name>
     <command>Steal</command>
+    <skillset>0E</skillset>
+    <sprite>Generic</sprite>
     <hpm>90</hpm>
     <mpm>50</mpm>
     <spm>110</spm>
@@ -1694,6 +1854,8 @@
     <byte>54</byte>
     <name>Orator</name>
     <command>Speechcraft</command>
+    <skillset>0F</skillset>
+    <sprite>Generic</sprite>
     <hpm>80</hpm>
     <mpm>70</mpm>
     <spm>100</spm>
@@ -1715,6 +1877,8 @@
     <byte>55</byte>
     <name>Mystic</name>
     <command>Mystic Arts</command>
+    <skillset>10</skillset>
+    <sprite>Generic</sprite>
     <hpm>75</hpm>
     <mpm>110</mpm>
     <spm>100</spm>
@@ -1736,6 +1900,8 @@
     <byte>56</byte>
     <name>Geomancer</name>
     <command>Geomancy</command>
+    <skillset>11</skillset>
+    <sprite>Generic</sprite>
     <hpm>110</hpm>
     <mpm>95</mpm>
     <spm>100</spm>
@@ -1757,6 +1923,8 @@
     <byte>57</byte>
     <name>Dragoon</name>
     <command>Jump</command>
+    <skillset>12</skillset>
+    <sprite>Generic</sprite>
     <hpm>120</hpm>
     <mpm>50</mpm>
     <spm>100</spm>
@@ -1778,6 +1946,8 @@
     <byte>58</byte>
     <name>Samurai</name>
     <command>Iaido</command>
+    <skillset>13</skillset>
+    <sprite>Generic</sprite>
     <hpm>75</hpm>
     <mpm>75</mpm>
     <spm>100</spm>
@@ -1799,6 +1969,8 @@
     <byte>59</byte>
     <name>Ninja</name>
     <command>Throw</command>
+    <skillset>14</skillset>
+    <sprite>Generic</sprite>
     <hpm>70</hpm>
     <mpm>50</mpm>
     <spm>120</spm>
@@ -1820,6 +1992,8 @@
     <byte>5A</byte>
     <name>Arithmetician</name>
     <command>Arithmeticks</command>
+    <skillset>15</skillset>
+    <sprite>Generic</sprite>
     <hpm>65</hpm>
     <mpm>80</mpm>
     <spm>50</spm>
@@ -1841,6 +2015,8 @@
     <byte>5B</byte>
     <name>Bard</name>
     <command>Bardsong</command>
+    <skillset>16</skillset>
+    <sprite>Generic</sprite>
     <hpm>55</hpm>
     <mpm>50</mpm>
     <spm>100</spm>
@@ -1862,6 +2038,8 @@
     <byte>5C</byte>
     <name>Dancer</name>
     <command>Dance</command>
+    <skillset>17</skillset>
+    <sprite>Generic</sprite>
     <hpm>60</hpm>
     <mpm>50</mpm>
     <spm>100</spm>
@@ -1883,6 +2061,8 @@
     <byte>5D</byte>
     <name>Mime</name>
     <command>Mimic</command>
+    <skillset>18</skillset>
+    <sprite>Generic</sprite>
     <hpm>140</hpm>
     <mpm>50</mpm>
     <spm>120</spm>
@@ -2967,6 +3147,8 @@
     <byte>90</byte>
     <name>Byblos</name>
     <command>Byblos</command>
+    <skillset>AA</skillset>
+    <sprite>Byblos</sprite>
     <hpm>130</hpm>
     <mpm>110</mpm>
     <spm>104</spm>
@@ -2988,6 +3170,8 @@
     <byte>91</byte>
     <name>Automaton</name>
     <command>Tasks</command>
+    <skillset>AB</skillset>
+    <sprite>Worker 8</sprite>
     <hpm>115</hpm>
     <mpm>0</mpm>
     <spm>105</spm>
@@ -3009,6 +3193,8 @@
     <byte>96</byte>
     <name>Reaver</name>
     <command>Bio</command>
+    <skillset>AC</skillset>
+    <sprite>Apanda</sprite>
     <hpm>140</hpm>
     <mpm>120</mpm>
     <spm>105</spm>
@@ -3030,6 +3216,8 @@
     <byte>97</byte>
     <name>Serpentarius</name>
     <command>The Dark</command>
+    <skillset>AD</skillset>
+    <sprite>Elidibs</sprite>
     <hpm>100</hpm>
     <mpm>150</mpm>
     <spm>90</spm>
@@ -3055,6 +3243,8 @@
     <byte>99</byte>
     <name>Archaeodaemon</name>
     <command>Dark Arts</command>
+    <skillset>AE</skillset>
+    <sprite>Archaeodaemon</sprite>
     <hpm>140</hpm>
     <mpm>200</mpm>
     <spm>110</spm>
@@ -3076,50 +3266,139 @@
     <byte>9A</byte>
     <name>Ultima Daemon</name>
     <command>Demon Magicks</command>
+    <skillset>AF</skillset>
+    <sprite>Ultima Demon</sprite>
+    <hpm>155</hpm>
+    <mpm>180</mpm>
+    <spm>105</spm>
+    <pam>135</pam>
+    <mam>128</mam>
+    <move>5</move>
+    <cev>10</cev>
+    <hpc>9</hpc>
+    <mpc>8</mpc>
+    <spc>100</spc>
+    <pac>39</pac>
+    <mac>43</mac>
+    <jump>2</jump>
+    <type>
+      Demon
+    </type>
   </Class>
   <Class>
     <byte>A0</byte>
+    <skillset>A0</skillset>
+    <sprite>Generic</sprite>
     <name>Dark Knight</name>
     <command>Darkness</command>
+    <hpm>80</hpm>
+    <mpm>90</mpm>
+    <spm>100</spm>
+    <pam>134</pam>
+    <mam>79</mam>
+    <move>3</move>
+    <jump>3</jump>
+    <cev>0</cev>
+    <hpc></hpc>
+    <mpc></mpc>
+    <spc></spc>
+    <pac></pac>
+    <mac></mac>
+    <type>
+      Generic
+    </type>
   </Class>
   <Class>
     <byte>A1</byte>
     <name>Onion Knight</name>
     <command />
+    <skillset>00</skillset>
+    <sprite>Ramza</sprite>
+    <hpm>50</hpm>
+    <mpm>50</mpm>
+    <spm>94</spm>
+    <pam>43</pam>
+    <mam>47</mam>
+    <move>3</move>
+    <jump>3</jump>
+    <cev>5</cev>
+    <hpc></hpc>
+    <mpc></mpc>
+    <spc></spc>
+    <pac></pac>
+    <mac></mac>
+    <type>
+      Special
+    </type>
   </Class>
   <Class>
     <byte>A2</byte>
     <name>Sky Pirate</name>
     <command>Piracy</command>
+    <skillset>E1</skillset>
+    <sprite>Balthier</sprite>
+    <hpm>109</hpm>
+    <mpm>79</mpm>
+    <spm>114</spm>
+    <pam>110</pam>
+    <mam>97</mam>
+    <move>4</move>
+    <jump>4</jump>
+    <cev>25</cev>
+    <hpc></hpc>
+    <mpc></mpc>
+    <spc></spc>
+    <pac></pac>
+    <mac></mac>
+    <type>
+      Special
+    </type>
   </Class>
   <Class>
     <byte>A3</byte>
     <name>Game Hunter</name>
     <command>Huntcraft</command>
+    <skillset>E2</skillset>
+    <sprite>Luso</sprite>
+    <hpm>119</hpm>
+    <mpm>104</mpm>
+    <spm>95</spm>
+    <pam>109</pam>
+    <mam>90</mam>
+    <move>4</move>
+    <jump>3</jump>
+    <cev>10</cev>
+    <hpc></hpc>
+    <mpc></mpc>
+    <spc></spc>
+    <pac></pac>
+    <mac></mac>
+    <type>
+      Special
+    </type>  
   </Class>
-  <Class>
-    <byte>A4</byte>
-    <name>Onion Knight</name>
-    <command />
-  </Class>
+
   <Class>
     <byte>A5</byte>
     <name>Deathknight</name>
     <command>Fell Sword</command>
-  </Class>
-  <Class>
-    <byte>A6</byte>
-    <name>Templar</name>
-    <command>Spellblade</command>
-  </Class>
-  <Class>
-    <byte>A7</byte>
-    <name>Celebrant</name>
-    <command>Priest Magicks</command>
-  </Class>
-  <Class>
-    <byte>A8</byte>
-    <name>Dark Dragon</name>
-    <command>Breath</command>
+    <skillset>27</skillset>
+    <sprite>Blank</sprite>
+    <hpm>359</hpm>17cbdc
+    <mpm>209</mpm>0adfb8
+    <spm>155</spm>01ee39
+    <pam>190</pam>0170f8
+    <mam>140</mam>01f5ee
+    <move>3</move>
+    <jump>3</jump>
+    <cev>15</cev>
+    <hpc></hpc>
+    <mpc></mpc>
+    <spc></spc>
+    <pac></pac>
+    <mac></mac>
+    <type>
+      Special
+    </type>
   </Class>
 </Classes>

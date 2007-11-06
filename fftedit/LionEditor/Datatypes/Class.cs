@@ -220,22 +220,22 @@ namespace LionEditor
 
         private Class( XmlNode classNode )
         {
-            this.num = byte.Parse( classNode.SelectSingleNode( "//byte" ).InnerXml, System.Globalization.NumberStyles.HexNumber );
-            this.name = classNode.SelectSingleNode( "//name" ).InnerXml;
-            this.command = classNode.SelectSingleNode( "//command" ).InnerXml;
-            this.hpm = Convert.ToInt32( classNode.SelectSingleNode( "//hpm" ).InnerXml );
-            this.spm = Convert.ToInt32( classNode.SelectSingleNode( "//spm" ).InnerXml );
-            this.pam = Convert.ToInt32( classNode.SelectSingleNode( "//pam" ).InnerXml );
-            this.mam = Convert.ToInt32( classNode.SelectSingleNode( "//mam" ).InnerXml );
-            this.move = Convert.ToInt32( classNode.SelectSingleNode( "//move" ).InnerXml );
-            this.cev = Convert.ToInt32( classNode.SelectSingleNode( "//cev" ).InnerXml );
-            this.hpc = Convert.ToInt32( classNode.SelectSingleNode( "//hpc" ).InnerXml );
-            this.mpc = Convert.ToInt32( classNode.SelectSingleNode( "//mpc" ).InnerXml );
-            this.spc = Convert.ToInt32( classNode.SelectSingleNode( "//spc" ).InnerXml );
-            this.pac = Convert.ToInt32( classNode.SelectSingleNode( "//pac" ).InnerXml );
-            this.mac = Convert.ToInt32( classNode.SelectSingleNode( "//mac" ).InnerXml );
-            this.jump = Convert.ToInt32( classNode.SelectSingleNode( "//jump" ).InnerXml );
-            this.type = classNode.SelectSingleNode( "//type" ).InnerXml;
+            this.num = Convert.ToByte( classNode.SelectSingleNode( "byte" ).InnerText, 16 );
+            this.name = classNode.SelectSingleNode( "name" ).InnerXml;
+            this.command = classNode.SelectSingleNode( "command" ).InnerXml;
+            this.hpm = Convert.ToInt32( classNode.SelectSingleNode( "hpm" ).InnerXml );
+            this.spm = Convert.ToInt32( classNode.SelectSingleNode( "spm" ).InnerXml );
+            this.pam = Convert.ToInt32( classNode.SelectSingleNode( "pam" ).InnerXml );
+            this.mam = Convert.ToInt32( classNode.SelectSingleNode( "mam" ).InnerXml );
+            this.move = Convert.ToInt32( classNode.SelectSingleNode( "move" ).InnerXml );
+            this.cev = Convert.ToInt32( classNode.SelectSingleNode( "cev" ).InnerXml );
+            this.hpc = Convert.ToInt32( classNode.SelectSingleNode( "hpc" ).InnerXml );
+            this.mpc = Convert.ToInt32( classNode.SelectSingleNode( "mpc" ).InnerXml );
+            this.spc = Convert.ToInt32( classNode.SelectSingleNode( "spc" ).InnerXml );
+            this.pac = Convert.ToInt32( classNode.SelectSingleNode( "pac" ).InnerXml );
+            this.mac = Convert.ToInt32( classNode.SelectSingleNode( "mac" ).InnerXml );
+            this.jump = Convert.ToInt32( classNode.SelectSingleNode( "jump" ).InnerXml );
+            this.type = classNode.SelectSingleNode( "type" ).InnerXml;
         }
 
         private int multiply( int rawVal, int multiplier )

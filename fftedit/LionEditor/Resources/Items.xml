@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Items>
+  <Item offset="255" type="None" subtype="None">Nothing</Item>
   <Item offset="0" type="None" subtype="None">Nothing</Item>
   <Item offset="1" type="Hand" subtype="Knife">Dagger</Item>
   <Item offset="2" type="Hand" subtype="Knife">Mythril Knife</Item>
@@ -169,9 +170,9 @@
   <Item offset="166" type="Head" subtype="Hat">Gold Hairpin</Item>
   <Item offset="167" type="Head" subtype="Hat">Lambent Hat</Item>
   <Item offset="168" type="Head" subtype="Hat">Thief's Cap</Item>
-  <Item offset="169" type="Head" subtype="Hair Adornment">Cachusha</Item>
-  <Item offset="170" type="Head" subtype="Hair Adornment">Barette</Item>
-  <Item offset="171" type="Head" subtype="Hair Adornment">Ribbon</Item>
+  <Item offset="169" type="Head" subtype="HairAdornment">Cachusha</Item>
+  <Item offset="170" type="Head" subtype="HairAdornment">Barette</Item>
+  <Item offset="171" type="Head" subtype="HairAdornment">Ribbon</Item>
   <Item offset="172" type="Body" subtype="Armor">Leather Armor</Item>
   <Item offset="173" type="Body" subtype="Armor">Linen Cuirass</Item>
   <Item offset="174" type="Body" subtype="Armor">Bronze Armor</Item>

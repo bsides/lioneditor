@@ -88,13 +88,17 @@ namespace LionEditor
             reactAbility = new Ability( (ushort)(charData[9] << 8 + charData[8]) );
             supportAbility = new Ability( (ushort)(charData[11] << 8 + charData[10]) );
             movementAbility = new Ability( (ushort)(charData[13] << 8 + charData[12]) );
-            head = new Item( (ushort)(charData[15] << 8 + charData[14]) );
-            body = new Item( (ushort)(charData[17] << 8 + charData[16]) );
-            accessory = new Item( (ushort)(charData[19] << 8 + charData[18]) );
-            rightHand = new Item( (ushort)(charData[21] << 8 + charData[20]) );
-            rightShield = new Item( (ushort)(charData[23] << 8 + charData[22]) );
-            leftHand = new Item( (ushort)(charData[25] << 8 + charData[24]) );
-            leftShield = new Item( (ushort)(charData[27] << 8 + charData[26]) );
+            ushort I = charData[17];
+            ushort J = (ushort)(I << 8);
+            ushort K = charData[16];
+            ushort L = (ushort)(J + K);
+            head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
+            body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
+            accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
+            rightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
+            rightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
+            leftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
+            leftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
             experience = charData[28];
             level = charData[29];
             brave = charData[30];
@@ -125,11 +129,11 @@ namespace LionEditor
 
             for( int i = 0; i < 23; i++ )
             {
-                JP[i] = (ushort)(charData[0x80 + 2 * i + 1] << 8 + charData[0x80 + 2 * i]);
+                JP[i] = (ushort)((ushort)(charData[0x80 + 2 * i + 1] << 8) + charData[0x80 + 2 * i]);
             }
             for( int i = 0; i < 23; i++ )
             {
-                totalJP[i] = (ushort)(charData[0xAE + 2 * i + 1] << 8 + charData[0xAE + 2 * i]);
+                totalJP[i] = (ushort)((ushort)(charData[0xAE + 2 * i + 1] << 8) + charData[0xAE + 2 * i]);
             }
 
             StringBuilder sb = new StringBuilder();
@@ -138,6 +142,7 @@ namespace LionEditor
             while( charData[k] != 0xFE )
             {
                 sb.Append( characterMap[charData[k]] );
+                k++;
             }
 
             name = sb.ToString();

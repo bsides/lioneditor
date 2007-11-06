@@ -647,6 +647,7 @@
     <name>Grand Duke</name>
     <skillset>00</skillset>
     <sprite>Barrington</sprite>
+    <command/>
     <hpm>100</hpm>
     <mpm>100</mpm>
     <spm>100</spm>
@@ -738,6 +739,7 @@
     <name>Witch of the Coven</name>
     <skillset>00</skillset>
     <sprite>Valmafra</sprite>
+    <command/>
     <hpm>100</hpm>
     <mpm>100</mpm>
     <spm>100</spm>
@@ -1104,6 +1106,7 @@
     <byte>31</byte>
     <name>False Saint</name>
     <skillset>00</skillset>
+    <command/>
     <sprite>Ajora</sprite>
     <hpm>100</hpm>
     <mpm>100</mpm>
@@ -1416,6 +1419,7 @@
   </Class>
   <Class>
     <byte>41</byte>
+    <command/>
     <name>High Seraph</name>
     <skillset>00</skillset>
     <sprite>Altima, First Form</sprite>
@@ -3235,10 +3239,10 @@
       Demon
     </type>
   </Class>
-  <Class>
+<!--  <Class>
     <byte>98</byte>
     <name>Holy Dragon</name>
-  </Class>
+  </Class> -->
   <Class>
     <byte>99</byte>
     <name>Archaeodaemon</name>
@@ -3322,11 +3326,12 @@
     <move>3</move>
     <jump>3</jump>
     <cev>5</cev>
-    <hpc></hpc>2ff67a
-    <mpc></mpc>122d1b
-    <spc></spc>02640c
-    <pac></pac>02db18
-    <mac></mac>022d2c
+    <!-- TODO -->
+    <hpc>0</hpc>
+    <mpc>0</mpc>
+    <spc>0</spc>
+    <pac>0</pac>
+    <mac>0</mac>
     <type>
       Special
     </type>
@@ -3392,11 +3397,12 @@
     <move>3</move>
     <jump>3</jump>
     <cev>15</cev>
-    <hpc></hpc>
-    <mpc></mpc>
-    <spc></spc>
-    <pac></pac>
-    <mac></mac>
+    <!-- TODO -->
+    <hpc>0</hpc>
+    <mpc>0</mpc>
+    <spc>0</spc>
+    <pac>0</pac>
+    <mac>0</mac>
     <type>
       Special
     </type>

@@ -4,6 +4,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Xml;
 using System.Resources;
+using LionEditor.Properties;
 
 namespace LionEditor
 {
@@ -64,8 +65,7 @@ namespace LionEditor
                 if( itemList == null )
                 {
                     XmlDocument d = new XmlDocument();
-                    System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
-                    d.Load( a.GetManifestResourceStream( "Items" ) );
+                    d.LoadXml( Resources.Items );
 
                     XmlNodeList items = d.SelectNodes( "//Item" );
 

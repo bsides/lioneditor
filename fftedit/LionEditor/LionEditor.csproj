@@ -39,6 +39,7 @@
     <Compile Include="Datatypes\Ability.cs" />
     <Compile Include="Datatypes\Character.cs" />
     <Compile Include="Datatypes\Class.cs" />
+    <Compile Include="Datatypes\SecondaryAction.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +76,7 @@
     <Content Include="Resources\Classes.xml" />
     <Content Include="Resources\Items.xml" />
     <Content Include="Resources\JobsWithAbilities.xml" />
+    <Content Include="Resources\SecondaryAction.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

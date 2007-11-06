@@ -3287,7 +3287,7 @@
   </Class>
   <Class>
     <byte>A0</byte>
-    <skillset>A0</skillset>
+    <skillset>E0</skillset>
     <sprite>Generic</sprite>
     <name>Dark Knight</name>
     <command>Darkness</command>
@@ -3299,11 +3299,11 @@
     <move>3</move>
     <jump>3</jump>
     <cev>0</cev>
-    <hpc></hpc>
-    <mpc></mpc>
-    <spc></spc>
-    <pac></pac>
-    <mac></mac>
+    <hpc>12</hpc>
+    <mpc>20</mpc>
+    <spc>100</spc>
+    <pac>40</pac>
+    <mac>50</mac>
     <type>
       Generic
     </type>
@@ -3313,7 +3313,7 @@
     <name>Onion Knight</name>
     <command />
     <skillset>00</skillset>
-    <sprite>Ramza</sprite>
+    <sprite>Generic</sprite>
     <hpm>50</hpm>
     <mpm>50</mpm>
     <spm>94</spm>
@@ -3322,11 +3322,11 @@
     <move>3</move>
     <jump>3</jump>
     <cev>5</cev>
-    <hpc></hpc>
-    <mpc></mpc>
-    <spc></spc>
-    <pac></pac>
-    <mac></mac>
+    <hpc></hpc>2ff67a
+    <mpc></mpc>122d1b
+    <spc></spc>02640c
+    <pac></pac>02db18
+    <mac></mac>022d2c
     <type>
       Special
     </type>
@@ -3345,11 +3345,11 @@
     <move>4</move>
     <jump>4</jump>
     <cev>25</cev>
-    <hpc></hpc>
-    <mpc></mpc>
-    <spc></spc>
-    <pac></pac>
-    <mac></mac>
+    <hpc>10</hpc>
+    <mpc>13</mpc>
+    <spc>80</spc>
+    <pac>50</pac>
+    <mac>50</mac>
     <type>
       Special
     </type>
@@ -3368,11 +3368,11 @@
     <move>4</move>
     <jump>3</jump>
     <cev>10</cev>
-    <hpc></hpc>
-    <mpc></mpc>
-    <spc></spc>
-    <pac></pac>
-    <mac></mac>
+    <hpc>11</hpc>
+    <mpc>10</mpc>
+    <spc>95</spc>
+    <pac>50</pac>
+    <mac>48</mac>
     <type>
       Special
     </type>  
@@ -3384,11 +3384,11 @@
     <command>Fell Sword</command>
     <skillset>27</skillset>
     <sprite>Blank</sprite>
-    <hpm>359</hpm>17cbdc
-    <mpm>209</mpm>0adfb8
-    <spm>155</spm>01ee39
-    <pam>190</pam>0170f8
-    <mam>140</mam>01f5ee
+    <hpm>359</hpm>
+    <mpm>209</mpm>
+    <spm>155</spm>
+    <pam>190</pam>
+    <mam>140</mam>
     <move>3</move>
     <jump>3</jump>
     <cev>15</cev>

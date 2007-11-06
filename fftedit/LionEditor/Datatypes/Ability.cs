@@ -4,32 +4,29 @@ using System.Text;
 using System.ComponentModel;
 using System.Xml;
 using System.Resources;
+using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public struct Ability
+    public class Ability
     {
         public UInt16 Value;
         public string Name;
 
         public Ability( UInt16 value )
         {
-            Ability? i = AbilityList.Find(
+            Ability i = AbilityList.Find(
                 delegate( Ability j )
                 {
                     return j.Value == value;
                 } );
 
-            if( i.HasValue )
-            {
-                this.Value = i.Value.Value;
-                this.Name = i.Value.Name;
-            }
-            else
-            {
-                this.Value = 0;
-                this.Name = string.Empty;
-            }
+            this.Value = i.Value;
+            this.Name = i.Name;
+        }
+
+        private Ability()
+        {
         }
 
         public override string ToString()
@@ -58,8 +55,7 @@ namespace LionEditor
                 if( abilityList == null )
                 {
                     XmlDocument d = new XmlDocument();
-                    System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
-                    d.Load( a.GetManifestResourceStream( "Abilities" ) );
+                    d.LoadXml( Resources.Abilities );
 
                     XmlNodeList abilities = d.SelectNodes( "//Ability" );
 
@@ -67,9 +63,9 @@ namespace LionEditor
 
                     foreach( XmlNode i in abilities )
                     {
-                        Ability newItem;
+                        Ability newItem = new Ability();
                         newItem.Name = i.InnerText;
-                        newItem.Value = Convert.ToUInt16( i.Attributes["offset"].InnerText );
+                        newItem.Value = Convert.ToUInt16( i.Attributes["value"].InnerText );
 
                         abilityList.Add( newItem );
                     }

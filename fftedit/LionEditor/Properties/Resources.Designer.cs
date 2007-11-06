@@ -83,31 +83,31 @@ namespace LionEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Classes&gt;
         ///  &lt;Class&gt;
         ///    &lt;byte&gt;01&lt;/byte&gt;
+        ///    &lt;skillset&gt;19&lt;/skillset&gt;
+        ///    &lt;sprite&gt;Ramza, chapter 1&lt;/sprite&gt;
         ///    &lt;name&gt;Squire&lt;/name&gt;
         ///    &lt;command&gt;Mettle&lt;/command&gt;
+        ///    &lt;hpm&gt;125&lt;/hpm&gt;
+        ///    &lt;mpm&gt;105&lt;/mpm&gt;
+        ///    &lt;spm&gt;107&lt;/spm&gt;
+        ///    &lt;pam&gt;111&lt;/pam&gt;
+        ///    &lt;mam&gt;102&lt;/mam&gt;
+        ///    &lt;move&gt;4&lt;/move&gt;
+        ///    &lt;cev&gt;10&lt;/cev&gt;
+        ///    &lt;hpc&gt;11&lt;/hpc&gt;
+        ///    &lt;mpc&gt;11&lt;/mpc&gt;
+        ///    &lt;spc&gt;95&lt;/spc&gt;
+        ///    &lt;pac&gt;50&lt;/pac&gt;
+        ///    &lt;mac&gt;48&lt;/mac&gt;
+        ///    &lt;jump&gt;3&lt;/jump&gt;
+        ///    &lt;type&gt;Special&lt;/type&gt;
         ///  &lt;/Class&gt;
         ///  &lt;Class&gt;
-        ///    &lt;byte&gt;02&lt;/byte&gt;
-        ///    &lt;name&gt;Squire&lt;/name&gt;
-        ///    &lt;command&gt;Mettle&lt;/command&gt;
-        ///  &lt;/Class&gt;
-        ///  &lt;Class&gt;
-        ///    &lt;byte&gt;03&lt;/byte&gt;
-        ///    &lt;name&gt;Squire&lt;/name&gt;
-        ///    &lt;command&gt;Mettle&lt;/command&gt;
-        ///  &lt;/Class&gt;
-        ///  &lt;Class&gt;
-        ///    &lt;byte&gt;04&lt;/byte&gt;
-        ///    &lt;name&gt;Squire&lt;/name&gt;
-        ///    &lt;command&gt;Mettle&lt;/command&gt;
-        ///  &lt;/Class&gt;
-        ///  &lt;Class&gt;
-        ///    &lt;byte&gt;05&lt;/byte&gt;
-        ///    &lt;name&gt;Holy Knight&lt;/name&gt; [rest of string was truncated]&quot;;.
+        ///   [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Classes {
             get {
@@ -135,30 +135,46 @@ namespace LionEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;JobsWithAbilities&gt;
-        ///
-        ///  &lt;Job name=&quot;Squire&quot;&gt;
-        ///    &lt;bytes/&gt;
-        ///    &lt;action&gt;
-        ///      &lt;skill&gt;Focus&lt;/skill&gt;
-        ///      &lt;skill&gt;Rush&lt;/skill&gt;
-        ///      &lt;skill&gt;Stone&lt;/skill&gt;
-        ///      &lt;skill&gt;Salve&lt;/skill&gt;
-        ///      &lt;skill&gt;Tailwind&lt;/skill&gt;
-        ///      &lt;skill&gt;Chant&lt;/skill&gt;
-        ///    &lt;/action&gt;
-        ///    &lt;reaction&gt;
-        ///      &lt;skill&gt;Counter Tackle&lt;/skill&gt;
-        ///    &lt;/reaction&gt;
-        ///    &lt;support&gt;
-        ///      &lt;skill&gt;Equip Axes&lt;/skill&gt;
-        ///      &lt;skill&gt;Beastmaster&lt;/skill&gt;
-        ///      &lt;skill&gt;Defend&lt;/skill&gt;
-        ///      &lt;skill&gt;JP Boost&lt;/skill&gt;
-        /// [rest of string was truncated]&quot;;.
+        ///  &lt;Generic&gt;
+        ///    &lt;Job name=&quot;Squire&quot;&gt;
+        ///      &lt;!-- This is the byte to set for --&gt;
+        ///      &lt;bytes&gt;05&lt;/bytes&gt;
+        ///      &lt;command&gt;Fundaments&lt;/command&gt;
+        ///      &lt;action&gt;
+        ///        &lt;skill&gt;Focus&lt;/skill&gt;
+        ///        &lt;skill&gt;Rush&lt;/skill&gt;
+        ///        &lt;skill&gt;Stone&lt;/skill&gt;
+        ///        &lt;skill&gt;Salve&lt;/skill&gt;
+        ///        &lt;skill&gt;Tailwind&lt;/skill&gt;
+        ///        &lt;skill&gt;Chant&lt;/skill&gt;
+        ///      &lt;/action&gt;
+        ///      &lt;reaction&gt;
+        ///        &lt;skill&gt;Counter Tackle&lt;/skill&gt;
+        ///      &lt;/reaction&gt;
+        ///      &lt;support&gt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string JobsWithAbilities {
             get {
                 return ResourceManager.GetString("JobsWithAbilities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;SecondaryActions&gt;
+        ///  &lt;SecondaryAction byte=&quot;00&quot;&gt;Nothing&lt;/SecondaryAction&gt;
+        ///  &lt;SecondaryAction byte=&quot;01&quot;&gt;Attack&lt;/SecondaryAction&gt;
+        ///  &lt;SecondaryAction byte=&quot;02&quot;&gt;Defend&lt;/SecondaryAction&gt;
+        ///  &lt;SecondaryAction byte=&quot;03&quot;&gt;Reequip&lt;/SecondaryAction&gt;
+        ///  &lt;SecondaryAction byte=&quot;04&quot;&gt;Flee&lt;/SecondaryAction&gt;
+        ///  &lt;SecondaryAction byte=&quot;05&quot;&gt;Fundaments&lt;/SecondaryAction&gt;
+        ///  &lt;SecondaryAction byte=&quot;06&quot;&gt;Items&lt;/SecondaryAction&gt;
+        ///  &lt;SecondaryAction byte=&quot;07&quot;&gt;Arts of War&lt;/SecondaryAction&gt;
+        ///  &lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SecondaryAction {
+            get {
+                return ResourceManager.GetString("SecondaryAction", resourceCulture);
             }
         }
     }

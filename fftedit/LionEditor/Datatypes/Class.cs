@@ -2,11 +2,56 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using LionEditor.Properties;
 
-namespace LionEditor.Datatypes
+namespace LionEditor
 {
-    class Class
+    public class Class
     {
+        private static List<Class> classList;
+        public static List<Class> ClassList
+        {
+            get
+            {
+                if( classList == null )
+                {
+                    LoadClasses();
+                }
+                return classList;
+            }
+        }
+
+        private static Dictionary<byte, Class> classDict;
+        public static Dictionary<byte, Class> ClassDictionary
+        {
+            get
+            {
+                if( classDict == null )
+                {
+                    LoadClasses();
+                }
+
+                return classDict;
+            }
+        }
+
+        private static void LoadClasses()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml( Resources.Classes );
+
+            XmlNodeList classes = doc.SelectNodes( "//Class" );
+            classDict = new Dictionary<byte, Class>( classes.Count );
+            classList = new List<Class>( classes.Count );
+
+            foreach( XmlNode node in classes )
+            {
+                Class newClass = new Class( node );
+                classDict.Add( newClass.Byte, newClass );
+                classList.Add( newClass );
+            }
+        }
+
         byte num;
         public byte Byte
         {
@@ -151,7 +196,7 @@ namespace LionEditor.Datatypes
             return stats;
         }
 
-        public Class( byte value, string name, int hpModifier, int hpConstant, int mpModifier, int mpConstant, int spModifier, int spConstant,
+        private Class( byte value, string name, int hpModifier, int hpConstant, int mpModifier, int mpConstant, int spModifier, int spConstant,
             int paModifier, int paConstant, int maModifier, int maConstant, int move, int jump, int cev, string type, string command )
         {
             this.num = value;
@@ -173,7 +218,7 @@ namespace LionEditor.Datatypes
             this.command = command;
         }
 
-        public Class( XmlNode classNode )
+        private Class( XmlNode classNode )
         {
             this.num = byte.Parse( classNode.SelectSingleNode( "//byte" ).InnerXml, System.Globalization.NumberStyles.HexNumber );
             this.name = classNode.SelectSingleNode( "//name" ).InnerXml;
@@ -193,7 +238,6 @@ namespace LionEditor.Datatypes
             this.type = classNode.SelectSingleNode( "//type" ).InnerXml;
         }
 
-
         private int multiply( int rawVal, int multiplier )
         {
             int result = rawVal * multiplier / 1638400;
@@ -207,7 +251,7 @@ namespace LionEditor.Datatypes
 
         private int divide( int actualVal, int multiplier )
         {
-            return (actualVal * 1638400) / multiplier);
+            return (actualVal * 1638400) / multiplier;
         }
     
     

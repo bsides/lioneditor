@@ -15,6 +15,8 @@ namespace LionEditor
             FileStream stream = new FileStream( "testCharacter.hex", FileMode.Open );
             byte[] bytes = new byte[256];
             stream.Read( bytes, 0, 256 );
+            stream.Close();
+
             Character c = new Character( bytes );
 
             Assert.AreEqual( 0x80, c.SpriteSet );
@@ -66,6 +68,7 @@ namespace LionEditor
             FileStream stream = new FileStream( "testCharacter.hex", FileMode.Open );
             byte[] bytes = new byte[256];
             stream.Read( bytes, 0, 256 );
+            stream.Close();
             Character c = new Character( bytes );
             byte[] newBytes = c.ToByteArray();
 

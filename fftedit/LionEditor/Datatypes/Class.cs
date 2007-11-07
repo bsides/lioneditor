@@ -70,7 +70,7 @@ namespace LionEditor
         int mpm;
         public int MPModifier { get { return mpm; } }
 
-        public int ActualMP( int rawMP )
+        public int ActualMP( uint rawMP )
         {
             return multiply( rawMP, mpm );
         }
@@ -78,7 +78,7 @@ namespace LionEditor
         int hpm;
         public int HPModifier { get { return hpm; } }
 
-        public int ActualHP( int rawHP )
+        public int ActualHP( uint rawHP )
         {
             return multiply( rawHP, hpm );
         }
@@ -86,7 +86,7 @@ namespace LionEditor
         int spm;
         public int SPModifier { get { return spm; } }
 
-        public int ActualSP( int rawSP )
+        public int ActualSP( uint rawSP )
         {
             return multiply( rawSP, spm );
         }
@@ -94,7 +94,7 @@ namespace LionEditor
         int pam;
         public int PAModifier { get { return pam; } }
 
-        public int ActualPA( int rawPA )
+        public int ActualPA( uint rawPA )
         {
             return multiply( rawPA, pam );
         }
@@ -102,7 +102,7 @@ namespace LionEditor
         int mam;
         public int MAModifier { get { return mam; } }
 
-        public int ActualMA( int rawMA )
+        public int ActualMA( uint rawMA )
         {
             return multiply( rawMA, mam );
         }
@@ -157,19 +157,19 @@ namespace LionEditor
             stats stats = new stats();
 
             stats.rawHP += currentRawHP / (hpc + currentLevel);
-            stats.HP = multiply( stats.rawHP, hpm );
+            stats.HP = (int)multiply( (uint)stats.rawHP, hpm );
 
             stats.rawMP += currentRawMP / (mpc + currentLevel);
-            stats.MP = multiply( stats.rawMP, mpm );
+            stats.MP = (int)multiply( (uint)stats.rawMP, mpm );
 
             stats.rawMA += currentRawMA / (mac + currentLevel);
-            stats.MA = multiply( stats.rawMA, mam );
+            stats.MA = (int)multiply( (uint)stats.rawMA, mam );
 
             stats.rawPA += currentRawPA / (pac + currentLevel);
-            stats.PA = multiply( stats.rawPA, pam );
+            stats.PA = (int)multiply( (uint)stats.rawPA, pam );
 
             stats.rawSp += currentRawSp / (spc + currentLevel);
-            stats.Sp = multiply( stats.rawSp, spm );
+            stats.Sp = (int)multiply( (uint)stats.rawSp, spm );
 
             return stats;
         }
@@ -179,19 +179,19 @@ namespace LionEditor
             stats stats = new stats();
 
             stats.rawHP -= currentRawHP / (hpc + currentLevel-1);
-            stats.HP = multiply( stats.rawHP, hpm );
+            stats.HP = multiply( (uint)stats.rawHP, hpm );
 
             stats.rawMP -= currentRawMP / (mpc + currentLevel-1);
-            stats.MP = multiply( stats.rawMP, mpm );
+            stats.MP = multiply( (uint)stats.rawMP, mpm );
 
             stats.rawMA -= currentRawMA / (mac + currentLevel-1);
-            stats.MA = multiply( stats.rawMA, mam );
+            stats.MA = multiply( (uint)stats.rawMA, mam );
 
             stats.rawPA -= currentRawPA / (pac + currentLevel-1);
-            stats.PA = multiply( stats.rawPA, pam );
+            stats.PA = multiply( (uint)stats.rawPA, pam );
 
             stats.rawSp -= currentRawSp / (spc + currentLevel-1);
-            stats.Sp = multiply( stats.rawSp, spm );
+            stats.Sp = multiply( (uint)stats.rawSp, spm );
 
             return stats;
         }
@@ -224,6 +224,7 @@ namespace LionEditor
             this.name = classNode.SelectSingleNode( "name" ).InnerXml;
             this.command = classNode.SelectSingleNode( "command" ).InnerXml;
             this.hpm = Convert.ToInt32( classNode.SelectSingleNode( "hpm" ).InnerXml );
+            this.mpm = Convert.ToInt32( classNode.SelectSingleNode( "mpm" ).InnerXml );
             this.spm = Convert.ToInt32( classNode.SelectSingleNode( "spm" ).InnerXml );
             this.pam = Convert.ToInt32( classNode.SelectSingleNode( "pam" ).InnerXml );
             this.mam = Convert.ToInt32( classNode.SelectSingleNode( "mam" ).InnerXml );
@@ -238,22 +239,16 @@ namespace LionEditor
             this.type = classNode.SelectSingleNode( "type" ).InnerXml;
         }
 
-        private int multiply( int rawVal, int multiplier )
+        private int multiply( uint rawVal, int multiplier )
         {
-            int result = rawVal * multiplier / 1638400;
+            uint result = (uint)(rawVal * multiplier / 1638400);
             if( result < 1 )
             {
                 result = 1;
             }
 
-            return result;
+            return (int)result;
         }
-
-        private int divide( int actualVal, int multiplier )
-        {
-            return (actualVal * 1638400) / multiplier;
-        }
-    
     
     }
 }

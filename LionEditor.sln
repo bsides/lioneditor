@@ -6,7 +6,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kernel", "kernel", "{D63D8F75-18B1-4844-B0BD-8DD8852EBEC3}"
 	ProjectSection(SolutionItems) = preProject
 		kernel\main.c = kernel\main.c
-		kernel\main.h = kernel\main.h
 		kernel\Makefile = kernel\Makefile
 	EndProjectSection
 EndProject

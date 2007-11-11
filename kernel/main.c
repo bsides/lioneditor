@@ -1,6 +1,22 @@
-//////////////////////////////////////////////////
-//* Custom Firmware Extender For 3.71 Firmware *//
-//////////////////////////////////////////////////
+/*
+	Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+	FindProc() adapted from code Copyright (c) 2005 James F <tyranid@gmail.com>
+
+	This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include <psptypes.h>
 #include <pspkernel.h>
@@ -21,18 +37,6 @@ PSP_MODULE_INFO("FFTSaveHook", 0x1000, 1, 1);
 
 PSP_MAIN_THREAD_ATTR(0);
 PSP_MAIN_THREAD_STACK_SIZE_KB(0);
-
-/* 
-char buff[512];
-
-SceUID fd;
-
-#define printf(format, args...) \
-	sprintf(buff, format, ## args); \
-	fd = sceIoOpen("ms0:/hook-log.txt", PSP_O_WRONLY | PSP_O_CREAT | PSP_O_APPEND, 0777); \
-	sceIoWrite(fd, buff, strlen(buff)); \
-	sceIoClose(fd); 
-*/
 
 // Hooking routine by FreePlay
 #define J_OPCODE 0x08000000
@@ -61,7 +65,7 @@ u32 sceUtilitySavedataShutdownStart_bd;
 
 SceUtilitySavedataParam* currentParams = NULL;
 
-
+// Count the number of bits in a byte
 int countBits(unsigned char b)
 {
 	int count = 0;
@@ -72,6 +76,9 @@ int countBits(unsigned char b)
 	return count;
 }
 
+// Calculate the checksum for a FFT savegame
+// data should be 0x2A3C bytes long
+// csum should be 11 bytes long
 void calcChecksum(unsigned char* data, unsigned char* csum)
 {
 	int curbyte = 0;
@@ -99,6 +106,10 @@ void calcChecksum(unsigned char* data, unsigned char* csum)
 	}
 }
 
+// Calculates a checksum and adds it to the game
+// If adding the checksum to the game changes the checksum, 
+// it resolves the error
+// savegame should be 0x2A3C bytes long
 void addChecksum(unsigned char* savegame)
 {
 	unsigned char csum[10];
@@ -125,6 +136,8 @@ void addChecksum(unsigned char* savegame)
 	return;
 }
 
+// Fixes the checksums on all 15 savegames
+// data should be at least 162180 bytes long
 void fixChecksums(unsigned char* data)
 {
 	int i = 0;
@@ -134,6 +147,8 @@ void fixChecksums(unsigned char* data)
 	}
 }
 
+// Looks for a particular module in the list of currently loaded modules, 
+// and returns its UID
 static u32 FindProc(const char* szMod, const char* szLib, u32 nid) 
 {
 	// This function based on PSPLink's code
@@ -147,8 +162,6 @@ static u32 FindProc(const char* szMod, const char* szLib, u32 nid)
         printf("Failed to find mod '%s'\n", szMod); 
         return 0; 
     } 
-
-    //SceLibraryEntryTable* entP = (SceLibraryEntryTable*)modP->ent_top; 
 
 	entTab = modP->ent_top;
 	entLen = modP->ent_size;
@@ -191,6 +204,7 @@ void ClearCaches()
 	sceKernelDcacheWritebackInvalidateAll();
 }
 
+// Hooks sceKernelStartModule so we can listen for when sceUtility is started
 void set_startModulehook()
 {
    sceKernelStartModule_ptr = (void *)FindProc("sceModuleManager", "ModuleMgrForUser", 0x50F0C1EC);
@@ -200,6 +214,7 @@ void set_startModulehook()
    ClearCaches();
 }
 
+// Hooks sceUtilitySavedata* functions so we can inject/extract our decrypted data
 int set_savehook()
 {
 	sceUtilitySavedataInitStart_ptr = (void*)FindProc("sceUtility_Driver", "sceUtility", 0x50C4CD57);
@@ -234,7 +249,9 @@ int set_savehook()
 	return 0;
 }
 
-
+// Overload for sceKernelStartModule
+// If sceUtility gets started, it will add hooks to the savedata functions
+// and release the hook on sceKernelStartModule
 int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int* status, SceKernelSMOption* options)
 {
 	int k1 = pspSdkSetK1(0);
@@ -267,6 +284,7 @@ int sceKernelStartModule_patched(SceUID modid, SceSize argsize, void* argp, int*
 	return ret;
 }
 
+// Writes data of length size to path
 int writeDataToFile(const char* path, void* data, int size)
 {
 	int fd = sceIoOpen(path, PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);
@@ -293,6 +311,7 @@ int writeDataToFile(const char* path, void* data, int size)
 	return fd;
 }
 
+// Reads data of length size from path
 int readDataFromFile(const char* path, void* data, int size)
 {
 	int fd = sceIoOpen(path, PSP_O_RDONLY, 0777);
@@ -319,7 +338,7 @@ int readDataFromFile(const char* path, void* data, int size)
 	return fd;
 }
 
-
+// Create a directory on the filesystem
 int makeDecryptedDirectory(const char* dir)
 {
 	int d = sceIoDopen(PATH("decryptedSaves"));
@@ -348,6 +367,7 @@ int makeDecryptedDirectory(const char* dir)
 	return d;
 }
 
+// When the game tries to save, grab its data and save it somewhere else on the memory stick
 int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 {
 	printf("saveDecryptedSavedata\n");
@@ -386,6 +406,7 @@ int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 	return 0;
 }
 
+// When a game tries to load a save, inject our own data if available
 int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 {
 	char path[256] = { '\0' };
@@ -429,6 +450,9 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 	return 0;
 }
 
+// Overload for sceUtilitySavedataInitStart
+// If the game running is not one we're interested in (US/PAL/JAP versions of FFT)
+// it removes the hooks to the savedata functions 
 int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 {
 	int badgame = 0;
@@ -518,6 +542,9 @@ int sceUtilitySavedataGetStatus_patched(void)
 	return ret;
 }
 
+// Main thread
+// Tries to hook savedata functions, if fails, assumes they haven't been loaded yet
+// and hooks sceKernelStartModule to try again when they are loaded
 int threadMain(SceSize args, void *argp)
 {
 	if (set_savehook() == -1)

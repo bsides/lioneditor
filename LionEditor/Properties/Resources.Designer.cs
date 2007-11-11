@@ -118,13 +118,14 @@ namespace LionEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;Items&gt;
+        ///  &lt;Item offset=&quot;255&quot; type=&quot;None&quot; subtype=&quot;None&quot;&gt;Nothing&lt;/Item&gt;
         ///  &lt;Item offset=&quot;0&quot; type=&quot;None&quot; subtype=&quot;None&quot;&gt;Nothing&lt;/Item&gt;
         ///  &lt;Item offset=&quot;1&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Dagger&lt;/Item&gt;
         ///  &lt;Item offset=&quot;2&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Mythril Knife&lt;/Item&gt;
         ///  &lt;Item offset=&quot;3&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Blind Knife&lt;/Item&gt;
         ///  &lt;Item offset=&quot;4&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Mage Masher&lt;/Item&gt;
         ///  &lt;Item offset=&quot;5&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Platinum Dagger&lt;/Item&gt;
-        ///  &lt;Item offset=&quot;6&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Main Gauche&lt;/Item [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Items {
             get {

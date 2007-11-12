@@ -55,8 +55,8 @@ namespace LionEditor
             Assert.AreEqual( "Mirror Mail", c.Body.Name );
             Assert.AreEqual( "Japa Mala", c.Accessory.Name );
             Assert.AreEqual( "Runeblade", c.RightHand.Name );
-            Assert.AreEqual( "Nothing", c.RightShield.Name );
-            Assert.AreEqual( "Nothing", c.LeftHand.Name );
+            Assert.AreEqual( "<Nothing>", c.RightShield.Name );
+            Assert.AreEqual( "<Nothing>", c.LeftHand.Name );
             Assert.AreEqual( "Crystal Shield", c.LeftShield.Name );
             Assert.AreEqual( 50, c.Experience );
             Assert.AreEqual( 77, c.Level );

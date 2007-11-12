@@ -18,7 +18,7 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Abilities>
-  <Ability value="0"></Ability>
+  <Ability value="0">&lt;Nothing&gt;</Ability>
   <Ability value="1">Cure</Ability>
   <Ability value="2">Cura</Ability>
   <Ability value="3">Curaga</Ability>
@@ -58,7 +58,7 @@
   <Ability value="37">Immobilize</Ability>
   <Ability value="38">Float</Ability>
   <Ability value="39">Reflect</Ability>
-  <Ability value="40"></Ability>
+  <Ability value="40">&lt;Unknown&gt;</Ability>
   <Ability value="41">Quick</Ability>
   <Ability value="42">Gravity</Ability>
   <Ability value="43">Graviga</Ability>
@@ -461,7 +461,7 @@
   <Ability value="440">Reflect</Ability>
   <Ability value="441">Auto-Potion</Ability>
   <Ability value="442">Counter</Ability>
-  <Ability value="443"></Ability>
+  <Ability value="443">&lt;Unknown&gt;</Ability>
   <Ability value="444">Cup of Life</Ability>
   <Ability value="445">Mana Shield</Ability>
   <Ability value="446">Soulbind</Ability>
@@ -499,7 +499,7 @@
   <Ability value="478">Beastmaster</Ability>
   <Ability value="479">Defend</Ability>
   <Ability value="480">Reequip</Ability>
-  <Ability value="481"></Ability>
+  <Ability value="481">&lt;Unknown&gt;</Ability>
   <Ability value="482">Swiftness</Ability>
   <Ability value="483">CT 0</Ability>
   <Ability value="484">HP Boost</Ability>
@@ -515,7 +515,7 @@
   <Ability value="494">Manafont</Ability>
   <Ability value="495">Accrue EXP</Ability>
   <Ability value="496">Accrue JP</Ability>
-  <Ability value="497"></Ability>
+  <Ability value="497">&lt;Unknown&gt;</Ability>
   <Ability value="498">Teleport</Ability>
   <Ability value="499">Master Teleportation</Ability>
   <Ability value="500">Ignore Weather</Ability>
@@ -528,6 +528,6 @@
   <Ability value="507">Fly</Ability>
   <Ability value="508">Stealth</Ability>
   <Ability value="509">Treasure Hunter</Ability>
-  <Ability value="510"></Ability>
-  <Ability value="511"></Ability>
+  <Ability value="510">&lt;Unknown&gt;</Ability>
+  <Ability value="511">&lt;Unknown&gt;</Ability>
 </Abilities>

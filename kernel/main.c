@@ -423,6 +423,7 @@ int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 
 	fixChecksums(params->dataBuf);
 
+	// I don't think this stuff needs to be done
 	if (params->icon0FileData.buf)
 	{
 		sprintf(path, PATH("decryptedSaves/%s%s/ICON0.PNG"), params->gameName, params->saveName);

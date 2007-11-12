@@ -27,7 +27,7 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public class Ability
+    public class Ability:IComparable
     {
         public UInt16 Value;
         public string Name;
@@ -50,7 +50,7 @@ namespace LionEditor
 
         public override string ToString()
         {
-            return this.Name;
+            return string.Format( "{0} ({1:X03})", this.Name, this.Value );
         }
 
         /// <summary>
@@ -61,6 +61,12 @@ namespace LionEditor
         {
             return new byte[] { (byte)(Value & 0xFF), (byte)((Value & 0xFF00) >> 8) };
         }
+
+        public string String
+        {
+            get { return this.ToString(); }
+        }
+
 
 
         #region Static members
@@ -88,10 +94,28 @@ namespace LionEditor
 
                         abilityList.Add( newItem );
                     }
+
+                    abilityList.Sort();
                 }
 
-                return abilityList;
+
+                return new List<Ability>(abilityList);
             }
+        }
+
+        #endregion
+
+        #region IComparable Members
+
+        public int CompareTo( object obj )
+        {
+            Ability a = obj as Ability;
+            if( a != null )
+            {
+                return this.ToString().CompareTo( a.ToString() );
+            }
+
+            return -1;
         }
 
         #endregion

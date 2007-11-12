@@ -27,7 +27,7 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public struct Item
+    public class Item:IComparable
     {
         public ItemType Type;
         public ItemSubType SubType;
@@ -37,31 +37,30 @@ namespace LionEditor
 
         public Item( UInt16 offset )
         {
-            Item? i = ItemList.Find(
+            Item i = ItemList.Find(
                 delegate( Item j )
                 {
                     return j.Offset == offset;
                 } );
 
-            if( i.HasValue )
-            {
-                this.Type = i.Value.Type;
-                this.SubType = i.Value.SubType;
-                this.Name = i.Value.Name;
-                this.Offset = offset;
-            }
-            else
-            {
-                this.Type = ItemType.Accessory;
-                this.SubType = ItemSubType.Armguard;
-                this.Name = string.Empty;
-                this.Offset = 0;
-            }
+            this.Type = i.Type;
+            this.SubType = i.SubType;
+            this.Name = i.Name;
+            this.Offset = offset;
+        }
+
+        private Item()
+        {
+        }
+
+        public string String
+        {
+            get { return this.ToString(); }
         }
 
         public override string ToString()
         {
-            return this.Name;
+            return string.Format( "{0} ({1:X03})", this.Name, this.Offset );
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace LionEditor
 
                     foreach( XmlNode i in items )
                     {
-                        Item newItem;
+                        Item newItem = new Item();
                         newItem.Name = i.InnerText;
                         newItem.Offset = Convert.ToUInt16( i.Attributes["offset"].InnerText );
                         newItem.Type = (ItemType)Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
@@ -100,9 +99,11 @@ namespace LionEditor
 
                         itemList.Add( newItem );
                     }
+
+                    itemList.Sort();
                 }
 
-                return itemList;
+                return new List<Item>(itemList);
             }
         }
 
@@ -135,6 +136,21 @@ namespace LionEditor
             return fullList;
         }
 
+
+        #endregion
+
+        #region IComparable Members
+
+        public int CompareTo( object obj )
+        {
+            Item o = obj as Item;
+            if( obj != null )
+            {
+                return (this.ToString().CompareTo( o.ToString() ));
+            }
+
+            return -1;
+        }
 
         #endregion
     }

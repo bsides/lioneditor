@@ -18,8 +18,8 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Items>
-  <Item offset="255" type="None" subtype="None">Nothing</Item>
-  <Item offset="0" type="None" subtype="None">Nothing</Item>
+  <Item offset="255" type="None" subtype="None">&lt;Nothing&gt;</Item>
+  <Item offset="0" type="None" subtype="None">&lt;Nothing&gt;</Item>
   <Item offset="1" type="Hand" subtype="Knife">Dagger</Item>
   <Item offset="2" type="Hand" subtype="Knife">Mythril Knife</Item>
   <Item offset="3" type="Hand" subtype="Knife">Blind Knife</Item>

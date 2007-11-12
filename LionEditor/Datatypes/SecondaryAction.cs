@@ -25,7 +25,7 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public class SecondaryAction
+    public class SecondaryAction:IComparable
     {
         private static List<SecondaryAction> actionList;
 
@@ -38,7 +38,7 @@ namespace LionEditor
                     LoadActions();
                 }
 
-                return actionList;
+                return new List<SecondaryAction>(actionList);
             }
         }
 
@@ -52,7 +52,7 @@ namespace LionEditor
                     LoadActions();
                 }
 
-                return actionDict;
+                return new Dictionary<byte,SecondaryAction>(actionDict);
             }
         }
 
@@ -71,6 +71,8 @@ namespace LionEditor
                 actionList.Add( action );
                 actionDict.Add( action.Byte, action );
             }
+
+            actionList.Sort();
         }
 
         private byte _byte;
@@ -80,6 +82,12 @@ namespace LionEditor
         {
             get { return _byte; }
         }
+
+        public string String
+        {
+            get { return this.ToString(); }
+        }
+
 
         public string Name
         {
@@ -91,5 +99,25 @@ namespace LionEditor
             this._byte = b;
             this.name = name;
         }
+
+        public override string ToString()
+        {
+            return string.Format( "{0} ({1:X02})", this.Name, this.Byte );
+        }
+
+        #region IComparable Members
+
+        public int CompareTo( object obj )
+        {
+            SecondaryAction a = obj as SecondaryAction;
+            if( a != null )
+            {
+                return this.ToString().CompareTo( a.ToString() );
+            }
+
+            return -1;
+        }
+
+        #endregion
     }
 }

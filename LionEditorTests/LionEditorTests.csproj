@@ -47,6 +47,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="FFTA.SYS">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="testCharacter.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

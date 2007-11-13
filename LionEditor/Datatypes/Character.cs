@@ -58,11 +58,12 @@ namespace LionEditor
             private set { m_index = value; }
         }
 
-        private string m_name;
+        //private string m_name;
+        private byte[] rawName = new byte[15];
         public string Name
         {
-        	get { return m_name; }
-            private set { m_name = value; }
+            get { return DecodeName( rawName, 0 ); }
+            set { EncodeName( value, rawName, 0 ); }
         }
 
         private Class m_job;
@@ -305,82 +306,93 @@ namespace LionEditor
         /// <param name="charData"></param>
         public Character( byte[] charData )
         {
-            SpriteSet = charData[0];
-            Index = charData[1];
-            Job = Class.ClassDictionary[charData[2]];
-            UnknownOffset03 = charData[3];
-            Gender = (Gender)charData[4];
-            UnknownOffset05 = charData[5];
-            ZodiacSign = (Zodiac)charData[6];
-
-            SecondaryAction = SecondaryAction.ActionDictionary[charData[7]];
-
-            ReactAbility = new Ability( (ushort)((charData[9] << 8) + charData[8]) );
-            SupportAbility = new Ability( (ushort)((charData[11] << 8) + charData[10]) );
-            MovementAbility = new Ability( (ushort)((charData[13] << 8) + charData[12]) );
-            ushort I = charData[17];
-            ushort J = (ushort)(I << 8);
-            ushort K = charData[16];
-            ushort L = (ushort)(J + K);
-            Head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
-            Body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
-            Accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
-            RightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
-            RightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
-            LeftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
-            LeftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
-            Experience = charData[28];
-            Level = charData[29];
-            Brave = charData[30];
-            Faith = charData[31];
-
-            RawHP = (uint)(((uint)charData[34] << 16) + ((uint)charData[33] << 8) + (uint)charData[32]);
-            RawMP = (uint)(((uint)charData[37] << 16) + ((uint)charData[36] << 8) + (uint)charData[35]);
-            RawSP = (uint)(((uint)charData[40] << 16) + ((uint)charData[39] << 8) + (uint)charData[38]);
-            RawPA = (uint)(((uint)charData[43] << 16) + ((uint)charData[42] << 8) + (uint)charData[41]);
-            RawMA = (uint)(((uint)charData[46] << 16) + ((uint)charData[45] << 8) + (uint)charData[44]);
-
-            JobsUnlocked[0] = charData[47];
-            JobsUnlocked[1] = charData[48];
-            JobsUnlocked[2] = charData[49];
-
-            for( int i = 0; i < 22; i++ )
+            try
             {
-                for( int j = 0; j < 3; j++ )
+                SpriteSet = charData[0];
+                Index = charData[1];
+                Job = Class.ClassDictionary[charData[2]];
+                UnknownOffset03 = charData[3];
+                Gender = (Gender)charData[4];
+                UnknownOffset05 = charData[5];
+                ZodiacSign = (Zodiac)charData[6];
+
+                SecondaryAction = SecondaryAction.ActionDictionary[charData[7]];
+
+                ReactAbility = new Ability( (ushort)((charData[9] << 8) + charData[8]) );
+                SupportAbility = new Ability( (ushort)((charData[11] << 8) + charData[10]) );
+                MovementAbility = new Ability( (ushort)((charData[13] << 8) + charData[12]) );
+
+                Head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
+                Body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
+                Accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
+                RightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
+                RightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
+                LeftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
+                LeftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
+                Experience = charData[28];
+                Level = charData[29];
+                Brave = charData[30];
+                Faith = charData[31];
+
+                RawHP = (uint)(((uint)charData[34] << 16) + ((uint)charData[33] << 8) + (uint)charData[32]);
+                RawMP = (uint)(((uint)charData[37] << 16) + ((uint)charData[36] << 8) + (uint)charData[35]);
+                RawSP = (uint)(((uint)charData[40] << 16) + ((uint)charData[39] << 8) + (uint)charData[38]);
+                RawPA = (uint)(((uint)charData[43] << 16) + ((uint)charData[42] << 8) + (uint)charData[41]);
+                RawMA = (uint)(((uint)charData[46] << 16) + ((uint)charData[45] << 8) + (uint)charData[44]);
+
+                JobsUnlocked[0] = charData[47];
+                JobsUnlocked[1] = charData[48];
+                JobsUnlocked[2] = charData[49];
+
+                for( int i = 0; i < 22; i++ )
                 {
-                    SkillsUnlocked[i, j] = charData[50 + 3 * i + j];
+                    for( int j = 0; j < 3; j++ )
+                    {
+                        SkillsUnlocked[i, j] = charData[50 + 3 * i + j];
+                    }
+                }
+
+                for( int i = 0; i < 12; i++ )
+                {
+                    JobLevels[i] = charData[0x74 + i];
+                }
+
+                for( int i = 0; i < 23; i++ )
+                {
+                    JP[i] = (ushort)((ushort)(charData[0x80 + 2 * i + 1] << 8) + charData[0x80 + 2 * i]);
+                }
+                for( int i = 0; i < 23; i++ )
+                {
+                    TotalJP[i] = (ushort)((ushort)(charData[0xAE + 2 * i + 1] << 8) + charData[0xAE + 2 * i]);
+                }
+
+                for( int i = 0; i < 15; i++ )
+                {
+                    rawName[i] = charData[0xDC + i];
+                }
+
+                for( int k = 0; k < 21; k++ )
+                {
+                    AfterName[k] = charData[0xEB + k];
                 }
             }
-
-            for (int i = 0; i < 12; i++)
+            catch( Exception )
             {
-                JobLevels[i] = charData[0x74 + i];
+                throw new BadCharacterDataException();
             }
+        }
 
-            for( int i = 0; i < 23; i++ )
-            {
-                JP[i] = (ushort)((ushort)(charData[0x80 + 2 * i + 1] << 8) + charData[0x80 + 2 * i]);
-            }
-            for( int i = 0; i < 23; i++ )
-            {
-                TotalJP[i] = (ushort)((ushort)(charData[0xAE + 2 * i + 1] << 8) + charData[0xAE + 2 * i]);
-            }
-
+        public static string DecodeName( byte[] source, int start )
+        {
             StringBuilder sb = new StringBuilder();
-
-            int k = 0xDC;
-            while( charData[k] != 0xFE )
+            int k = start;
+            while (source[k] != 0xFE)
             {
-                sb.Append( characterMap[charData[k]] );
+                sb.Append(characterMap[source[k]]);
                 k++;
             }
 
-            Name = sb.ToString();
-
-            for( k = 0; k < 21; k++ )
-            {
-                AfterName[k] = charData[0xEB + k];
-            }
+            return sb.ToString();
         }
 
 
@@ -470,24 +482,34 @@ namespace LionEditor
                 result[0xAE + 2 * i + 1] = (byte)((TotalJP[i] & 0xFF00) >> 8);
             }
 
-            List<char> charList = new List<char>( characterMap );
-
-            int k = 0xDC;
-            foreach( char c in Name )
+            for( int i = 0; i < 15; i++ )
             {
-                result[k] = (byte)(charList.IndexOf( c ) & 0xFF);
-                k++;
+                result[0xDC + i] = rawName[i];
             }
-            result[k] = 0xFE;
 
-            for( k = 0; k < 21; k++ )
+            for( int k = 0; k < 21; k++ )
             {
                 result[0xEB + k] = AfterName[k];
             }
 
             return result;
         }
+
+        public static void EncodeName( string name, byte[] destination, int start )
+        {
+            int i = 0;
+            List<char> charList = new List<char>( characterMap );
+
+            foreach( char c in name )
+            {
+                destination[i + start] = (byte)(charList.IndexOf( c ) & 0xFF);
+                i++;
+            }
+            destination[i + start] = 0xFE;
+        }
     }
 
-
+    public class BadCharacterDataException : Exception
+    {
+    }
 }

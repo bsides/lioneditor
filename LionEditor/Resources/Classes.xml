@@ -19,6 +19,27 @@
 -->
 <Classes>
   <Class>
+    <byte>0</byte>
+    <skillset>0</skillset>
+    <sprite>None</sprite>
+    <name>None</name>
+    <command>None</command>
+    <hpm>0</hpm>
+    <mpm>0</mpm>
+    <spm>0</spm>
+    <pam>0</pam>
+    <mam>0</mam>
+    <move>0</move>
+    <cev>0</cev>
+    <hpc>0</hpc>
+    <mpc>0</mpc>
+    <spc>0</spc>
+    <pac>0</pac>
+    <mac>0</mac>
+    <jump>0</jump>
+    <type>Special</type>
+  </Class>
+  <Class>
     <byte>01</byte>
     <skillset>19</skillset>
     <sprite>Ramza, chapter 1</sprite>

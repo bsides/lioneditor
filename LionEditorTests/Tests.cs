@@ -97,5 +97,19 @@ namespace LionEditor
             }
             Assert.AreEqual( bytes, newBytes );
         }
+
+        [Test]
+        public void ShouldConvertBetweenObjectAndBytes()
+        {
+            FileStream stream = new FileStream( "FFTA.SYS", FileMode.Open );
+            byte[] bytes = new byte[0x2A3C];
+            stream.Read( bytes, 0, 0x2A3C );
+            stream.Close();
+
+            Savefile s = new Savefile( bytes );
+            byte[] newBytes = s.ToByteArray();
+
+            Assert.AreEqual( bytes, newBytes );
+        }
     }
 }

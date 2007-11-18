@@ -60,8 +60,8 @@ namespace LionEditor
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.characterEditor1 = new CharacterEditor();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             label1 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -124,7 +124,7 @@ namespace LionEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add( this.tabControl1 );
-            this.splitContainer1.Size = new System.Drawing.Size( 646, 0 );
+            this.splitContainer1.Size = new System.Drawing.Size( 646, 496 );
             this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
@@ -167,7 +167,7 @@ namespace LionEditor
             this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size( 646, 25 );
+            this.tabControl1.Size = new System.Drawing.Size( 646, 470 );
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -176,7 +176,7 @@ namespace LionEditor
             this.tabPage1.Location = new System.Drawing.Point( 4, 22 );
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding( 3 );
-            this.tabPage1.Size = new System.Drawing.Size( 638, 0 );
+            this.tabPage1.Size = new System.Drawing.Size( 638, 444 );
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -194,8 +194,8 @@ namespace LionEditor
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add( this.characterEditor1 );
-            this.splitContainer3.Size = new System.Drawing.Size( 632, 0 );
-            this.splitContainer3.SplitterDistance = 121;
+            this.splitContainer3.Size = new System.Drawing.Size( 632, 438 );
+            this.splitContainer3.SplitterDistance = 120;
             this.splitContainer3.TabIndex = 0;
             // 
             // checkedListBox1
@@ -204,35 +204,35 @@ namespace LionEditor
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point( 0, 0 );
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size( 121, 4 );
+            this.checkedListBox1.Size = new System.Drawing.Size( 120, 424 );
             this.checkedListBox1.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point( 4, 22 );
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding( 3 );
-            this.tabPage2.Size = new System.Drawing.Size( 638, 0 );
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // characterEditor1
             // 
             this.characterEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.characterEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.characterEditor1.Name = "characterEditor1";
-            this.characterEditor1.Size = new System.Drawing.Size( 507, 0 );
+            this.characterEditor1.Size = new System.Drawing.Size( 508, 438 );
             this.characterEditor1.TabIndex = 0;
             // 
-            // Form1
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point( 4, 22 );
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding( 3 );
+            this.tabPage2.Size = new System.Drawing.Size( 638, 444 );
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // LionEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 646, 0 );
+            this.ClientSize = new System.Drawing.Size( 646, 496 );
             this.Controls.Add( this.splitContainer1 );
             this.Menu = this.mainMenu1;
-            this.Name = "Form1";
+            this.Name = "LionEditor";
             this.Text = "Form1";
             this.splitContainer1.Panel1.ResumeLayout( false );
             this.splitContainer1.Panel2.ResumeLayout( false );

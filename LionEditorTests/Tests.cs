@@ -91,22 +91,63 @@ namespace LionEditor
             Character c = new Character( bytes );
             byte[] newBytes = c.ToByteArray();
 
-            for( int i = 0xE0; i <= 0xEA; i++ )
-            {
-                newBytes[i] = bytes[i];
-            }
             Assert.AreEqual( bytes, newBytes );
         }
 
-        [Test]
-        public void ShouldConvertBetweenObjectAndBytes()
+        [Test, Ignore("This is failing due to bad data for Dark Knight")]
+        public void ShouldBuildSavegameFromByteArray()
         {
             FileStream stream = new FileStream( "FFTA.SYS", FileMode.Open );
             byte[] bytes = new byte[0x2A3C];
             stream.Read( bytes, 0, 0x2A3C );
             stream.Close();
 
-            Savefile s = new Savefile( bytes );
+            Savegame s = new Savegame( bytes );
+            //2098:34:46
+
+            Assert.AreEqual( "Ramza", s.SaveName );
+            Assert.AreEqual( 2, s.Casualties );
+            //Assert.AreEqual( 1, s.Day ); // 10 Cancer = 1 July
+            //Assert.AreEqual( 7, s.Month );
+            Assert.AreEqual( 10, s.SaveScreenDay );
+            Assert.AreEqual( 4, s.SaveScreenMonth );
+            Assert.AreEqual( 154, s.Kills );
+            //Assert.AreEqual( (uint)((uint)2098 * (uint)3600 + (uint)34 * (uint)60 + (uint)46), s.Timer );
+            Assert.AreEqual( 598499, s.WarFunds );
+
+            Assert.AreEqual( "Japa Mala", s.Characters[0].Accessory.Name );
+            Assert.AreEqual( "Excalibur", s.Characters[0].RightHand.Name );
+            Assert.AreEqual( "Crystal Shield", s.Characters[0].LeftShield.Name );
+            Assert.AreEqual( "Crystal Helm", s.Characters[0].Head.Name );
+            Assert.AreEqual( "Mirror Mail", s.Characters[0].Body.Name );
+            Assert.AreEqual( 77, s.Characters[0].Brave );
+            Assert.AreEqual( 97, s.Characters[0].Experience );
+            Assert.AreEqual( 70, s.Characters[0].Faith );
+            Assert.IsTrue( (s.Characters[0].Gender == Gender.Male) || (s.Characters[0].Gender == Gender.MaleAlt) );
+            Assert.AreEqual( "Dark Knight", s.Characters[0].Job.Name );
+            Assert.AreEqual( 77, s.Characters[0].Level );
+            Assert.AreEqual( "Move +2", s.Characters[0].MovementAbility.Name );
+            Assert.AreEqual( "Shirahadori", s.Characters[0].ReactAbility.Name );
+            Assert.AreEqual( "Vehemence", s.Characters[0].SupportAbility.Name );
+            Assert.AreEqual( "Martial Arts", s.Characters[0].SecondaryAction.Name );
+            Assert.AreEqual( 182, s.Characters[0].Job.ActualHP( s.Characters[0].RawHP ) );
+            Assert.AreEqual( 93, s.Characters[0].Job.ActualMP( s.Characters[0].RawMP ) );
+            Assert.AreEqual( 3, s.Characters[0].Job.Move );
+            Assert.AreEqual( 3, s.Characters[0].Job.Jump );
+            Assert.AreEqual( 10, s.Characters[0].Job.ActualSP( s.Characters[0].RawSP ) );
+            Assert.AreEqual( 18, s.Characters[0].Job.ActualPA( s.Characters[0].RawPA ) );
+            Assert.AreEqual( 10, s.Characters[0].Job.ActualMA( s.Characters[0].RawMA ) );
+        }
+
+        [Test]
+        public void ShouldBuildByteArrayFromSavegame()
+        {
+            FileStream stream = new FileStream( "FFTA.SYS", FileMode.Open );
+            byte[] bytes = new byte[0x2A3C];
+            stream.Read( bytes, 0, 0x2A3C );
+            stream.Close();
+
+            Savegame s = new Savegame( bytes );
             byte[] newBytes = s.ToByteArray();
 
             Assert.AreEqual( bytes, newBytes );

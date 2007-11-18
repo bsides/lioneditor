@@ -260,7 +260,7 @@ namespace LionEditor
 
         private int multiply( uint rawVal, int multiplier )
         {
-            uint result = (uint)(rawVal * multiplier / 1638400);
+            uint result = (uint)(rawVal * multiplier / 1638400 );
             if( result < 1 )
             {
                 result = 1;
@@ -268,6 +268,10 @@ namespace LionEditor
 
             return (int)result;
         }
-    
+
+        public override string ToString()
+        {
+            return string.Format( "{0} ({1:X02})", Name, Byte );
+        }
     }
 }

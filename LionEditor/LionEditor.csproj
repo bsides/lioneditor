@@ -45,7 +45,9 @@
     <Compile Include="Datatypes\Ability.cs" />
     <Compile Include="Datatypes\Character.cs" />
     <Compile Include="Datatypes\Class.cs" />
-    <Compile Include="Datatypes\Savefile.cs" />
+    <Compile Include="Datatypes\Location.cs" />
+    <None Include="Datatypes\Proposition.cs" />
+    <Compile Include="Datatypes\Savegame.cs" />
     <Compile Include="Datatypes\SecondaryAction.cs" />
     <Compile Include="LionEditor.cs">
       <SubType>Form</SubType>

@@ -3334,6 +3334,7 @@
     <sprite>Generic</sprite>
     <name>Dark Knight</name>
     <command>Darkness</command>
+    <!-- TODO: check these values -->
     <hpm>80</hpm>
     <mpm>90</mpm>
     <spm>100</spm>

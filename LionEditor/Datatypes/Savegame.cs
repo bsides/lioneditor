@@ -24,12 +24,11 @@ using System.Text;
 
 namespace LionEditor
 {
-    public class Savefile
+    public class Savegame
     {
         const uint saveFileSize = 0x2A3C;
 
         byte[] offset0x00 = new byte[257];
-        string saveName;
         byte[] saveNameRaw = new byte[15];
 
         public string SaveName
@@ -39,11 +38,36 @@ namespace LionEditor
         }
 
         byte[] offset0x110 = new byte[4];
-        byte saveScreenMonth;
-        byte saveScreenDay;
-        byte saveScreenMapPosition;
+        private SaveScreenMonths m_saveScreenMonth;
+
+        public SaveScreenMonths SaveScreenMonth
+        {
+        	get { return m_saveScreenMonth; }
+        	set { m_saveScreenMonth = value; }
+        }
+
+        private byte m_saveScreenDay;
+        public byte SaveScreenDay
+        {
+        	get { return m_saveScreenDay; }
+        	set { m_saveScreenDay = value; }
+        }
+
+        private byte m_saveScreenMapPosition;
+        public byte SaveScreenMapPosition
+        {
+        	get { return m_saveScreenMapPosition; }
+        	set { m_saveScreenMapPosition = value; }
+        }
+
         byte[] offset0x117 = new byte[17];
-        uint timer;
+        private uint m_timer;
+        public uint Timer
+        {
+        	get { return m_timer; }
+        	set { m_timer = value; }
+        }
+
         byte[] artifactDates = new byte[53];
         byte[] wondersDates = new byte[17];
         byte[] featsDates = new byte[108];
@@ -58,20 +82,68 @@ namespace LionEditor
         byte[] prop7 = new byte[9];
         byte[] prop8 = new byte[9];
         byte[] offset0x489 = new byte[3];
-        Character[] characters = new Character[24];
-        Character[] guests = new Character[4];
+        private Character[] m_characters = new Character[24];
+        public Character[] Characters
+        {
+        	get { return m_characters; }
+        	set { m_characters = value; }
+        }
+
+        private Character[] m_guests = new Character[4];
+        public Character[] Guests
+        {
+        	get { return m_guests; }
+        	set { m_guests = value; }
+        }
+
         byte[] inventory = new byte[316];
         byte[] furshop = new byte[316];
         byte[] offset0x2304 = new byte[304];
-        uint warFunds;
+        private uint m_warFunds;
+        public uint WarFunds
+        {
+        	get { return m_warFunds; }
+        	set { m_warFunds = value; }
+        }
+
         byte[] offset0x2438 = new byte[4];
-        uint month;
-        uint day;
+        private uint m_month;
+        public uint Month
+        {
+        	get { return m_month; }
+        	set { m_month = value; }
+        }
+
+        private uint m_day;
+        public uint Day
+        {
+        	get { return m_day; }
+        	set { m_day = value; }
+        }
+
         byte[] offset0x2444 = new byte[4];
-        byte mapPosition;
+        private byte m_mapPosition;
+        public byte MapPosition
+        {
+        	get { return m_mapPosition; }
+        	set { m_mapPosition = value; }
+        }
+
         byte[] offset0x2449 = new byte[191];
-        uint kills;
-        uint casualties;
+        private uint m_kills;
+        public uint Kills
+        {
+        	get { return m_kills; }
+        	set { m_kills = value; }
+        }
+
+        private uint m_casualties;
+        public uint Casualties
+        {
+        	get { return m_casualties; }
+        	set { m_casualties = value; }
+        }
+
         byte[] offset0x2510 = new byte[200];
         byte[] artefacts = new byte[6];
         byte[] wonders = new byte[2];
@@ -80,17 +152,36 @@ namespace LionEditor
         byte[] options = new byte[4];
         byte[] offset0x2788 = new byte[692];
 
-        public Savefile( byte[] file )
+        public enum SaveScreenMonths
+        {
+            Aries = 0x01,
+            Taurus = 0x02,
+            Gemini = 0x03,
+            Cancer = 0x04,
+            Leo = 0x05,
+            Virgo = 0x06,
+            Libra = 0x07,
+            Scorpio = 0x08,
+            Sagittarius = 0x09,
+            Capricorn = 0x0A,
+            Aquarius = 0x0B,
+            Pisces = 0x0C,
+            Level = 0x0D,
+            Empty = 0x0E,
+            Unusable = 0x0F,
+        }
+        
+        public Savegame( byte[] file )
         {
             CopyArray( file, offset0x00, 0, 257 );
             CopyArray( file, saveNameRaw, 0x101, 15 );
 
             CopyArray( file, offset0x110, 0x110, 4 );
-            saveScreenMonth = file[0x114];
-            saveScreenDay = file[0x115];
-            saveScreenMapPosition = file[0x116];
+            SaveScreenMonth = (SaveScreenMonths)file[0x114];
+            SaveScreenDay = file[0x115];
+            SaveScreenMapPosition = file[0x116];
             CopyArray( file, offset0x117, 0x117, 17 );
-            timer = (uint)((uint)file[0x128] + ((uint)file[0x129] << 8) + ((uint)file[0x12A] << 16) + ((uint)file[0x12B] << 24));
+            Timer = (uint)((uint)file[0x128] + ((uint)file[0x129] << 8) + ((uint)file[0x12A] << 16) + ((uint)file[0x12B] << 24));
             CopyArray( file, artifactDates, 0x12C, 53 );
             CopyArray( file, wondersDates, 0x161, 17 );
             CopyArray( file, featsDates, 0x172, 108 );
@@ -111,7 +202,7 @@ namespace LionEditor
                 CopyArray( file, charBytes, 0x48C + i * 0x100, 0x100 );
                 try
                 {
-                    characters[i] = new Character( charBytes );
+                    Characters[i] = new Character( charBytes );
                 }
                 catch( Exception e )
                 {
@@ -127,7 +218,7 @@ namespace LionEditor
                 CopyArray( file, guestBytes, 0x1C8C + i * 0x100, 0x100 );
                 try
                 {
-                    guests[i] = new Character( guestBytes );
+                    Guests[i] = new Character( guestBytes );
                 }
                 catch( Exception e )
                 {
@@ -140,15 +231,15 @@ namespace LionEditor
             CopyArray( file, inventory, 0x208C, 316 );
             CopyArray( file, furshop, 0x21C8, 316 );
             CopyArray( file, offset0x2304, 0x2304, 304 );
-            warFunds = (uint)((uint)file[0x2434] + ((uint)file[0x2435] << 8) + ((uint)file[0x2436] << 16) + ((uint)file[0x2437] << 24));
+            WarFunds = (uint)((uint)file[0x2434] + ((uint)file[0x2435] << 8) + ((uint)file[0x2436] << 16) + ((uint)file[0x2437] << 24));
             CopyArray( file, offset0x2438, 0x2438, 4 );
-            month = file[0x243C];
-            day = file[0x2440];
+            Month = file[0x243C];
+            Day = file[0x2440];
             CopyArray( file, offset0x2444, 0x2444, 4 );
-            mapPosition = file[0x2448];
+            MapPosition = file[0x2448];
             CopyArray( file, offset0x2449, 0x2449, 191 );
-            kills = (uint)((uint)file[0x2508] + ((uint)file[0x2509] << 8) + ((uint)file[0x250A] << 16) + ((uint)file[0x250B] << 25));
-            casualties = (uint)((uint)file[0x250C] + ((uint)file[0x250D] << 8) + ((uint)file[0x250E] << 16) + ((uint)file[0x250F] << 24));
+            Kills = (uint)((uint)file[0x2508] + ((uint)file[0x2509] << 8) + ((uint)file[0x250A] << 16) + ((uint)file[0x250B] << 25));
+            Casualties = (uint)((uint)file[0x250C] + ((uint)file[0x250D] << 8) + ((uint)file[0x250E] << 16) + ((uint)file[0x250F] << 24));
             CopyArray( file, offset0x2510, 0x2510, 200 );
             CopyArray( file, artefacts, 0x25D8, 6 );
             CopyArray( file, wonders, 0x25DE, 2 );
@@ -164,14 +255,14 @@ namespace LionEditor
             CopyArray( offset0x00, result, 0, 0, 257 );
             CopyArray( saveNameRaw, result, 0, 0x101, 15 );
             CopyArray( offset0x110, result, 0, 0x110, 4 );
-            result[0x114] = saveScreenMonth;
-            result[0x115] = saveScreenDay;
-            result[0x116] = saveScreenMapPosition;
+            result[0x114] = (byte)SaveScreenMonth;
+            result[0x115] = SaveScreenDay;
+            result[0x116] = SaveScreenMapPosition;
             CopyArray( offset0x117, result, 0, 0x117, 17 );
-            result[0x128] = (byte)(timer & 0xFF);
-            result[0x129] = (byte)((timer >> 8) & 0xFF);
-            result[0x12A] = (byte)((timer >> 16) & 0xFF);
-            result[0x12B] = (byte)((timer >> 24) & 0xFF);
+            result[0x128] = (byte)(Timer & 0xFF);
+            result[0x129] = (byte)((Timer >> 8) & 0xFF);
+            result[0x12A] = (byte)((Timer >> 16) & 0xFF);
+            result[0x12B] = (byte)((Timer >> 24) & 0xFF);
             CopyArray( artifactDates, result, 0, 0x12C, 53 );
             CopyArray( wondersDates, result, 0, 0x161, 17 );
             CopyArray( featsDates, result, 0, 0x172, 108 );
@@ -188,41 +279,41 @@ namespace LionEditor
             CopyArray( offset0x489, result, 0, 0x489, 3 );
             for( int i = 0; i < 24; i++ )
             {
-                if( characters[i] != null )
+                if( Characters[i] != null )
                 {
-                    byte[] charBytes = characters[i].ToByteArray();
+                    byte[] charBytes = Characters[i].ToByteArray();
                     CopyArray( charBytes, result, 0, 0x48C + i * 0x100, 0x100 );
                 }
             }
             for( int i = 0; i < 4; i++ )
             {
-                if( guests[i] != null )
+                if( Guests[i] != null )
                 {
-                    byte[] guestBytes = guests[i].ToByteArray();
+                    byte[] guestBytes = Guests[i].ToByteArray();
                     CopyArray( guestBytes, result, 0, 0x1C8C + i * 0x100, 0x100 );
                 }
             }
             CopyArray( inventory, result, 0, 0x208C, 316 );
             CopyArray( furshop, result, 0, 0x21C8, 316 );
             CopyArray( offset0x2304, result, 0, 0x2304, 304 );
-            result[0x2434] = (byte)(warFunds & 0xFF);
-            result[0x2435] = (byte)((warFunds >> 8) & 0xFF);
-            result[0x2436] = (byte)((warFunds >> 16) & 0xFF);
-            result[0x2437] = (byte)((warFunds >> 24) & 0xFF);
+            result[0x2434] = (byte)(WarFunds & 0xFF);
+            result[0x2435] = (byte)((WarFunds >> 8) & 0xFF);
+            result[0x2436] = (byte)((WarFunds >> 16) & 0xFF);
+            result[0x2437] = (byte)((WarFunds >> 24) & 0xFF);
             CopyArray( offset0x2438, result, 0, 0x2438, 4 );
-            result[0x243C] = (byte)month;
-            result[0x2440] = (byte)day;
+            result[0x243C] = (byte)Month;
+            result[0x2440] = (byte)Day;
             CopyArray( offset0x2444, result, 0, 0x2444, 4 );
-            result[0x2448] = mapPosition;
+            result[0x2448] = MapPosition;
             CopyArray( offset0x2449, result, 0, 0x2449, 191 );
-            result[0x2508] = (byte)(kills & 0xFF);
-            result[0x2509] = (byte)((kills >> 8) & 0xFF);
-            result[0x250A] = (byte)((kills >> 16) & 0xFF);
-            result[0x250B] = (byte)((kills >> 24) & 0xFF);
-            result[0x250C] = (byte)(casualties & 0xFF);
-            result[0x250D] = (byte)((casualties >> 8) & 0xFF);
-            result[0x250E] = (byte)((casualties >> 16) & 0xFF);
-            result[0x250F] = (byte)((casualties >> 24) & 0xFF);
+            result[0x2508] = (byte)(Kills & 0xFF);
+            result[0x2509] = (byte)((Kills >> 8) & 0xFF);
+            result[0x250A] = (byte)((Kills >> 16) & 0xFF);
+            result[0x250B] = (byte)((Kills >> 24) & 0xFF);
+            result[0x250C] = (byte)(Casualties & 0xFF);
+            result[0x250D] = (byte)((Casualties >> 8) & 0xFF);
+            result[0x250E] = (byte)((Casualties >> 16) & 0xFF);
+            result[0x250F] = (byte)((Casualties >> 24) & 0xFF);
             CopyArray( offset0x2510, result, 0, 0x2510, 200 );
             CopyArray( artefacts, result, 0, 0x25D8, 6 );
             CopyArray( wonders, result, 0, 0x25DE, 2 );

@@ -82,6 +82,11 @@ namespace LionEditor
                 a.DataSource = Ability.AbilityList;
                 a.DropDownWidth = GetIdealDropDownWidth( Ability.AbilityList, a, 0 );
             }
+
+            classComboBox.DataSource = Class.ClassList;
+            classComboBox.DropDownWidth = GetIdealDropDownWidth( Class.ClassList, classComboBox, 0 );
+
+            zodiacComboBox.DataSource = Enum.GetValues( typeof( Zodiac ) );
         }
 
         void ComboBoxValidating( object sender, CancelEventArgs e )

@@ -59,9 +59,22 @@ namespace LionEditor
             System.Windows.Forms.Label reactLabel;
             System.Windows.Forms.Label supportLabel;
             System.Windows.Forms.Label movementLabel;
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+            System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+            System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+            System.Windows.Forms.GroupBox groupBox1;
+            System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+            System.Windows.Forms.Panel panel1;
+            System.Windows.Forms.Label braveryLabel;
+            System.Windows.Forms.Panel panel2;
+            System.Windows.Forms.Label faithLabel;
+            System.Windows.Forms.Panel panel3;
+            System.Windows.Forms.Panel panel4;
+            System.Windows.Forms.Label nameLabel;
+            System.Windows.Forms.Panel panel5;
+            System.Windows.Forms.Label classLabel;
+            System.Windows.Forms.Panel panel6;
             this.equipAbilityGroupBox = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.skillTextLabel = new System.Windows.Forms.Label();
             this.rightHandCombo = new System.Windows.Forms.ComboBox();
             this.rightShieldCombo = new System.Windows.Forms.ComboBox();
@@ -74,6 +87,11 @@ namespace LionEditor
             this.supportCombo = new System.Windows.Forms.ComboBox();
             this.reactionCombo = new System.Windows.Forms.ComboBox();
             this.movementCombo = new System.Windows.Forms.ComboBox();
+            this.braverySpinner = new System.Windows.Forms.NumericUpDown();
+            this.faithSpinner = new System.Windows.Forms.NumericUpDown();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.classComboBox = new System.Windows.Forms.ComboBox();
+            this.zodiacComboBox = new System.Windows.Forms.ComboBox();
             rightHandLabel = new System.Windows.Forms.Label();
             rightShieldLabel = new System.Windows.Forms.Label();
             leftHandLabel = new System.Windows.Forms.Label();
@@ -86,9 +104,35 @@ namespace LionEditor
             reactLabel = new System.Windows.Forms.Label();
             supportLabel = new System.Windows.Forms.Label();
             movementLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            panel1 = new System.Windows.Forms.Panel();
+            braveryLabel = new System.Windows.Forms.Label();
+            panel2 = new System.Windows.Forms.Panel();
+            faithLabel = new System.Windows.Forms.Label();
+            panel3 = new System.Windows.Forms.Panel();
+            panel4 = new System.Windows.Forms.Panel();
+            nameLabel = new System.Windows.Forms.Label();
+            panel5 = new System.Windows.Forms.Panel();
+            classLabel = new System.Windows.Forms.Label();
+            panel6 = new System.Windows.Forms.Panel();
+            tableLayoutPanel1.SuspendLayout();
             this.equipAbilityGroupBox.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            groupBox1.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.braverySpinner)).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.faithSpinner)).BeginInit();
+            panel3.SuspendLayout();
+            panel4.SuspendLayout();
+            panel5.SuspendLayout();
+            panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // rightHandLabel
@@ -225,22 +269,24 @@ namespace LionEditor
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
-            this.tableLayoutPanel1.Controls.Add( this.equipAbilityGroupBox, 0, 2 );
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 45.64103F ) );
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 54.35897F ) );
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 209F ) );
-            this.tableLayoutPanel1.Size = new System.Drawing.Size( 624, 405 );
-            this.tableLayoutPanel1.TabIndex = 0;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
+            tableLayoutPanel1.Controls.Add( this.equipAbilityGroupBox, 0, 2 );
+            tableLayoutPanel1.Controls.Add( tableLayoutPanel3, 0, 0 );
+            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 79.48718F ) );
+            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 20.51282F ) );
+            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 209F ) );
+            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
+            tableLayoutPanel1.Size = new System.Drawing.Size( 624, 405 );
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // equipAbilityGroupBox
             // 
-            this.equipAbilityGroupBox.Controls.Add( this.tableLayoutPanel2 );
+            this.equipAbilityGroupBox.Controls.Add( tableLayoutPanel2 );
             this.equipAbilityGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.equipAbilityGroupBox.Location = new System.Drawing.Point( 3, 198 );
             this.equipAbilityGroupBox.Name = "equipAbilityGroupBox";
@@ -250,48 +296,48 @@ namespace LionEditor
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 17F ) );
-            this.tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33F ) );
-            this.tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 17F ) );
-            this.tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33F ) );
-            this.tableLayoutPanel2.Controls.Add( this.skillTextLabel, 3, 0 );
-            this.tableLayoutPanel2.Controls.Add( skillLabel, 2, 0 );
-            this.tableLayoutPanel2.Controls.Add( this.rightHandCombo, 1, 0 );
-            this.tableLayoutPanel2.Controls.Add( this.rightShieldCombo, 1, 1 );
-            this.tableLayoutPanel2.Controls.Add( this.leftHandCombo, 1, 2 );
-            this.tableLayoutPanel2.Controls.Add( this.leftShieldCombo, 1, 3 );
-            this.tableLayoutPanel2.Controls.Add( this.headCombo, 1, 4 );
-            this.tableLayoutPanel2.Controls.Add( this.bodyCombo, 1, 5 );
-            this.tableLayoutPanel2.Controls.Add( this.accessoryCombo, 1, 6 );
-            this.tableLayoutPanel2.Controls.Add( this.secondaryCombo, 3, 2 );
-            this.tableLayoutPanel2.Controls.Add( this.supportCombo, 3, 5 );
-            this.tableLayoutPanel2.Controls.Add( this.reactionCombo, 3, 4 );
-            this.tableLayoutPanel2.Controls.Add( this.movementCombo, 3, 6 );
-            this.tableLayoutPanel2.Controls.Add( rightHandLabel, 0, 0 );
-            this.tableLayoutPanel2.Controls.Add( leftHandLabel, 0, 2 );
-            this.tableLayoutPanel2.Controls.Add( rightShieldLabel, 0, 1 );
-            this.tableLayoutPanel2.Controls.Add( leftShieldLabel, 0, 3 );
-            this.tableLayoutPanel2.Controls.Add( headLabel, 0, 4 );
-            this.tableLayoutPanel2.Controls.Add( bodyLabel, 0, 5 );
-            this.tableLayoutPanel2.Controls.Add( accessoryLabel, 0, 6 );
-            this.tableLayoutPanel2.Controls.Add( secondaryLabel, 2, 2 );
-            this.tableLayoutPanel2.Controls.Add( reactLabel, 2, 4 );
-            this.tableLayoutPanel2.Controls.Add( supportLabel, 2, 5 );
-            this.tableLayoutPanel2.Controls.Add( movementLabel, 2, 6 );
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point( 3, 16 );
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 7;
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            this.tableLayoutPanel2.Size = new System.Drawing.Size( 612, 185 );
-            this.tableLayoutPanel2.TabIndex = 0;
+            tableLayoutPanel2.ColumnCount = 4;
+            tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 17F ) );
+            tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33F ) );
+            tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 17F ) );
+            tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33F ) );
+            tableLayoutPanel2.Controls.Add( this.skillTextLabel, 3, 0 );
+            tableLayoutPanel2.Controls.Add( skillLabel, 2, 0 );
+            tableLayoutPanel2.Controls.Add( this.rightHandCombo, 1, 0 );
+            tableLayoutPanel2.Controls.Add( this.rightShieldCombo, 1, 1 );
+            tableLayoutPanel2.Controls.Add( this.leftHandCombo, 1, 2 );
+            tableLayoutPanel2.Controls.Add( this.leftShieldCombo, 1, 3 );
+            tableLayoutPanel2.Controls.Add( this.headCombo, 1, 4 );
+            tableLayoutPanel2.Controls.Add( this.bodyCombo, 1, 5 );
+            tableLayoutPanel2.Controls.Add( this.accessoryCombo, 1, 6 );
+            tableLayoutPanel2.Controls.Add( this.secondaryCombo, 3, 2 );
+            tableLayoutPanel2.Controls.Add( this.supportCombo, 3, 5 );
+            tableLayoutPanel2.Controls.Add( this.reactionCombo, 3, 4 );
+            tableLayoutPanel2.Controls.Add( this.movementCombo, 3, 6 );
+            tableLayoutPanel2.Controls.Add( rightHandLabel, 0, 0 );
+            tableLayoutPanel2.Controls.Add( leftHandLabel, 0, 2 );
+            tableLayoutPanel2.Controls.Add( rightShieldLabel, 0, 1 );
+            tableLayoutPanel2.Controls.Add( leftShieldLabel, 0, 3 );
+            tableLayoutPanel2.Controls.Add( headLabel, 0, 4 );
+            tableLayoutPanel2.Controls.Add( bodyLabel, 0, 5 );
+            tableLayoutPanel2.Controls.Add( accessoryLabel, 0, 6 );
+            tableLayoutPanel2.Controls.Add( secondaryLabel, 2, 2 );
+            tableLayoutPanel2.Controls.Add( reactLabel, 2, 4 );
+            tableLayoutPanel2.Controls.Add( supportLabel, 2, 5 );
+            tableLayoutPanel2.Controls.Add( movementLabel, 2, 6 );
+            tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableLayoutPanel2.Location = new System.Drawing.Point( 3, 16 );
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 7;
+            tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
+            tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
+            tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
+            tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
+            tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
+            tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
+            tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
+            tableLayoutPanel2.Size = new System.Drawing.Size( 612, 185 );
+            tableLayoutPanel2.TabIndex = 0;
             // 
             // skillTextLabel
             // 
@@ -301,7 +347,7 @@ namespace LionEditor
             this.skillTextLabel.Name = "skillTextLabel";
             this.skillTextLabel.Size = new System.Drawing.Size( 197, 26 );
             this.skillTextLabel.TabIndex = 19;
-            this.skillTextLabel.Text = "label";
+            this.skillTextLabel.Text = "##skill##";
             this.skillTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // rightHandCombo
@@ -436,23 +482,241 @@ namespace LionEditor
             this.movementCombo.Size = new System.Drawing.Size( 197, 21 );
             this.movementCombo.TabIndex = 10;
             // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 3;
+            tableLayoutPanel3.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 19.25926F ) );
+            tableLayoutPanel3.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 80.74074F ) );
+            tableLayoutPanel3.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 322F ) );
+            tableLayoutPanel3.Controls.Add( groupBox1, 2, 0 );
+            tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableLayoutPanel3.Location = new System.Drawing.Point( 3, 3 );
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
+            tableLayoutPanel3.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
+            tableLayoutPanel3.Size = new System.Drawing.Size( 618, 149 );
+            tableLayoutPanel3.TabIndex = 2;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add( tableLayoutPanel4 );
+            groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBox1.Location = new System.Drawing.Point( 298, 3 );
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size( 317, 143 );
+            groupBox1.TabIndex = 0;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "##position##";
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 3;
+            tableLayoutPanel4.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
+            tableLayoutPanel4.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33.33334F ) );
+            tableLayoutPanel4.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33.33334F ) );
+            tableLayoutPanel4.Controls.Add( panel6, 0, 2 );
+            tableLayoutPanel4.Controls.Add( panel2, 2, 2 );
+            tableLayoutPanel4.Controls.Add( panel1, 1, 2 );
+            tableLayoutPanel4.Controls.Add( panel3, 0, 0 );
+            tableLayoutPanel4.Controls.Add( panel4, 0, 1 );
+            tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableLayoutPanel4.Location = new System.Drawing.Point( 3, 16 );
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 3;
+            tableLayoutPanel4.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
+            tableLayoutPanel4.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
+            tableLayoutPanel4.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
+            tableLayoutPanel4.Size = new System.Drawing.Size( 311, 124 );
+            tableLayoutPanel4.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add( this.braverySpinner );
+            panel1.Controls.Add( braveryLabel );
+            panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel1.Location = new System.Drawing.Point( 103, 82 );
+            panel1.Margin = new System.Windows.Forms.Padding( 0 );
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size( 103, 42 );
+            panel1.TabIndex = 2;
+            // 
+            // braveryLabel
+            // 
+            braveryLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            braveryLabel.AutoSize = true;
+            braveryLabel.Location = new System.Drawing.Point( 3, 15 );
+            braveryLabel.Name = "braveryLabel";
+            braveryLabel.Size = new System.Drawing.Size( 46, 13 );
+            braveryLabel.TabIndex = 0;
+            braveryLabel.Text = "Bravery:";
+            braveryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // braverySpinner
+            // 
+            this.braverySpinner.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.braverySpinner.Location = new System.Drawing.Point( 56, 11 );
+            this.braverySpinner.Name = "braverySpinner";
+            this.braverySpinner.Size = new System.Drawing.Size( 44, 20 );
+            this.braverySpinner.TabIndex = 1;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add( this.faithSpinner );
+            panel2.Controls.Add( faithLabel );
+            panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel2.Location = new System.Drawing.Point( 206, 82 );
+            panel2.Margin = new System.Windows.Forms.Padding( 0 );
+            panel2.Name = "panel2";
+            panel2.Size = new System.Drawing.Size( 105, 42 );
+            panel2.TabIndex = 3;
+            // 
+            // faithSpinner
+            // 
+            this.faithSpinner.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.faithSpinner.Location = new System.Drawing.Point( 58, 11 );
+            this.faithSpinner.Name = "faithSpinner";
+            this.faithSpinner.Size = new System.Drawing.Size( 44, 20 );
+            this.faithSpinner.TabIndex = 1;
+            // 
+            // faithLabel
+            // 
+            faithLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            faithLabel.AutoSize = true;
+            faithLabel.Location = new System.Drawing.Point( 3, 15 );
+            faithLabel.Name = "faithLabel";
+            faithLabel.Size = new System.Drawing.Size( 33, 13 );
+            faithLabel.TabIndex = 0;
+            faithLabel.Text = "Faith:";
+            faithLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel3
+            // 
+            tableLayoutPanel4.SetColumnSpan( panel3, 3 );
+            panel3.Controls.Add( this.nameTextBox );
+            panel3.Controls.Add( nameLabel );
+            panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel3.Location = new System.Drawing.Point( 1, 1 );
+            panel3.Margin = new System.Windows.Forms.Padding( 1 );
+            panel3.Name = "panel3";
+            panel3.Size = new System.Drawing.Size( 309, 39 );
+            panel3.TabIndex = 4;
+            // 
+            // panel4
+            // 
+            tableLayoutPanel4.SetColumnSpan( panel4, 3 );
+            panel4.Controls.Add( panel5 );
+            panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel4.Location = new System.Drawing.Point( 1, 42 );
+            panel4.Margin = new System.Windows.Forms.Padding( 1 );
+            panel4.Name = "panel4";
+            panel4.Size = new System.Drawing.Size( 309, 39 );
+            panel4.TabIndex = 5;
+            // 
+            // nameLabel
+            // 
+            nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            nameLabel.AutoSize = true;
+            nameLabel.Location = new System.Drawing.Point( 4, 13 );
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new System.Drawing.Size( 38, 13 );
+            nameLabel.TabIndex = 0;
+            nameLabel.Text = "Name:";
+            nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // nameTextBox
+            // 
+            this.nameTextBox.Location = new System.Drawing.Point( 49, 9 );
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size( 257, 20 );
+            this.nameTextBox.TabIndex = 1;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add( this.classComboBox );
+            panel5.Controls.Add( classLabel );
+            panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel5.Location = new System.Drawing.Point( 0, 0 );
+            panel5.Margin = new System.Windows.Forms.Padding( 1 );
+            panel5.Name = "panel5";
+            panel5.Size = new System.Drawing.Size( 309, 39 );
+            panel5.TabIndex = 5;
+            // 
+            // classLabel
+            // 
+            classLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            classLabel.AutoSize = true;
+            classLabel.Location = new System.Drawing.Point( 4, 13 );
+            classLabel.Name = "classLabel";
+            classLabel.Size = new System.Drawing.Size( 35, 13 );
+            classLabel.TabIndex = 0;
+            classLabel.Text = "Class:";
+            classLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // classComboBox
+            // 
+            this.classComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.classComboBox.FormattingEnabled = true;
+            this.classComboBox.Location = new System.Drawing.Point( 49, 9 );
+            this.classComboBox.Name = "classComboBox";
+            this.classComboBox.Size = new System.Drawing.Size( 257, 21 );
+            this.classComboBox.TabIndex = 1;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add( this.zodiacComboBox );
+            panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel6.Location = new System.Drawing.Point( 0, 82 );
+            panel6.Margin = new System.Windows.Forms.Padding( 0 );
+            panel6.Name = "panel6";
+            panel6.Size = new System.Drawing.Size( 103, 42 );
+            panel6.TabIndex = 3;
+            // 
+            // zodiacComboBox
+            // 
+            this.zodiacComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zodiacComboBox.FormattingEnabled = true;
+            this.zodiacComboBox.Location = new System.Drawing.Point( 1, 12 );
+            this.zodiacComboBox.Name = "zodiacComboBox";
+            this.zodiacComboBox.Size = new System.Drawing.Size( 99, 21 );
+            this.zodiacComboBox.TabIndex = 0;
+            // 
             // CharacterEditor
             // 
-            this.Controls.Add( this.tableLayoutPanel1 );
+            this.Controls.Add( tableLayoutPanel1 );
             this.Name = "CharacterEditor";
             this.Size = new System.Drawing.Size( 624, 405 );
-            this.tableLayoutPanel1.ResumeLayout( false );
+            tableLayoutPanel1.ResumeLayout( false );
             this.equipAbilityGroupBox.ResumeLayout( false );
-            this.tableLayoutPanel2.ResumeLayout( false );
-            this.tableLayoutPanel2.PerformLayout();
+            tableLayoutPanel2.ResumeLayout( false );
+            tableLayoutPanel2.PerformLayout();
+            tableLayoutPanel3.ResumeLayout( false );
+            groupBox1.ResumeLayout( false );
+            tableLayoutPanel4.ResumeLayout( false );
+            panel1.ResumeLayout( false );
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.braverySpinner)).EndInit();
+            panel2.ResumeLayout( false );
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.faithSpinner)).EndInit();
+            panel3.ResumeLayout( false );
+            panel3.PerformLayout();
+            panel4.ResumeLayout( false );
+            panel5.ResumeLayout( false );
+            panel5.PerformLayout();
+            panel6.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ComboBox rightHandCombo;
         private System.Windows.Forms.ComboBox rightShieldCombo;
         private System.Windows.Forms.ComboBox leftHandCombo;
@@ -466,6 +730,11 @@ namespace LionEditor
         private System.Windows.Forms.ComboBox movementCombo;
         private System.Windows.Forms.Label skillTextLabel;
         private System.Windows.Forms.GroupBox equipAbilityGroupBox;
+        private System.Windows.Forms.NumericUpDown braverySpinner;
+        private System.Windows.Forms.NumericUpDown faithSpinner;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.ComboBox zodiacComboBox;
+        private System.Windows.Forms.ComboBox classComboBox;
 
     }
 }

@@ -62,19 +62,18 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Abilities&gt;
-        ///  &lt;Ability value=&quot;0&quot;&gt;&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;1&quot;&gt;Cure&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;2&quot;&gt;Cura&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;3&quot;&gt;Curaga&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;4&quot;&gt;Curaja&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;5&quot;&gt;Raise&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;6&quot;&gt;Arise&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;7&quot;&gt;Reraise&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;8&quot;&gt;Regen&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;9&quot;&gt;Protect&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;10&quot;&gt;Protectja&lt;/Ability&gt;
-        ///  &lt;Ability value=&quot;11&quot;&gt;Shell&lt;/Ability [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///	This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Abilities {
             get {
@@ -84,30 +83,18 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;Classes&gt;
-        ///  &lt;Class&gt;
-        ///    &lt;byte&gt;01&lt;/byte&gt;
-        ///    &lt;skillset&gt;19&lt;/skillset&gt;
-        ///    &lt;sprite&gt;Ramza, chapter 1&lt;/sprite&gt;
-        ///    &lt;name&gt;Squire&lt;/name&gt;
-        ///    &lt;command&gt;Mettle&lt;/command&gt;
-        ///    &lt;hpm&gt;125&lt;/hpm&gt;
-        ///    &lt;mpm&gt;105&lt;/mpm&gt;
-        ///    &lt;spm&gt;107&lt;/spm&gt;
-        ///    &lt;pam&gt;111&lt;/pam&gt;
-        ///    &lt;mam&gt;102&lt;/mam&gt;
-        ///    &lt;move&gt;4&lt;/move&gt;
-        ///    &lt;cev&gt;10&lt;/cev&gt;
-        ///    &lt;hpc&gt;11&lt;/hpc&gt;
-        ///    &lt;mpc&gt;11&lt;/mpc&gt;
-        ///    &lt;spc&gt;95&lt;/spc&gt;
-        ///    &lt;pac&gt;50&lt;/pac&gt;
-        ///    &lt;mac&gt;48&lt;/mac&gt;
-        ///    &lt;jump&gt;3&lt;/jump&gt;
-        ///    &lt;type&gt;Special&lt;/type&gt;
-        ///  &lt;/Class&gt;
-        ///  &lt;Class&gt;
-        ///   [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///	This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without even th [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Classes {
             get {
@@ -117,15 +104,18 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Items&gt;
-        ///  &lt;Item offset=&quot;255&quot; type=&quot;None&quot; subtype=&quot;None&quot;&gt;Nothing&lt;/Item&gt;
-        ///  &lt;Item offset=&quot;0&quot; type=&quot;None&quot; subtype=&quot;None&quot;&gt;Nothing&lt;/Item&gt;
-        ///  &lt;Item offset=&quot;1&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Dagger&lt;/Item&gt;
-        ///  &lt;Item offset=&quot;2&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Mythril Knife&lt;/Item&gt;
-        ///  &lt;Item offset=&quot;3&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Blind Knife&lt;/Item&gt;
-        ///  &lt;Item offset=&quot;4&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Mage Masher&lt;/Item&gt;
-        ///  &lt;Item offset=&quot;5&quot; type=&quot;Hand&quot; subtype=&quot;Knife&quot;&gt;Platinum Dagger&lt;/Item&gt;
-        /// [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///	This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Items {
             get {
@@ -135,24 +125,18 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;JobsWithAbilities&gt;
-        ///  &lt;Generic&gt;
-        ///    &lt;Job name=&quot;Squire&quot;&gt;
-        ///      &lt;!-- This is the byte to set for --&gt;
-        ///      &lt;bytes&gt;05&lt;/bytes&gt;
-        ///      &lt;command&gt;Fundaments&lt;/command&gt;
-        ///      &lt;action&gt;
-        ///        &lt;skill&gt;Focus&lt;/skill&gt;
-        ///        &lt;skill&gt;Rush&lt;/skill&gt;
-        ///        &lt;skill&gt;Stone&lt;/skill&gt;
-        ///        &lt;skill&gt;Salve&lt;/skill&gt;
-        ///        &lt;skill&gt;Tailwind&lt;/skill&gt;
-        ///        &lt;skill&gt;Chant&lt;/skill&gt;
-        ///      &lt;/action&gt;
-        ///      &lt;reaction&gt;
-        ///        &lt;skill&gt;Counter Tackle&lt;/skill&gt;
-        ///      &lt;/reaction&gt;
-        ///      &lt;support&gt; [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///	This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string JobsWithAbilities {
             get {
@@ -162,20 +146,43 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;SecondaryActions&gt;
-        ///  &lt;SecondaryAction byte=&quot;00&quot;&gt;Nothing&lt;/SecondaryAction&gt;
-        ///  &lt;SecondaryAction byte=&quot;01&quot;&gt;Attack&lt;/SecondaryAction&gt;
-        ///  &lt;SecondaryAction byte=&quot;02&quot;&gt;Defend&lt;/SecondaryAction&gt;
-        ///  &lt;SecondaryAction byte=&quot;03&quot;&gt;Reequip&lt;/SecondaryAction&gt;
-        ///  &lt;SecondaryAction byte=&quot;04&quot;&gt;Flee&lt;/SecondaryAction&gt;
-        ///  &lt;SecondaryAction byte=&quot;05&quot;&gt;Fundaments&lt;/SecondaryAction&gt;
-        ///  &lt;SecondaryAction byte=&quot;06&quot;&gt;Items&lt;/SecondaryAction&gt;
-        ///  &lt;SecondaryAction byte=&quot;07&quot;&gt;Arts of War&lt;/SecondaryAction&gt;
-        ///  &lt; [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///	This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SecondaryAction {
             get {
                 return ResourceManager.GetString("SecondaryAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;!--
+        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///	This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Sprites {
+            get {
+                return ResourceManager.GetString("Sprites", resourceCulture);
             }
         }
     }

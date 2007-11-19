@@ -94,12 +94,22 @@ namespace LionEditor
             return multiply( rawMP, mpm );
         }
 
+        public uint GetRawMPFromActualMP( int actualMP )
+        {
+            return divide( actualMP, mpm );
+        }
+
         int hpm;
         public int HPModifier { get { return hpm; } }
 
         public int ActualHP( uint rawHP )
         {
             return multiply( rawHP, hpm );
+        }
+
+        public uint GetRawHPFromActualHP( int actualHP )
+        {
+            return divide( actualHP, hpm );
         }
 
         int spm;
@@ -110,6 +120,11 @@ namespace LionEditor
             return multiply( rawSP, spm );
         }
 
+        public uint GetRawSPFromActualSP( int actualSP )
+        {
+            return divide( actualSP, spm );
+        }
+
         int pam;
         public int PAModifier { get { return pam; } }
 
@@ -118,12 +133,22 @@ namespace LionEditor
             return multiply( rawPA, pam );
         }
 
+        public uint GetRawPAFromActualPA( int actualPA )
+        {
+            return divide( actualPA, pam );
+        }
+
         int mam;
         public int MAModifier { get { return mam; } }
 
         public int ActualMA( uint rawMA )
         {
             return multiply( rawMA, mam );
+        }
+
+        public uint GetRawMAFromActualMA( int actualMA )
+        {
+            return divide( actualMA, mam );
         }
 
         int move;
@@ -267,6 +292,12 @@ namespace LionEditor
             }
 
             return (int)result;
+        }
+
+        private uint divide( int value, int multiplier )
+        {
+            uint result = (uint)(((uint)value * 1638400) / (uint)multiplier);
+            return result;
         }
 
         public override string ToString()

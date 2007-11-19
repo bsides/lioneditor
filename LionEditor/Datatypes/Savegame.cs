@@ -206,7 +206,11 @@ namespace LionEditor
                 }
                 catch( Exception e )
                 {
-                    if( !(e is BadCharacterDataException) )
+                    if( e is BadCharacterDataException )
+                    {
+                        Characters[i] = new Character( i );
+                    }
+                    else
                     {
                         throw;
                     }

@@ -27,10 +27,37 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public class Ability:IComparable
+    public class Ability:IComparable, IEquatable<Ability>
     {
-        public UInt16 Value;
-        public string Name;
+        private UInt16 m_Value;
+        public UInt16 Value
+        {
+        	get { return m_Value; }
+        	set { m_Value = value; }
+        }
+
+        private string m_Name;
+        public string Name
+        {
+        	get { return m_Name; }
+        	set { m_Name = value; }
+        }
+
+        private uint m_JumpBonus;
+        public uint JumpBonus
+        {
+        	get { return m_JumpBonus; }
+        	set { m_JumpBonus = value; }
+        }
+
+        private uint m_MoveBonus;
+        public uint MoveBonus
+        {
+        	get { return m_MoveBonus; }
+        	set { m_MoveBonus = value; }
+        }
+
+
 
         public Ability( UInt16 value )
         {
@@ -42,6 +69,8 @@ namespace LionEditor
 
             this.Value = i.Value;
             this.Name = i.Name;
+            this.MoveBonus = i.MoveBonus;
+            this.JumpBonus = i.JumpBonus;
         }
 
         private Ability()
@@ -89,8 +118,12 @@ namespace LionEditor
                     foreach( XmlNode i in abilities )
                     {
                         Ability newItem = new Ability();
-                        newItem.Name = i.InnerText;
+                        newItem.Name = i.SelectSingleNode("name").InnerText;
                         newItem.Value = Convert.ToUInt16( i.Attributes["value"].InnerText );
+                        XmlNode moveJumpNode = i.SelectSingleNode( "move" );
+                        if( moveJumpNode != null ) { newItem.MoveBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
+                        moveJumpNode = i.SelectSingleNode( "jump" );
+                        if( moveJumpNode != null ) { newItem.JumpBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
 
                         abilityList.Add( newItem );
                     }
@@ -116,6 +149,15 @@ namespace LionEditor
             }
 
             return -1;
+        }
+
+        #endregion
+
+        #region IEquatable<Ability> Members
+
+        public bool Equals( Ability other )
+        {
+            return (this.Value == other.Value);
         }
 
         #endregion

@@ -87,18 +87,19 @@ namespace LionEditor
             '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',
             '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#' };
 
-        private byte m_spriteSet;
-        public byte SpriteSet
+        private SpriteSet m_spriteSet;
+
+        public SpriteSet SpriteSet
         {
         	get { return m_spriteSet; }
-            private set { m_spriteSet = value; }
+            set { m_spriteSet = value; }
         }
 
         private byte m_index;
         public byte Index
         {
         	get { return m_index; }
-            private set { m_index = value; }
+            set { m_index = value; }
         }
 
         //private string m_name;
@@ -113,28 +114,28 @@ namespace LionEditor
         public Class Job
         {
         	get { return m_job; }
-            private set { m_job = value; }
+            set { m_job = value; }
         }
 
         private bool m_isGuest;
         public bool IsGuest
         {
         	get { return m_isGuest; }
-            private set { m_isGuest = value; }
+            set { m_isGuest = value; }
         }
 
         private Gender m_gender;
         public Gender Gender
         {
         	get { return m_gender; }
-            private set { m_gender = value; }
+            set { m_gender = value; }
         }
 
         private Zodiac m_zodiacSign;
         public Zodiac ZodiacSign
         {
         	get { return m_zodiacSign; }
-        	private set { m_zodiacSign = value; }
+        	set { m_zodiacSign = value; }
         }
 
 
@@ -142,7 +143,7 @@ namespace LionEditor
         public SecondaryAction SecondaryAction
         {
         	get { return m_secondaryAction; }
-        	private set { m_secondaryAction = value; }
+        	set { m_secondaryAction = value; }
         }
 
 
@@ -150,21 +151,21 @@ namespace LionEditor
         public Ability ReactAbility
         {
         	get { return m_ReactAbility; }
-        	private set { m_ReactAbility = value; }
+        	set { m_ReactAbility = value; }
         }
 
         private Ability m_SupportAbility;
         public Ability SupportAbility
         {
         	get { return m_SupportAbility; }
-        	private set { m_SupportAbility = value; }
+        	set { m_SupportAbility = value; }
         }
 
         private Ability m_MovementAbility;
         public Ability MovementAbility
         {
         	get { return m_MovementAbility; }
-        	private set { m_MovementAbility = value; }
+        	set { m_MovementAbility = value; }
         }
 
 
@@ -172,49 +173,49 @@ namespace LionEditor
         public Item Head
         {
         	get { return m_Head; }
-        	private set { m_Head = value; }
+        	set { m_Head = value; }
         }
 
         private Item m_Body;
         public Item Body
         {
         	get { return m_Body; }
-        	private set { m_Body = value; }
+        	set { m_Body = value; }
         }
 
         private Item m_Accessory;
         public Item Accessory
         {
         	get { return m_Accessory; }
-        	private set { m_Accessory = value; }
+        	set { m_Accessory = value; }
         }
 
         private Item m_RightHand;
         public Item RightHand
         {
         	get { return m_RightHand; }
-        	private set { m_RightHand = value; }
+        	set { m_RightHand = value; }
         }
 
         private Item m_RightShield;
         public Item RightShield
         {
         	get { return m_RightShield; }
-        	private set { m_RightShield = value; }
+        	set { m_RightShield = value; }
         }
 
         private Item m_LeftHand;
         public Item LeftHand
         {
         	get { return m_LeftHand; }
-        	private set { m_LeftHand = value; }
+        	set { m_LeftHand = value; }
         }
 
         private Item m_LeftShield;
         public Item LeftShield
         {
         	get { return m_LeftShield; }
-        	private set { m_LeftShield = value; }
+        	set { m_LeftShield = value; }
         }
 
 
@@ -222,28 +223,28 @@ namespace LionEditor
         public byte Experience
         {
         	get { return m_Experience; }
-        	private set { m_Experience = value; }
+        	set { m_Experience = value; }
         }
 
         private byte m_Level;
         public byte Level
         {
         	get { return m_Level; }
-        	private set { m_Level = value; }
+        	set { m_Level = value; }
         }
 
         private byte m_Brave;
         public byte Brave
         {
         	get { return m_Brave; }
-        	private set { m_Brave = value; }
+        	set { m_Brave = value; }
         }
 
         private byte m_Faith;
         public byte Faith
         {
         	get { return m_Faith; }
-        	private set { m_Faith = value; }
+        	set { m_Faith = value; }
         }
 
 
@@ -251,35 +252,157 @@ namespace LionEditor
         public uint RawHP
         {
         	get { return m_RawHP; }
-        	private set { m_RawHP = value; }
+        	set { m_RawHP = value; }
         }
 
         private uint m_RawMP;
         public uint RawMP
         {
         	get { return m_RawMP; }
-        	private set { m_RawMP = value; }
+        	set { m_RawMP = value; }
         }
 
         private uint m_RawSP;
         public uint RawSP
         {
         	get { return m_RawSP; }
-        	private set { m_RawSP = value; }
+        	set { m_RawSP = value; }
         }
 
         private uint m_RawPA;
         public uint RawPA
         {
         	get { return m_RawPA; }
-        	private set { m_RawPA = value; }
+        	set { m_RawPA = value; }
         }
 
         private uint m_RawMA;
         public uint RawMA
         {
         	get { return m_RawMA; }
-        	private set { m_RawMA = value; }
+        	set { m_RawMA = value; }
+        }
+
+        public uint Move
+        {
+        	get 
+            {
+                return (uint)(Job.Move + ReactAbility.MoveBonus + SupportAbility.MoveBonus + MovementAbility.MoveBonus);
+            }
+        }
+
+        public uint Jump
+        {
+            get
+            {
+                return (uint)(Job.Jump + ReactAbility.JumpBonus + SupportAbility.JumpBonus + MovementAbility.JumpBonus);
+            }
+        }
+
+        public uint Speed
+        {
+        	get 
+            {
+                return (uint)(Job.ActualSP( RawSP ) + RightHand.SpeedBonus + RightShield.SpeedBonus + LeftHand.SpeedBonus + LeftShield.SpeedBonus + Head.SpeedBonus + Body.SpeedBonus + Accessory.SpeedBonus);
+            }
+        	set 
+            {
+                RawSP = Job.GetRawSPFromActualSP( (int)(value - RightHand.SpeedBonus - RightShield.SpeedBonus - LeftHand.SpeedBonus - LeftShield.SpeedBonus - Head.SpeedBonus - Body.SpeedBonus - Accessory.SpeedBonus) );
+            }
+        }
+
+        public uint RPower
+        {
+            get { return RightHand.Power; }
+        }
+
+        public uint LPower
+        {
+            get { return LeftHand.Power; }
+        }
+
+        public uint RBlockRate
+        {
+            get { return RightHand.BlockRate; }
+        }
+
+        public uint LBlockRate
+        {
+            get { return LeftHand.BlockRate; }
+        }
+
+        public uint PA
+        {
+        	get 
+            {
+                return (uint)(Job.ActualPA( RawPA ) + RightHand.PABonus + RightShield.PABonus + LeftHand.PABonus + LeftShield.PABonus + Head.PABonus + Body.PABonus + Accessory.PABonus);
+            }
+            set
+            {
+                RawPA = Job.GetRawPAFromActualPA( (int)(value - RightHand.PABonus - RightShield.PABonus - LeftHand.PABonus - LeftShield.PABonus - Head.PABonus - Body.PABonus - Accessory.PABonus) );
+            }
+        }
+
+        public uint MA
+        {
+        	get 
+            {
+                return (uint)(Job.ActualMA( RawMA ) + RightHand.MABonus + RightShield.MABonus + LeftHand.PABonus + LeftShield.PABonus + Head.PABonus + Body.PABonus + Accessory.PABonus);
+            }
+        	set 
+            {
+                RawMA = Job.GetRawMAFromActualMA( (int)(value - (RightHand.MABonus + RightShield.MABonus + LeftHand.PABonus + LeftShield.PABonus + Head.PABonus + Body.PABonus + Accessory.PABonus)) );
+            }
+        }
+
+        public uint HP
+        {
+            get
+            {
+                return (uint)(Job.ActualHP( RawHP ) + RightHand.HPBonus + RightShield.HPBonus + LeftHand.HPBonus + LeftShield.HPBonus + Head.HPBonus + Body.HPBonus + Accessory.HPBonus);
+            }
+            set
+            {
+                RawHP = Job.GetRawHPFromActualHP( (int)(value - (RightHand.HPBonus + RightShield.HPBonus + LeftHand.HPBonus + LeftShield.HPBonus + Head.HPBonus + Body.HPBonus + Accessory.HPBonus) ));
+            }
+        }
+
+        public uint MP
+        {
+            get
+            {
+                return (uint)(Job.ActualMP( RawMP ) + RightHand.MPBonus + RightShield.MPBonus + LeftHand.MPBonus + LeftShield.MPBonus + Head.MPBonus + Body.MPBonus + Accessory.MPBonus);
+            }
+            set
+            {
+                RawMP = Job.GetRawMPFromActualMP( (int)(value - (RightHand.MPBonus + RightShield.MPBonus + LeftHand.MPBonus + LeftShield.MPBonus + Head.MPBonus + Body.MPBonus + Accessory.MPBonus) ));
+            }
+        }
+
+        public uint PhysicalCEV
+        {
+            get { return (uint)Job.CEvade; }
+        }
+
+        public uint MagicCEV
+        {
+        	get { return 0; }
+        }
+
+        public uint PhysicalSEV
+        {
+            get 
+            { 
+                return RightShield.PhysicalSEV + RightHand.PhysicalSEV + LeftHand.PhysicalSEV + LeftShield.PhysicalSEV + Head.PhysicalSEV + Body.PhysicalSEV + Accessory.PhysicalSEV; 
+            }
+        }
+
+        public uint MagicSEV
+        {
+            get
+            {
+                return RightHand.MagicSEV + RightShield.MagicSEV + LeftHand.MagicSEV + LeftShield.MagicSEV + Head.MagicSEV + Body.MagicSEV + Accessory.MagicSEV;
+            }
         }
 
 
@@ -287,14 +410,14 @@ namespace LionEditor
         public byte UnknownOffset03
         {
         	get { return m_UnknownOffset03; }
-        	private set { m_UnknownOffset03 = value; }
+        	set { m_UnknownOffset03 = value; }
         }
 
         private byte m_UnknownOffset05;
         public byte UnknownOffset05
         {
         	get { return m_UnknownOffset05; }
-        	private set { m_UnknownOffset05 = value; }
+        	set { m_UnknownOffset05 = value; }
         }
 
 
@@ -302,14 +425,14 @@ namespace LionEditor
         public byte[] JobsUnlocked
         {
         	get { return m_JobsUnlocked; }
-        	private set { m_JobsUnlocked = value; }
+        	set { m_JobsUnlocked = value; }
         }
 
         private byte[,] m_SkillsUnlocked = new byte[22, 3];
         public byte[,] SkillsUnlocked
         {
         	get { return m_SkillsUnlocked; }
-        	private set { m_SkillsUnlocked = value; }
+        	set { m_SkillsUnlocked = value; }
         }
 
 
@@ -317,21 +440,21 @@ namespace LionEditor
         public byte[] JobLevels
         {
         	get { return m_JobLevels; }
-        	private set { m_JobLevels = value; }
+        	set { m_JobLevels = value; }
         }
 
         private ushort[] m_JP = new ushort[23];
         public ushort[] JP
         {
         	get { return m_JP; }
-        	private set { m_JP = value; }
+        	set { m_JP = value; }
         }
 
         private ushort[] m_TotalJP = new ushort[23];
         public ushort[] TotalJP
         {
         	get { return m_TotalJP; }
-        	private set { m_TotalJP = value; }
+        	set { m_TotalJP = value; }
         }
 
 
@@ -339,7 +462,13 @@ namespace LionEditor
         public byte[] AfterName
         {
         	get { return m_AfterName; }
-        	private set { m_AfterName = value; }
+        	set { m_AfterName = value; }
+        }
+
+        public bool OnProposition
+        {
+            get { return m_AfterName[0x03] == 0x01; }
+            set { m_AfterName[0x03] = (byte)(value ? 0x01 : 0x00); }
         }
 
 
@@ -351,7 +480,7 @@ namespace LionEditor
         {
             try
             {
-                SpriteSet = charData[0];
+                SpriteSet = SpriteSet.AllSprites[charData[0]];
                 Index = charData[1];
                 Job = Class.ClassDictionary[charData[2]];
                 UnknownOffset03 = charData[3];
@@ -425,6 +554,51 @@ namespace LionEditor
             }
         }
 
+        public Character( int index )
+        {
+            this.Accessory = new Item( 0 );
+            this.Body = new Item( 0 );
+            this.Brave = 50;
+            this.Experience = 0;
+            this.Faith = 50;
+            this.Gender = Gender.Male;
+            this.Head = new Item( 0 );
+            this.Index = (byte)index;
+            this.Job = Class.ClassDictionary[0x4A];
+            this.JobLevels = new byte[] { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11 };
+            this.JobsUnlocked = new byte[] { 0xC0, 0x00, 0x00 };
+            this.JP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            this.LeftHand = new Item( 0 );
+            this.LeftShield = new Item( 0 );
+            this.Level = 1;
+            this.MovementAbility = new Ability( 0 );
+            this.Name = "Stupid Name";
+            this.RawHP = Job.GetRawHPFromActualHP( 50 );
+            this.RawMA = Job.GetRawMAFromActualMA( 11 );
+            this.RawMP = Job.GetRawMPFromActualMP( 10 );
+            this.RawPA = Job.GetRawPAFromActualPA( 5 );
+            this.RawSP = Job.GetRawSPFromActualSP( 6 );
+            this.ReactAbility = new Ability( 0 );
+            this.RightHand = new Item( 0 );
+            this.RightShield = new Item( 0 );
+            this.SecondaryAction = SecondaryAction.ActionDictionary[0x00];
+            for( int i = 0; i < 22; i++ )
+            {
+                for( int j = 0; j < 3; j++ )
+                {
+                    this.SkillsUnlocked[i, j] = 0x00;
+                }
+            }
+
+            this.SpriteSet = SpriteSet.AllSprites[0x80];
+            this.SupportAbility = new Ability( 0 );
+            this.TotalJP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            this.UnknownOffset03 = 0x00;
+            this.UnknownOffset05 = 0x00;
+            this.ZodiacSign = Zodiac.Aries;
+            this.OnProposition = false;
+        }
+
         public static string DecodeName( byte[] source, int start )
         {
             StringBuilder sb = new StringBuilder();
@@ -442,7 +616,7 @@ namespace LionEditor
         public byte[] ToByteArray()
         {
             byte[] result = new byte[256];
-            result[0] = SpriteSet;
+            result[0] = SpriteSet.Value;
             result[1] = Index;
             result[2] = Job.Byte;
             result[3] = UnknownOffset03;
@@ -529,6 +703,8 @@ namespace LionEditor
             {
                 result[0xDC + i] = rawName[i];
             }
+
+            
 
             for( int k = 0; k < 21; k++ )
             {

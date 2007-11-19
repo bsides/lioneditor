@@ -49,6 +49,7 @@
     <None Include="Datatypes\Proposition.cs" />
     <Compile Include="Datatypes\Savegame.cs" />
     <Compile Include="Datatypes\SecondaryAction.cs" />
+    <Compile Include="Datatypes\SpriteSet.cs" />
     <Compile Include="LionEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,10 +77,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Datatypes\ClassDiagram1.cd" />
+    <None Include="FFTA.SYS" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="testCharacter.hex">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -94,6 +98,7 @@
     <Content Include="Resources\Items.xml" />
     <Content Include="Resources\JobsWithAbilities.xml" />
     <Content Include="Resources\SecondaryAction.xml" />
+    <Content Include="Resources\Sprites.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

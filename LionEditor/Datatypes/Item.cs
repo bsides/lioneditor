@@ -27,13 +27,115 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public class Item:IComparable
+    public class Item:IComparable, IEquatable<Item>
     {
-        public ItemType Type;
-        public ItemSubType SubType;
-        public UInt16 Offset;
+        private ItemType m_Type;
+        public ItemType Type
+        {
+        	get { return m_Type; }
+        	set { m_Type = value; }
+        }
 
-        public string Name;
+        private ItemSubType m_SubType;
+        public ItemSubType SubType
+        {
+        	get { return m_SubType; }
+        	set { m_SubType = value; }
+        }
+
+
+        private UInt16 m_Offset;
+        public UInt16 Offset
+        {
+        	get { return m_Offset; }
+        	set { m_Offset = value; }
+        }
+
+
+        private string m_Name;
+        public string Name
+        {
+        	get { return m_Name; }
+        	set { m_Name = value; }
+        }
+
+        private uint m_Power;
+        public uint Power
+        {
+        	get { return m_Power; }
+        	set { m_Power = value; }
+        }
+
+        private uint m_BlockRate;
+        public uint BlockRate
+        {
+        	get { return m_BlockRate; }
+        	set { m_BlockRate = value; }
+        }
+
+        private uint m_MABonus;
+        public uint MABonus
+        {
+        	get { return m_MABonus; }
+        	set { m_MABonus = value; }
+        }
+
+        private uint m_PABonus;
+        public uint PABonus
+        {
+        	get { return m_PABonus; }
+        	set { m_PABonus = value; }
+        }
+
+        private uint m_SpeedBonus;
+        public uint SpeedBonus
+        {
+        	get { return m_SpeedBonus; }
+        	set { m_SpeedBonus = value; }
+        }
+
+        private uint m_JumpBonus;
+        public uint JumpBonus
+        {
+        	get { return m_JumpBonus; }
+        	set { m_JumpBonus = value; }
+        }
+
+        private uint m_MoveBonus;
+        public uint MoveBonus
+        {
+        	get { return m_MoveBonus; }
+        	set { m_MoveBonus = value; }
+        }
+
+        private uint m_PhysicalSEV;
+        public uint PhysicalSEV
+        {
+        	get { return m_PhysicalSEV; }
+        	set { m_PhysicalSEV = value; }
+        }
+
+        private uint m_MagicSEV;
+        public uint MagicSEV
+        {
+        	get { return m_MagicSEV; }
+        	set { m_MagicSEV = value; }
+        }
+
+        private uint m_HPBonus;
+        public uint HPBonus
+        {
+        	get { return m_HPBonus; }
+        	set { m_HPBonus = value; }
+        }
+
+        private uint m_MPBonus;
+        public uint MPBonus
+        {
+        	get { return m_MPBonus; }
+        	set { m_MPBonus = value; }
+        }
+
 
         public Item( UInt16 offset )
         {
@@ -47,6 +149,17 @@ namespace LionEditor
             this.SubType = i.SubType;
             this.Name = i.Name;
             this.Offset = offset;
+            this.BlockRate = i.BlockRate;
+            this.HPBonus = i.HPBonus;
+            this.JumpBonus = i.JumpBonus;
+            this.MABonus = i.MABonus;
+            this.MagicSEV = i.MagicSEV;
+            this.MoveBonus = i.MoveBonus;
+            this.MPBonus = i.MPBonus;
+            this.PABonus = i.PABonus;
+            this.PhysicalSEV = i.PhysicalSEV;
+            this.Power = i.Power;
+            this.SpeedBonus = i.SpeedBonus;
         }
 
         private Item()
@@ -92,10 +205,43 @@ namespace LionEditor
                     foreach( XmlNode i in items )
                     {
                         Item newItem = new Item();
-                        newItem.Name = i.InnerText;
+                        newItem.Name = i.SelectSingleNode( "name" ).InnerText;
                         newItem.Offset = Convert.ToUInt16( i.Attributes["offset"].InnerText );
                         newItem.Type = (ItemType)Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
                         newItem.SubType = (ItemSubType)Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
+
+                        XmlNode node = i.SelectSingleNode( "power" );
+                        if( node != null ) { newItem.Power = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "blockRate" );
+                        if( node != null ) { newItem.BlockRate = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "ma" );
+                        if( node != null ) { newItem.MABonus = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "pa" );
+                        if( node != null ) { newItem.PABonus = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "speed" );
+                        if( node != null ) { newItem.SpeedBonus = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "jump" );
+                        if( node != null ) { newItem.JumpBonus = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "move" );
+                        if( node != null ) { newItem.MoveBonus = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "physicalSEV" );
+                        if( node != null ) { newItem.PhysicalSEV = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "magicSEV" );
+                        if( node != null ) { newItem.MagicSEV = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "hp" );
+                        if( node != null ) { newItem.HPBonus = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "mp" );
+                        if( node != null ) { newItem.MPBonus = Convert.ToUInt32( node.InnerText ); }
 
                         itemList.Add( newItem );
                     }
@@ -144,12 +290,21 @@ namespace LionEditor
         public int CompareTo( object obj )
         {
             Item o = obj as Item;
-            if( obj != null )
+            if( o != null )
             {
                 return (this.ToString().CompareTo( o.ToString() ));
             }
 
             return -1;
+        }
+
+        #endregion
+
+        #region IEquatable<Item> Members
+
+        public bool Equals( Item other )
+        {
+            return (this.Offset == other.Offset);
         }
 
         #endregion

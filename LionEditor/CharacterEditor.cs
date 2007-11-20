@@ -291,6 +291,7 @@ namespace LionEditor
             rightHandCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.RightHand = (Item)rightHandCombo.SelectedItem;
                     UpdateRightWeapon();
                     UpdateMove();
@@ -302,10 +303,12 @@ namespace LionEditor
                     UpdateMPValue();
                     UpdateSEV();
                     UpdateAEV();
+                    ignoreChanges = false;
                 };
             rightShieldCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.RightShield = (Item)rightShieldCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
@@ -316,10 +319,12 @@ namespace LionEditor
                     UpdateMPValue();
                     UpdateSEV();
                     UpdateAEV();
+                    ignoreChanges = false;
                 };
             leftHandCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.LeftHand = (Item)leftHandCombo.SelectedItem;
                     UpdateLeftWeapon();
                     UpdateMove();
@@ -331,10 +336,12 @@ namespace LionEditor
                     UpdateMPValue();
                     UpdateSEV();
                     UpdateAEV();
+                    ignoreChanges = false;
                 };
             leftShieldCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.LeftShield = (Item)leftShieldCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
@@ -345,10 +352,12 @@ namespace LionEditor
                     UpdateMPValue();
                     UpdateSEV();
                     UpdateAEV();
+                    ignoreChanges = false;
                 };
             headCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.Head = (Item)headCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
@@ -359,10 +368,12 @@ namespace LionEditor
                     UpdateMPValue();
                     UpdateSEV();
                     UpdateAEV();
+                    ignoreChanges = false;
                 };
             bodyCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.Body = (Item)bodyCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
@@ -373,10 +384,12 @@ namespace LionEditor
                     UpdateMPValue();
                     UpdateSEV();
                     UpdateAEV();
+                    ignoreChanges = false;
                 };
             accessoryCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.Accessory = (Item)accessoryCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
@@ -387,33 +400,39 @@ namespace LionEditor
                     UpdateMPValue();
                     UpdateSEV();
                     UpdateAEV();
+                    ignoreChanges = false;
                 };
             secondaryCombo.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.SecondaryAction = (SecondaryAction)secondaryCombo.SelectedItem;
-                    UpdateView();
                 };
             reactionCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.ReactAbility = (Ability)reactionCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
+                    ignoreChanges = false;
                 };
             supportCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.SupportAbility = (Ability)supportCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
+                    ignoreChanges = false;
                 };
             movementCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
+                    ignoreChanges = true;
                     character.MovementAbility = (Ability)movementCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
+                    ignoreChanges = false;
                 };
         
         }

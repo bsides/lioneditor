@@ -72,6 +72,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="SavegameEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SavegameEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -91,6 +95,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Datatypes\Zodiac.cs" />
+    <Compile Include="SavegameEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SavegameEditor.Designer.cs">
+      <DependentUpon>SavegameEditor.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Abilities.xml" />

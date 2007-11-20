@@ -56,12 +56,7 @@ namespace LionEditor
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.characterEditor1 = new CharacterEditor();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.savegameEditor1 = new SavegameEditor();
             label1 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -69,11 +64,6 @@ namespace LionEditor
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -123,8 +113,8 @@ namespace LionEditor
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add( this.tabControl1 );
-            this.splitContainer1.Size = new System.Drawing.Size( 646, 496 );
+            this.splitContainer1.Panel2.Controls.Add( this.savegameEditor1 );
+            this.splitContainer1.Size = new System.Drawing.Size( 738, 496 );
             this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
@@ -144,8 +134,8 @@ namespace LionEditor
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add( this.comboBox1 );
-            this.splitContainer2.Size = new System.Drawing.Size( 646, 25 );
-            this.splitContainer2.SplitterDistance = 40;
+            this.splitContainer2.Size = new System.Drawing.Size( 738, 25 );
+            this.splitContainer2.SplitterDistance = 45;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
             this.splitContainer2.TabStop = false;
@@ -159,77 +149,19 @@ namespace LionEditor
             this.comboBox1.Size = new System.Drawing.Size( 121, 21 );
             this.comboBox1.TabIndex = 0;
             // 
-            // tabControl1
+            // savegameEditor1
             // 
-            this.tabControl1.Controls.Add( this.tabPage1 );
-            this.tabControl1.Controls.Add( this.tabPage2 );
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size( 646, 470 );
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add( this.splitContainer3 );
-            this.tabPage1.Location = new System.Drawing.Point( 4, 22 );
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding( 3 );
-            this.tabPage1.Size = new System.Drawing.Size( 638, 444 );
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point( 3, 3 );
-            this.splitContainer3.Name = "splitContainer3";
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add( this.checkedListBox1 );
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add( this.characterEditor1 );
-            this.splitContainer3.Size = new System.Drawing.Size( 632, 438 );
-            this.splitContainer3.SplitterDistance = 120;
-            this.splitContainer3.TabIndex = 0;
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point( 0, 0 );
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size( 120, 424 );
-            this.checkedListBox1.TabIndex = 0;
-            // 
-            // characterEditor1
-            // 
-            this.characterEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.characterEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.characterEditor1.Name = "characterEditor1";
-            this.characterEditor1.Size = new System.Drawing.Size( 508, 438 );
-            this.characterEditor1.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point( 4, 22 );
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding( 3 );
-            this.tabPage2.Size = new System.Drawing.Size( 638, 444 );
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.savegameEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.savegameEditor1.Location = new System.Drawing.Point( 0, 0 );
+            this.savegameEditor1.Name = "savegameEditor1";
+            this.savegameEditor1.Size = new System.Drawing.Size( 738, 470 );
+            this.savegameEditor1.TabIndex = 0;
             // 
             // LionEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 646, 496 );
+            this.ClientSize = new System.Drawing.Size( 738, 496 );
             this.Controls.Add( this.splitContainer1 );
             this.Menu = this.mainMenu1;
             this.Name = "LionEditor";
@@ -241,11 +173,6 @@ namespace LionEditor
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout( false );
             this.splitContainer2.ResumeLayout( false );
-            this.tabControl1.ResumeLayout( false );
-            this.tabPage1.ResumeLayout( false );
-            this.splitContainer3.Panel1.ResumeLayout( false );
-            this.splitContainer3.Panel2.ResumeLayout( false );
-            this.splitContainer3.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -259,12 +186,7 @@ namespace LionEditor
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private CharacterEditor characterEditor1;
+        private SavegameEditor savegameEditor1;
     }
 }
 

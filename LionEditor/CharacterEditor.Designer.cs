@@ -113,6 +113,8 @@ namespace LionEditor
             this.levelSpinner = new System.Windows.Forms.NumericUpDown();
             this.hpSpinner = new System.Windows.Forms.NumericUpDown();
             this.mpSpinner = new System.Windows.Forms.NumericUpDown();
+            this.unavailableCheckbox = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.leftLabel = new System.Windows.Forms.Label();
             this.cevPhysical = new System.Windows.Forms.Label();
@@ -130,6 +132,7 @@ namespace LionEditor
             this.speedSpinner = new System.Windows.Forms.NumericUpDown();
             this.paSpinner = new System.Windows.Forms.NumericUpDown();
             this.maSpinner = new System.Windows.Forms.NumericUpDown();
+            this.genderComboBox = new System.Windows.Forms.ComboBox();
             rightHandLabel = new System.Windows.Forms.Label();
             rightShieldLabel = new System.Windows.Forms.Label();
             leftHandLabel = new System.Windows.Forms.Label();
@@ -422,7 +425,7 @@ namespace LionEditor
             this.rightHandCombo.Location = new System.Drawing.Point( 107, 3 );
             this.rightHandCombo.Name = "rightHandCombo";
             this.rightHandCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.rightHandCombo.TabIndex = 0;
+            this.rightHandCombo.TabIndex = 16;
             // 
             // rightShieldCombo
             // 
@@ -434,7 +437,7 @@ namespace LionEditor
             this.rightShieldCombo.Location = new System.Drawing.Point( 107, 29 );
             this.rightShieldCombo.Name = "rightShieldCombo";
             this.rightShieldCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.rightShieldCombo.TabIndex = 1;
+            this.rightShieldCombo.TabIndex = 17;
             // 
             // leftHandCombo
             // 
@@ -446,7 +449,7 @@ namespace LionEditor
             this.leftHandCombo.Location = new System.Drawing.Point( 107, 55 );
             this.leftHandCombo.Name = "leftHandCombo";
             this.leftHandCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.leftHandCombo.TabIndex = 2;
+            this.leftHandCombo.TabIndex = 18;
             // 
             // leftShieldCombo
             // 
@@ -458,7 +461,7 @@ namespace LionEditor
             this.leftShieldCombo.Location = new System.Drawing.Point( 107, 81 );
             this.leftShieldCombo.Name = "leftShieldCombo";
             this.leftShieldCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.leftShieldCombo.TabIndex = 3;
+            this.leftShieldCombo.TabIndex = 19;
             // 
             // headCombo
             // 
@@ -470,7 +473,7 @@ namespace LionEditor
             this.headCombo.Location = new System.Drawing.Point( 107, 107 );
             this.headCombo.Name = "headCombo";
             this.headCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.headCombo.TabIndex = 4;
+            this.headCombo.TabIndex = 20;
             // 
             // bodyCombo
             // 
@@ -482,7 +485,7 @@ namespace LionEditor
             this.bodyCombo.Location = new System.Drawing.Point( 107, 133 );
             this.bodyCombo.Name = "bodyCombo";
             this.bodyCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.bodyCombo.TabIndex = 5;
+            this.bodyCombo.TabIndex = 21;
             // 
             // accessoryCombo
             // 
@@ -494,7 +497,7 @@ namespace LionEditor
             this.accessoryCombo.Location = new System.Drawing.Point( 107, 159 );
             this.accessoryCombo.Name = "accessoryCombo";
             this.accessoryCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.accessoryCombo.TabIndex = 6;
+            this.accessoryCombo.TabIndex = 22;
             // 
             // secondaryCombo
             // 
@@ -506,7 +509,7 @@ namespace LionEditor
             this.secondaryCombo.Location = new System.Drawing.Point( 412, 55 );
             this.secondaryCombo.Name = "secondaryCombo";
             this.secondaryCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.secondaryCombo.TabIndex = 7;
+            this.secondaryCombo.TabIndex = 23;
             // 
             // supportCombo
             // 
@@ -518,7 +521,7 @@ namespace LionEditor
             this.supportCombo.Location = new System.Drawing.Point( 412, 133 );
             this.supportCombo.Name = "supportCombo";
             this.supportCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.supportCombo.TabIndex = 9;
+            this.supportCombo.TabIndex = 25;
             // 
             // reactionCombo
             // 
@@ -530,7 +533,7 @@ namespace LionEditor
             this.reactionCombo.Location = new System.Drawing.Point( 412, 107 );
             this.reactionCombo.Name = "reactionCombo";
             this.reactionCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.reactionCombo.TabIndex = 8;
+            this.reactionCombo.TabIndex = 24;
             // 
             // movementCombo
             // 
@@ -542,7 +545,7 @@ namespace LionEditor
             this.movementCombo.Location = new System.Drawing.Point( 412, 159 );
             this.movementCombo.Name = "movementCombo";
             this.movementCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.movementCombo.TabIndex = 10;
+            this.movementCombo.TabIndex = 26;
             // 
             // tableLayoutPanel3
             // 
@@ -612,7 +615,7 @@ namespace LionEditor
             this.zodiacComboBox.Location = new System.Drawing.Point( 6, 5 );
             this.zodiacComboBox.Name = "zodiacComboBox";
             this.zodiacComboBox.Size = new System.Drawing.Size( 87, 21 );
-            this.zodiacComboBox.TabIndex = 0;
+            this.zodiacComboBox.TabIndex = 10;
             // 
             // panel2
             // 
@@ -633,7 +636,7 @@ namespace LionEditor
             this.faithSpinner.Location = new System.Drawing.Point( 47, 5 );
             this.faithSpinner.Name = "faithSpinner";
             this.faithSpinner.Size = new System.Drawing.Size( 44, 20 );
-            this.faithSpinner.TabIndex = 1;
+            this.faithSpinner.TabIndex = 12;
             // 
             // faithLabel
             // 
@@ -666,7 +669,7 @@ namespace LionEditor
             this.braverySpinner.Location = new System.Drawing.Point( 50, 5 );
             this.braverySpinner.Name = "braverySpinner";
             this.braverySpinner.Size = new System.Drawing.Size( 44, 20 );
-            this.braverySpinner.TabIndex = 1;
+            this.braverySpinner.TabIndex = 11;
             // 
             // braveryLabel
             // 
@@ -701,7 +704,7 @@ namespace LionEditor
             this.nameTextBox.MaxLength = 14;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size( 237, 20 );
-            this.nameTextBox.TabIndex = 1;
+            this.nameTextBox.TabIndex = 8;
             // 
             // nameLabel
             // 
@@ -747,7 +750,7 @@ namespace LionEditor
             this.classComboBox.Location = new System.Drawing.Point( 49, 3 );
             this.classComboBox.Name = "classComboBox";
             this.classComboBox.Size = new System.Drawing.Size( 237, 21 );
-            this.classComboBox.TabIndex = 1;
+            this.classComboBox.TabIndex = 9;
             // 
             // classLabel
             // 
@@ -777,6 +780,9 @@ namespace LionEditor
             this.tableLayoutPanel5.Controls.Add( this.levelSpinner, 1, 1 );
             this.tableLayoutPanel5.Controls.Add( this.hpSpinner, 3, 2 );
             this.tableLayoutPanel5.Controls.Add( this.mpSpinner, 3, 3 );
+            this.tableLayoutPanel5.Controls.Add( this.unavailableCheckbox, 0, 2 );
+            this.tableLayoutPanel5.Controls.Add( this.button1, 1, 3 );
+            this.tableLayoutPanel5.Controls.Add( this.genderComboBox, 0, 3 );
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point( 3, 3 );
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -821,7 +827,7 @@ namespace LionEditor
             this.spriteSetCombo.Location = new System.Drawing.Point( 3, 3 );
             this.spriteSetCombo.Name = "spriteSetCombo";
             this.spriteSetCombo.Size = new System.Drawing.Size( 303, 21 );
-            this.spriteSetCombo.TabIndex = 2;
+            this.spriteSetCombo.TabIndex = 1;
             // 
             // expLabel
             // 
@@ -871,7 +877,7 @@ namespace LionEditor
             0} );
             this.levelSpinner.Name = "levelSpinner";
             this.levelSpinner.Size = new System.Drawing.Size( 48, 20 );
-            this.levelSpinner.TabIndex = 4;
+            this.levelSpinner.TabIndex = 2;
             this.levelSpinner.Value = new decimal( new int[] {
             1,
             0,
@@ -894,7 +900,7 @@ namespace LionEditor
             0} );
             this.hpSpinner.Name = "hpSpinner";
             this.hpSpinner.Size = new System.Drawing.Size( 79, 20 );
-            this.hpSpinner.TabIndex = 7;
+            this.hpSpinner.TabIndex = 6;
             this.hpSpinner.Value = new decimal( new int[] {
             1,
             0,
@@ -912,7 +918,30 @@ namespace LionEditor
             0} );
             this.mpSpinner.Name = "mpSpinner";
             this.mpSpinner.Size = new System.Drawing.Size( 79, 20 );
-            this.mpSpinner.TabIndex = 6;
+            this.mpSpinner.TabIndex = 7;
+            // 
+            // unavailableCheckbox
+            // 
+            this.unavailableCheckbox.AutoSize = true;
+            this.tableLayoutPanel5.SetColumnSpan( this.unavailableCheckbox, 2 );
+            this.unavailableCheckbox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.unavailableCheckbox.Location = new System.Drawing.Point( 69, 55 );
+            this.unavailableCheckbox.Name = "unavailableCheckbox";
+            this.unavailableCheckbox.Size = new System.Drawing.Size( 82, 20 );
+            this.unavailableCheckbox.TabIndex = 3;
+            this.unavailableCheckbox.Text = "Unavailable";
+            this.unavailableCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point( 80, 81 );
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size( 71, 21 );
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Jobs";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel6
             // 
@@ -1243,7 +1272,7 @@ namespace LionEditor
             0} );
             this.speedSpinner.Name = "speedSpinner";
             this.speedSpinner.Size = new System.Drawing.Size( 52, 20 );
-            this.speedSpinner.TabIndex = 24;
+            this.speedSpinner.TabIndex = 13;
             // 
             // paSpinner
             // 
@@ -1257,7 +1286,7 @@ namespace LionEditor
             0} );
             this.paSpinner.Name = "paSpinner";
             this.paSpinner.Size = new System.Drawing.Size( 56, 20 );
-            this.paSpinner.TabIndex = 25;
+            this.paSpinner.TabIndex = 14;
             // 
             // maSpinner
             // 
@@ -1271,7 +1300,15 @@ namespace LionEditor
             0} );
             this.maSpinner.Name = "maSpinner";
             this.maSpinner.Size = new System.Drawing.Size( 56, 20 );
-            this.maSpinner.TabIndex = 26;
+            this.maSpinner.TabIndex = 15;
+            // 
+            // genderComboBox
+            // 
+            this.genderComboBox.FormattingEnabled = true;
+            this.genderComboBox.Location = new System.Drawing.Point( 3, 81 );
+            this.genderComboBox.Name = "genderComboBox";
+            this.genderComboBox.Size = new System.Drawing.Size( 71, 21 );
+            this.genderComboBox.TabIndex = 8;
             // 
             // CharacterEditor
             // 
@@ -1356,6 +1393,9 @@ namespace LionEditor
         private System.Windows.Forms.NumericUpDown speedSpinner;
         private System.Windows.Forms.NumericUpDown paSpinner;
         private System.Windows.Forms.NumericUpDown maSpinner;
+        private System.Windows.Forms.CheckBox unavailableCheckbox;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox genderComboBox;
 
     }
 }

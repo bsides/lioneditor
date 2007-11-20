@@ -47,7 +47,7 @@ namespace LionEditor
         {
             // HACK: find a better way to do this
             ignoreChanges = true;
-
+            unavailableCheckbox.Checked = character.OnProposition;
             rightHandCombo.SelectedIndex = (rightHandCombo.DataSource as List<Item>).IndexOf( character.RightHand );
             rightShieldCombo.SelectedIndex = (rightShieldCombo.DataSource as List<Item>).IndexOf( character.RightShield );
             leftHandCombo.SelectedIndex = (leftHandCombo.DataSource as List<Item>).IndexOf( character.LeftHand );
@@ -171,11 +171,19 @@ namespace LionEditor
             AssignComboBoxItems();
 
             nameTextBox.Validating += new CancelEventHandler( nameTextBox_Validating );
-            System.IO.FileStream stream = new System.IO.FileStream( "testCharacter.hex", System.IO.FileMode.Open );
-            byte[] bytes = new byte[256];
-            stream.Read( bytes, 0, 256 );
-            stream.Close();
-            Character = new Character( bytes );
+
+            if( LicenseManager.UsageMode != LicenseUsageMode.Designtime )
+            {
+                System.IO.FileStream stream = new System.IO.FileStream( "testCharacter.hex", System.IO.FileMode.Open );
+                byte[] bytes = new byte[256];
+                stream.Read( bytes, 0, 256 );
+                stream.Close();
+                Character = new Character( bytes );
+            }
+            else
+            {
+                Character = new Character( 0 );
+            }
 
             UpdateView();
             SetupEvents();
@@ -183,6 +191,11 @@ namespace LionEditor
 
         private void SetupEvents()
         {
+            unavailableCheckbox.CheckedChanged +=
+                delegate( object sender, EventArgs e )
+                {
+                    character.OnProposition = unavailableCheckbox.Checked;
+                };
             classComboBox.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
@@ -483,6 +496,5 @@ namespace LionEditor
                 e.Cancel = true;
             }
         }
-
     }
 }

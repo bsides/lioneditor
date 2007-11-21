@@ -45,6 +45,7 @@ namespace LionEditor
 
         private void UpdateView()
         {
+            this.SuspendLayout();
             // HACK: find a better way to do this
             ignoreChanges = true;
             unavailableCheckbox.Checked = character.OnProposition;
@@ -87,6 +88,7 @@ namespace LionEditor
             UpdateAEV();
 
             ignoreChanges = false;
+            this.ResumeLayout();
         }
 
         private void UpdateRightWeapon()

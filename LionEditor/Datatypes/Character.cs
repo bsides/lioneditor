@@ -726,6 +726,11 @@ namespace LionEditor
             }
             destination[i + start] = 0xFE;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class BadCharacterDataException : Exception

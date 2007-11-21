@@ -202,6 +202,10 @@ namespace LionEditor
                 CopyArray( file, charBytes, 0x48C + i * 0x100, 0x100 );
                 try
                 {
+                    if( charBytes[1] == 0xFF )
+                    {
+                        throw new BadCharacterDataException();
+                    }
                     Characters[i] = new Character( charBytes );
                 }
                 catch( Exception e )
@@ -209,6 +213,7 @@ namespace LionEditor
                     if( e is BadCharacterDataException )
                     {
                         Characters[i] = new Character( i );
+                        Characters[i].Index = 0xFF;
                     }
                     else
                     {
@@ -222,11 +227,20 @@ namespace LionEditor
                 CopyArray( file, guestBytes, 0x1C8C + i * 0x100, 0x100 );
                 try
                 {
+                    if( guestBytes[1] == 0xFF )
+                    {
+                        throw new BadCharacterDataException();
+                    }
                     Guests[i] = new Character( guestBytes );
                 }
                 catch( Exception e )
                 {
-                    if( !(e is BadCharacterDataException) )
+                    if( e is BadCharacterDataException )
+                    {
+                        Guests[i] = new Character( i );
+                        Guests[i].Index = 0xFF;
+                    }
+                    else
                     {
                         throw;
                     }

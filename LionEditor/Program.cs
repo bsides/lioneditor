@@ -33,7 +33,7 @@ namespace LionEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new LionEditor() );
+            Application.Run( new MainForm() );
         }
     }
 }

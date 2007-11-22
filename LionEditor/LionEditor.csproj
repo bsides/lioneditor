@@ -36,10 +36,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterEditor.cs">
+    <Compile Include="Editors\CharacterEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CharacterEditor.Designer.cs">
+    <Compile Include="Editors\CharacterEditor.Designer.cs">
       <DependentUpon>CharacterEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Datatypes\Ability.cs" />
@@ -50,29 +50,29 @@
     <Compile Include="Datatypes\Savegame.cs" />
     <Compile Include="Datatypes\SecondaryAction.cs" />
     <Compile Include="Datatypes\SpriteSet.cs" />
-    <Compile Include="LionEditor.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LionEditor.Designer.cs">
-      <DependentUpon>LionEditor.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Datatypes\Item.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CharacterEditor.resx">
+    <EmbeddedResource Include="Editors\CharacterEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CharacterEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LionEditor.resx">
+    <EmbeddedResource Include="MainForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>LionEditor.cs</DependentUpon>
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SavegameEditor.resx">
+    <EmbeddedResource Include="Editors\SavegameEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SavegameEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,10 +97,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Datatypes\Zodiac.cs" />
-    <Compile Include="SavegameEditor.cs">
+    <Compile Include="Editors\SavegameEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SavegameEditor.Designer.cs">
+    <Compile Include="Editors\SavegameEditor.Designer.cs">
       <DependentUpon>SavegameEditor.cs</DependentUpon>
     </Compile>
   </ItemGroup>

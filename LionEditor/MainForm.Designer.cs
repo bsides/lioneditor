@@ -19,7 +19,7 @@
 
 namespace LionEditor
 {
-    partial class LionEditor
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -48,38 +48,28 @@ namespace LionEditor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label label1;
-            this.mainMenu1 = new System.Windows.Forms.MainMenu( this.components );
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
+            this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.toolBar1 = new System.Windows.Forms.ToolBar();
+            this.openButton = new System.Windows.Forms.ToolBarButton();
+            this.saveButton = new System.Windows.Forms.ToolBarButton();
+            this.toolBarIcons = new System.Windows.Forms.ImageList( this.components );
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.savegameEditor1 = new SavegameEditor();
-            label1 = new System.Windows.Forms.Label();
+            this.savegameEditor1 = new LionEditor.SavegameEditor();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // mainMenu
             // 
-            label1.AutoSize = true;
-            label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            label1.Location = new System.Drawing.Point( 0, 0 );
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size( 23, 13 );
-            label1.TabIndex = 0;
-            label1.Text = "File";
-            label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // mainMenu1
-            // 
-            this.mainMenu1.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.menuItem1,
             this.menuItem2,
             this.menuItem3} );
@@ -102,6 +92,7 @@ namespace LionEditor
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point( 0, 0 );
             this.splitContainer1.Name = "splitContainer1";
@@ -109,84 +100,111 @@ namespace LionEditor
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add( this.splitContainer2 );
+            this.splitContainer1.Panel1.Controls.Add( this.comboBox1 );
+            this.splitContainer1.Panel1.Controls.Add( this.toolBar1 );
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add( this.savegameEditor1 );
-            this.splitContainer1.Size = new System.Drawing.Size( 738, 496 );
-            this.splitContainer1.SplitterDistance = 25;
+            this.splitContainer1.Size = new System.Drawing.Size( 738, 527 );
+            this.splitContainer1.SplitterDistance = 46;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.TabStop = false;
             // 
-            // splitContainer2
+            // toolBar1
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.IsSplitterFixed = true;
-            this.splitContainer2.Location = new System.Drawing.Point( 0, 0 );
-            this.splitContainer2.Name = "splitContainer2";
+            this.toolBar1.Buttons.AddRange( new System.Windows.Forms.ToolBarButton[] {
+            this.openButton,
+            this.saveButton} );
+            this.toolBar1.ButtonSize = new System.Drawing.Size( 32, 32 );
+            this.toolBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolBar1.DropDownArrows = true;
+            this.toolBar1.ImageList = this.toolBarIcons;
+            this.toolBar1.Location = new System.Drawing.Point( 0, 0 );
+            this.toolBar1.Name = "toolBar1";
+            this.toolBar1.ShowToolTips = true;
+            this.toolBar1.Size = new System.Drawing.Size( 738, 44 );
+            this.toolBar1.TabIndex = 0;
+            this.toolBar1.Wrappable = false;
             // 
-            // splitContainer2.Panel1
+            // openButton
             // 
-            this.splitContainer2.Panel1.Controls.Add( label1 );
+            this.openButton.ImageIndex = 3;
+            this.openButton.Name = "openButton";
             // 
-            // splitContainer2.Panel2
+            // saveButton
             // 
-            this.splitContainer2.Panel2.Controls.Add( this.comboBox1 );
-            this.splitContainer2.Size = new System.Drawing.Size( 738, 25 );
-            this.splitContainer2.SplitterDistance = 45;
-            this.splitContainer2.SplitterWidth = 1;
-            this.splitContainer2.TabIndex = 0;
-            this.splitContainer2.TabStop = false;
+            this.saveButton.ImageIndex = 0;
+            this.saveButton.Name = "saveButton";
+            // 
+            // toolBarIcons
+            // 
+            this.toolBarIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject( "toolBarIcons.ImageStream" )));
+            this.toolBarIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.toolBarIcons.Images.SetKeyName( 0, "save-32x32.png" );
+            this.toolBarIcons.Images.SetKeyName( 1, "copy-32x32.png" );
+            this.toolBarIcons.Images.SetKeyName( 2, "cut-32x32.png" );
+            this.toolBarIcons.Images.SetKeyName( 3, "open-32x32.png" );
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "*.SYS";
+            this.openFileDialog.Filter = "FFTA.SYS|FFTA.SYS";
+            this.openFileDialog.Title = "Open file...";
             // 
             // comboBox1
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point( 0, 0 );
+            this.comboBox1.Location = new System.Drawing.Point( 149, 13 );
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size( 121, 21 );
-            this.comboBox1.TabIndex = 0;
+            this.comboBox1.Size = new System.Drawing.Size( 303, 21 );
+            this.comboBox1.TabIndex = 1;
             // 
             // savegameEditor1
             // 
             this.savegameEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.savegameEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.savegameEditor1.Name = "savegameEditor1";
-            this.savegameEditor1.Size = new System.Drawing.Size( 738, 470 );
+            this.savegameEditor1.Size = new System.Drawing.Size( 738, 480 );
             this.savegameEditor1.TabIndex = 0;
             // 
-            // LionEditor
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 738, 496 );
+            this.ClientSize = new System.Drawing.Size( 738, 527 );
             this.Controls.Add( this.splitContainer1 );
-            this.Menu = this.mainMenu1;
-            this.Name = "LionEditor";
+            this.MaximumSize = new System.Drawing.Size( 746, 554 );
+            this.Menu = this.mainMenu;
+            this.MinimumSize = new System.Drawing.Size( 746, 554 );
+            this.Name = "MainForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Form1";
             this.splitContainer1.Panel1.ResumeLayout( false );
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout( false );
             this.splitContainer1.ResumeLayout( false );
-            this.splitContainer2.Panel1.ResumeLayout( false );
-            this.splitContainer2.Panel1.PerformLayout();
-            this.splitContainer2.Panel2.ResumeLayout( false );
-            this.splitContainer2.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MainMenu mainMenu1;
+        private System.Windows.Forms.MainMenu mainMenu;
         private System.Windows.Forms.MenuItem menuItem1;
         private System.Windows.Forms.MenuItem menuItem2;
         private System.Windows.Forms.MenuItem menuItem3;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ComboBox comboBox1;
         private SavegameEditor savegameEditor1;
+        private System.Windows.Forms.ToolBar toolBar1;
+        private System.Windows.Forms.ImageList toolBarIcons;
+        private System.Windows.Forms.ToolBarButton saveButton;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolBarButton openButton;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

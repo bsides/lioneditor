@@ -486,7 +486,7 @@ namespace LionEditor
                 UnknownOffset03 = charData[3];
                 Gender = (Gender)charData[4];
                 UnknownOffset05 = charData[5];
-                ZodiacSign = (Zodiac)charData[6];
+                ZodiacSign = (Zodiac)(charData[6] & 0xF0);
 
                 SecondaryAction = SecondaryAction.ActionDictionary[charData[7]];
 

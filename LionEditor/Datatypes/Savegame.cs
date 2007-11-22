@@ -355,6 +355,39 @@ namespace LionEditor
         {
             CopyArray( source, destination, sourceStart, 0, length );
         }
+
+        private string Time
+        {
+            get
+            {
+                TimeSpan span = new TimeSpan( Timer * 10000000 );
+                //uint seconds = Timer % 60;
+                //uint minutes = ((Timer - seconds) / 60) % 60;
+                //uint hours = (Timer - seconds - minutes * 60) / 60 / 60;
+                return string.Format( "{0:000}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds );
+            }
+        }
+
+        private string Date
+        {
+            get 
+            {
+                return string.Format( "{0} {1}", SaveScreenDay, SaveScreenMonth );
+            }
+        }
+        
+        private string Location
+        {
+            get
+            {
+                return LionEditor.Location.AllLocations[SaveScreenMapPosition].ToString();
+            }
+        }
+        
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}) [{2}] ~{3}~", SaveName, Time, Date, Location);
+        }
     }
 
 

@@ -1,3 +1,22 @@
+/*
+	Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+	This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 namespace LionEditor
 {
     partial class SavegameEditor
@@ -29,42 +48,19 @@ namespace LionEditor
         private void InitializeComponent()
         {
             System.Windows.Forms.SplitContainer splitContainer3;
+            this.characterSelector = new System.Windows.Forms.CheckedListBox();
+            this.characterEditor1 = new LionEditor.CharacterEditor();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.charactersTab = new System.Windows.Forms.TabPage();
-            this.characterSelector = new System.Windows.Forms.CheckedListBox();
-            this.characterEditor1 = new CharacterEditor();
             this.braveStoryTab = new System.Windows.Forms.TabPage();
             this.inventoryTab = new System.Windows.Forms.TabPage();
             splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.tabControl1.SuspendLayout();
-            this.charactersTab.SuspendLayout();
             splitContainer3.Panel1.SuspendLayout();
             splitContainer3.Panel2.SuspendLayout();
             splitContainer3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.charactersTab.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add( this.charactersTab );
-            this.tabControl1.Controls.Add( this.braveStoryTab );
-            this.tabControl1.Controls.Add( this.inventoryTab );
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size( 725, 476 );
-            this.tabControl1.TabIndex = 1;
-            // 
-            // charactersTab
-            // 
-            this.charactersTab.Controls.Add( splitContainer3 );
-            this.charactersTab.Location = new System.Drawing.Point( 4, 22 );
-            this.charactersTab.Name = "charactersTab";
-            this.charactersTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.charactersTab.Size = new System.Drawing.Size( 717, 450 );
-            this.charactersTab.TabIndex = 0;
-            this.charactersTab.Text = "Characters";
-            this.charactersTab.UseVisualStyleBackColor = true;
             // 
             // splitContainer3
             // 
@@ -102,6 +98,29 @@ namespace LionEditor
             this.characterEditor1.Size = new System.Drawing.Size( 577, 444 );
             this.characterEditor1.TabIndex = 0;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add( this.charactersTab );
+            this.tabControl1.Controls.Add( this.braveStoryTab );
+            this.tabControl1.Controls.Add( this.inventoryTab );
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size( 725, 476 );
+            this.tabControl1.TabIndex = 1;
+            // 
+            // charactersTab
+            // 
+            this.charactersTab.Controls.Add( splitContainer3 );
+            this.charactersTab.Location = new System.Drawing.Point( 4, 22 );
+            this.charactersTab.Name = "charactersTab";
+            this.charactersTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.charactersTab.Size = new System.Drawing.Size( 717, 450 );
+            this.charactersTab.TabIndex = 0;
+            this.charactersTab.Text = "Characters";
+            this.charactersTab.UseVisualStyleBackColor = true;
+            // 
             // braveStoryTab
             // 
             this.braveStoryTab.Location = new System.Drawing.Point( 4, 22 );
@@ -129,11 +148,11 @@ namespace LionEditor
             this.Controls.Add( this.tabControl1 );
             this.Name = "SavegameEditor";
             this.Size = new System.Drawing.Size( 725, 476 );
-            this.tabControl1.ResumeLayout( false );
-            this.charactersTab.ResumeLayout( false );
             splitContainer3.Panel1.ResumeLayout( false );
             splitContainer3.Panel2.ResumeLayout( false );
             splitContainer3.ResumeLayout( false );
+            this.tabControl1.ResumeLayout( false );
+            this.charactersTab.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }

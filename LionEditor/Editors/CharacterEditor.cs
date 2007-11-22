@@ -39,7 +39,10 @@ namespace LionEditor
             set
             {
                 character = value;
-                UpdateView();
+                if( value != null )
+                {
+                    UpdateView();
+                }
             }
         }
 
@@ -197,6 +200,7 @@ namespace LionEditor
                 delegate( object sender, EventArgs e )
                 {
                     character.OnProposition = unavailableCheckbox.Checked;
+                    FireDataChangedEvent();
                 };
             classComboBox.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
@@ -213,26 +217,31 @@ namespace LionEditor
                     UpdateHPValue();
                     UpdateMPValue();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             nameTextBox.Validated +=
                 delegate( object sender, EventArgs e )
                 {
                     character.Name = nameTextBox.Text;
+                    FireDataChangedEvent();
                 };
             spriteSetCombo.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.SpriteSet = (SpriteSet)spriteSetCombo.SelectedItem;
+                    FireDataChangedEvent();
                 };
             levelSpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.Level = (byte)levelSpinner.Value;
+                    FireDataChangedEvent();
                 };
             experienceSpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.Experience = (byte)experienceSpinner.Value;
+                    FireDataChangedEvent();
                 };
             hpSpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -240,6 +249,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.HP = (uint)hpSpinner.Value;
+                        FireDataChangedEvent();
                     }
                 };
             speedSpinner.ValueChanged +=
@@ -248,6 +258,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.Speed = (uint)speedSpinner.Value;
+                        FireDataChangedEvent();
                     }
                 };
             mpSpinner.ValueChanged +=
@@ -256,6 +267,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.MP = (uint)mpSpinner.Value;
+                        FireDataChangedEvent();
                     }
                 };
             paSpinner.ValueChanged +=
@@ -264,6 +276,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.PA = (uint)paSpinner.Value;
+                        FireDataChangedEvent();
                     }
                 };
             maSpinner.ValueChanged +=
@@ -272,22 +285,26 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.MA = (uint)maSpinner.Value;
+                        FireDataChangedEvent();
                     }
                 };
             zodiacComboBox.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.ZodiacSign = (Zodiac)zodiacComboBox.SelectedValue;
+                    FireDataChangedEvent();
                 };
             braverySpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.Brave = (byte)braverySpinner.Value;
+                    FireDataChangedEvent();
                 };
             faithSpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.Faith = (byte)faithSpinner.Value;
+                    FireDataChangedEvent();
                 };
 
             rightHandCombo.SelectedValueChanged +=
@@ -306,6 +323,7 @@ namespace LionEditor
                     UpdateSEV();
                     UpdateAEV();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             rightShieldCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -322,6 +340,7 @@ namespace LionEditor
                     UpdateSEV();
                     UpdateAEV();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             leftHandCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -339,6 +358,7 @@ namespace LionEditor
                     UpdateSEV();
                     UpdateAEV();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             leftShieldCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -355,6 +375,7 @@ namespace LionEditor
                     UpdateSEV();
                     UpdateAEV();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             headCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -371,6 +392,7 @@ namespace LionEditor
                     UpdateSEV();
                     UpdateAEV();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             bodyCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -387,6 +409,7 @@ namespace LionEditor
                     UpdateSEV();
                     UpdateAEV();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             accessoryCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -403,11 +426,13 @@ namespace LionEditor
                     UpdateSEV();
                     UpdateAEV();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             secondaryCombo.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     character.SecondaryAction = (SecondaryAction)secondaryCombo.SelectedItem;
+                    FireDataChangedEvent();
                 };
             reactionCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -417,6 +442,7 @@ namespace LionEditor
                     UpdateMove();
                     UpdateJump();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             supportCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -426,6 +452,7 @@ namespace LionEditor
                     UpdateMove();
                     UpdateJump();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
             movementCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -435,6 +462,7 @@ namespace LionEditor
                     UpdateMove();
                     UpdateJump();
                     ignoreChanges = false;
+                    FireDataChangedEvent();
                 };
         
         }
@@ -515,6 +543,16 @@ namespace LionEditor
             if( c.SelectedItem == null )
             {
                 e.Cancel = true;
+            }
+        }
+
+        public event EventHandler DataChangedEvent;
+
+        private void FireDataChangedEvent()
+        {
+            if( DataChangedEvent != null )
+            {
+                DataChangedEvent( this, EventArgs.Empty );
             }
         }
     }

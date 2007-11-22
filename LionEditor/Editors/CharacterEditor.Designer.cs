@@ -115,6 +115,7 @@ namespace LionEditor
             this.mpSpinner = new System.Windows.Forms.NumericUpDown();
             this.unavailableCheckbox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.genderComboBox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.leftLabel = new System.Windows.Forms.Label();
             this.cevPhysical = new System.Windows.Forms.Label();
@@ -132,7 +133,6 @@ namespace LionEditor
             this.speedSpinner = new System.Windows.Forms.NumericUpDown();
             this.paSpinner = new System.Windows.Forms.NumericUpDown();
             this.maSpinner = new System.Windows.Forms.NumericUpDown();
-            this.genderComboBox = new System.Windows.Forms.ComboBox();
             rightHandLabel = new System.Windows.Forms.Label();
             rightShieldLabel = new System.Windows.Forms.Label();
             leftHandLabel = new System.Windows.Forms.Label();
@@ -943,6 +943,14 @@ namespace LionEditor
             this.button1.Text = "Jobs";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // genderComboBox
+            // 
+            this.genderComboBox.FormattingEnabled = true;
+            this.genderComboBox.Location = new System.Drawing.Point( 3, 81 );
+            this.genderComboBox.Name = "genderComboBox";
+            this.genderComboBox.Size = new System.Drawing.Size( 71, 21 );
+            this.genderComboBox.TabIndex = 8;
+            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 10;
@@ -1301,14 +1309,6 @@ namespace LionEditor
             this.maSpinner.Name = "maSpinner";
             this.maSpinner.Size = new System.Drawing.Size( 56, 20 );
             this.maSpinner.TabIndex = 15;
-            // 
-            // genderComboBox
-            // 
-            this.genderComboBox.FormattingEnabled = true;
-            this.genderComboBox.Location = new System.Drawing.Point( 3, 81 );
-            this.genderComboBox.Name = "genderComboBox";
-            this.genderComboBox.Size = new System.Drawing.Size( 71, 21 );
-            this.genderComboBox.TabIndex = 8;
             // 
             // CharacterEditor
             // 

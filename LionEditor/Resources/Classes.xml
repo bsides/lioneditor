@@ -3224,8 +3224,8 @@
     <hpm>80</hpm>
     <mpm>90</mpm>
     <spm>100</spm>
-    <pam>134</pam>
-    <mam>79</mam>
+    <pam>140</pam>
+    <mam>80</mam>
     <move>3</move>
     <jump>3</jump>
     <cev>0</cev>
@@ -3245,9 +3245,9 @@
     <skillset>00</skillset>
     <hpm>50</hpm>
     <mpm>50</mpm>
-    <spm>94</spm>
-    <pam>43</pam>
-    <mam>47</mam>
+    <spm>100</spm>
+    <pam>50</pam>
+    <mam>50</mam>
     <move>3</move>
     <jump>3</jump>
     <cev>5</cev>
@@ -3266,11 +3266,11 @@
     <name>Sky Pirate</name>
     <command>Piracy</command>
     <skillset>E1</skillset>
-    <hpm>109</hpm>
-    <mpm>79</mpm>
-    <spm>114</spm>
-    <pam>110</pam>
-    <mam>97</mam>
+    <hpm>110</hpm>
+    <mpm>80</mpm>
+    <spm>120</spm>
+    <pam>114</pam>
+    <mam>100</mam>
     <move>4</move>
     <jump>4</jump>
     <cev>25</cev>
@@ -3288,11 +3288,11 @@
     <name>Game Hunter</name>
     <command>Huntcraft</command>
     <skillset>E2</skillset>
-    <hpm>119</hpm>
-    <mpm>104</mpm>
-    <spm>95</spm>
-    <pam>109</pam>
-    <mam>90</mam>
+    <hpm>120</hpm>
+    <mpm>105</mpm>
+    <spm>100</spm>
+    <pam>110</pam>
+    <mam>100</mam>
     <move>4</move>
     <jump>3</jump>
     <cev>10</cev>
@@ -3310,11 +3310,11 @@
     <name>Deathknight</name>
     <command>Fell Sword</command>
     <skillset>27</skillset>
-    <hpm>359</hpm>
-    <mpm>209</mpm>
-    <spm>155</spm>
-    <pam>190</pam>
-    <mam>140</mam>
+    <hpm>150</hpm>
+    <mpm>100</mpm>
+    <spm>120</spm>
+    <pam>100</pam>
+    <mam>90</mam>
     <move>3</move>
     <jump>3</jump>
     <cev>15</cev>

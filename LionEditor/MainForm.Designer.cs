@@ -54,14 +54,14 @@ namespace LionEditor
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.openButton = new System.Windows.Forms.ToolBarButton();
             this.saveButton = new System.Windows.Forms.ToolBarButton();
             this.toolBarIcons = new System.Windows.Forms.ImageList( this.components );
+            this.savegameEditor1 = new LionEditor.SavegameEditor();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.savegameEditor1 = new LionEditor.SavegameEditor();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -112,6 +112,15 @@ namespace LionEditor
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.TabStop = false;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point( 149, 13 );
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size( 303, 21 );
+            this.comboBox1.TabIndex = 1;
+            // 
             // toolBar1
             // 
             this.toolBar1.Buttons.AddRange( new System.Windows.Forms.ToolBarButton[] {
@@ -135,6 +144,7 @@ namespace LionEditor
             // 
             // saveButton
             // 
+            this.saveButton.Enabled = false;
             this.saveButton.ImageIndex = 0;
             this.saveButton.Name = "saveButton";
             // 
@@ -147,21 +157,6 @@ namespace LionEditor
             this.toolBarIcons.Images.SetKeyName( 2, "cut-32x32.png" );
             this.toolBarIcons.Images.SetKeyName( 3, "open-32x32.png" );
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.DefaultExt = "*.SYS";
-            this.openFileDialog.Filter = "FFTA.SYS|FFTA.SYS";
-            this.openFileDialog.Title = "Open file...";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point( 149, 13 );
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size( 303, 21 );
-            this.comboBox1.TabIndex = 1;
-            // 
             // savegameEditor1
             // 
             this.savegameEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -169,6 +164,12 @@ namespace LionEditor
             this.savegameEditor1.Name = "savegameEditor1";
             this.savegameEditor1.Size = new System.Drawing.Size( 738, 480 );
             this.savegameEditor1.TabIndex = 0;
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "*.SYS";
+            this.openFileDialog.Filter = "FFTA.SYS|FFTA.SYS";
+            this.openFileDialog.Title = "Open file...";
             // 
             // MainForm
             // 

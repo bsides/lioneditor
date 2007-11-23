@@ -1472,6 +1472,7 @@
   </Ability>
   <Ability value="484">
     <name>HP Boost</name>
+    <hpMultiplier>20</hpMultiplier>
   </Ability>
   <Ability value="485">
     <name>Vehemence</name>

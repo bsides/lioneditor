@@ -43,20 +43,26 @@ namespace LionEditor
         	set { m_Name = value; }
         }
 
-        private uint m_JumpBonus;
+        private uint m_JumpBonus = 0;
         public uint JumpBonus
         {
         	get { return m_JumpBonus; }
         	set { m_JumpBonus = value; }
         }
 
-        private uint m_MoveBonus;
+        private uint m_MoveBonus = 0;
         public uint MoveBonus
         {
         	get { return m_MoveBonus; }
         	set { m_MoveBonus = value; }
         }
 
+        private uint hpMultiplier = 0;
+        public uint HPMultiplier
+        {
+            get { return hpMultiplier; }
+            set { hpMultiplier = value; }
+        }
 
 
         public Ability( UInt16 value )
@@ -124,6 +130,8 @@ namespace LionEditor
                         if( moveJumpNode != null ) { newItem.MoveBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
                         moveJumpNode = i.SelectSingleNode( "jump" );
                         if( moveJumpNode != null ) { newItem.JumpBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
+                        moveJumpNode = i.SelectSingleNode( "hpMultiplier" );
+                        if( moveJumpNode != null ) { newItem.HPMultiplier = Convert.ToUInt32( moveJumpNode.InnerText ); }
 
                         abilityList.Add( newItem );
                     }

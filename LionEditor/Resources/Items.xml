@@ -224,7 +224,7 @@
   <Item offset="35" type="Hand" subtype="KnightsSword">
     <name>Excalibur</name>
     <power>21</power>
-    <blockRate>30</blockRate>
+    <blockRate>35</blockRate>
   </Item>
   <Item offset="36" type="Hand" subtype="KnightsSword">
     <name>Ragnarok</name>

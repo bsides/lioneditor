@@ -287,7 +287,7 @@ namespace LionEditor
         {
         	get 
             {
-                return (uint)(Job.Move + ReactAbility.MoveBonus + SupportAbility.MoveBonus + MovementAbility.MoveBonus);
+                return (uint)(Job.Move + ReactAbility.MoveBonus + SupportAbility.MoveBonus + MovementAbility.MoveBonus + Accessory.MoveBonus + LeftHand.MoveBonus + LeftShield.MoveBonus + RightHand.MoveBonus + RightShield.MoveBonus + Head.MoveBonus + Body.MoveBonus);
             }
         }
 
@@ -295,7 +295,7 @@ namespace LionEditor
         {
             get
             {
-                return (uint)(Job.Jump + ReactAbility.JumpBonus + SupportAbility.JumpBonus + MovementAbility.JumpBonus);
+                return (uint)(Job.Jump + ReactAbility.JumpBonus + SupportAbility.JumpBonus + MovementAbility.JumpBonus + Accessory.JumpBonus + Head.JumpBonus + RightHand.JumpBonus + RightShield.JumpBonus + LeftHand.JumpBonus + LeftShield.JumpBonus + Body.JumpBonus);
             }
         }
 
@@ -347,11 +347,11 @@ namespace LionEditor
         {
         	get 
             {
-                return (uint)(Job.ActualMA( RawMA ) + RightHand.MABonus + RightShield.MABonus + LeftHand.PABonus + LeftShield.PABonus + Head.PABonus + Body.PABonus + Accessory.PABonus);
+                return (uint)(Job.ActualMA( RawMA ) + RightHand.MABonus + RightShield.MABonus + LeftHand.MABonus + LeftShield.MABonus + Head.MABonus + Body.MABonus + Accessory.MABonus);
             }
         	set 
             {
-                RawMA = Job.GetRawMAFromActualMA( (int)(value - (RightHand.MABonus + RightShield.MABonus + LeftHand.PABonus + LeftShield.PABonus + Head.PABonus + Body.PABonus + Accessory.PABonus)) );
+                RawMA = Job.GetRawMAFromActualMA( (int)(value - (RightHand.MABonus + RightShield.MABonus + LeftHand.MABonus + LeftShield.MABonus + Head.MABonus + Body.MABonus + Accessory.MABonus)) );
             }
         }
 
@@ -359,11 +359,12 @@ namespace LionEditor
         {
             get
             {
-                return (uint)(Job.ActualHP( RawHP ) + RightHand.HPBonus + RightShield.HPBonus + LeftHand.HPBonus + LeftShield.HPBonus + Head.HPBonus + Body.HPBonus + Accessory.HPBonus);
+                
+                return (uint)(Job.ActualHP( RawHP ) * (100 + SupportAbility.HPMultiplier + ReactAbility.HPMultiplier + MovementAbility.HPMultiplier) / 100 + RightHand.HPBonus + RightShield.HPBonus + LeftHand.HPBonus + LeftShield.HPBonus + Head.HPBonus + Body.HPBonus + Accessory.HPBonus);
             }
             set
             {
-                RawHP = Job.GetRawHPFromActualHP( (int)(value - (RightHand.HPBonus + RightShield.HPBonus + LeftHand.HPBonus + LeftShield.HPBonus + Head.HPBonus + Body.HPBonus + Accessory.HPBonus) ));
+                RawHP = Job.GetRawHPFromActualHP( (int)(value * 100 / (100 + SupportAbility.HPMultiplier + ReactAbility.HPMultiplier + MovementAbility.HPMultiplier) - (RightHand.HPBonus + RightShield.HPBonus + LeftHand.HPBonus + LeftShield.HPBonus + Head.HPBonus + Body.HPBonus + Accessory.HPBonus)) );
             }
         }
 

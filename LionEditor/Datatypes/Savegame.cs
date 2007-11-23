@@ -26,7 +26,7 @@ namespace LionEditor
 {
     public class Savegame
     {
-        const uint saveFileSize = 0x2A3C;
+        public const uint saveFileSize = 0x2A3C;
 
         byte[] offset0x00 = new byte[257];
         byte[] saveNameRaw = new byte[15];

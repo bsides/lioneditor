@@ -252,6 +252,7 @@
         <skill>Faerie</skill>
         <skill>Lich</skill>
         <skill>Cyclops</skill>
+        <!-- TODO -->
         <skill>------------</skill>
       </action>
       <reaction>
@@ -588,9 +589,6 @@
         <skill>Tailwind</skill>
         <skill>Chant</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Squire">
@@ -605,9 +603,6 @@
         <skill>Chant</skill>
         <skill>Steel</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Squire">
@@ -624,9 +619,6 @@
         <skill>Shout</skill>
         <skill>Ultima</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Squire">
@@ -640,9 +632,6 @@
         <skill>Tailwind</skill>
         <skill>Chant</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Holy Knight">
@@ -656,9 +645,6 @@
         <skill>Divine Ruination</skill>
         <skill>Chant</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Ark Knight">
@@ -670,9 +656,6 @@
         <skill>Crush Weapon</skill>
         <skill>Crush Accessory</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Squire">
@@ -686,9 +669,6 @@
         <skill>Rend Helm</skill>
         <skill>Rend Armor</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Ark Knight" hasCommon="false">
@@ -701,9 +681,6 @@
         <skill>Powersap</skill>
         <skill>Mindsap</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Counter</skill>
         <skill>Counter Tackle</skill>
@@ -732,9 +709,6 @@
         <skill>Crush Weapon</skill>
         <skill>Crush Accessory</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Duke" hasCommon="false">
@@ -762,9 +736,6 @@
         <skill>Aegis</skill>
         <skill>Dispelna</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Sword Saint">
@@ -783,9 +754,6 @@
         <skill>Duskblade</skill>
         <skill>Shadowblade</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="High Confessor" hasCommon="false">
@@ -810,9 +778,6 @@
         <skill>Dragon's Speed</skill>
         <skill>Holy Breath</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Celebrant">
@@ -830,9 +795,6 @@
         <skill>Arise</skill>
         <skill>Esuna</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Fell Knight">
@@ -842,9 +804,6 @@
         <skill>Shadowblade</skill>
         <skill>Duskblade</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Netherseer">
@@ -859,9 +818,6 @@
         <skill>Corporeal Void</skill>
         <skill>Impiety</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Elder" hasCommon="false">
@@ -883,9 +839,6 @@
         <skill>--------</skill>
         <skill>Chant</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Astrologer">
@@ -898,9 +851,6 @@
         <skill>Stone</skill>
         <skill>Salve</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
 
@@ -914,9 +864,6 @@
         <skill>Arm Shot</skill>
         <skill>Seal Evil</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Fell Knight">
@@ -926,9 +873,6 @@
         <skill>Shadowblade</skill>
         <skill>Duskblade</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Cardinal" hasCommon="false">
@@ -952,9 +896,6 @@
         <skill>Celestial Void</skill>
         <skill>Divinity</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Ark Knight">
@@ -966,9 +907,6 @@
         <skill>Osafune</skill>
         <skill>Muramasa</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Commoner" hasCommon="false">
@@ -978,9 +916,6 @@
         <skill>Cure</skill>
         <skill>Chant</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction/>
       <support/>
       <movement/>
@@ -1006,9 +941,6 @@
         <skill>Hallowed Bolt</skill>
         <skill>Divine Ruination</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Templar">
@@ -1032,9 +964,6 @@
         <skill>Break</skill>
         <skill>Vengeance</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="White Knight">
@@ -1045,9 +974,6 @@
         <skill>Cleansing Strike</skill>
         <skill>Northswain's Strike</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Witch of the Coven" hasCommon="false">
@@ -1078,9 +1004,6 @@
         <skill>Crush Weapon</skill>
         <skill>Crush Accessory</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Divine Knight">
@@ -1091,9 +1014,6 @@
         <skill>Crush Helm</skill>
         <skill>Crush Weapon</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Nightblade">
@@ -1109,9 +1029,6 @@
         <skill>Rend Power</skill>
         <skill>Rend Magick</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Sorceror">
@@ -1124,9 +1041,6 @@
         <skill>Unholy Darkness</skill>
         <skill>Arise</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="White Knight">
@@ -1138,9 +1052,6 @@
         <skill>Northswain's Strike</skill>
         <skill>Hallowed Bolt</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Cleric">
@@ -1152,9 +1063,6 @@
         <skill>Ultima</skill>
         <skill>Chant</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Assassin">
@@ -1169,9 +1077,6 @@
         <skill>--------</skill>
         <skill>Charm</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Divine Knight">
@@ -1181,9 +1086,6 @@
         <skill>Crush Armor</skill>
         <skill>Crush Helm</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Cleric">
@@ -1194,9 +1096,6 @@
         <skill>Dispelna</skill>
         <skill>Chant</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="False Saint" hasCommon="false">
@@ -1221,9 +1120,6 @@
         <skill>Omnislash</skill>
         <skill>Cherry Blossom</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Chemist" useCommon="false">
@@ -1246,9 +1142,6 @@
         <skill>Remedy</skill>
         <skill>Phoenix Down</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Auto-Potion</skill>
       </reaction>
@@ -1283,9 +1176,6 @@
         <skill>Esuna</skill>
         <skill>Holy</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Regenerate</skill>
       </reaction>
@@ -1317,9 +1207,6 @@
         <skill>Death</skill>
         <skill>Flare</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Magick Counter</skill>
       </reaction>
@@ -1349,9 +1236,6 @@
         <skill>Repose</skill>
         <skill>Induration</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Absorb MP</skill>
       </reaction>
@@ -1480,9 +1364,6 @@
         <skill>Omnislash</skill>
         <skill>Cherry Blossom</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Gigas" useCommon="false">
@@ -1493,9 +1374,6 @@
         <skill>Petrify</skill>
         <skill>Befuddle</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction/>
       <support/>
       <movement/>
@@ -1514,9 +1392,6 @@
         <skill>Rend Power</skill>
         <skill>Rend Magick</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Counter Tackle</skill>
       </reaction>
@@ -1543,9 +1418,6 @@
       <reaction/>
       <support/>
       <movement/>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Archer" useCommon="false">
@@ -1560,9 +1432,6 @@
         <skill>Aim +7</skill>
         <skill>Aim +10</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Counter Tackle</skill>
       </reaction>
@@ -1585,9 +1454,6 @@
         <skill>Bind</skill>
         <skill>Ague</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction/>
       <support/>
       <movement/>
@@ -1622,9 +1488,6 @@
         <skill>Toad</skill>
         <skill>Death</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Counter Tackle</skill>
       </reaction>
@@ -1650,9 +1513,6 @@
       <reaction/>
       <support/>
       <movement/>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Time Mage" useCommon="false">
@@ -1671,9 +1531,6 @@
         <skill>Gravity</skill>
         <skill>Graviga</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Counter Tackle</skill>
       </reaction>
@@ -1700,9 +1557,6 @@
       <reaction/>
       <support/>
       <movement/>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Mystic" useCommon="false">
@@ -1724,9 +1578,6 @@
         <skill>Repose</skill>
         <skill>Induration</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Counter Tackle</skill>
       </reaction>
@@ -1756,9 +1607,6 @@
         <skill>Salamander</skill>
         <skill>Lich</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Counter Tackle</skill>
       </reaction>
@@ -1781,9 +1629,6 @@
         <skill>Fire Breath</skill>
         <skill>Thunder Breath</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction/>
       <support/>
       <movement/>
@@ -1810,9 +1655,6 @@
         <skill>Stone</skill>
         <skill>Salve</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
     </Job>
 
     <Job name="Knight" useCommon="false">
@@ -1828,9 +1670,6 @@
         <skill>Rend Power</skill>
         <skill>Rend Magick</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Parry</skill>
       </reaction>
@@ -1839,8 +1678,7 @@
         <skill>Equip Shields</skill>
         <skill>Equip Swords</skill>
       </support>
-      <movement>
-      </movement>
+      <movement/>
     </Job>
 
     <Job name="Archer" useCommon="false">
@@ -1856,9 +1694,6 @@
         <skill>Aim +10</skill>
         <skill>Aim +20</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Adrenaline Rush</skill>
         <skill>Archer's Bane</skill>
@@ -1885,9 +1720,6 @@
         <skill>Chakra</skill>
         <skill>Revive</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Critical: Recover HP</skill>
         <skill>Counter</skill>
@@ -1918,9 +1750,6 @@
         <skill>Graviga</skill>
         <skill>Meteor</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Critical: Quick</skill>
         <skill>Mana Shield</skill>
@@ -1955,9 +1784,6 @@
         <!-- TODO -->
         <skill>------------</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Critical: Recover MP</skill>
       </reaction>
@@ -1980,9 +1806,6 @@
         <skill>Steal Accessory</skill>
         <skill>Steal EXP</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Vigilance</skill>
         <skill>Gil Snapper</skill>
@@ -2012,9 +1835,6 @@
         <skill>Insult</skill>
         <skill>Mimic Darlavon</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Earplug</skill>
       </reaction>
@@ -2043,9 +1863,6 @@
         <skill>Wind Blast</skill>
         <skill>Magma Surge</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Nature's Wrath</skill>
       </reaction>
@@ -2075,9 +1892,6 @@
         <skill>Vertical Jump 7</skill>
         <skill>Vertical Jump 8</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Dragonheart</skill>
       </reaction>
@@ -2104,9 +1918,6 @@
         <skill>Masamune</skill>
         <skill>Chirijiraden</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Bonecrusher</skill>
         <skill>Shirahadori</skill>
@@ -2137,9 +1948,6 @@
         <skill>Knight's Sword</skill>
         <skill>Book</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Vanish</skill>
         <skill>Reflexes</skill>
@@ -2165,9 +1973,6 @@
         <skill>Multiple of 4</skill>
         <skill>Multiple of 3</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Cup of Life</skill>
         <skill>Soulbind</skill>
@@ -2192,9 +1997,6 @@
         <skill>Nameless Song</skill>
         <skill>Finale</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Magick Boost</skill>
         <skill>Faith Boost</skill>
@@ -2217,9 +2019,6 @@
         <skill>Forbidden Dance</skill>
         <skill>Last Waltz</skill>
       </action>
-      <reaction/>
-      <support/>
-      <movement/>
       <reaction>
         <skill>Fury</skill>
         <skill>Bravery Boost</skill>

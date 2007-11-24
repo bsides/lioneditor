@@ -1,6 +1,5 @@
 /*
 	Copyright 2007, Joe Davidson <joedavidson@gmail.com>
-	FindProc() adapted from code Copyright (c) 2005 James F <tyranid@gmail.com>
 
 	This file is part of LionEditor.
 
@@ -360,11 +359,12 @@ namespace LionEditor
         {
             get
             {
-                TimeSpan span = new TimeSpan( Timer * 10000000 );
+                TimeSpan span = new TimeSpan( (long)((long)Timer * 10000000) );
+                //TimeSpan span = new TimeSpan(
                 //uint seconds = Timer % 60;
                 //uint minutes = ((Timer - seconds) / 60) % 60;
                 //uint hours = (Timer - seconds - minutes * 60) / 60 / 60;
-                return string.Format( "{0:000}:{1:00}:{2:00}", span.Hours, span.Minutes, span.Seconds );
+                return string.Format( "{0:000}:{1:00}:{2:00}", (int)span.TotalHours, span.Minutes, span.Seconds );
             }
         }
 

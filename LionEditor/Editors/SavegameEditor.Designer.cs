@@ -47,39 +47,39 @@ namespace LionEditor
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.SplitContainer splitContainer3;
+            System.Windows.Forms.SplitContainer splitContainer;
             this.characterSelector = new System.Windows.Forms.CheckedListBox();
-            this.characterEditor1 = new LionEditor.CharacterEditor();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.charactersTab = new System.Windows.Forms.TabPage();
             this.braveStoryTab = new System.Windows.Forms.TabPage();
             this.inventoryTab = new System.Windows.Forms.TabPage();
-            splitContainer3 = new System.Windows.Forms.SplitContainer();
-            splitContainer3.Panel1.SuspendLayout();
-            splitContainer3.Panel2.SuspendLayout();
-            splitContainer3.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.characterEditor = new LionEditor.CharacterEditor();
+            splitContainer = new System.Windows.Forms.SplitContainer();
+            splitContainer.Panel1.SuspendLayout();
+            splitContainer.Panel2.SuspendLayout();
+            splitContainer.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.charactersTab.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer3
+            // splitContainer
             // 
-            splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            splitContainer3.IsSplitterFixed = true;
-            splitContainer3.Location = new System.Drawing.Point( 3, 3 );
-            splitContainer3.Name = "splitContainer3";
+            splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer.IsSplitterFixed = true;
+            splitContainer.Location = new System.Drawing.Point( 3, 3 );
+            splitContainer.Name = "splitContainer";
             // 
-            // splitContainer3.Panel1
+            // splitContainer.Panel1
             // 
-            splitContainer3.Panel1.Controls.Add( this.characterSelector );
+            splitContainer.Panel1.Controls.Add( this.characterSelector );
             // 
-            // splitContainer3.Panel2
+            // splitContainer.Panel2
             // 
-            splitContainer3.Panel2.Controls.Add( this.characterEditor1 );
-            splitContainer3.Size = new System.Drawing.Size( 711, 444 );
-            splitContainer3.SplitterDistance = 130;
-            splitContainer3.TabIndex = 0;
-            splitContainer3.TabStop = false;
+            splitContainer.Panel2.Controls.Add( this.characterEditor );
+            splitContainer.Size = new System.Drawing.Size( 711, 444 );
+            splitContainer.SplitterDistance = 130;
+            splitContainer.TabIndex = 0;
+            splitContainer.TabStop = false;
             // 
             // characterSelector
             // 
@@ -90,29 +90,21 @@ namespace LionEditor
             this.characterSelector.Size = new System.Drawing.Size( 130, 439 );
             this.characterSelector.TabIndex = 0;
             // 
-            // characterEditor1
+            // tabControl
             // 
-            this.characterEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.characterEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.characterEditor1.Name = "characterEditor1";
-            this.characterEditor1.Size = new System.Drawing.Size( 577, 444 );
-            this.characterEditor1.TabIndex = 0;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add( this.charactersTab );
-            this.tabControl1.Controls.Add( this.braveStoryTab );
-            this.tabControl1.Controls.Add( this.inventoryTab );
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size( 725, 476 );
-            this.tabControl1.TabIndex = 1;
+            this.tabControl.Controls.Add( this.charactersTab );
+            this.tabControl.Controls.Add( this.braveStoryTab );
+            this.tabControl.Controls.Add( this.inventoryTab );
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point( 0, 0 );
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size( 725, 476 );
+            this.tabControl.TabIndex = 1;
             // 
             // charactersTab
             // 
-            this.charactersTab.Controls.Add( splitContainer3 );
+            this.charactersTab.Controls.Add( splitContainer );
             this.charactersTab.Location = new System.Drawing.Point( 4, 22 );
             this.charactersTab.Name = "charactersTab";
             this.charactersTab.Padding = new System.Windows.Forms.Padding( 3 );
@@ -141,17 +133,25 @@ namespace LionEditor
             this.inventoryTab.Text = "Inventory";
             this.inventoryTab.UseVisualStyleBackColor = true;
             // 
+            // characterEditor
+            // 
+            this.characterEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.characterEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.characterEditor.Name = "characterEditor";
+            this.characterEditor.Size = new System.Drawing.Size( 577, 444 );
+            this.characterEditor.TabIndex = 0;
+            // 
             // SavegameEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.tabControl1 );
+            this.Controls.Add( this.tabControl );
             this.Name = "SavegameEditor";
             this.Size = new System.Drawing.Size( 725, 476 );
-            splitContainer3.Panel1.ResumeLayout( false );
-            splitContainer3.Panel2.ResumeLayout( false );
-            splitContainer3.ResumeLayout( false );
-            this.tabControl1.ResumeLayout( false );
+            splitContainer.Panel1.ResumeLayout( false );
+            splitContainer.Panel2.ResumeLayout( false );
+            splitContainer.ResumeLayout( false );
+            this.tabControl.ResumeLayout( false );
             this.charactersTab.ResumeLayout( false );
             this.ResumeLayout( false );
 
@@ -161,9 +161,9 @@ namespace LionEditor
 
         private System.Windows.Forms.TabPage charactersTab;
         private System.Windows.Forms.CheckedListBox characterSelector;
-        private CharacterEditor characterEditor1;
+        private CharacterEditor characterEditor;
         private System.Windows.Forms.TabPage braveStoryTab;
         private System.Windows.Forms.TabPage inventoryTab;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
     }
 }

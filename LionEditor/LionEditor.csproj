@@ -37,6 +37,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datatypes\JobsAndAbilities.cs" />
+    <Compile Include="Editors\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\CharacterEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -72,6 +78,10 @@
     <Compile Include="Datatypes\Item.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Editors\About.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\CharacterEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CharacterEditor.cs</DependentUpon>
@@ -105,9 +115,6 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="testCharacter.hex">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

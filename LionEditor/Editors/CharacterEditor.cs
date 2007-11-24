@@ -63,7 +63,7 @@ namespace LionEditor
             this.braverySpinner.Value = character.Brave;
             this.experienceSpinner.Value = character.Experience;
             this.faithSpinner.Value = character.Faith;
-            this.groupBox1.Text = character.Index.ToString();
+            this.groupBox.Text = character.Index.ToString();
             this.classComboBox.SelectedItem = character.Job;
             this.movementCombo.SelectedIndex = (movementCombo.DataSource as List<Ability>).IndexOf( character.MovementAbility );
             this.reactionCombo.SelectedIndex = (reactionCombo.DataSource as List<Ability>).IndexOf( character.ReactAbility );
@@ -184,18 +184,7 @@ namespace LionEditor
 
             nameTextBox.Validating += new CancelEventHandler( nameTextBox_Validating );
 
-            if( LicenseManager.UsageMode != LicenseUsageMode.Designtime )
-            {
-                System.IO.FileStream stream = new System.IO.FileStream( "testCharacter.hex", System.IO.FileMode.Open );
-                byte[] bytes = new byte[256];
-                stream.Read( bytes, 0, 256 );
-                stream.Close();
-                Character = new Character( bytes );
-            }
-            else
-            {
-                Character = new Character( 0 );
-            }
+            Character = new Character( 0 );
 
             UpdateView();
             SetupEvents();
@@ -209,7 +198,7 @@ namespace LionEditor
                     character.OnProposition = unavailableCheckbox.Checked;
                     FireDataChangedEvent();
                 };
-            button1.Click +=
+            jobButton.Click +=
                 delegate( object sender, EventArgs e )
                 {
                     JobsAndAbilitiesEditor editor = new JobsAndAbilitiesEditor( character.JobsAndAbilities, character.SpriteSet.Value );

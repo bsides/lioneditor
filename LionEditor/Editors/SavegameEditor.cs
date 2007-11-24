@@ -43,9 +43,9 @@ namespace LionEditor
                 {
                     ignoreChanges = true;
 
-                    characterEditor1.Enabled = true;
+                    characterEditor.Enabled = true;
                     characterSelector.Enabled = true;
-                    tabControl1.Enabled = true;
+                    tabControl.Enabled = true;
 
                     UpdateView();
 
@@ -72,15 +72,15 @@ namespace LionEditor
         {
             InitializeComponent();
 
-            characterEditor1.Enabled = false;
+            characterEditor.Enabled = false;
             characterSelector.Enabled = false;
-            tabControl1.Enabled = false;
+            tabControl.Enabled = false;
             
             characterSelector.SelectedIndexChanged += characterSelector_SelectedIndexChanged;
             characterSelector.CheckOnClick = false;
             characterSelector.ItemCheck += characterSelector_ItemCheck;
 
-            characterEditor1.DataChangedEvent += characterEditor1_DataChangedEvent;
+            characterEditor.DataChangedEvent += characterEditor1_DataChangedEvent;
         }
 
         void characterEditor1_DataChangedEvent( object sender, EventArgs e )
@@ -101,7 +101,7 @@ namespace LionEditor
         void characterSelector_SelectedIndexChanged( object sender, EventArgs e )
         {
             Character c = characterSelector.SelectedItem as Character;
-            characterEditor1.Character = c;
+            characterEditor.Character = c;
         }
 
         public event EventHandler DataChangedEvent;

@@ -7,7 +7,8 @@ USE_KERNEL_LIBS=1
 PSP_FW_VERSION=371
 
 INCDIR = 
-CFLAGS = -Os -G0 -Wall -fno-strict-aliasing -fno-builtin-printf -D_PSPSLIM -DDEBUG
+#CFLAGS = -Os -G0 -Wall -fno-strict-aliasing -fno-builtin-printf -D_PSPSLIM -DDEBUG
+CFLAGS = -Os -G0 -Wall -fno-strict-aliasing -fno-builtin-printf -D_PSPSLIM 
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 

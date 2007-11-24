@@ -1,5 +1,9 @@
+The Windows application requires the .NET 2.0 framework to run.
+The kernel plugin has been tested on 3.71 M33, but it might work with other versions.
+
+To use the kernel plugin:
 Copy FFTSaveHook.prx to your seplugins directory, and edit game.txt to tell 
-it to load. Enable it in the recovery menu.
+it to load. Enable it in the recovery menu. 
 
 The next time you load a game in War of the Lions, the plugin will check
 ms0:/decryptedSaves for a decrypted copy of the save, and load it if it's 
@@ -15,6 +19,7 @@ It does this by looking at the game number:
 	ULUS10297 - US
 	ULES00850 - Europe
 	ULJM05194 - Japan (Untested)
+
 
 Once you have a decrypted FFTA.SYS file, you can load it into Lion Editor 
 and begin making changes.

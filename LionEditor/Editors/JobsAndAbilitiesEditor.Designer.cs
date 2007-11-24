@@ -50,6 +50,7 @@ namespace LionEditor
             System.Windows.Forms.SplitContainer splitContainer;
             this.jobSelector = new System.Windows.Forms.ListBox();
             this.jobEditor = new LionEditor.JobEditor();
+            this.closeButton = new System.Windows.Forms.Button();
             splitContainer = new System.Windows.Forms.SplitContainer();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
@@ -69,6 +70,7 @@ namespace LionEditor
             // 
             // splitContainer.Panel2
             // 
+            splitContainer.Panel2.Controls.Add( this.closeButton );
             splitContainer.Panel2.Controls.Add( this.jobEditor );
             splitContainer.Size = new System.Drawing.Size( 384, 436 );
             splitContainer.SplitterDistance = 109;
@@ -83,7 +85,7 @@ namespace LionEditor
             this.jobSelector.Location = new System.Drawing.Point( 0, 0 );
             this.jobSelector.Name = "jobSelector";
             this.jobSelector.Size = new System.Drawing.Size( 109, 433 );
-            this.jobSelector.TabIndex = 0;
+            this.jobSelector.TabIndex = 100;
             // 
             // jobEditor
             // 
@@ -93,15 +95,29 @@ namespace LionEditor
             this.jobEditor.Location = new System.Drawing.Point( 0, 0 );
             this.jobEditor.Name = "jobEditor";
             this.jobEditor.Size = new System.Drawing.Size( 274, 436 );
-            this.jobEditor.TabIndex = 0;
+            this.jobEditor.TabIndex = 200;
+            // 
+            // closeButton
+            // 
+            this.closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.closeButton.Location = new System.Drawing.Point( 187, 401 );
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size( 75, 23 );
+            this.closeButton.TabIndex = 300;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = true;
             // 
             // JobsAndAbilitiesEditor
             // 
+            this.AcceptButton = this.closeButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.closeButton;
             this.ClientSize = new System.Drawing.Size( 384, 436 );
             this.Controls.Add( splitContainer );
+            this.Location = new System.Drawing.Point( 392, 463 );
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size( 392, 463 );
             this.MinimizeBox = false;
             this.Name = "JobsAndAbilitiesEditor";
             this.ShowIcon = false;
@@ -119,5 +135,6 @@ namespace LionEditor
 
         private System.Windows.Forms.ListBox jobSelector;
         private JobEditor jobEditor;
+        private System.Windows.Forms.Button closeButton;
     }
 }

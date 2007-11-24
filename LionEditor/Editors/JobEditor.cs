@@ -136,7 +136,7 @@ namespace LionEditor
 
         bool ignoreChanges = false;
 
-        public void Update( LionEditor.JobsAndAbilities.Job job, JobInfo info )
+        public void UpdateView( LionEditor.JobsAndAbilities.Job job, JobInfo info )
         {
             this.SuspendLayout();
             ignoreChanges = true;

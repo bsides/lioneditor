@@ -49,11 +49,11 @@ namespace LionEditor
         {
             System.Windows.Forms.SplitContainer splitContainer;
             this.characterSelector = new System.Windows.Forms.CheckedListBox();
+            this.characterEditor = new LionEditor.CharacterEditor();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.charactersTab = new System.Windows.Forms.TabPage();
             this.braveStoryTab = new System.Windows.Forms.TabPage();
             this.inventoryTab = new System.Windows.Forms.TabPage();
-            this.characterEditor = new LionEditor.CharacterEditor();
             splitContainer = new System.Windows.Forms.SplitContainer();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
@@ -89,6 +89,14 @@ namespace LionEditor
             this.characterSelector.Name = "characterSelector";
             this.characterSelector.Size = new System.Drawing.Size( 130, 439 );
             this.characterSelector.TabIndex = 0;
+            // 
+            // characterEditor
+            // 
+            this.characterEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.characterEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.characterEditor.Name = "characterEditor";
+            this.characterEditor.Size = new System.Drawing.Size( 577, 444 );
+            this.characterEditor.TabIndex = 0;
             // 
             // tabControl
             // 
@@ -132,14 +140,6 @@ namespace LionEditor
             this.inventoryTab.TabIndex = 2;
             this.inventoryTab.Text = "Inventory";
             this.inventoryTab.UseVisualStyleBackColor = true;
-            // 
-            // characterEditor
-            // 
-            this.characterEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.characterEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.characterEditor.Name = "characterEditor";
-            this.characterEditor.Size = new System.Drawing.Size( 577, 444 );
-            this.characterEditor.TabIndex = 0;
             // 
             // SavegameEditor
             // 

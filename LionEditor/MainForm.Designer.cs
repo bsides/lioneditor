@@ -55,7 +55,6 @@ namespace LionEditor
             this.openButton = new System.Windows.Forms.ToolBarButton();
             this.saveButton = new System.Windows.Forms.ToolBarButton();
             this.toolBarIcons = new System.Windows.Forms.ImageList( this.components );
-            this.savegameEditor = new LionEditor.SavegameEditor();
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.fileMenu = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
@@ -68,6 +67,7 @@ namespace LionEditor
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.savegameEditor = new LionEditor.SavegameEditor();
             splitContainer = new System.Windows.Forms.SplitContainer();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
@@ -100,6 +100,7 @@ namespace LionEditor
             // gameSelector
             // 
             this.gameSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.gameSelector.Enabled = false;
             this.gameSelector.FormattingEnabled = true;
             this.gameSelector.Location = new System.Drawing.Point( 149, 13 );
             this.gameSelector.Name = "gameSelector";
@@ -143,14 +144,6 @@ namespace LionEditor
             this.toolBarIcons.Images.SetKeyName( 1, "copy-32x32.png" );
             this.toolBarIcons.Images.SetKeyName( 2, "cut-32x32.png" );
             this.toolBarIcons.Images.SetKeyName( 3, "open-32x32.png" );
-            // 
-            // savegameEditor
-            // 
-            this.savegameEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.savegameEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.savegameEditor.Name = "savegameEditor";
-            this.savegameEditor.Size = new System.Drawing.Size( 738, 480 );
-            this.savegameEditor.TabIndex = 0;
             // 
             // mainMenu
             // 
@@ -220,6 +213,14 @@ namespace LionEditor
             this.openFileDialog.DefaultExt = "*.SYS";
             this.openFileDialog.Filter = "FFTA.SYS|FFTA.SYS";
             this.openFileDialog.Title = "Open file...";
+            // 
+            // savegameEditor
+            // 
+            this.savegameEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.savegameEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.savegameEditor.Name = "savegameEditor";
+            this.savegameEditor.Size = new System.Drawing.Size( 738, 480 );
+            this.savegameEditor.TabIndex = 0;
             // 
             // MainForm
             // 

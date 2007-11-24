@@ -359,7 +359,7 @@ namespace LionEditor
             this.equipAbilityGroupBox.Location = new System.Drawing.Point( 3, 198 );
             this.equipAbilityGroupBox.Name = "equipAbilityGroupBox";
             this.equipAbilityGroupBox.Size = new System.Drawing.Size( 618, 204 );
-            this.equipAbilityGroupBox.TabIndex = 1;
+            this.equipAbilityGroupBox.TabIndex = 4;
             this.equipAbilityGroupBox.TabStop = false;
             // 
             // equipmentAndAbilitiesPanel
@@ -428,7 +428,7 @@ namespace LionEditor
             this.rightHandCombo.Location = new System.Drawing.Point( 107, 3 );
             this.rightHandCombo.Name = "rightHandCombo";
             this.rightHandCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.rightHandCombo.TabIndex = 16;
+            this.rightHandCombo.TabIndex = 0;
             // 
             // rightShieldCombo
             // 
@@ -440,7 +440,7 @@ namespace LionEditor
             this.rightShieldCombo.Location = new System.Drawing.Point( 107, 29 );
             this.rightShieldCombo.Name = "rightShieldCombo";
             this.rightShieldCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.rightShieldCombo.TabIndex = 17;
+            this.rightShieldCombo.TabIndex = 1;
             // 
             // leftHandCombo
             // 
@@ -452,7 +452,7 @@ namespace LionEditor
             this.leftHandCombo.Location = new System.Drawing.Point( 107, 55 );
             this.leftHandCombo.Name = "leftHandCombo";
             this.leftHandCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.leftHandCombo.TabIndex = 18;
+            this.leftHandCombo.TabIndex = 2;
             // 
             // leftShieldCombo
             // 
@@ -464,7 +464,7 @@ namespace LionEditor
             this.leftShieldCombo.Location = new System.Drawing.Point( 107, 81 );
             this.leftShieldCombo.Name = "leftShieldCombo";
             this.leftShieldCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.leftShieldCombo.TabIndex = 19;
+            this.leftShieldCombo.TabIndex = 3;
             // 
             // headCombo
             // 
@@ -476,7 +476,7 @@ namespace LionEditor
             this.headCombo.Location = new System.Drawing.Point( 107, 107 );
             this.headCombo.Name = "headCombo";
             this.headCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.headCombo.TabIndex = 20;
+            this.headCombo.TabIndex = 4;
             // 
             // bodyCombo
             // 
@@ -488,7 +488,7 @@ namespace LionEditor
             this.bodyCombo.Location = new System.Drawing.Point( 107, 133 );
             this.bodyCombo.Name = "bodyCombo";
             this.bodyCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.bodyCombo.TabIndex = 21;
+            this.bodyCombo.TabIndex = 5;
             // 
             // accessoryCombo
             // 
@@ -500,7 +500,7 @@ namespace LionEditor
             this.accessoryCombo.Location = new System.Drawing.Point( 107, 159 );
             this.accessoryCombo.Name = "accessoryCombo";
             this.accessoryCombo.Size = new System.Drawing.Size( 195, 21 );
-            this.accessoryCombo.TabIndex = 22;
+            this.accessoryCombo.TabIndex = 6;
             // 
             // secondaryCombo
             // 
@@ -512,7 +512,7 @@ namespace LionEditor
             this.secondaryCombo.Location = new System.Drawing.Point( 412, 55 );
             this.secondaryCombo.Name = "secondaryCombo";
             this.secondaryCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.secondaryCombo.TabIndex = 23;
+            this.secondaryCombo.TabIndex = 7;
             // 
             // supportCombo
             // 
@@ -524,7 +524,7 @@ namespace LionEditor
             this.supportCombo.Location = new System.Drawing.Point( 412, 133 );
             this.supportCombo.Name = "supportCombo";
             this.supportCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.supportCombo.TabIndex = 25;
+            this.supportCombo.TabIndex = 9;
             // 
             // reactionCombo
             // 
@@ -536,7 +536,7 @@ namespace LionEditor
             this.reactionCombo.Location = new System.Drawing.Point( 412, 107 );
             this.reactionCombo.Name = "reactionCombo";
             this.reactionCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.reactionCombo.TabIndex = 24;
+            this.reactionCombo.TabIndex = 8;
             // 
             // movementCombo
             // 
@@ -548,7 +548,7 @@ namespace LionEditor
             this.movementCombo.Location = new System.Drawing.Point( 412, 159 );
             this.movementCombo.Name = "movementCombo";
             this.movementCombo.Size = new System.Drawing.Size( 197, 21 );
-            this.movementCombo.TabIndex = 26;
+            this.movementCombo.TabIndex = 10;
             // 
             // characterEditorPanel2
             // 
@@ -564,7 +564,7 @@ namespace LionEditor
             characterEditorPanel2.RowCount = 1;
             characterEditorPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 100F ) );
             characterEditorPanel2.Size = new System.Drawing.Size( 618, 111 );
-            characterEditorPanel2.TabIndex = 2;
+            characterEditorPanel2.TabIndex = 0;
             // 
             // groupBox
             // 
@@ -573,7 +573,7 @@ namespace LionEditor
             this.groupBox.Location = new System.Drawing.Point( 318, 3 );
             this.groupBox.Name = "groupBox";
             this.groupBox.Size = new System.Drawing.Size( 297, 105 );
-            this.groupBox.TabIndex = 0;
+            this.groupBox.TabIndex = 1;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "##position##";
             // 
@@ -618,7 +618,7 @@ namespace LionEditor
             this.zodiacComboBox.Location = new System.Drawing.Point( 6, 5 );
             this.zodiacComboBox.Name = "zodiacComboBox";
             this.zodiacComboBox.Size = new System.Drawing.Size( 87, 21 );
-            this.zodiacComboBox.TabIndex = 10;
+            this.zodiacComboBox.TabIndex = 0;
             // 
             // faithPanel
             // 
@@ -629,7 +629,7 @@ namespace LionEditor
             faithPanel.Margin = new System.Windows.Forms.Padding( 0 );
             faithPanel.Name = "faithPanel";
             faithPanel.Size = new System.Drawing.Size( 94, 30 );
-            faithPanel.TabIndex = 3;
+            faithPanel.TabIndex = 5;
             // 
             // faithSpinner
             // 
@@ -639,7 +639,8 @@ namespace LionEditor
             this.faithSpinner.Location = new System.Drawing.Point( 47, 5 );
             this.faithSpinner.Name = "faithSpinner";
             this.faithSpinner.Size = new System.Drawing.Size( 44, 20 );
-            this.faithSpinner.TabIndex = 12;
+            this.faithSpinner.TabIndex = 0;
+            this.faithSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // faithLabel
             // 
@@ -662,7 +663,7 @@ namespace LionEditor
             braveryPanel.Margin = new System.Windows.Forms.Padding( 0 );
             braveryPanel.Name = "braveryPanel";
             braveryPanel.Size = new System.Drawing.Size( 97, 30 );
-            braveryPanel.TabIndex = 2;
+            braveryPanel.TabIndex = 4;
             // 
             // braverySpinner
             // 
@@ -672,7 +673,8 @@ namespace LionEditor
             this.braverySpinner.Location = new System.Drawing.Point( 50, 5 );
             this.braverySpinner.Name = "braverySpinner";
             this.braverySpinner.Size = new System.Drawing.Size( 44, 20 );
-            this.braverySpinner.TabIndex = 11;
+            this.braverySpinner.TabIndex = 0;
+            this.braverySpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // braveryLabel
             // 
@@ -696,7 +698,7 @@ namespace LionEditor
             namePanel.Margin = new System.Windows.Forms.Padding( 1 );
             namePanel.Name = "namePanel";
             namePanel.Size = new System.Drawing.Size( 289, 26 );
-            namePanel.TabIndex = 4;
+            namePanel.TabIndex = 1;
             // 
             // nameTextBox
             // 
@@ -707,7 +709,7 @@ namespace LionEditor
             this.nameTextBox.MaxLength = 14;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size( 237, 20 );
-            this.nameTextBox.TabIndex = 8;
+            this.nameTextBox.TabIndex = 0;
             // 
             // nameLabel
             // 
@@ -730,7 +732,7 @@ namespace LionEditor
             classPanel.Margin = new System.Windows.Forms.Padding( 1 );
             classPanel.Name = "classPanel";
             classPanel.Size = new System.Drawing.Size( 289, 26 );
-            classPanel.TabIndex = 5;
+            classPanel.TabIndex = 2;
             // 
             // classPanel2
             // 
@@ -753,7 +755,7 @@ namespace LionEditor
             this.classComboBox.Location = new System.Drawing.Point( 49, 3 );
             this.classComboBox.Name = "classComboBox";
             this.classComboBox.Size = new System.Drawing.Size( 237, 21 );
-            this.classComboBox.TabIndex = 9;
+            this.classComboBox.TabIndex = 0;
             // 
             // classLabel
             // 
@@ -795,7 +797,7 @@ namespace LionEditor
             topLeftPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
             topLeftPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
             topLeftPanel.Size = new System.Drawing.Size( 309, 105 );
-            topLeftPanel.TabIndex = 1;
+            topLeftPanel.TabIndex = 0;
             // 
             // experienceSpinner
             // 
@@ -808,7 +810,8 @@ namespace LionEditor
             0} );
             this.experienceSpinner.Name = "experienceSpinner";
             this.experienceSpinner.Size = new System.Drawing.Size( 79, 20 );
-            this.experienceSpinner.TabIndex = 5;
+            this.experienceSpinner.TabIndex = 3;
+            this.experienceSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // levelLabel
             // 
@@ -830,7 +833,7 @@ namespace LionEditor
             this.spriteSetCombo.Location = new System.Drawing.Point( 3, 3 );
             this.spriteSetCombo.Name = "spriteSetCombo";
             this.spriteSetCombo.Size = new System.Drawing.Size( 303, 21 );
-            this.spriteSetCombo.TabIndex = 1;
+            this.spriteSetCombo.TabIndex = 0;
             // 
             // expLabel
             // 
@@ -880,7 +883,8 @@ namespace LionEditor
             0} );
             this.levelSpinner.Name = "levelSpinner";
             this.levelSpinner.Size = new System.Drawing.Size( 48, 20 );
-            this.levelSpinner.TabIndex = 2;
+            this.levelSpinner.TabIndex = 1;
+            this.levelSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.levelSpinner.Value = new decimal( new int[] {
             1,
             0,
@@ -903,7 +907,8 @@ namespace LionEditor
             0} );
             this.hpSpinner.Name = "hpSpinner";
             this.hpSpinner.Size = new System.Drawing.Size( 79, 20 );
-            this.hpSpinner.TabIndex = 6;
+            this.hpSpinner.TabIndex = 4;
+            this.hpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.hpSpinner.Value = new decimal( new int[] {
             1,
             0,
@@ -921,7 +926,8 @@ namespace LionEditor
             0} );
             this.mpSpinner.Name = "mpSpinner";
             this.mpSpinner.Size = new System.Drawing.Size( 79, 20 );
-            this.mpSpinner.TabIndex = 7;
+            this.mpSpinner.TabIndex = 5;
+            this.mpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // unavailableCheckbox
             // 
@@ -931,7 +937,7 @@ namespace LionEditor
             this.unavailableCheckbox.Location = new System.Drawing.Point( 69, 55 );
             this.unavailableCheckbox.Name = "unavailableCheckbox";
             this.unavailableCheckbox.Size = new System.Drawing.Size( 82, 20 );
-            this.unavailableCheckbox.TabIndex = 3;
+            this.unavailableCheckbox.TabIndex = 2;
             this.unavailableCheckbox.Text = "Unavailable";
             this.unavailableCheckbox.UseVisualStyleBackColor = true;
             // 
@@ -941,7 +947,7 @@ namespace LionEditor
             this.jobButton.Location = new System.Drawing.Point( 80, 81 );
             this.jobButton.Name = "jobButton";
             this.jobButton.Size = new System.Drawing.Size( 71, 21 );
-            this.jobButton.TabIndex = 4;
+            this.jobButton.TabIndex = 7;
             this.jobButton.Text = "Jobs";
             this.jobButton.UseVisualStyleBackColor = true;
             // 
@@ -953,7 +959,7 @@ namespace LionEditor
             this.genderComboBox.Location = new System.Drawing.Point( 3, 81 );
             this.genderComboBox.Name = "genderComboBox";
             this.genderComboBox.Size = new System.Drawing.Size( 71, 21 );
-            this.genderComboBox.TabIndex = 8;
+            this.genderComboBox.TabIndex = 6;
             // 
             // statsPanel
             // 
@@ -1284,7 +1290,8 @@ namespace LionEditor
             0} );
             this.speedSpinner.Name = "speedSpinner";
             this.speedSpinner.Size = new System.Drawing.Size( 52, 20 );
-            this.speedSpinner.TabIndex = 13;
+            this.speedSpinner.TabIndex = 1;
+            this.speedSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // paSpinner
             // 
@@ -1298,7 +1305,8 @@ namespace LionEditor
             0} );
             this.paSpinner.Name = "paSpinner";
             this.paSpinner.Size = new System.Drawing.Size( 56, 20 );
-            this.paSpinner.TabIndex = 14;
+            this.paSpinner.TabIndex = 2;
+            this.paSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // maSpinner
             // 
@@ -1312,7 +1320,8 @@ namespace LionEditor
             0} );
             this.maSpinner.Name = "maSpinner";
             this.maSpinner.Size = new System.Drawing.Size( 56, 20 );
-            this.maSpinner.TabIndex = 15;
+            this.maSpinner.TabIndex = 3;
+            this.maSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CharacterEditor
             // 

@@ -41,6 +41,13 @@ namespace LionEditor
             openMenuItem.Click += new EventHandler( openMenuItem_Click );
             saveMenuItem.Click += new EventHandler( saveMenuItem_Click );
             saveAsMenuItem.Click += new EventHandler( saveAsMenuItem_Click );
+            aboutMenuItem.Click += new EventHandler( aboutMenuItem_Click );
+        }
+
+        void aboutMenuItem_Click( object sender, EventArgs e )
+        {
+            About about = new About();
+            about.ShowDialog( this );
         }
 
         void saveAsMenuItem_Click( object sender, EventArgs e )
@@ -175,6 +182,7 @@ namespace LionEditor
                 savegameEditor.DataChangedEvent += new EventHandler( savegameEditor_DataChangedEvent );
                 saveMenuItem.Enabled = false;
                 saveAsMenuItem.Enabled = true;
+                gameSelector.Enabled = true;
             }
         }
 

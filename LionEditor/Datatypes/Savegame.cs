@@ -28,7 +28,7 @@ namespace LionEditor
         public const uint saveFileSize = 0x2A3C;
 
         byte[] offset0x00 = new byte[257];
-        byte[] saveNameRaw = new byte[15];
+        byte[] saveNameRaw = new byte[17];
 
         public string SaveName
         {
@@ -36,7 +36,6 @@ namespace LionEditor
             set { Character.EncodeName( value, saveNameRaw, 0 ); }
         }
 
-        byte[] offset0x110 = new byte[4];
         private SaveScreenMonths m_saveScreenMonth;
 
         public SaveScreenMonths SaveScreenMonth
@@ -173,9 +172,9 @@ namespace LionEditor
         public Savegame( byte[] file )
         {
             CopyArray( file, offset0x00, 0, 257 );
-            CopyArray( file, saveNameRaw, 0x101, 15 );
+            CopyArray( file, saveNameRaw, 0x101, 17 );
 
-            CopyArray( file, offset0x110, 0x110, 4 );
+            //CopyArray( file, offset0x110, 0x110, 4 );
             SaveScreenMonth = (SaveScreenMonths)file[0x114];
             SaveScreenDay = file[0x115];
             SaveScreenMapPosition = file[0x116];
@@ -270,8 +269,10 @@ namespace LionEditor
         {
             byte[] result = new byte[saveFileSize];
             CopyArray( offset0x00, result, 0, 0, 257 );
-            CopyArray( saveNameRaw, result, 0, 0x101, 15 );
-            CopyArray( offset0x110, result, 0, 0x110, 4 );
+            CopyArray( saveNameRaw, result, 0, 0x101, 17 );
+            //CopyArray( offset0x110, result, 0, 0x110, 4 );
+            result[0x112] = Characters[0].Job.Byte;
+            result[0x113] = Characters[0].Level;
             result[0x114] = (byte)SaveScreenMonth;
             result[0x115] = SaveScreenDay;
             result[0x116] = SaveScreenMapPosition;
@@ -355,38 +356,16 @@ namespace LionEditor
             CopyArray( source, destination, sourceStart, 0, length );
         }
 
-        private string Time
-        {
-            get
-            {
-                TimeSpan span = new TimeSpan( (long)((long)Timer * 10000000) );
-                //TimeSpan span = new TimeSpan(
-                //uint seconds = Timer % 60;
-                //uint minutes = ((Timer - seconds) / 60) % 60;
-                //uint hours = (Timer - seconds - minutes * 60) / 60 / 60;
-                return string.Format( "{0:000}:{1:00}:{2:00}", (int)span.TotalHours, span.Minutes, span.Seconds );
-            }
-        }
-
-        private string Date
-        {
-            get 
-            {
-                return string.Format( "{0} {1}", SaveScreenDay, SaveScreenMonth );
-            }
-        }
-        
-        private string Location
-        {
-            get
-            {
-                return LionEditor.Location.AllLocations[SaveScreenMapPosition].ToString();
-            }
-        }
-        
         public override string ToString()
         {
-            return string.Format("{0} ({1}) [{2}] ~{3}~", SaveName, Time, Date, Location);
+            TimeSpan span = new TimeSpan( (long)((long)Timer * 10000000) );
+            string time = string.Format( "{0:000}:{1:00}:{2:00}", (int)span.TotalHours, span.Minutes, span.Seconds );
+
+            string date = string.Format( "{0} {1}", SaveScreenDay, SaveScreenMonth );
+
+            string loc = LionEditor.Location.AllLocations[SaveScreenMapPosition].ToString();
+
+            return string.Format( "{0} ({1}) [{2}] ~{3}~", SaveName, time, date, loc );
         }
     }
 

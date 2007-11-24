@@ -72,7 +72,7 @@ namespace LionEditor
 
         void jobSelector_SelectedIndexChanged( object sender, EventArgs e )
         {
-            jobEditor.Update( ja.jobs[jobSelector.SelectedIndex], jobSelector.SelectedItem as JobInfo );
+            jobEditor.UpdateView( ja.jobs[jobSelector.SelectedIndex], jobSelector.SelectedItem as JobInfo );
         }
 
         public JobsAndAbilitiesEditor()

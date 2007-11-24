@@ -158,7 +158,8 @@ namespace LionEditor
             0} );
             this.totalSpinner.Name = "totalSpinner";
             this.totalSpinner.Size = new System.Drawing.Size( 68, 20 );
-            this.totalSpinner.TabIndex = 1;
+            this.totalSpinner.TabIndex = 200;
+            this.totalSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // totalLabel
             // 
@@ -578,7 +579,8 @@ namespace LionEditor
             0} );
             this.jpSpinner.Name = "jpSpinner";
             this.jpSpinner.Size = new System.Drawing.Size( 67, 20 );
-            this.jpSpinner.TabIndex = 1;
+            this.jpSpinner.TabIndex = 100;
+            this.jpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // jpLabel
             // 

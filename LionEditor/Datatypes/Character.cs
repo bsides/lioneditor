@@ -102,7 +102,6 @@ namespace LionEditor
             set { m_index = value; }
         }
 
-        //private string m_name;
         private byte[] rawName = new byte[15];
         public string Name
         {
@@ -496,6 +495,13 @@ namespace LionEditor
             set { m_AfterName[0x03] = (byte)(value ? 0x01 : 0x00); }
         }
 
+        public byte Kills
+        {
+        	get { return m_AfterName[0x06]; }
+        	set { m_AfterName[0x06] = value; }
+        }
+
+
 
         /// <summary>
         /// Builds a Character from a 256 byte array
@@ -516,19 +522,36 @@ namespace LionEditor
                 UnknownOffset05 = charData[5];
                 ZodiacSign = (Zodiac)(charData[6] & 0xF0);
 
-                SecondaryAction = SecondaryAction.ActionDictionary[charData[7]];
+                if( Gender == Gender.Monster )
+                {
+                    SecondaryAction = SecondaryAction.ActionDictionary[0x00];
+                    SupportAbility = Ability.AbilityList[0];
+                    ReactAbility = Ability.AbilityList[0];
+                    MovementAbility = Ability.AbilityList[0];
+                    Head = Item.ItemList[0];
+                    Body = Item.ItemList[0];
+                    Accessory = Item.ItemList[0];
+                    RightHand = Item.ItemList[0];
+                    RightShield = Item.ItemList[0];
+                    LeftHand = Item.ItemList[0];
+                    LeftShield = Item.ItemList[0];
+                }
+                else
+                {
+                    SecondaryAction = SecondaryAction.ActionDictionary[charData[7]];
 
-                ReactAbility = new Ability( (ushort)((charData[9] << 8) + charData[8]) );
-                SupportAbility = new Ability( (ushort)((charData[11] << 8) + charData[10]) );
-                MovementAbility = new Ability( (ushort)((charData[13] << 8) + charData[12]) );
+                    ReactAbility = new Ability( (ushort)((charData[9] << 8) + charData[8]) );
+                    SupportAbility = new Ability( (ushort)((charData[11] << 8) + charData[10]) );
+                    MovementAbility = new Ability( (ushort)((charData[13] << 8) + charData[12]) );
+                    Head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
+                    Body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
+                    Accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
+                    RightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
+                    RightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
+                    LeftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
+                    LeftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
+                }
 
-                Head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
-                Body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
-                Accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
-                RightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
-                RightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
-                LeftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
-                LeftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
                 Experience = charData[28];
                 Level = charData[29];
                 Brave = charData[30];
@@ -612,7 +635,7 @@ namespace LionEditor
             this.LeftShield = new Item( 0 );
             this.Level = 1;
             this.MovementAbility = new Ability( 0 );
-            this.Name = "Stupid Name";
+            this.Name = "##########";
             this.RawHP = Job.GetRawHPFromActualHP( 50 );
             this.RawMA = Job.GetRawMAFromActualMA( 11 );
             this.RawMP = Job.GetRawMPFromActualMP( 10 );

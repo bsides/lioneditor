@@ -1,0 +1,8 @@
+#summary Screenshots
+
+= Main editor =
+
+[http://lioneditor.googlecode.com/svn/screenshots/main.png]
+
+= Job/Abilities editor = 
+[http://lioneditor.googlecode.com/svn/screenshots/jobAbilities.png]

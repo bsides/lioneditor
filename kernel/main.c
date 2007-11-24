@@ -33,6 +33,8 @@
 #define PATH(x) "ms0:/" x
 #endif
 
+#define FILE_NOT_FOUND 10
+
 PSP_MODULE_INFO("FFTSaveHook", 0x1000, 1, 1);
 
 PSP_MAIN_THREAD_ATTR(0);
@@ -364,7 +366,7 @@ int makeDecryptedDirectory(const char* dir)
 		sceIoMkdir(buf, 0777);
 	}
 
-	return d;
+	return 0;
 }
 
 // When the game tries to save, grab its data and save it somewhere else on the memory stick
@@ -406,20 +408,21 @@ int saveDecryptedSavedata(SceUtilitySavedataParam* params)
 	return 0;
 }
 
+
+
 // When a game tries to load a save, inject our own data if available
 int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 {
 	char path[256] = { '\0' };
 	sprintf(path, "%s%s", params->gameName, params->saveName);
 
-	int ret = makeDecryptedDirectory(path);
-	if (ret < 0)
-	{
-		return ret;
-	}
+	makeDecryptedDirectory(path);
 
 	sprintf(path, PATH("decryptedSaves/%s%s/%s"), params->gameName, params->saveName, params->fileName);
-	readDataFromFile(path, params->dataBuf, params->dataBufSize);
+	if (readDataFromFile(path, params->dataBuf, params->dataBufSize) < 0)
+	{
+		return FILE_NOT_FOUND;
+	}
 
 	fixChecksums(params->dataBuf);
 
@@ -533,7 +536,14 @@ int sceUtilitySavedataGetStatus_patched(void)
 	if ((currentParams != NULL) && (currentParams->mode == 0) && (ret == 3))
 	{
 		int k1 = pspSdkSetK1(0);
-		loadDecryptedSavedata(currentParams);
+		int loadStatus = loadDecryptedSavedata(currentParams);
+		if (loadStatus == FILE_NOT_FOUND)
+		{
+			// Get the encrypted data that was read from the memory stick and save it
+			// with the decrypted data
+			saveDecryptedSavedata(currentParams);
+		}
+
 		pspSdkSetK1(k1);
 	}
 

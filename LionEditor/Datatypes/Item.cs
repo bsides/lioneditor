@@ -136,6 +136,21 @@ namespace LionEditor
         	set { m_MPBonus = value; }
         }
 
+        private uint m_PhysicalAEV;
+        public uint PhysicalAEV
+        {
+        	get { return m_PhysicalAEV; }
+        	set { m_PhysicalAEV = value; }
+        }
+
+        private uint m_MagicAEV;
+        public uint MagicAEV
+        {
+        	get { return m_MagicAEV; }
+        	set { m_MagicAEV = value; }
+        }
+
+
 
         public Item( UInt16 offset )
         {
@@ -160,6 +175,8 @@ namespace LionEditor
             this.PhysicalSEV = i.PhysicalSEV;
             this.Power = i.Power;
             this.SpeedBonus = i.SpeedBonus;
+            this.PhysicalAEV = i.PhysicalAEV;
+            this.MagicAEV = i.MagicAEV;
         }
 
         private Item()
@@ -242,6 +259,12 @@ namespace LionEditor
 
                         node = i.SelectSingleNode( "mp" );
                         if( node != null ) { newItem.MPBonus = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "magicAEV" );
+                        if( node != null ) { newItem.MagicAEV = Convert.ToUInt32( node.InnerText ); }
+
+                        node = i.SelectSingleNode( "physicalAEV" );
+                        if( node != null ) { newItem.PhysicalAEV = Convert.ToUInt32( node.InnerText ); }
 
                         itemList.Add( newItem );
                     }

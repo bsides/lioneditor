@@ -101,6 +101,8 @@ namespace LionEditor
                     }
                 }
             }
+
+            stream.Close();
         }
 
         private void LoadFile()

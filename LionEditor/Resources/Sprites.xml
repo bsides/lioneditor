@@ -154,7 +154,6 @@
   <Sprite>
     <byte>21</byte>
     <sprite>Valmafra</sprite>
-    <command/>
   </Sprite>
   <Sprite>
     <byte>22</byte>
@@ -162,7 +161,6 @@
   </Sprite>
   <Sprite>
     <byte>23</byte>
-    <command />
     <sprite>Ludovich</sprite>
   </Sprite>
   <Sprite>
@@ -235,12 +233,48 @@
     <sprite>Agrias</sprite>
   </Sprite>
   <Sprite>
+    <byte>35</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
+    <byte>36</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
+    <byte>37</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
+    <byte>38</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
+    <byte>39</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
+    <byte>3A</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
+    <byte>3B</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
     <byte>3C</byte>
     <sprite>Belias</sprite>
   </Sprite>
   <Sprite>
+    <byte>3D</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
     <byte>3E</byte>
     <sprite>Zalera</sprite>
+  </Sprite>
+  <Sprite>
+    <byte>3F</byte>
+    <sprite/>
   </Sprite>
   <Sprite>
     <byte>40</byte>
@@ -252,12 +286,28 @@
     <sprite>Altima, First Form</sprite>
   </Sprite>
   <Sprite>
+    <byte>42</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
     <byte>43</byte>
     <sprite>Cuchulainn</sprite>
   </Sprite>
   <Sprite>
+    <byte>44</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
     <byte>45</byte>
     <sprite>Adremmelech</sprite>
+  </Sprite>
+  <Sprite>
+    <byte>46</byte>
+    <sprite/>
+  </Sprite>
+  <Sprite>
+    <byte>47</byte>
+    <sprite/>
   </Sprite>
   <Sprite>
     <byte>48</byte>

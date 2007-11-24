@@ -44,7 +44,7 @@ namespace LionEditor
             Assert.AreEqual( 3, c.Job.Move );
             Assert.AreEqual( 3, c.Job.Jump );
             Assert.AreEqual( 0x00, c.UnknownOffset03 );
-            Assert.IsTrue( (c.Gender == Gender.Male) || (c.Gender == Gender.MaleAlt) );
+            Assert.IsTrue( (c.Gender == Gender.Male) );
             Assert.AreEqual( 0x90, c.UnknownOffset05 );
             Assert.AreEqual( Zodiac.Gemini, c.ZodiacSign );
             Assert.AreEqual( "Steal", c.SecondaryAction.Name );
@@ -123,7 +123,7 @@ namespace LionEditor
             Assert.AreEqual( 77, s.Characters[0].Brave );
             Assert.AreEqual( 97, s.Characters[0].Experience );
             Assert.AreEqual( 70, s.Characters[0].Faith );
-            Assert.IsTrue( (s.Characters[0].Gender == Gender.Male) || (s.Characters[0].Gender == Gender.MaleAlt) );
+            Assert.IsTrue( (s.Characters[0].Gender == Gender.Male) );
             Assert.AreEqual( "Dark Knight", s.Characters[0].Job.Name );
             Assert.AreEqual( 77, s.Characters[0].Level );
             Assert.AreEqual( "Move +2", s.Characters[0].MovementAbility.Name );

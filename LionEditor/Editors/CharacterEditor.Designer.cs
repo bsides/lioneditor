@@ -935,7 +935,6 @@ namespace LionEditor
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point( 80, 81 );
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size( 71, 21 );
@@ -945,6 +944,7 @@ namespace LionEditor
             // 
             // genderComboBox
             // 
+            this.genderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.genderComboBox.FormattingEnabled = true;
             this.genderComboBox.Location = new System.Drawing.Point( 3, 81 );
             this.genderComboBox.Name = "genderComboBox";

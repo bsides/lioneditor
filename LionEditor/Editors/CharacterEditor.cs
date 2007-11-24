@@ -74,7 +74,9 @@ namespace LionEditor
             this.spriteSetCombo.SelectedItem = character.SpriteSet;
             this.levelSpinner.Value = character.Level;
             this.zodiacComboBox.SelectedItem = character.ZodiacSign;
-            this.skillTextLabel.Text = character.Job.Command;
+            this.genderComboBox.SelectedItem = character.Gender;
+
+            UpdateSkillLabel();
 
             UpdateMove();
             UpdateJump();
@@ -120,8 +122,8 @@ namespace LionEditor
 
         private void UpdateAEV()
         {
-            aevMagic.Text = "00%";
-            aevPhysical.Text = "00%";
+            aevMagic.Text = string.Format( "{0:00}%", character.MagicAEV );
+            aevPhysical.Text = string.Format( "{0:00}%", character.PhysicalAEV );
         }
 
         private void UpdateMove()
@@ -169,6 +171,11 @@ namespace LionEditor
             paSpinner.Minimum = character.PA - character.Job.ActualPA( character.RawPA );
         }
 
+        private void UpdateSkillLabel()
+        {
+            skillTextLabel.Text = character.Job.Command;
+        }
+
 
         public CharacterEditor()
         {
@@ -202,6 +209,16 @@ namespace LionEditor
                     character.OnProposition = unavailableCheckbox.Checked;
                     FireDataChangedEvent();
                 };
+            button1.Click +=
+                delegate( object sender, EventArgs e )
+                {
+                    JobsAndAbilitiesEditor editor = new JobsAndAbilitiesEditor( character.JobsAndAbilities, character.SpriteSet.Value );
+                    editor.ShowDialog( this );
+                    if( editor.ChangesMade )
+                    {
+                        FireDataChangedEvent();
+                    }
+                };
             classComboBox.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
@@ -216,6 +233,7 @@ namespace LionEditor
                     UpdateCEV();
                     UpdateHPValue();
                     UpdateMPValue();
+                    UpdateSkillLabel();
                     ignoreChanges = false;
                     FireDataChangedEvent();
                 };
@@ -287,6 +305,12 @@ namespace LionEditor
                         character.MA = (uint)maSpinner.Value;
                         FireDataChangedEvent();
                     }
+                };
+            genderComboBox.SelectedValueChanged +=
+                delegate( object sender, EventArgs e )
+                {
+                    character.Gender = (Gender)genderComboBox.SelectedValue;
+                    FireDataChangedEvent();
                 };
             zodiacComboBox.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -535,6 +559,8 @@ namespace LionEditor
 
             spriteSetCombo.DataSource = SpriteSet.AllSprites;
             //spriteSetCombo.DropDownWidth = GetIdealDropDownWidth( SpriteSet.AllSprites, spriteSetCombo, 0 );
+
+            genderComboBox.DataSource = Enum.GetValues( typeof( Gender ) );
         }
 
         void ComboBoxValidating( object sender, CancelEventArgs e )

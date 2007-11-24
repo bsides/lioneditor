@@ -343,7 +343,7 @@ namespace LionEditor
             return result;
         }
 
-        private void CopyArray( byte[] source, byte[] destination, int sourceStart, int destStart, int length )
+        public static void CopyArray( byte[] source, byte[] destination, int sourceStart, int destStart, int length )
         {
             for( int i = 0; i < length; i++ )
             {
@@ -351,7 +351,7 @@ namespace LionEditor
             }
         }
 
-        private void CopyArray( byte[] source, byte[] destination, int sourceStart, int length )
+        public static void CopyArray( byte[] source, byte[] destination, int sourceStart, int length )
         {
             CopyArray( source, destination, sourceStart, 0, length );
         }

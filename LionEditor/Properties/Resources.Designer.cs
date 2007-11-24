@@ -138,9 +138,9 @@ namespace LionEditor.Properties {
         ///    LionEditor is distributed in the hope that it will be useful,
         ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string JobsWithAbilities {
+        internal static string MainJobBasedOnSprite {
             get {
-                return ResourceManager.GetString("JobsWithAbilities", resourceCulture);
+                return ResourceManager.GetString("MainJobBasedOnSprite", resourceCulture);
             }
         }
         

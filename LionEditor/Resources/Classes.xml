@@ -2357,10 +2357,10 @@
   <Class>
     <byte>6D</byte>
     <name>Skeleton</name>
-    <command>Chop </command>
+    <command>Chop</command>
     <command>Thunder Anima</command>
     <hpm>115</hpm>
-    <mpm>50</mpm>
+    <mpm>5</mpm>
     <spm>120</spm>
     <pam>108</pam>
     <mam>85</mam>
@@ -2379,7 +2379,7 @@
   <Class>
     <byte>6E</byte>
     <name>Bonesnatch</name>
-    <command>Chop </command>
+    <command>Chop</command>
     <command>Water Anima</command>
     <hpm>90</hpm>
     <mpm>40</mpm>
@@ -2401,7 +2401,7 @@
   <Class>
     <byte>6F</byte>
     <name>Skeletal Fiend</name>
-    <command>Chop </command>
+    <command>Chop</command>
     <command>Ice Anima</command>
     <hpm>101</hpm>
     <mpm>30</mpm>

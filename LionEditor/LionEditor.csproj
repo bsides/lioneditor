@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datatypes\JobsAndAbilities.cs" />
     <Compile Include="Editors\CharacterEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -50,6 +51,18 @@
     <Compile Include="Datatypes\Savegame.cs" />
     <Compile Include="Datatypes\SecondaryAction.cs" />
     <Compile Include="Datatypes\SpriteSet.cs" />
+    <Compile Include="Editors\JobEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\JobEditor.Designer.cs">
+      <DependentUpon>JobEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\JobsAndAbilitiesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\JobsAndAbilitiesEditor.Designer.cs">
+      <DependentUpon>JobsAndAbilitiesEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +75,14 @@
     <EmbeddedResource Include="Editors\CharacterEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CharacterEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\JobEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>JobEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\JobsAndAbilitiesEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>JobsAndAbilitiesEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <SubType>Designer</SubType>
@@ -81,9 +102,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="FFTA.SYS">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -107,8 +125,8 @@
   <ItemGroup>
     <Content Include="Resources\Abilities.xml" />
     <Content Include="Resources\Classes.xml" />
+    <Content Include="Resources\MainJobBasedOnSprite.xml" />
     <Content Include="Resources\Items.xml" />
-    <Content Include="Resources\JobsWithAbilities.xml" />
     <Content Include="Resources\SecondaryAction.xml" />
     <Content Include="Resources\Sprites.xml" />
   </ItemGroup>

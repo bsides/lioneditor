@@ -406,6 +406,30 @@ namespace LionEditor
             }
         }
 
+        public uint PhysicalAEV
+        {
+            get
+            {
+                return RightHand.PhysicalAEV + RightShield.PhysicalAEV + LeftHand.PhysicalAEV + LeftShield.PhysicalAEV + Head.PhysicalAEV + Body.PhysicalAEV + Accessory.PhysicalAEV;
+            }
+        }
+
+        public uint MagicAEV
+        {
+            get
+            {
+                return RightHand.MagicAEV + RightShield.MagicAEV + LeftHand.MagicAEV + LeftShield.MagicAEV + Head.MagicAEV + Body.MagicAEV + Accessory.MagicAEV;
+            }
+        }
+
+        private JobsAndAbilities m_JobsAndAbilities;
+        public JobsAndAbilities JobsAndAbilities
+        {
+        	get { return m_JobsAndAbilities; }
+        	set { m_JobsAndAbilities = value; }
+        }
+
+
 
         private byte m_UnknownOffset03;
         public byte UnknownOffset03
@@ -483,9 +507,12 @@ namespace LionEditor
             {
                 SpriteSet = SpriteSet.AllSprites[charData[0]];
                 Index = charData[1];
-                Job = Class.ClassDictionary[charData[2]];
+                if( !Class.ClassDictionary.TryGetValue( charData[2], out m_job ) )
+                {
+                    Job = Class.ClassDictionary[0x4A];
+                }
                 UnknownOffset03 = charData[3];
-                Gender = (Gender)charData[4];
+                Gender = (Gender)(charData[4] & 0xE0);
                 UnknownOffset05 = charData[5];
                 ZodiacSign = (Zodiac)(charData[6] & 0xF0);
 
@@ -513,31 +540,10 @@ namespace LionEditor
                 RawPA = (uint)(((uint)charData[43] << 16) + ((uint)charData[42] << 8) + (uint)charData[41]);
                 RawMA = (uint)(((uint)charData[46] << 16) + ((uint)charData[45] << 8) + (uint)charData[44]);
 
-                JobsUnlocked[0] = charData[47];
-                JobsUnlocked[1] = charData[48];
-                JobsUnlocked[2] = charData[49];
+                byte[] jaBytes = new byte[173];
 
-                for( int i = 0; i < 22; i++ )
-                {
-                    for( int j = 0; j < 3; j++ )
-                    {
-                        SkillsUnlocked[i, j] = charData[50 + 3 * i + j];
-                    }
-                }
-
-                for( int i = 0; i < 12; i++ )
-                {
-                    JobLevels[i] = charData[0x74 + i];
-                }
-
-                for( int i = 0; i < 23; i++ )
-                {
-                    JP[i] = (ushort)((ushort)(charData[0x80 + 2 * i + 1] << 8) + charData[0x80 + 2 * i]);
-                }
-                for( int i = 0; i < 23; i++ )
-                {
-                    TotalJP[i] = (ushort)((ushort)(charData[0xAE + 2 * i + 1] << 8) + charData[0xAE + 2 * i]);
-                }
+                Savegame.CopyArray( charData, jaBytes, 0x4BB-0x48C, 173 );
+                this.JobsAndAbilities = new JobsAndAbilities( jaBytes );
 
                 for( int i = 0; i < 15; i++ )
                 {
@@ -566,9 +572,42 @@ namespace LionEditor
             this.Head = new Item( 0 );
             this.Index = (byte)index;
             this.Job = Class.ClassDictionary[0x4A];
+
             this.JobLevels = new byte[] { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11 };
             this.JobsUnlocked = new byte[] { 0xC0, 0x00, 0x00 };
             this.JP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            this.TotalJP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            byte[] jobBytes = new byte[] {
+                0xC0, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00,
+                0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+            this.JobsAndAbilities = new JobsAndAbilities( jobBytes );
+            
             this.LeftHand = new Item( 0 );
             this.LeftShield = new Item( 0 );
             this.Level = 1;
@@ -593,7 +632,6 @@ namespace LionEditor
 
             this.SpriteSet = SpriteSet.AllSprites[0x80];
             this.SupportAbility = new Ability( 0 );
-            this.TotalJP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             this.UnknownOffset03 = 0x00;
             this.UnknownOffset05 = 0x00;
             this.ZodiacSign = Zodiac.Aries;
@@ -671,33 +709,10 @@ namespace LionEditor
             result[45] = (byte)((RawMA & 0xFF00) >> 8);
             result[46] = (byte)((RawMA & 0xFF0000) >> 16);
 
-            result[47] = JobsUnlocked[0];
-            result[48] = JobsUnlocked[1];
-            result[49] = JobsUnlocked[2];
-
-            for( int i = 0; i < 22; i++ )
+            byte[] jaBytes = this.JobsAndAbilities.ToByteArray();
+            for( int i = 0; i < 173; i++ )
             {
-                for( int j = 0; j < 3; j++ )
-                {
-                    result[50 + 3 * i + j] = SkillsUnlocked[i, j];
-                }
-            }
-
-            for( int i = 0; i < 12; i++ )
-            {
-                result[0x74 + i] = JobLevels[i];
-            }
-
-            for( int i = 0; i < 23; i++ )
-            {
-                result[0x80 + 2 * i] = (byte)(JP[i] & 0xFF);
-                result[0x80 + 2 * i + 1] = (byte)((JP[i] & 0xFF00) >> 8);
-            }
-
-            for( int i = 0; i < 23; i++ )
-            {
-                result[0xAE + 2 * i] = (byte)(TotalJP[i] & 0xFF);
-                result[0xAE + 2 * i + 1] = (byte)((TotalJP[i] & 0xFF00) >> 8);
+                result[47 + i] = jaBytes[i];
             }
 
             for( int i = 0; i < 15; i++ )

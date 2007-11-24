@@ -1361,25 +1361,39 @@
 
   <Item offset="229" type="Accessory" subtype="Cloak">
     <name>Shoulder Cape</name>
+    <physicalAEV>10</physicalAEV>
+    <magicAEV>10</magicAEV>
   </Item>
   <Item offset="230" type="Accessory" subtype="Cloak">
     <name>Leather Cloak</name>
+    <physicalAEV>15</physicalAEV>
+    <magicAEV>15</magicAEV>
   </Item>
   <Item offset="231" type="Accessory" subtype="Cloak">
     <name>Mage's Cloak</name>
     <ma>1</ma>
+    <physicalAEV>18</physicalAEV>
+    <magicAEV>18</magicAEV>
   </Item>
   <Item offset="232" type="Accessory" subtype="Cloak">
     <name>Elven Cloak</name>
+    <physicalAEV>25</physicalAEV>
+    <magicAEV>25</magicAEV>
   </Item>
   <Item offset="233" type="Accessory" subtype="Cloak">
     <name>Vampire Cape</name>
+    <physicalAEV>28</physicalAEV>
+    <magicAEV>28</magicAEV>
   </Item>
   <Item offset="234" type="Accessory" subtype="Cloak">
     <name>Featherweave Cape</name>
+    <physicalAEV>40</physicalAEV>
+    <magicAEV>30</magicAEV>
   </Item>
   <Item offset="235" type="Accessory" subtype="Cloak">
     <name>Invisibility Cloak</name>
+    <physicalAEV>35</physicalAEV>
+    <magicAEV>0</magicAEV>
   </Item>
   
   

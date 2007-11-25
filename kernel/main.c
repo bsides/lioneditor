@@ -464,9 +464,9 @@ int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
 
     currentParams = params;
 
-    if ((strstr(params->gameName, "ULUS10297") >= 0) ||
-        (strstr(params->gameName, "ULES00850") >= 0) ||
-        (strstr(params->gameName, "ULJM05194") >= 0))
+    if (strstr(params->gameName, "ULUS10297") ||
+        strstr(params->gameName, "ULES00850") ||
+        strstr(params->gameName, "ULJM05194"))
     {
         if (params->mode == 1)
         {

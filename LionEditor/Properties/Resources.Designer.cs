@@ -63,9 +63,9 @@ namespace LionEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
-        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
         ///
-        ///	This file is part of LionEditor.
+        ///    This file is part of LionEditor.
         ///
         ///    LionEditor is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ namespace LionEditor.Properties {
         ///    (at your option) any later version.
         ///
         ///    LionEditor is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Abilities {
             get {
@@ -82,11 +82,31 @@ namespace LionEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;Artefacts&gt;
+        ///  &lt;Artefact offset=&quot;0&quot; name=&quot;Four-Deity Plate&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;1&quot; name=&quot;Statuette of Lilith&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;2&quot; name=&quot;Scarab Charm&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;3&quot; name=&quot;Tobacco Pipe&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;4&quot; name=&quot;Coin Blade&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;5&quot; name=&quot;Black Cat&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;6&quot; name=&quot;Hanya Mask&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;7&quot; name=&quot;Parade Helm&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;8&quot; name=&quot;Moppet Bread&quot;/&gt;
+        ///  &lt;Artefact offset=&quot;9&quot; name=&quot;Goliath Brea [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Artefacts {
+            get {
+                return ResourceManager.GetString("Artefacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;!--
-        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
         ///
-        ///	This file is part of LionEditor.
+        ///    This file is part of LionEditor.
         ///
         ///    LionEditor is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
@@ -94,7 +114,7 @@ namespace LionEditor.Properties {
         ///    (at your option) any later version.
         ///
         ///    LionEditor is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without even th [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without e [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Classes {
             get {
@@ -104,10 +124,30 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;Feats&gt;
+        ///  &lt;Feat offset=&quot;0&quot; name=&quot;The Salvage of the Highwind&quot; /&gt;
+        ///  &lt;Feat offset=&quot;1&quot; name=&quot;Salvage Expedition&quot; /&gt;
+        ///  &lt;Feat offset=&quot;2&quot; name=&quot;Diving Expedition&quot; /&gt;
+        ///  &lt;Feat offset=&quot;3&quot; name=&quot;The Enterprise&quot; /&gt;
+        ///  &lt;Feat offset=&quot;4&quot; name=&quot;Drudge Work&quot; /&gt;
+        ///  &lt;Feat offset=&quot;5&quot; name=&quot;Raising the Hindenburg&quot; /&gt;
+        ///  &lt;Feat offset=&quot;6&quot; name=&quot;The Foundered Falcon&quot; /&gt;
+        ///  &lt;Feat offset=&quot;7&quot; name=&quot;The Hero-King of Legend&quot; /&gt;
+        ///  &lt;Feat offset=&quot;8&quot; name=&quot;The Salvage of the Durga&quot; /&gt;
+        ///  &lt;Feat [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Feats {
+            get {
+                return ResourceManager.GetString("Feats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
-        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
         ///
-        ///	This file is part of LionEditor.
+        ///    This file is part of LionEditor.
         ///
         ///    LionEditor is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
@@ -115,7 +155,7 @@ namespace LionEditor.Properties {
         ///    (at your option) any later version.
         ///
         ///    LionEditor is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Items {
             get {
@@ -126,9 +166,9 @@ namespace LionEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
-        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
         ///
-        ///	This file is part of LionEditor.
+        ///    This file is part of LionEditor.
         ///
         ///    LionEditor is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
@@ -136,7 +176,7 @@ namespace LionEditor.Properties {
         ///    (at your option) any later version.
         ///
         ///    LionEditor is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MainJobBasedOnSprite {
             get {
@@ -147,9 +187,9 @@ namespace LionEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
-        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
         ///
-        ///	This file is part of LionEditor.
+        ///    This file is part of LionEditor.
         ///
         ///    LionEditor is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
@@ -157,7 +197,7 @@ namespace LionEditor.Properties {
         ///    (at your option) any later version.
         ///
         ///    LionEditor is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SecondaryAction {
             get {
@@ -168,9 +208,9 @@ namespace LionEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
-        ///	Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
         ///
-        ///	This file is part of LionEditor.
+        ///    This file is part of LionEditor.
         ///
         ///    LionEditor is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
@@ -178,11 +218,31 @@ namespace LionEditor.Properties {
         ///    (at your option) any later version.
         ///
         ///    LionEditor is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without even t [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Sprites {
             get {
                 return ResourceManager.GetString("Sprites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;Wonders&gt;
+        ///  &lt;Wonder offset=&quot;0&quot; name=&quot;Shrine of Chaos&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;1&quot; name=&quot;Eureka&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;2&quot; name=&quot;Pandaemonium&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;3&quot; name=&quot;Mirage Tower&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;4&quot; name=&quot;Floating Castle&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;5&quot; name=&quot;Matoya&apos;s Cave&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;6&quot; name=&quot;Crystal Tower&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;7&quot; name=&quot;Floating Continent&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;8&quot; name=&quot;Fortress of Trials&quot; /&gt;
+        ///  &lt;Wonder offset=&quot;9&quot; name=&quot;Tower of Babel [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Wonders {
+            get {
+                return ResourceManager.GetString("Wonders", resourceCulture);
             }
         }
     }

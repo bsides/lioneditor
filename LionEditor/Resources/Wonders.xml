@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Wonders>
+  <Wonder offset="0" name="Shrine of Chaos" />
+  <Wonder offset="1" name="Eureka" />
+  <Wonder offset="2" name="Pandaemonium" />
+  <Wonder offset="3" name="Mirage Tower" />
+  <Wonder offset="4" name="Floating Castle" />
+  <Wonder offset="5" name="Matoya's Cave" />
+  <Wonder offset="6" name="Crystal Tower" />
+  <Wonder offset="7" name="Floating Continent" />
+  <Wonder offset="8" name="Fortress of Trials" />
+  <Wonder offset="9" name="Tower of Babel" />
+  <Wonder offset="10" name="Ronkan Ruins" />
+  <Wonder offset="11" name="Falgabard" />
+  <Wonder offset="12" name="Phantom Train" />
+  <Wonder offset="13" name="Tozus Village" />
+  <Wonder offset="14" name="Chocobo Forest" />
+  <Wonder offset="15" name="Semitt Falls" />
+</Wonders>

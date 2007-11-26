@@ -473,7 +473,7 @@ int sceUtilitySavedataInitStart_patched(SceUtilitySavedataParam* params)
             // Grab the data being saved and put it on memory stick
             saveDecryptedSavedata(params);
         }
-	}
+    }
     else
     {
         badgame = 1;

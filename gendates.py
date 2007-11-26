@@ -2,7 +2,8 @@ bytes = [] # 108
 dates = [] # 96
 
 shift = 0
-start = 97
+start = 162
+
 
 for i in range(start,start + 96):
 #for i in [start]*96:

@@ -36,13 +36,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datatypes\Artefacts.cs" />
+    <Compile Include="Datatypes\Feats.cs" />
     <Compile Include="Datatypes\JobsAndAbilities.cs" />
     <Compile Include="About.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Datatypes\Wonders.cs" />
     <Compile Include="Editors\CharacterEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -57,6 +60,54 @@
     <Compile Include="Datatypes\Savegame.cs" />
     <Compile Include="Datatypes\SecondaryAction.cs" />
     <Compile Include="Datatypes\SpriteSet.cs" />
+    <Compile Include="Editors\Chronicle\ArtefactsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\ArtefactsEditor.Designer.cs">
+      <DependentUpon>ArtefactsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\ChronicleEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\ChronicleEditor.Designer.cs">
+      <DependentUpon>ChronicleEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\EventsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\EventsEditor.Designer.cs">
+      <DependentUpon>EventsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\FeatsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\FeatsEditor.Designer.cs">
+      <DependentUpon>FeatsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\PersonaeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\PersonaeEditor.Designer.cs">
+      <DependentUpon>PersonaeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\StupidDateEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\StupidDateEditor.Designer.cs">
+      <DependentUpon>StupidDateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\TimerEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\TimerEditor.Designer.cs">
+      <DependentUpon>TimerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\WondersEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\WondersEditor.Designer.cs">
+      <DependentUpon>WondersEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\JobEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -68,6 +119,8 @@
     </Compile>
     <Compile Include="Editors\JobsAndAbilitiesEditor.Designer.cs">
       <DependentUpon>JobsAndAbilitiesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Datatypes\StupidDate.cs">
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -85,6 +138,38 @@
     <EmbeddedResource Include="Editors\CharacterEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CharacterEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\ArtefactsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ArtefactsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\ChronicleEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChronicleEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\EventsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EventsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\FeatsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FeatsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\PersonaeEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PersonaeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\StupidDateEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>StupidDateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\TimerEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TimerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\WondersEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WondersEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\JobEditor.resx">
       <SubType>Designer</SubType>
@@ -131,11 +216,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Abilities.xml" />
+    <Content Include="Resources\Artefacts.xml" />
     <Content Include="Resources\Classes.xml" />
+    <Content Include="Resources\Feats.xml" />
     <Content Include="Resources\MainJobBasedOnSprite.xml" />
     <Content Include="Resources\Items.xml" />
     <Content Include="Resources\SecondaryAction.xml" />
     <Content Include="Resources\Sprites.xml" />
+    <Content Include="Resources\Wonders.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

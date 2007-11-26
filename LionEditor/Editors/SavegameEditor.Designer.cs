@@ -1,7 +1,7 @@
 /*
-	Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
-	This file is part of LionEditor.
+    This file is part of LionEditor.
 
     LionEditor is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -52,7 +52,8 @@ namespace LionEditor
             this.characterEditor = new LionEditor.CharacterEditor();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.charactersTab = new System.Windows.Forms.TabPage();
-            this.braveStoryTab = new System.Windows.Forms.TabPage();
+            this.chronicleTab = new System.Windows.Forms.TabPage();
+            this.chronicleEditor1 = new LionEditor.ChronicleEditor();
             this.inventoryTab = new System.Windows.Forms.TabPage();
             splitContainer = new System.Windows.Forms.SplitContainer();
             splitContainer.Panel1.SuspendLayout();
@@ -60,6 +61,7 @@ namespace LionEditor
             splitContainer.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.charactersTab.SuspendLayout();
+            this.chronicleTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer
@@ -101,7 +103,7 @@ namespace LionEditor
             // tabControl
             // 
             this.tabControl.Controls.Add( this.charactersTab );
-            this.tabControl.Controls.Add( this.braveStoryTab );
+            this.tabControl.Controls.Add( this.chronicleTab );
             this.tabControl.Controls.Add( this.inventoryTab );
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point( 0, 0 );
@@ -121,15 +123,28 @@ namespace LionEditor
             this.charactersTab.Text = "Characters";
             this.charactersTab.UseVisualStyleBackColor = true;
             // 
-            // braveStoryTab
+            // chronicleTab
             // 
-            this.braveStoryTab.Location = new System.Drawing.Point( 4, 22 );
-            this.braveStoryTab.Name = "braveStoryTab";
-            this.braveStoryTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.braveStoryTab.Size = new System.Drawing.Size( 717, 450 );
-            this.braveStoryTab.TabIndex = 1;
-            this.braveStoryTab.Text = "Brave Story";
-            this.braveStoryTab.UseVisualStyleBackColor = true;
+            this.chronicleTab.Controls.Add( this.chronicleEditor1 );
+            this.chronicleTab.Location = new System.Drawing.Point( 4, 22 );
+            this.chronicleTab.Name = "chronicleTab";
+            this.chronicleTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.chronicleTab.Size = new System.Drawing.Size( 717, 450 );
+            this.chronicleTab.TabIndex = 1;
+            this.chronicleTab.Text = "Chronicle";
+            this.chronicleTab.UseVisualStyleBackColor = true;
+            // 
+            // chronicleEditor1
+            // 
+            this.chronicleEditor1.Casualties = ((uint)(0u));
+            this.chronicleEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chronicleEditor1.Feats = null;
+            this.chronicleEditor1.Kills = ((uint)(0u));
+            this.chronicleEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.chronicleEditor1.Name = "chronicleEditor1";
+            this.chronicleEditor1.Size = new System.Drawing.Size( 711, 444 );
+            this.chronicleEditor1.TabIndex = 0;
+            this.chronicleEditor1.Timer = ((uint)(0u));
             // 
             // inventoryTab
             // 
@@ -153,6 +168,7 @@ namespace LionEditor
             splitContainer.ResumeLayout( false );
             this.tabControl.ResumeLayout( false );
             this.charactersTab.ResumeLayout( false );
+            this.chronicleTab.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -162,8 +178,9 @@ namespace LionEditor
         private System.Windows.Forms.TabPage charactersTab;
         private System.Windows.Forms.CheckedListBox characterSelector;
         private CharacterEditor characterEditor;
-        private System.Windows.Forms.TabPage braveStoryTab;
+        private System.Windows.Forms.TabPage chronicleTab;
         private System.Windows.Forms.TabPage inventoryTab;
         private System.Windows.Forms.TabControl tabControl;
+        private LionEditor.ChronicleEditor chronicleEditor1;
     }
 }

@@ -1,7 +1,7 @@
 /*
-	Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
-	This file is part of LionEditor.
+    This file is part of LionEditor.
 
     LionEditor is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -67,9 +67,7 @@ namespace LionEditor
         }
 
         byte[] artifactDates = new byte[53];
-        byte[] wondersDates = new byte[17];
-        byte[] featsDates = new byte[108];
-        byte[] offset0x1DE = new byte[610];
+        byte[] offset0x1DF = new byte[609];
         byte numPropositions;
         byte[] prop1 = new byte[9];
         byte[] prop2 = new byte[9];
@@ -143,9 +141,6 @@ namespace LionEditor
         }
 
         byte[] offset0x2510 = new byte[200];
-        byte[] artefacts = new byte[6];
-        byte[] wonders = new byte[2];
-        byte[] feats = new byte[48];
         byte[] offset0x2610 = new byte[372];
         byte[] options = new byte[4];
         byte[] offset0x2788 = new byte[692];
@@ -168,6 +163,27 @@ namespace LionEditor
             Empty = 0x0E,
             Unusable = 0x0F,
         }
+
+        private Feats feats;
+        public Feats Feats
+        {
+            get { return feats; }
+            set { feats = value; }
+        }
+
+        private Wonders wonders;
+        public Wonders Wonders
+        {
+            get { return wonders; }
+            set { wonders = value; }
+        }
+
+        private Artefacts artefacts;
+        public Artefacts Artefacts
+        {
+            get { return artefacts; }
+            set { artefacts = value; }
+        }
         
         public Savegame( byte[] file )
         {
@@ -180,10 +196,29 @@ namespace LionEditor
             SaveScreenMapPosition = file[0x116];
             CopyArray( file, offset0x117, 0x117, 17 );
             Timer = (uint)((uint)file[0x128] + ((uint)file[0x129] << 8) + ((uint)file[0x12A] << 16) + ((uint)file[0x12B] << 24));
-            CopyArray( file, artifactDates, 0x12C, 53 );
-            CopyArray( file, wondersDates, 0x161, 17 );
-            CopyArray( file, featsDates, 0x172, 108 );
-            CopyArray( file, offset0x1DE, 0x1DE, 610 );
+            //CopyArray( file, artifactDates, 0x12C, 53 );
+
+            byte[] artefactsDates = new byte[53];
+            byte[] artefactsStates = new byte[6];
+            CopyArray( file, artefactsDates, 0x12C, 53 );
+            CopyArray( file, artefactsStates, 0x25D8, 6 );
+            artefacts = new Artefacts( artefactsDates, artefactsStates );
+
+
+            byte[] wondersDates = new byte[18];
+            byte[] wondersStates = new byte[2];
+            CopyArray( file, wondersDates, 0x161, 18 );
+            CopyArray( file, wondersStates, 0x25DE, 2 );
+            wonders = new Wonders( wondersDates, wondersStates );
+       
+            byte[] featsDates = new byte[108];
+            byte[] featsStates = new byte[48];
+            CopyArray( file, featsDates, 0x173, 108 );
+            CopyArray( file, featsStates, 0x25E0, 48 );
+            feats = new Feats( featsDates, featsStates );
+
+            
+            CopyArray( file, offset0x1DF, 0x1DF, 609 );
             numPropositions = file[0x440];
             CopyArray( file, prop1, 0x441, 9 );
             CopyArray( file, prop2, 0x44A, 9 );
@@ -257,9 +292,6 @@ namespace LionEditor
             Kills = (uint)((uint)file[0x2508] + ((uint)file[0x2509] << 8) + ((uint)file[0x250A] << 16) + ((uint)file[0x250B] << 25));
             Casualties = (uint)((uint)file[0x250C] + ((uint)file[0x250D] << 8) + ((uint)file[0x250E] << 16) + ((uint)file[0x250F] << 24));
             CopyArray( file, offset0x2510, 0x2510, 200 );
-            CopyArray( file, artefacts, 0x25D8, 6 );
-            CopyArray( file, wonders, 0x25DE, 2 );
-            CopyArray( file, feats, 0x25E0, 48 );
             CopyArray( file, offset0x2610, 0x2610, 372 );
             CopyArray( file, options, 0x2784, 4 );
             CopyArray( file, offset0x2788, 0x2788, 692 );
@@ -281,10 +313,13 @@ namespace LionEditor
             result[0x129] = (byte)((Timer >> 8) & 0xFF);
             result[0x12A] = (byte)((Timer >> 16) & 0xFF);
             result[0x12B] = (byte)((Timer >> 24) & 0xFF);
-            CopyArray( artifactDates, result, 0, 0x12C, 53 );
-            CopyArray( wondersDates, result, 0, 0x161, 17 );
-            CopyArray( featsDates, result, 0, 0x172, 108 );
-            CopyArray( offset0x1DE, result, 0, 0x1DE, 610 );
+            //CopyArray( artifactDates, result, 0, 0x12C, 53 );
+            CopyArray( artefacts.DatesToByteArray(), result, 0, 0x12C, 53 );
+            //CopyArray( wondersDates, result, 0, 0x161, 17 );
+            CopyArray( wonders.DatesToByteArray(), result, 0, 0x161, 18 );
+            //CopyArray( featsDates, result, 0, 0x172, 108 );
+            CopyArray( feats.DatesToByteArray(), result, 0, 0x173, 108 );
+            CopyArray( offset0x1DF, result, 0, 0x1DF, 609 );
             result[0x440] = numPropositions;
             CopyArray( prop1, result, 0, 0x441, 9 );
             CopyArray( prop2, result, 0, 0x44A, 9 );
@@ -333,9 +368,12 @@ namespace LionEditor
             result[0x250E] = (byte)((Casualties >> 16) & 0xFF);
             result[0x250F] = (byte)((Casualties >> 24) & 0xFF);
             CopyArray( offset0x2510, result, 0, 0x2510, 200 );
-            CopyArray( artefacts, result, 0, 0x25D8, 6 );
-            CopyArray( wonders, result, 0, 0x25DE, 2 );
-            CopyArray( feats, result, 0, 0x25E0, 48 );
+            //CopyArray( artefacts, result, 0, 0x25D8, 6 );
+            CopyArray( artefacts.StatesToByteArray(), result, 0, 0x25D8, 6 );
+            //CopyArray( wonders, result, 0, 0x25DE, 2 );
+            CopyArray( wonders.StatesToByteArray(), result, 0, 0x25DE, 2 );
+            //CopyArray( feats, result, 0, 0x25E0, 48 );
+            CopyArray( feats.StatesToByteArray(), result, 0, 0x25E0, 48 );
             CopyArray( offset0x2610, result, 0, 0x2610, 372 );
             CopyArray( options, result, 0, 0x2784, 4 );
             CopyArray( offset0x2788, result, 0, 0x2788, 692 );

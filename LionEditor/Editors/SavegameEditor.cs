@@ -1,7 +1,7 @@
 /*
-	Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
-	This file is part of LionEditor.
+    This file is part of LionEditor.
 
     LionEditor is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -66,6 +66,13 @@ namespace LionEditor
                 characterSelector.Items.Add( g, g.Index != 0xFF );
             }
             characterSelector.SelectedIndex = 0;
+            chronicleEditor1.Feats = game.Feats;
+            chronicleEditor1.Wonders = game.Wonders;
+            chronicleEditor1.Artefacts = game.Artefacts;
+
+            chronicleEditor1.Kills = (game.Kills > 9999) ? 9999 : game.Kills;
+            chronicleEditor1.Casualties = (game.Casualties > 9999) ? 9999 : game.Casualties;
+            chronicleEditor1.Timer = game.Timer;
         }
 
         public SavegameEditor()
@@ -80,10 +87,22 @@ namespace LionEditor
             characterSelector.CheckOnClick = false;
             characterSelector.ItemCheck += characterSelector_ItemCheck;
 
-            characterEditor.DataChangedEvent += characterEditor1_DataChangedEvent;
+            characterEditor.DataChangedEvent += dataChanged;
+            chronicleEditor1.DataChangedEvent += chronicleEditor1_DataChangedEvent;
         }
 
-        void characterEditor1_DataChangedEvent( object sender, EventArgs e )
+        void chronicleEditor1_DataChangedEvent( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                game.Kills = chronicleEditor1.Kills;
+                game.Casualties = chronicleEditor1.Casualties;
+                game.Timer = chronicleEditor1.Timer;
+                dataChanged( sender, e );
+            }
+        }
+
+        void dataChanged( object sender, EventArgs e )
         {
             FireDataChangedEvent();
         }

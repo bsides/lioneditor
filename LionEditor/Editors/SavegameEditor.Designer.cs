@@ -55,6 +55,8 @@ namespace LionEditor
             this.chronicleTab = new System.Windows.Forms.TabPage();
             this.chronicleEditor1 = new LionEditor.ChronicleEditor();
             this.inventoryTab = new System.Windows.Forms.TabPage();
+            this.optionsTab = new System.Windows.Forms.TabPage();
+            this.optionsEditor1 = new LionEditor.Editors.OptionsEditor();
             splitContainer = new System.Windows.Forms.SplitContainer();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
@@ -62,6 +64,7 @@ namespace LionEditor
             this.tabControl.SuspendLayout();
             this.charactersTab.SuspendLayout();
             this.chronicleTab.SuspendLayout();
+            this.optionsTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer
@@ -105,6 +108,7 @@ namespace LionEditor
             this.tabControl.Controls.Add( this.charactersTab );
             this.tabControl.Controls.Add( this.chronicleTab );
             this.tabControl.Controls.Add( this.inventoryTab );
+            this.tabControl.Controls.Add( this.optionsTab );
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point( 0, 0 );
             this.tabControl.Name = "tabControl";
@@ -136,6 +140,7 @@ namespace LionEditor
             // 
             // chronicleEditor1
             // 
+            this.chronicleEditor1.Artefacts = null;
             this.chronicleEditor1.Casualties = ((uint)(0u));
             this.chronicleEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chronicleEditor1.Feats = null;
@@ -145,6 +150,7 @@ namespace LionEditor
             this.chronicleEditor1.Size = new System.Drawing.Size( 711, 444 );
             this.chronicleEditor1.TabIndex = 0;
             this.chronicleEditor1.Timer = ((uint)(0u));
+            this.chronicleEditor1.Wonders = null;
             // 
             // inventoryTab
             // 
@@ -155,6 +161,26 @@ namespace LionEditor
             this.inventoryTab.TabIndex = 2;
             this.inventoryTab.Text = "Inventory";
             this.inventoryTab.UseVisualStyleBackColor = true;
+            // 
+            // optionsTab
+            // 
+            this.optionsTab.Controls.Add( this.optionsEditor1 );
+            this.optionsTab.Location = new System.Drawing.Point( 4, 22 );
+            this.optionsTab.Name = "optionsTab";
+            this.optionsTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.optionsTab.Size = new System.Drawing.Size( 717, 450 );
+            this.optionsTab.TabIndex = 3;
+            this.optionsTab.Text = "Options";
+            this.optionsTab.UseVisualStyleBackColor = true;
+            // 
+            // optionsEditor1
+            // 
+            this.optionsEditor1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.optionsEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.optionsEditor1.Name = "optionsEditor1";
+            this.optionsEditor1.Options = null;
+            this.optionsEditor1.Size = new System.Drawing.Size( 460, 444 );
+            this.optionsEditor1.TabIndex = 0;
             // 
             // SavegameEditor
             // 
@@ -169,6 +195,7 @@ namespace LionEditor
             this.tabControl.ResumeLayout( false );
             this.charactersTab.ResumeLayout( false );
             this.chronicleTab.ResumeLayout( false );
+            this.optionsTab.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -182,5 +209,7 @@ namespace LionEditor
         private System.Windows.Forms.TabPage inventoryTab;
         private System.Windows.Forms.TabControl tabControl;
         private LionEditor.ChronicleEditor chronicleEditor1;
+        private System.Windows.Forms.TabPage optionsTab;
+        private LionEditor.Editors.OptionsEditor optionsEditor1;
     }
 }

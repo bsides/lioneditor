@@ -175,7 +175,10 @@ namespace LionEditor
                 }
                 stream.Close();
 
-                gameSelector.SelectedIndex = 0;
+                if( gameSelector.Items.Count > 0 )
+                {
+                    gameSelector.SelectedIndex = 0;
+                }
 
                 saveButton.Enabled = false;
 

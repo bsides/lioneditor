@@ -45,6 +45,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Datatypes\Options.cs" />
     <Compile Include="Datatypes\Wonders.cs" />
     <Compile Include="Editors\CharacterEditor.cs">
       <SubType>UserControl</SubType>
@@ -122,6 +123,12 @@
     </Compile>
     <Compile Include="Datatypes\StupidDate.cs">
     </Compile>
+    <Compile Include="Editors\OptionsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\OptionsEditor.Designer.cs">
+      <DependentUpon>OptionsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +185,10 @@
     <EmbeddedResource Include="Editors\JobsAndAbilitiesEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>JobsAndAbilitiesEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\OptionsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OptionsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <SubType>Designer</SubType>

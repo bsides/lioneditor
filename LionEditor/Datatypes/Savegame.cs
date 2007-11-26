@@ -142,8 +142,15 @@ namespace LionEditor
 
         byte[] offset0x2510 = new byte[200];
         byte[] offset0x2610 = new byte[372];
-        byte[] options = new byte[4];
         byte[] offset0x2788 = new byte[692];
+
+        private Options options;
+        public Options Options
+        {
+            get { return options; }
+            set { options = value; }
+        }
+
 
         public enum SaveScreenMonths
         {
@@ -293,7 +300,11 @@ namespace LionEditor
             Casualties = (uint)((uint)file[0x250C] + ((uint)file[0x250D] << 8) + ((uint)file[0x250E] << 16) + ((uint)file[0x250F] << 24));
             CopyArray( file, offset0x2510, 0x2510, 200 );
             CopyArray( file, offset0x2610, 0x2610, 372 );
-            CopyArray( file, options, 0x2784, 4 );
+
+            byte[] optionsBytes = new byte[4];
+            CopyArray( file, optionsBytes, 0x2784, 4 );
+            options = new Options( optionsBytes );
+
             CopyArray( file, offset0x2788, 0x2788, 692 );
         }
 
@@ -375,7 +386,7 @@ namespace LionEditor
             //CopyArray( feats, result, 0, 0x25E0, 48 );
             CopyArray( feats.StatesToByteArray(), result, 0, 0x25E0, 48 );
             CopyArray( offset0x2610, result, 0, 0x2610, 372 );
-            CopyArray( options, result, 0, 0x2784, 4 );
+            CopyArray( options.ToByteArray(), result, 0, 0x2784, 4 );
             CopyArray( offset0x2788, result, 0, 0x2788, 692 );
 
             return result;

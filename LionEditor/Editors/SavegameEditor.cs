@@ -66,6 +66,9 @@ namespace LionEditor
                 characterSelector.Items.Add( g, g.Index != 0xFF );
             }
             characterSelector.SelectedIndex = 0;
+
+            optionsEditor1.Options = game.Options;
+
             chronicleEditor1.Feats = game.Feats;
             chronicleEditor1.Wonders = game.Wonders;
             chronicleEditor1.Artefacts = game.Artefacts;
@@ -88,6 +91,7 @@ namespace LionEditor
             characterSelector.ItemCheck += characterSelector_ItemCheck;
 
             characterEditor.DataChangedEvent += dataChanged;
+            optionsEditor1.DataChangedEvent += dataChanged;
             chronicleEditor1.DataChangedEvent += chronicleEditor1_DataChangedEvent;
         }
 

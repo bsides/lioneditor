@@ -43,8 +43,8 @@ namespace LionEditor
                     {
                         checkedListBox1.Items.Add( a, a.Discovered );
                     }
+                    checkedListBox1.SelectedIndex = 0;
                 }
-                checkedListBox1.SelectedIndex = 0;
             }
         }
 

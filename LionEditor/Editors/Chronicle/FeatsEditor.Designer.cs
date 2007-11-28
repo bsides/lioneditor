@@ -50,61 +50,15 @@ namespace LionEditor
             System.Windows.Forms.Label nameLabel;
             System.Windows.Forms.Label stateLabel;
             System.Windows.Forms.Label dateLabel;
-            this.featComboBox = new System.Windows.Forms.ComboBox();
             this.stateComboBox = new System.Windows.Forms.ComboBox();
-            this.stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.featListBox = new System.Windows.Forms.ListBox();
+            this.stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor();
             nameLabel = new System.Windows.Forms.Label();
             stateLabel = new System.Windows.Forms.Label();
             dateLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // featComboBox
-            // 
-            this.featComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.featComboBox.FormattingEnabled = true;
-            this.featComboBox.Location = new System.Drawing.Point( 3, 16 );
-            this.featComboBox.Name = "featComboBox";
-            this.featComboBox.Size = new System.Drawing.Size( 216, 21 );
-            this.featComboBox.TabIndex = 1;
-            // 
-            // stateComboBox
-            // 
-            this.stateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.stateComboBox.FormattingEnabled = true;
-            this.stateComboBox.Location = new System.Drawing.Point( 225, 16 );
-            this.stateComboBox.Name = "stateComboBox";
-            this.stateComboBox.Size = new System.Drawing.Size( 82, 21 );
-            this.stateComboBox.TabIndex = 2;
-            // 
-            // stupidDateEditor1
-            // 
-            this.stupidDateEditor1.Location = new System.Drawing.Point( 313, 16 );
-            this.stupidDateEditor1.Name = "stupidDateEditor1";
-            this.stupidDateEditor1.Size = new System.Drawing.Size( 174, 27 );
-            this.stupidDateEditor1.TabIndex = 0;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 222F ) );
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 88F ) );
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 112F ) );
-            this.tableLayoutPanel1.Controls.Add( this.featComboBox, 0, 1 );
-            this.tableLayoutPanel1.Controls.Add( this.stupidDateEditor1, 2, 1 );
-            this.tableLayoutPanel1.Controls.Add( this.stateComboBox, 1, 1 );
-            this.tableLayoutPanel1.Controls.Add( nameLabel, 0, 0 );
-            this.tableLayoutPanel1.Controls.Add( stateLabel, 1, 0 );
-            this.tableLayoutPanel1.Controls.Add( dateLabel, 2, 0 );
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            this.tableLayoutPanel1.Size = new System.Drawing.Size( 490, 53 );
-            this.tableLayoutPanel1.TabIndex = 3;
             // 
             // nameLabel
             // 
@@ -139,13 +93,59 @@ namespace LionEditor
             dateLabel.Text = "Date";
             dateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // stateComboBox
+            // 
+            this.stateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.stateComboBox.FormattingEnabled = true;
+            this.stateComboBox.Location = new System.Drawing.Point( 225, 16 );
+            this.stateComboBox.Name = "stateComboBox";
+            this.stateComboBox.Size = new System.Drawing.Size( 82, 21 );
+            this.stateComboBox.TabIndex = 2;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 222F ) );
+            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 88F ) );
+            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 180F ) );
+            this.tableLayoutPanel1.Controls.Add( this.stupidDateEditor1, 2, 1 );
+            this.tableLayoutPanel1.Controls.Add( this.stateComboBox, 1, 1 );
+            this.tableLayoutPanel1.Controls.Add( nameLabel, 0, 0 );
+            this.tableLayoutPanel1.Controls.Add( stateLabel, 1, 0 );
+            this.tableLayoutPanel1.Controls.Add( dateLabel, 2, 0 );
+            this.tableLayoutPanel1.Controls.Add( this.featListBox, 0, 1 );
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
+            this.tableLayoutPanel1.Size = new System.Drawing.Size( 490, 298 );
+            this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // featListBox
+            // 
+            this.featListBox.FormattingEnabled = true;
+            this.featListBox.Location = new System.Drawing.Point( 3, 16 );
+            this.featListBox.Name = "featListBox";
+            this.featListBox.Size = new System.Drawing.Size( 216, 251 );
+            this.featListBox.TabIndex = 6;
+            // 
+            // stupidDateEditor1
+            // 
+            this.stupidDateEditor1.Location = new System.Drawing.Point( 313, 16 );
+            this.stupidDateEditor1.Name = "stupidDateEditor1";
+            this.stupidDateEditor1.Size = new System.Drawing.Size( 174, 27 );
+            this.stupidDateEditor1.TabIndex = 0;
+            // 
             // FeatsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add( this.tableLayoutPanel1 );
             this.Name = "FeatsEditor";
-            this.Size = new System.Drawing.Size( 490, 53 );
+            this.Size = new System.Drawing.Size( 490, 298 );
             this.tableLayoutPanel1.ResumeLayout( false );
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout( false );
@@ -155,9 +155,9 @@ namespace LionEditor
         #endregion
 
         private LionEditor.Editors.Chronicle.StupidDateEditor stupidDateEditor1;
-        private System.Windows.Forms.ComboBox featComboBox;
         private System.Windows.Forms.ComboBox stateComboBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ListBox featListBox;
 
     }
 }

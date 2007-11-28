@@ -76,7 +76,7 @@ namespace LionEditor.Editors
                 options.CursorRepeatRate = (Speed)cursorRepeatRate.SelectedItem;
                 options.MultiHeightToggleRate = (MultiheightToggleRate)multiheightToggleRate.SelectedItem;
                 options.MenuCursorSpeed = (MenuCursorSpeed)menuCursorSpeed.SelectedItem;
-                options.MessageSpeed = (Speed)menuCursorSpeed.SelectedItem;
+                options.MessageSpeed = (Speed)messageSpeed.SelectedItem;
                 options.BattlePrompts = battlePrompts.Checked;
                 options.DisplayAbilityNames = displayAbilityNames.Checked;
                 options.DisplayEffectMessages = displayEffectMessages.Checked;

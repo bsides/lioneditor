@@ -36,21 +36,6 @@ namespace LionEditor
             set { Character.EncodeName( value, saveNameRaw, 0 ); }
         }
 
-        private SaveScreenMonths m_saveScreenMonth;
-
-        public SaveScreenMonths SaveScreenMonth
-        {
-        	get { return m_saveScreenMonth; }
-        	set { m_saveScreenMonth = value; }
-        }
-
-        private byte m_saveScreenDay;
-        public byte SaveScreenDay
-        {
-        	get { return m_saveScreenDay; }
-        	set { m_saveScreenDay = value; }
-        }
-
         private byte m_saveScreenMapPosition;
         public byte SaveScreenMapPosition
         {
@@ -103,21 +88,9 @@ namespace LionEditor
         }
 
         byte[] offset0x2438 = new byte[4];
-        private uint m_month;
-        public uint Month
-        {
-        	get { return m_month; }
-        	set { m_month = value; }
-        }
-
-        private uint m_day;
-        public uint Day
-        {
-        	get { return m_day; }
-        	set { m_day = value; }
-        }
 
         byte[] offset0x2444 = new byte[4];
+
         private byte m_mapPosition;
         public byte MapPosition
         {
@@ -191,6 +164,13 @@ namespace LionEditor
             get { return artefacts; }
             set { artefacts = value; }
         }
+
+        private StupidDate date;
+        public StupidDate Date
+        {
+            get { return date; }
+            set { date = value; }
+        }
         
         public Savegame( byte[] file )
         {
@@ -198,8 +178,8 @@ namespace LionEditor
             CopyArray( file, saveNameRaw, 0x101, 17 );
 
             //CopyArray( file, offset0x110, 0x110, 4 );
-            SaveScreenMonth = (SaveScreenMonths)file[0x114];
-            SaveScreenDay = file[0x115];
+            Date = new StupidDate( file[0x115], (Zodiac)((file[0x114] - 1) << 4) );
+
             SaveScreenMapPosition = file[0x116];
             CopyArray( file, offset0x117, 0x117, 17 );
             Timer = (uint)((uint)file[0x128] + ((uint)file[0x129] << 8) + ((uint)file[0x12A] << 16) + ((uint)file[0x12B] << 24));
@@ -291,8 +271,6 @@ namespace LionEditor
             CopyArray( file, offset0x2304, 0x2304, 304 );
             WarFunds = (uint)((uint)file[0x2434] + ((uint)file[0x2435] << 8) + ((uint)file[0x2436] << 16) + ((uint)file[0x2437] << 24));
             CopyArray( file, offset0x2438, 0x2438, 4 );
-            Month = file[0x243C];
-            Day = file[0x2440];
             CopyArray( file, offset0x2444, 0x2444, 4 );
             MapPosition = file[0x2448];
             CopyArray( file, offset0x2449, 0x2449, 191 );
@@ -316,8 +294,8 @@ namespace LionEditor
             //CopyArray( offset0x110, result, 0, 0x110, 4 );
             result[0x112] = Characters[0].Job.Byte;
             result[0x113] = Characters[0].Level;
-            result[0x114] = (byte)SaveScreenMonth;
-            result[0x115] = SaveScreenDay;
+            result[0x114] = (byte)((((byte)Date.Month) >> 4) + 1);
+            result[0x115] = (byte)Date.Day;
             result[0x116] = SaveScreenMapPosition;
             CopyArray( offset0x117, result, 0, 0x117, 17 );
             result[0x128] = (byte)(Timer & 0xFF);
@@ -365,8 +343,9 @@ namespace LionEditor
             result[0x2436] = (byte)((WarFunds >> 16) & 0xFF);
             result[0x2437] = (byte)((WarFunds >> 24) & 0xFF);
             CopyArray( offset0x2438, result, 0, 0x2438, 4 );
-            result[0x243C] = (byte)Month;
-            result[0x2440] = (byte)Day;
+            DateTime realDate = Date.ToNormalDate();
+            result[0x243C] = (byte)realDate.Month;
+            result[0x2440] = (byte)realDate.Day;
             CopyArray( offset0x2444, result, 0, 0x2444, 4 );
             result[0x2448] = MapPosition;
             CopyArray( offset0x2449, result, 0, 0x2449, 191 );
@@ -410,7 +389,7 @@ namespace LionEditor
             TimeSpan span = new TimeSpan( (long)((long)Timer * 10000000) );
             string time = string.Format( "{0:000}:{1:00}:{2:00}", (int)span.TotalHours, span.Minutes, span.Seconds );
 
-            string date = string.Format( "{0} {1}", SaveScreenDay, SaveScreenMonth );
+            string date = string.Format( "{0} {1}", Date.Day, Date.Month );
 
             string loc = LionEditor.Location.AllLocations[SaveScreenMapPosition].ToString();
 

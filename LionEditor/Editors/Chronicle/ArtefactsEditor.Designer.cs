@@ -57,12 +57,12 @@ namespace LionEditor
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point( 0, 0 );
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size( 117, 334 );
+            this.checkedListBox1.Size = new System.Drawing.Size( 180, 334 );
             this.checkedListBox1.TabIndex = 2;
             // 
             // stupidDateEditor1
             // 
-            this.stupidDateEditor1.Location = new System.Drawing.Point( 127, 4 );
+            this.stupidDateEditor1.Location = new System.Drawing.Point( 186, 3 );
             this.stupidDateEditor1.Name = "stupidDateEditor1";
             this.stupidDateEditor1.Size = new System.Drawing.Size( 183, 29 );
             this.stupidDateEditor1.TabIndex = 3;

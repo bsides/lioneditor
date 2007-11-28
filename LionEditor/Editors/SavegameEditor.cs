@@ -76,6 +76,8 @@ namespace LionEditor
             chronicleEditor1.Kills = (game.Kills > 9999) ? 9999 : game.Kills;
             chronicleEditor1.Casualties = (game.Casualties > 9999) ? 9999 : game.Casualties;
             chronicleEditor1.Timer = game.Timer;
+            chronicleEditor1.WarFunds = game.WarFunds;
+            chronicleEditor1.Date = game.Date;
         }
 
         public SavegameEditor()
@@ -102,6 +104,8 @@ namespace LionEditor
                 game.Kills = chronicleEditor1.Kills;
                 game.Casualties = chronicleEditor1.Casualties;
                 game.Timer = chronicleEditor1.Timer;
+                game.Date = chronicleEditor1.Date;
+                game.WarFunds = chronicleEditor1.WarFunds;
                 dataChanged( sender, e );
             }
         }

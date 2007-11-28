@@ -47,6 +47,7 @@ namespace LionEditor
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label rightHandLabel;
             System.Windows.Forms.Label rightShieldLabel;
             System.Windows.Forms.Label leftHandLabel;
@@ -133,6 +134,7 @@ namespace LionEditor
             this.speedSpinner = new System.Windows.Forms.NumericUpDown();
             this.paSpinner = new System.Windows.Forms.NumericUpDown();
             this.maSpinner = new System.Windows.Forms.NumericUpDown();
+            this.toolTip = new System.Windows.Forms.ToolTip( this.components );
             rightHandLabel = new System.Windows.Forms.Label();
             rightShieldLabel = new System.Windows.Forms.Label();
             leftHandLabel = new System.Windows.Forms.Label();
@@ -1406,6 +1408,7 @@ namespace LionEditor
         private System.Windows.Forms.Button jobButton;
         private System.Windows.Forms.ComboBox genderComboBox;
         private System.Windows.Forms.GroupBox groupBox;
+        private System.Windows.Forms.ToolTip toolTip;
 
     }
 }

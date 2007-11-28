@@ -10,6 +10,7 @@ namespace LionEditor.Editors.Chronicle
 {
     public partial class StupidDateEditor : UserControl
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public StupidDate CurrentDate
         {
             get { return new StupidDate( (int)daySpinner.Value, (Zodiac)monthCombo.SelectedItem ); }

@@ -73,8 +73,21 @@ namespace LionEditor
             set { artefacts.Artefacts = value; }
         }
 
+        public StupidDate Date
+        {
+            get { return date.CurrentDate; }
+            set { date.CurrentDate = value; }
+        }
+
+        public uint WarFunds
+        {
+            get { return (uint)warFunds.Value; }
+            set { warFunds.Value = value; }
+        }
+
         public ChronicleEditor()
         {
+            date = new LionEditor.Editors.Chronicle.StupidDateEditor();
             InitializeComponent();
             listBox1.SelectedIndexChanged += selectedPageChanged;
             controls = new UserControl[] { events, personae, feats, wonders, artefacts };
@@ -86,6 +99,8 @@ namespace LionEditor
             casualtiesSpinner.ValueChanged += controlDataChangedEvent;
             killsSpinner.ValueChanged += controlDataChangedEvent;
             timerEditor1.DataChangedEvent += controlDataChangedEvent;
+            warFunds.Validated += controlDataChangedEvent;
+            date.DateChangedEvent += controlDataChangedEvent;
 
             listBox1.SelectedIndex = 0;
         }

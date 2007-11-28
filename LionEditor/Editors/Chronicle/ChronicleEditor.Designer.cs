@@ -49,6 +49,8 @@ namespace LionEditor
         {
             System.Windows.Forms.Label killsLabel;
             System.Windows.Forms.Label casualtiesLabel;
+            System.Windows.Forms.Label dateLabel;
+            System.Windows.Forms.Label warFundsLabel;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -56,16 +58,24 @@ namespace LionEditor
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.killsSpinner = new System.Windows.Forms.NumericUpDown();
             this.casualtiesSpinner = new System.Windows.Forms.NumericUpDown();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.date = new LionEditor.Editors.Chronicle.StupidDateEditor();
             this.timerEditor1 = new LionEditor.Editors.Chronicle.TimerEditor();
+            this.warFunds = new System.Windows.Forms.NumericUpDown();
             killsLabel = new System.Windows.Forms.Label();
             casualtiesLabel = new System.Windows.Forms.Label();
+            dateLabel = new System.Windows.Forms.Label();
+            warFundsLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
+            this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.killsSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.casualtiesSpinner)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.warFunds)).BeginInit();
             this.SuspendLayout();
             // 
             // killsLabel
@@ -129,6 +139,10 @@ namespace LionEditor
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point( 78, 3 );
             this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add( this.panel1 );
             // 
             // splitContainer1.Panel2
             // 
@@ -196,6 +210,34 @@ namespace LionEditor
             this.casualtiesSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.casualtiesSpinner.ThousandsSeparator = true;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add( warFundsLabel );
+            this.panel1.Controls.Add( this.warFunds );
+            this.panel1.Controls.Add( dateLabel );
+            this.panel1.Controls.Add( this.date );
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point( 0, 0 );
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size( 461, 77 );
+            this.panel1.TabIndex = 0;
+            // 
+            // dateLabel
+            // 
+            dateLabel.AutoSize = true;
+            dateLabel.Location = new System.Drawing.Point( 236, 22 );
+            dateLabel.Name = "dateLabel";
+            dateLabel.Size = new System.Drawing.Size( 33, 13 );
+            dateLabel.TabIndex = 1;
+            dateLabel.Text = "Date:";
+            // 
+            // date
+            // 
+            this.date.Location = new System.Drawing.Point( 275, 20 );
+            this.date.Name = "date";
+            this.date.Size = new System.Drawing.Size( 183, 29 );
+            this.date.TabIndex = 0;
+            // 
             // timerEditor1
             // 
             this.timerEditor1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -205,6 +247,29 @@ namespace LionEditor
             this.timerEditor1.TabIndex = 2;
             this.timerEditor1.Value = ((uint)(0u));
             // 
+            // warFunds
+            // 
+            this.warFunds.Location = new System.Drawing.Point( 275, 54 );
+            this.warFunds.Maximum = new decimal( new int[] {
+            99999999,
+            0,
+            0,
+            0} );
+            this.warFunds.Name = "warFunds";
+            this.warFunds.Size = new System.Drawing.Size( 173, 20 );
+            this.warFunds.TabIndex = 2;
+            this.warFunds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.warFunds.ThousandsSeparator = true;
+            // 
+            // warFundsLabel
+            // 
+            warFundsLabel.AutoSize = true;
+            warFundsLabel.Location = new System.Drawing.Point( 207, 57 );
+            warFundsLabel.Name = "warFundsLabel";
+            warFundsLabel.Size = new System.Drawing.Size( 62, 13 );
+            warFundsLabel.TabIndex = 3;
+            warFundsLabel.Text = "War Funds:";
+            // 
             // ChronicleEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -213,6 +278,7 @@ namespace LionEditor
             this.Name = "ChronicleEditor";
             this.Size = new System.Drawing.Size( 706, 439 );
             this.tableLayoutPanel1.ResumeLayout( false );
+            this.splitContainer1.Panel1.ResumeLayout( false );
             this.splitContainer1.Panel2.ResumeLayout( false );
             this.splitContainer1.ResumeLayout( false );
             this.groupBox1.ResumeLayout( false );
@@ -220,6 +286,9 @@ namespace LionEditor
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.killsSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.casualtiesSpinner)).EndInit();
+            this.panel1.ResumeLayout( false );
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.warFunds)).EndInit();
             this.ResumeLayout( false );
 
         }
@@ -234,5 +303,8 @@ namespace LionEditor
         private System.Windows.Forms.NumericUpDown killsSpinner;
         private System.Windows.Forms.NumericUpDown casualtiesSpinner;
         private LionEditor.Editors.Chronicle.TimerEditor timerEditor1;
+        private System.Windows.Forms.Panel panel1;
+        private LionEditor.Editors.Chronicle.StupidDateEditor date;
+        private System.Windows.Forms.NumericUpDown warFunds;
     }
 }

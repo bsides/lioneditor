@@ -129,46 +129,83 @@ namespace LionEditor
         private void UpdateMove()
         {
             moveValueLabel.Text = character.Move.ToString();
+            toolTip.SetToolTip( moveValueLabel, string.Format( "Base: {0}", character.Job.Move ) );
         }
 
         private void UpdateJump()
         {
             jumpValueLabel.Text = character.Jump.ToString();
+            toolTip.SetToolTip( jumpValueLabel, string.Format( "Base: {0}", character.Job.Jump ) );
         }
 
         private void UpdateHPValue()
         {
             hpSpinner.Minimum = 0;
+            hpSpinner.Maximum = character.MaxHP;
             hpSpinner.Value = (character.HP > hpSpinner.Maximum) ? hpSpinner.Maximum : character.HP;
             hpSpinner.Minimum = character.HP - character.Job.ActualHP( character.RawHP );
+            UpdateHPToolTip();
+        }
+
+        private void UpdateHPToolTip()
+        {
+            toolTip.SetToolTip( hpSpinner, string.Format( "Raw: {0}\nBase: {1}\nMultiplier: x{2}\nBonus: +{3}", character.RawHP, character.Job.ActualHP( character.RawHP ), character.HPMultiplier, character.HPBonus ) );
         }
 
         private void UpdateMPValue()
         {
             mpSpinner.Minimum = 0;
+            mpSpinner.Maximum = character.MaxMP;
             mpSpinner.Value = (character.MP > mpSpinner.Maximum) ? mpSpinner.Maximum : character.MP;
             mpSpinner.Minimum = character.MP - character.Job.ActualMP( character.RawMP );
+            UpdateMPToolTip();
+        }
+
+        private void UpdateMPToolTip()
+        {
+            toolTip.SetToolTip( mpSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMP, character.Job.ActualMP( character.RawMP ), character.MPBonus ) );
         }
 
         private void UpdateSPValue()
         {
             speedSpinner.Minimum = 0;
+            speedSpinner.Maximum = character.MaxSpeed;
             speedSpinner.Value = (character.Speed > speedSpinner.Maximum) ? speedSpinner.Maximum : character.Speed;
             speedSpinner.Minimum = character.Speed - character.Job.ActualSP( character.RawSP );
+            UpdateSpeedToolTip();
+        }
+
+        private void UpdateSpeedToolTip()
+        {
+            toolTip.SetToolTip( speedSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawSP, character.Job.ActualSP( character.RawSP ), character.SpeedBonus ) );
         }
 
         private void UpdateMAValue()
         {
             maSpinner.Minimum = 0;
+            maSpinner.Maximum = character.MaxMA;
             maSpinner.Value = (character.MA > maSpinner.Maximum) ? maSpinner.Maximum : character.MA;
             maSpinner.Minimum = character.MA - character.Job.ActualMA( character.RawMA );
+            UpdateMAToolTip();
+        }
+
+        private void UpdateMAToolTip()
+        {
+            toolTip.SetToolTip( maSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMA, character.Job.ActualMA( character.RawMA ), character.MABonus ) );
         }
 
         private void UpdatePAValue()
         {
             paSpinner.Minimum = 0;
+            paSpinner.Maximum = character.MaxPA;
             paSpinner.Value = (character.PA > paSpinner.Maximum) ? paSpinner.Maximum : character.PA;
             paSpinner.Minimum = character.PA - character.Job.ActualPA( character.RawPA );
+            UpdatePAToolTip();
+        }
+
+        private void UpdatePAToolTip()
+        {
+            toolTip.SetToolTip( paSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawPA, character.Job.ActualPA( character.RawPA ), character.PABonus ) );
         }
 
         private void UpdateSkillLabel()
@@ -256,6 +293,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.HP = (uint)hpSpinner.Value;
+                        UpdateHPToolTip();
                         FireDataChangedEvent();
                     }
                 };
@@ -265,6 +303,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.Speed = (uint)speedSpinner.Value;
+                        UpdateSpeedToolTip();
                         FireDataChangedEvent();
                     }
                 };
@@ -274,6 +313,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.MP = (uint)mpSpinner.Value;
+                        UpdateMPToolTip();
                         FireDataChangedEvent();
                     }
                 };
@@ -283,6 +323,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.PA = (uint)paSpinner.Value;
+                        UpdatePAToolTip();
                         FireDataChangedEvent();
                     }
                 };
@@ -292,6 +333,7 @@ namespace LionEditor
                     if( !ignoreChanges )
                     {
                         character.MA = (uint)maSpinner.Value;
+                        UpdateMAToolTip();
                         FireDataChangedEvent();
                     }
                 };
@@ -454,6 +496,7 @@ namespace LionEditor
                     character.ReactAbility = (Ability)reactionCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
+                    UpdateHPValue();
                     ignoreChanges = false;
                     FireDataChangedEvent();
                 };
@@ -464,6 +507,7 @@ namespace LionEditor
                     character.SupportAbility = (Ability)supportCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
+                    UpdateHPValue();
                     ignoreChanges = false;
                     FireDataChangedEvent();
                 };
@@ -474,6 +518,7 @@ namespace LionEditor
                     character.MovementAbility = (Ability)movementCombo.SelectedItem;
                     UpdateMove();
                     UpdateJump();
+                    UpdateHPValue();
                     ignoreChanges = false;
                     FireDataChangedEvent();
                 };

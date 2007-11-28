@@ -1255,7 +1255,7 @@
 
   <Item offset="208" type="Accessory" subtype="Shoes">
     <name>Battle Boots</name>
-    <mode>1</mode>
+    <move>1</move>
   </Item>
   <Item offset="209" type="Accessory" subtype="Shoes">
     <name>Spiked Boots</name>

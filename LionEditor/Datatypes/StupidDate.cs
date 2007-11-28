@@ -103,6 +103,40 @@ namespace LionEditor
             return StupidDateList.IndexOf( this );
         }
 
+        public DateTime ToNormalDate()
+        {
+            switch( Month )
+            {
+                case Zodiac.Aries:
+                    return new DateTime( 1990, 3, 21 ).AddDays( Day - 1 );
+                case Zodiac.Taurus:
+                    return new DateTime( 1990, 4, 20 ).AddDays( Day - 1 );
+                case Zodiac.Gemini:
+                    return new DateTime( 1990, 5, 21 ).AddDays( Day - 1 );
+                case Zodiac.Cancer:
+                    return new DateTime( 1990, 6, 22 ).AddDays( Day - 1 );
+                case Zodiac.Leo:
+                    return new DateTime( 1990, 7, 23 ).AddDays( Day - 1 );
+                case Zodiac.Virgo:
+                    return new DateTime( 1990, 8, 23 ).AddDays( Day - 1 );
+                case Zodiac.Libra:
+                    return new DateTime( 1990, 9, 23 ).AddDays( Day - 1 );
+                case Zodiac.Scorpio:
+                    return new DateTime( 1990, 10, 24 ).AddDays( Day - 1 );
+                case Zodiac.Sagittarius:
+                    return new DateTime( 1990, 11, 23 ).AddDays( Day - 1 );
+                case Zodiac.Capricorn:
+                    return new DateTime( 1990, 12, 23 ).AddDays( Day - 1 );
+                case Zodiac.Aquarius:
+                    return new DateTime( 1990, 1, 20 ).AddDays( Day - 1 );
+                case Zodiac.Pisces:
+                    return new DateTime( 1990, 2, 19 ).AddDays( Day - 1 );
+                default:
+                    // Something terrible happened
+                    return DateTime.Now;
+            }
+        }
+
         private static List<StupidDate> stupidDateList;
 
         private static List<StupidDate> StupidDateList

@@ -38,9 +38,10 @@
   <ItemGroup>
     <Compile Include="Datatypes\Artefacts.cs" />
     <Compile Include="Datatypes\Feats.cs" />
+    <Compile Include="Datatypes\Inventory.cs" />
     <Compile Include="Datatypes\JobsAndAbilities.cs" />
     <Compile Include="About.cs">
-      <SubType>Component</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
@@ -108,6 +109,12 @@
     </Compile>
     <Compile Include="Editors\Chronicle\WondersEditor.Designer.cs">
       <DependentUpon>WondersEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\InventoryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\InventoryEditor.Designer.cs">
+      <DependentUpon>InventoryEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\JobEditor.cs">
       <SubType>UserControl</SubType>
@@ -177,6 +184,10 @@
     <EmbeddedResource Include="Editors\Chronicle\WondersEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>WondersEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\InventoryEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>InventoryEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\JobEditor.resx">
       <SubType>Designer</SubType>

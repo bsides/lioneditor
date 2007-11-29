@@ -67,21 +67,30 @@ namespace LionEditor
         public Character[] Characters
         {
         	get { return m_characters; }
-        	set { m_characters = value; }
+        	private set { m_characters = value; }
         }
 
         private Character[] m_guests = new Character[4];
         public Character[] Guests
         {
         	get { return m_guests; }
-        	set { m_guests = value; }
+            private set { m_guests = value; }
         }
 
-        byte[] inventory = new byte[316];
-        byte[] furshop = new byte[316];
+        private Inventory inventory;
+        public Inventory Inventory
+        {
+            get { return inventory; }
+        }
+
+        private Inventory poachersDen;
+        public Inventory PoachersDen
+        {
+            get { return poachersDen; }
+        }
+
         byte[] offset0x2304 = new byte[304];
-        private uint m_warFunds;
-        public uint WarFunds
+                private uint m_warFunds;        public uint WarFunds
         {
         	get { return m_warFunds; }
         	set { m_warFunds = value; }
@@ -91,23 +100,20 @@ namespace LionEditor
 
         byte[] offset0x2444 = new byte[4];
 
-        private byte m_mapPosition;
-        public byte MapPosition
+        private byte m_mapPosition;        public byte MapPosition
         {
         	get { return m_mapPosition; }
         	set { m_mapPosition = value; }
         }
 
         byte[] offset0x2449 = new byte[191];
-        private uint m_kills;
-        public uint Kills
+        private uint m_kills;        public uint Kills
         {
         	get { return m_kills; }
         	set { m_kills = value; }
         }
 
-        private uint m_casualties;
-        public uint Casualties
+        private uint m_casualties;        public uint Casualties
         {
         	get { return m_casualties; }
         	set { m_casualties = value; }
@@ -117,11 +123,10 @@ namespace LionEditor
         byte[] offset0x2610 = new byte[372];
         byte[] offset0x2788 = new byte[692];
 
-        private Options options;
-        public Options Options
+        private Options options;        public Options Options
         {
             get { return options; }
-            set { options = value; }
+            private set { options = value; }
         }
 
 
@@ -148,21 +153,21 @@ namespace LionEditor
         public Feats Feats
         {
             get { return feats; }
-            set { feats = value; }
+            private set { feats = value; }
         }
 
         private Wonders wonders;
         public Wonders Wonders
         {
             get { return wonders; }
-            set { wonders = value; }
+            private set { wonders = value; }
         }
 
         private Artefacts artefacts;
         public Artefacts Artefacts
         {
             get { return artefacts; }
-            set { artefacts = value; }
+            private set { artefacts = value; }
         }
 
         private StupidDate date;
@@ -266,8 +271,15 @@ namespace LionEditor
                     }
                 }
             }
-            CopyArray( file, inventory, 0x208C, 316 );
-            CopyArray( file, furshop, 0x21C8, 316 );
+
+            byte[] inventoryBytes = new byte[316];
+            CopyArray( file, inventoryBytes, 0x208C, 316 );
+
+            inventory = new Inventory( inventoryBytes );
+
+            CopyArray( file, inventoryBytes, 0x21C8, 316 );
+            poachersDen = new Inventory( inventoryBytes, 255 );
+
             CopyArray( file, offset0x2304, 0x2304, 304 );
             WarFunds = (uint)((uint)file[0x2434] + ((uint)file[0x2435] << 8) + ((uint)file[0x2436] << 16) + ((uint)file[0x2437] << 24));
             CopyArray( file, offset0x2438, 0x2438, 4 );
@@ -335,8 +347,11 @@ namespace LionEditor
                     CopyArray( guestBytes, result, 0, 0x1C8C + i * 0x100, 0x100 );
                 }
             }
-            CopyArray( inventory, result, 0, 0x208C, 316 );
-            CopyArray( furshop, result, 0, 0x21C8, 316 );
+
+            inventory.UpdateEquippedQuantities( new Character[][] { Characters, Guests } );
+
+            CopyArray( inventory.ToByteArray(), result, 0, 0x208C, 316 );
+            CopyArray( poachersDen.ToByteArray(), result, 0, 0x21C8, 316 );
             CopyArray( offset0x2304, result, 0, 0x2304, 304 );
             result[0x2434] = (byte)(WarFunds & 0xFF);
             result[0x2435] = (byte)((WarFunds >> 8) & 0xFF);

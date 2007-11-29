@@ -73,6 +73,7 @@ namespace LionEditor
             set { artefacts.Artefacts = value; }
         }
 
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden)]
         public StupidDate Date
         {
             get { return date.CurrentDate; }

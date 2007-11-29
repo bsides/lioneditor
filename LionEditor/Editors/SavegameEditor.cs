@@ -78,6 +78,9 @@ namespace LionEditor
             chronicleEditor1.Timer = game.Timer;
             chronicleEditor1.WarFunds = game.WarFunds;
             chronicleEditor1.Date = game.Date;
+
+            inventoryEditor.Inventory = game.Inventory;
+            poachersDenEditor.Inventory = game.PoachersDen;
         }
 
         public SavegameEditor()
@@ -95,6 +98,8 @@ namespace LionEditor
             characterEditor.DataChangedEvent += dataChanged;
             optionsEditor1.DataChangedEvent += dataChanged;
             chronicleEditor1.DataChangedEvent += chronicleEditor1_DataChangedEvent;
+            inventoryEditor.DataChangedEvent += dataChanged;
+            poachersDenEditor.DataChangedEvent += dataChanged;
         }
 
         void chronicleEditor1_DataChangedEvent( object sender, EventArgs e )

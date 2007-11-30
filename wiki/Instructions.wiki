@@ -1,5 +1,5 @@
 #summary Installation/usage instructions
-#labels idiots
+#labels idiots,Featured
 
 = Introduction =
 

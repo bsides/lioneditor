@@ -1,3 +1,22 @@
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,19 +25,48 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LionEditor.Editors
+namespace LionEditor
 {
     public partial class InventoryEditor : UserControl
     {
-        ItemType filter = ItemType.None;
+        #region Fields
 
+        private ItemType filter = ItemType.None;
+        private bool addingRows = false;
+        private Inventory inventory;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the inventory being edited
+        /// </summary>
+        public Inventory Inventory
+        {
+            get { return inventory; }
+            set
+            {
+                inventory = value;
+                if( value != null )
+                {
+                    SetDataSource();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Filters the data grid view by item type
+        /// </summary>
         private void Filter( ItemType type )
         {
             filter = type;
             SetDataSource();
         }
-
-        private bool addingRows = false;
 
         public void SetDataSource()
         {
@@ -29,6 +77,35 @@ namespace LionEditor.Editors
             }
             addingRows = false;
         }
+
+        #endregion
+
+        #region Events
+
+        void dataGridView_CellValueChanged( object sender, DataGridViewCellEventArgs e )
+        {
+            if( !addingRows )
+            {
+                FireDataChangedEvent();
+            }
+        }
+
+        void filterComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            Filter( (ItemType)filterComboBox.SelectedItem );
+        }
+
+        public event EventHandler DataChangedEvent;
+
+        private void FireDataChangedEvent()
+        {
+            if( DataChangedEvent != null )
+            {
+                DataChangedEvent( this, EventArgs.Empty );
+            }
+        }
+
+        #endregion
 
         public InventoryEditor()
         {
@@ -43,61 +120,6 @@ namespace LionEditor.Editors
             filterComboBox.SelectedIndexChanged += new EventHandler( filterComboBox_SelectedIndexChanged );
             filterComboBox.SelectedItem = ItemType.None;
             dataGridView.CellValueChanged += new DataGridViewCellEventHandler( dataGridView_CellValueChanged );
-            //dataGridView.CellValidating += new DataGridViewCellValidatingEventHandler( dataGridView_CellValidating );
         }
-
-        void dataGridView_CellValueChanged( object sender, DataGridViewCellEventArgs e )
-        {
-            if( !addingRows )
-            {
-                FireDataChangedEvent();
-            }
-        }
-
-        void dataGridView_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
-        {
-            if( e.ColumnIndex == dataGridView.Columns["Item"].Index )
-            {
-                int value;
-                if( !Int32.TryParse( dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out value ) || (value < 0) || (value > this.inventory.MaxQuantity) )
-                {
-                    e.Cancel = true;
-                }
-            }
-        }
-
-        void filterComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            Filter( (ItemType)filterComboBox.SelectedItem );
-        }
-
-        private Inventory inventory;
-
-        public Inventory Inventory
-        {
-            get
-            {
-                return inventory;
-            }
-            set
-            {
-                inventory = value;
-                if( value != null )
-                {
-                    SetDataSource();
-                }
-            }
-        }
-
-        public event EventHandler DataChangedEvent;
-
-        private void FireDataChangedEvent()
-        {
-            if( DataChangedEvent != null )
-            {
-                DataChangedEvent( this, EventArgs.Empty );
-            }
-        }
-
     }
 }

@@ -49,8 +49,8 @@ namespace LionEditor
         {
             System.Windows.Forms.SplitContainer splitContainer;
             this.jobSelector = new System.Windows.Forms.ListBox();
-            this.jobEditor = new LionEditor.JobEditor();
             this.closeButton = new System.Windows.Forms.Button();
+            this.jobEditor = new LionEditor.JobEditor();
             splitContainer = new System.Windows.Forms.SplitContainer();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
@@ -87,16 +87,6 @@ namespace LionEditor
             this.jobSelector.Size = new System.Drawing.Size( 109, 433 );
             this.jobSelector.TabIndex = 100;
             // 
-            // jobEditor
-            // 
-            this.jobEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.jobEditor.Info = null;
-            this.jobEditor.Job = null;
-            this.jobEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.jobEditor.Name = "jobEditor";
-            this.jobEditor.Size = new System.Drawing.Size( 274, 436 );
-            this.jobEditor.TabIndex = 200;
-            // 
             // closeButton
             // 
             this.closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -106,6 +96,16 @@ namespace LionEditor
             this.closeButton.TabIndex = 300;
             this.closeButton.Text = "Close";
             this.closeButton.UseVisualStyleBackColor = true;
+            // 
+            // jobEditor
+            // 
+            this.jobEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.jobEditor.Info = null;
+            this.jobEditor.Job = null;
+            this.jobEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.jobEditor.Name = "jobEditor";
+            this.jobEditor.Size = new System.Drawing.Size( 274, 436 );
+            this.jobEditor.TabIndex = 200;
             // 
             // JobsAndAbilitiesEditor
             // 

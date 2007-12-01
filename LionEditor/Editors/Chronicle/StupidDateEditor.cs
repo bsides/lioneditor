@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace LionEditor.Editors.Chronicle
+namespace LionEditor
 {
     public partial class StupidDateEditor : UserControl
     {

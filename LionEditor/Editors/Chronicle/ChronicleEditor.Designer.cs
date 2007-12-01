@@ -51,31 +51,35 @@ namespace LionEditor
             System.Windows.Forms.Label casualtiesLabel;
             System.Windows.Forms.Label dateLabel;
             System.Windows.Forms.Label warFundsLabel;
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            System.Windows.Forms.SplitContainer topSplitContainer;
+            System.Windows.Forms.Panel dateWarFundsPanel;
+            System.Windows.Forms.GroupBox killGroupBox;
+            System.Windows.Forms.TableLayoutPanel killsTables;
+            this.entireTable = new System.Windows.Forms.TableLayoutPanel();
+            this.pageSelector = new System.Windows.Forms.ListBox();
+            this.warFunds = new System.Windows.Forms.NumericUpDown();
             this.killsSpinner = new System.Windows.Forms.NumericUpDown();
             this.casualtiesSpinner = new System.Windows.Forms.NumericUpDown();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.date = new LionEditor.Editors.Chronicle.StupidDateEditor();
-            this.timerEditor1 = new LionEditor.Editors.Chronicle.TimerEditor();
-            this.warFunds = new System.Windows.Forms.NumericUpDown();
+            this.date = new LionEditor.StupidDateEditor();
+            this.timerEditor = new LionEditor.TimerEditor();
             killsLabel = new System.Windows.Forms.Label();
             casualtiesLabel = new System.Windows.Forms.Label();
             dateLabel = new System.Windows.Forms.Label();
             warFundsLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            topSplitContainer = new System.Windows.Forms.SplitContainer();
+            dateWarFundsPanel = new System.Windows.Forms.Panel();
+            killGroupBox = new System.Windows.Forms.GroupBox();
+            killsTables = new System.Windows.Forms.TableLayoutPanel();
+            this.entireTable.SuspendLayout();
+            topSplitContainer.Panel1.SuspendLayout();
+            topSplitContainer.Panel2.SuspendLayout();
+            topSplitContainer.SuspendLayout();
+            dateWarFundsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.warFunds)).BeginInit();
+            killGroupBox.SuspendLayout();
+            killsTables.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.killsSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.casualtiesSpinner)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.warFunds)).BeginInit();
             this.SuspendLayout();
             // 
             // killsLabel
@@ -100,85 +104,129 @@ namespace LionEditor
             casualtiesLabel.Text = "Casualties:";
             casualtiesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tableLayoutPanel1
+            // dateLabel
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 10.76487F ) );
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 89.23513F ) );
-            this.tableLayoutPanel1.Controls.Add( this.listBox1, 0, 0 );
-            this.tableLayoutPanel1.Controls.Add( this.splitContainer1, 1, 0 );
-            this.tableLayoutPanel1.Controls.Add( this.timerEditor1, 1, 2 );
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 21.70543F ) );
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 78.29457F ) );
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 56F ) );
-            this.tableLayoutPanel1.Size = new System.Drawing.Size( 706, 439 );
-            this.tableLayoutPanel1.TabIndex = 0;
+            dateLabel.AutoSize = true;
+            dateLabel.Location = new System.Drawing.Point( 236, 22 );
+            dateLabel.Name = "dateLabel";
+            dateLabel.Size = new System.Drawing.Size( 33, 13 );
+            dateLabel.TabIndex = 1;
+            dateLabel.Text = "Date:";
             // 
-            // listBox1
+            // warFundsLabel
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange( new object[] {
+            warFundsLabel.AutoSize = true;
+            warFundsLabel.Location = new System.Drawing.Point( 207, 57 );
+            warFundsLabel.Name = "warFundsLabel";
+            warFundsLabel.Size = new System.Drawing.Size( 62, 13 );
+            warFundsLabel.TabIndex = 3;
+            warFundsLabel.Text = "War Funds:";
+            // 
+            // entireTable
+            // 
+            this.entireTable.ColumnCount = 2;
+            this.entireTable.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 10.76487F ) );
+            this.entireTable.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 89.23513F ) );
+            this.entireTable.Controls.Add( this.pageSelector, 0, 0 );
+            this.entireTable.Controls.Add( topSplitContainer, 1, 0 );
+            this.entireTable.Controls.Add( this.timerEditor, 1, 2 );
+            this.entireTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.entireTable.Location = new System.Drawing.Point( 0, 0 );
+            this.entireTable.Name = "entireTable";
+            this.entireTable.RowCount = 3;
+            this.entireTable.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 21.70543F ) );
+            this.entireTable.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 78.29457F ) );
+            this.entireTable.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 56F ) );
+            this.entireTable.Size = new System.Drawing.Size( 706, 439 );
+            this.entireTable.TabIndex = 0;
+            // 
+            // pageSelector
+            // 
+            this.pageSelector.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pageSelector.FormattingEnabled = true;
+            this.pageSelector.Items.AddRange( new object[] {
             "Events",
             "Personae",
             "Feats",
             "Wonders",
             "Artefacts"} );
-            this.listBox1.Location = new System.Drawing.Point( 3, 3 );
-            this.listBox1.Name = "listBox1";
-            this.tableLayoutPanel1.SetRowSpan( this.listBox1, 2 );
-            this.listBox1.Size = new System.Drawing.Size( 69, 238 );
-            this.listBox1.TabIndex = 0;
+            this.pageSelector.Location = new System.Drawing.Point( 3, 3 );
+            this.pageSelector.Name = "pageSelector";
+            this.entireTable.SetRowSpan( this.pageSelector, 2 );
+            this.pageSelector.Size = new System.Drawing.Size( 69, 238 );
+            this.pageSelector.TabIndex = 0;
             // 
-            // splitContainer1
+            // topSplitContainer
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point( 78, 3 );
-            this.splitContainer1.Name = "splitContainer1";
+            topSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            topSplitContainer.Location = new System.Drawing.Point( 78, 3 );
+            topSplitContainer.Name = "topSplitContainer";
             // 
-            // splitContainer1.Panel1
+            // topSplitContainer.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add( this.panel1 );
+            topSplitContainer.Panel1.Controls.Add( dateWarFundsPanel );
             // 
-            // splitContainer1.Panel2
+            // topSplitContainer.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add( this.groupBox1 );
-            this.splitContainer1.Size = new System.Drawing.Size( 625, 77 );
-            this.splitContainer1.SplitterDistance = 461;
-            this.splitContainer1.TabIndex = 1;
+            topSplitContainer.Panel2.Controls.Add( killGroupBox );
+            topSplitContainer.Size = new System.Drawing.Size( 625, 77 );
+            topSplitContainer.SplitterDistance = 461;
+            topSplitContainer.TabIndex = 1;
             // 
-            // groupBox1
+            // dateWarFundsPanel
             // 
-            this.groupBox1.Controls.Add( this.tableLayoutPanel2 );
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point( 0, 0 );
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding( 3, 0, 3, 3 );
-            this.groupBox1.Size = new System.Drawing.Size( 160, 77 );
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
+            dateWarFundsPanel.Controls.Add( warFundsLabel );
+            dateWarFundsPanel.Controls.Add( this.warFunds );
+            dateWarFundsPanel.Controls.Add( dateLabel );
+            dateWarFundsPanel.Controls.Add( this.date );
+            dateWarFundsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            dateWarFundsPanel.Location = new System.Drawing.Point( 0, 0 );
+            dateWarFundsPanel.Name = "dateWarFundsPanel";
+            dateWarFundsPanel.Size = new System.Drawing.Size( 461, 77 );
+            dateWarFundsPanel.TabIndex = 0;
             // 
-            // tableLayoutPanel2
+            // warFunds
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 42.20779F ) );
-            this.tableLayoutPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 57.79221F ) );
-            this.tableLayoutPanel2.Controls.Add( killsLabel, 0, 0 );
-            this.tableLayoutPanel2.Controls.Add( casualtiesLabel, 0, 1 );
-            this.tableLayoutPanel2.Controls.Add( this.killsSpinner, 1, 0 );
-            this.tableLayoutPanel2.Controls.Add( this.casualtiesSpinner, 1, 1 );
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point( 3, 13 );
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
-            this.tableLayoutPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
-            this.tableLayoutPanel2.Size = new System.Drawing.Size( 154, 61 );
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.warFunds.Location = new System.Drawing.Point( 275, 54 );
+            this.warFunds.Maximum = new decimal( new int[] {
+            99999999,
+            0,
+            0,
+            0} );
+            this.warFunds.Name = "warFunds";
+            this.warFunds.Size = new System.Drawing.Size( 173, 20 );
+            this.warFunds.TabIndex = 2;
+            this.warFunds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.warFunds.ThousandsSeparator = true;
+            // 
+            // killGroupBox
+            // 
+            killGroupBox.Controls.Add( killsTables );
+            killGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            killGroupBox.Location = new System.Drawing.Point( 0, 0 );
+            killGroupBox.Name = "killGroupBox";
+            killGroupBox.Padding = new System.Windows.Forms.Padding( 3, 0, 3, 3 );
+            killGroupBox.Size = new System.Drawing.Size( 160, 77 );
+            killGroupBox.TabIndex = 0;
+            killGroupBox.TabStop = false;
+            // 
+            // killsTables
+            // 
+            killsTables.ColumnCount = 2;
+            killsTables.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 42.20779F ) );
+            killsTables.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 57.79221F ) );
+            killsTables.Controls.Add( killsLabel, 0, 0 );
+            killsTables.Controls.Add( casualtiesLabel, 0, 1 );
+            killsTables.Controls.Add( this.killsSpinner, 1, 0 );
+            killsTables.Controls.Add( this.casualtiesSpinner, 1, 1 );
+            killsTables.Dock = System.Windows.Forms.DockStyle.Fill;
+            killsTables.Location = new System.Drawing.Point( 3, 13 );
+            killsTables.Name = "killsTables";
+            killsTables.RowCount = 2;
+            killsTables.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
+            killsTables.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
+            killsTables.Size = new System.Drawing.Size( 154, 61 );
+            killsTables.TabIndex = 0;
             // 
             // killsSpinner
             // 
@@ -210,27 +258,6 @@ namespace LionEditor
             this.casualtiesSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.casualtiesSpinner.ThousandsSeparator = true;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add( warFundsLabel );
-            this.panel1.Controls.Add( this.warFunds );
-            this.panel1.Controls.Add( dateLabel );
-            this.panel1.Controls.Add( this.date );
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point( 0, 0 );
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size( 461, 77 );
-            this.panel1.TabIndex = 0;
-            // 
-            // dateLabel
-            // 
-            dateLabel.AutoSize = true;
-            dateLabel.Location = new System.Drawing.Point( 236, 22 );
-            dateLabel.Name = "dateLabel";
-            dateLabel.Size = new System.Drawing.Size( 33, 13 );
-            dateLabel.TabIndex = 1;
-            dateLabel.Text = "Date:";
-            // 
             // date
             // 
             this.date.Location = new System.Drawing.Point( 275, 20 );
@@ -238,73 +265,46 @@ namespace LionEditor
             this.date.Size = new System.Drawing.Size( 183, 29 );
             this.date.TabIndex = 0;
             // 
-            // timerEditor1
+            // timerEditor
             // 
-            this.timerEditor1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.timerEditor1.Location = new System.Drawing.Point( 438, 385 );
-            this.timerEditor1.Name = "timerEditor1";
-            this.timerEditor1.Size = new System.Drawing.Size( 265, 51 );
-            this.timerEditor1.TabIndex = 2;
-            this.timerEditor1.Value = ((uint)(0u));
-            // 
-            // warFunds
-            // 
-            this.warFunds.Location = new System.Drawing.Point( 275, 54 );
-            this.warFunds.Maximum = new decimal( new int[] {
-            99999999,
-            0,
-            0,
-            0} );
-            this.warFunds.Name = "warFunds";
-            this.warFunds.Size = new System.Drawing.Size( 173, 20 );
-            this.warFunds.TabIndex = 2;
-            this.warFunds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.warFunds.ThousandsSeparator = true;
-            // 
-            // warFundsLabel
-            // 
-            warFundsLabel.AutoSize = true;
-            warFundsLabel.Location = new System.Drawing.Point( 207, 57 );
-            warFundsLabel.Name = "warFundsLabel";
-            warFundsLabel.Size = new System.Drawing.Size( 62, 13 );
-            warFundsLabel.TabIndex = 3;
-            warFundsLabel.Text = "War Funds:";
+            this.timerEditor.Dock = System.Windows.Forms.DockStyle.Right;
+            this.timerEditor.Location = new System.Drawing.Point( 438, 385 );
+            this.timerEditor.Name = "timerEditor";
+            this.timerEditor.Size = new System.Drawing.Size( 265, 51 );
+            this.timerEditor.TabIndex = 2;
+            this.timerEditor.Value = ((uint)(0u));
             // 
             // ChronicleEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.tableLayoutPanel1 );
+            this.Controls.Add( this.entireTable );
             this.Name = "ChronicleEditor";
             this.Size = new System.Drawing.Size( 706, 439 );
-            this.tableLayoutPanel1.ResumeLayout( false );
-            this.splitContainer1.Panel1.ResumeLayout( false );
-            this.splitContainer1.Panel2.ResumeLayout( false );
-            this.splitContainer1.ResumeLayout( false );
-            this.groupBox1.ResumeLayout( false );
-            this.tableLayoutPanel2.ResumeLayout( false );
-            this.tableLayoutPanel2.PerformLayout();
+            this.entireTable.ResumeLayout( false );
+            topSplitContainer.Panel1.ResumeLayout( false );
+            topSplitContainer.Panel2.ResumeLayout( false );
+            topSplitContainer.ResumeLayout( false );
+            dateWarFundsPanel.ResumeLayout( false );
+            dateWarFundsPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.warFunds)).EndInit();
+            killGroupBox.ResumeLayout( false );
+            killsTables.ResumeLayout( false );
+            killsTables.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.killsSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.casualtiesSpinner)).EndInit();
-            this.panel1.ResumeLayout( false );
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.warFunds)).EndInit();
             this.ResumeLayout( false );
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.ListBox pageSelector;
         private System.Windows.Forms.NumericUpDown killsSpinner;
         private System.Windows.Forms.NumericUpDown casualtiesSpinner;
-        private LionEditor.Editors.Chronicle.TimerEditor timerEditor1;
-        private System.Windows.Forms.Panel panel1;
-        private LionEditor.Editors.Chronicle.StupidDateEditor date;
+        private TimerEditor timerEditor;
+        private StupidDateEditor date;
         private System.Windows.Forms.NumericUpDown warFunds;
+        private System.Windows.Forms.TableLayoutPanel entireTable;
     }
 }

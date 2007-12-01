@@ -1,4 +1,23 @@
-namespace LionEditor.Editors
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+namespace LionEditor
 {
     partial class InventoryEditor
     {
@@ -28,18 +47,19 @@ namespace LionEditor.Editors
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.SplitContainer splitContainer;
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.filterLabel = new System.Windows.Forms.Label();
             this.filterComboBox = new System.Windows.Forms.ComboBox();
+            splitContainer = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            splitContainer.Panel1.SuspendLayout();
+            splitContainer.Panel2.SuspendLayout();
+            splitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -98,24 +118,26 @@ namespace LionEditor.Editors
             this.Quantity.Name = "Quantity";
             this.Quantity.Width = 71;
             // 
-            // splitContainer1
+            // splitContainer
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point( 0, 0 );
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            splitContainer.IsSplitterFixed = true;
+            splitContainer.Location = new System.Drawing.Point( 0, 0 );
+            splitContainer.Name = "splitContainer";
+            splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer1.Panel1
+            // splitContainer.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add( this.filterLabel );
-            this.splitContainer1.Panel1.Controls.Add( this.filterComboBox );
+            splitContainer.Panel1.Controls.Add( this.filterLabel );
+            splitContainer.Panel1.Controls.Add( this.filterComboBox );
             // 
-            // splitContainer1.Panel2
+            // splitContainer.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add( this.dataGridView );
-            this.splitContainer1.Size = new System.Drawing.Size( 683, 388 );
-            this.splitContainer1.SplitterDistance = 28;
-            this.splitContainer1.TabIndex = 1;
+            splitContainer.Panel2.Controls.Add( this.dataGridView );
+            splitContainer.Size = new System.Drawing.Size( 683, 388 );
+            splitContainer.SplitterDistance = 28;
+            splitContainer.TabIndex = 1;
             // 
             // filterLabel
             // 
@@ -142,14 +164,14 @@ namespace LionEditor.Editors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.splitContainer1 );
+            this.Controls.Add( splitContainer );
             this.Name = "InventoryEditor";
             this.Size = new System.Drawing.Size( 683, 388 );
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-            this.splitContainer1.Panel1.ResumeLayout( false );
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout( false );
-            this.splitContainer1.ResumeLayout( false );
+            splitContainer.Panel1.ResumeLayout( false );
+            splitContainer.Panel1.PerformLayout();
+            splitContainer.Panel2.ResumeLayout( false );
+            splitContainer.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -157,7 +179,6 @@ namespace LionEditor.Editors
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ComboBox filterComboBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn Item;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;

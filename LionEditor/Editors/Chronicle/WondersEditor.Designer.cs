@@ -47,32 +47,32 @@ namespace LionEditor
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor();
+            this.wondersListBox = new System.Windows.Forms.CheckedListBox();
+            this.stupidDateEditor = new LionEditor.StupidDateEditor();
             this.SuspendLayout();
             // 
-            // checkedListBox1
+            // wondersListBox
             // 
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point( 0, 0 );
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size( 117, 334 );
-            this.checkedListBox1.TabIndex = 0;
+            this.wondersListBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.wondersListBox.FormattingEnabled = true;
+            this.wondersListBox.Location = new System.Drawing.Point( 0, 0 );
+            this.wondersListBox.Name = "wondersListBox";
+            this.wondersListBox.Size = new System.Drawing.Size( 117, 334 );
+            this.wondersListBox.TabIndex = 0;
             // 
-            // stupidDateEditor1
+            // stupidDateEditor
             // 
-            this.stupidDateEditor1.Location = new System.Drawing.Point( 127, 4 );
-            this.stupidDateEditor1.Name = "stupidDateEditor1";
-            this.stupidDateEditor1.Size = new System.Drawing.Size( 183, 29 );
-            this.stupidDateEditor1.TabIndex = 1;
+            this.stupidDateEditor.Location = new System.Drawing.Point( 127, 4 );
+            this.stupidDateEditor.Name = "stupidDateEditor";
+            this.stupidDateEditor.Size = new System.Drawing.Size( 183, 29 );
+            this.stupidDateEditor.TabIndex = 1;
             // 
             // WondersEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.stupidDateEditor1 );
-            this.Controls.Add( this.checkedListBox1 );
+            this.Controls.Add( this.stupidDateEditor );
+            this.Controls.Add( this.wondersListBox );
             this.Name = "WondersEditor";
             this.Size = new System.Drawing.Size( 512, 343 );
             this.ResumeLayout( false );
@@ -81,8 +81,8 @@ namespace LionEditor
 
         #endregion
 
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private LionEditor.Editors.Chronicle.StupidDateEditor stupidDateEditor1;
+        private System.Windows.Forms.CheckedListBox wondersListBox;
+        private StupidDateEditor stupidDateEditor;
 
     }
 }

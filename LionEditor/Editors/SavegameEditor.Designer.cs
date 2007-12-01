@@ -53,13 +53,13 @@ namespace LionEditor
             System.Windows.Forms.TableLayoutPanel inventoryTable;
             this.characterSelector = new System.Windows.Forms.CheckedListBox();
             this.characterEditor = new LionEditor.CharacterEditor();
+            this.inventoryEditor = new LionEditor.InventoryEditor();
+            this.poachersDenEditor = new LionEditor.InventoryEditor();
             this.optionsTab = new System.Windows.Forms.TabPage();
-            this.optionsEditor1 = new LionEditor.Editors.OptionsEditor();
+            this.optionsEditor = new LionEditor.OptionsEditor();
             this.inventoryTab = new System.Windows.Forms.TabPage();
-            this.inventoryEditor = new LionEditor.Editors.InventoryEditor();
-            this.poachersDenEditor = new LionEditor.Editors.InventoryEditor();
             this.chronicleTab = new System.Windows.Forms.TabPage();
-            this.chronicleEditor1 = new LionEditor.ChronicleEditor();
+            this.chronicleEditor = new LionEditor.ChronicleEditor();
             this.charactersTab = new System.Windows.Forms.TabPage();
             this.tabControl = new System.Windows.Forms.TabControl();
             poachersDenLabel = new System.Windows.Forms.Label();
@@ -69,9 +69,9 @@ namespace LionEditor
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
             splitContainer.SuspendLayout();
+            inventoryTable.SuspendLayout();
             this.optionsTab.SuspendLayout();
             this.inventoryTab.SuspendLayout();
-            inventoryTable.SuspendLayout();
             this.chronicleTab.SuspendLayout();
             this.charactersTab.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -135,36 +135,6 @@ namespace LionEditor
             this.characterEditor.Size = new System.Drawing.Size( 577, 444 );
             this.characterEditor.TabIndex = 0;
             // 
-            // optionsTab
-            // 
-            this.optionsTab.Controls.Add( this.optionsEditor1 );
-            this.optionsTab.Location = new System.Drawing.Point( 4, 22 );
-            this.optionsTab.Name = "optionsTab";
-            this.optionsTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.optionsTab.Size = new System.Drawing.Size( 717, 450 );
-            this.optionsTab.TabIndex = 3;
-            this.optionsTab.Text = "Options";
-            this.optionsTab.UseVisualStyleBackColor = true;
-            // 
-            // optionsEditor1
-            // 
-            this.optionsEditor1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.optionsEditor1.Location = new System.Drawing.Point( 3, 3 );
-            this.optionsEditor1.Name = "optionsEditor1";
-            this.optionsEditor1.Options = null;
-            this.optionsEditor1.Size = new System.Drawing.Size( 460, 444 );
-            this.optionsEditor1.TabIndex = 0;
-            // 
-            // inventoryTab
-            // 
-            this.inventoryTab.Controls.Add( inventoryTable );
-            this.inventoryTab.Location = new System.Drawing.Point( 4, 22 );
-            this.inventoryTab.Name = "inventoryTab";
-            this.inventoryTab.Size = new System.Drawing.Size( 717, 450 );
-            this.inventoryTab.TabIndex = 2;
-            this.inventoryTab.Text = "Inventory";
-            this.inventoryTab.UseVisualStyleBackColor = true;
-            // 
             // inventoryTable
             // 
             inventoryTable.ColumnCount = 2;
@@ -204,9 +174,39 @@ namespace LionEditor
             this.poachersDenEditor.Size = new System.Drawing.Size( 357, 424 );
             this.poachersDenEditor.TabIndex = 1;
             // 
+            // optionsTab
+            // 
+            this.optionsTab.Controls.Add( this.optionsEditor );
+            this.optionsTab.Location = new System.Drawing.Point( 4, 22 );
+            this.optionsTab.Name = "optionsTab";
+            this.optionsTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.optionsTab.Size = new System.Drawing.Size( 717, 450 );
+            this.optionsTab.TabIndex = 3;
+            this.optionsTab.Text = "Options";
+            this.optionsTab.UseVisualStyleBackColor = true;
+            // 
+            // optionsEditor
+            // 
+            this.optionsEditor.Dock = System.Windows.Forms.DockStyle.Left;
+            this.optionsEditor.Location = new System.Drawing.Point( 3, 3 );
+            this.optionsEditor.Name = "optionsEditor";
+            this.optionsEditor.Options = null;
+            this.optionsEditor.Size = new System.Drawing.Size( 460, 444 );
+            this.optionsEditor.TabIndex = 0;
+            // 
+            // inventoryTab
+            // 
+            this.inventoryTab.Controls.Add( inventoryTable );
+            this.inventoryTab.Location = new System.Drawing.Point( 4, 22 );
+            this.inventoryTab.Name = "inventoryTab";
+            this.inventoryTab.Size = new System.Drawing.Size( 717, 450 );
+            this.inventoryTab.TabIndex = 2;
+            this.inventoryTab.Text = "Inventory";
+            this.inventoryTab.UseVisualStyleBackColor = true;
+            // 
             // chronicleTab
             // 
-            this.chronicleTab.Controls.Add( this.chronicleEditor1 );
+            this.chronicleTab.Controls.Add( this.chronicleEditor );
             this.chronicleTab.Location = new System.Drawing.Point( 4, 22 );
             this.chronicleTab.Name = "chronicleTab";
             this.chronicleTab.Padding = new System.Windows.Forms.Padding( 3 );
@@ -215,20 +215,20 @@ namespace LionEditor
             this.chronicleTab.Text = "Chronicle";
             this.chronicleTab.UseVisualStyleBackColor = true;
             // 
-            // chronicleEditor1
+            // chronicleEditor
             // 
-            this.chronicleEditor1.Artefacts = null;
-            this.chronicleEditor1.Casualties = ((uint)(0u));
-            this.chronicleEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chronicleEditor1.Feats = null;
-            this.chronicleEditor1.Kills = ((uint)(0u));
-            this.chronicleEditor1.Location = new System.Drawing.Point( 3, 3 );
-            this.chronicleEditor1.Name = "chronicleEditor1";
-            this.chronicleEditor1.Size = new System.Drawing.Size( 711, 444 );
-            this.chronicleEditor1.TabIndex = 0;
-            this.chronicleEditor1.Timer = ((uint)(0u));
-            this.chronicleEditor1.WarFunds = ((uint)(0u));
-            this.chronicleEditor1.Wonders = null;
+            this.chronicleEditor.Artefacts = null;
+            this.chronicleEditor.Casualties = ((uint)(0u));
+            this.chronicleEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chronicleEditor.Feats = null;
+            this.chronicleEditor.Kills = ((uint)(0u));
+            this.chronicleEditor.Location = new System.Drawing.Point( 3, 3 );
+            this.chronicleEditor.Name = "chronicleEditor";
+            this.chronicleEditor.Size = new System.Drawing.Size( 711, 444 );
+            this.chronicleEditor.TabIndex = 0;
+            this.chronicleEditor.Timer = ((uint)(0u));
+            this.chronicleEditor.WarFunds = ((uint)(0u));
+            this.chronicleEditor.Wonders = null;
             // 
             // charactersTab
             // 
@@ -264,10 +264,10 @@ namespace LionEditor
             splitContainer.Panel1.ResumeLayout( false );
             splitContainer.Panel2.ResumeLayout( false );
             splitContainer.ResumeLayout( false );
-            this.optionsTab.ResumeLayout( false );
-            this.inventoryTab.ResumeLayout( false );
             inventoryTable.ResumeLayout( false );
             inventoryTable.PerformLayout();
+            this.optionsTab.ResumeLayout( false );
+            this.inventoryTab.ResumeLayout( false );
             this.chronicleTab.ResumeLayout( false );
             this.charactersTab.ResumeLayout( false );
             this.tabControl.ResumeLayout( false );
@@ -278,12 +278,12 @@ namespace LionEditor
         #endregion
 
         private System.Windows.Forms.TabPage optionsTab;
-        private LionEditor.Editors.OptionsEditor optionsEditor1;
+        private LionEditor.OptionsEditor optionsEditor;
         private System.Windows.Forms.TabPage inventoryTab;
-        private LionEditor.Editors.InventoryEditor inventoryEditor;
-        private LionEditor.Editors.InventoryEditor poachersDenEditor;
+        private InventoryEditor inventoryEditor;
+        private InventoryEditor poachersDenEditor;
         private System.Windows.Forms.TabPage chronicleTab;
-        private ChronicleEditor chronicleEditor1;
+        private ChronicleEditor chronicleEditor;
         private System.Windows.Forms.TabPage charactersTab;
         private System.Windows.Forms.CheckedListBox characterSelector;
         private CharacterEditor characterEditor;

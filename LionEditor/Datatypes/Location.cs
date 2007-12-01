@@ -25,9 +25,11 @@ using System.Reflection;
 
 namespace LionEditor
 {
+    // TODO: Document this file better
     class Location
     {
         private static List<Location> allLocations;
+        
         public static List<Location> AllLocations
         {
             get

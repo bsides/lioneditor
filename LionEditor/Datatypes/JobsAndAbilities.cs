@@ -25,12 +25,18 @@ using System.Xml;
 
 namespace LionEditor
 {
+    /// <summary>
+    /// Represents a ability a job can have
+    /// </summary>
     public struct JobInfoEntry
     {
         public string Name;
         public bool Enabled;
     }
 
+    /// <summary>
+    /// Represents a Job and all of its abilities
+    /// </summary>
     public class JobInfo
     {
         public JobInfoEntry[] action;
@@ -50,6 +56,10 @@ namespace LionEditor
         }
 
         private static List<JobInfo> jobs;
+
+        /// <summary>
+        /// Gets a list of JobInfo for EVERY job
+        /// </summary>
         public static List<JobInfo> Jobs
         {
             get
@@ -151,6 +161,10 @@ namespace LionEditor
         }
 
         private static List<JobInfo> genericJobs;
+
+        /// <summary>
+        /// Gets a list of JobInfo for generic jobs
+        /// </summary>
         public static List<JobInfo> GenericJobs
         {
             get
@@ -210,8 +224,14 @@ namespace LionEditor
         }
     }
 
+    /// <summary>
+    /// Represents a character's jobs, enabled abilities, JP, and total JP
+    /// </summary>
     public class JobsAndAbilities
     {
+        /// <summary>
+        /// Represents a specific job's enabled abilities, level, and JP
+        /// </summary>
         public class Job
         {
             public uint Level;
@@ -226,29 +246,6 @@ namespace LionEditor
         }
 
         public Job[] jobs = new Job[22];
-
-        private void CopyByteToBoolArray( byte b, bool[] array )
-        {
-            for( int i = 0; i < 8; i++ )
-            {
-                array[7 - i] = (b & (1 << i)) > 0;
-            }
-        }
-
-        private byte MakeByteFromBoolArray( bool[] array )
-        {
-            byte b = 0x00;
-
-            for( int i = 0; i < 8; i++ )
-            {
-                if( array[7-i] )
-                {
-                    b |= (byte)(1 << i);
-                }
-            }
-
-            return b;
-        }
 
         public JobsAndAbilities( byte[] bytes )
         {
@@ -276,6 +273,31 @@ namespace LionEditor
                 newJob.TotalJP = (ushort)((ushort)(bytes[127 + i * 2]) + (ushort)((ushort)bytes[127 + i * 2 + 1] << 8));
                 jobs[i] = newJob;
             }
+        }
+
+        #region Utilities
+
+        private void CopyByteToBoolArray( byte b, bool[] array )
+        {
+            for( int i = 0; i < 8; i++ )
+            {
+                array[7 - i] = (b & (1 << i)) > 0;
+            }
+        }
+
+        private byte MakeByteFromBoolArray( bool[] array )
+        {
+            byte b = 0x00;
+
+            for( int i = 0; i < 8; i++ )
+            {
+                if( array[7 - i] )
+                {
+                    b |= (byte)(1 << i);
+                }
+            }
+
+            return b;
         }
 
         public byte[] ToByteArray()
@@ -310,5 +332,7 @@ namespace LionEditor
 
             return result;
         }
+
+        #endregion
     }
 }

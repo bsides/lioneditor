@@ -1,3 +1,22 @@
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -5,11 +24,61 @@ using System.Windows.Forms;
 
 namespace LionEditor
 {
-    public class StupidDate:IEquatable<StupidDate>
+    /// <summary>
+    /// Represents FFT's moronic 9-bit date structures
+    /// </summary>
+    public class StupidDate : IEquatable<StupidDate>
     {
+        #region Fields
+
         public Zodiac Month;
         public int Day;
+        private static List<StupidDate> stupidDateList;
+        private static StupidDate[] dateDictionary;
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets a list of all possible dates
+        /// </summary>
+        private static List<StupidDate> StupidDateList
+        {
+            get
+            {
+                if( stupidDateList == null )
+                {
+                    stupidDateList = new List<StupidDate>( DateDictionary );
+                }
+
+                return stupidDateList;
+            }
+        }
+
+        /// <summary>
+        /// Gets an array of all possible dates, indexed by a 9-bit value
+        /// </summary>
+        public static StupidDate[] DateDictionary
+        {
+            get
+            {
+                if( dateDictionary == null )
+                {
+                    SetupDateDictionary();
+                }
+
+                return dateDictionary;
+            }
+        }
+
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Given an array of 9-bit dates squashed together, finds the date at offset
+        /// </summary>
         public static StupidDate GetDateFromOffset( int offset, byte[] dates )
         {
             int index = 0;
@@ -46,6 +115,9 @@ namespace LionEditor
             return DateDictionary[index];
         }
 
+        /// <summary>
+        /// Sets the appropriate 9 bits in dates for this date at offset
+        /// </summary>
         public void SetDateAtOffset( int offset, byte[] dates )
         {
             int start = (offset / 8) * 9;
@@ -87,12 +159,6 @@ namespace LionEditor
             }
         }
 
-        public StupidDate( int day, Zodiac month )
-        {
-            Month = month;
-            Day = day;
-        }
-
         public override string ToString()
         {
             return string.Format( "{0} {1}", Day, Month );
@@ -103,6 +169,10 @@ namespace LionEditor
             return StupidDateList.IndexOf( this );
         }
 
+        /// <summary>
+        /// Converts a War of the Lions date into a Gregorian date
+        /// </summary>
+        /// <returns></returns>
         public DateTime ToNormalDate()
         {
             switch( Month )
@@ -137,39 +207,12 @@ namespace LionEditor
             }
         }
 
-        private static List<StupidDate> stupidDateList;
-
-        private static List<StupidDate> StupidDateList
-        {
-            get
-            {
-                if( stupidDateList == null )
-                {
-                    stupidDateList = new List<StupidDate>( DateDictionary );
-                }
-
-                return stupidDateList;
-            }
-        }
-
-        private static StupidDate[] dateDictionary;
-        public static StupidDate[] DateDictionary
-        {
-            get
-            {
-                if( dateDictionary == null )
-                {
-                    SetupDateDictionary();
-                }
-
-                return dateDictionary;
-            }
-        }
-
+        /// <summary>
+        /// Builds the date dictionary
+        /// </summary>
         private static void SetupDateDictionary()
         {
             dateDictionary = new StupidDate[512];
-            //dateDictionary = new Dictionary<int, StupidDate>( 512 );
 
             dateDictionary[0] = new StupidDate( 10, Zodiac.Capricorn );
 
@@ -332,6 +375,14 @@ namespace LionEditor
         public bool Equals( StupidDate other )
         {
             return ((this.Day == other.Day) && (this.Month == other.Month));
+        }
+
+        #endregion
+
+        public StupidDate( int day, Zodiac month )
+        {
+            Month = month;
+            Day = day;
         }
     }
 }

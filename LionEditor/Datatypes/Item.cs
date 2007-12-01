@@ -27,185 +27,180 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public class Item:IComparable, IEquatable<Item>
+    public class Item : IComparable, IEquatable<Item>
     {
-        private ItemType m_Type;
+        #region Fields
+
+        private ItemType type;
+        private ItemSubType subType;
+        private UInt16 offset;
+        private string name;
+        private uint power;
+        private uint blockRate;
+        private uint maBonus;
+        private uint paBonus;
+        private uint speedBonus;
+        private uint jumpBonus;
+        private uint moveBonus;
+        private uint physicalSEV;
+        private uint magicSEV;
+        private uint hpBonus;
+        private uint mpBonus;
+        private uint physicalAEV;
+        private uint magicAEV;
+        private static List<Item> itemList;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets this item's <see cref="ItemType"/>
+        /// </summary>
         public ItemType Type
         {
-        	get { return m_Type; }
-        	set { m_Type = value; }
+            get { return type; }
         }
 
-        private ItemSubType m_SubType;
+        /// <summary>
+        /// Gets this item's <see cref="ItemSubType"/>
+        /// </summary>
         public ItemSubType SubType
         {
-        	get { return m_SubType; }
-        	set { m_SubType = value; }
+            get { return subType; }
         }
 
-
-        private UInt16 m_Offset;
+        /// <summary>
+        /// Gets this item's offset in the inventory/list
+        /// </summary>
         public UInt16 Offset
         {
-        	get { return m_Offset; }
-        	set { m_Offset = value; }
+            get { return offset; }
         }
 
-
-        private string m_Name;
+        /// <summary>
+        /// Gets the name of this item
+        /// </summary>
         public string Name
         {
-        	get { return m_Name; }
-        	set { m_Name = value; }
+            get { return name; }
         }
 
-        private uint m_Power;
+        /// <summary>
+        /// Gets the power provided by this item, if any
+        /// </summary>
         public uint Power
         {
-        	get { return m_Power; }
-        	set { m_Power = value; }
+            get { return power; }
         }
 
-        private uint m_BlockRate;
+        /// <summary>
+        /// Gets the block rate of this item, if any
+        /// </summary>
         public uint BlockRate
         {
-        	get { return m_BlockRate; }
-        	set { m_BlockRate = value; }
+            get { return blockRate; }
         }
 
-        private uint m_MABonus;
+        /// <summary>
+        /// Gets the magic attack bonus of this item, if any
+        /// </summary>
         public uint MABonus
         {
-        	get { return m_MABonus; }
-        	set { m_MABonus = value; }
+            get { return maBonus; }
         }
 
-        private uint m_PABonus;
+        /// <summary>
+        /// Gets the physical attack bonus of this item, if any
+        /// </summary>
         public uint PABonus
         {
-        	get { return m_PABonus; }
-        	set { m_PABonus = value; }
+            get { return paBonus; }
         }
 
-        private uint m_SpeedBonus;
+        /// <summary>
+        /// Gets the speed bonus of this item, if any
+        /// </summary>
         public uint SpeedBonus
         {
-        	get { return m_SpeedBonus; }
-        	set { m_SpeedBonus = value; }
+            get { return speedBonus; }
         }
 
-        private uint m_JumpBonus;
+        /// <summary>
+        /// Gets the jump bonus of this item, if any
+        /// </summary>
         public uint JumpBonus
         {
-        	get { return m_JumpBonus; }
-        	set { m_JumpBonus = value; }
+            get { return jumpBonus; }
         }
 
-        private uint m_MoveBonus;
+        /// <summary>
+        /// Gets the move bonus of this item
+        /// </summary>
         public uint MoveBonus
         {
-        	get { return m_MoveBonus; }
-        	set { m_MoveBonus = value; }
+            get { return moveBonus; }
         }
 
-        private uint m_PhysicalSEV;
+        /// <summary>
+        /// Gets the Physical Shield Evade% of this item
+        /// </summary>
         public uint PhysicalSEV
         {
-        	get { return m_PhysicalSEV; }
-        	set { m_PhysicalSEV = value; }
+            get { return physicalSEV; }
         }
 
-        private uint m_MagicSEV;
+        /// <summary>
+        /// Gets the Magic Shield Evade% of this item
+        /// </summary>
         public uint MagicSEV
         {
-        	get { return m_MagicSEV; }
-        	set { m_MagicSEV = value; }
+            get { return magicSEV; }
         }
 
-        private uint m_HPBonus;
+        /// <summary>
+        /// Gets the HP bonus provided by this item, if any
+        /// </summary>
         public uint HPBonus
         {
-        	get { return m_HPBonus; }
-        	set { m_HPBonus = value; }
+            get { return hpBonus; }
         }
 
-        private uint m_MPBonus;
+        /// <summary>
+        /// Gets the MP bonus provided by this item, if any
+        /// </summary>
         public uint MPBonus
         {
-        	get { return m_MPBonus; }
-        	set { m_MPBonus = value; }
+            get { return mpBonus; }
         }
 
-        private uint m_PhysicalAEV;
+        /// <summary>
+        /// Gets the Physical Accessory Evade% of this item
+        /// </summary>
         public uint PhysicalAEV
         {
-        	get { return m_PhysicalAEV; }
-        	set { m_PhysicalAEV = value; }
+            get { return physicalAEV; }
         }
 
-        private uint m_MagicAEV;
+        /// <summary>
+        /// Gets the Magic Accessory Evade% of this item
+        /// </summary>
         public uint MagicAEV
         {
-        	get { return m_MagicAEV; }
-        	set { m_MagicAEV = value; }
+            get { return magicAEV; }
         }
 
-
-
-        public Item( UInt16 offset )
-        {
-            Item i = ItemList.Find(
-                delegate( Item j )
-                {
-                    return j.Offset == offset;
-                } );
-
-            this.Type = i.Type;
-            this.SubType = i.SubType;
-            this.Name = i.Name;
-            this.Offset = offset;
-            this.BlockRate = i.BlockRate;
-            this.HPBonus = i.HPBonus;
-            this.JumpBonus = i.JumpBonus;
-            this.MABonus = i.MABonus;
-            this.MagicSEV = i.MagicSEV;
-            this.MoveBonus = i.MoveBonus;
-            this.MPBonus = i.MPBonus;
-            this.PABonus = i.PABonus;
-            this.PhysicalSEV = i.PhysicalSEV;
-            this.Power = i.Power;
-            this.SpeedBonus = i.SpeedBonus;
-            this.PhysicalAEV = i.PhysicalAEV;
-            this.MagicAEV = i.MagicAEV;
-        }
-
-        private Item()
-        {
-        }
-
+        /// <summary>
+        /// Gets a string representing this item
+        /// </summary>
         public string String
         {
             get { return this.ToString(); }
         }
 
-        public override string ToString()
-        {
-            return string.Format( "{0} ({1:X03})", this.Name, this.Offset );
-        }
-
         /// <summary>
-        /// Converts this Item into a series of bytes appropriate for putting into a character's struct
+        /// Gets a list of all items
         /// </summary>
-        /// <remarks>Returned byte[] is little-endian (least significant byte is in 0th index)</remarks>
-        public byte[] ToByte()
-        {
-            return new byte[] { (byte)(Offset & 0xFF), (byte)((Offset & 0xFF00) >> 8) };
-        }
-
-        #region Static members
-
-        private static List<Item> itemList;
-
         public static List<Item> ItemList
         {
             get
@@ -222,49 +217,49 @@ namespace LionEditor
                     foreach( XmlNode i in items )
                     {
                         Item newItem = new Item();
-                        newItem.Name = i.SelectSingleNode( "name" ).InnerText;
-                        newItem.Offset = Convert.ToUInt16( i.Attributes["offset"].InnerText );
-                        newItem.Type = (ItemType)Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
-                        newItem.SubType = (ItemSubType)Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
+                        newItem.name = i.SelectSingleNode( "name" ).InnerText;
+                        newItem.offset = Convert.ToUInt16( i.Attributes["offset"].InnerText );
+                        newItem.type = (ItemType)Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
+                        newItem.subType = (ItemSubType)Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
 
                         XmlNode node = i.SelectSingleNode( "power" );
-                        if( node != null ) { newItem.Power = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.power = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "blockRate" );
-                        if( node != null ) { newItem.BlockRate = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.blockRate = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "ma" );
-                        if( node != null ) { newItem.MABonus = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.maBonus = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "pa" );
-                        if( node != null ) { newItem.PABonus = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.paBonus = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "speed" );
-                        if( node != null ) { newItem.SpeedBonus = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.speedBonus = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "jump" );
-                        if( node != null ) { newItem.JumpBonus = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.jumpBonus = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "move" );
-                        if( node != null ) { newItem.MoveBonus = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.moveBonus = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "physicalSEV" );
-                        if( node != null ) { newItem.PhysicalSEV = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.physicalSEV = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "magicSEV" );
-                        if( node != null ) { newItem.MagicSEV = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.magicSEV = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "hp" );
-                        if( node != null ) { newItem.HPBonus = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.hpBonus = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "mp" );
-                        if( node != null ) { newItem.MPBonus = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.mpBonus = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "magicAEV" );
-                        if( node != null ) { newItem.MagicAEV = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.magicAEV = Convert.ToUInt32( node.InnerText ); }
 
                         node = i.SelectSingleNode( "physicalAEV" );
-                        if( node != null ) { newItem.PhysicalAEV = Convert.ToUInt32( node.InnerText ); }
+                        if( node != null ) { newItem.physicalAEV = Convert.ToUInt32( node.InnerText ); }
 
                         itemList.Add( newItem );
                     }
@@ -272,15 +267,69 @@ namespace LionEditor
                     itemList.Sort();
                 }
 
-                return new List<Item>(itemList);
+                // Return a new instance here otherwise the combobox data binding screws up
+                return new List<Item>( itemList );
             }
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public Item( UInt16 offset )
+        {
+            Item i = ItemList.Find(
+                delegate( Item j )
+                {
+                    return j.Offset == offset;
+                } );
+
+            type = i.Type;
+            subType = i.SubType;
+            name = i.Name;
+            this.offset = offset;
+            blockRate = i.BlockRate;
+            hpBonus = i.HPBonus;
+            jumpBonus = i.JumpBonus;
+            maBonus = i.MABonus;
+            magicSEV = i.MagicSEV;
+            moveBonus = i.MoveBonus;
+            mpBonus = i.MPBonus;
+            paBonus = i.PABonus;
+            physicalSEV = i.PhysicalSEV;
+            power = i.Power;
+            speedBonus = i.SpeedBonus;
+            physicalAEV = i.PhysicalAEV;
+            magicAEV = i.MagicAEV;
+        }
+
+        private Item()
+        {
+        }
+
+        #endregion
+
+        #region Utilities
+
+        public override string ToString()
+        {
+            return string.Format( "{0} ({1:X03})", this.Name, this.Offset );
+        }
+
+        /// <summary>
+        /// Converts this Item into a series of bytes appropriate for putting into a character's struct
+        /// </summary>
+        /// <remarks>Returned byte[] is little-endian (least significant byte is in 0th index)</remarks>
+        public byte[] ToByte()
+        {
+            return new byte[] { (byte)(Offset & 0xFF), (byte)((Offset & 0xFF00) >> 8) };
         }
 
         public static List<Item> GetAll( ItemType itemType )
         {
             List<Item> fullList = new List<Item>( ItemList );
 
-            foreach (Item i in fullList)
+            foreach( Item i in fullList )
             {
                 if( i.Type != itemType )
                 {
@@ -305,9 +354,6 @@ namespace LionEditor
             return fullList;
         }
 
-
-        #endregion
-
         #region IComparable Members
 
         public int CompareTo( object obj )
@@ -331,138 +377,145 @@ namespace LionEditor
         }
 
         #endregion
+
+        #endregion
     }
 
+    /// <summary>
+    /// Represents types of items
+    /// </summary>
     public enum ItemType
     {
-        [Description("Hand")]
+        [Description( "Hand" )]
         Hand,
 
-        [Description("Item")]
+        [Description( "Item" )]
         Item,
 
-        [Description("Head")]
+        [Description( "Head" )]
         Head,
 
-        [Description("Body")]
+        [Description( "Body" )]
         Body,
 
-        [Description("Accessory")]
+        [Description( "Accessory" )]
         Accessory,
 
-        [Description("None")]
+        [Description( "None" )]
         None
     }
 
+    /// <summary>
+    /// Represents subtypes of items
+    /// </summary>
     public enum ItemSubType
     {
-        [Description("Knife")]
+        [Description( "Knife" )]
         Knife,
-        
-        [Description("Ninja Blade")]
+
+        [Description( "Ninja Blade" )]
         NinjaBlade,
-        
-        [Description("Sword")]
+
+        [Description( "Sword" )]
         Sword,
-        
-        [Description("Knight's Sword")]
+
+        [Description( "Knight's Sword" )]
         KnightsSword,
-        
-        [Description("Katana")]
+
+        [Description( "Katana" )]
         Katana,
-        
-        [Description("Axe")]
+
+        [Description( "Axe" )]
         Axe,
 
-        [Description("Rod")]
+        [Description( "Rod" )]
         Rod,
-        
-        [Description("Staff")]
+
+        [Description( "Staff" )]
         Staff,
-        
-        [Description("Flail")]
+
+        [Description( "Flail" )]
         Flail,
-        
-        [Description("Gun")]
+
+        [Description( "Gun" )]
         Gun,
-        
-        [Description("Crossbow")]
+
+        [Description( "Crossbow" )]
         Crossbow,
-        
-        [Description("Bow")]
+
+        [Description( "Bow" )]
         Bow,
-        
-        [Description("Instrument")]
+
+        [Description( "Instrument" )]
         Instrument,
-        
-        [Description("Book")]
+
+        [Description( "Book" )]
         Book,
-        
-        [Description("Polearm")]
+
+        [Description( "Polearm" )]
         Polearm,
-        
-        [Description("Pole")]
+
+        [Description( "Pole" )]
         Pole,
-        
-        [Description("Bag")]
+
+        [Description( "Bag" )]
         Bag,
-        
-        [Description("Cloth")]
+
+        [Description( "Cloth" )]
         Cloth,
-        
-        [Description("Throwing")]
+
+        [Description( "Throwing" )]
         Throwing,
-        
-        [Description("Bomb")]
+
+        [Description( "Bomb" )]
         Bomb,
-        
-        [Description("Shield")]
+
+        [Description( "Shield" )]
         Shield,
-        
-        [Description("Helmet")]
+
+        [Description( "Helmet" )]
         Helmet,
-        
-        [Description("Hat")]
+
+        [Description( "Hat" )]
         Hat,
-        
-        [Description("Hair Adornment")]
+
+        [Description( "Hair Adornment" )]
         HairAdornment,
-        
-        [Description("Armor")]
+
+        [Description( "Armor" )]
         Armor,
-        
-        [Description("Clothing")]
+
+        [Description( "Clothing" )]
         Clothing,
-        
-        [Description("Robe")]
+
+        [Description( "Robe" )]
         Robe,
-        
-        [Description("Shoes")]
+
+        [Description( "Shoes" )]
         Shoes,
-        
-        [Description("Armguard")]
+
+        [Description( "Armguard" )]
         Armguard,
-        
-        [Description("Ring")]
+
+        [Description( "Ring" )]
         Ring,
-        
-        [Description("Armlet")]
+
+        [Description( "Armlet" )]
         Armlet,
-        
-        [Description("Cloak")]
+
+        [Description( "Cloak" )]
         Cloak,
-        
-        [Description("Perfume")]
+
+        [Description( "Perfume" )]
         Perfume,
-        
-        [Description("Fell Sword")]
+
+        [Description( "Fell Sword" )]
         FellSword,
-        
-        [Description("Lip Rouge")]
+
+        [Description( "Lip Rouge" )]
         LipRouge,
 
-        [Description("None")]
+        [Description( "None" )]
         None
     }
-
 }

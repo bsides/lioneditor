@@ -29,31 +29,23 @@ namespace LionEditor
 {
     public partial class JobEditor : UserControl
     {
-        public event EventHandler DataChangedEvent;
-
-        private void FireDataChangedEvent()
-        {
-            if (DataChangedEvent != null)
-            {
-                DataChangedEvent( this, EventArgs.Empty );
-            }
-        }
-
-        private LionEditor.JobsAndAbilities.Job m_job;
-        public LionEditor.JobsAndAbilities.Job Job
-        {
-        	get { return m_job; }
-        	set { m_job = value; }
-        }
-
-        private JobInfo m_Info;
-        public JobInfo Info
-        {
-        	get { return m_Info; }
-        	set { m_Info = value; }
-        }
+        #region Fields
 
         private CheckBox[] actionCheckBoxes;
+        private CheckBox[] reactionCheckBoxes;
+        private CheckBox[] supportCheckBoxes;
+        private LionEditor.JobsAndAbilities.Job job;
+        private JobInfo info;
+        private CheckBox[] movementCheckBoxes;
+        private bool ignoreChanges = false;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the collection of Action Check boxes
+        /// </summary>
         private CheckBox[] ActionCheckBoxes
         {
             get
@@ -83,7 +75,9 @@ namespace LionEditor
             }
         }
 
-        private CheckBox[] reactionCheckBoxes;
+        /// <summary>
+        /// Gets the collection of Reaction check boxes
+        /// </summary>
         private CheckBox[] ReactionCheckBoxes
         {
             get
@@ -100,7 +94,9 @@ namespace LionEditor
             }
         }
 
-        private CheckBox[] supportCheckBoxes;
+        /// <summary>
+        /// Gets the collection of Support check boxes
+        /// </summary>
         private CheckBox[] SupportCheckBoxes
         {
             get
@@ -118,7 +114,9 @@ namespace LionEditor
             }
         }
 
-        private CheckBox[] movementCheckBoxes;
+        /// <summary>
+        /// Gets the collection of movement checkboxes
+        /// </summary>
         private CheckBox[] MovementCheckBoxes
         {
             get
@@ -134,8 +132,95 @@ namespace LionEditor
             }
         }
 
-        bool ignoreChanges = false;
+        /// <summary>
+        /// Gets or sets the job whose abilities are being edited
+        /// </summary>
+        public LionEditor.JobsAndAbilities.Job Job
+        {
+            get { return job; }
+            set { job = value; }
+        }
 
+        /// <summary>
+        /// Gets or sets the jobinfo whose abilities are being edited
+        /// </summary>
+        public JobInfo Info
+        {
+            get { return info; }
+            set { info = value; }
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler DataChangedEvent;
+
+        private void FireDataChangedEvent()
+        {
+            if( DataChangedEvent != null )
+            {
+                DataChangedEvent( this, EventArgs.Empty );
+            }
+        }
+
+        void spinnerValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                Job.JP = (ushort)jpSpinner.Value;
+                Job.TotalJP = (ushort)totalSpinner.Value;
+
+                FireDataChangedEvent();
+            }
+        }
+
+        void cb_CheckedChanged( object sender, EventArgs e )
+        {
+            CheckBox cb = sender as CheckBox;
+
+            if( !ignoreChanges )
+            {
+                string s = cb.Name.TrimEnd( '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' );
+                int num = Convert.ToInt32( cb.Name.Substring( s.Length ) );
+
+                // Determine which checkbox changed
+                switch( s )
+                {
+                    case "action":
+                        if( num <= 8 )
+                        {
+                            Job.actions1[num - 1] = cb.Checked;
+                        }
+                        else
+                        {
+                            Job.actions2[num - 9] = cb.Checked;
+                        }
+                        break;
+                    case "reaction":
+                        Job.theRest[num - 1] = cb.Checked;
+                        break;
+                    case "support":
+                        Job.theRest[num + Info.reaction.Length - 1] = cb.Checked;
+                        break;
+                    case "movement":
+                        Job.theRest[num + Info.reaction.Length + Info.support.Length - 1] = cb.Checked;
+                        break;
+                }
+
+                FireDataChangedEvent();
+            }
+        }
+
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Refreshes everything based on the current job and its info
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="info"></param>
         public void UpdateView( LionEditor.JobsAndAbilities.Job job, JobInfo info )
         {
             this.SuspendLayout();
@@ -217,6 +302,8 @@ namespace LionEditor
             this.ResumeLayout();
         }
 
+        #endregion
+
         public JobEditor()
         {
             InitializeComponent();
@@ -240,54 +327,5 @@ namespace LionEditor
             jpSpinner.ValueChanged += spinnerValueChanged;
             totalSpinner.ValueChanged += spinnerValueChanged;
         }
-
-        void spinnerValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                Job.JP = (ushort)jpSpinner.Value;
-                Job.TotalJP = (ushort)totalSpinner.Value;
-
-                FireDataChangedEvent();
-            }
-        }
-
-        void cb_CheckedChanged( object sender, EventArgs e )
-        {
-            CheckBox cb = sender as CheckBox;
-
-            if( !ignoreChanges )
-            {
-                string s = cb.Name.TrimEnd('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-                int num = Convert.ToInt32( cb.Name.Substring( s.Length ) );
-
-                switch( s )
-                {
-                    case "action":
-                        if( num <= 8 )
-                        {
-                            Job.actions1[num - 1] = cb.Checked;
-                        }
-                        else
-                        {
-                            Job.actions2[num - 9] = cb.Checked;
-                        }
-                        break;
-                    case "reaction":
-                        Job.theRest[num - 1] = cb.Checked;
-                        break;
-                    case "support":
-                        Job.theRest[num + Info.reaction.Length - 1] = cb.Checked;
-                        break;
-                    case "movement":
-                        Job.theRest[num + Info.reaction.Length + Info.support.Length - 1] = cb.Checked;
-                        break;
-                }
-
-                FireDataChangedEvent();
-            }
-        }
-
-
     }
 }

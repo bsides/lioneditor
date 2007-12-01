@@ -41,7 +41,7 @@
     <Compile Include="Datatypes\Inventory.cs" />
     <Compile Include="Datatypes\JobsAndAbilities.cs" />
     <Compile Include="About.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>

@@ -1,4 +1,23 @@
-namespace LionEditor.Editors
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+namespace LionEditor
 {
     partial class OptionsEditor
     {
@@ -28,7 +47,7 @@ namespace LionEditor.Editors
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+            System.Windows.Forms.TableLayoutPanel table;
             System.Windows.Forms.Label cursorMovementLabel;
             System.Windows.Forms.Label cursorRepeatRateLabel;
             System.Windows.Forms.Label multiheightToggleLabel;
@@ -48,59 +67,59 @@ namespace LionEditor.Editors
             this.optimizeOnJobChange = new System.Windows.Forms.CheckBox();
             this.sound = new System.Windows.Forms.ComboBox();
             this.battlePrompts = new System.Windows.Forms.CheckBox();
-            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            table = new System.Windows.Forms.TableLayoutPanel();
             cursorMovementLabel = new System.Windows.Forms.Label();
             cursorRepeatRateLabel = new System.Windows.Forms.Label();
             multiheightToggleLabel = new System.Windows.Forms.Label();
             menuCursorSpeedLabel = new System.Windows.Forms.Label();
             messageSpeedLabel = new System.Windows.Forms.Label();
             soundLabel = new System.Windows.Forms.Label();
-            tableLayoutPanel1.SuspendLayout();
+            table.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // table
             // 
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 55.23013F ) );
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 44.76987F ) );
-            tableLayoutPanel1.Controls.Add( this.cursorMovement, 1, 0 );
-            tableLayoutPanel1.Controls.Add( this.cursorRepeatRate, 1, 1 );
-            tableLayoutPanel1.Controls.Add( this.multiheightToggleRate, 1, 2 );
-            tableLayoutPanel1.Controls.Add( this.menuCursorSpeed, 1, 3 );
-            tableLayoutPanel1.Controls.Add( this.messageSpeed, 1, 4 );
-            tableLayoutPanel1.Controls.Add( this.displayAbilityNames, 0, 6 );
-            tableLayoutPanel1.Controls.Add( this.displayEffectMessages, 0, 7 );
-            tableLayoutPanel1.Controls.Add( this.displayEarnedExpJp, 0, 8 );
-            tableLayoutPanel1.Controls.Add( this.targetColors, 0, 9 );
-            tableLayoutPanel1.Controls.Add( this.displayUnequippableItems, 0, 10 );
-            tableLayoutPanel1.Controls.Add( this.optimizeOnJobChange, 0, 11 );
-            tableLayoutPanel1.Controls.Add( this.sound, 1, 12 );
-            tableLayoutPanel1.Controls.Add( cursorMovementLabel, 0, 0 );
-            tableLayoutPanel1.Controls.Add( cursorRepeatRateLabel, 0, 1 );
-            tableLayoutPanel1.Controls.Add( multiheightToggleLabel, 0, 2 );
-            tableLayoutPanel1.Controls.Add( menuCursorSpeedLabel, 0, 3 );
-            tableLayoutPanel1.Controls.Add( messageSpeedLabel, 0, 4 );
-            tableLayoutPanel1.Controls.Add( soundLabel, 0, 12 );
-            tableLayoutPanel1.Controls.Add( this.battlePrompts, 0, 5 );
-            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 13;
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            tableLayoutPanel1.Size = new System.Drawing.Size( 460, 324 );
-            tableLayoutPanel1.TabIndex = 0;
+            table.ColumnCount = 2;
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 55.23013F ) );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 44.76987F ) );
+            table.Controls.Add( this.cursorMovement, 1, 0 );
+            table.Controls.Add( this.cursorRepeatRate, 1, 1 );
+            table.Controls.Add( this.multiheightToggleRate, 1, 2 );
+            table.Controls.Add( this.menuCursorSpeed, 1, 3 );
+            table.Controls.Add( this.messageSpeed, 1, 4 );
+            table.Controls.Add( this.displayAbilityNames, 0, 6 );
+            table.Controls.Add( this.displayEffectMessages, 0, 7 );
+            table.Controls.Add( this.displayEarnedExpJp, 0, 8 );
+            table.Controls.Add( this.targetColors, 0, 9 );
+            table.Controls.Add( this.displayUnequippableItems, 0, 10 );
+            table.Controls.Add( this.optimizeOnJobChange, 0, 11 );
+            table.Controls.Add( this.sound, 1, 12 );
+            table.Controls.Add( cursorMovementLabel, 0, 0 );
+            table.Controls.Add( cursorRepeatRateLabel, 0, 1 );
+            table.Controls.Add( multiheightToggleLabel, 0, 2 );
+            table.Controls.Add( menuCursorSpeedLabel, 0, 3 );
+            table.Controls.Add( messageSpeedLabel, 0, 4 );
+            table.Controls.Add( soundLabel, 0, 12 );
+            table.Controls.Add( this.battlePrompts, 0, 5 );
+            table.Dock = System.Windows.Forms.DockStyle.Top;
+            table.Location = new System.Drawing.Point( 0, 0 );
+            table.Name = "table";
+            table.RowCount = 13;
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.Size = new System.Drawing.Size( 460, 324 );
+            table.TabIndex = 0;
             // 
             // cursorMovement
             // 
@@ -155,7 +174,7 @@ namespace LionEditor.Editors
             // displayAbilityNames
             // 
             this.displayAbilityNames.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan( this.displayAbilityNames, 2 );
+            table.SetColumnSpan( this.displayAbilityNames, 2 );
             this.displayAbilityNames.Dock = System.Windows.Forms.DockStyle.Fill;
             this.displayAbilityNames.Location = new System.Drawing.Point( 3, 161 );
             this.displayAbilityNames.Name = "displayAbilityNames";
@@ -168,7 +187,7 @@ namespace LionEditor.Editors
             // displayEffectMessages
             // 
             this.displayEffectMessages.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan( this.displayEffectMessages, 2 );
+            table.SetColumnSpan( this.displayEffectMessages, 2 );
             this.displayEffectMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.displayEffectMessages.Location = new System.Drawing.Point( 3, 184 );
             this.displayEffectMessages.Name = "displayEffectMessages";
@@ -181,7 +200,7 @@ namespace LionEditor.Editors
             // displayEarnedExpJp
             // 
             this.displayEarnedExpJp.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan( this.displayEarnedExpJp, 2 );
+            table.SetColumnSpan( this.displayEarnedExpJp, 2 );
             this.displayEarnedExpJp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.displayEarnedExpJp.Location = new System.Drawing.Point( 3, 207 );
             this.displayEarnedExpJp.Name = "displayEarnedExpJp";
@@ -194,7 +213,7 @@ namespace LionEditor.Editors
             // targetColors
             // 
             this.targetColors.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan( this.targetColors, 2 );
+            table.SetColumnSpan( this.targetColors, 2 );
             this.targetColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.targetColors.Location = new System.Drawing.Point( 3, 230 );
             this.targetColors.Name = "targetColors";
@@ -207,7 +226,7 @@ namespace LionEditor.Editors
             // displayUnequippableItems
             // 
             this.displayUnequippableItems.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan( this.displayUnequippableItems, 2 );
+            table.SetColumnSpan( this.displayUnequippableItems, 2 );
             this.displayUnequippableItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.displayUnequippableItems.Location = new System.Drawing.Point( 3, 253 );
             this.displayUnequippableItems.Name = "displayUnequippableItems";
@@ -220,7 +239,7 @@ namespace LionEditor.Editors
             // optimizeOnJobChange
             // 
             this.optimizeOnJobChange.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan( this.optimizeOnJobChange, 2 );
+            table.SetColumnSpan( this.optimizeOnJobChange, 2 );
             this.optimizeOnJobChange.Dock = System.Windows.Forms.DockStyle.Fill;
             this.optimizeOnJobChange.Location = new System.Drawing.Point( 3, 276 );
             this.optimizeOnJobChange.Name = "optimizeOnJobChange";
@@ -309,7 +328,7 @@ namespace LionEditor.Editors
             // battlePrompts
             // 
             this.battlePrompts.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan( this.battlePrompts, 2 );
+            table.SetColumnSpan( this.battlePrompts, 2 );
             this.battlePrompts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.battlePrompts.Location = new System.Drawing.Point( 3, 138 );
             this.battlePrompts.Name = "battlePrompts";
@@ -323,11 +342,11 @@ namespace LionEditor.Editors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( tableLayoutPanel1 );
+            this.Controls.Add( table );
             this.Name = "OptionsEditor";
             this.Size = new System.Drawing.Size( 460, 363 );
-            tableLayoutPanel1.ResumeLayout( false );
-            tableLayoutPanel1.PerformLayout();
+            table.ResumeLayout( false );
+            table.PerformLayout();
             this.ResumeLayout( false );
 
         }

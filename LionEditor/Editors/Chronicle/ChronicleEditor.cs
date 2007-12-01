@@ -29,50 +29,77 @@ namespace LionEditor
 {
     public partial class ChronicleEditor : UserControl
     {
-        UserControl currentControl = null;
-        ArtefactsEditor artefacts = new ArtefactsEditor();
-        EventsEditor events = new EventsEditor();
-        FeatsEditor feats = new FeatsEditor();
-        PersonaeEditor personae = new PersonaeEditor();
-        WondersEditor wonders = new WondersEditor();
-        UserControl[] controls;
+        #region Fields
 
+        private UserControl currentControl = null;
+        private ArtefactsEditor artefacts = new ArtefactsEditor();
+        private EventsEditor events = new EventsEditor();
+        private FeatsEditor feats = new FeatsEditor();
+        private PersonaeEditor personae = new PersonaeEditor();
+        private WondersEditor wonders = new WondersEditor();
+        private UserControl[] controls;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the number of kills in the kills spinbox
+        /// </summary>
         public uint Kills
         {
             get { return (uint)killsSpinner.Value; }
             set { killsSpinner.Value = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the number of casualties in the casualties spinbox
+        /// </summary>
         public uint Casualties
         {
             get { return (uint)casualtiesSpinner.Value; }
             set { casualtiesSpinner.Value = value; }
         }
 
+        /// <summary>
+        /// Gets or set the gametime in the timer editor
+        /// </summary>
         public uint Timer
         {
-            get { return timerEditor1.Value; }
-            set { timerEditor1.Value = value; }
+            get { return timerEditor.Value; }
+            set { timerEditor.Value = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the feats in the feats editor
+        /// </summary>
         public Feats Feats
         {
             get { return feats.Feats; }
             set { feats.Feats = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the wonders in the wonders editor
+        /// </summary>
         public Wonders Wonders
         {
             get { return wonders.Wonders; }
             set { wonders.Wonders = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the artefacts in the artfacts editor
+        /// </summary>
         public Artefacts Artefacts
         {
             get { return artefacts.Artefacts; }
             set { artefacts.Artefacts = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the date in the date editor
+        /// </summary>
         [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden)]
         public StupidDate Date
         {
@@ -80,17 +107,22 @@ namespace LionEditor
             set { date.CurrentDate = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the value in the war funds spinbox
+        /// </summary>
         public uint WarFunds
         {
             get { return (uint)warFunds.Value; }
             set { warFunds.Value = value; }
         }
 
+        #endregion
+
         public ChronicleEditor()
         {
-            date = new LionEditor.Editors.Chronicle.StupidDateEditor();
+            date = new StupidDateEditor();
             InitializeComponent();
-            listBox1.SelectedIndexChanged += selectedPageChanged;
+            pageSelector.SelectedIndexChanged += selectedPageChanged;
             controls = new UserControl[] { events, personae, feats, wonders, artefacts };
             events.DataChangedEvent += controlDataChangedEvent;
             personae.DataChangedEvent += controlDataChangedEvent;
@@ -99,12 +131,14 @@ namespace LionEditor
             artefacts.DataChangedEvent += controlDataChangedEvent;
             casualtiesSpinner.ValueChanged += controlDataChangedEvent;
             killsSpinner.ValueChanged += controlDataChangedEvent;
-            timerEditor1.DataChangedEvent += controlDataChangedEvent;
+            timerEditor.DataChangedEvent += controlDataChangedEvent;
             warFunds.Validated += controlDataChangedEvent;
             date.DateChangedEvent += controlDataChangedEvent;
 
-            listBox1.SelectedIndex = 0;
+            pageSelector.SelectedIndex = 0;
         }
+
+        #region Events
 
         void controlDataChangedEvent( object sender, EventArgs e )
         {
@@ -115,14 +149,12 @@ namespace LionEditor
         {
             if( currentControl != null )
             {
-                tableLayoutPanel1.Controls.RemoveAt( tableLayoutPanel1.Controls.IndexOf( currentControl ) );
+                entireTable.Controls.RemoveAt( entireTable.Controls.IndexOf( currentControl ) );
             }
-            currentControl = controls[listBox1.SelectedIndex];
-            //currentControl.Dock = DockStyle.Fill;
+            currentControl = controls[pageSelector.SelectedIndex];
             currentControl.Anchor = AnchorStyles.Left | AnchorStyles.Top;
             currentControl.Location = new Point( 0, 0 );
-            tableLayoutPanel1.Controls.Add( controls[listBox1.SelectedIndex], 1, 1 );
-            //tableLayoutPanel1.SetRowSpan( controls[listBox1.SelectedIndex], 2 );
+            entireTable.Controls.Add( controls[pageSelector.SelectedIndex], 1, 1 );
         }
 
         public event EventHandler DataChangedEvent;
@@ -135,5 +167,6 @@ namespace LionEditor
             }
         }
 
+        #endregion
     }
 }

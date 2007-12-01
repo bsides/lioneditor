@@ -23,45 +23,75 @@ using System.Text;
 
 namespace LionEditor
 {
-    public class InventoryEntry:IComparable<InventoryEntry>, IEquatable<InventoryEntry>
+    /// <summary>
+    /// Represents a single item in the inventory
+    /// </summary>
+    public class InventoryEntry : IComparable<InventoryEntry>, IEquatable<InventoryEntry>
     {
-        private byte m_Quantity;
+        #region Fields
+
+        private byte quantity;
+        private byte equipped;
+        private Item item;
+        private static InventoryEntry dummyEntry;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the quantity of this item in the inventory
+        /// </summary>
         public byte InventoryQuantity
         {
-        	get { return m_Quantity; }
-        	set { m_Quantity = value; }
+            get { return quantity; }
+            set { quantity = value; }
         }
 
-        private byte m_Equipped;
+        /// <summary>
+        /// Gets or sets the number of this item equipped by characters
+        /// </summary>
         public byte Equipped
         {
-        	get { return m_Equipped; }
-        	set { m_Equipped = value; }
+            get { return equipped; }
+            set { equipped = value; }
         }
 
-        private Item m_Item;
+        /// <summary>
+        /// Gets the <see cref="Item"/> represented by this entry
+        /// </summary>
         public Item Item
         {
-        	get { return m_Item; }
+            get { return item; }
         }
 
+        /// <summary>
+        /// Gets the type of item represented by this entry
+        /// </summary>
         public string Type
         {
             get { return Item.Type.ToString(); }
         }
 
+        /// <summary>
+        /// Gets the sub-type of item represented by this entry
+        /// </summary>
         public string SubType
         {
             get { return Item.SubType.ToString(); }
         }
 
-
+        /// <summary>
+        /// Gets the total number of this item in inventory+equipped
+        /// </summary>
         public byte Total
         {
-            get { return (byte)(m_Quantity + m_Equipped); }
+            get { return (byte)(quantity + equipped); }
         }
 
-        private static InventoryEntry dummyEntry;
+        /// <summary>
+        /// A dummy entry for invalid items
+        /// </summary>
         public static InventoryEntry DummyEntry
         {
             get
@@ -75,6 +105,10 @@ namespace LionEditor
             }
         }
 
+        #endregion
+
+        #region Constructors
+
         public InventoryEntry( Item item, byte quantity )
             : this( item, quantity, 0 )
         {
@@ -82,11 +116,12 @@ namespace LionEditor
 
         public InventoryEntry( Item item, byte quantity, byte equipped )
         {
-            m_Item = item;
-            m_Quantity = quantity;
-            m_Equipped = equipped;
+            this.item = item;
+            this.quantity = quantity;
+            this.equipped = equipped;
         }
 
+        #endregion
 
         #region IComparable<InventoryEntry> Members
 
@@ -110,9 +145,24 @@ namespace LionEditor
         #endregion
     }
 
+    /// <summary>
+    /// Represents an Inventory in memory
+    /// </summary>
     public class Inventory
     {
+        #region Fields
+
         private Dictionary<ItemType, List<InventoryEntry>> filteredItems;
+        private List<InventoryEntry> inventory;
+        private int maxQuantity;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets a dictionary of all <see cref="InventoryEntry"/>s, filtered by <see cref="ItemType"/>
+        /// </summary>
         public Dictionary<ItemType, List<InventoryEntry>> FilteredItems
         {
             get
@@ -145,6 +195,25 @@ namespace LionEditor
             }
         }
 
+        /// <summary>
+        /// Gets an unfiltered list of all <see cref="InventoryEntry"/>s in this inventory
+        /// </summary>
+        public List<InventoryEntry> Items
+        {
+            get { return inventory; }
+        }
+
+        /// <summary>
+        /// Gets the maximum quantity for items in this inventory
+        /// </summary>
+        public int MaxQuantity
+        {
+            get { return maxQuantity; }
+        }
+
+        #endregion
+
+        #region Utilities
 
         public void UpdateEquippedQuantities( Character[][] characters )
         {
@@ -165,20 +234,31 @@ namespace LionEditor
             }
         }
 
-        private List<InventoryEntry> inventory;
-
-        public List<InventoryEntry> Items
+        public byte[] ToByteArray()
         {
-            get { return inventory; }
+            byte[] result = new byte[316];
+            foreach( InventoryEntry item in inventory )
+            {
+                int count = 0;
+
+                if( (item.Total > maxQuantity) || (item.InventoryQuantity > maxQuantity) )
+                {
+                    count = maxQuantity - item.Equipped;
+                }
+                else
+                {
+                    count = item.InventoryQuantity;
+                }
+
+                result[item.Item.Offset] = (byte)count;
+            }
+
+            return result;
         }
 
-        private int maxQuantity;
-        public int MaxQuantity
-        {
-            get { return maxQuantity; }
-        }
+        #endregion
 
-        public Inventory(byte[] bytes, int maxQuantity)
+        public Inventory( byte[] bytes, int maxQuantity )
         {
             this.maxQuantity = maxQuantity;
 
@@ -212,26 +292,5 @@ namespace LionEditor
         {
         }
 
-        public byte[] ToByteArray()
-        {
-            byte[] result = new byte[316];
-            foreach( InventoryEntry item in inventory )
-            {
-                int count = 0;
-
-                if( (item.Total > maxQuantity) || (item.InventoryQuantity > maxQuantity) )
-                {
-                    count = maxQuantity - item.Equipped;
-                }
-                else
-                {
-                    count = item.InventoryQuantity;
-                }
-
-                result[item.Item.Offset] = (byte)count;
-            }
-
-            return result;
-        }
     }
 }

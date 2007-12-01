@@ -25,6 +25,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace LionEditor
 {
@@ -33,7 +34,7 @@ namespace LionEditor
         public About()
         {
             InitializeComponent();
-            textBoxNoCaret1.Text =
+            textBoxNoCaret.Text =
 @"Credits:
     Alan Morris: For his FFTEdit source code, especially the checksum algorithm and text encoding information
     Avaj: FFTastic was used to determine the offsets of some values
@@ -48,8 +49,7 @@ LionEditor is free software: you can redistribute it and/or modify it under the 
 LionEditor is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.";
-
-            
+            versionLabel.Text = string.Format( "v0.{0}", Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString() );
         }
     }
 

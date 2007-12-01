@@ -25,10 +25,25 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public class SecondaryAction:IComparable
+    /// <summary>
+    /// Represents a secondary action a character can have
+    /// </summary>
+    public class SecondaryAction : IComparable
     {
-        private static List<SecondaryAction> actionList;
+        #region Fields
 
+        private static List<SecondaryAction> actionList;
+        private static Dictionary<byte, SecondaryAction> actionDict;
+        private byte _byte;
+        private string name;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets a list of all secondary actions
+        /// </summary>
         public static List<SecondaryAction> ActionList
         {
             get
@@ -38,11 +53,13 @@ namespace LionEditor
                     LoadActions();
                 }
 
-                return new List<SecondaryAction>(actionList);
+                return new List<SecondaryAction>( actionList );
             }
         }
 
-        private static Dictionary<byte, SecondaryAction> actionDict;
+        /// <summary>
+        /// Gets a dictionary of all secondary actions, whose keys are byte values
+        /// </summary>
         public static Dictionary<byte, SecondaryAction> ActionDictionary
         {
             get
@@ -52,9 +69,34 @@ namespace LionEditor
                     LoadActions();
                 }
 
-                return new Dictionary<byte,SecondaryAction>(actionDict);
+                return new Dictionary<byte, SecondaryAction>( actionDict );
             }
         }
+
+        /// <summary>
+        /// Gets the byte representing this secondary action
+        /// </summary>
+        public byte Byte
+        {
+            get { return _byte; }
+        }
+
+        public string String
+        {
+            get { return this.ToString(); }
+        }
+
+        /// <summary>
+        /// Gets the name of this secondary action
+        /// </summary>
+        public string Name
+        {
+            get { return name; }
+        }
+
+        #endregion
+
+        #region Utilities
 
         private static void LoadActions()
         {
@@ -73,31 +115,6 @@ namespace LionEditor
             }
 
             actionList.Sort();
-        }
-
-        private byte _byte;
-        private string name;
-
-        public byte Byte
-        {
-            get { return _byte; }
-        }
-
-        public string String
-        {
-            get { return this.ToString(); }
-        }
-
-
-        public string Name
-        {
-            get { return name; }
-        }
-
-        private SecondaryAction( byte b, string name )
-        {
-            this._byte = b;
-            this.name = name;
         }
 
         public override string ToString()
@@ -119,5 +136,14 @@ namespace LionEditor
         }
 
         #endregion
+
+        #endregion
+        
+        private SecondaryAction( byte b, string name )
+        {
+            this._byte = b;
+            this.name = name;
+        }
+
     }
 }

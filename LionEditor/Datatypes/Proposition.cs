@@ -23,6 +23,7 @@ using System.Text;
 
 namespace LionEditor.Datatypes
 {
+    // TODO: Implement this
     class Proposition
     {
         byte dayIncrement;

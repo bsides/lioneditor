@@ -30,9 +30,18 @@ namespace LionEditor
 {
     public partial class CharacterEditor : UserControl
     {
-        private bool ignoreChanges = false;
+        #region Fields
 
+        private bool ignoreChanges = false;
         private Character character;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the character currently being edited
+        /// </summary>
         public Character Character
         {
             get { return character; }
@@ -46,6 +55,13 @@ namespace LionEditor
             }
         }
 
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Updates every control's data
+        /// </summary>
         private void UpdateView()
         {
             this.SuspendLayout();
@@ -60,7 +76,7 @@ namespace LionEditor
             headCombo.SelectedIndex = (headCombo.DataSource as List<Item>).IndexOf( character.Head );
             bodyCombo.SelectedIndex = (bodyCombo.DataSource as List<Item>).IndexOf( character.Body );
 
-            this.braverySpinner.Value = character.Brave;
+            this.braverySpinner.Value = character.Bravery;
             this.experienceSpinner.Value = character.Experience;
             this.faithSpinner.Value = character.Faith;
             this.groupBox.Text = character.Index.ToString();
@@ -96,48 +112,72 @@ namespace LionEditor
             this.ResumeLayout();
         }
 
+        /// <summary>
+        ///  Updates the right weapon labels
+        /// </summary>
         private void UpdateRightWeapon()
         {
             rightWeaponEvade.Text = string.Format( "/ {0:00}%", character.RBlockRate );
             rightWeaponPower.Text = string.Format( "{0:000}", character.RPower );
         }
 
+        /// <summary>
+        /// Updates the left weapon labels
+        /// </summary>
         private void UpdateLeftWeapon()
         {
             leftWeaponEvade.Text = string.Format( "/ {0:00}%", character.LBlockRate );
             leftWeaponPower.Text = string.Format( "{0:000}", character.LPower );
         }
 
+        /// <summary>
+        /// Updates the CEV labels
+        /// </summary>
         private void UpdateCEV()
         {
             cevPhysical.Text = string.Format( "{0:00}%", character.PhysicalCEV );
             cevMagic.Text = string.Format( "{0:00}%", character.MagicCEV );
         }
 
+        /// <summary>
+        /// Updates the SEV labels
+        /// </summary>
         private void UpdateSEV()
         {
             sevMagic.Text = string.Format( "{0:00}%", character.MagicSEV );
             sevPhysical.Text = string.Format( "{0:00}%", character.PhysicalSEV );
         }
 
+        /// <summary>
+        /// Updates the AEV labels
+        /// </summary>
         private void UpdateAEV()
         {
             aevMagic.Text = string.Format( "{0:00}%", character.MagicAEV );
             aevPhysical.Text = string.Format( "{0:00}%", character.PhysicalAEV );
         }
 
+        /// <summary>
+        /// Updates the move label and tooltip
+        /// </summary>
         private void UpdateMove()
         {
             moveValueLabel.Text = character.Move.ToString();
             toolTip.SetToolTip( moveValueLabel, string.Format( "Base: {0}", character.Job.Move ) );
         }
 
+        /// <summary>
+        /// Updates the jump label and tooltip
+        /// </summary>
         private void UpdateJump()
         {
             jumpValueLabel.Text = character.Jump.ToString();
             toolTip.SetToolTip( jumpValueLabel, string.Format( "Base: {0}", character.Job.Jump ) );
         }
 
+        /// <summary>
+        /// Updates the HP spinner's min, max, value, and tooltip
+        /// </summary>
         private void UpdateHPValue()
         {
             hpSpinner.Minimum = 0;
@@ -147,11 +187,19 @@ namespace LionEditor
             UpdateHPToolTip();
         }
 
+        /// <summary>
+        /// Updates the HP spinner's tooltip
+        /// </summary>
         private void UpdateHPToolTip()
         {
-            toolTip.SetToolTip( hpSpinner, string.Format( "Raw: {0}\nBase: {1}\nMultiplier: x{2}\nBonus: +{3}", character.RawHP, character.Job.ActualHP( character.RawHP ), character.HPMultiplier, character.HPBonus ) );
+            toolTip.SetToolTip( hpSpinner, 
+                string.Format( "Raw: {0}\nBase: {1}\nMultiplier: x{2}\nBonus: +{3}", 
+                character.RawHP, character.Job.ActualHP( character.RawHP ), character.HPMultiplier, character.HPBonus ) );
         }
 
+        /// <summary>
+        /// Updates the MP spinner's min, max, value, and tooltip
+        /// </summary>
         private void UpdateMPValue()
         {
             mpSpinner.Minimum = 0;
@@ -161,11 +209,19 @@ namespace LionEditor
             UpdateMPToolTip();
         }
 
+        /// <summary>
+        /// Updates the MP spinner's tooltip
+        /// </summary>
         private void UpdateMPToolTip()
         {
-            toolTip.SetToolTip( mpSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMP, character.Job.ActualMP( character.RawMP ), character.MPBonus ) );
+            toolTip.SetToolTip( mpSpinner, 
+                string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", 
+                character.RawMP, character.Job.ActualMP( character.RawMP ), character.MPBonus ) );
         }
 
+        /// <summary>
+        /// Updates the speed spinner's min, max, value, and tooltip
+        /// </summary>
         private void UpdateSPValue()
         {
             speedSpinner.Minimum = 0;
@@ -175,11 +231,19 @@ namespace LionEditor
             UpdateSpeedToolTip();
         }
 
+        /// <summary>
+        /// Updates the speed spinner's tooltip
+        /// </summary>
         private void UpdateSpeedToolTip()
         {
-            toolTip.SetToolTip( speedSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawSP, character.Job.ActualSP( character.RawSP ), character.SpeedBonus ) );
+            toolTip.SetToolTip( speedSpinner, 
+                string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", 
+                character.RawSP, character.Job.ActualSP( character.RawSP ), character.SpeedBonus ) );
         }
 
+        /// <summary>
+        /// Updates the magic attack spinner's min, max, value, and tooltip
+        /// </summary>
         private void UpdateMAValue()
         {
             maSpinner.Minimum = 0;
@@ -189,11 +253,19 @@ namespace LionEditor
             UpdateMAToolTip();
         }
 
+        /// <summary>
+        /// Updates the magic attack spinner's tooltip
+        /// </summary>
         private void UpdateMAToolTip()
         {
-            toolTip.SetToolTip( maSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMA, character.Job.ActualMA( character.RawMA ), character.MABonus ) );
+            toolTip.SetToolTip( maSpinner, 
+                string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", 
+                character.RawMA, character.Job.ActualMA( character.RawMA ), character.MABonus ) );
         }
 
+        /// <summary>
+        /// Updates the physical attack spinner's min, max, value and tooltip
+        /// </summary>
         private void UpdatePAValue()
         {
             paSpinner.Minimum = 0;
@@ -203,32 +275,29 @@ namespace LionEditor
             UpdatePAToolTip();
         }
 
+        /// <summary>
+        /// Updates the physical attack spinner's tooltip
+        /// </summary>
         private void UpdatePAToolTip()
         {
             toolTip.SetToolTip( paSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawPA, character.Job.ActualPA( character.RawPA ), character.PABonus ) );
         }
 
+        /// <summary>
+        /// Updates the primary skill label
+        /// </summary>
         private void UpdateSkillLabel()
         {
             skillTextLabel.Text = character.Job.Command;
         }
 
+        #endregion
 
-        public CharacterEditor()
-        {
-            InitializeComponent();
-            AssignComboBoxItems();
-
-            nameTextBox.Validating += new CancelEventHandler( nameTextBox_Validating );
-
-            Character = new Character( 0 );
-
-            UpdateView();
-            SetupEvents();
-        }
+        #region Events
 
         private void SetupEvents()
         {
+            // TODO: make these delegates not anonymous
             unavailableCheckbox.CheckedChanged +=
                 delegate( object sender, EventArgs e )
                 {
@@ -352,7 +421,7 @@ namespace LionEditor
             braverySpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    character.Brave = (byte)braverySpinner.Value;
+                    character.Bravery = (byte)braverySpinner.Value;
                     FireDataChangedEvent();
                 };
             faithSpinner.ValueChanged +=
@@ -522,7 +591,7 @@ namespace LionEditor
                     ignoreChanges = false;
                     FireDataChangedEvent();
                 };
-        
+
         }
 
         void nameTextBox_Validating( object sender, CancelEventArgs e )
@@ -538,6 +607,28 @@ namespace LionEditor
             }
         }
 
+        void ComboBoxValidating( object sender, CancelEventArgs e )
+        {
+            ComboBox c = sender as ComboBox;
+            if( c.SelectedItem == null )
+            {
+                e.Cancel = true;
+            }
+        }
+
+        public event EventHandler DataChangedEvent;
+
+        private void FireDataChangedEvent()
+        {
+            if( DataChangedEvent != null )
+            {
+                DataChangedEvent( this, EventArgs.Empty );
+            }
+        }
+
+        #endregion
+
+        #region Utilities
         private int GetIdealDropDownWidth( ICollection items, ComboBox c, int minimumWidth )
         {
             int width = minimumWidth;
@@ -561,7 +652,7 @@ namespace LionEditor
         private void AssignComboBoxItems()
         {
             ComboBox[] itemCombos = new ComboBox[] { rightHandCombo, rightShieldCombo, leftHandCombo, leftShieldCombo, headCombo, bodyCombo, accessoryCombo };
-            foreach (ComboBox c in itemCombos)
+            foreach( ComboBox c in itemCombos )
             {
                 c.DisplayMember = "String";
                 c.ValueMember = "Offset";
@@ -597,23 +688,19 @@ namespace LionEditor
             genderComboBox.DataSource = Enum.GetValues( typeof( Gender ) );
         }
 
-        void ComboBoxValidating( object sender, CancelEventArgs e )
-        {
-            ComboBox c = sender as ComboBox;
-            if( c.SelectedItem == null )
-            {
-                e.Cancel = true;
-            }
-        }
+        #endregion
 
-        public event EventHandler DataChangedEvent;
-
-        private void FireDataChangedEvent()
+        public CharacterEditor()
         {
-            if( DataChangedEvent != null )
-            {
-                DataChangedEvent( this, EventArgs.Empty );
-            }
+            InitializeComponent();
+            AssignComboBoxItems();
+
+            nameTextBox.Validating += new CancelEventHandler( nameTextBox_Validating );
+
+            Character = new Character( 0 );
+
+            UpdateView();
+            SetupEvents();
         }
     }
 }

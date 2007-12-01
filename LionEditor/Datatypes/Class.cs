@@ -25,9 +25,40 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
+    /// <summary>
+    /// Represents a Job/Class a character can have and the stat modifiers that go along with that class
+    /// </summary>
     public class Class
     {
+        #region Fields
+
         private static List<Class> classList;
+        private static Dictionary<byte, Class> classDict;
+        private byte num;
+        private string name;
+        private string command;
+        private int mpm;
+        private int hpm;
+        private int spm;
+        private int pam;
+        private int mam;
+        private int move;
+        private int cev;
+        private int hpc;
+        private int mpc;
+        private int spc;
+        private int pac;
+        private int mac;
+        private int jump;
+        private string type;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets a list of all Classes
+        /// </summary>
         public static List<Class> ClassList
         {
             get
@@ -40,7 +71,9 @@ namespace LionEditor
             }
         }
 
-        private static Dictionary<byte, Class> classDict;
+        /// <summary>
+        /// Gets a dictionary of all Classes, where the Key is the Class's byte value
+        /// </summary>
         public static Dictionary<byte, Class> ClassDictionary
         {
             get
@@ -53,6 +86,146 @@ namespace LionEditor
                 return classDict;
             }
         }
+
+        /// <summary>
+        /// Gets the byte for this class
+        /// </summary>
+        public byte Byte
+        {
+            get { return num; }
+        }
+
+        /// <summary>
+        /// Gets the name of this class
+        /// </summary>
+        public string Name
+        {
+            get { return name; }
+        }
+
+        /// <summary>
+        /// Gets the command this Class provides
+        /// </summary>
+        public string Command
+        {
+            get { return command; }
+        }
+
+        /// <summary>
+        /// Gets the MP modifier for this class
+        /// </summary>
+        public int MPModifier
+        {
+            get { return mpm; }
+        }
+
+        /// <summary>
+        /// Gets the HP modifier for this class
+        /// </summary>
+        public int HPModifier
+        {
+            get { return hpm; }
+        }
+
+        /// <summary>
+        /// Gets the Speed modifier for this class
+        /// </summary>
+        public int SPModifier
+        {
+            get { return spm; }
+        }
+
+        /// <summary>
+        /// Gets the Physical Attack modifier for this class
+        /// </summary>
+        public int PAModifier
+        {
+            get { return pam; }
+        }
+
+        /// <summary>
+        /// Gets the Magic Attack modifier for this class
+        /// </summary>
+        public int MAModifier
+        {
+            get { return mam; }
+        }
+
+        /// <summary>
+        /// Gets this class's movement distance
+        /// </summary>
+        public int Move
+        {
+            get { return move; }
+        }
+
+        /// <summary>
+        /// Gets this class's Evade%
+        /// </summary>
+        public int CEvade
+        {
+            get { return cev; }
+        }
+
+        /// <summary>
+        /// Gets the HP constant for this class, used to determine level up/down changes
+        /// </summary>
+        public int HPConstant
+        {
+            get { return hpc; }
+        }
+
+        /// <summary>
+        /// Gets the MP constant for this class, used to determine level up/down changes
+        /// </summary>
+        public int MPConstant
+        {
+            get { return mpc; }
+        }
+
+        /// <summary>
+        /// Gets the Speed constant for this class, used to determine level up/down changes
+        /// </summary>
+        public int SPConstant
+        {
+            get { return spc; }
+        }
+
+        /// <summary>
+        /// Gets the Physical Attack constant for this class, used to determine level up/down changes
+        /// </summary>
+        public int PAConstant
+        {
+            get { return pac; }
+        }
+
+        /// <summary>
+        /// Gets the Magic Attack constant for this class, used to determine level up/down changes
+        /// </summary>
+        public int MAConstant
+        {
+            get { return mac; }
+        }
+
+        /// <summary>
+        /// Gets the jump distance for this class
+        /// </summary>
+        public int Jump
+        {
+            get { return jump; }
+        }
+
+        /// <summary>
+        /// Gets the "type" of class this is (Monster/Generic/Special/Demon)
+        /// </summary>
+        public string Type
+        {
+            get { return type; }
+        }
+
+        #endregion
+
+        #region Utilities
 
         private static void LoadClasses()
         {
@@ -71,112 +244,111 @@ namespace LionEditor
             }
         }
 
-        byte num;
-        public byte Byte
-        {
-            get { return num; }
-        }
-
-        string name;
-        public string Name
-        {
-            get { return name; }
-        }
-
-        string command;
-        public string Command { get { return command; } }
-
-        int mpm;
-        public int MPModifier { get { return mpm; } }
-
+        /// <summary>
+        /// Converts RawMP into the actual MP
+        /// </summary>
         public int ActualMP( uint rawMP )
         {
             return multiply( rawMP, mpm );
         }
 
+        /// <summary>
+        /// Converts actual MP into RawMP
+        /// </summary>
         public uint GetRawMPFromActualMP( int actualMP )
         {
             return divide( actualMP, mpm );
         }
 
-        int hpm;
-        public int HPModifier { get { return hpm; } }
-
+        /// <summary>
+        /// Converts RawHP into actual HP
+        /// </summary>
         public int ActualHP( uint rawHP )
         {
             return multiply( rawHP, hpm );
         }
 
+        /// <summary>
+        /// Converts actual HP into RawHP
+        /// </summary>
         public uint GetRawHPFromActualHP( int actualHP )
         {
             return divide( actualHP, hpm );
         }
 
-        int spm;
-        public int SPModifier { get { return spm; } }
-
+        /// <summary>
+        /// Converts RawSP into actual speed
+        /// </summary>
         public int ActualSP( uint rawSP )
         {
             return multiply( rawSP, spm );
         }
 
+        /// <summary>
+        /// Converts actual speed into RawSP
+        /// </summary>
         public uint GetRawSPFromActualSP( int actualSP )
         {
             return divide( actualSP, spm );
         }
 
-        int pam;
-        public int PAModifier { get { return pam; } }
-
+        /// <summary>
+        /// Converts RawPA into actual physical attack
+        /// </summary>
         public int ActualPA( uint rawPA )
         {
             return multiply( rawPA, pam );
         }
 
+        /// <summary>
+        /// Converts actual physical attack into RawPA
+        /// </summary>
         public uint GetRawPAFromActualPA( int actualPA )
         {
             return divide( actualPA, pam );
         }
 
-        int mam;
-        public int MAModifier { get { return mam; } }
-
+        /// <summary>
+        /// Converts RawMA into actual magic attack
+        /// </summary>
         public int ActualMA( uint rawMA )
         {
             return multiply( rawMA, mam );
         }
 
+        /// <summary>
+        /// Converts actual magic attack into RawMA
+        /// </summary>
         public uint GetRawMAFromActualMA( int actualMA )
         {
             return divide( actualMA, mam );
         }
 
-        int move;
-        public int Move { get { return move; } }
+        private int multiply( uint rawVal, int multiplier )
+        {
+            uint result = (uint)(rawVal * multiplier / 1638400);
+            if( result < 1 )
+            {
+                result = 1;
+            }
 
-        int cev;
-        public int CEvade { get { return cev; } }
+            return (int)result;
+        }
 
-        int hpc;
-        public int HPConstant { get { return hpc; } }
+        private uint divide( int value, int multiplier )
+        {
+            uint result = (uint)(((uint)value * 1638400) / (uint)multiplier);
+            return result;
+        }
 
-        int mpc;
-        public int MPConstant { get { return mpc; } }
+        public override string ToString()
+        {
+            return string.Format( "{0} ({1:X02})", Name, Byte );
+        }
 
-        int spc;
-        public int SPConstant { get { return spc; } }
+        #endregion
 
-        int pac;
-        public int PAConstant { get { return pac; } }
-
-        int mac;
-        public int MAConstant { get { return mac; } }
-
-        int jump;
-        public int Jump { get { return jump; } }
-
-        string type;
-        public string Type { get { return type; } }
+        #region Level Up/down stuff not yet implemented
 
         public struct stats
         {
@@ -222,23 +394,27 @@ namespace LionEditor
         {
             stats stats = new stats();
 
-            stats.rawHP -= currentRawHP / (hpc + currentLevel-1);
+            stats.rawHP -= currentRawHP / (hpc + currentLevel - 1);
             stats.HP = multiply( (uint)stats.rawHP, hpm );
 
-            stats.rawMP -= currentRawMP / (mpc + currentLevel-1);
+            stats.rawMP -= currentRawMP / (mpc + currentLevel - 1);
             stats.MP = multiply( (uint)stats.rawMP, mpm );
 
-            stats.rawMA -= currentRawMA / (mac + currentLevel-1);
+            stats.rawMA -= currentRawMA / (mac + currentLevel - 1);
             stats.MA = multiply( (uint)stats.rawMA, mam );
 
-            stats.rawPA -= currentRawPA / (pac + currentLevel-1);
+            stats.rawPA -= currentRawPA / (pac + currentLevel - 1);
             stats.PA = multiply( (uint)stats.rawPA, pam );
 
-            stats.rawSp -= currentRawSp / (spc + currentLevel-1);
+            stats.rawSp -= currentRawSp / (spc + currentLevel - 1);
             stats.Sp = multiply( (uint)stats.rawSp, spm );
 
             return stats;
         }
+
+        #endregion
+
+        #region Constructors
 
         private Class( byte value, string name, int hpModifier, int hpConstant, int mpModifier, int mpConstant, int spModifier, int spConstant,
             int paModifier, int paConstant, int maModifier, int maConstant, int move, int jump, int cev, string type, string command )
@@ -283,26 +459,7 @@ namespace LionEditor
             this.type = classNode.SelectSingleNode( "type" ).InnerXml;
         }
 
-        private int multiply( uint rawVal, int multiplier )
-        {
-            uint result = (uint)(rawVal * multiplier / 1638400 );
-            if( result < 1 )
-            {
-                result = 1;
-            }
+        #endregion
 
-            return (int)result;
-        }
-
-        private uint divide( int value, int multiplier )
-        {
-            uint result = (uint)(((uint)value * 1638400) / (uint)multiplier);
-            return result;
-        }
-
-        public override string ToString()
-        {
-            return string.Format( "{0} ({1:X02})", Name, Byte );
-        }
     }
 }

@@ -42,17 +42,11 @@ namespace LionEditor
     {
         [Description( "Monster" )]
         Monster = 0x20,
-        //[Description( "Monster" )]
-        //MonsterAlt = 0x30,
 
         [Description( "Female" )]
         Female = 0x40,
-        //[Description( "Female" )]
-        //FemaleAlt = 0x50,
 
         [Description( "Male" )]
         Male = 0x80,
-        //[Description( "Male" )]
-        //MaleAlt = 0x90
     }
 }

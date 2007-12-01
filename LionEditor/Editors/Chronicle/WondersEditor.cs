@@ -29,53 +29,57 @@ namespace LionEditor
 {
     public partial class WondersEditor : UserControl
     {
+        #region Fields
+
         private Wonders wonders;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the wonders currently being edited
+        /// </summary>
         public Wonders Wonders
         {
             get { return wonders; }
             set
             {
                 wonders = value;
-                checkedListBox1.Items.Clear();
+                wondersListBox.Items.Clear();
                 if( wonders != null )
                 {
                     foreach( Wonder w in wonders.AllWonders )
                     {
-                        checkedListBox1.Items.Add( w, w.Discovered );
+                        wondersListBox.Items.Add( w, w.Discovered );
                     }
-                    checkedListBox1.SelectedIndex = 0;
+                    wondersListBox.SelectedIndex = 0;
                 }
             }
         }
 
-        public WondersEditor()
-        {
-            stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor( StupidDate.DateDictionary[0] );
-            InitializeComponent();
+        #endregion
 
-            checkedListBox1.SelectedIndexChanged += new EventHandler( checkedListBox1_SelectedIndexChanged );
-            stupidDateEditor1.DateChangedEvent += new EventHandler( stupidDateEditor1_DateChangedEvent );
-            checkedListBox1.ItemCheck += new ItemCheckEventHandler( checkedListBox1_ItemCheck );
-        }
+        #region Events
 
-        void checkedListBox1_ItemCheck( object sender, ItemCheckEventArgs e )
+        void wondersListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
-            Wonder w = checkedListBox1.Items[e.Index] as Wonder;
+            Wonder w = wondersListBox.Items[e.Index] as Wonder;
             w.Discovered = (e.NewValue == CheckState.Checked);
             FireDataChangedEvent();
         }
 
-        void stupidDateEditor1_DateChangedEvent( object sender, EventArgs e )
+        void stupidDateEditor_DateChangedEvent( object sender, EventArgs e )
         {
-            Wonder w = checkedListBox1.SelectedItem as Wonder;
-            w.Date = stupidDateEditor1.CurrentDate;
+            Wonder w = wondersListBox.SelectedItem as Wonder;
+            w.Date = stupidDateEditor.CurrentDate;
             FireDataChangedEvent();
         }
 
-        void checkedListBox1_SelectedIndexChanged( object sender, EventArgs e )
+        void wondersListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
-            Wonder w = checkedListBox1.SelectedItem as Wonder;
-            stupidDateEditor1.CurrentDate = w.Date;
+            Wonder w = wondersListBox.SelectedItem as Wonder;
+            stupidDateEditor.CurrentDate = w.Date;
         }
 
         public event EventHandler DataChangedEvent;
@@ -88,5 +92,16 @@ namespace LionEditor
             }
         }
 
+        #endregion
+
+        public WondersEditor()
+        {
+            stupidDateEditor = new StupidDateEditor( StupidDate.DateDictionary[0] );
+            InitializeComponent();
+
+            wondersListBox.SelectedIndexChanged += wondersListBox_SelectedIndexChanged;
+            stupidDateEditor.DateChangedEvent += stupidDateEditor_DateChangedEvent;
+            wondersListBox.ItemCheck += wondersListBox_ItemCheck;
+        }
     }
 }

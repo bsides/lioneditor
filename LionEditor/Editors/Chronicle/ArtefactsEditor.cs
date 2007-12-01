@@ -30,52 +30,58 @@ namespace LionEditor
     public partial class ArtefactsEditor : UserControl
     {
         private Artefacts artefacts;
+
+        /// <summary>
+        /// Gets or sets the <see cref="Artefacts"/> currently being edited.
+        /// </summary>
         public Artefacts Artefacts
         {
             get { return artefacts; }
             set
             {
                 artefacts = value;
-                checkedListBox1.Items.Clear();
+                artefactsListBox.Items.Clear();
                 if( artefacts != null )
                 {
                     foreach( Artefact a in artefacts.AllArtefacts )
                     {
-                        checkedListBox1.Items.Add( a, a.Discovered );
+                        artefactsListBox.Items.Add( a, a.Discovered );
                     }
-                    checkedListBox1.SelectedIndex = 0;
+                    artefactsListBox.SelectedIndex = 0;
                 }
             }
         }
 
         public ArtefactsEditor()
         {
-            stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor( StupidDate.DateDictionary[0] );
+            stupidDateEditor = new StupidDateEditor( StupidDate.DateDictionary[0] );
             InitializeComponent();
 
-            checkedListBox1.SelectedIndexChanged += new EventHandler( checkedListBox1_SelectedIndexChanged );
-            stupidDateEditor1.DateChangedEvent += new EventHandler( stupidDateEditor1_DateChangedEvent );
-            checkedListBox1.ItemCheck += new ItemCheckEventHandler( checkedListBox1_ItemCheck );
+            artefactsListBox.SelectedIndexChanged += artefactsListBox_SelectedIndexChanged;
+            stupidDateEditor.DateChangedEvent += stupidDateEditor_DateChangedEvent;
+            artefactsListBox.ItemCheck += artefactsListBox_ItemCheck;
         }
 
-        void checkedListBox1_ItemCheck( object sender, ItemCheckEventArgs e )
+        #region Events
+
+        void artefactsListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
-            Artefact a = checkedListBox1.Items[e.Index] as Artefact;
+            Artefact a = artefactsListBox.Items[e.Index] as Artefact;
             a.Discovered = (e.NewValue == CheckState.Checked);
             FireDataChangedEvent();
         }
 
-        void stupidDateEditor1_DateChangedEvent( object sender, EventArgs e )
+        void stupidDateEditor_DateChangedEvent( object sender, EventArgs e )
         {
-            Artefact a = checkedListBox1.SelectedItem as Artefact;
-            a.Date = stupidDateEditor1.CurrentDate;
+            Artefact a = artefactsListBox.SelectedItem as Artefact;
+            a.Date = stupidDateEditor.CurrentDate;
             FireDataChangedEvent();
         }
 
-        void checkedListBox1_SelectedIndexChanged( object sender, EventArgs e )
+        void artefactsListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
-            Artefact a = checkedListBox1.SelectedItem as Artefact;
-            stupidDateEditor1.CurrentDate = a.Date;
+            Artefact a = artefactsListBox.SelectedItem as Artefact;
+            stupidDateEditor.CurrentDate = a.Date;
         }
 
         public event EventHandler DataChangedEvent;
@@ -88,5 +94,6 @@ namespace LionEditor
             }
         }
 
+        #endregion
     }
 }

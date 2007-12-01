@@ -23,172 +23,204 @@ using System.Text;
 
 namespace LionEditor
 {
+    /// <summary>
+    /// Represents a saved game
+    /// </summary>
     public class Savegame
     {
+        #region Fields
+
         public const uint saveFileSize = 0x2A3C;
+        private byte[] offset0x00 = new byte[257];
+        private byte[] saveNameRaw = new byte[17];
+        private byte saveScreenMapPosition;
+        private byte[] offset0x117 = new byte[17];
+        private uint timer;
+        private byte[] offset0x1DF = new byte[609];
+        private byte numPropositions;
+        private byte[] prop1 = new byte[9];
+        private byte[] prop2 = new byte[9];
+        private byte[] prop3 = new byte[9];
+        private byte[] prop4 = new byte[9];
+        private byte[] prop5 = new byte[9];
+        private byte[] prop6 = new byte[9];
+        private byte[] prop7 = new byte[9];
+        private byte[] prop8 = new byte[9];
+        private byte[] offset0x489 = new byte[3];
+        private Character[] characters = new Character[24];
+        private Character[] guests = new Character[4];
+        private Inventory inventory;
+        private Inventory poachersDen;
+        private byte[] offset0x2304 = new byte[304];
+        private uint warFunds;
+        private byte[] offset0x2438 = new byte[4];
+        private byte[] offset0x2444 = new byte[4];
+        private byte mapPosition;
+        private byte[] offset0x2449 = new byte[191];
+        private uint kills;
+        private uint casualties;
+        private byte[] offset0x2510 = new byte[200];
+        private byte[] offset0x2610 = new byte[372];
+        private byte[] offset0x2788 = new byte[692];
+        private Options options;
+        private Feats feats;
+        private Wonders wonders;
+        private Artefacts artefacts;
+        private StupidDate date;
 
-        byte[] offset0x00 = new byte[257];
-        byte[] saveNameRaw = new byte[17];
+        #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Gets the name of this save
+        /// </summary>
         public string SaveName
         {
             get { return Character.DecodeName( saveNameRaw, 0 ); }
-            set { Character.EncodeName( value, saveNameRaw, 0 ); }
         }
 
-        private byte m_saveScreenMapPosition;
+        /// <summary>
+        /// Gets or sets the map position displayed on the save screen
+        /// </summary>
         public byte SaveScreenMapPosition
         {
-        	get { return m_saveScreenMapPosition; }
-        	set { m_saveScreenMapPosition = value; }
+            get { return saveScreenMapPosition; }
+            set { saveScreenMapPosition = value; }
         }
 
-        byte[] offset0x117 = new byte[17];
-        private uint m_timer;
+        /// <summary>
+        /// Gets or sets the game timer
+        /// </summary>
         public uint Timer
         {
-        	get { return m_timer; }
-        	set { m_timer = value; }
+            get { return timer; }
+            set { timer = value; }
         }
 
-        byte[] artifactDates = new byte[53];
-        byte[] offset0x1DF = new byte[609];
-        byte numPropositions;
-        byte[] prop1 = new byte[9];
-        byte[] prop2 = new byte[9];
-        byte[] prop3 = new byte[9];
-        byte[] prop4 = new byte[9];
-        byte[] prop5 = new byte[9];
-        byte[] prop6 = new byte[9];
-        byte[] prop7 = new byte[9];
-        byte[] prop8 = new byte[9];
-        byte[] offset0x489 = new byte[3];
-        private Character[] m_characters = new Character[24];
+        /// <summary>
+        /// Gets the collection of <see cref="Character"/>s.
+        /// </summary>
         public Character[] Characters
         {
-        	get { return m_characters; }
-        	private set { m_characters = value; }
+            get { return characters; }
         }
 
-        private Character[] m_guests = new Character[4];
+        /// <summary>
+        /// Gets the collection of Guest <see cref="Character"/>s.
+        /// </summary>
         public Character[] Guests
         {
-        	get { return m_guests; }
-            private set { m_guests = value; }
+            get { return guests; }
         }
-
-        private Inventory inventory;
+        
+        /// <summary>
+        /// Gets the <see cref="Inventory"/>
+        /// </summary>
         public Inventory Inventory
         {
             get { return inventory; }
         }
 
-        private Inventory poachersDen;
+        /// <summary>
+        /// Gets the Poacher's Den <see cref="Inventory"/>
+        /// </summary>
         public Inventory PoachersDen
         {
             get { return poachersDen; }
         }
 
-        byte[] offset0x2304 = new byte[304];
-                private uint m_warFunds;        public uint WarFunds
+        /// <summary>
+        /// Gets or sets the war funds
+        /// </summary>
+        public uint WarFunds
         {
-        	get { return m_warFunds; }
-        	set { m_warFunds = value; }
+            get { return warFunds; }
+            set { warFunds = value; }
         }
 
-        byte[] offset0x2438 = new byte[4];
-
-        byte[] offset0x2444 = new byte[4];
-
-        private byte m_mapPosition;        public byte MapPosition
+        /// <summary>
+        /// Gets or sets the map position
+        /// </summary>
+        public byte MapPosition
         {
-        	get { return m_mapPosition; }
-        	set { m_mapPosition = value; }
+            get { return mapPosition; }
+            set { mapPosition = value; }
         }
 
-        byte[] offset0x2449 = new byte[191];
-        private uint m_kills;        public uint Kills
+        /// <summary>
+        /// Gets or sets the number of kills
+        /// </summary>
+        public uint Kills
         {
-        	get { return m_kills; }
-        	set { m_kills = value; }
+            get { return kills; }
+            set { kills = value; }
         }
 
-        private uint m_casualties;        public uint Casualties
+        /// <summary>
+        /// Gets or sets the number of casualties
+        /// </summary>
+        public uint Casualties
         {
-        	get { return m_casualties; }
-        	set { m_casualties = value; }
+            get { return casualties; }
+            set { casualties = value; }
         }
 
-        byte[] offset0x2510 = new byte[200];
-        byte[] offset0x2610 = new byte[372];
-        byte[] offset0x2788 = new byte[692];
-
-        private Options options;        public Options Options
+        /// <summary>
+        /// Gets the game options
+        /// </summary>
+        public Options Options
         {
             get { return options; }
-            private set { options = value; }
         }
 
-
-        public enum SaveScreenMonths
-        {
-            Aries = 0x01,
-            Taurus = 0x02,
-            Gemini = 0x03,
-            Cancer = 0x04,
-            Leo = 0x05,
-            Virgo = 0x06,
-            Libra = 0x07,
-            Scorpio = 0x08,
-            Sagittarius = 0x09,
-            Capricorn = 0x0A,
-            Aquarius = 0x0B,
-            Pisces = 0x0C,
-            Level = 0x0D,
-            Empty = 0x0E,
-            Unusable = 0x0F,
-        }
-
-        private Feats feats;
+        /// <summary>
+        /// Gets the feats
+        /// </summary>
         public Feats Feats
         {
             get { return feats; }
-            private set { feats = value; }
         }
 
-        private Wonders wonders;
+        /// <summary>
+        /// Gets the wonders
+        /// </summary>
         public Wonders Wonders
         {
             get { return wonders; }
-            private set { wonders = value; }
         }
 
-        private Artefacts artefacts;
+        /// <summary>
+        /// Gets the artefacts
+        /// </summary>
         public Artefacts Artefacts
         {
             get { return artefacts; }
-            private set { artefacts = value; }
         }
 
-        private StupidDate date;
+        /// <summary>
+        /// Gets the current date
+        /// </summary>
         public StupidDate Date
         {
             get { return date; }
             set { date = value; }
         }
-        
+
+        #endregion
+
+        #region Constructor
+
         public Savegame( byte[] file )
         {
             CopyArray( file, offset0x00, 0, 257 );
             CopyArray( file, saveNameRaw, 0x101, 17 );
 
-            //CopyArray( file, offset0x110, 0x110, 4 );
             Date = new StupidDate( file[0x115], (Zodiac)((file[0x114] - 1) << 4) );
 
             SaveScreenMapPosition = file[0x116];
             CopyArray( file, offset0x117, 0x117, 17 );
             Timer = (uint)((uint)file[0x128] + ((uint)file[0x129] << 8) + ((uint)file[0x12A] << 16) + ((uint)file[0x12B] << 24));
-            //CopyArray( file, artifactDates, 0x12C, 53 );
 
             byte[] artefactsDates = new byte[53];
             byte[] artefactsStates = new byte[6];
@@ -196,20 +228,18 @@ namespace LionEditor
             CopyArray( file, artefactsStates, 0x25D8, 6 );
             artefacts = new Artefacts( artefactsDates, artefactsStates );
 
-
             byte[] wondersDates = new byte[18];
             byte[] wondersStates = new byte[2];
             CopyArray( file, wondersDates, 0x161, 18 );
             CopyArray( file, wondersStates, 0x25DE, 2 );
             wonders = new Wonders( wondersDates, wondersStates );
-       
+
             byte[] featsDates = new byte[108];
             byte[] featsStates = new byte[48];
             CopyArray( file, featsDates, 0x173, 108 );
             CopyArray( file, featsStates, 0x25E0, 48 );
             feats = new Feats( featsDates, featsStates );
 
-            
             CopyArray( file, offset0x1DF, 0x1DF, 609 );
             numPropositions = file[0x440];
             CopyArray( file, prop1, 0x441, 9 );
@@ -298,12 +328,15 @@ namespace LionEditor
             CopyArray( file, offset0x2788, 0x2788, 692 );
         }
 
+        #endregion
+
+        #region Utilities
+
         public byte[] ToByteArray()
         {
             byte[] result = new byte[saveFileSize];
             CopyArray( offset0x00, result, 0, 0, 257 );
-            CopyArray( saveNameRaw, result, 0, 0x101, 17 );
-            //CopyArray( offset0x110, result, 0, 0x110, 4 );
+            Character.EncodeName( characters[0].Name, result, 0x101 );
             result[0x112] = Characters[0].Job.Byte;
             result[0x113] = Characters[0].Level;
             result[0x114] = (byte)((((byte)Date.Month) >> 4) + 1);
@@ -314,11 +347,8 @@ namespace LionEditor
             result[0x129] = (byte)((Timer >> 8) & 0xFF);
             result[0x12A] = (byte)((Timer >> 16) & 0xFF);
             result[0x12B] = (byte)((Timer >> 24) & 0xFF);
-            //CopyArray( artifactDates, result, 0, 0x12C, 53 );
             CopyArray( artefacts.DatesToByteArray(), result, 0, 0x12C, 53 );
-            //CopyArray( wondersDates, result, 0, 0x161, 17 );
             CopyArray( wonders.DatesToByteArray(), result, 0, 0x161, 18 );
-            //CopyArray( featsDates, result, 0, 0x172, 108 );
             CopyArray( feats.DatesToByteArray(), result, 0, 0x173, 108 );
             CopyArray( offset0x1DF, result, 0, 0x1DF, 609 );
             result[0x440] = numPropositions;
@@ -331,6 +361,7 @@ namespace LionEditor
             CopyArray( prop7, result, 0, 0x477, 9 );
             CopyArray( prop8, result, 0, 0x480, 9 );
             CopyArray( offset0x489, result, 0, 0x489, 3 );
+
             for( int i = 0; i < 24; i++ )
             {
                 if( Characters[i] != null )
@@ -373,11 +404,8 @@ namespace LionEditor
             result[0x250E] = (byte)((Casualties >> 16) & 0xFF);
             result[0x250F] = (byte)((Casualties >> 24) & 0xFF);
             CopyArray( offset0x2510, result, 0, 0x2510, 200 );
-            //CopyArray( artefacts, result, 0, 0x25D8, 6 );
             CopyArray( artefacts.StatesToByteArray(), result, 0, 0x25D8, 6 );
-            //CopyArray( wonders, result, 0, 0x25DE, 2 );
             CopyArray( wonders.StatesToByteArray(), result, 0, 0x25DE, 2 );
-            //CopyArray( feats, result, 0, 0x25E0, 48 );
             CopyArray( feats.StatesToByteArray(), result, 0, 0x25E0, 48 );
             CopyArray( offset0x2610, result, 0, 0x2610, 372 );
             CopyArray( options.ToByteArray(), result, 0, 0x2784, 4 );
@@ -410,7 +438,7 @@ namespace LionEditor
 
             return string.Format( "{0} ({1}) [{2}] ~{3}~", SaveName, time, date, loc );
         }
+
+        #endregion
     }
-
-
 }

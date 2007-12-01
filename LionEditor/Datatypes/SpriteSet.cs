@@ -25,15 +25,32 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
+    /// <summary>
+    /// Represents a character's sprite set, which also affects his "primary job"
+    /// </summary>
     public class SpriteSet
     {
+        #region Fields
+
         private string name = string.Empty;
+        private static List<SpriteSet> allSprites;
+        private static XmlDocument doc;
+        private byte value;
+
+        #endregion
+
+        #region Properties
+
         public string Name
         {
             get { return name; }
         }
 
-        private static List<SpriteSet> allSprites;
+        public byte Value
+        {
+            get { return value; }
+        }
+
         public static List<SpriteSet> AllSprites
         {
             get
@@ -51,14 +68,8 @@ namespace LionEditor
             }
         }
 
-        private static XmlDocument doc;
-
-        private byte value;
-        public byte Value
-        {
-            get { return value; }
-        }
-
+        #endregion
+        
         private SpriteSet( byte b )
         {
             if( doc == null )

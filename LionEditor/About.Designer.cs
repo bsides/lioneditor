@@ -48,7 +48,8 @@ namespace LionEditor
         private void InitializeComponent()
         {
             System.Windows.Forms.Button closeButton;
-            this.textBoxNoCaret1 = new LionEditor.TextBoxNoCaret();
+            this.textBoxNoCaret = new LionEditor.TextBoxNoCaret();
+            this.versionLabel = new System.Windows.Forms.Label();
             closeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -62,27 +63,37 @@ namespace LionEditor
             closeButton.Text = "Close";
             closeButton.UseVisualStyleBackColor = true;
             // 
-            // textBoxNoCaret1
+            // textBoxNoCaret
             // 
-            this.textBoxNoCaret1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBoxNoCaret1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxNoCaret1.Location = new System.Drawing.Point( 0, 0 );
-            this.textBoxNoCaret1.Multiline = true;
-            this.textBoxNoCaret1.Name = "textBoxNoCaret1";
-            this.textBoxNoCaret1.ReadOnly = true;
-            this.textBoxNoCaret1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxNoCaret1.ShortcutsEnabled = false;
-            this.textBoxNoCaret1.Size = new System.Drawing.Size( 380, 229 );
-            this.textBoxNoCaret1.TabIndex = 0;
-            this.textBoxNoCaret1.TabStop = false;
+            this.textBoxNoCaret.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBoxNoCaret.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBoxNoCaret.Location = new System.Drawing.Point( 0, 0 );
+            this.textBoxNoCaret.Multiline = true;
+            this.textBoxNoCaret.Name = "textBoxNoCaret";
+            this.textBoxNoCaret.ReadOnly = true;
+            this.textBoxNoCaret.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxNoCaret.ShortcutsEnabled = false;
+            this.textBoxNoCaret.Size = new System.Drawing.Size( 380, 229 );
+            this.textBoxNoCaret.TabIndex = 0;
+            this.textBoxNoCaret.TabStop = false;
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Location = new System.Drawing.Point( 13, 246 );
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size( 69, 13 );
+            this.versionLabel.TabIndex = 2;
+            this.versionLabel.Text = "##version##";
             // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 380, 277 );
+            this.Controls.Add( this.versionLabel );
             this.Controls.Add( closeButton );
-            this.Controls.Add( this.textBoxNoCaret1 );
+            this.Controls.Add( this.textBoxNoCaret );
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size( 388, 304 );
             this.MinimizeBox = false;
@@ -100,7 +111,8 @@ namespace LionEditor
 
         #endregion
 
-        private TextBoxNoCaret textBoxNoCaret1;
+        private TextBoxNoCaret textBoxNoCaret;
+        private System.Windows.Forms.Label versionLabel;
 
 
 

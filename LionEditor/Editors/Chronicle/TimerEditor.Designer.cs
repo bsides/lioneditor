@@ -1,4 +1,4 @@
-namespace LionEditor.Editors.Chronicle
+namespace LionEditor
 {
     partial class TimerEditor
     {
@@ -28,7 +28,7 @@ namespace LionEditor.Editors.Chronicle
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+            System.Windows.Forms.TableLayoutPanel table;
             System.Windows.Forms.Label colon1;
             System.Windows.Forms.Label colon2;
             System.Windows.Forms.Label hoursLabel;
@@ -37,42 +37,42 @@ namespace LionEditor.Editors.Chronicle
             this.hoursSpinner = new System.Windows.Forms.NumericUpDown();
             this.minutesSpinner = new System.Windows.Forms.NumericUpDown();
             this.secondsSpinner = new System.Windows.Forms.NumericUpDown();
-            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            table = new System.Windows.Forms.TableLayoutPanel();
             colon1 = new System.Windows.Forms.Label();
             colon2 = new System.Windows.Forms.Label();
             hoursLabel = new System.Windows.Forms.Label();
             minutesLabel = new System.Windows.Forms.Label();
             secondsLabel = new System.Windows.Forms.Label();
-            tableLayoutPanel1.SuspendLayout();
+            table.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hoursSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minutesSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondsSpinner)).BeginInit();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // table
             // 
-            tableLayoutPanel1.ColumnCount = 5;
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 108F ) );
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle() );
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 60F ) );
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle() );
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 65F ) );
-            tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
-            tableLayoutPanel1.Controls.Add( colon1, 1, 1 );
-            tableLayoutPanel1.Controls.Add( colon2, 3, 1 );
-            tableLayoutPanel1.Controls.Add( this.hoursSpinner, 0, 1 );
-            tableLayoutPanel1.Controls.Add( this.minutesSpinner, 2, 1 );
-            tableLayoutPanel1.Controls.Add( this.secondsSpinner, 4, 1 );
-            tableLayoutPanel1.Controls.Add( hoursLabel, 0, 0 );
-            tableLayoutPanel1.Controls.Add( minutesLabel, 2, 0 );
-            tableLayoutPanel1.Controls.Add( secondsLabel, 4, 0 );
-            tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
-            tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 100F ) );
-            tableLayoutPanel1.Size = new System.Drawing.Size( 265, 48 );
-            tableLayoutPanel1.TabIndex = 0;
+            table.ColumnCount = 5;
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 108F ) );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle() );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 60F ) );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle() );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 65F ) );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
+            table.Controls.Add( colon1, 1, 1 );
+            table.Controls.Add( colon2, 3, 1 );
+            table.Controls.Add( this.hoursSpinner, 0, 1 );
+            table.Controls.Add( this.minutesSpinner, 2, 1 );
+            table.Controls.Add( this.secondsSpinner, 4, 1 );
+            table.Controls.Add( hoursLabel, 0, 0 );
+            table.Controls.Add( minutesLabel, 2, 0 );
+            table.Controls.Add( secondsLabel, 4, 0 );
+            table.Location = new System.Drawing.Point( 0, 0 );
+            table.Name = "table";
+            table.RowCount = 2;
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 100F ) );
+            table.Size = new System.Drawing.Size( 265, 48 );
+            table.TabIndex = 0;
             // 
             // colon1
             // 
@@ -172,11 +172,11 @@ namespace LionEditor.Editors.Chronicle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( tableLayoutPanel1 );
+            this.Controls.Add( table );
             this.Name = "TimerEditor";
             this.Size = new System.Drawing.Size( 265, 48 );
-            tableLayoutPanel1.ResumeLayout( false );
-            tableLayoutPanel1.PerformLayout();
+            table.ResumeLayout( false );
+            table.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hoursSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minutesSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondsSpinner)).EndInit();

@@ -29,8 +29,24 @@ namespace LionEditor
 {
     public partial class JobsAndAbilitiesEditor : Form
     {
-        JobsAndAbilities ja;
-        byte spriteSet;
+        #region Fields
+
+        private JobsAndAbilities ja;
+        private byte spriteSet;
+        private bool changed = false;
+
+        #endregion
+
+        #region Properties
+
+        public bool ChangesMade
+        {
+            get { return changed; }
+        }
+
+        #endregion
+
+        #region Constructors
 
         public JobsAndAbilitiesEditor( JobsAndAbilities ja, byte currentSpriteSet )
             : this()
@@ -59,12 +75,15 @@ namespace LionEditor
             jobEditor.DataChangedEvent += new EventHandler( jobEditor1_DataChangedEvent );
         }
 
-        bool changed = false;
-
-        public bool ChangesMade
+        public JobsAndAbilitiesEditor()
         {
-            get { return changed; }
+            InitializeComponent();
         }
+
+        #endregion
+
+        #region Events
+
         void jobEditor1_DataChangedEvent( object sender, EventArgs e )
         {
             changed = true;
@@ -75,9 +94,7 @@ namespace LionEditor
             jobEditor.UpdateView( ja.jobs[jobSelector.SelectedIndex], jobSelector.SelectedItem as JobInfo );
         }
 
-        public JobsAndAbilitiesEditor()
-        {
-            InitializeComponent();
-        }
+        #endregion
+
     }
 }

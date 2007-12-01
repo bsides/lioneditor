@@ -47,32 +47,32 @@ namespace LionEditor
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor();
+            this.artefactsListBox = new System.Windows.Forms.CheckedListBox();
+            this.stupidDateEditor = new LionEditor.StupidDateEditor();
             this.SuspendLayout();
             // 
-            // checkedListBox1
+            // artefactsListBox
             // 
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point( 0, 0 );
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size( 180, 334 );
-            this.checkedListBox1.TabIndex = 2;
+            this.artefactsListBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.artefactsListBox.FormattingEnabled = true;
+            this.artefactsListBox.Location = new System.Drawing.Point( 0, 0 );
+            this.artefactsListBox.Name = "artefactsListBox";
+            this.artefactsListBox.Size = new System.Drawing.Size( 180, 334 );
+            this.artefactsListBox.TabIndex = 2;
             // 
-            // stupidDateEditor1
+            // stupidDateEditor
             // 
-            this.stupidDateEditor1.Location = new System.Drawing.Point( 186, 3 );
-            this.stupidDateEditor1.Name = "stupidDateEditor1";
-            this.stupidDateEditor1.Size = new System.Drawing.Size( 183, 29 );
-            this.stupidDateEditor1.TabIndex = 3;
+            this.stupidDateEditor.Location = new System.Drawing.Point( 186, 3 );
+            this.stupidDateEditor.Name = "stupidDateEditor";
+            this.stupidDateEditor.Size = new System.Drawing.Size( 183, 29 );
+            this.stupidDateEditor.TabIndex = 3;
             // 
             // ArtefactsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.stupidDateEditor1 );
-            this.Controls.Add( this.checkedListBox1 );
+            this.Controls.Add( this.stupidDateEditor );
+            this.Controls.Add( this.artefactsListBox );
             this.Name = "ArtefactsEditor";
             this.Size = new System.Drawing.Size( 517, 342 );
             this.ResumeLayout( false );
@@ -81,8 +81,8 @@ namespace LionEditor
 
         #endregion
 
-        private LionEditor.Editors.Chronicle.StupidDateEditor stupidDateEditor1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private StupidDateEditor stupidDateEditor;
+        private System.Windows.Forms.CheckedListBox artefactsListBox;
 
     }
 }

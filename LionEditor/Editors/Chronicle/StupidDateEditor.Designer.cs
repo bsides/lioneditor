@@ -1,4 +1,4 @@
-namespace LionEditor.Editors.Chronicle
+namespace LionEditor
 {
     partial class StupidDateEditor
     {

@@ -26,6 +26,8 @@ namespace LionEditor
 {
     public class Character
     {
+        #region Character Map
+
         public static char[] characterMap = new char[256] {
             '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F',
             'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V',
@@ -87,524 +89,753 @@ namespace LionEditor
             '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',
             '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#' };
 
-        private SpriteSet m_spriteSet;
+        #endregion
 
+        #region Fields
+
+        private SpriteSet spriteSet;
+        private byte index;
+        private byte[] rawName = new byte[15];
+        private Class job;
+        private Gender gender;
+        private Zodiac zodiacSign;
+        private SecondaryAction secondaryAction;
+        private Ability reactAbility;
+        private Ability supportAbility;
+        private Ability movementAbility;
+        private Item head;
+        private Item body;
+        private Item accessory;
+        private Item rightHand;
+        private Item rightShield;
+        private Item leftHand;
+        private Item leftShield;
+        private byte experience;
+        private byte level;
+        private byte bravery;
+        private byte faith;
+        private uint rawHP;
+        private uint rawMP;
+        private uint rawSP;
+        private uint rawPA;
+        private uint rawMA;
+        private JobsAndAbilities jobsAndAbilities;
+        private byte unknownOffset03;
+        private byte unknownOffset05;
+        private byte[] jobsUnlocked = new byte[3];
+        private byte[,] skillsUnlocked = new byte[22, 3];
+        private byte[] jobLevels = new byte[12];
+        private ushort[] jp = new ushort[23];
+        private ushort[] totalJP = new ushort[23];
+        private byte[] afterName = new byte[21];
+
+        #endregion
+
+        #region Properties
+
+        #region Identity
+
+        /// <summary>
+        /// Gets or sets this character's <see cref="SpriteSet"/>
+        /// </summary>
         public SpriteSet SpriteSet
         {
-        	get { return m_spriteSet; }
-            set { m_spriteSet = value; }
+            get { return spriteSet; }
+            set { spriteSet = value; }
         }
 
-        private byte m_index;
+        /// <summary>
+        /// Gets or sets this character's index on the party screen
+        /// </summary>
         public byte Index
         {
-        	get { return m_index; }
-            set { m_index = value; }
+            get { return index; }
+            set { index = value; }
         }
 
-        private byte[] rawName = new byte[15];
+        /// <summary>
+        /// Gets or sets this character's name
+        /// </summary>
         public string Name
         {
             get { return DecodeName( rawName, 0 ); }
             set { EncodeName( value, rawName, 0 ); }
         }
 
-        private Class m_job;
+        /// <summary>
+        /// Gets or sets this character's Job
+        /// </summary>
         public Class Job
         {
-        	get { return m_job; }
-            set { m_job = value; }
+            get { return job; }
+            set { job = value; }
         }
 
-        private bool m_isGuest;
-        public bool IsGuest
-        {
-        	get { return m_isGuest; }
-            set { m_isGuest = value; }
-        }
-
-        private Gender m_gender;
+        /// <summary>
+        /// Gets or sets this character's <see cref="Gender"/>
+        /// </summary>
         public Gender Gender
         {
-        	get { return m_gender; }
-            set { m_gender = value; }
+            get { return gender; }
+            set { gender = value; }
         }
 
-        private Zodiac m_zodiacSign;
+        /// <summary>
+        /// Gets or sets this characters <see cref="Zodiac"/>
+        /// </summary>
         public Zodiac ZodiacSign
         {
-        	get { return m_zodiacSign; }
-        	set { m_zodiacSign = value; }
+            get { return zodiacSign; }
+            set { zodiacSign = value; }
         }
 
+        #endregion Identity
 
-        private SecondaryAction m_secondaryAction;
+        #region Abilities
+
+        /// <summary>
+        /// Gets or sets this character's Secondary Action
+        /// </summary>
         public SecondaryAction SecondaryAction
         {
-        	get { return m_secondaryAction; }
-        	set { m_secondaryAction = value; }
+            get { return secondaryAction; }
+            set { secondaryAction = value; }
         }
 
-
-        private Ability m_ReactAbility;
+        /// <summary>
+        /// Gets or sets this character's Reaction Ability
+        /// </summary>
         public Ability ReactAbility
         {
-        	get { return m_ReactAbility; }
-        	set { m_ReactAbility = value; }
+            get { return reactAbility; }
+            set { reactAbility = value; }
         }
 
-        private Ability m_SupportAbility;
+        /// <summary>
+        /// Gets or sets this character's Support Ability
+        /// </summary>
         public Ability SupportAbility
         {
-        	get { return m_SupportAbility; }
-        	set { m_SupportAbility = value; }
+            get { return supportAbility; }
+            set { supportAbility = value; }
         }
 
-        private Ability m_MovementAbility;
+        /// <summary>
+        /// Gets or sets this character's Movement Ability
+        /// </summary>
         public Ability MovementAbility
         {
-        	get { return m_MovementAbility; }
-        	set { m_MovementAbility = value; }
+            get { return movementAbility; }
+            set { movementAbility = value; }
         }
 
+        #endregion Abilities
 
-        private Item m_Head;
+        #region Equipment
+
+        /// <summary>
+        /// Gets or sets this character's equipped helmet
+        /// </summary>
         public Item Head
         {
-        	get { return m_Head; }
-        	set { m_Head = value; }
+            get { return head; }
+            set { head = value; }
         }
 
-        private Item m_Body;
+        /// <summary>
+        /// Gets or sets this character's equipped armor
+        /// </summary>
         public Item Body
         {
-        	get { return m_Body; }
-        	set { m_Body = value; }
+            get { return body; }
+            set { body = value; }
         }
 
-        private Item m_Accessory;
+        /// <summary>
+        /// Gets or sets this character's equipped accessory
+        /// </summary>
         public Item Accessory
         {
-        	get { return m_Accessory; }
-        	set { m_Accessory = value; }
+            get { return accessory; }
+            set { accessory = value; }
         }
 
-        private Item m_RightHand;
+        /// <summary>
+        /// Gets or sets this character's equipped right-hand weapon
+        /// </summary>
         public Item RightHand
         {
-        	get { return m_RightHand; }
-        	set { m_RightHand = value; }
+            get { return rightHand; }
+            set { rightHand = value; }
         }
 
-        private Item m_RightShield;
-        public Item RightShield
-        {
-        	get { return m_RightShield; }
-        	set { m_RightShield = value; }
-        }
-
-        private Item m_LeftHand;
-        public Item LeftHand
-        {
-        	get { return m_LeftHand; }
-        	set { m_LeftHand = value; }
-        }
-
-        private Item m_LeftShield;
-        public Item LeftShield
-        {
-        	get { return m_LeftShield; }
-        	set { m_LeftShield = value; }
-        }
-
-
-        private byte m_Experience;
-        public byte Experience
-        {
-        	get { return m_Experience; }
-        	set { m_Experience = value; }
-        }
-
-        private byte m_Level;
-        public byte Level
-        {
-        	get { return m_Level; }
-        	set { m_Level = value; }
-        }
-
-        private byte m_Brave;
-        public byte Brave
-        {
-        	get { return m_Brave; }
-        	set { m_Brave = value; }
-        }
-
-        private byte m_Faith;
-        public byte Faith
-        {
-        	get { return m_Faith; }
-        	set { m_Faith = value; }
-        }
-
-
-        private uint m_RawHP;
-        public uint RawHP
-        {
-        	get { return m_RawHP; }
-        	set { m_RawHP = value; }
-        }
-
-        private uint m_RawMP;
-        public uint RawMP
-        {
-        	get { return m_RawMP; }
-        	set { m_RawMP = value; }
-        }
-
-        private uint m_RawSP;
-        public uint RawSP
-        {
-        	get { return m_RawSP; }
-        	set { m_RawSP = value; }
-        }
-
-        private uint m_RawPA;
-        public uint RawPA
-        {
-        	get { return m_RawPA; }
-        	set { m_RawPA = value; }
-        }
-
-        private uint m_RawMA;
-        public uint RawMA
-        {
-        	get { return m_RawMA; }
-        	set { m_RawMA = value; }
-        }
-
-        public uint MoveBonus
-        {
-            get
-            {
-                return ReactAbility.MoveBonus + SupportAbility.MoveBonus + MovementAbility.MoveBonus + Accessory.MoveBonus + LeftHand.MoveBonus + LeftShield.MoveBonus + RightHand.MoveBonus + RightShield.MoveBonus + Head.MoveBonus + Body.MoveBonus;
-            }
-        }
-
-        public uint Move
-        {
-            get
-            {
-                return (uint)(Job.Move + MoveBonus);
-            }
-        }
-
-        public uint JumpBonus
-        {
-            get
-            {
-                return ReactAbility.JumpBonus + SupportAbility.JumpBonus + MovementAbility.JumpBonus + Accessory.JumpBonus + Head.JumpBonus + RightHand.JumpBonus + RightShield.JumpBonus + LeftHand.JumpBonus + LeftShield.JumpBonus + Body.JumpBonus;
-            }
-        }
-        public uint Jump
-        {
-            get
-            {
-                return (uint)(Job.Jump + JumpBonus);
-            }
-        }
-
-        public uint SpeedBonus
-        {
-            get
-            {
-                return RightHand.SpeedBonus + RightShield.SpeedBonus + LeftHand.SpeedBonus + LeftShield.SpeedBonus + Head.SpeedBonus + Body.SpeedBonus + Accessory.SpeedBonus;
-            }
-        }
-
-        public uint Speed
-        {
-        	get 
-            {
-                return (uint)(Job.ActualSP( RawSP ) + SpeedBonus);
-            }
-        	set 
-            {
-                RawSP = Job.GetRawSPFromActualSP( (int)(value - SpeedBonus) );
-            }
-        }
-
-        public uint MaxSpeed
-        {
-            get
-            {
-                return (uint)(Job.ActualSP( RawSP ) + SpeedBonus);
-            }
-        }
-
+        /// <summary>
+        /// Gets this character's right-hand weapon's power
+        /// </summary>
         public uint RPower
         {
-            get { return RightHand.Power; }
+            get { return rightHand.Power; }
         }
 
-        public uint LPower
+        /// <summary>
+        /// Gets or sets this character's equipped right-hand shield
+        /// </summary>
+        public Item RightShield
         {
-            get { return LeftHand.Power; }
+            get { return rightShield; }
+            set { rightShield = value; }
         }
 
+        /// <summary>
+        /// Gets this character's right-hand shield's block rate
+        /// </summary>
         public uint RBlockRate
         {
-            get { return RightHand.BlockRate; }
+            get { return rightHand.BlockRate; }
         }
 
+        /// <summary>
+        /// Gets or sets this character's equipped left-hand weapon
+        /// </summary>
+        public Item LeftHand
+        {
+            get { return leftHand; }
+            set { leftHand = value; }
+        }
+
+        /// <summary>
+        /// Gets this character's left-hand weapon's power
+        /// </summary>
+        public uint LPower
+        {
+            get { return leftHand.Power; }
+        }
+
+        /// <summary>
+        /// Gets or sets this character's equipped left-hand shield
+        /// </summary>
+        public Item LeftShield
+        {
+            get { return leftShield; }
+            set { leftShield = value; }
+        }
+
+        /// <summary>
+        /// Gets this character's left-hand shield's block rate
+        /// </summary>
         public uint LBlockRate
         {
-            get { return LeftHand.BlockRate; }
+            get { return leftHand.BlockRate; }
         }
 
-        public uint PABonus
+        #endregion
+
+        #region Stats
+
+        /// <summary>
+        /// Gets or sets this character's experience
+        /// </summary>
+        public byte Experience
         {
-            get 
-            { 
-                return RightHand.PABonus + LeftHand.PABonus + RightShield.PABonus + LeftShield.PABonus+ Head.PABonus + Body.PABonus + Accessory.PABonus;
-            }
+            get { return experience; }
+            set { experience = value; }
         }
 
-        public uint PA
+        /// <summary>
+        /// Gets or sets this character's level
+        /// </summary>
+        public byte Level
         {
-        	get 
-            {
-                return (uint)(Job.ActualPA( RawPA ) + PABonus);
-            }
-            set
-            {
-                RawPA = Job.GetRawPAFromActualPA( (int)(value - PABonus) );
-            }
+            get { return level; }
+            set { level = value; }
         }
 
-        public uint MaxPA
+        /// <summary>
+        /// Gets or sets this character's bravery
+        /// </summary>
+        public byte Bravery
         {
-            get
-            {
-                return (uint)(Job.ActualPA( 0xFFFFFF ) + PABonus);
-            }
+            get { return bravery; }
+            set { bravery = value; }
         }
 
-        public uint MABonus
+        /// <summary>
+        /// Gets or sets this character's faith
+        /// </summary>
+        public byte Faith
         {
-            get
-            {
-                return RightHand.MABonus + RightShield.MABonus + LeftHand.MABonus + LeftShield.MABonus + Head.MABonus + Body.MABonus + Accessory.MABonus;
-            }
+            get { return faith; }
+            set { faith = value; }
         }
 
-        public uint MA
+        #region HP
+
+        /// <summary>
+        /// Gets this character's raw HP stat
+        /// </summary>
+        public uint RawHP
         {
-        	get 
-            {
-                return (uint)(Job.ActualMA( RawMA ) + MABonus);
-            }
-        	set 
-            {
-                RawMA = Job.GetRawMAFromActualMA( (int)(value - MABonus) );
-            }
+            get { return rawHP; }
         }
 
-        public uint MaxMA
-        {
-            get
-            {
-                return (uint)(Job.ActualMA( 0xFFFFFF ) + MABonus);
-            }
-        }
-
+        /// <summary>
+        /// Gets the HP bonus provided by this character's equipment
+        /// </summary>
         public uint HPBonus
         {
             get
             {
-                return RightHand.HPBonus + RightShield.HPBonus + LeftHand.HPBonus + LeftShield.HPBonus + Head.HPBonus + Body.HPBonus + Accessory.HPBonus;
+                // TODO: determine if the equipment must be in the "right place" in order to receive bonus
+                return
+                    rightHand.HPBonus +
+                    rightShield.HPBonus +
+                    leftHand.HPBonus +
+                    leftShield.HPBonus +
+                    head.HPBonus +
+                    body.HPBonus +
+                    accessory.HPBonus;
             }
         }
 
+        /// <summary>
+        /// Gets the HP multiplier provided by this character's abilities
+        /// </summary>
         public decimal HPMultiplier
         {
-            get
-            {
-                return ((decimal)(100 + SupportAbility.HPMultiplier + ReactAbility.HPMultiplier + MovementAbility.HPMultiplier)) / 100;
-            }
+            // TODO: determine if the abilities must be in the "right place" in order to receive bonus
+            get { return ((decimal)(100 + supportAbility.HPMultiplier + reactAbility.HPMultiplier + movementAbility.HPMultiplier)) / 100; }
         }
 
+        /// <summary>
+        /// Gets or sets the "human readable" HP based on <see cref="RawHP"/>, <see cref="HPBonus"/>, and <see cref="HPMultiplier"/>.
+        /// </summary>
         public uint HP
         {
-            get
-            {
-                
-                return (uint)(Job.ActualHP( RawHP ) * HPMultiplier + HPBonus);
-            }
-            set
-            {
-                RawHP = Job.GetRawHPFromActualHP( (int)((value - HPBonus) / HPMultiplier) );
-            }
+            get { return (uint)(job.ActualHP( rawHP ) * HPMultiplier + HPBonus); }
+            set { rawHP = job.GetRawHPFromActualHP( (int)((value - HPBonus) / HPMultiplier) ); }
         }
 
+        /// <summary>
+        /// Gets the maximum HP this character can have with his current equipment, abilities, and job.
+        /// </summary>
         public uint MaxHP
         {
-            get
-            {
-                return (uint)(Job.ActualHP( 0xFFFFFF ) * HPMultiplier + HPBonus);
-            }
+            get { return (uint)(job.ActualHP( 0xFFFFFF ) * HPMultiplier + HPBonus); }
         }
 
+        #endregion HP
+
+        #region MP
+
+        /// <summary>
+        /// Gets this character's raw MP stat
+        /// </summary>
+        public uint RawMP
+        {
+            get { return rawMP; }
+        }
+
+        /// <summary>
+        /// Gets the MP bonus provided by this character's equipment
+        /// </summary>
         public uint MPBonus
         {
             get
             {
-                return RightHand.MPBonus + RightShield.MPBonus + LeftHand.MPBonus + LeftShield.MPBonus + Head.MPBonus + Body.MPBonus + Accessory.MPBonus;
+                // TODO: determine if the equipment must be in the "right place" in order to receive bonus
+                return
+                    rightHand.MPBonus +
+                    rightShield.MPBonus +
+                    leftHand.MPBonus +
+                    leftShield.MPBonus +
+                    head.MPBonus +
+                    body.MPBonus +
+                    accessory.MPBonus;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the "human readable" MP based on <see cref="RawMP"/> and <see cref="MPBonus"/>.
+        /// </summary>
         public uint MP
         {
-            get
-            {
-                return (uint)(Job.ActualMP( RawMP ) + MPBonus);
-            }
-            set
-            {
-                RawMP = Job.GetRawMPFromActualMP( (int)(value - -MPBonus) );
-            }
+            get { return (uint)(job.ActualMP( rawMP ) + MPBonus); }
+            set { rawMP = job.GetRawMPFromActualMP( (int)(value - MPBonus) ); }
         }
 
+        /// <summary>
+        /// Gets the maximum MP this character can have with his current equipment and job.
+        /// </summary>
         public uint MaxMP
         {
+            get { return (uint)(job.ActualMP( 0xFFFFFF ) + MPBonus); }
+        }
+
+        #endregion MP
+
+        #region Speed
+
+        /// <summary>
+        /// Gets this character's raw speed stat
+        /// </summary>
+        public uint RawSP
+        {
+            get { return rawSP; }
+        }
+
+        /// <summary>
+        /// Gets the speed bonus provided by this character's equipment
+        /// </summary>
+        public uint SpeedBonus
+        {
             get
             {
-                return (uint)(Job.ActualMP( 0xFFFFFF ) + MPBonus);
+                // TODO: determine if the equipment must be in the "right place" in order to receive bonus
+                return
+                    rightHand.SpeedBonus +
+                    rightShield.SpeedBonus +
+                    leftHand.SpeedBonus +
+                    leftShield.SpeedBonus +
+                    head.SpeedBonus +
+                    body.SpeedBonus +
+                    accessory.SpeedBonus;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the "human readable" speed based on <see cref="RawSP"/> and <see cref="SpeedBonus"/>
+        /// </summary>
+        public uint Speed
+        {
+            get { return (uint)(job.ActualSP( rawSP ) + SpeedBonus); }
+            set { rawSP = job.GetRawSPFromActualSP( (int)(value - SpeedBonus) ); }
+        }
+
+        /// <summary>
+        /// Gets the maximum speed this character can have with his current equipment and job.
+        /// </summary>
+        public uint MaxSpeed
+        {
+            get { return (uint)(job.ActualSP( rawSP ) + SpeedBonus); }
+        }
+
+        #endregion Speed
+
+        #region Physical Attack
+
+        /// <summary>
+        /// Gets this character's raw physical attack stat
+        /// </summary>
+        public uint RawPA
+        {
+            get { return rawPA; }
+        }
+
+        /// <summary>
+        /// Gets the physical attack bonus provided by this character's equipment
+        /// </summary>
+        public uint PABonus
+        {
+            get
+            {
+                // TODO: determine if the equipment must be in the "right place" in order to receive bonus
+                return
+                    rightHand.PABonus +
+                    leftHand.PABonus +
+                    rightShield.PABonus +
+                    leftShield.PABonus +
+                    head.PABonus +
+                    body.PABonus +
+                    accessory.PABonus;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the "human readable" physical attack based on <see cref="RawPA"/> and <see cref="PABonus"/>.
+        /// </summary>
+        public uint PA
+        {
+            get { return (uint)(job.ActualPA( rawPA ) + PABonus); }
+            set { rawPA = job.GetRawPAFromActualPA( (int)(value - PABonus) ); }
+        }
+
+        /// <summary>
+        /// Gets the maximum physical attack this character can have with his current equipment and job.
+        /// </summary>
+        public uint MaxPA
+        {
+            get { return (uint)(job.ActualPA( 0xFFFFFF ) + PABonus); }
+        }
+
+        #endregion Pysical Attack
+
+        #region Magic Attack
+
+        /// <summary>
+        /// Gets this character's raw magic attack stat
+        /// </summary>
+        public uint RawMA
+        {
+            get { return rawMA; }
+        }
+
+        /// <summary>
+        /// Gets the magic attack bonus provided by this character's equipment
+        /// </summary>
+        public uint MABonus
+        {
+            get
+            {
+                // TODO: determine if the equipment must be in the "right place" in order to receive bonus
+                return
+                    rightHand.MABonus +
+                    rightShield.MABonus +
+                    leftHand.MABonus +
+                    leftShield.MABonus +
+                    head.MABonus +
+                    body.MABonus +
+                    accessory.MABonus;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the "human readable" magic attack based on <see cref="RawMA"/> and <see cref="MABonus"/>.
+        /// </summary>
+        public uint MA
+        {
+            get { return (uint)(job.ActualMA( rawMA ) + MABonus); }
+            set { rawMA = job.GetRawMAFromActualMA( (int)(value - MABonus) ); }
+        }
+
+        /// <summary>
+        /// Gets the maximum magic attack this character can have with his current equipment and job.
+        /// </summary>
+        public uint MaxMA
+        {
+            get { return (uint)(job.ActualMA( 0xFFFFFF ) + MABonus); }
+        }
+
+        #endregion Magic Attack
+
+        #region Move
+
+        /// <summary>
+        /// Gets the movement bonus provided by this character's equipment and abilities
+        /// </summary>
+        public uint MoveBonus
+        {
+            get
+            {
+                // TODO: determine if the equipment/abilities must be in the "right place" in order to receive bonus
+                return
+                    reactAbility.MoveBonus +
+                    supportAbility.MoveBonus +
+                    movementAbility.MoveBonus +
+                    accessory.MoveBonus +
+                    leftHand.MoveBonus +
+                    leftShield.MoveBonus +
+                    rightHand.MoveBonus +
+                    rightShield.MoveBonus +
+                    head.MoveBonus +
+                    body.MoveBonus;
+            }
+        }
+
+        /// <summary>
+        /// Gets this character's movement distance based on his current Job and <see cref="MoveBonus"/>
+        /// </summary>
+        public uint Move
+        {
+            get { return (uint)(job.Move + MoveBonus); }
+        }
+
+        #endregion Move
+
+        #region Jump
+
+        /// <summary>
+        /// Gets the jump bonus provided by this character's equipment and abilities
+        /// </summary>
+        public uint JumpBonus
+        {
+            get
+            {
+                // TODO: determine if the equipment/abilities must be in the "right place" in order to receive bonus
+                return
+                    reactAbility.JumpBonus +
+                    supportAbility.JumpBonus +
+                    movementAbility.JumpBonus +
+                    accessory.JumpBonus +
+                    head.JumpBonus +
+                    rightHand.JumpBonus +
+                    rightShield.JumpBonus +
+                    leftHand.JumpBonus +
+                    leftShield.JumpBonus +
+                    body.JumpBonus;
+            }
+        }
+
+        /// <summary>
+        /// Gets this character's jump distance based on his current Job and <see cref="JumpBonus"/>
+        /// </summary>
+        public uint Jump
+        {
+            get { return (uint)(job.Jump + JumpBonus); }
+        }
+
+        #endregion Jump
+
+        /// <summary>
+        /// Gets this character's CEvade%, based on his Job
+        /// </summary>
         public uint PhysicalCEV
         {
-            get { return (uint)Job.CEvade; }
+            get { return (uint)job.CEvade; }
         }
 
+        /// <summary>
+        /// Gets this character's Magic CEvade%
+        /// </summary>
+        /// <remarks>
+        /// This value is always 0.
+        /// </remarks>
         public uint MagicCEV
         {
-        	get { return 0; }
+            get { return 0; }
         }
 
+        /// <summary>
+        /// Gets this character's Shield Evade%, based on his equipment
+        /// </summary>
         public uint PhysicalSEV
         {
-            get 
-            { 
-                return RightShield.PhysicalSEV + RightHand.PhysicalSEV + LeftHand.PhysicalSEV + LeftShield.PhysicalSEV + Head.PhysicalSEV + Body.PhysicalSEV + Accessory.PhysicalSEV; 
+            get
+            {
+                // TODO: determine if the equipment must be in the "right place" in order to affect stat
+                return
+                    rightShield.PhysicalSEV +
+                    rightHand.PhysicalSEV +
+                    leftHand.PhysicalSEV +
+                    leftShield.PhysicalSEV +
+                    head.PhysicalSEV +
+                    body.PhysicalSEV +
+                    accessory.PhysicalSEV;
             }
         }
 
+        /// <summary>
+        /// Gets this character's Magic Shield Evade%, based on his equipment
+        /// </summary>
         public uint MagicSEV
         {
             get
             {
-                return RightHand.MagicSEV + RightShield.MagicSEV + LeftHand.MagicSEV + LeftShield.MagicSEV + Head.MagicSEV + Body.MagicSEV + Accessory.MagicSEV;
+                // TODO: determine if the equipment must be in the "right place" in order to affect stat
+                return
+                    rightHand.MagicSEV +
+                    rightShield.MagicSEV +
+                    leftHand.MagicSEV +
+                    leftShield.MagicSEV +
+                    head.MagicSEV +
+                    body.MagicSEV +
+                    accessory.MagicSEV;
             }
         }
 
+        /// <summary>
+        /// Gets this character's physical accessory evade%, based on his equipment
+        /// </summary>
         public uint PhysicalAEV
         {
             get
             {
-                return RightHand.PhysicalAEV + RightShield.PhysicalAEV + LeftHand.PhysicalAEV + LeftShield.PhysicalAEV + Head.PhysicalAEV + Body.PhysicalAEV + Accessory.PhysicalAEV;
+                // TODO: determine if the equipment must be in the "right place" in order to affect stat
+                return
+                    rightHand.PhysicalAEV +
+                    rightShield.PhysicalAEV +
+                    leftHand.PhysicalAEV +
+                    leftShield.PhysicalAEV +
+                    head.PhysicalAEV +
+                    body.PhysicalAEV +
+                    accessory.PhysicalAEV;
             }
         }
 
+        /// <summary>
+        /// Gets this character's magic accessory evade%, based on his equipment
+        /// </summary>
         public uint MagicAEV
         {
             get
             {
-                return RightHand.MagicAEV + RightShield.MagicAEV + LeftHand.MagicAEV + LeftShield.MagicAEV + Head.MagicAEV + Body.MagicAEV + Accessory.MagicAEV;
+                // TODO: determine if the equipment must be in the "right place" in order to affect stat
+                return
+                    rightHand.MagicAEV +
+                    rightShield.MagicAEV +
+                    leftHand.MagicAEV +
+                    leftShield.MagicAEV +
+                    head.MagicAEV +
+                    body.MagicAEV +
+                    accessory.MagicAEV;
             }
         }
 
-        private JobsAndAbilities m_JobsAndAbilities;
+        #endregion Stats
+
+        #region Jobs/Skills
+
         public JobsAndAbilities JobsAndAbilities
         {
-        	get { return m_JobsAndAbilities; }
-        	set { m_JobsAndAbilities = value; }
+            get { return jobsAndAbilities; }
         }
 
-
-
-        private byte m_UnknownOffset03;
-        public byte UnknownOffset03
-        {
-        	get { return m_UnknownOffset03; }
-        	set { m_UnknownOffset03 = value; }
-        }
-
-        private byte m_UnknownOffset05;
-        public byte UnknownOffset05
-        {
-        	get { return m_UnknownOffset05; }
-        	set { m_UnknownOffset05 = value; }
-        }
-
-
-        private byte[] m_JobsUnlocked = new byte[3];
         public byte[] JobsUnlocked
         {
-        	get { return m_JobsUnlocked; }
-        	set { m_JobsUnlocked = value; }
+            get { return jobsUnlocked; }
+            set { jobsUnlocked = value; }
         }
 
-        private byte[,] m_SkillsUnlocked = new byte[22, 3];
         public byte[,] SkillsUnlocked
         {
-        	get { return m_SkillsUnlocked; }
-        	set { m_SkillsUnlocked = value; }
+            get { return skillsUnlocked; }
+            set { skillsUnlocked = value; }
         }
 
-
-        private byte[] m_JobLevels = new byte[12];
         public byte[] JobLevels
         {
-        	get { return m_JobLevels; }
-        	set { m_JobLevels = value; }
+            get { return jobLevels; }
+            set { jobLevels = value; }
         }
 
-        private ushort[] m_JP = new ushort[23];
         public ushort[] JP
         {
-        	get { return m_JP; }
-        	set { m_JP = value; }
+            get { return jp; }
+            set { jp = value; }
         }
 
-        private ushort[] m_TotalJP = new ushort[23];
         public ushort[] TotalJP
         {
-        	get { return m_TotalJP; }
-        	set { m_TotalJP = value; }
+            get { return totalJP; }
+            set { totalJP = value; }
         }
 
-
-        private byte[] m_AfterName = new byte[21];
-        public byte[] AfterName
-        {
-        	get { return m_AfterName; }
-        	set { m_AfterName = value; }
-        }
+        #endregion Jobs/Skills
 
         public bool OnProposition
         {
-            get { return m_AfterName[0x03] == 0x01; }
-            set { m_AfterName[0x03] = (byte)(value ? 0x01 : 0x00); }
+            get { return afterName[0x03] == 0x01; }
+            set { afterName[0x03] = (byte)(value ? 0x01 : 0x00); }
         }
 
         public byte Kills
         {
-        	get { return m_AfterName[0x06]; }
-        	set { m_AfterName[0x06] = value; }
+            get { return afterName[0x06]; }
+            set { afterName[0x06] = value; }
         }
 
+        #endregion
 
+        #region Constructors
 
         /// <summary>
         /// Builds a Character from a 256 byte array
@@ -614,62 +845,61 @@ namespace LionEditor
         {
             try
             {
-                SpriteSet = SpriteSet.AllSprites[charData[0]];
-                Index = charData[1];
-                if( !Class.ClassDictionary.TryGetValue( charData[2], out m_job ) )
+                spriteSet = SpriteSet.AllSprites[charData[0]];
+                index = charData[1];
+                if( !Class.ClassDictionary.TryGetValue( charData[2], out job ) )
                 {
-                    Job = Class.ClassDictionary[0x4A];
+                    job = Class.ClassDictionary[0x4A];
                 }
-                UnknownOffset03 = charData[3];
-                Gender = (Gender)(charData[4] & 0xE0);
-                UnknownOffset05 = charData[5];
-                ZodiacSign = (Zodiac)(charData[6] & 0xF0);
+                unknownOffset03 = charData[3];
+                gender = (Gender)(charData[4] & 0xE0);
+                unknownOffset05 = charData[5];
+                zodiacSign = (Zodiac)(charData[6] & 0xF0);
 
-                if( Gender == Gender.Monster )
+                if( gender == Gender.Monster )
                 {
-                    SecondaryAction = SecondaryAction.ActionDictionary[0x00];
-                    SupportAbility = Ability.AbilityList[0];
-                    ReactAbility = Ability.AbilityList[0];
-                    MovementAbility = Ability.AbilityList[0];
-                    Head = Item.ItemList[0];
-                    Body = Item.ItemList[0];
-                    Accessory = Item.ItemList[0];
-                    RightHand = Item.ItemList[0];
-                    RightShield = Item.ItemList[0];
-                    LeftHand = Item.ItemList[0];
-                    LeftShield = Item.ItemList[0];
+                    secondaryAction = SecondaryAction.ActionDictionary[0x00];
+                    supportAbility = Ability.AbilityList[0];
+                    reactAbility = Ability.AbilityList[0];
+                    movementAbility = Ability.AbilityList[0];
+                    head = Item.ItemList[0];
+                    body = Item.ItemList[0];
+                    accessory = Item.ItemList[0];
+                    rightHand = Item.ItemList[0];
+                    rightShield = Item.ItemList[0];
+                    leftHand = Item.ItemList[0];
+                    leftShield = Item.ItemList[0];
                 }
                 else
                 {
-                    SecondaryAction = SecondaryAction.ActionDictionary[charData[7]];
-
-                    ReactAbility = new Ability( (ushort)((charData[9] << 8) + charData[8]) );
-                    SupportAbility = new Ability( (ushort)((charData[11] << 8) + charData[10]) );
-                    MovementAbility = new Ability( (ushort)((charData[13] << 8) + charData[12]) );
-                    Head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
-                    Body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
-                    Accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
-                    RightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
-                    RightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
-                    LeftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
-                    LeftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
+                    secondaryAction = SecondaryAction.ActionDictionary[charData[7]];
+                    reactAbility = new Ability( (ushort)((charData[9] << 8) + charData[8]) );
+                    supportAbility = new Ability( (ushort)((charData[11] << 8) + charData[10]) );
+                    movementAbility = new Ability( (ushort)((charData[13] << 8) + charData[12]) );
+                    head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
+                    body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
+                    accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
+                    rightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
+                    rightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
+                    leftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
+                    leftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
                 }
 
-                Experience = charData[28];
-                Level = charData[29];
-                Brave = charData[30];
-                Faith = charData[31];
+                experience = charData[28];
+                level = charData[29];
+                bravery = charData[30];
+                faith = charData[31];
 
-                RawHP = (uint)(((uint)charData[34] << 16) + ((uint)charData[33] << 8) + (uint)charData[32]);
-                RawMP = (uint)(((uint)charData[37] << 16) + ((uint)charData[36] << 8) + (uint)charData[35]);
-                RawSP = (uint)(((uint)charData[40] << 16) + ((uint)charData[39] << 8) + (uint)charData[38]);
-                RawPA = (uint)(((uint)charData[43] << 16) + ((uint)charData[42] << 8) + (uint)charData[41]);
-                RawMA = (uint)(((uint)charData[46] << 16) + ((uint)charData[45] << 8) + (uint)charData[44]);
+                rawHP = (uint)(((uint)charData[34] << 16) + ((uint)charData[33] << 8) + (uint)charData[32]);
+                rawMP = (uint)(((uint)charData[37] << 16) + ((uint)charData[36] << 8) + (uint)charData[35]);
+                rawSP = (uint)(((uint)charData[40] << 16) + ((uint)charData[39] << 8) + (uint)charData[38]);
+                rawPA = (uint)(((uint)charData[43] << 16) + ((uint)charData[42] << 8) + (uint)charData[41]);
+                rawMA = (uint)(((uint)charData[46] << 16) + ((uint)charData[45] << 8) + (uint)charData[44]);
 
                 byte[] jaBytes = new byte[173];
 
-                Savegame.CopyArray( charData, jaBytes, 0x4BB-0x48C, 173 );
-                this.JobsAndAbilities = new JobsAndAbilities( jaBytes );
+                Savegame.CopyArray( charData, jaBytes, 0x4BB - 0x48C, 173 );
+                jobsAndAbilities = new JobsAndAbilities( jaBytes );
 
                 for( int i = 0; i < 15; i++ )
                 {
@@ -678,7 +908,7 @@ namespace LionEditor
 
                 for( int k = 0; k < 21; k++ )
                 {
-                    AfterName[k] = charData[0xEB + k];
+                    afterName[k] = charData[0xEB + k];
                 }
             }
             catch( Exception )
@@ -687,22 +917,26 @@ namespace LionEditor
             }
         }
 
+        /// <summary>
+        /// Creates a default character at the specified index
+        /// </summary>
+        /// <param name="index"></param>
         public Character( int index )
         {
-            this.Accessory = new Item( 0 );
-            this.Body = new Item( 0 );
-            this.Brave = 50;
-            this.Experience = 0;
-            this.Faith = 50;
-            this.Gender = Gender.Male;
-            this.Head = new Item( 0 );
-            this.Index = (byte)index;
-            this.Job = Class.ClassDictionary[0x4A];
+            accessory = new Item( 0 );
+            body = new Item( 0 );
+            bravery = 50;
+            experience = 0;
+            faith = 50;
+            gender = Gender.Male;
+            head = new Item( 0 );
+            index = (byte)index;
+            job = Class.ClassDictionary[0x4A];
 
-            this.JobLevels = new byte[] { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11 };
-            this.JobsUnlocked = new byte[] { 0xC0, 0x00, 0x00 };
-            this.JP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            this.TotalJP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            jobLevels = new byte[] { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11 };
+            jobsUnlocked = new byte[] { 0xC0, 0x00, 0x00 };
+            jp = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            totalJP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             byte[] jobBytes = new byte[] {
                 0xC0, 0x00, 0x00,
@@ -732,130 +966,67 @@ namespace LionEditor
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-            this.JobsAndAbilities = new JobsAndAbilities( jobBytes );
-            
-            this.LeftHand = new Item( 0 );
-            this.LeftShield = new Item( 0 );
-            this.Level = 1;
-            this.MovementAbility = new Ability( 0 );
-            this.Name = "##########";
-            this.RawHP = Job.GetRawHPFromActualHP( 50 );
-            this.RawMA = Job.GetRawMAFromActualMA( 11 );
-            this.RawMP = Job.GetRawMPFromActualMP( 10 );
-            this.RawPA = Job.GetRawPAFromActualPA( 5 );
-            this.RawSP = Job.GetRawSPFromActualSP( 6 );
-            this.ReactAbility = new Ability( 0 );
-            this.RightHand = new Item( 0 );
-            this.RightShield = new Item( 0 );
-            this.SecondaryAction = SecondaryAction.ActionDictionary[0x00];
+            jobsAndAbilities = new JobsAndAbilities( jobBytes );
+
+            leftHand = new Item( 0 );
+            leftShield = new Item( 0 );
+            level = 1;
+            movementAbility = new Ability( 0 );
+            Name = "##########";
+            rawHP = Job.GetRawHPFromActualHP( 50 );
+            rawMA = Job.GetRawMAFromActualMA( 11 );
+            rawMP = Job.GetRawMPFromActualMP( 10 );
+            rawPA = Job.GetRawPAFromActualPA( 5 );
+            rawSP = Job.GetRawSPFromActualSP( 6 );
+            reactAbility = new Ability( 0 );
+            rightHand = new Item( 0 );
+            rightShield = new Item( 0 );
+            secondaryAction = SecondaryAction.ActionDictionary[0x00];
             for( int i = 0; i < 22; i++ )
             {
                 for( int j = 0; j < 3; j++ )
                 {
-                    this.SkillsUnlocked[i, j] = 0x00;
+                    skillsUnlocked[i, j] = 0x00;
                 }
             }
 
-            this.SpriteSet = SpriteSet.AllSprites[0x80];
-            this.SupportAbility = new Ability( 0 );
-            this.UnknownOffset03 = 0x00;
-            this.UnknownOffset05 = 0x00;
-            this.ZodiacSign = Zodiac.Aries;
-            this.OnProposition = false;
+            spriteSet = SpriteSet.AllSprites[0x80];
+            supportAbility = new Ability( 0 );
+            unknownOffset03 = 0x00;
+            unknownOffset05 = 0x00;
+            zodiacSign = Zodiac.Aries;
+            OnProposition = false;
         }
 
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Decodes a name from FFT's dumb character encoding
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="start"></param>
+        /// <returns></returns>
         public static string DecodeName( byte[] source, int start )
         {
             StringBuilder sb = new StringBuilder();
             int k = start;
-            while (source[k] != 0xFE)
+            while( source[k] != 0xFE )
             {
-                sb.Append(characterMap[source[k]]);
+                sb.Append( characterMap[source[k]] );
                 k++;
             }
 
             return sb.ToString();
         }
 
-
-        public byte[] ToByteArray()
-        {
-            byte[] result = new byte[256];
-            result[0] = SpriteSet.Value;
-            result[1] = Index;
-            result[2] = Job.Byte;
-            result[3] = UnknownOffset03;
-            result[4] = (byte)Gender;
-            result[5] = UnknownOffset05;
-            result[6] = (byte)ZodiacSign;
-            result[7] = SecondaryAction.Byte;
-            result[8] = (byte)(ReactAbility.Value & 0xFF);
-            result[9] = (byte)((ReactAbility.Value & 0xFF00) >> 8);
-            result[10] = (byte)(SupportAbility.Value & 0xFF);
-            result[11] = (byte)((SupportAbility.Value & 0xFF00) >> 8);
-            result[12] = (byte)(MovementAbility.Value & 0xFF);
-            result[13] = (byte)((MovementAbility.Value & 0xFF00) >> 8);
-
-            result[14] = Head.ToByte()[0];
-            result[15] = Head.ToByte()[1];
-            result[16] = Body.ToByte()[0];
-            result[17] = Body.ToByte()[1];
-            result[18] = Accessory.ToByte()[0];
-            result[19] = Accessory.ToByte()[1];
-            result[20] = RightHand.ToByte()[0];
-            result[21] = RightHand.ToByte()[1];
-            result[22] = RightShield.ToByte()[0];
-            result[23] = RightShield.ToByte()[1];
-            result[24] = LeftHand.ToByte()[0];
-            result[25] = LeftHand.ToByte()[1];
-            result[26] = LeftShield.ToByte()[0];
-            result[27] = LeftShield.ToByte()[1];
-            result[28] = Experience;
-            result[29] = Level;
-            result[30] = Brave;
-            result[31] = Faith;
-
-            result[32] = (byte)(RawHP & 0xFF);
-            result[33] = (byte)((RawHP & 0xFF00) >> 8);
-            result[34] = (byte)((RawHP & 0xFF0000) >> 16);
-
-            result[35] = (byte)(RawMP & 0xFF);
-            result[36] = (byte)((RawMP & 0xFF00) >> 8);
-            result[37] = (byte)((RawMP & 0xFF0000) >> 16);
-
-            result[38] = (byte)(RawSP & 0xFF);
-            result[39] = (byte)((RawSP & 0xFF00) >> 8);
-            result[40] = (byte)((RawSP & 0xFF0000) >> 16);
-
-            result[41] = (byte)(RawPA & 0xFF);
-            result[42] = (byte)((RawPA & 0xFF00) >> 8);
-            result[43] = (byte)((RawPA & 0xFF0000) >> 16);
-
-            result[44] = (byte)(RawMA & 0xFF);
-            result[45] = (byte)((RawMA & 0xFF00) >> 8);
-            result[46] = (byte)((RawMA & 0xFF0000) >> 16);
-
-            byte[] jaBytes = this.JobsAndAbilities.ToByteArray();
-            for( int i = 0; i < 173; i++ )
-            {
-                result[47 + i] = jaBytes[i];
-            }
-
-            for( int i = 0; i < 15; i++ )
-            {
-                result[0xDC + i] = rawName[i];
-            }
-
-            
-
-            for( int k = 0; k < 21; k++ )
-            {
-                result[0xEB + k] = AfterName[k];
-            }
-
-            return result;
-        }
-
+        /// <summary>
+        /// Encodes a name into FFT's dumb character encoding
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="destination"></param>
+        /// <param name="start"></param>
         public static void EncodeName( string name, byte[] destination, int start )
         {
             int i = 0;
@@ -869,10 +1040,96 @@ namespace LionEditor
             destination[i + start] = 0xFE;
         }
 
+        /// <summary>
+        /// Creates a byte array for this character
+        /// </summary>
+        /// <returns>byte[] of length 256</returns>
+        public byte[] ToByteArray()
+        {
+            byte[] result = new byte[256];
+            result[0] = spriteSet.Value;
+            result[1] = index;
+            result[2] = job.Byte;
+            result[3] = unknownOffset03;
+            result[4] = (byte)gender;
+            result[5] = unknownOffset05;
+            result[6] = (byte)zodiacSign;
+            result[7] = secondaryAction.Byte;
+            result[8] = (byte)(reactAbility.Value & 0xFF);
+            result[9] = (byte)((reactAbility.Value & 0xFF00) >> 8);
+            result[10] = (byte)(supportAbility.Value & 0xFF);
+            result[11] = (byte)((supportAbility.Value & 0xFF00) >> 8);
+            result[12] = (byte)(movementAbility.Value & 0xFF);
+            result[13] = (byte)((movementAbility.Value & 0xFF00) >> 8);
+
+            result[14] = head.ToByte()[0];
+            result[15] = head.ToByte()[1];
+            result[16] = body.ToByte()[0];
+            result[17] = body.ToByte()[1];
+            result[18] = accessory.ToByte()[0];
+            result[19] = accessory.ToByte()[1];
+            result[20] = rightHand.ToByte()[0];
+            result[21] = rightHand.ToByte()[1];
+            result[22] = rightShield.ToByte()[0];
+            result[23] = rightShield.ToByte()[1];
+            result[24] = leftHand.ToByte()[0];
+            result[25] = leftHand.ToByte()[1];
+            result[26] = leftShield.ToByte()[0];
+            result[27] = leftShield.ToByte()[1];
+            result[28] = experience;
+            result[29] = level;
+            result[30] = bravery;
+            result[31] = faith;
+
+            result[32] = (byte)(rawHP & 0xFF);
+            result[33] = (byte)((rawHP & 0xFF00) >> 8);
+            result[34] = (byte)((rawHP & 0xFF0000) >> 16);
+
+            result[35] = (byte)(rawMP & 0xFF);
+            result[36] = (byte)((rawMP & 0xFF00) >> 8);
+            result[37] = (byte)((rawMP & 0xFF0000) >> 16);
+
+            result[38] = (byte)(rawSP & 0xFF);
+            result[39] = (byte)((rawSP & 0xFF00) >> 8);
+            result[40] = (byte)((rawSP & 0xFF0000) >> 16);
+
+            result[41] = (byte)(rawPA & 0xFF);
+            result[42] = (byte)((rawPA & 0xFF00) >> 8);
+            result[43] = (byte)((rawPA & 0xFF0000) >> 16);
+
+            result[44] = (byte)(rawMA & 0xFF);
+            result[45] = (byte)((rawMA & 0xFF00) >> 8);
+            result[46] = (byte)((rawMA & 0xFF0000) >> 16);
+
+            byte[] jaBytes = jobsAndAbilities.ToByteArray();
+            for( int i = 0; i < 173; i++ )
+            {
+                result[47 + i] = jaBytes[i];
+            }
+
+            for( int i = 0; i < 15; i++ )
+            {
+                result[0xDC + i] = rawName[i];
+            }
+
+            for( int k = 0; k < 21; k++ )
+            {
+                result[0xEB + k] = afterName[k];
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// This character's <see cref="Name"/>
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Name;
         }
+
+        #endregion
     }
 
     public class BadCharacterDataException : Exception

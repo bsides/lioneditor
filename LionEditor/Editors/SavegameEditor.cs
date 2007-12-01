@@ -29,10 +29,19 @@ namespace LionEditor
 {
     public partial class SavegameEditor : UserControl
     {
-        Savegame game;
-        bool ignoreChanges = false;
+        #region Fields
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        private Savegame game;
+        private bool ignoreChanges = false;
+        
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the game currently being edited
+        /// </summary>
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public Savegame Game
         {
             get { return game; }
@@ -54,63 +63,19 @@ namespace LionEditor
             }
         }
 
-        private void UpdateView()
-        {
-            characterSelector.Items.Clear();
-            foreach( Character c in game.Characters )
-            {
-                characterSelector.Items.Add( c, c.Index != 0xFF );
-            }
-            foreach( Character g in game.Guests )
-            {
-                characterSelector.Items.Add( g, g.Index != 0xFF );
-            }
-            characterSelector.SelectedIndex = 0;
+        #endregion
 
-            optionsEditor1.Options = game.Options;
+        #region Events
 
-            chronicleEditor1.Feats = game.Feats;
-            chronicleEditor1.Wonders = game.Wonders;
-            chronicleEditor1.Artefacts = game.Artefacts;
-
-            chronicleEditor1.Kills = (game.Kills > 9999) ? 9999 : game.Kills;
-            chronicleEditor1.Casualties = (game.Casualties > 9999) ? 9999 : game.Casualties;
-            chronicleEditor1.Timer = game.Timer;
-            chronicleEditor1.WarFunds = game.WarFunds;
-            chronicleEditor1.Date = game.Date;
-
-            inventoryEditor.Inventory = game.Inventory;
-            poachersDenEditor.Inventory = game.PoachersDen;
-        }
-
-        public SavegameEditor()
-        {
-            InitializeComponent();
-
-            characterEditor.Enabled = false;
-            characterSelector.Enabled = false;
-            tabControl.Enabled = false;
-            
-            characterSelector.SelectedIndexChanged += characterSelector_SelectedIndexChanged;
-            characterSelector.CheckOnClick = false;
-            characterSelector.ItemCheck += characterSelector_ItemCheck;
-
-            characterEditor.DataChangedEvent += dataChanged;
-            optionsEditor1.DataChangedEvent += dataChanged;
-            chronicleEditor1.DataChangedEvent += chronicleEditor1_DataChangedEvent;
-            inventoryEditor.DataChangedEvent += dataChanged;
-            poachersDenEditor.DataChangedEvent += dataChanged;
-        }
-
-        void chronicleEditor1_DataChangedEvent( object sender, EventArgs e )
+        void chronicleEditor_DataChangedEvent( object sender, EventArgs e )
         {
             if( !ignoreChanges )
             {
-                game.Kills = chronicleEditor1.Kills;
-                game.Casualties = chronicleEditor1.Casualties;
-                game.Timer = chronicleEditor1.Timer;
-                game.Date = chronicleEditor1.Date;
-                game.WarFunds = chronicleEditor1.WarFunds;
+                game.Kills = chronicleEditor.Kills;
+                game.Casualties = chronicleEditor.Casualties;
+                game.Timer = chronicleEditor.Timer;
+                game.Date = chronicleEditor.Date;
+                game.WarFunds = chronicleEditor.WarFunds;
                 dataChanged( sender, e );
             }
         }
@@ -122,7 +87,7 @@ namespace LionEditor
 
         void characterSelector_ItemCheck( object sender, ItemCheckEventArgs e )
         {
-            if( e.NewValue != CheckState.Indeterminate)
+            if( e.NewValue != CheckState.Indeterminate )
             {
                 Character c = characterSelector.Items[e.Index] as Character;
                 c.Index = (e.NewValue == CheckState.Checked) ? (byte)e.Index : (byte)0xFF;
@@ -145,5 +110,60 @@ namespace LionEditor
                 DataChangedEvent( this, EventArgs.Empty );
             }
         }
+
+        #endregion
+
+        #region Utilities
+
+        private void UpdateView()
+        {
+            characterSelector.Items.Clear();
+            foreach( Character c in game.Characters )
+            {
+                characterSelector.Items.Add( c, c.Index != 0xFF );
+            }
+            foreach( Character g in game.Guests )
+            {
+                characterSelector.Items.Add( g, g.Index != 0xFF );
+            }
+            characterSelector.SelectedIndex = 0;
+
+            optionsEditor.Options = game.Options;
+
+            chronicleEditor.Feats = game.Feats;
+            chronicleEditor.Wonders = game.Wonders;
+            chronicleEditor.Artefacts = game.Artefacts;
+
+            chronicleEditor.Kills = (game.Kills > 9999) ? 9999 : game.Kills;
+            chronicleEditor.Casualties = (game.Casualties > 9999) ? 9999 : game.Casualties;
+            chronicleEditor.Timer = game.Timer;
+            chronicleEditor.WarFunds = game.WarFunds;
+            chronicleEditor.Date = game.Date;
+
+            inventoryEditor.Inventory = game.Inventory;
+            poachersDenEditor.Inventory = game.PoachersDen;
+        }
+
+        #endregion
+
+        public SavegameEditor()
+        {
+            InitializeComponent();
+
+            characterEditor.Enabled = false;
+            characterSelector.Enabled = false;
+            tabControl.Enabled = false;
+            
+            characterSelector.SelectedIndexChanged += characterSelector_SelectedIndexChanged;
+            characterSelector.CheckOnClick = false;
+            characterSelector.ItemCheck += characterSelector_ItemCheck;
+
+            characterEditor.DataChangedEvent += dataChanged;
+            optionsEditor.DataChangedEvent += dataChanged;
+            chronicleEditor.DataChangedEvent += chronicleEditor_DataChangedEvent;
+            inventoryEditor.DataChangedEvent += dataChanged;
+            poachersDenEditor.DataChangedEvent += dataChanged;
+        }
+
     }
 }

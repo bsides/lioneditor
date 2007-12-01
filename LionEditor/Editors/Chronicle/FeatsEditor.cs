@@ -29,12 +29,22 @@ namespace LionEditor
 {
     public partial class FeatsEditor : UserControl
     {
+        #region Fields
+
         private Feats feats;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the Feats currently being edited
+        /// </summary>
         public Feats Feats
         {
             get { return feats; }
-            set 
-            { 
+            set
+            {
                 feats = value;
                 if( feats != null )
                 {
@@ -43,24 +53,15 @@ namespace LionEditor
             }
         }
 
-        public FeatsEditor()
-        {
-            stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor( StupidDate.DateDictionary[0] );
-            InitializeComponent();
+        #endregion
 
-            stateComboBox.Items.Add( State.Active );
-            stateComboBox.Items.Add( State.Complete );
-            stateComboBox.Items.Add( State.None );
-            stupidDateEditor1.DateChangedEvent += new EventHandler( stupidDateEditor1_DateChangedEvent );
-            featListBox.SelectedIndexChanged += new EventHandler( featListBox_SelectedIndexChanged );
-            stateComboBox.SelectedIndexChanged += new EventHandler( stateComboBox_SelectedIndexChanged );
-        }
+        #region Events
 
         void featListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             Feat f = featListBox.SelectedItem as Feat;
             stateComboBox.SelectedItem = f.State;
-            stupidDateEditor1.CurrentDate = f.Date;
+            stupidDateEditor.CurrentDate = f.Date;
         }
 
         void stateComboBox_SelectedIndexChanged( object sender, EventArgs e )
@@ -69,10 +70,10 @@ namespace LionEditor
             f.State = (State)stateComboBox.SelectedItem;
         }
 
-        void stupidDateEditor1_DateChangedEvent( object sender, EventArgs e )
+        void stupidDateEditor_DateChangedEvent( object sender, EventArgs e )
         {
             Feat f = featListBox.SelectedItem as Feat;
-            f.Date = stupidDateEditor1.CurrentDate;
+            f.Date = stupidDateEditor.CurrentDate;
             FireDataChangedEvent();
         }
 
@@ -86,5 +87,19 @@ namespace LionEditor
             }
         }
 
+        #endregion
+
+        public FeatsEditor()
+        {
+            stupidDateEditor = new StupidDateEditor( StupidDate.DateDictionary[0] );
+            InitializeComponent();
+
+            stateComboBox.Items.Add( State.Active );
+            stateComboBox.Items.Add( State.Complete );
+            stateComboBox.Items.Add( State.None );
+            stupidDateEditor.DateChangedEvent += stupidDateEditor_DateChangedEvent;
+            featListBox.SelectedIndexChanged += featListBox_SelectedIndexChanged;
+            stateComboBox.SelectedIndexChanged += stateComboBox_SelectedIndexChanged;
+        }
     }
 }

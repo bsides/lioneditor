@@ -50,14 +50,15 @@ namespace LionEditor
             System.Windows.Forms.Label nameLabel;
             System.Windows.Forms.Label stateLabel;
             System.Windows.Forms.Label dateLabel;
+            System.Windows.Forms.TableLayoutPanel table;
             this.stateComboBox = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.stupidDateEditor = new LionEditor.StupidDateEditor();
             this.featListBox = new System.Windows.Forms.ListBox();
-            this.stupidDateEditor1 = new LionEditor.Editors.Chronicle.StupidDateEditor();
             nameLabel = new System.Windows.Forms.Label();
             stateLabel = new System.Windows.Forms.Label();
             dateLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1.SuspendLayout();
+            table = new System.Windows.Forms.TableLayoutPanel();
+            table.SuspendLayout();
             this.SuspendLayout();
             // 
             // nameLabel
@@ -102,27 +103,34 @@ namespace LionEditor
             this.stateComboBox.Size = new System.Drawing.Size( 82, 21 );
             this.stateComboBox.TabIndex = 2;
             // 
-            // tableLayoutPanel1
+            // table
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 222F ) );
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 88F ) );
-            this.tableLayoutPanel1.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 180F ) );
-            this.tableLayoutPanel1.Controls.Add( this.stupidDateEditor1, 2, 1 );
-            this.tableLayoutPanel1.Controls.Add( this.stateComboBox, 1, 1 );
-            this.tableLayoutPanel1.Controls.Add( nameLabel, 0, 0 );
-            this.tableLayoutPanel1.Controls.Add( stateLabel, 1, 0 );
-            this.tableLayoutPanel1.Controls.Add( dateLabel, 2, 0 );
-            this.tableLayoutPanel1.Controls.Add( this.featListBox, 0, 1 );
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point( 0, 0 );
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle() );
-            this.tableLayoutPanel1.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
-            this.tableLayoutPanel1.Size = new System.Drawing.Size( 490, 298 );
-            this.tableLayoutPanel1.TabIndex = 3;
+            table.ColumnCount = 3;
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 222F ) );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 88F ) );
+            table.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 180F ) );
+            table.Controls.Add( this.stupidDateEditor, 2, 1 );
+            table.Controls.Add( this.stateComboBox, 1, 1 );
+            table.Controls.Add( nameLabel, 0, 0 );
+            table.Controls.Add( stateLabel, 1, 0 );
+            table.Controls.Add( dateLabel, 2, 0 );
+            table.Controls.Add( this.featListBox, 0, 1 );
+            table.Dock = System.Windows.Forms.DockStyle.Fill;
+            table.Location = new System.Drawing.Point( 0, 0 );
+            table.Name = "table";
+            table.RowCount = 2;
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle() );
+            table.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
+            table.Size = new System.Drawing.Size( 490, 298 );
+            table.TabIndex = 3;
+            // 
+            // stupidDateEditor
+            // 
+            this.stupidDateEditor.Location = new System.Drawing.Point( 313, 16 );
+            this.stupidDateEditor.Name = "stupidDateEditor";
+            this.stupidDateEditor.Size = new System.Drawing.Size( 174, 27 );
+            this.stupidDateEditor.TabIndex = 0;
             // 
             // featListBox
             // 
@@ -132,31 +140,23 @@ namespace LionEditor
             this.featListBox.Size = new System.Drawing.Size( 216, 251 );
             this.featListBox.TabIndex = 6;
             // 
-            // stupidDateEditor1
-            // 
-            this.stupidDateEditor1.Location = new System.Drawing.Point( 313, 16 );
-            this.stupidDateEditor1.Name = "stupidDateEditor1";
-            this.stupidDateEditor1.Size = new System.Drawing.Size( 174, 27 );
-            this.stupidDateEditor1.TabIndex = 0;
-            // 
             // FeatsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.tableLayoutPanel1 );
+            this.Controls.Add( table );
             this.Name = "FeatsEditor";
             this.Size = new System.Drawing.Size( 490, 298 );
-            this.tableLayoutPanel1.ResumeLayout( false );
-            this.tableLayoutPanel1.PerformLayout();
+            table.ResumeLayout( false );
+            table.PerformLayout();
             this.ResumeLayout( false );
 
         }
 
         #endregion
 
-        private LionEditor.Editors.Chronicle.StupidDateEditor stupidDateEditor1;
+        private StupidDateEditor stupidDateEditor;
         private System.Windows.Forms.ComboBox stateComboBox;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ListBox featListBox;
 
     }

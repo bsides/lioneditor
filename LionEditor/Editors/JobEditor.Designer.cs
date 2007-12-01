@@ -48,7 +48,7 @@ namespace LionEditor
         private void InitializeComponent()
         {
             System.Windows.Forms.TableLayoutPanel jobEditorTable;
-            System.Windows.Forms.Panel panel2;
+            System.Windows.Forms.Panel totalPanel;
             System.Windows.Forms.Label totalLabel;
             System.Windows.Forms.GroupBox movementGroup;
             System.Windows.Forms.TableLayoutPanel movementTable;
@@ -58,7 +58,7 @@ namespace LionEditor
             System.Windows.Forms.TableLayoutPanel actionTable;
             System.Windows.Forms.GroupBox reactionGroup;
             System.Windows.Forms.TableLayoutPanel reactionTable;
-            System.Windows.Forms.Panel panel1;
+            System.Windows.Forms.Panel jpPanel;
             System.Windows.Forms.Label jpLabel;
             this.totalSpinner = new System.Windows.Forms.NumericUpDown();
             this.movement2 = new System.Windows.Forms.CheckBox();
@@ -88,7 +88,7 @@ namespace LionEditor
             this.reaction3 = new System.Windows.Forms.CheckBox();
             this.jpSpinner = new System.Windows.Forms.NumericUpDown();
             jobEditorTable = new System.Windows.Forms.TableLayoutPanel();
-            panel2 = new System.Windows.Forms.Panel();
+            totalPanel = new System.Windows.Forms.Panel();
             totalLabel = new System.Windows.Forms.Label();
             movementGroup = new System.Windows.Forms.GroupBox();
             movementTable = new System.Windows.Forms.TableLayoutPanel();
@@ -98,10 +98,10 @@ namespace LionEditor
             actionTable = new System.Windows.Forms.TableLayoutPanel();
             reactionGroup = new System.Windows.Forms.GroupBox();
             reactionTable = new System.Windows.Forms.TableLayoutPanel();
-            panel1 = new System.Windows.Forms.Panel();
+            jpPanel = new System.Windows.Forms.Panel();
             jpLabel = new System.Windows.Forms.Label();
             jobEditorTable.SuspendLayout();
-            panel2.SuspendLayout();
+            totalPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.totalSpinner)).BeginInit();
             movementGroup.SuspendLayout();
             movementTable.SuspendLayout();
@@ -111,7 +111,7 @@ namespace LionEditor
             actionTable.SuspendLayout();
             reactionGroup.SuspendLayout();
             reactionTable.SuspendLayout();
-            panel1.SuspendLayout();
+            jpPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.jpSpinner)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,12 +120,12 @@ namespace LionEditor
             jobEditorTable.ColumnCount = 2;
             jobEditorTable.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
             jobEditorTable.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
-            jobEditorTable.Controls.Add( panel2, 1, 0 );
+            jobEditorTable.Controls.Add( totalPanel, 1, 0 );
             jobEditorTable.Controls.Add( movementGroup, 1, 3 );
             jobEditorTable.Controls.Add( supportGroup, 1, 2 );
             jobEditorTable.Controls.Add( actionGroup, 0, 1 );
             jobEditorTable.Controls.Add( reactionGroup, 1, 1 );
-            jobEditorTable.Controls.Add( panel1, 0, 0 );
+            jobEditorTable.Controls.Add( jpPanel, 0, 0 );
             jobEditorTable.Dock = System.Windows.Forms.DockStyle.Fill;
             jobEditorTable.Location = new System.Drawing.Point( 0, 0 );
             jobEditorTable.Name = "jobEditorTable";
@@ -138,15 +138,15 @@ namespace LionEditor
             jobEditorTable.Size = new System.Drawing.Size( 625, 518 );
             jobEditorTable.TabIndex = 2;
             // 
-            // panel2
+            // totalPanel
             // 
-            panel2.Controls.Add( this.totalSpinner );
-            panel2.Controls.Add( totalLabel );
-            panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel2.Location = new System.Drawing.Point( 315, 3 );
-            panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size( 307, 34 );
-            panel2.TabIndex = 7;
+            totalPanel.Controls.Add( this.totalSpinner );
+            totalPanel.Controls.Add( totalLabel );
+            totalPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            totalPanel.Location = new System.Drawing.Point( 315, 3 );
+            totalPanel.Name = "totalPanel";
+            totalPanel.Size = new System.Drawing.Size( 307, 34 );
+            totalPanel.TabIndex = 7;
             // 
             // totalSpinner
             // 
@@ -559,15 +559,15 @@ namespace LionEditor
             this.reaction3.Text = "reaction3";
             this.reaction3.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // jpPanel
             // 
-            panel1.Controls.Add( this.jpSpinner );
-            panel1.Controls.Add( jpLabel );
-            panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel1.Location = new System.Drawing.Point( 3, 3 );
-            panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size( 306, 34 );
-            panel1.TabIndex = 6;
+            jpPanel.Controls.Add( this.jpSpinner );
+            jpPanel.Controls.Add( jpLabel );
+            jpPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            jpPanel.Location = new System.Drawing.Point( 3, 3 );
+            jpPanel.Name = "jpPanel";
+            jpPanel.Size = new System.Drawing.Size( 306, 34 );
+            jpPanel.TabIndex = 6;
             // 
             // jpSpinner
             // 
@@ -599,8 +599,8 @@ namespace LionEditor
             this.Name = "JobEditor";
             this.Size = new System.Drawing.Size( 625, 518 );
             jobEditorTable.ResumeLayout( false );
-            panel2.ResumeLayout( false );
-            panel2.PerformLayout();
+            totalPanel.ResumeLayout( false );
+            totalPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.totalSpinner)).EndInit();
             movementGroup.ResumeLayout( false );
             movementTable.ResumeLayout( false );
@@ -614,8 +614,8 @@ namespace LionEditor
             reactionGroup.ResumeLayout( false );
             reactionTable.ResumeLayout( false );
             reactionTable.PerformLayout();
-            panel1.ResumeLayout( false );
-            panel1.PerformLayout();
+            jpPanel.ResumeLayout( false );
+            jpPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.jpSpinner)).EndInit();
             this.ResumeLayout( false );
 

@@ -27,43 +27,68 @@ using LionEditor.Properties;
 
 namespace LionEditor
 {
-    public class Ability:IComparable, IEquatable<Ability>
+    /// <summary>
+    /// Represents a movement, reaction, or support ability
+    /// </summary>
+    public class Ability : IComparable, IEquatable<Ability>
     {
-        private UInt16 m_Value;
+        #region Fields
+
+        private UInt16 value;
+        private string name;
+        private uint jumpBonus = 0;
+        private uint moveBonus = 0;
+        private uint hpMultiplier = 0;
+
+        #endregion
+
+        #region Properties
+
         public UInt16 Value
         {
-        	get { return m_Value; }
-        	set { m_Value = value; }
+            get { return value; }
         }
 
-        private string m_Name;
+        /// <summary>
+        /// Gets the name of this ability
+        /// </summary>
         public string Name
         {
-        	get { return m_Name; }
-        	set { m_Name = value; }
+            get { return name; }
         }
 
-        private uint m_JumpBonus = 0;
+        /// <summary>
+        /// Gets the jump bonus provided by this ability, if any
+        /// </summary>
         public uint JumpBonus
         {
-        	get { return m_JumpBonus; }
-        	set { m_JumpBonus = value; }
+            get { return jumpBonus; }
         }
 
-        private uint m_MoveBonus = 0;
+        /// <summary>
+        /// Gets the move bonus provided by this ability, if any
+        /// </summary>
         public uint MoveBonus
         {
-        	get { return m_MoveBonus; }
-        	set { m_MoveBonus = value; }
+            get { return moveBonus; }
         }
 
-        private uint hpMultiplier = 0;
+        /// <summary>
+        /// Gets the HP multiplier provided by this ability, if any
+        /// </summary>
         public uint HPMultiplier
         {
             get { return hpMultiplier; }
-            set { hpMultiplier = value; }
         }
 
+        public string String
+        {
+            get { return this.ToString(); }
+        }
+
+        #endregion
+
+        #region Constructor
 
         public Ability( UInt16 value )
         {
@@ -73,15 +98,17 @@ namespace LionEditor
                     return j.Value == value;
                 } );
 
-            this.Value = i.Value;
-            this.Name = i.Name;
-            this.MoveBonus = i.MoveBonus;
-            this.JumpBonus = i.JumpBonus;
+            this.value = i.Value;
+            this.name = i.Name;
+            this.moveBonus = i.MoveBonus;
+            this.moveBonus = i.JumpBonus;
         }
 
         private Ability()
         {
         }
+
+        #endregion
 
         public override string ToString()
         {
@@ -97,17 +124,13 @@ namespace LionEditor
             return new byte[] { (byte)(Value & 0xFF), (byte)((Value & 0xFF00) >> 8) };
         }
 
-        public string String
-        {
-            get { return this.ToString(); }
-        }
-
-
-
         #region Static members
 
         private static List<Ability> abilityList;
 
+        /// <summary>
+        /// Gets a list of ALL abilities from the XML
+        /// </summary>
         public static List<Ability> AbilityList
         {
             get
@@ -123,24 +146,24 @@ namespace LionEditor
 
                     foreach( XmlNode i in abilities )
                     {
-                        Ability newItem = new Ability();
-                        newItem.Name = i.SelectSingleNode("name").InnerText;
-                        newItem.Value = Convert.ToUInt16( i.Attributes["value"].InnerText );
+                        Ability newAbility = new Ability();
+                        newAbility.name = i.SelectSingleNode( "name" ).InnerText;
+                        newAbility.value = Convert.ToUInt16( i.Attributes["value"].InnerText );
                         XmlNode moveJumpNode = i.SelectSingleNode( "move" );
-                        if( moveJumpNode != null ) { newItem.MoveBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
+                        if( moveJumpNode != null ) { newAbility.moveBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
                         moveJumpNode = i.SelectSingleNode( "jump" );
-                        if( moveJumpNode != null ) { newItem.JumpBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
+                        if( moveJumpNode != null ) { newAbility.jumpBonus = Convert.ToUInt32( moveJumpNode.InnerText ); }
                         moveJumpNode = i.SelectSingleNode( "hpMultiplier" );
-                        if( moveJumpNode != null ) { newItem.HPMultiplier = Convert.ToUInt32( moveJumpNode.InnerText ); }
+                        if( moveJumpNode != null ) { newAbility.hpMultiplier = Convert.ToUInt32( moveJumpNode.InnerText ); }
 
-                        abilityList.Add( newItem );
+                        abilityList.Add( newAbility );
                     }
 
                     abilityList.Sort();
                 }
 
 
-                return new List<Ability>(abilityList);
+                return new List<Ability>( abilityList );
             }
         }
 

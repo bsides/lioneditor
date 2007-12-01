@@ -2,8 +2,22 @@
 #labels Featured
 
 = Main editor =
-
 [http://lioneditor.googlecode.com/svn/screenshots/main.png]
 
 = Job/Abilities editor = 
 [http://lioneditor.googlecode.com/svn/screenshots/jobAbilities.png]
+
+= Game options = 
+[http://lioneditor.googlecode.com/svn/screenshots/options.png]
+
+= Inventory/Poacher's Den = 
+[http://lioneditor.googlecode.com/svn/screenshots/inventory.png]
+
+= Chronicle/Feats = 
+[http://lioneditor.googlecode.com/svn/screenshots/feats.png]
+
+= Chronicle/Wonders = 
+[http://lioneditor.googlecode.com/svn/screenshots/chronicle.png]
+
+= Chronicle/Artefacts =
+[http://lioneditor.googlecode.com/svn/screenshots/artefacts.png]

@@ -17,7 +17,7 @@
 [http://lioneditor.googlecode.com/svn/screenshots/feats.png]
 
 = Chronicle/Wonders = 
-[http://lioneditor.googlecode.com/svn/screenshots/chronicle.png]
+[http://lioneditor.googlecode.com/svn/screenshots/wonders.png]
 
 = Chronicle/Artefacts =
 [http://lioneditor.googlecode.com/svn/screenshots/artefacts.png]

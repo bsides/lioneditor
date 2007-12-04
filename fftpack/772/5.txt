@@ -1,0 +1,408 @@
+[spazio]Several other knights apprentice and I, all of us soon to
+graduate into the ranks of knighthood, were called to
+gather at the Akademy Hall. An unsavory band of outlaws
+known as the Corpse Brigade continues to plunder and loot
+throughout Gallionne, and plans are afoot for the Order to
+rid the land of these ne'er-do-wells. We knights apprentice
+are charged with providing rear-guard support. (Press [Triangolo]
+to view.) {END}
+
+[spazio]That night, I dreamt of things long past. My lord
+father, Barbaneth Beoulve, former commander of the
+Order of the Northern Sky and renowned hero of the
+Fifty Years' War, had been bedridden for some two years.
+As he lay upon his deathbed, he was but a pale shadow of
+the man who had once led countless legions into battle. I
+stood at his bedside with my lord brothers and young
+sister, awaiting the end. (Press [Triangolo] to view.) {END}
+
+[spazio]We rescued a swordsman under attack by the Corpse
+Brigade on Mandalia Plain. His name was Argath, a knight
+apprentice in the household of Marquis Elmdore de
+Limberry. It seemed their carriage was waylaid en route
+to Eagrose. The marquis was abducted in the attack, and
+all among his guard were killed, save Argath. Argath
+pleaded for the Northern Order's aid in rescuing the
+marquis. (Press [Triangolo] to view.) {END}
+
+[spazio]We had found our way to Eagrose, the high seat of
+Gallionne, and immediately made for the castle, where my
+lord brother Dycedarg awaited our arrival. In his haste to
+avenge the deaths of his fellows, Argath pleaded fervently
+to be granted a troop of soldiers, for which my lord
+brother roundly rebuked him. (Press [Triangolo] to view.) {END}
+
+[spazio]Following our audience with my lord brother Dycedarg,
+we chanced upon Zalbaag and Alma in the gardens. Before
+leaving to attend to his duties, Zalbaag confided that a
+spy in his employ had recently disappeared in the vicinity
+of the merchant city of Dorter. (Press [Triangolo] to view.) {END}
+
+[spazio]We combed the slums of Dorter and turned up the 
+Corpse Brigade, with their leader Wiegraf among their
+ranks. After setting them to rout, we interrogated one of
+our prisoners on the marquis's whereabouts. The brigand
+confessed to the abduction, but said it was the work of
+the Corpse Brigade's second-in-command, Gustav
+Margriff, who desired a ransom. (Press [Triangolo] to view.) {END}
+
+[spazio]After a successful raid of the so-called Sand Rat's
+Sietch, we entered the ramshackle building in which
+Marquis Elmdore was confined. An unexpected sight
+greeted us there: it was Wiegraf, berating Gustav for
+abducting the marquis. Words soon turned to swords, and
+Gustav was slain. Wiegraf left the marquis and fled into
+the darkness. (Press [Triangolo] to view.) {END}
+
+[spazio]No warm words of commendation for our rescue of the
+marquis awaited us upon our return to Eagrose Castle.
+Instead, my lord brother Dycedarg fumed over our
+violation of orders, asking if I intended to live up to our
+family name or befoul it. At that moment, Duke Larg,
+liege lord of Gallionne and trueborn brother to the queen,
+made his entrance. (Press [Triangolo] to view.) {END}
+
+[spazio]The plan to rid the realm of the Corpse Brigade was in
+its final stages. We raided one of their dens at the
+southernmost tip of Gallionne, and it was there we met
+Milleuda. A member of the Corpse Brigade and younger
+sister to its leader, Wiegraf Folles, Milleuda seems to
+hold a deep resentment for the aristocracy and the Crown.
+(Press [Triangolo] to view.) {END}
+
+[spazio]Our manse at Eagrose was plundered by the Corpse
+Brigade. The campaign to rid Gallionne of the criminals
+had left too few soldiers on guard. The attackers' goal was
+the assassination of Dycedarg, retainer to Duke Larg.
+But although they succeeded in storming the manse, their
+murderous plot was foiled by Zalbaag. As they fled, they
+took Delita's young sister Tietra as a hostage. (Press [Triangolo]
+to view.) {END}
+
+[spazio]Dycedarg, injured during the Corpse Brigade's assault,
+informed me that the Brigade was already in shambles,
+and that Zalbaag was preparing for a full-scale attack to
+finish them off. He promised me, however, that this
+attack would not be carried out until Tietra was brought
+back to safety. Argath bluntly asserted that delaying the
+attack to save the life of a "common maid" would be
+foolish, enraging Delita. (Press [Triangolo] to view.) {END}
+
+[spazio]On our way to Ziekden, Delita and I came upon a small
+meadow, painted a golden hue by the setting sun. As we
+gazed in awe at the natural beauty all around us, Delita
+began to question his lot in life. Unable to provide him
+with the answers he sought, I stood silent and powerless.
+Delita then pressed a blade of grass to his lips and began
+to whistle-a trick my lord father once taught us as
+children. (Press [Triangolo] to view.) {END}
+
+[spazio]Gragoroth and Wiegraf had yet eluded the Order's
+pursuit, finding refuge in one of the mills that dot the
+Fovoham windflats. Wiegraf vehemently condemned
+Gragoroth for kidnapping Tietra. When a scout arrived
+with word of Milleuda's death, Wiegraf, consumed with
+grief and hatred, vowed to quench his blade with the blood
+of Milleuda's killers. (Press [Triangolo] to view.) {END}
+
+[spazio]Snow dusted Ziekden Fortress as stragglers from the
+Corpse Brigade took refuge within, but the Northern Sky
+held firm its position around the perimeter. Argath slew
+Gragoroth after first shooting Tietra, whom Gragoroth
+was using as a human shield. Delita, enraged by the death
+of his sister, saw Argath repaid in kind. The gunpowder
+planted by Gragoroth was then set alight, reducing the
+fortress to rubble. (Press [Triangolo] to view.) {END}
+
+[spazio]A year had passed since the tragedy at Ziekden. The
+Dukes Larg and Goltanna had been locked in a fierce
+political struggle for control of Ivalice since the king's
+death. Tensions were high, and war seemed all but
+inevitable. Secret plans were under way to bring Princess
+Ovelia from Orbonne Monastery to Gallionne to prevent
+the outbreak of war. (Press [Triangolo] to view.) {END}
+
+[spazio]Lady Agrias set out in heavy rain in search of
+Princess Ovelia, who had been kidnapped by men bearing
+the standard of Duke Goltanna. I decided to join her in
+the search, as my dear friend Delita, whom I believed to
+have died at Ziekden, had been among the Black Lion's
+men. (Press [Triangolo] to view.) {END}
+
+[spazio]After abducting Princess Ovelia, Delita found himself
+under attack by the Northern Sky at Zeirchele Falls. It
+there came to light that Duke Larg had ordered the
+kidnapping, his goals twofold: to force Duke Goltanna
+from power by destroying his name, and to kill Ovelia,
+eliminating the threat of her claim to the throne. Upon
+discovering that Gaffgarion knew of all this, I broke with
+him in support of the princess. (Press [Triangolo] to view.) {END}
+
+[spazio]In Zaland, we met a young man named Mustadio, who
+was being pursued by thugs in the employ of the Baert
+Trading Company. Mustadio was a machinist from Goug,
+determined to revive lost technologies such as the pistol.
+The young man was worried about his captured father, and
+refused to tell us why he was being chased. As he was
+seeking Cardinal Delacroix for sanctuary, Mustadio asked
+to accompany us to Lionel Castle. (Press [Triangolo] to view.) {END}
+
+[spazio]We stopped for a brief respite on our journey to Lionel
+Castle. The princess spoke candidly of her childhood with
+Agrias. She also spoke of her distrust for those in
+power-those who sought to use her for political gain.
+If only I had words to console the princess in her time of
+need. In hopes of lightening her spirit, I showed her the
+way to whistle using a blade of grass. (Press [Triangolo] to view.){END}
+
+[spazio]Dycedarg's initial plan to kidnap Ovelia foiled, he once
+again ordered Gaffgarion into action. But this time, he
+authorized the death of any who dared to interfere-even
+I, his own brother, was to be no exception. The incident
+at Orbonne Monastery had alerted Dycedarg to the
+existence of another player in this game of thrones-one
+dead set on foiling his plans. (Press [Triangolo] to view.) {END}
+
+[spazio]Cardinal Delacroix greeted us warmly at the keep of
+Lionel Castle, and pledged to send word of Duke Larg's
+plot to the High Confessor at once. The cardinal also
+showed us one of the Zodiac Stones spoken of in ancient
+Ivalician legend. It came to light that Mustadio's troubles
+were also connected to the Stones, and so we set out for
+Goug while the princess and Lady Agrias remained at the
+castle. (Press [Triangolo] to view.) {END}
+
+[spazio]The crystal that had been unearthed deep beneath the
+city of Goug was in fact one of the legendary Zodiac
+Stones. Fearing the Stone would fall into the wrong hands,
+Mustadio's father Besrudio entrusted it to his son and
+beseeched him to hide it someplace safe. But just as
+Mustadio took the Stone, thugs in the employ of the Baert
+Trading Company arrived to give chase. (Press [Triangolo] to
+view.) {END}
+
+[spazio]Cardinal Delacroix had been behind it all, using the
+Baert Trading Company as a front to obtain the Zodiac
+Stone found in Goug for himself. Mustadio's quick thinking
+prevented the enemy from obtaining the real Stone, and
+saved his father's life in the process. But the princess and
+Lady Agrias were still in the cardinal's clutches. I made
+for Lionel Castle straight away, Stone in hand, to rescue
+them. (Press [Triangolo] to view.) {END}
+
+[spazio]Once again I crossed paths with Delita-this time in
+the port city of Warjilis. He advised me not to concern
+myself any further with the princess or the Zodiac
+Stones, suggesting that some great and powerful will was
+fanning the flames of this conflict. The words he spoke
+weighed upon my mind: "Noble endeavors do not always
+reach the end that we desire." (Press [Triangolo] to view.) {END}
+
+[spazio]Dycedarg and the cardinal, it seems, had made a secret
+pact in order to obtain both the Stone and the princess.
+Gaffgarion was dispatched to the cardinal by Dycedarg,
+and suggested that Princess Ovelia be used as bait to
+obtain the Stone, and to lure all those who knew of the
+kidnapping to their deaths. As for Ludovich Baert, the
+cardinal personally saw that he received stiff punishment
+for failing in his duties. (Press [Triangolo] to view.) {END}
+
+[spazio]Delita visited the room in Lionel Castle to which Ovelia
+was confined. After she accused him of collaborating with
+Cardinal Delacroix, the cardinal himself entered the room
+with a man who appeared to be a knight. After Ovelia
+refused to cooperate with them, the mysterious man
+informed her of the shocking truth behind her heritage.
+(Press [Triangolo] to view.) {END}
+
+[spazio]Delita brought Ovelia to a castle in Zeltennia where
+Duke Goltanna awaited them. After framing one of the
+duke's retainers as the mastermind behind Ovelia's
+kidnapping, Delita suggested that Duke Goltanna himself
+lead the Order of the Southern Sky to march on Lesalia.
+Duke Larg then mobilized the Order of the Northern Sky
+in response, dividing Ivalice into two factions. The War of
+the Lions had begun. (Press [Triangolo] to view.) {END}
+
+[spazio]Three months had passed since the beginning of the
+War of the Lions. The conflict grew fiercer by the day,
+and the forces of Dukes Larg and Goltanna grew
+increasingly weary of the endless battle. Pleading for the
+overtaxed and starving populace, Count Orlandeau, lord
+commander of the Order of the Southern Sky, proposed
+peace talks to Duke Goltanna. However, his suggestion did
+not fall upon sympathetic ears. (Press [Triangolo] to view.) {END}
+
+[spazio]While en route to Lesalia, we rescued a young astrologer
+from an assault by brigands in the mining town of Gollund.
+His name was Orran Durai, and he reacted strangely upon
+hearing the name Beoulve. He respectfully declined the
+offer to join us on our journey, hinting that we would be
+like to cross paths again. (Press [Triangolo] to view.) {END}
+
+[spazio]We met my brother Zalbaag in Lesalia, where I informed
+him that there was a presence working in secret to stoke
+the war's flames. But Zalbaag paid no heed to my words
+and saw fit to admonish me instead, appalled that I would
+accuse our lord brother Dycedarg of kidnapping the
+princess. We then received word that Count Orlandeau,
+lord commander of the Order of the Southern Sky, had
+broken through at Dugeura Pass. (Press [Triangolo] to view.) {END}
+
+[spazio]I was branded a heretic by Confessor Zalmour, but
+managed to stave him off at the postern of Lesalia
+Castle. This did little to assuage my suspicions about the
+Church of Glabados. Alma informed me that one of the
+Stones, Virgo, was kept within Orbonne Monastery. As a
+heretic, entering the monastery alone would be an
+impossibility. I had no other choice but to have Alma
+accompany me. (Press [Triangolo] to view.) {END}
+
+[spazio]By the time we arrived, men had already forced their
+way into the monastery in search of its Stone. We found
+Elder Simon in dire condition, collapsed in the vaults. He
+revealed that High Confessor Marcel plotted to use the
+chaos of this war to gather the Stones and revive the
+legend of the Zodiac Braves. I asked Alma to stay with
+the elder, entrusting her with the Stones I carried, and
+went in search of the attackers. (Press [Triangolo] to view.) {END}
+
+[spazio]The Knights Templar made off with the Virgo Stone,
+and Alma as well. Wiegraf, who had joined the templarate
+in a bid for power, lay near death outside. In desperation
+he bound himself in an infernal contract with the Aries
+Stone, allowing the transmigration of a Lucavi, Belias,
+into his body, then vanished from sight. Elder Simon placed
+the Scriptures of Germonique in my hands, then passed
+into the Father's keeping. (Press [Triangolo] to view.) {END}
+
+[spazio]By the will of Duke Goltanna, Ovelia was enthroned as
+queen at Zeltennia Castle. But discovering the truth of
+her origins had wounded her deeply. Delita came to console
+the new queen, offering to build her a new kingdom, and
+promising her a life where she would have no more need of
+tears. These comforting words in her time of despair
+helped Ovelia to start building a bond of trust with Delita.
+(Press [Triangolo] to view.) {END}
+
+[spazio]Orran and I crossed paths once again in the rain-sodden
+Grogh Heights. I discovered that he was the adopted son
+of Count Orlandeau, lord commander of the Order of the
+Southern Sky. Orran, too, was aware of the High
+Confessor's search for the Stones, and his scheme to
+foment discontent on both sides of the conflict. (Press
+[Triangolo] to view.) {END}
+
+[spazio]After rescuing a young girl named Rapha in Yardrow, I
+was told of Grand Duke Barrington, liege lord of Fovoham,
+and his sinister plot to use the chaos of war to obtain the
+throne of Ivalice for himself. The girl's brother Marach,
+however, remained loyal to the grand duke, and threatened
+to take Alma's life unless we both went to Riovanes.
+(Press [Triangolo] to view.) {END}
+
+[spazio]Grand Duke Barrington had invited knights of the
+templarate to Riovanes in hopes of striking a deal with
+them. The grand duke had seized the Taurus and Scorpio
+Stones from Ser Isilud, and was attempting to use them-
+along with his knowledge of the location of the Scriptures
+of Germonique-to acquire the full backing of the Church.
+However, Lord Folmarv refused to comply, angered by the
+grand duke's presumption. (Press [Triangolo] to view.) {END}
+
+[spazio]Alma sat alone in the dungeon of Riovanes Castle, no
+doubt wondering when I would come to rescue her. The
+dungeon's eerie quiet was shattered suddenly by a shriek
+of pain. Alma staggered backwards as a Riovanesian knight
+fell before her and, after a few fearful words, breathed
+his last. Alma prayed for his soul's repose and then padded
+cautiously through the open door. (Press [Triangolo] to view.) {END}
+
+[spazio]In shock from the horror of the events that had
+unfolded, Alma discovered Knight Templar Isilud in the
+grand duke's parlor. He entrusted her with the Pisces
+Stone before falling into an eternal sleep. Lord Folmarv
+then appeared, but as he approached Alma, the Virgo Stone
+began to shine brightly. Intrigued, he took the struggling
+Alma away with him. (Press [Triangolo] to view.) {END}
+
+[spazio]Marach had taken Grand Duke Barrington's bullet to
+save his sister's life. As a tearful Rapha cradled his body,
+the Scorpio Stone upon her chest began to glow. At this,
+I recalled the horrible episode of transmigration with
+Wiegraf, and a dreadful feeling consumed my thoughts-
+that a Lucavi might appear at any moment. But no demon
+was summoned by the Stone's light. Instead, Marach's soul
+was restored to him. (Press [Triangolo] to view.) {END}
+
+[spazio]I searched desperately for Alma, but she was nowhere
+to be found at Riovanes. All that remained in the castle's
+ravaged parlor was the Pisces Stone. Marach remarked
+that the Stone's power depended on the nature of its user,
+but as I clasped the Stone tightly in my hands, all I could
+think of was Alma. The war had begun to take a new
+direction, and chaos flared throughout Ivalice. (Press [Triangolo]
+to view.) {END}
+
+[spazio]While grasping for clues as to Alma's whereabouts,
+Marach mentioned the name of Lord Folmarv, lord
+commander of the Knights Templar. It seemed that even
+High Confessor Marcel and his vile ambitions were being
+used by him. In order to uncover the truth about Lord
+Folmarv and his aims, I thought it wise to visit my former
+friend and confidant Delita in Zeltennia. (Press [Triangolo] to
+view.) {END}
+
+[spazio]Orran welcomed Count Orlandeau back to Zeltennia
+Castle, whereupon the young astrologer reported to him
+the peculiar string of events happening throughout Ivalice,
+all revolving around the Stones. He then spoke candidly of
+the Church and the Knights Templar, and their suspicious
+tendencies of late. Count Orlandeau pulled the Libra Stone
+from his pocket and gazed into it, overcome by foreboding
+at the battle that must soon come. (Press [Triangolo] to view.) {END}
+
+[spazio]I met Delita at a church in Zeltennia. He informed me
+of the High Confessor's plan to assassinate both Duke
+Larg and Duke Goltanna in a bid to give the Church
+absolute power over the realm. I inquired of Delita's true
+intentions. It was then that he denied his loyalty to the
+Church, and expressed his feelings for Ovelia. (Press [Triangolo]
+to view.) {END}
+
+[spazio]A woman approached Delita and I after we had defeated
+Confessor Zalmour. Her name was Valmafra, a young mage
+dispatched by the Church along with Delita. She informed
+us that the Order of the Northern Sky had begun its
+advance on Fort Besselat. I immediately started out for
+Besselat to meet with Count Orlandeau, for this was my
+only hope of preventing a major clash of the Orders.
+(Press [Triangolo] to view.) {END}
+
+[spazio]Upon his arrival at Fort Besselat, Count Orlandeau
+was accused of plotting rebellion against Duke Goltanna.
+Although the count maintained his innocence, the duke,
+fully unaware of the High Confessor's scheme, ordered
+him imprisoned. Soon after this surprising turn of events,
+Delita was dubbed a Knight Devout by Duke Goltanna and
+made lord commander of the Order of the Southern Sky.
+(Press [Triangolo] to view.) {END}
+
+[spazio]The foul poison dispersed by Ser Barich of the Knights
+Templar brought the Order of the Northern Sky to its
+knees. Even Lord Dycedarg and Duke Larg succumbed to
+its vile effects. Zalbaag rushed to their rescue, only to
+witness Dycedarg stab their duke in cold blood. Zalbaag
+stood in a state of shock and disbelief as Dycedarg spoke
+of his ambition that Ivalice be brought under total reign
+of House Beoulve. (Press [Triangolo] to view.) {END}
+
+[spazio]Opening the floodgates at Fort Besselat prevented a
+disastrous clash of the Orders. Count Orlandeau,
+disillusioned by his liege lord's warmongering, decided to
+accompany us in hopes of putting an end to the High
+Confessor's ambitions. The count's adopted son Orran
+returned to Zeltennia to ensure that Ovelia would remain
+safe. (Press [Triangolo] to view.) {END}
+
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

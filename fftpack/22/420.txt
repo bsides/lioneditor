@@ -1,0 +1,182 @@
+[Portrait]Master Darlavon
+[Dialog]Now then, let us begin the lesson.
+
+In this session we shall discuss how to use
+magicks.
+
+As with units, each magick has a charge time,
+which starts when a unit begins to cast it,
+and ends when the magick goes into effect.
+Each magick also has a Speed attribute that
+affects how quickly it charges.
+
+The charge time for magicks begins when a
+unit starts to cast them.
+
+If the unit's next turn arrives before the
+casting is complete, the unit cannot perform
+another action without canceling the magick.
+If the unit chooses the Wait command, it will
+continue casting. The unit may also move
+without interrupting the casting.
+Perhaps the easiest way to learn about magick
+is to actually use it.
+
+First, select "Act" from the unit's menu.{END}
+
+Now select "Black Magicks."{END}
+
+The black magicks available to this unit
+are displayed.
+
+Magicks that are marked with the  icon
+may be reflected with the Reflect ability.
+
+The MP cost of casting the magick is shown
+in the column labeled "MP."
+
+The "Turn" column indicates when the magick
+will actually go into effect.
+
+All magicks require time to cast.
+
+
+The Turn value tells you when the unit
+will finish casting the magick in the
+current turn order.
+It is calculated based on the casting
+unit's turn order and the amount of time
+it takes to cast the magick.
+You can press the left or right button to
+see more detailed information.
+
+Move the cursor to the spell whose timing
+you wish to check, and press the left or
+right button now.{END}
+
+Empty{END}
+
+The turn list is displayed. The flashing row
+with the casting unit's name and the magick's
+name indicates when the magick will be cast.
+This list may also be viewed at any time by
+pressing [Triangolo] and selecting "Turn List."
+
+Now press [Simbolo B9] to return to the spell selection
+menu.{END}
+
+For now, try casting the first spell
+on the list.{END}
+
+The red tiles around the unit indicate the
+magick's range.
+
+You may select any of these tiles as the
+target.
+
+The targeted unit or units will be damaged
+by offensive magicks, or aided by support
+magicks.
+Select that enemy unit's tile as your target.{END}
+
+The green tiles around the target indicate
+the magick's area of effect.
+
+Any units within the the area of effect
+will be affected.
+
+Since you are casting an offensive magick,
+units in the area of effect will be damaged.
+
+Note that allied units and enemy units will
+flash in different colors to help you
+distinguish friend from foe.
+Note that both allies and enemies can be
+damaged by your magicks.
+
+Therefore, you should always ensure that
+there are no blue flashing units in the
+area of effect.
+You may turn off the flashing color effect
+with option 10, "Target Colors."
+
+Press [Croce] again to confirm your target.{END}
+
+Next, choose whether you wish to target the
+unit or the tile beneath him.
+
+If you select "Unit," that unit will remain
+the magick's target, even if he or she moves
+while it is being cast.
+If you select "Tile" and the unit moves
+while the magick is being cast, the magick
+will be cast upon the empty tile.
+Choosing "Unit" ensures that a magick will affect
+the targeted unit. But if the unit moves, the
+magick may then affect your own units as well.
+This time, let's select the unit as our target.{END}
+
+Only one magick may be cast at a time. Starting
+another action before the initial magick has
+been cast will cancel it.
+This concludes my explanation of magicks.
+
+
+Let us review. Like units, magicks have a
+charge time requirement and a Speed attribute.
+
+Keep in mind the amount of time required to
+cast magicks when choosing one.
+
+When casting a magick, you must select a target
+within its range. The magick will affect all
+tiles in its area of effect.
+You may choose to cast a magick on either a
+unit or a tile.
+
+If you cast a magick on a unit, the magick's
+area of effect will move along with the
+targeted unit.
+If you cast a magick on a tile and there are no
+units within the area of effect when the magick
+is finally cast, the magick will be wasted.
+Keep these points in mind to make the most
+of your units' magicks.
+
+With that, I shall bring this lesson to a close.{END}
+
+Understanding these concepts should allow you
+to gain the upper hand in any battle you fight.
+
+With that, I shall bring this lesson to a close.{END}
+
+Every time the CT gauge goes up, it increases
+by an amount equal to the unit's Speed.
+
+This means that units with a high Speed will
+see their CT gauges fill up more quickly.{END}
+
+If the attack was successful, the unit will gain
+experience points (EXP) and job points (JP).
+
+After a unit has both moved and acted, 
+his or her turn will automatically end.
+
+When a unit's turn ends, you must choose his or
+her facing. This affects the probability of him
+or her dodging enemy attacks.
+You will want to be facing the enemy whenever
+possible.{END}
+
+This concludes my explanation of
+movement and actions.
+
+You will be repeating these steps many times
+as you battle your foes.
+
+This is one of the fundamentals of battle, so
+please do your best to remember what you
+have learned here.
+With that, I shall bring this lesson to a close.{END}
+
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

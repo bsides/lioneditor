@@ -1,0 +1,189 @@
+[Portrait]Master Darlavon
+[Dialog]Now then, let us begin the lesson.
+
+In this session, I shall explain movement and
+actions.
+
+A unit is allowed one move and one action
+during his or her turn.
+
+Let's try controlling a unit as he moves
+and acts.
+
+First, you must move your unit to a tile
+next to the enemy you wish to attack.
+
+Try selecting "Move."{END}
+
+As you can see, the tiles around your unit are
+flashing blue.
+
+These blue tiles indicate the movement range
+of your unit. You must select a destination from
+among these tiles.
+But first, allow me to explain how a unit's
+movement range is determined.
+
+Each unit's range of movement is determined by
+his or her Move and Jump attributes.
+
+On flat terrain, a unit may move a number of
+tiles in one turn equal to the unit's Move
+attribute.
+So, if a unit's Move is 4, he or she may move
+4 tiles.
+
+Likewise, the unit may perform a vertical jump
+to a height equaling his or her Jump attribute.
+
+He or she may also jump horizontally for a
+distance equaling half his or her Jump attribute.
+
+So, a unit with a Jump of 3 could jump
+horizontally over a 1-tile gap, or jump up
+or down 3 levels.
+In this case, "levels" refer to the difference
+between the height of the unit's current tile and
+that of the target tile.
+Now then, let us continue practicing movement.
+
+
+Once the unit's movement range is displayed,
+select a destination.
+
+If there is an allied chocobo on the tile you
+select, your unit will mount that chocobo.{END}
+
+Now try approaching the enemy by selecting
+the tile directly in front of him.{END}
+
+Since a unit may only move once per turn, the
+Move command is now grayed out and cannot
+be selected.
+Now try attacking with a weapon.
+
+
+To do this, you must select the Attack
+command.
+
+Try it now. Select "Act" and then "Attack."{END}
+
+The tiles around your unit have turned red.
+
+
+This indicates the unit's attack range.
+He may attack any unit on a red tile.
+
+Allow me to explain a bit about attack range.
+
+
+A unit's attack range is determined by the
+weapon a unit has equipped, as well as his
+or her abilities.
+For example, a sword has a range of only one
+tile, but a bow allows a unit to extend his or
+her attack to tiles that are quite far away.
+Magicks generally have a long range as well.
+
+
+Next, try selecting your target. Move the
+cursor to your enemy and press [Croce].{END}
+
+Notice that the enemy unit's tile has turned
+green.
+
+Green tiles indicate the attack's area of
+effect.
+
+The area of effect depends upon the weapon
+a unit has equipped, as well as his or her
+abilities.
+Most weapons have an area of effect of just
+one tile, but magicks may affect many tiles
+at once.
+The status of each unit is displayed at the
+bottom of the screen.
+
+On the left is the attacking unit, and on the
+right is his or her target.
+
+The attacking unit's turn order, level,
+and EXP are not shown here.
+
+In place of them, you will see an estimate
+of the attack's effect. The HP value listed
+here is the estimated amount of damage.
+To the right is the probability that
+the attack will succeed.
+
+By checking these, you can get a good idea of
+how effective an attack will be against a
+particular enemy.
+For standard attacks, only the damage
+estimate and chance of success are
+displayed.
+For magicks that cause status effects, the
+status effect's name and its chance of being
+inflicted will also be displayed.
+If the targeted unit has a reaction ability,
+the name of that ability will appear beneath
+the unit's status display.
+In battle, it is important to check all of
+these when choosing a target.
+
+You should also note that a unit's Bravery,
+Faith, and zodiac sign all affect the damage
+and success rate of attacks.
+A unit's Bravery also affects its bare-handed
+Attack attribute and the chance that its
+reaction ability will be triggered.
+Faith affects the damage and success rate
+of a unit's magick attacks.
+
+For example, a unit with high Faith inflicts
+more damage when casting Firaga, and is
+more like to successfully cast Raise.
+The relationship between the zodiac signs
+of the attacker and defender also affects
+damage and success rate.
+If the two signs are compatible, attacks
+will do more damage and healing magicks
+will be more effective.
+If the two signs are incompatible, damage
+will be reduced, as will the success rate
+of magicks.
+The estimated results of an attack take
+into account Faith, Bravery, and zodiac
+sign compatibility.
+Now then, let us continue by selecting the
+target.
+
+Once you have checked the area of effect
+and estimated results, you may confirm
+your target.
+Press [Croce] to confirm the selection.{END}
+
+If an attack is successful, the attacker will
+gain experience points (EXP) and job points
+(JP).
+After a unit has both moved and acted, 
+his or her turn will automatically end.
+
+When a unit's turn ends, you must choose his or
+her facing. This affects the probability of the
+unit evading enemy attacks.
+You will want to be facing the enemy whenever
+possible.{END}
+
+That concludes my explanation of
+movement and actions.
+
+You shall be repeating these steps many times
+as you battle your foes.
+
+This is one of the fundamentals of battle, so
+please do your best to remember what you
+have learned here.
+With that, I shall bring this lesson to a close.{END}
+
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

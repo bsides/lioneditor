@@ -1,0 +1,426 @@
+ 
+[spazio]Twilight Gustkov had become the leader of the Wyverns.
+In addition to a string of robberies, the outlaw band was
+suspected of playing a part in the kidnapping of a member
+of the royal family, prompting the Crown to place a
+sizeable bounty on Gustkov's head. We bested him after a
+lengthy struggle, and were given a generous reward during
+a rare public appearance by Celebrant Palcino.{END}
+
+ 
+[spazio]A rash of monster attacks had finally resulted in the
+loss of human life. The behemoth that had taken up
+residence in the mountains near Bervenia killed Cassandra,
+the owner of a nearby farm, and some thirty others.
+Although we were successful in our efforts to slay the
+beast, our battle with this king of monsters was
+uncomfortably close.{END}
+
+ 
+[spazio]Bacchus Winery's most popular product is Bacchus
+Liqueur, an incredibly sweet drink made from bacchus
+seeds, and it was the reason for the attacks on the
+company's wains. What was thought to be the work of
+bandits was actually that of monsters drawn to the sweet
+smell. We defeated them and their leader Lilith, ensuring
+that Ivalicians could again partake of Bacchus's blessing.{END}
+
+ 
+[spazio]Enticed by the offer of reward, we set off to find a
+dragon. After a fierce battle in the Glenn Peaks, we
+succeeded in slaying one. No sooner had we extracted its
+tooth than we found ourselves ringed by soldiers-the
+duke's men. Duke McEnroe himself was present, and gave
+us a fine reward for the tooth. We felt a tinge of pity
+for the duke, who must buy his own son's respect.{END}
+
+ 
+[spazio]The labyrinthine cave on the outskirts of Warjilis led
+to a vast underground lake. We sensed we were being
+watched as we stared across the water, and turned to see
+a pack of red mousses ready to pounce. After overcoming
+our foes, we saw an astonishing sight: the blossom of a
+whisperweed, a plant that blooms only once in several
+millenia. Could the monsters have been protecting it?{END}
+
+ 
+[spazio]Typhoon Karzst has been captured! We learned that
+Bevester Karzst, wanted for 765 counts of purse-
+snatching, was hiding in Sal Ghidos, and quickly set out
+to capture him. We were aided by a mysterious ninja clad
+in black, who promptly vanished after we defeated the
+Typhoon. Witnesses told us that the ninja was none other
+than the informant who had sold us the information.{END}
+
+ 
+[spazio]Count Minimas has been exposed! After defeating the
+door mimic, we performed a cursory search of the area,
+whereupon we were startled to discover a cache of gold
+and documents hidden in the count's cellar. The nature of
+the documents would take too long to explain here, but
+suffice to say they removed any chance of the count
+winning the upcoming mayoral election.{END}
+
+ 
+[spazio]The cave mimic is an unusual predator whose enormous
+mouth resembles that of a cave. Usually found in natural
+caverns, this one had taken up residence at the entrance
+to the Ural mythril mine. Word among the miners was that
+an adamantitan that had once dwelt in the mine had cursed
+it, summoning the mimic. Whatever the reason for the
+mimic's presence, it was a most unusual task.{END}
+
+ 
+[spazio]Zerro struck again, targeting Viscount Barfire this
+time. Zerro, who seems to target corrupt aristocrats,
+infiltrated the noble's manor dressed as a guard. He fled
+with paintings, gold, and other treasure. We managed to
+corner him in the gardens, but he disappeared in a cloud of
+smoke, leaving behind a message and treasure. After
+verifying he was gone, we claimed the treasure and left.{END}
+
+ 
+[spazio]Zerro struck again! This time, his target was Baron
+Barthundra, a dealer in art. Unbeknownst to the baron,
+Zerro had been hired as an assistant at his gallery,
+allowing him to pilfer paintings, gold, and other valuables
+undetected. Before disappearing yet again, he left behind
+a note and a treasure. After ensuring we were not being
+watched, we claimed the treasure and headed for home.{END}
+
+ 
+[spazio]Zerro returned for another heist, this time targeting
+Baron Barfrost. Given Zerro's history, we thought it
+best to guard the baron's priceless art collection. Despite
+our best preparations, Zerro gained access to the Baron's
+estate in the guise of a gardener and escaped with
+paintings and gold. Before vanishing into the night, he
+left behind a message and a treasure, which we took.{END}
+
+ 
+[spazio]Zerro struck again, this time against Magister Bardeth.
+The city guard did their best to stop him, but Zerro gained
+access to the magisterial estate in the guise of a cook,
+sneaking past the guards and escaping with priceless
+treasures and gold. Though the magister's collection of fine
+art is famous, not a single work was stolen. The city guard
+was left in confusion.{END}
+
+ 
+[spazio]At last we know what Zerro was truly after-a golden
+Mashmal drachma. This coin, a relic of old Ivalice, was
+minted by Focara's late grandfather, and she wished to
+return it to her grandfather's grave. Zerro learned this,
+and pilfered it in an attempt to woo her. Slipping away,
+Zerro was heard to say, "As long as there is injustice,
+and as long as there is hope, Zerro will always return!"{END}
+
+ 
+[spazio]The chimera, once thought extinct, had indeed
+reappeared. Such an abomination-a foul creation bearing
+the features of countless beasts-could only have been
+wrought by the hand of man. It stands to reason that the
+chimera was the work of dark sorcery, and rumor would
+place responsibility on one of the townspeople. We managed
+to fell the beast in a battle that spanned some eight hours.{END}
+
+ 
+[spazio]We were called to assist in an unusual case of pet-
+turned-monster. The metamorphosis resulted from magicks
+that the pet's owner, young Diara Luca, had found in an
+ancient tome in her family library. After disposing of the
+pet and questioning Diara, we learned that the chimera
+seen in town not long ago was also hers. We released her
+after eliciting a promise that she stop experimenting.{END}
+
+ 
+[spazio]The Braana clan has been defeated! The pirates had
+been plundering small fishing villages on the outskirts of
+town, taking hostages from each to keep others from
+calling for help. But thanks to the bravery of a ten-year-
+old girl named Fia in a tiny fishing village near Riovanes
+Castle, we were notified of the pirates' plot, and the
+craven lot was brought to justice.{END}
+
+ 
+[spazio]Lady Vitts, the proprietress of an inn near Zeltennia
+Castle, lost her six-year-old son Gallua to an accident.
+However, as we discovered during our investigation, she
+was convinced he still lived. According to a doctor learned
+in such matters, the trauma of losing her son caused the
+good lady to lose touch with reality, resulting in this
+errand which we were sadly unable to complete.{END}
+
+ 
+[spazio]Little Cornelia, Baron Catastro's only daughter, was
+kidnapped by a man calling himself "Jacques le rapeur" and
+demanding the Catastro family jewels. We met the culprit
+on the pretense of delivering them. As it turned out,
+"Jacques le rapeur" was actually a man by the name of
+Roberts-Cornelia's tutor. Cornelia had planned the
+kidnapping in an attempt to reunite her estranged parents.{END}
+
+ 
+[spazio]Duke McEnroe's son was kidnapped by brigands claiming
+to work against the nobility. The city guard conducted
+their own investigation, supplemented by an outside
+search party at the request of the duke. Working with
+members of the guard, we infiltrated the culprits'
+hideout, and rescued young Pappal. It seems the men's
+ultimate goal was the dissolution of Ivalice's aristocracy.{END}
+
+ 
+[spazio]Carrot, a five-month-old malboro kept as a pet by
+Countess Zalmasse, had gone missing. After an extended
+search, we found Carrot feeding in the hills behind
+Zalmasse Manor and recaptured her. Consulting with a
+specialist, we learned that domesticated malboros regress
+to their wild state every fourth generation, and
+determined this was the cause of little Carrot's escape.{END}
+
+ 
+[spazio]We headed to an old house on the outskirts of Lesalia to
+investigate the cause of mysterious noises. They started
+late that night and seemed to be emanating from a room on
+the second floor. Upon entering the room, we found a doll
+crying alone in the pitch blackness. Later, we learned that
+the house's former residents had died in a fire many years
+ago. Was the doll lamenting the fate of its owner?{END}
+
+ 
+[spazio]We looked into the items washing up on the shore near
+the city of Gariland. We mostly found refuse from cities
+across the sea, but amongst the garbage we saw a small
+bottle containing a scrap of paper. Although we were
+unable to decipher the foreign script inscribed on the
+paper, it appeared to be a plea of some sort.{END}
+
+ 
+[spazio]We were asked by residents of Goug to defeat a
+monster living in an abandoned well. What we found at its
+dark, dank bottom was a figure in the shape of a man,
+covered from head to toe in mud. It took all of our
+strength to defeat it. From its remains crawled a
+bedraggled vagrant. It seems that he had taken shelter in
+the well, only to be engulfed by the mud monster.{END}
+
+ 
+[spazio]We followed up on reports of a strange figure seen
+prowling the streets of Zeltennia. We soon spied our
+quarry, but as we followed him, our surroundings suddenly
+seemed unfamiliar. The figure was none other than the
+legendary phantom known as the Black Cape, and it had
+trapped us within an umbral prison. However, our faith
+and bravery allowed us to break free and defeat the shade.{END}
+
+ 
+[spazio]Our investigation of an abandoned dwelling just within
+the outer wall of Limberry Castle revealed arteficers'
+tools of varying design and a golem some 4 sectas from
+head to toe. The golem attacked, and we destroyed it only
+with great difficulty. Not long afterward, the golem's
+creator, a man by the name of Master Gell, returned. He
+claimed to be experimenting in alchemical reanimation.{END}
+
+ 
+[spazio]For five days, thirty students of the Riovanes
+Military Institute had confined themselves to an ancient
+mountain temple outside of town. It seems this was in
+protest for beatings received at the hands of their
+teachers. The Ivalician Minister of Education has taken
+the charges very seriously, and dismissed a number of
+faculty members from the school, including the headmaster.{END}
+
+ 
+[spazio]Our investigation revealed that there was indeed a spy
+in the secret society's ranks. Heckern Mauer, a man of
+one-and-forty, had been hired by a rival group as a spy.
+Through his testimony, we learned the society had been
+trafficking in endangered resplendent chocobo plumes. We
+searched their base, whereupon one of the smugglers
+confessed, helping us take down the entire syndicate.{END}
+
+ 
+[spazio]Viscount Lachayle entrusted us with a centuries-old
+family heirloom, so that we might determine if it was
+genuine. Consulting various experts, we obtained proof of
+its authenticity. However, the viscount's remark that he
+loved it above all else led to the dissolution of his marriage
+while we were away. He seemed to learn from the
+experience, and gave us the treasure upon our return.{END}
+
+ 
+[spazio]It seems that the bard Edward is in love with Anna,
+the golden voice of Warjilis. Although their work rarely
+allows the two to meet, they have exchanged love letters
+for years. We discovered this sweet truth upon delivering
+the bard's letter.{END}
+
+ 
+[spazio]Count Minimas, famed for his yearly contributions to
+local Dorter charities, could not open his family vault. It
+seems that it had been stuffed full with bags of gil,
+jamming the opening mechanism. Although this reminded us
+of the lavish lifestyles that nobles lead, we felt Count
+Minimas and his charity work a shining example in our
+corrupt society, and so we were happy to aid him.{END}
+
+ 
+[spazio]We discovered that the raffleshiva, the legendary man-
+eating plant, does indeed exist. It grows in the north, and
+its blossoms can reach 5 sectas in diameter. It reached
+for us with its giant tentacles when we encountered it,
+but somehow we managed to escape. We have no doubt that
+the scientific community will be most interested in this
+find.{END}
+
+ 
+[spazio]Anna, the renowned singer, is to be married! After
+seven years of long-distance romance, a date is finally set.
+The lucky man is none other than Edward, a bard employed
+at Riovanes. Edward's gentlemanly manner has caused many
+to suspect he may be a prince in disguise-mayhap of
+continental royalty. This charm is no doubt what attracted
+Anna to him. We wish the two of them every happiness.{END}
+
+ 
+[spazio]A new star is born! Cattedona Fimm, a young orator of
+nine-and-ten, had this to say about coming in first place in
+her first speech contest: "Until very recently, I was so
+shy I couldn't even talk to other people. But after being
+taught the basics of conversation, I'm not afraid
+anymore." Cattedona continued with a wide smile, "You
+need to face your fears in life!"{END}
+
+ 
+[spazio]Dorman, a boy of seven who hated math, recently raised
+his hand to answer a question in math class during open
+house. We were able to witness the miracle for ourselves.
+Recalling how the child struggled to answer even the
+simplest questions when we began tutoring him, we could
+not help but smile, and we swelled with pride as he
+correctly answered the difficult question.{END}
+
+ 
+[spazio]Mameco, a wandering minstrel, has returned to the
+stage. Since winning a talent contest several years ago,
+his unique act had been the favorite of local audiences.
+However, an extended slump had rendered him unable to
+perform. We spoke with him at length, and though we are
+unsure if our off-the-cuff suggestion for a new hairstyle
+made the difference, Mameco seems in better spirits.{END}
+
+ 
+[spazio]Count Minimas, famed in Dorter for his yearly
+donations to the Red Wings, found himself unable to open
+the door to his mansion. Newly added solid gold fittings
+had rendered the door too heavy to open. But once again,
+we couldn't help but think of the philanthropic count as
+one of the few hopes for our corrupt society.{END}
+
+ 
+[spazio]We took part in the annual Clockwork Faire as
+assistants to the Goliphans machinists' club. The Goliphans
+enter the competition every year and always do admirably,
+but had never taken the first prize. But this time, despite
+the fact that there were more entrants than ever in the
+contest's history, the Goliphans' innovative clockwork
+chocobo carriage brought them victory.{END}
+
+ 
+[spazio]Not long ago, the wandering minstrel Mameco gave his
+first performance in nigh on ten years. Although he had
+been in an extended slump, he is now an indispensable part
+of Eagrose's nightlife, and his farewell show was his most
+spectacular yet. Our thoughts were with Mameco as he
+departed on his new tour.{END}
+
+ 
+[spazio]A party was held at Gysahl Greens, an eatery renowned
+for its fine chocobo cuisine. What precisely the party was
+for we could not say, for we were much too busy working
+to ask any questions. We arrived early in the morning and
+began preparing food, washed a mountain of dirty dishes,
+and finally worked to clean up after the party had finished.
+It was dawn before we were done.{END}
+
+ 
+[spazio]The Blackjack, a casino ship equipped with slot machines
+and all manner of card games, docked in Warjilis Bay.
+Gambling is strictly regulated by the city, but the owner
+of the ship, a man of seven-and-twenty named Setzer,
+claims that he was merely trying to bring a little
+enjoyment into the drab lives of the townspeople.{END}
+
+ 
+[spazio]A casino ship, the Blackjack, had arrived in port, and
+we paid it a visit. Just as we were told, the slot machine
+in the far left corner immediately gave a seven on each
+reel-a jackpot! We continued to obtain jackpots, but our
+earnings were quite low. When asked, the ship's owner, a
+man by the name of Setzer, told us he had reduced the
+machine's payout to let people feel like they were winning.{END}
+
+ 
+[spazio]The president of Larcam Mercantile, Nalman Hosse, a
+man aged one-and-forty, is now wanted by the authorities
+for drug smuggling. While fighting a monster attacking the
+company's caravan, one of the chocobo wains overturned,
+revealing a large stash of drugs. We turned the driver over
+to the city guard, but their investigation determined that
+the president was behind the entire operation.{END}
+
+ 
+[spazio]We had been asked by Old Blanche to deliver her son
+Dinar his favorite dish. Upon learning he was slain by
+monsters that morning, we agonized over how to break the
+news. On the advice of Dinar's wife, we told her that we
+had delivered the meal and Dinar was well. Old Blanche is
+blind and has little time left, but her last wish-to make
+this dish for her son on his birthday-is now fulfilled.{END}
+
+ 
+[spazio]The Duchess Cupper's son Michael, a boy of two-and-
+ten, received a perfect score on his Gariland Magick Exam.
+With a pass rate of 1 in 600, the exam is said to be one
+of the most difficult in Ivalice, and Michael is only the
+second in history to pass with a perfect score. Given this,
+our reward of 10,000 gil seemed rather stingy, but
+Michael's smile when he heard the news was reward enough.{END}
+
+ 
+[spazio]The Yardrow Melee is an event held annually in the
+Walled City. This is the 80th year that this contest has
+been held, and as such it has grown to become a sizeable
+competition. Although we were defeated once in the
+qualifying rounds, we were somehow able to advance to the
+final tournament, where we defeated Gustaf, a Yardrow
+assassin, to claim the title.{END}
+
+ 
+[spazio]The annual Zaland Melee took place just outside of the
+city proper. Champions from all over Ivalice were invited
+to take part in the competition, modeled after a similar
+event held in Yardrow. Luckily, these entrants were
+pitted against one another, allowing us to advance to the
+finals with relative ease. In the end, we emerged as the
+new champions of the competition.{END}
+
+ 
+[spazio]A magick melee was held in Gariland. Competitors fought
+one another using only magick, allowing mages of all stripes
+to demonstrate their skills. We performed admirably, easily
+winning the initial rounds and finally besting Alestair, a
+black mage from Dorter, to become the 13th champions
+in the melee's history.{END}
+
+ 
+[spazio]The annual Arteficers' Contest was held in the city of
+Goug. This contest is meant to test three skills required
+of any engineer-knowledge, dexterity, and technical skill,
+with the winner being the person with the highest score
+among all three categories. Although we lost points in the
+initial clock assembly stage, we made up for it later on
+for a last-minute victory. {END}
+
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

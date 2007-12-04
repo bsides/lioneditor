@@ -90,7 +90,7 @@ namespace LionEditor
             if( e.NewValue != CheckState.Indeterminate )
             {
                 Character c = characterSelector.Items[e.Index] as Character;
-                c.Index = (e.NewValue == CheckState.Checked) ? (byte)e.Index : (byte)0xFF;
+                c.IsPresent = (e.NewValue == CheckState.Checked);
                 FireDataChangedEvent();
             }
         }
@@ -120,11 +120,11 @@ namespace LionEditor
             characterSelector.Items.Clear();
             foreach( Character c in game.Characters )
             {
-                characterSelector.Items.Add( c, c.Index != 0xFF );
+                characterSelector.Items.Add(c, c.IsPresent);
             }
             foreach( Character g in game.Guests )
             {
-                characterSelector.Items.Add( g, g.Index != 0xFF );
+                characterSelector.Items.Add(g, g.IsPresent);
             }
             characterSelector.SelectedIndex = 0;
 

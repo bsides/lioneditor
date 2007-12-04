@@ -42,6 +42,7 @@ namespace LionEditor
         /// <summary>
         /// Gets or sets the character currently being edited
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Character Character
         {
             get { return character; }
@@ -64,6 +65,10 @@ namespace LionEditor
         /// </summary>
         private void UpdateView()
         {
+            if (character == null)
+            {
+                return;
+            }
             this.SuspendLayout();
             // HACK: find a better way to do this
             ignoreChanges = true;
@@ -79,7 +84,7 @@ namespace LionEditor
             this.braverySpinner.Value = character.Bravery;
             this.experienceSpinner.Value = character.Experience;
             this.faithSpinner.Value = character.Faith;
-            this.groupBox.Text = character.Index.ToString();
+            this.groupBox.Text = string.Format("{0}", character.Index + 1);
             this.classComboBox.SelectedItem = character.Job;
             this.movementCombo.SelectedIndex = (movementCombo.DataSource as List<Ability>).IndexOf( character.MovementAbility );
             this.reactionCombo.SelectedIndex = (reactionCombo.DataSource as List<Ability>).IndexOf( character.ReactAbility );
@@ -696,8 +701,6 @@ namespace LionEditor
             AssignComboBoxItems();
 
             nameTextBox.Validating += new CancelEventHandler( nameTextBox_Validating );
-
-            Character = new Character( 0 );
 
             UpdateView();
             SetupEvents();

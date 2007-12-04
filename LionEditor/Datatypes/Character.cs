@@ -128,6 +128,7 @@ namespace LionEditor
         private ushort[] jp = new ushort[23];
         private ushort[] totalJP = new ushort[23];
         private byte[] afterName = new byte[21];
+        private bool isPresent;
 
         #endregion
 
@@ -187,6 +188,15 @@ namespace LionEditor
         {
             get { return zodiacSign; }
             set { zodiacSign = value; }
+        }
+
+        /// <summary>
+        /// Whether or not this character is "alive"
+        /// </summary>
+        public bool IsPresent
+        {
+            get { return isPresent; }
+            set { isPresent = value; }
         }
 
         #endregion Identity
@@ -841,96 +851,112 @@ namespace LionEditor
         /// Builds a Character from a 256 byte array
         /// </summary>
         /// <param name="charData"></param>
-        public Character( byte[] charData )
+        /// <param name="index"></param>
+        public Character( byte[] charData, int index )
         {
-            try
+            this.index = (byte)index;
+            if (IsValidCharacter(charData))
             {
-                spriteSet = SpriteSet.AllSprites[charData[0]];
-                index = charData[1];
-                if( !Class.ClassDictionary.TryGetValue( charData[2], out job ) )
-                {
-                    job = Class.ClassDictionary[0x4A];
-                }
-                unknownOffset03 = charData[3];
-                gender = (Gender)(charData[4] & 0xE0);
-                unknownOffset05 = charData[5];
-                zodiacSign = (Zodiac)(charData[6] & 0xF0);
-
-                if( gender == Gender.Monster )
-                {
-                    secondaryAction = SecondaryAction.ActionDictionary[0x00];
-                    supportAbility = Ability.AbilityList[0];
-                    reactAbility = Ability.AbilityList[0];
-                    movementAbility = Ability.AbilityList[0];
-                    head = Item.ItemList[0];
-                    body = Item.ItemList[0];
-                    accessory = Item.ItemList[0];
-                    rightHand = Item.ItemList[0];
-                    rightShield = Item.ItemList[0];
-                    leftHand = Item.ItemList[0];
-                    leftShield = Item.ItemList[0];
-                }
-                else
-                {
-                    secondaryAction = SecondaryAction.ActionDictionary[charData[7]];
-                    reactAbility = new Ability( (ushort)((charData[9] << 8) + charData[8]) );
-                    supportAbility = new Ability( (ushort)((charData[11] << 8) + charData[10]) );
-                    movementAbility = new Ability( (ushort)((charData[13] << 8) + charData[12]) );
-                    head = new Item( (ushort)((ushort)(charData[15] << 8) + charData[14]) );
-                    body = new Item( (ushort)((ushort)(charData[17] << 8) + charData[16]) );
-                    accessory = new Item( (ushort)((ushort)(charData[19] << 8) + charData[18]) );
-                    rightHand = new Item( (ushort)((ushort)(charData[21] << 8) + charData[20]) );
-                    rightShield = new Item( (ushort)((ushort)(charData[23] << 8) + charData[22]) );
-                    leftHand = new Item( (ushort)((ushort)(charData[25] << 8) + charData[24]) );
-                    leftShield = new Item( (ushort)((ushort)(charData[27] << 8) + charData[26]) );
-                }
-
-                experience = charData[28];
-                level = charData[29];
-                bravery = charData[30];
-                faith = charData[31];
-
-                rawHP = (uint)(((uint)charData[34] << 16) + ((uint)charData[33] << 8) + (uint)charData[32]);
-                rawMP = (uint)(((uint)charData[37] << 16) + ((uint)charData[36] << 8) + (uint)charData[35]);
-                rawSP = (uint)(((uint)charData[40] << 16) + ((uint)charData[39] << 8) + (uint)charData[38]);
-                rawPA = (uint)(((uint)charData[43] << 16) + ((uint)charData[42] << 8) + (uint)charData[41]);
-                rawMA = (uint)(((uint)charData[46] << 16) + ((uint)charData[45] << 8) + (uint)charData[44]);
-
-                byte[] jaBytes = new byte[173];
-
-                Savegame.CopyArray( charData, jaBytes, 0x4BB - 0x48C, 173 );
-                jobsAndAbilities = new JobsAndAbilities( jaBytes );
-
-                for( int i = 0; i < 15; i++ )
-                {
-                    rawName[i] = charData[0xDC + i];
-                }
-
-                for( int k = 0; k < 21; k++ )
-                {
-                    afterName[k] = charData[0xEB + k];
-                }
+                BuildCharacter(charData);
             }
-            catch( Exception )
+            else
             {
-                throw new BadCharacterDataException();
+                BuildDummyCharacter();
+            }
+
+        }
+
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Builds an actual character from its binary data
+        /// </summary>
+        /// <param name="charData"></param>
+        private void BuildCharacter(byte[] charData)
+        {
+            spriteSet = SpriteSet.AllSprites[charData[0]];
+            isPresent = (charData[1] != 0xFF);
+
+            if (!Class.ClassDictionary.TryGetValue(charData[2], out job))
+            {
+                job = Class.ClassDictionary[0x4A];
+            }
+            unknownOffset03 = charData[3];
+            gender = (Gender)(charData[4] & 0xE0);
+            unknownOffset05 = charData[5];
+            zodiacSign = (Zodiac)(charData[6] & 0xF0);
+
+            if (gender == Gender.Monster)
+            {
+                secondaryAction = SecondaryAction.ActionDictionary[0x00];
+                supportAbility = Ability.AbilityList[0];
+                reactAbility = Ability.AbilityList[0];
+                movementAbility = Ability.AbilityList[0];
+                head = Item.ItemList[0];
+                body = Item.ItemList[0];
+                accessory = Item.ItemList[0];
+                rightHand = Item.ItemList[0];
+                rightShield = Item.ItemList[0];
+                leftHand = Item.ItemList[0];
+                leftShield = Item.ItemList[0];
+            }
+            else
+            {
+                secondaryAction = SecondaryAction.ActionDictionary[charData[7]];
+                reactAbility = new Ability(TwoBytesToUShort(charData[8], charData[9]));
+                supportAbility = new Ability(TwoBytesToUShort(charData[10], charData[11]));
+                movementAbility = new Ability(TwoBytesToUShort(charData[12], charData[13]));
+                head = new Ability(TwoBytesToUShort(charData[14], charData[15]));
+                body = new Ability(TwoBytesToUShort(charData[16], charData[17]));
+                accessory = new Ability(TwoBytesToUShort(charData[18], charData[19]));
+                rightHand = new Ability(TwoBytesToUShort(charData[20], charData[21]));
+                rightShield = new Ability(TwoBytesToUShort(charData[22], charData[23]));
+                leftHand = new Ability(TwoBytesToUShort(charData[24], charData[25]));
+                leftShield = new Ability(TwoBytesToUShort(charData[26], charData[27]));
+            }
+
+            experience = charData[28];
+            level = charData[29];
+            bravery = charData[30];
+            faith = charData[31];
+
+            rawHP = ThreeBytesToUInt(charData[32], charData[33], charData[34]);
+            rawMP = ThreeBytesToUInt(charData[35], charData[36], charData[37]);
+            rawSP = ThreeBytesToUInt(charData[38], charData[39], charData[40]);
+            rawPA = ThreeBytesToUInt(charData[41], charData[42], charData[43]);
+            rawMA = ThreeBytesToUInt(charData[44], charData[45], charData[46]);
+
+            byte[] jaBytes = new byte[173];
+
+            Savegame.CopyArray(charData, jaBytes, 0x4BB - 0x48C, 173);
+            jobsAndAbilities = new JobsAndAbilities(jaBytes);
+
+            for (int i = 0; i < 15; i++)
+            {
+                rawName[i] = charData[0xDC + i];
+            }
+
+            for (int k = 0; k < 21; k++)
+            {
+                afterName[k] = charData[0xEB + k];
             }
         }
 
         /// <summary>
-        /// Creates a default character at the specified index
+        /// Builds a character with "default" stats
         /// </summary>
-        /// <param name="index"></param>
-        public Character( int index )
+        private void BuildDummyCharacter()
         {
-            accessory = new Item( 0 );
-            body = new Item( 0 );
+            accessory = new Item(0);
+            body = new Item(0);
             bravery = 50;
             experience = 0;
             faith = 50;
             gender = Gender.Male;
-            head = new Item( 0 );
-            index = (byte)index;
+            head = new Item(0);
+            isPresent = false;
             job = Class.ClassDictionary[0x4A];
 
             jobLevels = new byte[] { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11 };
@@ -966,41 +992,88 @@ namespace LionEditor
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-            jobsAndAbilities = new JobsAndAbilities( jobBytes );
+            jobsAndAbilities = new JobsAndAbilities(jobBytes);
 
-            leftHand = new Item( 0 );
-            leftShield = new Item( 0 );
+            leftHand = new Item(0);
+            leftShield = new Item(0);
             level = 1;
-            movementAbility = new Ability( 0 );
+            movementAbility = new Ability(0);
             Name = "##########";
-            rawHP = Job.GetRawHPFromActualHP( 50 );
-            rawMA = Job.GetRawMAFromActualMA( 11 );
-            rawMP = Job.GetRawMPFromActualMP( 10 );
-            rawPA = Job.GetRawPAFromActualPA( 5 );
-            rawSP = Job.GetRawSPFromActualSP( 6 );
-            reactAbility = new Ability( 0 );
-            rightHand = new Item( 0 );
-            rightShield = new Item( 0 );
+            rawHP = Job.GetRawHPFromActualHP(50);
+            rawMA = Job.GetRawMAFromActualMA(11);
+            rawMP = Job.GetRawMPFromActualMP(10);
+            rawPA = Job.GetRawPAFromActualPA(5);
+            rawSP = Job.GetRawSPFromActualSP(6);
+            reactAbility = new Ability(0);
+            rightHand = new Item(0);
+            rightShield = new Item(0);
             secondaryAction = SecondaryAction.ActionDictionary[0x00];
-            for( int i = 0; i < 22; i++ )
+            for (int i = 0; i < 22; i++)
             {
-                for( int j = 0; j < 3; j++ )
+                for (int j = 0; j < 3; j++)
                 {
                     skillsUnlocked[i, j] = 0x00;
                 }
             }
 
             spriteSet = SpriteSet.AllSprites[0x80];
-            supportAbility = new Ability( 0 );
+            supportAbility = new Ability(0);
             unknownOffset03 = 0x00;
             unknownOffset05 = 0x00;
             zodiacSign = Zodiac.Aries;
             OnProposition = false;
         }
 
-        #endregion
+        /// <summary>
+        /// Takes two little endian bytes and turns them into a ushort
+        /// </summary>
+        /// <param name="one">least significant byte</param>
+        /// <param name="two">most significant byte</param>
+        /// <returns></returns>
+        private static ushort TwoBytesToUShort(byte one, byte two)
+        {
+            return (ushort)((two << 8) + one);
+        }
 
-        #region Utilities
+        /// <summary>
+        /// Takes three little endian bytes and turns them into a uint
+        /// </summary>
+        /// <param name="one">least significant byte</param>
+        /// <param name="two"></param>
+        /// <param name="three">most significant byte</param>
+        /// <returns></returns>
+        private static uint ThreeBytesToUInt(byte one, byte two, byte three)
+        {
+            return (uint)(((uint)three << 16) + ((uint)two << 8) + (uint)one);
+        }
+
+        /// <summary>
+        /// Checks valid ranges of some bytes to determine if the byte array represents a valid character
+        /// </summary>
+        private static bool IsValidCharacter(byte[] charData)
+        {
+            return ((charData[0] > 0) && (charData[0] < SpriteSet.AllSprites.Count))
+                && (((charData[1] >= 0) && (charData[1] < 28)) || (charData[1] == 0xFF))
+                && ((charData[2] > 0) && (Class.ClassDictionary.ContainsKey(charData[2])))
+                && (Enum.IsDefined(typeof(Gender), charData[4] & 0xE0))
+                && (Enum.IsDefined(typeof(Zodiac), charData[6] & 0xF0))
+                && (((Gender)charData[4] == Gender.Monster) || 
+                      ((SecondaryAction.ActionDictionary.ContainsKey(charData[7])) 
+                    && (TwoBytesToUShort(charData[8], charData[9]) < 512) 
+                    && (TwoBytesToUShort(charData[10], charData[11]) < 512) 
+                    && (TwoBytesToUShort(charData[12], charData[13]) < 512) 
+                    && (TwoBytesToUShort(charData[14], charData[15]) < 316) 
+                    && (TwoBytesToUShort(charData[16], charData[17]) < 316) 
+                    && (TwoBytesToUShort(charData[18], charData[19]) < 316) 
+                    && (TwoBytesToUShort(charData[20], charData[21]) < 316) 
+                    && (TwoBytesToUShort(charData[22], charData[23]) < 316) 
+                    && (TwoBytesToUShort(charData[24], charData[25]) < 316) 
+                    && (TwoBytesToUShort(charData[26], charData[27]) < 316)))
+                && (charData[28] < 100)
+                && ((charData[29] > 0) && (charData[29] < 100))
+                && ((charData[30] >= 0) && (charData[30] <= 100))
+                && ((charData[31] >= 0) && (charData[31] <= 100));
+        }
 
         /// <summary>
         /// Decodes a name from FFT's dumb character encoding

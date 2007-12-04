@@ -30,7 +30,6 @@ namespace LionEditor
     public partial class MainForm : Form
     {
         string filename;
-        bool modified = false;
         Savegame[] games = new Savegame[15];
 
         public MainForm()

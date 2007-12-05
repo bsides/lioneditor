@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace LionEditor
 {
@@ -84,10 +85,10 @@ namespace LionEditor
         {
             FireDataChangedEvent();
         }
-
+        bool ignoreChecks = false;
         void characterSelector_ItemCheck( object sender, ItemCheckEventArgs e )
         {
-            if( e.NewValue != CheckState.Indeterminate )
+            if ((e.NewValue != CheckState.Indeterminate) && (!ignoreChecks))
             {
                 Character c = characterSelector.Items[e.Index] as Character;
                 c.IsPresent = (e.NewValue == CheckState.Checked);
@@ -95,10 +96,13 @@ namespace LionEditor
             }
         }
 
+        int lastSelectedIndex;
+
         void characterSelector_SelectedIndexChanged( object sender, EventArgs e )
         {
             Character c = characterSelector.SelectedItem as Character;
             characterEditor.Character = c;
+            lastSelectedIndex = characterSelector.SelectedIndex;
         }
 
         public event EventHandler DataChangedEvent;
@@ -111,6 +115,90 @@ namespace LionEditor
             }
         }
 
+        #region Drag/Drop support
+
+        void characterSelector_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Effect == DragDropEffects.Move)
+            {
+                if (e.Data.GetDataPresent(typeof(Character)))
+                {
+                    CheckedListBox listBox = sender as CheckedListBox;
+                    Character c = e.Data.GetData(typeof(Character)) as Character;
+                    int index = listBox.IndexFromPoint(listBox.PointToClient(new Point(e.X, e.Y)));
+                    if (index > -1)
+                    {
+                        listBox.Items.Insert(index, c);
+                        int oldSelectedIndex = listBox.SelectedIndex;
+                        //listBox.SelectedIndex = index;
+                        listBox.Items.RemoveAt(oldSelectedIndex);
+                        listBox.SelectedItem = c;
+                        characterEditor.Character = c;
+                    }
+                }
+            }
+        }
+
+        void characterSelector_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(Character)))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        void characterSelector_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Determine if the click was on the checkbox
+            Size s;
+            int index = characterSelector.IndexFromPoint(e.X, e.Y);
+            using (Graphics g = characterSelector.CreateGraphics())
+            {
+                s = CheckBoxRenderer.GetGlyphSize(g, characterSelector.CheckedIndices.Contains(index) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal);
+            }
+            Rectangle bounds = characterSelector.GetItemRectangle(index);
+            int num2 = characterSelector.Font.Height + 2;
+            int num3 = Math.Max((num2 - s.Width) / 2, 0);
+            if ((num3 + s.Width) > bounds.Height)
+            {
+                num3 = bounds.Height - s.Width;
+            }
+
+            Rectangle rectangle = new Rectangle(bounds.X + 1, bounds.Y + num3, s.Width, s.Width);
+
+            CheckedListBox listBox = sender as CheckedListBox;
+
+            // If not, do whatever
+            if ((e.Button == MouseButtons.Left) && (listBox.SelectedIndex == lastSelectedIndex) && (!rectangle.Contains(e.Location)))
+            {
+                if (listBox.Items.Count == 0)
+                {
+                    return;
+                }
+
+                Character c = listBox.Items[index] as Character;
+                DragDropEffects dde = DoDragDrop(c, DragDropEffects.Move);
+                lastSelectedIndex = listBox.SelectedIndex;
+
+                // Reassign everyone's index and checkstates
+                for (int i = 0; i < listBox.Items.Count; i++)
+                {
+                    c = listBox.Items[i] as Character;
+                    listBox.SetItemChecked(i, c.IsPresent);
+                    c.Index = (byte)i;
+                }
+
+                // TODO: "dropped" character's index displays wrong in groupbox
+                characterEditor.Invalidate();
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Utilities
@@ -122,10 +210,7 @@ namespace LionEditor
             {
                 characterSelector.Items.Add(c, c.IsPresent);
             }
-            foreach( Character g in game.Guests )
-            {
-                characterSelector.Items.Add(g, g.IsPresent);
-            }
+
             characterSelector.SelectedIndex = 0;
 
             optionsEditor.Options = game.Options;
@@ -163,7 +248,10 @@ namespace LionEditor
             chronicleEditor.DataChangedEvent += chronicleEditor_DataChangedEvent;
             inventoryEditor.DataChangedEvent += dataChanged;
             poachersDenEditor.DataChangedEvent += dataChanged;
-        }
 
+            characterSelector.MouseDown += characterSelector_MouseDown;
+            characterSelector.DragEnter += characterSelector_DragEnter;
+            characterSelector.DragDrop += characterSelector_DragDrop;
+        }
     }
 }

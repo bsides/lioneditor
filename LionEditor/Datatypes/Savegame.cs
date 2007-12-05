@@ -47,8 +47,7 @@ namespace LionEditor
         private byte[] prop7 = new byte[9];
         private byte[] prop8 = new byte[9];
         private byte[] offset0x489 = new byte[3];
-        private Character[] characters = new Character[24];
-        private Character[] guests = new Character[4];
+        private Character[] characters = new Character[28];
         private Inventory inventory;
         private Inventory poachersDen;
         private byte[] offset0x2304 = new byte[304];
@@ -106,14 +105,6 @@ namespace LionEditor
             get { return characters; }
         }
 
-        /// <summary>
-        /// Gets the collection of Guest <see cref="Character"/>s.
-        /// </summary>
-        public Character[] Guests
-        {
-            get { return guests; }
-        }
-        
         /// <summary>
         /// Gets the <see cref="Inventory"/>
         /// </summary>
@@ -251,17 +242,11 @@ namespace LionEditor
             CopyArray( file, prop7, 0x477, 9 );
             CopyArray( file, prop8, 0x480, 9 );
             CopyArray( file, offset0x489, 0x489, 3 );
-            for( int i = 0; i < 24; i++ )
+            for( int i = 0; i < 28; i++ )
             {
                 byte[] charBytes = new byte[256];
                 CopyArray( file, charBytes, 0x48C + i * 0x100, 0x100 );
                 Characters[i] = new Character(charBytes, i);
-            }
-            for( int i = 0; i < 4; i++ )
-            {
-                byte[] guestBytes = new byte[256];
-                CopyArray( file, guestBytes, 0x1C8C + i * 0x100, 0x100 );
-                Guests[i] = new Character(guestBytes, i+24);
             }
 
             byte[] inventoryBytes = new byte[316];
@@ -324,7 +309,7 @@ namespace LionEditor
             CopyArray( prop8, result, 0, 0x480, 9 );
             CopyArray( offset0x489, result, 0, 0x489, 3 );
 
-            for( int i = 0; i < 24; i++ )
+            for( int i = 0; i < 28; i++ )
             {
                 if( Characters[i] != null )
                 {
@@ -332,16 +317,8 @@ namespace LionEditor
                     CopyArray( charBytes, result, 0, 0x48C + i * 0x100, 0x100 );
                 }
             }
-            for( int i = 0; i < 4; i++ )
-            {
-                if( Guests[i] != null )
-                {
-                    byte[] guestBytes = Guests[i].ToByteArray();
-                    CopyArray( guestBytes, result, 0, 0x1C8C + i * 0x100, 0x100 );
-                }
-            }
 
-            inventory.UpdateEquippedQuantities( new Character[][] { Characters, Guests } );
+            inventory.UpdateEquippedQuantities( new Character[][] { Characters } );
 
             CopyArray( inventory.ToByteArray(), result, 0, 0x208C, 316 );
             CopyArray( poachersDen.ToByteArray(), result, 0, 0x21C8, 316 );

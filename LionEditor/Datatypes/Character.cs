@@ -908,13 +908,13 @@ namespace LionEditor
                 reactAbility = new Ability(TwoBytesToUShort(charData[8], charData[9]));
                 supportAbility = new Ability(TwoBytesToUShort(charData[10], charData[11]));
                 movementAbility = new Ability(TwoBytesToUShort(charData[12], charData[13]));
-                head = new Ability(TwoBytesToUShort(charData[14], charData[15]));
-                body = new Ability(TwoBytesToUShort(charData[16], charData[17]));
-                accessory = new Ability(TwoBytesToUShort(charData[18], charData[19]));
-                rightHand = new Ability(TwoBytesToUShort(charData[20], charData[21]));
-                rightShield = new Ability(TwoBytesToUShort(charData[22], charData[23]));
-                leftHand = new Ability(TwoBytesToUShort(charData[24], charData[25]));
-                leftShield = new Ability(TwoBytesToUShort(charData[26], charData[27]));
+                head = new Item(TwoBytesToUShort(charData[14], charData[15]));
+                body = new Item(TwoBytesToUShort(charData[16], charData[17]));
+                accessory = new Item(TwoBytesToUShort(charData[18], charData[19]));
+                rightHand = new Item(TwoBytesToUShort(charData[20], charData[21]));
+                rightShield = new Item(TwoBytesToUShort(charData[22], charData[23]));
+                leftHand = new Item(TwoBytesToUShort(charData[24], charData[25]));
+                leftShield = new Item(TwoBytesToUShort(charData[26], charData[27]));
             }
 
             experience = charData[28];

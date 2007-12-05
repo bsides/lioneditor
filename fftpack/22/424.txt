@@ -32,7 +32,7 @@ used in the help messages.
 [Portrait]Radius[Dialog] is the radius of the area of effect.
 [Portrait]MP[Dialog] is the number of MP consumed.
 [Portrait]Speed[Dialog] is the ability's Speed attribute.
- means that the magick may be reflected
+\xD110 means that the magick may be reflected
 by the Reflect ability.
 "Arithmeticks" indicates a spell that may be
 used with arithmeticks.

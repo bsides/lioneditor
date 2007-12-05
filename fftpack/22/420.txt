@@ -29,7 +29,7 @@ Now select "Black Magicks."{END}
 The black magicks available to this unit
 are displayed.
 
-Magicks that are marked with the  icon
+Magicks that are marked with the \xD110 icon
 may be reflected with the Reflect ability.
 
 The MP cost of casting the magick is shown

@@ -131,11 +131,11 @@ if (num == "dummy"):
 f = open(filename)
 o = open(str(num) + ".txt","w")
 
-#lower = ord(f.read(1))
-#upper = ord(f.read(1))
-#offset = upper * 256 + lower
+lower = ord(f.read(1))
+upper = ord(f.read(1))
+offset = upper * 256 + lower
 #print offset
-#f.seek(offset)
+f.seek(offset)
 
 b = f.read(1)
 while (len(b) > 0):
@@ -147,5 +147,11 @@ while (len(b) > 0):
     h = b *256 + ord(c)
     if (d.has_key(h)):
       o.write(d[h])
+    else:
+      print "0x%04X" % (h)
+      o.write("\\x%04X" % (h))
+  else:
+    print "0x%02X" % (b)
+    o.write("\\x%02X" % (b))
   b = f.read(1)
 o.close()

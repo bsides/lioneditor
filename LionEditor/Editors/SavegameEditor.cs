@@ -34,6 +34,7 @@ namespace LionEditor
 
         private Savegame game;
         private bool ignoreChanges = false;
+        private Character characterInVirtualClipBoard = null;
         
         #endregion
 
@@ -193,7 +194,11 @@ namespace LionEditor
                 }
 
                 // TODO: "dropped" character's index displays wrong in groupbox
-                characterEditor.Invalidate();
+                characterEditor.Character = characterSelector.SelectedItem as Character;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                characterSelector.SelectedIndex = index;
             }
         }
 
@@ -238,7 +243,7 @@ namespace LionEditor
             characterEditor.Enabled = false;
             characterSelector.Enabled = false;
             tabControl.Enabled = false;
-            
+            characterSelector.ContextMenu = characterRightClickMenu;
             characterSelector.SelectedIndexChanged += characterSelector_SelectedIndexChanged;
             characterSelector.CheckOnClick = false;
             characterSelector.ItemCheck += characterSelector_ItemCheck;
@@ -252,6 +257,66 @@ namespace LionEditor
             characterSelector.MouseDown += characterSelector_MouseDown;
             characterSelector.DragEnter += characterSelector_DragEnter;
             characterSelector.DragDrop += characterSelector_DragDrop;
+
+            characterCopyMenuItem.Click += new EventHandler(characterCopyMenuItem_Click);
+            characterPasteMenuItem.Click += new EventHandler(characterPasteMenuItem_Click);
+            characterMoveUpMenuItem.Click += new EventHandler(characterMoveUpMenuItem_Click);
+            characterMoveDownMenuItem.Click += new EventHandler(characterMoveDownMenuItem_Click);
+            characterRightClickMenu.Popup += new EventHandler(characterRightClickMenu_Popup);
+        }
+
+        void characterRightClickMenu_Popup(object sender, EventArgs e)
+        {
+            characterMoveDownMenuItem.Enabled = (characterSelector.SelectedIndex != (characterSelector.Items.Count - 1));
+            characterMoveUpMenuItem.Enabled = (characterSelector.SelectedIndex != 0);
+            characterPasteMenuItem.Enabled = (characterInVirtualClipBoard != null);
+        }
+
+        void characterMoveDownMenuItem_Click(object sender, EventArgs e)
+        {
+            this.SuspendLayout();
+            Character moved = characterSelector.SelectedItem as Character;
+            Character notMoved = characterSelector.Items[characterSelector.SelectedIndex + 1] as Character;
+            moved.Index += 1;
+            notMoved.Index -= 1;
+
+            characterSelector.Items[characterSelector.SelectedIndex] = notMoved;
+            characterSelector.Items[characterSelector.SelectedIndex + 1] = moved;
+            characterSelector.SelectedItem = moved;
+            this.ResumeLayout();
+        }
+
+        void characterMoveUpMenuItem_Click(object sender, EventArgs e)
+        {
+            this.SuspendLayout();
+            Character moved = characterSelector.SelectedItem as Character;
+            Character notMoved = characterSelector.Items[characterSelector.SelectedIndex - 1] as Character;
+            moved.Index -= 1;
+            notMoved.Index += 1;
+            characterSelector.Items[characterSelector.SelectedIndex] = notMoved;
+            characterSelector.Items[characterSelector.SelectedIndex - 1] = moved;
+            characterSelector.SelectedItem = moved;
+            this.ResumeLayout();
+        }
+
+        void characterPasteMenuItem_Click(object sender, EventArgs e)
+        {
+            if (characterInVirtualClipBoard != null)
+            {
+                this.SuspendLayout();
+                Character newChar = characterInVirtualClipBoard.Clone() as Character;
+                newChar.Index = (byte)characterSelector.SelectedIndex;
+                game.Characters[characterSelector.SelectedIndex] = newChar;
+                characterSelector.Items[characterSelector.SelectedIndex] = newChar;
+                characterEditor.Character = newChar;
+                this.ResumeLayout();
+            }
+        }
+
+        void characterCopyMenuItem_Click(object sender, EventArgs e)
+        {
+            characterPasteMenuItem.Enabled = true;
+            characterInVirtualClipBoard = characterSelector.SelectedItem as Character;
         }
     }
 }

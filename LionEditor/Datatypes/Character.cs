@@ -24,7 +24,7 @@ using System.Runtime.Serialization;
 
 namespace LionEditor
 {
-    public class Character
+    public class Character : ICloneable
     {
         #region Character Map
 
@@ -159,8 +159,8 @@ namespace LionEditor
         /// </summary>
         public string Name
         {
-            get { return DecodeName( rawName, 0 ); }
-            set { EncodeName( value, rawName, 0 ); }
+            get { return DecodeName(rawName, 0); }
+            set { EncodeName(value, rawName, 0); }
         }
 
         /// <summary>
@@ -421,8 +421,8 @@ namespace LionEditor
         /// </summary>
         public uint HP
         {
-            get { return (uint)(job.ActualHP( rawHP ) * HPMultiplier + HPBonus); }
-            set { rawHP = job.GetRawHPFromActualHP( (int)((value - HPBonus) / HPMultiplier) ); }
+            get { return (uint)(job.ActualHP(rawHP) * HPMultiplier + HPBonus); }
+            set { rawHP = job.GetRawHPFromActualHP((int)((value - HPBonus) / HPMultiplier)); }
         }
 
         /// <summary>
@@ -430,7 +430,7 @@ namespace LionEditor
         /// </summary>
         public uint MaxHP
         {
-            get { return (uint)(job.ActualHP( 0xFFFFFF ) * HPMultiplier + HPBonus); }
+            get { return (uint)(job.ActualHP(0xFFFFFF) * HPMultiplier + HPBonus); }
         }
 
         #endregion HP
@@ -469,8 +469,8 @@ namespace LionEditor
         /// </summary>
         public uint MP
         {
-            get { return (uint)(job.ActualMP( rawMP ) + MPBonus); }
-            set { rawMP = job.GetRawMPFromActualMP( (int)(value - MPBonus) ); }
+            get { return (uint)(job.ActualMP(rawMP) + MPBonus); }
+            set { rawMP = job.GetRawMPFromActualMP((int)(value - MPBonus)); }
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace LionEditor
         /// </summary>
         public uint MaxMP
         {
-            get { return (uint)(job.ActualMP( 0xFFFFFF ) + MPBonus); }
+            get { return (uint)(job.ActualMP(0xFFFFFF) + MPBonus); }
         }
 
         #endregion MP
@@ -517,8 +517,8 @@ namespace LionEditor
         /// </summary>
         public uint Speed
         {
-            get { return (uint)(job.ActualSP( rawSP ) + SpeedBonus); }
-            set { rawSP = job.GetRawSPFromActualSP( (int)(value - SpeedBonus) ); }
+            get { return (uint)(job.ActualSP(rawSP) + SpeedBonus); }
+            set { rawSP = job.GetRawSPFromActualSP((int)(value - SpeedBonus)); }
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace LionEditor
         /// </summary>
         public uint MaxSpeed
         {
-            get { return (uint)(job.ActualSP( rawSP ) + SpeedBonus); }
+            get { return (uint)(job.ActualSP(rawSP) + SpeedBonus); }
         }
 
         #endregion Speed
@@ -565,8 +565,8 @@ namespace LionEditor
         /// </summary>
         public uint PA
         {
-            get { return (uint)(job.ActualPA( rawPA ) + PABonus); }
-            set { rawPA = job.GetRawPAFromActualPA( (int)(value - PABonus) ); }
+            get { return (uint)(job.ActualPA(rawPA) + PABonus); }
+            set { rawPA = job.GetRawPAFromActualPA((int)(value - PABonus)); }
         }
 
         /// <summary>
@@ -574,7 +574,7 @@ namespace LionEditor
         /// </summary>
         public uint MaxPA
         {
-            get { return (uint)(job.ActualPA( 0xFFFFFF ) + PABonus); }
+            get { return (uint)(job.ActualPA(0xFFFFFF) + PABonus); }
         }
 
         #endregion Pysical Attack
@@ -613,8 +613,8 @@ namespace LionEditor
         /// </summary>
         public uint MA
         {
-            get { return (uint)(job.ActualMA( rawMA ) + MABonus); }
-            set { rawMA = job.GetRawMAFromActualMA( (int)(value - MABonus) ); }
+            get { return (uint)(job.ActualMA(rawMA) + MABonus); }
+            set { rawMA = job.GetRawMAFromActualMA((int)(value - MABonus)); }
         }
 
         /// <summary>
@@ -622,7 +622,7 @@ namespace LionEditor
         /// </summary>
         public uint MaxMA
         {
-            get { return (uint)(job.ActualMA( 0xFFFFFF ) + MABonus); }
+            get { return (uint)(job.ActualMA(0xFFFFFF) + MABonus); }
         }
 
         #endregion Magic Attack
@@ -852,7 +852,7 @@ namespace LionEditor
         /// </summary>
         /// <param name="charData"></param>
         /// <param name="index"></param>
-        public Character( byte[] charData, int index )
+        public Character(byte[] charData, int index)
         {
             this.index = (byte)index;
             if (IsValidCharacter(charData))
@@ -1057,17 +1057,17 @@ namespace LionEditor
                 && ((charData[2] > 0) && (Class.ClassDictionary.ContainsKey(charData[2])))
                 && (Enum.IsDefined(typeof(Gender), charData[4] & 0xE0))
                 && (Enum.IsDefined(typeof(Zodiac), charData[6] & 0xF0))
-                && (((Gender)charData[4] == Gender.Monster) || 
-                      ((SecondaryAction.ActionDictionary.ContainsKey(charData[7])) 
-                    && (TwoBytesToUShort(charData[8], charData[9]) < 512) 
-                    && (TwoBytesToUShort(charData[10], charData[11]) < 512) 
-                    && (TwoBytesToUShort(charData[12], charData[13]) < 512) 
-                    && (TwoBytesToUShort(charData[14], charData[15]) < 316) 
-                    && (TwoBytesToUShort(charData[16], charData[17]) < 316) 
-                    && (TwoBytesToUShort(charData[18], charData[19]) < 316) 
-                    && (TwoBytesToUShort(charData[20], charData[21]) < 316) 
-                    && (TwoBytesToUShort(charData[22], charData[23]) < 316) 
-                    && (TwoBytesToUShort(charData[24], charData[25]) < 316) 
+                && (((Gender)charData[4] == Gender.Monster) ||
+                      ((SecondaryAction.ActionDictionary.ContainsKey(charData[7]))
+                    && (TwoBytesToUShort(charData[8], charData[9]) < 512)
+                    && (TwoBytesToUShort(charData[10], charData[11]) < 512)
+                    && (TwoBytesToUShort(charData[12], charData[13]) < 512)
+                    && (TwoBytesToUShort(charData[14], charData[15]) < 316)
+                    && (TwoBytesToUShort(charData[16], charData[17]) < 316)
+                    && (TwoBytesToUShort(charData[18], charData[19]) < 316)
+                    && (TwoBytesToUShort(charData[20], charData[21]) < 316)
+                    && (TwoBytesToUShort(charData[22], charData[23]) < 316)
+                    && (TwoBytesToUShort(charData[24], charData[25]) < 316)
                     && (TwoBytesToUShort(charData[26], charData[27]) < 316)))
                 && (charData[28] < 100)
                 && ((charData[29] > 0) && (charData[29] < 100))
@@ -1081,13 +1081,13 @@ namespace LionEditor
         /// <param name="source"></param>
         /// <param name="start"></param>
         /// <returns></returns>
-        public static string DecodeName( byte[] source, int start )
+        public static string DecodeName(byte[] source, int start)
         {
             StringBuilder sb = new StringBuilder();
             int k = start;
-            while( source[k] != 0xFE )
+            while (source[k] != 0xFE)
             {
-                sb.Append( characterMap[source[k]] );
+                sb.Append(characterMap[source[k]]);
                 k++;
             }
 
@@ -1100,14 +1100,14 @@ namespace LionEditor
         /// <param name="name"></param>
         /// <param name="destination"></param>
         /// <param name="start"></param>
-        public static void EncodeName( string name, byte[] destination, int start )
+        public static void EncodeName(string name, byte[] destination, int start)
         {
             int i = 0;
-            List<char> charList = new List<char>( characterMap );
+            List<char> charList = new List<char>(characterMap);
 
-            foreach( char c in name )
+            foreach (char c in name)
             {
-                destination[i + start] = (byte)(charList.IndexOf( c ) & 0xFF);
+                destination[i + start] = (byte)(charList.IndexOf(c) & 0xFF);
                 i++;
             }
             destination[i + start] = 0xFE;
@@ -1121,7 +1121,7 @@ namespace LionEditor
         {
             byte[] result = new byte[256];
             result[0] = spriteSet.Value;
-            result[1] = index;
+            result[1] = (byte)(isPresent ? index : 0xFF);
             result[2] = job.Byte;
             result[3] = unknownOffset03;
             result[4] = (byte)gender;
@@ -1175,17 +1175,17 @@ namespace LionEditor
             result[46] = (byte)((rawMA & 0xFF0000) >> 16);
 
             byte[] jaBytes = jobsAndAbilities.ToByteArray();
-            for( int i = 0; i < 173; i++ )
+            for (int i = 0; i < 173; i++)
             {
                 result[47 + i] = jaBytes[i];
             }
 
-            for( int i = 0; i < 15; i++ )
+            for (int i = 0; i < 15; i++)
             {
                 result[0xDC + i] = rawName[i];
             }
 
-            for( int k = 0; k < 21; k++ )
+            for (int k = 0; k < 21; k++)
             {
                 result[0xEB + k] = afterName[k];
             }
@@ -1200,6 +1200,15 @@ namespace LionEditor
         public override string ToString()
         {
             return Name;
+        }
+
+        /// <summary>
+        /// Clones this character
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            return new Character(this.ToByteArray(), this.index);
         }
 
         #endregion

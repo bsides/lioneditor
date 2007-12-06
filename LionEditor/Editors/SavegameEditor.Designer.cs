@@ -52,16 +52,22 @@ namespace LionEditor
             System.Windows.Forms.SplitContainer splitContainer;
             System.Windows.Forms.TableLayoutPanel inventoryTable;
             this.characterSelector = new System.Windows.Forms.CheckedListBox();
-            this.characterEditor = new LionEditor.CharacterEditor();
-            this.inventoryEditor = new LionEditor.InventoryEditor();
-            this.poachersDenEditor = new LionEditor.InventoryEditor();
             this.optionsTab = new System.Windows.Forms.TabPage();
-            this.optionsEditor = new LionEditor.OptionsEditor();
             this.inventoryTab = new System.Windows.Forms.TabPage();
             this.chronicleTab = new System.Windows.Forms.TabPage();
-            this.chronicleEditor = new LionEditor.ChronicleEditor();
             this.charactersTab = new System.Windows.Forms.TabPage();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.characterRightClickMenu = new System.Windows.Forms.ContextMenu();
+            this.characterCopyMenuItem = new System.Windows.Forms.MenuItem();
+            this.characterPasteMenuItem = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.characterMoveUpMenuItem = new System.Windows.Forms.MenuItem();
+            this.characterMoveDownMenuItem = new System.Windows.Forms.MenuItem();
+            this.characterEditor = new LionEditor.CharacterEditor();
+            this.chronicleEditor = new LionEditor.ChronicleEditor();
+            this.inventoryEditor = new LionEditor.InventoryEditor();
+            this.poachersDenEditor = new LionEditor.InventoryEditor();
+            this.optionsEditor = new LionEditor.OptionsEditor();
             poachersDenLabel = new System.Windows.Forms.Label();
             inventoryLabel = new System.Windows.Forms.Label();
             splitContainer = new System.Windows.Forms.SplitContainer();
@@ -125,16 +131,9 @@ namespace LionEditor
             this.characterSelector.FormattingEnabled = true;
             this.characterSelector.Location = new System.Drawing.Point(0, 0);
             this.characterSelector.Name = "characterSelector";
+            this.characterSelector.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.characterSelector.Size = new System.Drawing.Size(130, 439);
             this.characterSelector.TabIndex = 0;
-            // 
-            // characterEditor
-            // 
-            this.characterEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.characterEditor.Location = new System.Drawing.Point(0, 0);
-            this.characterEditor.Name = "characterEditor";
-            this.characterEditor.Size = new System.Drawing.Size(577, 444);
-            this.characterEditor.TabIndex = 0;
             // 
             // inventoryTable
             // 
@@ -155,26 +154,6 @@ namespace LionEditor
             inventoryTable.Size = new System.Drawing.Size(717, 450);
             inventoryTable.TabIndex = 1;
             // 
-            // inventoryEditor
-            // 
-            this.inventoryEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inventoryEditor.Inventory = null;
-            this.inventoryEditor.Location = new System.Drawing.Point(1, 25);
-            this.inventoryEditor.Margin = new System.Windows.Forms.Padding(1);
-            this.inventoryEditor.Name = "inventoryEditor";
-            this.inventoryEditor.Size = new System.Drawing.Size(356, 424);
-            this.inventoryEditor.TabIndex = 0;
-            // 
-            // poachersDenEditor
-            // 
-            this.poachersDenEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poachersDenEditor.Inventory = null;
-            this.poachersDenEditor.Location = new System.Drawing.Point(359, 25);
-            this.poachersDenEditor.Margin = new System.Windows.Forms.Padding(1);
-            this.poachersDenEditor.Name = "poachersDenEditor";
-            this.poachersDenEditor.Size = new System.Drawing.Size(357, 424);
-            this.poachersDenEditor.TabIndex = 1;
-            // 
             // optionsTab
             // 
             this.optionsTab.Controls.Add(this.optionsEditor);
@@ -185,15 +164,6 @@ namespace LionEditor
             this.optionsTab.TabIndex = 3;
             this.optionsTab.Text = "Options";
             this.optionsTab.UseVisualStyleBackColor = true;
-            // 
-            // optionsEditor
-            // 
-            this.optionsEditor.Dock = System.Windows.Forms.DockStyle.Left;
-            this.optionsEditor.Location = new System.Drawing.Point(3, 3);
-            this.optionsEditor.Name = "optionsEditor";
-            this.optionsEditor.Options = null;
-            this.optionsEditor.Size = new System.Drawing.Size(460, 444);
-            this.optionsEditor.TabIndex = 0;
             // 
             // inventoryTab
             // 
@@ -215,21 +185,6 @@ namespace LionEditor
             this.chronicleTab.TabIndex = 1;
             this.chronicleTab.Text = "Chronicle";
             this.chronicleTab.UseVisualStyleBackColor = true;
-            // 
-            // chronicleEditor
-            // 
-            this.chronicleEditor.Artefacts = null;
-            this.chronicleEditor.Casualties = ((uint)(0u));
-            this.chronicleEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chronicleEditor.Feats = null;
-            this.chronicleEditor.Kills = ((uint)(0u));
-            this.chronicleEditor.Location = new System.Drawing.Point(3, 3);
-            this.chronicleEditor.Name = "chronicleEditor";
-            this.chronicleEditor.Size = new System.Drawing.Size(711, 444);
-            this.chronicleEditor.TabIndex = 0;
-            this.chronicleEditor.Timer = ((uint)(0u));
-            this.chronicleEditor.WarFunds = ((uint)(0u));
-            this.chronicleEditor.Wonders = null;
             // 
             // charactersTab
             // 
@@ -254,6 +209,93 @@ namespace LionEditor
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(725, 476);
             this.tabControl.TabIndex = 1;
+            // 
+            // characterRightClickMenu
+            // 
+            this.characterRightClickMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.characterCopyMenuItem,
+            this.characterPasteMenuItem,
+            this.menuItem3,
+            this.characterMoveUpMenuItem,
+            this.characterMoveDownMenuItem});
+            // 
+            // characterCopyMenuItem
+            // 
+            this.characterCopyMenuItem.Index = 0;
+            this.characterCopyMenuItem.Text = "&Copy";
+            // 
+            // characterPasteMenuItem
+            // 
+            this.characterPasteMenuItem.Enabled = false;
+            this.characterPasteMenuItem.Index = 1;
+            this.characterPasteMenuItem.Text = "P&aste";
+            // 
+            // menuItem3
+            // 
+            this.menuItem3.Index = 2;
+            this.menuItem3.Text = "-";
+            // 
+            // characterMoveUpMenuItem
+            // 
+            this.characterMoveUpMenuItem.Index = 3;
+            this.characterMoveUpMenuItem.Text = "Move &up";
+            // 
+            // characterMoveDownMenuItem
+            // 
+            this.characterMoveDownMenuItem.Index = 4;
+            this.characterMoveDownMenuItem.Text = "Move &down";
+            // 
+            // characterEditor
+            // 
+            this.characterEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.characterEditor.Location = new System.Drawing.Point(0, 0);
+            this.characterEditor.Name = "characterEditor";
+            this.characterEditor.Size = new System.Drawing.Size(577, 444);
+            this.characterEditor.TabIndex = 0;
+            // 
+            // chronicleEditor
+            // 
+            this.chronicleEditor.Artefacts = null;
+            this.chronicleEditor.Casualties = ((uint)(0u));
+            this.chronicleEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chronicleEditor.Feats = null;
+            this.chronicleEditor.Kills = ((uint)(0u));
+            this.chronicleEditor.Location = new System.Drawing.Point(3, 3);
+            this.chronicleEditor.Name = "chronicleEditor";
+            this.chronicleEditor.Size = new System.Drawing.Size(711, 444);
+            this.chronicleEditor.TabIndex = 0;
+            this.chronicleEditor.Timer = ((uint)(0u));
+            this.chronicleEditor.WarFunds = ((uint)(0u));
+            this.chronicleEditor.Wonders = null;
+            // 
+            // inventoryEditor
+            // 
+            this.inventoryEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inventoryEditor.Inventory = null;
+            this.inventoryEditor.Location = new System.Drawing.Point(1, 25);
+            this.inventoryEditor.Margin = new System.Windows.Forms.Padding(1);
+            this.inventoryEditor.Name = "inventoryEditor";
+            this.inventoryEditor.Size = new System.Drawing.Size(356, 424);
+            this.inventoryEditor.TabIndex = 0;
+            // 
+            // poachersDenEditor
+            // 
+            this.poachersDenEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poachersDenEditor.Inventory = null;
+            this.poachersDenEditor.Location = new System.Drawing.Point(359, 25);
+            this.poachersDenEditor.Margin = new System.Windows.Forms.Padding(1);
+            this.poachersDenEditor.Name = "poachersDenEditor";
+            this.poachersDenEditor.Size = new System.Drawing.Size(357, 424);
+            this.poachersDenEditor.TabIndex = 1;
+            // 
+            // optionsEditor
+            // 
+            this.optionsEditor.Dock = System.Windows.Forms.DockStyle.Left;
+            this.optionsEditor.Location = new System.Drawing.Point(3, 3);
+            this.optionsEditor.Name = "optionsEditor";
+            this.optionsEditor.Options = null;
+            this.optionsEditor.Size = new System.Drawing.Size(460, 444);
+            this.optionsEditor.TabIndex = 0;
             // 
             // SavegameEditor
             // 
@@ -289,6 +331,12 @@ namespace LionEditor
         private System.Windows.Forms.CheckedListBox characterSelector;
         private CharacterEditor characterEditor;
         private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.ContextMenu characterRightClickMenu;
+        private System.Windows.Forms.MenuItem characterCopyMenuItem;
+        private System.Windows.Forms.MenuItem characterPasteMenuItem;
+        private System.Windows.Forms.MenuItem menuItem3;
+        private System.Windows.Forms.MenuItem characterMoveUpMenuItem;
+        private System.Windows.Forms.MenuItem characterMoveDownMenuItem;
 
     }
 }

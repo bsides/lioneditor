@@ -29,51 +29,92 @@ namespace LionEditor
 {
     public partial class MainForm : Form
     {
-        string filename;
-        Savegame[] games = new Savegame[15];
+        #region Fields
+
+        private string filename;
+        private Savegame[] games = new Savegame[15];
+
+        #endregion
+
+        #region Constructor
 
         public MainForm()
         {
             InitializeComponent();
-            toolBar.ButtonClick += new ToolBarButtonClickEventHandler( toolBarClick );
-            gameSelector.SelectedIndexChanged += new EventHandler( SelectedGameChanged );
-            openMenuItem.Click += new EventHandler( openMenuItem_Click );
-            saveMenuItem.Click += new EventHandler( saveMenuItem_Click );
-            saveAsMenuItem.Click += new EventHandler( saveAsMenuItem_Click );
-            aboutMenuItem.Click += new EventHandler( aboutMenuItem_Click );
+            toolBar.ButtonClick += toolBarClick;
+            gameSelector.SelectedIndexChanged += SelectedGameChanged;
+            openMenuItem.Click += openMenuItem_Click;
+            saveMenuItem.Click += saveMenuItem_Click;
+            saveAsMenuItem.Click += saveAsMenuItem_Click;
+            aboutMenuItem.Click += aboutMenuItem_Click;
         }
 
-        void aboutMenuItem_Click( object sender, EventArgs e )
+        #endregion
+
+        #region Events
+
+        private void aboutMenuItem_Click(object sender, EventArgs e)
         {
             About about = new About();
-            about.ShowDialog( this );
+            about.ShowDialog(this);
         }
 
-        void saveAsMenuItem_Click( object sender, EventArgs e )
+        private void saveAsMenuItem_Click(object sender, EventArgs e)
         {
             filename = null;
             SaveFile();
         }
 
-        void saveMenuItem_Click( object sender, EventArgs e )
+        private void saveMenuItem_Click(object sender, EventArgs e)
         {
             SaveFile();
         }
 
-        void openMenuItem_Click( object sender, EventArgs e )
+        private void openMenuItem_Click(object sender, EventArgs e)
         {
             LoadFile();
         }
 
-        void SelectedGameChanged( object sender, EventArgs e )
+        private void SelectedGameChanged(object sender, EventArgs e)
         {
-            if( gameSelector.SelectedIndex != -1 )
+            if (gameSelector.SelectedIndex != -1)
             {
                 savegameEditor.Game = gameSelector.SelectedItem as Savegame;
             }
         }
 
-        private bool CheckValidGame( byte[] bytes )
+        private void savegameEditor_DataChangedEvent(object sender, EventArgs e)
+        {
+            saveButton.Enabled = true;
+            saveMenuItem.Enabled = true;
+        }
+
+        private void toolBarClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            if (e.Button == openButton)
+            {
+                LoadFile();
+            }
+            else if (e.Button == saveButton)
+            {
+                if ((filename != null) && (filename != string.Empty))
+                {
+                    SaveFile();
+                    saveButton.Enabled = false;
+                }
+            }
+            else
+            {
+                // Something terrible happened
+                throw new Exception();
+            }
+        }
+
+        #endregion
+
+        #region Utilities
+
+        private bool CheckValidGame(byte[] bytes)
         {
             // TODO: Improve this
 
@@ -113,11 +154,11 @@ namespace LionEditor
 
         private void SaveFile()
         {
-            if( (filename == null) || (filename == string.Empty) )
+            if ((filename == null) || (filename == string.Empty))
             {
                 filename = null;
                 saveFileDialog.FileName = string.Empty;
-                if( saveFileDialog.ShowDialog() == DialogResult.OK )
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     filename = saveFileDialog.FileName;
                 }
@@ -127,18 +168,18 @@ namespace LionEditor
                 }
             }
 
-            System.IO.FileStream stream = new System.IO.FileStream( filename, System.IO.FileMode.Create );
-            for( int i = 0; i < 15; i++ )
+            System.IO.FileStream stream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+            for (int i = 0; i < 15; i++)
             {
-                if( games[i] != null )
+                if (games[i] != null)
                 {
-                    stream.Write( games[i].ToByteArray(), 0, (int)Savegame.saveFileSize );
+                    stream.Write(games[i].ToByteArray(), 0, (int)Savegame.saveFileSize);
                 }
                 else
                 {
-                    for( int j = 0; j < Savegame.saveFileSize; j++ )
+                    for (int j = 0; j < Savegame.saveFileSize; j++)
                     {
-                        stream.WriteByte( 0xFF );
+                        stream.WriteByte(0xFF);
                     }
                 }
             }
@@ -152,20 +193,20 @@ namespace LionEditor
         {
             openFileDialog.FileName = string.Empty;
             DialogResult result = openFileDialog.ShowDialog();
-            if( result == DialogResult.OK )
+            if (result == DialogResult.OK)
             {
                 filename = openFileDialog.FileName;
-                System.IO.FileStream stream = new System.IO.FileStream( filename, System.IO.FileMode.Open );
+                System.IO.FileStream stream = new System.IO.FileStream(filename, System.IO.FileMode.Open);
                 byte[] bytes = new byte[0x2A3C];
 
                 gameSelector.Items.Clear();
-                for( int i = 0; i < 15; i++ )
+                for (int i = 0; i < 15; i++)
                 {
-                    stream.Read( bytes, 0, 0x2A3C );
-                    if( CheckValidGame( bytes ) )
+                    stream.Read(bytes, 0, 0x2A3C);
+                    if (CheckValidGame(bytes))
                     {
-                        games[i] = new Savegame( bytes );
-                        gameSelector.Items.Add( games[i] );
+                        games[i] = new Savegame(bytes);
+                        gameSelector.Items.Add(games[i]);
                     }
                     else
                     {
@@ -174,45 +215,21 @@ namespace LionEditor
                 }
                 stream.Close();
 
-                if( gameSelector.Items.Count > 0 )
+                if (gameSelector.Items.Count > 0)
                 {
                     gameSelector.SelectedIndex = 0;
                 }
 
                 saveButton.Enabled = false;
 
-                savegameEditor.DataChangedEvent += new EventHandler( savegameEditor_DataChangedEvent );
+                savegameEditor.DataChangedEvent += new EventHandler(savegameEditor_DataChangedEvent);
                 saveMenuItem.Enabled = false;
                 saveAsMenuItem.Enabled = true;
                 gameSelector.Enabled = true;
             }
         }
 
-        void savegameEditor_DataChangedEvent( object sender, EventArgs e )
-        {
-            saveButton.Enabled = true;
-            saveMenuItem.Enabled = true;
-        }
+        #endregion
 
-        void toolBarClick( object sender, ToolBarButtonClickEventArgs e )
-        {
-            if( e.Button == openButton )
-            {
-                LoadFile();
-            }
-            else if( e.Button == saveButton )
-            {
-                if( (filename != null) && (filename != string.Empty) )
-                {
-                    SaveFile();
-                    saveButton.Enabled = false;
-                }
-            }
-            else
-            {
-                // Something terrible happened
-                throw new Exception();
-            }
-        }
     }
 }

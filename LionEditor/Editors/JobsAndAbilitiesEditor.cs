@@ -84,12 +84,12 @@ namespace LionEditor
 
         #region Events
 
-        void jobEditor1_DataChangedEvent( object sender, EventArgs e )
+        private void jobEditor1_DataChangedEvent(object sender, EventArgs e)
         {
             changed = true;
         }
 
-        void jobSelector_SelectedIndexChanged( object sender, EventArgs e )
+        private void jobSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             jobEditor.UpdateView( ja.jobs[jobSelector.SelectedIndex], jobSelector.SelectedItem as JobInfo );
         }

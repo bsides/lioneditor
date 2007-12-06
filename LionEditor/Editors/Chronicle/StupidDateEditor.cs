@@ -56,13 +56,13 @@ namespace LionEditor
                 DateChangedEvent( this, EventArgs.Empty );
             }
         }
-        
-        void daySpinner_ValueChanged( object sender, EventArgs e )
+
+        private void daySpinner_ValueChanged(object sender, EventArgs e)
         {
             FireDateChangedEvent();
         }
 
-        void monthCombo_SelectedIndexChanged( object sender, EventArgs e )
+        private void monthCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch( (Zodiac)monthCombo.SelectedItem )
             {

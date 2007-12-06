@@ -82,7 +82,7 @@ namespace LionEditor
 
         #region Events
 
-        void dataGridView_CellValueChanged( object sender, DataGridViewCellEventArgs e )
+        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if( !addingRows )
             {
@@ -90,7 +90,7 @@ namespace LionEditor
             }
         }
 
-        void filterComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Filter( (ItemType)filterComboBox.SelectedItem );
         }

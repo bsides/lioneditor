@@ -62,21 +62,21 @@ namespace LionEditor
 
         #region Events
 
-        void wondersListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        private void wondersListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             Wonder w = wondersListBox.Items[e.Index] as Wonder;
             w.Discovered = (e.NewValue == CheckState.Checked);
             FireDataChangedEvent();
         }
 
-        void stupidDateEditor_DateChangedEvent( object sender, EventArgs e )
+        private void stupidDateEditor_DateChangedEvent(object sender, EventArgs e)
         {
             Wonder w = wondersListBox.SelectedItem as Wonder;
             w.Date = stupidDateEditor.CurrentDate;
             FireDataChangedEvent();
         }
 
-        void wondersListBox_SelectedIndexChanged( object sender, EventArgs e )
+        private void wondersListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Wonder w = wondersListBox.SelectedItem as Wonder;
             stupidDateEditor.CurrentDate = w.Date;

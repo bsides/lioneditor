@@ -57,20 +57,20 @@ namespace LionEditor
 
         #region Events
 
-        void featListBox_SelectedIndexChanged( object sender, EventArgs e )
+        private void featListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             Feat f = featListBox.SelectedItem as Feat;
             stateComboBox.SelectedItem = f.State;
             stupidDateEditor.CurrentDate = f.Date;
         }
 
-        void stateComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        private void stateComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Feat f = featListBox.SelectedItem as Feat;
             f.State = (State)stateComboBox.SelectedItem;
         }
 
-        void stupidDateEditor_DateChangedEvent( object sender, EventArgs e )
+        private void stupidDateEditor_DateChangedEvent(object sender, EventArgs e)
         {
             Feat f = featListBox.SelectedItem as Feat;
             f.Date = stupidDateEditor.CurrentDate;

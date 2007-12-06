@@ -47,7 +47,7 @@ namespace LionEditor
         private byte[] prop7 = new byte[9];
         private byte[] prop8 = new byte[9];
         private byte[] offset0x489 = new byte[3];
-        private Character[] characters = new Character[28];
+        private List<Character> characters = new List<Character>(28);
         private Inventory inventory;
         private Inventory poachersDen;
         private byte[] offset0x2304 = new byte[304];
@@ -100,7 +100,7 @@ namespace LionEditor
         /// <summary>
         /// Gets the collection of <see cref="Character"/>s.
         /// </summary>
-        public Character[] Characters
+        public List<Character> Characters
         {
             get { return characters; }
         }
@@ -246,7 +246,7 @@ namespace LionEditor
             {
                 byte[] charBytes = new byte[256];
                 CopyArray( file, charBytes, 0x48C + i * 0x100, 0x100 );
-                Characters[i] = new Character(charBytes, i);
+                characters.Add(new Character(charBytes, i));
             }
 
             byte[] inventoryBytes = new byte[316];
@@ -318,7 +318,7 @@ namespace LionEditor
                 }
             }
 
-            inventory.UpdateEquippedQuantities( new Character[][] { Characters } );
+            inventory.UpdateEquippedQuantities(characters);
 
             CopyArray( inventory.ToByteArray(), result, 0, 0x208C, 316 );
             CopyArray( poachersDen.ToByteArray(), result, 0, 0x21C8, 316 );

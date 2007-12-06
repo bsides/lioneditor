@@ -164,7 +164,7 @@ namespace LionEditor
             }
         }
 
-        void spinnerValueChanged( object sender, EventArgs e )
+        private void spinnerValueChanged(object sender, EventArgs e)
         {
             if( !ignoreChanges )
             {
@@ -175,7 +175,7 @@ namespace LionEditor
             }
         }
 
-        void cb_CheckedChanged( object sender, EventArgs e )
+        private void cb_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = sender as CheckBox;
 

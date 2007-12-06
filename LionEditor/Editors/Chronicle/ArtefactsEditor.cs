@@ -64,21 +64,21 @@ namespace LionEditor
 
         #region Events
 
-        void artefactsListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        private void artefactsListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
             Artefact a = artefactsListBox.Items[e.Index] as Artefact;
             a.Discovered = (e.NewValue == CheckState.Checked);
             FireDataChangedEvent();
         }
 
-        void stupidDateEditor_DateChangedEvent( object sender, EventArgs e )
+        private void stupidDateEditor_DateChangedEvent( object sender, EventArgs e )
         {
             Artefact a = artefactsListBox.SelectedItem as Artefact;
             a.Date = stupidDateEditor.CurrentDate;
             FireDataChangedEvent();
         }
 
-        void artefactsListBox_SelectedIndexChanged( object sender, EventArgs e )
+        private void artefactsListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             Artefact a = artefactsListBox.SelectedItem as Artefact;
             stupidDateEditor.CurrentDate = a.Date;

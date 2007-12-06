@@ -859,6 +859,10 @@ namespace LionEditor
             {
                 BuildCharacter(charData);
             }
+            else if (IsGMECharacter(charData))
+            {
+                BuildCharacterGME(charData);
+            }
             else
             {
                 BuildDummyCharacter();
@@ -869,6 +873,76 @@ namespace LionEditor
         #endregion
 
         #region Utilities
+
+        private void BuildCharacterGME(byte[] charData)
+        {
+            spriteSet = SpriteSet.AllSprites[charData[0]];
+            isPresent = (charData[1] != 0xFF);
+
+            if (!Class.ClassDictionary.TryGetValue(charData[2], out job))
+            {
+                job = Class.ClassDictionary[0x4A];
+            }
+            unknownOffset03 = charData[3];
+            gender = (Gender)(charData[4] & 0xE0);
+            unknownOffset05 = charData[5];
+            zodiacSign = (Zodiac)(charData[6] & 0xF0);
+
+            if (gender == Gender.Monster)
+            {
+                secondaryAction = SecondaryAction.ActionDictionary[0x00];
+                supportAbility = Ability.AbilityList[0];
+                reactAbility = Ability.AbilityList[0];
+                movementAbility = Ability.AbilityList[0];
+                head = Item.ItemList[0];
+                body = Item.ItemList[0];
+                accessory = Item.ItemList[0];
+                rightHand = Item.ItemList[0];
+                rightShield = Item.ItemList[0];
+                leftHand = Item.ItemList[0];
+                leftShield = Item.ItemList[0];
+            }
+            else
+            {
+                secondaryAction = SecondaryAction.ActionDictionary[charData[7]];
+                reactAbility = new Ability(TwoBytesToUShort(charData[8], charData[9]));
+                supportAbility = new Ability(TwoBytesToUShort(charData[10], charData[11]));
+                movementAbility = new Ability(TwoBytesToUShort(charData[12], charData[13]));
+                head = new Item(charData[14]);
+                body = new Item(charData[15]);
+                accessory = new Item(charData[16]);
+                rightHand = new Item(charData[17]);
+                rightShield = new Item(charData[18]);
+                leftHand = new Item(charData[19]);
+                leftShield = new Item(charData[20]);
+            }
+
+            experience = charData[21];
+            level = charData[22];
+            bravery = charData[23];
+            faith = charData[24];
+
+            rawHP = ThreeBytesToUInt(charData[25], charData[26], charData[27]);
+            rawMP = ThreeBytesToUInt(charData[28], charData[29], charData[30]);
+            rawSP = ThreeBytesToUInt(charData[31], charData[32], charData[33]);
+            rawPA = ThreeBytesToUInt(charData[34], charData[35], charData[36]);
+            rawMA = ThreeBytesToUInt(charData[37], charData[38], charData[39]);
+
+            byte[] jaBytes = new byte[173];
+
+            Savegame.CopyArray(charData, jaBytes, 0x28, 0x3C);
+            Savegame.CopyArray(charData, jaBytes, 0x64, 0x500 - 0x4BB, 0x0A);
+            Savegame.CopyArray(charData, jaBytes, 0x6E, 0x50C - 0x4BB, 0x28);
+            Savegame.CopyArray(charData, jaBytes, 0x96, 0x53A - 0x4BB, 0x28);
+            jobsAndAbilities = new JobsAndAbilities(jaBytes);
+
+            Savegame.CopyArray(charData, rawName, 0xBE, 15);
+
+            for (int k = 0; k < 19; k++)
+            {
+                afterName[k] = charData[0xCD + k];
+            }
+        }
 
         /// <summary>
         /// Builds an actual character from its binary data
@@ -1052,7 +1126,8 @@ namespace LionEditor
         /// </summary>
         private static bool IsValidCharacter(byte[] charData)
         {
-            return ((charData[0] > 0) && (charData[0] < SpriteSet.AllSprites.Count))
+            return (charData.Length == 0x100) 
+                && ((charData[0] > 0) && (charData[0] < SpriteSet.AllSprites.Count))
                 && (((charData[1] >= 0) && (charData[1] < 28)) || (charData[1] == 0xFF))
                 && ((charData[2] > 0) && (Class.ClassDictionary.ContainsKey(charData[2])))
                 && (Enum.IsDefined(typeof(Gender), charData[4] & 0xE0))
@@ -1073,6 +1148,87 @@ namespace LionEditor
                 && ((charData[29] > 0) && (charData[29] < 100))
                 && ((charData[30] >= 0) && (charData[30] <= 100))
                 && ((charData[31] >= 0) && (charData[31] <= 100));
+        }
+
+        /// <summary>
+        /// Checks valid ranges of some bytes to determien if the byte array represents a FFT PSX character
+        /// </summary>
+        private static bool IsGMECharacter(byte[] charData)
+        {
+            return (charData.Length == 0xE0)
+                && (((charData[1] >= 0) && (charData[1] < 20)) || (charData[1] == 0xFF))
+                && ((charData[2] > 0) && (Class.ClassDictionary.ContainsKey(charData[2])))
+                && (Enum.IsDefined(typeof(Gender), charData[4] & 0xE0))
+                && (Enum.IsDefined(typeof(Zodiac), charData[6] & 0xF0))
+                && (((Gender)charData[4] == Gender.Monster) ||
+                      ((SecondaryAction.ActionDictionary.ContainsKey(charData[7]))
+                    && (TwoBytesToUShort(charData[8], charData[9]) < 512)
+                    && (TwoBytesToUShort(charData[10], charData[11]) < 512)
+                    && (TwoBytesToUShort(charData[12], charData[13]) < 512)))
+                && (charData[21] < 100)
+                && (charData[22] < 100)
+                && (charData[23] <= 100)
+                && (charData[24] <= 100)
+                && (((charData[0x64] & 0xF0) >> 4) <= 8)
+                && ((charData[0x64] & 0x0F) <= 8)
+                && (((charData[0x65] & 0xF0) >> 4) <= 8)
+                && ((charData[0x65] & 0x0F) <= 8)
+                && (((charData[0x66] & 0xF0) >> 4) <= 8)
+                && ((charData[0x66] & 0x0F) <= 8)
+                && (((charData[0x67] & 0xF0) >> 4) <= 8)
+                && ((charData[0x67] & 0x0F) <= 8)
+                && (((charData[0x68] & 0xF0) >> 4) <= 8)
+                && ((charData[0x68] & 0x0F) <= 8)
+                && (((charData[0x69] & 0xF0) >> 4) <= 8)
+                && ((charData[0x69] & 0x0F) <= 8)
+                && (((charData[0x6A] & 0xF0) >> 4) <= 8)
+                && ((charData[0x6A] & 0x0F) <= 8)
+                && (((charData[0x6B] & 0xF0) >> 4) <= 8)
+                && ((charData[0x6B] & 0x0F) <= 8)
+                && (((charData[0x6C] & 0xF0) >> 4) <= 8)
+                && ((charData[0x6C] & 0x0F) <= 8)
+                && (((charData[0x6D] & 0xF0) >> 4) <= 8)
+                && ((charData[0x6D] & 0x0F) <= 8)
+                && (TwoBytesToUShort(charData[0x6E], charData[0x6F]) <= 9999)
+                && (TwoBytesToUShort(charData[0x70], charData[0x71]) <= 9999)
+                && (TwoBytesToUShort(charData[0x72], charData[0x73]) <= 9999)
+                && (TwoBytesToUShort(charData[0x74], charData[0x75]) <= 9999)
+                && (TwoBytesToUShort(charData[0x76], charData[0x77]) <= 9999)
+                && (TwoBytesToUShort(charData[0x78], charData[0x79]) <= 9999)
+                && (TwoBytesToUShort(charData[0x7A], charData[0x7B]) <= 9999)
+                && (TwoBytesToUShort(charData[0x7C], charData[0x7D]) <= 9999)
+                && (TwoBytesToUShort(charData[0x7E], charData[0x7F]) <= 9999)
+                && (TwoBytesToUShort(charData[0x80], charData[0x80]) <= 9999)
+                && (TwoBytesToUShort(charData[0x82], charData[0x82]) <= 9999)
+                && (TwoBytesToUShort(charData[0x84], charData[0x84]) <= 9999)
+                && (TwoBytesToUShort(charData[0x86], charData[0x86]) <= 9999)
+                && (TwoBytesToUShort(charData[0x88], charData[0x88]) <= 9999)
+                && (TwoBytesToUShort(charData[0x8A], charData[0x8A]) <= 9999)
+                && (TwoBytesToUShort(charData[0x8C], charData[0x8C]) <= 9999)
+                && (TwoBytesToUShort(charData[0x8E], charData[0x8E]) <= 9999)
+                && (TwoBytesToUShort(charData[0x90], charData[0x90]) <= 9999)
+                && (TwoBytesToUShort(charData[0x92], charData[0x92]) <= 9999)
+                && (TwoBytesToUShort(charData[0x94], charData[0x94]) <= 9999)
+                && (TwoBytesToUShort(charData[0x96], charData[0x96]) <= 9999)
+                && (TwoBytesToUShort(charData[0x98], charData[0x98]) <= 9999)
+                && (TwoBytesToUShort(charData[0x9A], charData[0x9A]) <= 9999)
+                && (TwoBytesToUShort(charData[0x9C], charData[0x9C]) <= 9999)
+                && (TwoBytesToUShort(charData[0x9E], charData[0x9E]) <= 9999)
+                && (TwoBytesToUShort(charData[0xA0], charData[0xA0]) <= 9999)
+                && (TwoBytesToUShort(charData[0xA2], charData[0xA2]) <= 9999)
+                && (TwoBytesToUShort(charData[0xA4], charData[0xA4]) <= 9999)
+                && (TwoBytesToUShort(charData[0xA6], charData[0xA6]) <= 9999)
+                && (TwoBytesToUShort(charData[0xA8], charData[0xA8]) <= 9999)
+                && (TwoBytesToUShort(charData[0xAA], charData[0xAA]) <= 9999)
+                && (TwoBytesToUShort(charData[0xAC], charData[0xAC]) <= 9999)
+                && (TwoBytesToUShort(charData[0xAE], charData[0xAE]) <= 9999)
+                && (TwoBytesToUShort(charData[0xB0], charData[0xB0]) <= 9999)
+                && (TwoBytesToUShort(charData[0xB2], charData[0xB2]) <= 9999)
+                && (TwoBytesToUShort(charData[0xB4], charData[0xB4]) <= 9999)
+                && (TwoBytesToUShort(charData[0xB6], charData[0xB6]) <= 9999)
+                && (TwoBytesToUShort(charData[0xB8], charData[0xB8]) <= 9999)
+                && (TwoBytesToUShort(charData[0xBA], charData[0xBA]) <= 9999)
+                && (TwoBytesToUShort(charData[0xBC], charData[0xBC]) <= 9999);
         }
 
         /// <summary>

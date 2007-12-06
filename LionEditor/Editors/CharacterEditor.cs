@@ -599,7 +599,7 @@ namespace LionEditor
 
         }
 
-        void nameTextBox_Validating( object sender, CancelEventArgs e )
+        private void nameTextBox_Validating( object sender, CancelEventArgs e )
         {
             List<char> charList = new List<char>( Character.characterMap );
             foreach( char c in nameTextBox.Text )
@@ -612,7 +612,7 @@ namespace LionEditor
             }
         }
 
-        void ComboBoxValidating( object sender, CancelEventArgs e )
+        private void ComboBoxValidating( object sender, CancelEventArgs e )
         {
             ComboBox c = sender as ComboBox;
             if( c.SelectedItem == null )

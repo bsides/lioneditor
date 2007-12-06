@@ -215,21 +215,18 @@ namespace LionEditor
 
         #region Utilities
 
-        public void UpdateEquippedQuantities( Character[][] characters )
+        public void UpdateEquippedQuantities(List<Character> characters)
         {
-            foreach( InventoryEntry item in this.Items )
+            foreach (InventoryEntry item in this.Items)
             {
                 item.Equipped = 0;
             }
 
-            foreach( Character[] arr in characters )
+            foreach (Character c in characters)
             {
-                foreach( Character c in arr )
+                foreach (Item i in new Item[] { c.RightShield, c.RightHand, c.LeftShield, c.LeftHand, c.Accessory, c.Head, c.Body })
                 {
-                    foreach( Item i in new Item[] { c.RightShield, c.RightHand, c.LeftShield, c.LeftHand, c.Accessory, c.Head, c.Body } )
-                    {
-                        Items[i.Offset].Equipped += 1;
-                    }
+                    Items[i.Offset].Equipped += 1;
                 }
             }
         }

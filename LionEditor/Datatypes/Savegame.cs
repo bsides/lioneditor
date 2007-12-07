@@ -378,6 +378,55 @@ namespace LionEditor
             return string.Format( "{0} ({1}) [{2}] ~{3}~", SaveName, time, date, loc );
         }
 
+        /// <summary>
+        /// Determines whether bytes is a valid War of the Lions save
+        /// </summary>
+        public static bool IsValidGame(byte[] bytes)
+        {
+            return (bytes.Length == saveFileSize) && IsValidGame(bytes, 0);
+        }
+
+        /// <summary>
+        /// Determines whether the data in bytes at startPosition is a valid War of the Lions save
+        /// </summary>
+        public static bool IsValidGame(byte[] bytes, int startPosition)
+        {
+            // TODO: Improve this
+
+            return (bytes[startPosition + 0] == 'S')
+                && (bytes[startPosition + 1] == 'C')
+                && ((bytes[startPosition + 0x48D] == 0x00) || (bytes[startPosition + 0x48D] == 0xFF))
+                && ((bytes[startPosition + 0x58D] == 0x01) || (bytes[startPosition + 0x58D] == 0xFF))
+                && ((bytes[startPosition + 0x68D] == 0x02) || (bytes[startPosition + 0x68D] == 0xFF))
+                && ((bytes[startPosition + 0x78D] == 0x03) || (bytes[startPosition + 0x78D] == 0xFF))
+                && ((bytes[startPosition + 0x88D] == 0x04) || (bytes[startPosition + 0x88D] == 0xFF))
+                && ((bytes[startPosition + 0x98D] == 0x05) || (bytes[startPosition + 0x98D] == 0xFF))
+                && ((bytes[startPosition + 0xA8D] == 0x06) || (bytes[startPosition + 0xA8D] == 0xFF))
+                && ((bytes[startPosition + 0xB8D] == 0x07) || (bytes[startPosition + 0xB8D] == 0xFF))
+                && ((bytes[startPosition + 0xC8D] == 0x08) || (bytes[startPosition + 0xC8D] == 0xFF))
+                && ((bytes[startPosition + 0xD8D] == 0x09) || (bytes[startPosition + 0xD8D] == 0xFF))
+                && ((bytes[startPosition + 0xE8D] == 0x0A) || (bytes[startPosition + 0xE8D] == 0xFF))
+                && ((bytes[startPosition + 0xF8D] == 0x0B) || (bytes[startPosition + 0xF8D] == 0xFF))
+                && ((bytes[startPosition + 0x108D] == 0x0C) || (bytes[startPosition + 0x108D] == 0xFF))
+                && ((bytes[startPosition + 0x118D] == 0x0D) || (bytes[startPosition + 0x118D] == 0xFF))
+                && ((bytes[startPosition + 0x128D] == 0x0E) || (bytes[startPosition + 0x128D] == 0xFF))
+                && ((bytes[startPosition + 0x138D] == 0x0F) || (bytes[startPosition + 0x138D] == 0xFF))
+                && ((bytes[startPosition + 0x148D] == 0x10) || (bytes[startPosition + 0x148D] == 0xFF))
+                && ((bytes[startPosition + 0x158D] == 0x11) || (bytes[startPosition + 0x158D] == 0xFF))
+                && ((bytes[startPosition + 0x168D] == 0x12) || (bytes[startPosition + 0x168D] == 0xFF))
+                && ((bytes[startPosition + 0x178D] == 0x13) || (bytes[startPosition + 0x178D] == 0xFF))
+                && ((bytes[startPosition + 0x188D] == 0x14) || (bytes[startPosition + 0x188D] == 0xFF))
+                && ((bytes[startPosition + 0x198D] == 0x15) || (bytes[startPosition + 0x198D] == 0xFF))
+                && ((bytes[startPosition + 0x1A8D] == 0x16) || (bytes[startPosition + 0x1A8D] == 0xFF))
+                && ((bytes[startPosition + 0x1B8D] == 0x17) || (bytes[startPosition + 0x1B8D] == 0xFF))
+                && ((bytes[startPosition + 0x1C8D] == 0x18) || (bytes[startPosition + 0x1C8D] == 0xFF))
+                && ((bytes[startPosition + 0x1D8D] == 0x19) || (bytes[startPosition + 0x1D8D] == 0xFF))
+                && ((bytes[startPosition + 0x1E8D] == 0x1A) || (bytes[startPosition + 0x1E8D] == 0xFF))
+                && ((bytes[startPosition + 0x1F8D] == 0x1B) || (bytes[startPosition + 0x1F8D] == 0xFF))
+                && (bytes[startPosition + 0x2A3A] == 0xFF)
+                && (bytes[startPosition + 0x2A3B] == 0xFF);
+        }
+
         #endregion
     }
 }

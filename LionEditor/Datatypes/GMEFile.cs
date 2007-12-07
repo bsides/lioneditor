@@ -22,13 +22,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections.Specialized;
 
-namespace LionEditor.Datatypes
+namespace LionEditor
 {
     public class GMEFile
     {
         #region Fields
 
-        private StringCollection gameNames = new StringCollection();
+        private List<string> gameNames = new List<string>();
         private List<List<Character>> games = new List<List<Character>>(15);
 
         #endregion
@@ -38,7 +38,7 @@ namespace LionEditor.Datatypes
         /// <summary>
         /// Gets the names for each game in this file
         /// </summary>
-        public StringCollection GameNames
+        public List<string> GameNames
         {
             get { return gameNames; }
         }
@@ -63,10 +63,73 @@ namespace LionEditor.Datatypes
 
         #region Utilities
 
+        /// <summary>
+        /// Validates a GME file and returns which blocks have FFT data
+        /// </summary>
+        private static List<int> ValidateGMEFile(byte[] bytes)
+        {
+            List<int> result = new List<int>();
+            if ((bytes[0] == '1') && 
+                (bytes[1] == '2') &&
+                (bytes[2] == '3') &&
+                (bytes[3] == '-') &&
+                (bytes[4] == '4') &&
+                (bytes[5] == '5') &&
+                (bytes[6] == '6') &&
+                (bytes[7] == '-') &&
+                (bytes[8] == 'S') &&
+                (bytes[9] == 'T') &&
+                (bytes[10] == 'D') &&
+                (bytes[11] == 0) &&
+                (bytes[12] == 0) &&
+                (bytes[13] == 0) &&
+                (bytes[14] == 0) &&
+                (bytes[15] == 0) &&
+                (bytes[0xF40] == 'M') &&
+                (bytes[0xF41] == 'C') &&
+                (bytes[0xFBF] == 0x0E))
+            {
+                // Valid GME file
+
+                // Check index frame for each block
+                for (int i = 0; i < 15; i++)
+                {
+                    int offset = i*128;
+                    if ((bytes[0xFC0 + offset] == 0x51) &&
+                        (bytes[0xFC4 + offset] == 0x00) &&
+                        (bytes[0xFC5 + offset] == 0x20) &&
+                        (bytes[0xFCA + offset] == 'B') &&
+                        (bytes[0xFCB + offset] == 'A') &&
+                        (bytes[0xFCC + offset] == 'S') &&
+                        (bytes[0xFCD + offset] == 'C') &&
+                        (bytes[0xFCE + offset] == 'U') &&
+                        (bytes[0xFCF + offset] == 'S') &&
+                        (bytes[0xFD0 + offset] == '-') &&
+                        (bytes[0xFD1 + offset] == '9') &&
+                        (bytes[0xFD2 + offset] == '4') &&
+                        (bytes[0xFD3 + offset] == '2') &&
+                        (bytes[0xFD4 + offset] == '2') &&
+                        (bytes[0xFD5 + offset] == '1') &&
+                        (bytes[0xFD6 + offset] == 'F') &&
+                        (bytes[0xFD7 + offset] == 'F') &&
+                        (bytes[0xFD8 + offset] == 'T'))
+                    {
+                        result.Add(i);
+                    }
+
+                }
+            }
+
+            return result;
+        }
+
         public static GMEFile ReadGMEFile(byte[] bytes)
         {
+            // TODO: check validity of GME file
+
             GMEFile result = new GMEFile();
-            for (int i = 0; i < 15; i++)
+            foreach (int i in ValidateGMEFile(bytes))
+            //for (int i = 0; i < 15; i++)
             {
                 try
                 {
@@ -90,7 +153,14 @@ namespace LionEditor.Datatypes
                 }
             }
 
-            return result;
+            if ((result.games.Count == 0) || (result.gameNames.Count == 0))
+            {
+                return null;
+            }
+            else
+            {
+                return result;
+            }
         }
 
         #endregion

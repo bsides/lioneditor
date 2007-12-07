@@ -17,7 +17,7 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace LionEditor.Editors
+namespace LionEditor
 {
     partial class CharacterCollectionEditor
     {

@@ -58,7 +58,7 @@ namespace LionEditor
             this.chronicleTab = new System.Windows.Forms.TabPage();
             this.chronicleEditor = new LionEditor.ChronicleEditor();
             this.charactersTab = new System.Windows.Forms.TabPage();
-            this.characterCollectionEditor = new LionEditor.Editors.CharacterCollectionEditor();
+            this.characterCollectionEditor = new LionEditor.CharacterCollectionEditor();
             this.tabControl = new System.Windows.Forms.TabControl();
             poachersDenLabel = new System.Windows.Forms.Label();
             inventoryLabel = new System.Windows.Forms.Label();
@@ -250,7 +250,7 @@ namespace LionEditor
         private ChronicleEditor chronicleEditor;
         private System.Windows.Forms.TabPage charactersTab;
         private System.Windows.Forms.TabControl tabControl;
-        private LionEditor.Editors.CharacterCollectionEditor characterCollectionEditor;
+        private LionEditor.CharacterCollectionEditor characterCollectionEditor;
 
     }
 }

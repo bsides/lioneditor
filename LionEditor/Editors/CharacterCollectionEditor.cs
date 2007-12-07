@@ -26,7 +26,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace LionEditor.Editors
+namespace LionEditor
 {
     /// <summary>
     /// A UserControl for editing collections of characters, with drag/drop, rearranging, etc.
@@ -45,6 +45,15 @@ namespace LionEditor.Editors
         #region Properties
 
         /// <summary>
+        /// Gets or sets whether the CharacterEditor is enabled
+        /// </summary>
+        public bool CharacterEditorEnabled
+        {
+            get { return characterEditor.Enabled; }
+            set { characterEditor.Enabled = false; }
+        }
+
+        /// <summary>
         /// Gets or sets the collection of characters being edited by this instance
         /// </summary>
         public List<Character> CharacterCollection
@@ -54,12 +63,15 @@ namespace LionEditor.Editors
             {
                 characterCollection = value;
                 characterSelector.Items.Clear();
-                foreach (Character c in characterCollection)
+                if (characterCollection != null)
                 {
-                    characterSelector.Items.Add(c, c.IsPresent);
-                }
+                    foreach (Character c in characterCollection)
+                    {
+                        characterSelector.Items.Add(c, c.IsPresent);
+                    }
 
-                characterSelector.SelectedIndex = 0;
+                    characterSelector.SelectedIndex = 0;
+                }
             }
         }
 
@@ -77,6 +89,8 @@ namespace LionEditor.Editors
         }
 
         #endregion
+
+        #region Constructor
 
         public CharacterCollectionEditor()
         {
@@ -101,27 +115,53 @@ namespace LionEditor.Editors
             characterEditor.DataChangedEvent += characterEditor_DataChangedEvent;
         }
 
+        #endregion
+
         #region Events
 
         #region Drag/Drop support
 
         private void characterSelector_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Effect == DragDropEffects.Move)
+            CheckedListBox listBox = sender as CheckedListBox;
+            if (e.Data.GetDataPresent(typeof(Character)))
             {
-                if (e.Data.GetDataPresent(typeof(Character)))
+                if (e.Effect == DragDropEffects.Move)
                 {
-                    CheckedListBox listBox = sender as CheckedListBox;
                     Character c = e.Data.GetData(typeof(Character)) as Character;
                     int index = listBox.IndexFromPoint(listBox.PointToClient(new Point(e.X, e.Y)));
                     if (index > -1)
                     {
                         listBox.Items.Insert(index, c);
+                        characterCollection.Insert(index, c);
+
                         int oldSelectedIndex = listBox.SelectedIndex;
-                        //listBox.SelectedIndex = index;
                         listBox.Items.RemoveAt(oldSelectedIndex);
+                        characterCollection.RemoveAt(oldSelectedIndex);
+
                         listBox.SelectedItem = c;
                         characterEditor.Character = c;
+                        FireDataChangedEvent();
+                    }
+                }
+                else if (e.Effect == DragDropEffects.Copy)
+                {
+                    Character c = e.Data.GetData(typeof(Character)) as Character;
+                    int index = listBox.IndexFromPoint(listBox.PointToClient(new Point(e.X, e.Y)));
+                    Character d = new Character(c.ToByteArray(), index);
+                    if (index > -1)
+                    {
+                        d.Index = (byte)index;
+                        listBox.Items.Insert(index, d);
+                        listBox.SetItemChecked(index, d.IsPresent);
+                        characterCollection.Insert(index, d);
+
+                        listBox.Items.RemoveAt(index + 1);
+                        characterCollection.RemoveAt(index + 1);
+
+                        listBox.SelectedItem = d;
+                        characterEditor.Character = d;
+                        FireDataChangedEvent();
                     }
                 }
             }
@@ -129,7 +169,11 @@ namespace LionEditor.Editors
 
         private void characterSelector_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(Character)))
+            if ((e.AllowedEffect == DragDropEffects.Copy) && (CharacterEditorEnabled) && (e.Data.GetDataPresent(typeof(Character))))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else if ((e.AllowedEffect == DragDropEffects.Move) && (e.Data.GetDataPresent(typeof(Character))))
             {
                 e.Effect = DragDropEffects.Move;
             }
@@ -169,7 +213,8 @@ namespace LionEditor.Editors
                 }
 
                 Character c = listBox.Items[index] as Character;
-                DragDropEffects dde = DoDragDrop(c, DragDropEffects.Move);
+
+                DragDropEffects dde = DoDragDrop(c, CharacterEditorEnabled?DragDropEffects.Move:DragDropEffects.Copy);
                 lastSelectedIndex = listBox.SelectedIndex;
 
                 // Reassign everyone's index and checkstates
@@ -180,7 +225,6 @@ namespace LionEditor.Editors
                     c.Index = (byte)i;
                 }
 
-                // TODO: "dropped" character's index displays wrong in groupbox
                 characterEditor.Character = characterSelector.SelectedItem as Character;
             }
             else if (e.Button == MouseButtons.Right)
@@ -287,6 +331,10 @@ namespace LionEditor.Editors
             }
         }
 
+
+        #endregion
+
+        #region Utilities
 
         #endregion
     }

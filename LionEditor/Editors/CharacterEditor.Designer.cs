@@ -134,7 +134,8 @@ namespace LionEditor
             this.speedSpinner = new System.Windows.Forms.NumericUpDown();
             this.paSpinner = new System.Windows.Forms.NumericUpDown();
             this.maSpinner = new System.Windows.Forms.NumericUpDown();
-            this.toolTip = new System.Windows.Forms.ToolTip( this.components );
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.randomNameButton = new System.Windows.Forms.Button();
             rightHandLabel = new System.Windows.Forms.Label();
             rightShieldLabel = new System.Windows.Forms.Label();
             leftHandLabel = new System.Windows.Forms.Label();
@@ -208,9 +209,9 @@ namespace LionEditor
             // 
             rightHandLabel.AutoSize = true;
             rightHandLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            rightHandLabel.Location = new System.Drawing.Point( 3, 0 );
+            rightHandLabel.Location = new System.Drawing.Point(3, 0);
             rightHandLabel.Name = "rightHandLabel";
-            rightHandLabel.Size = new System.Drawing.Size( 98, 26 );
+            rightHandLabel.Size = new System.Drawing.Size(98, 26);
             rightHandLabel.TabIndex = 11;
             rightHandLabel.Text = "Right hand:";
             rightHandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -219,9 +220,9 @@ namespace LionEditor
             // 
             rightShieldLabel.AutoSize = true;
             rightShieldLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            rightShieldLabel.Location = new System.Drawing.Point( 3, 26 );
+            rightShieldLabel.Location = new System.Drawing.Point(3, 26);
             rightShieldLabel.Name = "rightShieldLabel";
-            rightShieldLabel.Size = new System.Drawing.Size( 98, 26 );
+            rightShieldLabel.Size = new System.Drawing.Size(98, 26);
             rightShieldLabel.TabIndex = 12;
             rightShieldLabel.Text = "Right shield:";
             rightShieldLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -230,9 +231,9 @@ namespace LionEditor
             // 
             leftHandLabel.AutoSize = true;
             leftHandLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            leftHandLabel.Location = new System.Drawing.Point( 3, 52 );
+            leftHandLabel.Location = new System.Drawing.Point(3, 52);
             leftHandLabel.Name = "leftHandLabel";
-            leftHandLabel.Size = new System.Drawing.Size( 98, 26 );
+            leftHandLabel.Size = new System.Drawing.Size(98, 26);
             leftHandLabel.TabIndex = 13;
             leftHandLabel.Text = "Left hand:";
             leftHandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -241,9 +242,9 @@ namespace LionEditor
             // 
             leftShieldLabel.AutoSize = true;
             leftShieldLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            leftShieldLabel.Location = new System.Drawing.Point( 3, 78 );
+            leftShieldLabel.Location = new System.Drawing.Point(3, 78);
             leftShieldLabel.Name = "leftShieldLabel";
-            leftShieldLabel.Size = new System.Drawing.Size( 98, 26 );
+            leftShieldLabel.Size = new System.Drawing.Size(98, 26);
             leftShieldLabel.TabIndex = 14;
             leftShieldLabel.Text = "Left shield:";
             leftShieldLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -252,9 +253,9 @@ namespace LionEditor
             // 
             headLabel.AutoSize = true;
             headLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            headLabel.Location = new System.Drawing.Point( 3, 104 );
+            headLabel.Location = new System.Drawing.Point(3, 104);
             headLabel.Name = "headLabel";
-            headLabel.Size = new System.Drawing.Size( 98, 26 );
+            headLabel.Size = new System.Drawing.Size(98, 26);
             headLabel.TabIndex = 15;
             headLabel.Text = "Head:";
             headLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -263,9 +264,9 @@ namespace LionEditor
             // 
             bodyLabel.AutoSize = true;
             bodyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            bodyLabel.Location = new System.Drawing.Point( 3, 130 );
+            bodyLabel.Location = new System.Drawing.Point(3, 130);
             bodyLabel.Name = "bodyLabel";
-            bodyLabel.Size = new System.Drawing.Size( 98, 26 );
+            bodyLabel.Size = new System.Drawing.Size(98, 26);
             bodyLabel.TabIndex = 16;
             bodyLabel.Text = "Body:";
             bodyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -274,9 +275,9 @@ namespace LionEditor
             // 
             accessoryLabel.AutoSize = true;
             accessoryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            accessoryLabel.Location = new System.Drawing.Point( 3, 156 );
+            accessoryLabel.Location = new System.Drawing.Point(3, 156);
             accessoryLabel.Name = "accessoryLabel";
-            accessoryLabel.Size = new System.Drawing.Size( 98, 29 );
+            accessoryLabel.Size = new System.Drawing.Size(98, 29);
             accessoryLabel.TabIndex = 17;
             accessoryLabel.Text = "Accessory:";
             accessoryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -285,9 +286,9 @@ namespace LionEditor
             // 
             skillLabel.AutoSize = true;
             skillLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            skillLabel.Location = new System.Drawing.Point( 308, 0 );
+            skillLabel.Location = new System.Drawing.Point(308, 0);
             skillLabel.Name = "skillLabel";
-            skillLabel.Size = new System.Drawing.Size( 98, 26 );
+            skillLabel.Size = new System.Drawing.Size(98, 26);
             skillLabel.TabIndex = 18;
             skillLabel.Text = "Skill:";
             skillLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -296,9 +297,9 @@ namespace LionEditor
             // 
             secondaryLabel.AutoSize = true;
             secondaryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            secondaryLabel.Location = new System.Drawing.Point( 308, 52 );
+            secondaryLabel.Location = new System.Drawing.Point(308, 52);
             secondaryLabel.Name = "secondaryLabel";
-            secondaryLabel.Size = new System.Drawing.Size( 98, 26 );
+            secondaryLabel.Size = new System.Drawing.Size(98, 26);
             secondaryLabel.TabIndex = 20;
             secondaryLabel.Text = "Secondary skill:";
             secondaryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -307,9 +308,9 @@ namespace LionEditor
             // 
             reactLabel.AutoSize = true;
             reactLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            reactLabel.Location = new System.Drawing.Point( 308, 104 );
+            reactLabel.Location = new System.Drawing.Point(308, 104);
             reactLabel.Name = "reactLabel";
-            reactLabel.Size = new System.Drawing.Size( 98, 26 );
+            reactLabel.Size = new System.Drawing.Size(98, 26);
             reactLabel.TabIndex = 21;
             reactLabel.Text = "Reaction ability:";
             reactLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -318,9 +319,9 @@ namespace LionEditor
             // 
             supportLabel.AutoSize = true;
             supportLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            supportLabel.Location = new System.Drawing.Point( 308, 130 );
+            supportLabel.Location = new System.Drawing.Point(308, 130);
             supportLabel.Name = "supportLabel";
-            supportLabel.Size = new System.Drawing.Size( 98, 26 );
+            supportLabel.Size = new System.Drawing.Size(98, 26);
             supportLabel.TabIndex = 22;
             supportLabel.Text = "Support ability:";
             supportLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -329,9 +330,9 @@ namespace LionEditor
             // 
             movementLabel.AutoSize = true;
             movementLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            movementLabel.Location = new System.Drawing.Point( 308, 156 );
+            movementLabel.Location = new System.Drawing.Point(308, 156);
             movementLabel.Name = "movementLabel";
-            movementLabel.Size = new System.Drawing.Size( 98, 29 );
+            movementLabel.Size = new System.Drawing.Size(98, 29);
             movementLabel.TabIndex = 23;
             movementLabel.Text = "Movement ability:";
             movementLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -339,83 +340,83 @@ namespace LionEditor
             // characterEditorPanel
             // 
             characterEditorPanel.ColumnCount = 1;
-            characterEditorPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
-            characterEditorPanel.Controls.Add( this.equipAbilityGroupBox, 0, 2 );
-            characterEditorPanel.Controls.Add( characterEditorPanel2, 0, 0 );
-            characterEditorPanel.Controls.Add( statsPanel, 0, 1 );
+            characterEditorPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            characterEditorPanel.Controls.Add(this.equipAbilityGroupBox, 0, 2);
+            characterEditorPanel.Controls.Add(characterEditorPanel2, 0, 0);
+            characterEditorPanel.Controls.Add(statsPanel, 0, 1);
             characterEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            characterEditorPanel.Location = new System.Drawing.Point( 0, 0 );
+            characterEditorPanel.Location = new System.Drawing.Point(0, 0);
             characterEditorPanel.Name = "characterEditorPanel";
             characterEditorPanel.RowCount = 3;
-            characterEditorPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 60F ) );
-            characterEditorPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 40F ) );
-            characterEditorPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 209F ) );
-            characterEditorPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
-            characterEditorPanel.Size = new System.Drawing.Size( 624, 405 );
+            characterEditorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            characterEditorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            characterEditorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 209F));
+            characterEditorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            characterEditorPanel.Size = new System.Drawing.Size(624, 405);
             characterEditorPanel.TabIndex = 0;
             // 
             // equipAbilityGroupBox
             // 
-            this.equipAbilityGroupBox.Controls.Add( equipmentAndAbilitiesPanel );
+            this.equipAbilityGroupBox.Controls.Add(equipmentAndAbilitiesPanel);
             this.equipAbilityGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.equipAbilityGroupBox.Location = new System.Drawing.Point( 3, 198 );
+            this.equipAbilityGroupBox.Location = new System.Drawing.Point(3, 198);
             this.equipAbilityGroupBox.Name = "equipAbilityGroupBox";
-            this.equipAbilityGroupBox.Size = new System.Drawing.Size( 618, 204 );
+            this.equipAbilityGroupBox.Size = new System.Drawing.Size(618, 204);
             this.equipAbilityGroupBox.TabIndex = 4;
             this.equipAbilityGroupBox.TabStop = false;
             // 
             // equipmentAndAbilitiesPanel
             // 
             equipmentAndAbilitiesPanel.ColumnCount = 4;
-            equipmentAndAbilitiesPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 17F ) );
-            equipmentAndAbilitiesPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33F ) );
-            equipmentAndAbilitiesPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 17F ) );
-            equipmentAndAbilitiesPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33F ) );
-            equipmentAndAbilitiesPanel.Controls.Add( this.skillTextLabel, 3, 0 );
-            equipmentAndAbilitiesPanel.Controls.Add( skillLabel, 2, 0 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.rightHandCombo, 1, 0 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.rightShieldCombo, 1, 1 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.leftHandCombo, 1, 2 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.leftShieldCombo, 1, 3 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.headCombo, 1, 4 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.bodyCombo, 1, 5 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.accessoryCombo, 1, 6 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.secondaryCombo, 3, 2 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.supportCombo, 3, 5 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.reactionCombo, 3, 4 );
-            equipmentAndAbilitiesPanel.Controls.Add( this.movementCombo, 3, 6 );
-            equipmentAndAbilitiesPanel.Controls.Add( rightHandLabel, 0, 0 );
-            equipmentAndAbilitiesPanel.Controls.Add( leftHandLabel, 0, 2 );
-            equipmentAndAbilitiesPanel.Controls.Add( rightShieldLabel, 0, 1 );
-            equipmentAndAbilitiesPanel.Controls.Add( leftShieldLabel, 0, 3 );
-            equipmentAndAbilitiesPanel.Controls.Add( headLabel, 0, 4 );
-            equipmentAndAbilitiesPanel.Controls.Add( bodyLabel, 0, 5 );
-            equipmentAndAbilitiesPanel.Controls.Add( accessoryLabel, 0, 6 );
-            equipmentAndAbilitiesPanel.Controls.Add( secondaryLabel, 2, 2 );
-            equipmentAndAbilitiesPanel.Controls.Add( reactLabel, 2, 4 );
-            equipmentAndAbilitiesPanel.Controls.Add( supportLabel, 2, 5 );
-            equipmentAndAbilitiesPanel.Controls.Add( movementLabel, 2, 6 );
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            equipmentAndAbilitiesPanel.Controls.Add(this.skillTextLabel, 3, 0);
+            equipmentAndAbilitiesPanel.Controls.Add(skillLabel, 2, 0);
+            equipmentAndAbilitiesPanel.Controls.Add(this.rightHandCombo, 1, 0);
+            equipmentAndAbilitiesPanel.Controls.Add(this.rightShieldCombo, 1, 1);
+            equipmentAndAbilitiesPanel.Controls.Add(this.leftHandCombo, 1, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(this.leftShieldCombo, 1, 3);
+            equipmentAndAbilitiesPanel.Controls.Add(this.headCombo, 1, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(this.bodyCombo, 1, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(this.accessoryCombo, 1, 6);
+            equipmentAndAbilitiesPanel.Controls.Add(this.secondaryCombo, 3, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(this.supportCombo, 3, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(this.reactionCombo, 3, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(this.movementCombo, 3, 6);
+            equipmentAndAbilitiesPanel.Controls.Add(rightHandLabel, 0, 0);
+            equipmentAndAbilitiesPanel.Controls.Add(leftHandLabel, 0, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(rightShieldLabel, 0, 1);
+            equipmentAndAbilitiesPanel.Controls.Add(leftShieldLabel, 0, 3);
+            equipmentAndAbilitiesPanel.Controls.Add(headLabel, 0, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(bodyLabel, 0, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(accessoryLabel, 0, 6);
+            equipmentAndAbilitiesPanel.Controls.Add(secondaryLabel, 2, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(reactLabel, 2, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(supportLabel, 2, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(movementLabel, 2, 6);
             equipmentAndAbilitiesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            equipmentAndAbilitiesPanel.Location = new System.Drawing.Point( 3, 16 );
+            equipmentAndAbilitiesPanel.Location = new System.Drawing.Point(3, 16);
             equipmentAndAbilitiesPanel.Name = "equipmentAndAbilitiesPanel";
             equipmentAndAbilitiesPanel.RowCount = 7;
-            equipmentAndAbilitiesPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            equipmentAndAbilitiesPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            equipmentAndAbilitiesPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            equipmentAndAbilitiesPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            equipmentAndAbilitiesPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            equipmentAndAbilitiesPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            equipmentAndAbilitiesPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 14.28571F ) );
-            equipmentAndAbilitiesPanel.Size = new System.Drawing.Size( 612, 185 );
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.Size = new System.Drawing.Size(612, 185);
             equipmentAndAbilitiesPanel.TabIndex = 0;
             // 
             // skillTextLabel
             // 
             this.skillTextLabel.AutoSize = true;
             this.skillTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skillTextLabel.Location = new System.Drawing.Point( 412, 0 );
+            this.skillTextLabel.Location = new System.Drawing.Point(412, 0);
             this.skillTextLabel.Name = "skillTextLabel";
-            this.skillTextLabel.Size = new System.Drawing.Size( 197, 26 );
+            this.skillTextLabel.Size = new System.Drawing.Size(197, 26);
             this.skillTextLabel.TabIndex = 19;
             this.skillTextLabel.Text = "##skill##";
             this.skillTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -427,9 +428,9 @@ namespace LionEditor
             this.rightHandCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rightHandCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rightHandCombo.FormattingEnabled = true;
-            this.rightHandCombo.Location = new System.Drawing.Point( 107, 3 );
+            this.rightHandCombo.Location = new System.Drawing.Point(107, 3);
             this.rightHandCombo.Name = "rightHandCombo";
-            this.rightHandCombo.Size = new System.Drawing.Size( 195, 21 );
+            this.rightHandCombo.Size = new System.Drawing.Size(195, 21);
             this.rightHandCombo.TabIndex = 0;
             // 
             // rightShieldCombo
@@ -439,9 +440,9 @@ namespace LionEditor
             this.rightShieldCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rightShieldCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rightShieldCombo.FormattingEnabled = true;
-            this.rightShieldCombo.Location = new System.Drawing.Point( 107, 29 );
+            this.rightShieldCombo.Location = new System.Drawing.Point(107, 29);
             this.rightShieldCombo.Name = "rightShieldCombo";
-            this.rightShieldCombo.Size = new System.Drawing.Size( 195, 21 );
+            this.rightShieldCombo.Size = new System.Drawing.Size(195, 21);
             this.rightShieldCombo.TabIndex = 1;
             // 
             // leftHandCombo
@@ -451,9 +452,9 @@ namespace LionEditor
             this.leftHandCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.leftHandCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.leftHandCombo.FormattingEnabled = true;
-            this.leftHandCombo.Location = new System.Drawing.Point( 107, 55 );
+            this.leftHandCombo.Location = new System.Drawing.Point(107, 55);
             this.leftHandCombo.Name = "leftHandCombo";
-            this.leftHandCombo.Size = new System.Drawing.Size( 195, 21 );
+            this.leftHandCombo.Size = new System.Drawing.Size(195, 21);
             this.leftHandCombo.TabIndex = 2;
             // 
             // leftShieldCombo
@@ -463,9 +464,9 @@ namespace LionEditor
             this.leftShieldCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.leftShieldCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.leftShieldCombo.FormattingEnabled = true;
-            this.leftShieldCombo.Location = new System.Drawing.Point( 107, 81 );
+            this.leftShieldCombo.Location = new System.Drawing.Point(107, 81);
             this.leftShieldCombo.Name = "leftShieldCombo";
-            this.leftShieldCombo.Size = new System.Drawing.Size( 195, 21 );
+            this.leftShieldCombo.Size = new System.Drawing.Size(195, 21);
             this.leftShieldCombo.TabIndex = 3;
             // 
             // headCombo
@@ -475,9 +476,9 @@ namespace LionEditor
             this.headCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.headCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.headCombo.FormattingEnabled = true;
-            this.headCombo.Location = new System.Drawing.Point( 107, 107 );
+            this.headCombo.Location = new System.Drawing.Point(107, 107);
             this.headCombo.Name = "headCombo";
-            this.headCombo.Size = new System.Drawing.Size( 195, 21 );
+            this.headCombo.Size = new System.Drawing.Size(195, 21);
             this.headCombo.TabIndex = 4;
             // 
             // bodyCombo
@@ -487,9 +488,9 @@ namespace LionEditor
             this.bodyCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bodyCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.bodyCombo.FormattingEnabled = true;
-            this.bodyCombo.Location = new System.Drawing.Point( 107, 133 );
+            this.bodyCombo.Location = new System.Drawing.Point(107, 133);
             this.bodyCombo.Name = "bodyCombo";
-            this.bodyCombo.Size = new System.Drawing.Size( 195, 21 );
+            this.bodyCombo.Size = new System.Drawing.Size(195, 21);
             this.bodyCombo.TabIndex = 5;
             // 
             // accessoryCombo
@@ -499,9 +500,9 @@ namespace LionEditor
             this.accessoryCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.accessoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.accessoryCombo.FormattingEnabled = true;
-            this.accessoryCombo.Location = new System.Drawing.Point( 107, 159 );
+            this.accessoryCombo.Location = new System.Drawing.Point(107, 159);
             this.accessoryCombo.Name = "accessoryCombo";
-            this.accessoryCombo.Size = new System.Drawing.Size( 195, 21 );
+            this.accessoryCombo.Size = new System.Drawing.Size(195, 21);
             this.accessoryCombo.TabIndex = 6;
             // 
             // secondaryCombo
@@ -511,9 +512,9 @@ namespace LionEditor
             this.secondaryCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.secondaryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.secondaryCombo.FormattingEnabled = true;
-            this.secondaryCombo.Location = new System.Drawing.Point( 412, 55 );
+            this.secondaryCombo.Location = new System.Drawing.Point(412, 55);
             this.secondaryCombo.Name = "secondaryCombo";
-            this.secondaryCombo.Size = new System.Drawing.Size( 197, 21 );
+            this.secondaryCombo.Size = new System.Drawing.Size(197, 21);
             this.secondaryCombo.TabIndex = 7;
             // 
             // supportCombo
@@ -523,9 +524,9 @@ namespace LionEditor
             this.supportCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.supportCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.supportCombo.FormattingEnabled = true;
-            this.supportCombo.Location = new System.Drawing.Point( 412, 133 );
+            this.supportCombo.Location = new System.Drawing.Point(412, 133);
             this.supportCombo.Name = "supportCombo";
-            this.supportCombo.Size = new System.Drawing.Size( 197, 21 );
+            this.supportCombo.Size = new System.Drawing.Size(197, 21);
             this.supportCombo.TabIndex = 9;
             // 
             // reactionCombo
@@ -535,9 +536,9 @@ namespace LionEditor
             this.reactionCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reactionCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.reactionCombo.FormattingEnabled = true;
-            this.reactionCombo.Location = new System.Drawing.Point( 412, 107 );
+            this.reactionCombo.Location = new System.Drawing.Point(412, 107);
             this.reactionCombo.Name = "reactionCombo";
-            this.reactionCombo.Size = new System.Drawing.Size( 197, 21 );
+            this.reactionCombo.Size = new System.Drawing.Size(197, 21);
             this.reactionCombo.TabIndex = 8;
             // 
             // movementCombo
@@ -547,34 +548,34 @@ namespace LionEditor
             this.movementCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.movementCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.movementCombo.FormattingEnabled = true;
-            this.movementCombo.Location = new System.Drawing.Point( 412, 159 );
+            this.movementCombo.Location = new System.Drawing.Point(412, 159);
             this.movementCombo.Name = "movementCombo";
-            this.movementCombo.Size = new System.Drawing.Size( 197, 21 );
+            this.movementCombo.Size = new System.Drawing.Size(197, 21);
             this.movementCombo.TabIndex = 10;
             // 
             // characterEditorPanel2
             // 
             characterEditorPanel2.ColumnCount = 2;
-            characterEditorPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 100F ) );
-            characterEditorPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 303F ) );
-            characterEditorPanel2.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Absolute, 20F ) );
-            characterEditorPanel2.Controls.Add( this.groupBox, 1, 0 );
-            characterEditorPanel2.Controls.Add( topLeftPanel, 0, 0 );
+            characterEditorPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            characterEditorPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 303F));
+            characterEditorPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            characterEditorPanel2.Controls.Add(this.groupBox, 1, 0);
+            characterEditorPanel2.Controls.Add(topLeftPanel, 0, 0);
             characterEditorPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            characterEditorPanel2.Location = new System.Drawing.Point( 3, 3 );
+            characterEditorPanel2.Location = new System.Drawing.Point(3, 3);
             characterEditorPanel2.Name = "characterEditorPanel2";
             characterEditorPanel2.RowCount = 1;
-            characterEditorPanel2.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 100F ) );
-            characterEditorPanel2.Size = new System.Drawing.Size( 618, 111 );
+            characterEditorPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            characterEditorPanel2.Size = new System.Drawing.Size(618, 111);
             characterEditorPanel2.TabIndex = 0;
             // 
             // groupBox
             // 
-            this.groupBox.Controls.Add( identityPanel );
+            this.groupBox.Controls.Add(identityPanel);
             this.groupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox.Location = new System.Drawing.Point( 318, 3 );
+            this.groupBox.Location = new System.Drawing.Point(318, 3);
             this.groupBox.Name = "groupBox";
-            this.groupBox.Size = new System.Drawing.Size( 297, 105 );
+            this.groupBox.Size = new System.Drawing.Size(297, 105);
             this.groupBox.TabIndex = 1;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "##position##";
@@ -582,32 +583,32 @@ namespace LionEditor
             // identityPanel
             // 
             identityPanel.ColumnCount = 3;
-            identityPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 34.58904F ) );
-            identityPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 33.21918F ) );
-            identityPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 31.84932F ) );
-            identityPanel.Controls.Add( zodiacPanel, 0, 2 );
-            identityPanel.Controls.Add( faithPanel, 2, 2 );
-            identityPanel.Controls.Add( braveryPanel, 1, 2 );
-            identityPanel.Controls.Add( namePanel, 0, 0 );
-            identityPanel.Controls.Add( classPanel, 0, 1 );
+            identityPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.58904F));
+            identityPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.21918F));
+            identityPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.84932F));
+            identityPanel.Controls.Add(zodiacPanel, 0, 2);
+            identityPanel.Controls.Add(faithPanel, 2, 2);
+            identityPanel.Controls.Add(braveryPanel, 1, 2);
+            identityPanel.Controls.Add(namePanel, 0, 0);
+            identityPanel.Controls.Add(classPanel, 0, 1);
             identityPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            identityPanel.Location = new System.Drawing.Point( 3, 16 );
+            identityPanel.Location = new System.Drawing.Point(3, 16);
             identityPanel.Name = "identityPanel";
             identityPanel.RowCount = 3;
-            identityPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
-            identityPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
-            identityPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
-            identityPanel.Size = new System.Drawing.Size( 291, 86 );
+            identityPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            identityPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            identityPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            identityPanel.Size = new System.Drawing.Size(291, 86);
             identityPanel.TabIndex = 0;
             // 
             // zodiacPanel
             // 
-            zodiacPanel.Controls.Add( this.zodiacComboBox );
+            zodiacPanel.Controls.Add(this.zodiacComboBox);
             zodiacPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            zodiacPanel.Location = new System.Drawing.Point( 0, 56 );
-            zodiacPanel.Margin = new System.Windows.Forms.Padding( 0 );
+            zodiacPanel.Location = new System.Drawing.Point(0, 56);
+            zodiacPanel.Margin = new System.Windows.Forms.Padding(0);
             zodiacPanel.Name = "zodiacPanel";
-            zodiacPanel.Size = new System.Drawing.Size( 100, 30 );
+            zodiacPanel.Size = new System.Drawing.Size(100, 30);
             zodiacPanel.TabIndex = 3;
             // 
             // zodiacComboBox
@@ -617,20 +618,20 @@ namespace LionEditor
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.zodiacComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.zodiacComboBox.FormattingEnabled = true;
-            this.zodiacComboBox.Location = new System.Drawing.Point( 6, 5 );
+            this.zodiacComboBox.Location = new System.Drawing.Point(6, 5);
             this.zodiacComboBox.Name = "zodiacComboBox";
-            this.zodiacComboBox.Size = new System.Drawing.Size( 87, 21 );
+            this.zodiacComboBox.Size = new System.Drawing.Size(87, 21);
             this.zodiacComboBox.TabIndex = 0;
             // 
             // faithPanel
             // 
-            faithPanel.Controls.Add( this.faithSpinner );
-            faithPanel.Controls.Add( faithLabel );
+            faithPanel.Controls.Add(this.faithSpinner);
+            faithPanel.Controls.Add(faithLabel);
             faithPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            faithPanel.Location = new System.Drawing.Point( 197, 56 );
-            faithPanel.Margin = new System.Windows.Forms.Padding( 0 );
+            faithPanel.Location = new System.Drawing.Point(197, 56);
+            faithPanel.Margin = new System.Windows.Forms.Padding(0);
             faithPanel.Name = "faithPanel";
-            faithPanel.Size = new System.Drawing.Size( 94, 30 );
+            faithPanel.Size = new System.Drawing.Size(94, 30);
             faithPanel.TabIndex = 5;
             // 
             // faithSpinner
@@ -638,9 +639,9 @@ namespace LionEditor
             this.faithSpinner.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.faithSpinner.Location = new System.Drawing.Point( 47, 5 );
+            this.faithSpinner.Location = new System.Drawing.Point(47, 5);
             this.faithSpinner.Name = "faithSpinner";
-            this.faithSpinner.Size = new System.Drawing.Size( 44, 20 );
+            this.faithSpinner.Size = new System.Drawing.Size(44, 20);
             this.faithSpinner.TabIndex = 0;
             this.faithSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -649,22 +650,22 @@ namespace LionEditor
             faithLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
             faithLabel.AutoSize = true;
-            faithLabel.Location = new System.Drawing.Point( 3, 9 );
+            faithLabel.Location = new System.Drawing.Point(3, 9);
             faithLabel.Name = "faithLabel";
-            faithLabel.Size = new System.Drawing.Size( 33, 13 );
+            faithLabel.Size = new System.Drawing.Size(33, 13);
             faithLabel.TabIndex = 0;
             faithLabel.Text = "Faith:";
             faithLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // braveryPanel
             // 
-            braveryPanel.Controls.Add( this.braverySpinner );
-            braveryPanel.Controls.Add( braveryLabel );
+            braveryPanel.Controls.Add(this.braverySpinner);
+            braveryPanel.Controls.Add(braveryLabel);
             braveryPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            braveryPanel.Location = new System.Drawing.Point( 100, 56 );
-            braveryPanel.Margin = new System.Windows.Forms.Padding( 0 );
+            braveryPanel.Location = new System.Drawing.Point(100, 56);
+            braveryPanel.Margin = new System.Windows.Forms.Padding(0);
             braveryPanel.Name = "braveryPanel";
-            braveryPanel.Size = new System.Drawing.Size( 97, 30 );
+            braveryPanel.Size = new System.Drawing.Size(97, 30);
             braveryPanel.TabIndex = 4;
             // 
             // braverySpinner
@@ -672,9 +673,9 @@ namespace LionEditor
             this.braverySpinner.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.braverySpinner.Location = new System.Drawing.Point( 50, 5 );
+            this.braverySpinner.Location = new System.Drawing.Point(50, 5);
             this.braverySpinner.Name = "braverySpinner";
-            this.braverySpinner.Size = new System.Drawing.Size( 44, 20 );
+            this.braverySpinner.Size = new System.Drawing.Size(44, 20);
             this.braverySpinner.TabIndex = 0;
             this.braverySpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -683,23 +684,24 @@ namespace LionEditor
             braveryLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
             braveryLabel.AutoSize = true;
-            braveryLabel.Location = new System.Drawing.Point( 3, 9 );
+            braveryLabel.Location = new System.Drawing.Point(3, 9);
             braveryLabel.Name = "braveryLabel";
-            braveryLabel.Size = new System.Drawing.Size( 46, 13 );
+            braveryLabel.Size = new System.Drawing.Size(46, 13);
             braveryLabel.TabIndex = 0;
             braveryLabel.Text = "Bravery:";
             braveryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // namePanel
             // 
-            identityPanel.SetColumnSpan( namePanel, 3 );
-            namePanel.Controls.Add( this.nameTextBox );
-            namePanel.Controls.Add( nameLabel );
+            identityPanel.SetColumnSpan(namePanel, 3);
+            namePanel.Controls.Add(this.randomNameButton);
+            namePanel.Controls.Add(this.nameTextBox);
+            namePanel.Controls.Add(nameLabel);
             namePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            namePanel.Location = new System.Drawing.Point( 1, 1 );
-            namePanel.Margin = new System.Windows.Forms.Padding( 1 );
+            namePanel.Location = new System.Drawing.Point(1, 1);
+            namePanel.Margin = new System.Windows.Forms.Padding(1);
             namePanel.Name = "namePanel";
-            namePanel.Size = new System.Drawing.Size( 289, 26 );
+            namePanel.Size = new System.Drawing.Size(289, 26);
             namePanel.TabIndex = 1;
             // 
             // nameTextBox
@@ -707,10 +709,10 @@ namespace LionEditor
             this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameTextBox.Location = new System.Drawing.Point( 49, 3 );
+            this.nameTextBox.Location = new System.Drawing.Point(49, 3);
             this.nameTextBox.MaxLength = 14;
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size( 237, 20 );
+            this.nameTextBox.Size = new System.Drawing.Size(147, 20);
             this.nameTextBox.TabIndex = 0;
             // 
             // nameLabel
@@ -718,33 +720,33 @@ namespace LionEditor
             nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
             nameLabel.AutoSize = true;
-            nameLabel.Location = new System.Drawing.Point( 4, 7 );
+            nameLabel.Location = new System.Drawing.Point(4, 7);
             nameLabel.Name = "nameLabel";
-            nameLabel.Size = new System.Drawing.Size( 38, 13 );
+            nameLabel.Size = new System.Drawing.Size(38, 13);
             nameLabel.TabIndex = 0;
             nameLabel.Text = "Name:";
             nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // classPanel
             // 
-            identityPanel.SetColumnSpan( classPanel, 3 );
-            classPanel.Controls.Add( classPanel2 );
+            identityPanel.SetColumnSpan(classPanel, 3);
+            classPanel.Controls.Add(classPanel2);
             classPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            classPanel.Location = new System.Drawing.Point( 1, 29 );
-            classPanel.Margin = new System.Windows.Forms.Padding( 1 );
+            classPanel.Location = new System.Drawing.Point(1, 29);
+            classPanel.Margin = new System.Windows.Forms.Padding(1);
             classPanel.Name = "classPanel";
-            classPanel.Size = new System.Drawing.Size( 289, 26 );
+            classPanel.Size = new System.Drawing.Size(289, 26);
             classPanel.TabIndex = 2;
             // 
             // classPanel2
             // 
-            classPanel2.Controls.Add( this.classComboBox );
-            classPanel2.Controls.Add( classLabel );
+            classPanel2.Controls.Add(this.classComboBox);
+            classPanel2.Controls.Add(classLabel);
             classPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            classPanel2.Location = new System.Drawing.Point( 0, 0 );
-            classPanel2.Margin = new System.Windows.Forms.Padding( 1 );
+            classPanel2.Location = new System.Drawing.Point(0, 0);
+            classPanel2.Margin = new System.Windows.Forms.Padding(1);
             classPanel2.Name = "classPanel2";
-            classPanel2.Size = new System.Drawing.Size( 289, 26 );
+            classPanel2.Size = new System.Drawing.Size(289, 26);
             classPanel2.TabIndex = 5;
             // 
             // classComboBox
@@ -754,9 +756,9 @@ namespace LionEditor
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.classComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.classComboBox.FormattingEnabled = true;
-            this.classComboBox.Location = new System.Drawing.Point( 49, 3 );
+            this.classComboBox.Location = new System.Drawing.Point(49, 3);
             this.classComboBox.Name = "classComboBox";
-            this.classComboBox.Size = new System.Drawing.Size( 237, 21 );
+            this.classComboBox.Size = new System.Drawing.Size(237, 21);
             this.classComboBox.TabIndex = 0;
             // 
             // classLabel
@@ -764,9 +766,9 @@ namespace LionEditor
             classLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
             classLabel.AutoSize = true;
-            classLabel.Location = new System.Drawing.Point( 4, 7 );
+            classLabel.Location = new System.Drawing.Point(4, 7);
             classLabel.Name = "classLabel";
-            classLabel.Size = new System.Drawing.Size( 35, 13 );
+            classLabel.Size = new System.Drawing.Size(35, 13);
             classLabel.TabIndex = 0;
             classLabel.Text = "Class:";
             classLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -774,44 +776,44 @@ namespace LionEditor
             // topLeftPanel
             // 
             topLeftPanel.ColumnCount = 4;
-            topLeftPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
-            topLeftPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
-            topLeftPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 22.72727F ) );
-            topLeftPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 27.27273F ) );
-            topLeftPanel.Controls.Add( this.experienceSpinner, 3, 1 );
-            topLeftPanel.Controls.Add( levelLabel, 0, 1 );
-            topLeftPanel.Controls.Add( this.spriteSetCombo, 0, 0 );
-            topLeftPanel.Controls.Add( expLabel, 2, 1 );
-            topLeftPanel.Controls.Add( HPLabel, 2, 2 );
-            topLeftPanel.Controls.Add( MPLabel, 2, 3 );
-            topLeftPanel.Controls.Add( this.levelSpinner, 1, 1 );
-            topLeftPanel.Controls.Add( this.hpSpinner, 3, 2 );
-            topLeftPanel.Controls.Add( this.mpSpinner, 3, 3 );
-            topLeftPanel.Controls.Add( this.unavailableCheckbox, 0, 2 );
-            topLeftPanel.Controls.Add( this.jobButton, 1, 3 );
-            topLeftPanel.Controls.Add( this.genderComboBox, 0, 3 );
+            topLeftPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            topLeftPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            topLeftPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.72727F));
+            topLeftPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.27273F));
+            topLeftPanel.Controls.Add(this.experienceSpinner, 3, 1);
+            topLeftPanel.Controls.Add(levelLabel, 0, 1);
+            topLeftPanel.Controls.Add(this.spriteSetCombo, 0, 0);
+            topLeftPanel.Controls.Add(expLabel, 2, 1);
+            topLeftPanel.Controls.Add(HPLabel, 2, 2);
+            topLeftPanel.Controls.Add(MPLabel, 2, 3);
+            topLeftPanel.Controls.Add(this.levelSpinner, 1, 1);
+            topLeftPanel.Controls.Add(this.hpSpinner, 3, 2);
+            topLeftPanel.Controls.Add(this.mpSpinner, 3, 3);
+            topLeftPanel.Controls.Add(this.unavailableCheckbox, 0, 2);
+            topLeftPanel.Controls.Add(this.jobButton, 1, 3);
+            topLeftPanel.Controls.Add(this.genderComboBox, 0, 3);
             topLeftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            topLeftPanel.Location = new System.Drawing.Point( 3, 3 );
+            topLeftPanel.Location = new System.Drawing.Point(3, 3);
             topLeftPanel.Name = "topLeftPanel";
             topLeftPanel.RowCount = 4;
-            topLeftPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
-            topLeftPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
-            topLeftPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
-            topLeftPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 25F ) );
-            topLeftPanel.Size = new System.Drawing.Size( 309, 105 );
+            topLeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            topLeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            topLeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            topLeftPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            topLeftPanel.Size = new System.Drawing.Size(309, 105);
             topLeftPanel.TabIndex = 0;
             // 
             // experienceSpinner
             // 
             this.experienceSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.experienceSpinner.Location = new System.Drawing.Point( 227, 29 );
-            this.experienceSpinner.Maximum = new decimal( new int[] {
+            this.experienceSpinner.Location = new System.Drawing.Point(227, 29);
+            this.experienceSpinner.Maximum = new decimal(new int[] {
             99,
             0,
             0,
-            0} );
+            0});
             this.experienceSpinner.Name = "experienceSpinner";
-            this.experienceSpinner.Size = new System.Drawing.Size( 79, 20 );
+            this.experienceSpinner.Size = new System.Drawing.Size(79, 20);
             this.experienceSpinner.TabIndex = 3;
             this.experienceSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -819,31 +821,31 @@ namespace LionEditor
             // 
             levelLabel.AutoSize = true;
             levelLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            levelLabel.Location = new System.Drawing.Point( 3, 26 );
+            levelLabel.Location = new System.Drawing.Point(3, 26);
             levelLabel.Name = "levelLabel";
-            levelLabel.Size = new System.Drawing.Size( 71, 26 );
+            levelLabel.Size = new System.Drawing.Size(71, 26);
             levelLabel.TabIndex = 0;
             levelLabel.Text = "Level:";
             levelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // spriteSetCombo
             // 
-            topLeftPanel.SetColumnSpan( this.spriteSetCombo, 4 );
+            topLeftPanel.SetColumnSpan(this.spriteSetCombo, 4);
             this.spriteSetCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.spriteSetCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.spriteSetCombo.FormattingEnabled = true;
-            this.spriteSetCombo.Location = new System.Drawing.Point( 3, 3 );
+            this.spriteSetCombo.Location = new System.Drawing.Point(3, 3);
             this.spriteSetCombo.Name = "spriteSetCombo";
-            this.spriteSetCombo.Size = new System.Drawing.Size( 303, 21 );
+            this.spriteSetCombo.Size = new System.Drawing.Size(303, 21);
             this.spriteSetCombo.TabIndex = 0;
             // 
             // expLabel
             // 
             expLabel.AutoSize = true;
             expLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            expLabel.Location = new System.Drawing.Point( 157, 26 );
+            expLabel.Location = new System.Drawing.Point(157, 26);
             expLabel.Name = "expLabel";
-            expLabel.Size = new System.Drawing.Size( 64, 26 );
+            expLabel.Size = new System.Drawing.Size(64, 26);
             expLabel.TabIndex = 1;
             expLabel.Text = "Exp:";
             expLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -852,9 +854,9 @@ namespace LionEditor
             // 
             HPLabel.AutoSize = true;
             HPLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            HPLabel.Location = new System.Drawing.Point( 157, 52 );
+            HPLabel.Location = new System.Drawing.Point(157, 52);
             HPLabel.Name = "HPLabel";
-            HPLabel.Size = new System.Drawing.Size( 64, 26 );
+            HPLabel.Size = new System.Drawing.Size(64, 26);
             HPLabel.TabIndex = 2;
             HPLabel.Text = "HP:";
             HPLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -863,82 +865,82 @@ namespace LionEditor
             // 
             MPLabel.AutoSize = true;
             MPLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            MPLabel.Location = new System.Drawing.Point( 157, 78 );
+            MPLabel.Location = new System.Drawing.Point(157, 78);
             MPLabel.Name = "MPLabel";
-            MPLabel.Size = new System.Drawing.Size( 64, 27 );
+            MPLabel.Size = new System.Drawing.Size(64, 27);
             MPLabel.TabIndex = 3;
             MPLabel.Text = "MP:";
             MPLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // levelSpinner
             // 
-            this.levelSpinner.Location = new System.Drawing.Point( 80, 29 );
-            this.levelSpinner.Maximum = new decimal( new int[] {
+            this.levelSpinner.Location = new System.Drawing.Point(80, 29);
+            this.levelSpinner.Maximum = new decimal(new int[] {
             99,
             0,
             0,
-            0} );
-            this.levelSpinner.Minimum = new decimal( new int[] {
+            0});
+            this.levelSpinner.Minimum = new decimal(new int[] {
             1,
             0,
             0,
-            0} );
+            0});
             this.levelSpinner.Name = "levelSpinner";
-            this.levelSpinner.Size = new System.Drawing.Size( 48, 20 );
+            this.levelSpinner.Size = new System.Drawing.Size(48, 20);
             this.levelSpinner.TabIndex = 1;
             this.levelSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.levelSpinner.Value = new decimal( new int[] {
+            this.levelSpinner.Value = new decimal(new int[] {
             1,
             0,
             0,
-            0} );
+            0});
             // 
             // hpSpinner
             // 
             this.hpSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hpSpinner.Location = new System.Drawing.Point( 227, 55 );
-            this.hpSpinner.Maximum = new decimal( new int[] {
+            this.hpSpinner.Location = new System.Drawing.Point(227, 55);
+            this.hpSpinner.Maximum = new decimal(new int[] {
             999,
             0,
             0,
-            0} );
-            this.hpSpinner.Minimum = new decimal( new int[] {
+            0});
+            this.hpSpinner.Minimum = new decimal(new int[] {
             1,
             0,
             0,
-            0} );
+            0});
             this.hpSpinner.Name = "hpSpinner";
-            this.hpSpinner.Size = new System.Drawing.Size( 79, 20 );
+            this.hpSpinner.Size = new System.Drawing.Size(79, 20);
             this.hpSpinner.TabIndex = 4;
             this.hpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.hpSpinner.Value = new decimal( new int[] {
+            this.hpSpinner.Value = new decimal(new int[] {
             1,
             0,
             0,
-            0} );
+            0});
             // 
             // mpSpinner
             // 
             this.mpSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mpSpinner.Location = new System.Drawing.Point( 227, 81 );
-            this.mpSpinner.Maximum = new decimal( new int[] {
+            this.mpSpinner.Location = new System.Drawing.Point(227, 81);
+            this.mpSpinner.Maximum = new decimal(new int[] {
             999,
             0,
             0,
-            0} );
+            0});
             this.mpSpinner.Name = "mpSpinner";
-            this.mpSpinner.Size = new System.Drawing.Size( 79, 20 );
+            this.mpSpinner.Size = new System.Drawing.Size(79, 20);
             this.mpSpinner.TabIndex = 5;
             this.mpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // unavailableCheckbox
             // 
             this.unavailableCheckbox.AutoSize = true;
-            topLeftPanel.SetColumnSpan( this.unavailableCheckbox, 2 );
+            topLeftPanel.SetColumnSpan(this.unavailableCheckbox, 2);
             this.unavailableCheckbox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.unavailableCheckbox.Location = new System.Drawing.Point( 69, 55 );
+            this.unavailableCheckbox.Location = new System.Drawing.Point(69, 55);
             this.unavailableCheckbox.Name = "unavailableCheckbox";
-            this.unavailableCheckbox.Size = new System.Drawing.Size( 82, 20 );
+            this.unavailableCheckbox.Size = new System.Drawing.Size(82, 20);
             this.unavailableCheckbox.TabIndex = 2;
             this.unavailableCheckbox.Text = "Unavailable";
             this.unavailableCheckbox.UseVisualStyleBackColor = true;
@@ -946,9 +948,9 @@ namespace LionEditor
             // jobButton
             // 
             this.jobButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.jobButton.Location = new System.Drawing.Point( 80, 81 );
+            this.jobButton.Location = new System.Drawing.Point(80, 81);
             this.jobButton.Name = "jobButton";
-            this.jobButton.Size = new System.Drawing.Size( 71, 21 );
+            this.jobButton.Size = new System.Drawing.Size(71, 21);
             this.jobButton.TabIndex = 7;
             this.jobButton.Text = "Jobs";
             this.jobButton.UseVisualStyleBackColor = true;
@@ -958,69 +960,69 @@ namespace LionEditor
             this.genderComboBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.genderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.genderComboBox.FormattingEnabled = true;
-            this.genderComboBox.Location = new System.Drawing.Point( 3, 81 );
+            this.genderComboBox.Location = new System.Drawing.Point(3, 81);
             this.genderComboBox.Name = "genderComboBox";
-            this.genderComboBox.Size = new System.Drawing.Size( 71, 21 );
+            this.genderComboBox.Size = new System.Drawing.Size(71, 21);
             this.genderComboBox.TabIndex = 6;
             // 
             // statsPanel
             // 
             statsPanel.ColumnCount = 10;
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 10F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 9.294871F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 6.891026F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 6.730769F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 8.173077F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 18.58974F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 10F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 10F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 10F ) );
-            statsPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 10F ) );
-            statsPanel.Controls.Add( moveLabel, 0, 0 );
-            statsPanel.Controls.Add( jumpLabel, 0, 1 );
-            statsPanel.Controls.Add( speedLabel, 0, 2 );
-            statsPanel.Controls.Add( weaponPowerLabel, 2, 0 );
-            statsPanel.Controls.Add( rightLabel, 2, 1 );
-            statsPanel.Controls.Add( leftLabel, 2, 2 );
-            statsPanel.Controls.Add( physicalLabel, 5, 1 );
-            statsPanel.Controls.Add( magicLabel, 5, 2 );
-            statsPanel.Controls.Add( atkLabel, 6, 0 );
-            statsPanel.Controls.Add( cevLabel, 7, 0 );
-            statsPanel.Controls.Add( sevLabel, 8, 0 );
-            statsPanel.Controls.Add( aevLabel, 9, 0 );
-            statsPanel.Controls.Add( this.cevPhysical, 7, 1 );
-            statsPanel.Controls.Add( this.cevMagic, 7, 2 );
-            statsPanel.Controls.Add( this.sevPhysical, 8, 1 );
-            statsPanel.Controls.Add( this.sevMagic, 8, 2 );
-            statsPanel.Controls.Add( this.aevPhysical, 9, 1 );
-            statsPanel.Controls.Add( this.aevMagic, 9, 2 );
-            statsPanel.Controls.Add( this.rightWeaponPower, 3, 1 );
-            statsPanel.Controls.Add( this.rightWeaponEvade, 4, 1 );
-            statsPanel.Controls.Add( this.leftWeaponPower, 3, 2 );
-            statsPanel.Controls.Add( this.leftWeaponEvade, 4, 2 );
-            statsPanel.Controls.Add( this.moveValueLabel, 1, 0 );
-            statsPanel.Controls.Add( this.jumpValueLabel, 1, 1 );
-            statsPanel.Controls.Add( this.speedSpinner, 1, 2 );
-            statsPanel.Controls.Add( this.paSpinner, 6, 1 );
-            statsPanel.Controls.Add( this.maSpinner, 6, 2 );
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.294871F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.891026F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.730769F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.173077F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.58974F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            statsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            statsPanel.Controls.Add(moveLabel, 0, 0);
+            statsPanel.Controls.Add(jumpLabel, 0, 1);
+            statsPanel.Controls.Add(speedLabel, 0, 2);
+            statsPanel.Controls.Add(weaponPowerLabel, 2, 0);
+            statsPanel.Controls.Add(rightLabel, 2, 1);
+            statsPanel.Controls.Add(leftLabel, 2, 2);
+            statsPanel.Controls.Add(physicalLabel, 5, 1);
+            statsPanel.Controls.Add(magicLabel, 5, 2);
+            statsPanel.Controls.Add(atkLabel, 6, 0);
+            statsPanel.Controls.Add(cevLabel, 7, 0);
+            statsPanel.Controls.Add(sevLabel, 8, 0);
+            statsPanel.Controls.Add(aevLabel, 9, 0);
+            statsPanel.Controls.Add(this.cevPhysical, 7, 1);
+            statsPanel.Controls.Add(this.cevMagic, 7, 2);
+            statsPanel.Controls.Add(this.sevPhysical, 8, 1);
+            statsPanel.Controls.Add(this.sevMagic, 8, 2);
+            statsPanel.Controls.Add(this.aevPhysical, 9, 1);
+            statsPanel.Controls.Add(this.aevMagic, 9, 2);
+            statsPanel.Controls.Add(this.rightWeaponPower, 3, 1);
+            statsPanel.Controls.Add(this.rightWeaponEvade, 4, 1);
+            statsPanel.Controls.Add(this.leftWeaponPower, 3, 2);
+            statsPanel.Controls.Add(this.leftWeaponEvade, 4, 2);
+            statsPanel.Controls.Add(this.moveValueLabel, 1, 0);
+            statsPanel.Controls.Add(this.jumpValueLabel, 1, 1);
+            statsPanel.Controls.Add(this.speedSpinner, 1, 2);
+            statsPanel.Controls.Add(this.paSpinner, 6, 1);
+            statsPanel.Controls.Add(this.maSpinner, 6, 2);
             statsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            statsPanel.Location = new System.Drawing.Point( 0, 117 );
-            statsPanel.Margin = new System.Windows.Forms.Padding( 0 );
+            statsPanel.Location = new System.Drawing.Point(0, 117);
+            statsPanel.Margin = new System.Windows.Forms.Padding(0);
             statsPanel.Name = "statsPanel";
             statsPanel.RowCount = 3;
-            statsPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
-            statsPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
-            statsPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 33.33333F ) );
-            statsPanel.Size = new System.Drawing.Size( 624, 78 );
+            statsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            statsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            statsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            statsPanel.Size = new System.Drawing.Size(624, 78);
             statsPanel.TabIndex = 3;
             // 
             // moveLabel
             // 
             moveLabel.AutoSize = true;
             moveLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            moveLabel.Location = new System.Drawing.Point( 3, 0 );
+            moveLabel.Location = new System.Drawing.Point(3, 0);
             moveLabel.Name = "moveLabel";
-            moveLabel.Size = new System.Drawing.Size( 56, 26 );
+            moveLabel.Size = new System.Drawing.Size(56, 26);
             moveLabel.TabIndex = 0;
             moveLabel.Text = "Move:";
             moveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1029,9 +1031,9 @@ namespace LionEditor
             // 
             jumpLabel.AutoSize = true;
             jumpLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            jumpLabel.Location = new System.Drawing.Point( 3, 26 );
+            jumpLabel.Location = new System.Drawing.Point(3, 26);
             jumpLabel.Name = "jumpLabel";
-            jumpLabel.Size = new System.Drawing.Size( 56, 26 );
+            jumpLabel.Size = new System.Drawing.Size(56, 26);
             jumpLabel.TabIndex = 1;
             jumpLabel.Text = "Jump:";
             jumpLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1040,9 +1042,9 @@ namespace LionEditor
             // 
             speedLabel.AutoSize = true;
             speedLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            speedLabel.Location = new System.Drawing.Point( 3, 52 );
+            speedLabel.Location = new System.Drawing.Point(3, 52);
             speedLabel.Name = "speedLabel";
-            speedLabel.Size = new System.Drawing.Size( 56, 26 );
+            speedLabel.Size = new System.Drawing.Size(56, 26);
             speedLabel.TabIndex = 2;
             speedLabel.Text = "Speed:";
             speedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1050,11 +1052,11 @@ namespace LionEditor
             // weaponPowerLabel
             // 
             weaponPowerLabel.AutoSize = true;
-            statsPanel.SetColumnSpan( weaponPowerLabel, 3 );
+            statsPanel.SetColumnSpan(weaponPowerLabel, 3);
             weaponPowerLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            weaponPowerLabel.Location = new System.Drawing.Point( 123, 0 );
+            weaponPowerLabel.Location = new System.Drawing.Point(123, 0);
             weaponPowerLabel.Name = "weaponPowerLabel";
-            weaponPowerLabel.Size = new System.Drawing.Size( 130, 26 );
+            weaponPowerLabel.Size = new System.Drawing.Size(130, 26);
             weaponPowerLabel.TabIndex = 3;
             weaponPowerLabel.Text = "Weapon Power";
             weaponPowerLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -1063,9 +1065,9 @@ namespace LionEditor
             // 
             rightLabel.AutoSize = true;
             rightLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            rightLabel.Location = new System.Drawing.Point( 123, 26 );
+            rightLabel.Location = new System.Drawing.Point(123, 26);
             rightLabel.Name = "rightLabel";
-            rightLabel.Size = new System.Drawing.Size( 37, 26 );
+            rightLabel.Size = new System.Drawing.Size(37, 26);
             rightLabel.TabIndex = 4;
             rightLabel.Text = "R";
             rightLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1074,9 +1076,9 @@ namespace LionEditor
             // 
             leftLabel.AutoSize = true;
             leftLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            leftLabel.Location = new System.Drawing.Point( 123, 52 );
+            leftLabel.Location = new System.Drawing.Point(123, 52);
             leftLabel.Name = "leftLabel";
-            leftLabel.Size = new System.Drawing.Size( 37, 26 );
+            leftLabel.Size = new System.Drawing.Size(37, 26);
             leftLabel.TabIndex = 5;
             leftLabel.Text = "L";
             leftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1085,9 +1087,9 @@ namespace LionEditor
             // 
             physicalLabel.AutoSize = true;
             physicalLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            physicalLabel.Location = new System.Drawing.Point( 259, 26 );
+            physicalLabel.Location = new System.Drawing.Point(259, 26);
             physicalLabel.Name = "physicalLabel";
-            physicalLabel.Size = new System.Drawing.Size( 110, 26 );
+            physicalLabel.Size = new System.Drawing.Size(110, 26);
             physicalLabel.TabIndex = 6;
             physicalLabel.Text = "Physical:";
             physicalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1096,9 +1098,9 @@ namespace LionEditor
             // 
             magicLabel.AutoSize = true;
             magicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            magicLabel.Location = new System.Drawing.Point( 259, 52 );
+            magicLabel.Location = new System.Drawing.Point(259, 52);
             magicLabel.Name = "magicLabel";
-            magicLabel.Size = new System.Drawing.Size( 110, 26 );
+            magicLabel.Size = new System.Drawing.Size(110, 26);
             magicLabel.TabIndex = 7;
             magicLabel.Text = "Magic:";
             magicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1107,9 +1109,9 @@ namespace LionEditor
             // 
             atkLabel.AutoSize = true;
             atkLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            atkLabel.Location = new System.Drawing.Point( 375, 0 );
+            atkLabel.Location = new System.Drawing.Point(375, 0);
             atkLabel.Name = "atkLabel";
-            atkLabel.Size = new System.Drawing.Size( 56, 26 );
+            atkLabel.Size = new System.Drawing.Size(56, 26);
             atkLabel.TabIndex = 8;
             atkLabel.Text = "ATK";
             atkLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -1118,9 +1120,9 @@ namespace LionEditor
             // 
             cevLabel.AutoSize = true;
             cevLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            cevLabel.Location = new System.Drawing.Point( 437, 0 );
+            cevLabel.Location = new System.Drawing.Point(437, 0);
             cevLabel.Name = "cevLabel";
-            cevLabel.Size = new System.Drawing.Size( 56, 26 );
+            cevLabel.Size = new System.Drawing.Size(56, 26);
             cevLabel.TabIndex = 9;
             cevLabel.Text = "C-EV";
             cevLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -1129,9 +1131,9 @@ namespace LionEditor
             // 
             sevLabel.AutoSize = true;
             sevLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            sevLabel.Location = new System.Drawing.Point( 499, 0 );
+            sevLabel.Location = new System.Drawing.Point(499, 0);
             sevLabel.Name = "sevLabel";
-            sevLabel.Size = new System.Drawing.Size( 56, 26 );
+            sevLabel.Size = new System.Drawing.Size(56, 26);
             sevLabel.TabIndex = 10;
             sevLabel.Text = "S-EV";
             sevLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -1140,9 +1142,9 @@ namespace LionEditor
             // 
             aevLabel.AutoSize = true;
             aevLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            aevLabel.Location = new System.Drawing.Point( 561, 0 );
+            aevLabel.Location = new System.Drawing.Point(561, 0);
             aevLabel.Name = "aevLabel";
-            aevLabel.Size = new System.Drawing.Size( 60, 26 );
+            aevLabel.Size = new System.Drawing.Size(60, 26);
             aevLabel.TabIndex = 11;
             aevLabel.Text = "A-EV";
             aevLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -1151,9 +1153,9 @@ namespace LionEditor
             // 
             this.cevPhysical.AutoSize = true;
             this.cevPhysical.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cevPhysical.Location = new System.Drawing.Point( 437, 26 );
+            this.cevPhysical.Location = new System.Drawing.Point(437, 26);
             this.cevPhysical.Name = "cevPhysical";
-            this.cevPhysical.Size = new System.Drawing.Size( 56, 26 );
+            this.cevPhysical.Size = new System.Drawing.Size(56, 26);
             this.cevPhysical.TabIndex = 12;
             this.cevPhysical.Text = "###";
             this.cevPhysical.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1162,9 +1164,9 @@ namespace LionEditor
             // 
             this.cevMagic.AutoSize = true;
             this.cevMagic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cevMagic.Location = new System.Drawing.Point( 437, 52 );
+            this.cevMagic.Location = new System.Drawing.Point(437, 52);
             this.cevMagic.Name = "cevMagic";
-            this.cevMagic.Size = new System.Drawing.Size( 56, 26 );
+            this.cevMagic.Size = new System.Drawing.Size(56, 26);
             this.cevMagic.TabIndex = 13;
             this.cevMagic.Text = "###";
             this.cevMagic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1173,9 +1175,9 @@ namespace LionEditor
             // 
             this.sevPhysical.AutoSize = true;
             this.sevPhysical.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sevPhysical.Location = new System.Drawing.Point( 499, 26 );
+            this.sevPhysical.Location = new System.Drawing.Point(499, 26);
             this.sevPhysical.Name = "sevPhysical";
-            this.sevPhysical.Size = new System.Drawing.Size( 56, 26 );
+            this.sevPhysical.Size = new System.Drawing.Size(56, 26);
             this.sevPhysical.TabIndex = 14;
             this.sevPhysical.Text = "###";
             this.sevPhysical.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1184,9 +1186,9 @@ namespace LionEditor
             // 
             this.sevMagic.AutoSize = true;
             this.sevMagic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sevMagic.Location = new System.Drawing.Point( 499, 52 );
+            this.sevMagic.Location = new System.Drawing.Point(499, 52);
             this.sevMagic.Name = "sevMagic";
-            this.sevMagic.Size = new System.Drawing.Size( 56, 26 );
+            this.sevMagic.Size = new System.Drawing.Size(56, 26);
             this.sevMagic.TabIndex = 15;
             this.sevMagic.Text = "###";
             this.sevMagic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1195,9 +1197,9 @@ namespace LionEditor
             // 
             this.aevPhysical.AutoSize = true;
             this.aevPhysical.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aevPhysical.Location = new System.Drawing.Point( 561, 26 );
+            this.aevPhysical.Location = new System.Drawing.Point(561, 26);
             this.aevPhysical.Name = "aevPhysical";
-            this.aevPhysical.Size = new System.Drawing.Size( 60, 26 );
+            this.aevPhysical.Size = new System.Drawing.Size(60, 26);
             this.aevPhysical.TabIndex = 16;
             this.aevPhysical.Text = "###";
             this.aevPhysical.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1206,9 +1208,9 @@ namespace LionEditor
             // 
             this.aevMagic.AutoSize = true;
             this.aevMagic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aevMagic.Location = new System.Drawing.Point( 561, 52 );
+            this.aevMagic.Location = new System.Drawing.Point(561, 52);
             this.aevMagic.Name = "aevMagic";
-            this.aevMagic.Size = new System.Drawing.Size( 60, 26 );
+            this.aevMagic.Size = new System.Drawing.Size(60, 26);
             this.aevMagic.TabIndex = 17;
             this.aevMagic.Text = "###";
             this.aevMagic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1217,9 +1219,9 @@ namespace LionEditor
             // 
             this.rightWeaponPower.AutoSize = true;
             this.rightWeaponPower.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightWeaponPower.Location = new System.Drawing.Point( 166, 26 );
+            this.rightWeaponPower.Location = new System.Drawing.Point(166, 26);
             this.rightWeaponPower.Name = "rightWeaponPower";
-            this.rightWeaponPower.Size = new System.Drawing.Size( 36, 26 );
+            this.rightWeaponPower.Size = new System.Drawing.Size(36, 26);
             this.rightWeaponPower.TabIndex = 18;
             this.rightWeaponPower.Text = "###";
             this.rightWeaponPower.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1228,9 +1230,9 @@ namespace LionEditor
             // 
             this.rightWeaponEvade.AutoSize = true;
             this.rightWeaponEvade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightWeaponEvade.Location = new System.Drawing.Point( 208, 26 );
+            this.rightWeaponEvade.Location = new System.Drawing.Point(208, 26);
             this.rightWeaponEvade.Name = "rightWeaponEvade";
-            this.rightWeaponEvade.Size = new System.Drawing.Size( 45, 26 );
+            this.rightWeaponEvade.Size = new System.Drawing.Size(45, 26);
             this.rightWeaponEvade.TabIndex = 19;
             this.rightWeaponEvade.Text = "###";
             this.rightWeaponEvade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1239,9 +1241,9 @@ namespace LionEditor
             // 
             this.leftWeaponPower.AutoSize = true;
             this.leftWeaponPower.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftWeaponPower.Location = new System.Drawing.Point( 166, 52 );
+            this.leftWeaponPower.Location = new System.Drawing.Point(166, 52);
             this.leftWeaponPower.Name = "leftWeaponPower";
-            this.leftWeaponPower.Size = new System.Drawing.Size( 36, 26 );
+            this.leftWeaponPower.Size = new System.Drawing.Size(36, 26);
             this.leftWeaponPower.TabIndex = 20;
             this.leftWeaponPower.Text = "###";
             this.leftWeaponPower.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1250,9 +1252,9 @@ namespace LionEditor
             // 
             this.leftWeaponEvade.AutoSize = true;
             this.leftWeaponEvade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftWeaponEvade.Location = new System.Drawing.Point( 208, 52 );
+            this.leftWeaponEvade.Location = new System.Drawing.Point(208, 52);
             this.leftWeaponEvade.Name = "leftWeaponEvade";
-            this.leftWeaponEvade.Size = new System.Drawing.Size( 45, 26 );
+            this.leftWeaponEvade.Size = new System.Drawing.Size(45, 26);
             this.leftWeaponEvade.TabIndex = 21;
             this.leftWeaponEvade.Text = "###";
             this.leftWeaponEvade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1261,9 +1263,9 @@ namespace LionEditor
             // 
             this.moveValueLabel.AutoSize = true;
             this.moveValueLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.moveValueLabel.Location = new System.Drawing.Point( 65, 0 );
+            this.moveValueLabel.Location = new System.Drawing.Point(65, 0);
             this.moveValueLabel.Name = "moveValueLabel";
-            this.moveValueLabel.Size = new System.Drawing.Size( 52, 26 );
+            this.moveValueLabel.Size = new System.Drawing.Size(52, 26);
             this.moveValueLabel.TabIndex = 22;
             this.moveValueLabel.Text = "##move##";
             this.moveValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1272,9 +1274,9 @@ namespace LionEditor
             // 
             this.jumpValueLabel.AutoSize = true;
             this.jumpValueLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.jumpValueLabel.Location = new System.Drawing.Point( 65, 26 );
+            this.jumpValueLabel.Location = new System.Drawing.Point(65, 26);
             this.jumpValueLabel.Name = "jumpValueLabel";
-            this.jumpValueLabel.Size = new System.Drawing.Size( 52, 26 );
+            this.jumpValueLabel.Size = new System.Drawing.Size(52, 26);
             this.jumpValueLabel.TabIndex = 23;
             this.jumpValueLabel.Text = "##jump##";
             this.jumpValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1283,84 +1285,93 @@ namespace LionEditor
             // 
             this.speedSpinner.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
-            this.speedSpinner.Location = new System.Drawing.Point( 65, 56 );
-            this.speedSpinner.Margin = new System.Windows.Forms.Padding( 3, 4, 3, 3 );
-            this.speedSpinner.Maximum = new decimal( new int[] {
+            this.speedSpinner.Location = new System.Drawing.Point(65, 56);
+            this.speedSpinner.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
+            this.speedSpinner.Maximum = new decimal(new int[] {
             99,
             0,
             0,
-            0} );
+            0});
             this.speedSpinner.Name = "speedSpinner";
-            this.speedSpinner.Size = new System.Drawing.Size( 52, 20 );
+            this.speedSpinner.Size = new System.Drawing.Size(52, 20);
             this.speedSpinner.TabIndex = 1;
             this.speedSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // paSpinner
             // 
             this.paSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paSpinner.Location = new System.Drawing.Point( 375, 30 );
-            this.paSpinner.Margin = new System.Windows.Forms.Padding( 3, 4, 3, 3 );
-            this.paSpinner.Maximum = new decimal( new int[] {
+            this.paSpinner.Location = new System.Drawing.Point(375, 30);
+            this.paSpinner.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
+            this.paSpinner.Maximum = new decimal(new int[] {
             99,
             0,
             0,
-            0} );
+            0});
             this.paSpinner.Name = "paSpinner";
-            this.paSpinner.Size = new System.Drawing.Size( 56, 20 );
+            this.paSpinner.Size = new System.Drawing.Size(56, 20);
             this.paSpinner.TabIndex = 2;
             this.paSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // maSpinner
             // 
             this.maSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maSpinner.Location = new System.Drawing.Point( 375, 56 );
-            this.maSpinner.Margin = new System.Windows.Forms.Padding( 3, 4, 3, 3 );
-            this.maSpinner.Maximum = new decimal( new int[] {
+            this.maSpinner.Location = new System.Drawing.Point(375, 56);
+            this.maSpinner.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
+            this.maSpinner.Maximum = new decimal(new int[] {
             99,
             0,
             0,
-            0} );
+            0});
             this.maSpinner.Name = "maSpinner";
-            this.maSpinner.Size = new System.Drawing.Size( 56, 20 );
+            this.maSpinner.Size = new System.Drawing.Size(56, 20);
             this.maSpinner.TabIndex = 3;
             this.maSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // randomNameButton
+            // 
+            this.randomNameButton.Location = new System.Drawing.Point(203, 2);
+            this.randomNameButton.Name = "randomNameButton";
+            this.randomNameButton.Size = new System.Drawing.Size(75, 23);
+            this.randomNameButton.TabIndex = 1;
+            this.randomNameButton.Text = "Random Name";
+            this.randomNameButton.UseVisualStyleBackColor = true;
+            // 
             // CharacterEditor
             // 
-            this.Controls.Add( characterEditorPanel );
+            this.Controls.Add(characterEditorPanel);
             this.Name = "CharacterEditor";
-            this.Size = new System.Drawing.Size( 624, 405 );
-            characterEditorPanel.ResumeLayout( false );
-            this.equipAbilityGroupBox.ResumeLayout( false );
-            equipmentAndAbilitiesPanel.ResumeLayout( false );
+            this.Size = new System.Drawing.Size(624, 405);
+            characterEditorPanel.ResumeLayout(false);
+            this.equipAbilityGroupBox.ResumeLayout(false);
+            equipmentAndAbilitiesPanel.ResumeLayout(false);
             equipmentAndAbilitiesPanel.PerformLayout();
-            characterEditorPanel2.ResumeLayout( false );
-            this.groupBox.ResumeLayout( false );
-            identityPanel.ResumeLayout( false );
-            zodiacPanel.ResumeLayout( false );
-            faithPanel.ResumeLayout( false );
+            characterEditorPanel2.ResumeLayout(false);
+            this.groupBox.ResumeLayout(false);
+            identityPanel.ResumeLayout(false);
+            zodiacPanel.ResumeLayout(false);
+            faithPanel.ResumeLayout(false);
             faithPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.faithSpinner)).EndInit();
-            braveryPanel.ResumeLayout( false );
+            braveryPanel.ResumeLayout(false);
             braveryPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.braverySpinner)).EndInit();
-            namePanel.ResumeLayout( false );
+            namePanel.ResumeLayout(false);
             namePanel.PerformLayout();
-            classPanel.ResumeLayout( false );
-            classPanel2.ResumeLayout( false );
+            classPanel.ResumeLayout(false);
+            classPanel2.ResumeLayout(false);
             classPanel2.PerformLayout();
-            topLeftPanel.ResumeLayout( false );
+            topLeftPanel.ResumeLayout(false);
             topLeftPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.experienceSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.levelSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hpSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mpSpinner)).EndInit();
-            statsPanel.ResumeLayout( false );
+            statsPanel.ResumeLayout(false);
             statsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maSpinner)).EndInit();
-            this.ResumeLayout( false );
+            this.ResumeLayout(false);
 
         }
 
@@ -1409,6 +1420,7 @@ namespace LionEditor
         private System.Windows.Forms.ComboBox genderComboBox;
         private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Button randomNameButton;
 
     }
 }

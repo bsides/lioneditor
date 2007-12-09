@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -57,11 +76,11 @@ namespace LionEditor
 
                     gameSelector.Items.Clear();
 
-                    if (Savegame.IsValidGame(bytes, 0))
+                    if (Savegame.IsValidPSPGame(bytes, 0))
                     {
                         for (int i = 0; i < 15; i++)
                         {
-                            if (Savegame.IsValidGame(bytes, (int)(Savegame.saveFileSize*i)))
+                            if (Savegame.IsValidPSPGame(bytes, (int)(Savegame.saveFileSize*i)))
                             {
                                 Savegame g = new Savegame(bytes);
                                 gameNames.Add(g.ToString());
@@ -99,7 +118,7 @@ namespace LionEditor
         {
             for (int i = 0; i < 15; i++)
             {
-                if (Savegame.IsValidGame(bytes, (int)(i * Savegame.saveFileSize)))
+                if (Savegame.IsValidPSPGame(bytes, (int)(i * Savegame.saveFileSize)))
                 {
                     return true;
                 }

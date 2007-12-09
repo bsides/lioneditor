@@ -303,6 +303,15 @@ namespace LionEditor
         private void SetupEvents()
         {
             // TODO: make these delegates not anonymous
+            randomNameButton.Click +=
+                delegate(object sender, EventArgs e)
+                {
+                    string s = character.GetRandomName();
+                    nameTextBox.Text = s;
+                    character.Name = s;
+                    FireDataChangedEvent();
+                };
+
             unavailableCheckbox.CheckedChanged +=
                 delegate( object sender, EventArgs e )
                 {
@@ -322,7 +331,6 @@ namespace LionEditor
             classComboBox.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    //UpdateJob( (Class)classComboBox.SelectedItem );
                     character.Job = (Class)classComboBox.SelectedItem;
                     ignoreChanges = true;
                     UpdateMove();

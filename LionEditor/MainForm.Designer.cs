@@ -55,7 +55,6 @@ namespace LionEditor
             this.openButton = new System.Windows.Forms.ToolBarButton();
             this.saveButton = new System.Windows.Forms.ToolBarButton();
             this.toolBarIcons = new System.Windows.Forms.ImageList(this.components);
-            this.savegameEditor = new LionEditor.SavegameEditor();
             this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.fileMenu = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
@@ -64,11 +63,12 @@ namespace LionEditor
             this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.editMenu = new System.Windows.Forms.MenuItem();
+            this.importCharactersMenuItem = new System.Windows.Forms.MenuItem();
             this.helpMenu = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.importCharactersMenuItem = new System.Windows.Forms.MenuItem();
+            this.savegameEditor = new LionEditor.SavegameEditor();
             splitContainer = new System.Windows.Forms.SplitContainer();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
@@ -146,14 +146,6 @@ namespace LionEditor
             this.toolBarIcons.Images.SetKeyName(2, "cut-32x32.png");
             this.toolBarIcons.Images.SetKeyName(3, "open-32x32.png");
             // 
-            // savegameEditor
-            // 
-            this.savegameEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.savegameEditor.Location = new System.Drawing.Point(0, 0);
-            this.savegameEditor.Name = "savegameEditor";
-            this.savegameEditor.Size = new System.Drawing.Size(738, 480);
-            this.savegameEditor.TabIndex = 0;
-            // 
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
@@ -206,6 +198,11 @@ namespace LionEditor
             this.importCharactersMenuItem});
             this.editMenu.Text = "Edit";
             // 
+            // importCharactersMenuItem
+            // 
+            this.importCharactersMenuItem.Index = 0;
+            this.importCharactersMenuItem.Text = "Import characters...";
+            // 
             // helpMenu
             // 
             this.helpMenu.Index = 2;
@@ -221,13 +218,16 @@ namespace LionEditor
             // openFileDialog
             // 
             this.openFileDialog.DefaultExt = "*.SYS";
-            this.openFileDialog.Filter = "FFTA.SYS|FFTA.SYS";
+            this.openFileDialog.Filter = "War of the Lions Files|FFTA.SYS";
             this.openFileDialog.Title = "Open file...";
             // 
-            // importCharactersMenuItem
+            // savegameEditor
             // 
-            this.importCharactersMenuItem.Index = 0;
-            this.importCharactersMenuItem.Text = "Import characters...";
+            this.savegameEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.savegameEditor.Location = new System.Drawing.Point(0, 0);
+            this.savegameEditor.Name = "savegameEditor";
+            this.savegameEditor.Size = new System.Drawing.Size(738, 480);
+            this.savegameEditor.TabIndex = 0;
             // 
             // MainForm
             // 

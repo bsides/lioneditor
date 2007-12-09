@@ -124,7 +124,7 @@ namespace LionEditor
             byte[] result = new byte[6];
             for( int i = 1; i < 48; i++ )
             {
-                result[(i - 1) / 8] |= (byte)((AllArtefacts[i - 1].Discovered) ? (1 << ((i - 1) % 8)) : 0);
+                result[i / 8] |= (byte)((AllArtefacts[i - 1].Discovered) ? (1 << (i % 8)) : 0);
             }
 
             return result;

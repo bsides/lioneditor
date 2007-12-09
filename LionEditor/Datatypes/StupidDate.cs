@@ -208,6 +208,70 @@ namespace LionEditor
         }
 
         /// <summary>
+        /// Creates a StupidDate from a Gregorian date
+        /// </summary>
+        public static StupidDate FromNormalDate(int month, int day)
+        {
+            int dayOfYear = new DateTime(1990, month, day).DayOfYear;
+            if (dayOfYear <= 19)
+            {
+                return new StupidDate(dayOfYear+9, Zodiac.Capricorn);
+            }
+            else if ((dayOfYear >= 20) && (dayOfYear <= 49))
+            {
+                return new StupidDate(dayOfYear - 19, Zodiac.Aquarius);
+            }
+            else if ((dayOfYear >= 50) && (dayOfYear <= 79))
+            {
+                return new StupidDate(dayOfYear - 49, Zodiac.Pisces);
+            }
+            else if ((dayOfYear >= 80) && (dayOfYear <= 109))
+            {
+                return new StupidDate(dayOfYear - 79, Zodiac.Aries);
+            }
+            else if ((dayOfYear >= 110) && (dayOfYear <= 140))
+            {
+                return new StupidDate(dayOfYear - 109, Zodiac.Taurus);
+            }
+            else if ((dayOfYear >= 140) && (dayOfYear <= 171))
+            {
+                return new StupidDate(dayOfYear - 139, Zodiac.Gemini);
+            }
+            else if ((dayOfYear >= 172) && (dayOfYear <= 202))
+            {
+                return new StupidDate(dayOfYear - 171, Zodiac.Cancer);
+            }
+            else if ((dayOfYear >= 203) && (dayOfYear <= 233))
+            {
+                return new StupidDate(dayOfYear - 202, Zodiac.Leo);
+            }
+            else if ((dayOfYear >= 234) && (dayOfYear <= 264))
+            {
+                return new StupidDate(dayOfYear - 233, Zodiac.Virgo);
+            }
+            else if ((dayOfYear >= 265) && (dayOfYear <= 295))
+            {
+                return new StupidDate(dayOfYear - 264, Zodiac.Libra);
+            }
+            else if ((dayOfYear >= 296) && (dayOfYear <= 325))
+            {
+                return new StupidDate(dayOfYear - 295, Zodiac.Scorpio);
+            }
+            else if ((dayOfYear >= 326) && (dayOfYear <= 355))
+            {
+                return new StupidDate(dayOfYear - 325, Zodiac.Sagittarius);
+            }
+            else if (dayOfYear >= 356)
+            {
+                return new StupidDate(dayOfYear - 355, Zodiac.Capricorn);
+            }
+            else
+            {
+                return FromNormalDate(1, 1);
+            }
+        }
+
+        /// <summary>
         /// Builds the date dictionary
         /// </summary>
         private static void SetupDateDictionary()

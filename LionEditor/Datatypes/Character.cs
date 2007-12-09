@@ -848,6 +848,15 @@ namespace LionEditor
         #region Constructors
 
         /// <summary>
+        /// Builds a dummy character
+        /// </summary>
+        public Character(int index)
+        {
+            this.index = (byte)index;
+            BuildDummyCharacter();
+        }
+
+        /// <summary>
         /// Builds a Character from a 256 byte array
         /// </summary>
         /// <param name="charData"></param>
@@ -1023,12 +1032,17 @@ namespace LionEditor
         /// </summary>
         private void BuildDummyCharacter()
         {
+            Random rng = new Random((int)DateTime.Now.Ticks);
+
             accessory = new Item(0);
             body = new Item(0);
             bravery = 50;
             experience = 0;
             faith = 50;
-            gender = Gender.Male;
+
+            gender = ((rng.Next() % 2) == 0) ? Gender.Male : Gender.Female;
+            Name = GetRandomName();
+
             head = new Item(0);
             isPresent = false;
             job = Class.ClassDictionary[0x4A];
@@ -1072,7 +1086,6 @@ namespace LionEditor
             leftShield = new Item(0);
             level = 1;
             movementAbility = new Ability(0);
-            Name = "##########";
             rawHP = Job.GetRawHPFromActualHP(50);
             rawMA = Job.GetRawMAFromActualMA(11);
             rawMP = Job.GetRawMPFromActualMP(10);
@@ -1365,6 +1378,22 @@ namespace LionEditor
         public object Clone()
         {
             return new Character(this.ToByteArray(), this.index);
+        }
+
+        public string GetRandomName()
+        {
+            switch (gender)
+            {
+                case Gender.Female:
+                    return RandomNames.GetRandomFemaleName();
+                case Gender.Male:
+                    return RandomNames.GetRandomMaleName();
+                case Gender.Monster:
+                    return RandomNames.GetRandomMonsterName();
+                default:
+                    // Can't happen...
+                    return string.Empty;
+            }
         }
 
         #endregion

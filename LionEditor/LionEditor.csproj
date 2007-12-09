@@ -42,12 +42,13 @@
     <Compile Include="Datatypes\Inventory.cs" />
     <Compile Include="Datatypes\JobsAndAbilities.cs" />
     <Compile Include="About.cs">
-      <SubType>Component</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="Datatypes\Options.cs" />
+    <Compile Include="Datatypes\RandomNames.cs" />
     <Compile Include="Datatypes\Wonders.cs" />
     <Compile Include="CharacterBrowser.cs">
       <SubType>Form</SubType>
@@ -267,6 +268,7 @@
     <Content Include="Resources\SecondaryAction.xml" />
     <Content Include="Resources\Sprites.xml" />
     <Content Include="Resources\Wonders.xml" />
+    <Content Include="Resources\RandomNames.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

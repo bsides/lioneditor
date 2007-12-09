@@ -34,6 +34,7 @@ namespace LionEditor
         private string filename;
         private Savegame[] games = new Savegame[15];
         private CharacterBrowser characterBrowser;
+        private bool usingGME = false;
 
         #endregion
 
@@ -142,7 +143,7 @@ namespace LionEditor
 
         private void SaveFile()
         {
-            if ((filename == null) || (filename == string.Empty))
+            if ((filename == null) || (filename == string.Empty) || (usingGME))
             {
                 filename = null;
                 saveFileDialog.FileName = string.Empty;
@@ -177,6 +178,115 @@ namespace LionEditor
             saveMenuItem.Enabled = false;
         }
 
+        private void TryReadFile(byte[] bytes)
+        {
+            try
+            {
+                bool validGameFound = false;
+                for (int i = 0; (i < 15) && (((i+1) * Savegame.saveFileSize) < bytes.Length); i++)
+                {
+                    if (Savegame.IsValidPSPGame(bytes, (int)(i * Savegame.saveFileSize)))
+                    {
+                        usingGME = false;
+                        validGameFound = true;
+                        byte[] saveData = new byte[Savegame.saveFileSize];
+                        Array.Copy(bytes, i * Savegame.saveFileSize, saveData, 0, Savegame.saveFileSize);
+
+                        games[i] = new Savegame(saveData);
+                        gameSelector.Items.Add(games[i]);
+                    }
+                    else
+                    {
+                        games[i] = null;
+                    }
+                }
+
+                //if (!validGameFound)
+                // TODO: fix GME importing
+                if (false)
+                {
+                    // Try GME...
+                    usingGME = true;
+                    foreach (int i in ValidateGMEFile(bytes))
+                    {
+                        byte[] saveData = new byte[0x2000];
+                        if ((bytes.Length + 1) < 0x2F40 + i * 0x2000)
+                        {
+                            break;
+                        }
+                        Array.Copy(bytes, 0x2F40 + i * 0x2000, saveData, 0, 0x2000);
+
+                        games[i] = new Savegame(saveData);
+                        gameSelector.Items.Add(games[i]);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Fail silently!!
+            }
+        }
+
+        /// <summary>
+        /// Validates a GME file and returns which blocks have FFT data
+        /// </summary>
+        private static List<int> ValidateGMEFile(byte[] bytes)
+        {
+            List<int> result = new List<int>();
+            if ((bytes[0] == '1') &&
+                (bytes[1] == '2') &&
+                (bytes[2] == '3') &&
+                (bytes[3] == '-') &&
+                (bytes[4] == '4') &&
+                (bytes[5] == '5') &&
+                (bytes[6] == '6') &&
+                (bytes[7] == '-') &&
+                (bytes[8] == 'S') &&
+                (bytes[9] == 'T') &&
+                (bytes[10] == 'D') &&
+                (bytes[11] == 0) &&
+                (bytes[12] == 0) &&
+                (bytes[13] == 0) &&
+                (bytes[14] == 0) &&
+                (bytes[15] == 0) &&
+                (bytes[0xF40] == 'M') &&
+                (bytes[0xF41] == 'C') &&
+                (bytes[0xFBF] == 0x0E))
+            {
+                // Valid GME file
+
+                // Check index frame for each block
+                for (int i = 0; i < 15; i++)
+                {
+                    int offset = i * 128;
+                    if ((bytes[0xFC0 + offset] == 0x51) &&
+                        (bytes[0xFC4 + offset] == 0x00) &&
+                        (bytes[0xFC5 + offset] == 0x20) &&
+                        (bytes[0xFCA + offset] == 'B') &&
+                        (bytes[0xFCB + offset] == 'A') &&
+                        (bytes[0xFCC + offset] == 'S') &&
+                        (bytes[0xFCD + offset] == 'C') &&
+                        (bytes[0xFCE + offset] == 'U') &&
+                        (bytes[0xFCF + offset] == 'S') &&
+                        (bytes[0xFD0 + offset] == '-') &&
+                        (bytes[0xFD1 + offset] == '9') &&
+                        (bytes[0xFD2 + offset] == '4') &&
+                        (bytes[0xFD3 + offset] == '2') &&
+                        (bytes[0xFD4 + offset] == '2') &&
+                        (bytes[0xFD5 + offset] == '1') &&
+                        (bytes[0xFD6 + offset] == 'F') &&
+                        (bytes[0xFD7 + offset] == 'F') &&
+                        (bytes[0xFD8 + offset] == 'T'))
+                    {
+                        result.Add(i);
+                    }
+
+                }
+            }
+
+            return result;
+        }
+
         private void LoadFile()
         {
             openFileDialog.FileName = string.Empty;
@@ -185,23 +295,13 @@ namespace LionEditor
             {
                 filename = openFileDialog.FileName;
                 System.IO.FileStream stream = new System.IO.FileStream(filename, System.IO.FileMode.Open);
-                byte[] bytes = new byte[0x2A3C];
+                byte[] bytes = new byte[stream.Length];
+                stream.Read(bytes, 0, (int)stream.Length);
+                stream.Close();
 
                 gameSelector.Items.Clear();
-                for (int i = 0; i < 15; i++)
-                {
-                    stream.Read(bytes, 0, 0x2A3C);
-                    if (Savegame.IsValidGame(bytes))
-                    {
-                        games[i] = new Savegame(bytes);
-                        gameSelector.Items.Add(games[i]);
-                    }
-                    else
-                    {
-                        games[i] = null;
-                    }
-                }
-                stream.Close();
+
+                TryReadFile(bytes);
 
                 if (gameSelector.Items.Count > 0)
                 {
@@ -210,7 +310,7 @@ namespace LionEditor
 
                 saveButton.Enabled = false;
 
-                savegameEditor.DataChangedEvent += new EventHandler(savegameEditor_DataChangedEvent);
+                savegameEditor.DataChangedEvent += savegameEditor_DataChangedEvent;
                 saveMenuItem.Enabled = false;
                 saveAsMenuItem.Enabled = true;
                 gameSelector.Enabled = true;

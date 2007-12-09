@@ -136,6 +136,9 @@
   <data name="MainJobBasedOnSprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MainJobBasedOnSprite.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="RandomNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\randomnames.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="SecondaryAction" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SecondaryAction.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

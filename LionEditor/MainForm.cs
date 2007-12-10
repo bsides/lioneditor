@@ -24,9 +24,17 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LionEditor
 {
+    public enum Region
+    {
+        US,
+        Europe,
+        Japan
+    }
+
     public partial class MainForm : Form
     {
         #region Fields
@@ -50,12 +58,53 @@ namespace LionEditor
             saveAsMenuItem.Click += saveAsMenuItem_Click;
             aboutMenuItem.Click += aboutMenuItem_Click;
             importCharactersMenuItem.Click += importCharactersMenuItem_Click;
-        }
+            usMenuItem.Click += memoryStickMenuItem_Click;
+            usMenuItem.Tag = LionEditor.Region.US;
+            usMenuItem.Checked = true;
+            europeMenuItem.Click += memoryStickMenuItem_Click;
+            europeMenuItem.Tag = LionEditor.Region.Europe;
+            europeMenuItem.Checked = false;
+            japanMenuItem.Click += memoryStickMenuItem_Click;
+            japanMenuItem.Tag = LionEditor.Region.Japan;
+            japanMenuItem.Checked = false;
 
+            openUSMenuItem.Tag = LionEditor.Region.US;
+            openUSMenuItem.Click += openRegionMenuItem_Click;
+            openEuropeanMenuItem.Tag = LionEditor.Region.Europe;
+            openEuropeanMenuItem.Click += openRegionMenuItem_Click;
+            openJapaneseMenuItem.Tag = LionEditor.Region.Japan;
+            openJapaneseMenuItem.Click += openRegionMenuItem_Click;
+        }
 
         #endregion
 
         #region Events
+
+        private void openRegionMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFromRegion((LionEditor.Region)(((MenuItem)sender).Tag));
+        }
+
+        private void memoryStickMenuItem_Click(object sender, EventArgs e)
+        {
+            MenuItem selectedItem = null;
+            foreach (MenuItem item in memoryStickMenu.MenuItems)
+            {
+                if (item == sender)
+                {
+                    item.Checked = true;
+                    selectedItem = item;
+                }
+                else
+                {
+                    item.Checked = false;
+                }
+            }
+            if (selectedItem != null)
+            {
+                OpenFromRegion((LionEditor.Region)selectedItem.Tag);
+            }
+        }
 
         private void importCharactersMenuItem_Click(object sender, EventArgs e)
         {
@@ -123,11 +172,23 @@ namespace LionEditor
             }
             else if (e.Button == saveButton)
             {
-                if ((filename != null) && (filename != string.Empty))
+                SaveFile();
+                saveButton.Enabled = false;
+            }
+            else if (e.Button == openMemoryStickButton)
+            {
+                foreach (MenuItem item in memoryStickMenu.MenuItems)
                 {
-                    SaveFile();
-                    saveButton.Enabled = false;
+                    if (item.Checked)
+                    {
+                        OpenFromRegion((LionEditor.Region)item.Tag);
+                        break;
+                    }
                 }
+            }
+            else if (e.Button == installButton)
+            {
+                InstallPlugin();
             }
             else
             {
@@ -140,6 +201,48 @@ namespace LionEditor
 
         #region Utilities
 
+        private void InstallPlugin()
+        {
+            bool success = false;
+            bool cancel = false;
+
+            while ((!success) && (!cancel))
+            {
+                DialogResult result = folderBrowserDialog.ShowDialog(this);
+                if (result == DialogResult.OK)
+                {
+                    string path = folderBrowserDialog.SelectedPath;
+
+                    switch (MemoryStickUtilities.InstallPlugin(path))
+                    {
+                        case MemoryStickUtilities.InstallResult.Failure:
+                            MessageBox.Show(this, "Installation failed", "Failed", MessageBoxButtons.OK);
+                            cancel = true;
+                            break;
+                        case MemoryStickUtilities.InstallResult.NotMemoryStickRoot:
+                            if (MessageBox.Show(this, 
+                                                "Selected path is not a Memory Stick.", 
+                                                "Invalid path", 
+                                                MessageBoxButtons.RetryCancel) == DialogResult.Cancel)
+                            {
+                                cancel = true;
+                            }
+                            break;
+                        case MemoryStickUtilities.InstallResult.Success:
+                            MessageBox.Show(this, 
+                                            "Plugin successfully installed!\nRemember to enable the plugin in the Recovery Menu", 
+                                            "Success", 
+                                            MessageBoxButtons.OK);
+                            success = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    cancel = true;
+                }
+            }
+        }
 
         private void SaveFile()
         {
@@ -287,27 +390,20 @@ namespace LionEditor
             return result;
         }
 
-        private void LoadFile()
+        private void LoadFile(string path)
         {
-            openFileDialog.FileName = string.Empty;
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            System.IO.FileStream stream = new System.IO.FileStream(path, System.IO.FileMode.Open);
+            byte[] bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, (int)stream.Length);
+            stream.Close();
+
+            gameSelector.Items.Clear();
+
+            TryReadFile(bytes);
+
+            if (gameSelector.Items.Count > 0)
             {
-                filename = openFileDialog.FileName;
-                System.IO.FileStream stream = new System.IO.FileStream(filename, System.IO.FileMode.Open);
-                byte[] bytes = new byte[stream.Length];
-                stream.Read(bytes, 0, (int)stream.Length);
-                stream.Close();
-
-                gameSelector.Items.Clear();
-
-                TryReadFile(bytes);
-
-                if (gameSelector.Items.Count > 0)
-                {
-                    gameSelector.SelectedIndex = 0;
-                }
-
+                gameSelector.SelectedIndex = 0;
                 saveButton.Enabled = false;
 
                 savegameEditor.DataChangedEvent += savegameEditor_DataChangedEvent;
@@ -317,7 +413,44 @@ namespace LionEditor
             }
         }
 
-        #endregion
+        private void LoadFile()
+        {
+            openFileDialog.FileName = string.Empty;
+            DialogResult result = openFileDialog.ShowDialog(this);
+            if (result == DialogResult.OK)
+            {
+                filename = openFileDialog.FileName;
+                LoadFile(filename);
+            }
+        }
 
+        private void OpenFromRegion(Region region)
+        {
+            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                filename = MemoryStickUtilities.GetSavePath(folderBrowserDialog.SelectedPath, region);
+                if (filename == string.Empty)
+                {
+                    MessageBox.Show(this,
+                                    "Selected path is not a Memory Stick.",
+                                    "Invalid path",
+                                    MessageBoxButtons.OK);
+                }
+                else if (!File.Exists(filename))
+                {
+                    filename = string.Empty;
+                    MessageBox.Show(this,
+                                    string.Format("{0} file not found!", region),
+                                    "File not found",
+                                    MessageBoxButtons.OK);
+                }
+                else
+                {
+                    LoadFile(filename);
+                }
+            }
+        }
+
+        #endregion
     }
 }

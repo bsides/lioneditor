@@ -130,6 +130,9 @@
   <data name="Feats" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\feats.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="FFTSaveHook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FFTSaveHook.prx;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Items" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Items.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

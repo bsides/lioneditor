@@ -33,6 +33,8 @@
 #define PATH(x) "ms0:/" x
 #endif
 
+#define DECRYPTED_PATH "PSP/SAVEDATA/%s%s/lioneditor.bin"
+
 #define FILE_NOT_FOUND 10
 
 PSP_MODULE_INFO("FFTSaveHook", 0x1000, 1, 1);
@@ -80,7 +82,7 @@ int countBits(unsigned char b)
 
 // Calculate the checksum for a FFT savegame
 // data should be 0x2A3C bytes long
-// csum should be 11 bytes long
+// csum should be 10 bytes long
 void calcChecksum(unsigned char* data, unsigned char* csum)
 {
     int curbyte = 0;
@@ -375,81 +377,25 @@ int saveDecryptedSavedata(SceUtilitySavedataParam* params)
     printf("saveDecryptedSavedata\n");
 
     char path[256] = { '\0' };
-    sprintf(path, "%s%s", params->gameName, params->saveName);
-    makeDecryptedDirectory(path);
 
-    sprintf(path, PATH("decryptedSaves/%s%s/%s"), params->gameName, params->saveName, params->fileName);
+    sprintf(path, PATH(DECRYPTED_PATH), params->gameName, params->saveName);
     writeDataToFile(path, params->dataBuf, params->dataBufSize);
-
-    if (params->icon0FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/ICON0.PNG"), params->gameName, params->saveName);
-        writeDataToFile(path, params->icon0FileData.buf, params->icon0FileData.bufSize);
-    }
-    if (params->icon1FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/ICON1.PNG"), params->gameName, params->saveName);
-        writeDataToFile(path, params->icon1FileData.buf, params->icon1FileData.bufSize);
-    }
-    if (params->pic1FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/PIC1.PNG"), params->gameName, params->saveName);
-        writeDataToFile(path, params->pic1FileData.buf, params->pic1FileData.bufSize);
-    }
-    if (params->snd0FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/SND0.AC3"), params->gameName, params->saveName);
-        writeDataToFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
-    }
-    
-    sprintf(path, PATH("decryptedSaves/%s%s/PARAM"), params->gameName, params->saveName);
-    writeDataToFile(path, &(params->sfoParam), sizeof(params->sfoParam));
 
     return 0;
 }
-
-
 
 // When a game tries to load a save, inject our own data if available
 int loadDecryptedSavedata(SceUtilitySavedataParam* params)
 {
     char path[256] = { '\0' };
-    sprintf(path, "%s%s", params->gameName, params->saveName);
 
-    makeDecryptedDirectory(path);
-
-    sprintf(path, PATH("decryptedSaves/%s%s/%s"), params->gameName, params->saveName, params->fileName);
+    sprintf(path, PATH(DECRYPTED_PATH), params->gameName, params->saveName);
     if (readDataFromFile(path, params->dataBuf, params->dataBufSize) < 0)
     {
         return FILE_NOT_FOUND;
     }
 
     fixChecksums(params->dataBuf);
-
-    // I don't think this stuff needs to be done
-    if (params->icon0FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/ICON0.PNG"), params->gameName, params->saveName);
-        readDataFromFile(path, params->icon0FileData.buf, params->icon0FileData.bufSize);
-    }
-    if (params->icon1FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/ICON1.PNG"), params->gameName, params->saveName);
-        readDataFromFile(path, params->icon1FileData.buf, params->icon1FileData.bufSize);
-    }
-    if (params->pic1FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/PIC1.PNG"), params->gameName, params->saveName);
-        readDataFromFile(path, params->pic1FileData.buf, params->pic1FileData.bufSize);
-    }
-    if (params->snd0FileData.buf)
-    {
-        sprintf(path, PATH("decryptedSaves/%s%s/SND0.AC3"), params->gameName, params->saveName);
-        readDataFromFile(path, params->snd0FileData.buf, params->snd0FileData.bufSize);
-    }
-
-    sprintf(path, PATH("/%s%s/PARAM"), params->gameName, params->saveName);
-    readDataFromFile(path, &(params->sfoParam), sizeof(params->sfoParam));
 
     return 0;
 }

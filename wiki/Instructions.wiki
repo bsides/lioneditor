@@ -16,12 +16,9 @@ Save games on the PSP memory stick are *[http://en.wikipedia.org/wiki/Encryption
 
 == Kernel plugin installation and use ==
   # Plug your Memory Stick into your computer or hook up a USB cable between your PSP and computer
-  # Create a directory called `seplugins` in the root directory of your memory stick
-  # Copy `FFTSaveHook.prx` to the new `seplugins` directory
-  # Create a file called `GAME.TXT` in the `seplugins` directory that has this text:
-{{{
-ms0:/seplugins/FFTSaveHook.prx
-}}}
+  # Run the LionEditor.exe program
+  # Click the "Install plugin to Memory Stick" button at the top right of the window.
+  # Select the drive letter of your PSP or Memory Stick
   # Put your memory stick back in your PSP
   # Boot the PSP into the custom firmware's *Recovery Mode* by holding *the R Button* as you turn on the PSP
   # Select _Plugins_
@@ -31,10 +28,8 @@ ms0:/seplugins/FFTSaveHook.prx
   # Put your Final Fantasy Tactics: War of the Lions UMD in your PSP
   # Start the game
   # Load your saved game
-    * When this is done a NEW directory is created on your Memory Stick, called `decryptedSaves`
-    * From now on, you should use the files in `ms0:/decryptedSaves` (*decrypted*) instead of `ms0:/PSP/SAVEDATA` (*encrypted*)
+    * When this is done a new file is created on your Memory Stick `ms0:/PSP/SAVEDATA/ULUS10297FFT0000/lioneditor.bin` (For the US version)
   # Turn off your PSP and hook it up to the computer again
-  # The decrypted savegame is now in the `decryptedSaves` directory in the root directory of the memory stick. There should be a file called `FFTA.SYS` that you can open in Lion Editor
 
 = PC =
 == PC Application requirements ==

@@ -49,18 +49,43 @@ namespace LionEditor
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.SplitContainer splitContainer;
+            System.Windows.Forms.ToolBarButton dummyButton1;
+            System.Windows.Forms.ToolBarButton dummyButton2;
+            System.Windows.Forms.ToolBarButton dummyButton3;
+            System.Windows.Forms.ToolBarButton dummyButton4;
+            System.Windows.Forms.ToolBarButton dummyButton5;
+            System.Windows.Forms.ToolBarButton dummyButton6;
+            System.Windows.Forms.ToolBarButton dummyButton7;
+            System.Windows.Forms.ToolBarButton dummyButton8;
+            System.Windows.Forms.ToolBarButton dummyButton9;
+            System.Windows.Forms.ToolBarButton dummyButton10;
+            System.Windows.Forms.ToolBarButton dummyButton11;
+            System.Windows.Forms.ToolBarButton dummyButton12;
+            System.Windows.Forms.ToolBarButton dummyButton13;
+            System.Windows.Forms.ToolBarButton dummyButton14;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.MenuItem menuItem1;
+            System.Windows.Forms.MenuItem menuItem4;
             this.gameSelector = new System.Windows.Forms.ComboBox();
             this.toolBar = new System.Windows.Forms.ToolBar();
             this.openButton = new System.Windows.Forms.ToolBarButton();
+            this.openMemoryStickButton = new System.Windows.Forms.ToolBarButton();
+            this.memoryStickMenu = new System.Windows.Forms.ContextMenu();
+            this.usMenuItem = new System.Windows.Forms.MenuItem();
+            this.europeMenuItem = new System.Windows.Forms.MenuItem();
+            this.japanMenuItem = new System.Windows.Forms.MenuItem();
             this.saveButton = new System.Windows.Forms.ToolBarButton();
+            this.installButton = new System.Windows.Forms.ToolBarButton();
             this.toolBarIcons = new System.Windows.Forms.ImageList(this.components);
+            this.savegameEditor = new LionEditor.SavegameEditor();
             this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.fileMenu = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
+            this.openUSMenuItem = new System.Windows.Forms.MenuItem();
+            this.openEuropeanMenuItem = new System.Windows.Forms.MenuItem();
+            this.openJapaneseMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.saveAsMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.editMenu = new System.Windows.Forms.MenuItem();
             this.importCharactersMenuItem = new System.Windows.Forms.MenuItem();
@@ -68,8 +93,24 @@ namespace LionEditor
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.savegameEditor = new LionEditor.SavegameEditor();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             splitContainer = new System.Windows.Forms.SplitContainer();
+            dummyButton1 = new System.Windows.Forms.ToolBarButton();
+            dummyButton2 = new System.Windows.Forms.ToolBarButton();
+            dummyButton3 = new System.Windows.Forms.ToolBarButton();
+            dummyButton4 = new System.Windows.Forms.ToolBarButton();
+            dummyButton5 = new System.Windows.Forms.ToolBarButton();
+            dummyButton6 = new System.Windows.Forms.ToolBarButton();
+            dummyButton7 = new System.Windows.Forms.ToolBarButton();
+            dummyButton8 = new System.Windows.Forms.ToolBarButton();
+            dummyButton9 = new System.Windows.Forms.ToolBarButton();
+            dummyButton10 = new System.Windows.Forms.ToolBarButton();
+            dummyButton11 = new System.Windows.Forms.ToolBarButton();
+            dummyButton12 = new System.Windows.Forms.ToolBarButton();
+            dummyButton13 = new System.Windows.Forms.ToolBarButton();
+            dummyButton14 = new System.Windows.Forms.ToolBarButton();
+            menuItem1 = new System.Windows.Forms.MenuItem();
+            menuItem4 = new System.Windows.Forms.MenuItem();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
             splitContainer.SuspendLayout();
@@ -112,7 +153,23 @@ namespace LionEditor
             // 
             this.toolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.openButton,
-            this.saveButton});
+            this.openMemoryStickButton,
+            this.saveButton,
+            dummyButton1,
+            dummyButton2,
+            dummyButton3,
+            dummyButton4,
+            dummyButton5,
+            dummyButton6,
+            dummyButton7,
+            dummyButton8,
+            dummyButton9,
+            dummyButton10,
+            dummyButton11,
+            dummyButton12,
+            dummyButton13,
+            dummyButton14,
+            this.installButton});
             this.toolBar.ButtonSize = new System.Drawing.Size(32, 32);
             this.toolBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolBar.DropDownArrows = true;
@@ -130,12 +187,119 @@ namespace LionEditor
             this.openButton.Name = "openButton";
             this.openButton.ToolTipText = "Open...";
             // 
+            // openMemoryStickButton
+            // 
+            this.openMemoryStickButton.DropDownMenu = this.memoryStickMenu;
+            this.openMemoryStickButton.ImageIndex = 5;
+            this.openMemoryStickButton.Name = "openMemoryStickButton";
+            this.openMemoryStickButton.Style = System.Windows.Forms.ToolBarButtonStyle.DropDownButton;
+            this.openMemoryStickButton.ToolTipText = "Open from Memory Stick...";
+            // 
+            // memoryStickMenu
+            // 
+            this.memoryStickMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.usMenuItem,
+            this.europeMenuItem,
+            this.japanMenuItem});
+            // 
+            // usMenuItem
+            // 
+            this.usMenuItem.Checked = true;
+            this.usMenuItem.Index = 0;
+            this.usMenuItem.Text = "US";
+            // 
+            // europeMenuItem
+            // 
+            this.europeMenuItem.Index = 1;
+            this.europeMenuItem.Text = "Europe";
+            // 
+            // japanMenuItem
+            // 
+            this.japanMenuItem.Index = 2;
+            this.japanMenuItem.Text = "Japan";
+            // 
             // saveButton
             // 
             this.saveButton.Enabled = false;
             this.saveButton.ImageIndex = 0;
             this.saveButton.Name = "saveButton";
             this.saveButton.ToolTipText = "Save";
+            // 
+            // dummyButton1
+            // 
+            dummyButton1.Enabled = false;
+            dummyButton1.Name = "dummyButton1";
+            // 
+            // dummyButton2
+            // 
+            dummyButton2.Enabled = false;
+            dummyButton2.Name = "dummyButton2";
+            // 
+            // dummyButton3
+            // 
+            dummyButton3.Enabled = false;
+            dummyButton3.Name = "dummyButton3";
+            // 
+            // dummyButton4
+            // 
+            dummyButton4.Enabled = false;
+            dummyButton4.Name = "dummyButton4";
+            // 
+            // dummyButton5
+            // 
+            dummyButton5.Enabled = false;
+            dummyButton5.Name = "dummyButton5";
+            // 
+            // dummyButton6
+            // 
+            dummyButton6.Enabled = false;
+            dummyButton6.Name = "dummyButton6";
+            // 
+            // dummyButton7
+            // 
+            dummyButton7.Enabled = false;
+            dummyButton7.Name = "dummyButton7";
+            // 
+            // dummyButton8
+            // 
+            dummyButton8.Enabled = false;
+            dummyButton8.Name = "dummyButton8";
+            // 
+            // dummyButton9
+            // 
+            dummyButton9.Enabled = false;
+            dummyButton9.Name = "dummyButton9";
+            // 
+            // dummyButton10
+            // 
+            dummyButton10.Enabled = false;
+            dummyButton10.Name = "dummyButton10";
+            // 
+            // dummyButton11
+            // 
+            dummyButton11.Enabled = false;
+            dummyButton11.Name = "dummyButton11";
+            // 
+            // dummyButton12
+            // 
+            dummyButton12.Enabled = false;
+            dummyButton12.Name = "dummyButton12";
+            // 
+            // dummyButton13
+            // 
+            dummyButton13.Enabled = false;
+            dummyButton13.Name = "dummyButton13";
+            // 
+            // dummyButton14
+            // 
+            dummyButton14.Enabled = false;
+            dummyButton14.Name = "dummyButton14";
+            // 
+            // installButton
+            // 
+            this.installButton.ImageIndex = 4;
+            this.installButton.Name = "installButton";
+            this.installButton.ToolTipText = "Install plugin to Memory Stick";
             // 
             // toolBarIcons
             // 
@@ -145,6 +309,26 @@ namespace LionEditor
             this.toolBarIcons.Images.SetKeyName(1, "copy-32x32.png");
             this.toolBarIcons.Images.SetKeyName(2, "cut-32x32.png");
             this.toolBarIcons.Images.SetKeyName(3, "open-32x32.png");
+            this.toolBarIcons.Images.SetKeyName(4, "installIcon.png");
+            this.toolBarIcons.Images.SetKeyName(5, "open-ms.png");
+            // 
+            // savegameEditor
+            // 
+            this.savegameEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.savegameEditor.Location = new System.Drawing.Point(0, 0);
+            this.savegameEditor.Name = "savegameEditor";
+            this.savegameEditor.Size = new System.Drawing.Size(738, 480);
+            this.savegameEditor.TabIndex = 0;
+            // 
+            // menuItem1
+            // 
+            menuItem1.Index = 4;
+            menuItem1.Text = "-";
+            // 
+            // menuItem4
+            // 
+            menuItem4.Index = 7;
+            menuItem4.Text = "-";
             // 
             // mainMenu
             // 
@@ -158,9 +342,13 @@ namespace LionEditor
             this.fileMenu.Index = 0;
             this.fileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.openMenuItem,
+            this.openUSMenuItem,
+            this.openEuropeanMenuItem,
+            this.openJapaneseMenuItem,
+            menuItem1,
             this.saveMenuItem,
             this.saveAsMenuItem,
-            this.menuItem4,
+            menuItem4,
             this.exitMenuItem});
             this.fileMenu.Text = "&File";
             // 
@@ -169,26 +357,36 @@ namespace LionEditor
             this.openMenuItem.Index = 0;
             this.openMenuItem.Text = "&Open...";
             // 
+            // openUSMenuItem
+            // 
+            this.openUSMenuItem.Index = 1;
+            this.openUSMenuItem.Text = "Open US file...";
+            // 
+            // openEuropeanMenuItem
+            // 
+            this.openEuropeanMenuItem.Index = 2;
+            this.openEuropeanMenuItem.Text = "Open European file...";
+            // 
+            // openJapaneseMenuItem
+            // 
+            this.openJapaneseMenuItem.Index = 3;
+            this.openJapaneseMenuItem.Text = "Open Japanese file...";
+            // 
             // saveMenuItem
             // 
             this.saveMenuItem.Enabled = false;
-            this.saveMenuItem.Index = 1;
+            this.saveMenuItem.Index = 5;
             this.saveMenuItem.Text = "&Save";
             // 
             // saveAsMenuItem
             // 
             this.saveAsMenuItem.Enabled = false;
-            this.saveAsMenuItem.Index = 2;
+            this.saveAsMenuItem.Index = 6;
             this.saveAsMenuItem.Text = "Save &As...";
-            // 
-            // menuItem4
-            // 
-            this.menuItem4.Index = 3;
-            this.menuItem4.Text = "-";
             // 
             // exitMenuItem
             // 
-            this.exitMenuItem.Index = 4;
+            this.exitMenuItem.Index = 8;
             this.exitMenuItem.Text = "E&xit";
             // 
             // editMenu
@@ -217,17 +415,18 @@ namespace LionEditor
             // 
             // openFileDialog
             // 
-            this.openFileDialog.DefaultExt = "*.SYS";
-            this.openFileDialog.Filter = "War of the Lions Files|FFTA.SYS";
+            this.openFileDialog.Filter = "War of the Lions Files (lioneditor.bin)|lioneditor.bin";
             this.openFileDialog.Title = "Open file...";
             // 
-            // savegameEditor
+            // saveFileDialog
             // 
-            this.savegameEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.savegameEditor.Location = new System.Drawing.Point(0, 0);
-            this.savegameEditor.Name = "savegameEditor";
-            this.savegameEditor.Size = new System.Drawing.Size(738, 480);
-            this.savegameEditor.TabIndex = 0;
+            this.saveFileDialog.FileName = "lioneditor.bin";
+            this.saveFileDialog.Filter = "War of the Lions Files (lioneditor.bin; FFTA.SYS)|lioneditor.bin;FFTA.SYS";
+            // 
+            // folderBrowserDialog
+            // 
+            this.folderBrowserDialog.Description = "Where is the root directory of your memory stick?";
+            this.folderBrowserDialog.ShowNewFolderButton = false;
             // 
             // MainForm
             // 
@@ -266,10 +465,19 @@ namespace LionEditor
         private System.Windows.Forms.MenuItem openMenuItem;
         private System.Windows.Forms.MenuItem saveMenuItem;
         private System.Windows.Forms.MenuItem saveAsMenuItem;
-        private System.Windows.Forms.MenuItem menuItem4;
         private System.Windows.Forms.MenuItem exitMenuItem;
         private System.Windows.Forms.MenuItem aboutMenuItem;
         private System.Windows.Forms.MenuItem importCharactersMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.ToolBarButton installButton;
+        private System.Windows.Forms.ToolBarButton openMemoryStickButton;
+        private System.Windows.Forms.ContextMenu memoryStickMenu;
+        private System.Windows.Forms.MenuItem usMenuItem;
+        private System.Windows.Forms.MenuItem europeMenuItem;
+        private System.Windows.Forms.MenuItem japanMenuItem;
+        private System.Windows.Forms.MenuItem openUSMenuItem;
+        private System.Windows.Forms.MenuItem openEuropeanMenuItem;
+        private System.Windows.Forms.MenuItem openJapaneseMenuItem;
     }
 }
 

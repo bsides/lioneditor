@@ -83,18 +83,18 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Artefacts&gt;
-        ///  &lt;Artefact offset=&quot;0&quot; /&gt;
-        ///  &lt;Artefact offset=&quot;1&quot; name=&quot;Four-Deity Plate&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;2&quot; name=&quot;Statuette of Lilith&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;3&quot; name=&quot;Scarab Charm&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;4&quot; name=&quot;Tobacco Pipe&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;5&quot; name=&quot;Coin Blade&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;6&quot; name=&quot;Black Cat&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;7&quot; name=&quot;Hanya Mask&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;8&quot; name=&quot;Parade Helm&quot;/&gt;
-        ///  &lt;Artefact offset=&quot;9&quot; name=&quot;Moppet Bread&quot;/&gt;
-        ///  &lt;Artefact of [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///    This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Artefacts {
             get {
@@ -125,21 +125,29 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Feats&gt;
-        ///  &lt;Feat offset=&quot;0&quot; name=&quot;The Salvage of the Highwind&quot; /&gt;
-        ///  &lt;Feat offset=&quot;1&quot; name=&quot;Salvage Expedition&quot; /&gt;
-        ///  &lt;Feat offset=&quot;2&quot; name=&quot;Diving Expedition&quot; /&gt;
-        ///  &lt;Feat offset=&quot;3&quot; name=&quot;The Enterprise&quot; /&gt;
-        ///  &lt;Feat offset=&quot;4&quot; name=&quot;Drudge Work&quot; /&gt;
-        ///  &lt;Feat offset=&quot;5&quot; name=&quot;Raising the Hindenburg&quot; /&gt;
-        ///  &lt;Feat offset=&quot;6&quot; name=&quot;The Foundered Falcon&quot; /&gt;
-        ///  &lt;Feat offset=&quot;7&quot; name=&quot;The Hero-King of Legend&quot; /&gt;
-        ///  &lt;Feat offset=&quot;8&quot; name=&quot;The Salvage of the Durga&quot; /&gt;
-        ///  &lt;Feat [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///    This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Feats {
             get {
                 return ResourceManager.GetString("Feats", resourceCulture);
+            }
+        }
+        
+        internal static byte[] FFTSaveHook {
+            get {
+                object obj = ResourceManager.GetObject("FFTSaveHook", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -187,26 +195,18 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;RandomNames&gt;
-        ///  &lt;male&gt;
-        ///    &lt;name&gt;Abel&lt;/name&gt;
-        ///    &lt;name&gt;Abelard&lt;/name&gt;
-        ///    &lt;name&gt;Abraham&lt;/name&gt;
-        ///    &lt;name&gt;Addison&lt;/name&gt;
-        ///    &lt;name&gt;Alaire&lt;/name&gt;
-        ///    &lt;name&gt;Albin&lt;/name&gt;
-        ///    &lt;name&gt;Aldebrand&lt;/name&gt;
-        ///    &lt;name&gt;Aldous&lt;/name&gt;
-        ///    &lt;name&gt;Aleyn&lt;/name&gt;
-        ///    &lt;name&gt;Alistair&lt;/name&gt;
-        ///    &lt;name&gt;Ancelot&lt;/name&gt;
-        ///    &lt;name&gt;Anselm&lt;/name&gt;
-        ///    &lt;name&gt;Aran&lt;/name&gt;
-        ///    &lt;name&gt;Arnald&lt;/name&gt;
-        ///    &lt;name&gt;Arnott&lt;/name&gt;
-        ///    &lt;name&gt;Arthur&lt;/name&gt;
-        ///    &lt;name&gt;Augustine&lt;/name&gt;
-        ///    &lt;name&gt;Aylme [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///    This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string RandomNames {
             get {
@@ -258,17 +258,18 @@ namespace LionEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Wonders&gt;
-        ///  &lt;Wonder offset=&quot;0&quot; name=&quot;Shrine of Chaos&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;1&quot; name=&quot;Eureka&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;2&quot; name=&quot;Pandaemonium&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;3&quot; name=&quot;Mirage Tower&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;4&quot; name=&quot;Floating Castle&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;5&quot; name=&quot;Matoya&apos;s Cave&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;6&quot; name=&quot;Crystal Tower&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;7&quot; name=&quot;Floating Continent&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;8&quot; name=&quot;Fortress of Trials&quot; /&gt;
-        ///  &lt;Wonder offset=&quot;9&quot; name=&quot;Tower of Babel [rest of string was truncated]&quot;;.
+        ///&lt;!--
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///
+        ///    This file is part of LionEditor.
+        ///
+        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    it under the terms of the GNU General Public License as published by
+        ///    the Free Software Foundation, either version 3 of the License, or
+        ///    (at your option) any later version.
+        ///
+        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Wonders {
             get {

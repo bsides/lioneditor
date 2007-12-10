@@ -135,8 +135,9 @@ namespace LionEditor
             // 
             // openFileDialog
             // 
-            this.openFileDialog.DefaultExt = "*.SYS;*.GME";
-            this.openFileDialog.Filter = "All Valid Files|FFTA.SYS;*.gme|LionEditor Files|FFTA.SYS|Dex Drive Files|*.gme";
+            this.openFileDialog.DefaultExt = "*.SYS;*.GME;*.bin";
+            this.openFileDialog.Filter = "All Valid Files|lioneditor.bin;FFTA.SYS;*.gme|War of the Lions Files (lioneditor." +
+                "bin; FFTA.SYS)|lioneditor.bin;FFTA.SYS|Dex Drive Files|*.gme";
             this.openFileDialog.ReadOnlyChecked = true;
             // 
             // CharacterBrowser

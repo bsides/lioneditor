@@ -10,6 +10,12 @@
 = Game options = 
 [http://lioneditor.googlecode.com/svn/screenshots/options.png]
 
+= Copy/Paste/Rearrange characters = 
+[http://lioneditor.googlecode.com/svn/screenshots/contextMenu.png]
+
+= Character Browser (With GME support) = 
+[http://lioneditor.googlecode.com/svn/screenshots/characterBrowser.png]
+
 = Inventory/Poacher's Den = 
 [http://lioneditor.googlecode.com/svn/screenshots/inventory.png]
 

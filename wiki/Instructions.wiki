@@ -16,7 +16,7 @@ Save games on the PSP memory stick are *[http://en.wikipedia.org/wiki/Encryption
 
 == Kernel plugin installation and use ==
   # Plug your Memory Stick into your computer or hook up a USB cable between your PSP and computer
-  # Run the LionEditor.exe program
+  # Run the `LionEditor.exe` program
   # Click the "Install plugin to Memory Stick" button at the top right of the window.
   # Select the drive letter of your PSP or Memory Stick
   # Put your memory stick back in your PSP

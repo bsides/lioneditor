@@ -48,20 +48,7 @@ namespace LionEditor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label rightHandLabel;
-            System.Windows.Forms.Label rightShieldLabel;
-            System.Windows.Forms.Label leftHandLabel;
-            System.Windows.Forms.Label leftShieldLabel;
-            System.Windows.Forms.Label headLabel;
-            System.Windows.Forms.Label bodyLabel;
-            System.Windows.Forms.Label accessoryLabel;
-            System.Windows.Forms.Label skillLabel;
-            System.Windows.Forms.Label secondaryLabel;
-            System.Windows.Forms.Label reactLabel;
-            System.Windows.Forms.Label supportLabel;
-            System.Windows.Forms.Label movementLabel;
             System.Windows.Forms.TableLayoutPanel characterEditorPanel;
-            System.Windows.Forms.TableLayoutPanel equipmentAndAbilitiesPanel;
             System.Windows.Forms.TableLayoutPanel characterEditorPanel2;
             System.Windows.Forms.TableLayoutPanel identityPanel;
             System.Windows.Forms.Panel zodiacPanel;
@@ -92,23 +79,25 @@ namespace LionEditor
             System.Windows.Forms.Label cevLabel;
             System.Windows.Forms.Label sevLabel;
             System.Windows.Forms.Label aevLabel;
-            this.equipAbilityGroupBox = new System.Windows.Forms.GroupBox();
-            this.skillTextLabel = new System.Windows.Forms.Label();
-            this.rightHandCombo = new System.Windows.Forms.ComboBox();
-            this.rightShieldCombo = new System.Windows.Forms.ComboBox();
-            this.leftHandCombo = new System.Windows.Forms.ComboBox();
-            this.leftShieldCombo = new System.Windows.Forms.ComboBox();
-            this.headCombo = new System.Windows.Forms.ComboBox();
-            this.bodyCombo = new System.Windows.Forms.ComboBox();
-            this.accessoryCombo = new System.Windows.Forms.ComboBox();
-            this.secondaryCombo = new System.Windows.Forms.ComboBox();
-            this.supportCombo = new System.Windows.Forms.ComboBox();
-            this.reactionCombo = new System.Windows.Forms.ComboBox();
-            this.movementCombo = new System.Windows.Forms.ComboBox();
+            System.Windows.Forms.TableLayoutPanel equipmentAndAbilitiesPanel;
+            System.Windows.Forms.Label rightHandLabel;
+            System.Windows.Forms.Label leftHandLabel;
+            System.Windows.Forms.Label rightShieldLabel;
+            System.Windows.Forms.Label leftShieldLabel;
+            System.Windows.Forms.Label headLabel;
+            System.Windows.Forms.Label bodyLabel;
+            System.Windows.Forms.Label accessoryLabel;
+            System.Windows.Forms.Label reactLabel;
+            System.Windows.Forms.Label supportLabel;
+            System.Windows.Forms.Label movementLabel;
+            System.Windows.Forms.Label secondaryLabel;
+            System.Windows.Forms.Label skillLabel;
+            System.Windows.Forms.Label killsLabel;
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.zodiacComboBox = new System.Windows.Forms.ComboBox();
             this.faithSpinner = new System.Windows.Forms.NumericUpDown();
             this.braverySpinner = new System.Windows.Forms.NumericUpDown();
+            this.randomNameButton = new System.Windows.Forms.Button();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.classComboBox = new System.Windows.Forms.ComboBox();
             this.experienceSpinner = new System.Windows.Forms.NumericUpDown();
@@ -135,21 +124,20 @@ namespace LionEditor
             this.paSpinner = new System.Windows.Forms.NumericUpDown();
             this.maSpinner = new System.Windows.Forms.NumericUpDown();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.randomNameButton = new System.Windows.Forms.Button();
-            rightHandLabel = new System.Windows.Forms.Label();
-            rightShieldLabel = new System.Windows.Forms.Label();
-            leftHandLabel = new System.Windows.Forms.Label();
-            leftShieldLabel = new System.Windows.Forms.Label();
-            headLabel = new System.Windows.Forms.Label();
-            bodyLabel = new System.Windows.Forms.Label();
-            accessoryLabel = new System.Windows.Forms.Label();
-            skillLabel = new System.Windows.Forms.Label();
-            secondaryLabel = new System.Windows.Forms.Label();
-            reactLabel = new System.Windows.Forms.Label();
-            supportLabel = new System.Windows.Forms.Label();
-            movementLabel = new System.Windows.Forms.Label();
+            this.rightHandCombo = new System.Windows.Forms.ComboBox();
+            this.rightShieldCombo = new System.Windows.Forms.ComboBox();
+            this.leftHandCombo = new System.Windows.Forms.ComboBox();
+            this.leftShieldCombo = new System.Windows.Forms.ComboBox();
+            this.headCombo = new System.Windows.Forms.ComboBox();
+            this.bodyCombo = new System.Windows.Forms.ComboBox();
+            this.accessoryCombo = new System.Windows.Forms.ComboBox();
+            this.supportCombo = new System.Windows.Forms.ComboBox();
+            this.reactionCombo = new System.Windows.Forms.ComboBox();
+            this.movementCombo = new System.Windows.Forms.ComboBox();
+            this.secondaryCombo = new System.Windows.Forms.ComboBox();
+            this.skillTextLabel = new System.Windows.Forms.Label();
+            this.killsSpinner = new System.Windows.Forms.NumericUpDown();
             characterEditorPanel = new System.Windows.Forms.TableLayoutPanel();
-            equipmentAndAbilitiesPanel = new System.Windows.Forms.TableLayoutPanel();
             characterEditorPanel2 = new System.Windows.Forms.TableLayoutPanel();
             identityPanel = new System.Windows.Forms.TableLayoutPanel();
             zodiacPanel = new System.Windows.Forms.Panel();
@@ -180,9 +168,21 @@ namespace LionEditor
             cevLabel = new System.Windows.Forms.Label();
             sevLabel = new System.Windows.Forms.Label();
             aevLabel = new System.Windows.Forms.Label();
+            equipmentAndAbilitiesPanel = new System.Windows.Forms.TableLayoutPanel();
+            rightHandLabel = new System.Windows.Forms.Label();
+            leftHandLabel = new System.Windows.Forms.Label();
+            rightShieldLabel = new System.Windows.Forms.Label();
+            leftShieldLabel = new System.Windows.Forms.Label();
+            headLabel = new System.Windows.Forms.Label();
+            bodyLabel = new System.Windows.Forms.Label();
+            accessoryLabel = new System.Windows.Forms.Label();
+            reactLabel = new System.Windows.Forms.Label();
+            supportLabel = new System.Windows.Forms.Label();
+            movementLabel = new System.Windows.Forms.Label();
+            secondaryLabel = new System.Windows.Forms.Label();
+            skillLabel = new System.Windows.Forms.Label();
+            killsLabel = new System.Windows.Forms.Label();
             characterEditorPanel.SuspendLayout();
-            this.equipAbilityGroupBox.SuspendLayout();
-            equipmentAndAbilitiesPanel.SuspendLayout();
             characterEditorPanel2.SuspendLayout();
             this.groupBox.SuspendLayout();
             identityPanel.SuspendLayout();
@@ -203,145 +203,15 @@ namespace LionEditor
             ((System.ComponentModel.ISupportInitialize)(this.speedSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maSpinner)).BeginInit();
+            equipmentAndAbilitiesPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.killsSpinner)).BeginInit();
             this.SuspendLayout();
-            // 
-            // rightHandLabel
-            // 
-            rightHandLabel.AutoSize = true;
-            rightHandLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            rightHandLabel.Location = new System.Drawing.Point(3, 0);
-            rightHandLabel.Name = "rightHandLabel";
-            rightHandLabel.Size = new System.Drawing.Size(98, 26);
-            rightHandLabel.TabIndex = 11;
-            rightHandLabel.Text = "Right hand:";
-            rightHandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // rightShieldLabel
-            // 
-            rightShieldLabel.AutoSize = true;
-            rightShieldLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            rightShieldLabel.Location = new System.Drawing.Point(3, 26);
-            rightShieldLabel.Name = "rightShieldLabel";
-            rightShieldLabel.Size = new System.Drawing.Size(98, 26);
-            rightShieldLabel.TabIndex = 12;
-            rightShieldLabel.Text = "Right shield:";
-            rightShieldLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // leftHandLabel
-            // 
-            leftHandLabel.AutoSize = true;
-            leftHandLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            leftHandLabel.Location = new System.Drawing.Point(3, 52);
-            leftHandLabel.Name = "leftHandLabel";
-            leftHandLabel.Size = new System.Drawing.Size(98, 26);
-            leftHandLabel.TabIndex = 13;
-            leftHandLabel.Text = "Left hand:";
-            leftHandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // leftShieldLabel
-            // 
-            leftShieldLabel.AutoSize = true;
-            leftShieldLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            leftShieldLabel.Location = new System.Drawing.Point(3, 78);
-            leftShieldLabel.Name = "leftShieldLabel";
-            leftShieldLabel.Size = new System.Drawing.Size(98, 26);
-            leftShieldLabel.TabIndex = 14;
-            leftShieldLabel.Text = "Left shield:";
-            leftShieldLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // headLabel
-            // 
-            headLabel.AutoSize = true;
-            headLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            headLabel.Location = new System.Drawing.Point(3, 104);
-            headLabel.Name = "headLabel";
-            headLabel.Size = new System.Drawing.Size(98, 26);
-            headLabel.TabIndex = 15;
-            headLabel.Text = "Head:";
-            headLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // bodyLabel
-            // 
-            bodyLabel.AutoSize = true;
-            bodyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            bodyLabel.Location = new System.Drawing.Point(3, 130);
-            bodyLabel.Name = "bodyLabel";
-            bodyLabel.Size = new System.Drawing.Size(98, 26);
-            bodyLabel.TabIndex = 16;
-            bodyLabel.Text = "Body:";
-            bodyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // accessoryLabel
-            // 
-            accessoryLabel.AutoSize = true;
-            accessoryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            accessoryLabel.Location = new System.Drawing.Point(3, 156);
-            accessoryLabel.Name = "accessoryLabel";
-            accessoryLabel.Size = new System.Drawing.Size(98, 29);
-            accessoryLabel.TabIndex = 17;
-            accessoryLabel.Text = "Accessory:";
-            accessoryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // skillLabel
-            // 
-            skillLabel.AutoSize = true;
-            skillLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            skillLabel.Location = new System.Drawing.Point(308, 0);
-            skillLabel.Name = "skillLabel";
-            skillLabel.Size = new System.Drawing.Size(98, 26);
-            skillLabel.TabIndex = 18;
-            skillLabel.Text = "Skill:";
-            skillLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // secondaryLabel
-            // 
-            secondaryLabel.AutoSize = true;
-            secondaryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            secondaryLabel.Location = new System.Drawing.Point(308, 52);
-            secondaryLabel.Name = "secondaryLabel";
-            secondaryLabel.Size = new System.Drawing.Size(98, 26);
-            secondaryLabel.TabIndex = 20;
-            secondaryLabel.Text = "Secondary skill:";
-            secondaryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // reactLabel
-            // 
-            reactLabel.AutoSize = true;
-            reactLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            reactLabel.Location = new System.Drawing.Point(308, 104);
-            reactLabel.Name = "reactLabel";
-            reactLabel.Size = new System.Drawing.Size(98, 26);
-            reactLabel.TabIndex = 21;
-            reactLabel.Text = "Reaction ability:";
-            reactLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // supportLabel
-            // 
-            supportLabel.AutoSize = true;
-            supportLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            supportLabel.Location = new System.Drawing.Point(308, 130);
-            supportLabel.Name = "supportLabel";
-            supportLabel.Size = new System.Drawing.Size(98, 26);
-            supportLabel.TabIndex = 22;
-            supportLabel.Text = "Support ability:";
-            supportLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // movementLabel
-            // 
-            movementLabel.AutoSize = true;
-            movementLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            movementLabel.Location = new System.Drawing.Point(308, 156);
-            movementLabel.Name = "movementLabel";
-            movementLabel.Size = new System.Drawing.Size(98, 29);
-            movementLabel.TabIndex = 23;
-            movementLabel.Text = "Movement ability:";
-            movementLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // characterEditorPanel
             // 
             characterEditorPanel.ColumnCount = 1;
             characterEditorPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            characterEditorPanel.Controls.Add(this.equipAbilityGroupBox, 0, 2);
+            characterEditorPanel.Controls.Add(equipmentAndAbilitiesPanel, 0, 2);
             characterEditorPanel.Controls.Add(characterEditorPanel2, 0, 0);
             characterEditorPanel.Controls.Add(statsPanel, 0, 1);
             characterEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -354,204 +224,6 @@ namespace LionEditor
             characterEditorPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             characterEditorPanel.Size = new System.Drawing.Size(624, 405);
             characterEditorPanel.TabIndex = 0;
-            // 
-            // equipAbilityGroupBox
-            // 
-            this.equipAbilityGroupBox.Controls.Add(equipmentAndAbilitiesPanel);
-            this.equipAbilityGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.equipAbilityGroupBox.Location = new System.Drawing.Point(3, 198);
-            this.equipAbilityGroupBox.Name = "equipAbilityGroupBox";
-            this.equipAbilityGroupBox.Size = new System.Drawing.Size(618, 204);
-            this.equipAbilityGroupBox.TabIndex = 4;
-            this.equipAbilityGroupBox.TabStop = false;
-            // 
-            // equipmentAndAbilitiesPanel
-            // 
-            equipmentAndAbilitiesPanel.ColumnCount = 4;
-            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
-            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            equipmentAndAbilitiesPanel.Controls.Add(this.skillTextLabel, 3, 0);
-            equipmentAndAbilitiesPanel.Controls.Add(skillLabel, 2, 0);
-            equipmentAndAbilitiesPanel.Controls.Add(this.rightHandCombo, 1, 0);
-            equipmentAndAbilitiesPanel.Controls.Add(this.rightShieldCombo, 1, 1);
-            equipmentAndAbilitiesPanel.Controls.Add(this.leftHandCombo, 1, 2);
-            equipmentAndAbilitiesPanel.Controls.Add(this.leftShieldCombo, 1, 3);
-            equipmentAndAbilitiesPanel.Controls.Add(this.headCombo, 1, 4);
-            equipmentAndAbilitiesPanel.Controls.Add(this.bodyCombo, 1, 5);
-            equipmentAndAbilitiesPanel.Controls.Add(this.accessoryCombo, 1, 6);
-            equipmentAndAbilitiesPanel.Controls.Add(this.secondaryCombo, 3, 2);
-            equipmentAndAbilitiesPanel.Controls.Add(this.supportCombo, 3, 5);
-            equipmentAndAbilitiesPanel.Controls.Add(this.reactionCombo, 3, 4);
-            equipmentAndAbilitiesPanel.Controls.Add(this.movementCombo, 3, 6);
-            equipmentAndAbilitiesPanel.Controls.Add(rightHandLabel, 0, 0);
-            equipmentAndAbilitiesPanel.Controls.Add(leftHandLabel, 0, 2);
-            equipmentAndAbilitiesPanel.Controls.Add(rightShieldLabel, 0, 1);
-            equipmentAndAbilitiesPanel.Controls.Add(leftShieldLabel, 0, 3);
-            equipmentAndAbilitiesPanel.Controls.Add(headLabel, 0, 4);
-            equipmentAndAbilitiesPanel.Controls.Add(bodyLabel, 0, 5);
-            equipmentAndAbilitiesPanel.Controls.Add(accessoryLabel, 0, 6);
-            equipmentAndAbilitiesPanel.Controls.Add(secondaryLabel, 2, 2);
-            equipmentAndAbilitiesPanel.Controls.Add(reactLabel, 2, 4);
-            equipmentAndAbilitiesPanel.Controls.Add(supportLabel, 2, 5);
-            equipmentAndAbilitiesPanel.Controls.Add(movementLabel, 2, 6);
-            equipmentAndAbilitiesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            equipmentAndAbilitiesPanel.Location = new System.Drawing.Point(3, 16);
-            equipmentAndAbilitiesPanel.Name = "equipmentAndAbilitiesPanel";
-            equipmentAndAbilitiesPanel.RowCount = 7;
-            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            equipmentAndAbilitiesPanel.Size = new System.Drawing.Size(612, 185);
-            equipmentAndAbilitiesPanel.TabIndex = 0;
-            // 
-            // skillTextLabel
-            // 
-            this.skillTextLabel.AutoSize = true;
-            this.skillTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skillTextLabel.Location = new System.Drawing.Point(412, 0);
-            this.skillTextLabel.Name = "skillTextLabel";
-            this.skillTextLabel.Size = new System.Drawing.Size(197, 26);
-            this.skillTextLabel.TabIndex = 19;
-            this.skillTextLabel.Text = "##skill##";
-            this.skillTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // rightHandCombo
-            // 
-            this.rightHandCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.rightHandCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.rightHandCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightHandCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.rightHandCombo.FormattingEnabled = true;
-            this.rightHandCombo.Location = new System.Drawing.Point(107, 3);
-            this.rightHandCombo.Name = "rightHandCombo";
-            this.rightHandCombo.Size = new System.Drawing.Size(195, 21);
-            this.rightHandCombo.TabIndex = 0;
-            // 
-            // rightShieldCombo
-            // 
-            this.rightShieldCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.rightShieldCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.rightShieldCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightShieldCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.rightShieldCombo.FormattingEnabled = true;
-            this.rightShieldCombo.Location = new System.Drawing.Point(107, 29);
-            this.rightShieldCombo.Name = "rightShieldCombo";
-            this.rightShieldCombo.Size = new System.Drawing.Size(195, 21);
-            this.rightShieldCombo.TabIndex = 1;
-            // 
-            // leftHandCombo
-            // 
-            this.leftHandCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.leftHandCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.leftHandCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftHandCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.leftHandCombo.FormattingEnabled = true;
-            this.leftHandCombo.Location = new System.Drawing.Point(107, 55);
-            this.leftHandCombo.Name = "leftHandCombo";
-            this.leftHandCombo.Size = new System.Drawing.Size(195, 21);
-            this.leftHandCombo.TabIndex = 2;
-            // 
-            // leftShieldCombo
-            // 
-            this.leftShieldCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.leftShieldCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.leftShieldCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftShieldCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.leftShieldCombo.FormattingEnabled = true;
-            this.leftShieldCombo.Location = new System.Drawing.Point(107, 81);
-            this.leftShieldCombo.Name = "leftShieldCombo";
-            this.leftShieldCombo.Size = new System.Drawing.Size(195, 21);
-            this.leftShieldCombo.TabIndex = 3;
-            // 
-            // headCombo
-            // 
-            this.headCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.headCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.headCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.headCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.headCombo.FormattingEnabled = true;
-            this.headCombo.Location = new System.Drawing.Point(107, 107);
-            this.headCombo.Name = "headCombo";
-            this.headCombo.Size = new System.Drawing.Size(195, 21);
-            this.headCombo.TabIndex = 4;
-            // 
-            // bodyCombo
-            // 
-            this.bodyCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.bodyCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.bodyCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bodyCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.bodyCombo.FormattingEnabled = true;
-            this.bodyCombo.Location = new System.Drawing.Point(107, 133);
-            this.bodyCombo.Name = "bodyCombo";
-            this.bodyCombo.Size = new System.Drawing.Size(195, 21);
-            this.bodyCombo.TabIndex = 5;
-            // 
-            // accessoryCombo
-            // 
-            this.accessoryCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.accessoryCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.accessoryCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accessoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.accessoryCombo.FormattingEnabled = true;
-            this.accessoryCombo.Location = new System.Drawing.Point(107, 159);
-            this.accessoryCombo.Name = "accessoryCombo";
-            this.accessoryCombo.Size = new System.Drawing.Size(195, 21);
-            this.accessoryCombo.TabIndex = 6;
-            // 
-            // secondaryCombo
-            // 
-            this.secondaryCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.secondaryCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.secondaryCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.secondaryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.secondaryCombo.FormattingEnabled = true;
-            this.secondaryCombo.Location = new System.Drawing.Point(412, 55);
-            this.secondaryCombo.Name = "secondaryCombo";
-            this.secondaryCombo.Size = new System.Drawing.Size(197, 21);
-            this.secondaryCombo.TabIndex = 7;
-            // 
-            // supportCombo
-            // 
-            this.supportCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.supportCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.supportCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.supportCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.supportCombo.FormattingEnabled = true;
-            this.supportCombo.Location = new System.Drawing.Point(412, 133);
-            this.supportCombo.Name = "supportCombo";
-            this.supportCombo.Size = new System.Drawing.Size(197, 21);
-            this.supportCombo.TabIndex = 9;
-            // 
-            // reactionCombo
-            // 
-            this.reactionCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.reactionCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.reactionCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reactionCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.reactionCombo.FormattingEnabled = true;
-            this.reactionCombo.Location = new System.Drawing.Point(412, 107);
-            this.reactionCombo.Name = "reactionCombo";
-            this.reactionCombo.Size = new System.Drawing.Size(197, 21);
-            this.reactionCombo.TabIndex = 8;
-            // 
-            // movementCombo
-            // 
-            this.movementCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.movementCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.movementCombo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.movementCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.movementCombo.FormattingEnabled = true;
-            this.movementCombo.Location = new System.Drawing.Point(412, 159);
-            this.movementCombo.Name = "movementCombo";
-            this.movementCombo.Size = new System.Drawing.Size(197, 21);
-            this.movementCombo.TabIndex = 10;
             // 
             // characterEditorPanel2
             // 
@@ -703,6 +375,15 @@ namespace LionEditor
             namePanel.Name = "namePanel";
             namePanel.Size = new System.Drawing.Size(289, 26);
             namePanel.TabIndex = 1;
+            // 
+            // randomNameButton
+            // 
+            this.randomNameButton.Location = new System.Drawing.Point(203, 2);
+            this.randomNameButton.Name = "randomNameButton";
+            this.randomNameButton.Size = new System.Drawing.Size(75, 23);
+            this.randomNameButton.TabIndex = 1;
+            this.randomNameButton.Text = "Random Name";
+            this.randomNameButton.UseVisualStyleBackColor = true;
             // 
             // nameTextBox
             // 
@@ -1327,14 +1008,354 @@ namespace LionEditor
             this.maSpinner.TabIndex = 3;
             this.maSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // randomNameButton
+            // equipmentAndAbilitiesPanel
             // 
-            this.randomNameButton.Location = new System.Drawing.Point(203, 2);
-            this.randomNameButton.Name = "randomNameButton";
-            this.randomNameButton.Size = new System.Drawing.Size(75, 23);
-            this.randomNameButton.TabIndex = 1;
-            this.randomNameButton.Text = "Random Name";
-            this.randomNameButton.UseVisualStyleBackColor = true;
+            equipmentAndAbilitiesPanel.ColumnCount = 4;
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17F));
+            equipmentAndAbilitiesPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            equipmentAndAbilitiesPanel.Controls.Add(this.rightHandCombo, 1, 0);
+            equipmentAndAbilitiesPanel.Controls.Add(this.rightShieldCombo, 1, 1);
+            equipmentAndAbilitiesPanel.Controls.Add(this.leftHandCombo, 1, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(this.leftShieldCombo, 1, 3);
+            equipmentAndAbilitiesPanel.Controls.Add(this.headCombo, 1, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(this.bodyCombo, 1, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(this.accessoryCombo, 1, 6);
+            equipmentAndAbilitiesPanel.Controls.Add(this.supportCombo, 3, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(this.reactionCombo, 3, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(this.movementCombo, 3, 6);
+            equipmentAndAbilitiesPanel.Controls.Add(rightHandLabel, 0, 0);
+            equipmentAndAbilitiesPanel.Controls.Add(leftHandLabel, 0, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(rightShieldLabel, 0, 1);
+            equipmentAndAbilitiesPanel.Controls.Add(leftShieldLabel, 0, 3);
+            equipmentAndAbilitiesPanel.Controls.Add(headLabel, 0, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(bodyLabel, 0, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(accessoryLabel, 0, 6);
+            equipmentAndAbilitiesPanel.Controls.Add(reactLabel, 2, 4);
+            equipmentAndAbilitiesPanel.Controls.Add(supportLabel, 2, 5);
+            equipmentAndAbilitiesPanel.Controls.Add(movementLabel, 2, 6);
+            equipmentAndAbilitiesPanel.Controls.Add(secondaryLabel, 2, 3);
+            equipmentAndAbilitiesPanel.Controls.Add(this.secondaryCombo, 3, 3);
+            equipmentAndAbilitiesPanel.Controls.Add(skillLabel, 2, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(this.skillTextLabel, 3, 2);
+            equipmentAndAbilitiesPanel.Controls.Add(killsLabel, 2, 0);
+            equipmentAndAbilitiesPanel.Controls.Add(this.killsSpinner, 3, 0);
+            equipmentAndAbilitiesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            equipmentAndAbilitiesPanel.Location = new System.Drawing.Point(3, 198);
+            equipmentAndAbilitiesPanel.Name = "equipmentAndAbilitiesPanel";
+            equipmentAndAbilitiesPanel.RowCount = 7;
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            equipmentAndAbilitiesPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            equipmentAndAbilitiesPanel.Size = new System.Drawing.Size(618, 204);
+            equipmentAndAbilitiesPanel.TabIndex = 4;
+            // 
+            // rightHandCombo
+            // 
+            this.rightHandCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.rightHandCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.rightHandCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightHandCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rightHandCombo.FormattingEnabled = true;
+            this.rightHandCombo.Location = new System.Drawing.Point(108, 3);
+            this.rightHandCombo.Name = "rightHandCombo";
+            this.rightHandCombo.Size = new System.Drawing.Size(197, 21);
+            this.rightHandCombo.TabIndex = 0;
+            // 
+            // rightShieldCombo
+            // 
+            this.rightShieldCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.rightShieldCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.rightShieldCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightShieldCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rightShieldCombo.FormattingEnabled = true;
+            this.rightShieldCombo.Location = new System.Drawing.Point(108, 32);
+            this.rightShieldCombo.Name = "rightShieldCombo";
+            this.rightShieldCombo.Size = new System.Drawing.Size(197, 21);
+            this.rightShieldCombo.TabIndex = 1;
+            // 
+            // leftHandCombo
+            // 
+            this.leftHandCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.leftHandCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.leftHandCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.leftHandCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.leftHandCombo.FormattingEnabled = true;
+            this.leftHandCombo.Location = new System.Drawing.Point(108, 61);
+            this.leftHandCombo.Name = "leftHandCombo";
+            this.leftHandCombo.Size = new System.Drawing.Size(197, 21);
+            this.leftHandCombo.TabIndex = 2;
+            // 
+            // leftShieldCombo
+            // 
+            this.leftShieldCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.leftShieldCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.leftShieldCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.leftShieldCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.leftShieldCombo.FormattingEnabled = true;
+            this.leftShieldCombo.Location = new System.Drawing.Point(108, 90);
+            this.leftShieldCombo.Name = "leftShieldCombo";
+            this.leftShieldCombo.Size = new System.Drawing.Size(197, 21);
+            this.leftShieldCombo.TabIndex = 3;
+            // 
+            // headCombo
+            // 
+            this.headCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.headCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.headCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.headCombo.FormattingEnabled = true;
+            this.headCombo.Location = new System.Drawing.Point(108, 119);
+            this.headCombo.Name = "headCombo";
+            this.headCombo.Size = new System.Drawing.Size(197, 21);
+            this.headCombo.TabIndex = 4;
+            // 
+            // bodyCombo
+            // 
+            this.bodyCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.bodyCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.bodyCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bodyCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bodyCombo.FormattingEnabled = true;
+            this.bodyCombo.Location = new System.Drawing.Point(108, 148);
+            this.bodyCombo.Name = "bodyCombo";
+            this.bodyCombo.Size = new System.Drawing.Size(197, 21);
+            this.bodyCombo.TabIndex = 5;
+            // 
+            // accessoryCombo
+            // 
+            this.accessoryCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.accessoryCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.accessoryCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accessoryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.accessoryCombo.FormattingEnabled = true;
+            this.accessoryCombo.Location = new System.Drawing.Point(108, 177);
+            this.accessoryCombo.Name = "accessoryCombo";
+            this.accessoryCombo.Size = new System.Drawing.Size(197, 21);
+            this.accessoryCombo.TabIndex = 6;
+            // 
+            // supportCombo
+            // 
+            this.supportCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.supportCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.supportCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.supportCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.supportCombo.FormattingEnabled = true;
+            this.supportCombo.Location = new System.Drawing.Point(416, 148);
+            this.supportCombo.Name = "supportCombo";
+            this.supportCombo.Size = new System.Drawing.Size(199, 21);
+            this.supportCombo.TabIndex = 9;
+            // 
+            // reactionCombo
+            // 
+            this.reactionCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.reactionCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.reactionCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reactionCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.reactionCombo.FormattingEnabled = true;
+            this.reactionCombo.Location = new System.Drawing.Point(416, 119);
+            this.reactionCombo.Name = "reactionCombo";
+            this.reactionCombo.Size = new System.Drawing.Size(199, 21);
+            this.reactionCombo.TabIndex = 8;
+            // 
+            // movementCombo
+            // 
+            this.movementCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.movementCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.movementCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.movementCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.movementCombo.FormattingEnabled = true;
+            this.movementCombo.Location = new System.Drawing.Point(416, 177);
+            this.movementCombo.Name = "movementCombo";
+            this.movementCombo.Size = new System.Drawing.Size(199, 21);
+            this.movementCombo.TabIndex = 10;
+            // 
+            // rightHandLabel
+            // 
+            rightHandLabel.AutoSize = true;
+            rightHandLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            rightHandLabel.Location = new System.Drawing.Point(3, 0);
+            rightHandLabel.Name = "rightHandLabel";
+            rightHandLabel.Size = new System.Drawing.Size(99, 29);
+            rightHandLabel.TabIndex = 11;
+            rightHandLabel.Text = "Right hand:";
+            rightHandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // leftHandLabel
+            // 
+            leftHandLabel.AutoSize = true;
+            leftHandLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            leftHandLabel.Location = new System.Drawing.Point(3, 58);
+            leftHandLabel.Name = "leftHandLabel";
+            leftHandLabel.Size = new System.Drawing.Size(99, 29);
+            leftHandLabel.TabIndex = 13;
+            leftHandLabel.Text = "Left hand:";
+            leftHandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // rightShieldLabel
+            // 
+            rightShieldLabel.AutoSize = true;
+            rightShieldLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            rightShieldLabel.Location = new System.Drawing.Point(3, 29);
+            rightShieldLabel.Name = "rightShieldLabel";
+            rightShieldLabel.Size = new System.Drawing.Size(99, 29);
+            rightShieldLabel.TabIndex = 12;
+            rightShieldLabel.Text = "Right shield:";
+            rightShieldLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // leftShieldLabel
+            // 
+            leftShieldLabel.AutoSize = true;
+            leftShieldLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            leftShieldLabel.Location = new System.Drawing.Point(3, 87);
+            leftShieldLabel.Name = "leftShieldLabel";
+            leftShieldLabel.Size = new System.Drawing.Size(99, 29);
+            leftShieldLabel.TabIndex = 14;
+            leftShieldLabel.Text = "Left shield:";
+            leftShieldLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // headLabel
+            // 
+            headLabel.AutoSize = true;
+            headLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            headLabel.Location = new System.Drawing.Point(3, 116);
+            headLabel.Name = "headLabel";
+            headLabel.Size = new System.Drawing.Size(99, 29);
+            headLabel.TabIndex = 15;
+            headLabel.Text = "Head:";
+            headLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // bodyLabel
+            // 
+            bodyLabel.AutoSize = true;
+            bodyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            bodyLabel.Location = new System.Drawing.Point(3, 145);
+            bodyLabel.Name = "bodyLabel";
+            bodyLabel.Size = new System.Drawing.Size(99, 29);
+            bodyLabel.TabIndex = 16;
+            bodyLabel.Text = "Body:";
+            bodyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // accessoryLabel
+            // 
+            accessoryLabel.AutoSize = true;
+            accessoryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            accessoryLabel.Location = new System.Drawing.Point(3, 174);
+            accessoryLabel.Name = "accessoryLabel";
+            accessoryLabel.Size = new System.Drawing.Size(99, 30);
+            accessoryLabel.TabIndex = 17;
+            accessoryLabel.Text = "Accessory:";
+            accessoryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // reactLabel
+            // 
+            reactLabel.AutoSize = true;
+            reactLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            reactLabel.Location = new System.Drawing.Point(311, 116);
+            reactLabel.Name = "reactLabel";
+            reactLabel.Size = new System.Drawing.Size(99, 29);
+            reactLabel.TabIndex = 21;
+            reactLabel.Text = "Reaction ability:";
+            reactLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // supportLabel
+            // 
+            supportLabel.AutoSize = true;
+            supportLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            supportLabel.Location = new System.Drawing.Point(311, 145);
+            supportLabel.Name = "supportLabel";
+            supportLabel.Size = new System.Drawing.Size(99, 29);
+            supportLabel.TabIndex = 22;
+            supportLabel.Text = "Support ability:";
+            supportLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // movementLabel
+            // 
+            movementLabel.AutoSize = true;
+            movementLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            movementLabel.Location = new System.Drawing.Point(311, 174);
+            movementLabel.Name = "movementLabel";
+            movementLabel.Size = new System.Drawing.Size(99, 30);
+            movementLabel.TabIndex = 23;
+            movementLabel.Text = "Movement ability:";
+            movementLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // secondaryLabel
+            // 
+            secondaryLabel.AutoSize = true;
+            secondaryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            secondaryLabel.Location = new System.Drawing.Point(311, 87);
+            secondaryLabel.Name = "secondaryLabel";
+            secondaryLabel.Size = new System.Drawing.Size(99, 29);
+            secondaryLabel.TabIndex = 20;
+            secondaryLabel.Text = "Secondary skill:";
+            secondaryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // secondaryCombo
+            // 
+            this.secondaryCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.secondaryCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.secondaryCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.secondaryCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.secondaryCombo.FormattingEnabled = true;
+            this.secondaryCombo.Location = new System.Drawing.Point(416, 90);
+            this.secondaryCombo.Name = "secondaryCombo";
+            this.secondaryCombo.Size = new System.Drawing.Size(199, 21);
+            this.secondaryCombo.TabIndex = 7;
+            // 
+            // skillLabel
+            // 
+            skillLabel.AutoSize = true;
+            skillLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            skillLabel.Location = new System.Drawing.Point(311, 58);
+            skillLabel.Name = "skillLabel";
+            skillLabel.Size = new System.Drawing.Size(99, 29);
+            skillLabel.TabIndex = 18;
+            skillLabel.Text = "Skill:";
+            skillLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // skillTextLabel
+            // 
+            this.skillTextLabel.AutoSize = true;
+            this.skillTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.skillTextLabel.Location = new System.Drawing.Point(416, 58);
+            this.skillTextLabel.Name = "skillTextLabel";
+            this.skillTextLabel.Size = new System.Drawing.Size(199, 29);
+            this.skillTextLabel.TabIndex = 19;
+            this.skillTextLabel.Text = "##skill##";
+            this.skillTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // killsLabel
+            // 
+            killsLabel.AutoSize = true;
+            killsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            killsLabel.Location = new System.Drawing.Point(311, 0);
+            killsLabel.Name = "killsLabel";
+            killsLabel.Size = new System.Drawing.Size(99, 29);
+            killsLabel.TabIndex = 24;
+            killsLabel.Text = "Kills:";
+            killsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // killsSpinner
+            // 
+            this.killsSpinner.Dock = System.Windows.Forms.DockStyle.Left;
+            this.killsSpinner.Location = new System.Drawing.Point(416, 3);
+            this.killsSpinner.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.killsSpinner.Name = "killsSpinner";
+            this.killsSpinner.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.killsSpinner.Size = new System.Drawing.Size(54, 20);
+            this.killsSpinner.TabIndex = 25;
+            this.killsSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // CharacterEditor
             // 
@@ -1342,9 +1363,6 @@ namespace LionEditor
             this.Name = "CharacterEditor";
             this.Size = new System.Drawing.Size(624, 405);
             characterEditorPanel.ResumeLayout(false);
-            this.equipAbilityGroupBox.ResumeLayout(false);
-            equipmentAndAbilitiesPanel.ResumeLayout(false);
-            equipmentAndAbilitiesPanel.PerformLayout();
             characterEditorPanel2.ResumeLayout(false);
             this.groupBox.ResumeLayout(false);
             identityPanel.ResumeLayout(false);
@@ -1371,25 +1389,15 @@ namespace LionEditor
             ((System.ComponentModel.ISupportInitialize)(this.speedSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maSpinner)).EndInit();
+            equipmentAndAbilitiesPanel.ResumeLayout(false);
+            equipmentAndAbilitiesPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.killsSpinner)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ComboBox rightHandCombo;
-        private System.Windows.Forms.ComboBox rightShieldCombo;
-        private System.Windows.Forms.ComboBox leftHandCombo;
-        private System.Windows.Forms.ComboBox leftShieldCombo;
-        private System.Windows.Forms.ComboBox headCombo;
-        private System.Windows.Forms.ComboBox bodyCombo;
-        private System.Windows.Forms.ComboBox accessoryCombo;
-        private System.Windows.Forms.ComboBox secondaryCombo;
-        private System.Windows.Forms.ComboBox supportCombo;
-        private System.Windows.Forms.ComboBox reactionCombo;
-        private System.Windows.Forms.ComboBox movementCombo;
-        private System.Windows.Forms.Label skillTextLabel;
-        private System.Windows.Forms.GroupBox equipAbilityGroupBox;
         private System.Windows.Forms.NumericUpDown braverySpinner;
         private System.Windows.Forms.NumericUpDown faithSpinner;
         private System.Windows.Forms.TextBox nameTextBox;
@@ -1421,6 +1429,19 @@ namespace LionEditor
         private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button randomNameButton;
+        private System.Windows.Forms.ComboBox rightHandCombo;
+        private System.Windows.Forms.ComboBox rightShieldCombo;
+        private System.Windows.Forms.ComboBox leftHandCombo;
+        private System.Windows.Forms.ComboBox leftShieldCombo;
+        private System.Windows.Forms.ComboBox headCombo;
+        private System.Windows.Forms.ComboBox bodyCombo;
+        private System.Windows.Forms.ComboBox accessoryCombo;
+        private System.Windows.Forms.ComboBox supportCombo;
+        private System.Windows.Forms.ComboBox reactionCombo;
+        private System.Windows.Forms.ComboBox movementCombo;
+        private System.Windows.Forms.ComboBox secondaryCombo;
+        private System.Windows.Forms.Label skillTextLabel;
+        private System.Windows.Forms.NumericUpDown killsSpinner;
 
     }
 }

@@ -237,12 +237,23 @@ namespace LionEditor
             public uint Level;
             public ushort JP;
             public ushort TotalJP;
-            public byte[] Skills;
             public bool Unlocked;
 
             public bool[] actions1 = new bool[8];
             public bool[] actions2 = new bool[8];
             public bool[] theRest = new bool[8];
+
+            public uint GetLevelFromTotalJP()
+            {
+                if (TotalJP >= 3000) return 8;
+                if (TotalJP >= 2200) return 7;
+                if (TotalJP >= 1600) return 6;
+                if (TotalJP >= 1100) return 5;
+                if (TotalJP >= 700) return 4;
+                if (TotalJP >= 400) return 3;
+                if (TotalJP >= 200) return 2;
+                return 1;
+            }
         }
 
         public Job[] jobs = new Job[22];
@@ -253,24 +264,15 @@ namespace LionEditor
             {
                 Job newJob = new Job();
                 newJob.Unlocked = (bytes[i / 8] & (1 << (7 - (i % 8)))) > 0;
-                newJob.Skills = new byte[3];
 
                 CopyByteToBoolArray( bytes[i * 3 + 3], newJob.actions1 );
                 CopyByteToBoolArray( bytes[i * 3 + 3 + 1], newJob.actions2 );
                 CopyByteToBoolArray( bytes[i * 3 + 3 + 2], newJob.theRest );
 
-                switch( i % 2 )
-                {
-                    case 0:
-                        newJob.Level = (uint)((bytes[69 + i / 2] & 0xF0) >> 4);
-                        break;
-                    case 1:
-                        newJob.Level = (uint)((bytes[69 + i / 2] & 0x0F));
-                        break;
-                }
-
                 newJob.JP = (ushort)((ushort)(bytes[81 + i * 2]) + (ushort)((ushort)bytes[81 + i * 2 + 1] << 8));
                 newJob.TotalJP = (ushort)((ushort)(bytes[127 + i * 2]) + (ushort)((ushort)bytes[127 + i * 2 + 1] << 8));
+                newJob.Level = newJob.GetLevelFromTotalJP();
+
                 jobs[i] = newJob;
             }
         }

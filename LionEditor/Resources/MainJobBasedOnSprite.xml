@@ -252,8 +252,7 @@
         <skill>Faerie</skill>
         <skill>Lich</skill>
         <skill>Cyclops</skill>
-        <!-- TODO -->
-        <skill>------------</skill>
+        <skill>Zodiark</skill>
       </action>
       <reaction>
         <skill>Critical: Recover MP</skill>
@@ -835,8 +834,7 @@
       <action>
         <skill>Aegis</skill>
         <skill>Dispelna</skill>
-        <!-- TODO -->
-        <skill>--------</skill>
+        <skill>Ultima</skill>
         <skill>Chant</skill>
       </action>
     </Job>
@@ -1073,8 +1071,7 @@
         <skill>Petrify</skill>
         <skill>Shadowbind</skill>
         <skill>Suffocate</skill>
-        <!-- TODO -->
-        <skill>--------</skill>
+        <skill>Ultima</skill>
         <skill>Charm</skill>
       </action>
     </Job>
@@ -1781,8 +1778,7 @@
         <skill>Faerie</skill>
         <skill>Lich</skill>
         <skill>Cyclops</skill>
-        <!-- TODO -->
-        <skill>------------</skill>
+        <skill>Zodiark</skill>
       </action>
       <reaction>
         <skill>Critical: Recover MP</skill>
@@ -2719,8 +2715,7 @@
         <skill>Chant</skill>
         <skill>Steel</skill>
         <skill>Shout</skill>
-        <!-- TODO -->
-        <skill>--------</skill>
+        <skill>Ultima</skill>
       </action>
     </Job>
 

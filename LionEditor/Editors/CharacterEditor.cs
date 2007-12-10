@@ -97,6 +97,8 @@ namespace LionEditor
             this.zodiacComboBox.SelectedItem = character.ZodiacSign;
             this.genderComboBox.SelectedItem = character.Gender;
 
+            this.killsSpinner.Value = character.Kills;
+
             UpdateSkillLabel();
 
             UpdateMove();
@@ -303,6 +305,13 @@ namespace LionEditor
         private void SetupEvents()
         {
             // TODO: make these delegates not anonymous
+            killsSpinner.ValueChanged +=
+                delegate(object sender, EventArgs e)
+                {
+                    character.Kills = (byte)killsSpinner.Value;
+                    FireDataChangedEvent();
+                };
+
             randomNameButton.Click +=
                 delegate(object sender, EventArgs e)
                 {

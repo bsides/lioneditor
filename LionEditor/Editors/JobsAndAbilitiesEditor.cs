@@ -72,7 +72,7 @@ namespace LionEditor
             jobSelector.SelectedIndexChanged += jobSelector_SelectedIndexChanged;
             jobSelector.SelectedIndex = 0;
 
-            jobEditor.DataChangedEvent += new EventHandler( jobEditor1_DataChangedEvent );
+            jobEditor.DataChangedEvent += jobEditor_DataChangedEvent;
         }
 
         public JobsAndAbilitiesEditor()
@@ -84,7 +84,7 @@ namespace LionEditor
 
         #region Events
 
-        private void jobEditor1_DataChangedEvent(object sender, EventArgs e)
+        private void jobEditor_DataChangedEvent(object sender, EventArgs e)
         {
             changed = true;
         }

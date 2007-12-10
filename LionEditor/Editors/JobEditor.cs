@@ -170,6 +170,14 @@ namespace LionEditor
             {
                 Job.JP = (ushort)jpSpinner.Value;
                 Job.TotalJP = (ushort)totalSpinner.Value;
+                if (Job.JP > Job.TotalJP)
+                {
+                    ignoreChanges = true;
+                    Job.TotalJP = Job.JP;
+                    totalSpinner.Value = Job.JP;
+                    ignoreChanges = false;
+                }
+                levelLabel.Text = string.Format("Level: {0}", Job.GetLevelFromTotalJP());
 
                 FireDataChangedEvent();
             }
@@ -208,6 +216,8 @@ namespace LionEditor
                         break;
                 }
 
+                UpdateMastered();
+
                 FireDataChangedEvent();
             }
         }
@@ -215,6 +225,23 @@ namespace LionEditor
         #endregion
 
         #region Utilities
+
+        private void UpdateMastered()
+        {
+            foreach (CheckBox[] arr in new CheckBox[][] { actionCheckBoxes, reactionCheckBoxes, supportCheckBoxes, movementCheckBoxes })
+            {
+                foreach (CheckBox cb in arr)
+                {
+                    if (cb.Visible && !cb.Checked)
+                    {
+                        masteredCheckbox.Checked = false;
+                        return;
+                    }
+                }
+            }
+
+            masteredCheckbox.Checked = true;
+        }
 
         /// <summary>
         /// Refreshes everything based on the current job and its info
@@ -298,6 +325,7 @@ namespace LionEditor
             jpSpinner.Value = job.JP;
             totalSpinner.Value = job.TotalJP;
 
+            UpdateMastered();
             ignoreChanges = false;
             this.ResumeLayout();
         }

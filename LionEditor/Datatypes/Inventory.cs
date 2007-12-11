@@ -98,7 +98,7 @@ namespace LionEditor
             {
                 if( dummyEntry == null )
                 {
-                    dummyEntry = new InventoryEntry( Item.ItemList[0], 0xFF );
+                    dummyEntry = new InventoryEntry( Item.ItemList[0], 0x00 );
                 }
 
                 return dummyEntry;
@@ -249,6 +249,10 @@ namespace LionEditor
 
                 result[item.Item.Offset] = (byte)count;
             }
+
+            result[0] = 0;
+            result[254] = 0;
+            result[255] = 0;
 
             return result;
         }

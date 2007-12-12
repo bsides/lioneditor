@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     if (argc < 3)
     {
         printf("Final Fantasy Tactics PSP De/Archivier 1.0 by Brisma\n"
+               "English translation by Joe Davidson\n"
                "   -> fftpspext -d fftpack.bin //Extract\n"
                "   -> fftpspext -a fftpack.bin //Update\n"
                "   -> fftpspext -r newfile.bin //Rebuild\n"

@@ -199,9 +199,13 @@ namespace LionEditor
         /// </summary>
         private void UpdateHPToolTip()
         {
-            toolTip.SetToolTip( hpSpinner, 
-                string.Format( "Raw: {0}\nBase: {1}\nMultiplier: x{2}\nBonus: +{3}", 
-                character.RawHP, character.Job.ActualHP( character.RawHP ), character.HPMultiplier, character.HPBonus ) );
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nMultiplier: x{2}\nBonus: +{3}", character.RawHP, 
+                character.Job.ActualHP( character.RawHP ), character.HPMultiplier, character.HPBonus );
+            toolTip.SetToolTip( hpSpinner, tip );
+            foreach( Control c in hpSpinner.Controls )
+            {
+                toolTip.SetToolTip( c, tip );
+            }
         }
 
         /// <summary>
@@ -221,9 +225,13 @@ namespace LionEditor
         /// </summary>
         private void UpdateMPToolTip()
         {
-            toolTip.SetToolTip( mpSpinner, 
-                string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", 
-                character.RawMP, character.Job.ActualMP( character.RawMP ), character.MPBonus ) );
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMP, 
+                character.Job.ActualMP( character.RawMP ), character.MPBonus );
+            toolTip.SetToolTip( mpSpinner, tip );
+            foreach( Control c in mpSpinner.Controls )
+            {
+                toolTip.SetToolTip( c, tip );
+            }
         }
 
         /// <summary>
@@ -243,9 +251,13 @@ namespace LionEditor
         /// </summary>
         private void UpdateSpeedToolTip()
         {
-            toolTip.SetToolTip( speedSpinner, 
-                string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", 
-                character.RawSP, character.Job.ActualSP( character.RawSP ), character.SpeedBonus ) );
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawSP, 
+                character.Job.ActualSP( character.RawSP ), character.SpeedBonus );
+            toolTip.SetToolTip( speedSpinner, tip );
+            foreach( Control c in speedSpinner.Controls )
+            {
+                toolTip.SetToolTip( c, tip );
+            }
         }
 
         /// <summary>
@@ -265,9 +277,13 @@ namespace LionEditor
         /// </summary>
         private void UpdateMAToolTip()
         {
-            toolTip.SetToolTip( maSpinner, 
-                string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", 
-                character.RawMA, character.Job.ActualMA( character.RawMA ), character.MABonus ) );
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMA, 
+                character.Job.ActualMA( character.RawMA ), character.MABonus )
+            toolTip.SetToolTip( maSpinner, tip );
+            foreach( Control c in speedSpinner.Controls )
+            {
+                toolTip.SetToolTip( c, tip );
+            }
         }
 
         /// <summary>
@@ -287,7 +303,13 @@ namespace LionEditor
         /// </summary>
         private void UpdatePAToolTip()
         {
-            toolTip.SetToolTip( paSpinner, string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawPA, character.Job.ActualPA( character.RawPA ), character.PABonus ) );
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawPA, 
+                character.Job.ActualPA( character.RawPA ), character.PABonus )
+            toolTip.SetToolTip( paSpinner, tip );
+            foreach( Control c in speedSpinner.Controls )
+            {
+                toolTip.SetToolTip( c, tip );
+            }
         }
 
         /// <summary>

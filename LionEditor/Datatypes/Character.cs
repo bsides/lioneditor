@@ -526,7 +526,7 @@ namespace LionEditor
         /// </summary>
         public uint MaxSpeed
         {
-            get { return (uint)(job.ActualSP(rawSP) + SpeedBonus); }
+            get { return (uint)(job.ActualSP(0xFFFFFF) + SpeedBonus); }
         }
 
         #endregion Speed

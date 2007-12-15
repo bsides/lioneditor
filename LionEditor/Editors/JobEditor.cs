@@ -176,8 +176,8 @@ namespace LionEditor
                     Job.TotalJP = Job.JP;
                     totalSpinner.Value = Job.JP;
                     ignoreChanges = false;
+                    UpdateLevelLabel();
                 }
-                levelLabel.Text = string.Format("Level: {0}", Job.GetLevelFromTotalJP());
 
                 FireDataChangedEvent();
             }
@@ -226,6 +226,11 @@ namespace LionEditor
 
         #region Utilities
 
+        private void UpdateLevelLabel()
+        {
+            levelLabel.Text = string.Format("Level: {0}", Job.GetLevelFromTotalJP());
+        }
+
         private void UpdateMastered()
         {
             foreach (CheckBox[] arr in new CheckBox[][] { actionCheckBoxes, reactionCheckBoxes, supportCheckBoxes, movementCheckBoxes })
@@ -251,6 +256,12 @@ namespace LionEditor
         public void UpdateView( LionEditor.JobsAndAbilities.Job job, JobInfo info )
         {
             this.SuspendLayout();
+            this.actionGroup.SuspendLayout();
+            this.reactionGroup.SuspendLayout();
+            this.movementGroup.SuspendLayout();
+            this.supportGroup.SuspendLayout();
+            this.infoPanel.SuspendLayout();
+
             ignoreChanges = true;
 
             this.Info = info;
@@ -326,8 +337,15 @@ namespace LionEditor
             totalSpinner.Value = job.TotalJP;
 
             UpdateMastered();
+            UpdateLevelLabel();
+
             ignoreChanges = false;
             this.ResumeLayout();
+            this.actionGroup.ResumeLayout();
+            this.reactionGroup.ResumeLayout();
+            this.movementGroup.ResumeLayout();
+            this.supportGroup.ResumeLayout();
+            this.infoPanel.ResumeLayout();
         }
 
         #endregion

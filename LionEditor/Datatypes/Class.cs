@@ -337,8 +337,15 @@ namespace LionEditor
 
         private uint divide( int value, int multiplier )
         {
-            uint result = (uint)(((uint)value * 1638400) / (uint)multiplier);
-            return result;
+            if (multiplier == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                uint result = (uint)(((uint)value * 1638400) / (uint)multiplier);
+                return result;
+            }
         }
 
         public override string ToString()

@@ -53,7 +53,7 @@ namespace LionEditor
                     LoadActions();
                 }
 
-                return new List<SecondaryAction>( actionList );
+                return actionList;
             }
         }
 

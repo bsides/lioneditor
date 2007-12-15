@@ -32,6 +32,7 @@ namespace LionEditor
         private static List<string> maleNames;
         private static List<string> femaleNames;
         private static List<string> monsterNames;
+        private static Random rng = new Random();
 
         #endregion
 
@@ -120,7 +121,6 @@ namespace LionEditor
         /// </summary>
         public static string GetRandomMaleName()
         {
-            Random rng = new Random((int)DateTime.Now.Ticks);
             return MaleNames[rng.Next(0, 255)];
         }
 
@@ -129,7 +129,6 @@ namespace LionEditor
         /// </summary>
         public static string GetRandomFemaleName()
         {
-            Random rng = new Random((int)DateTime.Now.Ticks);
             return FemaleNames[rng.Next(0, 255)];
         }
 
@@ -138,7 +137,6 @@ namespace LionEditor
         /// </summary>
         public static string GetRandomMonsterName()
         {
-            Random rng = new Random((int)DateTime.Now.Ticks);
             return MonsterNames[rng.Next(0, 255)];
         }
 

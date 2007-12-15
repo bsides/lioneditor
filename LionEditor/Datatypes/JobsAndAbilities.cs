@@ -234,6 +234,10 @@ namespace LionEditor
         /// </summary>
         public class Job
         {
+            //public JobsOffset Job;
+
+            public Job[] OtherJobs;
+
             public uint Level;
             public ushort JP;
             public ushort TotalJP;
@@ -242,6 +246,23 @@ namespace LionEditor
             public bool[] actions1 = new bool[8];
             public bool[] actions2 = new bool[8];
             public bool[] theRest = new bool[8];
+
+            //public uint GetLevel()
+            //{
+            //    if (Job == JobsOffset.OnionKnight)
+            //    {
+            //        return GetLevelFromOtherJobs();
+            //    }
+            //    else
+            //    {
+            //        return GetLevelFromTotalJP();
+            //    }
+            //}
+
+            //private uint GetLevelFromOtherJobs()
+            //{
+            //    for (int i = 2; i < 
+            //}
 
             public uint GetLevelFromTotalJP()
             {
@@ -256,6 +277,32 @@ namespace LionEditor
             }
         }
 
+        private enum JobsOffset
+        {
+            Base,
+            Chemist,
+            Knight,
+            Archer,
+            Monk,
+            WhiteMage,
+            BlackMage,
+            TimeMage,
+            Summoner,
+            Thief,
+            Orator,
+            Mystic,
+            Geomancer,
+            Dragoon,
+            Samurai,
+            Ninja,
+            Arithmetician,
+            Bard,
+            Dancer,
+            Mime,
+            DarkKnight,
+            OnionKnight
+        }
+
         public Job[] jobs = new Job[22];
 
         public JobsAndAbilities( byte[] bytes )
@@ -263,6 +310,9 @@ namespace LionEditor
             for( int i = 0; i < 22; i++ )
             {
                 Job newJob = new Job();
+                newJob.OtherJobs = jobs;
+                //newJob.Job = (JobsOffset)i;
+
                 newJob.Unlocked = (bytes[i / 8] & (1 << (7 - (i % 8)))) > 0;
 
                 CopyByteToBoolArray( bytes[i * 3 + 3], newJob.actions1 );
@@ -271,7 +321,7 @@ namespace LionEditor
 
                 newJob.JP = (ushort)((ushort)(bytes[81 + i * 2]) + (ushort)((ushort)bytes[81 + i * 2 + 1] << 8));
                 newJob.TotalJP = (ushort)((ushort)(bytes[127 + i * 2]) + (ushort)((ushort)bytes[127 + i * 2 + 1] << 8));
-                newJob.Level = newJob.GetLevelFromTotalJP();
+                //newJob.Level = newJob.GetLevelFromTotalJP();
 
                 jobs[i] = newJob;
             }
@@ -330,7 +380,6 @@ namespace LionEditor
                 result[127 + i * 2] = (byte)(jobs[i].TotalJP & 0xFF);
                 result[127 + i * 2 + 1] = (byte)((jobs[i].TotalJP & 0xFF00) >> 8);
             }
-
 
             return result;
         }

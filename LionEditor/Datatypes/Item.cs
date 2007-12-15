@@ -267,41 +267,13 @@ namespace LionEditor
                     itemList.Sort();
                 }
 
-                // Return a new instance here otherwise the combobox data binding screws up
-                return new List<Item>( itemList );
+                return itemList;
             }
         }
 
         #endregion
 
         #region Constructors
-
-        public Item( UInt16 offset )
-        {
-            Item i = ItemList.Find(
-                delegate( Item j )
-                {
-                    return j.Offset == offset;
-                } );
-
-            type = i.Type;
-            subType = i.SubType;
-            name = i.Name;
-            this.offset = offset;
-            blockRate = i.BlockRate;
-            hpBonus = i.HPBonus;
-            jumpBonus = i.JumpBonus;
-            maBonus = i.MABonus;
-            magicSEV = i.MagicSEV;
-            moveBonus = i.MoveBonus;
-            mpBonus = i.MPBonus;
-            paBonus = i.PABonus;
-            physicalSEV = i.PhysicalSEV;
-            power = i.Power;
-            speedBonus = i.SpeedBonus;
-            physicalAEV = i.PhysicalAEV;
-            magicAEV = i.MagicAEV;
-        }
 
         private Item()
         {
@@ -310,6 +282,16 @@ namespace LionEditor
         #endregion
 
         #region Utilities
+
+        public static Item GetItemAtOffset(int offset)
+        {
+            Item i = ItemList.Find(
+                delegate(Item j)
+                {
+                    return j.Offset == offset;
+                });
+            return i;
+        }
 
         public override string ToString()
         {

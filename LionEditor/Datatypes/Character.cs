@@ -129,6 +129,9 @@ namespace LionEditor
         private ushort[] totalJP = new ushort[23];
         private byte[] afterName = new byte[21];
         private bool isPresent;
+        private bool isDummy = false;
+
+        private static Random rng = new Random();
 
         #endregion
 
@@ -196,7 +199,14 @@ namespace LionEditor
         public bool IsPresent
         {
             get { return isPresent; }
-            set { isPresent = value; }
+            set 
+            {
+                if (isPresent != value)
+                {
+                    ClearDummy();
+                }
+                isPresent = value; 
+            }
         }
 
         #endregion Identity
@@ -914,16 +924,16 @@ namespace LionEditor
             else
             {
                 secondaryAction = SecondaryAction.ActionDictionary[charData[7]];
-                reactAbility = new Ability(TwoBytesToUShort(charData[8], charData[9]));
-                supportAbility = new Ability(TwoBytesToUShort(charData[10], charData[11]));
-                movementAbility = new Ability(TwoBytesToUShort(charData[12], charData[13]));
-                head = new Item(charData[14]);
-                body = new Item(charData[15]);
-                accessory = new Item(charData[16]);
-                rightHand = new Item(charData[17]);
-                rightShield = new Item(charData[18]);
-                leftHand = new Item(charData[19]);
-                leftShield = new Item(charData[20]);
+                reactAbility = Ability.GetAbilityFromOffset(TwoBytesToUShort(charData[8], charData[9]));
+                supportAbility = Ability.GetAbilityFromOffset(TwoBytesToUShort(charData[10], charData[11]));
+                movementAbility = Ability.GetAbilityFromOffset(TwoBytesToUShort(charData[12], charData[13]));
+                head = Item.GetItemAtOffset(charData[14]);
+                body = Item.GetItemAtOffset(charData[15]);
+                accessory = Item.GetItemAtOffset(charData[16]);
+                rightHand = Item.GetItemAtOffset(charData[17]);
+                rightShield = Item.GetItemAtOffset(charData[18]);
+                leftHand = Item.GetItemAtOffset(charData[19]);
+                leftShield = Item.GetItemAtOffset(charData[20]);
             }
 
             experience = charData[21];
@@ -988,16 +998,16 @@ namespace LionEditor
             else
             {
                 secondaryAction = SecondaryAction.ActionDictionary[charData[7]];
-                reactAbility = new Ability(TwoBytesToUShort(charData[8], charData[9]));
-                supportAbility = new Ability(TwoBytesToUShort(charData[10], charData[11]));
-                movementAbility = new Ability(TwoBytesToUShort(charData[12], charData[13]));
-                head = new Item(TwoBytesToUShort(charData[14], charData[15]));
-                body = new Item(TwoBytesToUShort(charData[16], charData[17]));
-                accessory = new Item(TwoBytesToUShort(charData[18], charData[19]));
-                rightHand = new Item(TwoBytesToUShort(charData[20], charData[21]));
-                rightShield = new Item(TwoBytesToUShort(charData[22], charData[23]));
-                leftHand = new Item(TwoBytesToUShort(charData[24], charData[25]));
-                leftShield = new Item(TwoBytesToUShort(charData[26], charData[27]));
+                reactAbility = Ability.GetAbilityFromOffset(TwoBytesToUShort(charData[8], charData[9]));
+                supportAbility = Ability.GetAbilityFromOffset(TwoBytesToUShort(charData[10], charData[11]));
+                movementAbility = Ability.GetAbilityFromOffset(TwoBytesToUShort(charData[12], charData[13]));
+                head = Item.GetItemAtOffset(TwoBytesToUShort(charData[14], charData[15]));
+                body = Item.GetItemAtOffset(TwoBytesToUShort(charData[16], charData[17]));
+                accessory = Item.GetItemAtOffset(TwoBytesToUShort(charData[18], charData[19]));
+                rightHand = Item.GetItemAtOffset(TwoBytesToUShort(charData[20], charData[21]));
+                rightShield = Item.GetItemAtOffset(TwoBytesToUShort(charData[22], charData[23]));
+                leftHand = Item.GetItemAtOffset(TwoBytesToUShort(charData[24], charData[25]));
+                leftShield = Item.GetItemAtOffset(TwoBytesToUShort(charData[26], charData[27]));
             }
 
             experience = charData[28];
@@ -1032,68 +1042,38 @@ namespace LionEditor
         /// </summary>
         private void BuildDummyCharacter()
         {
-            Random rng = new Random((int)DateTime.Now.Ticks);
-
-            accessory = new Item(0);
-            body = new Item(0);
-            bravery = 50;
+            accessory = Item.GetItemAtOffset(0);
+            body = Item.GetItemAtOffset(0);
+            bravery = 0;
             experience = 0;
-            faith = 50;
+            faith = 0;
 
             gender = ((rng.Next() % 2) == 0) ? Gender.Male : Gender.Female;
-            Name = GetRandomName();
+            Name = string.Empty;
 
-            head = new Item(0);
+            head = Item.GetItemAtOffset(0);
             isPresent = false;
-            job = Class.ClassDictionary[0x4A];
+            job = Class.ClassDictionary[0x00];
 
-            jobLevels = new byte[] { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11 };
-            jobsUnlocked = new byte[] { 0xC0, 0x00, 0x00 };
+            jobLevels = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            jobsUnlocked = new byte[] { 0x00, 0x00, 0x00 };
             jp = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             totalJP = new ushort[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-            byte[] jobBytes = new byte[] {
-                0xC0, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00,
-                0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            jobsAndAbilities = new JobsAndAbilities(new byte[173]);
 
-            jobsAndAbilities = new JobsAndAbilities(jobBytes);
-
-            leftHand = new Item(0);
-            leftShield = new Item(0);
-            level = 1;
-            movementAbility = new Ability(0);
-            rawHP = Job.GetRawHPFromActualHP(50);
-            rawMA = Job.GetRawMAFromActualMA(11);
-            rawMP = Job.GetRawMPFromActualMP(10);
-            rawPA = Job.GetRawPAFromActualPA(5);
-            rawSP = Job.GetRawSPFromActualSP(6);
-            reactAbility = new Ability(0);
-            rightHand = new Item(0);
-            rightShield = new Item(0);
+            leftHand = Item.GetItemAtOffset(0);
+            leftShield = Item.GetItemAtOffset(0);
+            level = 0;
+            movementAbility = Ability.GetAbilityFromOffset(0);
+            rawHP = Job.GetRawHPFromActualHP(0);
+            rawMA = Job.GetRawMAFromActualMA(0);
+            rawMP = Job.GetRawMPFromActualMP(0);
+            rawPA = Job.GetRawPAFromActualPA(0);
+            rawSP = Job.GetRawSPFromActualSP(0);
+            reactAbility = Ability.GetAbilityFromOffset(0);
+            rightHand = Item.GetItemAtOffset(0);
+            rightShield = Item.GetItemAtOffset(0);
             secondaryAction = SecondaryAction.ActionDictionary[0x00];
             for (int i = 0; i < 22; i++)
             {
@@ -1103,12 +1083,15 @@ namespace LionEditor
                 }
             }
 
-            spriteSet = SpriteSet.AllSprites[0x80];
-            supportAbility = new Ability(0);
+            spriteSet = SpriteSet.AllSprites[0x00];
+            supportAbility = Ability.GetAbilityFromOffset(0);
             unknownOffset03 = 0x00;
             unknownOffset05 = 0x00;
-            zodiacSign = Zodiac.Aries;
+            zodiacSign = (Zodiac)0;
             OnProposition = false;
+            Kills = 0;
+
+            isDummy = true;
         }
 
         /// <summary>
@@ -1289,8 +1272,14 @@ namespace LionEditor
         public byte[] ToByteArray()
         {
             byte[] result = new byte[256];
-            result[0] = spriteSet.Value;
             result[1] = (byte)(isPresent ? index : 0xFF);
+
+            if (isDummy)
+            {
+                return result;
+            }
+
+            result[0] = spriteSet.Value;
             result[2] = job.Byte;
             result[3] = unknownOffset03;
             result[4] = (byte)gender;
@@ -1304,20 +1293,13 @@ namespace LionEditor
             result[12] = (byte)(movementAbility.Value & 0xFF);
             result[13] = (byte)((movementAbility.Value & 0xFF00) >> 8);
 
-            result[14] = head.ToByte()[0];
-            result[15] = head.ToByte()[1];
-            result[16] = body.ToByte()[0];
-            result[17] = body.ToByte()[1];
-            result[18] = accessory.ToByte()[0];
-            result[19] = accessory.ToByte()[1];
-            result[20] = rightHand.ToByte()[0];
-            result[21] = rightHand.ToByte()[1];
-            result[22] = rightShield.ToByte()[0];
-            result[23] = rightShield.ToByte()[1];
-            result[24] = leftHand.ToByte()[0];
-            result[25] = leftHand.ToByte()[1];
-            result[26] = leftShield.ToByte()[0];
-            result[27] = leftShield.ToByte()[1];
+            Array.Copy(head.ToByte(), 0, result, 14, 2);
+            Array.Copy(body.ToByte(), 0, result, 16, 2);
+            Array.Copy(accessory.ToByte(), 0, result, 18, 2);
+            Array.Copy(rightHand.ToByte(), 0, result, 20, 2);
+            Array.Copy(rightShield.ToByte(), 0, result, 22, 2);
+            Array.Copy(leftHand.ToByte(), 0, result, 24, 2);
+            Array.Copy(leftShield.ToByte(), 0, result, 26, 2);
             result[28] = experience;
             result[29] = level;
             result[30] = bravery;
@@ -1343,21 +1325,15 @@ namespace LionEditor
             result[45] = (byte)((rawMA & 0xFF00) >> 8);
             result[46] = (byte)((rawMA & 0xFF0000) >> 16);
 
-            byte[] jaBytes = jobsAndAbilities.ToByteArray();
-            for (int i = 0; i < 173; i++)
+            Array.Copy(jobsAndAbilities.ToByteArray(), 0, result, 47, 173);
+            Array.Copy(rawName, 0, result, 0xDC, 15);
+
+            if (Name == string.Empty)
             {
-                result[47 + i] = jaBytes[i];
+                result[0xDC] = 0x00;
             }
 
-            for (int i = 0; i < 15; i++)
-            {
-                result[0xDC + i] = rawName[i];
-            }
-
-            for (int k = 0; k < 21; k++)
-            {
-                result[0xEB + k] = afterName[k];
-            }
+            Array.Copy(afterName, 0, result, 0xEB, 21);
 
             return result;
         }
@@ -1394,6 +1370,11 @@ namespace LionEditor
                     // Can't happen...
                     return string.Empty;
             }
+        }
+
+        public void ClearDummy()
+        {
+            isDummy = false;
         }
 
         #endregion

@@ -367,7 +367,7 @@
         <skill>Attack Boost</skill>
       </support>
       <movement>
-        <skill>Ignore Turrain</skill>
+        <skill>Ignore Terrain</skill>
         <skill>Lavawalking</skill>
       </movement>
     </Job>
@@ -1866,7 +1866,7 @@
         <skill>Attack Boost</skill>
       </support>
       <movement>
-        <skill>Ignore Turrain</skill>
+        <skill>Ignore Terrain</skill>
         <skill>Lavawalking</skill>
       </movement>
     </Job>

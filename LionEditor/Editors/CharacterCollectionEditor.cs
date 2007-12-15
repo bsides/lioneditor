@@ -173,7 +173,7 @@ namespace LionEditor
             {
                 e.Effect = DragDropEffects.Copy;
             }
-            else if ((e.AllowedEffect == DragDropEffects.Move) && (e.Data.GetDataPresent(typeof(Character))))
+            else if ((e.AllowedEffect == DragDropEffects.Move) && (CharacterEditorEnabled) && (e.Data.GetDataPresent(typeof(Character))))
             {
                 e.Effect = DragDropEffects.Move;
             }
@@ -214,7 +214,7 @@ namespace LionEditor
 
                 Character c = listBox.Items[index] as Character;
 
-                DragDropEffects dde = DoDragDrop(c, CharacterEditorEnabled?DragDropEffects.Move:DragDropEffects.Copy);
+                DragDropEffects dde = DoDragDrop(c, CharacterEditorEnabled ? DragDropEffects.Move : DragDropEffects.Copy);
                 lastSelectedIndex = listBox.SelectedIndex;
 
                 // Reassign everyone's index and checkstates
@@ -246,33 +246,12 @@ namespace LionEditor
 
         private void characterMoveDownMenuItem_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-            Character moved = characterSelector.SelectedItem as Character;
-            Character notMoved = characterSelector.Items[characterSelector.SelectedIndex + 1] as Character;
-            moved.Index += 1;
-            notMoved.Index -= 1;
-
-            characterSelector.Items[characterSelector.SelectedIndex] = notMoved;
-            characterSelector.Items[characterSelector.SelectedIndex + 1] = moved;
-            characterSelector.SelectedItem = moved;
-
-            FireDataChangedEvent();
-            this.ResumeLayout();
+            CharacterMove(false);
         }
 
         private void characterMoveUpMenuItem_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-            Character moved = characterSelector.SelectedItem as Character;
-            Character notMoved = characterSelector.Items[characterSelector.SelectedIndex - 1] as Character;
-            moved.Index -= 1;
-            notMoved.Index += 1;
-            characterSelector.Items[characterSelector.SelectedIndex] = notMoved;
-            characterSelector.Items[characterSelector.SelectedIndex - 1] = moved;
-            characterSelector.SelectedItem = moved;
-            FireDataChangedEvent();
-
-            this.ResumeLayout();
+            CharacterMove(true);
         }
 
         private void characterPasteMenuItem_Click(object sender, EventArgs e)
@@ -336,6 +315,23 @@ namespace LionEditor
 
         #region Utilities
 
+        private void CharacterMove(bool up)
+        {
+            int add = up ? -1 : 1;
+            this.SuspendLayout();
+            Character moved = characterSelector.SelectedItem as Character;
+            Character notMoved = characterSelector.Items[characterSelector.SelectedIndex + add] as Character;
+            moved.Index = (byte)(moved.Index + add);
+            notMoved.Index = (byte)(notMoved.Index - add);
+
+            characterSelector.Items[characterSelector.SelectedIndex] = notMoved;
+            characterSelector.Items[characterSelector.SelectedIndex + add] = moved;
+            characterSelector.SelectedItem = moved;
+
+            FireDataChangedEvent();
+            this.ResumeLayout();
+        }
+        
         #endregion
     }
 }

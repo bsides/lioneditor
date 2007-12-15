@@ -90,25 +90,22 @@ namespace LionEditor
 
         #region Constructor
 
-        public Ability( UInt16 value )
-        {
-            Ability i = AbilityList.Find(
-                delegate( Ability j )
-                {
-                    return j.Value == value;
-                } );
-
-            this.value = i.Value;
-            this.name = i.Name;
-            this.moveBonus = i.MoveBonus;
-            this.moveBonus = i.JumpBonus;
-        }
-
         private Ability()
         {
         }
 
         #endregion
+
+        public static Ability GetAbilityFromOffset(UInt16 value)
+        {
+            Ability i = AbilityList.Find(
+                delegate(Ability j)
+                {
+                    return j.Value == value;
+                });
+
+            return i;
+        }
 
         public override string ToString()
         {
@@ -163,7 +160,7 @@ namespace LionEditor
                 }
 
 
-                return new List<Ability>( abilityList );
+                return abilityList;
             }
         }
 

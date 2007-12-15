@@ -49,11 +49,11 @@ namespace LionEditor
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.SplitContainer splitContainer;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( CharacterBrowser ) );
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharacterBrowser));
             this.gameSelector = new System.Windows.Forms.ComboBox();
             this.toolBar = new System.Windows.Forms.ToolBar();
             this.openButton = new System.Windows.Forms.ToolBarButton();
-            this.toolBarIcons = new System.Windows.Forms.ImageList( this.components );
+            this.toolBarIcons = new System.Windows.Forms.ImageList(this.components);
             this.characterCollectionEditor = new LionEditor.CharacterCollectionEditor();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             splitContainer = new System.Windows.Forms.SplitContainer();
@@ -67,19 +67,19 @@ namespace LionEditor
             splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             splitContainer.IsSplitterFixed = true;
-            splitContainer.Location = new System.Drawing.Point( 0, 0 );
+            splitContainer.Location = new System.Drawing.Point(0, 0);
             splitContainer.Name = "splitContainer";
             splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer.Panel1
             // 
-            splitContainer.Panel1.Controls.Add( this.gameSelector );
-            splitContainer.Panel1.Controls.Add( this.toolBar );
+            splitContainer.Panel1.Controls.Add(this.gameSelector);
+            splitContainer.Panel1.Controls.Add(this.toolBar);
             // 
             // splitContainer.Panel2
             // 
-            splitContainer.Panel2.Controls.Add( this.characterCollectionEditor );
-            splitContainer.Size = new System.Drawing.Size( 732, 455 );
+            splitContainer.Panel2.Controls.Add(this.characterCollectionEditor);
+            splitContainer.Size = new System.Drawing.Size(732, 455);
             splitContainer.SplitterDistance = 46;
             splitContainer.SplitterWidth = 1;
             splitContainer.TabIndex = 1;
@@ -90,23 +90,23 @@ namespace LionEditor
             this.gameSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.gameSelector.Enabled = false;
             this.gameSelector.FormattingEnabled = true;
-            this.gameSelector.Location = new System.Drawing.Point( 149, 13 );
+            this.gameSelector.Location = new System.Drawing.Point(149, 13);
             this.gameSelector.Name = "gameSelector";
-            this.gameSelector.Size = new System.Drawing.Size( 303, 21 );
+            this.gameSelector.Size = new System.Drawing.Size(303, 21);
             this.gameSelector.TabIndex = 1;
             // 
             // toolBar
             // 
-            this.toolBar.Buttons.AddRange( new System.Windows.Forms.ToolBarButton[] {
-            this.openButton} );
-            this.toolBar.ButtonSize = new System.Drawing.Size( 32, 32 );
+            this.toolBar.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            this.openButton});
+            this.toolBar.ButtonSize = new System.Drawing.Size(32, 32);
             this.toolBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolBar.DropDownArrows = true;
             this.toolBar.ImageList = this.toolBarIcons;
-            this.toolBar.Location = new System.Drawing.Point( 0, 0 );
+            this.toolBar.Location = new System.Drawing.Point(0, 0);
             this.toolBar.Name = "toolBar";
             this.toolBar.ShowToolTips = true;
-            this.toolBar.Size = new System.Drawing.Size( 732, 44 );
+            this.toolBar.Size = new System.Drawing.Size(732, 44);
             this.toolBar.TabIndex = 0;
             this.toolBar.Wrappable = false;
             // 
@@ -118,9 +118,9 @@ namespace LionEditor
             // 
             // toolBarIcons
             // 
-            this.toolBarIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject( "toolBarIcons.ImageStream" )));
+            this.toolBarIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("toolBarIcons.ImageStream")));
             this.toolBarIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.toolBarIcons.Images.SetKeyName( 0, "open-32x32.png" );
+            this.toolBarIcons.Images.SetKeyName(0, "open-32x32.png");
             // 
             // characterCollectionEditor
             // 
@@ -128,9 +128,9 @@ namespace LionEditor
             this.characterCollectionEditor.CharacterEditorEnabled = false;
             this.characterCollectionEditor.ContextMenuEnabled = true;
             this.characterCollectionEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.characterCollectionEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.characterCollectionEditor.Location = new System.Drawing.Point(0, 0);
             this.characterCollectionEditor.Name = "characterCollectionEditor";
-            this.characterCollectionEditor.Size = new System.Drawing.Size( 732, 408 );
+            this.characterCollectionEditor.Size = new System.Drawing.Size(732, 408);
             this.characterCollectionEditor.TabIndex = 0;
             // 
             // openFileDialog
@@ -142,10 +142,10 @@ namespace LionEditor
             // 
             // CharacterBrowser
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 732, 455 );
-            this.Controls.Add( splitContainer );
+            this.ClientSize = new System.Drawing.Size(732, 455);
+            this.Controls.Add(splitContainer);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CharacterBrowser";
@@ -153,11 +153,11 @@ namespace LionEditor
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "CharacterBrowser";
-            splitContainer.Panel1.ResumeLayout( false );
+            splitContainer.Panel1.ResumeLayout(false);
             splitContainer.Panel1.PerformLayout();
-            splitContainer.Panel2.ResumeLayout( false );
-            splitContainer.ResumeLayout( false );
-            this.ResumeLayout( false );
+            splitContainer.Panel2.ResumeLayout(false);
+            splitContainer.ResumeLayout(false);
+            this.ResumeLayout(false);
 
         }
 

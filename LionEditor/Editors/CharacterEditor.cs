@@ -70,25 +70,24 @@ namespace LionEditor
                 return;
             }
             this.SuspendLayout();
-            // HACK: find a better way to do this
             ignoreChanges = true;
             unavailableCheckbox.Checked = character.OnProposition;
-            rightHandCombo.SelectedIndex = (rightHandCombo.DataSource as List<Item>).IndexOf( character.RightHand );
-            rightShieldCombo.SelectedIndex = (rightShieldCombo.DataSource as List<Item>).IndexOf( character.RightShield );
-            leftHandCombo.SelectedIndex = (leftHandCombo.DataSource as List<Item>).IndexOf( character.LeftHand );
-            leftShieldCombo.SelectedIndex = (leftShieldCombo.DataSource as List<Item>).IndexOf( character.LeftShield );
-            accessoryCombo.SelectedIndex = (accessoryCombo.DataSource as List<Item>).IndexOf( character.Accessory );
-            headCombo.SelectedIndex = (headCombo.DataSource as List<Item>).IndexOf( character.Head );
-            bodyCombo.SelectedIndex = (bodyCombo.DataSource as List<Item>).IndexOf( character.Body );
+            rightHandCombo.SelectedItem = character.RightHand;
+            rightShieldCombo.SelectedItem = character.RightShield;
+            leftHandCombo.SelectedItem = character.LeftHand;
+            leftShieldCombo.SelectedItem = character.LeftShield;
+            accessoryCombo.SelectedItem = character.Accessory;
+            headCombo.SelectedItem = character.Head;
+            bodyCombo.SelectedItem = character.Body;
 
             this.braverySpinner.Value = character.Bravery;
             this.experienceSpinner.Value = character.Experience;
             this.faithSpinner.Value = character.Faith;
             this.groupBox.Text = string.Format( "{0}", character.Index + 1 );
             this.classComboBox.SelectedItem = character.Job;
-            this.movementCombo.SelectedIndex = (movementCombo.DataSource as List<Ability>).IndexOf( character.MovementAbility );
-            this.reactionCombo.SelectedIndex = (reactionCombo.DataSource as List<Ability>).IndexOf( character.ReactAbility );
-            this.supportCombo.SelectedIndex = (supportCombo.DataSource as List<Ability>).IndexOf( character.SupportAbility );
+            this.movementCombo.SelectedItem = character.MovementAbility;
+            this.reactionCombo.SelectedItem = character.ReactAbility;
+            this.supportCombo.SelectedItem = character.SupportAbility;
             this.nameTextBox.Text = character.Name;
 
             this.secondaryCombo.SelectedItem = character.SecondaryAction;
@@ -362,19 +361,22 @@ namespace LionEditor
             classComboBox.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    character.Job = (Class)classComboBox.SelectedItem;
-                    ignoreChanges = true;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateMAValue();
-                    UpdatePAValue();
-                    UpdateCEV();
-                    UpdateHPValue();
-                    UpdateMPValue();
-                    UpdateSkillLabel();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        character.Job = (Class)classComboBox.SelectedItem;
+                        ignoreChanges = true;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateMAValue();
+                        UpdatePAValue();
+                        UpdateCEV();
+                        UpdateHPValue();
+                        UpdateMPValue();
+                        UpdateSkillLabel();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             nameTextBox.Validated +=
                 delegate( object sender, EventArgs e )
@@ -478,123 +480,144 @@ namespace LionEditor
             rightHandCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.RightHand = (Item)rightHandCombo.SelectedItem;
-                    UpdateRightWeapon();
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateHPValue();
-                    UpdatePAValue();
-                    UpdateMAValue();
-                    UpdateMPValue();
-                    UpdateSEV();
-                    UpdateAEV();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.RightHand = (Item)rightHandCombo.SelectedItem;
+                        UpdateRightWeapon();
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateHPValue();
+                        UpdatePAValue();
+                        UpdateMAValue();
+                        UpdateMPValue();
+                        UpdateSEV();
+                        UpdateAEV();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             rightShieldCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.RightShield = (Item)rightShieldCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateHPValue();
-                    UpdatePAValue();
-                    UpdateMAValue();
-                    UpdateMPValue();
-                    UpdateSEV();
-                    UpdateAEV();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.RightShield = (Item)rightShieldCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateHPValue();
+                        UpdatePAValue();
+                        UpdateMAValue();
+                        UpdateMPValue();
+                        UpdateSEV();
+                        UpdateAEV();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             leftHandCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.LeftHand = (Item)leftHandCombo.SelectedItem;
-                    UpdateLeftWeapon();
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateHPValue();
-                    UpdatePAValue();
-                    UpdateMAValue();
-                    UpdateMPValue();
-                    UpdateSEV();
-                    UpdateAEV();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.LeftHand = (Item)leftHandCombo.SelectedItem;
+                        UpdateLeftWeapon();
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateHPValue();
+                        UpdatePAValue();
+                        UpdateMAValue();
+                        UpdateMPValue();
+                        UpdateSEV();
+                        UpdateAEV();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             leftShieldCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.LeftShield = (Item)leftShieldCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateHPValue();
-                    UpdatePAValue();
-                    UpdateMAValue();
-                    UpdateMPValue();
-                    UpdateSEV();
-                    UpdateAEV();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.LeftShield = (Item)leftShieldCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateHPValue();
+                        UpdatePAValue();
+                        UpdateMAValue();
+                        UpdateMPValue();
+                        UpdateSEV();
+                        UpdateAEV();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             headCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.Head = (Item)headCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateHPValue();
-                    UpdatePAValue();
-                    UpdateMAValue();
-                    UpdateMPValue();
-                    UpdateSEV();
-                    UpdateAEV();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.Head = (Item)headCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateHPValue();
+                        UpdatePAValue();
+                        UpdateMAValue();
+                        UpdateMPValue();
+                        UpdateSEV();
+                        UpdateAEV();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             bodyCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.Body = (Item)bodyCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateHPValue();
-                    UpdatePAValue();
-                    UpdateMAValue();
-                    UpdateMPValue();
-                    UpdateSEV();
-                    UpdateAEV();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.Body = (Item)bodyCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateHPValue();
+                        UpdatePAValue();
+                        UpdateMAValue();
+                        UpdateMPValue();
+                        UpdateSEV();
+                        UpdateAEV();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             accessoryCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.Accessory = (Item)accessoryCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateSPValue();
-                    UpdateHPValue();
-                    UpdatePAValue();
-                    UpdateMAValue();
-                    UpdateMPValue();
-                    UpdateSEV();
-                    UpdateAEV();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.Accessory = (Item)accessoryCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateSPValue();
+                        UpdateHPValue();
+                        UpdatePAValue();
+                        UpdateMAValue();
+                        UpdateMPValue();
+                        UpdateSEV();
+                        UpdateAEV();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             secondaryCombo.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
@@ -605,35 +628,44 @@ namespace LionEditor
             reactionCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.ReactAbility = (Ability)reactionCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateHPValue();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.ReactAbility = (Ability)reactionCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateHPValue();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             supportCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.SupportAbility = (Ability)supportCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateHPValue();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.SupportAbility = (Ability)supportCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateHPValue();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
             movementCombo.SelectedValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
-                    ignoreChanges = true;
-                    character.MovementAbility = (Ability)movementCombo.SelectedItem;
-                    UpdateMove();
-                    UpdateJump();
-                    UpdateHPValue();
-                    ignoreChanges = false;
-                    FireDataChangedEvent();
+                    if (!ignoreChanges)
+                    {
+                        ignoreChanges = true;
+                        character.MovementAbility = (Ability)movementCombo.SelectedItem;
+                        UpdateMove();
+                        UpdateJump();
+                        UpdateHPValue();
+                        ignoreChanges = false;
+                        FireDataChangedEvent();
+                    }
                 };
 
         }
@@ -664,9 +696,13 @@ namespace LionEditor
 
         private void FireDataChangedEvent()
         {
-            if( DataChangedEvent != null )
+            if (!ignoreChanges)
             {
-                DataChangedEvent( this, EventArgs.Empty );
+                character.ClearDummy();
+                if (DataChangedEvent != null)
+                {
+                    DataChangedEvent(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -698,36 +734,32 @@ namespace LionEditor
             ComboBox[] itemCombos = new ComboBox[] { rightHandCombo, rightShieldCombo, leftHandCombo, leftShieldCombo, headCombo, bodyCombo, accessoryCombo };
             foreach( ComboBox c in itemCombos )
             {
+                c.BindingContext = new BindingContext();
+                c.DataSource = Item.ItemList;
                 c.DisplayMember = "String";
                 c.ValueMember = "Offset";
-                c.DataSource = Item.ItemList;
                 c.Validating += ComboBoxValidating;
-
-                //c.DropDownWidth = GetIdealDropDownWidth( Item.ItemList, c, 0 );
             }
 
             secondaryCombo.DisplayMember = "String";
             secondaryCombo.ValueMember = "Byte";
+            secondaryCombo.BindingContext = new BindingContext();
             secondaryCombo.DataSource = SecondaryAction.ActionList;
-            //secondaryCombo.DropDownWidth = GetIdealDropDownWidth( SecondaryAction.ActionList, secondaryCombo, 0 );
 
             ComboBox[] abilityCombos = new ComboBox[] { movementCombo, reactionCombo, supportCombo };
             foreach( ComboBox a in abilityCombos )
             {
+                a.BindingContext = new BindingContext();
                 a.DisplayMember = "String";
                 a.ValueMember = "Value";
                 a.DataSource = Ability.AbilityList;
-                //a.DropDownWidth = GetIdealDropDownWidth( Ability.AbilityList, a, 0 );
             }
 
             classComboBox.DataSource = Class.ClassList;
-            //classComboBox.DropDownWidth = GetIdealDropDownWidth( Class.ClassList, classComboBox, 0 );
 
             zodiacComboBox.DataSource = Enum.GetValues( typeof( Zodiac ) );
-            //zodiacComboBox.DropDownWidth = GetIdealDropDownWidth( Enum.GetValues( typeof( Zodiac ) ), zodiacComboBox, 0 );
 
             spriteSetCombo.DataSource = SpriteSet.AllSprites;
-            //spriteSetCombo.DropDownWidth = GetIdealDropDownWidth( SpriteSet.AllSprites, spriteSetCombo, 0 );
 
             genderComboBox.DataSource = Enum.GetValues( typeof( Gender ) );
         }
@@ -744,5 +776,6 @@ namespace LionEditor
             UpdateView();
             SetupEvents();
         }
+
     }
 }

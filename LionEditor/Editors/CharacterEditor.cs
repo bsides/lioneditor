@@ -42,7 +42,7 @@ namespace LionEditor
         /// <summary>
         /// Gets or sets the character currently being edited
         /// </summary>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public Character Character
         {
             get { return character; }
@@ -65,7 +65,7 @@ namespace LionEditor
         /// </summary>
         private void UpdateView()
         {
-            if (character == null)
+            if( character == null )
             {
                 return;
             }
@@ -84,7 +84,7 @@ namespace LionEditor
             this.braverySpinner.Value = character.Bravery;
             this.experienceSpinner.Value = character.Experience;
             this.faithSpinner.Value = character.Faith;
-            this.groupBox.Text = string.Format("{0}", character.Index + 1);
+            this.groupBox.Text = string.Format( "{0}", character.Index + 1 );
             this.classComboBox.SelectedItem = character.Job;
             this.movementCombo.SelectedIndex = (movementCombo.DataSource as List<Ability>).IndexOf( character.MovementAbility );
             this.reactionCombo.SelectedIndex = (reactionCombo.DataSource as List<Ability>).IndexOf( character.ReactAbility );
@@ -199,7 +199,7 @@ namespace LionEditor
         /// </summary>
         private void UpdateHPToolTip()
         {
-            string tip = string.Format( "Raw: {0}\nBase: {1}\nMultiplier: x{2}\nBonus: +{3}", character.RawHP, 
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nMultiplier: x{2}\nBonus: +{3}", character.RawHP,
                 character.Job.ActualHP( character.RawHP ), character.HPMultiplier, character.HPBonus );
             toolTip.SetToolTip( hpSpinner, tip );
             foreach( Control c in hpSpinner.Controls )
@@ -225,7 +225,7 @@ namespace LionEditor
         /// </summary>
         private void UpdateMPToolTip()
         {
-            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMP, 
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMP,
                 character.Job.ActualMP( character.RawMP ), character.MPBonus );
             toolTip.SetToolTip( mpSpinner, tip );
             foreach( Control c in mpSpinner.Controls )
@@ -251,7 +251,7 @@ namespace LionEditor
         /// </summary>
         private void UpdateSpeedToolTip()
         {
-            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawSP, 
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawSP,
                 character.Job.ActualSP( character.RawSP ), character.SpeedBonus );
             toolTip.SetToolTip( speedSpinner, tip );
             foreach( Control c in speedSpinner.Controls )
@@ -277,8 +277,8 @@ namespace LionEditor
         /// </summary>
         private void UpdateMAToolTip()
         {
-            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMA, 
-                character.Job.ActualMA( character.RawMA ), character.MABonus )
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawMA,
+                character.Job.ActualMA( character.RawMA ), character.MABonus );
             toolTip.SetToolTip( maSpinner, tip );
             foreach( Control c in speedSpinner.Controls )
             {
@@ -303,8 +303,8 @@ namespace LionEditor
         /// </summary>
         private void UpdatePAToolTip()
         {
-            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawPA, 
-                character.Job.ActualPA( character.RawPA ), character.PABonus )
+            string tip = string.Format( "Raw: {0}\nBase: {1}\nBonus: +{2}", character.RawPA,
+                character.Job.ActualPA( character.RawPA ), character.PABonus );
             toolTip.SetToolTip( paSpinner, tip );
             foreach( Control c in speedSpinner.Controls )
             {
@@ -328,14 +328,14 @@ namespace LionEditor
         {
             // TODO: make these delegates not anonymous
             killsSpinner.ValueChanged +=
-                delegate(object sender, EventArgs e)
+                delegate( object sender, EventArgs e )
                 {
                     character.Kills = (byte)killsSpinner.Value;
                     FireDataChangedEvent();
                 };
 
             randomNameButton.Click +=
-                delegate(object sender, EventArgs e)
+                delegate( object sender, EventArgs e )
                 {
                     string s = character.GetRandomName();
                     nameTextBox.Text = s;

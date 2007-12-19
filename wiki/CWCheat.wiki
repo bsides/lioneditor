@@ -1,10 +1,21 @@
 #summary Some CWCheat codes I've found
 
-===Debug code===
+===World debug code===
 {{{
 _C0 World Map Debug
 _L 0xD02A528C 0x20000000
 _L 0x002A528C 0x00000006
 }}}
-This is the same as the debug code for the Playstation version. The battle selector doesn't seem to work right, though: whenever the battle starts it always tells me Game Over and I get sent back to the map.
+This works the same as the [http://www.gamefaqs.com/console/psx/file/197339/3878 debug code] for the Playstation version. 
+To use it, enable the code in CWCheat, press triangle while on the map, and the cursor should be pointing to an option below "Options".
 
+The battle selector doesn't seem to work right, though: whenever the battle starts it always tells me Game Over and I get sent back to the map.
+
+===Battle debug code===
+{{{
+_C0 Battle debug
+_L 0xD0298BBC 0x20000000
+_L 0x00298BBC 0x00000003
+}}}
+This works the same as the code for the Playstation version. You can edit the stats of any unit in the battle with this code. 
+To use it, enable the code in CWCheat, press triangle while the cursor is on an empty square in battle. The menu should come up with the cursor pointing to the empty spot below "Options"

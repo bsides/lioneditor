@@ -19,3 +19,41 @@ _L 0x00298BBC 0x00000003
 }}}
 This works the same as the code for the Playstation version. You can edit the stats of any unit in the battle with this code. 
 To use it, enable the code in CWCheat, press triangle while the cursor is on an empty square in battle. The menu should come up with the cursor pointing to the empty spot below "Options"
+
+===Hard mode===
+{{{
+_C0 Hard mode
+_L 0x80AE5D57 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE5F3F 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE6127 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE630F 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE64F7 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE66DF 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE68C7 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE6AAF 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE6C97 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE6E7F 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE7067 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE724F 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE7437 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE761F 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE7807 0x00420001
+_L 0x000000FF 0x00000000
+_L 0x80AE79EF 0x00420001
+_L 0x000000FF 0x00000000
+}}}
+Causes all enemy units to master their jobs. Adapted from [http://neoweird.tripod.com/gameshark/Hard_Mode.html NeoWeird's hard mode code].

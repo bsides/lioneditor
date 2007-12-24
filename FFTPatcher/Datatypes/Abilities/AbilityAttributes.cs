@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FFTPatcher.Datatypes
 {
@@ -57,7 +55,7 @@ namespace FFTPatcher.Datatypes
         public string Name { get; private set; }
         public UInt16 Offset { get; private set; }
 
-        public AbilityAttributes(string name, UInt16 offset, SubArray<byte> second)
+        public AbilityAttributes( string name, UInt16 offset, SubArray<byte> second )
         {
             Name = name;
             Offset = offset;
@@ -65,23 +63,23 @@ namespace FFTPatcher.Datatypes
             Range = second[0];
             Effect = second[1];
             Vertical = second[2];
-            Utilities.CopyByteToBooleans(second[3],
-                ref Blank6, ref Blank7, ref WeaponRange, ref VerticalFixed, ref VerticalTolerance, ref WeaponStrike, ref Auto, ref TargetSelf);
+            Utilities.CopyByteToBooleans( second[3],
+                ref Blank6, ref Blank7, ref WeaponRange, ref VerticalFixed, ref VerticalTolerance, ref WeaponStrike, ref Auto, ref TargetSelf );
             TargetSelf = !TargetSelf;
-            Utilities.CopyByteToBooleans(second[4],
-                ref HitEnemies, ref HitAllies, ref Blank8, ref FollowTarget, ref RandomFire, ref LinearAttack, ref ThreeDirections, ref HitCaster);
+            Utilities.CopyByteToBooleans( second[4],
+                ref HitEnemies, ref HitAllies, ref Blank8, ref FollowTarget, ref RandomFire, ref LinearAttack, ref ThreeDirections, ref HitCaster );
             HitEnemies = !HitEnemies;
             FollowTarget = !FollowTarget;
             HitAllies = !HitAllies;
             HitCaster = !HitCaster;
-            Utilities.CopyByteToBooleans(second[5],
-                ref Reflect, ref Arithmetick, ref Silence, ref Mimic, ref NormalAttack, ref Perservere, ref ShowQuote, ref Unknown5);
+            Utilities.CopyByteToBooleans( second[5],
+                ref Reflect, ref Arithmetick, ref Silence, ref Mimic, ref NormalAttack, ref Perservere, ref ShowQuote, ref Unknown5 );
             Silence = !Silence;
             Mimic = !Mimic;
-            Utilities.CopyByteToBooleans(second[6],
-                ref CounterFlood, ref CounterMagic, ref Direct, ref Shirahadori, ref RequiresSword, ref RequiresMateriaBlade, ref Evadeable, ref Targeting);
+            Utilities.CopyByteToBooleans( second[6],
+                ref CounterFlood, ref CounterMagic, ref Direct, ref Shirahadori, ref RequiresSword, ref RequiresMateriaBlade, ref Evadeable, ref Targeting );
             Targeting = !Targeting;
-            Elements = new Elements(second[7]);
+            Elements = new Elements( second[7] );
 
             Formula = second[8];
             X = second[9];
@@ -97,10 +95,10 @@ namespace FFTPatcher.Datatypes
             result[0] = Range;
             result[1] = Effect;
             result[2] = Vertical;
-            result[3] = Utilities.ByteFromBooleans(Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, !TargetSelf);
-            result[4] = Utilities.ByteFromBooleans(!HitEnemies, !HitAllies, Blank8, !FollowTarget, RandomFire, LinearAttack, ThreeDirections, !HitCaster);
-            result[5] = Utilities.ByteFromBooleans(Reflect, Arithmetick, !Silence, !Mimic, NormalAttack, Perservere, ShowQuote, Unknown5);
-            result[6] = Utilities.ByteFromBooleans(CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade, Evadeable, !Targeting);
+            result[3] = Utilities.ByteFromBooleans( Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, !TargetSelf );
+            result[4] = Utilities.ByteFromBooleans( !HitEnemies, !HitAllies, Blank8, !FollowTarget, RandomFire, LinearAttack, ThreeDirections, !HitCaster );
+            result[5] = Utilities.ByteFromBooleans( Reflect, Arithmetick, !Silence, !Mimic, NormalAttack, Perservere, ShowQuote, Unknown5 );
+            result[6] = Utilities.ByteFromBooleans( CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade, Evadeable, !Targeting );
             result[7] = Elements.ToByte();
             result[8] = Formula;
             result[9] = X;

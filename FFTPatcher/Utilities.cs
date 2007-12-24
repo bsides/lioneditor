@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 
 namespace FFTPatcher
 {
     public static class Utilities
     {
-        public static byte ByteFromBooleans(bool msb, bool six, bool five, bool four, bool three, bool two, bool one, bool lsb)
+        public static byte ByteFromBooleans( bool msb, bool six, bool five, bool four, bool three, bool two, bool one, bool lsb )
         {
             bool[] flags = new bool[] { lsb, one, two, three, four, five, six, msb };
             byte result = 0;
 
-            for (int i = 0; i < 8; i++)
+            for( int i = 0; i < 8; i++ )
             {
-                if (flags[i])
+                if( flags[i] )
                 {
                     result |= (byte)(1 << i);
                 }
@@ -26,10 +24,10 @@ namespace FFTPatcher
         /// <summary>
         /// Creates an array of booleans from a byte. Index 0 in the array is the least significant bit.
         /// </summary>
-        public static bool[] BooleansFromByte(byte b)
+        public static bool[] BooleansFromByte( byte b )
         {
             bool[] result = new bool[8];
-            for (int i = 0; i < 8; i++)
+            for( int i = 0; i < 8; i++ )
             {
                 result[i] = ((b >> i) & 0x01) > 0;
             }
@@ -40,10 +38,10 @@ namespace FFTPatcher
         /// <summary>
         /// Creates an array of booleans from a byte. Index 0 in the array is the most significant bit.
         /// </summary>
-        public static bool[] BooleansFromByteMSB(byte b)
+        public static bool[] BooleansFromByteMSB( byte b )
         {
             bool[] result = new bool[8];
-            for (int i = 0; i < 8; i++)
+            for( int i = 0; i < 8; i++ )
             {
                 result[i] = ((b >> (7 - i)) & 0x01) > 0;
             }
@@ -51,7 +49,7 @@ namespace FFTPatcher
             return result;
         }
 
-        public static void CopyBoolArrayToBooleans(bool[] bools, 
+        public static void CopyBoolArrayToBooleans( bool[] bools,
             ref bool msb,
             ref bool six,
             ref bool five,
@@ -59,7 +57,7 @@ namespace FFTPatcher
             ref bool three,
             ref bool two,
             ref bool one,
-            ref bool lsb)
+            ref bool lsb )
         {
             lsb = bools[0];
             one = bools[1];
@@ -71,7 +69,7 @@ namespace FFTPatcher
             msb = bools[7];
         }
 
-        public static void CopyByteToBooleans(byte b,
+        public static void CopyByteToBooleans( byte b,
             ref bool msb,
             ref bool six,
             ref bool five,
@@ -79,12 +77,12 @@ namespace FFTPatcher
             ref bool three,
             ref bool two,
             ref bool one,
-            ref bool lsb)
+            ref bool lsb )
         {
-            CopyBoolArrayToBooleans(BooleansFromByte(b), ref msb, ref six, ref five, ref four, ref three, ref two, ref one, ref lsb);
+            CopyBoolArrayToBooleans( BooleansFromByte( b ), ref msb, ref six, ref five, ref four, ref three, ref two, ref one, ref lsb );
         }
 
-        public static UInt16 BytesToUShort(byte lsb, byte msb)
+        public static UInt16 BytesToUShort( byte lsb, byte msb )
         {
             UInt16 result = 0;
             result += lsb;
@@ -92,28 +90,28 @@ namespace FFTPatcher
             return result;
         }
 
-        public static bool GetFlag(object o, string name)
+        public static bool GetFlag( object o, string name )
         {
-            return GetFieldOrProperty<bool>(o, name);
+            return GetFieldOrProperty<bool>( o, name );
         }
 
-        public static void SetFlag(object o, string name, bool newValue)
+        public static void SetFlag( object o, string name, bool newValue )
         {
-            SetFieldOrProperty(o, name, newValue);
+            SetFieldOrProperty( o, name, newValue );
         }
 
-        public static T GetFieldOrProperty<T>(object target, string name)
+        public static T GetFieldOrProperty<T>( object target, string name )
         {
-            PropertyInfo pi = target.GetType().GetProperty(name);
-            FieldInfo fi = target.GetType().GetField(name);
+            PropertyInfo pi = target.GetType().GetProperty( name );
+            FieldInfo fi = target.GetType().GetField( name );
 
-            if (pi != null)
+            if( pi != null )
             {
-                return (T)pi.GetValue(target, null);
+                return (T)pi.GetValue( target, null );
             }
-            else if (fi != null)
+            else if( fi != null )
             {
-                return (T)fi.GetValue(target);
+                return (T)fi.GetValue( target );
             }
             else
             {
@@ -121,17 +119,17 @@ namespace FFTPatcher
             }
         }
 
-        public static void SetFieldOrProperty(object target, string name, object newValue)
+        public static void SetFieldOrProperty( object target, string name, object newValue )
         {
-            PropertyInfo pi = target.GetType().GetProperty(name);
-            FieldInfo fi = target.GetType().GetField(name);
-            if (pi != null)
+            PropertyInfo pi = target.GetType().GetProperty( name );
+            FieldInfo fi = target.GetType().GetField( name );
+            if( pi != null )
             {
-                pi.SetValue(target, newValue, null);
+                pi.SetValue( target, newValue, null );
             }
-            else if (fi != null)
+            else if( fi != null )
             {
-                fi.SetValue(target, newValue);
+                fi.SetValue( target, newValue );
             }
             else
             {
@@ -139,7 +137,7 @@ namespace FFTPatcher
             }
         }
 
-        public static byte[] UShortToBytes(UInt16 value)
+        public static byte[] UShortToBytes( UInt16 value )
         {
             byte[] result = new byte[2];
             result[0] = (byte)(value & 0xFF);

@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
-using FFTPatcher.Datatypes.Job;
 using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
@@ -14,20 +9,20 @@ namespace FFTPatcher.Editors
     {
         private Job job;
         private bool ignoreChanges;
-        private List<NumericUpDown> spinners;
-        private List<ComboBox> comboBoxes;
+        private NumericUpDown[] spinners;
+        private ComboBox[] comboBoxes;
 
         public Job Job
         {
             get { return job; }
             set
             {
-                if (value == null)
+                if( value == null )
                 {
                     this.Enabled = false;
                     job = null;
                 }
-                else if (job != value)
+                else if( job != value )
                 {
                     job = value;
                     this.Enabled = true;
@@ -40,13 +35,13 @@ namespace FFTPatcher.Editors
         public JobEditor()
         {
             InitializeComponent();
-            spinners = new List<NumericUpDown>(new NumericUpDown[] {
+            spinners = new NumericUpDown[] {
                 hpGrowthSpinner, hpMultiplierSpinner, mpGrowthSpinner, mpMultiplierSpinner,
                 speedGrowthSpinner, speedMultiplierSpinner, paGrowthSpinner, paMultiplierSpinner,
                 maGrowthSpinner, maMultiplierSpinner, moveSpinner, jumpSpinner,
-                cevSpinner, mPortraitSpinner, mPaletteSpinner, mGraphicSpinner});
-            comboBoxes = new List<ComboBox>(new ComboBox[] {
-                skillsetComboBox, innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox});
+                cevSpinner, mPortraitSpinner, mPaletteSpinner, mGraphicSpinner };
+            comboBoxes = new ComboBox[] {
+                skillsetComboBox, innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox };
 
             skillsetComboBox.DataSource = SkillSet.DummySkillSets;
             innateAComboBox.BindingContext = new BindingContext();
@@ -58,31 +53,31 @@ namespace FFTPatcher.Editors
             innateDComboBox.BindingContext = new BindingContext();
             innateDComboBox.DataSource = AllAbilities.DummyAbilities;
 
-            foreach (NumericUpDown spinner in spinners)
+            foreach( NumericUpDown spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
-            foreach (ComboBox comboBox in comboBoxes)
+            foreach( ComboBox comboBox in comboBoxes )
             {
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
         }
 
-        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
-            if (!ignoreChanges)
+            if( !ignoreChanges )
             {
                 ComboBox c = sender as ComboBox;
-                Utilities.SetFieldOrProperty(job, c.Tag.ToString(), c.SelectedItem);
+                Utilities.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
             }
         }
-        
-        private void spinner_ValueChanged(object sender, EventArgs e)
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
         {
-            if (!ignoreChanges)
+            if( !ignoreChanges )
             {
                 NumericUpDown spinner = sender as NumericUpDown;
-                Utilities.SetFieldOrProperty(job, spinner.Tag.ToString(), (byte)spinner.Value);
+                Utilities.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
 
@@ -100,9 +95,9 @@ namespace FFTPatcher.Editors
             startingStatusesEditor.SuspendLayout();
 
             skillsetComboBox.SelectedItem = job.SkillSet;
-            foreach (NumericUpDown s in spinners)
+            foreach( NumericUpDown s in spinners )
             {
-                s.Value = Utilities.GetFieldOrProperty<byte>(job, s.Tag.ToString());
+                s.Value = Utilities.GetFieldOrProperty<byte>( job, s.Tag.ToString() );
             }
             innateAComboBox.SelectedItem = job.InnateA;
             innateBComboBox.SelectedItem = job.InnateB;

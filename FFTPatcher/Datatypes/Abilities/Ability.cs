@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FFTPatcher.Datatypes
 {
@@ -46,7 +44,7 @@ namespace FFTPatcher.Datatypes
 
         #region Properties
 
-        #region Common 
+        #region Common
 
         public string Name { get; private set; }
         public UInt16 Offset { get; private set; }
@@ -60,7 +58,7 @@ namespace FFTPatcher.Datatypes
 
         public AbilityType AbilityType { get; set; }
         public AIFlags AIFlags { get; private set; }
-        
+
         #region AI flags
 
         public bool AIHP { get { return AIFlags.HP; } set { AIFlags.HP = value; } }
@@ -118,7 +116,7 @@ namespace FFTPatcher.Datatypes
         public UInt16 ItemOffset
         {
             get { return Item.Offset; }
-            set { Item = Item.GetItemAtOffset(value); }
+            set { Item = Item.GetItemAtOffset( value ); }
         }
         public Item Item { get; set; }
 
@@ -165,34 +163,34 @@ namespace FFTPatcher.Datatypes
 
         #endregion
 
-        public Ability(string name, UInt16 offset)
+        public Ability( string name, UInt16 offset )
         {
             Name = name;
             Offset = offset;
         }
 
-        private Ability(string name, UInt16 offset, SubArray<byte> first)
+        private Ability( string name, UInt16 offset, SubArray<byte> first )
         {
             Name = name;
             Offset = offset;
-            JPCost = Utilities.BytesToUShort(first[0], first[1]);
+            JPCost = Utilities.BytesToUShort( first[0], first[1] );
             LearnRate = first[2];
 
             bool dummy = false;
-            Utilities.CopyByteToBooleans(first[3], 
-                ref learnWithJP, ref action, ref learnOnHit, ref blank1, ref dummy, ref dummy, ref dummy, ref dummy);
+            Utilities.CopyByteToBooleans( first[3],
+                ref learnWithJP, ref action, ref learnOnHit, ref blank1, ref dummy, ref dummy, ref dummy, ref dummy );
             learnWithJP = !learnWithJP;
 
             AbilityType = (AbilityType)(first[3] & 0x0F);
 
-            AIFlags = new AIFlags(new SubArray<byte>(first, 4, 6));
+            AIFlags = new AIFlags( new SubArray<byte>( first, 4, 6 ) );
 
-            Utilities.CopyByteToBooleans(first[7], 
-                ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4);
+            Utilities.CopyByteToBooleans( first[7],
+                ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
         }
 
-        public Ability(string name, UInt16 offset, SubArray<byte> first, SubArray<byte> second)
-            : this(name, offset, first)
+        public Ability( string name, UInt16 offset, SubArray<byte> first, SubArray<byte> second )
+            : this( name, offset, first )
         {
             IsNormal = ((offset >= 0x000) && (offset <= 0x16F));
             IsItem = ((offset >= 0x170) && (offset <= 0x17D));
@@ -202,33 +200,33 @@ namespace FFTPatcher.Datatypes
             IsArithmetick = ((offset >= 0x19E) && (offset <= 0x1A5));
             IsOther = (offset >= 0x1A6);
 
-            if (IsNormal)
+            if( IsNormal )
             {
-                Attributes = new AbilityAttributes(name, offset, second);
+                Attributes = new AbilityAttributes( name, offset, second );
             }
-            if (IsItem)
+            if( IsItem )
             {
                 ItemOffset = second[0];
             }
-            if (IsThrowing)
+            if( IsThrowing )
             {
                 Throwing = (ItemSubType)second[0];
             }
-            if (IsJumping)
+            if( IsJumping )
             {
                 JumpHorizontal = second[0];
                 JumpVertical = second[1];
             }
-            if (IsCharging)
+            if( IsCharging )
             {
                 ChargeCT = second[0];
                 ChargeBonus = second[1];
             }
-            if (IsArithmetick)
+            if( IsArithmetick )
             {
                 ArithmetickSkill = second[0];
             }
-            if (IsOther)
+            if( IsOther )
             {
                 OtherID = second[0];
             }
@@ -240,23 +238,30 @@ namespace FFTPatcher.Datatypes
             result[0] = (byte)(JPCost & 0xFF);
             result[1] = (byte)(JPCost >> 8);
             result[2] = LearnRate;
-            result[3] = Utilities.ByteFromBooleans(!learnWithJP, action, learnOnHit, blank1, false, false, false, false);
+            result[3] = Utilities.ByteFromBooleans( !learnWithJP, action, learnOnHit, blank1, false, false, false, false );
             result[3] |= (byte)AbilityType;
-            Array.Copy(AIFlags.ToByteArray(), 0, result, 4, 3);
-            result[7] = Utilities.ByteFromBooleans(unknown1, unknown2, unknown3, blank2, blank3, blank4, blank5, unknown4);
+            Array.Copy( AIFlags.ToByteArray(), 0, result, 4, 3 );
+            result[7] = Utilities.ByteFromBooleans( unknown1, unknown2, unknown3, blank2, blank3, blank4, blank5, unknown4 );
 
             return result;
         }
 
         public byte[] ToSecondByteArray()
         {
-            if (IsNormal) return Attributes.ToByteArray();
-            if (IsItem) return new byte[] { Item.ToByteArray()[0] };
-            if (IsThrowing) return new byte[] { (byte)Throwing };
-            if (IsJumping) return new byte[] { JumpHorizontal, JumpVertical };
-            if (IsCharging) return new byte[] { ChargeCT, ChargeBonus };
-            if (IsArithmetick) return new byte[] { ArithmetickSkill };
-            if (IsOther) return new byte[] { OtherID };
+            if( IsNormal )
+                return Attributes.ToByteArray();
+            if( IsItem )
+                return new byte[] { Item.ToByteArray()[0] };
+            if( IsThrowing )
+                return new byte[] { (byte)Throwing };
+            if( IsJumping )
+                return new byte[] { JumpHorizontal, JumpVertical };
+            if( IsCharging )
+                return new byte[] { ChargeCT, ChargeBonus };
+            if( IsArithmetick )
+                return new byte[] { ArithmetickSkill };
+            if( IsOther )
+                return new byte[] { OtherID };
             return null;
         }
 

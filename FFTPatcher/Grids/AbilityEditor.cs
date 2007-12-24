@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
+using System.Reflection;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using System.Reflection;
 
 namespace FFTPatcher.Grids
 {
@@ -19,12 +14,13 @@ namespace FFTPatcher.Grids
             InitializeComponent();
         }
 
-        public AbilityEditor(Ability a):this()
+        public AbilityEditor( Ability a )
+            : this()
         {
             ability = a;
 
             NameLabel.Text = a.Name;
-            Offset.Text = a.Offset.ToString("0x{04X}");
+            Offset.Text = a.Offset.ToString( "0x{04X}" );
 
             JPCost.Value = a.JPCost;
             JPCost.ValueChanged += JPCost_ValueChanged;
@@ -32,60 +28,60 @@ namespace FFTPatcher.Grids
             LearnRate.Value = a.LearnRate;
             LearnRate.ValueChanged += LearnRate_ValueChanged;
 
-            AbilityType.DataSource = Enum.GetValues(a.AbilityType.GetType());
+            AbilityType.DataSource = Enum.GetValues( a.AbilityType.GetType() );
             AbilityType.SelectedItem = a.AbilityType;
             AbilityType.SelectedIndexChanged += AbilityType_SelectedIndexChanged;
 
-            foreach (Control c in this.Controls)
+            foreach( Control c in this.Controls )
             {
-                if (c is CheckBox)
+                if( c is CheckBox )
                 {
                     CheckBox cb = c as CheckBox;
-                    if (cb.Name.IndexOf("AI") == 0)
+                    if( cb.Name.IndexOf( "AI" ) == 0 )
                     {
-                        FieldInfo fi = typeof(AIFlags).GetField(cb.Name.Substring(2));
-                        bool b = (bool)fi.GetValue(a.AIFlags);
+                        FieldInfo fi = typeof( AIFlags ).GetField( cb.Name.Substring( 2 ) );
+                        bool b = (bool)fi.GetValue( a.AIFlags );
                         cb.Checked = b;
                     }
                     else
                     {
-                        FieldInfo fi = typeof(Ability).GetField(cb.Name);
-                        bool b = (bool)fi.GetValue(a);
+                        FieldInfo fi = typeof( Ability ).GetField( cb.Name );
+                        bool b = (bool)fi.GetValue( a );
                         cb.Checked = b;
                     }
 
-                    cb.CheckedChanged += new EventHandler(cb_CheckedChanged);
+                    cb.CheckedChanged += new EventHandler( cb_CheckedChanged );
                 }
             }
         }
 
-        private void AbilityType_SelectedIndexChanged(object sender, EventArgs e)
+        private void AbilityType_SelectedIndexChanged( object sender, EventArgs e )
         {
             ability.AbilityType = (AbilityType)AbilityType.Items[AbilityType.SelectedIndex];
         }
 
-        void LearnRate_ValueChanged(object sender, EventArgs e)
+        void LearnRate_ValueChanged( object sender, EventArgs e )
         {
             ability.LearnRate = (byte)LearnRate.Value;
         }
 
-        void JPCost_ValueChanged(object sender, EventArgs e)
+        void JPCost_ValueChanged( object sender, EventArgs e )
         {
             ability.JPCost = (UInt16)JPCost.Value;
         }
 
-        private void cb_CheckedChanged(object sender, EventArgs e)
+        private void cb_CheckedChanged( object sender, EventArgs e )
         {
             CheckBox cb = sender as CheckBox;
-            if (cb.Name.IndexOf("AI") == 0)
+            if( cb.Name.IndexOf( "AI" ) == 0 )
             {
-                FieldInfo fi = typeof(AIFlags).GetField(cb.Name.Substring(2));
-                fi.SetValue(ability.AIFlags, cb.Checked);
+                FieldInfo fi = typeof( AIFlags ).GetField( cb.Name.Substring( 2 ) );
+                fi.SetValue( ability.AIFlags, cb.Checked );
             }
             else
             {
-                FieldInfo fi = typeof(Ability).GetField(cb.Name);
-                fi.SetValue(ability, cb.Checked);
+                FieldInfo fi = typeof( Ability ).GetField( cb.Name );
+                fi.SetValue( ability, cb.Checked );
             }
         }
     }

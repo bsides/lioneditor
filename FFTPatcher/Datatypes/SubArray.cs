@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace FFTPatcher
+namespace FFTPatcher.Datatypes
 {
     public class SubArray<T> : ICollection<T>
     {
@@ -14,12 +13,12 @@ namespace FFTPatcher
         {
             get
             {
-                CheckIndex(index);
+                CheckIndex( index );
                 return baseArray[index + start];
             }
             set
             {
-                CheckIndex(index);
+                CheckIndex( index );
                 baseArray[index + start] = value;
             }
         }
@@ -29,22 +28,22 @@ namespace FFTPatcher
             get { return stop - start + 1; }
         }
 
-        public SubArray(SubArray<T> baseArray, int start, int stop)
-            : this(baseArray.baseArray, start + baseArray.start, stop + baseArray.start)
+        public SubArray( SubArray<T> baseArray, int start, int stop )
+            : this( baseArray.baseArray, start + baseArray.start, stop + baseArray.start )
         {
         }
 
-        public SubArray(IList<T> baseArray, int start, int stop)
+        public SubArray( IList<T> baseArray, int start, int stop )
         {
-            if (stop < start)
+            if( stop < start )
             {
                 throw new ArgumentException();
             }
-            if (stop > baseArray.Count - 1)
+            if( stop > baseArray.Count - 1 )
             {
                 throw new ArgumentException();
             }
-            if (start > baseArray.Count - 1)
+            if( start > baseArray.Count - 1 )
             {
                 throw new ArgumentException();
             }
@@ -54,14 +53,14 @@ namespace FFTPatcher
             this.baseArray = baseArray;
         }
 
-        public SubArray(IList<T> baseArray, int start)
-            : this(baseArray, start, baseArray.Count - 1)
+        public SubArray( IList<T> baseArray, int start )
+            : this( baseArray, start, baseArray.Count - 1 )
         {
         }
 
-        private void CheckIndex(int index)
+        private void CheckIndex( int index )
         {
-            if (index > (stop - start))
+            if( index > (stop - start) )
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -69,7 +68,7 @@ namespace FFTPatcher
 
         #region ICollection<T> Members
 
-        public void Add(T item)
+        public void Add( T item )
         {
         }
 
@@ -77,15 +76,15 @@ namespace FFTPatcher
         {
         }
 
-        public bool Contains(T item)
+        public bool Contains( T item )
         {
-            int index = baseArray.IndexOf(item);
+            int index = baseArray.IndexOf( item );
             return ((index != -1) && (index >= start) && (index <= stop));
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo( T[] array, int arrayIndex )
         {
-            for (int i = 0; i < Count; i++)
+            for( int i = 0; i < Count; i++ )
             {
                 array[i + arrayIndex] = baseArray[start + i];
             }
@@ -96,7 +95,7 @@ namespace FFTPatcher
             get { return false; }
         }
 
-        public bool Remove(T item)
+        public bool Remove( T item )
         {
             return false;
         }
@@ -107,7 +106,7 @@ namespace FFTPatcher
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new SubArrayEnumerator<T>(this);
+            return new SubArrayEnumerator<T>( this );
         }
 
         #endregion
@@ -116,7 +115,7 @@ namespace FFTPatcher
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new SubArrayEnumerator<T>(this);
+            return new SubArrayEnumerator<T>( this );
         }
 
         #endregion
@@ -126,7 +125,7 @@ namespace FFTPatcher
     {
         SubArray<T> array;
 
-        public SubArrayEnumerator(SubArray<T> array)
+        public SubArrayEnumerator( SubArray<T> array )
         {
             this.array = array;
         }
@@ -138,12 +137,12 @@ namespace FFTPatcher
         {
             get
             {
-                if ((currentIndex != -1) && (currentIndex < array.Count))
+                if( (currentIndex != -1) && (currentIndex < array.Count) )
                 {
                     return array[currentIndex];
                 }
 
-                return default(T);
+                return default( T );
             }
         }
 
@@ -163,7 +162,7 @@ namespace FFTPatcher
         {
             get
             {
-                if ((currentIndex != -1) && (currentIndex < array.Count))
+                if( (currentIndex != -1) && (currentIndex < array.Count) )
                 {
                     return array[currentIndex];
                 }
@@ -175,7 +174,7 @@ namespace FFTPatcher
         public bool MoveNext()
         {
             currentIndex++;
-            if (currentIndex >= array.Count)
+            if( currentIndex >= array.Count )
             {
                 currentIndex = array.Count;
                 return false;

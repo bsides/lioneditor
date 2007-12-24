@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
+﻿using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using FFTPatcher.Datatypes;
-using System.Reflection;
 
 namespace FFTPatcher.Editors
 {
     public partial class ElementsEditor : UserControl
     {
-        private Elements elements = new Elements(0);
+        private Elements elements = new Elements( 0 );
         public Elements Elements
         {
             get { return elements; }
             set
             {
-                if (value == null)
+                if( value == null )
                 {
                     elements = null;
                     this.Enabled = false;
                 }
-                else if (elements != value)
+                else if( elements != value )
                 {
                     elements = value;
                     this.Enabled = true;
@@ -45,13 +40,13 @@ namespace FFTPatcher.Editors
             elementsCheckedListBox.ItemCheck += elementsCheckedListBox_ItemCheck;
         }
 
-        private void elementsCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void elementsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
-            if (!ignoreChanges)
+            if( !ignoreChanges )
             {
                 string s = elementsCheckedListBox.Items[e.Index].ToString();
-                PropertyInfo pi = elements.GetType().GetProperty(s);
-                pi.SetValue(elements, e.NewValue == CheckState.Checked, null);
+                PropertyInfo pi = elements.GetType().GetProperty( s );
+                pi.SetValue( elements, e.NewValue == CheckState.Checked, null );
             }
         }
 
@@ -63,11 +58,11 @@ namespace FFTPatcher.Editors
             elementsCheckedListBox.SuspendLayout();
 
             ignoreChanges = true;
-            for (int i = 0; i < elementsCheckedListBox.Items.Count; i++)
+            for( int i = 0; i < elementsCheckedListBox.Items.Count; i++ )
             {
                 string s = elementsCheckedListBox.Items[i].ToString();
-                PropertyInfo pi = elements.GetType().GetProperty(s);
-                elementsCheckedListBox.SetItemChecked(i, (bool)pi.GetValue(elements, null));
+                PropertyInfo pi = elements.GetType().GetProperty( s );
+                elementsCheckedListBox.SetItemChecked( i, (bool)pi.GetValue( elements, null ) );
             }
             ignoreChanges = false;
 
@@ -96,12 +91,12 @@ namespace FFTPatcher.Editors
             {
             }
 
-            protected override void OnDrawItem(DrawItemEventArgs e)
+            protected override void OnDrawItem( DrawItemEventArgs e )
             {
                 Brush backColorBrush = Brushes.White;
                 Brush foreColorBrush = Brushes.Black;
 
-                switch ((Elements)e.Index)
+                switch( (Elements)e.Index )
                 {
                     case Elements.Fire:
                         backColorBrush = Brushes.Red;
@@ -140,16 +135,15 @@ namespace FFTPatcher.Editors
                         break;
                 }
 
-                e.Graphics.FillRectangle(backColorBrush, e.Bounds);
-                CheckBoxState state = this.GetItemChecked(e.Index) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
-                Size checkBoxSize = CheckBoxRenderer.GetGlyphSize(e.Graphics, state);
-                Point loc = new Point(1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1);
-                CheckBoxRenderer.DrawCheckBox(e.Graphics, new Point(loc.X + e.Bounds.X, loc.Y + e.Bounds.Y), state);
-                e.Graphics.DrawString(this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF(loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y));
+                e.Graphics.FillRectangle( backColorBrush, e.Bounds );
+                CheckBoxState state = this.GetItemChecked( e.Index ) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
+                Size checkBoxSize = CheckBoxRenderer.GetGlyphSize( e.Graphics, state );
+                Point loc = new Point( 1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1 );
+                CheckBoxRenderer.DrawCheckBox( e.Graphics, new Point( loc.X + e.Bounds.X, loc.Y + e.Bounds.Y ), state );
+                e.Graphics.DrawString( this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF( loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y ) );
             }
         }
 
         #endregion
     }
-
 }

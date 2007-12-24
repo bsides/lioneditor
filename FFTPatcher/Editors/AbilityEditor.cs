@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 
@@ -17,7 +13,7 @@ namespace FFTPatcher.Editors
             get { return ability; }
             set
             {
-                if (ability != value)
+                if( ability != value )
                 {
                     ability = value;
                     UpdateView();
@@ -79,22 +75,22 @@ namespace FFTPatcher.Editors
         public AbilityEditor()
         {
             InitializeComponent();
-            spinners = new List<NumericUpDown>(new NumericUpDown[] { 
-                arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner });
-            comboBoxes = new List<ComboBox>(new ComboBox[] { itemUseComboBox, throwingComboBox });
+            spinners = new List<NumericUpDown>( new NumericUpDown[] { 
+                arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner } );
+            comboBoxes = new List<ComboBox>( new ComboBox[] { itemUseComboBox, throwingComboBox } );
 
             itemUseComboBox.BindingContext = new BindingContext();
-            List<Item> validItems = new List<Item>(256);
-            foreach (Item i in Item.ItemList)
+            List<Item> validItems = new List<Item>( 256 );
+            foreach( Item i in Item.ItemList )
             {
-                if (i.Offset <= 0xFF)
+                if( i.Offset <= 0xFF )
                 {
-                    validItems.Add(i);
+                    validItems.Add( i );
                 }
             }
 
             itemUseComboBox.DataSource = validItems;
-            throwingComboBox.DataSource = Enum.GetValues(typeof(ItemSubType));
+            throwingComboBox.DataSource = Enum.GetValues( typeof( ItemSubType ) );
 
             arithmeticksSpinner.Tag = "ArithmetickSkill";
             ctSpinner.Tag = "ChargeCT";
@@ -104,31 +100,31 @@ namespace FFTPatcher.Editors
             itemUseComboBox.Tag = "Item";
             throwingComboBox.Tag = "Throwing";
 
-            foreach (NumericUpDown spinner in spinners)
+            foreach( NumericUpDown spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
-            foreach (ComboBox combo in comboBoxes)
+            foreach( ComboBox combo in comboBoxes )
             {
                 combo.SelectedIndexChanged += combo_SelectedIndexChanged;
             }
         }
 
-        private void combo_SelectedIndexChanged(object sender, EventArgs e)
+        private void combo_SelectedIndexChanged( object sender, EventArgs e )
         {
-            if (!ignoreChanges)
+            if( !ignoreChanges )
             {
                 ComboBox c = sender as ComboBox;
-                Utilities.SetFieldOrProperty(ability, c.Tag as string, c.SelectedItem);
+                Utilities.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
             }
         }
 
-        private void spinner_ValueChanged(object sender, EventArgs e)
+        private void spinner_ValueChanged( object sender, EventArgs e )
         {
-            if (!ignoreChanges)
+            if( !ignoreChanges )
             {
                 NumericUpDown c = sender as NumericUpDown;
-                Utilities.SetFieldOrProperty(ability, c.Tag as string, (byte)c.Value);
+                Utilities.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
             }
         }
     }

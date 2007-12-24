@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 using FFTPatcher.Properties;
-using FFTPatcher.Datatypes.Job;
 
 namespace FFTPatcher
 {

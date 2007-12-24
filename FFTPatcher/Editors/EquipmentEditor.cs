@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
-using FFTPatcher.Datatypes.Job;
+﻿using System.Windows.Forms;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
     public partial class EquipmentEditor : UserControl
     {
-        private static List<string> FieldNames = new List<string>(new string[] {
+        private static string[] FieldNames = new string[] {
             "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
             "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
             "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "HairAdornment", "Armor",
             "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume",
-            "Unknown1", "Unknown2", "Unknown3", "FellSword", "LipRouge", "Unknown6", "Unknown7", "Unknown8"});
+            "Unknown1", "Unknown2", "Unknown3", "FellSword", "LipRouge", "Unknown6", "Unknown7", "Unknown8"};
 
         private Equipment equipment;
         public Equipment Equipment

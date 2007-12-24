@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FFTPatcher.Datatypes
+﻿namespace FFTPatcher.Datatypes
 {
     public class Elements
     {
@@ -15,9 +11,9 @@ namespace FFTPatcher.Datatypes
         public bool Holy { get; set; }
         public bool Dark { get; set; }
 
-        public Elements(byte b)
+        public Elements( byte b )
         {
-            bool[] flags = Utilities.BooleansFromByte(b);
+            bool[] flags = Utilities.BooleansFromByte( b );
             Fire = flags[7];
             Lightning = flags[6];
             Ice = flags[5];
@@ -30,7 +26,7 @@ namespace FFTPatcher.Datatypes
 
         public byte ToByte()
         {
-            return Utilities.ByteFromBooleans(Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark);
+            return Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
         }
     }
 }

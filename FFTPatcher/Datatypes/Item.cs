@@ -19,13 +19,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using System.Xml;
-using System.Resources;
 using FFTPatcher.Properties;
 
-namespace FFTPatcher
+namespace FFTPatcher.Datatypes
 {
     public class Item : IComparable, IEquatable<Item>
     {
@@ -283,13 +281,13 @@ namespace FFTPatcher
 
         #region Utilities
 
-        public static Item GetItemAtOffset(int offset)
+        public static Item GetItemAtOffset( int offset )
         {
             Item i = ItemList.Find(
-                delegate(Item j)
+                delegate( Item j )
                 {
                     return j.Offset == offset;
-                });
+                } );
             return i;
         }
 
@@ -490,16 +488,16 @@ namespace FFTPatcher
         [Description( "Throwing" )]
         Throwing,
 
-        [Description("Bomb")]
+        [Description( "Bomb" )]
         Bomb,
 
-        [Description("Chemist Item")]
+        [Description( "Chemist Item" )]
         None,
 
-        [Description("Fell Sword")]
+        [Description( "Fell Sword" )]
         FellSword,
 
-        [Description("Lip Rouge")]
+        [Description( "Lip Rouge" )]
         LipRouge
     }
 }

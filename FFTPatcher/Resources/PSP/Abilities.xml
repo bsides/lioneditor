@@ -515,7 +515,7 @@
   <Ability value="494" name="Manafont" />
   <Ability value="495" name="Accrue EXP" />
   <Ability value="496" name="Accrue JP" />
-  <Ability value="497" name="&lt;Unknown&gt;" />
+  <Ability value="497" name="Cannot enter water" />
   <Ability value="498" name="Teleport" />
   <Ability value="499" name="Master Teleportation" />
   <Ability value="500" name="Ignore Weather" />

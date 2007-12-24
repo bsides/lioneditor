@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FFTPatcher
 {
-    public class SubArray<T>:ICollection<T>
+    public class SubArray<T> : ICollection<T>
     {
         private IList<T> baseArray;
         private int start;
@@ -71,12 +71,10 @@ namespace FFTPatcher
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
         }
 
         public bool Contains(T item)
@@ -100,7 +98,7 @@ namespace FFTPatcher
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         #endregion
@@ -193,5 +191,4 @@ namespace FFTPatcher
 
         #endregion
     }
-
 }

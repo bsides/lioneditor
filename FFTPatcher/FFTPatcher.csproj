@@ -39,13 +39,90 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Datatypes\AbilityAttributes.cs" />
-    <Compile Include="Datatypes\AllAbilities.cs" />
-    <Compile Include="Datatypes\Ability.cs" />
+    <Compile Include="Datatypes\Abilities\AbilityAttributes.cs" />
+    <Compile Include="Datatypes\Abilities\AllAbilities.cs" />
+    <Compile Include="Datatypes\Abilities\Ability.cs" />
     <Compile Include="Datatypes\AIFlags.cs" />
     <Compile Include="Datatypes\Context.cs" />
     <Compile Include="Datatypes\Elements.cs" />
+    <Compile Include="Datatypes\Item.cs" />
+    <Compile Include="Datatypes\Job\Equipment.cs" />
+    <Compile Include="Datatypes\Job\Job.cs" />
+    <Compile Include="Datatypes\Job\SkillSet.cs" />
+    <Compile Include="Datatypes\Statuses.cs" />
     <Compile Include="Datatypes\SubArray.cs" />
+    <Compile Include="Editors\AbilityAttributesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AbilityAttributesEditor.Designer.cs">
+      <DependentUpon>AbilityAttributesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\AbilityEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AbilityEditor.Designer.cs">
+      <DependentUpon>AbilityEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\AllAbilitiesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AllAbilitiesEditor.Designer.cs">
+      <DependentUpon>AllAbilitiesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\AllJobsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AllJobsEditor.Designer.cs">
+      <DependentUpon>AllJobsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\AllSkillSetsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AllSkillSetsEditor.Designer.cs">
+      <DependentUpon>AllSkillSetsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CodeCreator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\CodeCreator.Designer.cs">
+      <DependentUpon>CodeCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\CommonAbilitiesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\CommonAbilitiesEditor.Designer.cs">
+      <DependentUpon>CommonAbilitiesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ElementsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ElementsEditor.Designer.cs">
+      <DependentUpon>ElementsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\EquipmentEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\EquipmentEditor.Designer.cs">
+      <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\JobEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\JobEditor.Designer.cs">
+      <DependentUpon>JobEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SkillSetEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SkillSetEditor.Designer.cs">
+      <DependentUpon>SkillSetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\StatusesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\StatusesEditor.Designer.cs">
+      <DependentUpon>StatusesEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,8 +135,62 @@
     <Compile Include="Grids\AbilitiesDataGridView.Designer.cs">
       <DependentUpon>AbilitiesDataGridView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Grids\AbilityEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Grids\AbilityEditor.Designer.cs">
+      <DependentUpon>AbilityEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Editors\AbilityAttributesEditor.resx">
+      <DependentUpon>AbilityAttributesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AbilityEditor.resx">
+      <DependentUpon>AbilityEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AllAbilitiesEditor.resx">
+      <DependentUpon>AllAbilitiesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AllJobsEditor.resx">
+      <DependentUpon>AllJobsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AllSkillSetsEditor.resx">
+      <DependentUpon>AllSkillSetsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\CodeCreator.resx">
+      <DependentUpon>CodeCreator.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\CommonAbilitiesEditor.resx">
+      <DependentUpon>CommonAbilitiesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ElementsEditor.resx">
+      <DependentUpon>ElementsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\EquipmentEditor.resx">
+      <DependentUpon>EquipmentEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\JobEditor.resx">
+      <DependentUpon>JobEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SkillSetEditor.resx">
+      <DependentUpon>SkillSetEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\StatusesEditor.resx">
+      <DependentUpon>StatusesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -68,20 +199,27 @@
       <DependentUpon>AbilitiesDataGridView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Grids\AbilityEditor.resx">
+      <DependentUpon>AbilityEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\PSP\Abilities.bin" />
+    <None Include="Resources\PSP\Jobs.bin" />
+    <None Include="Resources\PSP\SkillSetsBin.bin" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -90,7 +228,10 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Abilities.xml" />
+    <Content Include="Resources\PSP\Abilities.xml" />
+    <Content Include="Resources\PSP\Items.xml" />
+    <Content Include="Resources\PSP\Jobs.xml" />
+    <Content Include="Resources\PSP\SkillSets.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

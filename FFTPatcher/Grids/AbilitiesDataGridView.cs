@@ -18,171 +18,52 @@ namespace FFTPatcher.Grids
         public AbilitiesDataGridView()
         {
             InitializeComponent();
-            //BindingSource b = new BindingSource(new AllAbilities(null), "Abilities");
-            dataGridView1.CellPainting += new DataGridViewCellPaintingEventHandler(dataGridView1_CellPainting);
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridView1.VirtualMode = true;
-            Offset.ValueType = typeof(UInt16);
-
-            dataGridView1.CellValueNeeded += new DataGridViewCellValueEventHandler(dataGridView1_CellValueNeeded);
-            dataGridView1.CellValuePushed += new DataGridViewCellValueEventHandler(dataGridView1_CellValuePushed);
-            dataGridView1.NewRowNeeded += new DataGridViewRowEventHandler(dataGridView1_NewRowNeeded);
-            dataGridView1.RowValidated += new DataGridViewCellEventHandler(dataGridView1_RowValidated);
-            dataGridView1.RowDirtyStateNeeded += new QuestionEventHandler(dataGridView1_RowDirtyStateNeeded);
-            dataGridView1.CancelRowEdit += new QuestionEventHandler(dataGridView1_CancelRowEdit);
-            dataGridView1.UserDeletingRow += new DataGridViewRowCancelEventHandler(dataGridView1_UserDeletingRow);
-            dataGridView1.RowCount = allAbilities.Count;
+            AbilityType.DataSource = Enum.GetValues(typeof(AbilityType));
+            AbilityType.ValueType = typeof(AbilityType);
+            dataGridView1.AutoGenerateColumns = false;
+            Index.ValueType = typeof(UInt16);
+            JPCost.ValueType = typeof(UInt16);
+            LearnRate.ValueType = typeof(byte);
+            dataGridView1.DataSource = allAbilities;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
+            dataGridView1.CellParsing += dataGridView1_CellParsing;
         }
 
-        void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        private void dataGridView1_CellParsing(object sender, DataGridViewCellParsingEventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        void dataGridView1_CancelRowEdit(object sender, QuestionEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void dataGridView1_RowDirtyStateNeeded(object sender, QuestionEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void dataGridView1_RowValidated(object sender, DataGridViewCellEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void dataGridView1_NewRowNeeded(object sender, DataGridViewRowEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void dataGridView1_CellValuePushed(object sender, DataGridViewCellValueEventArgs e)
-        {
-            Type t = dataGridView1.Columns[e.ColumnIndex].ValueType;
-            if ((t == typeof(int)) || (t == typeof(UInt16)) || (t == typeof(byte)))
+            Int64 i;
+            if (e.ColumnIndex == JPCost.Index)
             {
+                bool success = Int64.TryParse(e.Value.ToString(), out i);
+                i = success ? ((i < 0) ? 0 : ((i > 9999) ? 9999 : i)) : 0;
+                e.Value = (UInt16)i;
+                e.ParsingApplied = true;
             }
-            else if (t == typeof(AbilityType))
+            else if (e.ColumnIndex == LearnRate.Index)
             {
-            }
-            else if (t == typeof(bool))
-            {
-            }
-
-
-            switch (e.ColumnIndex)
-            {
-                case JPCost.Index:
-                case LearnRate.Index:
-                case AbilityType.Index:
-                    PropertyInfo pi = typeof(Ability).GetProperty(dataGridView1.Columns[e.ColumnIndex].Name);
-                    pi.SetValue(allAbilities[e.RowIndex], e.Value);
-                case LearnWithJP.Index:
-                case Action.Index:
-                case LearnOnHit.Index:
-                case Blank1.Index:
-                case Unknown1.Index:
-                case Unknown2.Index:
-                case Unknown3.Index:
-                case Unknown4.Index:
-                case Blank2.Index:
-                case Blank3.Index:
-                case Blank4.Index:
-                case Blank5.Index:
-                case Unknown5.Index:
-                    FieldInfo fi = typeof(Ability).GetField(dataGridView1.Columns[e.ColumnIndex].Name);
-                    fi.SetValue(allAbilities[e.RowIndex], e.Value);
-                    break;
-                case aiHP.Index:
-                case aiMP.Index:
-                case aiCancelStatus.Index:
-                case aiAddStatus.Index:
-                case aiStats.Index:
-                case aiUnequip.Index:
-                case aiTargetEnemies.Index:
-                case aiTargetAllies.Index:
-                case aiIgnoreRange.Index:
-                case aiReflectable.Index:
-                case aiUndeadReverse.Index:
-                case aiUnknown1.Index:
-                case aiRandomHits.Index:
-                case aiUnknown2.Index:
-                case aiUnknown3.Index:
-                case aiSilence.Index:
-                case aiBlank.Index:
-                case aiDirectAttack.Index:
-                case aiLineAttack.Index:
-                case aiVerticalIncrease.Index:
-                case aiTripleAttack.Index:
-                case aiTripleBracelet.Index:
-                case aiMagicDefenseUp.Index:
-                case aiDefenseUp.Index:
-                    FieldInfo fi = typeof(AIFlags).GetField(dataGridView1.Columns[e.ColumnIndex].Tag);
-                    fi.SetValue(allAbilities[e.RowIndex].AIFlags, e.Value);
-                    break;
+                bool success = Int64.TryParse(e.Value.ToString(), out i);
+                i = success ? ((i < 0) ? 0 : ((i > 100) ? 100 : i)) : 0;
+                e.Value = (byte)i;
+                e.ParsingApplied = true;
             }
         }
 
-        void dataGridView1_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
+        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if ((e.ColumnIndex >= 0) && (e.RowIndex == -1))
+            if (dataGridView1.CurrentCell.ColumnIndex == AbilityType.Index)
             {
-                string text = dataGridView1.Columns[e.ColumnIndex].HeaderText;
-                e.Handled = true;
-                double textWidth = e.Graphics.MeasureString(text, e.CellStyle.Font).Width;
-                double textHeight = e.Graphics.MeasureString(text, e.CellStyle.Font).Height;
-
-                using (Brush b = new SolidBrush(e.CellStyle.BackColor))
-                {
-                    e.Graphics.FillRectangle(b, e.CellBounds);
-                }
-
-                e.Graphics.DrawLine(Pens.DarkGray, e.CellBounds.Left, e.CellBounds.Bottom - 1,
-                    e.CellBounds.Right, e.CellBounds.Bottom - 1);
-                e.Graphics.DrawLine(Pens.DarkGray, e.CellBounds.Left, e.CellBounds.Top,
-                    e.CellBounds.Right, e.CellBounds.Top);
-                e.Graphics.DrawLine(Pens.White, e.CellBounds.Left, e.CellBounds.Top + 1,
-                    e.CellBounds.Right, e.CellBounds.Top + 1);
-                e.Graphics.DrawLine(Pens.DarkGray, e.CellBounds.Right - 1, e.CellBounds.Top,
-                    e.CellBounds.Right - 1, e.CellBounds.Bottom);
-                e.Graphics.DrawLine(Pens.White, e.CellBounds.Left, e.CellBounds.Top,
-                    e.CellBounds.Left, e.CellBounds.Bottom);
-
-                double rotatedWidth = textHeight;
-                double rotatedHeight = textWidth;
-
-                double dx = (e.CellBounds.Width + rotatedWidth) / 2;
-                double dy = (e.CellBounds.Height + rotatedHeight) / 2;
-
-                dataGridView1.Columns[e.ColumnIndex].Width = (int)rotatedWidth + 10;
-                int newColHeight = (int)rotatedHeight + 10;
-                if (dataGridView1.ColumnHeadersHeight < newColHeight)
-                {
-                    dataGridView1.ColumnHeadersHeight = newColHeight;
-                }
-
-                Matrix matrix = new Matrix();
-                matrix.Rotate((float)90, MatrixOrder.Append);
-                float heightOffset = e.CellBounds.Y + 10;
-                matrix.Translate((float)(dx + e.CellBounds.X), heightOffset, MatrixOrder.Append);
-                e.Graphics.Transform = matrix;
-
-                using (Brush b = new SolidBrush(e.CellStyle.ForeColor))
-                {
-                    e.Graphics.DrawString(text, e.CellStyle.Font, b, 0, 0, StringFormat.GenericTypographic);
-                }
-
-                e.Graphics.ResetTransform();
+                DataGridViewComboBoxEditingControl c = e.Control as DataGridViewComboBoxEditingControl;
+                c.DropDownStyle = ComboBoxStyle.DropDownList;
             }
         }
+
+        void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+        }
+
 
 
         static byte[] bytes = new byte[] {

@@ -29,6 +29,12 @@ namespace FFTPatcher.Editors
                 sb.AppendLine( "_C0 Skill Sets" );
                 sb.AppendLine( Form1.AllSkillSets.GenerateCodes() );
             }
+            if( Form1.AllMonsterSkills != null )
+            {
+                sb.AppendLine( "_C0 Monster Skill Sets" );
+                sb.AppendLine( Form1.AllMonsterSkills.GenerateCodes() );
+            }
+
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );
         }

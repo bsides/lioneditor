@@ -48,6 +48,7 @@
     <Compile Include="Datatypes\Item.cs" />
     <Compile Include="Datatypes\Job\Equipment.cs" />
     <Compile Include="Datatypes\Job\Job.cs" />
+    <Compile Include="Datatypes\Job\MonsterSkills.cs" />
     <Compile Include="Datatypes\Job\SkillSet.cs" />
     <Compile Include="Datatypes\Statuses.cs" />
     <Compile Include="Datatypes\SubArray.cs" />
@@ -74,6 +75,12 @@
     </Compile>
     <Compile Include="Editors\AllJobsEditor.Designer.cs">
       <DependentUpon>AllJobsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\AllMonsterSkillsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AllMonsterSkillsEditor.Designer.cs">
+      <DependentUpon>AllMonsterSkillsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\AllSkillSetsEditor.cs">
       <SubType>UserControl</SubType>
@@ -159,6 +166,10 @@
       <DependentUpon>AllJobsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AllMonsterSkillsEditor.resx">
+      <DependentUpon>AllMonsterSkillsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\AllSkillSetsEditor.resx">
       <DependentUpon>AllSkillSetsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -214,6 +225,7 @@
     </None>
     <None Include="Resources\PSP\Abilities.bin" />
     <None Include="Resources\PSP\Jobs.bin" />
+    <None Include="Resources\PSP\MonsterSkills.bin" />
     <None Include="Resources\PSP\SkillSetsBin.bin" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

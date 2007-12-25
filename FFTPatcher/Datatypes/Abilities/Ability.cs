@@ -46,6 +46,7 @@ namespace FFTPatcher.Datatypes
 
         #region Common
 
+        public Ability Self { get { return this; } }
         public string Name { get; private set; }
         public UInt16 Offset { get; private set; }
         public UInt16 JPCost { get; set; }

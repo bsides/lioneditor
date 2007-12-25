@@ -15,6 +15,7 @@ namespace FFTPatcher
         public static AllAbilities AllAbilities { get; private set; }
         public static AllJobs AllJobs { get; private set; }
         public static AllSkillSets AllSkillSets { get; private set; }
+        public static AllMonsterSkills AllMonsterSkills { get; private set; }
 
         public Form1()
         {
@@ -22,6 +23,7 @@ namespace FFTPatcher
             AllAbilities = allAbilitiesEditor1.AllAbilities;
             AllJobs = allJobsEditor1.AllJobs;
             AllSkillSets = allSkillSetsEditor1.AllSkillSets;
+            AllMonsterSkills = allMonsterSkillsEditor1.MonsterSkills;
         }
     }
 }

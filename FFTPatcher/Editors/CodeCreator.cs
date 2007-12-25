@@ -34,6 +34,16 @@ namespace FFTPatcher.Editors
                 sb.AppendLine( "_C0 Monster Skill Sets" );
                 sb.AppendLine( Form1.AllMonsterSkills.GenerateCodes() );
             }
+            if( Form1.AllActionMenus != null )
+            {
+                sb.AppendLine( "_C0 Action Menus" );
+                sb.AppendLine( Form1.AllActionMenus.GenerateCodes() );
+            }
+            if( Form1.AllStatusAttributes != null )
+            {
+                sb.AppendLine( "_C0 Status Effects" );
+                sb.AppendLine( Form1.AllStatusAttributes.GenerateCodes() );
+            }
 
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );

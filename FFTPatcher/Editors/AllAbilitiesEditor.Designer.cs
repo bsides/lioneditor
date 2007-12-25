@@ -36,9 +36,9 @@
             // 
             this.abilitiesListBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.abilitiesListBox.FormattingEnabled = true;
-            this.abilitiesListBox.Location = new System.Drawing.Point(0, 0);
+            this.abilitiesListBox.Location = new System.Drawing.Point( 0, 0 );
             this.abilitiesListBox.Name = "abilitiesListBox";
-            this.abilitiesListBox.Size = new System.Drawing.Size(120, 693);
+            this.abilitiesListBox.Size = new System.Drawing.Size( 120, 693 );
             this.abilitiesListBox.TabIndex = 0;
             // 
             // abilityEditor
@@ -48,21 +48,21 @@
             this.abilityEditor.AutoSize = true;
             this.abilityEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.abilityEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.abilityEditor.Location = new System.Drawing.Point(120, 0);
+            this.abilityEditor.Location = new System.Drawing.Point( 120, 0 );
             this.abilityEditor.Name = "abilityEditor";
-            this.abilityEditor.Size = new System.Drawing.Size(563, 695);
+            this.abilityEditor.Size = new System.Drawing.Size( 563, 695 );
             this.abilityEditor.TabIndex = 1;
             // 
             // AllAbilitiesEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.Controls.Add(this.abilityEditor);
-            this.Controls.Add(this.abilitiesListBox);
+            this.Controls.Add( this.abilityEditor );
+            this.Controls.Add( this.abilitiesListBox );
             this.Name = "AllAbilitiesEditor";
-            this.Size = new System.Drawing.Size(683, 695);
-            this.ResumeLayout(false);
+            this.Size = new System.Drawing.Size( 683, 695 );
+            this.ResumeLayout( false );
             this.PerformLayout();
 
         }

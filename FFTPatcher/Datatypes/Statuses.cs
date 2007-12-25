@@ -2,6 +2,19 @@
 {
     public class Statuses
     {
+        public static string[] FieldNames = new string[] {
+            "NoEffect","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
+            "Petrify","Invite","Darkness","Confusion","Silence","BloodSuck","DarkEvilLooking","Treasure",
+            "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
+            "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
+            "Faith","Innocent","Charm","Sleep","DontMove","DontAct","Reflect","DeathSentence" };
+        public static string[] StatusNames = new string[] {
+            "","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
+            "Petrify","Invite","Darkness","Confusion","Silence","Blood Suck","Dark/Evil Looking","Treasure",
+            "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
+            "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
+            "Faith","Innocent","Charm","Sleep","Don\'t Move","Don\'t Act","Reflect","Death Sentence" };
+
         public bool NoEffect;
         public bool Crystal;
         public bool Dead;

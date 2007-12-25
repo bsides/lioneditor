@@ -54,6 +54,10 @@
       <Link>Abilities.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Resources\PSP\ActionEvents.bin">
+      <Link>ActionEvents.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Resources\PSP\Jobs.bin">
       <Link>Jobs.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -64,6 +68,10 @@
     </None>
     <None Include="..\Resources\PSP\SkillSetsBin.bin">
       <Link>SkillSetsBin.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\StatusAttributes.bin">
+      <Link>StatusAttributes.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

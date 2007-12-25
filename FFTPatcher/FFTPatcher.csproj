@@ -46,10 +46,12 @@
     <Compile Include="Datatypes\Context.cs" />
     <Compile Include="Datatypes\Elements.cs" />
     <Compile Include="Datatypes\Item.cs" />
+    <Compile Include="Datatypes\Job\ActionMenu.cs" />
     <Compile Include="Datatypes\Job\Equipment.cs" />
     <Compile Include="Datatypes\Job\Job.cs" />
     <Compile Include="Datatypes\Job\MonsterSkills.cs" />
     <Compile Include="Datatypes\Job\SkillSet.cs" />
+    <Compile Include="Datatypes\StatusAttribute.cs" />
     <Compile Include="Datatypes\Statuses.cs" />
     <Compile Include="Datatypes\SubArray.cs" />
     <Compile Include="Editors\AbilityAttributesEditor.cs">
@@ -70,6 +72,12 @@
     <Compile Include="Editors\AllAbilitiesEditor.Designer.cs">
       <DependentUpon>AllAbilitiesEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\AllActionMenusEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AllActionMenusEditor.Designer.cs">
+      <DependentUpon>AllActionMenusEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\AllJobsEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -87,6 +95,12 @@
     </Compile>
     <Compile Include="Editors\AllSkillSetsEditor.Designer.cs">
       <DependentUpon>AllSkillSetsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\AllStatusAttributesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AllStatusAttributesEditor.Designer.cs">
+      <DependentUpon>AllStatusAttributesEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\CodeCreator.cs">
       <SubType>UserControl</SubType>
@@ -123,6 +137,12 @@
     </Compile>
     <Compile Include="Editors\SkillSetEditor.Designer.cs">
       <DependentUpon>SkillSetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\StatusAttributeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\StatusAttributeEditor.Designer.cs">
+      <DependentUpon>StatusAttributeEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\StatusesEditor.cs">
       <SubType>UserControl</SubType>
@@ -162,6 +182,10 @@
       <DependentUpon>AllAbilitiesEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AllActionMenusEditor.resx">
+      <DependentUpon>AllActionMenusEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\AllJobsEditor.resx">
       <DependentUpon>AllJobsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -172,6 +196,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\AllSkillSetsEditor.resx">
       <DependentUpon>AllSkillSetsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AllStatusAttributesEditor.resx">
+      <DependentUpon>AllStatusAttributesEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\CodeCreator.resx">
@@ -196,6 +224,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\SkillSetEditor.resx">
       <DependentUpon>SkillSetEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\StatusAttributeEditor.resx">
+      <DependentUpon>StatusAttributeEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\StatusesEditor.resx">
@@ -224,9 +256,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\PSP\Abilities.bin" />
+    <None Include="Resources\PSP\ActionEvents.bin" />
     <None Include="Resources\PSP\Jobs.bin" />
     <None Include="Resources\PSP\MonsterSkills.bin" />
     <None Include="Resources\PSP\SkillSetsBin.bin" />
+    <None Include="Resources\PSP\StatusAttributes.bin" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

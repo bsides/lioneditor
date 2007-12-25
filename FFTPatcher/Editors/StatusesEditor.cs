@@ -6,13 +6,6 @@ namespace FFTPatcher.Editors
 {
     public partial class StatusesEditor : UserControl
     {
-        public static string[] FieldNames = new string[] {
-            "NoEffect","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
-            "Petrify","Invite","Darkness","Confusion","Silence","BloodSuck","DarkEvilLooking","Treasure",
-            "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
-            "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
-            "Faith","Innocent","Charm","Sleep","DontMove","DontAct","Reflect","DeathSentence" };
-
         private Statuses statuses;
         private bool ignoreChanges = false;
 
@@ -47,7 +40,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                Utilities.SetFlag( statuses, FieldNames[e.Index], e.NewValue == CheckState.Checked );
+                Utilities.SetFlag( statuses, Statuses.FieldNames[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -59,7 +52,7 @@ namespace FFTPatcher.Editors
             ignoreChanges = true;
             for( int i = 0; i < statusesCheckedListBox.Items.Count; i++ )
             {
-                statusesCheckedListBox.SetItemChecked( i, Utilities.GetFlag( statuses, FieldNames[i] ) );
+                statusesCheckedListBox.SetItemChecked( i, Utilities.GetFlag( statuses, Statuses.FieldNames[i] ) );
             }
             ignoreChanges = false;
             statusesCheckedListBox.ResumeLayout();

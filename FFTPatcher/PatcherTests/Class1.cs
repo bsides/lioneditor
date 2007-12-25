@@ -60,5 +60,31 @@ namespace PatcherTests
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
+
+        [Test]
+        public void ShouldNotMangleActionEvents()
+        {
+            FileStream stream = new FileStream( "ActionEvents.bin", FileMode.Open );
+            byte[] bytes = new byte[stream.Length];
+            stream.Read( bytes, 0, (int)stream.Length );
+            stream.Close();
+
+            AllActionMenus all = new AllActionMenus( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            byte[] outputBytes = all.ToByteArray();
+            Assert.That( outputBytes, Is.EqualTo( bytes ) );
+        }
+
+        [Test]
+        public void ShouldNotMangleStatusAttributes()
+        {
+            FileStream stream = new FileStream( "StatusAttributes.bin", FileMode.Open );
+            byte[] bytes = new byte[stream.Length];
+            stream.Read( bytes, 0, (int)stream.Length );
+            stream.Close();
+
+            AllStatusAttributes all = new AllStatusAttributes( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            byte[] outputBytes = all.ToByteArray();
+            Assert.That( outputBytes, Is.EqualTo( bytes ) );
+        }
     }
 }

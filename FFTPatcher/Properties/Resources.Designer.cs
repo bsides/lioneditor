@@ -88,6 +88,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] ActionEventsBin {
+            get {
+                object obj = ResourceManager.GetObject("ActionEventsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
@@ -170,6 +177,13 @@ namespace FFTPatcher.Properties {
         internal static byte[] SkillSetsBin {
             get {
                 object obj = ResourceManager.GetObject("SkillSetsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] StatusAttributesBin {
+            get {
+                object obj = ResourceManager.GetObject("StatusAttributesBin", resourceCulture);
                 return ((byte[])(obj));
             }
         }

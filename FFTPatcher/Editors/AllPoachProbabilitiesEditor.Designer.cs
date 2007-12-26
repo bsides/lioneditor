@@ -1,6 +1,6 @@
 ﻿namespace FFTPatcher.Editors
 {
-    partial class AllActionMenusEditor
+    partial class AllPoachProbabilitiesEditor
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.Offset = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ActionColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Monster = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommonItem = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.UncommonItem = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,54 +44,48 @@
             this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.ColumnHeadersVisible = false;
             this.dataGridView.Columns.AddRange( new System.Windows.Forms.DataGridViewColumn[] {
-            this.Offset,
-            this.NameColumn,
-            this.ActionColumn} );
+            this.Monster,
+            this.CommonItem,
+            this.UncommonItem} );
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.Location = new System.Drawing.Point( 0, 0 );
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersVisible = false;
-            this.dataGridView.Size = new System.Drawing.Size( 291, 459 );
+            this.dataGridView.Size = new System.Drawing.Size( 419, 303 );
             this.dataGridView.TabIndex = 0;
             // 
-            // Offset
+            // Monster
             // 
-            this.Offset.DataPropertyName = "Value";
-            this.Offset.Frozen = true;
-            this.Offset.HeaderText = "";
-            this.Offset.Name = "Offset";
-            this.Offset.ReadOnly = true;
-            this.Offset.Width = 5;
+            this.Monster.DataPropertyName = "MonsterName";
+            this.Monster.Frozen = true;
+            this.Monster.HeaderText = "Monster";
+            this.Monster.Name = "Monster";
+            this.Monster.ReadOnly = true;
+            this.Monster.Width = 70;
             // 
-            // NameColumn
+            // CommonItem
             // 
-            this.NameColumn.DataPropertyName = "Name";
-            this.NameColumn.Frozen = true;
-            this.NameColumn.HeaderText = "";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
-            this.NameColumn.Width = 5;
+            this.CommonItem.DataPropertyName = "Common";
+            this.CommonItem.HeaderText = "Common Item (75%)";
+            this.CommonItem.Name = "CommonItem";
+            this.CommonItem.Width = 72;
             // 
-            // ActionColumn
+            // UncommonItem
             // 
-            this.ActionColumn.DataPropertyName = "MenuAction";
-            this.ActionColumn.Frozen = true;
-            this.ActionColumn.HeaderText = "";
-            this.ActionColumn.Name = "ActionColumn";
-            this.ActionColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ActionColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ActionColumn.Width = 5;
+            this.UncommonItem.DataPropertyName = "Uncommon";
+            this.UncommonItem.HeaderText = "Uncommon Item (25%)";
+            this.UncommonItem.Name = "UncommonItem";
+            this.UncommonItem.Width = 84;
             // 
-            // AllActionMenusEditor
+            // AllPoachProbabilitiesEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add( this.dataGridView );
-            this.Name = "AllActionMenusEditor";
-            this.Size = new System.Drawing.Size( 291, 459 );
+            this.Name = "AllPoachProbabilitiesEditor";
+            this.Size = new System.Drawing.Size( 419, 303 );
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout( false );
 
@@ -100,8 +94,8 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Offset;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ActionColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Monster;
+        private System.Windows.Forms.DataGridViewComboBoxColumn CommonItem;
+        private System.Windows.Forms.DataGridViewComboBoxColumn UncommonItem;
     }
 }

@@ -247,6 +247,28 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+        public byte[] ToByteArray( Context context )
+        {
+            switch( context )
+            {
+                case Context.US_PSX:
+                    return ToByteArray();
+                default:
+                    return ToByteArray();
+            }
+        }
+
+        public byte[] ToSecondByteArray( Context context )
+        {
+            switch( context )
+            {
+                case Context.US_PSX:
+                    return ToSecondByteArray();
+                default:
+                    return ToSecondByteArray();
+            }
+        }
+
         public byte[] ToSecondByteArray()
         {
             if( IsNormal )

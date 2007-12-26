@@ -10,38 +10,33 @@ using FFTPatcher.Properties;
 
 namespace FFTPatcher.Editors
 {
-    public partial class AllMonsterSkillsEditor : UserControl
+    public partial class AllPoachProbabilitiesEditor : UserControl
     {
-        public AllMonsterSkills MonsterSkills { get; private set; }
+        public AllPoachProbabilities PoachProbabilities { get; private set; }
 
-        public AllMonsterSkillsEditor()
+        public AllPoachProbabilitiesEditor()
         {
             InitializeComponent();
-            MonsterSkills = new AllMonsterSkills( new SubArray<byte>( new List<byte>( Resources.MonsterSkillsBin ), 0 ) );
-            foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
+            PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( new List<byte>( Resources.PoachProbabilitiesBin ), 0 ) );
+            foreach( Item i in Item.ItemList )
             {
-                col.Items.AddRange( AllAbilities.DummyAbilities );
-                col.ValueType = typeof( Ability );
+                if( i.Offset <= 0xFF )
+                {
+                    CommonItem.Items.Add( i );
+                    UncommonItem.Items.Add( i );
+                }
             }
+
+            CommonItem.ValueType = typeof( Item );
+            UncommonItem.ValueType = typeof( Item );
 
             dataGridView.AutoSize = true;
             dataGridView.CellParsing += dataGridView_CellParsing;
-
             dataGridView.AutoGenerateColumns = false;
-            dataGridView.DataSource = MonsterSkills.MonsterSkills;
+            dataGridView.DataSource = PoachProbabilities.PoachProbabilities;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
-            dataGridView.CellFormatting += dataGridView_CellFormatting;
         }
 
-        private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
-        {
-            if( e.ColumnIndex == Offset.Index )
-            {
-                byte b = (byte)e.Value;
-                e.Value = b.ToString( "X2" );
-                e.FormattingApplied = true;
-            }
-        }
 
         private void dataGridView_CellParsing( object sender, DataGridViewCellParsingEventArgs e )
         {
@@ -61,6 +56,5 @@ namespace FFTPatcher.Editors
                 c.DropDownStyle = ComboBoxStyle.DropDownList;
             }
         }
-
     }
 }

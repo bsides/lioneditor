@@ -52,41 +52,52 @@ namespace FFTPatcher.Datatypes
             Name = name;
         }
 
-        public Job( SubArray<byte> bytes )
+        public Job( Context context, SubArray<byte> bytes )
         {
+            int equipEnd = context == Context.US_PSP ? 13 : 12;
             SkillSet = SkillSet.DummySkillSets[bytes[0]];
             InnateA = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[1], bytes[2] )];
             InnateB = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[3], bytes[4] )];
             InnateC = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[5], bytes[6] )];
             InnateD = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[7], bytes[8] )];
-            Equipment = new Equipment( new SubArray<byte>( bytes, 9, 13 ) );
-            HPConstant = bytes[14];
-            HPMultiplier = bytes[15];
-            MPConstant = bytes[16];
-            MPMultiplier = bytes[17];
-            SpeedConstant = bytes[18];
-            SpeedMultiplier = bytes[19];
-            PAConstant = bytes[20];
-            PAMultiplier = bytes[21];
-            MAConstant = bytes[22];
-            MAMultiplier = bytes[23];
-            Move = bytes[24];
-            Jump = bytes[25];
-            CEvade = bytes[26];
-            PermanentStatus = new Statuses( new SubArray<byte>( bytes, 27, 31 ) );
-            StatusImmunity = new Statuses( new SubArray<byte>( bytes, 32, 36 ) );
-            StartingStatus = new Statuses( new SubArray<byte>( bytes, 37, 41 ) );
-            AbsorbElement = new Elements( bytes[42] );
-            CancelElement = new Elements( bytes[43] );
-            HalfElement = new Elements( bytes[44] );
-            WeakElement = new Elements( bytes[45] );
+            Equipment = new Equipment( new SubArray<byte>( bytes, 9, equipEnd ) );
+            HPConstant = bytes[equipEnd + 1];
+            HPMultiplier = bytes[equipEnd + 2];
+            MPConstant = bytes[equipEnd + 3];
+            MPMultiplier = bytes[equipEnd + 4];
+            SpeedConstant = bytes[equipEnd + 5];
+            SpeedMultiplier = bytes[equipEnd + 6];
+            PAConstant = bytes[equipEnd + 7];
+            PAMultiplier = bytes[equipEnd + 8];
+            MAConstant = bytes[equipEnd + 9];
+            MAMultiplier = bytes[equipEnd + 10];
+            Move = bytes[equipEnd + 11];
+            Jump = bytes[equipEnd + 12];
+            CEvade = bytes[equipEnd + 13];
+            PermanentStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 14, equipEnd + 18 ) );
+            StatusImmunity = new Statuses( new SubArray<byte>( bytes, equipEnd + 19, equipEnd + 23 ) );
+            StartingStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 24, equipEnd + 28 ) );
+            AbsorbElement = new Elements( bytes[equipEnd + 29] );
+            CancelElement = new Elements( bytes[equipEnd + 30] );
+            HalfElement = new Elements( bytes[equipEnd + 31] );
+            WeakElement = new Elements( bytes[equipEnd + 32] );
 
-            MPortrait = bytes[46];
-            MPalette = bytes[47];
-            MGraphic = bytes[48];
+            MPortrait = bytes[equipEnd + 33];
+            MPalette = bytes[equipEnd + 34];
+            MGraphic = bytes[equipEnd + 35];
+        }
+
+        public Job( SubArray<byte> bytes )
+            : this( Context.US_PSP, bytes )
+        {
         }
 
         public byte[] ToByteArray()
+        {
+            return ToByteArray( Context.US_PSP );
+        }
+
+        public byte[] ToByteArray( Context context )
         {
             List<byte> result = new List<byte>( 49 );
             result.Add( SkillSet.Value );
@@ -94,7 +105,7 @@ namespace FFTPatcher.Datatypes
             result.AddRange( Utilities.UShortToBytes( InnateB.Offset ) );
             result.AddRange( Utilities.UShortToBytes( InnateC.Offset ) );
             result.AddRange( Utilities.UShortToBytes( InnateD.Offset ) );
-            result.AddRange( Equipment.ToByteArray() );
+            result.AddRange( Equipment.ToByteArray( context ) );
             result.Add( HPConstant );
             result.Add( HPMultiplier );
             result.Add( MPConstant );
@@ -145,20 +156,33 @@ namespace FFTPatcher.Datatypes
         }
 
         public AllJobs( SubArray<byte> bytes )
+            : this( Context.US_PSP, bytes )
         {
-            Jobs = new Job[0xA9];
-            for( int i = 0; i < 0xA9; i++ )
+        }
+
+        public AllJobs( Context context, SubArray<byte> bytes )
+        {
+            int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
+            int jobLength = context == Context.US_PSP ? 49 : 48;
+
+            Jobs = new Job[numJobs];
+            for( int i = 0; i < numJobs; i++ )
             {
-                Jobs[i] = new Job( (byte)i, Names[i], new SubArray<byte>( bytes, 49 * i, 49 * i + 48 ) );
+                Jobs[i] = new Job( (byte)i, Names[i], new SubArray<byte>( bytes, i * jobLength, (i + 1) * jobLength - 1 ) );
             }
         }
 
         public byte[] ToByteArray()
         {
+            return ToByteArray( Context.US_PSP );
+        }
+
+        public byte[] ToByteArray( Context context )
+        {
             List<byte> result = new List<byte>( 0x205C );
             foreach( Job j in Jobs )
             {
-                result.AddRange( j.ToByteArray() );
+                result.AddRange( j.ToByteArray( context ) );
             }
             result.Add( 0x00 );
             result.Add( 0x00 );
@@ -169,20 +193,7 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            byte[] newBytes = this.ToByteArray();
-            byte[] oldBytes = Resources.JobsBin;
-            StringBuilder codeBuilder = new StringBuilder();
-            for( int i = 0; i < newBytes.Length; i++ )
-            {
-                if( newBytes[i] != oldBytes[i] )
-                {
-                    UInt32 addy = (UInt32)(0x277988 + i);
-                    string code = "_L 0x0" + addy.ToString( "X7" ) + " 0x000000" + newBytes[i].ToString( "X2" );
-                    codeBuilder.AppendLine( code );
-                }
-            }
-
-            return codeBuilder.ToString();
+            return Utilities.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
         }
     }
 }

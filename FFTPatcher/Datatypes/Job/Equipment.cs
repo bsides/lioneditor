@@ -65,5 +65,26 @@
             result[4] = Utilities.ByteFromBooleans( Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 );
             return result;
         }
+
+        private byte[] ToByteArrayPSX()
+        {
+            byte[] result = new byte[4];
+            result[0] = Utilities.ByteFromBooleans( Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod );
+            result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
+            result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
+            result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
+            return result;
+        }
+
+        public byte[] ToByteArray( Context context )
+        {
+            switch( context )
+            {
+                case Context.US_PSX:
+                    return ToByteArrayPSX();
+                default:
+                    return ToByteArray();
+            }
+        }
     }
 }

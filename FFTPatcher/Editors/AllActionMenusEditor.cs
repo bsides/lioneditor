@@ -31,12 +31,17 @@ namespace FFTPatcher.Editors
             dataGridView.AutoGenerateColumns = false;
             dataGridView.DataSource = AllActionMenus.ActionMenus;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
-            dataGridView.DataError += new DataGridViewDataErrorEventHandler( dataGridView_DataError );
+            dataGridView.CellFormatting += dataGridView_CellFormatting;
         }
 
-        void dataGridView_DataError( object sender, DataGridViewDataErrorEventArgs e )
+        private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
         {
-            e.Cancel = true;
+            if( e.ColumnIndex == Offset.Index )
+            {
+                byte b = (byte)e.Value;
+                e.Value = b.ToString( "X2" );
+                e.FormattingApplied = true;
+            }
         }
 
         private void dataGridView_CellParsing( object sender, DataGridViewCellParsingEventArgs e )

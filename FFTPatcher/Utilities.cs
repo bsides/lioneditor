@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using FFTPatcher.Datatypes;
+using System.Text;
 
 namespace FFTPatcher
 {
@@ -19,6 +21,21 @@ namespace FFTPatcher
             }
 
             return result;
+        }
+
+        public static byte UpperNibble( byte b )
+        {
+            return (byte)((b & 0xF0) >> 4);
+        }
+
+        public static byte LowerNibble( byte b )
+        {
+            return (byte)(b & 0x0F);
+        }
+
+        public static byte MoveToUpperAndLowerNibbles( int upper, int lower )
+        {
+            return (byte)(((upper & 0x0F) << 4) | (lower & 0x0F));
         }
 
         /// <summary>
@@ -143,6 +160,22 @@ namespace FFTPatcher
             result[0] = (byte)(value & 0xFF);
             result[1] = (byte)((value >> 8) & 0xFF);
             return result;
+        }
+
+        public static string GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        {
+            StringBuilder codeBuilder = new StringBuilder();
+            for( int i = 0; i < newBytes.Length; i++ )
+            {
+                if( newBytes[i] != oldBytes[i] )
+                {
+                    UInt32 addy = (UInt32)(offset + i);
+                    string code = "_L 0x0" + addy.ToString( "X7" ) + " 0x000000" + newBytes[i].ToString( "X2" );
+                    codeBuilder.AppendLine( code );
+                }
+            }
+
+            return codeBuilder.ToString();
         }
     }
 }

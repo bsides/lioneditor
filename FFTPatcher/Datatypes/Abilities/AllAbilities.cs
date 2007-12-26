@@ -85,38 +85,14 @@ namespace FFTPatcher.Datatypes
             return bytes.ToArray();
         }
 
+        public byte[] ToByteArray( Context context )
+        {
+            return ToByteArray();
+        }
+
         public string GenerateCodes()
         {
-            byte[] newBytes = this.ToByteArray();
-            byte[] oldBytes = Resources.AbilitiesBin;
-            StringBuilder codeBuilder = new StringBuilder();
-            for( int i = 0; i < newBytes.Length; i++ )
-            {
-                if( newBytes[i] != oldBytes[i] )
-                {
-                    UInt32 addy = (UInt32)(0x2754C0 + i);
-                    string code = "_L 0x0" + addy.ToString( "X7" ) + " 0x000000" + newBytes[i].ToString( "X2" );
-                    codeBuilder.AppendLine( code );
-                }
-            }
-
-            return codeBuilder.ToString();
-        }
-    }
-
-    public class AllAbilityAttributes
-    {
-        public AbilityAttributes[] Abilities { get; private set; }
-        public AllAbilityAttributes( SubArray<byte> bytes )
-        {
-            Abilities = new AbilityAttributes[368];
-
-            for( UInt16 i = 0; i < 368; i++ )
-            {
-                Abilities[i] =
-                    new AbilityAttributes( AllAbilities.Names[i], i,
-                        new SubArray<byte>( bytes, i * 14, i * 14 + 13 ) );
-            }
+            return Utilities.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 );
         }
     }
 }

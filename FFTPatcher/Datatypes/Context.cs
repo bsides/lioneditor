@@ -1,6 +1,8 @@
 ﻿namespace FFTPatcher.Datatypes
 {
-    public abstract class Context
+    public enum Context
     {
+        US_PSP,
+        US_PSX
     }
 }

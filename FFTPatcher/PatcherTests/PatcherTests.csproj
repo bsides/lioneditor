@@ -58,12 +58,20 @@
       <Link>ActionEvents.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Resources\PSP\JobLevels.bin">
+      <Link>JobLevels.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Resources\PSP\Jobs.bin">
       <Link>Jobs.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Resources\PSP\MonsterSkills.bin">
       <Link>MonsterSkills.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\PoachProbabilities.bin">
+      <Link>PoachProbabilities.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Resources\PSP\SkillSetsBin.bin">

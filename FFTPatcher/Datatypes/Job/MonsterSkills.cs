@@ -47,6 +47,11 @@ namespace FFTPatcher.Datatypes
 
             return result;
         }
+
+        public byte[] ToByteArray( Context context )
+        {
+            return ToByteArray();
+        }
     }
 
     public class AllMonsterSkills
@@ -86,22 +91,14 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public byte[] ToByteArray( Context context )
+        {
+            return ToByteArray();
+        }
+
         public string GenerateCodes()
         {
-            byte[] newBytes = this.ToByteArray();
-            byte[] oldBytes = Resources.MonsterSkillsBin;
-            StringBuilder codeBuilder = new StringBuilder();
-            for( int i = 0; i < newBytes.Length; i++ )
-            {
-                if( newBytes[i] != oldBytes[i] )
-                {
-                    UInt32 addy = (UInt32)(0x27AB60 + i);
-                    string code = "_L 0x0" + addy.ToString( "X7" ) + " 0x000000" + newBytes[i].ToString( "X2" );
-                    codeBuilder.AppendLine( code );
-                }
-            }
-
-            return codeBuilder.ToString();
+            return Utilities.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
         }
     }
 }

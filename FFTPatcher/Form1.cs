@@ -18,7 +18,8 @@ namespace FFTPatcher
         public static AllMonsterSkills AllMonsterSkills { get; private set; }
         public static AllActionMenus AllActionMenus { get; private set; }
         public static AllStatusAttributes AllStatusAttributes { get; private set; }
-
+        public static AllPoachProbabilities AllPoachProbabilities { get; private set; }
+        public static JobLevels JobLevels { get; private set; }
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +29,8 @@ namespace FFTPatcher
             AllMonsterSkills = allMonsterSkillsEditor1.MonsterSkills;
             AllActionMenus = allActionMenusEditor1.AllActionMenus;
             AllStatusAttributes = allStatusAttributesEditor1.AllStatusAttributes;
+            AllPoachProbabilities = allPoachProbabilitiesEditor1.PoachProbabilities;
+            JobLevels = jobLevelsEditor1.JobLevels;
         }
     }
 }

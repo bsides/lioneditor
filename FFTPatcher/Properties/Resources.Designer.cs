@@ -116,6 +116,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] JobLevelsBin {
+            get {
+                object obj = ResourceManager.GetObject("JobLevelsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;Jobs&gt;
@@ -149,6 +156,13 @@ namespace FFTPatcher.Properties {
         internal static byte[] MonsterSkillsBin {
             get {
                 object obj = ResourceManager.GetObject("MonsterSkillsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] PoachProbabilitiesBin {
+            get {
+                object obj = ResourceManager.GetObject("PoachProbabilitiesBin", resourceCulture);
                 return ((byte[])(obj));
             }
         }

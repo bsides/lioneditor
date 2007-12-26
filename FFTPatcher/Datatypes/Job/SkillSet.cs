@@ -115,19 +115,39 @@ namespace FFTPatcher.Datatypes
         public SkillSet[] SkillSets { get; private set; }
 
         public AllSkillSets( SubArray<byte> bytes )
+            : this( Context.US_PSP, bytes )
+        {
+        }
+
+        public AllSkillSets( Context context, SubArray<byte> bytes )
         {
             SkillSets = new SkillSet[179];
             for( int i = 0; i < 176; i++ )
             {
                 SkillSets[i] = new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * i, 25 * i + 24 ) );
             }
-            for( int i = 0xE0; i <= 0xE2; i++ )
+
+            if( context == Context.US_PSP )
             {
-                SkillSets[i - 0xE0 + 176] = new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ) );
+                for( int i = 0xE0; i <= 0xE2; i++ )
+                {
+                    SkillSets[i - 0xE0 + 176] = new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ) );
+                }
+            }
+            else
+            {
+                SkillSets[176] = new SkillSet( 0xE0, new SubArray<byte>( new List<byte>( new byte[25] ), 0 ) );
+                SkillSets[177] = new SkillSet( 0xE1, new SubArray<byte>( new List<byte>( new byte[25] ), 0 ) );
+                SkillSets[178] = new SkillSet( 0xE2, new SubArray<byte>( new List<byte>( new byte[25] ), 0 ) );
             }
         }
 
         public byte[] ToByteArray()
+        {
+            return ToByteArray( Context.US_PSP );
+        }
+
+        public byte[] ToByteArray( Context context )
         {
             List<byte> result = new List<byte>( 0x117B );
             foreach( SkillSet s in SkillSets )
@@ -135,25 +155,17 @@ namespace FFTPatcher.Datatypes
                 result.AddRange( s.ToByteArray() );
             }
 
+            while( (context == Context.US_PSP) && (result.Count < 0x117B) )
+            {
+                result.Add( 0x00 );
+            }
+
             return result.ToArray();
         }
 
         public string GenerateCodes()
         {
-            byte[] newBytes = this.ToByteArray();
-            byte[] oldBytes = Resources.SkillSetsBin;
-            StringBuilder codeBuilder = new StringBuilder();
-            for( int i = 0; i < newBytes.Length; i++ )
-            {
-                if( newBytes[i] != oldBytes[i] )
-                {
-                    UInt32 addy = (UInt32)(0x2799E4 + i);
-                    string code = "_L 0x0" + addy.ToString( "X7" ) + " 0x000000" + newBytes[i].ToString( "X2" );
-                    codeBuilder.AppendLine( code );
-                }
-            }
-
-            return codeBuilder.ToString();
+            return Utilities.GenerateCodes( Context.US_PSP, Resources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
         }
 
     }

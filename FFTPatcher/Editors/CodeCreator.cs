@@ -44,7 +44,16 @@ namespace FFTPatcher.Editors
                 sb.AppendLine( "_C0 Status Effects" );
                 sb.AppendLine( Form1.AllStatusAttributes.GenerateCodes() );
             }
-
+            if( Form1.AllPoachProbabilities != null )
+            {
+                sb.AppendLine( "_C0 Poaching" );
+                sb.AppendLine( Form1.AllPoachProbabilities.GenerateCodes() );
+            }
+            if( Form1.JobLevels != null )
+            {
+                sb.AppendLine( "_C0 Job Levels" );
+                sb.AppendLine( Form1.JobLevels.GenerateCodes() );
+            }
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );
         }

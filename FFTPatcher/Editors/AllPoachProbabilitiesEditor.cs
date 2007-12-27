@@ -18,7 +18,7 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
             PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( new List<byte>( Resources.PoachProbabilitiesBin ), 0 ) );
-            foreach( Item i in Item.ItemList )
+            foreach( Item i in Item.DummyItems )
             {
                 if( i.Offset <= 0xFF )
                 {

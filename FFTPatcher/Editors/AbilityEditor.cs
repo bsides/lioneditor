@@ -81,7 +81,7 @@ namespace FFTPatcher.Editors
 
             itemUseComboBox.BindingContext = new BindingContext();
             List<Item> validItems = new List<Item>( 256 );
-            foreach( Item i in Item.ItemList )
+            foreach( Item i in Item.DummyItems )
             {
                 if( i.Offset <= 0xFF )
                 {

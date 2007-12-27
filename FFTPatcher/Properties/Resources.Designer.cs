@@ -160,6 +160,20 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] NewItemsBin {
+            get {
+                object obj = ResourceManager.GetObject("NewItemsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] OldItemsBin {
+            get {
+                object obj = ResourceManager.GetObject("OldItemsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] PoachProbabilitiesBin {
             get {
                 object obj = ResourceManager.GetObject("PoachProbabilitiesBin", resourceCulture);

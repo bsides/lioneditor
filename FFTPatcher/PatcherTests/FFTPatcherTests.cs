@@ -114,6 +114,29 @@ namespace PatcherTests
         }
 
         [Test]
+        public void ShouldNotMangleItems()
+        {
+            FileStream stream = new FileStream( "OldItems.bin", FileMode.Open );
+            byte[] oldBytes = new byte[stream.Length];
+            stream.Read( oldBytes, 0, (int)stream.Length );
+            stream.Close();
+
+            stream = new FileStream( "NewItems.bin", FileMode.Open );
+            byte[] newBytes = new byte[stream.Length];
+            stream.Read( newBytes, 0, (int)stream.Length );
+            stream.Close();
+
+            AllItems all = new AllItems(
+                new SubArray<byte>( new List<byte>( oldBytes ), 0 ),
+                new SubArray<byte>( new List<byte>( newBytes ), 0 ));
+            byte[] oldOutput = all.ToFirstByteArray();
+            byte[] newOutput = all.ToSecondByteArray();
+
+            Assert.That( oldOutput, Is.EqualTo( oldBytes ) );
+            Assert.That( newOutput, Is.EqualTo( newBytes ) );
+        }
+
+        [Test]
         public void ShouldHaveCorrectJobRequirements()
         {
             FileStream stream = new FileStream( "JobLevels.bin", FileMode.Open );

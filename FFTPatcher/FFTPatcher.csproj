@@ -48,8 +48,14 @@
     <Compile Include="Datatypes\AIFlags.cs" />
     <Compile Include="Datatypes\Context.cs" />
     <Compile Include="Datatypes\Elements.cs" />
+    <Compile Include="Datatypes\Items\Accessory.cs" />
+    <Compile Include="Datatypes\Items\AllItems.cs" />
+    <Compile Include="Datatypes\Items\Armor.cs" />
+    <Compile Include="Datatypes\Items\ChemistItem.cs" />
     <Compile Include="Datatypes\Items\Item.cs" />
     <Compile Include="Datatypes\Items\PoachProabability.cs" />
+    <Compile Include="Datatypes\Items\Shield.cs" />
+    <Compile Include="Datatypes\Items\Weapon.cs" />
     <Compile Include="Datatypes\Job\ActionMenu.cs" />
     <Compile Include="Datatypes\Job\Equipment.cs" />
     <Compile Include="Datatypes\Job\Job.cs" />
@@ -82,6 +88,12 @@
     </Compile>
     <Compile Include="Editors\AllActionMenusEditor.Designer.cs">
       <DependentUpon>AllActionMenusEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\AllItemsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\AllItemsEditor.Designer.cs">
+      <DependentUpon>AllItemsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\AllJobsEditor.cs">
       <SubType>UserControl</SubType>
@@ -136,6 +148,12 @@
     </Compile>
     <Compile Include="Editors\EquipmentEditor.Designer.cs">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ItemEditor.Designer.cs">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\JobEditor.cs">
       <SubType>UserControl</SubType>
@@ -209,6 +227,10 @@
       <DependentUpon>AllActionMenusEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\AllItemsEditor.resx">
+      <DependentUpon>AllItemsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\AllJobsEditor.resx">
       <DependentUpon>AllJobsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -243,6 +265,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\EquipmentEditor.resx">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ItemEditor.resx">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\JobEditor.resx">
@@ -295,6 +321,8 @@
     <None Include="Resources\PSP\JobLevels.bin" />
     <None Include="Resources\PSP\Jobs.bin" />
     <None Include="Resources\PSP\MonsterSkills.bin" />
+    <None Include="Resources\PSP\NewItems.bin" />
+    <None Include="Resources\PSP\OldItems.bin" />
     <None Include="Resources\PSP\PoachProbabilities.bin" />
     <None Include="Resources\PSP\SkillSetsBin.bin" />
     <None Include="Resources\PSP\StatusAttributes.bin" />

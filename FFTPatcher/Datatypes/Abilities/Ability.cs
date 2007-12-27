@@ -274,7 +274,7 @@ namespace FFTPatcher.Datatypes
             if( IsNormal )
                 return Attributes.ToByteArray();
             if( IsItem )
-                return new byte[] { Item.ToByteArray()[0] };
+                return new byte[] { (byte)(Item.Offset & 0xFF) };
             if( IsThrowing )
                 return new byte[] { (byte)Throwing };
             if( IsJumping )

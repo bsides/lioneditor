@@ -54,6 +54,11 @@ namespace FFTPatcher.Editors
                 sb.AppendLine( "_C0 Job Levels" );
                 sb.AppendLine( Form1.JobLevels.GenerateCodes() );
             }
+            if( Form1.AllItems != null )
+            {
+                sb.AppendLine( "_C0 Items" );
+                sb.AppendLine( Form1.AllItems.GenerateCodes() );
+            }
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );
         }

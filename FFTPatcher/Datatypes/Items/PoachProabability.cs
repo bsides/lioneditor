@@ -21,8 +21,8 @@ namespace FFTPatcher.Datatypes
         public byte[] ToByteArray()
         {
             byte[] result = new byte[2];
-            result[0] = Common.ToByteArray()[0];
-            result[1] = Uncommon.ToByteArray()[0];
+            result[0] = (byte)(Common.Offset & 0xFF);
+            result[1] = (byte)(Uncommon.Offset & 0xFF);
             return result;
         }
     }

@@ -25,340 +25,211 @@ using FFTPatcher.Properties;
 
 namespace FFTPatcher.Datatypes
 {
-    public class Item : IComparable, IEquatable<Item>
+    public class Item
     {
-        #region Fields
-
-        private ItemType type;
-        private ItemSubType subType;
-        private UInt16 offset;
-        private string name;
-        private uint power;
-        private uint blockRate;
-        private uint maBonus;
-        private uint paBonus;
-        private uint speedBonus;
-        private uint jumpBonus;
-        private uint moveBonus;
-        private uint physicalSEV;
-        private uint magicSEV;
-        private uint hpBonus;
-        private uint mpBonus;
-        private uint physicalAEV;
-        private uint magicAEV;
-        private static List<Item> itemList;
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets this item's <see cref="ItemType"/>
-        /// </summary>
-        public ItemType Type
-        {
-            get { return type; }
-        }
-
-        /// <summary>
-        /// Gets this item's <see cref="ItemSubType"/>
-        /// </summary>
-        public ItemSubType SubType
-        {
-            get { return subType; }
-        }
-
-        /// <summary>
-        /// Gets this item's offset in the inventory/list
-        /// </summary>
-        public UInt16 Offset
-        {
-            get { return offset; }
-        }
-
-        /// <summary>
-        /// Gets the name of this item
-        /// </summary>
-        public string Name
-        {
-            get { return name; }
-        }
-
-        /// <summary>
-        /// Gets the power provided by this item, if any
-        /// </summary>
-        public uint Power
-        {
-            get { return power; }
-        }
-
-        /// <summary>
-        /// Gets the block rate of this item, if any
-        /// </summary>
-        public uint BlockRate
-        {
-            get { return blockRate; }
-        }
-
-        /// <summary>
-        /// Gets the magic attack bonus of this item, if any
-        /// </summary>
-        public uint MABonus
-        {
-            get { return maBonus; }
-        }
-
-        /// <summary>
-        /// Gets the physical attack bonus of this item, if any
-        /// </summary>
-        public uint PABonus
-        {
-            get { return paBonus; }
-        }
-
-        /// <summary>
-        /// Gets the speed bonus of this item, if any
-        /// </summary>
-        public uint SpeedBonus
-        {
-            get { return speedBonus; }
-        }
-
-        /// <summary>
-        /// Gets the jump bonus of this item, if any
-        /// </summary>
-        public uint JumpBonus
-        {
-            get { return jumpBonus; }
-        }
-
-        /// <summary>
-        /// Gets the move bonus of this item
-        /// </summary>
-        public uint MoveBonus
-        {
-            get { return moveBonus; }
-        }
-
-        /// <summary>
-        /// Gets the Physical Shield Evade% of this item
-        /// </summary>
-        public uint PhysicalSEV
-        {
-            get { return physicalSEV; }
-        }
-
-        /// <summary>
-        /// Gets the Magic Shield Evade% of this item
-        /// </summary>
-        public uint MagicSEV
-        {
-            get { return magicSEV; }
-        }
-
-        /// <summary>
-        /// Gets the HP bonus provided by this item, if any
-        /// </summary>
-        public uint HPBonus
-        {
-            get { return hpBonus; }
-        }
-
-        /// <summary>
-        /// Gets the MP bonus provided by this item, if any
-        /// </summary>
-        public uint MPBonus
-        {
-            get { return mpBonus; }
-        }
-
-        /// <summary>
-        /// Gets the Physical Accessory Evade% of this item
-        /// </summary>
-        public uint PhysicalAEV
-        {
-            get { return physicalAEV; }
-        }
-
-        /// <summary>
-        /// Gets the Magic Accessory Evade% of this item
-        /// </summary>
-        public uint MagicAEV
-        {
-            get { return magicAEV; }
-        }
-
-        /// <summary>
-        /// Gets a string representing this item
-        /// </summary>
-        public string String
-        {
-            get { return this.ToString(); }
-        }
-
-        /// <summary>
-        /// Gets a list of all items
-        /// </summary>
-        public static List<Item> ItemList
+        private static List<string> names;
+        public static List<string> ItemNames
         {
             get
             {
-                if( itemList == null )
+                if( names == null )
                 {
-                    XmlDocument d = new XmlDocument();
-                    d.LoadXml( Resources.Items );
-
-                    XmlNodeList items = d.SelectNodes( "//Item" );
-
-                    itemList = new List<Item>( items.Count );
-
-                    foreach( XmlNode i in items )
+                    names = new List<string>( 316 );
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml( Resources.Items );
+                    for( int i = 0; i < 316; i++ )
                     {
-                        Item newItem = new Item();
-                        newItem.name = i.SelectSingleNode( "name" ).InnerText;
-                        newItem.offset = Convert.ToUInt16( i.Attributes["offset"].InnerText );
-                        newItem.type = (ItemType)Enum.Parse( typeof( ItemType ), i.Attributes["type"].InnerText );
-                        newItem.subType = (ItemSubType)Enum.Parse( typeof( ItemSubType ), i.Attributes["subtype"].InnerText );
-
-                        XmlNode node = i.SelectSingleNode( "power" );
-                        if( node != null ) { newItem.power = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "blockRate" );
-                        if( node != null ) { newItem.blockRate = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "ma" );
-                        if( node != null ) { newItem.maBonus = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "pa" );
-                        if( node != null ) { newItem.paBonus = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "speed" );
-                        if( node != null ) { newItem.speedBonus = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "jump" );
-                        if( node != null ) { newItem.jumpBonus = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "move" );
-                        if( node != null ) { newItem.moveBonus = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "physicalSEV" );
-                        if( node != null ) { newItem.physicalSEV = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "magicSEV" );
-                        if( node != null ) { newItem.magicSEV = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "hp" );
-                        if( node != null ) { newItem.hpBonus = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "mp" );
-                        if( node != null ) { newItem.mpBonus = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "magicAEV" );
-                        if( node != null ) { newItem.magicAEV = Convert.ToUInt32( node.InnerText ); }
-
-                        node = i.SelectSingleNode( "physicalAEV" );
-                        if( node != null ) { newItem.physicalAEV = Convert.ToUInt32( node.InnerText ); }
-
-                        itemList.Add( newItem );
+                        names.Add( doc.SelectSingleNode( string.Format( "//Item[@offset='{0}']/name", i ) ).InnerText );
                     }
-
-                    itemList.Sort();
                 }
 
-                return itemList;
+                return names;
             }
         }
 
-        #endregion
+        public static Item GetItemAtOffset( UInt16 offset )
+        {
+            return DummyItems.Find(
+                delegate( Item i )
+                {
+                    return i.Offset == offset;
+                } );
+        }
 
-        #region Constructors
+        private static List<Item> dummyItems;
+        public static List<Item> DummyItems
+        {
+            get
+            {
+                if( dummyItems == null )
+                {
+                    dummyItems = new List<Item>( 316 );
+                    for( int i = 0; i < 316; i++ )
+                    {
+                        Item item = new Item();
+                        item.Offset = (UInt16)i;
+                        item.Name = ItemNames[i];
+                        dummyItems.Add( item );
+                    }
+                }
+
+                return dummyItems;
+            }
+        }
+
+        public UInt16 Offset { get; private set; }
+        public string Name { get; private set; }
+        public byte Palette { get; set; }
+        public byte Graphic { get; set; }
+        public byte EnemyLevel { get; set; }
+
+        private bool weapon;
+        private bool shield;
+        private bool head;
+        private bool body;
+        private bool accessory;
+        private bool blank1;
+        private bool rare;
+        private bool blank2;
+        public bool Weapon { get { return weapon; } set { weapon = value; } }
+        public bool Shield { get { return shield; } set { shield = value; } }
+        public bool Head { get { return head; } set { head = value; } }
+        public bool Body { get { return body; } set { body = value; } }
+        public bool Accessory { get { return accessory; } set { accessory = value; } }
+        public bool Blank1 { get { return blank1; } set { blank1 = value; } }
+        public bool Rare { get { return rare; } set { rare = value; } }
+        public bool Blank2 { get { return blank2; } set { blank2 = value; } }
+
+        public byte SecondTableId { get; set; }
+        public ItemSubType ItemType { get; set; }
+        public byte Unknown1 { get; set; }
+        public byte SIA { get; set; }
+        public UInt16 Price { get; set; }
+        public ShopAvailability ShopAvailability { get; set; }
+        public byte Unknown2 { get; set; }
 
         private Item()
         {
         }
 
-        #endregion
-
-        #region Utilities
-
-        public static Item GetItemAtOffset( int offset )
+        protected Item( UInt16 offset, SubArray<byte> bytes )
         {
-            Item i = ItemList.Find(
-                delegate( Item j )
-                {
-                    return j.Offset == offset;
-                } );
-            return i;
+            Name = ItemNames[offset];
+            Offset = offset;
+            Palette = bytes[0];
+            Graphic = bytes[1];
+            EnemyLevel = bytes[2];
+            Utilities.CopyByteToBooleans( bytes[3], ref weapon, ref shield, ref head, ref body, ref accessory, ref blank1, ref rare, ref blank2 );
+            SecondTableId = bytes[4];
+            ItemType = (ItemSubType)bytes[5];
+            Unknown1 = bytes[6];
+            SIA = bytes[7];
+            Price = Utilities.BytesToUShort( bytes[8], bytes[9] );
+            ShopAvailability = ShopAvailability.AllAvailabilities[bytes[10]];
+            Unknown2 = bytes[11];
+        }
+
+        protected List<byte> ToByteArray()
+        {
+            List<byte> result = new List<byte>( 12 );
+            result.Add( Palette );
+            result.Add( Graphic );
+            result.Add( EnemyLevel );
+            result.Add( Utilities.ByteFromBooleans( weapon, shield, head, body, accessory, blank1, rare, blank2 ) );
+            result.Add( SecondTableId );
+            result.Add( (byte)ItemType );
+            result.Add( Unknown1 );
+            result.Add( SIA );
+            result.AddRange( Utilities.UShortToBytes( Price ) );
+            result.Add( ShopAvailability.ToByte() );
+            result.Add( Unknown2 );
+            return result;
+        }
+
+        public virtual byte[] ToFirstByteArray()
+        {
+            return new byte[0];
+        }
+
+        public virtual byte[] ToSecondByteArray()
+        {
+            return new byte[0];
         }
 
         public override string ToString()
         {
-            return string.Format( "{0} ({1:X03})", this.Name, this.Offset );
+            return Name;
         }
+    }
 
-        /// <summary>
-        /// Converts this Item into a series of bytes appropriate for putting into a character's struct
-        /// </summary>
-        /// <remarks>Returned byte[] is little-endian (least significant byte is in 0th index)</remarks>
-        public byte[] ToByteArray()
+    public class ShopAvailability
+    {
+        private static readonly string[] events = new string[] {
+            "<Blank>",
+            "Chapter 1 - Start",
+            "Chapter 1 - Enter Eagrose",
+            "Chapter 1 - Save Elmdore",
+            "Chapter 1 - Kill Milleuda",
+            "Chapter 2 - Start",
+            "Chapter 2 - Save Ovelia",
+            "Chapter 2 - Meet Dracleau",
+            "Chapter 2 - Save Agrias",
+            "Chapter 3 - Start",
+            "Chapter 3 - Zalmour",
+            "Chapter 3 - Meet Belias",
+            "Chapter 3 - Save Rapha",
+            "Chapter 4 - Start",
+            "Chapter 4 - Bethla",
+            "Chapter 4 - Kill Elmdore",
+            "Chapter 4 - Kill Zalbaag",
+            "<Blank>",
+            "<Blank>",
+            "<Blank>",
+            "<Blank>" };
+
+        private string name;
+        private static List<ShopAvailability> all;
+        public static List<ShopAvailability> AllAvailabilities
         {
-            return new byte[] { (byte)(Offset & 0xFF), (byte)((Offset & 0xFF00) >> 8) };
-        }
-
-        public static List<Item> GetAll( ItemType itemType )
-        {
-            List<Item> fullList = new List<Item>( ItemList );
-
-            foreach( Item i in fullList )
+            get
             {
-                if( i.Type != itemType )
+                if( all == null )
                 {
-                    fullList.Remove( i );
+                    all = new List<ShopAvailability>( 256 );
+                    for( byte i = 0; i < events.Length; i++ )
+                    {
+                        ShopAvailability a = new ShopAvailability();
+                        a.b = i;
+                        a.name = events[i];
+                        all.Add( a );
+                    }
+                    for( int i = events.Length; i <= 0xFF; i++ )
+                    {
+                        ShopAvailability a = new ShopAvailability();
+                        a.b = (byte)i;
+                        a.name = string.Format( "Unknown ({0})", i );
+                        all.Add( a );
+                    }
                 }
+
+                return all;
             }
-            return fullList;
         }
 
-        public static List<Item> GetAll( ItemSubType itemSubType )
+        private byte b;
+        private ShopAvailability()
         {
-            List<Item> fullList = new List<Item>( ItemList );
-
-            foreach( Item i in fullList )
-            {
-                if( i.SubType != itemSubType )
-                {
-                    fullList.Remove( i );
-                }
-            }
-
-            return fullList;
         }
 
-        #region IComparable Members
-
-        public int CompareTo( object obj )
+        public override string ToString()
         {
-            Item o = obj as Item;
-            if( o != null )
-            {
-                return (this.ToString().CompareTo( o.ToString() ));
-            }
-
-            return -1;
+            return name;
         }
 
-        #endregion
-
-        #region IEquatable<Item> Members
-
-        public bool Equals( Item other )
+        public byte ToByte()
         {
-            return (this.Offset == other.Offset);
+            return b;
         }
-
-        #endregion
-
-        #endregion
     }
 
     /// <summary>

@@ -2,6 +2,7 @@
 using System.Reflection;
 using FFTPatcher.Datatypes;
 using System.Text;
+using System.Collections.Generic;
 
 namespace FFTPatcher
 {
@@ -165,14 +166,65 @@ namespace FFTPatcher
         public static string GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
         {
             StringBuilder codeBuilder = new StringBuilder();
+            List<string> codes = new List<string>();
+            bool[] patched = new bool[newBytes.Length];
+
             for( int i = 0; i < newBytes.Length; i++ )
             {
-                if( newBytes[i] != oldBytes[i] )
+                if( ((i + 3) < newBytes.Length) &&
+                    (newBytes[i] != oldBytes[i]) && (!patched[i]) &&
+                    (newBytes[i + 1] != oldBytes[i + 1]) && (!patched[i + 1]) &&
+                    (newBytes[i + 2] != oldBytes[i + 2]) && (!patched[i + 2]) &&
+                    (newBytes[i + 3] != oldBytes[i + 3]) && (!patched[i + 3]) )
                 {
                     UInt32 addy = (UInt32)(offset + i);
-                    string code = "_L 0x0" + addy.ToString( "X7" ) + " 0x000000" + newBytes[i].ToString( "X2" );
-                    codeBuilder.AppendLine( code );
+                    string code = string.Format( "_L 0x2{0:X7} 0x{1:X2}{2:X2}{3:X2}{4:X2}",
+                        addy, newBytes[i], newBytes[i + 1], newBytes[i + 2], newBytes[i + 3] );
+                    codes.Add( code );
+                    patched[i] = true;
+                    patched[i + 1] = true;
+                    patched[i + 2] = true;
+                    patched[i + 3] = true;
+                    i += 3;
                 }
+            }
+
+            for( int i = 0; i < newBytes.Length; i++ )
+            {
+                if( ((i + 1) < newBytes.Length) &&
+                    (newBytes[i] != oldBytes[i]) && (!patched[i]) &&
+                    (newBytes[i + 1] != oldBytes[i + 1]) && (!patched[i + 1]) )
+                {
+                    UInt32 addy = (UInt32)(offset + i);
+                    string code = string.Format( "_L 0x1{0:X7} 0x0000{1:X2}{2:X2}",
+                        addy, newBytes[i], newBytes[i + 1] );
+                    codes.Add( code );
+                    patched[i] = true;
+                    patched[i + 1] = true;
+                    i++;
+                }
+            }
+
+            for( int i = 0; i < newBytes.Length; i++ )
+            {
+                if( (newBytes[i] != oldBytes[i]) && (!patched[i]) )
+                {
+                    UInt32 addy = (UInt32)(offset + i);
+                    string code = string.Format( "_L 0x0{0:X7} 0x000000{1:X2}",
+                        addy, newBytes[i] );
+                    codes.Add( code );
+                    patched[i] = true;
+                }
+            }
+
+            codes.Sort( new Comparison<string>(
+                delegate( string s, string t )
+                {
+                    return s.Substring( 6 ).CompareTo( t.Substring( 6 ) );
+                } ) );
+            foreach( string s in codes )
+            {
+                codeBuilder.AppendLine( s );
             }
 
             return codeBuilder.ToString();

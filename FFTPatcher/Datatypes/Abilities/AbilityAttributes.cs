@@ -10,7 +10,7 @@ namespace FFTPatcher.Datatypes
         public byte Formula;
         public byte X;
         public byte Y;
-        public byte StatusMagic;
+        public byte InflictStatus;
         public byte CT;
         public byte MPCost;
 
@@ -84,7 +84,7 @@ namespace FFTPatcher.Datatypes
             Formula = second[8];
             X = second[9];
             Y = second[10];
-            StatusMagic = second[11];
+            InflictStatus = second[11];
             CT = second[12];
             MPCost = second[13];
         }
@@ -103,7 +103,7 @@ namespace FFTPatcher.Datatypes
             result[8] = Formula;
             result[9] = X;
             result[10] = Y;
-            result[11] = StatusMagic;
+            result[11] = InflictStatus;
             result[12] = CT;
             result[13] = MPCost;
 

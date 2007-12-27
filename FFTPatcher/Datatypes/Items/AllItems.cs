@@ -119,8 +119,8 @@ namespace FFTPatcher.Datatypes
         public string GenerateCodes()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
             sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
+            sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
             return sb.ToString();
         }
     }

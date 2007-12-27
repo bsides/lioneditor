@@ -10,7 +10,7 @@ namespace FFTPatcher.Editors
 
         private List<NumericUpDown> spinners;
         private static readonly List<string> FieldNames = new List<string>( new string[] {
-            "Range", "Effect", "Vertical", "Formula", "X", "Y", "StatusMagic", "CT", "MPCost" } );
+            "Range", "Effect", "Vertical", "Formula", "X", "Y", "InflictStatus", "CT", "MPCost" } );
         private static readonly List<string> FlagNames = new List<string>( new string[] {
             "Blank6", "Blank7", "WeaponRange", "VerticalFixed", "VerticalTolerance", "WeaponStrike", "Auto", "TargetSelf",
             "HitEnemies", "HitAllies", "Blank8", "FollowTarget", "RandomFire", "LinearAttack", "ThreeDirections", "HitCaster",
@@ -55,7 +55,7 @@ namespace FFTPatcher.Editors
             formulaSpinner.Value = attributes.Formula;
             xSpinner.Value = attributes.X;
             ySpinner.Value = attributes.Y;
-            statusSpinner.Value = attributes.StatusMagic;
+            statusSpinner.Value = attributes.InflictStatus;
             ctSpinner.Value = attributes.CT;
             mpSpinner.Value = attributes.MPCost;
 

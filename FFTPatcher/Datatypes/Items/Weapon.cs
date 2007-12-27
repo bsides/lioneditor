@@ -22,7 +22,7 @@ namespace FFTPatcher.Datatypes
         public byte WeaponPower { get; set; }
         public byte EvadePercentage { get; set; }
         public Elements Elements { get; private set; }
-        public byte SpellStatus { get; set; }
+        public byte InflictStatus { get; set; }
 
         public Weapon( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> weaponBytes )
             : base( offset, itemBytes )
@@ -34,7 +34,7 @@ namespace FFTPatcher.Datatypes
             WeaponPower = weaponBytes[4];
             EvadePercentage = weaponBytes[5];
             Elements = new Elements( weaponBytes[6] );
-            SpellStatus = weaponBytes[7];
+            InflictStatus = weaponBytes[7];
         }
 
         public byte[] ToItemByteArray()
@@ -52,7 +52,7 @@ namespace FFTPatcher.Datatypes
             result[4] = WeaponPower;
             result[5] = EvadePercentage;
             result[6] = Elements.ToByte();
-            result[7] = SpellStatus;
+            result[7] = InflictStatus;
             return result;
         }
 

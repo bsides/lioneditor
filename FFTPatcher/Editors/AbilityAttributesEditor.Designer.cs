@@ -347,7 +347,7 @@
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new System.Drawing.Size(74, 13);
             statusLabel.TabIndex = 7;
-            statusLabel.Text = "Status/Magic:";
+            statusLabel.Text = "Inflict Status:";
             // 
             // yLabel
             // 

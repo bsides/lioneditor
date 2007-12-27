@@ -294,7 +294,7 @@
             spellStatusLabel.Name = "spellStatusLabel";
             spellStatusLabel.Size = new System.Drawing.Size( 65, 13 );
             spellStatusLabel.TabIndex = 21;
-            spellStatusLabel.Text = "Spell/Status";
+            spellStatusLabel.Text = "Inflict Status";
             // 
             // percentLabel2
             // 
@@ -411,8 +411,8 @@
             itemSpellStatusLabel.Name = "itemSpellStatusLabel";
             itemSpellStatusLabel.Size = new System.Drawing.Size( 65, 13 );
             itemSpellStatusLabel.TabIndex = 5;
-            itemSpellStatusLabel.Tag = "SpellStatus";
-            itemSpellStatusLabel.Text = "Spell/Status";
+            itemSpellStatusLabel.Tag = "InflictStatus";
+            itemSpellStatusLabel.Text = "Inflict Status";
             // 
             // paletteSpinner
             // 
@@ -445,7 +445,7 @@
             0} );
             this.graphicSpinner.Name = "graphicSpinner";
             this.graphicSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.graphicSpinner.TabIndex = 2;
+            this.graphicSpinner.TabIndex = 1;
             this.graphicSpinner.Tag = "Graphic";
             this.graphicSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.graphicSpinner.Value = new decimal( new int[] {
@@ -484,7 +484,7 @@
             0} );
             this.enemyLevelSpinner.Name = "enemyLevelSpinner";
             this.enemyLevelSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.enemyLevelSpinner.TabIndex = 8;
+            this.enemyLevelSpinner.TabIndex = 2;
             this.enemyLevelSpinner.Tag = "EnemyLevel";
             this.enemyLevelSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.enemyLevelSpinner.Value = new decimal( new int[] {
@@ -500,7 +500,7 @@
             this.itemTypeComboBox.Location = new System.Drawing.Point( 90, 65 );
             this.itemTypeComboBox.Name = "itemTypeComboBox";
             this.itemTypeComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.itemTypeComboBox.TabIndex = 10;
+            this.itemTypeComboBox.TabIndex = 3;
             this.itemTypeComboBox.Tag = "ItemType";
             // 
             // priceSpinner
@@ -513,7 +513,7 @@
             0} );
             this.priceSpinner.Name = "priceSpinner";
             this.priceSpinner.Size = new System.Drawing.Size( 54, 20 );
-            this.priceSpinner.TabIndex = 11;
+            this.priceSpinner.TabIndex = 5;
             this.priceSpinner.Tag = "Price";
             this.priceSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.priceSpinner.Value = new decimal( new int[] {
@@ -529,7 +529,7 @@
             this.shopAvailabilityComboBox.Location = new System.Drawing.Point( 90, 129 );
             this.shopAvailabilityComboBox.Name = "shopAvailabilityComboBox";
             this.shopAvailabilityComboBox.Size = new System.Drawing.Size( 174, 21 );
-            this.shopAvailabilityComboBox.TabIndex = 12;
+            this.shopAvailabilityComboBox.TabIndex = 6;
             this.shopAvailabilityComboBox.Tag = "ShopAvailability";
             // 
             // itemAttributesCheckedListBox
@@ -547,7 +547,7 @@
             this.itemAttributesCheckedListBox.Location = new System.Drawing.Point( 270, 4 );
             this.itemAttributesCheckedListBox.Name = "itemAttributesCheckedListBox";
             this.itemAttributesCheckedListBox.Size = new System.Drawing.Size( 107, 124 );
-            this.itemAttributesCheckedListBox.TabIndex = 17;
+            this.itemAttributesCheckedListBox.TabIndex = 7;
             // 
             // weaponPanel
             // 
@@ -570,7 +570,7 @@
             this.weaponPanel.Location = new System.Drawing.Point( 4, 159 );
             this.weaponPanel.Name = "weaponPanel";
             this.weaponPanel.Size = new System.Drawing.Size( 376, 167 );
-            this.weaponPanel.TabIndex = 18;
+            this.weaponPanel.TabIndex = 12;
             // 
             // weaponAttributesCheckedListBox
             // 
@@ -587,7 +587,7 @@
             this.weaponAttributesCheckedListBox.Location = new System.Drawing.Point( 266, 21 );
             this.weaponAttributesCheckedListBox.Name = "weaponAttributesCheckedListBox";
             this.weaponAttributesCheckedListBox.Size = new System.Drawing.Size( 107, 124 );
-            this.weaponAttributesCheckedListBox.TabIndex = 23;
+            this.weaponAttributesCheckedListBox.TabIndex = 5;
             // 
             // weaponElementsEditor
             // 
@@ -598,6 +598,7 @@
             this.weaponElementsEditor.Name = "weaponElementsEditor";
             this.weaponElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.weaponElementsEditor.TabIndex = 22;
+            this.weaponElementsEditor.TabStop = false;
             // 
             // weaponSpellStatusSpinner
             // 
@@ -610,8 +611,8 @@
             0} );
             this.weaponSpellStatusSpinner.Name = "weaponSpellStatusSpinner";
             this.weaponSpellStatusSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponSpellStatusSpinner.TabIndex = 15;
-            this.weaponSpellStatusSpinner.Tag = "SpellStatus";
+            this.weaponSpellStatusSpinner.TabIndex = 4;
+            this.weaponSpellStatusSpinner.Tag = "InflictStatus";
             this.weaponSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.weaponSpellStatusSpinner.Value = new decimal( new int[] {
             255,
@@ -630,7 +631,7 @@
             0} );
             this.weaponFormulaSpinner.Name = "weaponFormulaSpinner";
             this.weaponFormulaSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponFormulaSpinner.TabIndex = 13;
+            this.weaponFormulaSpinner.TabIndex = 1;
             this.weaponFormulaSpinner.Tag = "Formula";
             this.weaponFormulaSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.weaponFormulaSpinner.Value = new decimal( new int[] {
@@ -649,7 +650,7 @@
             0} );
             this.weaponEvadePercentageSpinner.Name = "weaponEvadePercentageSpinner";
             this.weaponEvadePercentageSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponEvadePercentageSpinner.TabIndex = 11;
+            this.weaponEvadePercentageSpinner.TabIndex = 3;
             this.weaponEvadePercentageSpinner.Tag = "EvadePercentage";
             this.weaponEvadePercentageSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.weaponEvadePercentageSpinner.Value = new decimal( new int[] {
@@ -668,7 +669,7 @@
             0} );
             this.weaponPowerSpinner.Name = "weaponPowerSpinner";
             this.weaponPowerSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponPowerSpinner.TabIndex = 10;
+            this.weaponPowerSpinner.TabIndex = 2;
             this.weaponPowerSpinner.Tag = "WeaponPower";
             this.weaponPowerSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.weaponPowerSpinner.Value = new decimal( new int[] {
@@ -687,7 +688,7 @@
             0} );
             this.weaponRangeSpinner.Name = "weaponRangeSpinner";
             this.weaponRangeSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponRangeSpinner.TabIndex = 9;
+            this.weaponRangeSpinner.TabIndex = 0;
             this.weaponRangeSpinner.Tag = "Range";
             this.weaponRangeSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.weaponRangeSpinner.Value = new decimal( new int[] {
@@ -707,7 +708,7 @@
             this.shieldPanel.Location = new System.Drawing.Point( 4, 159 );
             this.shieldPanel.Name = "shieldPanel";
             this.shieldPanel.Size = new System.Drawing.Size( 376, 167 );
-            this.shieldPanel.TabIndex = 19;
+            this.shieldPanel.TabIndex = 11;
             // 
             // shieldMagicBlockRateSpinner
             // 
@@ -746,7 +747,7 @@
             this.armorPanel.Location = new System.Drawing.Point( 4, 159 );
             this.armorPanel.Name = "armorPanel";
             this.armorPanel.Size = new System.Drawing.Size( 376, 167 );
-            this.armorPanel.TabIndex = 20;
+            this.armorPanel.TabIndex = 10;
             // 
             // armorMPBonusSpinner
             // 
@@ -758,7 +759,7 @@
             0} );
             this.armorMPBonusSpinner.Name = "armorMPBonusSpinner";
             this.armorMPBonusSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.armorMPBonusSpinner.TabIndex = 7;
+            this.armorMPBonusSpinner.TabIndex = 1;
             this.armorMPBonusSpinner.Tag = "MPBonus";
             this.armorMPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.armorMPBonusSpinner.Value = new decimal( new int[] {
@@ -777,7 +778,7 @@
             0} );
             this.armorHPBonusSpinner.Name = "armorHPBonusSpinner";
             this.armorHPBonusSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.armorHPBonusSpinner.TabIndex = 6;
+            this.armorHPBonusSpinner.TabIndex = 0;
             this.armorHPBonusSpinner.Tag = "HPBonus";
             this.armorHPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.armorHPBonusSpinner.Value = new decimal( new int[] {
@@ -797,7 +798,7 @@
             this.accessoryPanel.Location = new System.Drawing.Point( 4, 159 );
             this.accessoryPanel.Name = "accessoryPanel";
             this.accessoryPanel.Size = new System.Drawing.Size( 376, 167 );
-            this.accessoryPanel.TabIndex = 20;
+            this.accessoryPanel.TabIndex = 9;
             // 
             // accessoryMagicEvadeRateSpinner
             // 
@@ -838,7 +839,7 @@
             this.chemistItemPanel.Location = new System.Drawing.Point( 4, 159 );
             this.chemistItemPanel.Name = "chemistItemPanel";
             this.chemistItemPanel.Size = new System.Drawing.Size( 376, 167 );
-            this.chemistItemPanel.TabIndex = 21;
+            this.chemistItemPanel.TabIndex = 8;
             // 
             // chemistItemSpellStatusSpinner
             // 
@@ -851,7 +852,7 @@
             0} );
             this.chemistItemSpellStatusSpinner.Name = "chemistItemSpellStatusSpinner";
             this.chemistItemSpellStatusSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.chemistItemSpellStatusSpinner.TabIndex = 4;
+            this.chemistItemSpellStatusSpinner.TabIndex = 2;
             this.chemistItemSpellStatusSpinner.Tag = "Formula";
             this.chemistItemSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.chemistItemSpellStatusSpinner.Value = new decimal( new int[] {
@@ -905,11 +906,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add( this.chemistItemPanel );
-            this.Controls.Add( this.accessoryPanel );
-            this.Controls.Add( this.armorPanel );
-            this.Controls.Add( this.shieldPanel );
-            this.Controls.Add( this.weaponPanel );
             this.Controls.Add( this.itemAttributesCheckedListBox );
             this.Controls.Add( shopAvailabilityLabel );
             this.Controls.Add( priceLabel );
@@ -928,6 +924,11 @@
             this.Controls.Add( this.graphicSpinner );
             this.Controls.Add( hLabel5 );
             this.Controls.Add( this.paletteSpinner );
+            this.Controls.Add( this.chemistItemPanel );
+            this.Controls.Add( this.accessoryPanel );
+            this.Controls.Add( this.armorPanel );
+            this.Controls.Add( this.shieldPanel );
+            this.Controls.Add( this.weaponPanel );
             this.Name = "ItemEditor";
             this.Size = new System.Drawing.Size( 383, 329 );
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).EndInit();

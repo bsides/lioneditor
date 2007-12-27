@@ -77,7 +77,7 @@ namespace FFTPatcher.Editors
                 weaponFormulaSpinner.Value = (item as Weapon).Formula;
                 weaponPowerSpinner.Value = (item as Weapon).WeaponPower;
                 weaponEvadePercentageSpinner.Value = (item as Weapon).EvadePercentage;
-                weaponSpellStatusSpinner.Value = (item as Weapon).SpellStatus;
+                weaponSpellStatusSpinner.Value = (item as Weapon).InflictStatus;
                 weaponElementsEditor.Elements = (item as Weapon).Elements;
             }
             else if( item is Shield )
@@ -98,7 +98,7 @@ namespace FFTPatcher.Editors
             else if( item is ChemistItem )
             {
                 chemistItemFormulaSpinner.Value = (item as ChemistItem).Formula;
-                chemistItemSpellStatusSpinner.Value = (item as ChemistItem).SpellStatus;
+                chemistItemSpellStatusSpinner.Value = (item as ChemistItem).InflictStatus;
                 chemistItemSpellStatusSpinner.Value = (item as ChemistItem).X;
             }
 
@@ -160,7 +160,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 Weapon w = item as Weapon;
-                Utilities.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue );
+                Utilities.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -168,7 +168,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                Utilities.SetFieldOrProperty( item, itemBools[e.Index], e.NewValue );
+                Utilities.SetFieldOrProperty( item, itemBools[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 

@@ -10,7 +10,7 @@ using FFTPatcher.Properties;
 
 namespace FFTPatcher
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         public static AllAbilities AllAbilities { get; private set; }
         public static AllJobs AllJobs { get; private set; }
@@ -24,7 +24,7 @@ namespace FFTPatcher
         public static AllInflictStatuses AllInflictStatuses { get; private set; }
         public static AllItemAttributes AllItemAttributes { get; private set; }
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             AllAbilities = allAbilitiesEditor1.AllAbilities;

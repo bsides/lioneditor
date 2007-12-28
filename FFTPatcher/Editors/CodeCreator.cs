@@ -14,60 +14,60 @@ namespace FFTPatcher.Editors
         protected override void OnVisibleChanged( EventArgs e )
         {
             StringBuilder sb = new StringBuilder();
-            if( Form1.AllAbilities != null )
+            if( MainForm.AllAbilities != null )
             {
                 sb.AppendLine( "_C0 Abilities" );
-                sb.AppendLine( Form1.AllAbilities.GenerateCodes() );
+                sb.AppendLine( MainForm.AllAbilities.GenerateCodes() );
             }
-            if( Form1.AllJobs != null )
+            if( MainForm.AllJobs != null )
             {
                 sb.AppendLine( "_C0 Jobs" );
-                sb.AppendLine( Form1.AllJobs.GenerateCodes() );
+                sb.AppendLine( MainForm.AllJobs.GenerateCodes() );
             }
-            if( Form1.AllSkillSets != null )
+            if( MainForm.AllSkillSets != null )
             {
                 sb.AppendLine( "_C0 Skill Sets" );
-                sb.AppendLine( Form1.AllSkillSets.GenerateCodes() );
+                sb.AppendLine( MainForm.AllSkillSets.GenerateCodes() );
             }
-            if( Form1.AllMonsterSkills != null )
+            if( MainForm.AllMonsterSkills != null )
             {
                 sb.AppendLine( "_C0 Monster Skill Sets" );
-                sb.AppendLine( Form1.AllMonsterSkills.GenerateCodes() );
+                sb.AppendLine( MainForm.AllMonsterSkills.GenerateCodes() );
             }
-            if( Form1.AllActionMenus != null )
+            if( MainForm.AllActionMenus != null )
             {
                 sb.AppendLine( "_C0 Action Menus" );
-                sb.AppendLine( Form1.AllActionMenus.GenerateCodes() );
+                sb.AppendLine( MainForm.AllActionMenus.GenerateCodes() );
             }
-            if( Form1.AllStatusAttributes != null )
+            if( MainForm.AllStatusAttributes != null )
             {
                 sb.AppendLine( "_C0 Status Effects" );
-                sb.AppendLine( Form1.AllStatusAttributes.GenerateCodes() );
+                sb.AppendLine( MainForm.AllStatusAttributes.GenerateCodes() );
             }
-            if( Form1.AllPoachProbabilities != null )
+            if( MainForm.AllPoachProbabilities != null )
             {
                 sb.AppendLine( "_C0 Poaching" );
-                sb.AppendLine( Form1.AllPoachProbabilities.GenerateCodes() );
+                sb.AppendLine( MainForm.AllPoachProbabilities.GenerateCodes() );
             }
-            if( Form1.JobLevels != null )
+            if( MainForm.JobLevels != null )
             {
                 sb.AppendLine( "_C0 Job Levels" );
-                sb.AppendLine( Form1.JobLevels.GenerateCodes() );
+                sb.AppendLine( MainForm.JobLevels.GenerateCodes() );
             }
-            if( Form1.AllItems != null )
+            if( MainForm.AllItems != null )
             {
                 sb.AppendLine( "_C0 Items" );
-                sb.AppendLine( Form1.AllItems.GenerateCodes() );
+                sb.AppendLine( MainForm.AllItems.GenerateCodes() );
             }
-            if( Form1.AllItemAttributes != null )
+            if( MainForm.AllItemAttributes != null )
             {
                 sb.AppendLine( "_C0 Item Attributes" );
-                sb.AppendLine( Form1.AllItemAttributes.GenerateCodes() );
+                sb.AppendLine( MainForm.AllItemAttributes.GenerateCodes() );
             }
-            if( Form1.AllInflictStatuses != null )
+            if( MainForm.AllInflictStatuses != null )
             {
                 sb.AppendLine( "_C0 Inflict Statuses" );
-                sb.AppendLine( Form1.AllInflictStatuses.GenerateCodes() );
+                sb.AppendLine( MainForm.AllInflictStatuses.GenerateCodes() );
             }
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );

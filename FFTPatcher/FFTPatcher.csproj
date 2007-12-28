@@ -354,6 +354,11 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="PSXResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PSXResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -371,6 +376,16 @@
     <None Include="Resources\PSP\PoachProbabilities.bin" />
     <None Include="Resources\PSP\SkillSetsBin.bin" />
     <None Include="Resources\PSP\StatusAttributes.bin" />
+    <None Include="Resources\PSX-US\Abilities.bin" />
+    <None Include="Resources\PSX-US\InflictStatuses.bin" />
+    <None Include="Resources\PSX-US\JobLevels.bin" />
+    <None Include="Resources\PSX-US\Jobs.bin" />
+    <None Include="Resources\PSX-US\MonsterSkills.bin" />
+    <None Include="Resources\PSX-US\OldItemAttributes.bin" />
+    <None Include="Resources\PSX-US\OldItems.bin" />
+    <None Include="Resources\PSX-US\PoachProbabilities.bin" />
+    <None Include="Resources\PSX-US\SkillSetsBin.bin" />
+    <None Include="Resources\PSX-US\StatusAttributes.bin" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -380,6 +395,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PSXResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PSXResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities.cs" />
   </ItemGroup>

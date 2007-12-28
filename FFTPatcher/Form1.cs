@@ -22,6 +22,8 @@ namespace FFTPatcher
         public static JobLevels JobLevels { get; private set; }
         public static AllItems AllItems { get; private set; }
         public static AllInflictStatuses AllInflictStatuses { get; private set; }
+        public static AllItemAttributes AllItemAttributes { get; private set; }
+
         public Form1()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace FFTPatcher
             JobLevels = jobLevelsEditor1.JobLevels;
             AllItems = allItemsEditor1.AllItems;
             AllInflictStatuses = allInflictStatusesEditor1.AllInflictStatuses;
+            AllItemAttributes = allItemAttributesEditor1.AllItemAttributes;
         }
     }
 }

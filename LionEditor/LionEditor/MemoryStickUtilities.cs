@@ -18,9 +18,7 @@
 */
 
 using System;
-using System.Text;
 using System.IO;
-using System.Windows.Forms;
 using LionEditor.Properties;
 
 namespace LionEditor

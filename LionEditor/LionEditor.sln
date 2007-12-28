@@ -1,8 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LionEditor", "LionEditor\LionEditor.csproj", "{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kernel", "kernel", "{D63D8F75-18B1-4844-B0BD-8DD8852EBEC3}"
 	ProjectSection(SolutionItems) = preProject
 		kernel\main.c = kernel\main.c
@@ -17,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.txt = readme.txt
 		testCharacter.hex = testCharacter.hex
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LionEditor", "LionEditor\LionEditor.csproj", "{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

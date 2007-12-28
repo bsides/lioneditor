@@ -19,9 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using LionEditor.Properties;
 using System.Xml;
+using LionEditor.Properties;
 
 namespace LionEditor
 {

@@ -1,6 +1,11 @@
-Lion Editor v0.107
+Lion Editor v0.138
 
 See http://code.google.com/p/lioneditor/wiki/Instructions for instructions.
+
+New since v0.107
+    Can now modify each character's kills. Useful for unlocking Dark Knight.
+    Fixed inventory issue where the Fitting Room stopped working
+    Fixed bug where you couldn't increase Speed
 
 New since v0.95:
     Fixed issue where Artefacts get messed up

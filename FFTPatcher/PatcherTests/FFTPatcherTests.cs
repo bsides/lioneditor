@@ -236,7 +236,6 @@ namespace PatcherTests
             Assert.That( all.TimeMage.Chemist, Is.EqualTo( 2 ) );
 
             Assert.That( all.WhiteMage.Chemist, Is.EqualTo( 2 ) );
-
         }
     }
 }

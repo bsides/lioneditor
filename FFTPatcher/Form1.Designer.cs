@@ -30,8 +30,13 @@
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.abilitiesPage = new System.Windows.Forms.TabPage();
+            this.allAbilitiesEditor1 = new FFTPatcher.Editors.AllAbilitiesEditor();
+            this.itemsTabPage = new System.Windows.Forms.TabPage();
+            this.allItemsEditor1 = new FFTPatcher.Editors.AllItemsEditor();
             this.jobsPage = new System.Windows.Forms.TabPage();
             this.allJobsEditor1 = new FFTPatcher.Editors.AllJobsEditor();
+            this.jobLevelsTab = new System.Windows.Forms.TabPage();
+            this.jobLevelsEditor1 = new FFTPatcher.Editors.JobLevelsEditor();
             this.skillSetsPage = new System.Windows.Forms.TabPage();
             this.allSkillSetsEditor1 = new FFTPatcher.Editors.AllSkillSetsEditor();
             this.monsterSkillsTab = new System.Windows.Forms.TabPage();
@@ -40,39 +45,42 @@
             this.allActionMenusEditor1 = new FFTPatcher.Editors.AllActionMenusEditor();
             this.statusEffectsTab = new System.Windows.Forms.TabPage();
             this.allStatusAttributesEditor1 = new FFTPatcher.Editors.AllStatusAttributesEditor();
+            this.inflictStatusesTabPage = new System.Windows.Forms.TabPage();
+            this.allInflictStatusesEditor1 = new FFTPatcher.Editors.AllInflictStatusesEditor();
             this.poachingTabPage = new System.Windows.Forms.TabPage();
+            this.allPoachProbabilitiesEditor1 = new FFTPatcher.Editors.AllPoachProbabilitiesEditor();
             this.codesTab = new System.Windows.Forms.TabPage();
             this.codeCreator1 = new FFTPatcher.Editors.CodeCreator();
-            this.jobLevelsTab = new System.Windows.Forms.TabPage();
-            this.jobLevelsEditor1 = new FFTPatcher.Editors.JobLevelsEditor();
-            this.allAbilitiesEditor1 = new FFTPatcher.Editors.AllAbilitiesEditor();
-            this.itemsTabPage = new System.Windows.Forms.TabPage();
-            this.allItemsEditor1 = new FFTPatcher.Editors.AllItemsEditor();
-            this.allPoachProbabilitiesEditor1 = new FFTPatcher.Editors.AllPoachProbabilitiesEditor();
+            this.itemAttributesTabPage = new System.Windows.Forms.TabPage();
+            this.allItemAttributesEditor1 = new FFTPatcher.Editors.AllItemAttributesEditor();
             this.tabControl.SuspendLayout();
             this.abilitiesPage.SuspendLayout();
+            this.itemsTabPage.SuspendLayout();
             this.jobsPage.SuspendLayout();
+            this.jobLevelsTab.SuspendLayout();
             this.skillSetsPage.SuspendLayout();
             this.monsterSkillsTab.SuspendLayout();
             this.actionMenusTabPage.SuspendLayout();
             this.statusEffectsTab.SuspendLayout();
+            this.inflictStatusesTabPage.SuspendLayout();
             this.poachingTabPage.SuspendLayout();
             this.codesTab.SuspendLayout();
-            this.jobLevelsTab.SuspendLayout();
-            this.itemsTabPage.SuspendLayout();
+            this.itemAttributesTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add( this.abilitiesPage );
+            this.tabControl.Controls.Add( this.itemsTabPage );
+            this.tabControl.Controls.Add( this.itemAttributesTabPage );
             this.tabControl.Controls.Add( this.jobsPage );
+            this.tabControl.Controls.Add( this.jobLevelsTab );
             this.tabControl.Controls.Add( this.skillSetsPage );
             this.tabControl.Controls.Add( this.monsterSkillsTab );
             this.tabControl.Controls.Add( this.actionMenusTabPage );
             this.tabControl.Controls.Add( this.statusEffectsTab );
+            this.tabControl.Controls.Add( this.inflictStatusesTabPage );
             this.tabControl.Controls.Add( this.poachingTabPage );
-            this.tabControl.Controls.Add( this.jobLevelsTab );
-            this.tabControl.Controls.Add( this.itemsTabPage );
             this.tabControl.Controls.Add( this.codesTab );
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point( 0, 0 );
@@ -91,6 +99,33 @@
             this.abilitiesPage.TabIndex = 0;
             this.abilitiesPage.Text = "Abilities";
             this.abilitiesPage.UseVisualStyleBackColor = true;
+            // 
+            // allAbilitiesEditor1
+            // 
+            this.allAbilitiesEditor1.AutoSize = true;
+            this.allAbilitiesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allAbilitiesEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.allAbilitiesEditor1.Name = "allAbilitiesEditor1";
+            this.allAbilitiesEditor1.Size = new System.Drawing.Size( 677, 680 );
+            this.allAbilitiesEditor1.TabIndex = 0;
+            // 
+            // itemsTabPage
+            // 
+            this.itemsTabPage.Controls.Add( this.allItemsEditor1 );
+            this.itemsTabPage.Location = new System.Drawing.Point( 4, 22 );
+            this.itemsTabPage.Name = "itemsTabPage";
+            this.itemsTabPage.Size = new System.Drawing.Size( 683, 686 );
+            this.itemsTabPage.TabIndex = 9;
+            this.itemsTabPage.Text = "Items";
+            this.itemsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // allItemsEditor1
+            // 
+            this.allItemsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allItemsEditor1.Location = new System.Drawing.Point( 0, 0 );
+            this.allItemsEditor1.Name = "allItemsEditor1";
+            this.allItemsEditor1.Size = new System.Drawing.Size( 683, 686 );
+            this.allItemsEditor1.TabIndex = 0;
             // 
             // jobsPage
             // 
@@ -111,6 +146,28 @@
             this.allJobsEditor1.Name = "allJobsEditor1";
             this.allJobsEditor1.Size = new System.Drawing.Size( 677, 680 );
             this.allJobsEditor1.TabIndex = 0;
+            // 
+            // jobLevelsTab
+            // 
+            this.jobLevelsTab.Controls.Add( this.jobLevelsEditor1 );
+            this.jobLevelsTab.Location = new System.Drawing.Point( 4, 22 );
+            this.jobLevelsTab.Name = "jobLevelsTab";
+            this.jobLevelsTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.jobLevelsTab.Size = new System.Drawing.Size( 683, 686 );
+            this.jobLevelsTab.TabIndex = 8;
+            this.jobLevelsTab.Text = "Job Levels";
+            this.jobLevelsTab.UseVisualStyleBackColor = true;
+            // 
+            // jobLevelsEditor1
+            // 
+            this.jobLevelsEditor1.AutoScroll = true;
+            this.jobLevelsEditor1.AutoSize = true;
+            this.jobLevelsEditor1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.jobLevelsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.jobLevelsEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.jobLevelsEditor1.Name = "jobLevelsEditor1";
+            this.jobLevelsEditor1.Size = new System.Drawing.Size( 677, 680 );
+            this.jobLevelsEditor1.TabIndex = 0;
             // 
             // skillSetsPage
             // 
@@ -188,6 +245,25 @@
             this.allStatusAttributesEditor1.Size = new System.Drawing.Size( 677, 680 );
             this.allStatusAttributesEditor1.TabIndex = 0;
             // 
+            // inflictStatusesTabPage
+            // 
+            this.inflictStatusesTabPage.Controls.Add( this.allInflictStatusesEditor1 );
+            this.inflictStatusesTabPage.Location = new System.Drawing.Point( 4, 22 );
+            this.inflictStatusesTabPage.Name = "inflictStatusesTabPage";
+            this.inflictStatusesTabPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.inflictStatusesTabPage.Size = new System.Drawing.Size( 683, 686 );
+            this.inflictStatusesTabPage.TabIndex = 10;
+            this.inflictStatusesTabPage.Text = "Inflict Statuses";
+            this.inflictStatusesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // allInflictStatusesEditor1
+            // 
+            this.allInflictStatusesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allInflictStatusesEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.allInflictStatusesEditor1.Name = "allInflictStatusesEditor1";
+            this.allInflictStatusesEditor1.Size = new System.Drawing.Size( 677, 680 );
+            this.allInflictStatusesEditor1.TabIndex = 0;
+            // 
             // poachingTabPage
             // 
             this.poachingTabPage.Controls.Add( this.allPoachProbabilitiesEditor1 );
@@ -197,6 +273,14 @@
             this.poachingTabPage.TabIndex = 7;
             this.poachingTabPage.Text = "Poaching";
             this.poachingTabPage.UseVisualStyleBackColor = true;
+            // 
+            // allPoachProbabilitiesEditor1
+            // 
+            this.allPoachProbabilitiesEditor1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.allPoachProbabilitiesEditor1.Location = new System.Drawing.Point( 0, 0 );
+            this.allPoachProbabilitiesEditor1.Name = "allPoachProbabilitiesEditor1";
+            this.allPoachProbabilitiesEditor1.Size = new System.Drawing.Size( 419, 686 );
+            this.allPoachProbabilitiesEditor1.TabIndex = 0;
             // 
             // codesTab
             // 
@@ -217,62 +301,23 @@
             this.codeCreator1.Size = new System.Drawing.Size( 677, 680 );
             this.codeCreator1.TabIndex = 0;
             // 
-            // jobLevelsTab
+            // itemAttributesTabPage
             // 
-            this.jobLevelsTab.Controls.Add( this.jobLevelsEditor1 );
-            this.jobLevelsTab.Location = new System.Drawing.Point( 4, 22 );
-            this.jobLevelsTab.Name = "jobLevelsTab";
-            this.jobLevelsTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.jobLevelsTab.Size = new System.Drawing.Size( 683, 686 );
-            this.jobLevelsTab.TabIndex = 8;
-            this.jobLevelsTab.Text = "Job Levels";
-            this.jobLevelsTab.UseVisualStyleBackColor = true;
+            this.itemAttributesTabPage.Controls.Add( this.allItemAttributesEditor1 );
+            this.itemAttributesTabPage.Location = new System.Drawing.Point( 4, 22 );
+            this.itemAttributesTabPage.Name = "itemAttributesTabPage";
+            this.itemAttributesTabPage.Size = new System.Drawing.Size( 683, 686 );
+            this.itemAttributesTabPage.TabIndex = 11;
+            this.itemAttributesTabPage.Text = "Item Attributes";
+            this.itemAttributesTabPage.UseVisualStyleBackColor = true;
             // 
-            // jobLevelsEditor1
+            // allItemAttributesEditor1
             // 
-            this.jobLevelsEditor1.AutoScroll = true;
-            this.jobLevelsEditor1.AutoSize = true;
-            this.jobLevelsEditor1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.jobLevelsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.jobLevelsEditor1.Location = new System.Drawing.Point( 3, 3 );
-            this.jobLevelsEditor1.Name = "jobLevelsEditor1";
-            this.jobLevelsEditor1.Size = new System.Drawing.Size( 677, 680 );
-            this.jobLevelsEditor1.TabIndex = 0;
-            // 
-            // allAbilitiesEditor1
-            // 
-            this.allAbilitiesEditor1.AutoSize = true;
-            this.allAbilitiesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allAbilitiesEditor1.Location = new System.Drawing.Point( 3, 3 );
-            this.allAbilitiesEditor1.Name = "allAbilitiesEditor1";
-            this.allAbilitiesEditor1.Size = new System.Drawing.Size( 677, 680 );
-            this.allAbilitiesEditor1.TabIndex = 0;
-            // 
-            // itemsTabPage
-            // 
-            this.itemsTabPage.Controls.Add( this.allItemsEditor1 );
-            this.itemsTabPage.Location = new System.Drawing.Point( 4, 22 );
-            this.itemsTabPage.Name = "itemsTabPage";
-            this.itemsTabPage.Size = new System.Drawing.Size( 683, 686 );
-            this.itemsTabPage.TabIndex = 9;
-            this.itemsTabPage.Text = "Items";
-            this.itemsTabPage.UseVisualStyleBackColor = true;
-            // 
-            // allItemsEditor1
-            // 
-            this.allItemsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allItemsEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.allItemsEditor1.Name = "allItemsEditor1";
-            this.allItemsEditor1.Size = new System.Drawing.Size( 683, 686 );
-            this.allItemsEditor1.TabIndex = 0;
-            // 
-            // allPoachProbabilitiesEditor1
-            // 
-            this.allPoachProbabilitiesEditor1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.allPoachProbabilitiesEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.allPoachProbabilitiesEditor1.Name = "allPoachProbabilitiesEditor1";
-            this.allPoachProbabilitiesEditor1.Size = new System.Drawing.Size( 419, 686 );
-            this.allPoachProbabilitiesEditor1.TabIndex = 0;
+            this.allItemAttributesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allItemAttributesEditor1.Location = new System.Drawing.Point( 0, 0 );
+            this.allItemAttributesEditor1.Name = "allItemAttributesEditor1";
+            this.allItemAttributesEditor1.Size = new System.Drawing.Size( 683, 686 );
+            this.allItemAttributesEditor1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -287,17 +332,19 @@
             this.tabControl.ResumeLayout( false );
             this.abilitiesPage.ResumeLayout( false );
             this.abilitiesPage.PerformLayout();
+            this.itemsTabPage.ResumeLayout( false );
             this.jobsPage.ResumeLayout( false );
+            this.jobLevelsTab.ResumeLayout( false );
+            this.jobLevelsTab.PerformLayout();
             this.skillSetsPage.ResumeLayout( false );
             this.monsterSkillsTab.ResumeLayout( false );
             this.monsterSkillsTab.PerformLayout();
             this.actionMenusTabPage.ResumeLayout( false );
             this.statusEffectsTab.ResumeLayout( false );
+            this.inflictStatusesTabPage.ResumeLayout( false );
             this.poachingTabPage.ResumeLayout( false );
             this.codesTab.ResumeLayout( false );
-            this.jobLevelsTab.ResumeLayout( false );
-            this.jobLevelsTab.PerformLayout();
-            this.itemsTabPage.ResumeLayout( false );
+            this.itemAttributesTabPage.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -325,6 +372,10 @@
         private System.Windows.Forms.TabPage itemsTabPage;
         private FFTPatcher.Editors.AllItemsEditor allItemsEditor1;
         private FFTPatcher.Editors.AllPoachProbabilitiesEditor allPoachProbabilitiesEditor1;
+        private System.Windows.Forms.TabPage inflictStatusesTabPage;
+        private FFTPatcher.Editors.AllInflictStatusesEditor allInflictStatusesEditor1;
+        private System.Windows.Forms.TabPage itemAttributesTabPage;
+        private FFTPatcher.Editors.AllItemAttributesEditor allItemAttributesEditor1;
     }
 }
 

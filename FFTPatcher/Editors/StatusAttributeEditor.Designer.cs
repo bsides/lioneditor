@@ -55,6 +55,69 @@
             ((System.ComponentModel.ISupportInitialize)(this.ctSpinner)).BeginInit();
             this.SuspendLayout();
             // 
+            // blank1Label
+            // 
+            blank1Label.AutoSize = true;
+            blank1Label.Location = new System.Drawing.Point( 16, 11 );
+            blank1Label.Name = "blank1Label";
+            blank1Label.Size = new System.Drawing.Size( 56, 13 );
+            blank1Label.TabIndex = 6;
+            blank1Label.Text = "Unknown:";
+            // 
+            // blank2Label
+            // 
+            blank2Label.AutoSize = true;
+            blank2Label.Location = new System.Drawing.Point( 16, 37 );
+            blank2Label.Name = "blank2Label";
+            blank2Label.Size = new System.Drawing.Size( 56, 13 );
+            blank2Label.TabIndex = 7;
+            blank2Label.Text = "Unknown:";
+            // 
+            // orderLabel
+            // 
+            orderLabel.AutoSize = true;
+            orderLabel.Location = new System.Drawing.Point( 16, 63 );
+            orderLabel.Name = "orderLabel";
+            orderLabel.Size = new System.Drawing.Size( 36, 13 );
+            orderLabel.TabIndex = 8;
+            orderLabel.Text = "Order:";
+            // 
+            // ctLabel
+            // 
+            ctLabel.AutoSize = true;
+            ctLabel.Location = new System.Drawing.Point( 16, 89 );
+            ctLabel.Name = "ctLabel";
+            ctLabel.Size = new System.Drawing.Size( 24, 13 );
+            ctLabel.TabIndex = 9;
+            ctLabel.Text = "CT:";
+            // 
+            // hLabel1
+            // 
+            hLabel1.AutoSize = true;
+            hLabel1.Location = new System.Drawing.Point( 127, 11 );
+            hLabel1.Name = "hLabel1";
+            hLabel1.Size = new System.Drawing.Size( 13, 13 );
+            hLabel1.TabIndex = 43;
+            hLabel1.Text = "h";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point( 127, 37 );
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size( 13, 13 );
+            label1.TabIndex = 44;
+            label1.Text = "h";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point( 127, 63 );
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size( 13, 13 );
+            label2.TabIndex = 45;
+            label2.Text = "h";
+            // 
             // unknown1Spinner
             // 
             this.unknown1Spinner.Hexadecimal = true;
@@ -136,61 +199,21 @@
             // 
             // cancelStatusesEditor
             // 
-            this.cancelStatusesEditor.AutoSize = true;
-            this.cancelStatusesEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.cancelStatusesEditor.Location = new System.Drawing.Point( 3, 171 );
+            this.cancelStatusesEditor.Location = new System.Drawing.Point( 3, 139 );
             this.cancelStatusesEditor.Name = "cancelStatusesEditor";
-            this.cancelStatusesEditor.Size = new System.Drawing.Size( 507, 198 );
+            this.cancelStatusesEditor.Size = new System.Drawing.Size( 498, 179 );
             this.cancelStatusesEditor.Status = "Cancels";
             this.cancelStatusesEditor.Statuses = null;
             this.cancelStatusesEditor.TabIndex = 4;
             // 
             // cantStackStatusesEditor
             // 
-            this.cantStackStatusesEditor.AutoSize = true;
-            this.cantStackStatusesEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.cantStackStatusesEditor.Location = new System.Drawing.Point( 3, 375 );
+            this.cantStackStatusesEditor.Location = new System.Drawing.Point( 3, 320 );
             this.cantStackStatusesEditor.Name = "cantStackStatusesEditor";
-            this.cantStackStatusesEditor.Size = new System.Drawing.Size( 507, 198 );
+            this.cantStackStatusesEditor.Size = new System.Drawing.Size( 498, 179 );
             this.cantStackStatusesEditor.Status = "Can\'t Stack On Top Of";
             this.cantStackStatusesEditor.Statuses = null;
             this.cantStackStatusesEditor.TabIndex = 5;
-            // 
-            // blank1Label
-            // 
-            blank1Label.AutoSize = true;
-            blank1Label.Location = new System.Drawing.Point( 16, 11 );
-            blank1Label.Name = "blank1Label";
-            blank1Label.Size = new System.Drawing.Size( 56, 13 );
-            blank1Label.TabIndex = 6;
-            blank1Label.Text = "Unknown:";
-            // 
-            // blank2Label
-            // 
-            blank2Label.AutoSize = true;
-            blank2Label.Location = new System.Drawing.Point( 16, 37 );
-            blank2Label.Name = "blank2Label";
-            blank2Label.Size = new System.Drawing.Size( 56, 13 );
-            blank2Label.TabIndex = 7;
-            blank2Label.Text = "Unknown:";
-            // 
-            // orderLabel
-            // 
-            orderLabel.AutoSize = true;
-            orderLabel.Location = new System.Drawing.Point( 16, 63 );
-            orderLabel.Name = "orderLabel";
-            orderLabel.Size = new System.Drawing.Size( 36, 13 );
-            orderLabel.TabIndex = 8;
-            orderLabel.Text = "Order:";
-            // 
-            // ctLabel
-            // 
-            ctLabel.AutoSize = true;
-            ctLabel.Location = new System.Drawing.Point( 16, 89 );
-            ctLabel.Name = "ctLabel";
-            ctLabel.Size = new System.Drawing.Size( 24, 13 );
-            ctLabel.TabIndex = 9;
-            ctLabel.Text = "CT:";
             // 
             // checkedListBox
             // 
@@ -218,33 +241,6 @@
             this.checkedListBox.Size = new System.Drawing.Size( 269, 124 );
             this.checkedListBox.TabIndex = 10;
             // 
-            // hLabel1
-            // 
-            hLabel1.AutoSize = true;
-            hLabel1.Location = new System.Drawing.Point( 127, 11 );
-            hLabel1.Name = "hLabel1";
-            hLabel1.Size = new System.Drawing.Size( 13, 13 );
-            hLabel1.TabIndex = 43;
-            hLabel1.Text = "h";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point( 127, 37 );
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size( 13, 13 );
-            label1.TabIndex = 44;
-            label1.Text = "h";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point( 127, 63 );
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size( 13, 13 );
-            label2.TabIndex = 45;
-            label2.Text = "h";
-            // 
             // StatusAttributeEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -266,7 +262,7 @@
             this.Controls.Add( this.unknown2Spinner );
             this.Controls.Add( this.unknown1Spinner );
             this.Name = "StatusAttributeEditor";
-            this.Size = new System.Drawing.Size( 513, 576 );
+            this.Size = new System.Drawing.Size( 504, 502 );
             ((System.ComponentModel.ISupportInitialize)(this.unknown1Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown2Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderSpinner)).EndInit();

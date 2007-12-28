@@ -95,6 +95,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] InflictStatusesBin {
+            get {
+                object obj = ResourceManager.GetObject("InflictStatusesBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
@@ -160,9 +167,23 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] NewItemAttributesBin {
+            get {
+                object obj = ResourceManager.GetObject("NewItemAttributesBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] NewItemsBin {
             get {
                 object obj = ResourceManager.GetObject("NewItemsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] OldItemAttributesBin {
+            get {
+                object obj = ResourceManager.GetObject("OldItemAttributesBin", resourceCulture);
                 return ((byte[])(obj));
             }
         }

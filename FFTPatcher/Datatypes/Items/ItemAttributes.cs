@@ -1,0 +1,120 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using FFTPatcher.Properties;
+
+namespace FFTPatcher.Datatypes
+{
+    public class ItemAttributes
+    {
+        public byte Value { get; private set; }
+
+        public byte PA { get; set; }
+        public byte MA { get; set; }
+        public byte Speed { get; set; }
+        public byte Move { get; set; }
+        public byte Jump { get; set; }
+
+        public Statuses PermanentStatuses { get; private set; }
+        public Statuses StatusImmunity { get; private set; }
+        public Statuses StartingStatuses { get; private set; }
+
+        public Elements Absorb { get; private set; }
+        public Elements Cancel { get; private set; }
+        public Elements Half { get; private set; }
+        public Elements Weak { get; private set; }
+        public Elements Strong { get; private set; }
+
+        public ItemAttributes( byte value, SubArray<byte> bytes )
+        {
+            Value = value;
+            PA = bytes[0];
+            MA = bytes[1];
+            Speed = bytes[2];
+            Move = bytes[3];
+            Jump = bytes[4];
+
+            PermanentStatuses = new Statuses( new SubArray<byte>( bytes, 5, 9 ) );
+            StatusImmunity = new Statuses( new SubArray<byte>( bytes, 10, 14 ) );
+            StartingStatuses = new Statuses( new SubArray<byte>( bytes, 15, 19 ) );
+
+            Absorb = new Elements( bytes[20] );
+            Cancel = new Elements( bytes[21] );
+            Half = new Elements( bytes[22] );
+            Weak = new Elements( bytes[23] );
+            Strong = new Elements( bytes[24] );
+        }
+
+        public byte[] ToByteArray()
+        {
+            List<byte> result = new List<byte>( 25 );
+            result.Add( PA );
+            result.Add( MA );
+            result.Add( Speed );
+            result.Add( Move );
+            result.Add( Jump );
+            result.AddRange( PermanentStatuses.ToByteArray() );
+            result.AddRange( StatusImmunity.ToByteArray() );
+            result.AddRange( StartingStatuses.ToByteArray() );
+            result.Add( Absorb.ToByte() );
+            result.Add( Cancel.ToByte() );
+            result.Add( Half.ToByte() );
+            result.Add( Weak.ToByte() );
+            result.Add( Strong.ToByte() );
+
+            return result.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString( "X2" );
+        }
+    }
+
+    public class AllItemAttributes
+    {
+        public ItemAttributes[] ItemAttributes { get; private set; }
+
+        public AllItemAttributes( SubArray<byte> first, SubArray<byte> second )
+        {
+            ItemAttributes = new ItemAttributes[0x65];
+
+            for( byte i = 0; i < 0x50; i++ )
+            {
+                ItemAttributes[i] = new ItemAttributes( i, new SubArray<byte>( first, i * 25, (i + 1) * 25 - 1 ) );
+            }
+            for( byte i = 0x50; i < 0x65; i++ )
+            {
+                ItemAttributes[i] = new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) );
+            }
+        }
+
+        public byte[] ToFirstByteArray()
+        {
+            List<byte> result = new List<byte>( 0x50 * 25 );
+            for( int i = 0; i < 0x50; i++ )
+            {
+                result.AddRange( ItemAttributes[i].ToByteArray() );
+            }
+            return result.ToArray();
+        }
+
+        public byte[] ToSecondByteArray()
+        {
+            List<byte> result = new List<byte>( 0x15 * 25 );
+            for( int i = 0x50; i < 0x65; i++ )
+            {
+                result.AddRange( ItemAttributes[i].ToByteArray() );
+            }
+            return result.ToArray();
+        }
+
+        public string GenerateCodes()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8 ) );
+            sb.AppendLine( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694 ) );
+            return sb.ToString();
+        }
+    }
+}

@@ -59,6 +59,11 @@ namespace FFTPatcher.Editors
                 sb.AppendLine( "_C0 Items" );
                 sb.AppendLine( Form1.AllItems.GenerateCodes() );
             }
+            if( Form1.AllInflictStatuses != null )
+            {
+                sb.AppendLine( "_C0 Inflict Statuses" );
+                sb.AppendLine( Form1.AllInflictStatuses.GenerateCodes() );
+            }
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );
         }

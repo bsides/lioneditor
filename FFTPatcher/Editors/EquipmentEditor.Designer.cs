@@ -34,10 +34,22 @@
             equipmentGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
+            // equipmentGroupBox
+            // 
+            equipmentGroupBox.Controls.Add( this.equipmentCheckedListBox );
+            equipmentGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            equipmentGroupBox.Location = new System.Drawing.Point( 0, 0 );
+            equipmentGroupBox.Name = "equipmentGroupBox";
+            equipmentGroupBox.Size = new System.Drawing.Size( 494, 185 );
+            equipmentGroupBox.TabIndex = 51;
+            equipmentGroupBox.TabStop = false;
+            equipmentGroupBox.Text = "Equipment";
+            // 
             // equipmentCheckedListBox
             // 
+            this.equipmentCheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.equipmentCheckedListBox.FormattingEnabled = true;
-            this.equipmentCheckedListBox.Items.AddRange(new object[] {
+            this.equipmentCheckedListBox.Items.AddRange( new object[] {
             "",
             "Knife",
             "Ninja Blade",
@@ -77,37 +89,22 @@
             "Lip Rouge",
             "Unknown6",
             "Unknown7",
-            "Unknown8"});
-            this.equipmentCheckedListBox.Location = new System.Drawing.Point(6, 19);
+            "Unknown8"} );
+            this.equipmentCheckedListBox.Location = new System.Drawing.Point( 3, 16 );
             this.equipmentCheckedListBox.MultiColumn = true;
             this.equipmentCheckedListBox.Name = "equipmentCheckedListBox";
-            this.equipmentCheckedListBox.Size = new System.Drawing.Size(498, 154);
+            this.equipmentCheckedListBox.Size = new System.Drawing.Size( 488, 154 );
             this.equipmentCheckedListBox.TabIndex = 50;
-            // 
-            // equipmentGroupBox
-            // 
-            equipmentGroupBox.AutoSize = true;
-            equipmentGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            equipmentGroupBox.Controls.Add(this.equipmentCheckedListBox);
-            equipmentGroupBox.Location = new System.Drawing.Point(3, 3);
-            equipmentGroupBox.Name = "equipmentGroupBox";
-            equipmentGroupBox.Size = new System.Drawing.Size(510, 192);
-            equipmentGroupBox.TabIndex = 51;
-            equipmentGroupBox.TabStop = false;
-            equipmentGroupBox.Text = "Equipment";
             // 
             // EquipmentEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(equipmentGroupBox);
+            this.Controls.Add( equipmentGroupBox );
             this.Name = "EquipmentEditor";
-            this.Size = new System.Drawing.Size(516, 198);
-            equipmentGroupBox.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            this.Size = new System.Drawing.Size( 494, 185 );
+            equipmentGroupBox.ResumeLayout( false );
+            this.ResumeLayout( false );
 
         }
 

@@ -458,18 +458,13 @@
             // 
             this.itemAttributesSpinner.Hexadecimal = true;
             this.itemAttributesSpinner.Location = new System.Drawing.Point( 90, 87 );
-            this.itemAttributesSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             this.itemAttributesSpinner.Name = "itemAttributesSpinner";
             this.itemAttributesSpinner.Size = new System.Drawing.Size( 41, 20 );
             this.itemAttributesSpinner.TabIndex = 4;
             this.itemAttributesSpinner.Tag = "SIA";
             this.itemAttributesSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.itemAttributesSpinner.Value = new decimal( new int[] {
-            255,
+            100,
             0,
             0,
             0} );
@@ -846,7 +841,7 @@
             this.chemistItemSpellStatusSpinner.Hexadecimal = true;
             this.chemistItemSpellStatusSpinner.Location = new System.Drawing.Point( 86, 45 );
             this.chemistItemSpellStatusSpinner.Maximum = new decimal( new int[] {
-            255,
+            127,
             0,
             0,
             0} );
@@ -856,7 +851,7 @@
             this.chemistItemSpellStatusSpinner.Tag = "Formula";
             this.chemistItemSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.chemistItemSpellStatusSpinner.Value = new decimal( new int[] {
-            255,
+            127,
             0,
             0,
             0} );

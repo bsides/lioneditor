@@ -21,6 +21,7 @@ namespace FFTPatcher
         public static AllPoachProbabilities AllPoachProbabilities { get; private set; }
         public static JobLevels JobLevels { get; private set; }
         public static AllItems AllItems { get; private set; }
+        public static AllInflictStatuses AllInflictStatuses { get; private set; }
         public Form1()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace FFTPatcher
             AllPoachProbabilities = allPoachProbabilitiesEditor1.PoachProbabilities;
             JobLevels = jobLevelsEditor1.JobLevels;
             AllItems = allItemsEditor1.AllItems;
+            AllInflictStatuses = allInflictStatusesEditor1.AllInflictStatuses;
         }
     }
 }

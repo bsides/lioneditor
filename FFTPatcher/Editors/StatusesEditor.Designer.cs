@@ -35,20 +35,20 @@
             // 
             // statusGroupBox
             // 
-            this.statusGroupBox.AutoSize = true;
-            this.statusGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.statusGroupBox.Controls.Add(this.statusesCheckedListBox);
-            this.statusGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.statusGroupBox.Controls.Add( this.statusesCheckedListBox );
+            this.statusGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusGroupBox.Location = new System.Drawing.Point( 0, 0 );
             this.statusGroupBox.Name = "statusGroupBox";
-            this.statusGroupBox.Size = new System.Drawing.Size(501, 192);
+            this.statusGroupBox.Size = new System.Drawing.Size( 513, 186 );
             this.statusGroupBox.TabIndex = 0;
             this.statusGroupBox.TabStop = false;
             this.statusGroupBox.Text = "Status";
             // 
             // statusesCheckedListBox
             // 
+            this.statusesCheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statusesCheckedListBox.FormattingEnabled = true;
-            this.statusesCheckedListBox.Items.AddRange(new object[] {
+            this.statusesCheckedListBox.Items.AddRange( new object[] {
             "",
             "Crystal",
             "Dead",
@@ -88,25 +88,22 @@
             "Don\'t Move",
             "Don\'t Act",
             "Reflect",
-            "Death Sentence"});
-            this.statusesCheckedListBox.Location = new System.Drawing.Point(6, 19);
+            "Death Sentence"} );
+            this.statusesCheckedListBox.Location = new System.Drawing.Point( 3, 16 );
             this.statusesCheckedListBox.MultiColumn = true;
             this.statusesCheckedListBox.Name = "statusesCheckedListBox";
-            this.statusesCheckedListBox.Size = new System.Drawing.Size(489, 154);
+            this.statusesCheckedListBox.Size = new System.Drawing.Size( 507, 154 );
             this.statusesCheckedListBox.TabIndex = 0;
             // 
             // StatusesEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.statusGroupBox);
+            this.Controls.Add( this.statusGroupBox );
             this.Name = "StatusesEditor";
-            this.Size = new System.Drawing.Size(507, 198);
-            this.statusGroupBox.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            this.Size = new System.Drawing.Size( 513, 186 );
+            this.statusGroupBox.ResumeLayout( false );
+            this.ResumeLayout( false );
 
         }
 

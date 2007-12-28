@@ -354,7 +354,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="PSXResources.resx">
+    <EmbeddedResource Include="Properties\PSXResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PSXResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
@@ -396,7 +396,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PSXResources.Designer.cs">
+    <Compile Include="Properties\PSXResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PSXResources.resx</DependentUpon>
@@ -409,6 +409,11 @@
     <Content Include="Resources\PSP\Items.xml" />
     <Content Include="Resources\PSP\Jobs.xml" />
     <Content Include="Resources\PSP\SkillSets.xml" />
+    <Content Include="Resources\PSX-US\Abilities.xml" />
+    <Content Include="Resources\PSX-US\ItemAttributes.xml" />
+    <Content Include="Resources\PSX-US\Items.xml" />
+    <Content Include="Resources\PSX-US\Jobs.xml" />
+    <Content Include="Resources\PSX-US\SkillSets.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

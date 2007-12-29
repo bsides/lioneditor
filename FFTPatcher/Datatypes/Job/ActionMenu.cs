@@ -135,19 +135,27 @@ namespace FFTPatcher.Datatypes
 
         public AllActionMenus( SubArray<byte> bytes )
         {
-            ActionMenus = new ActionMenu[256];
+            List<ActionMenu> tempActions = new List<ActionMenu>();
 
-            for( int i = 0; i < 256; i++ )
+            for( int i = 0; i < 0xE0; i++ )
             {
-                ActionMenus[i] = new ActionMenu( (byte)i, SkillSet.DummySkillSets[i].Name, (MenuAction)bytes[i] );
+                tempActions.Add( new ActionMenu( (byte)i, SkillSet.DummySkillSets[i].Name, (MenuAction)bytes[i] ) );
             }
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                tempActions.Add( new ActionMenu( 0xE0, SkillSet.DummySkillSets[0xE0].Name, (MenuAction)bytes[0xE0] ) );
+                tempActions.Add( new ActionMenu( 0xE1, SkillSet.DummySkillSets[0xE1].Name, (MenuAction)bytes[0xE1] ) );
+                tempActions.Add( new ActionMenu( 0xE2, SkillSet.DummySkillSets[0xE2].Name, (MenuAction)bytes[0xE2] ) );
+            }
+
+            ActionMenus = tempActions.ToArray();
         }
 
         public byte[] ToByteArray()
         {
-            byte[] result = new byte[256];
+            byte[] result = new byte[ActionMenus.Length];
 
-            for( int i = 0; i < 256; i++ )
+            for( int i = 0; i < ActionMenus.Length; i++ )
             {
                 result[i] = (byte)ActionMenus[i].MenuAction.MenuAction;
             }
@@ -162,7 +170,14 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.ActionEventsBin, this.ToByteArray(), 0x065CB4 );
+            }
         }
     }
 }

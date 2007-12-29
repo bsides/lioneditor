@@ -26,21 +26,43 @@ namespace FFTPatcher.Datatypes
 {
     public class AllAbilities
     {
-        public static string[] Names { get; private set; }
+        private static string[] psxNames;
+        private static string[] pspNames;
+        public static string[] Names
+        {
+            get
+            {
+                return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames;
+            }
+        }
 
-        public static Ability[] DummyAbilities { get; private set; }
+        private static Ability[] pspAbilities;
+        private static Ability[] psxAbilities;
+        public static Ability[] DummyAbilities 
+        {
+            get
+            {
+                return FFTPatch.Context == Context.US_PSP ? pspAbilities : psxAbilities;
+            }
+        }
 
         static AllAbilities()
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Resources.Abilities );
+            XmlDocument psxDoc = new XmlDocument();
+            psxDoc.LoadXml( PSXResources.Abilities );
 
-            Names = new string[512];
-            DummyAbilities = new Ability[512];
+            pspNames = new string[512];
+            psxNames = new string[512];
+            pspAbilities = new Ability[512];
+            psxAbilities = new Ability[512];
             for( int i = 0; i < 512; i++ )
             {
-                Names[i] = doc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
-                DummyAbilities[i] = new Ability( Names[i], (UInt16)i );
+                pspNames[i] = doc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
+                psxNames[i] = psxDoc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
+                pspAbilities[i] = new Ability( pspNames[i], (UInt16)i );
+                psxAbilities[i] = new Ability( psxNames[i], (UInt16)i );
             }
         }
 
@@ -110,8 +132,14 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX: 0x05EBF0
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
+            }
         }
     }
 }

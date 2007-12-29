@@ -66,9 +66,6 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label label17;
             System.Windows.Forms.Label label18;
             System.Windows.Forms.Label label19;
-            System.Windows.Forms.Label label20;
-            System.Windows.Forms.Label label21;
-            System.Windows.Forms.Label label22;
             System.Windows.Forms.Label label23;
             System.Windows.Forms.Label label24;
             System.Windows.Forms.Label label25;
@@ -80,10 +77,6 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label label31;
             System.Windows.Forms.Label label32;
             FFTPatcher.Controls.VerticalLabel verticalLabel25;
-            FFTPatcher.Controls.VerticalLabel verticalLabel24;
-            FFTPatcher.Controls.VerticalLabel verticalLabel23;
-            FFTPatcher.Controls.VerticalLabel verticalLabel22;
-            FFTPatcher.Controls.VerticalLabel verticalLabel21;
             FFTPatcher.Controls.VerticalLabel verticalLabel20;
             FFTPatcher.Controls.VerticalLabel verticalLabel19;
             FFTPatcher.Controls.VerticalLabel verticalLabel18;
@@ -104,6 +97,13 @@ namespace FFTPatcher.Editors
             FFTPatcher.Controls.VerticalLabel verticalLabel3;
             FFTPatcher.Controls.VerticalLabel verticalLabel2;
             FFTPatcher.Controls.VerticalLabel verticalLabel1;
+            this.darkKnightSideLabel = new System.Windows.Forms.Label();
+            this.onionKnightSideLabel = new System.Windows.Forms.Label();
+            this.unknownSideLabel = new System.Windows.Forms.Label();
+            this.unknown2TopLabel = new FFTPatcher.Controls.VerticalLabel();
+            this.unknown1TopLabel = new FFTPatcher.Controls.VerticalLabel();
+            this.onionKnightTopLabel = new FFTPatcher.Controls.VerticalLabel();
+            this.darkKnightTopLabel = new FFTPatcher.Controls.VerticalLabel();
             this.level1Spinner = new System.Windows.Forms.NumericUpDown();
             this.level2Spinner = new System.Windows.Forms.NumericUpDown();
             this.level3Spinner = new System.Windows.Forms.NumericUpDown();
@@ -132,9 +132,6 @@ namespace FFTPatcher.Editors
             label17 = new System.Windows.Forms.Label();
             label18 = new System.Windows.Forms.Label();
             label19 = new System.Windows.Forms.Label();
-            label20 = new System.Windows.Forms.Label();
-            label21 = new System.Windows.Forms.Label();
-            label22 = new System.Windows.Forms.Label();
             label23 = new System.Windows.Forms.Label();
             label24 = new System.Windows.Forms.Label();
             label25 = new System.Windows.Forms.Label();
@@ -146,10 +143,6 @@ namespace FFTPatcher.Editors
             label31 = new System.Windows.Forms.Label();
             label32 = new System.Windows.Forms.Label();
             verticalLabel25 = new FFTPatcher.Controls.VerticalLabel();
-            verticalLabel24 = new FFTPatcher.Controls.VerticalLabel();
-            verticalLabel23 = new FFTPatcher.Controls.VerticalLabel();
-            verticalLabel22 = new FFTPatcher.Controls.VerticalLabel();
-            verticalLabel21 = new FFTPatcher.Controls.VerticalLabel();
             verticalLabel20 = new FFTPatcher.Controls.VerticalLabel();
             verticalLabel19 = new FFTPatcher.Controls.VerticalLabel();
             verticalLabel18 = new FFTPatcher.Controls.VerticalLabel();
@@ -351,32 +344,32 @@ namespace FFTPatcher.Editors
             label19.TabIndex = 64;
             label19.Text = "Mime";
             // 
-            // label20
+            // darkKnightSideLabel
             // 
-            label20.AutoSize = true;
-            label20.Location = new System.Drawing.Point( 31, 527 );
-            label20.Name = "label20";
-            label20.Size = new System.Drawing.Size( 63, 13 );
-            label20.TabIndex = 65;
-            label20.Text = "Dark Knight";
+            this.darkKnightSideLabel.AutoSize = true;
+            this.darkKnightSideLabel.Location = new System.Drawing.Point( 31, 527 );
+            this.darkKnightSideLabel.Name = "darkKnightSideLabel";
+            this.darkKnightSideLabel.Size = new System.Drawing.Size( 63, 13 );
+            this.darkKnightSideLabel.TabIndex = 65;
+            this.darkKnightSideLabel.Text = "Dark Knight";
             // 
-            // label21
+            // onionKnightSideLabel
             // 
-            label21.AutoSize = true;
-            label21.Location = new System.Drawing.Point( 31, 549 );
-            label21.Name = "label21";
-            label21.Size = new System.Drawing.Size( 68, 13 );
-            label21.TabIndex = 66;
-            label21.Text = "Onion Knight";
+            this.onionKnightSideLabel.AutoSize = true;
+            this.onionKnightSideLabel.Location = new System.Drawing.Point( 31, 549 );
+            this.onionKnightSideLabel.Name = "onionKnightSideLabel";
+            this.onionKnightSideLabel.Size = new System.Drawing.Size( 68, 13 );
+            this.onionKnightSideLabel.TabIndex = 66;
+            this.onionKnightSideLabel.Text = "Onion Knight";
             // 
-            // label22
+            // unknownSideLabel
             // 
-            label22.AutoSize = true;
-            label22.Location = new System.Drawing.Point( 31, 570 );
-            label22.Name = "label22";
-            label22.Size = new System.Drawing.Size( 53, 13 );
-            label22.TabIndex = 67;
-            label22.Text = "Unknown";
+            this.unknownSideLabel.AutoSize = true;
+            this.unknownSideLabel.Location = new System.Drawing.Point( 31, 570 );
+            this.unknownSideLabel.Name = "unknownSideLabel";
+            this.unknownSideLabel.Size = new System.Drawing.Size( 53, 13 );
+            this.unknownSideLabel.TabIndex = 67;
+            this.unknownSideLabel.Text = "Unknown";
             // 
             // label23
             // 
@@ -387,158 +380,6 @@ namespace FFTPatcher.Editors
             label23.TabIndex = 69;
             label23.Text = "Requirement";
             label23.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // level1Spinner
-            // 
-            this.level1Spinner.Location = new System.Drawing.Point( 78, 633 );
-            this.level1Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level1Spinner.Name = "level1Spinner";
-            this.level1Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level1Spinner.TabIndex = 71;
-            this.level1Spinner.Tag = "Level1";
-            this.level1Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level1Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            // 
-            // level2Spinner
-            // 
-            this.level2Spinner.Location = new System.Drawing.Point( 78, 653 );
-            this.level2Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level2Spinner.Name = "level2Spinner";
-            this.level2Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level2Spinner.TabIndex = 72;
-            this.level2Spinner.Tag = "Level2";
-            this.level2Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level2Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            // 
-            // level3Spinner
-            // 
-            this.level3Spinner.Location = new System.Drawing.Point( 78, 673 );
-            this.level3Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level3Spinner.Name = "level3Spinner";
-            this.level3Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level3Spinner.TabIndex = 73;
-            this.level3Spinner.Tag = "Level3";
-            this.level3Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level3Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            // 
-            // level4Spinner
-            // 
-            this.level4Spinner.Location = new System.Drawing.Point( 78, 693 );
-            this.level4Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level4Spinner.Name = "level4Spinner";
-            this.level4Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level4Spinner.TabIndex = 74;
-            this.level4Spinner.Tag = "Level4";
-            this.level4Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level4Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            // 
-            // level5Spinner
-            // 
-            this.level5Spinner.Location = new System.Drawing.Point( 78, 713 );
-            this.level5Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level5Spinner.Name = "level5Spinner";
-            this.level5Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level5Spinner.TabIndex = 75;
-            this.level5Spinner.Tag = "Level5";
-            this.level5Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level5Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            // 
-            // level6Spinner
-            // 
-            this.level6Spinner.Location = new System.Drawing.Point( 78, 733 );
-            this.level6Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level6Spinner.Name = "level6Spinner";
-            this.level6Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level6Spinner.TabIndex = 76;
-            this.level6Spinner.Tag = "Level6";
-            this.level6Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level6Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            // 
-            // level7Spinner
-            // 
-            this.level7Spinner.Location = new System.Drawing.Point( 78, 753 );
-            this.level7Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level7Spinner.Name = "level7Spinner";
-            this.level7Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level7Spinner.TabIndex = 77;
-            this.level7Spinner.Tag = "Level7";
-            this.level7Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level7Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            // 
-            // level8Spinner
-            // 
-            this.level8Spinner.Location = new System.Drawing.Point( 78, 773 );
-            this.level8Spinner.Maximum = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
-            this.level8Spinner.Name = "level8Spinner";
-            this.level8Spinner.Size = new System.Drawing.Size( 54, 20 );
-            this.level8Spinner.TabIndex = 78;
-            this.level8Spinner.Tag = "Level8";
-            this.level8Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level8Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // label24
             // 
@@ -622,16 +463,6 @@ namespace FFTPatcher.Editors
             label32.TabIndex = 87;
             label32.Text = "JP Required";
             // 
-            // requirementsEditor1
-            // 
-            this.requirementsEditor1.AutoSize = true;
-            this.requirementsEditor1.Location = new System.Drawing.Point( 101, 103 );
-            this.requirementsEditor1.Margin = new System.Windows.Forms.Padding( 0 );
-            this.requirementsEditor1.Name = "requirementsEditor1";
-            this.requirementsEditor1.Requirements = null;
-            this.requirementsEditor1.Size = new System.Drawing.Size( 508, 488 );
-            this.requirementsEditor1.TabIndex = 70;
-            // 
             // verticalLabel25
             // 
             verticalLabel25.Font = new System.Drawing.Font( "Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)) );
@@ -642,41 +473,41 @@ namespace FFTPatcher.Editors
             verticalLabel25.Text = "Job";
             verticalLabel25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // verticalLabel24
+            // unknown2TopLabel
             // 
-            verticalLabel24.Location = new System.Drawing.Point( 588, 0 );
-            verticalLabel24.Name = "verticalLabel24";
-            verticalLabel24.Size = new System.Drawing.Size( 24, 100 );
-            verticalLabel24.TabIndex = 45;
-            verticalLabel24.Text = "Unknown";
-            verticalLabel24.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.unknown2TopLabel.Location = new System.Drawing.Point( 588, 0 );
+            this.unknown2TopLabel.Name = "unknown2TopLabel";
+            this.unknown2TopLabel.Size = new System.Drawing.Size( 24, 100 );
+            this.unknown2TopLabel.TabIndex = 45;
+            this.unknown2TopLabel.Text = "Unknown";
+            this.unknown2TopLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
-            // verticalLabel23
+            // unknown1TopLabel
             // 
-            verticalLabel23.Location = new System.Drawing.Point( 567, 0 );
-            verticalLabel23.Name = "verticalLabel23";
-            verticalLabel23.Size = new System.Drawing.Size( 24, 100 );
-            verticalLabel23.TabIndex = 44;
-            verticalLabel23.Text = "Unknown";
-            verticalLabel23.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.unknown1TopLabel.Location = new System.Drawing.Point( 567, 0 );
+            this.unknown1TopLabel.Name = "unknown1TopLabel";
+            this.unknown1TopLabel.Size = new System.Drawing.Size( 24, 100 );
+            this.unknown1TopLabel.TabIndex = 44;
+            this.unknown1TopLabel.Text = "Unknown";
+            this.unknown1TopLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
-            // verticalLabel22
+            // onionKnightTopLabel
             // 
-            verticalLabel22.Location = new System.Drawing.Point( 546, 0 );
-            verticalLabel22.Name = "verticalLabel22";
-            verticalLabel22.Size = new System.Drawing.Size( 24, 100 );
-            verticalLabel22.TabIndex = 43;
-            verticalLabel22.Text = "Onion Knight";
-            verticalLabel22.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.onionKnightTopLabel.Location = new System.Drawing.Point( 546, 0 );
+            this.onionKnightTopLabel.Name = "onionKnightTopLabel";
+            this.onionKnightTopLabel.Size = new System.Drawing.Size( 24, 100 );
+            this.onionKnightTopLabel.TabIndex = 43;
+            this.onionKnightTopLabel.Text = "Onion Knight";
+            this.onionKnightTopLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
-            // verticalLabel21
+            // darkKnightTopLabel
             // 
-            verticalLabel21.Location = new System.Drawing.Point( 525, 0 );
-            verticalLabel21.Name = "verticalLabel21";
-            verticalLabel21.Size = new System.Drawing.Size( 24, 100 );
-            verticalLabel21.TabIndex = 42;
-            verticalLabel21.Text = "Dark Knight";
-            verticalLabel21.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.darkKnightTopLabel.Location = new System.Drawing.Point( 525, 0 );
+            this.darkKnightTopLabel.Name = "darkKnightTopLabel";
+            this.darkKnightTopLabel.Size = new System.Drawing.Size( 24, 100 );
+            this.darkKnightTopLabel.TabIndex = 42;
+            this.darkKnightTopLabel.Text = "Dark Knight";
+            this.darkKnightTopLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
             // verticalLabel20
             // 
@@ -858,6 +689,168 @@ namespace FFTPatcher.Editors
             verticalLabel1.Text = "Squire";
             verticalLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // 
+            // level1Spinner
+            // 
+            this.level1Spinner.Location = new System.Drawing.Point( 78, 633 );
+            this.level1Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level1Spinner.Name = "level1Spinner";
+            this.level1Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level1Spinner.TabIndex = 71;
+            this.level1Spinner.Tag = "Level1";
+            this.level1Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level1Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // level2Spinner
+            // 
+            this.level2Spinner.Location = new System.Drawing.Point( 78, 653 );
+            this.level2Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level2Spinner.Name = "level2Spinner";
+            this.level2Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level2Spinner.TabIndex = 72;
+            this.level2Spinner.Tag = "Level2";
+            this.level2Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level2Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // level3Spinner
+            // 
+            this.level3Spinner.Location = new System.Drawing.Point( 78, 673 );
+            this.level3Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level3Spinner.Name = "level3Spinner";
+            this.level3Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level3Spinner.TabIndex = 73;
+            this.level3Spinner.Tag = "Level3";
+            this.level3Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level3Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // level4Spinner
+            // 
+            this.level4Spinner.Location = new System.Drawing.Point( 78, 693 );
+            this.level4Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level4Spinner.Name = "level4Spinner";
+            this.level4Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level4Spinner.TabIndex = 74;
+            this.level4Spinner.Tag = "Level4";
+            this.level4Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level4Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // level5Spinner
+            // 
+            this.level5Spinner.Location = new System.Drawing.Point( 78, 713 );
+            this.level5Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level5Spinner.Name = "level5Spinner";
+            this.level5Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level5Spinner.TabIndex = 75;
+            this.level5Spinner.Tag = "Level5";
+            this.level5Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level5Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // level6Spinner
+            // 
+            this.level6Spinner.Location = new System.Drawing.Point( 78, 733 );
+            this.level6Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level6Spinner.Name = "level6Spinner";
+            this.level6Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level6Spinner.TabIndex = 76;
+            this.level6Spinner.Tag = "Level6";
+            this.level6Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level6Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // level7Spinner
+            // 
+            this.level7Spinner.Location = new System.Drawing.Point( 78, 753 );
+            this.level7Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level7Spinner.Name = "level7Spinner";
+            this.level7Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level7Spinner.TabIndex = 77;
+            this.level7Spinner.Tag = "Level7";
+            this.level7Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level7Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // level8Spinner
+            // 
+            this.level8Spinner.Location = new System.Drawing.Point( 78, 773 );
+            this.level8Spinner.Maximum = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            this.level8Spinner.Name = "level8Spinner";
+            this.level8Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level8Spinner.TabIndex = 78;
+            this.level8Spinner.Tag = "Level8";
+            this.level8Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.level8Spinner.Value = new decimal( new int[] {
+            9999,
+            0,
+            0,
+            0} );
+            // 
+            // requirementsEditor1
+            // 
+            this.requirementsEditor1.AutoSize = true;
+            this.requirementsEditor1.Location = new System.Drawing.Point( 101, 103 );
+            this.requirementsEditor1.Margin = new System.Windows.Forms.Padding( 0 );
+            this.requirementsEditor1.Name = "requirementsEditor1";
+            this.requirementsEditor1.Requirements = null;
+            this.requirementsEditor1.Size = new System.Drawing.Size( 508, 488 );
+            this.requirementsEditor1.TabIndex = 70;
+            // 
             // JobLevelsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -884,9 +877,9 @@ namespace FFTPatcher.Editors
             this.Controls.Add( this.requirementsEditor1 );
             this.Controls.Add( label23 );
             this.Controls.Add( verticalLabel25 );
-            this.Controls.Add( label22 );
-            this.Controls.Add( label21 );
-            this.Controls.Add( label20 );
+            this.Controls.Add( this.unknownSideLabel );
+            this.Controls.Add( this.onionKnightSideLabel );
+            this.Controls.Add( this.darkKnightSideLabel );
             this.Controls.Add( label19 );
             this.Controls.Add( label18 );
             this.Controls.Add( label17 );
@@ -906,10 +899,10 @@ namespace FFTPatcher.Editors
             this.Controls.Add( label3 );
             this.Controls.Add( label2 );
             this.Controls.Add( label1 );
-            this.Controls.Add( verticalLabel24 );
-            this.Controls.Add( verticalLabel23 );
-            this.Controls.Add( verticalLabel22 );
-            this.Controls.Add( verticalLabel21 );
+            this.Controls.Add( this.unknown2TopLabel );
+            this.Controls.Add( this.unknown1TopLabel );
+            this.Controls.Add( this.onionKnightTopLabel );
+            this.Controls.Add( this.darkKnightTopLabel );
             this.Controls.Add( verticalLabel20 );
             this.Controls.Add( verticalLabel19 );
             this.Controls.Add( verticalLabel18 );
@@ -956,6 +949,13 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.NumericUpDown level6Spinner;
         private System.Windows.Forms.NumericUpDown level7Spinner;
         private System.Windows.Forms.NumericUpDown level8Spinner;
+        private System.Windows.Forms.Label darkKnightSideLabel;
+        private System.Windows.Forms.Label onionKnightSideLabel;
+        private System.Windows.Forms.Label unknownSideLabel;
+        private FFTPatcher.Controls.VerticalLabel unknown2TopLabel;
+        private FFTPatcher.Controls.VerticalLabel unknown1TopLabel;
+        private FFTPatcher.Controls.VerticalLabel onionKnightTopLabel;
+        private FFTPatcher.Controls.VerticalLabel darkKnightTopLabel;
 
     }
 }

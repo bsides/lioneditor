@@ -21,12 +21,13 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Properties;
 
 namespace FFTPatcher.Grids
 {
     public partial class AbilitiesDataGridView : UserControl
     {
-        private Ability[] allAbilities = new AllAbilities( new SubArray<byte>( new List<byte>( bytes ), 0, 4095 ) ).Abilities;
+        private Ability[] allAbilities = new AllAbilities( new SubArray<byte>( bytes, 0, 4095 ) ).Abilities;
         private static byte[] bytes = Resources.AbilitiesBin;
 
         public AbilitiesDataGridView()

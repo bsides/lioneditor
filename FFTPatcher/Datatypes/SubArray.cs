@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
-    public class SubArray<T> : ICollection<T>
+    public class SubArray<T> : ICollection<T>, IList<T>
     {
         private IList<T> baseArray;
         private int start;
@@ -74,6 +74,11 @@ namespace FFTPatcher.Datatypes
 
         public SubArray( IList<T> baseArray, int start )
             : this( baseArray, start, baseArray.Count - 1 )
+        {
+        }
+
+        public SubArray( IList<T> baseArray )
+            : this( baseArray, 0 )
         {
         }
 
@@ -135,6 +140,25 @@ namespace FFTPatcher.Datatypes
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return new SubArrayEnumerator<T>( this );
+        }
+
+        #endregion
+
+        #region IList<T> Members
+
+        public int IndexOf( T item )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert( int index, T item )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAt( int index )
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

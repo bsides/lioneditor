@@ -27,7 +27,12 @@ namespace FFTPatcher.Datatypes
     public class AllItems
     {
         public List<Item> Items { get; private set; }
-        private byte[] afterPhoenixDown; 
+        private byte[] afterPhoenixDown;
+
+        public AllItems( SubArray<byte> first )
+            : this( first, null )
+        {
+        }
 
         public AllItems( SubArray<byte> first, SubArray<byte> second )
         {
@@ -73,40 +78,42 @@ namespace FFTPatcher.Datatypes
             {
                 afterPhoenixDown[i] = first[0xBE8 + i];
             }
-
-            for( UInt16 i = 0; i < 0x20; i++ )
+            if( second != null )
             {
-                Items.Add( new Weapon(
-                    (UInt16)(i + 0x100),
-                    new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( second, 0x2D0 + i * 8, 0x2D0 + (i + 1) * 8 - 1 ) ) );
-            }
-            for( UInt16 i = 0x20; i < 0x24; i++ )
-            {
-                Items.Add( new Shield(
-                    (UInt16)(i + 0x100),
-                    new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( second, 0x3D0 + (i - 0x20) * 2, 0x3D0 + ((i - 0x20) + 1) * 2 - 1 ) ) );
-            }
-            for( UInt16 i = 0x24; i < 0x34; i++ )
-            {
-                Items.Add( new Armor(
-                    (UInt16)(i + 0x100),
-                    new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( second, 0x3D8 + (i - 0x24) * 2, 0x3D8 + ((i - 0x24) + 1) * 2 - 1 ) ) );
-            }
-            for( UInt16 i = 0x34; i < 0x3C; i++ )
-            {
-                Items.Add( new Accessory(
-                    (UInt16)(i + 0x100),
-                    new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( second, 0x3F8 + (i - 0x34) * 2, 0x3F8 + ((i - 0x34) + 1) * 2 - 1 ) ) );
+                for( UInt16 i = 0; i < 0x20; i++ )
+                {
+                    Items.Add( new Weapon(
+                        (UInt16)(i + 0x100),
+                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
+                        new SubArray<byte>( second, 0x2D0 + i * 8, 0x2D0 + (i + 1) * 8 - 1 ) ) );
+                }
+                for( UInt16 i = 0x20; i < 0x24; i++ )
+                {
+                    Items.Add( new Shield(
+                        (UInt16)(i + 0x100),
+                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
+                        new SubArray<byte>( second, 0x3D0 + (i - 0x20) * 2, 0x3D0 + ((i - 0x20) + 1) * 2 - 1 ) ) );
+                }
+                for( UInt16 i = 0x24; i < 0x34; i++ )
+                {
+                    Items.Add( new Armor(
+                        (UInt16)(i + 0x100),
+                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
+                        new SubArray<byte>( second, 0x3D8 + (i - 0x24) * 2, 0x3D8 + ((i - 0x24) + 1) * 2 - 1 ) ) );
+                }
+                for( UInt16 i = 0x34; i < 0x3C; i++ )
+                {
+                    Items.Add( new Accessory(
+                        (UInt16)(i + 0x100),
+                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
+                        new SubArray<byte>( second, 0x3F8 + (i - 0x34) * 2, 0x3F8 + ((i - 0x34) + 1) * 2 - 1 ) ) );
+                }
             }
         }
 
         public byte[] ToFirstByteArray()
         {
-            List<byte> result = new List<byte>( 0x1BDC );
+            List<byte> result = new List<byte>( 0x110A );
             for( int i = 0; i < 0xFE; i++ )
             {
                 result.AddRange( Items[i].ToFirstByteArray() );
@@ -137,11 +144,17 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX 0x062EB8
-            StringBuilder sb = new StringBuilder();
-            sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
-            sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
-            return sb.ToString();
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
+                sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
+                return sb.ToString();
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
+            }
         }
     }
 }

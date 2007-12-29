@@ -40,6 +40,10 @@ namespace FFTPatcher.Editors
                 }
                 else if( value != requirements )
                 {
+                    OnionKnight.Visible = FFTPatch.Context == Context.US_PSP;
+                    DarkKnight.Visible = FFTPatch.Context == Context.US_PSP;
+                    Unknown1.Visible = FFTPatch.Context == Context.US_PSP;
+                    Unknown2.Visible = FFTPatch.Context == Context.US_PSP;
                     this.Enabled = true;
                     this.requirements = value;
                     dataGridView1.DataSource = value;

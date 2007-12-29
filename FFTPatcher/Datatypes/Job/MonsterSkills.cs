@@ -115,8 +115,14 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX: 0x065BC4
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.MonsterSkillsBin, this.ToByteArray(), 0x065BC4 );
+            }
         }
     }
 }

@@ -17,21 +17,16 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using FFTPatcher.Properties;
 
 namespace FFTPatcher.Editors
 {
     public partial class AllPoachProbabilitiesEditor : UserControl
     {
-        public AllPoachProbabilities PoachProbabilities { get; private set; }
-
         public AllPoachProbabilitiesEditor()
         {
             InitializeComponent();
-            PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( new List<byte>( Resources.PoachProbabilitiesBin ), 0 ) );
             foreach( Item i in Item.DummyItems )
             {
                 if( i.Offset <= 0xFF )
@@ -47,8 +42,14 @@ namespace FFTPatcher.Editors
             dataGridView.AutoSize = true;
             dataGridView.CellParsing += dataGridView_CellParsing;
             dataGridView.AutoGenerateColumns = false;
-            dataGridView.DataSource = PoachProbabilities.PoachProbabilities;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
+
+            FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
+        {
+            dataGridView.DataSource = FFTPatch.PoachProbabilities.PoachProbabilities;
         }
 
 

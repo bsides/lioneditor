@@ -18,25 +18,23 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using FFTPatcher.Properties;
 
 namespace FFTPatcher.Editors
 {
     public partial class AllInflictStatusesEditor : UserControl
     {
-        public AllInflictStatuses AllInflictStatuses { get; private set; }
-
         public AllInflictStatusesEditor()
         {
             InitializeComponent();
-            AllInflictStatuses = new AllInflictStatuses( 
-                new SubArray<byte>( new List<byte>( Resources.InflictStatusesBin ), 0 ) );
+            FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
 
-            offsetListBox.DataSource = AllInflictStatuses.InflictStatuses;
-
+        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        {
+            offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
+            offsetListBox.DataSource = FFTPatch.InflictStatuses.InflictStatuses;
             offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
             offsetListBox.SelectedIndex = 0;
             offsetListBox_SelectedIndexChanged( offsetListBox, EventArgs.Empty );

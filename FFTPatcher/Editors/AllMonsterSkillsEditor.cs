@@ -17,21 +17,16 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using FFTPatcher.Properties;
 
 namespace FFTPatcher.Editors
 {
     public partial class AllMonsterSkillsEditor : UserControl
     {
-        public AllMonsterSkills MonsterSkills { get; private set; }
-
         public AllMonsterSkillsEditor()
         {
             InitializeComponent();
-            MonsterSkills = new AllMonsterSkills( new SubArray<byte>( new List<byte>( Resources.MonsterSkillsBin ), 0 ) );
             foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
             {
                 col.Items.AddRange( AllAbilities.DummyAbilities );
@@ -42,9 +37,14 @@ namespace FFTPatcher.Editors
             dataGridView.CellParsing += dataGridView_CellParsing;
 
             dataGridView.AutoGenerateColumns = false;
-            dataGridView.DataSource = MonsterSkills.MonsterSkills;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
+            FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
+        {
+            dataGridView.DataSource = FFTPatch.MonsterSkills.MonsterSkills;
         }
 
         private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )

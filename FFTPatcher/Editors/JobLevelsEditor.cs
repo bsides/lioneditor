@@ -21,53 +21,61 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using FFTPatcher.Properties;
 
 namespace FFTPatcher.Editors
 {
     public partial class JobLevelsEditor : UserControl
     {
-        private bool ignoreChanges = false;
-
-        public JobLevels JobLevels { get; set; }
+        private JobLevels levels;
 
         public JobLevelsEditor()
         {
             InitializeComponent();
-            JobLevels = new JobLevels( new SubArray<byte>( new List<byte>( Resources.JobLevelsBin ), 0 ) );
+            FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        {
+            levels = FFTPatch.JobLevels;
 
             foreach( Control c in Controls )
             {
                 if( c is NumericUpDown )
                 {
                     NumericUpDown spinner = c as NumericUpDown;
-                    spinner.Value = Utilities.GetFieldOrProperty<UInt16>( JobLevels, spinner.Tag.ToString() );
+                    spinner.ValueChanged -= spinner_ValueChanged;
+                    spinner.Value = Utilities.GetFieldOrProperty<UInt16>( levels, spinner.Tag.ToString() );
                     spinner.ValueChanged += spinner_ValueChanged;
                 }
             }
-            UpdateView();
+
+            List<Requirements> reqs = new List<Requirements>( new Requirements[] {
+                levels.Chemist, levels.Knight, levels.Archer, levels.Monk,
+                levels.WhiteMage, levels.BlackMage, levels.TimeMage, levels.Summoner,
+                levels.Thief, levels.Orator, levels.Mystic, levels.Geomancer,
+                levels.Dragoon, levels.Samurai, levels.Ninja, levels.Arithmetician,
+                levels.Bard, levels.Dancer, levels.Mime } );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                reqs.Add( levels.DarkKnight );
+                reqs.Add( levels.OnionKnight );
+                reqs.Add( levels.Unknown );
+            }
+            darkKnightSideLabel.Visible = FFTPatch.Context == Context.US_PSP;
+            darkKnightTopLabel.Visible = FFTPatch.Context == Context.US_PSP;
+            unknown1TopLabel.Visible = FFTPatch.Context == Context.US_PSP;
+            unknown2TopLabel.Visible = FFTPatch.Context == Context.US_PSP;
+            unknownSideLabel.Visible = FFTPatch.Context == Context.US_PSP;
+            onionKnightSideLabel.Visible = FFTPatch.Context == Context.US_PSP;
+            onionKnightTopLabel.Visible = FFTPatch.Context == Context.US_PSP;
+
+            requirementsEditor1.Requirements = reqs;
         }
 
         private void spinner_ValueChanged( object sender, EventArgs e )
         {
             NumericUpDown spinner = sender as NumericUpDown;
-            Utilities.SetFieldOrProperty( JobLevels, spinner.Tag.ToString(), (UInt16)spinner.Value );
+            Utilities.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
         }
-
-        private void UpdateView()
-        {
-            ignoreChanges = true;
-
-            requirementsEditor1.Requirements = new List<Requirements>( new Requirements[] {
-                JobLevels.Chemist, JobLevels.Knight, JobLevels.Archer, JobLevels.Monk,
-                JobLevels.WhiteMage, JobLevels.BlackMage, JobLevels.TimeMage, JobLevels.Summoner,
-                JobLevels.Thief, JobLevels.Orator, JobLevels.Mystic, JobLevels.Geomancer,
-                JobLevels.Dragoon, JobLevels.Samurai, JobLevels.Ninja, JobLevels.Arithmetician,
-                JobLevels.Bard, JobLevels.Dancer, JobLevels.Mime, JobLevels.DarkKnight,
-                JobLevels.OnionKnight, JobLevels.Unknown } );
-
-            ignoreChanges = false;
-        }
-
     }
 }

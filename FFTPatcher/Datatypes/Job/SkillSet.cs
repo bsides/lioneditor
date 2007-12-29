@@ -25,24 +25,34 @@ namespace FFTPatcher.Datatypes
 {
     public class SkillSet
     {
-        private static SkillSet[] skillSets;
+        private static SkillSet[] pspSkills;
+        private static SkillSet[] psxSkills;
         public static SkillSet[] DummySkillSets
         {
             get
             {
-                if( skillSets == null )
-                {
-                    XmlDocument doc = new XmlDocument();
-                    skillSets = new SkillSet[256];
-                    doc.LoadXml( Resources.SkillSets );
-                    for( int i = 0; i < 256; i++ )
-                    {
-                        string n = doc.SelectSingleNode( string.Format( "//SkillSet[@byte='{0}']", i.ToString( "X2" ) ) ).InnerText;
-                        skillSets[i] = new SkillSet( n, (byte)(i & 0xFF) );
-                    }
-                }
+                return FFTPatch.Context == Context.US_PSP ? pspSkills : psxSkills;
+            }
+        }
 
-                return skillSets;
+        static SkillSet()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml( Resources.SkillSets );
+            pspSkills = new SkillSet[0xE3];
+            for( int i = 0; i < 0xE3; i++ )
+            {
+                string n = doc.SelectSingleNode( string.Format( "//SkillSet[@byte='{0}']", i.ToString( "X2" ) ) ).InnerText;
+                pspSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
+            }
+
+            doc = new XmlDocument();
+            doc.LoadXml( PSXResources.SkillSets );
+            psxSkills = new SkillSet[0xE0];
+            for( int i = 0; i < 0xE0; i++ )
+            {
+                string n = doc.SelectSingleNode( string.Format( "//SkillSet[@byte='{0}']", i.ToString( "X2" ) ) ).InnerText;
+                psxSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
             }
         }
 
@@ -138,25 +148,21 @@ namespace FFTPatcher.Datatypes
 
         public AllSkillSets( Context context, SubArray<byte> bytes )
         {
-            SkillSets = new SkillSet[179];
+            List<SkillSet> tempSkills = new List<SkillSet>( 179 );
             for( int i = 0; i < 176; i++ )
             {
-                SkillSets[i] = new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * i, 25 * i + 24 ) );
+                tempSkills.Add( new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * i, 25 * i + 24 ) ) );
             }
 
             if( context == Context.US_PSP )
             {
                 for( int i = 0xE0; i <= 0xE2; i++ )
                 {
-                    SkillSets[i - 0xE0 + 176] = new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ) );
+                    tempSkills.Add( new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ) ) );
                 }
             }
-            else
-            {
-                SkillSets[176] = new SkillSet( 0xE0, new SubArray<byte>( new List<byte>( new byte[25] ), 0 ) );
-                SkillSets[177] = new SkillSet( 0xE1, new SubArray<byte>( new List<byte>( new byte[25] ), 0 ) );
-                SkillSets[178] = new SkillSet( 0xE2, new SubArray<byte>( new List<byte>( new byte[25] ), 0 ) );
-            }
+
+            SkillSets = tempSkills.ToArray();
         }
 
         public byte[] ToByteArray()
@@ -182,8 +188,14 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX: 0x064A94
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.SkillSetsBin, this.ToByteArray( Context.US_PSX ), 0x064A94 );
+            }
         }
 
     }

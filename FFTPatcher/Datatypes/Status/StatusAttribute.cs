@@ -123,8 +123,14 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX: 0x065DE4
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4);
+            }
         }
     }
 }

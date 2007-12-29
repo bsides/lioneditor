@@ -114,13 +114,15 @@ namespace FFTPatcher.Editors
             {
                 chemistItemFormulaSpinner.Value = (item as ChemistItem).Formula;
                 chemistItemSpellStatusSpinner.Value = (item as ChemistItem).InflictStatus;
-                chemistItemSpellStatusSpinner.Value = (item as ChemistItem).X;
+                chemistItemXSpinner.Value = (item as ChemistItem).X;
             }
 
             paletteSpinner.Value = item.Palette;
             graphicSpinner.Value = item.Graphic;
             enemyLevelSpinner.Value = item.EnemyLevel;
+
             itemTypeComboBox.SelectedItem = item.ItemType;
+
             itemAttributesSpinner.Value = item.SIA;
             priceSpinner.Value = item.Price;
             shopAvailabilityComboBox.SelectedItem = item.ShopAvailability;
@@ -164,9 +166,23 @@ namespace FFTPatcher.Editors
             itemAttributesCheckedListBox.ItemCheck += itemAttributesCheckedListBox_ItemCheck;
             weaponAttributesCheckedListBox.ItemCheck += weaponAttributesCheckedListBox_ItemCheck;
 
-            itemTypeComboBox.DataSource = Enum.GetValues( typeof( ItemSubType ) );
             shopAvailabilityComboBox.DataSource = ShopAvailability.AllAvailabilities;
+            FFTPatch.DataChanged += FFTPatch_DataChanged;
 
+            ignoreChanges = false;
+        }
+
+        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        {
+            ignoreChanges = true;
+            List<ItemSubType> itemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+            if( FFTPatch.Context == Context.US_PSX )
+            {
+                itemTypes.Remove( ItemSubType.LipRouge );
+                itemTypes.Remove( ItemSubType.FellSword );
+            }
+            itemTypeComboBox.DataSource = itemTypes;
+            itemAttributesSpinner.Maximum = FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F;
             ignoreChanges = false;
         }
 

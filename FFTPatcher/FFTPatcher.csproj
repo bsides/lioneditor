@@ -48,13 +48,14 @@
     <Compile Include="Datatypes\Abilities\AIFlags.cs" />
     <Compile Include="Datatypes\Context.cs" />
     <Compile Include="Datatypes\Elements.cs" />
+    <Compile Include="Datatypes\FFTPatch.cs" />
     <Compile Include="Datatypes\Items\Accessory.cs" />
     <Compile Include="Datatypes\Items\AllItems.cs" />
     <Compile Include="Datatypes\Items\Armor.cs" />
     <Compile Include="Datatypes\Items\ChemistItem.cs" />
     <Compile Include="Datatypes\Items\Item.cs" />
     <Compile Include="Datatypes\Items\ItemAttributes.cs" />
-    <Compile Include="Datatypes\Items\PoachProabability.cs" />
+    <Compile Include="Datatypes\Items\PoachProbability.cs" />
     <Compile Include="Datatypes\Items\Shield.cs" />
     <Compile Include="Datatypes\Items\Weapon.cs" />
     <Compile Include="Datatypes\Job\ActionMenu.cs" />
@@ -162,6 +163,12 @@
     </Compile>
     <Compile Include="Editors\EquipmentEditor.Designer.cs">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\FFTPatchEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\FFTPatchEditor.Designer.cs">
+      <DependentUpon>FFTPatchEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\InflictStatusEditor.cs">
       <SubType>UserControl</SubType>
@@ -301,6 +308,10 @@
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\FFTPatchEditor.resx">
+      <DependentUpon>FFTPatchEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\InflictStatusEditor.resx">
       <DependentUpon>InflictStatusEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -377,6 +388,7 @@
     <None Include="Resources\PSP\SkillSetsBin.bin" />
     <None Include="Resources\PSP\StatusAttributes.bin" />
     <None Include="Resources\PSX-US\Abilities.bin" />
+    <None Include="Resources\PSX-US\ActionEvents.bin" />
     <None Include="Resources\PSX-US\InflictStatuses.bin" />
     <None Include="Resources\PSX-US\JobLevels.bin" />
     <None Include="Resources\PSX-US\Jobs.bin" />

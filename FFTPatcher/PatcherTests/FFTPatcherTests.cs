@@ -17,7 +17,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllAbilities all = new AllAbilities( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            AllAbilities all = new AllAbilities( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -30,7 +30,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllJobs all = new AllJobs( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            AllJobs all = new AllJobs( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -43,7 +43,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllSkillSets all = new AllSkillSets( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            AllSkillSets all = new AllSkillSets( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -56,7 +56,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllMonsterSkills all = new AllMonsterSkills( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            AllMonsterSkills all = new AllMonsterSkills( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -69,7 +69,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllActionMenus all = new AllActionMenus( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            AllActionMenus all = new AllActionMenus( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -82,7 +82,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllStatusAttributes all = new AllStatusAttributes( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            AllStatusAttributes all = new AllStatusAttributes( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -95,7 +95,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllPoachProbabilities all = new AllPoachProbabilities( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            AllPoachProbabilities all = new AllPoachProbabilities( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -108,7 +108,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            JobLevels all = new JobLevels( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            JobLevels all = new JobLevels( new SubArray<byte>( bytes ) );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -127,8 +127,8 @@ namespace PatcherTests
             stream.Close();
 
             AllItems all = new AllItems(
-                new SubArray<byte>( new List<byte>( oldBytes ), 0 ),
-                new SubArray<byte>( new List<byte>( newBytes ), 0 ));
+                new SubArray<byte>( oldBytes ),
+                new SubArray<byte>( newBytes ));
             byte[] oldOutput = all.ToFirstByteArray();
             byte[] newOutput = all.ToSecondByteArray();
 
@@ -144,7 +144,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            JobLevels all = new JobLevels( new SubArray<byte>( new List<byte>( bytes ), 0 ) );
+            JobLevels all = new JobLevels( new SubArray<byte>( bytes ) );
 
             Assert.That( all.Archer.Squire, Is.EqualTo( 2 ) );
 

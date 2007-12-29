@@ -88,6 +88,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] ActionEventsBin {
+            get {
+                object obj = ResourceManager.GetObject("ActionEventsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] InflictStatusesBin {
             get {
                 object obj = ResourceManager.GetObject("InflictStatusesBin", resourceCulture);

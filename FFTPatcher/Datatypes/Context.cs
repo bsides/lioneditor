@@ -21,6 +21,7 @@ namespace FFTPatcher.Datatypes
 {
     public enum Context
     {
+        Default = 0,
         US_PSP,
         US_PSX
     }

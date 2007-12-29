@@ -22,13 +22,13 @@ using FFTPatcher.Properties;
 
 namespace FFTPatcher.Datatypes
 {
-    public class PoachProabability
+    public class PoachProbability
     {
         public string MonsterName { get; private set; }
         public Item Common { get; set; }
         public Item Uncommon { get; set; }
 
-        public PoachProabability( string name, SubArray<byte> bytes )
+        public PoachProbability( string name, SubArray<byte> bytes )
         {
             MonsterName = name;
             Common = Item.GetItemAtOffset( bytes[0] );
@@ -46,21 +46,21 @@ namespace FFTPatcher.Datatypes
 
     public class AllPoachProbabilities
     {
-        public PoachProabability[] PoachProbabilities { get; private set; }
+        public PoachProbability[] PoachProbabilities { get; private set; }
 
         public AllPoachProbabilities( SubArray<byte> bytes )
         {
-            PoachProbabilities = new PoachProabability[48];
+            PoachProbabilities = new PoachProbability[48];
             for( int i = 0; i < 48; i++ )
             {
-                PoachProbabilities[i] = new PoachProabability( AllJobs.Names[i + 0x5E], new SubArray<byte>( bytes, i * 2, i * 2 + 1 ) );
+                PoachProbabilities[i] = new PoachProbability( AllJobs.Names[i + 0x5E], new SubArray<byte>( bytes, i * 2, i * 2 + 1 ) );
             }
         }
 
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 96 );
-            foreach( PoachProabability p in PoachProbabilities )
+            foreach( PoachProbability p in PoachProbabilities )
             {
                 result.AddRange( p.ToByteArray() );
             }
@@ -75,8 +75,14 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX address 0x066064
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064 );
+            }
         }
     }
 }

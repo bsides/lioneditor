@@ -101,9 +101,12 @@ namespace FFTPatcher.Datatypes
             {
                 ItemAttributes[i] = new ItemAttributes( i, new SubArray<byte>( first, i * 25, (i + 1) * 25 - 1 ) );
             }
-            for( byte i = 0x50; i < 0x65; i++ )
+            if( second != null )
             {
-                ItemAttributes[i] = new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) );
+                for( byte i = 0x50; i < 0x65; i++ )
+                {
+                    ItemAttributes[i] = new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) );
+                }
             }
         }
 
@@ -129,11 +132,17 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX: 0x0642C4
-            StringBuilder sb = new StringBuilder();
-            sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8 ) );
-            sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694 ) );
-            return sb.ToString();
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8 ) );
+                sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694 ) );
+                return sb.ToString();
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x0642C4 );
+            }
         }
     }
 }

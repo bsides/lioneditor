@@ -81,6 +81,13 @@ namespace FFTPatcher.Editors
             itemUseComboBox.Visible = ability.IsItem;
             itemUseComboBox.SelectedItem = ability.Item;
 
+            List<ItemSubType> itemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+            if( FFTPatch.Context == Context.US_PSX )
+            {
+                itemTypes.Remove( ItemSubType.LipRouge );
+                itemTypes.Remove( ItemSubType.FellSword );
+            }
+            throwingComboBox.DataSource = itemTypes;
             throwingLabel.Visible = ability.IsThrowing;
             throwingComboBox.Visible = ability.IsThrowing;
             throwingComboBox.SelectedItem = ability.Throwing;
@@ -118,6 +125,7 @@ namespace FFTPatcher.Editors
             verticalSpinner.Tag = "JumpVertical";
             itemUseComboBox.Tag = "Item";
             throwingComboBox.Tag = "Throwing";
+            idSpinner.Tag = "OtherID";
 
             foreach( NumericUpDown spinner in spinners )
             {

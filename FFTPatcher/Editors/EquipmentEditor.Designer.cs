@@ -68,47 +68,6 @@ namespace FFTPatcher.Editors
             // 
             this.equipmentCheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.equipmentCheckedListBox.FormattingEnabled = true;
-            this.equipmentCheckedListBox.Items.AddRange( new object[] {
-            "",
-            "Knife",
-            "Ninja Blade",
-            "Sword",
-            "Knight\'s Sword",
-            "Katana",
-            "Axe",
-            "Rod",
-            "Staff",
-            "Flail",
-            "Gun",
-            "Crossbow",
-            "Bow",
-            "Instrument",
-            "Book",
-            "Polearm",
-            "Pole",
-            "Bag",
-            "Cloth",
-            "Shield",
-            "Helmet",
-            "Hat",
-            "Hair Adornment",
-            "Armor",
-            "Clothing",
-            "Robe",
-            "Shoes",
-            "Armguard",
-            "Ring",
-            "Armlet",
-            "Cloak",
-            "Perfume",
-            "Unknown1",
-            "Unknown2",
-            "Unknown3",
-            "Fell Sword",
-            "Lip Rouge",
-            "Unknown6",
-            "Unknown7",
-            "Unknown8"} );
             this.equipmentCheckedListBox.Location = new System.Drawing.Point( 3, 16 );
             this.equipmentCheckedListBox.MultiColumn = true;
             this.equipmentCheckedListBox.Name = "equipmentCheckedListBox";

@@ -27,23 +27,52 @@ namespace FFTPatcher.Datatypes
 {
     public class Item
     {
-        private static List<string> names;
+        private static List<string> psxNames;
+        private static List<string> pspNames;
         public static List<string> ItemNames
         {
             get
             {
-                if( names == null )
-                {
-                    names = new List<string>( 316 );
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml( Resources.Items );
-                    for( int i = 0; i < 316; i++ )
-                    {
-                        names.Add( doc.SelectSingleNode( string.Format( "//Item[@offset='{0}']/name", i ) ).InnerText );
-                    }
-                }
+                return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames;
+            }
+        }
 
-                return names;
+        private static List<Item> pspDummies;
+        private static List<Item> psxDummies;
+        public static List<Item> DummyItems
+        {
+            get
+            {
+                return FFTPatch.Context == Context.US_PSP ? pspDummies : psxDummies;
+            }
+        }
+
+        static Item()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml( Resources.Items );
+            pspNames = new List<string>( 316 );
+            pspDummies = new List<Item>( 316 );
+            for( int i = 0; i < 316; i++ )
+            {
+                pspNames.Add( doc.SelectSingleNode( string.Format( "//Item[@offset='{0}']/name", i ) ).InnerText );
+                Item item = new Item();
+                item.Offset = (UInt16)i;
+                item.Name = pspNames[i];
+                pspDummies.Add( item );
+            }
+
+            doc = new XmlDocument();
+            doc.LoadXml( PSXResources.Items );
+            psxNames = new List<string>( 256 );
+            psxDummies = new List<Item>( 256 );
+            for( int i = 0; i < 256; i++ )
+            {
+                psxNames.Add( doc.SelectSingleNode( string.Format( "//Item[@offset='{0}']/name", i ) ).InnerText );
+                Item item = new Item();
+                item.Offset = (UInt16)i;
+                item.Name = psxNames[i];
+                psxDummies.Add( item );
             }
         }
 
@@ -54,27 +83,6 @@ namespace FFTPatcher.Datatypes
                 {
                     return i.Offset == offset;
                 } );
-        }
-
-        private static List<Item> dummyItems;
-        public static List<Item> DummyItems
-        {
-            get
-            {
-                if( dummyItems == null )
-                {
-                    dummyItems = new List<Item>( 316 );
-                    for( int i = 0; i < 316; i++ )
-                    {
-                        Item item = new Item();
-                        item.Offset = (UInt16)i;
-                        item.Name = ItemNames[i];
-                        dummyItems.Add( item );
-                    }
-                }
-
-                return dummyItems;
-            }
         }
 
         public UInt16 Offset { get; private set; }

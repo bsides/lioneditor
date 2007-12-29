@@ -17,32 +17,22 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class AllStatusAttributesEditor : UserControl
+    public partial class FFTPatchEditor : UserControl
     {
-        public AllStatusAttributesEditor()
+        public FFTPatchEditor()
         {
             InitializeComponent();
+            FFTPatch.New( Context.US_PSX );
             FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
         {
-            listBox.SelectedIndexChanged -= listBox_SelectedIndexChanged;
-            listBox.Items.AddRange( FFTPatch.StatusAttributes.StatusAttributes );
-            listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
-            listBox.SelectedIndex = 0;
-        }
-
-        private void listBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            StatusAttribute a = listBox.SelectedItem as StatusAttribute;
-            statusAttributeEditor.StatusAttribute = a;
         }
     }
 }

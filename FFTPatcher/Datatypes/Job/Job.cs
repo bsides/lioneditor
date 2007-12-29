@@ -62,8 +62,8 @@ namespace FFTPatcher.Datatypes
         public byte MPalette { get; set; }
         public byte MGraphic { get; set; }
 
-        public Job( byte value, string name, SubArray<byte> bytes )
-            : this( bytes )
+        public Job( Context context, byte value, string name, SubArray<byte> bytes )
+            : this( context, bytes )
         {
             Value = value;
             Name = name;
@@ -158,17 +158,34 @@ namespace FFTPatcher.Datatypes
 
     public class AllJobs
     {
-        public static string[] Names { get; private set; }
+        private static string[] psxNames;
+        private static string[] pspNames;
+        public static string[] Names
+        {
+            get
+            {
+                return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames;
+            }
+        }
+
         public Job[] Jobs { get; private set; }
 
         static AllJobs()
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Resources.Jobs );
-            Names = new string[0xA9];
+            pspNames = new string[0xA9];
             for( int i = 0; i < 0xA9; i++ )
             {
-                Names[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
+                pspNames[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
+            }
+
+            doc = new XmlDocument();
+            doc.LoadXml( PSXResources.Jobs );
+            psxNames = new string[0xA0];
+            for( int i = 0; i < 0xA0; i++ )
+            {
+                psxNames[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
             }
         }
 
@@ -185,7 +202,7 @@ namespace FFTPatcher.Datatypes
             Jobs = new Job[numJobs];
             for( int i = 0; i < numJobs; i++ )
             {
-                Jobs[i] = new Job( (byte)i, Names[i], new SubArray<byte>( bytes, i * jobLength, (i + 1) * jobLength - 1 ) );
+                Jobs[i] = new Job( context, (byte)i, Names[i], new SubArray<byte>( bytes, i * jobLength, (i + 1) * jobLength - 1 ) );
             }
         }
 
@@ -201,17 +218,20 @@ namespace FFTPatcher.Datatypes
             {
                 result.AddRange( j.ToByteArray( context ) );
             }
-            result.Add( 0x00 );
-            result.Add( 0x00 );
-            result.Add( 0x00 );
 
             return result.ToArray();
         }
 
         public string GenerateCodes()
         {
-            // PSX: 0x0610B8
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
+            }
         }
     }
 }

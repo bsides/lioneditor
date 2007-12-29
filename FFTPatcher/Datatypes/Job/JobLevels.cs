@@ -65,7 +65,7 @@ namespace FFTPatcher.Datatypes
 
         public JobLevels( Context context, SubArray<byte> bytes )
         {
-            int jobCount = context == Context.US_PSP ? 22 : 20;
+            int jobCount = context == Context.US_PSP ? 22 : 19;
             int requirementsLength = context == Context.US_PSP ? 12 : 10;
 
             for( int i = 0; i < jobCount; i++ )
@@ -76,6 +76,8 @@ namespace FFTPatcher.Datatypes
             }
 
             int start = requirementsLength * jobCount;
+            if( context == Context.US_PSX )
+                start += 2;
             Level1 = Utilities.BytesToUShort( bytes[start + 0], bytes[start + 1] );
             Level2 = Utilities.BytesToUShort( bytes[start + 2], bytes[start + 3] );
             Level3 = Utilities.BytesToUShort( bytes[start + 4], bytes[start + 5] );
@@ -93,14 +95,17 @@ namespace FFTPatcher.Datatypes
 
         public byte[] ToByteArray( Context context )
         {
-            int jobCount = context == Context.US_PSP ? 22 : 20;
-            int requirementsLength = context == Context.US_PSP ? 12 : 10;
+            int jobCount = context == Context.US_PSP ? 22 : 19;
             List<byte> result = new List<byte>( 0x118 );
             for( int i = 0; i < jobCount; i++ )
             {
                 result.AddRange( Utilities.GetFieldOrProperty<Requirements>( this, reqs[i] ).ToByteArray( context ) );
             }
-
+            if( context == Context.US_PSX )
+            {
+                result.Add( 0x00 );
+                result.Add( 0x00 );
+            }
             result.AddRange( Utilities.UShortToBytes( Level1 ) );
             result.AddRange( Utilities.UShortToBytes( Level2 ) );
             result.AddRange( Utilities.UShortToBytes( Level3 ) );
@@ -115,8 +120,14 @@ namespace FFTPatcher.Datatypes
 
         public string GenerateCodes()
         {
-            // PSX address 0x0660C4
-            return Utilities.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Utilities.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
+            }
+            else
+            {
+                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
+            }
         }
     }
 

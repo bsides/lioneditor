@@ -17,22 +17,17 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using FFTPatcher.Properties;
 
 namespace FFTPatcher.Editors
 {
     public partial class AllActionMenusEditor : UserControl
     {
-        public AllActionMenus AllActionMenus { get; private set; }
-
         public AllActionMenusEditor()
         {
             InitializeComponent();
 
-            AllActionMenus = new AllActionMenus( new SubArray<byte>( new List<byte>( Resources.ActionEventsBin ), 0 ) );
             for( int i = 0; i < ActionMenuEntry.AllActionMenuEntries.Count; i++ )
             {
                 ActionColumn.Items.Add( ActionMenuEntry.AllActionMenuEntries[i] );
@@ -43,14 +38,20 @@ namespace FFTPatcher.Editors
             dataGridView.CellParsing += dataGridView_CellParsing;
 
             dataGridView.AutoGenerateColumns = false;
-            dataGridView.DataSource = AllActionMenus.ActionMenus;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
+
+            FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
+        {
+            dataGridView.DataSource = FFTPatch.ActionMenus.ActionMenus;
         }
 
         private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
         {
-            if( e.ColumnIndex == Offset.Index )
+            if( (e.ColumnIndex == Offset.Index) && (e.Value != null) )
             {
                 byte b = (byte)e.Value;
                 e.Value = b.ToString( "X2" );

@@ -20,6 +20,7 @@
 using System;
 using System.Text;
 using System.Windows.Forms;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
@@ -33,60 +34,60 @@ namespace FFTPatcher.Editors
         protected override void OnVisibleChanged( EventArgs e )
         {
             StringBuilder sb = new StringBuilder();
-            if( MainForm.AllAbilities != null )
+            if( FFTPatch.Abilities != null )
             {
                 sb.AppendLine( "_C0 Abilities" );
-                sb.AppendLine( MainForm.AllAbilities.GenerateCodes() );
+                sb.AppendLine( FFTPatch.Abilities.GenerateCodes() );
             }
-            if( MainForm.AllJobs != null )
+            if( FFTPatch.Jobs != null )
             {
                 sb.AppendLine( "_C0 Jobs" );
-                sb.AppendLine( MainForm.AllJobs.GenerateCodes() );
+                sb.AppendLine( FFTPatch.Jobs.GenerateCodes() );
             }
-            if( MainForm.AllSkillSets != null )
+            if( FFTPatch.SkillSets != null )
             {
                 sb.AppendLine( "_C0 Skill Sets" );
-                sb.AppendLine( MainForm.AllSkillSets.GenerateCodes() );
+                sb.AppendLine( FFTPatch.SkillSets.GenerateCodes() );
             }
-            if( MainForm.AllMonsterSkills != null )
+            if( FFTPatch.MonsterSkills != null )
             {
                 sb.AppendLine( "_C0 Monster Skill Sets" );
-                sb.AppendLine( MainForm.AllMonsterSkills.GenerateCodes() );
+                sb.AppendLine( FFTPatch.MonsterSkills.GenerateCodes() );
             }
-            if( MainForm.AllActionMenus != null )
+            if( FFTPatch.ActionMenus != null )
             {
                 sb.AppendLine( "_C0 Action Menus" );
-                sb.AppendLine( MainForm.AllActionMenus.GenerateCodes() );
+                sb.AppendLine( FFTPatch.ActionMenus.GenerateCodes() );
             }
-            if( MainForm.AllStatusAttributes != null )
+            if( FFTPatch.StatusAttributes != null )
             {
                 sb.AppendLine( "_C0 Status Effects" );
-                sb.AppendLine( MainForm.AllStatusAttributes.GenerateCodes() );
+                sb.AppendLine( FFTPatch.StatusAttributes.GenerateCodes() );
             }
-            if( MainForm.AllPoachProbabilities != null )
+            if( FFTPatch.PoachProbabilities != null )
             {
                 sb.AppendLine( "_C0 Poaching" );
-                sb.AppendLine( MainForm.AllPoachProbabilities.GenerateCodes() );
+                sb.AppendLine( FFTPatch.PoachProbabilities.GenerateCodes() );
             }
-            if( MainForm.JobLevels != null )
+            if( FFTPatch.JobLevels != null )
             {
                 sb.AppendLine( "_C0 Job Levels" );
-                sb.AppendLine( MainForm.JobLevels.GenerateCodes() );
+                sb.AppendLine( FFTPatch.JobLevels.GenerateCodes() );
             }
-            if( MainForm.AllItems != null )
+            if( FFTPatch.Items != null )
             {
                 sb.AppendLine( "_C0 Items" );
-                sb.AppendLine( MainForm.AllItems.GenerateCodes() );
+                sb.AppendLine( FFTPatch.Items.GenerateCodes() );
             }
-            if( MainForm.AllItemAttributes != null )
+            if( FFTPatch.ItemAttributes != null )
             {
                 sb.AppendLine( "_C0 Item Attributes" );
-                sb.AppendLine( MainForm.AllItemAttributes.GenerateCodes() );
+                sb.AppendLine( FFTPatch.ItemAttributes.GenerateCodes() );
             }
-            if( MainForm.AllInflictStatuses != null )
+            if( FFTPatch.InflictStatuses != null )
             {
                 sb.AppendLine( "_C0 Inflict Statuses" );
-                sb.AppendLine( MainForm.AllInflictStatuses.GenerateCodes() );
+                sb.AppendLine( FFTPatch.InflictStatuses.GenerateCodes() );
             }
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );

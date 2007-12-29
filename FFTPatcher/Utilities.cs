@@ -182,7 +182,7 @@ namespace FFTPatcher
             return result;
         }
 
-        public static string GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        private static string GeneratePSPCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
         {
             StringBuilder codeBuilder = new StringBuilder();
             List<string> codes = new List<string>();
@@ -247,6 +247,64 @@ namespace FFTPatcher
             }
 
             return codeBuilder.ToString();
+        }
+
+        private static string GeneratePSXCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        {
+            List<string> codes = new List<string>();
+            bool[] patched = new bool[newBytes.Length];
+            for( int i = 0; i < newBytes.Length; i += 2 )
+            {
+                if( ((i + 1) < newBytes.Length) &&
+                    (newBytes[i] != oldBytes[i]) && (!patched[i]) &&
+                    (newBytes[i + 1] != oldBytes[i + 1] && (!patched[i + 1])) )
+                {
+                    UInt32 addy = (UInt32)(offset + i);
+                    string code = string.Format( "80{0:X6} {1:X2}{2:X2}",
+                        addy, newBytes[i], newBytes[i + 1] );
+                    codes.Add( code );
+                    patched[i] = true;
+                    patched[i + 1] = true;
+                }
+            }
+            for( int i = 0; i < newBytes.Length; i++ )
+            {
+                if( (newBytes[i] != oldBytes[i]) && (!patched[i]) )
+                {
+                    UInt32 addy = (UInt32)(offset + i);
+                    string code = string.Format( "30{0:X6} 00{1:X2}",
+                        addy, newBytes[i] );
+                    codes.Add( code );
+                    patched[i] = true;
+                }
+            }
+
+            codes.Sort( new Comparison<string>(
+                delegate( string s, string t )
+                {
+                    return s.Substring( 2 ).CompareTo( t.Substring( 2 ) );
+                } ) );
+
+            StringBuilder codeBuilder = new StringBuilder();
+            foreach( string s in codes )
+            {
+                codeBuilder.AppendLine( s );
+            }
+
+            return codeBuilder.ToString();
+        }
+
+        public static string GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        {
+            switch( context )
+            {
+                case Context.US_PSP:
+                    return GeneratePSPCodes( oldBytes, newBytes, offset );
+                case Context.US_PSX:
+                    return GeneratePSXCodes( oldBytes, newBytes, offset );
+            }
+
+            return string.Empty;
         }
     }
 }

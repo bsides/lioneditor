@@ -95,19 +95,21 @@ namespace FFTPatcher.Datatypes
 
         public AllItemAttributes( SubArray<byte> first, SubArray<byte> second )
         {
-            ItemAttributes = new ItemAttributes[0x65];
+            List<ItemAttributes> temp = new List<ItemAttributes>( 0x65 );
 
             for( byte i = 0; i < 0x50; i++ )
             {
-                ItemAttributes[i] = new ItemAttributes( i, new SubArray<byte>( first, i * 25, (i + 1) * 25 - 1 ) );
+                temp.Add( new ItemAttributes( i, new SubArray<byte>( first, i * 25, (i + 1) * 25 - 1 ) ) );
             }
             if( second != null )
             {
                 for( byte i = 0x50; i < 0x65; i++ )
                 {
-                    ItemAttributes[i] = new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) );
+                    temp.Add( new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) ) );
                 }
             }
+
+            ItemAttributes = temp.ToArray();
         }
 
         public byte[] ToFirstByteArray()

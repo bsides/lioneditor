@@ -28,15 +28,16 @@ namespace FFTPatcher.Editors
         public AllJobsEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( AllJobs jobs )
         {
             jobsListBox.SelectedIndexChanged -= jobsListBox_SelectedIndexChanged;
-            jobsListBox.Items.AddRange( FFTPatch.Jobs.Jobs );
+            jobsListBox.Items.Clear();
+            jobsListBox.Items.AddRange( jobs.Jobs );
             jobsListBox.SelectedIndexChanged += jobsListBox_SelectedIndexChanged;
             jobsListBox.SelectedIndex = 0;
+            jobEditor.Job = jobsListBox.SelectedItem as Job;
         }
 
         private void jobsListBox_SelectedIndexChanged( object sender, EventArgs e )

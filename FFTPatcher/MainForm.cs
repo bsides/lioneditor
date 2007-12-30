@@ -27,6 +27,51 @@ namespace FFTPatcher
         public MainForm()
         {
             InitializeComponent();
+            openMenuItem.Click += openMenuItem_Click;
+            applyMenuItem.Click += applyMenuItem_Click;
+            saveMenuItem.Click += saveMenuItem_Click;
+            newPSPMenuItem.Click += newPSPMenuItem_Click;
+            newPSXMenuItem.Click += newPSXMenuItem_Click;
+            exitMenuItem.Click += exitMenuItem_Click;
+        }
+
+        private void exitMenuItem_Click( object sender, System.EventArgs e )
+        {
+            this.Close();
+        }
+
+        private void newPSXMenuItem_Click( object sender, System.EventArgs e )
+        {
+            FFTPatch.New( Context.US_PSX );
+        }
+
+        private void newPSPMenuItem_Click( object sender, System.EventArgs e )
+        {
+            FFTPatch.New( Context.US_PSP );
+        }
+
+        private void saveMenuItem_Click( object sender, System.EventArgs e )
+        {
+            if( saveFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                FFTPatch.SaveToFile( saveFileDialog.FileName );
+            }
+        }
+
+        private void applyMenuItem_Click( object sender, System.EventArgs e )
+        {
+            if( applyPatchOpenFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                FFTPatch.ApplyPatchesToFile( applyPatchOpenFileDialog.FileName );
+            }
+        }
+
+        private void openMenuItem_Click( object sender, System.EventArgs e )
+        {
+            if( openFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                FFTPatch.Load( openFileDialog.FileName );
+            }
         }
     }
 }

@@ -27,12 +27,27 @@ namespace FFTPatcher.Editors
         public FFTPatchEditor()
         {
             InitializeComponent();
-            FFTPatch.New( Context.US_PSX );
+            //FFTPatch.New( Context.US_PSP );
+            //FFTPatch.Load( "lol.xml" );
             FFTPatch.DataChanged += FFTPatch_DataChanged;
+            //FFTPatch.SaveToFile( "lol2.xml" );
+            this.Enabled = false;
         }
 
         private void FFTPatch_DataChanged( object sender, System.EventArgs e )
         {
+            this.Enabled = true;
+            allAbilitiesEditor1.UpdateView( FFTPatch.Abilities );
+            allActionMenusEditor1.UpdateView( FFTPatch.ActionMenus );
+            allInflictStatusesEditor1.UpdateView( FFTPatch.InflictStatuses );
+            allItemAttributesEditor1.UpdateView( FFTPatch.ItemAttributes );
+            allItemsEditor1.UpdateView( FFTPatch.Items );
+            allJobsEditor1.UpdateView( FFTPatch.Jobs );
+            allMonsterSkillsEditor1.UpdateView( FFTPatch.MonsterSkills );
+            allPoachProbabilitiesEditor1.UpdateView( FFTPatch.PoachProbabilities );
+            allSkillSetsEditor1.UpdateView( FFTPatch.SkillSets );
+            allStatusAttributesEditor1.UpdateView( FFTPatch.StatusAttributes );
+            jobLevelsEditor1.UpdateView( FFTPatch.JobLevels );
         }
     }
 }

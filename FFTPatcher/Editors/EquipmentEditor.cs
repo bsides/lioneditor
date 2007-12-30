@@ -52,64 +52,24 @@ namespace FFTPatcher.Editors
         }
 
         private bool ignoreChanges = false;
+        private object[] pspItems;
+        private object[] psxItems;
 
         public EquipmentEditor()
         {
             InitializeComponent();
             equipmentCheckedListBox.ItemCheck += equipmentCheckedListBox_ItemCheck;
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
-        }
-
-        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
-        {
-            ignoreChanges = true;
-            equipmentCheckedListBox.Items.Clear();
-            equipmentCheckedListBox.Items.AddRange( new object[] {
-                "",
-                "Knife",
-                "Ninja Blade",
-                "Sword",
-                "Knight\'s Sword",
-                "Katana",
-                "Axe",
-                "Rod",
-                "Staff",
-                "Flail",
-                "Gun",
-                "Crossbow",
-                "Bow",
-                "Instrument",
-                "Book",
-                "Polearm",
-                "Pole",
-                "Bag",
-                "Cloth",
-                "Shield",
-                "Helmet",
-                "Hat",
-                "Hair Adornment",
-                "Armor",
-                "Clothing",
-                "Robe",
-                "Shoes",
-                "Armguard",
-                "Ring",
-                "Armlet",
-                "Cloak",
-                "Perfume" } );
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                equipmentCheckedListBox.Items.AddRange( new object[] {
-                    "Unknown1",
-                    "Unknown2",
-                    "Unknown3",
-                    "Fell Sword",
-                    "Lip Rouge",
-                    "Unknown6",
-                    "Unknown7",
-                    "Unknown8"} );
-            }
-            ignoreChanges = false;
+            psxItems = new object[] { 
+                "", "Knife", "Ninja Blade", "Sword", "Knight\'s Sword", "Katana", "Axe", "Rod",
+                "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+                "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "Hair Adornment", 
+                "Armor", "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume"};
+            pspItems = new object[] { 
+                "", "Knife", "Ninja Blade", "Sword", "Knight\'s Sword", "Katana", "Axe", "Rod",
+                "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+                "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "Hair Adornment", 
+                "Armor", "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume",
+                "Unknown1", "Unknown2", "Unknown3", "Fell Sword", "Lip Rouge", "Unknown6", "Unknown7", "Unknown8"};
         }
 
         private void equipmentCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -126,6 +86,18 @@ namespace FFTPatcher.Editors
             equipmentCheckedListBox.SuspendLayout();
 
             ignoreChanges = true;
+
+            if( FFTPatch.Context == Context.US_PSP && equipmentCheckedListBox.Items.Count != pspItems.Length )
+            {
+                equipmentCheckedListBox.Items.Clear();
+                equipmentCheckedListBox.Items.AddRange( pspItems );
+            }
+            else if( FFTPatch.Context == Context.US_PSX && equipmentCheckedListBox.Items.Count != psxItems.Length )
+            {
+                equipmentCheckedListBox.Items.Clear();
+                equipmentCheckedListBox.Items.AddRange( psxItems );
+            }
+
             for (int i = 0; i < equipmentCheckedListBox.Items.Count; i++)
             {
                 equipmentCheckedListBox.SetItemChecked(i, Utilities.GetFlag(equipment, FieldNames[i]));

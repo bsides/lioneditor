@@ -26,23 +26,23 @@ namespace FFTPatcher.Datatypes
 {
     public class AllAbilities
     {
-        private static string[] psxNames;
-        private static string[] pspNames;
+        public  static string[] PSXNames { get; private set; }
+        public static string[] PSPNames { get; private set; }
         public static string[] Names
         {
             get
             {
-                return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames;
+                return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames;
             }
         }
 
-        private static Ability[] pspAbilities;
-        private static Ability[] psxAbilities;
+        public static Ability[] PSPAbilities { get; private set; }
+        public static Ability[] PSXAbilities { get; private set; }
         public static Ability[] DummyAbilities 
         {
             get
             {
-                return FFTPatch.Context == Context.US_PSP ? pspAbilities : psxAbilities;
+                return FFTPatch.Context == Context.US_PSP ? PSPAbilities : PSXAbilities;
             }
         }
 
@@ -53,16 +53,16 @@ namespace FFTPatcher.Datatypes
             XmlDocument psxDoc = new XmlDocument();
             psxDoc.LoadXml( PSXResources.Abilities );
 
-            pspNames = new string[512];
-            psxNames = new string[512];
-            pspAbilities = new Ability[512];
-            psxAbilities = new Ability[512];
+            PSPNames = new string[512];
+            PSXNames = new string[512];
+            PSPAbilities = new Ability[512];
+            PSXAbilities = new Ability[512];
             for( int i = 0; i < 512; i++ )
             {
-                pspNames[i] = doc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
-                psxNames[i] = psxDoc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
-                pspAbilities[i] = new Ability( pspNames[i], (UInt16)i );
-                psxAbilities[i] = new Ability( psxNames[i], (UInt16)i );
+                PSPNames[i] = doc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
+                PSXNames[i] = psxDoc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
+                PSPAbilities[i] = new Ability( PSPNames[i], (UInt16)i );
+                PSXAbilities[i] = new Ability( PSXNames[i], (UInt16)i );
             }
         }
 

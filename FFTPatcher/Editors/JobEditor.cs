@@ -61,16 +61,6 @@ namespace FFTPatcher.Editors
             comboBoxes = new ComboBox[] {
                 skillsetComboBox, innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox };
 
-            skillsetComboBox.DataSource = SkillSet.DummySkillSets;
-            innateAComboBox.BindingContext = new BindingContext();
-            innateAComboBox.DataSource = AllAbilities.DummyAbilities;
-            innateBComboBox.BindingContext = new BindingContext();
-            innateBComboBox.DataSource = AllAbilities.DummyAbilities;
-            innateCComboBox.BindingContext = new BindingContext();
-            innateCComboBox.DataSource = AllAbilities.DummyAbilities;
-            innateDComboBox.BindingContext = new BindingContext();
-            innateDComboBox.DataSource = AllAbilities.DummyAbilities;
-
             foreach( NumericUpDown spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
@@ -98,7 +88,7 @@ namespace FFTPatcher.Editors
                 Utilities.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
-
+        private Context ourContext = Context.Default;
         private void UpdateView()
         {
             ignoreChanges = true;
@@ -111,6 +101,18 @@ namespace FFTPatcher.Editors
             innateStatusesEditor.SuspendLayout();
             statusImmunityEditor.SuspendLayout();
             startingStatusesEditor.SuspendLayout();
+
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                skillsetComboBox.Items.Clear();
+                skillsetComboBox.Items.AddRange( SkillSet.DummySkillSets );
+                foreach( ComboBox cb in new ComboBox[] { innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox } )
+                {
+                    cb.Items.Clear();
+                    cb.Items.AddRange( AllAbilities.DummyAbilities );
+                }
+            }
 
             skillsetComboBox.SelectedItem = job.SkillSet;
             foreach( NumericUpDown s in spinners )

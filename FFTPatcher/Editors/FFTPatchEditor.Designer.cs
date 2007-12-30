@@ -223,7 +223,7 @@
             this.allMonsterSkillsEditor1.Dock = System.Windows.Forms.DockStyle.Left;
             this.allMonsterSkillsEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allMonsterSkillsEditor1.Name = "allMonsterSkillsEditor1";
-            this.allMonsterSkillsEditor1.Size = new System.Drawing.Size( 569, 709 );
+            this.allMonsterSkillsEditor1.Size = new System.Drawing.Size( 573, 709 );
             this.allMonsterSkillsEditor1.TabIndex = 0;
             // 
             // actionMenusTabPage

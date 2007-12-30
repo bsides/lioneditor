@@ -67,7 +67,7 @@ namespace FFTPatcher.Editors
             this.inflictStatusEditor.InflictStatus = null;
             this.inflictStatusEditor.Location = new System.Drawing.Point( 52, 0 );
             this.inflictStatusEditor.Name = "inflictStatusEditor";
-            this.inflictStatusEditor.Size = new System.Drawing.Size( 611, 204 );
+            this.inflictStatusEditor.Size = new System.Drawing.Size( 601, 188 );
             this.inflictStatusEditor.TabIndex = 0;
             // 
             // AllInflictStatusesEditor

@@ -31,13 +31,11 @@ namespace FFTPatcher.Editors
         public JobLevelsEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( JobLevels levels )
         {
-            levels = FFTPatch.JobLevels;
-
+            this.levels = levels;
             foreach( Control c in Controls )
             {
                 if( c is NumericUpDown )

@@ -28,15 +28,16 @@ namespace FFTPatcher.Editors
         public AllStatusAttributesEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( AllStatusAttributes attributes )
         {
             listBox.SelectedIndexChanged -= listBox_SelectedIndexChanged;
-            listBox.Items.AddRange( FFTPatch.StatusAttributes.StatusAttributes );
+            listBox.Items.Clear();
+            listBox.Items.AddRange( attributes.StatusAttributes );
             listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
             listBox.SelectedIndex = 0;
+            statusAttributeEditor.StatusAttribute = listBox.SelectedItem as StatusAttribute;
         }
 
         private void listBox_SelectedIndexChanged( object sender, EventArgs e )

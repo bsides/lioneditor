@@ -27,11 +27,6 @@ namespace FFTPatcher.Editors
         public AllMonsterSkillsEditor()
         {
             InitializeComponent();
-            foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
-            {
-                col.Items.AddRange( AllAbilities.DummyAbilities );
-                col.ValueType = typeof( Ability );
-            }
 
             dataGridView.AutoSize = true;
             dataGridView.CellParsing += dataGridView_CellParsing;
@@ -39,12 +34,18 @@ namespace FFTPatcher.Editors
             dataGridView.AutoGenerateColumns = false;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
+        public void UpdateView( AllMonsterSkills skills )
         {
-            dataGridView.DataSource = FFTPatch.MonsterSkills.MonsterSkills;
+            dataGridView.DataSource = null;
+            foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
+            {
+                col.Items.Clear();
+                col.Items.AddRange( AllAbilities.DummyAbilities );
+                col.ValueType = typeof( Ability );
+            }
+            dataGridView.DataSource = skills.MonsterSkills;
         }
 
         private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
@@ -75,6 +76,5 @@ namespace FFTPatcher.Editors
                 c.DropDownStyle = ComboBoxStyle.DropDownList;
             }
         }
-
     }
 }

@@ -28,16 +28,16 @@ namespace FFTPatcher.Editors
         public AllInflictStatusesEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( AllInflictStatuses statuses )
         {
             offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
-            offsetListBox.DataSource = FFTPatch.InflictStatuses.InflictStatuses;
+            offsetListBox.Items.Clear();
+            offsetListBox.Items.AddRange( statuses.InflictStatuses );
             offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
             offsetListBox.SelectedIndex = 0;
-            offsetListBox_SelectedIndexChanged( offsetListBox, EventArgs.Empty );
+            inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;
         }
 
         private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )

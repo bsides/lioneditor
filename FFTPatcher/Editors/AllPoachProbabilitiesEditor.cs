@@ -27,14 +27,6 @@ namespace FFTPatcher.Editors
         public AllPoachProbabilitiesEditor()
         {
             InitializeComponent();
-            foreach( Item i in Item.DummyItems )
-            {
-                if( i.Offset <= 0xFF )
-                {
-                    CommonItem.Items.Add( i );
-                    UncommonItem.Items.Add( i );
-                }
-            }
 
             CommonItem.ValueType = typeof( Item );
             UncommonItem.ValueType = typeof( Item );
@@ -43,15 +35,23 @@ namespace FFTPatcher.Editors
             dataGridView.CellParsing += dataGridView_CellParsing;
             dataGridView.AutoGenerateColumns = false;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
-
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
+        public void UpdateView( AllPoachProbabilities probs )
         {
-            dataGridView.DataSource = FFTPatch.PoachProbabilities.PoachProbabilities;
+            dataGridView.DataSource = null;
+            CommonItem.Items.Clear();
+            UncommonItem.Items.Clear();
+            foreach( Item i in Item.DummyItems )
+            {
+                if( i.Offset <= 0xFF )
+                {
+                    CommonItem.Items.Add( i );
+                    UncommonItem.Items.Add( i );
+                }
+            }
+            dataGridView.DataSource = probs.PoachProbabilities;
         }
-
 
         private void dataGridView_CellParsing( object sender, DataGridViewCellParsingEventArgs e )
         {

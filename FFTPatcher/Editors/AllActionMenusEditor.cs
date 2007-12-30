@@ -28,10 +28,7 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
 
-            for( int i = 0; i < ActionMenuEntry.AllActionMenuEntries.Count; i++ )
-            {
-                ActionColumn.Items.Add( ActionMenuEntry.AllActionMenuEntries[i] );
-            }
+            ActionColumn.DataSource = ActionMenuEntry.AllActionMenuEntries;
             ActionColumn.ValueType = typeof( ActionMenuEntry );
 
             dataGridView.AutoSize = true;
@@ -40,13 +37,11 @@ namespace FFTPatcher.Editors
             dataGridView.AutoGenerateColumns = false;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
-
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
+        public void UpdateView( AllActionMenus actionMenus )
         {
-            dataGridView.DataSource = FFTPatch.ActionMenus.ActionMenus;
+            dataGridView.DataSource = actionMenus.ActionMenus;
         }
 
         private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )

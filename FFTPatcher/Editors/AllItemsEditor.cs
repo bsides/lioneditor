@@ -28,19 +28,16 @@ namespace FFTPatcher.Editors
         public AllItemsEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( AllItems items )
         {
             itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;
             itemListBox.Items.Clear();
-            foreach( Item i in FFTPatch.Items.Items )
-            {
-                itemListBox.Items.Add( i );
-            }
+            itemListBox.Items.AddRange( items.Items.ToArray() );
             itemListBox.SelectedIndexChanged += itemListBox_SelectedIndexChanged;
             itemListBox.SelectedIndex = 0;
+            itemEditor.Item = itemListBox.SelectedItem as Item;
         }
 
         private void itemListBox_SelectedIndexChanged( object sender, EventArgs e )

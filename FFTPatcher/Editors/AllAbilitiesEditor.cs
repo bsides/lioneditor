@@ -28,16 +28,16 @@ namespace FFTPatcher.Editors
         public AllAbilitiesEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( AllAbilities allAbilities )
         {
             abilitiesListBox.SelectedIndexChanged -= abilitiesListBox_SelectedIndexChanged;
             abilitiesListBox.Items.Clear();
-            abilitiesListBox.Items.AddRange( FFTPatch.Abilities.Abilities );
+            abilitiesListBox.Items.AddRange( allAbilities.Abilities );
             abilitiesListBox.SelectedIndexChanged += abilitiesListBox_SelectedIndexChanged;
             abilitiesListBox.SelectedIndex = 0;
+            abilityEditor.Ability = abilitiesListBox.SelectedItem as Ability;
         }
 
         private void abilitiesListBox_SelectedIndexChanged( object sender, EventArgs e )

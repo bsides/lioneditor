@@ -28,6 +28,7 @@ namespace FFTPatcher.Editors
     {
         private bool ignoreChanges = false;
         private SkillSet skillSet;
+        private Context ourContext = Context.Default;
         public SkillSet SkillSet
         {
             get { return skillSet; }
@@ -47,7 +48,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-
         private List<ComboBox> actionComboBoxes;
         private List<ComboBox> theRestComboBoxes;
 
@@ -62,18 +62,6 @@ namespace FFTPatcher.Editors
             theRestComboBoxes = new List<ComboBox>( new ComboBox[] {
                 theRestComboBox1, theRestComboBox2, theRestComboBox3,
                 theRestComboBox4, theRestComboBox5, theRestComboBox6 } );
-            foreach( ComboBox actionComboBox in actionComboBoxes )
-            {
-                actionComboBox.BindingContext = new BindingContext();
-                actionComboBox.DataSource = AllAbilities.DummyAbilities;
-                actionComboBox.SelectedIndexChanged += actionComboBox_SelectedIndexChanged;
-            }
-            foreach( ComboBox theRestComboBox in theRestComboBoxes )
-            {
-                theRestComboBox.BindingContext = new BindingContext();
-                theRestComboBox.DataSource = AllAbilities.DummyAbilities;
-                theRestComboBox.SelectedIndexChanged += theRestComboBox_SelectedIndexChanged;
-            }
         }
 
         private void actionComboBox_SelectedIndexChanged( object sender, EventArgs e )
@@ -103,6 +91,22 @@ namespace FFTPatcher.Editors
             actionGroupBox.SuspendLayout();
             theRestGroupBox.SuspendLayout();
 
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                foreach( ComboBox actionComboBox in actionComboBoxes )
+                {
+                    actionComboBox.Items.Clear();
+                    actionComboBox.Items.AddRange( AllAbilities.DummyAbilities );
+                    actionComboBox.SelectedIndexChanged += actionComboBox_SelectedIndexChanged;
+                }
+                foreach( ComboBox theRestComboBox in theRestComboBoxes )
+                {
+                    theRestComboBox.Items.Clear();
+                    theRestComboBox.Items.AddRange( AllAbilities.DummyAbilities );
+                    theRestComboBox.SelectedIndexChanged += theRestComboBox_SelectedIndexChanged;
+                }
+            }
             for( int i = 0; i < 16; i++ )
             {
                 actionComboBoxes[i].SelectedItem = skillSet.Actions[i];

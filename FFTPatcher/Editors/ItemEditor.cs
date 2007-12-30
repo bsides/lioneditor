@@ -34,6 +34,9 @@ namespace FFTPatcher.Editors
             "Accessory", "Blank1", "Rare", "Blank2" };
         private List<NumericUpDown> spinners = new List<NumericUpDown>();
         private List<ComboBox> comboBoxes = new List<ComboBox>();
+        private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+        private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+        private Context ourContext = Context.Default;
 
         private bool ignoreChanges = false;
         private Item item;
@@ -85,7 +88,7 @@ namespace FFTPatcher.Editors
             {
                 for( int i = 0; i < 8; i++ )
                 {
-                    weaponAttributesCheckedListBox.SetItemChecked( i, 
+                    weaponAttributesCheckedListBox.SetItemChecked( i,
                         Utilities.GetFieldOrProperty<bool>( item as Weapon, weaponBools[i] ) );
                 }
                 weaponRangeSpinner.Value = (item as Weapon).Range;
@@ -121,9 +124,20 @@ namespace FFTPatcher.Editors
             graphicSpinner.Value = item.Graphic;
             enemyLevelSpinner.Value = item.EnemyLevel;
 
+            if( FFTPatch.Context == Context.US_PSP && ourContext != Context.US_PSP )
+            {
+                itemTypeComboBox.DataSource = pspItemTypes;
+                ourContext = Context.US_PSP;
+            }
+            else if( FFTPatch.Context == Context.US_PSX && ourContext != Context.US_PSX )
+            {
+                itemTypeComboBox.DataSource = psxItemTypes;
+                ourContext = Context.US_PSX;
+            }
             itemTypeComboBox.SelectedItem = item.ItemType;
 
             itemAttributesSpinner.Value = item.SIA;
+            itemAttributesSpinner.Maximum = FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F;
             priceSpinner.Value = item.Price;
             shopAvailabilityComboBox.SelectedItem = item.ShopAvailability;
             for( int i = 0; i < 8; i++ )
@@ -166,23 +180,11 @@ namespace FFTPatcher.Editors
             itemAttributesCheckedListBox.ItemCheck += itemAttributesCheckedListBox_ItemCheck;
             weaponAttributesCheckedListBox.ItemCheck += weaponAttributesCheckedListBox_ItemCheck;
 
-            shopAvailabilityComboBox.DataSource = ShopAvailability.AllAvailabilities;
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
+            shopAvailabilityComboBox.Items.Clear();
+            shopAvailabilityComboBox.Items.AddRange( ShopAvailability.AllAvailabilities.ToArray() );
+            psxItemTypes.Remove( ItemSubType.LipRouge );
+            psxItemTypes.Remove( ItemSubType.FellSword );
 
-            ignoreChanges = false;
-        }
-
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
-        {
-            ignoreChanges = true;
-            List<ItemSubType> itemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
-            if( FFTPatch.Context == Context.US_PSX )
-            {
-                itemTypes.Remove( ItemSubType.LipRouge );
-                itemTypes.Remove( ItemSubType.FellSword );
-            }
-            itemTypeComboBox.DataSource = itemTypes;
-            itemAttributesSpinner.Maximum = FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F;
             ignoreChanges = false;
         }
 

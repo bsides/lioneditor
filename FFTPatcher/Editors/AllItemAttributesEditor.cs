@@ -28,17 +28,16 @@ namespace FFTPatcher.Editors
         public AllItemAttributesEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( AllItemAttributes attributes )
         {
             offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
-            offsetListBox.DataSource = null;
-            offsetListBox.DataSource = FFTPatch.ItemAttributes.ItemAttributes;
+            offsetListBox.Items.Clear();
+            offsetListBox.Items.AddRange( attributes.ItemAttributes );
             offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
             offsetListBox.SelectedIndex = 0;
-            offsetListBox_SelectedIndexChanged( offsetListBox, EventArgs.Empty );
+            itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
         }
 
         private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )

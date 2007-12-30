@@ -28,15 +28,16 @@ namespace FFTPatcher.Editors
         public AllSkillSetsEditor()
         {
             InitializeComponent();
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        public void UpdateView( AllSkillSets skills )
         {
             skillSetListBox.SelectedIndexChanged -= skillSetListBox_SelectedIndexChanged;
-            skillSetListBox.Items.AddRange( FFTPatch.SkillSets.SkillSets );
+            skillSetListBox.Items.Clear();
+            skillSetListBox.Items.AddRange( skills.SkillSets );
             skillSetListBox.SelectedIndexChanged += skillSetListBox_SelectedIndexChanged;
             skillSetListBox.SelectedIndex = 0;
+            skillSetEditor.SkillSet = skillSetListBox.SelectedItem as SkillSet;
         }
 
         private void skillSetListBox_SelectedIndexChanged( object sender, EventArgs e )

@@ -41,6 +41,7 @@ namespace FFTPatcher.Editors
         }
 
         private bool ignoreChanges = false;
+        private Context ourContext = Context.Default;
 
         private void UpdateView()
         {
@@ -78,17 +79,26 @@ namespace FFTPatcher.Editors
             idSpinner.Value = ability.OtherID;
 
             itemUseLabel.Visible = ability.IsItem;
+
+            if( FFTPatch.Context == Context.US_PSP && ourContext != Context.US_PSP)
+            {
+                ourContext = Context.US_PSP;
+                itemUseComboBox.Items.Clear();
+                itemUseComboBox.Items.AddRange( pspItems.ToArray() );
+                throwingComboBox.DataSource = pspItemTypes;
+            }
+            else if( FFTPatch.Context == Context.US_PSX && ourContext != Context.US_PSX )
+            {
+                ourContext = Context.US_PSX;
+                itemUseComboBox.Items.Clear();
+                itemUseComboBox.Items.AddRange( psxItems.ToArray() );
+                throwingComboBox.DataSource = psxItemTypes;
+            }
             itemUseComboBox.Visible = ability.IsItem;
             itemUseComboBox.SelectedItem = ability.Item;
 
-            List<ItemSubType> itemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
-            if( FFTPatch.Context == Context.US_PSX )
-            {
-                itemTypes.Remove( ItemSubType.LipRouge );
-                itemTypes.Remove( ItemSubType.FellSword );
-            }
-            throwingComboBox.DataSource = itemTypes;
             throwingLabel.Visible = ability.IsThrowing;
+
             throwingComboBox.Visible = ability.IsThrowing;
             throwingComboBox.SelectedItem = ability.Throwing;
 
@@ -97,6 +107,10 @@ namespace FFTPatcher.Editors
 
         private List<NumericUpDown> spinners;
         private List<ComboBox> comboBoxes;
+        private List<Item> psxItems = new List<Item>( 256 );
+        private List<Item> pspItems = new List<Item>( 256 );
+        private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+        private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
 
         public AbilityEditor()
         {
@@ -104,19 +118,6 @@ namespace FFTPatcher.Editors
             spinners = new List<NumericUpDown>( new NumericUpDown[] { 
                 arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner } );
             comboBoxes = new List<ComboBox>( new ComboBox[] { itemUseComboBox, throwingComboBox } );
-
-            itemUseComboBox.BindingContext = new BindingContext();
-            List<Item> validItems = new List<Item>( 256 );
-            foreach( Item i in Item.DummyItems )
-            {
-                if( i.Offset <= 0xFF )
-                {
-                    validItems.Add( i );
-                }
-            }
-
-            itemUseComboBox.DataSource = validItems;
-            throwingComboBox.DataSource = Enum.GetValues( typeof( ItemSubType ) );
 
             arithmeticksSpinner.Tag = "ArithmetickSkill";
             ctSpinner.Tag = "ChargeCT";
@@ -135,6 +136,23 @@ namespace FFTPatcher.Editors
             {
                 combo.SelectedIndexChanged += combo_SelectedIndexChanged;
             }
+
+            foreach( Item i in Item.PSPDummies )
+            {
+                if( i.Offset <= 0xFF )
+                {
+                    pspItems.Add( i );
+                }
+            }
+            foreach( Item i in Item.PSXDummies )
+            {
+                if( i.Offset <= 0xFF )
+                {
+                    psxItems.Add( i );
+                }
+            }
+            psxItemTypes.Remove( ItemSubType.LipRouge );
+            psxItemTypes.Remove( ItemSubType.FellSword );
         }
 
         private void combo_SelectedIndexChanged( object sender, EventArgs e )

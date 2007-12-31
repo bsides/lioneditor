@@ -70,13 +70,20 @@ namespace LionEditor
             openEuropeanMenuItem.Click += openRegionMenuItem_Click;
             openJapaneseMenuItem.Tag = LionEditor.Region.Japan;
             openJapaneseMenuItem.Click += openRegionMenuItem_Click;
+
+            installButton.Click += installButton_Click;
         }
 
         #endregion
 
         #region Events
 
-        private void openRegionMenuItem_Click(object sender, EventArgs e)
+        private void installButton_Click( object sender, EventArgs e )
+        {
+            InstallPlugin();
+        }
+
+        private void openRegionMenuItem_Click( object sender, EventArgs e )
         {
             OpenFromRegion((LionEditor.Region)(((MenuItem)sender).Tag));
         }
@@ -181,10 +188,6 @@ namespace LionEditor
                         break;
                     }
                 }
-            }
-            else if (e.Button == installButton)
-            {
-                InstallPlugin();
             }
             else
             {
@@ -329,7 +332,7 @@ namespace LionEditor
         /// <summary>
         /// Validates a GME file and returns which blocks have FFT data
         /// </summary>
-        private static List<int> ValidateGMEFile(byte[] bytes)
+        public static List<int> ValidateGMEFile(byte[] bytes)
         {
             List<int> result = new List<int>();
             if ((bytes[0] == '1') &&

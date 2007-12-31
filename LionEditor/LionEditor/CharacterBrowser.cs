@@ -71,26 +71,44 @@ namespace LionEditor
 
                     gameSelector.Items.Clear();
 
-                    if (Savegame.IsValidPSPGame(bytes, 0))
+                    try
                     {
-                        for (int i = 0; i < 15; i++)
+                        bool validGameFound = false;
+                        for( int i = 0; (i < 15) && (((i + 1) * Savegame.saveFileSize) < bytes.Length); i++ )
                         {
-                            if (Savegame.IsValidPSPGame(bytes, (int)(Savegame.saveFileSize*i)))
+                            if( Savegame.IsValidPSPGame( bytes, (int)(i * Savegame.saveFileSize) ) )
                             {
-                                Savegame g = new Savegame(bytes);
-                                gameNames.Add(g.ToString());
-                                games.Add(g.Characters);
+                                validGameFound = true;
+                                byte[] saveData = new byte[Savegame.saveFileSize];
+                                Array.Copy( bytes, i * Savegame.saveFileSize, saveData, 0, Savegame.saveFileSize );
+
+                                Savegame g = new Savegame( saveData );
+                                gameNames.Add( g.ToString() );
+                                games.Add( g.Characters );
+                            }
+                        }
+
+                        if (!validGameFound)
+                        {
+                            // Try GME...
+                            foreach( int i in MainForm.ValidateGMEFile( bytes ) )
+                            {
+                                byte[] saveData = new byte[0x2000];
+                                if( (bytes.Length + 1) < 0x2F40 + i * 0x2000 )
+                                {
+                                    break;
+                                }
+                                Array.Copy( bytes, 0x2F40 + i * 0x2000, saveData, 0, 0x2000 );
+
+                                Savegame g = new Savegame( saveData );
+                                gameNames.Add( g.ToString() );
+                                games.Add( g.Characters );
                             }
                         }
                     }
-                    else 
+                    catch( Exception )
                     {
-                        GMEFile file = GMEFile.ReadGMEFile(bytes);
-                        if (file != null)
-                        {
-                            games = file.Games;
-                            gameNames = file.GameNames;
-                        }
+                        // Fail silently!!
                     }
 
                     gameSelector.Items.AddRange(gameNames.ToArray());

@@ -1,6 +1,10 @@
-Lion Editor v0.138
+Lion Editor v0.147
 
 See http://code.google.com/p/lioneditor/wiki/Instructions for instructions.
+
+New since v0.138
+	drewthem...@hotmail.com pointed out a truly embarassing bug in the Character
+		Browser that causes it to crash no matter what file you open.
 
 New since v0.107
     Can now modify each character's kills. Useful for unlocking Dark Knight.

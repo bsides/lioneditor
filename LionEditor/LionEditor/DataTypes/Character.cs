@@ -1343,7 +1343,7 @@ namespace LionEditor
         /// <returns></returns>
         public override string ToString()
         {
-            return Name;
+             return Name;
         }
 
         /// <summary>

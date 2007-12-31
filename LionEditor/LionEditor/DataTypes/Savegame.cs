@@ -479,7 +479,7 @@ namespace LionEditor
         {
             // TODO: Improve this
             // TODO: Fix GME importing
-            return false;
+            //return false;
 
             return (file[0x00] == 'S')
                 && (file[0x01] == 'C')

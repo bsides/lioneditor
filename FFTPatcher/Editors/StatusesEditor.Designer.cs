@@ -48,7 +48,7 @@ namespace FFTPatcher.Editors
         private void InitializeComponent()
         {
             this.statusGroupBox = new System.Windows.Forms.GroupBox();
-            this.statusesCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.statusesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.statusGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,6 +129,6 @@ namespace FFTPatcher.Editors
         #endregion
 
         private System.Windows.Forms.GroupBox statusGroupBox;
-        private System.Windows.Forms.CheckedListBox statusesCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight statusesCheckedListBox;
     }
 }

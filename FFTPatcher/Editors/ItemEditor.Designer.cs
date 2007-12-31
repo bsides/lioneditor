@@ -81,9 +81,9 @@ namespace FFTPatcher.Editors
             this.itemTypeComboBox = new System.Windows.Forms.ComboBox();
             this.priceSpinner = new System.Windows.Forms.NumericUpDown();
             this.shopAvailabilityComboBox = new System.Windows.Forms.ComboBox();
-            this.itemAttributesCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.itemAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.weaponPanel = new System.Windows.Forms.Panel();
-            this.weaponAttributesCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.weaponAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.weaponElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.weaponSpellStatusSpinner = new System.Windows.Forms.NumericUpDown();
             this.weaponFormulaSpinner = new System.Windows.Forms.NumericUpDown();
@@ -990,13 +990,13 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.ComboBox itemTypeComboBox;
         private System.Windows.Forms.NumericUpDown priceSpinner;
         private System.Windows.Forms.ComboBox shopAvailabilityComboBox;
-        private System.Windows.Forms.CheckedListBox itemAttributesCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight itemAttributesCheckedListBox;
         private System.Windows.Forms.NumericUpDown weaponEvadePercentageSpinner;
         private System.Windows.Forms.NumericUpDown weaponPowerSpinner;
         private System.Windows.Forms.NumericUpDown weaponRangeSpinner;
         private System.Windows.Forms.NumericUpDown weaponSpellStatusSpinner;
         private System.Windows.Forms.NumericUpDown weaponFormulaSpinner;
-        private System.Windows.Forms.CheckedListBox weaponAttributesCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight weaponAttributesCheckedListBox;
         private ElementsEditor weaponElementsEditor;
         private System.Windows.Forms.Panel shieldPanel;
         private System.Windows.Forms.NumericUpDown shieldMagicBlockRateSpinner;

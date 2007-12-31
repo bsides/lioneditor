@@ -60,11 +60,11 @@ namespace FFTPatcher
             this.applyMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
+            this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.applyPatchOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
-            this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -139,6 +139,11 @@ namespace FFTPatcher
             this.exitMenuItem.Index = 9;
             this.exitMenuItem.Text = "E&xit";
             // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Index = 1;
+            this.aboutMenuItem.Text = "About...";
+            // 
             // openFileDialog
             // 
             this.openFileDialog.Filter = "FFTPatcher files|*.fftpatch";
@@ -157,13 +162,8 @@ namespace FFTPatcher
             this.fftPatchEditor1.Enabled = false;
             this.fftPatchEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.fftPatchEditor1.Name = "fftPatchEditor1";
-            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 654 );
+            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 591 );
             this.fftPatchEditor1.TabIndex = 0;
-            // 
-            // aboutMenuItem
-            // 
-            this.aboutMenuItem.Index = 1;
-            this.aboutMenuItem.Text = "About...";
             // 
             // MainForm
             // 
@@ -171,7 +171,7 @@ namespace FFTPatcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size( 815, 654 );
+            this.ClientSize = new System.Drawing.Size( 815, 591 );
             this.Controls.Add( this.fftPatchEditor1 );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";

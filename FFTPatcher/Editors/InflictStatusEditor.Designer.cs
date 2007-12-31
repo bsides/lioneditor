@@ -48,7 +48,7 @@ namespace FFTPatcher.Editors
         private void InitializeComponent()
         {
             this.inflictStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
-            this.flagsCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.SuspendLayout();
             // 
             // inflictStatusesEditor
@@ -58,7 +58,7 @@ namespace FFTPatcher.Editors
             this.inflictStatusesEditor.Size = new System.Drawing.Size( 497, 182 );
             this.inflictStatusesEditor.Status = "Status";
             this.inflictStatusesEditor.Statuses = null;
-            this.inflictStatusesEditor.TabIndex = 0;
+            this.inflictStatusesEditor.TabIndex = 1;
             // 
             // flagsCheckedListBox
             // 
@@ -75,7 +75,7 @@ namespace FFTPatcher.Editors
             this.flagsCheckedListBox.Location = new System.Drawing.Point( 3, 25 );
             this.flagsCheckedListBox.Name = "flagsCheckedListBox";
             this.flagsCheckedListBox.Size = new System.Drawing.Size( 92, 124 );
-            this.flagsCheckedListBox.TabIndex = 1;
+            this.flagsCheckedListBox.TabIndex = 0;
             // 
             // InflictStatusEditor
             // 
@@ -94,6 +94,6 @@ namespace FFTPatcher.Editors
         #endregion
 
         private StatusesEditor inflictStatusesEditor;
-        private System.Windows.Forms.CheckedListBox flagsCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight flagsCheckedListBox;
     }
 }

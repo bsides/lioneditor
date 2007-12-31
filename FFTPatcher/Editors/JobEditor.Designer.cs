@@ -652,7 +652,7 @@ namespace FFTPatcher.Editors
             this.innateAComboBox.Location = new System.Drawing.Point( 103, 361 );
             this.innateAComboBox.Name = "innateAComboBox";
             this.innateAComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.innateAComboBox.TabIndex = 16;
+            this.innateAComboBox.TabIndex = 17;
             this.innateAComboBox.Tag = "InnateA";
             // 
             // innateBComboBox
@@ -662,7 +662,7 @@ namespace FFTPatcher.Editors
             this.innateBComboBox.Location = new System.Drawing.Point( 103, 383 );
             this.innateBComboBox.Name = "innateBComboBox";
             this.innateBComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.innateBComboBox.TabIndex = 17;
+            this.innateBComboBox.TabIndex = 18;
             this.innateBComboBox.Tag = "InnateB";
             // 
             // innateCComboBox
@@ -672,7 +672,7 @@ namespace FFTPatcher.Editors
             this.innateCComboBox.Location = new System.Drawing.Point( 103, 405 );
             this.innateCComboBox.Name = "innateCComboBox";
             this.innateCComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.innateCComboBox.TabIndex = 18;
+            this.innateCComboBox.TabIndex = 19;
             this.innateCComboBox.Tag = "InnateC";
             // 
             // innateDComboBox
@@ -682,7 +682,7 @@ namespace FFTPatcher.Editors
             this.innateDComboBox.Location = new System.Drawing.Point( 103, 427 );
             this.innateDComboBox.Name = "innateDComboBox";
             this.innateDComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.innateDComboBox.TabIndex = 19;
+            this.innateDComboBox.TabIndex = 20;
             this.innateDComboBox.Tag = "InnateD";
             // 
             // mGraphicSpinner
@@ -696,7 +696,7 @@ namespace FFTPatcher.Editors
             0} );
             this.mGraphicSpinner.Name = "mGraphicSpinner";
             this.mGraphicSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.mGraphicSpinner.TabIndex = 20;
+            this.mGraphicSpinner.TabIndex = 16;
             this.mGraphicSpinner.Tag = "MGraphic";
             this.mGraphicSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.mGraphicSpinner.Value = new decimal( new int[] {
@@ -712,7 +712,7 @@ namespace FFTPatcher.Editors
             this.startingStatusesEditor.Size = new System.Drawing.Size( 615, 151 );
             this.startingStatusesEditor.Status = "Starting Status";
             this.startingStatusesEditor.Statuses = null;
-            this.startingStatusesEditor.TabIndex = 52;
+            this.startingStatusesEditor.TabIndex = 27;
             // 
             // statusImmunityEditor
             // 
@@ -721,7 +721,7 @@ namespace FFTPatcher.Editors
             this.statusImmunityEditor.Size = new System.Drawing.Size( 615, 151 );
             this.statusImmunityEditor.Status = "Status Immunity";
             this.statusImmunityEditor.Statuses = null;
-            this.statusImmunityEditor.TabIndex = 51;
+            this.statusImmunityEditor.TabIndex = 28;
             // 
             // innateStatusesEditor
             // 
@@ -730,7 +730,7 @@ namespace FFTPatcher.Editors
             this.innateStatusesEditor.Size = new System.Drawing.Size( 615, 151 );
             this.innateStatusesEditor.Status = "Innate Status";
             this.innateStatusesEditor.Statuses = null;
-            this.innateStatusesEditor.TabIndex = 50;
+            this.innateStatusesEditor.TabIndex = 26;
             // 
             // equipmentEditor
             // 
@@ -738,7 +738,7 @@ namespace FFTPatcher.Editors
             this.equipmentEditor.Location = new System.Drawing.Point( 234, 171 );
             this.equipmentEditor.Name = "equipmentEditor";
             this.equipmentEditor.Size = new System.Drawing.Size( 394, 250 );
-            this.equipmentEditor.TabIndex = 49;
+            this.equipmentEditor.TabIndex = 25;
             // 
             // weakElementsEditor
             // 
@@ -748,7 +748,7 @@ namespace FFTPatcher.Editors
             this.weakElementsEditor.Location = new System.Drawing.Point( 534, 3 );
             this.weakElementsEditor.Name = "weakElementsEditor";
             this.weakElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.weakElementsEditor.TabIndex = 48;
+            this.weakElementsEditor.TabIndex = 24;
             // 
             // halfElementsEditor
             // 
@@ -758,7 +758,7 @@ namespace FFTPatcher.Editors
             this.halfElementsEditor.Location = new System.Drawing.Point( 434, 3 );
             this.halfElementsEditor.Name = "halfElementsEditor";
             this.halfElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.halfElementsEditor.TabIndex = 47;
+            this.halfElementsEditor.TabIndex = 23;
             // 
             // cancelElementsEditor
             // 
@@ -768,7 +768,7 @@ namespace FFTPatcher.Editors
             this.cancelElementsEditor.Location = new System.Drawing.Point( 334, 3 );
             this.cancelElementsEditor.Name = "cancelElementsEditor";
             this.cancelElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.cancelElementsEditor.TabIndex = 46;
+            this.cancelElementsEditor.TabIndex = 22;
             // 
             // absorbElementsEditor
             // 
@@ -778,7 +778,7 @@ namespace FFTPatcher.Editors
             this.absorbElementsEditor.Location = new System.Drawing.Point( 234, 3 );
             this.absorbElementsEditor.Name = "absorbElementsEditor";
             this.absorbElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.absorbElementsEditor.TabIndex = 45;
+            this.absorbElementsEditor.TabIndex = 21;
             // 
             // skillSetLabel
             // 

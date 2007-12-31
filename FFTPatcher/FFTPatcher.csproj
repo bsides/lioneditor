@@ -45,6 +45,9 @@
     <Compile Include="About.designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CheckedListBoxNoHighlight.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\VerticalLabel.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -51,12 +51,12 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label learnChanceLabel;
             System.Windows.Forms.Label percentLabel;
             System.Windows.Forms.GroupBox aiGroupBox;
-            this.aiCheckedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.aiCheckedListBox2 = new System.Windows.Forms.CheckedListBox();
-            this.aiCheckedListBox3 = new System.Windows.Forms.CheckedListBox();
+            this.aiCheckedListBox1 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.aiCheckedListBox2 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.aiCheckedListBox3 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.jpCostSpinner = new System.Windows.Forms.NumericUpDown();
             this.chanceSpinner = new System.Windows.Forms.NumericUpDown();
-            this.propertiesCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.propertiesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.abilityTypeComboBox = new System.Windows.Forms.ComboBox();
             jpCostLabel = new System.Windows.Forms.Label();
             learnChanceLabel = new System.Windows.Forms.Label();
@@ -250,11 +250,11 @@ namespace FFTPatcher.Editors
 
         #endregion
 
-        private System.Windows.Forms.CheckedListBox aiCheckedListBox3;
-        private System.Windows.Forms.CheckedListBox aiCheckedListBox2;
-        private System.Windows.Forms.CheckedListBox aiCheckedListBox1;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox3;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox2;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox1;
         private System.Windows.Forms.ComboBox abilityTypeComboBox;
-        private System.Windows.Forms.CheckedListBox propertiesCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight propertiesCheckedListBox;
         private System.Windows.Forms.NumericUpDown chanceSpinner;
         private System.Windows.Forms.NumericUpDown jpCostSpinner;
     }

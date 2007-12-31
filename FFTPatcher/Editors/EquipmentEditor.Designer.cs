@@ -48,7 +48,7 @@ namespace FFTPatcher.Editors
         private void InitializeComponent()
         {
             System.Windows.Forms.GroupBox equipmentGroupBox;
-            this.equipmentCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.equipmentCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             equipmentGroupBox = new System.Windows.Forms.GroupBox();
             equipmentGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -88,6 +88,6 @@ namespace FFTPatcher.Editors
 
         #endregion
 
-        private System.Windows.Forms.CheckedListBox equipmentCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight equipmentCheckedListBox;
     }
 }

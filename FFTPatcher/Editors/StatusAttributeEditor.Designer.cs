@@ -60,7 +60,7 @@ namespace FFTPatcher.Editors
             this.ctSpinner = new System.Windows.Forms.NumericUpDown();
             this.cancelStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
             this.cantStackStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
-            this.checkedListBox = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             blank1Label = new System.Windows.Forms.Label();
             blank2Label = new System.Windows.Forms.Label();
             orderLabel = new System.Windows.Forms.Label();
@@ -223,7 +223,7 @@ namespace FFTPatcher.Editors
             this.cancelStatusesEditor.Size = new System.Drawing.Size( 498, 179 );
             this.cancelStatusesEditor.Status = "Cancels";
             this.cancelStatusesEditor.Statuses = null;
-            this.cancelStatusesEditor.TabIndex = 4;
+            this.cancelStatusesEditor.TabIndex = 5;
             // 
             // cantStackStatusesEditor
             // 
@@ -232,7 +232,7 @@ namespace FFTPatcher.Editors
             this.cantStackStatusesEditor.Size = new System.Drawing.Size( 498, 179 );
             this.cantStackStatusesEditor.Status = "Can\'t Stack On Top Of";
             this.cantStackStatusesEditor.Statuses = null;
-            this.cantStackStatusesEditor.TabIndex = 5;
+            this.cantStackStatusesEditor.TabIndex = 6;
             // 
             // checkedListBox
             // 
@@ -258,7 +258,7 @@ namespace FFTPatcher.Editors
             this.checkedListBox.MultiColumn = true;
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size( 269, 124 );
-            this.checkedListBox.TabIndex = 10;
+            this.checkedListBox.TabIndex = 4;
             // 
             // StatusAttributeEditor
             // 
@@ -299,6 +299,6 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.NumericUpDown ctSpinner;
         private StatusesEditor cancelStatusesEditor;
         private StatusesEditor cantStackStatusesEditor;
-        private System.Windows.Forms.CheckedListBox checkedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlight checkedListBox;
     }
 }

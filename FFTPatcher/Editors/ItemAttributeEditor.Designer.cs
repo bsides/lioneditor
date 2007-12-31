@@ -132,7 +132,7 @@ namespace FFTPatcher.Editors
             0} );
             this.paSpinner.Name = "paSpinner";
             this.paSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.paSpinner.TabIndex = 8;
+            this.paSpinner.TabIndex = 0;
             this.paSpinner.Tag = "PA";
             this.paSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.paSpinner.Value = new decimal( new int[] {
@@ -151,7 +151,7 @@ namespace FFTPatcher.Editors
             0} );
             this.maSpinner.Name = "maSpinner";
             this.maSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.maSpinner.TabIndex = 9;
+            this.maSpinner.TabIndex = 1;
             this.maSpinner.Tag = "MA";
             this.maSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.maSpinner.Value = new decimal( new int[] {
@@ -170,7 +170,7 @@ namespace FFTPatcher.Editors
             0} );
             this.moveSpinner.Name = "moveSpinner";
             this.moveSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.moveSpinner.TabIndex = 10;
+            this.moveSpinner.TabIndex = 3;
             this.moveSpinner.Tag = "Move";
             this.moveSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.moveSpinner.Value = new decimal( new int[] {
@@ -189,7 +189,7 @@ namespace FFTPatcher.Editors
             0} );
             this.speedSpinner.Name = "speedSpinner";
             this.speedSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.speedSpinner.TabIndex = 11;
+            this.speedSpinner.TabIndex = 2;
             this.speedSpinner.Tag = "Speed";
             this.speedSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.speedSpinner.Value = new decimal( new int[] {
@@ -208,7 +208,7 @@ namespace FFTPatcher.Editors
             0} );
             this.jumpSpinner.Name = "jumpSpinner";
             this.jumpSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.jumpSpinner.TabIndex = 12;
+            this.jumpSpinner.TabIndex = 4;
             this.jumpSpinner.Tag = "Jump";
             this.jumpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.jumpSpinner.Value = new decimal( new int[] {
@@ -225,7 +225,7 @@ namespace FFTPatcher.Editors
             this.strongElementsEditor.Location = new System.Drawing.Point( 501, 0 );
             this.strongElementsEditor.Name = "strongElementsEditor";
             this.strongElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.strongElementsEditor.TabIndex = 7;
+            this.strongElementsEditor.TabIndex = 9;
             // 
             // weakElementsEditor
             // 
@@ -235,7 +235,7 @@ namespace FFTPatcher.Editors
             this.weakElementsEditor.Location = new System.Drawing.Point( 401, 0 );
             this.weakElementsEditor.Name = "weakElementsEditor";
             this.weakElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.weakElementsEditor.TabIndex = 6;
+            this.weakElementsEditor.TabIndex = 8;
             // 
             // halfElementsEditor
             // 
@@ -245,7 +245,7 @@ namespace FFTPatcher.Editors
             this.halfElementsEditor.Location = new System.Drawing.Point( 301, 0 );
             this.halfElementsEditor.Name = "halfElementsEditor";
             this.halfElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.halfElementsEditor.TabIndex = 5;
+            this.halfElementsEditor.TabIndex = 7;
             // 
             // cancelElementsEditor
             // 
@@ -255,7 +255,7 @@ namespace FFTPatcher.Editors
             this.cancelElementsEditor.Location = new System.Drawing.Point( 201, 0 );
             this.cancelElementsEditor.Name = "cancelElementsEditor";
             this.cancelElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.cancelElementsEditor.TabIndex = 4;
+            this.cancelElementsEditor.TabIndex = 6;
             // 
             // absorbElementsEditor
             // 
@@ -265,7 +265,7 @@ namespace FFTPatcher.Editors
             this.absorbElementsEditor.Location = new System.Drawing.Point( 101, 0 );
             this.absorbElementsEditor.Name = "absorbElementsEditor";
             this.absorbElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.absorbElementsEditor.TabIndex = 3;
+            this.absorbElementsEditor.TabIndex = 5;
             // 
             // startingStatusesEditor
             // 
@@ -274,7 +274,7 @@ namespace FFTPatcher.Editors
             this.startingStatusesEditor.Size = new System.Drawing.Size( 505, 178 );
             this.startingStatusesEditor.Status = "Starting Status";
             this.startingStatusesEditor.Statuses = null;
-            this.startingStatusesEditor.TabIndex = 2;
+            this.startingStatusesEditor.TabIndex = 12;
             // 
             // statusImmunityEditor
             // 
@@ -283,7 +283,7 @@ namespace FFTPatcher.Editors
             this.statusImmunityEditor.Size = new System.Drawing.Size( 505, 178 );
             this.statusImmunityEditor.Status = "Status Immunity";
             this.statusImmunityEditor.Statuses = null;
-            this.statusImmunityEditor.TabIndex = 1;
+            this.statusImmunityEditor.TabIndex = 11;
             // 
             // permanentStatusesEditor
             // 
@@ -292,7 +292,7 @@ namespace FFTPatcher.Editors
             this.permanentStatusesEditor.Size = new System.Drawing.Size( 505, 178 );
             this.permanentStatusesEditor.Status = "Permanent Status";
             this.permanentStatusesEditor.Statuses = null;
-            this.permanentStatusesEditor.TabIndex = 0;
+            this.permanentStatusesEditor.TabIndex = 10;
             // 
             // ItemAttributeEditor
             // 

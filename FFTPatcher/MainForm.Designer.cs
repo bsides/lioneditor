@@ -54,6 +54,7 @@ namespace FFTPatcher
             this.newPSPMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
+            this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.applyMenuItem = new System.Windows.Forms.MenuItem();
@@ -63,7 +64,6 @@ namespace FFTPatcher
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.applyPatchOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
-            this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -107,6 +107,11 @@ namespace FFTPatcher
             this.openMenuItem.Index = 3;
             this.openMenuItem.Text = "&Open patch...";
             // 
+            // openModifiedMenuItem
+            // 
+            this.openModifiedMenuItem.Index = 4;
+            this.openModifiedMenuItem.Text = "Open modified SCUS_942.21...";
+            // 
             // saveMenuItem
             // 
             this.saveMenuItem.Index = 5;
@@ -136,6 +141,10 @@ namespace FFTPatcher
             // 
             this.openFileDialog.Filter = "FFTPatcher files|*.fftpatch";
             // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
+            // 
             // applyPatchOpenFileDialog
             // 
             this.applyPatchOpenFileDialog.Filter = "ISO files|*.iso";
@@ -146,13 +155,8 @@ namespace FFTPatcher
             this.fftPatchEditor1.Enabled = false;
             this.fftPatchEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.fftPatchEditor1.Name = "fftPatchEditor1";
-            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 717 );
+            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 654 );
             this.fftPatchEditor1.TabIndex = 0;
-            // 
-            // openModifiedMenuItem
-            // 
-            this.openModifiedMenuItem.Index = 4;
-            this.openModifiedMenuItem.Text = "Open modified SCUS_942.21...";
             // 
             // MainForm
             // 
@@ -160,7 +164,7 @@ namespace FFTPatcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size( 815, 717 );
+            this.ClientSize = new System.Drawing.Size( 815, 654 );
             this.Controls.Add( this.fftPatchEditor1 );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";

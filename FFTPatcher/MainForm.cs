@@ -17,9 +17,10 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.IO;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using System.IO;
 
 namespace FFTPatcher
 {
@@ -79,7 +80,14 @@ namespace FFTPatcher
         {
             if( saveFileDialog.ShowDialog() == DialogResult.OK )
             {
-                FFTPatch.SaveToFile( saveFileDialog.FileName );
+                try
+                {
+                    FFTPatch.SaveToFile( saveFileDialog.FileName );
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
             }
         }
 

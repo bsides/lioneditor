@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using FFTPatcher.Datatypes;
-using System.IO;
 
 namespace FFTPatcher
 {
@@ -203,10 +202,14 @@ namespace FFTPatcher
             for( int i = 0; i < newBytes.Length; i++ )
             {
                 if( ((i + 3) < newBytes.Length) &&
-                    (newBytes[i] != oldBytes[i]) && (!patched[i]) &&
-                    (newBytes[i + 1] != oldBytes[i + 1]) && (!patched[i + 1]) &&
-                    (newBytes[i + 2] != oldBytes[i + 2]) && (!patched[i + 2]) &&
-                    (newBytes[i + 3] != oldBytes[i + 3]) && (!patched[i + 3]) )
+                    ((newBytes[i] != oldBytes[i]) ||
+                    (newBytes[i + 1] != oldBytes[i + 1]) ||
+                    (newBytes[i + 2] != oldBytes[i + 2]) ||
+                    (newBytes[i + 3] != oldBytes[i + 3])) &&
+                    (!patched[i]) &&
+                    (!patched[i + 1]) &&
+                    (!patched[i + 2]) &&
+                    (!patched[i + 3]) )
                 {
                     UInt32 addy = (UInt32)(offset + i);
                     string code = string.Format( "_L 0x2{0:X7} 0x{4:X2}{3:X2}{2:X2}{1:X2}",
@@ -223,8 +226,8 @@ namespace FFTPatcher
             for( int i = 0; i < newBytes.Length; i++ )
             {
                 if( ((i + 1) < newBytes.Length) &&
-                    (newBytes[i] != oldBytes[i]) && (!patched[i]) &&
-                    (newBytes[i + 1] != oldBytes[i + 1]) && (!patched[i + 1]) )
+                    ((newBytes[i] != oldBytes[i]) || (newBytes[i + 1] != oldBytes[i + 1]))
+                    && (!patched[i]) && (!patched[i + 1]) )
                 {
                     UInt32 addy = (UInt32)(offset + i);
                     string code = string.Format( "_L 0x1{0:X7} 0x0000{2:X2}{1:X2}",
@@ -268,8 +271,8 @@ namespace FFTPatcher
             for( int i = 0; i < newBytes.Length; i += 2 )
             {
                 if( ((i + 1) < newBytes.Length) &&
-                    (newBytes[i] != oldBytes[i]) && (!patched[i]) &&
-                    (newBytes[i + 1] != oldBytes[i + 1] && (!patched[i + 1])) )
+                    ((newBytes[i] != oldBytes[i]) || (newBytes[i + 1] != oldBytes[i + 1])) &&
+                    (!patched[i]) && (!patched[i + 1]) )
                 {
                     UInt32 addy = (UInt32)(offset + i);
                     string code = string.Format( "80{0:X6} {2:X2}{1:X2}",

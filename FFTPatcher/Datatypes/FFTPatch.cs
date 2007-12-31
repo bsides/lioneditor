@@ -18,11 +18,10 @@
 */
 
 using System;
-using System.Xml;
-using FFTPatcher.Properties;
 using System.IO;
 using System.Text;
-using System.Security.Cryptography;
+using System.Xml;
+using FFTPatcher.Properties;
 
 namespace FFTPatcher.Datatypes
 {
@@ -103,40 +102,55 @@ namespace FFTPatcher.Datatypes
             StringBuilder inflictStatuses = new StringBuilder( Convert.ToBase64String( InflictStatuses.ToByteArray(), Base64FormattingOptions.InsertLineBreaks ) );
             StringBuilder poach = new StringBuilder( Convert.ToBase64String( PoachProbabilities.ToByteArray( Context ), Base64FormattingOptions.InsertLineBreaks ) );
 
-            XmlTextWriter writer = new XmlTextWriter( path, System.Text.Encoding.UTF8 );
-            writer.Formatting = Formatting.Indented;
-            writer.IndentChar = ' ';
-            writer.Indentation = 2;
-            writer.WriteStartDocument();
-            writer.WriteStartElement( "patch" );
-            writer.WriteAttributeString( "type", Context.ToString() );
-
-            foreach( StringBuilder s in new StringBuilder[] { abilities, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach } )
+            XmlTextWriter writer = null;
+            try
             {
-                s.Insert( 0, "\r\n" );
-                s.Replace( "\r\n", "\r\n    " );
-                s.Append( "\r\n  " );
-            }
+                writer = new XmlTextWriter( path, System.Text.Encoding.UTF8 );
+                writer.Formatting = Formatting.Indented;
+                writer.IndentChar = ' ';
+                writer.Indentation = 2;
+                writer.WriteStartDocument();
+                writer.WriteStartElement( "patch" );
+                writer.WriteAttributeString( "type", Context.ToString() );
 
-            writer.WriteElementString( "abilities", abilities.ToString() );
-            writer.WriteElementString( "items", oldItems.ToString() );
-            writer.WriteElementString( "itemAttributes", oldItemAttributes.ToString() );
-            if( Context == Context.US_PSP )
-            {
-                writer.WriteElementString( "pspItems", newItems.ToString() );
-                writer.WriteElementString( "pspItemAttributes", newItemAttributes.ToString() );
+                foreach( StringBuilder s in new StringBuilder[] { abilities, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach } )
+                {
+                    s.Insert( 0, "\r\n" );
+                    s.Replace( "\r\n", "\r\n    " );
+                    s.Append( "\r\n  " );
+                }
+
+                writer.WriteElementString( "abilities", abilities.ToString() );
+                writer.WriteElementString( "items", oldItems.ToString() );
+                writer.WriteElementString( "itemAttributes", oldItemAttributes.ToString() );
+                if( Context == Context.US_PSP )
+                {
+                    writer.WriteElementString( "pspItems", newItems.ToString() );
+                    writer.WriteElementString( "pspItemAttributes", newItemAttributes.ToString() );
+                }
+                writer.WriteElementString( "jobs", jobs.ToString() );
+                writer.WriteElementString( "jobLevels", jobLevels.ToString() );
+                writer.WriteElementString( "skillSets", skillSets.ToString() );
+                writer.WriteElementString( "monsterSkills", monsterSkills.ToString() );
+                writer.WriteElementString( "actionMenus", actionMenus.ToString() );
+                writer.WriteElementString( "statusAttributes", statusAttributes.ToString() );
+                writer.WriteElementString( "inflictStatuses", inflictStatuses.ToString() );
+                writer.WriteElementString( "poaching", poach.ToString() );
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
             }
-            writer.WriteElementString( "jobs", jobs.ToString() );
-            writer.WriteElementString( "jobLevels", jobLevels.ToString() );
-            writer.WriteElementString( "skillSets", skillSets.ToString() );
-            writer.WriteElementString( "monsterSkills", monsterSkills.ToString() );
-            writer.WriteElementString( "actionMenus", actionMenus.ToString() );
-            writer.WriteElementString( "statusAttributes", statusAttributes.ToString() );
-            writer.WriteElementString( "inflictStatuses", inflictStatuses.ToString() );
-            writer.WriteElementString( "poaching", poach.ToString() );
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Close();
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( writer != null )
+                {
+                    writer.Flush();
+                    writer.Close();
+                }
+            }
         }
 
         public static void New( Context context )
@@ -248,8 +262,11 @@ namespace FFTPatcher.Datatypes
             }
             finally
             {
-                stream.Close();
-                stream.Dispose();
+                if( stream != null )
+                {
+                    stream.Close();
+                    stream.Dispose();
+                }
             }
         }
 
@@ -296,7 +313,7 @@ namespace FFTPatcher.Datatypes
                 {
                     VerifyFileIsSCUS94221( stream );
                     byte[] psx = new byte[stream.Length];
-                    
+
                     oldItemAttributes = 0x54AC4;
                     oldItems = 0x536B8;
                     poach = 0x56864;
@@ -385,7 +402,7 @@ namespace FFTPatcher.Datatypes
             stream.Seek( position, SeekOrigin.Begin );
             stream.Write( array, 0, array.Length );
         }
-        
+
         private static long FindArrayInStream( byte[] array, FileStream stream )
         {
             byte[] read = new byte[array.Length];

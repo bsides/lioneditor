@@ -29,7 +29,7 @@ Gameshark codes are automatically generated based on the changes you have made..
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-items.png]
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-itemattr.png]
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-jobs.png]
-[http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-loblevels.png]
+[http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-joblevels.png]
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-skillsets.png]
 
 CWCheat codes are automatically generated based on the changes you have made.

@@ -54,7 +54,6 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label graphicLabel;
             System.Windows.Forms.Label enemyLevelLabel;
             System.Windows.Forms.Label itemTypeLabel;
-            System.Windows.Forms.Label itemAttributesLabel;
             System.Windows.Forms.Label priceLabel;
             System.Windows.Forms.Label shopAvailabilityLabel;
             System.Windows.Forms.Label hLabel3;
@@ -63,7 +62,6 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label rangeLabel;
             System.Windows.Forms.Label weaponPowerLabel;
             System.Windows.Forms.Label evadeLabel;
-            System.Windows.Forms.Label spellStatusLabel;
             System.Windows.Forms.Label percentLabel2;
             System.Windows.Forms.Label percentLabel3;
             System.Windows.Forms.Label percentLabel1;
@@ -76,7 +74,6 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label physicalEvadeRateLabel;
             System.Windows.Forms.Label xLabel;
             System.Windows.Forms.Label itemFormulaLabel;
-            System.Windows.Forms.Label itemSpellStatusLabel;
             this.paletteSpinner = new System.Windows.Forms.NumericUpDown();
             this.graphicSpinner = new System.Windows.Forms.NumericUpDown();
             this.itemAttributesSpinner = new System.Windows.Forms.NumericUpDown();
@@ -106,6 +103,9 @@ namespace FFTPatcher.Editors
             this.chemistItemSpellStatusSpinner = new System.Windows.Forms.NumericUpDown();
             this.chemistItemXSpinner = new System.Windows.Forms.NumericUpDown();
             this.chemistItemFormulaSpinner = new System.Windows.Forms.NumericUpDown();
+            this.chemistItemSpellStatusLabel = new System.Windows.Forms.LinkLabel();
+            this.itemAttributesLabel = new System.Windows.Forms.LinkLabel();
+            this.weaponSpellStatusLabel = new System.Windows.Forms.LinkLabel();
             hLabel5 = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
             hLabel2 = new System.Windows.Forms.Label();
@@ -113,7 +113,6 @@ namespace FFTPatcher.Editors
             graphicLabel = new System.Windows.Forms.Label();
             enemyLevelLabel = new System.Windows.Forms.Label();
             itemTypeLabel = new System.Windows.Forms.Label();
-            itemAttributesLabel = new System.Windows.Forms.Label();
             priceLabel = new System.Windows.Forms.Label();
             shopAvailabilityLabel = new System.Windows.Forms.Label();
             hLabel3 = new System.Windows.Forms.Label();
@@ -122,7 +121,6 @@ namespace FFTPatcher.Editors
             rangeLabel = new System.Windows.Forms.Label();
             weaponPowerLabel = new System.Windows.Forms.Label();
             evadeLabel = new System.Windows.Forms.Label();
-            spellStatusLabel = new System.Windows.Forms.Label();
             percentLabel2 = new System.Windows.Forms.Label();
             percentLabel3 = new System.Windows.Forms.Label();
             percentLabel1 = new System.Windows.Forms.Label();
@@ -135,7 +133,6 @@ namespace FFTPatcher.Editors
             physicalEvadeRateLabel = new System.Windows.Forms.Label();
             xLabel = new System.Windows.Forms.Label();
             itemFormulaLabel = new System.Windows.Forms.Label();
-            itemSpellStatusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphicSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemAttributesSpinner)).BeginInit();
@@ -225,15 +222,6 @@ namespace FFTPatcher.Editors
             itemTypeLabel.TabIndex = 13;
             itemTypeLabel.Text = "Item Type";
             // 
-            // itemAttributesLabel
-            // 
-            itemAttributesLabel.AutoSize = true;
-            itemAttributesLabel.Location = new System.Drawing.Point( 4, 89 );
-            itemAttributesLabel.Name = "itemAttributesLabel";
-            itemAttributesLabel.Size = new System.Drawing.Size( 74, 13 );
-            itemAttributesLabel.TabIndex = 14;
-            itemAttributesLabel.Text = "Item Attributes";
-            // 
             // priceLabel
             // 
             priceLabel.AutoSize = true;
@@ -305,15 +293,6 @@ namespace FFTPatcher.Editors
             evadeLabel.Size = new System.Drawing.Size( 46, 13 );
             evadeLabel.TabIndex = 20;
             evadeLabel.Text = "Evade%";
-            // 
-            // spellStatusLabel
-            // 
-            spellStatusLabel.AutoSize = true;
-            spellStatusLabel.Location = new System.Drawing.Point( 0, 107 );
-            spellStatusLabel.Name = "spellStatusLabel";
-            spellStatusLabel.Size = new System.Drawing.Size( 65, 13 );
-            spellStatusLabel.TabIndex = 21;
-            spellStatusLabel.Text = "Inflict Status";
             // 
             // percentLabel2
             // 
@@ -422,16 +401,6 @@ namespace FFTPatcher.Editors
             itemFormulaLabel.Size = new System.Drawing.Size( 44, 13 );
             itemFormulaLabel.TabIndex = 2;
             itemFormulaLabel.Text = "Formula";
-            // 
-            // itemSpellStatusLabel
-            // 
-            itemSpellStatusLabel.AutoSize = true;
-            itemSpellStatusLabel.Location = new System.Drawing.Point( 4, 48 );
-            itemSpellStatusLabel.Name = "itemSpellStatusLabel";
-            itemSpellStatusLabel.Size = new System.Drawing.Size( 65, 13 );
-            itemSpellStatusLabel.TabIndex = 5;
-            itemSpellStatusLabel.Tag = "InflictStatus";
-            itemSpellStatusLabel.Text = "Inflict Status";
             // 
             // paletteSpinner
             // 
@@ -567,9 +536,9 @@ namespace FFTPatcher.Editors
             // 
             this.weaponPanel.AutoSize = true;
             this.weaponPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.weaponPanel.Controls.Add( this.weaponSpellStatusLabel );
             this.weaponPanel.Controls.Add( this.weaponAttributesCheckedListBox );
             this.weaponPanel.Controls.Add( this.weaponElementsEditor );
-            this.weaponPanel.Controls.Add( spellStatusLabel );
             this.weaponPanel.Controls.Add( evadeLabel );
             this.weaponPanel.Controls.Add( weaponPowerLabel );
             this.weaponPanel.Controls.Add( rangeLabel );
@@ -844,7 +813,7 @@ namespace FFTPatcher.Editors
             // 
             // chemistItemPanel
             // 
-            this.chemistItemPanel.Controls.Add( itemSpellStatusLabel );
+            this.chemistItemPanel.Controls.Add( this.chemistItemSpellStatusLabel );
             this.chemistItemPanel.Controls.Add( this.chemistItemSpellStatusSpinner );
             this.chemistItemPanel.Controls.Add( xLabel );
             this.chemistItemPanel.Controls.Add( itemFormulaLabel );
@@ -914,16 +883,49 @@ namespace FFTPatcher.Editors
             0,
             0} );
             // 
+            // chemistItemSpellStatusLabel
+            // 
+            this.chemistItemSpellStatusLabel.AutoSize = true;
+            this.chemistItemSpellStatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.chemistItemSpellStatusLabel.Location = new System.Drawing.Point( 4, 48 );
+            this.chemistItemSpellStatusLabel.Name = "chemistItemSpellStatusLabel";
+            this.chemistItemSpellStatusLabel.Size = new System.Drawing.Size( 65, 13 );
+            this.chemistItemSpellStatusLabel.TabIndex = 6;
+            this.chemistItemSpellStatusLabel.TabStop = true;
+            this.chemistItemSpellStatusLabel.Text = "Inflict Status";
+            // 
+            // itemAttributesLabel
+            // 
+            this.itemAttributesLabel.AutoSize = true;
+            this.itemAttributesLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.itemAttributesLabel.Location = new System.Drawing.Point( 4, 89 );
+            this.itemAttributesLabel.Name = "itemAttributesLabel";
+            this.itemAttributesLabel.Size = new System.Drawing.Size( 74, 13 );
+            this.itemAttributesLabel.TabIndex = 17;
+            this.itemAttributesLabel.TabStop = true;
+            this.itemAttributesLabel.Text = "Item Attributes";
+            // 
+            // weaponSpellStatusLabel
+            // 
+            this.weaponSpellStatusLabel.AutoSize = true;
+            this.weaponSpellStatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.weaponSpellStatusLabel.Location = new System.Drawing.Point( 0, 107 );
+            this.weaponSpellStatusLabel.Name = "weaponSpellStatusLabel";
+            this.weaponSpellStatusLabel.Size = new System.Drawing.Size( 65, 13 );
+            this.weaponSpellStatusLabel.TabIndex = 23;
+            this.weaponSpellStatusLabel.TabStop = true;
+            this.weaponSpellStatusLabel.Text = "Inflict Status";
+            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.itemAttributesLabel );
             this.Controls.Add( this.itemAttributesCheckedListBox );
             this.Controls.Add( shopAvailabilityLabel );
             this.Controls.Add( priceLabel );
-            this.Controls.Add( itemAttributesLabel );
             this.Controls.Add( itemTypeLabel );
             this.Controls.Add( this.shopAvailabilityComboBox );
             this.Controls.Add( this.priceSpinner );
@@ -938,11 +940,11 @@ namespace FFTPatcher.Editors
             this.Controls.Add( this.graphicSpinner );
             this.Controls.Add( hLabel5 );
             this.Controls.Add( this.paletteSpinner );
+            this.Controls.Add( this.weaponPanel );
             this.Controls.Add( this.chemistItemPanel );
             this.Controls.Add( this.accessoryPanel );
             this.Controls.Add( this.armorPanel );
             this.Controls.Add( this.shieldPanel );
-            this.Controls.Add( this.weaponPanel );
             this.Name = "ItemEditor";
             this.Size = new System.Drawing.Size( 383, 329 );
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).EndInit();
@@ -1010,6 +1012,9 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.NumericUpDown chemistItemFormulaSpinner;
         private System.Windows.Forms.NumericUpDown chemistItemSpellStatusSpinner;
         private System.Windows.Forms.Panel weaponPanel;
+        private System.Windows.Forms.LinkLabel chemistItemSpellStatusLabel;
+        private System.Windows.Forms.LinkLabel itemAttributesLabel;
+        private System.Windows.Forms.LinkLabel weaponSpellStatusLabel;
 
     }
 }

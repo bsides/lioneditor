@@ -25,6 +25,8 @@ namespace FFTPatcher.Editors
 {
     public partial class AllInflictStatusesEditor : UserControl
     {
+        public int SelectedIndex { get { return offsetListBox.SelectedIndex; } set { offsetListBox.SelectedIndex = value; } }
+
         public AllInflictStatusesEditor()
         {
             InitializeComponent();

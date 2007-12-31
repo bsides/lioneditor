@@ -28,6 +28,17 @@ namespace FFTPatcher.Editors
         public AllAbilitiesEditor()
         {
             InitializeComponent();
+            abilityEditor.InflictStatusLabelClicked += abilityEditor_InflictStatusLabelClicked;
+        }
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+
+        private void abilityEditor_InflictStatusLabelClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( InflictStatusClicked != null )
+            {
+                InflictStatusClicked( this, e );
+            }
         }
 
         public void UpdateView( AllAbilities allAbilities )

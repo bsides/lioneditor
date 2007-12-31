@@ -25,6 +25,8 @@ namespace FFTPatcher.Editors
 {
     public partial class AllSkillSetsEditor : UserControl
     {
+        public int SelectedIndex { get { return skillSetListBox.SelectedIndex; } set { skillSetListBox.SelectedIndex = value; } }
+
         public AllSkillSetsEditor()
         {
             InitializeComponent();

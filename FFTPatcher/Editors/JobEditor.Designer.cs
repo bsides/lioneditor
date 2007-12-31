@@ -47,7 +47,6 @@ namespace FFTPatcher.Editors
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label skillSetLabel;
             System.Windows.Forms.Label hpGrowthLabel;
             System.Windows.Forms.Label hpMultiplierLabel;
             System.Windows.Forms.Label mpGrowthLabel;
@@ -100,7 +99,7 @@ namespace FFTPatcher.Editors
             this.halfElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.cancelElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.absorbElementsEditor = new FFTPatcher.Editors.ElementsEditor();
-            skillSetLabel = new System.Windows.Forms.Label();
+            this.skillSetLabel = new System.Windows.Forms.LinkLabel();
             hpGrowthLabel = new System.Windows.Forms.Label();
             hpMultiplierLabel = new System.Windows.Forms.Label();
             mpGrowthLabel = new System.Windows.Forms.Label();
@@ -141,15 +140,6 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.mPaletteSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mGraphicSpinner)).BeginInit();
             this.SuspendLayout();
-            // 
-            // skillSetLabel
-            // 
-            skillSetLabel.AutoSize = true;
-            skillSetLabel.Location = new System.Drawing.Point( 3, 6 );
-            skillSetLabel.Name = "skillSetLabel";
-            skillSetLabel.Size = new System.Drawing.Size( 43, 13 );
-            skillSetLabel.TabIndex = 21;
-            skillSetLabel.Text = "Skillset:";
             // 
             // hpGrowthLabel
             // 
@@ -790,6 +780,17 @@ namespace FFTPatcher.Editors
             this.absorbElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.absorbElementsEditor.TabIndex = 45;
             // 
+            // skillSetLabel
+            // 
+            this.skillSetLabel.AutoSize = true;
+            this.skillSetLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.skillSetLabel.Location = new System.Drawing.Point( 3, 6 );
+            this.skillSetLabel.Name = "skillSetLabel";
+            this.skillSetLabel.Size = new System.Drawing.Size( 43, 13 );
+            this.skillSetLabel.TabIndex = 53;
+            this.skillSetLabel.TabStop = true;
+            this.skillSetLabel.Text = "Skillset:";
+            // 
             // JobEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -797,6 +798,7 @@ namespace FFTPatcher.Editors
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.skillSetLabel );
             this.Controls.Add( this.startingStatusesEditor );
             this.Controls.Add( this.statusImmunityEditor );
             this.Controls.Add( this.innateStatusesEditor );
@@ -828,7 +830,6 @@ namespace FFTPatcher.Editors
             this.Controls.Add( mpGrowthLabel );
             this.Controls.Add( hpMultiplierLabel );
             this.Controls.Add( hpGrowthLabel );
-            this.Controls.Add( skillSetLabel );
             this.Controls.Add( this.mGraphicSpinner );
             this.Controls.Add( this.innateDComboBox );
             this.Controls.Add( this.innateCComboBox );
@@ -904,5 +905,6 @@ namespace FFTPatcher.Editors
         private StatusesEditor innateStatusesEditor;
         private StatusesEditor statusImmunityEditor;
         private StatusesEditor startingStatusesEditor;
+        private System.Windows.Forms.LinkLabel skillSetLabel;
     }
 }

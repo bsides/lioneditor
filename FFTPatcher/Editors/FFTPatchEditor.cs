@@ -29,6 +29,42 @@ namespace FFTPatcher.Editors
             InitializeComponent();
             FFTPatch.DataChanged += FFTPatch_DataChanged;
             this.Enabled = false;
+
+            allAbilitiesEditor1.InflictStatusClicked += InflictStatusClicked;
+            allItemsEditor1.InflictStatusClicked += InflictStatusClicked;
+            allItemsEditor1.ItemAttributesClicked += ItemAttributesClicked;
+            allJobsEditor1.SkillSetClicked += SkillSetClicked;
+        }
+
+        private void SkillSetClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( e.Value >= 0xE0 )
+            {
+                allSkillSetsEditor1.SelectedIndex = e.Value - 0xE0 + 0xB0;
+                tabControl.SelectedTab = skillSetsPage;
+            }
+            else if( e.Value >= 0xB0 )
+            {
+                allMonsterSkillsEditor1.SelectedIndex = e.Value - 0xB0;
+                tabControl.SelectedTab = monsterSkillsTab;
+            }
+            else
+            {
+                allSkillSetsEditor1.SelectedIndex = e.Value;
+                tabControl.SelectedTab = skillSetsPage;
+            }
+        }
+
+        private void ItemAttributesClicked( object sender, LabelClickedEventArgs e )
+        {
+            allItemAttributesEditor1.SelectedIndex = e.Value;
+            tabControl.SelectedTab = itemAttributesTabPage;
+        }
+
+        private void InflictStatusClicked( object sender, LabelClickedEventArgs e )
+        {
+            allInflictStatusesEditor1.SelectedIndex = e.Value;
+            tabControl.SelectedTab = inflictStatusesTabPage;
         }
 
         private void FFTPatch_DataChanged( object sender, System.EventArgs e )

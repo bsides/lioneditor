@@ -94,6 +94,22 @@ namespace FFTPatcher.Editors
                 spinner.ValueChanged += spinner_ValueChanged;
             }
             flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
+            inflictStatusLabel.Click += inflictStatusLabel_Click;
+            inflictStatusLabel.TabStop = false;
+        }
+
+        private void inflictStatusLabel_Click( object sender, EventArgs e )
+        {
+            FireLinkClickedEvent();
+        }
+
+        public event EventHandler<LabelClickedEventArgs> LinkClicked;
+        private void FireLinkClickedEvent()
+        {
+            if( LinkClicked != null )
+            {
+                LinkClicked( this, new LabelClickedEventArgs( (byte)statusSpinner.Value ) );
+            }
         }
 
         private void spinner_ValueChanged( object sender, EventArgs e )
@@ -116,4 +132,15 @@ namespace FFTPatcher.Editors
             }
         }
     }
+
+    public class LabelClickedEventArgs : EventArgs
+    {
+        public byte Value { get; private set; }
+
+        public LabelClickedEventArgs( byte value )
+        {
+            Value = value;
+        }
+    }
+
 }

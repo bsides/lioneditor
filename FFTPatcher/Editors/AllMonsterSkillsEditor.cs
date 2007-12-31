@@ -24,6 +24,16 @@ namespace FFTPatcher.Editors
 {
     public partial class AllMonsterSkillsEditor : UserControl
     {
+        public int SelectedIndex
+        {
+            get { return dataGridView.CurrentRow.Index; }
+            set
+            {
+                dataGridView[0, value].Selected = true;
+                dataGridView.CurrentCell = dataGridView[0, value];
+            }
+        }
+
         public AllMonsterSkillsEditor()
         {
             InitializeComponent();

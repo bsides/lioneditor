@@ -28,6 +28,16 @@ namespace FFTPatcher.Editors
         public AllJobsEditor()
         {
             InitializeComponent();
+            jobEditor.SkillSetClicked += jobEditor_SkillSetClicked;
+        }
+
+        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
+        private void jobEditor_SkillSetClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( SkillSetClicked != null )
+            {
+                SkillSetClicked( this, e );
+            }
         }
 
         public void UpdateView( AllJobs jobs )

@@ -199,7 +199,7 @@ namespace FFTPatcher
             List<string> codes = new List<string>();
             bool[] patched = new bool[newBytes.Length];
 
-            for( int i = 0; i < newBytes.Length; i++ )
+            for( int i = 0; i < newBytes.Length; i += 4 )
             {
                 if( ((i + 3) < newBytes.Length) &&
                     ((newBytes[i] != oldBytes[i]) ||
@@ -219,11 +219,10 @@ namespace FFTPatcher
                     patched[i + 1] = true;
                     patched[i + 2] = true;
                     patched[i + 3] = true;
-                    i += 3;
                 }
             }
 
-            for( int i = 0; i < newBytes.Length; i++ )
+            for( int i = 0; i < newBytes.Length; i += 2 )
             {
                 if( ((i + 1) < newBytes.Length) &&
                     ((newBytes[i] != oldBytes[i]) || (newBytes[i + 1] != oldBytes[i + 1]))
@@ -235,7 +234,6 @@ namespace FFTPatcher
                     codes.Add( code );
                     patched[i] = true;
                     patched[i + 1] = true;
-                    i++;
                 }
             }
 

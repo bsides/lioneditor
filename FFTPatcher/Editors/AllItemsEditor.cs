@@ -28,8 +28,28 @@ namespace FFTPatcher.Editors
         public AllItemsEditor()
         {
             InitializeComponent();
+            itemEditor.InflictStatusClicked += itemEditor_InflictStatusClicked;
+            itemEditor.ItemAttributesClicked += itemEditor_ItemAttributesClicked;
         }
 
+        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
+        private void itemEditor_ItemAttributesClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( ItemAttributesClicked != null )
+            {
+                ItemAttributesClicked( this, e );
+            }
+        }
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+        private void itemEditor_InflictStatusClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( InflictStatusClicked != null )
+            {
+                InflictStatusClicked( this, e );
+            }
+        }
+        
         public void UpdateView( AllItems items )
         {
             itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;

@@ -36,6 +36,16 @@ namespace FFTPatcher
             newPSXMenuItem.Click += newPSXMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
             openModifiedMenuItem.Click += openModifiedMenuItem_Click;
+            applyMenuItem.Enabled = false;
+            saveMenuItem.Enabled = false;
+
+            FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        {
+            applyMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            saveMenuItem.Enabled = true;
         }
 
         private void openModifiedMenuItem_Click( object sender, System.EventArgs e )

@@ -69,6 +69,18 @@ namespace FFTPatcher.Editors
             {
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
+
+            skillSetLabel.TabStop = false;
+            skillSetLabel.Click += skillSetLabel_Click;
+        }
+
+        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
+        private void skillSetLabel_Click( object sender, EventArgs e )
+        {
+            if( SkillSetClicked != null )
+            {
+                SkillSetClicked( this, new LabelClickedEventArgs( (byte)skillsetComboBox.SelectedIndex ) );
+            }
         }
 
         private void comboBox_SelectedIndexChanged( object sender, EventArgs e )

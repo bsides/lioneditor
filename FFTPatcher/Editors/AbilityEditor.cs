@@ -153,6 +153,18 @@ namespace FFTPatcher.Editors
             }
             psxItemTypes.Remove( ItemSubType.LipRouge );
             psxItemTypes.Remove( ItemSubType.FellSword );
+
+            abilityAttributesEditor.LinkClicked += abilityAttributesEditor_LinkClicked;
+        }
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusLabelClicked;
+
+        private void abilityAttributesEditor_LinkClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( InflictStatusLabelClicked != null )
+            {
+                InflictStatusLabelClicked( this, e );
+            }
         }
 
         private void combo_SelectedIndexChanged( object sender, EventArgs e )

@@ -52,7 +52,6 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label hLabel1;
             System.Windows.Forms.Label mpLabel;
             System.Windows.Forms.Label ctLabel;
-            System.Windows.Forms.Label statusLabel;
             System.Windows.Forms.Label yLabel;
             System.Windows.Forms.Label xLabel;
             System.Windows.Forms.Label formulaLabel;
@@ -70,12 +69,12 @@ namespace FFTPatcher.Editors
             this.effectSpinner = new System.Windows.Forms.NumericUpDown();
             this.rangeSpinner = new System.Windows.Forms.NumericUpDown();
             this.elementsEditor = new FFTPatcher.Editors.ElementsEditor();
+            this.inflictStatusLabel = new System.Windows.Forms.LinkLabel();
             attributesGroupBox = new System.Windows.Forms.GroupBox();
             hLabel2 = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
             mpLabel = new System.Windows.Forms.Label();
             ctLabel = new System.Windows.Forms.Label();
-            statusLabel = new System.Windows.Forms.Label();
             yLabel = new System.Windows.Forms.Label();
             xLabel = new System.Windows.Forms.Label();
             formulaLabel = new System.Windows.Forms.Label();
@@ -98,6 +97,7 @@ namespace FFTPatcher.Editors
             // 
             attributesGroupBox.AutoSize = true;
             attributesGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            attributesGroupBox.Controls.Add( this.inflictStatusLabel );
             attributesGroupBox.Controls.Add( hLabel2 );
             attributesGroupBox.Controls.Add( hLabel1 );
             attributesGroupBox.Controls.Add( this.flagsCheckedListBox );
@@ -112,7 +112,6 @@ namespace FFTPatcher.Editors
             attributesGroupBox.Controls.Add( this.rangeSpinner );
             attributesGroupBox.Controls.Add( mpLabel );
             attributesGroupBox.Controls.Add( ctLabel );
-            attributesGroupBox.Controls.Add( statusLabel );
             attributesGroupBox.Controls.Add( yLabel );
             attributesGroupBox.Controls.Add( xLabel );
             attributesGroupBox.Controls.Add( formulaLabel );
@@ -377,15 +376,6 @@ namespace FFTPatcher.Editors
             ctLabel.TabIndex = 8;
             ctLabel.Text = "CT:";
             // 
-            // statusLabel
-            // 
-            statusLabel.AutoSize = true;
-            statusLabel.Location = new System.Drawing.Point( 6, 154 );
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new System.Drawing.Size( 68, 13 );
-            statusLabel.TabIndex = 7;
-            statusLabel.Text = "Inflict Status:";
-            // 
             // yLabel
             // 
             yLabel.AutoSize = true;
@@ -451,6 +441,17 @@ namespace FFTPatcher.Editors
             this.elementsEditor.TabIndex = 0;
             this.elementsEditor.TabStop = false;
             // 
+            // inflictStatusLabel
+            // 
+            this.inflictStatusLabel.AutoSize = true;
+            this.inflictStatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.inflictStatusLabel.Location = new System.Drawing.Point( 6, 154 );
+            this.inflictStatusLabel.Name = "inflictStatusLabel";
+            this.inflictStatusLabel.Size = new System.Drawing.Size( 66, 13 );
+            this.inflictStatusLabel.TabIndex = 12;
+            this.inflictStatusLabel.TabStop = true;
+            this.inflictStatusLabel.Text = "Inflict status:";
+            // 
             // AbilityAttributesEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -489,5 +490,6 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.NumericUpDown effectSpinner;
         private System.Windows.Forms.NumericUpDown rangeSpinner;
         private System.Windows.Forms.CheckedListBox flagsCheckedListBox;
+        private System.Windows.Forms.LinkLabel inflictStatusLabel;
     }
 }

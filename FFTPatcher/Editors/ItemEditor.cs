@@ -185,7 +185,39 @@ namespace FFTPatcher.Editors
             psxItemTypes.Remove( ItemSubType.LipRouge );
             psxItemTypes.Remove( ItemSubType.FellSword );
 
+            chemistItemSpellStatusLabel.Click += chemistItemSpellStatusLabel_Click;
+            chemistItemSpellStatusLabel.TabStop = false;
+            weaponSpellStatusLabel.Click += weaponSpellStatusLabel_Click;
+            weaponSpellStatusLabel.TabStop = false;
+            itemAttributesLabel.Click += itemAttributesLabel_Click;
+            itemAttributesLabel.TabStop = false;
             ignoreChanges = false;
+        }
+
+        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
+        private void itemAttributesLabel_Click( object sender, EventArgs e )
+        {
+            if( ItemAttributesClicked != null )
+            {
+                ItemAttributesClicked( this, new LabelClickedEventArgs( (byte)itemAttributesSpinner.Value ) );
+            }
+        }
+
+        private void weaponSpellStatusLabel_Click( object sender, EventArgs e )
+        {
+            if( InflictStatusClicked != null )
+            {
+                InflictStatusClicked( this, new LabelClickedEventArgs( (byte)weaponSpellStatusSpinner.Value ) );
+            }
+        }
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+        private void chemistItemSpellStatusLabel_Click( object sender, EventArgs e )
+        {
+            if( InflictStatusClicked != null )
+            {
+                InflictStatusClicked( this, new LabelClickedEventArgs( (byte)chemistItemSpellStatusSpinner.Value ) );
+            }
         }
 
         private void weaponAttributesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )

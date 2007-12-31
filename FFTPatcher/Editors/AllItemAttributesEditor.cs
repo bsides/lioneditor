@@ -25,6 +25,8 @@ namespace FFTPatcher.Editors
 {
     public partial class AllItemAttributesEditor : UserControl
     {
+        public int SelectedIndex { get { return offsetListBox.SelectedIndex; } set { offsetListBox.SelectedIndex = value; } }
+
         public AllItemAttributesEditor()
         {
             InitializeComponent();

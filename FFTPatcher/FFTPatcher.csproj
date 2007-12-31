@@ -374,6 +374,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="psp1.2.fftpatch" />
     <None Include="Resources\PSP\Abilities.bin" />
     <None Include="Resources\PSP\ActionEvents.bin" />
     <None Include="Resources\PSP\InflictStatuses.bin" />
@@ -416,6 +417,7 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="archive2.dll" />
     <Content Include="Resources\PSP\Abilities.xml" />
     <Content Include="Resources\PSP\ItemAttributes.xml" />
     <Content Include="Resources\PSP\Items.xml" />

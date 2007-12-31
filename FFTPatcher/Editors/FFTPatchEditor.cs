@@ -27,10 +27,7 @@ namespace FFTPatcher.Editors
         public FFTPatchEditor()
         {
             InitializeComponent();
-            //FFTPatch.New( Context.US_PSP );
-            //FFTPatch.Load( "lol.xml" );
             FFTPatch.DataChanged += FFTPatch_DataChanged;
-            //FFTPatch.SaveToFile( "lol2.xml" );
             this.Enabled = false;
         }
 
@@ -48,6 +45,7 @@ namespace FFTPatcher.Editors
             allSkillSetsEditor1.UpdateView( FFTPatch.SkillSets );
             allStatusAttributesEditor1.UpdateView( FFTPatch.StatusAttributes );
             jobLevelsEditor1.UpdateView( FFTPatch.JobLevels );
+            codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
         }
     }
 }

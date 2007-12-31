@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using FFTPatcher.Datatypes;
+using System.IO;
 
 namespace FFTPatcher
 {
@@ -124,6 +125,17 @@ namespace FFTPatcher
             UInt16 result = 0;
             result += lsb;
             result += (UInt16)(msb << 8);
+            return result;
+        }
+
+        public static UInt32 BytesToUInt32( byte[] bytes )
+        {
+            UInt32 result = 0;
+            result += bytes[0];
+            result += (UInt32)(bytes[1] << 8);
+            result += (UInt32)(bytes[2] << 16);
+            result += (UInt32)(bytes[3] << 24);
+
             return result;
         }
 
@@ -319,5 +331,6 @@ namespace FFTPatcher
 
             return true;
         }
+
     }
 }

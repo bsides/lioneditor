@@ -48,7 +48,6 @@ namespace FFTPatcher
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.fileMenuItem = new System.Windows.Forms.MenuItem();
             this.newPSXMenuItem = new System.Windows.Forms.MenuItem();
@@ -63,16 +62,9 @@ namespace FFTPatcher
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.applyPatchOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
+            this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
-            // 
-            // fftPatchEditor1
-            // 
-            this.fftPatchEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fftPatchEditor1.Enabled = false;
-            this.fftPatchEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.fftPatchEditor1.Name = "fftPatchEditor1";
-            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 759 );
-            this.fftPatchEditor1.TabIndex = 0;
             // 
             // mainMenu
             // 
@@ -87,6 +79,7 @@ namespace FFTPatcher
             this.newPSPMenuItem,
             this.menuItem4,
             this.openMenuItem,
+            this.openModifiedMenuItem,
             this.saveMenuItem,
             this.menuItem7,
             this.applyMenuItem,
@@ -116,27 +109,27 @@ namespace FFTPatcher
             // 
             // saveMenuItem
             // 
-            this.saveMenuItem.Index = 4;
+            this.saveMenuItem.Index = 5;
             this.saveMenuItem.Text = "&Save patch...";
             // 
             // menuItem7
             // 
-            this.menuItem7.Index = 5;
+            this.menuItem7.Index = 6;
             this.menuItem7.Text = "-";
             // 
             // applyMenuItem
             // 
-            this.applyMenuItem.Index = 6;
+            this.applyMenuItem.Index = 7;
             this.applyMenuItem.Text = "&Apply patch to file...";
             // 
             // menuItem9
             // 
-            this.menuItem9.Index = 7;
+            this.menuItem9.Index = 8;
             this.menuItem9.Text = "-";
             // 
             // exitMenuItem
             // 
-            this.exitMenuItem.Index = 8;
+            this.exitMenuItem.Index = 9;
             this.exitMenuItem.Text = "E&xit";
             // 
             // openFileDialog
@@ -147,13 +140,27 @@ namespace FFTPatcher
             // 
             this.applyPatchOpenFileDialog.Filter = "ISO files|*.iso";
             // 
+            // fftPatchEditor1
+            // 
+            this.fftPatchEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fftPatchEditor1.Enabled = false;
+            this.fftPatchEditor1.Location = new System.Drawing.Point( 0, 0 );
+            this.fftPatchEditor1.Name = "fftPatchEditor1";
+            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 717 );
+            this.fftPatchEditor1.TabIndex = 0;
+            // 
+            // openModifiedMenuItem
+            // 
+            this.openModifiedMenuItem.Index = 4;
+            this.openModifiedMenuItem.Text = "Open modified SCUS_942.21...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size( 815, 759 );
+            this.ClientSize = new System.Drawing.Size( 815, 717 );
             this.Controls.Add( this.fftPatchEditor1 );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
@@ -179,6 +186,7 @@ namespace FFTPatcher
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog applyPatchOpenFileDialog;
+        private System.Windows.Forms.MenuItem openModifiedMenuItem;
 
     }
 }

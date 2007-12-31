@@ -22,6 +22,7 @@ using System.Xml;
 using FFTPatcher.Properties;
 using System.IO;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace FFTPatcher.Datatypes
 {
@@ -189,6 +190,69 @@ namespace FFTPatcher.Datatypes
             FireDataChangedEvent();
         }
 
+        public static void OpenModifiedPSXFile( string filename )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open );
+                VerifyFileIsSCUS94221( stream );
+                Context = Context.US_PSX;
+
+                byte[] abilities = new byte[0x24C6];
+                byte[] oldItems = new byte[0x110A];
+                byte[] oldItemAttributes = new byte[0x7D0];
+                byte[] jobs = new byte[0x1E00];
+                byte[] jobLevels = new byte[0xD0];
+                byte[] skillSets = new byte[0x1130];
+                byte[] monsterSkills = new byte[0xF0];
+                byte[] actionMenus = new byte[0x100];
+                byte[] statusAttributes = new byte[0x280];
+                byte[] inflictStatuses = new byte[0x300];
+                byte[] poach = new byte[0x60];
+                byte[][] buffers = new byte[][] { 
+                    abilities, oldItems, oldItemAttributes, jobs, 
+                    jobLevels, skillSets, monsterSkills, actionMenus, 
+                    statusAttributes, inflictStatuses, poach };
+
+                UInt32[] offsets = new UInt32[] { 
+                    0x4F3F0, 0x536B8, 0x54AC4, 0x518B8,
+                    0x568C4, 0x55294, 0x563C4, 0x564B4,
+                    0x565E4, 0x547C4, 0x56864 };
+                for( int i = 0; i < buffers.Length; i++ )
+                {
+                    stream.Seek( offsets[i], SeekOrigin.Begin );
+                    stream.Read( buffers[i], 0, buffers[i].Length );
+                }
+
+                Abilities = new AllAbilities( new SubArray<byte>( abilities ) );
+                Items = new AllItems( new SubArray<byte>( oldItems ), null );
+                ItemAttributes = new AllItemAttributes( new SubArray<byte>( oldItemAttributes ), null );
+                Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
+                JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ) );
+                SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ) );
+                MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
+                ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );
+                StatusAttributes = new AllStatusAttributes( new SubArray<byte>( statusAttributes ) );
+                InflictStatuses = new AllInflictStatuses( new SubArray<byte>( inflictStatuses ) );
+                PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( poach ) );
+                FireDataChangedEvent();
+            }
+            catch( InvalidDataException )
+            {
+                throw;
+            }
+            catch( FileNotFoundException )
+            {
+                throw;
+            }
+            finally
+            {
+                stream.Close();
+                stream.Dispose();
+            }
+        }
+
         public static void ApplyPatchesToFile( string filename )
         {
             FileStream stream = null;
@@ -198,23 +262,53 @@ namespace FFTPatcher.Datatypes
                 stream = new FileStream( filename, FileMode.Open );
                 long newItems = -1;
                 long newItemAttributes = -1;
+                long abilities = -1;
+                long jobs = -1;
+                long skillSets = -1;
+                long monsterSkills = -1;
+                long actionEvents = -1;
+                long statusAttributes = -1;
+                long poach = -1;
+                long jobLevels = -1;
+                long oldItems = -1;
+                long inflictStatuses = -1;
+                long oldItemAttributes = -1;
+
                 if( Context == Context.US_PSP )
                 {
-                    newItems = FindArrayInStream( Resources.NewItemsBin, stream );
-                    newItemAttributes = FindArrayInStream( Resources.NewItemAttributesBin, stream );
+                    byte[] elf = new byte[] { 0x7F, 0x45, 0x4C, 0x46 };
+                    long bootBinLocation = FindArrayInStream( elf, stream );
+                    abilities = bootBinLocation + 0x271514;
+                    statusAttributes = bootBinLocation + 0x276DA4;
+                    skillSets = bootBinLocation + 0x275A38;
+                    oldItemAttributes = bootBinLocation + 0x3266E8;
+                    actionEvents = bootBinLocation + 0x276CA4;
+                    inflictStatuses = bootBinLocation + 0x3263E8;
+                    jobLevels = bootBinLocation + 0x277084;
+                    jobs = bootBinLocation + 0x2739DC;
+                    monsterSkills = bootBinLocation + 0x276BB4;
+                    newItemAttributes = bootBinLocation + 0x25720C;
+                    newItems = bootBinLocation + 0x256E00;
+                    oldItems = bootBinLocation + 0x3252DC;
+                    poach = bootBinLocation + 0x277024;
                 }
-
-                long abilities = FindArrayInStream( psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin, stream );
-                long jobs = FindArrayInStream( psp ? Resources.JobsBin : PSXResources.JobsBin, stream );
-                long skillSets = FindArrayInStream( psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin, stream );
-                long monsterSkills = FindArrayInStream( psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin, stream );
-                long actionEvents = FindArrayInStream( psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin, stream );
-                long statusAttributes = FindArrayInStream( psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin, stream );
-                long poach = FindArrayInStream( psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin, stream );
-                long jobLevels = FindArrayInStream( psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin, stream );
-                long oldItems = FindArrayInStream( psp ? Resources.OldItemsBin : PSXResources.OldItemsBin, stream );
-                long inflictStatuses = FindArrayInStream( psp ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin, stream );
-                long oldItemAttributes = FindArrayInStream( psp ? Resources.OldItemAttributesBin : PSXResources.OldItemAttributesBin, stream );
+                else
+                {
+                    VerifyFileIsSCUS94221( stream );
+                    byte[] psx = new byte[stream.Length];
+                    
+                    oldItemAttributes = 0x54AC4;
+                    oldItems = 0x536B8;
+                    poach = 0x56864;
+                    skillSets = 0x55294;
+                    statusAttributes = 0x565E4;
+                    abilities = 0x4F3F0;
+                    actionEvents = 0x564B4;
+                    inflictStatuses = 0x547C4;
+                    jobLevels = 0x568C4;
+                    jobs = 0x518B8;
+                    monsterSkills = 0x563C4;
+                }
 
                 WriteArrayToPosition( Abilities.ToByteArray( Context ), stream, abilities );
                 WriteArrayToPosition( Items.ToFirstByteArray(), stream, oldItems );
@@ -247,8 +341,43 @@ namespace FFTPatcher.Datatypes
                 {
                     stream.Flush();
                     stream.Close();
+                    stream.Dispose();
                 }
             }
+        }
+
+        private static void VerifyFileIsSCUS94221( FileStream stream )
+        {
+            stream.Seek( 0, SeekOrigin.Begin );
+            string header = ReadString( stream, 8 );
+
+            stream.Seek( 0x4C, SeekOrigin.Begin );
+            string scea = ReadString( stream, 0x37 );
+
+            stream.Seek( 0x1C, SeekOrigin.Begin );
+            byte[] length = new byte[4];
+            stream.Read( length, 0, 4 );
+            UInt32 l = Utilities.BytesToUInt32( length ) + 0x800;
+
+            if( (header != "PS-X EXE") ||
+                (scea != "Sony Computer Entertainment Inc. for North America area") ||
+                (l != stream.Length) )
+            {
+                throw new InvalidDataException();
+            }
+        }
+
+        private static string ReadString( FileStream stream, int length )
+        {
+            byte[] bytes = new byte[length];
+            stream.Read( bytes, 0, length );
+            StringBuilder result = new StringBuilder();
+            foreach( byte b in bytes )
+            {
+                result.Append( Convert.ToChar( b ) );
+            }
+
+            return result.ToString();
         }
 
         private static void WriteArrayToPosition( byte[] array, FileStream stream, long position )
@@ -260,19 +389,9 @@ namespace FFTPatcher.Datatypes
         private static long FindArrayInStream( byte[] array, FileStream stream )
         {
             byte[] read = new byte[array.Length];
-            long startPosition = stream.Position;
 
-            while( stream.Position + array.Length < stream.Length )
-            {
-                stream.Read( read, 0, array.Length );
-                if( Utilities.CompareArrays( array, read ) )
-                {
-                    return stream.Position - array.Length;
-                }
-                stream.Seek( 1 - (array.Length), SeekOrigin.Current );
-            }
             stream.Seek( 0, SeekOrigin.Begin );
-            while( stream.Position < startPosition )
+            while( stream.Position + array.Length < stream.Length )
             {
                 stream.Read( read, 0, array.Length );
                 if( Utilities.CompareArrays( array, read ) )

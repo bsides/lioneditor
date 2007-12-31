@@ -19,6 +19,7 @@
 
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.IO;
 
 namespace FFTPatcher
 {
@@ -33,6 +34,30 @@ namespace FFTPatcher
             newPSPMenuItem.Click += newPSPMenuItem_Click;
             newPSXMenuItem.Click += newPSXMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
+            openModifiedMenuItem.Click += openModifiedMenuItem_Click;
+        }
+
+        private void openModifiedMenuItem_Click( object sender, System.EventArgs e )
+        {
+            openFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
+            if( openFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.OpenModifiedPSXFile( openFileDialog.FileName );
+                }
+                catch( InvalidDataException )
+                {
+                    MessageBox.Show(
+                        "Could not find patch locations.\n" +
+                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
+                        "Invalid data", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
+            }
         }
 
         private void exitMenuItem_Click( object sender, System.EventArgs e )
@@ -60,14 +85,40 @@ namespace FFTPatcher
 
         private void applyMenuItem_Click( object sender, System.EventArgs e )
         {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                applyPatchOpenFileDialog.Filter = "ISO Files (*.iso) |*.iso";
+            }
+            else
+            {
+                applyPatchOpenFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
+            }
+
             if( applyPatchOpenFileDialog.ShowDialog() == DialogResult.OK )
             {
-                FFTPatch.ApplyPatchesToFile( applyPatchOpenFileDialog.FileName );
+                try
+                {
+                    FFTPatch.ApplyPatchesToFile( applyPatchOpenFileDialog.FileName );
+                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
+                }
+                catch( InvalidDataException )
+                {
+                    MessageBox.Show(
+                        "Could not find patch locations.\n" +
+                        "Ensure that the file is an ISO image if you are patching War of the Lions." +
+                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
+                        "Invalid data", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
             }
         }
 
         private void openMenuItem_Click( object sender, System.EventArgs e )
         {
+            openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( openFileDialog.ShowDialog() == DialogResult.OK )
             {
                 FFTPatch.Load( openFileDialog.FileName );

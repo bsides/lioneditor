@@ -2,6 +2,7 @@
 #labels Featured
 
 FFTPatcher is an application that can generate codes and patches for Final Fantasy Tactics (for Playstation) and FFT: War of the Lions (for PSP).
+
 = PSX =
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/abilities.png]
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psx-items.png]
@@ -16,8 +17,11 @@ FFTPatcher is an application that can generate codes and patches for Final Fanta
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psx-poaching.png]
 
 Gameshark codes are automatically generated based on the changes you have made...
+
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/gameshark.png]
+
 ... or you can save your work as an .fftpatch file or apply the changes to a SCUS_942.21 file
+
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/menu.png]
 
 = PSP =
@@ -29,5 +33,7 @@ Gameshark codes are automatically generated based on the changes you have made..
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-skillsets.png]
 
 CWCheat codes are automatically generated based on the changes you have made.
+
 [http://lioneditor.googlecode.com/svn/screenshots/FFTPatcher/psp-codes.png]
+
 It is not currently possible to apply the changes directly to a War of the Lions image file.

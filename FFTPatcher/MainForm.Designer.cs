@@ -64,12 +64,14 @@ namespace FFTPatcher
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.applyPatchOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
+            this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.fileMenuItem} );
+            this.fileMenuItem,
+            this.aboutMenuItem} );
             // 
             // fileMenuItem
             // 
@@ -158,6 +160,11 @@ namespace FFTPatcher
             this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 654 );
             this.fftPatchEditor1.TabIndex = 0;
             // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Index = 1;
+            this.aboutMenuItem.Text = "About...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -191,6 +198,7 @@ namespace FFTPatcher
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog applyPatchOpenFileDialog;
         private System.Windows.Forms.MenuItem openModifiedMenuItem;
+        private System.Windows.Forms.MenuItem aboutMenuItem;
 
     }
 }

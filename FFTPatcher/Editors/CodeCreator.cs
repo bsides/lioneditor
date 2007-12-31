@@ -31,6 +31,11 @@ namespace FFTPatcher.Editors
             InitializeComponent();
         }
 
+        public void UpdateView()
+        {
+            OnVisibleChanged( null );
+        }
+
         protected override void OnVisibleChanged( EventArgs e )
         {
             StringBuilder sb = new StringBuilder();

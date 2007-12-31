@@ -81,6 +81,7 @@ namespace FFTPatcher.Editors
             allSkillSetsEditor1.UpdateView( FFTPatch.SkillSets );
             allStatusAttributesEditor1.UpdateView( FFTPatch.StatusAttributes );
             jobLevelsEditor1.UpdateView( FFTPatch.JobLevels );
+            codeCreator1.UpdateView();
             codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
         }
     }

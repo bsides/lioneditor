@@ -5,6 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTPatcher", "FFTPatcher.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatcherTests", "PatcherTests\PatcherTests.csproj", "{A89E9663-714F-4E42-9A53-443D1D9F342B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0762D3C8-AAD4-4EF3-AF00-F2A2B0AD964D}"
+	ProjectSection(SolutionItems) = preProject
+		COPYING = COPYING
+		psp1.2.fftpatch = psp1.2.fftpatch
+		psx1.2.fftpatch = psx1.2.fftpatch
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

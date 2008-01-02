@@ -23,6 +23,13 @@ using System.Reflection;
 using System.Text;
 using FFTPatcher.Datatypes;
 
+namespace System.Runtime.CompilerServices
+{
+    public class ExtensionAttribute : Attribute
+    {
+    }
+}
+
 namespace FFTPatcher
 {
     public static class Utilities
@@ -193,18 +200,23 @@ namespace FFTPatcher
             return result;
         }
 
-        private static string GeneratePSPCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        private static List<string> GeneratePSPCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
         {
-            StringBuilder codeBuilder = new StringBuilder();
             List<string> codes = new List<string>();
             bool[] patched = new bool[newBytes.Length];
 
-            for( int i = 0; i < newBytes.Length; i += 4 )
+            uint i = 0;
+            if( offset % 4 > 0 )
+            {
+                i = 4 - (offset % 4);
+            }
+
+            for( ; i < newBytes.Length; i += 4 )
             {
                 if( ((i + 3) < newBytes.Length) &&
-                    ((newBytes[i] != oldBytes[i]) ||
-                    (newBytes[i + 1] != oldBytes[i + 1]) ||
-                    (newBytes[i + 2] != oldBytes[i + 2]) ||
+                    ((newBytes[i] != oldBytes[i]) &&
+                    (newBytes[i + 1] != oldBytes[i + 1]) &&
+                    (newBytes[i + 2] != oldBytes[i + 2]) &&
                     (newBytes[i + 3] != oldBytes[i + 3])) &&
                     (!patched[i]) &&
                     (!patched[i + 1]) &&
@@ -222,11 +234,12 @@ namespace FFTPatcher
                 }
             }
 
-            for( int i = 0; i < newBytes.Length; i += 2 )
+            for( i = offset % 2; i < newBytes.Length; i += 2 )
             {
                 if( ((i + 1) < newBytes.Length) &&
-                    ((newBytes[i] != oldBytes[i]) || (newBytes[i + 1] != oldBytes[i + 1]))
-                    && (!patched[i]) && (!patched[i + 1]) )
+                    ((newBytes[i] != oldBytes[i]) &&
+                    (newBytes[i + 1] != oldBytes[i + 1])) &&
+                    (!patched[i]) && (!patched[i + 1]) )
                 {
                     UInt32 addy = (UInt32)(offset + i);
                     string code = string.Format( "_L 0x1{0:X7} 0x0000{2:X2}{1:X2}",
@@ -237,7 +250,7 @@ namespace FFTPatcher
                 }
             }
 
-            for( int i = 0; i < newBytes.Length; i++ )
+            for( i = 0; i < newBytes.Length; i++ )
             {
                 if( (newBytes[i] != oldBytes[i]) && (!patched[i]) )
                 {
@@ -254,22 +267,19 @@ namespace FFTPatcher
                 {
                     return s.Substring( 6 ).CompareTo( t.Substring( 6 ) );
                 } ) );
-            foreach( string s in codes )
-            {
-                codeBuilder.AppendLine( s );
-            }
 
-            return codeBuilder.ToString();
+            return codes;
         }
 
-        private static string GeneratePSXCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        private static List<string> GeneratePSXCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
         {
             List<string> codes = new List<string>();
             bool[] patched = new bool[newBytes.Length];
-            for( int i = 0; i < newBytes.Length; i += 2 )
+            for( uint i = offset % 2; i < newBytes.Length; i += 2 )
             {
                 if( ((i + 1) < newBytes.Length) &&
-                    ((newBytes[i] != oldBytes[i]) || (newBytes[i + 1] != oldBytes[i + 1])) &&
+                    ((newBytes[i] != oldBytes[i]) &&
+                    (newBytes[i + 1] != oldBytes[i + 1])) &&
                     (!patched[i]) && (!patched[i + 1]) )
                 {
                     UInt32 addy = (UInt32)(offset + i);
@@ -298,16 +308,10 @@ namespace FFTPatcher
                     return s.Substring( 2 ).CompareTo( t.Substring( 2 ) );
                 } ) );
 
-            StringBuilder codeBuilder = new StringBuilder();
-            foreach( string s in codes )
-            {
-                codeBuilder.AppendLine( s );
-            }
-
-            return codeBuilder.ToString();
+            return codes;
         }
 
-        public static string GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        public static List<string> GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
         {
             switch( context )
             {
@@ -317,7 +321,7 @@ namespace FFTPatcher
                     return GeneratePSXCodes( oldBytes, newBytes, offset );
             }
 
-            return string.Empty;
+            return new List<string>();
         }
 
         public static bool CompareArrays<T>( T[] one, T[] two ) where T : IComparable, IEquatable<T>
@@ -333,5 +337,34 @@ namespace FFTPatcher
             return true;
         }
 
+        public static void AppendLines( this StringBuilder sb, IEnumerable<string> lines )
+        {
+            foreach( string line in lines )
+            {
+                sb.AppendLine( line );
+            }
+        }
+
+        public static void AddGroups( this StringBuilder sb, int groupSize, string groupName, List<string> lines )
+        {
+            if( lines.Count <= groupSize )
+            {
+                if( groupName != string.Empty ) sb.AppendLine( groupName );
+                sb.AppendLines( lines );
+            }
+            else
+            {
+                int i = 0;
+                int j = 1;
+                for( i = 0; (i + 1) * groupSize < lines.Count; i++ )
+                {
+                    if( groupName != string.Empty ) sb.AppendLine( string.Format( "{0} (part {1})", groupName, j++ ) );
+                    sb.AppendLines( new SubArray<string>( lines, i * groupSize, (i + 1) * groupSize - 1 ) );
+                }
+
+                if( groupName != string.Empty ) sb.AppendLine( string.Format( "{0} (part {1})", groupName, j++ ) );
+                sb.AppendLines( new SubArray<string>( lines, i * groupSize, lines.Count - 1 ) );
+            }
+        }
     }
 }

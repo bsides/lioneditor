@@ -21,6 +21,7 @@ using System;
 using System.Text;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Editors
 {
@@ -41,69 +42,47 @@ namespace FFTPatcher.Editors
             StringBuilder sb = new StringBuilder();
             if( FFTPatch.Abilities != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Abilities" );
-                sb.AppendLine( FFTPatch.Abilities.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Abilities" : "", FFTPatch.Abilities.GenerateCodes() );
             }
             if( FFTPatch.Jobs != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Jobs" );
-                sb.AppendLine( FFTPatch.Jobs.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Jobs" : "", FFTPatch.Jobs.GenerateCodes() );
             }
             if( FFTPatch.SkillSets != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Skill Sets" );
-                sb.AppendLine( FFTPatch.SkillSets.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Skill Sets" : "", FFTPatch.SkillSets.GenerateCodes() );
             }
             if( FFTPatch.MonsterSkills != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Monster Skill Sets" );
-                sb.AppendLine( FFTPatch.MonsterSkills.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Monster Skill Sets" : "", FFTPatch.MonsterSkills.GenerateCodes() );
             }
             if( FFTPatch.ActionMenus != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Action Menus" );
-                sb.AppendLine( FFTPatch.ActionMenus.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Action Menus" : "", FFTPatch.ActionMenus.GenerateCodes() );
             }
             if( FFTPatch.StatusAttributes != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Status Effects" );
-                sb.AppendLine( FFTPatch.StatusAttributes.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Status Effects" : "", FFTPatch.StatusAttributes.GenerateCodes() );
             }
             if( FFTPatch.PoachProbabilities != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Poaching" );
-                sb.AppendLine( FFTPatch.PoachProbabilities.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Poaching" : "", FFTPatch.PoachProbabilities.GenerateCodes() );
             }
             if( FFTPatch.JobLevels != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Job Levels" );
-                sb.AppendLine( FFTPatch.JobLevels.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Job Levels" : "", FFTPatch.JobLevels.GenerateCodes() );
             }
             if( FFTPatch.Items != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Items" );
-                sb.AppendLine( FFTPatch.Items.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Items" : "", FFTPatch.Items.GenerateCodes() );
             }
             if( FFTPatch.ItemAttributes != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Item Attributes" );
-                sb.AppendLine( FFTPatch.ItemAttributes.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Item Attributes" : "", FFTPatch.ItemAttributes.GenerateCodes() );
             }
             if( FFTPatch.InflictStatuses != null )
             {
-                if( FFTPatch.Context == Context.US_PSP )
-                    sb.AppendLine( "_C0 Inflict Statuses" );
-                sb.AppendLine( FFTPatch.InflictStatuses.GenerateCodes() );
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Inflict Statuses" : "", FFTPatch.InflictStatuses.GenerateCodes() );
             }
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );

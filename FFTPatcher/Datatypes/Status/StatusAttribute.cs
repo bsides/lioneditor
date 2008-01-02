@@ -121,7 +121,7 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public string GenerateCodes()
+        public List<string> GenerateCodes()
         {
             if( FFTPatch.Context == Context.US_PSP )
             {

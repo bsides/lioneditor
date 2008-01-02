@@ -142,14 +142,14 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public string GenerateCodes()
+        public List<string> GenerateCodes()
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
-                sb.Append( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
-                return sb.ToString();
+                List<string> strings = new List<string>();
+                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
+                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
+                return strings;
             }
             else
             {

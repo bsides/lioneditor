@@ -62,6 +62,14 @@ namespace FFTPatcher.Datatypes
         public byte MPalette { get; set; }
         public byte MGraphic { get; set; }
 
+        public Job Default { get; private set; }
+
+        public Job( Context context, byte value, string name, SubArray<byte> bytes, Job defaults ) :
+            this( context, value, name, bytes )
+        {
+            Default = defaults;
+        }
+
         public Job( Context context, byte value, string name, SubArray<byte> bytes )
             : this( context, bytes )
         {
@@ -69,7 +77,7 @@ namespace FFTPatcher.Datatypes
             Name = name;
         }
 
-        public Job( Context context, SubArray<byte> bytes )
+        private Job( Context context, SubArray<byte> bytes )
         {
             int equipEnd = context == Context.US_PSP ? 13 : 12;
             SkillSet = SkillSet.DummySkillSets[bytes[0]];
@@ -198,11 +206,12 @@ namespace FFTPatcher.Datatypes
         {
             int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
             int jobLength = context == Context.US_PSP ? 49 : 48;
-
+            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : PSXResources.JobsBin;
             Jobs = new Job[numJobs];
             for( int i = 0; i < numJobs; i++ )
             {
-                Jobs[i] = new Job( context, (byte)i, Names[i], new SubArray<byte>( bytes, i * jobLength, (i + 1) * jobLength - 1 ) );
+                Jobs[i] = new Job( context, (byte)i, Names[i], new SubArray<byte>( bytes, i * jobLength, (i + 1) * jobLength - 1 ),
+                    new Job( context, (byte)i, Names[i], new SubArray<byte>( defaultBytes, i * jobLength, (i + 1) * jobLength - 1 ) ) );
             }
         }
 

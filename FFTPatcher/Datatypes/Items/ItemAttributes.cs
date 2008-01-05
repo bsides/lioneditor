@@ -43,6 +43,14 @@ namespace FFTPatcher.Datatypes
         public Elements Weak { get; private set; }
         public Elements Strong { get; private set; }
 
+        public ItemAttributes Default { get; private set; }
+
+        public ItemAttributes( byte value, SubArray<byte> bytes, ItemAttributes defaults )
+            : this( value, bytes )
+        {
+            Default = defaults;
+        }
+
         public ItemAttributes( byte value, SubArray<byte> bytes )
         {
             Value = value;
@@ -96,16 +104,20 @@ namespace FFTPatcher.Datatypes
         public AllItemAttributes( SubArray<byte> first, SubArray<byte> second )
         {
             List<ItemAttributes> temp = new List<ItemAttributes>( 0x65 );
+            byte[] defaultFirst = second == null ? PSXResources.OldItemAttributesBin : Resources.OldItemAttributesBin;
+            byte[] defaultSecond = second == null ? null : Resources.NewItemAttributesBin;
 
             for( byte i = 0; i < 0x50; i++ )
             {
-                temp.Add( new ItemAttributes( i, new SubArray<byte>( first, i * 25, (i + 1) * 25 - 1 ) ) );
+                temp.Add( new ItemAttributes( i, new SubArray<byte>( first, i * 25, (i + 1) * 25 - 1 ),
+                    new ItemAttributes( i, new SubArray<byte>( defaultFirst, i * 25, (i + 1) * 25 - 1 ) ) ) );
             }
             if( second != null )
             {
                 for( byte i = 0x50; i < 0x65; i++ )
                 {
-                    temp.Add( new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) ) );
+                    temp.Add( new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ),
+                        new ItemAttributes( i, new SubArray<byte>( defaultSecond, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) ) ) );
                 }
             }
 

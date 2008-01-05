@@ -24,6 +24,13 @@ namespace FFTPatcher.Editors
 {
     public partial class FFTPatchEditor : UserControl
     {
+        public static ToolTip ToolTip { get; private set; }
+
+        static FFTPatchEditor()
+        {
+            ToolTip = new ToolTip();
+        }
+
         public FFTPatchEditor()
         {
             InitializeComponent();

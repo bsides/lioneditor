@@ -58,13 +58,21 @@ namespace FFTPatcher.Datatypes
         public ushort Level7 { get; set; }
         public ushort Level8 { get; set; }
 
+        public JobLevels Default { get; private set; }
+
         public JobLevels( SubArray<byte> bytes )
             : this( Context.US_PSP, bytes )
         {
         }
 
         public JobLevels( Context context, SubArray<byte> bytes )
+            : this( context, bytes, null )
         {
+        }
+
+        public JobLevels( Context context, SubArray<byte> bytes, JobLevels defaults )
+        {
+            Default = defaults;
             int jobCount = context == Context.US_PSP ? 22 : 19;
             int requirementsLength = context == Context.US_PSP ? 12 : 10;
 

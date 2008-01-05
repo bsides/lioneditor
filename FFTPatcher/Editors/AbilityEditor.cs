@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Controls;
 
 namespace FFTPatcher.Editors
 {
@@ -52,9 +53,14 @@ namespace FFTPatcher.Editors
             abilityAttributesEditor.Visible = ability.IsNormal;
             abilityAttributesEditor.Attributes = ability.Attributes;
 
+            foreach( NumericUpDownWithDefault spinner in spinners )
+            {
+                spinner.SetValueAndDefault(
+                    Utilities.GetFieldOrProperty<byte>( ability, spinner.Tag.ToString() ),
+                    Utilities.GetFieldOrProperty<byte>( ability.Default, spinner.Tag.ToString() ) );
+            }
             arithmeticksLabel.Visible = ability.IsArithmetick;
             arithmeticksSpinner.Visible = ability.IsArithmetick;
-            arithmeticksSpinner.Value = ability.ArithmetickSkill;
 
             hLabel.Visible = ability.IsArithmetick || ability.IsOther;
 
@@ -63,20 +69,15 @@ namespace FFTPatcher.Editors
             powerLabel.Visible = ability.IsCharging;
             ctSpinner.Visible = ability.IsCharging;
             powerSpinner.Visible = ability.IsCharging;
-            ctSpinner.Value = ability.ChargeCT;
-            powerSpinner.Value = ability.ChargeBonus;
 
             jumpingLabel.Visible = ability.IsJumping;
             horizontalLabel.Visible = ability.IsJumping;
             verticalLabel.Visible = ability.IsJumping;
             horizontalSpinner.Visible = ability.IsJumping;
             verticalSpinner.Visible = ability.IsJumping;
-            horizontalSpinner.Value = ability.JumpHorizontal;
-            verticalSpinner.Value = ability.JumpVertical;
 
             idLabel.Visible = ability.IsOther;
             idSpinner.Visible = ability.IsOther;
-            idSpinner.Value = ability.OtherID;
 
             itemUseLabel.Visible = ability.IsItem;
 
@@ -105,7 +106,7 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
-        private List<NumericUpDown> spinners;
+        private List<NumericUpDownWithDefault> spinners;
         private List<ComboBox> comboBoxes;
         private List<Item> psxItems = new List<Item>( 256 );
         private List<Item> pspItems = new List<Item>( 256 );
@@ -115,7 +116,7 @@ namespace FFTPatcher.Editors
         public AbilityEditor()
         {
             InitializeComponent();
-            spinners = new List<NumericUpDown>( new NumericUpDown[] { 
+            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { 
                 arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner } );
             comboBoxes = new List<ComboBox>( new ComboBox[] { itemUseComboBox, throwingComboBox } );
 
@@ -128,7 +129,7 @@ namespace FFTPatcher.Editors
             throwingComboBox.Tag = "Throwing";
             idSpinner.Tag = "OtherID";
 
-            foreach( NumericUpDown spinner in spinners )
+            foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
@@ -180,7 +181,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                NumericUpDown c = sender as NumericUpDown;
+                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
                 Utilities.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
             }
         }

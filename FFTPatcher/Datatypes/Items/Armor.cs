@@ -25,12 +25,19 @@ namespace FFTPatcher.Datatypes
     {
         public byte HPBonus { get; set; }
         public byte MPBonus { get; set; }
+        public Armor ArmorDefault { get; private set; }
 
-        public Armor( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> armorBytes )
-            : base( offset, itemBytes )
+        public Armor( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> armorBytes, Armor defaults )
+            : base( offset, itemBytes, defaults )
         {
+            ArmorDefault = defaults;
             HPBonus = armorBytes[0];
             MPBonus = armorBytes[1];
+        }
+
+        public Armor( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> armorBytes )
+            : this( offset, itemBytes, armorBytes, null )
+        {
         }
 
         public byte[] ToItemByteArray()

@@ -66,45 +66,59 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public Ability[] DefaultAbilities { get; private set; }
+
         public Ability[] Abilities { get; private set; }
 
         public AllAbilities( SubArray<byte> bytes )
         {
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : PSXResources.AbilitiesBin;
+
             Abilities = new Ability[512];
+            DefaultAbilities = new Ability[512];
             for( UInt16 i = 0; i < 512; i++ )
             {
+                SubArray<byte> defaultFirst = new SubArray<byte>( defaultBytes, i * 8, i * 8 + 7 );
                 SubArray<byte> first = new SubArray<byte>( bytes, i * 8, i * 8 + 7 );
                 SubArray<byte> second;
+                SubArray<byte> defaultSecond;
                 if( i <= 0x16F )
                 {
                     second = new SubArray<byte>( bytes, 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
+                    defaultSecond = new SubArray<byte>( defaultBytes, 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
                 }
                 else if( i <= 0x17D )
                 {
                     second = new SubArray<byte>( bytes, 0x2420 + i - 0x170, 0x2420 + i - 0x170 );
+                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2420 + i - 0x170, 0x2420 + i - 0x170 );
                 }
                 else if( i <= 0x189 )
                 {
                     second = new SubArray<byte>( bytes, 0x2430 + i - 0x17E, 0x2430 + i - 0x17E );
+                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2430 + i - 0x17E, 0x2430 + i - 0x17E );
                 }
                 else if( i <= 0x195 )
                 {
                     second = new SubArray<byte>( bytes, 0x243C + (i - 0x18A) * 2, 0x243C + (i - 0x18A) * 2 + 1 );
+                    defaultSecond = new SubArray<byte>( defaultBytes, 0x243C + (i - 0x18A) * 2, 0x243C + (i - 0x18A) * 2 + 1 );
                 }
                 else if( i <= 0x19D )
                 {
                     second = new SubArray<byte>( bytes, 0x2454 + (i - 0x196) * 2, 0x2454 + (i - 0x196) * 2 + 1 );
+                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2454 + (i - 0x196) * 2, 0x2454 + (i - 0x196) * 2 + 1 );
                 }
                 else if( i <= 0x1A5 )
                 {
                     second = new SubArray<byte>( bytes, 0x2464 + i - 0x19E, 0x2464 + i - 0x19E );
+                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2464 + i - 0x19E, 0x2464 + i - 0x19E );
                 }
                 else
                 {
                     second = new SubArray<byte>( bytes, 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
+                    defaultSecond = new SubArray<byte>( defaultBytes, 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
                 }
 
-                Abilities[i] = new Ability( Names[i], i, first, second );
+                Abilities[i] = new Ability( Names[i], i, first, second, new Ability( Names[i], i, defaultFirst, defaultSecond ) );
             }
         }
 

@@ -115,9 +115,16 @@ namespace FFTPatcher.Datatypes
         public UInt16 Price { get; set; }
         public ShopAvailability ShopAvailability { get; set; }
         public byte Unknown2 { get; set; }
+        public Item Default { get; private set; }
 
         private Item()
         {
+        }
+
+        protected Item( UInt16 offset, SubArray<byte> bytes, Item defaults )
+            : this( offset, bytes )
+        {
+            Default = defaults;
         }
 
         protected Item( UInt16 offset, SubArray<byte> bytes )

@@ -71,26 +71,26 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label hLabel2;
             System.Windows.Forms.Label hLabel3;
             this.skillsetComboBox = new System.Windows.Forms.ComboBox();
-            this.hpGrowthSpinner = new System.Windows.Forms.NumericUpDown();
-            this.hpMultiplierSpinner = new System.Windows.Forms.NumericUpDown();
-            this.mpGrowthSpinner = new System.Windows.Forms.NumericUpDown();
-            this.mpMultiplierSpinner = new System.Windows.Forms.NumericUpDown();
-            this.speedGrowthSpinner = new System.Windows.Forms.NumericUpDown();
-            this.speedMultiplierSpinner = new System.Windows.Forms.NumericUpDown();
-            this.paGrowthSpinner = new System.Windows.Forms.NumericUpDown();
-            this.paMultiplierSpinner = new System.Windows.Forms.NumericUpDown();
-            this.maGrowthSpinner = new System.Windows.Forms.NumericUpDown();
-            this.maMultiplierSpinner = new System.Windows.Forms.NumericUpDown();
-            this.moveSpinner = new System.Windows.Forms.NumericUpDown();
-            this.jumpSpinner = new System.Windows.Forms.NumericUpDown();
-            this.cevSpinner = new System.Windows.Forms.NumericUpDown();
-            this.mPortraitSpinner = new System.Windows.Forms.NumericUpDown();
-            this.mPaletteSpinner = new System.Windows.Forms.NumericUpDown();
+            this.hpGrowthSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.hpMultiplierSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.mpGrowthSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.mpMultiplierSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.speedGrowthSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.speedMultiplierSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.paGrowthSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.paMultiplierSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.maGrowthSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.maMultiplierSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.moveSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.jumpSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.cevSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.mPortraitSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.mPaletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.innateAComboBox = new System.Windows.Forms.ComboBox();
             this.innateBComboBox = new System.Windows.Forms.ComboBox();
             this.innateCComboBox = new System.Windows.Forms.ComboBox();
             this.innateDComboBox = new System.Windows.Forms.ComboBox();
-            this.mGraphicSpinner = new System.Windows.Forms.NumericUpDown();
+            this.mGraphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.startingStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
             this.statusImmunityEditor = new FFTPatcher.Editors.StatusesEditor();
             this.innateStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
@@ -371,11 +371,6 @@ namespace FFTPatcher.Editors
             this.hpGrowthSpinner.TabIndex = 1;
             this.hpGrowthSpinner.Tag = "HPConstant";
             this.hpGrowthSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.hpGrowthSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // hpMultiplierSpinner
             // 
@@ -390,11 +385,6 @@ namespace FFTPatcher.Editors
             this.hpMultiplierSpinner.TabIndex = 2;
             this.hpMultiplierSpinner.Tag = "HPMultiplier";
             this.hpMultiplierSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.hpMultiplierSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // mpGrowthSpinner
             // 
@@ -409,11 +399,6 @@ namespace FFTPatcher.Editors
             this.mpGrowthSpinner.TabIndex = 3;
             this.mpGrowthSpinner.Tag = "MPConstant";
             this.mpGrowthSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.mpGrowthSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // mpMultiplierSpinner
             // 
@@ -428,11 +413,6 @@ namespace FFTPatcher.Editors
             this.mpMultiplierSpinner.TabIndex = 4;
             this.mpMultiplierSpinner.Tag = "MPMultiplier";
             this.mpMultiplierSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.mpMultiplierSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // speedGrowthSpinner
             // 
@@ -447,11 +427,6 @@ namespace FFTPatcher.Editors
             this.speedGrowthSpinner.TabIndex = 5;
             this.speedGrowthSpinner.Tag = "SpeedConstant";
             this.speedGrowthSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.speedGrowthSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // speedMultiplierSpinner
             // 
@@ -466,11 +441,6 @@ namespace FFTPatcher.Editors
             this.speedMultiplierSpinner.TabIndex = 6;
             this.speedMultiplierSpinner.Tag = "SpeedMultiplier";
             this.speedMultiplierSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.speedMultiplierSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // paGrowthSpinner
             // 
@@ -485,11 +455,6 @@ namespace FFTPatcher.Editors
             this.paGrowthSpinner.TabIndex = 7;
             this.paGrowthSpinner.Tag = "PAConstant";
             this.paGrowthSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.paGrowthSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // paMultiplierSpinner
             // 
@@ -504,11 +469,6 @@ namespace FFTPatcher.Editors
             this.paMultiplierSpinner.TabIndex = 8;
             this.paMultiplierSpinner.Tag = "PAMultiplier";
             this.paMultiplierSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.paMultiplierSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // maGrowthSpinner
             // 
@@ -523,11 +483,6 @@ namespace FFTPatcher.Editors
             this.maGrowthSpinner.TabIndex = 9;
             this.maGrowthSpinner.Tag = "MAConstant";
             this.maGrowthSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.maGrowthSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // maMultiplierSpinner
             // 
@@ -542,11 +497,6 @@ namespace FFTPatcher.Editors
             this.maMultiplierSpinner.TabIndex = 10;
             this.maMultiplierSpinner.Tag = "MAMultiplier";
             this.maMultiplierSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.maMultiplierSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // moveSpinner
             // 
@@ -561,11 +511,6 @@ namespace FFTPatcher.Editors
             this.moveSpinner.TabIndex = 11;
             this.moveSpinner.Tag = "Move";
             this.moveSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.moveSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // jumpSpinner
             // 
@@ -580,11 +525,6 @@ namespace FFTPatcher.Editors
             this.jumpSpinner.TabIndex = 12;
             this.jumpSpinner.Tag = "Jump";
             this.jumpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.jumpSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // cevSpinner
             // 
@@ -599,11 +539,6 @@ namespace FFTPatcher.Editors
             this.cevSpinner.TabIndex = 13;
             this.cevSpinner.Tag = "CEvade";
             this.cevSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.cevSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // mPortraitSpinner
             // 
@@ -619,11 +554,6 @@ namespace FFTPatcher.Editors
             this.mPortraitSpinner.TabIndex = 14;
             this.mPortraitSpinner.Tag = "MPortrait";
             this.mPortraitSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.mPortraitSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // mPaletteSpinner
             // 
@@ -639,11 +569,6 @@ namespace FFTPatcher.Editors
             this.mPaletteSpinner.TabIndex = 15;
             this.mPaletteSpinner.Tag = "MPalette";
             this.mPaletteSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.mPaletteSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // innateAComboBox
             // 
@@ -699,11 +624,6 @@ namespace FFTPatcher.Editors
             this.mGraphicSpinner.TabIndex = 16;
             this.mGraphicSpinner.Tag = "MGraphic";
             this.mGraphicSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.mGraphicSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // startingStatusesEditor
             // 
@@ -877,26 +797,26 @@ namespace FFTPatcher.Editors
         #endregion
 
         private System.Windows.Forms.ComboBox skillsetComboBox;
-        private System.Windows.Forms.NumericUpDown hpGrowthSpinner;
-        private System.Windows.Forms.NumericUpDown hpMultiplierSpinner;
-        private System.Windows.Forms.NumericUpDown mpGrowthSpinner;
-        private System.Windows.Forms.NumericUpDown mpMultiplierSpinner;
-        private System.Windows.Forms.NumericUpDown speedGrowthSpinner;
-        private System.Windows.Forms.NumericUpDown speedMultiplierSpinner;
-        private System.Windows.Forms.NumericUpDown paGrowthSpinner;
-        private System.Windows.Forms.NumericUpDown paMultiplierSpinner;
-        private System.Windows.Forms.NumericUpDown maGrowthSpinner;
-        private System.Windows.Forms.NumericUpDown maMultiplierSpinner;
-        private System.Windows.Forms.NumericUpDown moveSpinner;
-        private System.Windows.Forms.NumericUpDown jumpSpinner;
-        private System.Windows.Forms.NumericUpDown cevSpinner;
-        private System.Windows.Forms.NumericUpDown mPortraitSpinner;
-        private System.Windows.Forms.NumericUpDown mPaletteSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault hpGrowthSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault hpMultiplierSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault mpGrowthSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault mpMultiplierSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault speedGrowthSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault speedMultiplierSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault paGrowthSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault paMultiplierSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault maGrowthSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault maMultiplierSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault moveSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault jumpSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault cevSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault mPortraitSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault mPaletteSpinner;
         private System.Windows.Forms.ComboBox innateAComboBox;
         private System.Windows.Forms.ComboBox innateBComboBox;
         private System.Windows.Forms.ComboBox innateCComboBox;
         private System.Windows.Forms.ComboBox innateDComboBox;
-        private System.Windows.Forms.NumericUpDown mGraphicSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault mGraphicSpinner;
         private ElementsEditor absorbElementsEditor;
         private ElementsEditor cancelElementsEditor;
         private ElementsEditor halfElementsEditor;

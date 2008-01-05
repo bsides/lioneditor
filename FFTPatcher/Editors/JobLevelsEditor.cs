@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Controls;
 
 namespace FFTPatcher.Editors
 {
@@ -38,11 +39,13 @@ namespace FFTPatcher.Editors
             this.levels = levels;
             foreach( Control c in Controls )
             {
-                if( c is NumericUpDown )
+                if( c is NumericUpDownWithDefault )
                 {
-                    NumericUpDown spinner = c as NumericUpDown;
+                    NumericUpDownWithDefault spinner = c as NumericUpDownWithDefault;
                     spinner.ValueChanged -= spinner_ValueChanged;
-                    spinner.Value = Utilities.GetFieldOrProperty<UInt16>( levels, spinner.Tag.ToString() );
+                    spinner.SetValueAndDefault(
+                        Utilities.GetFieldOrProperty<UInt16>( levels, spinner.Tag.ToString() ),
+                        Utilities.GetFieldOrProperty<UInt16>( levels.Default, spinner.Tag.ToString() ) );
                     spinner.ValueChanged += spinner_ValueChanged;
                 }
             }
@@ -72,7 +75,7 @@ namespace FFTPatcher.Editors
 
         private void spinner_ValueChanged( object sender, EventArgs e )
         {
-            NumericUpDown spinner = sender as NumericUpDown;
+            NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
             Utilities.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
         }
     }

@@ -104,14 +104,14 @@ namespace FFTPatcher.Editors
             this.unknown1TopLabel = new FFTPatcher.Controls.VerticalLabel();
             this.onionKnightTopLabel = new FFTPatcher.Controls.VerticalLabel();
             this.darkKnightTopLabel = new FFTPatcher.Controls.VerticalLabel();
-            this.level1Spinner = new System.Windows.Forms.NumericUpDown();
-            this.level2Spinner = new System.Windows.Forms.NumericUpDown();
-            this.level3Spinner = new System.Windows.Forms.NumericUpDown();
-            this.level4Spinner = new System.Windows.Forms.NumericUpDown();
-            this.level5Spinner = new System.Windows.Forms.NumericUpDown();
-            this.level6Spinner = new System.Windows.Forms.NumericUpDown();
-            this.level7Spinner = new System.Windows.Forms.NumericUpDown();
-            this.level8Spinner = new System.Windows.Forms.NumericUpDown();
+            this.level1Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.level2Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.level3Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.level4Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.level5Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.level6Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.level7Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.level8Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.requirementsEditor1 = new FFTPatcher.Editors.RequirementsEditor();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -702,11 +702,6 @@ namespace FFTPatcher.Editors
             this.level1Spinner.TabIndex = 71;
             this.level1Spinner.Tag = "Level1";
             this.level1Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level1Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // level2Spinner
             // 
@@ -721,11 +716,6 @@ namespace FFTPatcher.Editors
             this.level2Spinner.TabIndex = 72;
             this.level2Spinner.Tag = "Level2";
             this.level2Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level2Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // level3Spinner
             // 
@@ -740,11 +730,6 @@ namespace FFTPatcher.Editors
             this.level3Spinner.TabIndex = 73;
             this.level3Spinner.Tag = "Level3";
             this.level3Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level3Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // level4Spinner
             // 
@@ -759,11 +744,6 @@ namespace FFTPatcher.Editors
             this.level4Spinner.TabIndex = 74;
             this.level4Spinner.Tag = "Level4";
             this.level4Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level4Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // level5Spinner
             // 
@@ -778,11 +758,6 @@ namespace FFTPatcher.Editors
             this.level5Spinner.TabIndex = 75;
             this.level5Spinner.Tag = "Level5";
             this.level5Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level5Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // level6Spinner
             // 
@@ -797,11 +772,6 @@ namespace FFTPatcher.Editors
             this.level6Spinner.TabIndex = 76;
             this.level6Spinner.Tag = "Level6";
             this.level6Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level6Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // level7Spinner
             // 
@@ -816,11 +786,6 @@ namespace FFTPatcher.Editors
             this.level7Spinner.TabIndex = 77;
             this.level7Spinner.Tag = "Level7";
             this.level7Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level7Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // level8Spinner
             // 
@@ -835,11 +800,6 @@ namespace FFTPatcher.Editors
             this.level8Spinner.TabIndex = 78;
             this.level8Spinner.Tag = "Level8";
             this.level8Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.level8Spinner.Value = new decimal( new int[] {
-            9999,
-            0,
-            0,
-            0} );
             // 
             // requirementsEditor1
             // 
@@ -941,14 +901,14 @@ namespace FFTPatcher.Editors
         #endregion
 
         private RequirementsEditor requirementsEditor1;
-        private System.Windows.Forms.NumericUpDown level1Spinner;
-        private System.Windows.Forms.NumericUpDown level2Spinner;
-        private System.Windows.Forms.NumericUpDown level3Spinner;
-        private System.Windows.Forms.NumericUpDown level4Spinner;
-        private System.Windows.Forms.NumericUpDown level5Spinner;
-        private System.Windows.Forms.NumericUpDown level6Spinner;
-        private System.Windows.Forms.NumericUpDown level7Spinner;
-        private System.Windows.Forms.NumericUpDown level8Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level1Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level2Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level3Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level4Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level5Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level6Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level7Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault level8Spinner;
         private System.Windows.Forms.Label darkKnightSideLabel;
         private System.Windows.Forms.Label onionKnightSideLabel;
         private System.Windows.Forms.Label unknownSideLabel;

@@ -25,10 +25,17 @@ namespace FFTPatcher.Datatypes
     {
         public byte PhysicalBlockRate { get; set; }
         public byte MagicBlockRate { get; set; }
+        public Shield ShieldDefault { get; private set; }
 
         public Shield( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> shieldBytes )
-            : base( offset, itemBytes )
+            : this( offset, itemBytes, shieldBytes, null )
         {
+        }
+
+        public Shield( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> shieldBytes, Shield defaults )
+            : base( offset, itemBytes, defaults )
+        {
+            ShieldDefault = defaults;
             PhysicalBlockRate = shieldBytes[0];
             MagicBlockRate = shieldBytes[1];
         }

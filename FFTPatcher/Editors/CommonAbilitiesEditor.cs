@@ -20,6 +20,7 @@
 using System;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.Drawing;
 
 namespace FFTPatcher.Editors
 {
@@ -117,8 +118,8 @@ namespace FFTPatcher.Editors
         {
             this.SuspendLayout();
             ignoreChanges = true;
-            jpCostSpinner.Value = ability.JPCost;
-            chanceSpinner.Value = ability.LearnRate;
+            jpCostSpinner.SetValueAndDefault( ability.JPCost, ability.Default.JPCost );
+            chanceSpinner.SetValueAndDefault( ability.LearnRate, ability.Default.LearnRate );
             abilityTypeComboBox.SelectedItem = ability.AbilityType;
 
             for( int i = 0; i < 12; i++ )

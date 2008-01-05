@@ -52,11 +52,11 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label speedLabel;
             System.Windows.Forms.Label moveLabel;
             System.Windows.Forms.Label jumpLabel;
-            this.paSpinner = new System.Windows.Forms.NumericUpDown();
-            this.maSpinner = new System.Windows.Forms.NumericUpDown();
-            this.moveSpinner = new System.Windows.Forms.NumericUpDown();
-            this.speedSpinner = new System.Windows.Forms.NumericUpDown();
-            this.jumpSpinner = new System.Windows.Forms.NumericUpDown();
+            this.paSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.maSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.moveSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.speedSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.jumpSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.strongElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.weakElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.halfElementsEditor = new FFTPatcher.Editors.ElementsEditor();
@@ -135,11 +135,6 @@ namespace FFTPatcher.Editors
             this.paSpinner.TabIndex = 0;
             this.paSpinner.Tag = "PA";
             this.paSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.paSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // maSpinner
             // 
@@ -154,11 +149,6 @@ namespace FFTPatcher.Editors
             this.maSpinner.TabIndex = 1;
             this.maSpinner.Tag = "MA";
             this.maSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.maSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // moveSpinner
             // 
@@ -173,11 +163,6 @@ namespace FFTPatcher.Editors
             this.moveSpinner.TabIndex = 3;
             this.moveSpinner.Tag = "Move";
             this.moveSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.moveSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // speedSpinner
             // 
@@ -192,11 +177,6 @@ namespace FFTPatcher.Editors
             this.speedSpinner.TabIndex = 2;
             this.speedSpinner.Tag = "Speed";
             this.speedSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.speedSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // jumpSpinner
             // 
@@ -211,11 +191,6 @@ namespace FFTPatcher.Editors
             this.jumpSpinner.TabIndex = 4;
             this.jumpSpinner.Tag = "Jump";
             this.jumpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.jumpSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // strongElementsEditor
             // 
@@ -341,10 +316,10 @@ namespace FFTPatcher.Editors
         private ElementsEditor halfElementsEditor;
         private ElementsEditor weakElementsEditor;
         private ElementsEditor strongElementsEditor;
-        private System.Windows.Forms.NumericUpDown paSpinner;
-        private System.Windows.Forms.NumericUpDown maSpinner;
-        private System.Windows.Forms.NumericUpDown moveSpinner;
-        private System.Windows.Forms.NumericUpDown speedSpinner;
-        private System.Windows.Forms.NumericUpDown jumpSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault paSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault maSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault moveSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault speedSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault jumpSpinner;
     }
 }

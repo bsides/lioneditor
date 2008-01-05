@@ -25,12 +25,19 @@ namespace FFTPatcher.Datatypes
     {
         public byte PhysicalEvade { get; set; }
         public byte MagicEvade { get; set; }
+        public Accessory AccessoryDefault { get; private set; }
 
-        public Accessory( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> accessoryBytes )
-            : base( offset, itemBytes )
+        public Accessory( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> accessoryBytes, Accessory defaults )
+            : base( offset, itemBytes, defaults )
         {
+            AccessoryDefault = defaults;
             PhysicalEvade = accessoryBytes[0];
             MagicEvade = accessoryBytes[1];
+        }
+
+        public Accessory( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> accessoryBytes )
+            : this( offset, itemBytes, accessoryBytes, null )
+        {
         }
 
         public byte[] ToItemByteArray()

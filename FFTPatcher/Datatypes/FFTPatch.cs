@@ -22,6 +22,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using FFTPatcher.Properties;
+using System.Reflection;
 
 namespace FFTPatcher.Datatypes
 {
@@ -194,7 +195,8 @@ namespace FFTPatcher.Datatypes
             Items = new AllItems( new SubArray<byte>( oldItems ), newItems != null ? new SubArray<byte>( newItems ) : null );
             ItemAttributes = new AllItemAttributes( new SubArray<byte>( oldItemAttributes ), newItemAttributes != null ? new SubArray<byte>( newItemAttributes ) : null );
             Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
-            JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ) );
+            JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ),
+                new JobLevels( Context, new SubArray<byte>( Context == Context.US_PSP ? Resources.JobLevelsBin : PSXResources.JobLevelsBin ) ) );
             SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ) );
             MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
             ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );

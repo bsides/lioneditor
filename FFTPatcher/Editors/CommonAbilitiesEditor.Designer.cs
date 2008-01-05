@@ -54,8 +54,8 @@ namespace FFTPatcher.Editors
             this.aiCheckedListBox1 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.aiCheckedListBox2 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.aiCheckedListBox3 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
-            this.jpCostSpinner = new System.Windows.Forms.NumericUpDown();
-            this.chanceSpinner = new System.Windows.Forms.NumericUpDown();
+            this.jpCostSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.chanceSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.propertiesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.abilityTypeComboBox = new System.Windows.Forms.ComboBox();
             jpCostLabel = new System.Windows.Forms.Label();
@@ -173,11 +173,6 @@ namespace FFTPatcher.Editors
             this.jpCostSpinner.Size = new System.Drawing.Size(51, 20);
             this.jpCostSpinner.TabIndex = 0;
             this.jpCostSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.jpCostSpinner.Value = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
             // 
             // chanceSpinner
             // 
@@ -188,11 +183,6 @@ namespace FFTPatcher.Editors
             this.chanceSpinner.Size = new System.Drawing.Size(51, 20);
             this.chanceSpinner.TabIndex = 1;
             this.chanceSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.chanceSpinner.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
             // 
             // propertiesCheckedListBox
             // 
@@ -255,7 +245,7 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox1;
         private System.Windows.Forms.ComboBox abilityTypeComboBox;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight propertiesCheckedListBox;
-        private System.Windows.Forms.NumericUpDown chanceSpinner;
-        private System.Windows.Forms.NumericUpDown jpCostSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault chanceSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault jpCostSpinner;
     }
 }

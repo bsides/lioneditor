@@ -53,6 +53,14 @@ namespace FFTPatcher.Datatypes
         public Statuses Cancels { get; private set; }
         public Statuses CantStackOn { get; private set; }
 
+        public StatusAttribute Default { get; private set; }
+
+        public StatusAttribute( string name, byte value, SubArray<byte> bytes, StatusAttribute defaults )
+            : this( name, value, bytes )
+        {
+            Default = defaults;
+        }
+
         public StatusAttribute( string name, byte value, SubArray<byte> bytes )
         {
             Name = name;
@@ -98,10 +106,13 @@ namespace FFTPatcher.Datatypes
         public AllStatusAttributes( SubArray<byte> bytes )
         {
             StatusAttributes = new StatusAttribute[40];
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin;
 
             for( int i = 0; i < 40; i++ )
             {
-                StatusAttributes[i] = new StatusAttribute( Statuses.StatusNames[i], (byte)i, new SubArray<byte>( bytes, 16 * i, 16 * i + 15 ) );
+                StatusAttributes[i] =
+                    new StatusAttribute( Statuses.StatusNames[i], (byte)i, new SubArray<byte>( bytes, 16 * i, 16 * i + 15 ),
+                        new StatusAttribute( Statuses.StatusNames[i], (byte)i, new SubArray<byte>( defaultBytes, 16 * i, 16 * i + 15 ) ) );
             }
         }
 

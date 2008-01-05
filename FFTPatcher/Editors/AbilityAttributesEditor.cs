@@ -21,13 +21,14 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Controls;
 
 namespace FFTPatcher.Editors
 {
     public partial class AbilityAttributesEditor : UserControl
     {
 
-        private List<NumericUpDown> spinners;
+        private List<NumericUpDownWithDefault> spinners;
         private static readonly List<string> FieldNames = new List<string>( new string[] {
             "Range", "Effect", "Vertical", "Formula", "X", "Y", "InflictStatus", "CT", "MPCost" } );
         private static readonly List<string> FlagNames = new List<string>( new string[] {
@@ -68,15 +69,12 @@ namespace FFTPatcher.Editors
                 flagsCheckedListBox.SetItemChecked( i, Utilities.GetFlag( attributes, FlagNames[i] ) );
             }
 
-            rangeSpinner.Value = attributes.Range;
-            effectSpinner.Value = attributes.Effect;
-            verticalSpinner.Value = attributes.Vertical;
-            formulaSpinner.Value = attributes.Formula;
-            xSpinner.Value = attributes.X;
-            ySpinner.Value = attributes.Y;
-            statusSpinner.Value = attributes.InflictStatus;
-            ctSpinner.Value = attributes.CT;
-            mpSpinner.Value = attributes.MPCost;
+            foreach( NumericUpDownWithDefault spinner in spinners )
+            {
+                spinner.SetValueAndDefault(
+                    Utilities.GetFieldOrProperty<byte>( attributes, spinner.Tag.ToString() ),
+                    Utilities.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
+            }
 
             elementsEditor.Elements = attributes.Elements;
             ignoreChanges = false;
@@ -88,8 +86,8 @@ namespace FFTPatcher.Editors
         public AbilityAttributesEditor()
         {
             InitializeComponent();
-            spinners = new List<NumericUpDown>( new NumericUpDown[] { rangeSpinner, effectSpinner, verticalSpinner, formulaSpinner, xSpinner, ySpinner, statusSpinner, ctSpinner, mpSpinner } );
-            foreach( NumericUpDown spinner in spinners )
+            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { rangeSpinner, effectSpinner, verticalSpinner, formulaSpinner, xSpinner, ySpinner, statusSpinner, ctSpinner, mpSpinner } );
+            foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
@@ -116,7 +114,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                NumericUpDown c = sender as NumericUpDown;
+                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
                 int i = spinners.IndexOf( c );
                 Utilities.SetFieldOrProperty( attributes, FieldNames[i], (byte)c.Value );
             }

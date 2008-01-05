@@ -51,20 +51,20 @@ namespace FFTPatcher.Editors
             this.itemUseLabel = new System.Windows.Forms.Label();
             this.throwingComboBox = new System.Windows.Forms.ComboBox();
             this.throwingLabel = new System.Windows.Forms.Label();
-            this.horizontalSpinner = new System.Windows.Forms.NumericUpDown();
-            this.verticalSpinner = new System.Windows.Forms.NumericUpDown();
+            this.horizontalSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.verticalSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.jumpingLabel = new System.Windows.Forms.Label();
             this.verticalLabel = new System.Windows.Forms.Label();
             this.horizontalLabel = new System.Windows.Forms.Label();
             this.ctLabel = new System.Windows.Forms.Label();
             this.powerLabel = new System.Windows.Forms.Label();
             this.chargingLabel = new System.Windows.Forms.Label();
-            this.powerSpinner = new System.Windows.Forms.NumericUpDown();
-            this.ctSpinner = new System.Windows.Forms.NumericUpDown();
-            this.arithmeticksSpinner = new System.Windows.Forms.NumericUpDown();
+            this.powerSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.ctSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.arithmeticksSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.arithmeticksLabel = new System.Windows.Forms.Label();
             this.idLabel = new System.Windows.Forms.Label();
-            this.idSpinner = new System.Windows.Forms.NumericUpDown();
+            this.idSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.abilityAttributesEditor = new FFTPatcher.Editors.AbilityAttributesEditor();
             this.commonAbilitiesEditor = new FFTPatcher.Editors.CommonAbilitiesEditor();
             this.hLabel = new System.Windows.Forms.Label();
@@ -124,11 +124,6 @@ namespace FFTPatcher.Editors
             this.horizontalSpinner.Size = new System.Drawing.Size(43, 20);
             this.horizontalSpinner.TabIndex = 5;
             this.horizontalSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.horizontalSpinner.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // verticalSpinner
             // 
@@ -142,11 +137,6 @@ namespace FFTPatcher.Editors
             this.verticalSpinner.Size = new System.Drawing.Size(43, 20);
             this.verticalSpinner.TabIndex = 6;
             this.verticalSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.verticalSpinner.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // jumpingLabel
             // 
@@ -214,11 +204,6 @@ namespace FFTPatcher.Editors
             this.powerSpinner.Size = new System.Drawing.Size(43, 20);
             this.powerSpinner.TabIndex = 4;
             this.powerSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.powerSpinner.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // ctSpinner
             // 
@@ -232,11 +217,6 @@ namespace FFTPatcher.Editors
             this.ctSpinner.Size = new System.Drawing.Size(43, 20);
             this.ctSpinner.TabIndex = 3;
             this.ctSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.ctSpinner.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // arithmeticksSpinner
             // 
@@ -251,11 +231,6 @@ namespace FFTPatcher.Editors
             this.arithmeticksSpinner.Size = new System.Drawing.Size(43, 20);
             this.arithmeticksSpinner.TabIndex = 2;
             this.arithmeticksSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.arithmeticksSpinner.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // arithmeticksLabel
             // 
@@ -288,11 +263,6 @@ namespace FFTPatcher.Editors
             this.idSpinner.Size = new System.Drawing.Size(43, 20);
             this.idSpinner.TabIndex = 7;
             this.idSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.idSpinner.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // abilityAttributesEditor
             // 
@@ -372,20 +342,20 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.Label itemUseLabel;
         private System.Windows.Forms.ComboBox throwingComboBox;
         private System.Windows.Forms.Label throwingLabel;
-        private System.Windows.Forms.NumericUpDown horizontalSpinner;
-        private System.Windows.Forms.NumericUpDown verticalSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault horizontalSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault verticalSpinner;
         private System.Windows.Forms.Label jumpingLabel;
         private System.Windows.Forms.Label verticalLabel;
         private System.Windows.Forms.Label horizontalLabel;
         private System.Windows.Forms.Label ctLabel;
         private System.Windows.Forms.Label powerLabel;
         private System.Windows.Forms.Label chargingLabel;
-        private System.Windows.Forms.NumericUpDown powerSpinner;
-        private System.Windows.Forms.NumericUpDown ctSpinner;
-        private System.Windows.Forms.NumericUpDown arithmeticksSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault powerSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault ctSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault arithmeticksSpinner;
         private System.Windows.Forms.Label arithmeticksLabel;
         private System.Windows.Forms.Label idLabel;
-        private System.Windows.Forms.NumericUpDown idSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault idSpinner;
         private System.Windows.Forms.Label hLabel;
     }
 }

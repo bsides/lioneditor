@@ -54,10 +54,10 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label hLabel1;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label2;
-            this.unknown1Spinner = new System.Windows.Forms.NumericUpDown();
-            this.unknown2Spinner = new System.Windows.Forms.NumericUpDown();
-            this.orderSpinner = new System.Windows.Forms.NumericUpDown();
-            this.ctSpinner = new System.Windows.Forms.NumericUpDown();
+            this.unknown1Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown2Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.orderSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.ctSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.cancelStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
             this.cantStackStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
             this.checkedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
@@ -151,11 +151,6 @@ namespace FFTPatcher.Editors
             this.unknown1Spinner.TabIndex = 0;
             this.unknown1Spinner.Tag = "Blank1";
             this.unknown1Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.unknown1Spinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // unknown2Spinner
             // 
@@ -171,11 +166,6 @@ namespace FFTPatcher.Editors
             this.unknown2Spinner.TabIndex = 1;
             this.unknown2Spinner.Tag = "Blank2";
             this.unknown2Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.unknown2Spinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // orderSpinner
             // 
@@ -191,11 +181,6 @@ namespace FFTPatcher.Editors
             this.orderSpinner.TabIndex = 2;
             this.orderSpinner.Tag = "Order";
             this.orderSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.orderSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // ctSpinner
             // 
@@ -210,11 +195,6 @@ namespace FFTPatcher.Editors
             this.ctSpinner.TabIndex = 3;
             this.ctSpinner.Tag = "CT";
             this.ctSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.ctSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // cancelStatusesEditor
             // 
@@ -293,10 +273,10 @@ namespace FFTPatcher.Editors
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown unknown1Spinner;
-        private System.Windows.Forms.NumericUpDown unknown2Spinner;
-        private System.Windows.Forms.NumericUpDown orderSpinner;
-        private System.Windows.Forms.NumericUpDown ctSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault unknown1Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault unknown2Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault orderSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault ctSpinner;
         private StatusesEditor cancelStatusesEditor;
         private StatusesEditor cantStackStatusesEditor;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight checkedListBox;

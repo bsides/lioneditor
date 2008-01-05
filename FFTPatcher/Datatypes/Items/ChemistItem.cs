@@ -26,10 +26,17 @@ namespace FFTPatcher.Datatypes
         public byte Formula { get; set; }
         public byte X { get; set; }
         public byte InflictStatus { get; set; }
+        public ChemistItem ChemistItemDefault { get; private set; }
 
-        public ChemistItem( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> chemistBytes )
-            : base( offset, itemBytes )
+        public ChemistItem( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> chemistBytes ) :
+            this( offset, itemBytes, chemistBytes, null )
         {
+        }
+
+        public ChemistItem( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> chemistBytes, ChemistItem defaults )
+            : base( offset, itemBytes, defaults )
+        {
+            ChemistItemDefault = defaults;
             Formula = chemistBytes[0];
             X = chemistBytes[1];
             InflictStatus = chemistBytes[2];

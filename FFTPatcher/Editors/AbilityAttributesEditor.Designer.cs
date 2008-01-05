@@ -58,18 +58,18 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label verticalLabel;
             System.Windows.Forms.Label effectLabel;
             System.Windows.Forms.Label rangeLabel;
-            this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
-            this.mpSpinner = new System.Windows.Forms.NumericUpDown();
-            this.ctSpinner = new System.Windows.Forms.NumericUpDown();
-            this.statusSpinner = new System.Windows.Forms.NumericUpDown();
-            this.ySpinner = new System.Windows.Forms.NumericUpDown();
-            this.xSpinner = new System.Windows.Forms.NumericUpDown();
-            this.formulaSpinner = new System.Windows.Forms.NumericUpDown();
-            this.verticalSpinner = new System.Windows.Forms.NumericUpDown();
-            this.effectSpinner = new System.Windows.Forms.NumericUpDown();
-            this.rangeSpinner = new System.Windows.Forms.NumericUpDown();
-            this.elementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.inflictStatusLabel = new System.Windows.Forms.LinkLabel();
+            this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.mpSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.ctSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.statusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.ySpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.xSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.formulaSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.verticalSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.effectSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.rangeSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.elementsEditor = new FFTPatcher.Editors.ElementsEditor();
             attributesGroupBox = new System.Windows.Forms.GroupBox();
             hLabel2 = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
@@ -127,6 +127,17 @@ namespace FFTPatcher.Editors
             attributesGroupBox.TabStop = false;
             attributesGroupBox.Text = "Attributes";
             // 
+            // inflictStatusLabel
+            // 
+            this.inflictStatusLabel.AutoSize = true;
+            this.inflictStatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.inflictStatusLabel.Location = new System.Drawing.Point( 6, 154 );
+            this.inflictStatusLabel.Name = "inflictStatusLabel";
+            this.inflictStatusLabel.Size = new System.Drawing.Size( 66, 13 );
+            this.inflictStatusLabel.TabIndex = 12;
+            this.inflictStatusLabel.TabStop = true;
+            this.inflictStatusLabel.Text = "Inflict status:";
+            // 
             // hLabel2
             // 
             hLabel2.AutoSize = true;
@@ -147,6 +158,7 @@ namespace FFTPatcher.Editors
             // 
             // flagsCheckedListBox
             // 
+            this.flagsCheckedListBox.CheckOnClick = true;
             this.flagsCheckedListBox.FormattingEnabled = true;
             this.flagsCheckedListBox.Items.AddRange( new object[] {
             "",
@@ -189,6 +201,11 @@ namespace FFTPatcher.Editors
             // mpSpinner
             // 
             this.mpSpinner.AutoSize = true;
+            this.mpSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.mpSpinner.Location = new System.Drawing.Point( 102, 198 );
             this.mpSpinner.Maximum = new decimal( new int[] {
             255,
@@ -198,16 +215,17 @@ namespace FFTPatcher.Editors
             this.mpSpinner.Name = "mpSpinner";
             this.mpSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.mpSpinner.TabIndex = 8;
+            this.mpSpinner.Tag = "MPCost";
             this.mpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.mpSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // ctSpinner
             // 
             this.ctSpinner.AutoSize = true;
+            this.ctSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.ctSpinner.Location = new System.Drawing.Point( 102, 175 );
             this.ctSpinner.Maximum = new decimal( new int[] {
             255,
@@ -217,16 +235,17 @@ namespace FFTPatcher.Editors
             this.ctSpinner.Name = "ctSpinner";
             this.ctSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.ctSpinner.TabIndex = 7;
+            this.ctSpinner.Tag = "CT";
             this.ctSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.ctSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // statusSpinner
             // 
             this.statusSpinner.AutoSize = true;
+            this.statusSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.statusSpinner.Hexadecimal = true;
             this.statusSpinner.Location = new System.Drawing.Point( 102, 152 );
             this.statusSpinner.Maximum = new decimal( new int[] {
@@ -237,16 +256,17 @@ namespace FFTPatcher.Editors
             this.statusSpinner.Name = "statusSpinner";
             this.statusSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.statusSpinner.TabIndex = 6;
+            this.statusSpinner.Tag = "InflictStatus";
             this.statusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.statusSpinner.Value = new decimal( new int[] {
-            127,
-            0,
-            0,
-            0} );
             // 
             // ySpinner
             // 
             this.ySpinner.AutoSize = true;
+            this.ySpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.ySpinner.Location = new System.Drawing.Point( 102, 129 );
             this.ySpinner.Maximum = new decimal( new int[] {
             255,
@@ -256,16 +276,17 @@ namespace FFTPatcher.Editors
             this.ySpinner.Name = "ySpinner";
             this.ySpinner.Size = new System.Drawing.Size( 45, 20 );
             this.ySpinner.TabIndex = 5;
+            this.ySpinner.Tag = "Y";
             this.ySpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.ySpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // xSpinner
             // 
             this.xSpinner.AutoSize = true;
+            this.xSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.xSpinner.Location = new System.Drawing.Point( 102, 106 );
             this.xSpinner.Maximum = new decimal( new int[] {
             255,
@@ -275,15 +296,16 @@ namespace FFTPatcher.Editors
             this.xSpinner.Name = "xSpinner";
             this.xSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.xSpinner.TabIndex = 4;
+            this.xSpinner.Tag = "X";
             this.xSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.xSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // formulaSpinner
             // 
+            this.formulaSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.formulaSpinner.Hexadecimal = true;
             this.formulaSpinner.Location = new System.Drawing.Point( 102, 83 );
             this.formulaSpinner.Maximum = new decimal( new int[] {
@@ -294,16 +316,17 @@ namespace FFTPatcher.Editors
             this.formulaSpinner.Name = "formulaSpinner";
             this.formulaSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.formulaSpinner.TabIndex = 3;
+            this.formulaSpinner.Tag = "Formula";
             this.formulaSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.formulaSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // verticalSpinner
             // 
             this.verticalSpinner.AutoSize = true;
+            this.verticalSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.verticalSpinner.Location = new System.Drawing.Point( 102, 60 );
             this.verticalSpinner.Maximum = new decimal( new int[] {
             255,
@@ -313,16 +336,17 @@ namespace FFTPatcher.Editors
             this.verticalSpinner.Name = "verticalSpinner";
             this.verticalSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.verticalSpinner.TabIndex = 2;
+            this.verticalSpinner.Tag = "Vertical";
             this.verticalSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.verticalSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // effectSpinner
             // 
             this.effectSpinner.AutoSize = true;
+            this.effectSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.effectSpinner.Location = new System.Drawing.Point( 102, 37 );
             this.effectSpinner.Maximum = new decimal( new int[] {
             255,
@@ -332,16 +356,17 @@ namespace FFTPatcher.Editors
             this.effectSpinner.Name = "effectSpinner";
             this.effectSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.effectSpinner.TabIndex = 1;
+            this.effectSpinner.Tag = "Effect";
             this.effectSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.effectSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // rangeSpinner
             // 
             this.rangeSpinner.AutoSize = true;
+            this.rangeSpinner.DefaultValue = new decimal( new int[] {
+            0,
+            0,
+            0,
+            0} );
             this.rangeSpinner.Location = new System.Drawing.Point( 102, 14 );
             this.rangeSpinner.Maximum = new decimal( new int[] {
             255,
@@ -351,12 +376,8 @@ namespace FFTPatcher.Editors
             this.rangeSpinner.Name = "rangeSpinner";
             this.rangeSpinner.Size = new System.Drawing.Size( 45, 20 );
             this.rangeSpinner.TabIndex = 0;
+            this.rangeSpinner.Tag = "Range";
             this.rangeSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.rangeSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // mpLabel
             // 
@@ -441,17 +462,6 @@ namespace FFTPatcher.Editors
             this.elementsEditor.TabIndex = 0;
             this.elementsEditor.TabStop = false;
             // 
-            // inflictStatusLabel
-            // 
-            this.inflictStatusLabel.AutoSize = true;
-            this.inflictStatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.inflictStatusLabel.Location = new System.Drawing.Point( 6, 154 );
-            this.inflictStatusLabel.Name = "inflictStatusLabel";
-            this.inflictStatusLabel.Size = new System.Drawing.Size( 66, 13 );
-            this.inflictStatusLabel.TabIndex = 12;
-            this.inflictStatusLabel.TabStop = true;
-            this.inflictStatusLabel.Text = "Inflict status:";
-            // 
             // AbilityAttributesEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -480,15 +490,15 @@ namespace FFTPatcher.Editors
         #endregion
 
         private ElementsEditor elementsEditor;
-        private System.Windows.Forms.NumericUpDown mpSpinner;
-        private System.Windows.Forms.NumericUpDown ctSpinner;
-        private System.Windows.Forms.NumericUpDown statusSpinner;
-        private System.Windows.Forms.NumericUpDown ySpinner;
-        private System.Windows.Forms.NumericUpDown xSpinner;
-        private System.Windows.Forms.NumericUpDown formulaSpinner;
-        private System.Windows.Forms.NumericUpDown verticalSpinner;
-        private System.Windows.Forms.NumericUpDown effectSpinner;
-        private System.Windows.Forms.NumericUpDown rangeSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault mpSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault ctSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault statusSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault ySpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault xSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault formulaSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault verticalSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault effectSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault rangeSpinner;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight flagsCheckedListBox;
         private System.Windows.Forms.LinkLabel inflictStatusLabel;
     }

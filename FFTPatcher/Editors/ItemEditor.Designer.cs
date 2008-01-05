@@ -74,35 +74,35 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label physicalEvadeRateLabel;
             System.Windows.Forms.Label xLabel;
             System.Windows.Forms.Label itemFormulaLabel;
-            this.paletteSpinner = new System.Windows.Forms.NumericUpDown();
-            this.graphicSpinner = new System.Windows.Forms.NumericUpDown();
-            this.itemAttributesSpinner = new System.Windows.Forms.NumericUpDown();
-            this.enemyLevelSpinner = new System.Windows.Forms.NumericUpDown();
+            this.paletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.graphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.itemAttributesSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.enemyLevelSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.itemTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.priceSpinner = new System.Windows.Forms.NumericUpDown();
+            this.priceSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.shopAvailabilityComboBox = new System.Windows.Forms.ComboBox();
             this.itemAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.weaponPanel = new System.Windows.Forms.Panel();
             this.weaponAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.weaponElementsEditor = new FFTPatcher.Editors.ElementsEditor();
-            this.weaponSpellStatusSpinner = new System.Windows.Forms.NumericUpDown();
-            this.weaponFormulaSpinner = new System.Windows.Forms.NumericUpDown();
-            this.weaponEvadePercentageSpinner = new System.Windows.Forms.NumericUpDown();
-            this.weaponPowerSpinner = new System.Windows.Forms.NumericUpDown();
-            this.weaponRangeSpinner = new System.Windows.Forms.NumericUpDown();
+            this.weaponSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.weaponFormulaSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.weaponEvadePercentageSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.weaponPowerSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.weaponRangeSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.shieldPanel = new System.Windows.Forms.Panel();
-            this.shieldMagicBlockRateSpinner = new System.Windows.Forms.NumericUpDown();
-            this.shieldPhysicalBlockRateSpinner = new System.Windows.Forms.NumericUpDown();
+            this.shieldMagicBlockRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.shieldPhysicalBlockRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.armorPanel = new System.Windows.Forms.Panel();
-            this.armorMPBonusSpinner = new System.Windows.Forms.NumericUpDown();
-            this.armorHPBonusSpinner = new System.Windows.Forms.NumericUpDown();
+            this.armorMPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.armorHPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.accessoryPanel = new System.Windows.Forms.Panel();
-            this.accessoryMagicEvadeRateSpinner = new System.Windows.Forms.NumericUpDown();
-            this.accessoryPhysicalEvadeRateLabel = new System.Windows.Forms.NumericUpDown();
+            this.accessoryMagicEvadeRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.accessoryPhysicalEvadeRateLabel = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.chemistItemPanel = new System.Windows.Forms.Panel();
-            this.chemistItemSpellStatusSpinner = new System.Windows.Forms.NumericUpDown();
-            this.chemistItemXSpinner = new System.Windows.Forms.NumericUpDown();
-            this.chemistItemFormulaSpinner = new System.Windows.Forms.NumericUpDown();
+            this.chemistItemSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.chemistItemXSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.chemistItemFormulaSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.chemistItemSpellStatusLabel = new System.Windows.Forms.LinkLabel();
             this.itemAttributesLabel = new System.Windows.Forms.LinkLabel();
             this.weaponSpellStatusLabel = new System.Windows.Forms.LinkLabel();
@@ -416,11 +416,6 @@ namespace FFTPatcher.Editors
             this.paletteSpinner.TabIndex = 0;
             this.paletteSpinner.Tag = "Palette";
             this.paletteSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.paletteSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // graphicSpinner
             // 
@@ -436,11 +431,6 @@ namespace FFTPatcher.Editors
             this.graphicSpinner.TabIndex = 1;
             this.graphicSpinner.Tag = "Graphic";
             this.graphicSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.graphicSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // itemAttributesSpinner
             // 
@@ -451,11 +441,6 @@ namespace FFTPatcher.Editors
             this.itemAttributesSpinner.TabIndex = 4;
             this.itemAttributesSpinner.Tag = "SIA";
             this.itemAttributesSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.itemAttributesSpinner.Value = new decimal( new int[] {
-            100,
-            0,
-            0,
-            0} );
             // 
             // enemyLevelSpinner
             // 
@@ -470,11 +455,6 @@ namespace FFTPatcher.Editors
             this.enemyLevelSpinner.TabIndex = 2;
             this.enemyLevelSpinner.Tag = "EnemyLevel";
             this.enemyLevelSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.enemyLevelSpinner.Value = new decimal( new int[] {
-            99,
-            0,
-            0,
-            0} );
             // 
             // itemTypeComboBox
             // 
@@ -499,11 +479,6 @@ namespace FFTPatcher.Editors
             this.priceSpinner.TabIndex = 5;
             this.priceSpinner.Tag = "Price";
             this.priceSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.priceSpinner.Value = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
             // 
             // shopAvailabilityComboBox
             // 
@@ -597,11 +572,6 @@ namespace FFTPatcher.Editors
             this.weaponSpellStatusSpinner.TabIndex = 4;
             this.weaponSpellStatusSpinner.Tag = "InflictStatus";
             this.weaponSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.weaponSpellStatusSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // weaponFormulaSpinner
             // 
@@ -617,11 +587,6 @@ namespace FFTPatcher.Editors
             this.weaponFormulaSpinner.TabIndex = 1;
             this.weaponFormulaSpinner.Tag = "Formula";
             this.weaponFormulaSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.weaponFormulaSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // weaponEvadePercentageSpinner
             // 
@@ -636,11 +601,6 @@ namespace FFTPatcher.Editors
             this.weaponEvadePercentageSpinner.TabIndex = 3;
             this.weaponEvadePercentageSpinner.Tag = "EvadePercentage";
             this.weaponEvadePercentageSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.weaponEvadePercentageSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // weaponPowerSpinner
             // 
@@ -655,11 +615,6 @@ namespace FFTPatcher.Editors
             this.weaponPowerSpinner.TabIndex = 2;
             this.weaponPowerSpinner.Tag = "WeaponPower";
             this.weaponPowerSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.weaponPowerSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // weaponRangeSpinner
             // 
@@ -674,11 +629,6 @@ namespace FFTPatcher.Editors
             this.weaponRangeSpinner.TabIndex = 0;
             this.weaponRangeSpinner.Tag = "Range";
             this.weaponRangeSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.weaponRangeSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // shieldPanel
             // 
@@ -701,11 +651,6 @@ namespace FFTPatcher.Editors
             this.shieldMagicBlockRateSpinner.TabIndex = 1;
             this.shieldMagicBlockRateSpinner.Tag = "MagicBlockRate";
             this.shieldMagicBlockRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.shieldMagicBlockRateSpinner.Value = new decimal( new int[] {
-            100,
-            0,
-            0,
-            0} );
             // 
             // shieldPhysicalBlockRateSpinner
             // 
@@ -715,11 +660,6 @@ namespace FFTPatcher.Editors
             this.shieldPhysicalBlockRateSpinner.TabIndex = 0;
             this.shieldPhysicalBlockRateSpinner.Tag = "PhysicalBlockRate";
             this.shieldPhysicalBlockRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.shieldPhysicalBlockRateSpinner.Value = new decimal( new int[] {
-            100,
-            0,
-            0,
-            0} );
             // 
             // armorPanel
             // 
@@ -745,11 +685,6 @@ namespace FFTPatcher.Editors
             this.armorMPBonusSpinner.TabIndex = 1;
             this.armorMPBonusSpinner.Tag = "MPBonus";
             this.armorMPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.armorMPBonusSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // armorHPBonusSpinner
             // 
@@ -764,11 +699,6 @@ namespace FFTPatcher.Editors
             this.armorHPBonusSpinner.TabIndex = 0;
             this.armorHPBonusSpinner.Tag = "HPBonus";
             this.armorHPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.armorHPBonusSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // accessoryPanel
             // 
@@ -791,11 +721,6 @@ namespace FFTPatcher.Editors
             this.accessoryMagicEvadeRateSpinner.TabIndex = 1;
             this.accessoryMagicEvadeRateSpinner.Tag = "MagicEvade";
             this.accessoryMagicEvadeRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.accessoryMagicEvadeRateSpinner.Value = new decimal( new int[] {
-            100,
-            0,
-            0,
-            0} );
             // 
             // accessoryPhysicalEvadeRateLabel
             // 
@@ -805,11 +730,6 @@ namespace FFTPatcher.Editors
             this.accessoryPhysicalEvadeRateLabel.TabIndex = 0;
             this.accessoryPhysicalEvadeRateLabel.Tag = "PhysicalEvade";
             this.accessoryPhysicalEvadeRateLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.accessoryPhysicalEvadeRateLabel.Value = new decimal( new int[] {
-            100,
-            0,
-            0,
-            0} );
             // 
             // chemistItemPanel
             // 
@@ -838,11 +758,6 @@ namespace FFTPatcher.Editors
             this.chemistItemSpellStatusSpinner.TabIndex = 2;
             this.chemistItemSpellStatusSpinner.Tag = "Formula";
             this.chemistItemSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.chemistItemSpellStatusSpinner.Value = new decimal( new int[] {
-            127,
-            0,
-            0,
-            0} );
             // 
             // chemistItemXSpinner
             // 
@@ -857,11 +772,6 @@ namespace FFTPatcher.Editors
             this.chemistItemXSpinner.TabIndex = 1;
             this.chemistItemXSpinner.Tag = "X";
             this.chemistItemXSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.chemistItemXSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // chemistItemFormulaSpinner
             // 
@@ -877,11 +787,6 @@ namespace FFTPatcher.Editors
             this.chemistItemFormulaSpinner.TabIndex = 0;
             this.chemistItemFormulaSpinner.Tag = "Formula";
             this.chemistItemFormulaSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.chemistItemFormulaSpinner.Value = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
             // 
             // chemistItemSpellStatusLabel
             // 
@@ -983,34 +888,34 @@ namespace FFTPatcher.Editors
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown paletteSpinner;
-        private System.Windows.Forms.NumericUpDown graphicSpinner;
-        private System.Windows.Forms.NumericUpDown itemAttributesSpinner;
-        private System.Windows.Forms.NumericUpDown enemyLevelSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault paletteSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault graphicSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault itemAttributesSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault enemyLevelSpinner;
         private System.Windows.Forms.ComboBox itemTypeComboBox;
-        private System.Windows.Forms.NumericUpDown priceSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault priceSpinner;
         private System.Windows.Forms.ComboBox shopAvailabilityComboBox;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight itemAttributesCheckedListBox;
-        private System.Windows.Forms.NumericUpDown weaponEvadePercentageSpinner;
-        private System.Windows.Forms.NumericUpDown weaponPowerSpinner;
-        private System.Windows.Forms.NumericUpDown weaponRangeSpinner;
-        private System.Windows.Forms.NumericUpDown weaponSpellStatusSpinner;
-        private System.Windows.Forms.NumericUpDown weaponFormulaSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault weaponEvadePercentageSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault weaponPowerSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault weaponRangeSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault weaponSpellStatusSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault weaponFormulaSpinner;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight weaponAttributesCheckedListBox;
         private ElementsEditor weaponElementsEditor;
         private System.Windows.Forms.Panel shieldPanel;
-        private System.Windows.Forms.NumericUpDown shieldMagicBlockRateSpinner;
-        private System.Windows.Forms.NumericUpDown shieldPhysicalBlockRateSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault shieldMagicBlockRateSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault shieldPhysicalBlockRateSpinner;
         private System.Windows.Forms.Panel armorPanel;
-        private System.Windows.Forms.NumericUpDown armorMPBonusSpinner;
-        private System.Windows.Forms.NumericUpDown armorHPBonusSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault armorMPBonusSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault armorHPBonusSpinner;
         private System.Windows.Forms.Panel accessoryPanel;
-        private System.Windows.Forms.NumericUpDown accessoryMagicEvadeRateSpinner;
-        private System.Windows.Forms.NumericUpDown accessoryPhysicalEvadeRateLabel;
+        private FFTPatcher.Controls.NumericUpDownWithDefault accessoryMagicEvadeRateSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault accessoryPhysicalEvadeRateLabel;
         private System.Windows.Forms.Panel chemistItemPanel;
-        private System.Windows.Forms.NumericUpDown chemistItemXSpinner;
-        private System.Windows.Forms.NumericUpDown chemistItemFormulaSpinner;
-        private System.Windows.Forms.NumericUpDown chemistItemSpellStatusSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault chemistItemXSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault chemistItemFormulaSpinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault chemistItemSpellStatusSpinner;
         private System.Windows.Forms.Panel weaponPanel;
         private System.Windows.Forms.LinkLabel chemistItemSpellStatusLabel;
         private System.Windows.Forms.LinkLabel itemAttributesLabel;

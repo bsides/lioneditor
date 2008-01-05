@@ -63,6 +63,8 @@ namespace FFTPatcher.Datatypes
 
         #region Properties
 
+        public Ability Default { get; private set; }
+
         #region Common
 
         public Ability Self { get { return this; } }
@@ -135,7 +137,10 @@ namespace FFTPatcher.Datatypes
         public bool IsItem { get; private set; }
         public UInt16 ItemOffset
         {
-            get { return Item.Offset; }
+            get 
+            {
+                return (UInt16)(IsItem ? Item.Offset : 0);
+            }
             set { Item = Item.GetItemAtOffset( value ); }
         }
         public Item Item { get; set; }
@@ -207,6 +212,17 @@ namespace FFTPatcher.Datatypes
 
             Utilities.CopyByteToBooleans( first[7],
                 ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
+        }
+
+
+        public Ability( string name, UInt16 offset, SubArray<byte> first, SubArray<byte> second, Ability defaults )
+            : this( name, offset, first, second )
+        {
+            Default = defaults;
+            if( IsNormal )
+            {
+                Attributes.Default = Default.Attributes;
+            }
         }
 
         public Ability( string name, UInt16 offset, SubArray<byte> first, SubArray<byte> second )
@@ -311,6 +327,7 @@ namespace FFTPatcher.Datatypes
         {
             return Name;
         }
+
 
     }
 }

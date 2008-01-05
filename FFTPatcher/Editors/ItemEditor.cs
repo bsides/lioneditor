@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Controls;
 
 namespace FFTPatcher.Editors
 {
@@ -32,7 +33,7 @@ namespace FFTPatcher.Editors
         private string[] itemBools = new string[] {
             "Weapon", "Shield", "Head", "Body",
             "Accessory", "Blank1", "Rare", "Blank2" };
-        private List<NumericUpDown> spinners = new List<NumericUpDown>();
+        private List<NumericUpDownWithDefault> spinners = new List<NumericUpDownWithDefault>();
         private List<ComboBox> comboBoxes = new List<ComboBox>();
         private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
         private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
@@ -84,6 +85,7 @@ namespace FFTPatcher.Editors
             chemistItemPanel.Visible = item is ChemistItem;
             chemistItemPanel.Enabled = item is ChemistItem;
 
+            // TODO Update default
             if( item is Weapon )
             {
                 for( int i = 0; i < 8; i++ )
@@ -91,38 +93,68 @@ namespace FFTPatcher.Editors
                     weaponAttributesCheckedListBox.SetItemChecked( i,
                         Utilities.GetFieldOrProperty<bool>( item as Weapon, weaponBools[i] ) );
                 }
-                weaponRangeSpinner.Value = (item as Weapon).Range;
-                weaponFormulaSpinner.Value = (item as Weapon).Formula;
-                weaponPowerSpinner.Value = (item as Weapon).WeaponPower;
-                weaponEvadePercentageSpinner.Value = (item as Weapon).EvadePercentage;
-                weaponSpellStatusSpinner.Value = (item as Weapon).InflictStatus;
-                weaponElementsEditor.Elements = (item as Weapon).Elements;
+                weaponRangeSpinner.SetValueAndDefault(
+                    (item as Weapon).Range,
+                    (item as Weapon).WeaponDefault.Range );
+                weaponFormulaSpinner.SetValueAndDefault( 
+                    (item as Weapon).Formula, 
+                    (item as Weapon).WeaponDefault.Formula );
+                weaponPowerSpinner.SetValueAndDefault( 
+                    (item as Weapon).WeaponPower, 
+                    (item as Weapon).WeaponDefault.WeaponPower );
+                weaponEvadePercentageSpinner.SetValueAndDefault(
+                    (item as Weapon).EvadePercentage,
+                    (item as Weapon).WeaponDefault.EvadePercentage );
+                weaponSpellStatusSpinner.SetValueAndDefault(
+                    (item as Weapon).InflictStatus,
+                    (item as Weapon).WeaponDefault.InflictStatus );
+
+                weaponElementsEditor.Elements = 
+                    (item as Weapon).Elements;
             }
             else if( item is Shield )
             {
-                shieldPhysicalBlockRateSpinner.Value = (item as Shield).PhysicalBlockRate;
-                shieldMagicBlockRateSpinner.Value = (item as Shield).MagicBlockRate;
+                shieldPhysicalBlockRateSpinner.SetValueAndDefault(
+                    (item as Shield).PhysicalBlockRate,
+                    (item as Shield).ShieldDefault.PhysicalBlockRate );
+                shieldMagicBlockRateSpinner.SetValueAndDefault( 
+                    (item as Shield).MagicBlockRate, 
+                    (item as Shield).ShieldDefault.MagicBlockRate );
             }
             else if( item is Armor )
             {
-                armorHPBonusSpinner.Value = (item as Armor).HPBonus;
-                armorMPBonusSpinner.Value = (item as Armor).MPBonus;
+                armorHPBonusSpinner.SetValueAndDefault(
+                    (item as Armor).HPBonus,
+                    (item as Armor).ArmorDefault.HPBonus );
+                armorMPBonusSpinner.SetValueAndDefault( 
+                    (item as Armor).MPBonus,
+                    (item as Armor).ArmorDefault.MPBonus );
             }
             else if( item is Accessory )
             {
-                accessoryMagicEvadeRateSpinner.Value = (item as Accessory).MagicEvade;
-                accessoryPhysicalEvadeRateLabel.Value = (item as Accessory).PhysicalEvade;
+                accessoryMagicEvadeRateSpinner.SetValueAndDefault( 
+                    (item as Accessory).MagicEvade,
+                    (item as Accessory).AccessoryDefault.MagicEvade );
+                accessoryPhysicalEvadeRateLabel.SetValueAndDefault( 
+                    (item as Accessory).PhysicalEvade,
+                    (item as Accessory).AccessoryDefault.PhysicalEvade );
             }
             else if( item is ChemistItem )
             {
-                chemistItemFormulaSpinner.Value = (item as ChemistItem).Formula;
-                chemistItemSpellStatusSpinner.Value = (item as ChemistItem).InflictStatus;
-                chemistItemXSpinner.Value = (item as ChemistItem).X;
+                chemistItemFormulaSpinner.SetValueAndDefault( 
+                    (item as ChemistItem).Formula,
+                    (item as ChemistItem).ChemistItemDefault.Formula );
+                chemistItemSpellStatusSpinner.SetValueAndDefault( 
+                    (item as ChemistItem).InflictStatus,
+                    (item as ChemistItem).ChemistItemDefault.InflictStatus );
+                chemistItemXSpinner.SetValueAndDefault( 
+                    (item as ChemistItem).X,
+                    (item as ChemistItem).ChemistItemDefault.X );
             }
 
-            paletteSpinner.Value = item.Palette;
-            graphicSpinner.Value = item.Graphic;
-            enemyLevelSpinner.Value = item.EnemyLevel;
+            paletteSpinner.SetValueAndDefault( item.Palette, item.Default.Palette );
+            graphicSpinner.SetValueAndDefault( item.Graphic, item.Default.Graphic );
+            enemyLevelSpinner.SetValueAndDefault( item.EnemyLevel, item.Default.EnemyLevel );
 
             if( FFTPatch.Context == Context.US_PSP && ourContext != Context.US_PSP )
             {
@@ -136,9 +168,9 @@ namespace FFTPatcher.Editors
             }
             itemTypeComboBox.SelectedItem = item.ItemType;
 
-            itemAttributesSpinner.Value = item.SIA;
+            itemAttributesSpinner.SetValueAndDefault( item.SIA, item.Default.SIA );
             itemAttributesSpinner.Maximum = FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F;
-            priceSpinner.Value = item.Price;
+            priceSpinner.SetValueAndDefault( item.Price, item.Default.Price );
             shopAvailabilityComboBox.SelectedItem = item.ShopAvailability;
             for( int i = 0; i < 8; i++ )
             {
@@ -160,7 +192,7 @@ namespace FFTPatcher.Editors
             InitializeComponent();
             ignoreChanges = true;
 
-            spinners.AddRange( new NumericUpDown[] { 
+            spinners.AddRange( new NumericUpDownWithDefault[] { 
                 paletteSpinner, graphicSpinner, enemyLevelSpinner, itemAttributesSpinner, priceSpinner, 
                 weaponRangeSpinner, weaponFormulaSpinner, weaponPowerSpinner, weaponEvadePercentageSpinner, weaponSpellStatusSpinner, 
                 armorHPBonusSpinner, armorMPBonusSpinner, 
@@ -168,7 +200,7 @@ namespace FFTPatcher.Editors
                 accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateLabel, 
                 chemistItemFormulaSpinner, chemistItemSpellStatusSpinner, chemistItemXSpinner } );
             comboBoxes.AddRange( new ComboBox[] { itemTypeComboBox, shopAvailabilityComboBox } );
-            foreach( NumericUpDown spinner in spinners )
+            foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
@@ -250,7 +282,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                NumericUpDown spinner = sender as NumericUpDown;
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
                 if( spinner == priceSpinner )
                 {
                     Utilities.SetFieldOrProperty( item, spinner.Tag.ToString(), (UInt16)spinner.Value );

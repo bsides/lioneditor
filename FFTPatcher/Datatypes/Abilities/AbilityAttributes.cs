@@ -74,6 +74,14 @@ namespace FFTPatcher.Datatypes
         public string Name { get; private set; }
         public UInt16 Offset { get; private set; }
 
+        public AbilityAttributes Default { get; set; }
+
+        public AbilityAttributes( string name, UInt16 offset, SubArray<byte> second, AbilityAttributes defaults )
+            : this( name, offset, second )
+        {
+            Default = defaults;
+        }
+
         public AbilityAttributes( string name, UInt16 offset, SubArray<byte> second )
         {
             Name = name;

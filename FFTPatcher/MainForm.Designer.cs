@@ -162,7 +162,7 @@ namespace FFTPatcher
             this.fftPatchEditor1.Enabled = false;
             this.fftPatchEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.fftPatchEditor1.Name = "fftPatchEditor1";
-            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 591 );
+            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 0 );
             this.fftPatchEditor1.TabIndex = 0;
             // 
             // MainForm
@@ -171,7 +171,7 @@ namespace FFTPatcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size( 815, 591 );
+            this.ClientSize = new System.Drawing.Size( 815, 0 );
             this.Controls.Add( this.fftPatchEditor1 );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";

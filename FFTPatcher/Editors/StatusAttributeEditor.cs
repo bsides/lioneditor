@@ -20,6 +20,7 @@
 using System;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Controls;
 
 namespace FFTPatcher.Editors
 {
@@ -32,7 +33,7 @@ namespace FFTPatcher.Editors
 
         private StatusAttribute statusAttribute;
         private bool ignoreChanges = false;
-        private NumericUpDown[] spinners;
+        private NumericUpDownWithDefault[] spinners;
 
         public StatusAttribute StatusAttribute
         {
@@ -57,9 +58,11 @@ namespace FFTPatcher.Editors
         {
             this.ignoreChanges = true;
 
-            foreach( NumericUpDown spinner in spinners )
+            foreach( NumericUpDownWithDefault spinner in spinners )
             {
-                spinner.Value = Utilities.GetFieldOrProperty<byte>( statusAttribute, spinner.Tag.ToString() );
+                spinner.SetValueAndDefault(
+                    Utilities.GetFieldOrProperty<byte>( statusAttribute, spinner.Tag.ToString() ),
+                    Utilities.GetFieldOrProperty<byte>( statusAttribute.Default, spinner.Tag.ToString() ) );
             }
 
             for( int i = 0; i < checkedListBox.Items.Count; i++ )
@@ -77,8 +80,8 @@ namespace FFTPatcher.Editors
         public StatusAttributeEditor()
         {
             InitializeComponent();
-            spinners = new NumericUpDown[4] { unknown1Spinner, unknown2Spinner, orderSpinner, ctSpinner };
-            foreach( NumericUpDown spinner in spinners )
+            spinners = new NumericUpDownWithDefault[4] { unknown1Spinner, unknown2Spinner, orderSpinner, ctSpinner };
+            foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
@@ -97,7 +100,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                NumericUpDown spinner = sender as NumericUpDown;
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
                 Utilities.SetFieldOrProperty( statusAttribute, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }

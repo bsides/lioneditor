@@ -20,6 +20,7 @@
 using System;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Controls;
 
 namespace FFTPatcher.Editors
 {
@@ -27,7 +28,7 @@ namespace FFTPatcher.Editors
     {
         private Job job;
         private bool ignoreChanges;
-        private NumericUpDown[] spinners;
+        private NumericUpDownWithDefault[] spinners;
         private ComboBox[] comboBoxes;
 
         public Job Job
@@ -53,7 +54,7 @@ namespace FFTPatcher.Editors
         public JobEditor()
         {
             InitializeComponent();
-            spinners = new NumericUpDown[] {
+            spinners = new NumericUpDownWithDefault[] {
                 hpGrowthSpinner, hpMultiplierSpinner, mpGrowthSpinner, mpMultiplierSpinner,
                 speedGrowthSpinner, speedMultiplierSpinner, paGrowthSpinner, paMultiplierSpinner,
                 maGrowthSpinner, maMultiplierSpinner, moveSpinner, jumpSpinner,
@@ -61,7 +62,7 @@ namespace FFTPatcher.Editors
             comboBoxes = new ComboBox[] {
                 skillsetComboBox, innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox };
 
-            foreach( NumericUpDown spinner in spinners )
+            foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
@@ -96,7 +97,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                NumericUpDown spinner = sender as NumericUpDown;
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
                 Utilities.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
@@ -127,9 +128,12 @@ namespace FFTPatcher.Editors
             }
 
             skillsetComboBox.SelectedItem = job.SkillSet;
-            foreach( NumericUpDown s in spinners )
+            foreach( NumericUpDownWithDefault s in spinners )
             {
-                s.Value = Utilities.GetFieldOrProperty<byte>( job, s.Tag.ToString() );
+                // TODO Update Default
+                s.SetValueAndDefault(
+                    Utilities.GetFieldOrProperty<byte>( job, s.Tag.ToString() ),
+                    Utilities.GetFieldOrProperty<byte>( job.Default, s.Tag.ToString() ) );
             }
             innateAComboBox.SelectedItem = job.InnateA;
             innateBComboBox.SelectedItem = job.InnateB;

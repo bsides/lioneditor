@@ -40,10 +40,17 @@ namespace FFTPatcher.Datatypes
         public byte EvadePercentage { get; set; }
         public Elements Elements { get; private set; }
         public byte InflictStatus { get; set; }
+        public Weapon WeaponDefault { get; private set; }
 
         public Weapon( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> weaponBytes )
-            : base( offset, itemBytes )
+            : this( offset, itemBytes, weaponBytes, null )
         {
+        }
+
+        public Weapon( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> weaponBytes, Weapon defaults )
+            : base( offset, itemBytes, defaults )
+        {
+            WeaponDefault = defaults;
             Range = weaponBytes[0];
             Utilities.CopyByteToBooleans( weaponBytes[1], ref Striking, ref Lunging, ref Direct, ref Arc, ref TwoSwords, ref TwoHands, ref Blank, ref Force2Hands );
             Formula = weaponBytes[2];

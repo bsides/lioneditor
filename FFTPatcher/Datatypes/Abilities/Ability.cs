@@ -328,6 +328,11 @@ namespace FFTPatcher.Datatypes
             return Name;
         }
 
-
+        public bool[] PropertiesToBoolArray()
+        {
+            return new bool[12] {
+                LearnWithJP, Action, LearnOnHit, Blank1,
+                Unknown1, Unknown2, Unknown3, Blank2, Blank3, Blank4, Blank5, Unknown4 };
+        }
     }
 }

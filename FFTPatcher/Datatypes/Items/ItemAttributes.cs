@@ -46,13 +46,8 @@ namespace FFTPatcher.Datatypes
         public ItemAttributes Default { get; private set; }
 
         public ItemAttributes( byte value, SubArray<byte> bytes, ItemAttributes defaults )
-            : this( value, bytes )
         {
             Default = defaults;
-        }
-
-        public ItemAttributes( byte value, SubArray<byte> bytes )
-        {
             Value = value;
             PA = bytes[0];
             MA = bytes[1];
@@ -60,15 +55,20 @@ namespace FFTPatcher.Datatypes
             Move = bytes[3];
             Jump = bytes[4];
 
-            PermanentStatuses = new Statuses( new SubArray<byte>( bytes, 5, 9 ) );
-            StatusImmunity = new Statuses( new SubArray<byte>( bytes, 10, 14 ) );
-            StartingStatuses = new Statuses( new SubArray<byte>( bytes, 15, 19 ) );
+            PermanentStatuses = new Statuses( new SubArray<byte>( bytes, 5, 9 ), defaults == null ? null : defaults.PermanentStatuses );
+            StatusImmunity = new Statuses( new SubArray<byte>( bytes, 10, 14 ), defaults == null ? null : defaults.StatusImmunity );
+            StartingStatuses = new Statuses( new SubArray<byte>( bytes, 15, 19 ), defaults == null ? null : defaults.StartingStatuses );
 
             Absorb = new Elements( bytes[20] );
             Cancel = new Elements( bytes[21] );
             Half = new Elements( bytes[22] );
             Weak = new Elements( bytes[23] );
             Strong = new Elements( bytes[24] );
+        }
+
+        public ItemAttributes( byte value, SubArray<byte> bytes )
+            : this( value, bytes, null )
+        {
         }
 
         public byte[] ToByteArray()

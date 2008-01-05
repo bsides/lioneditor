@@ -64,28 +64,28 @@ namespace FFTPatcher.Datatypes
 
         public Job Default { get; private set; }
 
-        public Job( Context context, byte value, string name, SubArray<byte> bytes, Job defaults ) :
-            this( context, value, name, bytes )
+        public Job( Context context, SubArray<byte> bytes )
+            : this( context, 0, "", bytes )
         {
-            Default = defaults;
         }
 
         public Job( Context context, byte value, string name, SubArray<byte> bytes )
-            : this( context, bytes )
+            : this( context, value, name, bytes, null )
         {
-            Value = value;
-            Name = name;
         }
 
-        private Job( Context context, SubArray<byte> bytes )
+        public Job( Context context, byte value, string name, SubArray<byte> bytes, Job defaults )
         {
+            Default = defaults;
+            Value = value;
+            Name = name;
             int equipEnd = context == Context.US_PSP ? 13 : 12;
             SkillSet = SkillSet.DummySkillSets[bytes[0]];
             InnateA = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[1], bytes[2] )];
             InnateB = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[3], bytes[4] )];
             InnateC = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[5], bytes[6] )];
             InnateD = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[7], bytes[8] )];
-            Equipment = new Equipment( new SubArray<byte>( bytes, 9, equipEnd ) );
+            Equipment = new Equipment( new SubArray<byte>( bytes, 9, equipEnd ), defaults == null ? null : defaults.Equipment );
             HPConstant = bytes[equipEnd + 1];
             HPMultiplier = bytes[equipEnd + 2];
             MPConstant = bytes[equipEnd + 3];
@@ -99,9 +99,9 @@ namespace FFTPatcher.Datatypes
             Move = bytes[equipEnd + 11];
             Jump = bytes[equipEnd + 12];
             CEvade = bytes[equipEnd + 13];
-            PermanentStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 14, equipEnd + 18 ) );
-            StatusImmunity = new Statuses( new SubArray<byte>( bytes, equipEnd + 19, equipEnd + 23 ) );
-            StartingStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 24, equipEnd + 28 ) );
+            PermanentStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 14, equipEnd + 18 ), defaults == null ? null : defaults.PermanentStatus );
+            StatusImmunity = new Statuses( new SubArray<byte>( bytes, equipEnd + 19, equipEnd + 23 ), defaults == null ? null : defaults.StatusImmunity );
+            StartingStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 24, equipEnd + 28 ), defaults == null ? null : defaults.StartingStatus );
             AbsorbElement = new Elements( bytes[equipEnd + 29] );
             CancelElement = new Elements( bytes[equipEnd + 30] );
             HalfElement = new Elements( bytes[equipEnd + 31] );

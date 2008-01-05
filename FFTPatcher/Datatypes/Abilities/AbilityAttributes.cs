@@ -136,5 +136,14 @@ namespace FFTPatcher.Datatypes
 
             return result;
         }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[32] { 
+                Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, TargetSelf,
+                HitEnemies, HitAllies, Blank8, FollowTarget, RandomFire, LinearAttack, ThreeDirections, HitCaster,
+                Reflect, Arithmetick, Silence, Mimic, NormalAttack, Perservere, ShowQuote, Unknown5,
+                CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade,Evadeable, Targeting };
+        }
     }
 }

@@ -70,11 +70,12 @@ namespace FFTPatcher.Editors
             statusImmunityEditor.Statuses = attributes.StatusImmunity;
             startingStatusesEditor.Statuses = attributes.StartingStatuses;
             permanentStatusesEditor.Statuses = attributes.PermanentStatuses;
-            strongElementsEditor.Elements = attributes.Strong;
-            weakElementsEditor.Elements = attributes.Weak;
-            halfElementsEditor.Elements = attributes.Half;
-            absorbElementsEditor.Elements = attributes.Absorb;
-            cancelElementsEditor.Elements = attributes.Cancel;
+
+            strongElementsEditor.SetValueAndDefaults( attributes.Strong, attributes.Default.Strong );
+            weakElementsEditor.SetValueAndDefaults( attributes.Weak, attributes.Default.Weak );
+            halfElementsEditor.SetValueAndDefaults( attributes.Half, attributes.Default.Half );
+            absorbElementsEditor.SetValueAndDefaults( attributes.Absorb, attributes.Default.Absorb );
+            cancelElementsEditor.SetValueAndDefaults( attributes.Cancel, attributes.Default.Cancel );
 
             cancelElementsEditor.ResumeLayout();
             absorbElementsEditor.ResumeLayout();

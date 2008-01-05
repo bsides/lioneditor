@@ -34,6 +34,8 @@ namespace FFTPatcher.Datatypes
             "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
             "Faith","Innocent","Charm","Sleep","Don\'t Move","Don\'t Act","Reflect","Death Sentence" };
 
+        public Statuses Default { get; private set; }
+
         public bool NoEffect;
         public bool Crystal;
         public bool Dead;
@@ -75,6 +77,12 @@ namespace FFTPatcher.Datatypes
         public bool Reflect;
         public bool DeathSentence;
 
+        public Statuses( SubArray<byte> bytes, Statuses defaults )
+            : this( bytes )
+        {
+            Default = defaults;
+        }
+
         public Statuses( SubArray<byte> bytes )
         {
             Utilities.CopyByteToBooleans( bytes[0], ref NoEffect, ref Crystal, ref Dead, ref Undead, ref Charging, ref Jump, ref Defending, ref Performing );
@@ -93,6 +101,16 @@ namespace FFTPatcher.Datatypes
             result[3] = Utilities.ByteFromBooleans( Poison, Regen, Protect, Shell, Haste, Slow, Stop, Wall );
             result[4] = Utilities.ByteFromBooleans( Faith, Innocent, Charm, Sleep, DontMove, DontAct, Reflect, DeathSentence );
             return result;
+        }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[40] { 
+                NoEffect, Crystal, Dead, Undead, Charging, Jump, Defending, Performing,
+                Petrify, Invite, Darkness, Confusion, Silence, BloodSuck, DarkEvilLooking, Treasure,
+                Oil, Float, Reraise, Transparent, Berserk, Chicken, Frog, Critical,
+                Poison, Regen, Protect, Shell, Haste, Slow, Stop, Wall,
+                Faith, Innocent, Charm, Sleep, DontMove, DontAct, Reflect, DeathSentence };
         }
     }
 }

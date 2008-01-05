@@ -139,10 +139,12 @@ namespace FFTPatcher.Editors
             innateBComboBox.SetValueAndDefault( job.InnateB, job.Default.InnateB );
             innateCComboBox.SetValueAndDefault( job.InnateC, job.Default.InnateC );
             innateDComboBox.SetValueAndDefault( job.InnateD, job.Default.InnateD );
-            absorbElementsEditor.Elements = job.AbsorbElement;
-            halfElementsEditor.Elements = job.HalfElement;
-            cancelElementsEditor.Elements = job.CancelElement;
-            weakElementsEditor.Elements = job.WeakElement;
+
+            absorbElementsEditor.SetValueAndDefaults( job.AbsorbElement, job.Default.AbsorbElement );
+            halfElementsEditor.SetValueAndDefaults( job.HalfElement, job.Default.HalfElement);
+            cancelElementsEditor.SetValueAndDefaults( job.CancelElement, job.Default.CancelElement);
+            weakElementsEditor.SetValueAndDefaults( job.WeakElement, job.Default.WeakElement );
+
             equipmentEditor.Equipment = job.Equipment;
             innateStatusesEditor.Statuses = job.PermanentStatus;
             statusImmunityEditor.Statuses = job.StatusImmunity;

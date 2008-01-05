@@ -70,5 +70,13 @@ namespace FFTPatcher.Datatypes
             result[2] = Utilities.ByteFromBooleans( Blank, DirectAttack, LineAttack, !VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp );
             return result;
         }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[24] { 
+                HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies,
+                IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, Silence,
+                Blank, DirectAttack, LineAttack, VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp };
+        }
     }
 }

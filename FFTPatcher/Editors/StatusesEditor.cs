@@ -68,6 +68,10 @@ namespace FFTPatcher.Editors
             statusesCheckedListBox.SuspendLayout();
 
             ignoreChanges = true;
+            if( statuses.Default != null )
+            {
+                statusesCheckedListBox.Defaults = statuses.Default.ToBoolArray();
+            }
             for( int i = 0; i < statusesCheckedListBox.Items.Count; i++ )
             {
                 statusesCheckedListBox.SetItemChecked( i, Utilities.GetFlag( statuses, Statuses.FieldNames[i] ) );

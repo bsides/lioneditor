@@ -56,13 +56,8 @@ namespace FFTPatcher.Datatypes
         public StatusAttribute Default { get; private set; }
 
         public StatusAttribute( string name, byte value, SubArray<byte> bytes, StatusAttribute defaults )
-            : this( name, value, bytes )
         {
             Default = defaults;
-        }
-
-        public StatusAttribute( string name, byte value, SubArray<byte> bytes )
-        {
             Name = name;
             Value = value;
 
@@ -74,8 +69,13 @@ namespace FFTPatcher.Datatypes
             Utilities.CopyByteToBooleans( bytes[4], ref FreezeCT, ref Unknown1, ref Unknown2, ref Unknown3, ref Unknown4, ref Unknown5, ref Unknown6, ref KO );
             Utilities.CopyByteToBooleans( bytes[5], ref CanReact, ref Blank, ref IgnoreAttack, ref Unknown7, ref Unknown8, ref Unknown9, ref Unknown10, ref Unknown11 );
             CanReact = !CanReact;
-            Cancels = new Statuses( new SubArray<byte>( bytes, 6, 10 ) );
-            CantStackOn = new Statuses( new SubArray<byte>( bytes, 11, 15 ) );
+            Cancels = new Statuses( new SubArray<byte>( bytes, 6, 10 ), defaults == null ? null : defaults.Cancels );
+            CantStackOn = new Statuses( new SubArray<byte>( bytes, 11, 15 ), defaults == null ? null : defaults.CantStackOn );
+        }
+
+        public StatusAttribute( string name, byte value, SubArray<byte> bytes )
+            : this( name, value, bytes, null )
+        {
         }
 
         public byte[] ToByteArray()
@@ -96,6 +96,13 @@ namespace FFTPatcher.Datatypes
         public override string ToString()
         {
             return Name;
+        }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[16] {
+                FreezeCT, Unknown1, Unknown2, Unknown3, Unknown4, Unknown5, Unknown6, KO,
+                CanReact, Blank, IgnoreAttack, Unknown7, Unknown8, Unknown9, Unknown10, Unknown11 };
         }
     }
 

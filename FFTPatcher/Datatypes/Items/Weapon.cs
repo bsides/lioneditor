@@ -89,5 +89,12 @@ namespace FFTPatcher.Datatypes
         {
             return ToWeaponByteArray();
         }
+
+        public bool[] ToWeaponBoolArray()
+        {
+            return new bool[8] {
+                Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands };
+        }
+
     }
 }

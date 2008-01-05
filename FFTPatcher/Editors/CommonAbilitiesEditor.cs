@@ -122,10 +122,26 @@ namespace FFTPatcher.Editors
             chanceSpinner.SetValueAndDefault( ability.LearnRate, ability.Default.LearnRate );
             abilityTypeComboBox.SetValueAndDefault( ability.AbilityType, ability.Default.AbilityType );
 
+            if( ability.Default != null )
+            {
+                propertiesCheckedListBox.Defaults = ability.Default.PropertiesToBoolArray();
+                bool[] bools = ability.Default.AIFlags.ToBoolArray();
+                bool[] sub1 = new bool[8];
+                bool[] sub2 = new bool[8];
+                bool[] sub3 = new bool[8];
+                Array.Copy( bools, 0, sub1, 0, 8 );
+                aiCheckedListBox1.Defaults = sub1;
+                Array.Copy( bools, 8, sub2, 0, 8 );
+                aiCheckedListBox2.Defaults = sub2;
+                Array.Copy( bools, 16, sub3, 0, 8 );
+                aiCheckedListBox3.Defaults = sub3;
+            }
+
             for( int i = 0; i < 12; i++ )
             {
                 propertiesCheckedListBox.SetItemChecked( i, GetFlagFromAbility( PropertiesNames[i] ) );
             }
+
             for( int i = 0; i < 8; i++ )
             {
                 aiCheckedListBox1.SetItemChecked( i, GetFlagFromAbility( AIPropertyNames[i] ) );

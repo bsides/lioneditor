@@ -25,10 +25,18 @@ namespace FFTPatcher.Controls
 {
     public partial class CheckedListBoxNoHighlight : CheckedListBox
     {
+        public bool[] Defaults { get; set; }
+
         public CheckedListBoxNoHighlight()
             : base()
         {
             this.CheckOnClick = true;
+        }
+
+        protected override void OnItemCheck( ItemCheckEventArgs e )
+        {
+            RefreshItem( e.Index );
+            base.OnItemCheck( e );
         }
 
         protected override void OnDrawItem( DrawItemEventArgs e )
@@ -42,6 +50,14 @@ namespace FFTPatcher.Controls
             Point loc = new Point( 1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1 );
             CheckBoxRenderer.DrawCheckBox( e.Graphics, new Point( loc.X + e.Bounds.X, loc.Y + e.Bounds.Y ), state );
             e.Graphics.DrawString( this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF( loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y ) );
+
+            if( (Defaults != null) && (Defaults.Length > e.Index) && (Defaults[e.Index] != GetItemChecked( e.Index )) )
+            {
+                using( Pen p = new Pen( Color.Blue, 1 ) )
+                {
+                    e.Graphics.DrawRectangle( p, new Rectangle( e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1 ) );
+                }
+            }
         }
     }
 }

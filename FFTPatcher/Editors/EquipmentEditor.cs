@@ -97,6 +97,10 @@ namespace FFTPatcher.Editors
                 equipmentCheckedListBox.Items.Clear();
                 equipmentCheckedListBox.Items.AddRange( psxItems );
             }
+            if( equipment.Default != null )
+            {
+                equipmentCheckedListBox.Defaults = equipment.Default.ToBoolArray();
+            }
 
             for (int i = 0; i < equipmentCheckedListBox.Items.Count; i++)
             {

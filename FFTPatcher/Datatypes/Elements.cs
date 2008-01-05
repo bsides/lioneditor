@@ -47,5 +47,11 @@ namespace FFTPatcher.Datatypes
         {
             return Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
         }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[8] {
+                Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark };
+        }
     }
 }

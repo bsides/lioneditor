@@ -47,7 +47,6 @@ namespace FFTPatcher.Controls
             DefaultValue = defaultValue;
             SelectedItem = value;
             Invalidate();
-            //OnSelectedItemChanged( EventArgs.Empty );
         }
 
         protected override void OnDrawItem( DrawItemEventArgs e )

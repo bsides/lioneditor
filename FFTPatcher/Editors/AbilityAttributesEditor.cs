@@ -46,7 +46,6 @@ namespace FFTPatcher.Editors
                 if( value == null )
                 {
                     this.Enabled = false;
-                    this.elementsEditor.Elements = null;
                     attributes = null;
                 }
                 else if( attributes != value )
@@ -64,6 +63,10 @@ namespace FFTPatcher.Editors
             elementsEditor.SuspendLayout();
 
             ignoreChanges = true;
+            if( attributes.Default != null )
+            {
+                flagsCheckedListBox.Defaults = attributes.Default.ToBoolArray();
+            }
             for( int i = 0; i < flagsCheckedListBox.Items.Count; i++ )
             {
                 flagsCheckedListBox.SetItemChecked( i, Utilities.GetFlag( attributes, FlagNames[i] ) );
@@ -76,7 +79,7 @@ namespace FFTPatcher.Editors
                     Utilities.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
             }
 
-            elementsEditor.Elements = attributes.Elements;
+            elementsEditor.SetValueAndDefaults( attributes.Elements, attributes.Default.Elements );
             ignoreChanges = false;
 
             elementsEditor.ResumeLayout();

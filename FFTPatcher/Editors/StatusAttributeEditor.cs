@@ -57,12 +57,17 @@ namespace FFTPatcher.Editors
         private void UpdateView()
         {
             this.ignoreChanges = true;
-
+            
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.SetValueAndDefault(
                     Utilities.GetFieldOrProperty<byte>( statusAttribute, spinner.Tag.ToString() ),
                     Utilities.GetFieldOrProperty<byte>( statusAttribute.Default, spinner.Tag.ToString() ) );
+            }
+
+            if( statusAttribute.Default != null )
+            {
+                checkedListBox.Defaults = statusAttribute.Default.ToBoolArray();
             }
 
             for( int i = 0; i < checkedListBox.Items.Count; i++ )

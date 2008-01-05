@@ -28,23 +28,13 @@ namespace FFTPatcher.Editors
     public partial class ElementsEditor : UserControl
     {
         private Elements elements = new Elements( 0 );
-        public Elements Elements
+
+        public void SetValueAndDefaults( Elements value, Elements defaults )
         {
-            get { return elements; }
-            set
-            {
-                if( value == null )
-                {
-                    elements = null;
-                    this.Enabled = false;
-                }
-                else if( elements != value )
-                {
-                    elements = value;
-                    this.Enabled = true;
-                    UpdateView();
-                }
-            }
+            elementsCheckedListBox.Defaults = defaults.ToBoolArray();
+            elements = value;
+            Enabled = true;
+            UpdateView();
         }
 
         public string GroupBoxText
@@ -93,6 +83,8 @@ namespace FFTPatcher.Editors
 
         private class ElementsCheckedListBox : CheckedListBox
         {
+            public bool[] Defaults { get; set; }
+
             private enum Elements
             {
                 Fire,
@@ -160,6 +152,14 @@ namespace FFTPatcher.Editors
                 Point loc = new Point( 1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1 );
                 CheckBoxRenderer.DrawCheckBox( e.Graphics, new Point( loc.X + e.Bounds.X, loc.Y + e.Bounds.Y ), state );
                 e.Graphics.DrawString( this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF( loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y ) );
+                
+                if( (Defaults != null) && (Defaults.Length > e.Index) && (Defaults[e.Index] != GetItemChecked( e.Index )) )
+                {
+                    using( Pen p = new Pen( Color.Blue, 1 ) )
+                    {
+                        e.Graphics.DrawRectangle( p, new Rectangle( e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1 ) );
+                    }
+                }
             }
         }
 

@@ -62,8 +62,16 @@ namespace FFTPatcher.Datatypes
         public bool Unknown7;
         public bool Unknown8;
 
+        public Equipment Default { get; private set; }
+
         public Equipment( SubArray<byte> bytes )
+            : this( bytes, null )
         {
+        }
+
+        public Equipment( SubArray<byte> bytes, Equipment defaults )
+        {
+            Default = defaults;
             Utilities.CopyByteToBooleans( bytes[0], ref Unused, ref Knife, ref NinjaBlade, ref Sword, ref KnightsSword, ref Katana, ref Axe, ref Rod );
             Utilities.CopyByteToBooleans( bytes[1], ref Staff, ref Flail, ref Gun, ref Crossbow, ref Bow, ref Instrument, ref Book, ref Polearm );
             Utilities.CopyByteToBooleans( bytes[2], ref Pole, ref Bag, ref Cloth, ref Shield, ref Helmet, ref Hat, ref HairAdornment, ref Armor );
@@ -104,6 +112,16 @@ namespace FFTPatcher.Datatypes
                 default:
                     return ToByteArray();
             }
+        }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[40] {
+                Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod,
+                Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm,
+                Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor,
+                Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume,
+                Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 };
         }
     }
 }

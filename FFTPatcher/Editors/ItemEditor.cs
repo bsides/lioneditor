@@ -85,32 +85,37 @@ namespace FFTPatcher.Editors
             chemistItemPanel.Visible = item is ChemistItem;
             chemistItemPanel.Enabled = item is ChemistItem;
 
-            // TODO Update default
             if( item is Weapon )
             {
+                Weapon w = item as Weapon;
+
+                if( w.WeaponDefault != null )
+                {
+                    weaponAttributesCheckedListBox.Defaults = w.ToWeaponBoolArray();
+                }
+
                 for( int i = 0; i < 8; i++ )
                 {
                     weaponAttributesCheckedListBox.SetItemChecked( i,
-                        Utilities.GetFieldOrProperty<bool>( item as Weapon, weaponBools[i] ) );
+                        Utilities.GetFieldOrProperty<bool>( w, weaponBools[i] ) );
                 }
                 weaponRangeSpinner.SetValueAndDefault(
-                    (item as Weapon).Range,
-                    (item as Weapon).WeaponDefault.Range );
+                    w.Range,
+                    w.WeaponDefault.Range );
                 weaponFormulaSpinner.SetValueAndDefault( 
-                    (item as Weapon).Formula, 
-                    (item as Weapon).WeaponDefault.Formula );
+                    w.Formula, 
+                    w.WeaponDefault.Formula );
                 weaponPowerSpinner.SetValueAndDefault( 
-                    (item as Weapon).WeaponPower, 
-                    (item as Weapon).WeaponDefault.WeaponPower );
+                    w.WeaponPower, 
+                    w.WeaponDefault.WeaponPower );
                 weaponEvadePercentageSpinner.SetValueAndDefault(
-                    (item as Weapon).EvadePercentage,
-                    (item as Weapon).WeaponDefault.EvadePercentage );
+                    w.EvadePercentage,
+                    w.WeaponDefault.EvadePercentage );
                 weaponSpellStatusSpinner.SetValueAndDefault(
-                    (item as Weapon).InflictStatus,
-                    (item as Weapon).WeaponDefault.InflictStatus );
+                    w.InflictStatus,
+                    w.WeaponDefault.InflictStatus );
 
-                weaponElementsEditor.Elements = 
-                    (item as Weapon).Elements;
+                weaponElementsEditor.SetValueAndDefaults( w.Elements, w.WeaponDefault.Elements );
             }
             else if( item is Shield )
             {
@@ -172,6 +177,12 @@ namespace FFTPatcher.Editors
             itemAttributesSpinner.Maximum = FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F;
             priceSpinner.SetValueAndDefault( item.Price, item.Default.Price );
             shopAvailabilityComboBox.SetValueAndDefault( item.ShopAvailability, item.Default.ShopAvailability );
+
+            if( item.Default != null )
+            {
+                itemAttributesCheckedListBox.Defaults = item.ToBoolArray();
+            }
+            
             for( int i = 0; i < 8; i++ )
             {
                 itemAttributesCheckedListBox.SetItemChecked( i,

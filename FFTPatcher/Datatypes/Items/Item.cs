@@ -175,6 +175,12 @@ namespace FFTPatcher.Datatypes
         {
             return Name;
         }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[8] {
+                Weapon, Shield, Head, Body, Accessory, Blank1, Rare, Blank2 };
+        }
     }
 
     public class ShopAvailability

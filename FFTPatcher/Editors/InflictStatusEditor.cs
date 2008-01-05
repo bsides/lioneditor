@@ -69,6 +69,11 @@ namespace FFTPatcher.Editors
             flagsCheckedListBox.SuspendLayout();
             inflictStatusesEditor.SuspendLayout();
 
+            if( status.Default != null )
+            {
+                flagsCheckedListBox.Defaults = status.Default.ToBoolArray();
+            }
+
             for( int i = 0; i < 8; i++ )
             {
                 flagsCheckedListBox.SetItemChecked( i, Utilities.GetFlag( status, flags[i] ) );

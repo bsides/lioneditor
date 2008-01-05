@@ -48,6 +48,9 @@
     <Compile Include="Controls\CheckedListBoxNoHighlight.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ComboBoxWithDefault.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\NumericUpDownWithDefault.cs">
       <SubType>Component</SubType>
     </Compile>

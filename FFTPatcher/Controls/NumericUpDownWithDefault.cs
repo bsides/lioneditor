@@ -7,7 +7,7 @@ namespace FFTPatcher.Controls
 {
     public class NumericUpDownWithDefault : NumericUpDown
     {
-        public decimal DefaultValue { get; set; }
+        public decimal DefaultValue { get; private set; }
         public bool Default { get { return Value == DefaultValue; } }
         private bool borderOn = false;
 

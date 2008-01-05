@@ -34,7 +34,7 @@ namespace FFTPatcher.Editors
             "Weapon", "Shield", "Head", "Body",
             "Accessory", "Blank1", "Rare", "Blank2" };
         private List<NumericUpDownWithDefault> spinners = new List<NumericUpDownWithDefault>();
-        private List<ComboBox> comboBoxes = new List<ComboBox>();
+        private List<ComboBoxWithDefault> comboBoxes = new List<ComboBoxWithDefault>();
         private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
         private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
         private Context ourContext = Context.Default;
@@ -166,12 +166,12 @@ namespace FFTPatcher.Editors
                 itemTypeComboBox.DataSource = psxItemTypes;
                 ourContext = Context.US_PSX;
             }
-            itemTypeComboBox.SelectedItem = item.ItemType;
+            itemTypeComboBox.SetValueAndDefault( item.ItemType, item.Default.ItemType );
 
             itemAttributesSpinner.SetValueAndDefault( item.SIA, item.Default.SIA );
             itemAttributesSpinner.Maximum = FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F;
             priceSpinner.SetValueAndDefault( item.Price, item.Default.Price );
-            shopAvailabilityComboBox.SelectedItem = item.ShopAvailability;
+            shopAvailabilityComboBox.SetValueAndDefault( item.ShopAvailability, item.Default.ShopAvailability );
             for( int i = 0; i < 8; i++ )
             {
                 itemAttributesCheckedListBox.SetItemChecked( i,
@@ -199,12 +199,12 @@ namespace FFTPatcher.Editors
                 shieldMagicBlockRateSpinner, shieldPhysicalBlockRateSpinner, 
                 accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateLabel, 
                 chemistItemFormulaSpinner, chemistItemSpellStatusSpinner, chemistItemXSpinner } );
-            comboBoxes.AddRange( new ComboBox[] { itemTypeComboBox, shopAvailabilityComboBox } );
+            comboBoxes.AddRange( new ComboBoxWithDefault[] { itemTypeComboBox, shopAvailabilityComboBox } );
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
-            foreach( ComboBox comboBox in comboBoxes )
+            foreach( ComboBoxWithDefault comboBox in comboBoxes )
             {
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
@@ -273,7 +273,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                ComboBox c = sender as ComboBox;
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 Utilities.SetFieldOrProperty( item, c.Tag.ToString(), c.SelectedItem );
             }
         }

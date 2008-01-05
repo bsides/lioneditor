@@ -78,9 +78,9 @@ namespace FFTPatcher.Editors
             this.graphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.itemAttributesSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.enemyLevelSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.itemTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.itemTypeComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.priceSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.shopAvailabilityComboBox = new System.Windows.Forms.ComboBox();
+            this.shopAvailabilityComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.itemAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
             this.weaponPanel = new System.Windows.Forms.Panel();
             this.weaponAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
@@ -892,9 +892,9 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.NumericUpDownWithDefault graphicSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault itemAttributesSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault enemyLevelSpinner;
-        private System.Windows.Forms.ComboBox itemTypeComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault itemTypeComboBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault priceSpinner;
-        private System.Windows.Forms.ComboBox shopAvailabilityComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault shopAvailabilityComboBox;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight itemAttributesCheckedListBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault weaponEvadePercentageSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault weaponPowerSpinner;

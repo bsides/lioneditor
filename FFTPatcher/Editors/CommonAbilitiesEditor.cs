@@ -120,7 +120,7 @@ namespace FFTPatcher.Editors
             ignoreChanges = true;
             jpCostSpinner.SetValueAndDefault( ability.JPCost, ability.Default.JPCost );
             chanceSpinner.SetValueAndDefault( ability.LearnRate, ability.Default.LearnRate );
-            abilityTypeComboBox.SelectedItem = ability.AbilityType;
+            abilityTypeComboBox.SetValueAndDefault( ability.AbilityType, ability.Default.AbilityType );
 
             for( int i = 0; i < 12; i++ )
             {

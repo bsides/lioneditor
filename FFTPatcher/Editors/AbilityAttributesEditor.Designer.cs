@@ -201,11 +201,6 @@ namespace FFTPatcher.Editors
             // mpSpinner
             // 
             this.mpSpinner.AutoSize = true;
-            this.mpSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.mpSpinner.Location = new System.Drawing.Point( 102, 198 );
             this.mpSpinner.Maximum = new decimal( new int[] {
             255,
@@ -221,11 +216,6 @@ namespace FFTPatcher.Editors
             // ctSpinner
             // 
             this.ctSpinner.AutoSize = true;
-            this.ctSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.ctSpinner.Location = new System.Drawing.Point( 102, 175 );
             this.ctSpinner.Maximum = new decimal( new int[] {
             255,
@@ -241,11 +231,6 @@ namespace FFTPatcher.Editors
             // statusSpinner
             // 
             this.statusSpinner.AutoSize = true;
-            this.statusSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.statusSpinner.Hexadecimal = true;
             this.statusSpinner.Location = new System.Drawing.Point( 102, 152 );
             this.statusSpinner.Maximum = new decimal( new int[] {
@@ -262,11 +247,6 @@ namespace FFTPatcher.Editors
             // ySpinner
             // 
             this.ySpinner.AutoSize = true;
-            this.ySpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.ySpinner.Location = new System.Drawing.Point( 102, 129 );
             this.ySpinner.Maximum = new decimal( new int[] {
             255,
@@ -282,11 +262,6 @@ namespace FFTPatcher.Editors
             // xSpinner
             // 
             this.xSpinner.AutoSize = true;
-            this.xSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.xSpinner.Location = new System.Drawing.Point( 102, 106 );
             this.xSpinner.Maximum = new decimal( new int[] {
             255,
@@ -301,11 +276,6 @@ namespace FFTPatcher.Editors
             // 
             // formulaSpinner
             // 
-            this.formulaSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.formulaSpinner.Hexadecimal = true;
             this.formulaSpinner.Location = new System.Drawing.Point( 102, 83 );
             this.formulaSpinner.Maximum = new decimal( new int[] {
@@ -322,11 +292,6 @@ namespace FFTPatcher.Editors
             // verticalSpinner
             // 
             this.verticalSpinner.AutoSize = true;
-            this.verticalSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.verticalSpinner.Location = new System.Drawing.Point( 102, 60 );
             this.verticalSpinner.Maximum = new decimal( new int[] {
             255,
@@ -342,11 +307,6 @@ namespace FFTPatcher.Editors
             // effectSpinner
             // 
             this.effectSpinner.AutoSize = true;
-            this.effectSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.effectSpinner.Location = new System.Drawing.Point( 102, 37 );
             this.effectSpinner.Maximum = new decimal( new int[] {
             255,
@@ -362,11 +322,6 @@ namespace FFTPatcher.Editors
             // rangeSpinner
             // 
             this.rangeSpinner.AutoSize = true;
-            this.rangeSpinner.DefaultValue = new decimal( new int[] {
-            0,
-            0,
-            0,
-            0} );
             this.rangeSpinner.Location = new System.Drawing.Point( 102, 14 );
             this.rangeSpinner.Maximum = new decimal( new int[] {
             255,

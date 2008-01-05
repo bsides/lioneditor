@@ -56,8 +56,10 @@ namespace FFTPatcher.Datatypes
                         new SubArray<byte>( Resources.OldItemAttributesBin ),
                         new SubArray<byte>( Resources.NewItemAttributesBin ) );
                     Jobs = new AllJobs( Context, new SubArray<byte>( Resources.JobsBin ) );
-                    JobLevels = new JobLevels( Context, new SubArray<byte>( Resources.JobLevelsBin ) );
-                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( Resources.SkillSetsBin ) );
+                    JobLevels = new JobLevels( Context, new SubArray<byte>( Resources.JobLevelsBin ),
+                        new JobLevels( Context, new SubArray<byte>( Resources.JobLevelsBin ) ) );
+                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( Resources.SkillSetsBin ),
+                        new SubArray<byte>( Resources.SkillSetsBin ) );
                     MonsterSkills = new AllMonsterSkills( new SubArray<byte>( Resources.MonsterSkillsBin ) );
                     ActionMenus = new AllActionMenus( new SubArray<byte>( Resources.ActionEventsBin ) );
                     StatusAttributes = new AllStatusAttributes( new SubArray<byte>( Resources.StatusAttributesBin ) );
@@ -69,8 +71,10 @@ namespace FFTPatcher.Datatypes
                     Items = new AllItems( new SubArray<byte>( PSXResources.OldItemsBin ), null );
                     ItemAttributes = new AllItemAttributes( new SubArray<byte>( PSXResources.OldItemAttributesBin ), null );
                     Jobs = new AllJobs( Context, new SubArray<byte>( PSXResources.JobsBin ) );
-                    JobLevels = new JobLevels( Context, new SubArray<byte>( PSXResources.JobLevelsBin ) );
-                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( PSXResources.SkillSetsBin ) );
+                    JobLevels = new JobLevels( Context, new SubArray<byte>( PSXResources.JobLevelsBin ),
+                        new JobLevels( Context, new SubArray<byte>( PSXResources.JobLevelsBin ) ) );
+                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( PSXResources.SkillSetsBin ),
+                        new SubArray<byte>( PSXResources.SkillSetsBin ) );
                     MonsterSkills = new AllMonsterSkills( new SubArray<byte>( PSXResources.MonsterSkillsBin ) );
                     ActionMenus = new AllActionMenus( new SubArray<byte>( PSXResources.ActionEventsBin ) );
                     StatusAttributes = new AllStatusAttributes( new SubArray<byte>( PSXResources.StatusAttributesBin ) );
@@ -197,7 +201,8 @@ namespace FFTPatcher.Datatypes
             Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
             JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ),
                 new JobLevels( Context, new SubArray<byte>( Context == Context.US_PSP ? Resources.JobLevelsBin : PSXResources.JobLevelsBin ) ) );
-            SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ) );
+            SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ),
+                new SubArray<byte>( Context == Context.US_PSP ? Resources.SkillSetsBin : PSXResources.SkillSetsBin ) );
             MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
             ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );
             StatusAttributes = new AllStatusAttributes( new SubArray<byte>( statusAttributes ) );

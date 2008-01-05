@@ -47,30 +47,30 @@ namespace FFTPatcher.Editors
         /// </summary>
         private void InitializeComponent()
         {
-            this.actionComboBox1 = new System.Windows.Forms.ComboBox();
+            this.actionComboBox1 = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.actionGroupBox = new System.Windows.Forms.GroupBox();
-            this.actionComboBox16 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox15 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox14 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox13 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox12 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox11 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox10 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox9 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox8 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox7 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox6 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox5 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox4 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox3 = new System.Windows.Forms.ComboBox();
-            this.actionComboBox2 = new System.Windows.Forms.ComboBox();
+            this.actionComboBox16 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox15 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox14 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox13 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox12 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox11 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox10 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox9 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox8 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox7 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox6 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox5 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox4 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox3 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.actionComboBox2 = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.theRestGroupBox = new System.Windows.Forms.GroupBox();
-            this.theRestComboBox6 = new System.Windows.Forms.ComboBox();
-            this.theRestComboBox5 = new System.Windows.Forms.ComboBox();
-            this.theRestComboBox4 = new System.Windows.Forms.ComboBox();
-            this.theRestComboBox3 = new System.Windows.Forms.ComboBox();
-            this.theRestComboBox2 = new System.Windows.Forms.ComboBox();
-            this.theRestComboBox1 = new System.Windows.Forms.ComboBox();
+            this.theRestComboBox6 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.theRestComboBox5 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.theRestComboBox4 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.theRestComboBox3 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.theRestComboBox2 = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.theRestComboBox1 = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.actionGroupBox.SuspendLayout();
             this.theRestGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -335,29 +335,29 @@ namespace FFTPatcher.Editors
 
         #endregion
 
-        private System.Windows.Forms.ComboBox actionComboBox1;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox1;
         private System.Windows.Forms.GroupBox actionGroupBox;
-        private System.Windows.Forms.ComboBox actionComboBox16;
-        private System.Windows.Forms.ComboBox actionComboBox15;
-        private System.Windows.Forms.ComboBox actionComboBox14;
-        private System.Windows.Forms.ComboBox actionComboBox13;
-        private System.Windows.Forms.ComboBox actionComboBox12;
-        private System.Windows.Forms.ComboBox actionComboBox11;
-        private System.Windows.Forms.ComboBox actionComboBox10;
-        private System.Windows.Forms.ComboBox actionComboBox9;
-        private System.Windows.Forms.ComboBox actionComboBox8;
-        private System.Windows.Forms.ComboBox actionComboBox7;
-        private System.Windows.Forms.ComboBox actionComboBox6;
-        private System.Windows.Forms.ComboBox actionComboBox5;
-        private System.Windows.Forms.ComboBox actionComboBox4;
-        private System.Windows.Forms.ComboBox actionComboBox3;
-        private System.Windows.Forms.ComboBox actionComboBox2;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox16;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox15;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox14;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox13;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox12;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox11;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox10;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox9;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox8;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox7;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox6;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox5;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox4;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox3;
+        private FFTPatcher.Controls.ComboBoxWithDefault actionComboBox2;
         private System.Windows.Forms.GroupBox theRestGroupBox;
-        private System.Windows.Forms.ComboBox theRestComboBox6;
-        private System.Windows.Forms.ComboBox theRestComboBox5;
-        private System.Windows.Forms.ComboBox theRestComboBox4;
-        private System.Windows.Forms.ComboBox theRestComboBox3;
-        private System.Windows.Forms.ComboBox theRestComboBox2;
-        private System.Windows.Forms.ComboBox theRestComboBox1;
+        private FFTPatcher.Controls.ComboBoxWithDefault theRestComboBox6;
+        private FFTPatcher.Controls.ComboBoxWithDefault theRestComboBox5;
+        private FFTPatcher.Controls.ComboBoxWithDefault theRestComboBox4;
+        private FFTPatcher.Controls.ComboBoxWithDefault theRestComboBox3;
+        private FFTPatcher.Controls.ComboBoxWithDefault theRestComboBox2;
+        private FFTPatcher.Controls.ComboBoxWithDefault theRestComboBox1;
     }
 }

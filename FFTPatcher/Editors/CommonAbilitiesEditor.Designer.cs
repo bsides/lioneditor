@@ -57,7 +57,7 @@ namespace FFTPatcher.Editors
             this.jpCostSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.chanceSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.propertiesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
-            this.abilityTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.abilityTypeComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             jpCostLabel = new System.Windows.Forms.Label();
             learnChanceLabel = new System.Windows.Forms.Label();
             percentLabel = new System.Windows.Forms.Label();
@@ -243,7 +243,7 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox3;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox2;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox1;
-        private System.Windows.Forms.ComboBox abilityTypeComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault abilityTypeComboBox;
         private FFTPatcher.Controls.CheckedListBoxNoHighlight propertiesCheckedListBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault chanceSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault jpCostSpinner;

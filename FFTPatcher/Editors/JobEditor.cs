@@ -29,7 +29,7 @@ namespace FFTPatcher.Editors
         private Job job;
         private bool ignoreChanges;
         private NumericUpDownWithDefault[] spinners;
-        private ComboBox[] comboBoxes;
+        private ComboBoxWithDefault[] comboBoxes;
 
         public Job Job
         {
@@ -59,14 +59,14 @@ namespace FFTPatcher.Editors
                 speedGrowthSpinner, speedMultiplierSpinner, paGrowthSpinner, paMultiplierSpinner,
                 maGrowthSpinner, maMultiplierSpinner, moveSpinner, jumpSpinner,
                 cevSpinner, mPortraitSpinner, mPaletteSpinner, mGraphicSpinner };
-            comboBoxes = new ComboBox[] {
+            comboBoxes = new ComboBoxWithDefault[] {
                 skillsetComboBox, innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox };
 
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
-            foreach( ComboBox comboBox in comboBoxes )
+            foreach( ComboBoxWithDefault comboBox in comboBoxes )
             {
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
@@ -88,7 +88,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                ComboBox c = sender as ComboBox;
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 Utilities.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
             }
         }
@@ -120,14 +120,14 @@ namespace FFTPatcher.Editors
                 ourContext = FFTPatch.Context;
                 skillsetComboBox.Items.Clear();
                 skillsetComboBox.Items.AddRange( SkillSet.DummySkillSets );
-                foreach( ComboBox cb in new ComboBox[] { innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox } )
+                foreach( ComboBoxWithDefault cb in new ComboBoxWithDefault[] { innateAComboBox, innateBComboBox, innateCComboBox, innateDComboBox } )
                 {
                     cb.Items.Clear();
                     cb.Items.AddRange( AllAbilities.DummyAbilities );
                 }
             }
 
-            skillsetComboBox.SelectedItem = job.SkillSet;
+            skillsetComboBox.SetValueAndDefault( job.SkillSet, job.Default.SkillSet );
             foreach( NumericUpDownWithDefault s in spinners )
             {
                 // TODO Update Default
@@ -135,10 +135,10 @@ namespace FFTPatcher.Editors
                     Utilities.GetFieldOrProperty<byte>( job, s.Tag.ToString() ),
                     Utilities.GetFieldOrProperty<byte>( job.Default, s.Tag.ToString() ) );
             }
-            innateAComboBox.SelectedItem = job.InnateA;
-            innateBComboBox.SelectedItem = job.InnateB;
-            innateCComboBox.SelectedItem = job.InnateC;
-            innateDComboBox.SelectedItem = job.InnateD;
+            innateAComboBox.SetValueAndDefault( job.InnateA, job.Default.InnateA );
+            innateBComboBox.SetValueAndDefault( job.InnateB, job.Default.InnateB );
+            innateCComboBox.SetValueAndDefault( job.InnateC, job.Default.InnateC );
+            innateDComboBox.SetValueAndDefault( job.InnateD, job.Default.InnateD );
             absorbElementsEditor.Elements = job.AbsorbElement;
             halfElementsEditor.Elements = job.HalfElement;
             cancelElementsEditor.Elements = job.CancelElement;

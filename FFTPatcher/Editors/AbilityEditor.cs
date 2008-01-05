@@ -96,18 +96,24 @@ namespace FFTPatcher.Editors
                 throwingComboBox.DataSource = psxItemTypes;
             }
             itemUseComboBox.Visible = ability.IsItem;
-            itemUseComboBox.SelectedItem = ability.Item;
+            if( ability.IsItem )
+            {
+                itemUseComboBox.SetValueAndDefault( ability.Item, ability.Default.Item );
+            }
 
             throwingLabel.Visible = ability.IsThrowing;
 
             throwingComboBox.Visible = ability.IsThrowing;
-            throwingComboBox.SelectedItem = ability.Throwing;
+            if( ability.IsThrowing )
+            {
+                throwingComboBox.SetValueAndDefault( ability.Throwing, ability.Default.Throwing );
+            }
 
             ignoreChanges = false;
         }
 
         private List<NumericUpDownWithDefault> spinners;
-        private List<ComboBox> comboBoxes;
+        private List<ComboBoxWithDefault> comboBoxes;
         private List<Item> psxItems = new List<Item>( 256 );
         private List<Item> pspItems = new List<Item>( 256 );
         private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
@@ -118,7 +124,7 @@ namespace FFTPatcher.Editors
             InitializeComponent();
             spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { 
                 arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner } );
-            comboBoxes = new List<ComboBox>( new ComboBox[] { itemUseComboBox, throwingComboBox } );
+            comboBoxes = new List<ComboBoxWithDefault>( new ComboBoxWithDefault[] { itemUseComboBox, throwingComboBox } );
 
             arithmeticksSpinner.Tag = "ArithmetickSkill";
             ctSpinner.Tag = "ChargeCT";
@@ -133,7 +139,7 @@ namespace FFTPatcher.Editors
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
-            foreach( ComboBox combo in comboBoxes )
+            foreach( ComboBoxWithDefault combo in comboBoxes )
             {
                 combo.SelectedIndexChanged += combo_SelectedIndexChanged;
             }
@@ -172,7 +178,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                ComboBox c = sender as ComboBox;
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 Utilities.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
             }
         }

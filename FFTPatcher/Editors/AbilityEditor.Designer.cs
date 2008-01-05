@@ -47,9 +47,9 @@ namespace FFTPatcher.Editors
         /// </summary>
         private void InitializeComponent()
         {
-            this.itemUseComboBox = new System.Windows.Forms.ComboBox();
+            this.itemUseComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.itemUseLabel = new System.Windows.Forms.Label();
-            this.throwingComboBox = new System.Windows.Forms.ComboBox();
+            this.throwingComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.throwingLabel = new System.Windows.Forms.Label();
             this.horizontalSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.verticalSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -338,9 +338,9 @@ namespace FFTPatcher.Editors
 
         private CommonAbilitiesEditor commonAbilitiesEditor;
         private AbilityAttributesEditor abilityAttributesEditor;
-        private System.Windows.Forms.ComboBox itemUseComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault itemUseComboBox;
         private System.Windows.Forms.Label itemUseLabel;
-        private System.Windows.Forms.ComboBox throwingComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault throwingComboBox;
         private System.Windows.Forms.Label throwingLabel;
         private FFTPatcher.Controls.NumericUpDownWithDefault horizontalSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault verticalSpinner;

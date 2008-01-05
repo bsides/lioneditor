@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using FFTPatcher.Controls;
 
 namespace FFTPatcher.Editors
 {
@@ -48,18 +49,18 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private List<ComboBox> actionComboBoxes;
-        private List<ComboBox> theRestComboBoxes;
+        private List<ComboBoxWithDefault> actionComboBoxes;
+        private List<ComboBoxWithDefault> theRestComboBoxes;
 
         public SkillSetEditor()
         {
             InitializeComponent();
-            actionComboBoxes = new List<ComboBox>( new ComboBox[] { 
+            actionComboBoxes = new List<ComboBoxWithDefault>( new ComboBoxWithDefault[] { 
                 actionComboBox1, actionComboBox2, actionComboBox3, actionComboBox4, 
                 actionComboBox5, actionComboBox6, actionComboBox7, actionComboBox8, 
                 actionComboBox9, actionComboBox10, actionComboBox11, actionComboBox12, 
                 actionComboBox13, actionComboBox14, actionComboBox15, actionComboBox16 } );
-            theRestComboBoxes = new List<ComboBox>( new ComboBox[] {
+            theRestComboBoxes = new List<ComboBoxWithDefault>( new ComboBoxWithDefault[] {
                 theRestComboBox1, theRestComboBox2, theRestComboBox3,
                 theRestComboBox4, theRestComboBox5, theRestComboBox6 } );
         }
@@ -68,7 +69,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                ComboBox c = sender as ComboBox;
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 int i = actionComboBoxes.IndexOf( c );
                 skillSet.Actions[i] = c.SelectedItem as Ability;
             }
@@ -78,7 +79,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                ComboBox c = sender as ComboBox;
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 int i = theRestComboBoxes.IndexOf( c );
                 skillSet.TheRest[i] = c.SelectedItem as Ability;
             }
@@ -94,13 +95,13 @@ namespace FFTPatcher.Editors
             if( ourContext != FFTPatch.Context )
             {
                 ourContext = FFTPatch.Context;
-                foreach( ComboBox actionComboBox in actionComboBoxes )
+                foreach( ComboBoxWithDefault actionComboBox in actionComboBoxes )
                 {
                     actionComboBox.Items.Clear();
                     actionComboBox.Items.AddRange( AllAbilities.DummyAbilities );
                     actionComboBox.SelectedIndexChanged += actionComboBox_SelectedIndexChanged;
                 }
-                foreach( ComboBox theRestComboBox in theRestComboBoxes )
+                foreach( ComboBoxWithDefault theRestComboBox in theRestComboBoxes )
                 {
                     theRestComboBox.Items.Clear();
                     theRestComboBox.Items.AddRange( AllAbilities.DummyAbilities );
@@ -109,11 +110,11 @@ namespace FFTPatcher.Editors
             }
             for( int i = 0; i < 16; i++ )
             {
-                actionComboBoxes[i].SelectedItem = skillSet.Actions[i];
+                actionComboBoxes[i].SetValueAndDefault( skillSet.Actions[i], skillSet.Default.Actions[i] );
             }
             for( int i = 0; i < 6; i++ )
             {
-                theRestComboBoxes[i].SelectedItem = skillSet.TheRest[i];
+                theRestComboBoxes[i].SetValueAndDefault( skillSet.TheRest[i], skillSet.Default.TheRest[i] );
             }
 
             theRestGroupBox.ResumeLayout();

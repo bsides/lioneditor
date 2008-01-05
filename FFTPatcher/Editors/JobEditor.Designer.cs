@@ -70,7 +70,7 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label hLabel1;
             System.Windows.Forms.Label hLabel2;
             System.Windows.Forms.Label hLabel3;
-            this.skillsetComboBox = new System.Windows.Forms.ComboBox();
+            this.skillsetComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.hpGrowthSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.hpMultiplierSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.mpGrowthSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -86,10 +86,10 @@ namespace FFTPatcher.Editors
             this.cevSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.mPortraitSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.mPaletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.innateAComboBox = new System.Windows.Forms.ComboBox();
-            this.innateBComboBox = new System.Windows.Forms.ComboBox();
-            this.innateCComboBox = new System.Windows.Forms.ComboBox();
-            this.innateDComboBox = new System.Windows.Forms.ComboBox();
+            this.innateAComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.innateBComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.innateCComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.innateDComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.mGraphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.startingStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
             this.statusImmunityEditor = new FFTPatcher.Editors.StatusesEditor();
@@ -796,7 +796,7 @@ namespace FFTPatcher.Editors
 
         #endregion
 
-        private System.Windows.Forms.ComboBox skillsetComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault skillsetComboBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault hpGrowthSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault hpMultiplierSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault mpGrowthSpinner;
@@ -812,10 +812,10 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.NumericUpDownWithDefault cevSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault mPortraitSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault mPaletteSpinner;
-        private System.Windows.Forms.ComboBox innateAComboBox;
-        private System.Windows.Forms.ComboBox innateBComboBox;
-        private System.Windows.Forms.ComboBox innateCComboBox;
-        private System.Windows.Forms.ComboBox innateDComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault innateAComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault innateBComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault innateCComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault innateDComboBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault mGraphicSpinner;
         private ElementsEditor absorbElementsEditor;
         private ElementsEditor cancelElementsEditor;

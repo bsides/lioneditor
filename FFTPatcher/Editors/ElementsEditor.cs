@@ -17,6 +17,7 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
@@ -28,11 +29,15 @@ namespace FFTPatcher.Editors
     public partial class ElementsEditor : UserControl
     {
         private Elements elements = new Elements( 0 );
+        private Elements defaults;
+
+        private static string[] elementNames = new string[] {
+                "Fire", "Lightning", "Ice", "Wind", "Earth", "Water", "Holy", "Dark" };
 
         public void SetValueAndDefaults( Elements value, Elements defaults )
         {
-            elementsCheckedListBox.Defaults = defaults.ToBoolArray();
             elements = value;
+            this.defaults = defaults;
             Enabled = true;
             UpdateView();
         }
@@ -67,12 +72,7 @@ namespace FFTPatcher.Editors
             elementsCheckedListBox.SuspendLayout();
 
             ignoreChanges = true;
-            for( int i = 0; i < elementsCheckedListBox.Items.Count; i++ )
-            {
-                string s = elementsCheckedListBox.Items[i].ToString();
-                PropertyInfo pi = elements.GetType().GetProperty( s );
-                elementsCheckedListBox.SetItemChecked( i, (bool)pi.GetValue( elements, null ) );
-            }
+            elementsCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( elements, elementNames ), Utilities.GetFieldsOrProperties<bool>( defaults, elementNames ) );
             ignoreChanges = false;
 
             elementsCheckedListBox.ResumeLayout();
@@ -83,8 +83,7 @@ namespace FFTPatcher.Editors
 
         private class ElementsCheckedListBox : CheckedListBox
         {
-            public bool[] Defaults { get; set; }
-
+            public bool[] Defaults { get; private set; }
             private enum Elements
             {
                 Fire,
@@ -100,6 +99,43 @@ namespace FFTPatcher.Editors
             public ElementsCheckedListBox()
                 : base()
             {
+            }
+
+            public void SetValuesAndDefaults( bool[] values, bool[] defaults )
+            {
+                if( (values != null) && (defaults != null) && (this.Defaults == null) )
+                {
+                    this.Defaults = defaults;
+                    for( int i = 0; i < values.Length; i++ )
+                    {
+                        SetItemChecked( i, values[i] );
+                        RefreshItem( i );
+                    }
+                }
+                else if( (values != null) && (defaults != null) && (this.Defaults != null) )
+                {
+                    List<int> itemsToRefresh = new List<int>( values.Length );
+                    for( int i = 0; i < values.Length; i++ )
+                    {
+                        if( ((GetItemChecked( i ) ^ this.Defaults[i]) && !(values[i] ^ defaults[i])) ||
+                            (!(GetItemChecked( i ) ^ this.Defaults[i]) && (values[i] ^ defaults[i])) )
+                        {
+                            itemsToRefresh.Add( i );
+                        }
+                    }
+
+                    this.Defaults = defaults;
+                    for( int i = 0; i < values.Length; i++ )
+                    {
+                        SetItemChecked( i, values[i] );
+                    }
+
+                    foreach( int i in itemsToRefresh )
+                    {
+                        SetItemChecked( i, !values[i] );
+                        SetItemChecked( i, values[i] );
+                    }
+                }
             }
 
             protected override void OnDrawItem( DrawItemEventArgs e )

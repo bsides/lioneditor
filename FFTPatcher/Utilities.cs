@@ -174,6 +174,17 @@ namespace FFTPatcher
             }
         }
 
+        public static T[] GetFieldsOrProperties<T>( object target, string[] names )
+        {
+            T[] result = new T[names.Length];
+            for( int i = 0; i < names.Length; i++ )
+            {
+                result[i] = GetFieldOrProperty<T>( target, names[i] );
+            }
+
+            return result;
+        }
+
         public static void SetFieldOrProperty( object target, string name, object newValue )
         {
             PropertyInfo pi = target.GetType().GetProperty( name );

@@ -19,8 +19,8 @@
 
 using System;
 using System.Windows.Forms;
-using FFTPatcher.Datatypes;
 using FFTPatcher.Controls;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
@@ -67,12 +67,7 @@ namespace FFTPatcher.Editors
 
             if( statusAttribute.Default != null )
             {
-                checkedListBox.Defaults = statusAttribute.Default.ToBoolArray();
-            }
-
-            for( int i = 0; i < checkedListBox.Items.Count; i++ )
-            {
-                checkedListBox.SetItemChecked( i, Utilities.GetFieldOrProperty<bool>( statusAttribute, PropertyNames[i] ) );
+                checkedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( statusAttribute, PropertyNames ), statusAttribute.Default.ToBoolArray() );
             }
 
             cantStackStatusesEditor.Statuses = statusAttribute.CantStackOn;

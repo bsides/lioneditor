@@ -71,13 +71,9 @@ namespace FFTPatcher.Editors
 
             if( status.Default != null )
             {
-                flagsCheckedListBox.Defaults = status.Default.ToBoolArray();
+                flagsCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( status, flags ), status.Default.ToBoolArray() );
             }
 
-            for( int i = 0; i < 8; i++ )
-            {
-                flagsCheckedListBox.SetItemChecked( i, Utilities.GetFlag( status, flags[i] ) );
-            }
             inflictStatusesEditor.Statuses = status.Statuses;
 
             inflictStatusesEditor.ResumeLayout();

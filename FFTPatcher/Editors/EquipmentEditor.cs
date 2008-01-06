@@ -99,13 +99,9 @@ namespace FFTPatcher.Editors
             }
             if( equipment.Default != null )
             {
-                equipmentCheckedListBox.Defaults = equipment.Default.ToBoolArray();
+                equipmentCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( equipment, FieldNames ), equipment.Default.ToBoolArray() );
             }
 
-            for (int i = 0; i < equipmentCheckedListBox.Items.Count; i++)
-            {
-                equipmentCheckedListBox.SetItemChecked(i, Utilities.GetFlag(equipment, FieldNames[i]));
-            }
             ignoreChanges = false;
             equipmentCheckedListBox.ResumeLayout();
             this.ResumeLayout();

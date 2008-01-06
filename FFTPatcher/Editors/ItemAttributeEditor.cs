@@ -19,8 +19,8 @@
 
 using System;
 using System.Windows.Forms;
-using FFTPatcher.Datatypes;
 using FFTPatcher.Controls;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {

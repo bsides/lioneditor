@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using FFTPatcher.Datatypes;
 using FFTPatcher.Controls;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
@@ -63,14 +63,13 @@ namespace FFTPatcher.Editors
             elementsEditor.SuspendLayout();
 
             ignoreChanges = true;
+            bool[] defaults = null;
             if( attributes.Default != null )
             {
-                flagsCheckedListBox.Defaults = attributes.Default.ToBoolArray();
+                defaults = attributes.Default.ToBoolArray();
             }
-            for( int i = 0; i < flagsCheckedListBox.Items.Count; i++ )
-            {
-                flagsCheckedListBox.SetItemChecked( i, Utilities.GetFlag( attributes, FlagNames[i] ) );
-            }
+
+            flagsCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( attributes, FlagNames.ToArray() ), defaults );
 
             foreach( NumericUpDownWithDefault spinner in spinners )
             {

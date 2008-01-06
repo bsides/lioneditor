@@ -17,6 +17,8 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -25,7 +27,51 @@ namespace FFTPatcher.Controls
 {
     public partial class CheckedListBoxNoHighlightWithDefault : CheckedListBox
     {
-        public bool[] Defaults { get; set; }
+        private SortedList haveOutlines = new SortedList( null as IComparer );
+
+        private bool[] defaults;
+        public bool[] Defaults
+        {
+            get { return defaults; }
+            private set { defaults = value; }
+        }
+
+        public void SetValuesAndDefaults( bool[] values, bool[] defaults )
+        {
+            if( (values != null) && (defaults != null) && (this.defaults == null) )
+            {
+                this.defaults = defaults;
+                for( int i = 0; i < values.Length; i++ )
+                {
+                    SetItemChecked( i, values[i] );
+                    RefreshItem( i );
+                }
+            }
+            else if( (values != null) && (defaults != null) && (this.defaults != null) )
+            {
+                List<int> itemsToRefresh = new List<int>( values.Length );
+                for( int i = 0; i < values.Length; i++ )
+                {
+                    if( ((GetItemChecked( i ) ^ this.defaults[i]) && !(values[i] ^ defaults[i])) ||
+                        (!(GetItemChecked( i ) ^ this.defaults[i]) && (values[i] ^ defaults[i])) )
+                    {
+                        itemsToRefresh.Add( i );
+                    }
+                }
+
+                this.defaults = defaults;
+                for( int i = 0; i < values.Length; i++ )
+                {
+                    SetItemChecked( i, values[i] );
+                }
+
+                foreach( int i in itemsToRefresh )
+                {
+                    SetItemChecked( i, !values[i] );
+                    SetItemChecked( i, values[i] );
+                }
+            }
+        }
 
         public CheckedListBoxNoHighlightWithDefault()
             : base()
@@ -56,6 +102,10 @@ namespace FFTPatcher.Controls
                 using( Pen p = new Pen( Color.Blue, 1 ) )
                 {
                     e.Graphics.DrawRectangle( p, new Rectangle( e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1 ) );
+                    if( !haveOutlines.Contains( e.Index ) )
+                    {
+                        haveOutlines.Add( e.Index, null );
+                    }
                 }
             }
         }

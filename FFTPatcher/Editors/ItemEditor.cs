@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using FFTPatcher.Datatypes;
 using FFTPatcher.Controls;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
@@ -91,14 +91,9 @@ namespace FFTPatcher.Editors
 
                 if( w.WeaponDefault != null )
                 {
-                    weaponAttributesCheckedListBox.Defaults = w.ToWeaponBoolArray();
+                    weaponAttributesCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( w, weaponBools ), w.WeaponDefault.ToWeaponBoolArray() );
                 }
 
-                for( int i = 0; i < 8; i++ )
-                {
-                    weaponAttributesCheckedListBox.SetItemChecked( i,
-                        Utilities.GetFieldOrProperty<bool>( w, weaponBools[i] ) );
-                }
                 weaponRangeSpinner.SetValueAndDefault(
                     w.Range,
                     w.WeaponDefault.Range );
@@ -180,13 +175,7 @@ namespace FFTPatcher.Editors
 
             if( item.Default != null )
             {
-                itemAttributesCheckedListBox.Defaults = item.ToBoolArray();
-            }
-            
-            for( int i = 0; i < 8; i++ )
-            {
-                itemAttributesCheckedListBox.SetItemChecked( i,
-                    Utilities.GetFieldOrProperty<bool>( item, itemBools[i] ) );
+                itemAttributesCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( item, itemBools ), item.ToBoolArray() );
             }
 
             weaponPanel.ResumeLayout();

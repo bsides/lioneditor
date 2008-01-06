@@ -22,7 +22,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using FFTPatcher.Properties;
-using System.Reflection;
 
 namespace FFTPatcher.Datatypes
 {

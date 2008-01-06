@@ -17,9 +17,9 @@
     along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using System.Drawing;
 
 namespace FFTPatcher.Editors
 {

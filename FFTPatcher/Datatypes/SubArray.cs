@@ -90,6 +90,16 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public T[] ToArray()
+        {
+            T[] result = new T[this.Count];
+            for( int i = 0; i < this.Count; i++ )
+            {
+                result[i] = this[i];
+            }
+            return result;
+        }
+
         #region ICollection<T> Members
 
         public void Add( T item )

@@ -20,8 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using FFTPatcher.Datatypes;
 using FFTPatcher.Controls;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {

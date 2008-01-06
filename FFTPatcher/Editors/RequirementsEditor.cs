@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using System.Drawing;
 
 namespace FFTPatcher.Editors
 {

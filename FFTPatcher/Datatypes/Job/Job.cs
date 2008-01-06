@@ -117,6 +117,12 @@ namespace FFTPatcher.Datatypes
         {
         }
 
+        public Job( byte value, string name )
+        {
+            Value = value;
+            Name = name;
+        }
+
         public byte[] ToByteArray()
         {
             return ToByteArray( Context.US_PSP );
@@ -168,12 +174,17 @@ namespace FFTPatcher.Datatypes
     {
         private static string[] psxNames;
         private static string[] pspNames;
+        private static Job[] psxJobs;
+        private static Job[] pspJobs;
+
+        public static Job[] DummyJobs
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspJobs : psxJobs; }
+        }
+
         public static string[] Names
         {
-            get
-            {
-                return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames;
-            }
+            get { return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames; }
         }
 
         public Job[] Jobs { get; private set; }
@@ -183,17 +194,21 @@ namespace FFTPatcher.Datatypes
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Resources.Jobs );
             pspNames = new string[0xA9];
+            pspJobs = new Job[0xA9];
             for( int i = 0; i < 0xA9; i++ )
             {
                 pspNames[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
+                pspJobs[i] = new Job( (byte)i, pspNames[i] );
             }
 
             doc = new XmlDocument();
             doc.LoadXml( PSXResources.Jobs );
             psxNames = new string[0xA0];
+            psxJobs = new Job[0xA0];
             for( int i = 0; i < 0xA0; i++ )
             {
                 psxNames[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
+                psxJobs[i] = new Job( (byte)i, psxNames[i] );
             }
         }
 

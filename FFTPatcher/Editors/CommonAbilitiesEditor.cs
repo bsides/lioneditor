@@ -20,7 +20,6 @@
 using System;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
-using System.Drawing;
 
 namespace FFTPatcher.Editors
 {
@@ -124,35 +123,12 @@ namespace FFTPatcher.Editors
 
             if( ability.Default != null )
             {
-                propertiesCheckedListBox.Defaults = ability.Default.PropertiesToBoolArray();
+                propertiesCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, PropertiesNames ), ability.Default.PropertiesToBoolArray() );
                 bool[] bools = ability.Default.AIFlags.ToBoolArray();
-                bool[] sub1 = new bool[8];
-                bool[] sub2 = new bool[8];
-                bool[] sub3 = new bool[8];
-                Array.Copy( bools, 0, sub1, 0, 8 );
-                aiCheckedListBox1.Defaults = sub1;
-                Array.Copy( bools, 8, sub2, 0, 8 );
-                aiCheckedListBox2.Defaults = sub2;
-                Array.Copy( bools, 16, sub3, 0, 8 );
-                aiCheckedListBox3.Defaults = sub3;
-            }
 
-            for( int i = 0; i < 12; i++ )
-            {
-                propertiesCheckedListBox.SetItemChecked( i, GetFlagFromAbility( PropertiesNames[i] ) );
-            }
-
-            for( int i = 0; i < 8; i++ )
-            {
-                aiCheckedListBox1.SetItemChecked( i, GetFlagFromAbility( AIPropertyNames[i] ) );
-            }
-            for( int i = 0; i < 8; i++ )
-            {
-                aiCheckedListBox2.SetItemChecked( i, GetFlagFromAbility( AIPropertyNames[i + 8] ) );
-            }
-            for( int i = 0; i < 8; i++ )
-            {
-                aiCheckedListBox3.SetItemChecked( i, GetFlagFromAbility( AIPropertyNames[i + 16] ) );
+                aiCheckedListBox1.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 0, 7 ).ToArray() ), new SubArray<bool>( bools, 0, 7 ).ToArray() );
+                aiCheckedListBox2.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 8, 15 ).ToArray() ), new SubArray<bool>( bools, 8, 15 ).ToArray() );
+                aiCheckedListBox3.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 16, 23 ).ToArray() ), new SubArray<bool>( bools, 16, 23 ).ToArray() );
             }
 
             ignoreChanges = false;

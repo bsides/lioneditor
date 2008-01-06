@@ -1,0 +1,11 @@
+FFTPatcher - v0.164
+
+Changes since v0.148:
+  Changed the behavior of the CheckedListBoxes so that you only have to
+    click once to check or uncheck an item
+  Optimized CWCheat/Gameshark code generation so less codes are generated and
+    the CWCheat codes get split out into groups of 25
+  Added highlighting and tooltips to all editing controls:
+    Controls will be highlighted in blue of the value they modify has been changed from its default
+    MouseOver on an editing control (except checkboxes) will show a tooltip with the default value
+    

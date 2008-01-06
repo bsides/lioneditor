@@ -63,6 +63,11 @@
     <Compile Include="Datatypes\Abilities\AIFlags.cs" />
     <Compile Include="Datatypes\Context.cs" />
     <Compile Include="Datatypes\Elements.cs" />
+    <Compile Include="Datatypes\ENTD\ENTD.cs" />
+    <Compile Include="Datatypes\ENTD\Event.cs" />
+    <Compile Include="Datatypes\ENTD\EventUnit.cs" />
+    <Compile Include="Datatypes\ENTD\SpecialName.cs" />
+    <Compile Include="Datatypes\ENTD\SpriteSet.cs" />
     <Compile Include="Datatypes\FFTPatch.cs" />
     <Compile Include="Datatypes\Items\Accessory.cs" />
     <Compile Include="Datatypes\Items\AllItems.cs" />
@@ -373,6 +378,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\ENTD1.ENT" />
+    <None Include="Resources\ENTD2.ENT" />
+    <None Include="Resources\ENTD3.ENT" />
+    <None Include="Resources\ENTD4.ENT" />
     <None Include="Resources\PSP\Abilities.bin" />
     <None Include="Resources\PSP\ActionEvents.bin" />
     <None Include="Resources\PSP\InflictStatuses.bin" />
@@ -420,11 +429,15 @@
     <Content Include="Resources\PSP\Items.xml" />
     <Content Include="Resources\PSP\Jobs.xml" />
     <Content Include="Resources\PSP\SkillSets.xml" />
+    <Content Include="Resources\PSP\SpecialNames.xml" />
+    <Content Include="Resources\PSP\SpriteSets.xml" />
     <Content Include="Resources\PSX-US\Abilities.xml" />
     <Content Include="Resources\PSX-US\ItemAttributes.xml" />
     <Content Include="Resources\PSX-US\Items.xml" />
     <Content Include="Resources\PSX-US\Jobs.xml" />
     <Content Include="Resources\PSX-US\SkillSets.xml" />
+    <Content Include="Resources\PSX-US\SpecialNames.xml" />
+    <Content Include="Resources\PSX-US\SpriteSets.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

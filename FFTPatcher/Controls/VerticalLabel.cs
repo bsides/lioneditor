@@ -49,7 +49,7 @@ namespace FFTPatcher.Controls
 
 
 
-        private System.ComponentModel.Container components;
+        private System.ComponentModel.Container components = null;
 
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()

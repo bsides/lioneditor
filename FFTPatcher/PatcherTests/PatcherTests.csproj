@@ -50,6 +50,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\ENTD3.ENT">
+      <Link>ENTD3.ENT</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Resources\PSP\Abilities.bin">
       <Link>Abilities.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

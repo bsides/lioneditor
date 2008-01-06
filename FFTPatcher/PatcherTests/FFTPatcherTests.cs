@@ -137,6 +137,20 @@ namespace PatcherTests
         }
 
         [Test]
+        public void ShouldNotMangleENTD()
+        {
+            FileStream stream = new FileStream( "ENTD3.ENT", FileMode.Open );
+            byte[] bytes = new byte[stream.Length];
+            stream.Read( bytes, 0, (int)stream.Length );
+            stream.Close();
+
+            ENTD ent = new ENTD( new SubArray<byte>( bytes ), null );
+            byte[] output = ent.ToByteArray();
+
+            Assert.That( output, Is.EqualTo( bytes ) );
+        }
+
+        [Test]
         public void ShouldHaveCorrectJobRequirements()
         {
             FileStream stream = new FileStream( "JobLevels.bin", FileMode.Open );

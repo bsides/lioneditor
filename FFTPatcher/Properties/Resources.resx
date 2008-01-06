@@ -127,6 +127,18 @@
   <data name="ActionEventsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\actionevents.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ENTD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\entd1.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\entd2.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\entd3.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\entd4.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="InflictStatusesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\inflictstatuses.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -165,6 +177,12 @@
   </data>
   <data name="SkillSetsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\skillsetsbin.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SpecialNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\specialnames.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SpriteSets" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\spritesets.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="StatusAttributesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\statusattributes.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -19,6 +19,7 @@
 
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.Drawing;
 
 namespace FFTPatcher.Editors
 {
@@ -35,6 +36,8 @@ namespace FFTPatcher.Editors
             dataGridView.CellParsing += dataGridView_CellParsing;
             dataGridView.AutoGenerateColumns = false;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
+            dataGridView.CellFormatting += dataGridView_CellFormatting;
+            dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
         public void UpdateView( AllPoachProbabilities probs )
@@ -69,6 +72,44 @@ namespace FFTPatcher.Editors
             if( c != null )
             {
                 c.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
+        }
+
+        private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
+        {
+            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                (dataGridView.Rows[e.RowIndex].DataBoundItem is PoachProbability) )
+            {
+                PoachProbability poach = dataGridView.Rows[e.RowIndex].DataBoundItem as PoachProbability;
+                if( poach.Default != null )
+                {
+                    Item i = Utilities.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                    e.ToolTipText = "Default: " + i.Name;
+                }
+            }
+        }
+
+        private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
+        {
+            if( (e.ColumnIndex == CommonItem.Index) ||
+                (e.ColumnIndex == UncommonItem.Index) )
+            {
+                if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                    (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                    (dataGridView.Rows[e.RowIndex].DataBoundItem is PoachProbability) )
+                {
+                    PoachProbability poach = dataGridView.Rows[e.RowIndex].DataBoundItem as PoachProbability;
+                    if( poach.Default != null )
+                    {
+                        Item i = Utilities.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                        if( i != (e.Value as Item) )
+                        {
+                            e.CellStyle.BackColor = Color.Blue;
+                            e.CellStyle.ForeColor = Color.White;
+                        }
+                    }
+                }
             }
         }
     }

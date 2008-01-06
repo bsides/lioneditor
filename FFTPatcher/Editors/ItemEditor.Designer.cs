@@ -81,9 +81,9 @@ namespace FFTPatcher.Editors
             this.itemTypeComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.priceSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.shopAvailabilityComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.itemAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.itemAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.weaponPanel = new System.Windows.Forms.Panel();
-            this.weaponAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.weaponAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.weaponElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.weaponSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.weaponFormulaSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -895,13 +895,13 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.ComboBoxWithDefault itemTypeComboBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault priceSpinner;
         private FFTPatcher.Controls.ComboBoxWithDefault shopAvailabilityComboBox;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight itemAttributesCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault itemAttributesCheckedListBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault weaponEvadePercentageSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault weaponPowerSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault weaponRangeSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault weaponSpellStatusSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault weaponFormulaSpinner;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight weaponAttributesCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault weaponAttributesCheckedListBox;
         private ElementsEditor weaponElementsEditor;
         private System.Windows.Forms.Panel shieldPanel;
         private FFTPatcher.Controls.NumericUpDownWithDefault shieldMagicBlockRateSpinner;

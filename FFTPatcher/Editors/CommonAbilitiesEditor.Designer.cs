@@ -51,12 +51,12 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label learnChanceLabel;
             System.Windows.Forms.Label percentLabel;
             System.Windows.Forms.GroupBox aiGroupBox;
-            this.aiCheckedListBox1 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
-            this.aiCheckedListBox2 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
-            this.aiCheckedListBox3 = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.aiCheckedListBox1 = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
+            this.aiCheckedListBox2 = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
+            this.aiCheckedListBox3 = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.jpCostSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.chanceSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.propertiesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.propertiesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.abilityTypeComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             jpCostLabel = new System.Windows.Forms.Label();
             learnChanceLabel = new System.Windows.Forms.Label();
@@ -240,11 +240,11 @@ namespace FFTPatcher.Editors
 
         #endregion
 
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox3;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox2;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight aiCheckedListBox1;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault aiCheckedListBox3;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault aiCheckedListBox2;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault aiCheckedListBox1;
         private FFTPatcher.Controls.ComboBoxWithDefault abilityTypeComboBox;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight propertiesCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault propertiesCheckedListBox;
         private FFTPatcher.Controls.NumericUpDownWithDefault chanceSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault jpCostSpinner;
     }

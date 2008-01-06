@@ -31,9 +31,18 @@ namespace FFTPatcher.Datatypes
         public Ability Beastmaster { get; set; }
         public byte Value { get; private set; }
         public string Name { get; private set; }
+        public MonsterSkill Default { get; private set; }
 
         public MonsterSkill( SubArray<byte> bytes )
+            : this( 0, "", bytes, null )
         {
+        }
+
+        public MonsterSkill( byte value, string name, SubArray<byte> bytes, MonsterSkill defaults )
+        {
+            Default = defaults;
+            Name = name;
+            Value = value;
             bool[] flags = Utilities.BooleansFromByteMSB( bytes[0] );
             Ability1 = AllAbilities.DummyAbilities[flags[0] ? (bytes[1] + 0x100) : bytes[1]];
             Ability2 = AllAbilities.DummyAbilities[flags[1] ? (bytes[2] + 0x100) : bytes[2]];
@@ -42,10 +51,8 @@ namespace FFTPatcher.Datatypes
         }
 
         public MonsterSkill( byte value, string name, SubArray<byte> bytes )
-            : this( bytes )
+            : this( value, name, bytes, null )
         {
-            Name = name;
-            Value = value;
         }
 
         public byte[] ToByteArray()
@@ -90,10 +97,13 @@ namespace FFTPatcher.Datatypes
 
         public AllMonsterSkills( SubArray<byte> bytes )
         {
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin;
+
             MonsterSkills = new MonsterSkill[48];
             for( int i = 0; i < 48; i++ )
             {
-                MonsterSkills[i] = new MonsterSkill( (byte)(i + 0xB0), Names[i], new SubArray<byte>( bytes, 5 * i, 5 * i + 4 ) );
+                MonsterSkills[i] = new MonsterSkill( (byte)(i + 0xB0), Names[i], new SubArray<byte>( bytes, 5 * i, 5 * i + 4 ),
+                    new MonsterSkill( (byte)(i + 0xB0), Names[i], new SubArray<byte>( defaultBytes, 5 * i, 5 * i + 4 ) ) );
             }
         }
 

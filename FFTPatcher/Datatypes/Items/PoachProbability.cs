@@ -28,11 +28,19 @@ namespace FFTPatcher.Datatypes
         public Item Common { get; set; }
         public Item Uncommon { get; set; }
 
-        public PoachProbability( string name, SubArray<byte> bytes )
+        public PoachProbability Default { get; private set; }
+
+        public PoachProbability( string name, SubArray<byte> bytes, PoachProbability defaults )
         {
+            Default = defaults;
             MonsterName = name;
             Common = Item.GetItemAtOffset( bytes[0] );
             Uncommon = Item.GetItemAtOffset( bytes[1] );
+        }
+
+        public PoachProbability( string name, SubArray<byte> bytes )
+            : this( name, bytes, null )
+        {
         }
 
         public byte[] ToByteArray()
@@ -50,10 +58,13 @@ namespace FFTPatcher.Datatypes
 
         public AllPoachProbabilities( SubArray<byte> bytes )
         {
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin;
+
             PoachProbabilities = new PoachProbability[48];
             for( int i = 0; i < 48; i++ )
             {
-                PoachProbabilities[i] = new PoachProbability( AllJobs.Names[i + 0x5E], new SubArray<byte>( bytes, i * 2, i * 2 + 1 ) );
+                PoachProbabilities[i] = new PoachProbability( AllJobs.Names[i + 0x5E], new SubArray<byte>( bytes, i * 2, i * 2 + 1 ),
+                    new PoachProbability( AllJobs.Names[i + 0x5E], new SubArray<byte>( defaultBytes, i * 2, i * 2 + 1 ) ) );
             }
         }
 

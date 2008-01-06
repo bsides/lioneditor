@@ -60,7 +60,7 @@ namespace FFTPatcher.Editors
             this.ctSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.cancelStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
             this.cantStackStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
-            this.checkedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.checkedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             blank1Label = new System.Windows.Forms.Label();
             blank2Label = new System.Windows.Forms.Label();
             orderLabel = new System.Windows.Forms.Label();
@@ -279,6 +279,6 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.NumericUpDownWithDefault ctSpinner;
         private StatusesEditor cancelStatusesEditor;
         private StatusesEditor cantStackStatusesEditor;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight checkedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault checkedListBox;
     }
 }

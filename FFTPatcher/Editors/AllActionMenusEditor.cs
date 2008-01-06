@@ -19,6 +19,7 @@
 
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.Drawing;
 
 namespace FFTPatcher.Editors
 {
@@ -37,6 +38,7 @@ namespace FFTPatcher.Editors
             dataGridView.AutoGenerateColumns = false;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
+            dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
         public void UpdateView( AllActionMenus actionMenus )
@@ -51,6 +53,38 @@ namespace FFTPatcher.Editors
                 byte b = (byte)e.Value;
                 e.Value = b.ToString( "X2" );
                 e.FormattingApplied = true;
+            }
+            else if( e.ColumnIndex==ActionColumn.Index)
+            {
+                if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                    (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                    (dataGridView.Rows[e.RowIndex].DataBoundItem is ActionMenu) )
+                {
+                    ActionMenu menu = dataGridView.Rows[e.RowIndex].DataBoundItem as ActionMenu;
+                    if( menu.Default != null )
+                    {
+                        ActionMenuEntry a = menu.Default.MenuAction;
+                        if( a != (e.Value as ActionMenuEntry) )
+                        {
+                            e.CellStyle.BackColor = Color.Blue;
+                            e.CellStyle.ForeColor = Color.White;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
+        {
+            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                (dataGridView.Rows[e.RowIndex].DataBoundItem is ActionMenu) )
+            {
+                ActionMenu menu = dataGridView.Rows[e.RowIndex].DataBoundItem as ActionMenu;
+                if( menu.Default != null )
+                {
+                    e.ToolTipText = "Default: " + menu.Default.MenuAction.ToString();
+                }
             }
         }
 

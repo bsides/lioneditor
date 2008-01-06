@@ -48,7 +48,7 @@ namespace FFTPatcher.Editors
         private void InitializeComponent()
         {
             this.inflictStatusesEditor = new FFTPatcher.Editors.StatusesEditor();
-            this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.SuspendLayout();
             // 
             // inflictStatusesEditor
@@ -94,6 +94,6 @@ namespace FFTPatcher.Editors
         #endregion
 
         private StatusesEditor inflictStatusesEditor;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight flagsCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault flagsCheckedListBox;
     }
 }

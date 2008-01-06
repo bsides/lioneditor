@@ -23,11 +23,11 @@ using System.Windows.Forms.VisualStyles;
 
 namespace FFTPatcher.Controls
 {
-    public partial class CheckedListBoxNoHighlight : CheckedListBox
+    public partial class CheckedListBoxNoHighlightWithDefault : CheckedListBox
     {
         public bool[] Defaults { get; set; }
 
-        public CheckedListBoxNoHighlight()
+        public CheckedListBoxNoHighlightWithDefault()
             : base()
         {
             this.CheckOnClick = true;

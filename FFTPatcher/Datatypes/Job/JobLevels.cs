@@ -80,7 +80,8 @@ namespace FFTPatcher.Datatypes
             {
                 Utilities.SetFieldOrProperty( this, reqs[i],
                     new Requirements( context,
-                        new SubArray<byte>( bytes, i * requirementsLength, (i + 1) * requirementsLength - 1 ) ) );
+                        new SubArray<byte>( bytes, i * requirementsLength, (i + 1) * requirementsLength - 1 ),
+                        defaults == null ? null : Utilities.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
             }
 
             int start = requirementsLength * jobCount;
@@ -166,13 +167,16 @@ namespace FFTPatcher.Datatypes
         public int Unknown1 { get; set; }
         public int Unknown2 { get; set; }
 
+        public Requirements Default { get; private set; }
+
         public Requirements( SubArray<byte> bytes )
             : this( Context.US_PSP, bytes )
         {
         }
 
-        public Requirements( Context context, SubArray<byte> bytes )
+        public Requirements( Context context, SubArray<byte> bytes, Requirements defaults )
         {
+            Default = defaults;
             Squire = Utilities.UpperNibble( bytes[0] );
             Chemist = Utilities.LowerNibble( bytes[0] );
             Knight = Utilities.UpperNibble( bytes[1] );
@@ -200,6 +204,11 @@ namespace FFTPatcher.Datatypes
                 Unknown1 = Utilities.UpperNibble( bytes[11] );
                 Unknown2 = Utilities.LowerNibble( bytes[11] );
             }
+        }
+
+        public Requirements( Context context, SubArray<byte> bytes )
+            : this( context, bytes, null )
+        {
         }
 
         public byte[] ToByteArray( Context context )

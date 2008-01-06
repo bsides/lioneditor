@@ -112,20 +112,26 @@ namespace FFTPatcher.Datatypes
     {
         public string Name { get; private set; }
         public ActionMenuEntry MenuAction { get; set; }
+
+        public ActionMenu Default { get; private set; }
         public string ActionName
         {
-            get
-            {
-                return MenuAction.ToString();
-            }
+            get { return MenuAction.ToString(); }
         }
+
         public byte Value { get; private set; }
 
-        public ActionMenu( byte value, string name, MenuAction action )
+        public ActionMenu( byte value, string name, MenuAction action, ActionMenu defaults )
         {
+            Default = defaults;
             MenuAction = ActionMenuEntry.AllActionMenuEntries[(byte)action];
             Name = name;
             Value = value;
+        }
+
+        public ActionMenu( byte value, string name, MenuAction action )
+            : this( value, name, action, null )
+        {
         }
     }
     
@@ -135,17 +141,23 @@ namespace FFTPatcher.Datatypes
 
         public AllActionMenus( SubArray<byte> bytes )
         {
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.ActionEventsBin : PSXResources.ActionEventsBin;
+
             List<ActionMenu> tempActions = new List<ActionMenu>();
 
             for( int i = 0; i < 0xE0; i++ )
             {
-                tempActions.Add( new ActionMenu( (byte)i, SkillSet.DummySkillSets[i].Name, (MenuAction)bytes[i] ) );
+                tempActions.Add( new ActionMenu( (byte)i, SkillSet.DummySkillSets[i].Name, (MenuAction)bytes[i],
+                    new ActionMenu( (byte)i, SkillSet.DummySkillSets[i].Name, (MenuAction)defaultBytes[i] ) ) );
             }
             if( FFTPatch.Context == Context.US_PSP )
             {
-                tempActions.Add( new ActionMenu( 0xE0, SkillSet.DummySkillSets[0xE0].Name, (MenuAction)bytes[0xE0] ) );
-                tempActions.Add( new ActionMenu( 0xE1, SkillSet.DummySkillSets[0xE1].Name, (MenuAction)bytes[0xE1] ) );
-                tempActions.Add( new ActionMenu( 0xE2, SkillSet.DummySkillSets[0xE2].Name, (MenuAction)bytes[0xE2] ) );
+                tempActions.Add( new ActionMenu( 0xE0, SkillSet.DummySkillSets[0xE0].Name, (MenuAction)bytes[0xE0],
+                    new ActionMenu( (byte)0xE0, SkillSet.DummySkillSets[0xE0].Name, (MenuAction)defaultBytes[0xE0] ) ) );
+                tempActions.Add( new ActionMenu( 0xE1, SkillSet.DummySkillSets[0xE1].Name, (MenuAction)bytes[0xE1],
+                    new ActionMenu( (byte)0xE1, SkillSet.DummySkillSets[0xE1].Name, (MenuAction)defaultBytes[0xE1] ) ) );
+                tempActions.Add( new ActionMenu( 0xE2, SkillSet.DummySkillSets[0xE2].Name, (MenuAction)bytes[0xE2],
+                    new ActionMenu( (byte)0xE2, SkillSet.DummySkillSets[0xE2].Name, (MenuAction)defaultBytes[0xE2] ) ) );
             }
 
             ActionMenus = tempActions.ToArray();

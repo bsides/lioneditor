@@ -19,6 +19,7 @@
 
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.Drawing;
 
 namespace FFTPatcher.Editors
 {
@@ -44,6 +45,7 @@ namespace FFTPatcher.Editors
             dataGridView.AutoGenerateColumns = false;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
+            dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
         public void UpdateView( AllMonsterSkills skills )
@@ -58,6 +60,21 @@ namespace FFTPatcher.Editors
             dataGridView.DataSource = skills.MonsterSkills;
         }
 
+        private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
+        {
+            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                (dataGridView.Rows[e.RowIndex].DataBoundItem is MonsterSkill) )
+            {
+                MonsterSkill skill = dataGridView.Rows[e.RowIndex].DataBoundItem as MonsterSkill;
+                if( skill.Default != null )
+                {
+                    Ability a = Utilities.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                    e.ToolTipText = "Default: " + a.Name;
+                }
+            }
+        }
+
         private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
         {
             if( e.ColumnIndex == Offset.Index )
@@ -65,6 +82,27 @@ namespace FFTPatcher.Editors
                 byte b = (byte)e.Value;
                 e.Value = b.ToString( "X2" );
                 e.FormattingApplied = true;
+            }
+            else if( (e.ColumnIndex == Ability1.Index) || 
+                     (e.ColumnIndex == Ability2.Index) || 
+                     (e.ColumnIndex == Ability3.Index) || 
+                     (e.ColumnIndex == Beastmaster.Index) )
+            {
+                if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                    (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                    (dataGridView.Rows[e.RowIndex].DataBoundItem is MonsterSkill) )
+                {
+                    MonsterSkill skill = dataGridView.Rows[e.RowIndex].DataBoundItem as MonsterSkill;
+                    if( skill.Default != null )
+                    {
+                        Ability a = Utilities.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                        if( a != (e.Value as Ability) )
+                        {
+                            e.CellStyle.BackColor = Color.Blue;
+                            e.CellStyle.ForeColor = Color.White;
+                        }
+                    }
+                }
             }
         }
 

@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.Drawing;
 
 namespace FFTPatcher.Editors
 {
@@ -58,6 +59,8 @@ namespace FFTPatcher.Editors
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.CellParsing += dataGridView1_CellParsing;
             dataGridView1.CellValidating += dataGridView1_CellValidating;
+            dataGridView1.CellToolTipTextNeeded += dataGridView1_CellToolTipTextNeeded;
+            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
         }
 
         private void dataGridView1_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
@@ -66,6 +69,27 @@ namespace FFTPatcher.Editors
             if( !Int32.TryParse( e.FormattedValue.ToString(), out result ) || (result < 0) || (result > 8) )
             {
                 e.Cancel = true;
+            }
+        }
+
+        private void dataGridView1_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                    (dataGridView1.Rows[e.RowIndex].DataBoundItem is Requirements) )
+                {
+                    Requirements reqs = dataGridView1.Rows[e.RowIndex].DataBoundItem as Requirements;
+                    if( reqs.Default != null )
+                    {
+                        int a = Utilities.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[e.ColumnIndex].DataPropertyName );
+                        if( (int)e.Value != a )
+                        {
+                            e.CellStyle.BackColor = Color.Blue;
+                            e.CellStyle.ForeColor = Color.White;
+                        }
+                    }
+                }
             }
         }
 
@@ -81,6 +105,20 @@ namespace FFTPatcher.Editors
                 e.Value = result;
 
                 e.ParsingApplied = true;
+            }
+        }
+
+        private void dataGridView1_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
+        {
+            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                (dataGridView1.Rows[e.RowIndex].DataBoundItem is Requirements) )
+            {
+                Requirements reqs = dataGridView1.Rows[e.RowIndex].DataBoundItem as Requirements;
+                if( reqs.Default != null )
+                {
+                    int i = Utilities.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[e.ColumnIndex].DataPropertyName );
+                    e.ToolTipText = "Default: " + i.ToString();
+                }
             }
         }
     }

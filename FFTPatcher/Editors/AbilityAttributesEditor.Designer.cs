@@ -59,7 +59,7 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label effectLabel;
             System.Windows.Forms.Label rangeLabel;
             this.inflictStatusLabel = new System.Windows.Forms.LinkLabel();
-            this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlight();
+            this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.mpSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.ctSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.statusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -454,7 +454,7 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.NumericUpDownWithDefault verticalSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault effectSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault rangeSpinner;
-        private FFTPatcher.Controls.CheckedListBoxNoHighlight flagsCheckedListBox;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault flagsCheckedListBox;
         private System.Windows.Forms.LinkLabel inflictStatusLabel;
     }
 }

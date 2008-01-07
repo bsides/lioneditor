@@ -28,13 +28,16 @@ namespace FFTPatcher.Datatypes
 
         public ENTD Default { get; private set; }
 
-        public ENTD( SubArray<byte> bytes, ENTD defaults )
+        public ENTD( int start, SubArray<byte> bytes, ENTD defaults )
         {
             Default = defaults;
             Events = new Event[0x80];
             for( int i = 0; i < 0x80; i++ )
             {
-                Events[i] = new Event( new SubArray<byte>( bytes, i * 16 * 40, (i + 1) * 16 * 40 - 1 ), defaults == null ? null : defaults.Events[i] );
+                Events[i] = new Event(
+                    i + start,
+                    new SubArray<byte>( bytes, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
+                    defaults == null ? null : defaults.Events[i] );
             }
         }
 
@@ -53,22 +56,32 @@ namespace FFTPatcher.Datatypes
     public class AllENTDs
     {
         public ENTD[] ENTDs { get; private set; }
+        public List<Event> Events { get; private set; }
 
         public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4 )
         {
             ENTDs = new ENTD[4];
             ENTDs[0] = new ENTD( 
+                0,
                 new SubArray<byte>( entd1 ), 
-                new ENTD( new SubArray<byte>( Resources.ENTD1 ), null ) );
+                new ENTD( 0, new SubArray<byte>( Resources.ENTD1 ), null ) );
             ENTDs[1] = new ENTD( 
+                0x80,
                 new SubArray<byte>( entd2 ), 
-                new ENTD( new SubArray<byte>( Resources.ENTD2 ), null ) );
-            ENTDs[2] = 
-                new ENTD( new SubArray<byte>( entd3 ), 
-                new ENTD( new SubArray<byte>( Resources.ENTD3 ), null ) );
-            ENTDs[3] = 
-                new ENTD( new SubArray<byte>( entd4 ), 
-                new ENTD( new SubArray<byte>( Resources.ENTD4 ), null ) );
+                new ENTD( 0x80, new SubArray<byte>( Resources.ENTD2 ), null ) );
+            ENTDs[2] = new ENTD( 
+                0x100,
+                new SubArray<byte>( entd3 ), 
+                new ENTD( 0x100, new SubArray<byte>( Resources.ENTD3 ), null ) );
+            ENTDs[3] = new ENTD( 
+                0x180,
+                new SubArray<byte>( entd4 ), 
+                new ENTD( 0x180, new SubArray<byte>( Resources.ENTD4 ), null ) );
+            Events = new List<Event>( 0x200 );
+            foreach( ENTD e in ENTDs )
+            {
+                Events.AddRange( e.Events );
+            }
         }
 
 

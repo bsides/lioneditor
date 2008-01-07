@@ -1,3 +1,61 @@
+ENTD?.ENT
+byte SpriteSet;
+byte Flags
+    Male (MSB)
+    Female
+    Monster
+    JoinAfterEvent?
+    Load Formation
+    Blank
+    Blank
+    Save Formation
+byte name
+byte level?
+byte birth month
+byte ?
+byte brave
+byte faith
+byte unknown
+byte unknown
+byte job
+byte secondary
+ushort reaction
+ushort support
+ushort movement
+byte head
+byte body
+byte accessory
+byte righthand
+byte lefthand
+byte palette
+byte Flags2
+    blank (MSB)
+    blank
+    blank
+    ENemy
+    Control
+    Immortal
+    blank
+    blank
+byte X
+byte Y
+byte unknown
+byte unknown
+byte skillset
+byte unknown
+byte unknown
+byte unknown
+byte unknown
+byte unknown
+byte unknown
+byte unknown
+byte unknown
+byte unknown
+byte unknown
+
+
+
+
 0x2754C0-0x2764BF (4096 bytes) Ab1 (512 entries)
 0x2764C0-0x2778DF (5151 bytes) Ab2 (368 entries)
 0x2778E0-0x277987 (AS)

@@ -18,22 +18,56 @@
 */
 
 using System.Collections.Generic;
+using System.Xml;
+using FFTPatcher.Properties;
 
 namespace FFTPatcher.Datatypes
 {
     public class Event
     {
-        public EventUnit[] Units { get; private set; }
-
-        public Event Default { get; private set; }
-
-        public Event( SubArray<byte> bytes, Event defaults )
+        private static string[] pspEventNames;
+        private static string[] psxEventNames;
+        public static string[] EventNames
         {
+            get { return FFTPatch.Context == Context.US_PSP ? pspEventNames : psxEventNames; }
+        }
+
+        public EventUnit[] Units { get; private set; }
+        public int Value { get; private set; }
+        public Event Default { get; private set; }
+        public string Name { get; private set; }
+
+        static Event()
+        {
+            XmlDocument pspDoc = new XmlDocument();
+            XmlDocument psxDoc = new XmlDocument();
+
+            pspDoc.LoadXml( Resources.EventNames );
+            psxDoc.LoadXml( PSXResources.EventNames );
+            pspEventNames = new string[0x200];
+            psxEventNames = new string[0x200];
+            for( int i = 0; i < 0x200; i++ )
+            {
+                pspEventNames[i] =
+                    pspDoc.SelectSingleNode(
+                    string.Format( "//Events/Event[@value='{0:X3}']/@name", i ) ).InnerText;
+                psxEventNames[i] =
+                    psxDoc.SelectSingleNode(
+                    string.Format( "//Events/Event[@value='{0:X3}']/@name", i ) ).InnerText;
+            }
+        }
+
+        public Event( int value, SubArray<byte> bytes, Event defaults )
+        {
+            Value = value;
+            Name = EventNames[value];
             Default = defaults;
             Units = new EventUnit[16];
             for( int i = 0; i < 16; i++ )
             {
-                Units[i] = new EventUnit( new SubArray<byte>( bytes, i * 40, (i + 1) * 40 - 1 ), defaults == null ? null : defaults.Units[i] );
+                Units[i] = new EventUnit( 
+                    new SubArray<byte>( bytes, i * 40, (i + 1) * 40 - 1 ), 
+                    defaults == null ? null : defaults.Units[i] );
             }
         }
 
@@ -46,6 +80,11 @@ namespace FFTPatcher.Datatypes
             }
 
             return result.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return string.Format( "{0:X3} {1}", Value, Name );
         }
     }
 }

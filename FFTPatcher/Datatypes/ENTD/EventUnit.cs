@@ -18,12 +18,18 @@
 */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace FFTPatcher.Datatypes
 {
     public class EventUnit
     {
         public SpriteSet SpriteSet { get; set; }
+
+        public static readonly string[] Flags1FieldNames = new string[] { 
+            "Male", "Female", "Monster", "JoinAfterEvent", "LoadFormation", "Blank1", "Blank2", "SaveFormation" };
+        public static readonly string[] Flags2FieldNames = new string[] { 
+            "Blank3", "Blank4", "Blank5", "Enemy", "Control", "Immortal", "Blank6", "Blank7" };
 
         public bool Male;
         public bool Female;
@@ -36,9 +42,9 @@ namespace FFTPatcher.Datatypes
 
         public SpecialName SpecialName;
         public byte Level { get; set; }
-        public byte Month { get; set; }
-        public byte Unknown { get; set; }
-        public byte Brave { get; set; }
+        public Month Month { get; set; }
+        public byte Day { get; set; }
+        public byte Bravery { get; set; }
         public byte Faith { get; set; }
         public Job Job { get; set; }
         public SkillSet SecondaryAction { get; set; }
@@ -77,40 +83,47 @@ namespace FFTPatcher.Datatypes
         public byte Unknown10 { get; set; }
         public byte Unknown11 { get; set; }
         public byte Unknown12 { get; set; }
+
         public byte Unknown13 { get; set; }
         public byte Unknown14 { get; set; }
 
         public EventUnit Default { get; private set; }
 
+        public string Description
+        {
+            get { return string.Format( "Sprite: {0} | Name: {1} | Job: {2}", SpriteSet.Name, SpecialName.Name, Job.Name ); }
+        }
+
         public EventUnit( SubArray<byte> bytes, EventUnit defaults )
         {
             SpriteSet = SpriteSet.SpriteSets[bytes[0]];
+            Default = defaults;
             Utilities.CopyByteToBooleans( bytes[1], ref Male, ref Female, ref Monster, ref JoinAfterEvent, ref LoadFormation, ref Blank1, ref Blank2, ref SaveFormation );
             SpecialName = SpecialName.SpecialNames[bytes[2]];
             Level = bytes[3];
-            Month = bytes[4];
-            Unknown = bytes[5];
-            Brave = bytes[6];
+            Month = (Month)bytes[4];
+            Day = bytes[5];
+            Bravery = bytes[6];
             Faith = bytes[7];
             Unknown13 = bytes[8];
             Unknown14 = bytes[9];
             Job = AllJobs.DummyJobs[bytes[10]];
-            SecondaryAction = SkillSet.DummySkillSets[bytes[11]];
-            Reaction = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[12], bytes[13] )];
-            Support = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[14], bytes[15] )];
-            Movement = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[16], bytes[17] )];
-            Head = Item.DummyItems[bytes[18]];
-            Body = Item.DummyItems[bytes[19]];
-            Accessory = Item.DummyItems[bytes[20]];
-            RightHand = Item.DummyItems[bytes[21]];
-            LeftHand = Item.DummyItems[bytes[22]];
+            SecondaryAction = SkillSet.EventSkillSets[bytes[11]];
+            Reaction = AllAbilities.EventAbilities[Utilities.BytesToUShort( bytes[12], bytes[13] )];
+            Support = AllAbilities.EventAbilities[Utilities.BytesToUShort( bytes[14], bytes[15] )];
+            Movement = AllAbilities.EventAbilities[Utilities.BytesToUShort( bytes[16], bytes[17] )];
+            Head = Item.EventItems[bytes[18]];
+            Body = Item.EventItems[bytes[19]];
+            Accessory = Item.EventItems[bytes[20]];
+            RightHand = Item.EventItems[bytes[21]];
+            LeftHand = Item.EventItems[bytes[22]];
             Palette = bytes[23];
             Utilities.CopyByteToBooleans( bytes[24], ref Blank3, ref Blank4, ref Blank5, ref Enemy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
             X = bytes[25];
             Y = bytes[26];
             Unknown1 = bytes[27];
             Unknown2 = bytes[28];
-            SkillSet = SkillSet.DummySkillSets[bytes[29]];
+            SkillSet = SkillSet.EventSkillSets[bytes[29]];
             Unknown3 = bytes[30];
             Unknown4 = bytes[31];
             Unknown5 = bytes[32];
@@ -135,9 +148,9 @@ namespace FFTPatcher.Datatypes
             result.Add( Utilities.ByteFromBooleans( Male, Female, Monster, JoinAfterEvent, LoadFormation, Blank1, Blank2, SaveFormation ) );
             result.Add( SpecialName.ToByte() );
             result.Add( Level );
-            result.Add( Month );
-            result.Add( Unknown );
-            result.Add( Brave );
+            result.Add( (byte)Month );
+            result.Add( Day );
+            result.Add( Bravery );
             result.Add( Faith );
             result.Add( Unknown13 );
             result.Add( Unknown14 );
@@ -170,6 +183,11 @@ namespace FFTPatcher.Datatypes
             result.Add( Unknown12 );
 
             return result.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return Description;
         }
     }
 }

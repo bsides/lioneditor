@@ -52,14 +52,27 @@ namespace FFTPatcher.Controls
         {
             if( Enabled && !DroppedDown && (SelectedItem != null) && !SelectedItem.Equals( DefaultValue ) )
             {
+                using( Brush backBrush = new SolidBrush( BackColor ) )
                 using( Brush textBrush = new SolidBrush( ForeColor ) )
+                using( Pen borderPen = new Pen( Brushes.Blue, 2 ) )
                 {
-                    using( Pen borderPen = new Pen( Brushes.Blue, 2 ) )
+                    if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )
                     {
-                        e.Graphics.DrawRectangle( borderPen, e.Bounds );
-                        e.Graphics.DrawString( SelectedItem.ToString(), Font, textBrush, e.Bounds.Location );
+                        e.Graphics.FillRectangle( SystemBrushes.Highlight, e.Bounds );
+                        e.Graphics.DrawString( SelectedItem == null ? string.Empty : SelectedItem.ToString(), Font, SystemBrushes.HighlightText, e.Bounds.Location );
                     }
+                    else
+                    {
+                        e.Graphics.FillRectangle( backBrush, e.Bounds );
+                        e.Graphics.DrawString( SelectedItem == null ? string.Empty : SelectedItem.ToString(), Font, textBrush, e.Bounds.Location );
+                    }
+                    e.Graphics.DrawRectangle( borderPen, e.Bounds );
                 }
+            }
+            else if( Enabled && !DroppedDown && ((e.State & DrawItemState.Focus) == DrawItemState.Focus) )
+            {
+                e.Graphics.FillRectangle( SystemBrushes.Highlight, e.Bounds );
+                e.Graphics.DrawString( SelectedItem == null ? string.Empty : SelectedItem.ToString(), Font, SystemBrushes.HighlightText, e.Bounds.Location );
             }
             else if( Enabled && (e.Index != -1) )
             {
@@ -67,23 +80,19 @@ namespace FFTPatcher.Controls
                     ((e.State & DrawItemState.ComboBoxEdit) == 0) )
                 {
                     using( Brush highlightBrush = new SolidBrush( SystemColors.Highlight ) )
+                    using( Brush textBrush = new SolidBrush( SystemColors.HighlightText ) )
                     {
-                        using( Brush textBrush = new SolidBrush( SystemColors.HighlightText ) )
-                        {
-                            e.Graphics.FillRectangle( highlightBrush, e.Bounds );
-                            e.Graphics.DrawString( Items[e.Index].ToString(), Font, textBrush, e.Bounds.Location );
-                        }
+                        e.Graphics.FillRectangle( highlightBrush, e.Bounds );
+                        e.Graphics.DrawString( Items[e.Index].ToString(), Font, textBrush, e.Bounds.Location );
                     }
                 }
                 else
                 {
                     using( Brush highlightBrush = new SolidBrush( BackColor ) )
+                    using( Brush textBrush = new SolidBrush( ForeColor ) )
                     {
-                        using( Brush textBrush = new SolidBrush( ForeColor ) )
-                        {
-                            e.Graphics.FillRectangle( highlightBrush, e.Bounds );
-                            e.Graphics.DrawString( Items[e.Index].ToString(), Font, textBrush, e.Bounds.Location );
-                        }
+                        e.Graphics.FillRectangle( highlightBrush, e.Bounds );
+                        e.Graphics.DrawString( Items[e.Index].ToString(), Font, textBrush, e.Bounds.Location );
                     }
                 }
             }

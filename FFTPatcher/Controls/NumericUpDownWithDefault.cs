@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Editors;
@@ -30,6 +31,8 @@ namespace FFTPatcher.Controls
         public bool Default { get { return Value == DefaultValue; } }
         private bool borderOn = false;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [ReadOnly(true)]
         public new decimal Value
         {
             get { return base.Value; }

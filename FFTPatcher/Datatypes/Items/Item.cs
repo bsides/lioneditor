@@ -47,12 +47,23 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        private static List<Item> pspEventItems;
+        private static List<Item> psxEventItems;
+        public static List<Item> EventItems
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspEventItems : psxEventItems; }
+        }
+
+
         static Item()
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Resources.Items );
             PSPNames = new List<string>( 316 );
             PSPDummies = new List<Item>( 316 );
+            pspEventItems = new List<Item>( 256 );
+            psxEventItems = new List<Item>( 256 );
+
             for( int i = 0; i < 316; i++ )
             {
                 PSPNames.Add( doc.SelectSingleNode( string.Format( "//Item[@offset='{0}']/name", i ) ).InnerText );
@@ -60,6 +71,10 @@ namespace FFTPatcher.Datatypes
                 item.Offset = (UInt16)i;
                 item.Name = PSPNames[i];
                 PSPDummies.Add( item );
+                if( i <= 255 )
+                {
+                    pspEventItems.Add( item );
+                }
             }
 
             doc = new XmlDocument();
@@ -73,7 +88,20 @@ namespace FFTPatcher.Datatypes
                 item.Offset = (UInt16)i;
                 item.Name = PSXNames[i];
                 PSXDummies.Add( item );
+                psxEventItems.Add( item );
             }
+
+            Item rand = new Item();
+            rand.Name = "<Random>";
+            rand.Offset = 0xFE;
+
+            Item none = new Item();
+            none.Name = "<None>";
+            none.Offset = 0xFF;
+            pspEventItems[0xFE] = rand;
+            psxEventItems[0xFE] = rand;
+            pspEventItems[0xFF] = none;
+            psxEventItems[0xFF] = none;
         }
 
         public static Item GetItemAtOffset( UInt16 offset )

@@ -41,7 +41,7 @@ namespace FFTPatcher.Controls
             if( (values != null) && (defaults != null) && (this.defaults == null) )
             {
                 this.defaults = defaults;
-                for( int i = 0; i < values.Length; i++ )
+                for( int i = 0; i < Items.Count; i++ )
                 {
                     SetItemChecked( i, values[i] );
                     RefreshItem( i );
@@ -50,7 +50,7 @@ namespace FFTPatcher.Controls
             else if( (values != null) && (defaults != null) && (this.defaults != null) )
             {
                 List<int> itemsToRefresh = new List<int>( values.Length );
-                for( int i = 0; i < values.Length; i++ )
+                for( int i = 0; i < Items.Count; i++ )
                 {
                     if( ((GetItemChecked( i ) ^ this.defaults[i]) && !(values[i] ^ defaults[i])) ||
                         (!(GetItemChecked( i ) ^ this.defaults[i]) && (values[i] ^ defaults[i])) )
@@ -60,7 +60,7 @@ namespace FFTPatcher.Controls
                 }
 
                 this.defaults = defaults;
-                for( int i = 0; i < values.Length; i++ )
+                for( int i = 0; i < Items.Count; i++ )
                 {
                     SetItemChecked( i, values[i] );
                 }
@@ -91,20 +91,23 @@ namespace FFTPatcher.Controls
             Brush foreColorBrush = new SolidBrush( this.ForeColor );
 
             e.Graphics.FillRectangle( backColorBrush, e.Bounds );
-            CheckBoxState state = this.GetItemChecked( e.Index ) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
-            Size checkBoxSize = CheckBoxRenderer.GetGlyphSize( e.Graphics, state );
-            Point loc = new Point( 1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1 );
-            CheckBoxRenderer.DrawCheckBox( e.Graphics, new Point( loc.X + e.Bounds.X, loc.Y + e.Bounds.Y ), state );
-            e.Graphics.DrawString( this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF( loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y ) );
-
-            if( (Defaults != null) && (Defaults.Length > e.Index) && (Defaults[e.Index] != GetItemChecked( e.Index )) )
+            if( e.Index < Items.Count )
             {
-                using( Pen p = new Pen( Color.Blue, 1 ) )
+                CheckBoxState state = this.GetItemChecked( e.Index ) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
+                Size checkBoxSize = CheckBoxRenderer.GetGlyphSize( e.Graphics, state );
+                Point loc = new Point( 1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1 );
+                CheckBoxRenderer.DrawCheckBox( e.Graphics, new Point( loc.X + e.Bounds.X, loc.Y + e.Bounds.Y ), state );
+                e.Graphics.DrawString( this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF( loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y ) );
+
+                if( (Defaults != null) && (Defaults.Length > e.Index) && (Defaults[e.Index] != GetItemChecked( e.Index )) )
                 {
-                    e.Graphics.DrawRectangle( p, new Rectangle( e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1 ) );
-                    if( !haveOutlines.Contains( e.Index ) )
+                    using( Pen p = new Pen( Color.Blue, 1 ) )
                     {
-                        haveOutlines.Add( e.Index, null );
+                        e.Graphics.DrawRectangle( p, new Rectangle( e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1 ) );
+                        if( !haveOutlines.Contains( e.Index ) )
+                        {
+                            haveOutlines.Add( e.Index, null );
+                        }
                     }
                 }
             }

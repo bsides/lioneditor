@@ -53,6 +53,8 @@
             this.allPoachProbabilitiesEditor1 = new FFTPatcher.Editors.AllPoachProbabilitiesEditor();
             this.codesTab = new System.Windows.Forms.TabPage();
             this.codeCreator1 = new FFTPatcher.Editors.CodeCreator();
+            this.entdTab = new System.Windows.Forms.TabPage();
+            this.entdEditor1 = new FFTPatcher.Editors.ENTDEditor();
             this.tabControl.SuspendLayout();
             this.abilitiesPage.SuspendLayout();
             this.itemsTabPage.SuspendLayout();
@@ -66,6 +68,7 @@
             this.inflictStatusesTabPage.SuspendLayout();
             this.poachingTabPage.SuspendLayout();
             this.codesTab.SuspendLayout();
+            this.entdTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -82,6 +85,7 @@
             this.tabControl.Controls.Add( this.inflictStatusesTabPage );
             this.tabControl.Controls.Add( this.poachingTabPage );
             this.tabControl.Controls.Add( this.codesTab );
+            this.tabControl.Controls.Add( this.entdTab );
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point( 0, 0 );
             this.tabControl.Name = "tabControl";
@@ -142,6 +146,7 @@
             this.allItemAttributesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allItemAttributesEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.allItemAttributesEditor1.Name = "allItemAttributesEditor1";
+            this.allItemAttributesEditor1.SelectedIndex = -1;
             this.allItemAttributesEditor1.Size = new System.Drawing.Size( 792, 715 );
             this.allItemAttributesEditor1.TabIndex = 0;
             // 
@@ -202,6 +207,7 @@
             this.allSkillSetsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allSkillSetsEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.allSkillSetsEditor1.Name = "allSkillSetsEditor1";
+            this.allSkillSetsEditor1.SelectedIndex = -1;
             this.allSkillSetsEditor1.Size = new System.Drawing.Size( 792, 715 );
             this.allSkillSetsEditor1.TabIndex = 0;
             // 
@@ -223,7 +229,7 @@
             this.allMonsterSkillsEditor1.Dock = System.Windows.Forms.DockStyle.Left;
             this.allMonsterSkillsEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allMonsterSkillsEditor1.Name = "allMonsterSkillsEditor1";
-            this.allMonsterSkillsEditor1.Size = new System.Drawing.Size( 573, 709 );
+            this.allMonsterSkillsEditor1.Size = new System.Drawing.Size( 289, 709 );
             this.allMonsterSkillsEditor1.TabIndex = 0;
             // 
             // actionMenusTabPage
@@ -279,6 +285,7 @@
             this.allInflictStatusesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allInflictStatusesEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allInflictStatusesEditor1.Name = "allInflictStatusesEditor1";
+            this.allInflictStatusesEditor1.SelectedIndex = -1;
             this.allInflictStatusesEditor1.Size = new System.Drawing.Size( 786, 709 );
             this.allInflictStatusesEditor1.TabIndex = 0;
             // 
@@ -319,6 +326,25 @@
             this.codeCreator1.Size = new System.Drawing.Size( 786, 709 );
             this.codeCreator1.TabIndex = 0;
             // 
+            // entdTab
+            // 
+            this.entdTab.Controls.Add( this.entdEditor1 );
+            this.entdTab.Location = new System.Drawing.Point( 4, 22 );
+            this.entdTab.Name = "entdTab";
+            this.entdTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.entdTab.Size = new System.Drawing.Size( 792, 715 );
+            this.entdTab.TabIndex = 12;
+            this.entdTab.Text = "ENTD";
+            this.entdTab.UseVisualStyleBackColor = true;
+            // 
+            // entdEditor1
+            // 
+            this.entdEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.entdEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.entdEditor1.Name = "entdEditor1";
+            this.entdEditor1.Size = new System.Drawing.Size( 786, 709 );
+            this.entdEditor1.TabIndex = 0;
+            // 
             // FFTPatchEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -342,6 +368,7 @@
             this.inflictStatusesTabPage.ResumeLayout( false );
             this.poachingTabPage.ResumeLayout( false );
             this.codesTab.ResumeLayout( false );
+            this.entdTab.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -373,5 +400,7 @@
         private AllPoachProbabilitiesEditor allPoachProbabilitiesEditor1;
         private System.Windows.Forms.TabPage codesTab;
         private CodeCreator codeCreator1;
+        private System.Windows.Forms.TabPage entdTab;
+        private ENTDEditor entdEditor1;
     }
 }

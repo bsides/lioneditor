@@ -35,25 +35,43 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        private static SortedDictionary<byte, SkillSet> pspEventSkills;
+        private static SortedDictionary<byte, SkillSet> psxEventSkills;
+        public static SortedDictionary<byte, SkillSet> EventSkillSets
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspEventSkills : psxEventSkills; }
+        }
+
         static SkillSet()
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Resources.SkillSets );
             pspSkills = new SkillSet[0xE3];
+            pspEventSkills = new SortedDictionary<byte, SkillSet>();
             for( int i = 0; i < 0xE3; i++ )
             {
                 string n = doc.SelectSingleNode( string.Format( "//SkillSet[@byte='{0}']", i.ToString( "X2" ) ) ).InnerText;
                 pspSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
+                pspEventSkills.Add( (byte)i, pspSkills[i] );
             }
+
+            SkillSet random = new SkillSet( "<Random>", 0xFE );
+            SkillSet equal = new SkillSet( "<Job's>", 0xFF );
+            pspEventSkills.Add( 0xFE, random );
+            pspEventSkills.Add( 0xFF, equal );
 
             doc = new XmlDocument();
             doc.LoadXml( PSXResources.SkillSets );
             psxSkills = new SkillSet[0xE0];
+            psxEventSkills = new SortedDictionary<byte, SkillSet>();
             for( int i = 0; i < 0xE0; i++ )
             {
                 string n = doc.SelectSingleNode( string.Format( "//SkillSet[@byte='{0}']", i.ToString( "X2" ) ) ).InnerText;
                 psxSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
+                psxEventSkills.Add( (byte)i, psxSkills[i] );
             }
+            psxEventSkills.Add( 0xFE, random );
+            psxEventSkills.Add( 0xFF, equal );
         }
 
         public byte Value { get; private set; }

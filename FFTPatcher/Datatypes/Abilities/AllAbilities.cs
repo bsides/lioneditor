@@ -46,6 +46,14 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        private static Ability[] pspEventAbilites;
+        private static Ability[] psxEventAbilites;
+        public static Ability[] EventAbilities
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspEventAbilites : psxEventAbilites; }
+        }
+
+
         static AllAbilities()
         {
             XmlDocument doc = new XmlDocument();
@@ -57,13 +65,24 @@ namespace FFTPatcher.Datatypes
             PSXNames = new string[512];
             PSPAbilities = new Ability[512];
             PSXAbilities = new Ability[512];
+            psxEventAbilites = new Ability[512];
+            pspEventAbilites = new Ability[512];
+
             for( int i = 0; i < 512; i++ )
             {
                 PSPNames[i] = doc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
                 PSXNames[i] = psxDoc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
                 PSPAbilities[i] = new Ability( PSPNames[i], (UInt16)i );
                 PSXAbilities[i] = new Ability( PSXNames[i], (UInt16)i );
+                pspEventAbilites[i] = new Ability( PSPNames[i], (UInt16)i );
+                psxEventAbilites[i] = new Ability( PSXNames[i], (UInt16)i );
             }
+
+            pspEventAbilites[510] = new Ability( "<Random>", 510 );
+            pspEventAbilites[511] = new Ability( "Nothing", 511 );
+            psxEventAbilites[510] = new Ability( "<Random>", 510 );
+            psxEventAbilites[511] = new Ability( "Nothing", 511 );
+
         }
 
         public Ability[] DefaultAbilities { get; private set; }

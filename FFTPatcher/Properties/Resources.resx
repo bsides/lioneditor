@@ -139,6 +139,9 @@
   <data name="ENTD4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\entd4.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="EventNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\eventnames.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="InflictStatusesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\inflictstatuses.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

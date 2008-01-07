@@ -39,6 +39,7 @@ namespace FFTPatcher.Datatypes
         public static AllStatusAttributes StatusAttributes { get; private set; }
         public static AllInflictStatuses InflictStatuses { get; private set; }
         public static AllPoachProbabilities PoachProbabilities { get; private set; }
+        public static AllENTDs ENTDs { get; private set; }
 
         public static event EventHandler DataChanged;
 
@@ -83,6 +84,7 @@ namespace FFTPatcher.Datatypes
                 default:
                     throw new ArgumentException();
             }
+            ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
         }
 
         public static void SaveToFile( string path )

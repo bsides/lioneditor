@@ -108,6 +108,8 @@
   <SpecialName byte="7D" name="Wedge"/>
   <SpecialName byte="7E" name="Lezales"/>
   <SpecialName byte="7F" name="Ladd"/>
+  <SpecialName byte="FE" name="Ramza Beoulve"/>
+  <SpecialName byte="FF" name="&lt;Random&gt;"/>
   <SpecialName byte="A2" name="Balthier"/>
   <SpecialName byte="A3" name="Luso"/>
 </SpecialNames>

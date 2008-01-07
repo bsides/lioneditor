@@ -3,6 +3,8 @@ using System.IO;
 using FFTPatcher.Datatypes;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using FFTPatcher;
+using System.Reflection;
 
 namespace PatcherTests
 {
@@ -140,11 +142,14 @@ namespace PatcherTests
         public void ShouldNotMangleENTD()
         {
             FileStream stream = new FileStream( "ENTD3.ENT", FileMode.Open );
+            MethodInfo mi = typeof( FFTPatch ).GetMethod( "set_Context", BindingFlags.Static | BindingFlags.NonPublic );
+            mi.Invoke( null, new object[] { Context.US_PSP } );
+            
             byte[] bytes = new byte[stream.Length];
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            ENTD ent = new ENTD( new SubArray<byte>( bytes ), null );
+            ENTD ent = new ENTD( 0x00, new SubArray<byte>( bytes ), null );
             byte[] output = ent.ToByteArray();
 
             Assert.That( output, Is.EqualTo( bytes ) );

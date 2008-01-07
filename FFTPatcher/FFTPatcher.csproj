@@ -66,6 +66,7 @@
     <Compile Include="Datatypes\ENTD\ENTD.cs" />
     <Compile Include="Datatypes\ENTD\Event.cs" />
     <Compile Include="Datatypes\ENTD\EventUnit.cs" />
+    <Compile Include="Datatypes\ENTD\Months.cs" />
     <Compile Include="Datatypes\ENTD\SpecialName.cs" />
     <Compile Include="Datatypes\ENTD\SpriteSet.cs" />
     <Compile Include="Datatypes\FFTPatch.cs" />
@@ -178,11 +179,29 @@
     <Compile Include="Editors\ElementsEditor.Designer.cs">
       <DependentUpon>ElementsEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\ENTDEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ENTDEditor.Designer.cs">
+      <DependentUpon>ENTDEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\EquipmentEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Editors\EquipmentEditor.Designer.cs">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\EventEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\EventEditor.Designer.cs">
+      <DependentUpon>EventEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\EventUnitEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\EventUnitEditor.Designer.cs">
+      <DependentUpon>EventUnitEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\FFTPatchEditor.cs">
       <SubType>UserControl</SubType>
@@ -316,8 +335,20 @@
       <DependentUpon>ElementsEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ENTDEditor.resx">
+      <DependentUpon>ENTDEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\EquipmentEditor.resx">
       <DependentUpon>EquipmentEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\EventEditor.resx">
+      <DependentUpon>EventEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\EventUnitEditor.resx">
+      <DependentUpon>EventUnitEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\FFTPatchEditor.resx">
@@ -425,6 +456,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\PSP\Abilities.xml" />
+    <Content Include="Resources\PSP\EventNames.xml" />
     <Content Include="Resources\PSP\ItemAttributes.xml" />
     <Content Include="Resources\PSP\Items.xml" />
     <Content Include="Resources\PSP\Jobs.xml" />
@@ -432,6 +464,7 @@
     <Content Include="Resources\PSP\SpecialNames.xml" />
     <Content Include="Resources\PSP\SpriteSets.xml" />
     <Content Include="Resources\PSX-US\Abilities.xml" />
+    <Content Include="Resources\PSX-US\EventNames.xml" />
     <Content Include="Resources\PSX-US\ItemAttributes.xml" />
     <Content Include="Resources\PSX-US\Items.xml" />
     <Content Include="Resources\PSX-US\Jobs.xml" />

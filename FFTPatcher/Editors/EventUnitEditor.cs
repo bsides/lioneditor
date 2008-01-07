@@ -74,11 +74,22 @@ namespace FFTPatcher.Editors
             {
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
+            flags1CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
+            flags2CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
+        }
+
+        private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            if (sender == flags1CheckedListBox)
+                Utilities.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
+            else if( sender == flags2CheckedListBox )
+                Utilities.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
         }
 
         private void UpdateDataSources()
         {
-            foreach( ComboBoxWithDefault itemComboBox in new ComboBoxWithDefault[] { rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox } )
+            foreach( ComboBoxWithDefault itemComboBox in 
+                new ComboBoxWithDefault[] { rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox } )
             {
                 itemComboBox.BindingContext = new BindingContext();
                 itemComboBox.DataSource = Item.EventItems;
@@ -88,7 +99,8 @@ namespace FFTPatcher.Editors
             primarySkillComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
             secondaryActionComboBox.BindingContext = new BindingContext();
             secondaryActionComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
-            foreach( ComboBoxWithDefault abilityComboBox in new ComboBoxWithDefault[] { reactionComboBox, supportComboBox, movementComboBox } )
+            foreach( ComboBoxWithDefault abilityComboBox in 
+                new ComboBoxWithDefault[] { reactionComboBox, supportComboBox, movementComboBox } )
             {
                 abilityComboBox.BindingContext = new BindingContext();
                 abilityComboBox.DataSource = AllAbilities.EventAbilities;

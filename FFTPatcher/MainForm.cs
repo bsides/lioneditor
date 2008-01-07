@@ -39,8 +39,25 @@ namespace FFTPatcher
             aboutMenuItem.Click += aboutMenuItem_Click;
             applyMenuItem.Enabled = false;
             saveMenuItem.Enabled = false;
+            generateMenuItem.Click += generateMenuItem_Click;
+            generateMenuItem.Enabled = false;
 
             FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void generateMenuItem_Click( object sender, EventArgs e )
+        {
+            if( folderBrowserDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.ExportENTDFiles( folderBrowserDialog.SelectedPath );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not save files.", "Error", MessageBoxButtons.OK );
+                }
+            }
         }
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
@@ -53,6 +70,7 @@ namespace FFTPatcher
         {
             applyMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
             saveMenuItem.Enabled = true;
+            generateMenuItem.Enabled = true;
         }
 
         private void openModifiedMenuItem_Click( object sender, System.EventArgs e )
@@ -99,7 +117,7 @@ namespace FFTPatcher
             {
                 try
                 {
-                    FFTPatch.SaveToFile( saveFileDialog.FileName );
+                    FFTPatch.SavePatchToFile( saveFileDialog.FileName );
                 }
                 catch (Exception)
                 {
@@ -123,7 +141,7 @@ namespace FFTPatcher
             {
                 try
                 {
-                    FFTPatch.ApplyPatchesToFile( applyPatchOpenFileDialog.FileName );
+                    FFTPatch.ApplyPatchesToExecutable( applyPatchOpenFileDialog.FileName );
                     MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
                 }
                 catch( InvalidDataException )
@@ -146,7 +164,7 @@ namespace FFTPatcher
             openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( openFileDialog.ShowDialog() == DialogResult.OK )
             {
-                FFTPatch.Load( openFileDialog.FileName );
+                FFTPatch.LoadPatch( openFileDialog.FileName );
             }
         }
     }

@@ -48,8 +48,9 @@ namespace FFTPatcher
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.MenuItem fileMenuItem;
+            System.Windows.Forms.MenuItem exportMenu;
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
-            this.fileMenuItem = new System.Windows.Forms.MenuItem();
             this.newPSXMenuItem = new System.Windows.Forms.MenuItem();
             this.newPSPMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
@@ -58,25 +59,29 @@ namespace FFTPatcher
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.applyMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.applyPatchOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
+            this.generateMenuItem = new System.Windows.Forms.MenuItem();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            fileMenuItem = new System.Windows.Forms.MenuItem();
+            exportMenu = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.fileMenuItem,
+            fileMenuItem,
+            exportMenu,
             this.aboutMenuItem} );
             // 
             // fileMenuItem
             // 
-            this.fileMenuItem.Index = 0;
-            this.fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            fileMenuItem.Index = 0;
+            fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.newPSXMenuItem,
             this.newPSPMenuItem,
             this.menuItem4,
@@ -84,10 +89,8 @@ namespace FFTPatcher
             this.openModifiedMenuItem,
             this.saveMenuItem,
             this.menuItem7,
-            this.applyMenuItem,
-            this.menuItem9,
             this.exitMenuItem} );
-            this.fileMenuItem.Text = "&File";
+            fileMenuItem.Text = "&File";
             // 
             // newPSXMenuItem
             // 
@@ -126,22 +129,17 @@ namespace FFTPatcher
             // 
             // applyMenuItem
             // 
-            this.applyMenuItem.Index = 7;
-            this.applyMenuItem.Text = "&Apply patch to file...";
-            // 
-            // menuItem9
-            // 
-            this.menuItem9.Index = 8;
-            this.menuItem9.Text = "-";
+            this.applyMenuItem.Index = 0;
+            this.applyMenuItem.Text = "&Apply patch to SCUS_942.21...";
             // 
             // exitMenuItem
             // 
-            this.exitMenuItem.Index = 9;
+            this.exitMenuItem.Index = 7;
             this.exitMenuItem.Text = "E&xit";
             // 
             // aboutMenuItem
             // 
-            this.aboutMenuItem.Index = 1;
+            this.aboutMenuItem.Index = 2;
             this.aboutMenuItem.Text = "About...";
             // 
             // openFileDialog
@@ -165,6 +163,24 @@ namespace FFTPatcher
             this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 671 );
             this.fftPatchEditor1.TabIndex = 0;
             // 
+            // exportMenu
+            // 
+            exportMenu.Index = 1;
+            exportMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.applyMenuItem,
+            this.generateMenuItem} );
+            exportMenu.Text = "&Export";
+            // 
+            // generateMenuItem
+            // 
+            this.generateMenuItem.Index = 1;
+            this.generateMenuItem.Text = "&Generate ENTD?.ENT files...";
+            // 
+            // folderBrowserDialog
+            // 
+            this.folderBrowserDialog.Description = "Where should the files be exported?\\nAny files in the folder you choose with the " +
+                "names ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, or ENTD4.ENT will be overwritten.";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -184,7 +200,6 @@ namespace FFTPatcher
 
         private FFTPatcher.Editors.FFTPatchEditor fftPatchEditor1;
         private System.Windows.Forms.MainMenu mainMenu;
-        private System.Windows.Forms.MenuItem fileMenuItem;
         private System.Windows.Forms.MenuItem newPSXMenuItem;
         private System.Windows.Forms.MenuItem newPSPMenuItem;
         private System.Windows.Forms.MenuItem menuItem4;
@@ -192,13 +207,14 @@ namespace FFTPatcher
         private System.Windows.Forms.MenuItem saveMenuItem;
         private System.Windows.Forms.MenuItem menuItem7;
         private System.Windows.Forms.MenuItem applyMenuItem;
-        private System.Windows.Forms.MenuItem menuItem9;
         private System.Windows.Forms.MenuItem exitMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog applyPatchOpenFileDialog;
         private System.Windows.Forms.MenuItem openModifiedMenuItem;
         private System.Windows.Forms.MenuItem aboutMenuItem;
+        private System.Windows.Forms.MenuItem generateMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
 
     }
 }

@@ -1,5 +1,10 @@
-FFTPatcher - v0.164
+FFTPatcher - v0.168
 
+Changes since v0.164:
+  Fixed bug in CheckedListBoxes where the highlighting was not always displayed correctly
+  Added ENTD editor
+  Optimized .fftpatch generation to generate only the elements that are necessary.
+  
 Changes since v0.148:
   Changed the behavior of the CheckedListBoxes so that you only have to
     click once to check or uncheck an item

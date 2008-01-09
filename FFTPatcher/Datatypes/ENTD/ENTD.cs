@@ -3,18 +3,18 @@
 
     This file is part of FFTPatcher.
 
-    LionEditor is free software: you can redistribute it and/or modify
+    FFTPatcher is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    LionEditor is distributed in the hope that it will be useful,
+    FFTPatcher is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Collections.Generic;
@@ -77,10 +77,16 @@ namespace FFTPatcher.Datatypes
                 0x180,
                 new SubArray<byte>( entd4 ), 
                 new ENTD( 0x180, new SubArray<byte>( Resources.ENTD4 ), null ) );
+
             Events = new List<Event>( 0x200 );
             foreach( ENTD e in ENTDs )
             {
                 Events.AddRange( e.Events );
+            }
+            for( int i = 0; i < 77; i++ )
+            {
+                Events.Add( new Event( 0x200 + i, new SubArray<byte>( Resources.fftpack897, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
+                    new Event( 0x200 + i, new SubArray<byte>( Resources.fftpack897, i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
             }
         }
 

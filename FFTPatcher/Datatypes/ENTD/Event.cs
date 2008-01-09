@@ -3,18 +3,18 @@
 
     This file is part of FFTPatcher.
 
-    LionEditor is free software: you can redistribute it and/or modify
+    FFTPatcher is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    LionEditor is distributed in the hope that it will be useful,
+    FFTPatcher is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ namespace FFTPatcher.Datatypes
 
             pspDoc.LoadXml( Resources.EventNames );
             psxDoc.LoadXml( PSXResources.EventNames );
-            pspEventNames = new string[0x200];
+            pspEventNames = new string[0x200+77];
             psxEventNames = new string[0x200];
             for( int i = 0; i < 0x200; i++ )
             {
@@ -54,6 +54,10 @@ namespace FFTPatcher.Datatypes
                 psxEventNames[i] =
                     psxDoc.SelectSingleNode(
                     string.Format( "//Events/Event[@value='{0:X3}']/@name", i ) ).InnerText;
+            }
+            for( int i = 0x200; i < (0x200 + 77); i++ )
+            {
+                pspEventNames[i] = "";
             }
         }
 

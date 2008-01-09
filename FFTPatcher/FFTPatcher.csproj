@@ -415,6 +415,7 @@
     <None Include="Resources\ENTD4.ENT" />
     <None Include="Resources\PSP\Abilities.bin" />
     <None Include="Resources\PSP\ActionEvents.bin" />
+    <None Include="Resources\PSP\fftpack.897" />
     <None Include="Resources\PSP\InflictStatuses.bin" />
     <None Include="Resources\PSP\JobLevels.bin" />
     <None Include="Resources\PSP\Jobs.bin" />

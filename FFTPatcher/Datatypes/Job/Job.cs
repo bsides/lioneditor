@@ -3,18 +3,18 @@
 
     This file is part of FFTPatcher.
 
-    LionEditor is free software: you can redistribute it and/or modify
+    FFTPatcher is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    LionEditor is distributed in the hope that it will be useful,
+    FFTPatcher is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Collections.Generic;
@@ -193,13 +193,15 @@ namespace FFTPatcher.Datatypes
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Resources.Jobs );
-            pspNames = new string[0xA9];
-            pspJobs = new Job[0xA9];
+            pspNames = new string[0xAA];
+            pspJobs = new Job[0xAA];
             for( int i = 0; i < 0xA9; i++ )
             {
                 pspNames[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
                 pspJobs[i] = new Job( (byte)i, pspNames[i] );
             }
+            pspJobs[0xA9] = new Job( 0xA9, "???" );
+            pspNames[0xA9] = "???";
 
             doc = new XmlDocument();
             doc.LoadXml( PSXResources.Jobs );

@@ -67,12 +67,12 @@ namespace FFTPatcher.Properties {
         ///
         ///    This file is part of FFTPatcher.
         ///
-        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    FFTPatcher is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version.
         ///
-        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    FFTPatcher is distributed in the hope that it will be useful,
         ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Abilities {
@@ -130,17 +130,24 @@ namespace FFTPatcher.Properties {
         ///
         ///    This file is part of FFTPatcher.
         ///
-        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    FFTPatcher is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version.
         ///
-        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    FFTPatcher is distributed in the hope that it will be useful,
         ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EventNames {
             get {
                 return ResourceManager.GetString("EventNames", resourceCulture);
+            }
+        }
+        
+        internal static byte[] fftpack897 {
+            get {
+                object obj = ResourceManager.GetObject("fftpack897", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -158,13 +165,13 @@ namespace FFTPatcher.Properties {
         ///
         ///    This file is part of FFTPatcher.
         ///
-        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    FFTPatcher is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version.
         ///
-        ///    LionEditor is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
+        ///    FFTPatcher is distributed in the hope that it will be useful,
+        ///    but WITHOUT ANY WARRANTY; without ev [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Items {
             get {
@@ -186,12 +193,12 @@ namespace FFTPatcher.Properties {
         ///
         ///    This file is part of FFTPatcher.
         ///
-        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    FFTPatcher is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version.
         ///
-        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    FFTPatcher is distributed in the hope that it will be useful,
         ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Jobs {
@@ -256,12 +263,12 @@ namespace FFTPatcher.Properties {
         ///
         ///    This file is part of FFTPatcher.
         ///
-        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    FFTPatcher is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version.
         ///
-        ///    LionEditor is distributed in the hope that it will be useful,
+        ///    FFTPatcher is distributed in the hope that it will be useful,
         ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SkillSets {
@@ -284,7 +291,7 @@ namespace FFTPatcher.Properties {
         ///
         ///    This file is part of FFTPatcher.
         ///
-        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    FFTPatcher is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version.
@@ -305,7 +312,7 @@ namespace FFTPatcher.Properties {
         ///
         ///    This file is part of FFTPatcher.
         ///
-        ///    LionEditor is free software: you can redistribute it and/or modify
+        ///    FFTPatcher is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version.

@@ -40,6 +40,7 @@ namespace FFTPatcher.Datatypes
         public static AllInflictStatuses InflictStatuses { get; private set; }
         public static AllPoachProbabilities PoachProbabilities { get; private set; }
         public static AllENTDs ENTDs { get; private set; }
+        public static FFTFont Font { get; private set; }
 
         public static event EventHandler DataChanged;
 
@@ -65,6 +66,7 @@ namespace FFTPatcher.Datatypes
                     StatusAttributes = new AllStatusAttributes( new SubArray<byte>( Resources.StatusAttributesBin ) );
                     InflictStatuses = new AllInflictStatuses( new SubArray<byte>( Resources.InflictStatusesBin ) );
                     PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( Resources.PoachProbabilitiesBin ) );
+                    Font = new FFTFont( new SubArray<byte>( Resources.FontBin ) );
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( new SubArray<byte>( PSXResources.AbilitiesBin ) );
@@ -80,6 +82,7 @@ namespace FFTPatcher.Datatypes
                     StatusAttributes = new AllStatusAttributes( new SubArray<byte>( PSXResources.StatusAttributesBin ) );
                     InflictStatuses = new AllInflictStatuses( new SubArray<byte>( PSXResources.InflictStatusesBin ) );
                     PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( PSXResources.PoachProbabilitiesBin ) );
+                    Font = new FFTFont( new SubArray<byte>( PSXResources.FontBin ) );
                     break;
                 default:
                     throw new ArgumentException();
@@ -161,7 +164,7 @@ namespace FFTPatcher.Datatypes
             StringBuilder entd2 = GetBase64StringIfNonDefault( ENTDs.ENTDs[1].ToByteArray(), Resources.ENTD2 );
             StringBuilder entd3 = GetBase64StringIfNonDefault( ENTDs.ENTDs[2].ToByteArray(), Resources.ENTD3 );
             StringBuilder entd4 = GetBase64StringIfNonDefault( ENTDs.ENTDs[3].ToByteArray(), Resources.ENTD4 );
-
+            StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
             XmlTextWriter writer = null;
             try
             {
@@ -176,7 +179,7 @@ namespace FFTPatcher.Datatypes
                 StringBuilder[] builders = new StringBuilder[] { 
                     abilities, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, 
                     skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach,
-                    entd1, entd2, entd3, entd4 };
+                    entd1, entd2, entd3, entd4, font };
                 foreach( StringBuilder s in builders )
                 {
                     if( s != null )
@@ -190,7 +193,7 @@ namespace FFTPatcher.Datatypes
                 string[] elementNames = new string[] {
                     "abilities", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
                     "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-                    "entd1", "entd2", "entd3", "entd4" };
+                    "entd1", "entd2", "entd3", "entd4", "font" };
                 for( int i = 0; i < builders.Length; i++ )
                 {
                     if( builders[i] != null )
@@ -276,6 +279,7 @@ namespace FFTPatcher.Datatypes
             byte[] entd2 = GetFromNodeOrReturnDefault( rootNode, "entd2", Resources.ENTD2 );
             byte[] entd3 = GetFromNodeOrReturnDefault( rootNode, "entd3", Resources.ENTD3 );
             byte[] entd4 = GetFromNodeOrReturnDefault( rootNode, "entd4", Resources.ENTD4 );
+            byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? Resources.FontBin : PSXResources.FontBin );
 
             Abilities = new AllAbilities( new SubArray<byte>( abilities ) );
             Items = new AllItems( new SubArray<byte>( oldItems ), newItems != null ? new SubArray<byte>( newItems ) : null );
@@ -291,6 +295,7 @@ namespace FFTPatcher.Datatypes
             InflictStatuses = new AllInflictStatuses( new SubArray<byte>( inflictStatuses ) );
             PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( poach ) );
             ENTDs = new AllENTDs( entd1, entd2, entd3, entd4 );
+            Font = new FFTFont( new SubArray<byte>( font ) );
             FireDataChangedEvent();
         }
 
@@ -333,14 +338,16 @@ namespace FFTPatcher.Datatypes
                 Items = new AllItems( new SubArray<byte>( oldItems ), null );
                 ItemAttributes = new AllItemAttributes( new SubArray<byte>( oldItemAttributes ), null );
                 Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
-                JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ) );
-                SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ) );
+                JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ),
+                    new JobLevels( Context.US_PSX, new SubArray<byte>( PSXResources.JobLevelsBin ) ) );
+                SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ), new SubArray<byte>( PSXResources.SkillSetsBin ) );
                 MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
                 ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );
                 StatusAttributes = new AllStatusAttributes( new SubArray<byte>( statusAttributes ) );
                 InflictStatuses = new AllInflictStatuses( new SubArray<byte>( inflictStatuses ) );
                 PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( poach ) );
                 ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
+                Font = new FFTFont( new SubArray<byte>( PSXResources.FontBin ) );
                 FireDataChangedEvent();
             }
             catch( InvalidDataException )

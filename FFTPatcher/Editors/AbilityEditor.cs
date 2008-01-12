@@ -59,27 +59,15 @@ namespace FFTPatcher.Editors
                     Utilities.GetFieldOrProperty<byte>( ability, spinner.Tag.ToString() ),
                     Utilities.GetFieldOrProperty<byte>( ability.Default, spinner.Tag.ToString() ) );
             }
-            arithmeticksLabel.Visible = ability.IsArithmetick;
-            arithmeticksSpinner.Visible = ability.IsArithmetick;
+            arithmeticksPanel.Visible = ability.IsArithmetick;
 
-            hLabel.Visible = ability.IsArithmetick || ability.IsOther;
+            chargingPanel.Visible = ability.IsCharging;
 
-            chargingLabel.Visible = ability.IsCharging;
-            ctLabel.Visible = ability.IsCharging;
-            powerLabel.Visible = ability.IsCharging;
-            ctSpinner.Visible = ability.IsCharging;
-            powerSpinner.Visible = ability.IsCharging;
+            jumpingPanel.Visible = ability.IsJumping;
 
-            jumpingLabel.Visible = ability.IsJumping;
-            horizontalLabel.Visible = ability.IsJumping;
-            verticalLabel.Visible = ability.IsJumping;
-            horizontalSpinner.Visible = ability.IsJumping;
-            verticalSpinner.Visible = ability.IsJumping;
-
-            idLabel.Visible = ability.IsOther;
-            idSpinner.Visible = ability.IsOther;
-
-            itemUseLabel.Visible = ability.IsItem;
+            itemUsePanel.Visible = ability.IsItem;
+            abilityIdPanel.Visible = ability.IsOther;
+            throwingPanel.Visible = ability.IsThrowing;
 
             if( FFTPatch.Context == Context.US_PSP && ourContext != Context.US_PSP)
             {
@@ -95,15 +83,12 @@ namespace FFTPatcher.Editors
                 itemUseComboBox.Items.AddRange( psxItems.ToArray() );
                 throwingComboBox.DataSource = psxItemTypes;
             }
-            itemUseComboBox.Visible = ability.IsItem;
+
             if( ability.IsItem )
             {
                 itemUseComboBox.SetValueAndDefault( ability.Item, ability.Default.Item );
             }
 
-            throwingLabel.Visible = ability.IsThrowing;
-
-            throwingComboBox.Visible = ability.IsThrowing;
             if( ability.IsThrowing )
             {
                 throwingComboBox.SetValueAndDefault( ability.Throwing, ability.Default.Throwing );
@@ -191,5 +176,6 @@ namespace FFTPatcher.Editors
                 Utilities.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
             }
         }
+
     }
 }

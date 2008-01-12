@@ -116,6 +116,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] FontBin {
+            get {
+                object obj = ResourceManager.GetObject("FontBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] InflictStatusesBin {
             get {
                 object obj = ResourceManager.GetObject("InflictStatusesBin", resourceCulture);
@@ -147,7 +154,7 @@ namespace FFTPatcher.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
-        ///    Copyright 27, Joe Davidson &lt;joedavidson@gmail.com&gt;
+        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
         ///
         ///    This file is part of FFTPatcher.
         ///
@@ -157,7 +164,7 @@ namespace FFTPatcher.Properties {
         ///    (at your option) any later version.
         ///
         ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without ev [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Items {
             get {

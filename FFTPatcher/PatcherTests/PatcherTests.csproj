@@ -62,6 +62,10 @@
       <Link>ActionEvents.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Resources\PSP\font.bin">
+      <Link>font.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Resources\PSP\JobLevels.bin">
       <Link>JobLevels.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

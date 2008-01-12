@@ -123,6 +123,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] ENTD5 {
+            get {
+                object obj = ResourceManager.GetObject("ENTD5", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;!--
@@ -144,9 +151,9 @@ namespace FFTPatcher.Properties {
             }
         }
         
-        internal static byte[] fftpack897 {
+        internal static byte[] FontBin {
             get {
-                object obj = ResourceManager.GetObject("fftpack897", resourceCulture);
+                object obj = ResourceManager.GetObject("FontBin", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -171,7 +178,7 @@ namespace FFTPatcher.Properties {
         ///    (at your option) any later version.
         ///
         ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without ev [rest of string was truncated]&quot;;.
+        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Items {
             get {

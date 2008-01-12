@@ -70,6 +70,8 @@
     <Compile Include="Datatypes\ENTD\SpecialName.cs" />
     <Compile Include="Datatypes\ENTD\SpriteSet.cs" />
     <Compile Include="Datatypes\FFTPatch.cs" />
+    <Compile Include="Datatypes\Fonts\FFTFont.cs" />
+    <Compile Include="Datatypes\Fonts\Glyph.cs" />
     <Compile Include="Datatypes\Items\Accessory.cs" />
     <Compile Include="Datatypes\Items\AllItems.cs" />
     <Compile Include="Datatypes\Items\Armor.cs" />
@@ -208,6 +210,18 @@
     </Compile>
     <Compile Include="Editors\FFTPatchEditor.Designer.cs">
       <DependentUpon>FFTPatchEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\FontEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\FontEditor.Designer.cs">
+      <DependentUpon>FontEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\GlyphEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\GlyphEditor.Designer.cs">
+      <DependentUpon>GlyphEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\InflictStatusEditor.cs">
       <SubType>UserControl</SubType>
@@ -355,6 +369,14 @@
       <DependentUpon>FFTPatchEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\FontEditor.resx">
+      <DependentUpon>FontEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\GlyphEditor.resx">
+      <DependentUpon>GlyphEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\InflictStatusEditor.resx">
       <DependentUpon>InflictStatusEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -415,7 +437,8 @@
     <None Include="Resources\ENTD4.ENT" />
     <None Include="Resources\PSP\Abilities.bin" />
     <None Include="Resources\PSP\ActionEvents.bin" />
-    <None Include="Resources\PSP\fftpack.897" />
+    <None Include="Resources\PSP\ENTD5.bin" />
+    <None Include="Resources\PSP\font.bin" />
     <None Include="Resources\PSP\InflictStatuses.bin" />
     <None Include="Resources\PSP\JobLevels.bin" />
     <None Include="Resources\PSP\Jobs.bin" />
@@ -429,6 +452,7 @@
     <None Include="Resources\PSP\StatusAttributes.bin" />
     <None Include="Resources\PSX-US\Abilities.bin" />
     <None Include="Resources\PSX-US\ActionEvents.bin" />
+    <None Include="Resources\PSX-US\font.bin" />
     <None Include="Resources\PSX-US\InflictStatuses.bin" />
     <None Include="Resources\PSX-US\JobLevels.bin" />
     <None Include="Resources\PSX-US\Jobs.bin" />

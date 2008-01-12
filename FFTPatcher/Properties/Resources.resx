@@ -142,9 +142,6 @@
   <data name="EventNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\eventnames.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="fftpack897" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\fftpack.897;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="InflictStatusesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\inflictstatuses.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -192,5 +189,11 @@
   </data>
   <data name="StatusAttributesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\statusattributes.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FontBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\font.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\entd5.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

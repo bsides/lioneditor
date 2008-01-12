@@ -51,6 +51,19 @@ namespace PatcherTests
         }
 
         [Test]
+        public void ShouldNotMangleFont()
+        {
+            FileStream stream = new FileStream( "font.bin", FileMode.Open );
+            byte[] bytes = new byte[stream.Length];
+            stream.Read( bytes, 0, (int)stream.Length );
+            stream.Close();
+
+            FFTFont font = new FFTFont( new SubArray<byte>( bytes ) );
+            byte[] outputBytes = font.ToByteArray();
+            Assert.That( outputBytes, Is.EqualTo( bytes ) );
+        }
+
+        [Test]
         public void ShouldNotMangleMonsterSkills()
         {
             FileStream stream = new FileStream( "MonsterSkills.bin", FileMode.Open );

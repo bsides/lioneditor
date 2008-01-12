@@ -83,10 +83,13 @@ namespace FFTPatcher.Datatypes
             {
                 Events.AddRange( e.Events );
             }
-            for( int i = 0; i < 77; i++ )
+            if( FFTPatch.Context == Context.US_PSP )
             {
-                Events.Add( new Event( 0x200 + i, new SubArray<byte>( Resources.fftpack897, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
-                    new Event( 0x200 + i, new SubArray<byte>( Resources.fftpack897, i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
+                for( int i = 0; i < 77; i++ )
+                {
+                    Events.Add( new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
+                        new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
+                }
             }
         }
 

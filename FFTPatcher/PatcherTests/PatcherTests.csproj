@@ -54,47 +54,47 @@
       <Link>ENTD3.ENT</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\Abilities.bin">
+    <None Include="..\Resources\PSP\bin\Abilities.bin">
       <Link>Abilities.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\ActionEvents.bin">
+    <None Include="..\Resources\PSP\bin\ActionEvents.bin">
       <Link>ActionEvents.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\font.bin">
+    <None Include="..\Resources\PSP\bin\font.bin">
       <Link>font.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\JobLevels.bin">
+    <None Include="..\Resources\PSP\bin\JobLevels.bin">
       <Link>JobLevels.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\Jobs.bin">
+    <None Include="..\Resources\PSP\bin\Jobs.bin">
       <Link>Jobs.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\MonsterSkills.bin">
+    <None Include="..\Resources\PSP\bin\MonsterSkills.bin">
       <Link>MonsterSkills.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\NewItems.bin">
+    <None Include="..\Resources\PSP\bin\NewItems.bin">
       <Link>NewItems.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\OldItems.bin">
+    <None Include="..\Resources\PSP\bin\OldItems.bin">
       <Link>OldItems.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\PoachProbabilities.bin">
+    <None Include="..\Resources\PSP\bin\PoachProbabilities.bin">
       <Link>PoachProbabilities.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\SkillSetsBin.bin">
+    <None Include="..\Resources\PSP\bin\SkillSetsBin.bin">
       <Link>SkillSetsBin.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\PSP\StatusAttributes.bin">
+    <None Include="..\Resources\PSP\bin\StatusAttributes.bin">
       <Link>StatusAttributes.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

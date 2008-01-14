@@ -1,10 +1,27 @@
-﻿using System.Collections.Generic;
+﻿/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 using System.IO;
+using System.Reflection;
 using FFTPatcher.Datatypes;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-using FFTPatcher;
-using System.Reflection;
 
 namespace PatcherTests
 {
@@ -79,6 +96,9 @@ namespace PatcherTests
         [Test]
         public void ShouldNotMangleActionEvents()
         {
+            MethodInfo mi = typeof( FFTPatch ).GetMethod( "set_Context", BindingFlags.Static | BindingFlags.NonPublic );
+            mi.Invoke( null, new object[] { Context.US_PSP } );
+
             FileStream stream = new FileStream( "ActionEvents.bin", FileMode.Open );
             byte[] bytes = new byte[stream.Length];
             stream.Read( bytes, 0, (int)stream.Length );

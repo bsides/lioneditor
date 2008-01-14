@@ -28,23 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.glyphEditor1 = new FFTPatcher.Editors.GlyphEditor();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.AutoSize = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add( this.glyphEditor1 );
-            this.panel1.Location = new System.Drawing.Point( 27, 40 );
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size( 158, 218 );
-            this.panel1.TabIndex = 2;
             // 
             // numericUpDown1
             // 
@@ -60,25 +47,26 @@
             this.numericUpDown1.TabIndex = 3;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // glyphEditor1
+            // glyphEditor2
             // 
+            this.glyphEditor1.AutoSize = true;
+            this.glyphEditor1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.glyphEditor1.Glyph = null;
-            this.glyphEditor1.Location = new System.Drawing.Point( 3, 3 );
-            this.glyphEditor1.MaximumSize = new System.Drawing.Size( 150, 210 );
-            this.glyphEditor1.MinimumSize = new System.Drawing.Size( 150, 210 );
-            this.glyphEditor1.Name = "glyphEditor1";
-            this.glyphEditor1.Size = new System.Drawing.Size( 150, 210 );
-            this.glyphEditor1.TabIndex = 1;
+            this.glyphEditor1.Location = new System.Drawing.Point( 27, 41 );
+            this.glyphEditor1.Name = "glyphEditor2";
+            this.glyphEditor1.Size = new System.Drawing.Size( 183, 216 );
+            this.glyphEditor1.TabIndex = 4;
             // 
             // FontEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.glyphEditor1 );
             this.Controls.Add( this.numericUpDown1 );
-            this.Controls.Add( this.panel1 );
             this.Name = "FontEditor";
-            this.Size = new System.Drawing.Size( 504, 261 );
-            this.panel1.ResumeLayout( false );
+            this.Size = new System.Drawing.Size( 213, 260 );
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout( false );
             this.PerformLayout();
@@ -87,8 +75,7 @@
 
         #endregion
 
-        private GlyphEditor glyphEditor1;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private GlyphEditor glyphEditor1;
     }
 }

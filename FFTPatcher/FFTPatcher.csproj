@@ -439,6 +439,7 @@
     <None Include="Resources\PSP\ActionEvents.bin" />
     <None Include="Resources\PSP\ENTD5.bin" />
     <None Include="Resources\PSP\font.bin" />
+    <None Include="Resources\PSP\FontWidths.bin" />
     <None Include="Resources\PSP\InflictStatuses.bin" />
     <None Include="Resources\PSP\JobLevels.bin" />
     <None Include="Resources\PSP\Jobs.bin" />
@@ -453,6 +454,7 @@
     <None Include="Resources\PSX-US\Abilities.bin" />
     <None Include="Resources\PSX-US\ActionEvents.bin" />
     <None Include="Resources\PSX-US\font.bin" />
+    <None Include="Resources\PSX-US\FontWidths.bin" />
     <None Include="Resources\PSX-US\InflictStatuses.bin" />
     <None Include="Resources\PSX-US\JobLevels.bin" />
     <None Include="Resources\PSX-US\Jobs.bin" />
@@ -480,6 +482,7 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\bg.gif" />
     <Content Include="Resources\PSP\Abilities.xml" />
     <Content Include="Resources\PSP\EventNames.xml" />
     <Content Include="Resources\PSP\ItemAttributes.xml" />

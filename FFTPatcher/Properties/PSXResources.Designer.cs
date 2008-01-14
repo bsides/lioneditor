@@ -123,6 +123,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] FontWidthsBin {
+            get {
+                object obj = ResourceManager.GetObject("FontWidthsBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] InflictStatusesBin {
             get {
                 object obj = ResourceManager.GetObject("InflictStatusesBin", resourceCulture);

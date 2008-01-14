@@ -27,6 +27,10 @@ namespace FFTPatcher.Editors
     public partial class GlyphEditor : UserControl
     {
         private static Dictionary<FontColor, Brush> colors = new Dictionary<FontColor, Brush>();
+        private bool ignoreChanges = false;
+        private FontColor currentColor;
+
+        private RadioButton[] radios = new RadioButton[4];
 
         private Glyph glyph;
         public Glyph Glyph 
@@ -37,38 +41,93 @@ namespace FFTPatcher.Editors
                 if( glyph != value )
                 {
                     glyph = value;
-                    Invalidate();
+                    ignoreChanges = true;
+                    widthSpinner.Value = glyph.Width;
+                    ignoreChanges = false;
+                    Invalidate( true );
+                    glyphPanel.Invalidate();
+                    thumbnailPanel.Invalidate();
                 }
             }
         }
 
         static GlyphEditor()
         {
-            colors[FontColor.Black] = new SolidBrush( Color.Black );
-            colors[FontColor.Dark] = new SolidBrush( Color.DarkGray );
-            colors[FontColor.Light] = new SolidBrush( Color.LightGray );
-            colors[FontColor.Transparent] = new SolidBrush( Color.White );
+            colors[FontColor.Black] = new SolidBrush( Color.FromArgb( 70, 63, 51 ) );
+            colors[FontColor.Dark] = new SolidBrush( Color.FromArgb( 107, 104, 85 ) );
+            colors[FontColor.Light] = new SolidBrush( Color.FromArgb( 120, 112, 96 ) );
+            colors[FontColor.Transparent] = new SolidBrush( Color.Transparent );
         }
 
         public GlyphEditor()
         {
-            SetStyle( ControlStyles.AllPaintingInWmPaint, true );
-            SetStyle( ControlStyles.UserPaint, true );
-            SetStyle( ControlStyles.OptimizedDoubleBuffer, true );
-
             InitializeComponent();
+
+            glyphPanel.MouseClick += glyphPanel_MouseClick;
+            glyphPanel.Paint += glyphPanel_Paint;
+            thumbnailPanel.Paint += thumbnailPanel_Paint;
+            widthSpinner.ValueChanged += widthSpinner_ValueChanged;
+
+            currentColor = FontColor.Black;
+
+            blackRadioButton.Tag = FontColor.Black;
+            darkRadioButton.Tag = FontColor.Dark;
+            lightRadioButton.Tag = FontColor.Light;
+            transparentRadioButton.Tag = FontColor.Transparent;
+
+            radios[0] = blackRadioButton;
+            radios[1] = darkRadioButton;
+            radios[2] = lightRadioButton;
+            radios[3] = transparentRadioButton;
+
+            foreach( RadioButton r in radios )
+            {
+                r.CheckedChanged += radioButton_CheckedChanged;
+            }
         }
 
-        private void RedrawPixel( int col, int row, FontColor color, Graphics g )
+        private void radioButton_CheckedChanged( object sender, System.EventArgs e )
         {
-            g.FillRectangle( colors[color], new Rectangle( col * 15, row * 15, 15, 15 ) );
+            RadioButton r = sender as RadioButton;
+            currentColor = (FontColor)r.Tag;
         }
 
-        protected override void OnPaint( PaintEventArgs e )
+        private void widthSpinner_ValueChanged( object sender, System.EventArgs e )
+        {
+            if( !ignoreChanges && glyph != null )
+            {
+                glyph.Width = (byte)widthSpinner.Value;
+                glyphPanel.Invalidate();
+            }
+        }
+
+        private void thumbnailPanel_Paint( object sender, PaintEventArgs e )
         {
             if( Glyph != null )
             {
-                if( e.ClipRectangle == e.Graphics.ClipBounds )
+                if( e.ClipRectangle == e.Graphics.VisibleClipBounds )
+                {
+                    for( int i = 0; i < Glyph.Pixels.Length; i++ )
+                    {
+                        int col = i % 10;
+                        int row = i / 10;
+                        e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col * 2, row * 2, 2, 2 ) );
+                    }
+                }
+                else
+                {
+                    int col = e.ClipRectangle.Location.X / 2;
+                    int row = e.ClipRectangle.Location.Y / 2;
+                    e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col * 2, row * 2, 2, 2 ) );
+                }
+            }
+        }
+
+        private void glyphPanel_Paint( object sender, PaintEventArgs e )
+        {
+            if( Glyph != null )
+            {
+                if( e.ClipRectangle == e.Graphics.VisibleClipBounds )
                 {
                     for( int i = 0; i < Glyph.Pixels.Length; i++ )
                     {
@@ -83,21 +142,32 @@ namespace FFTPatcher.Editors
                     int row = e.ClipRectangle.Location.Y / 15;
                     RedrawPixel( col, row, Glyph.Pixels[row * 10 + col], e.Graphics );
                 }
-            }
 
-            base.OnPaint( e );
+                using( Pen p = new Pen( Color.White ) )
+                {
+                    e.Graphics.DrawLine( p, 
+                        new Point( (int)widthSpinner.Value * 15, 0 ), 
+                        new Point( (int)widthSpinner.Value * 15, (int)e.Graphics.VisibleClipBounds.Bottom ) );
+                }
+            }
         }
 
-        protected override void OnMouseClick( MouseEventArgs e )
+        private void glyphPanel_MouseClick( object sender, MouseEventArgs e )
         {
-            int column = e.X / 15;
-            int row = e.Y / 15;
-            FontColor oldValue = Glyph.Pixels[row * 10 + column];
-            FontColor newValue = (FontColor)(((int)(oldValue + 1)) % 4);
-            Glyph.Pixels[row * 10 + column] = newValue;
-            Invalidate( new Rectangle( column * 15, row * 15, 15, 15 ) );
+            if( Glyph != null )
+            {
+                int column = e.X / 15;
+                int row = e.Y / 15;
+                FontColor newValue = currentColor;
+                Glyph.Pixels[row * 10 + column] = newValue;
+                glyphPanel.Invalidate( new Rectangle( column * 15, row * 15, 15, 15 ) );
+                thumbnailPanel.Invalidate( new Rectangle( column * 2, row * 2, 2, 2 ) );
+            }
+        }
 
-            base.OnMouseClick( e );
+        private void RedrawPixel( int col, int row, FontColor color, Graphics g )
+        {
+            g.FillRectangle( colors[color], new Rectangle( col * 15, row * 15, 15, 15 ) );
         }
     }
 }

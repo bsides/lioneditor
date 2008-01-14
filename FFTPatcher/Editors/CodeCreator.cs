@@ -83,6 +83,10 @@ namespace FFTPatcher.Editors
             {
                 sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Inflict Statuses" : "", FFTPatch.InflictStatuses.GenerateCodes() );
             }
+            if( FFTPatch.Font != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Font" : "", FFTPatch.Font.GenerateCodes() );
+            }
             textBox1.Text = sb.ToString();
             base.OnVisibleChanged( e );
         }

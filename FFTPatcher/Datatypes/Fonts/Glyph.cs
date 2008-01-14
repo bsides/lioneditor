@@ -30,9 +30,11 @@ namespace FFTPatcher.Datatypes
     public class Glyph
     {
         public FontColor[] Pixels { get; private set; }
+        public byte Width { get; set; }
 
-        public Glyph( SubArray<byte> bytes )
+        public Glyph( byte width, SubArray<byte> bytes )
         {
+            Width = width;
             Pixels = new FontColor[14 * 10];
             for( int i = 0; i < bytes.Count; i++ )
             {

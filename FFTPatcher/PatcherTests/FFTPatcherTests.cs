@@ -58,7 +58,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            FFTFont font = new FFTFont( new SubArray<byte>( bytes ) );
+            FFTFont font = new FFTFont( new SubArray<byte>( bytes ), new SubArray<byte>( new byte[0x899] ) );
             byte[] outputBytes = font.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }

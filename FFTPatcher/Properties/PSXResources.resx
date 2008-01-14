@@ -133,6 +133,9 @@
   <data name="FontBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\font.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="FontWidthsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx-us\fontwidths.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="InflictStatusesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\inflictstatuses.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

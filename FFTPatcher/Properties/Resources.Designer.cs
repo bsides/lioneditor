@@ -95,6 +95,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap bg {
+            get {
+                object obj = ResourceManager.GetObject("bg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static byte[] ENTD1 {
             get {
                 object obj = ResourceManager.GetObject("ENTD1", resourceCulture);
@@ -154,6 +161,13 @@ namespace FFTPatcher.Properties {
         internal static byte[] FontBin {
             get {
                 object obj = ResourceManager.GetObject("FontBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] FontWidthsBin {
+            get {
+                object obj = ResourceManager.GetObject("FontWidthsBin", resourceCulture);
                 return ((byte[])(obj));
             }
         }

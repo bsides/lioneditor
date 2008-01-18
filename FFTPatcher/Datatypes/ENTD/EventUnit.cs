@@ -156,9 +156,9 @@ namespace FFTPatcher.Datatypes
             result.Add( Unknown14 );
             result.Add( Job.Value );
             result.Add( SecondaryAction.Value );
-            result.AddRange( Utilities.UShortToBytes( Reaction.Offset ) );
-            result.AddRange( Utilities.UShortToBytes( Support.Offset ) );
-            result.AddRange( Utilities.UShortToBytes( Movement.Offset ) );
+            result.AddRange( Reaction.Offset.ToBytes() );
+            result.AddRange( Support.Offset.ToBytes() );
+            result.AddRange( Movement.Offset.ToBytes() );
             result.Add( (byte)(Head.Offset & 0xFF) );
             result.Add( (byte)(Body.Offset & 0xFF) );
             result.Add( (byte)(Accessory.Offset & 0xFF) );

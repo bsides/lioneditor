@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 using System.Xml;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -97,7 +97,7 @@ namespace FFTPatcher.Datatypes
 
         public AllMonsterSkills( SubArray<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.MonsterSkillsBin : FFTPatcher.Properties.PSXResources.MonsterSkillsBin;
 
             MonsterSkills = new MonsterSkill[48];
             for( int i = 0; i < 48; i++ )
@@ -127,11 +127,11 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Utilities.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
+                return Codes.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
             }
             else
             {
-                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.MonsterSkillsBin, this.ToByteArray(), 0x065BC4 );
+                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.MonsterSkillsBin, this.ToByteArray(), 0x065BC4 );
             }
         }
     }

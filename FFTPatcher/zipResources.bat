@@ -1,0 +1,5 @@
+@for %%i in (%1\Resources\PSP\*.xml) do "%1\gzip" -c "%%i" > "%1\Resources\PSP\%%~ni.xml.gz"
+@for %%i in (%1\Resources\PSX-US\*.xml) do "%1\gzip" -c "%%i" > "%1\Resources\PSX-US\%%~ni.xml.gz"
+@for %%i in (%1\Resources\PSP\bin\*.bin) do "%1\gzip" -c "%%i" > "%1\Resources\PSP\bin\%%~ni.bin.gz"
+@for %%i in (%1\Resources\PSX-US\bin\*.bin) do "%1\gzip" -c "%%i" > "%1\Resources\PSX-US\bin\%%~ni.bin.gz"
+@for %%i in (%1\Resources\*.ENT) do "%1\gzip" -c "%%i" > "%1\Resources\%%~ni.ENT.gz"

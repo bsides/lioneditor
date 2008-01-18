@@ -64,8 +64,8 @@ namespace FFTPatcher.Editors
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.SetValueAndDefault(
-                    Utilities.GetFieldOrProperty<byte>( attributes, spinner.Tag.ToString() ),
-                    Utilities.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
+                    ReflectionHelpers.GetFieldOrProperty<byte>( attributes, spinner.Tag.ToString() ),
+                    ReflectionHelpers.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
             }
             statusImmunityEditor.Statuses = attributes.StatusImmunity;
             startingStatusesEditor.Statuses = attributes.StartingStatuses;
@@ -104,7 +104,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                Utilities.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
+                ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
     }

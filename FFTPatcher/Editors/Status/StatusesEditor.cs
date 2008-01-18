@@ -58,7 +58,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                Utilities.SetFlag( statuses, Statuses.FieldNames[e.Index], e.NewValue == CheckState.Checked );
+                ReflectionHelpers.SetFlag( statuses, Statuses.FieldNames[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -70,7 +70,7 @@ namespace FFTPatcher.Editors
             ignoreChanges = true;
             if( statuses.Default != null )
             {
-                statusesCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( statuses, Statuses.FieldNames ), statuses.Default.ToBoolArray() );
+                statusesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( statuses, Statuses.FieldNames ), statuses.Default.ToBoolArray() );
             }
 
             ignoreChanges = false;

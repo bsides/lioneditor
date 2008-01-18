@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 using System.Xml;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -132,10 +132,10 @@ namespace FFTPatcher.Datatypes
         {
             List<byte> result = new List<byte>( 49 );
             result.Add( SkillSet.Value );
-            result.AddRange( Utilities.UShortToBytes( InnateA.Offset ) );
-            result.AddRange( Utilities.UShortToBytes( InnateB.Offset ) );
-            result.AddRange( Utilities.UShortToBytes( InnateC.Offset ) );
-            result.AddRange( Utilities.UShortToBytes( InnateD.Offset ) );
+            result.AddRange( InnateA.Offset.ToBytes() );
+            result.AddRange( InnateB.Offset.ToBytes() );
+            result.AddRange( InnateC.Offset.ToBytes() );
+            result.AddRange( InnateD.Offset.ToBytes() );
             result.AddRange( Equipment.ToByteArray( context ) );
             result.Add( HPConstant );
             result.Add( HPMultiplier );
@@ -204,7 +204,7 @@ namespace FFTPatcher.Datatypes
             pspNames[0xA9] = "???";
 
             doc = new XmlDocument();
-            doc.LoadXml( PSXResources.Jobs );
+            doc.LoadXml( FFTPatcher.Properties.PSXResources.Jobs );
             psxNames = new string[0xA0];
             psxJobs = new Job[0xA0];
             for( int i = 0; i < 0xA0; i++ )
@@ -223,7 +223,7 @@ namespace FFTPatcher.Datatypes
         {
             int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
             int jobLength = context == Context.US_PSP ? 49 : 48;
-            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : PSXResources.JobsBin;
+            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : FFTPatcher.Properties.PSXResources.JobsBin;
             Jobs = new Job[numJobs];
             for( int i = 0; i < numJobs; i++ )
             {
@@ -252,11 +252,11 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Utilities.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
+                return Codes.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
             }
             else
             {
-                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
+                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
             }
         }
     }

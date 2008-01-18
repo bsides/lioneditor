@@ -18,7 +18,7 @@
 */
 
 using System.Xml;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -46,7 +46,7 @@ namespace FFTPatcher.Datatypes
 
                 pspNames[i] = new SpecialName( (byte)i, name );
             }
-            doc.LoadXml( PSXResources.SpecialNames );
+            doc.LoadXml( FFTPatcher.Properties.PSXResources.SpecialNames );
             for( int i = 0; i < 256; i++ )
             {
                 XmlNode node = doc.SelectSingleNode( string.Format( "//SpecialNames/SpecialName[@byte='{0:X2}']", i ) );

@@ -76,7 +76,7 @@ namespace FFTPatcher.Editors
         {
             if (!ignoreChanges)
             {
-                Utilities.SetFlag(equipment, FieldNames[e.Index], e.NewValue == CheckState.Checked);
+                ReflectionHelpers.SetFlag(equipment, FieldNames[e.Index], e.NewValue == CheckState.Checked);
             }
         }
 
@@ -99,7 +99,7 @@ namespace FFTPatcher.Editors
             }
             if( equipment.Default != null )
             {
-                equipmentCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( equipment, FieldNames ), equipment.Default.ToBoolArray() );
+                equipmentCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( equipment, FieldNames ), equipment.Default.ToBoolArray() );
             }
 
             ignoreChanges = false;

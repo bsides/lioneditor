@@ -82,7 +82,7 @@ namespace FFTPatcher.Editors
                     Requirements reqs = dataGridView1.Rows[e.RowIndex].DataBoundItem as Requirements;
                     if( reqs.Default != null )
                     {
-                        int a = Utilities.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[e.ColumnIndex].DataPropertyName );
+                        int a = ReflectionHelpers.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[e.ColumnIndex].DataPropertyName );
                         if( (int)e.Value != a )
                         {
                             e.CellStyle.BackColor = Color.Blue;
@@ -116,7 +116,7 @@ namespace FFTPatcher.Editors
                 Requirements reqs = dataGridView1.Rows[e.RowIndex].DataBoundItem as Requirements;
                 if( reqs.Default != null )
                 {
-                    int i = Utilities.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[e.ColumnIndex].DataPropertyName );
+                    int i = ReflectionHelpers.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[e.ColumnIndex].DataPropertyName );
                     e.ToolTipText = "Default: " + i.ToString();
                 }
             }

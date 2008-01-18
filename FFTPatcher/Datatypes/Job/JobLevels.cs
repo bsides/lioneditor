@@ -18,7 +18,7 @@
 */
 
 using System.Collections.Generic;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -78,10 +78,10 @@ namespace FFTPatcher.Datatypes
 
             for( int i = 0; i < jobCount; i++ )
             {
-                Utilities.SetFieldOrProperty( this, reqs[i],
+                ReflectionHelpers.SetFieldOrProperty( this, reqs[i],
                     new Requirements( context,
                         new SubArray<byte>( bytes, i * requirementsLength, (i + 1) * requirementsLength - 1 ),
-                        defaults == null ? null : Utilities.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
+                        defaults == null ? null : ReflectionHelpers.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
             }
 
             int start = requirementsLength * jobCount;
@@ -108,21 +108,21 @@ namespace FFTPatcher.Datatypes
             List<byte> result = new List<byte>( 0x118 );
             for( int i = 0; i < jobCount; i++ )
             {
-                result.AddRange( Utilities.GetFieldOrProperty<Requirements>( this, reqs[i] ).ToByteArray( context ) );
+                result.AddRange( ReflectionHelpers.GetFieldOrProperty<Requirements>( this, reqs[i] ).ToByteArray( context ) );
             }
             if( context == Context.US_PSX )
             {
                 result.Add( 0x00 );
                 result.Add( 0x00 );
             }
-            result.AddRange( Utilities.UShortToBytes( Level1 ) );
-            result.AddRange( Utilities.UShortToBytes( Level2 ) );
-            result.AddRange( Utilities.UShortToBytes( Level3 ) );
-            result.AddRange( Utilities.UShortToBytes( Level4 ) );
-            result.AddRange( Utilities.UShortToBytes( Level5 ) );
-            result.AddRange( Utilities.UShortToBytes( Level6 ) );
-            result.AddRange( Utilities.UShortToBytes( Level7 ) );
-            result.AddRange( Utilities.UShortToBytes( Level8 ) );
+            result.AddRange( Level1.ToBytes() );
+            result.AddRange( Level2.ToBytes() );
+            result.AddRange( Level3.ToBytes() );
+            result.AddRange( Level4.ToBytes() );
+            result.AddRange( Level5.ToBytes() );
+            result.AddRange( Level6.ToBytes() );
+            result.AddRange( Level7.ToBytes() );
+            result.AddRange( Level8.ToBytes() );
 
             return result.ToArray();
         }
@@ -131,11 +131,11 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Utilities.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
+                return Codes.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
             }
             else
             {
-                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
+                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
             }
         }
     }
@@ -177,32 +177,32 @@ namespace FFTPatcher.Datatypes
         public Requirements( Context context, SubArray<byte> bytes, Requirements defaults )
         {
             Default = defaults;
-            Squire = Utilities.UpperNibble( bytes[0] );
-            Chemist = Utilities.LowerNibble( bytes[0] );
-            Knight = Utilities.UpperNibble( bytes[1] );
-            Archer = Utilities.LowerNibble( bytes[1] );
-            Monk = Utilities.UpperNibble( bytes[2] );
-            WhiteMage = Utilities.LowerNibble( bytes[2] );
-            BlackMage = Utilities.UpperNibble( bytes[3] );
-            TimeMage = Utilities.LowerNibble( bytes[3] );
-            Summoner = Utilities.UpperNibble( bytes[4] );
-            Thief = Utilities.LowerNibble( bytes[4] );
-            Orator = Utilities.UpperNibble( bytes[5] );
-            Mystic = Utilities.LowerNibble( bytes[5] );
-            Geomancer = Utilities.UpperNibble( bytes[6] );
-            Dragoon = Utilities.LowerNibble( bytes[6] );
-            Samurai = Utilities.UpperNibble( bytes[7] );
-            Ninja = Utilities.LowerNibble( bytes[7] );
-            Arithmetician = Utilities.UpperNibble( bytes[8] );
-            Bard = Utilities.LowerNibble( bytes[8] );
-            Dancer = Utilities.UpperNibble( bytes[9] );
-            Mime = Utilities.LowerNibble( bytes[9] );
+            Squire = bytes[0].GetUpperNibble();
+            Chemist = bytes[0].GetLowerNibble();
+            Knight = bytes[1].GetUpperNibble();
+            Archer = bytes[1].GetLowerNibble();
+            Monk = bytes[2].GetUpperNibble();
+            WhiteMage = bytes[2].GetLowerNibble();
+            BlackMage = bytes[3].GetUpperNibble();
+            TimeMage = bytes[3].GetLowerNibble();
+            Summoner = bytes[4].GetUpperNibble();
+            Thief = bytes[4].GetLowerNibble();
+            Orator = bytes[5].GetUpperNibble();
+            Mystic = bytes[5].GetLowerNibble();
+            Geomancer = bytes[6].GetUpperNibble();
+            Dragoon = bytes[6].GetLowerNibble();
+            Samurai = bytes[7].GetUpperNibble();
+            Ninja = bytes[7].GetLowerNibble();
+            Arithmetician = bytes[8].GetUpperNibble();
+            Bard = bytes[8].GetLowerNibble();
+            Dancer = bytes[9].GetUpperNibble();
+            Mime = bytes[9].GetLowerNibble();
             if( context == Context.US_PSP )
             {
-                DarkKnight = Utilities.UpperNibble( bytes[10] );
-                OnionKnight = Utilities.LowerNibble( bytes[10] );
-                Unknown1 = Utilities.UpperNibble( bytes[11] );
-                Unknown2 = Utilities.LowerNibble( bytes[11] );
+                DarkKnight = bytes[10].GetUpperNibble();
+                OnionKnight = bytes[10].GetLowerNibble();
+                Unknown1 = bytes[11].GetUpperNibble();
+                Unknown2 = bytes[11].GetLowerNibble();
             }
         }
 

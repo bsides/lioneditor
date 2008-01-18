@@ -72,7 +72,7 @@ namespace FFTPatcher.Editors
             elementsCheckedListBox.SuspendLayout();
 
             ignoreChanges = true;
-            elementsCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( elements, elementNames ), Utilities.GetFieldsOrProperties<bool>( defaults, elementNames ) );
+            elementsCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( elements, elementNames ), ReflectionHelpers.GetFieldsOrProperties<bool>( defaults, elementNames ) );
             ignoreChanges = false;
 
             elementsCheckedListBox.ResumeLayout();

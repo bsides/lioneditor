@@ -19,7 +19,7 @@
 
 using System;
 using System.Collections.Generic;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -36,7 +36,7 @@ namespace FFTPatcher.Datatypes
         public AllItems( SubArray<byte> first, SubArray<byte> second )
         {
             Items = new List<Item>();
-            byte[] defaultFirst = second == null ? PSXResources.OldItemsBin : Resources.OldItemsBin;
+            byte[] defaultFirst = second == null ? FFTPatcher.Properties.PSXResources.OldItemsBin : Resources.OldItemsBin;
             byte[] defaultSecond = second == null ? null : Resources.NewItemsBin;
 
             for( UInt16 i = 0; i < 0x80; i++ )
@@ -183,13 +183,13 @@ namespace FFTPatcher.Datatypes
             if( FFTPatch.Context == Context.US_PSP )
             {
                 List<string> strings = new List<string>();
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
                 return strings;
             }
             else
             {
-                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
+                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
             }
         }
     }

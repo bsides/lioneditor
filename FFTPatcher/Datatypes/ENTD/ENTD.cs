@@ -18,7 +18,7 @@
 */
 
 using System.Collections.Generic;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {

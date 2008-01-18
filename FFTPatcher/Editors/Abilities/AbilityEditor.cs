@@ -56,8 +56,8 @@ namespace FFTPatcher.Editors
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.SetValueAndDefault(
-                    Utilities.GetFieldOrProperty<byte>( ability, spinner.Tag.ToString() ),
-                    Utilities.GetFieldOrProperty<byte>( ability.Default, spinner.Tag.ToString() ) );
+                    ReflectionHelpers.GetFieldOrProperty<byte>( ability, spinner.Tag.ToString() ),
+                    ReflectionHelpers.GetFieldOrProperty<byte>( ability.Default, spinner.Tag.ToString() ) );
             }
             arithmeticksPanel.Visible = ability.IsArithmetick;
 
@@ -164,7 +164,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                Utilities.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
+                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
             }
         }
 
@@ -173,7 +173,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
-                Utilities.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
+                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
             }
         }
 

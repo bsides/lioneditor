@@ -44,8 +44,8 @@ namespace FFTPatcher.Editors
                     NumericUpDownWithDefault spinner = c as NumericUpDownWithDefault;
                     spinner.ValueChanged -= spinner_ValueChanged;
                     spinner.SetValueAndDefault(
-                        Utilities.GetFieldOrProperty<UInt16>( levels, spinner.Tag.ToString() ),
-                        Utilities.GetFieldOrProperty<UInt16>( levels.Default, spinner.Tag.ToString() ) );
+                        ReflectionHelpers.GetFieldOrProperty<UInt16>( levels, spinner.Tag.ToString() ),
+                        ReflectionHelpers.GetFieldOrProperty<UInt16>( levels.Default, spinner.Tag.ToString() ) );
                     spinner.ValueChanged += spinner_ValueChanged;
                 }
             }
@@ -76,7 +76,7 @@ namespace FFTPatcher.Editors
         private void spinner_ValueChanged( object sender, EventArgs e )
         {
             NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-            Utilities.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
+            ReflectionHelpers.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
         }
     }
 }

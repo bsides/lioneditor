@@ -60,24 +60,10 @@ namespace FFTPatcher.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Abilities {
+        internal static byte[] Abilities {
             get {
-                return ResourceManager.GetString("Abilities", resourceCulture);
+                object obj = ResourceManager.GetObject("Abilities", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -137,24 +123,10 @@ namespace FFTPatcher.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string EventNames {
+        internal static byte[] EventNames {
             get {
-                return ResourceManager.GetString("EventNames", resourceCulture);
+                object obj = ResourceManager.GetObject("EventNames", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -179,24 +151,17 @@ namespace FFTPatcher.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Items {
+        internal static byte[] ItemAttributes {
             get {
-                return ResourceManager.GetString("Items", resourceCulture);
+                object obj = ResourceManager.GetObject("ItemAttributes", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] Items {
+            get {
+                object obj = ResourceManager.GetObject("Items", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -207,24 +172,10 @@ namespace FFTPatcher.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Jobs {
+        internal static byte[] Jobs {
             get {
-                return ResourceManager.GetString("Jobs", resourceCulture);
+                object obj = ResourceManager.GetObject("Jobs", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -277,24 +228,10 @@ namespace FFTPatcher.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SkillSets {
+        internal static byte[] SkillSets {
             get {
-                return ResourceManager.GetString("SkillSets", resourceCulture);
+                object obj = ResourceManager.GetObject("SkillSets", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -305,45 +242,17 @@ namespace FFTPatcher.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SpecialNames {
+        internal static byte[] SpecialNames {
             get {
-                return ResourceManager.GetString("SpecialNames", resourceCulture);
+                object obj = ResourceManager.GetObject("SpecialNames", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SpriteSets {
+        internal static byte[] SpriteSets {
             get {
-                return ResourceManager.GetString("SpriteSets", resourceCulture);
+                object obj = ResourceManager.GetObject("SpriteSets", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

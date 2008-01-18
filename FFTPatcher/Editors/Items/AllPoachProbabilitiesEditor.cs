@@ -84,7 +84,7 @@ namespace FFTPatcher.Editors
                 PoachProbability poach = dataGridView.Rows[e.RowIndex].DataBoundItem as PoachProbability;
                 if( poach.Default != null )
                 {
-                    Item i = Utilities.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                    Item i = ReflectionHelpers.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
                     e.ToolTipText = "Default: " + i.Name;
                 }
             }
@@ -102,7 +102,7 @@ namespace FFTPatcher.Editors
                     PoachProbability poach = dataGridView.Rows[e.RowIndex].DataBoundItem as PoachProbability;
                     if( poach.Default != null )
                     {
-                        Item i = Utilities.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                        Item i = ReflectionHelpers.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
                         if( i != (e.Value as Item) )
                         {
                             e.CellStyle.BackColor = Color.Blue;

@@ -18,7 +18,7 @@
 */
 
 using System.Collections.Generic;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -113,7 +113,7 @@ namespace FFTPatcher.Datatypes
         public AllStatusAttributes( SubArray<byte> bytes )
         {
             StatusAttributes = new StatusAttribute[40];
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.StatusAttributesBin : FFTPatcher.Properties.PSXResources.StatusAttributesBin;
 
             for( int i = 0; i < 40; i++ )
             {
@@ -143,11 +143,11 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Utilities.GenerateCodes( Context.US_PSP, Resources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
+                return Codes.GenerateCodes( Context.US_PSP, Resources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
             }
             else
             {
-                return Utilities.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4);
+                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4);
             }
         }
     }

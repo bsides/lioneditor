@@ -61,13 +61,13 @@ namespace FFTPatcher.Editors
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.SetValueAndDefault(
-                    Utilities.GetFieldOrProperty<byte>( statusAttribute, spinner.Tag.ToString() ),
-                    Utilities.GetFieldOrProperty<byte>( statusAttribute.Default, spinner.Tag.ToString() ) );
+                    ReflectionHelpers.GetFieldOrProperty<byte>( statusAttribute, spinner.Tag.ToString() ),
+                    ReflectionHelpers.GetFieldOrProperty<byte>( statusAttribute.Default, spinner.Tag.ToString() ) );
             }
 
             if( statusAttribute.Default != null )
             {
-                checkedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( statusAttribute, PropertyNames ), statusAttribute.Default.ToBoolArray() );
+                checkedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( statusAttribute, PropertyNames ), statusAttribute.Default.ToBoolArray() );
             }
 
             cantStackStatusesEditor.Statuses = statusAttribute.CantStackOn;
@@ -92,7 +92,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                Utilities.SetFieldOrProperty( statusAttribute, PropertyNames[e.Index], e.NewValue == CheckState.Checked );
+                ReflectionHelpers.SetFieldOrProperty( statusAttribute, PropertyNames[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -101,7 +101,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                Utilities.SetFieldOrProperty( statusAttribute, spinner.Tag.ToString(), (byte)spinner.Value );
+                ReflectionHelpers.SetFieldOrProperty( statusAttribute, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
     }

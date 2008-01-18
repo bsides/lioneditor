@@ -89,7 +89,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                Utilities.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
+                ReflectionHelpers.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
             }
         }
 
@@ -98,7 +98,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                Utilities.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
+                ReflectionHelpers.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
         private Context ourContext = Context.Default;
@@ -132,8 +132,8 @@ namespace FFTPatcher.Editors
             {
                 // TODO Update Default
                 s.SetValueAndDefault(
-                    Utilities.GetFieldOrProperty<byte>( job, s.Tag.ToString() ),
-                    Utilities.GetFieldOrProperty<byte>( job.Default, s.Tag.ToString() ) );
+                    ReflectionHelpers.GetFieldOrProperty<byte>( job, s.Tag.ToString() ),
+                    ReflectionHelpers.GetFieldOrProperty<byte>( job.Default, s.Tag.ToString() ) );
             }
             innateAComboBox.SetValueAndDefault( job.InnateA, job.Default.InnateA );
             innateBComboBox.SetValueAndDefault( job.InnateB, job.Default.InnateB );

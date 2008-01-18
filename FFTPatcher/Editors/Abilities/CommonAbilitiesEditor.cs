@@ -105,12 +105,12 @@ namespace FFTPatcher.Editors
 
         private bool GetFlagFromAbility( string name )
         {
-            return Utilities.GetFlag( ability, name );
+            return ReflectionHelpers.GetFlag( ability, name );
         }
 
         private void SetAbilityFlag( string name, bool newValue )
         {
-            Utilities.SetFlag( ability, name, newValue );
+            ReflectionHelpers.SetFlag( ability, name, newValue );
         }
 
         private void UpdateView()
@@ -123,12 +123,12 @@ namespace FFTPatcher.Editors
 
             if( ability.Default != null )
             {
-                propertiesCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, PropertiesNames ), ability.Default.PropertiesToBoolArray() );
+                propertiesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, PropertiesNames ), ability.Default.PropertiesToBoolArray() );
                 bool[] bools = ability.Default.AIFlags.ToBoolArray();
 
-                aiCheckedListBox1.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 0, 7 ).ToArray() ), new SubArray<bool>( bools, 0, 7 ).ToArray() );
-                aiCheckedListBox2.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 8, 15 ).ToArray() ), new SubArray<bool>( bools, 8, 15 ).ToArray() );
-                aiCheckedListBox3.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 16, 23 ).ToArray() ), new SubArray<bool>( bools, 16, 23 ).ToArray() );
+                aiCheckedListBox1.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 0, 7 ).ToArray() ), new SubArray<bool>( bools, 0, 7 ).ToArray() );
+                aiCheckedListBox2.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 8, 15 ).ToArray() ), new SubArray<bool>( bools, 8, 15 ).ToArray() );
+                aiCheckedListBox3.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 16, 23 ).ToArray() ), new SubArray<bool>( bools, 16, 23 ).ToArray() );
             }
 
             ignoreChanges = false;

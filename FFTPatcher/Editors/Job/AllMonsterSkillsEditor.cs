@@ -69,7 +69,7 @@ namespace FFTPatcher.Editors
                 MonsterSkill skill = dataGridView.Rows[e.RowIndex].DataBoundItem as MonsterSkill;
                 if( skill.Default != null )
                 {
-                    Ability a = Utilities.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                    Ability a = ReflectionHelpers.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
                     e.ToolTipText = "Default: " + a.Name;
                 }
             }
@@ -95,7 +95,7 @@ namespace FFTPatcher.Editors
                     MonsterSkill skill = dataGridView.Rows[e.RowIndex].DataBoundItem as MonsterSkill;
                     if( skill.Default != null )
                     {
-                        Ability a = Utilities.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                        Ability a = ReflectionHelpers.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
                         if( a != (e.Value as Ability) )
                         {
                             e.CellStyle.BackColor = Color.Blue;

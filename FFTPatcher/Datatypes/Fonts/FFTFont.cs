@@ -18,7 +18,7 @@
 */
 
 using System.Collections.Generic;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -68,15 +68,15 @@ namespace FFTPatcher.Datatypes
 
             if( FFTPatch.Context == Context.US_PSP )
             {
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x2FB364 ) );
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x2FB364 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
             }
             else
             {
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSX, PSXResources.FontBin, this.ToByteArray(), 0x13B8F8 ) );
-                strings.AddRange( Utilities.GenerateCodes( Context.US_PSX, PSXResources.FontWidthsBin, this.ToWidthsByteArray(), 0x1533E0 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.FontBin, this.ToByteArray(), 0x13B8F8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.FontWidthsBin, this.ToWidthsByteArray(), 0x1533E0 ) );
             }
             return strings;
         }

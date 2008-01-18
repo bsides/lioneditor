@@ -435,7 +435,7 @@
     <None Include="Resources\ENTD2.ENT" />
     <None Include="Resources\ENTD3.ENT" />
     <None Include="Resources\ENTD4.ENT" />
-    <None Include="Resources\PSP\bin\Abilities.bin" />
+    <Compile Include="Resources\PSP\bin\Abilities.bin" />
     <None Include="Resources\PSP\bin\ActionEvents.bin" />
     <None Include="Resources\PSP\bin\ENTD5.bin" />
     <None Include="Resources\PSP\bin\font.bin" />
@@ -479,7 +479,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PSXResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities\Codes.cs" />
+    <Compile Include="Utilities\ExtensionMethods.cs" />
+    <Compile Include="Utilities\GZip.cs" />
+    <Compile Include="Utilities\ReflectionHelpers.cs" />
+    <Compile Include="Utilities\Resources.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\bg.gif" />
@@ -508,4 +513,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>$(ProjectDir)zipResources.bat "$(ProjectDir)"
+</PreBuildEvent>
+  </PropertyGroup>
 </Project>

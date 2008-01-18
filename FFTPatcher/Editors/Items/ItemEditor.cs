@@ -91,7 +91,7 @@ namespace FFTPatcher.Editors
 
                 if( w.WeaponDefault != null )
                 {
-                    weaponAttributesCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( w, weaponBools ), w.WeaponDefault.ToWeaponBoolArray() );
+                    weaponAttributesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( w, weaponBools ), w.WeaponDefault.ToWeaponBoolArray() );
                 }
 
                 weaponRangeSpinner.SetValueAndDefault(
@@ -175,7 +175,7 @@ namespace FFTPatcher.Editors
 
             if( item.Default != null )
             {
-                itemAttributesCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( item, itemBools ), item.ToBoolArray() );
+                itemAttributesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( item, itemBools ), item.ToBoolArray() );
             }
 
             weaponPanel.ResumeLayout();
@@ -257,7 +257,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 Weapon w = item as Weapon;
-                Utilities.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue == CheckState.Checked );
+                ReflectionHelpers.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -265,7 +265,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                Utilities.SetFieldOrProperty( item, itemBools[e.Index], e.NewValue == CheckState.Checked );
+                ReflectionHelpers.SetFieldOrProperty( item, itemBools[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -274,7 +274,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                Utilities.SetFieldOrProperty( item, c.Tag.ToString(), c.SelectedItem );
+                ReflectionHelpers.SetFieldOrProperty( item, c.Tag.ToString(), c.SelectedItem );
             }
         }
 
@@ -285,11 +285,11 @@ namespace FFTPatcher.Editors
                 NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
                 if( spinner == priceSpinner )
                 {
-                    Utilities.SetFieldOrProperty( item, spinner.Tag.ToString(), (UInt16)spinner.Value );
+                    ReflectionHelpers.SetFieldOrProperty( item, spinner.Tag.ToString(), (UInt16)spinner.Value );
                 }
                 else
                 {
-                    Utilities.SetFieldOrProperty( item, spinner.Tag.ToString(), (byte)spinner.Value );
+                    ReflectionHelpers.SetFieldOrProperty( item, spinner.Tag.ToString(), (byte)spinner.Value );
                 }
             }
         }

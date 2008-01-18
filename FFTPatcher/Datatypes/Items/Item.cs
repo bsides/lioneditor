@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml;
-using FFTPatcher.Properties;
+
 
 namespace FFTPatcher.Datatypes
 {
@@ -78,7 +78,7 @@ namespace FFTPatcher.Datatypes
             }
 
             doc = new XmlDocument();
-            doc.LoadXml( PSXResources.Items );
+            doc.LoadXml( FFTPatcher.Properties.PSXResources.Items );
             PSXNames = new List<string>( 256 );
             PSXDummies = new List<Item>( 256 );
             for( int i = 0; i < 256; i++ )
@@ -183,7 +183,7 @@ namespace FFTPatcher.Datatypes
             result.Add( (byte)ItemType );
             result.Add( Unknown1 );
             result.Add( SIA );
-            result.AddRange( Utilities.UShortToBytes( Price ) );
+            result.AddRange( Price.ToBytes() );
             result.Add( ShopAvailability.ToByte() );
             result.Add( Unknown2 );
             return result;

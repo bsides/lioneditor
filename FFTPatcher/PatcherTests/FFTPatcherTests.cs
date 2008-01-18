@@ -22,6 +22,8 @@ using System.Reflection;
 using FFTPatcher.Datatypes;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using System;
+using FFTPatcher;
 
 namespace PatcherTests
 {
@@ -186,6 +188,20 @@ namespace PatcherTests
             byte[] output = ent.ToByteArray();
 
             Assert.That( output, Is.EqualTo( bytes ) );
+        }
+
+        [Test]
+        public void ShouldGUnzip()
+        {
+            Type t = Type.GetType( "FFTPatcher.Properties.Resources,FFTPatcher", false );
+            PropertyInfo p = t.GetProperty( "ENTD1_ENT", BindingFlags.Static | BindingFlags.NonPublic );
+            byte[] b = p.GetValue( null, null ) as byte[];
+
+            byte[] result = GZip.Decompress( b );
+
+            byte[] expected = t.GetProperty( "ENTD1", BindingFlags.Static | BindingFlags.NonPublic ).GetValue( null, null ) as byte[];
+            Assert.That( result, Is.EquivalentTo( expected ) );
+
         }
 
         [Test]

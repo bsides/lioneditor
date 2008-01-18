@@ -58,7 +58,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges )
             {
-                Utilities.SetFlag( status, flags[e.Index], e.NewValue == CheckState.Checked );
+                ReflectionHelpers.SetFlag( status, flags[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -71,7 +71,7 @@ namespace FFTPatcher.Editors
 
             if( status.Default != null )
             {
-                flagsCheckedListBox.SetValuesAndDefaults( Utilities.GetFieldsOrProperties<bool>( status, flags ), status.Default.ToBoolArray() );
+                flagsCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( status, flags ), status.Default.ToBoolArray() );
             }
 
             inflictStatusesEditor.Statuses = status.Statuses;

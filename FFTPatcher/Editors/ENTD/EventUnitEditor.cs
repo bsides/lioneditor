@@ -81,9 +81,9 @@ namespace FFTPatcher.Editors
         private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
             if (sender == flags1CheckedListBox)
-                Utilities.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
             else if( sender == flags2CheckedListBox )
-                Utilities.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
         }
 
         private void UpdateDataSources()
@@ -126,7 +126,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                Utilities.SetFieldOrProperty( eventUnit, c.Tag.ToString(), c.SelectedItem );
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), c.SelectedItem );
                 if( (c == spriteSetComboBox) || (c == specialNameComboBox) || (c == jobComboBox) )
                 {
                     FireDataChangedEvent();
@@ -139,7 +139,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
-                Utilities.SetFieldOrProperty( eventUnit, c.Tag.ToString(), (byte)c.Value );
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), (byte)c.Value );
             }
         }
 
@@ -158,24 +158,24 @@ namespace FFTPatcher.Editors
                 foreach( NumericUpDownWithDefault spinner in spinners )
                 {
                     spinner.SetValueAndDefault(
-                        Utilities.GetFieldOrProperty<byte>( eventUnit, spinner.Tag.ToString() ),
-                        Utilities.GetFieldOrProperty<byte>( eventUnit.Default, spinner.Tag.ToString() ) );
+                        ReflectionHelpers.GetFieldOrProperty<byte>( eventUnit, spinner.Tag.ToString() ),
+                        ReflectionHelpers.GetFieldOrProperty<byte>( eventUnit.Default, spinner.Tag.ToString() ) );
                 }
 
                 foreach( ComboBoxWithDefault comboBox in comboBoxes )
                 {
                     comboBox.SetValueAndDefault(
-                        Utilities.GetFieldOrProperty<object>( eventUnit, comboBox.Tag.ToString() ),
-                        Utilities.GetFieldOrProperty<object>( eventUnit.Default, comboBox.Tag.ToString() ) );
+                        ReflectionHelpers.GetFieldOrProperty<object>( eventUnit, comboBox.Tag.ToString() ),
+                        ReflectionHelpers.GetFieldOrProperty<object>( eventUnit.Default, comboBox.Tag.ToString() ) );
                 }
 
                 flags1CheckedListBox.SetValuesAndDefaults(
-                    Utilities.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags1FieldNames ),
-                    Utilities.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags1FieldNames ) );
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags1FieldNames ),
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags1FieldNames ) );
 
                 flags2CheckedListBox.SetValuesAndDefaults(
-                    Utilities.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags2FieldNames ),
-                    Utilities.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags2FieldNames ) );
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags2FieldNames ),
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags2FieldNames ) );
 
             }
             ignoreChanges = false;

@@ -160,39 +160,7 @@ namespace FFTPatcher.Editors
             // 
             this.flagsCheckedListBox.CheckOnClick = true;
             this.flagsCheckedListBox.FormattingEnabled = true;
-            this.flagsCheckedListBox.Items.AddRange( new object[] {
-            "",
-            "",
-            "Ranged Weapon",
-            "Vertical Fixed",
-            "Vertical Tolerance",
-            "Weapon Strike",
-            "Auto",
-            "Target Self",
-            "Hit Enemies",
-            "Hit Allies",
-            "",
-            "Follow Target",
-            "Random Fire",
-            "Linear Attack",
-            "3 Directions",
-            "Hit Caster",
-            "Reflect",
-            "Arithmeticks",
-            "Silence",
-            "Mimic",
-            "Normal Attack?",
-            "Perservere",
-            "Quote",
-            "Unknown",
-            "Counter Flood",
-            "Counter Magic",
-            "Direct",
-            "Shirahadori",
-            "Requires Sword",
-            "Requires Materia Blade",
-            "Evadeable",
-            "Targeting"} );
+
             this.flagsCheckedListBox.Location = new System.Drawing.Point( 164, 14 );
             this.flagsCheckedListBox.Name = "flagsCheckedListBox";
             this.flagsCheckedListBox.Size = new System.Drawing.Size( 144, 484 );
@@ -393,9 +361,9 @@ namespace FFTPatcher.Editors
             effectLabel.AutoSize = true;
             effectLabel.Location = new System.Drawing.Point( 6, 39 );
             effectLabel.Name = "effectLabel";
-            effectLabel.Size = new System.Drawing.Size( 38, 13 );
+            effectLabel.Size = new System.Drawing.Size( 62, 13 );
             effectLabel.TabIndex = 2;
-            effectLabel.Text = "Effect:";
+            effectLabel.Text = "Effect area:";
             // 
             // rangeLabel
             // 

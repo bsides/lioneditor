@@ -66,7 +66,16 @@ namespace FFTPatcher.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
+        internal static byte[] AbilitiesStrings
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject( "AbilitiesStrings", resourceCulture );
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] AbilitiesBin {
             get {
                 object obj = ResourceManager.GetObject("AbilitiesBin", resourceCulture);
@@ -119,6 +128,15 @@ namespace FFTPatcher.Properties {
         internal static byte[] Items {
             get {
                 object obj = ResourceManager.GetObject( "Items", resourceCulture );
+                return ((byte[])(obj));
+            }
+        }
+
+        internal static byte[] ItemsStrings
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject( "ItemsStrings", resourceCulture );
                 return ((byte[])(obj));
             }
         }
@@ -199,8 +217,18 @@ namespace FFTPatcher.Properties {
                 return ((byte[])(obj));
             }
         }
-        
-        internal static byte[] StatusAttributesBin {
+
+        internal static byte[] StatusNames
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject( "StatusNames", resourceCulture );
+                return ((byte[])(obj));
+            }
+        }
+
+        internal static byte[] StatusAttributesBin
+        {
             get {
                 object obj = ResourceManager.GetObject("StatusAttributesBin", resourceCulture);
                 return ((byte[])(obj));

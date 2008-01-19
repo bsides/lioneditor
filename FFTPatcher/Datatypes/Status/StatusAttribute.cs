@@ -115,11 +115,12 @@ namespace FFTPatcher.Datatypes
             StatusAttributes = new StatusAttribute[40];
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin;
 
+            string[] names = FFTPatch.Context == Context.US_PSP ? Resources.Statuses : PSXResources.Statuses;
             for( int i = 0; i < 40; i++ )
             {
                 StatusAttributes[i] =
-                    new StatusAttribute( Statuses.StatusNames[i], (byte)i, new SubArray<byte>( bytes, 16 * i, 16 * i + 15 ),
-                        new StatusAttribute( Statuses.StatusNames[i], (byte)i, new SubArray<byte>( defaultBytes, 16 * i, 16 * i + 15 ) ) );
+                    new StatusAttribute( names[i], (byte)i, new SubArray<byte>( bytes, 16 * i, 16 * i + 15 ),
+                        new StatusAttribute( names[i], (byte)i, new SubArray<byte>( defaultBytes, 16 * i, 16 * i + 15 ) ) );
             }
         }
 

@@ -57,12 +57,22 @@ namespace FFTPatcher.Editors
             }
         }
 
+        private Context ourContext = Context.Default;
+
         private void UpdateView()
         {
             this.SuspendLayout();
             elementsEditor.SuspendLayout();
 
             ignoreChanges = true;
+
+            if( FFTPatch.Context != ourContext )
+            {
+                ourContext = FFTPatch.Context;
+                flagsCheckedListBox.Items.Clear();
+                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.AbilityAttributes : PSXResources.AbilityAttributes );
+            }
+
             bool[] defaults = null;
             if( attributes.Default != null )
             {

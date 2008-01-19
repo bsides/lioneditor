@@ -119,7 +119,10 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Abilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\abilities.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\abilities\abilities.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="AbilitiesStrings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx-us\abilities\strings.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="AbilitiesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\bin\abilities.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -140,10 +143,13 @@
     <value>..\resources\psx-us\bin\inflictstatuses.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ItemAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\itemattributes.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\items\itemattributes.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Items" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\items.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\items\items.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="ItemsStrings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx-us\items\strings.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="JobLevelsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\bin\joblevels.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -180,5 +186,8 @@
   </data>
   <data name="StatusAttributesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\bin\statusattributes.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="StatusNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx-us\statusnames.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

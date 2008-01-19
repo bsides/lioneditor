@@ -53,7 +53,6 @@ namespace FFTPatcher.Editors
         public CommonAbilitiesEditor()
         {
             InitializeComponent();
-            abilityTypeComboBox.DataSource = Enum.GetValues( typeof( AbilityType ) );
 
             jpCostSpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
@@ -71,12 +70,10 @@ namespace FFTPatcher.Editors
                 delegate( object sender, EventArgs e )
                 {
                     if( !ignoreChanges )
-                        ability.AbilityType = (AbilityType)abilityTypeComboBox.SelectedItem;
+                        ability.AbilityType = (AbilityType)abilityTypeComboBox.SelectedIndex;
                 };
             propertiesCheckedListBox.ItemCheck += CheckedListBox_ItemCheck;
-            aiCheckedListBox1.ItemCheck += CheckedListBox_ItemCheck;
-            aiCheckedListBox2.ItemCheck += CheckedListBox_ItemCheck;
-            aiCheckedListBox3.ItemCheck += CheckedListBox_ItemCheck;
+            aiCheckedListBox.ItemCheck += CheckedListBox_ItemCheck;
         }
 
         private void CheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
@@ -88,17 +85,9 @@ namespace FFTPatcher.Editors
                 {
                     SetAbilityFlag( PropertiesNames[e.Index], e.NewValue == CheckState.Checked );
                 }
-                else if( clb == aiCheckedListBox1 )
+                else if( clb == aiCheckedListBox )
                 {
                     SetAbilityFlag( AIPropertyNames[e.Index], e.NewValue == CheckState.Checked );
-                }
-                else if( clb == aiCheckedListBox2 )
-                {
-                    SetAbilityFlag( AIPropertyNames[e.Index + 8], e.NewValue == CheckState.Checked );
-                }
-                else if( clb == aiCheckedListBox3 )
-                {
-                    SetAbilityFlag( AIPropertyNames[e.Index + 16], e.NewValue == CheckState.Checked );
                 }
             }
         }
@@ -113,22 +102,34 @@ namespace FFTPatcher.Editors
             ReflectionHelpers.SetFlag( ability, name, newValue );
         }
 
+        private Context ourContext = Context.Default;
+
         private void UpdateView()
         {
             this.SuspendLayout();
             ignoreChanges = true;
+
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                aiCheckedListBox.Items.Clear();
+                aiCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.AbilityAI : PSXResources.AbilityAI );
+                abilityTypeComboBox.DataSource = ourContext == Context.US_PSP ? Resources.AbilityTypes : PSXResources.AbilityTypes;
+            }
+
             jpCostSpinner.SetValueAndDefault( ability.JPCost, ability.Default.JPCost );
             chanceSpinner.SetValueAndDefault( ability.LearnRate, ability.Default.LearnRate );
-            abilityTypeComboBox.SetValueAndDefault( ability.AbilityType, ability.Default.AbilityType );
+
+            abilityTypeComboBox.SetValueAndDefault(
+                abilityTypeComboBox.Items[(byte)ability.AbilityType],
+                abilityTypeComboBox.Items[(byte)ability.Default.AbilityType] );
 
             if( ability.Default != null )
             {
                 propertiesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, PropertiesNames ), ability.Default.PropertiesToBoolArray() );
                 bool[] bools = ability.Default.AIFlags.ToBoolArray();
 
-                aiCheckedListBox1.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 0, 7 ).ToArray() ), new SubArray<bool>( bools, 0, 7 ).ToArray() );
-                aiCheckedListBox2.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 8, 15 ).ToArray() ), new SubArray<bool>( bools, 8, 15 ).ToArray() );
-                aiCheckedListBox3.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, new SubArray<string>( AIPropertyNames, 16, 23 ).ToArray() ), new SubArray<bool>( bools, 16, 23 ).ToArray() );
+                aiCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( ability, AIPropertyNames ), ability.Default.AIFlags.ToBoolArray() );
             }
 
             ignoreChanges = false;

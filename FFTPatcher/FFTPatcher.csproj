@@ -489,22 +489,28 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\bg.gif" />
-    <Content Include="Resources\PSP\Abilities.xml" />
+    <Content Include="Resources\PSP\Abilities\Abilities.xml" />
+    <Content Include="Resources\PSP\Abilities\Strings.xml" />
     <Content Include="Resources\PSP\EventNames.xml" />
-    <Content Include="Resources\PSP\ItemAttributes.xml" />
-    <Content Include="Resources\PSP\Items.xml" />
+    <Content Include="Resources\PSP\Items\ItemAttributes.xml" />
+    <Content Include="Resources\PSP\Items\Items.xml" />
+    <Content Include="Resources\PSP\Items\Strings.xml" />
     <Content Include="Resources\PSP\Jobs.xml" />
     <Content Include="Resources\PSP\SkillSets.xml" />
     <Content Include="Resources\PSP\SpecialNames.xml" />
     <Content Include="Resources\PSP\SpriteSets.xml" />
-    <Content Include="Resources\PSX-US\Abilities.xml" />
+    <Content Include="Resources\PSP\StatusNames.xml" />
+    <Content Include="Resources\PSX-US\Abilities\Abilities.xml" />
+    <Content Include="Resources\PSX-US\Abilities\Strings.xml" />
     <Content Include="Resources\PSX-US\EventNames.xml" />
-    <Content Include="Resources\PSX-US\ItemAttributes.xml" />
-    <Content Include="Resources\PSX-US\Items.xml" />
+    <Content Include="Resources\PSX-US\Items\ItemAttributes.xml" />
+    <Content Include="Resources\PSX-US\Items\Items.xml" />
+    <Content Include="Resources\PSX-US\Items\Strings.xml" />
     <Content Include="Resources\PSX-US\Jobs.xml" />
     <Content Include="Resources\PSX-US\SkillSets.xml" />
     <Content Include="Resources\PSX-US\SpecialNames.xml" />
     <Content Include="Resources\PSX-US\SpriteSets.xml" />
+    <Content Include="Resources\PSX-US\StatusNames.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

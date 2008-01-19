@@ -213,30 +213,9 @@ namespace FFTPatcher.Datatypes
 
     public class ShopAvailability
     {
-        private static readonly string[] events = new string[] {
-            "<Blank>",
-            "Chapter 1 - Start",
-            "Chapter 1 - Enter Eagrose",
-            "Chapter 1 - Save Elmdore",
-            "Chapter 1 - Kill Milleuda",
-            "Chapter 2 - Start",
-            "Chapter 2 - Save Ovelia",
-            "Chapter 2 - Meet Dracleau",
-            "Chapter 2 - Save Agrias",
-            "Chapter 3 - Start",
-            "Chapter 3 - Zalmour",
-            "Chapter 3 - Meet Belias",
-            "Chapter 3 - Save Rapha",
-            "Chapter 4 - Start",
-            "Chapter 4 - Bethla",
-            "Chapter 4 - Kill Elmdore",
-            "Chapter 4 - Kill Zalbaag",
-            "<Blank>",
-            "<Blank>",
-            "<Blank>",
-            "<Blank>" };
-
         private string name;
+        private string psxName;
+
         private static List<ShopAvailability> all;
         public static List<ShopAvailability> AllAvailabilities
         {
@@ -245,18 +224,20 @@ namespace FFTPatcher.Datatypes
                 if( all == null )
                 {
                     all = new List<ShopAvailability>( 256 );
-                    for( byte i = 0; i < events.Length; i++ )
+                    for( byte i = 0; i < Resources.ShopAvailabilities.Length; i++ )
                     {
                         ShopAvailability a = new ShopAvailability();
                         a.b = i;
-                        a.name = events[i];
+                        a.name = Resources.ShopAvailabilities[i];
+                        a.psxName = PSXResources.ShopAvailabilities[i];
                         all.Add( a );
                     }
-                    for( int i = events.Length; i <= 0xFF; i++ )
+                    for( int i = Resources.ShopAvailabilities.Length; i <= 0xFF; i++ )
                     {
                         ShopAvailability a = new ShopAvailability();
                         a.b = (byte)i;
                         a.name = string.Format( "Unknown ({0})", i );
+                        a.psxName = a.name;
                         all.Add( a );
                     }
                 }
@@ -272,7 +253,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return name;
+            return FFTPatch.Context == Context.US_PSP ? name : psxName;
         }
 
         public byte ToByte()

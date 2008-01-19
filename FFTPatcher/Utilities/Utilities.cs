@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Xml;
 
 namespace FFTPatcher
 {
@@ -135,6 +136,20 @@ namespace FFTPatcher
             }
 
             return true;
+        }
+
+        public static string[] GetStringsFromNumberedXmlNodes( string xmlDoc, string xPath, int length )
+        {
+            string[] result = new string[length];
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml( xmlDoc );
+            for( int i = 0; i < length; i++ )
+            {
+                result[i] = doc.SelectSingleNode(
+                    string.Format( xPath, i ) ).InnerText;
+            }
+
+            return result;
         }
     }
 }

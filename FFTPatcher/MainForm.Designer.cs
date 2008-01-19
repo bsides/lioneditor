@@ -178,8 +178,8 @@ namespace FFTPatcher
             // 
             // folderBrowserDialog
             // 
-            this.folderBrowserDialog.Description = "Where should the files be exported?\\nAny files in the folder you choose with the " +
-                "names ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, or ENTD4.ENT will be overwritten.";
+            this.folderBrowserDialog.Description = "Where should the files be exported?\nAny files in the folder you choose with the " +
+                "names ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, ENTD4.ENT, or ENTD5.ENT will be overwritten.";
             // 
             // MainForm
             // 

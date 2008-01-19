@@ -17,9 +17,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FFTPatcher
 {
@@ -52,20 +50,112 @@ namespace FFTPatcher
 
             dict["SkillSets"] = GZip.Decompress( FFTPatcher.Properties.Resources.SkillSets ).ToUTF8String();
             dict["Abilities"] = GZip.Decompress( FFTPatcher.Properties.Resources.Abilities ).ToUTF8String();
+            dict["AbilitiesStrings"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilitiesStrings ).ToUTF8String();
             dict["EventNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.EventNames ).ToUTF8String();
             dict["Items"] = GZip.Decompress( FFTPatcher.Properties.Resources.Items ).ToUTF8String();
+            dict["ItemsStrings"] = GZip.Decompress( FFTPatcher.Properties.Resources.ItemsStrings ).ToUTF8String();
             dict["Jobs"] = GZip.Decompress( FFTPatcher.Properties.Resources.Jobs ).ToUTF8String();
             dict["SpecialNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.SpecialNames ).ToUTF8String();
             dict["SpriteSets"] = GZip.Decompress( FFTPatcher.Properties.Resources.SpriteSets ).ToUTF8String();
+            dict["StatusNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.StatusNames ).ToUTF8String();
         }
 
         public static string SkillSets { get { return dict["SkillSets"] as string; } }
         public static string Abilities { get { return dict["Abilities"] as string; } }
+        public static string AbilitiesStrings { get { return dict["AbilitiesStrings"] as string; } }
         public static string EventNames { get { return dict["EventNames"] as string; } }
         public static string Items { get { return dict["Items"] as string; } }
+        public static string ItemsStrings { get { return dict["ItemsStrings"] as string; } }
         public static string Jobs { get { return dict["Jobs"] as string; } }
         public static string SpecialNames { get { return dict["SpecialNames"] as string; } }
         public static string SpriteSets { get { return dict["SpriteSets"] as string; } }
+        public static string StatusNames { get { return dict["StatusNames"] as string; } }
+
+        private static string[] statuses;
+        public static string[] Statuses
+        {
+            get
+            {
+                if( statuses == null )
+                {
+                    statuses = Utilities.GetStringsFromNumberedXmlNodes(
+                        StatusNames,
+                        "/Statuses/Status[@offset='{0}']/@name",
+                        40 );
+                }
+
+                return statuses;
+            }
+        }
+
+        private static string[] abilityAttributes;
+        public static string[] AbilityAttributes
+        {
+            get
+            {
+                if( abilityAttributes == null )
+                {
+                    abilityAttributes =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            AbilitiesStrings,
+                            "/AbilityStrings/Attributes/string[@value='{0}']/@name",
+                            32 );
+                }
+                return abilityAttributes;
+            }
+        }
+
+        private static string[] abilityAI;
+        public static string[] AbilityAI
+        {
+            get
+            {
+                if( abilityAI == null )
+                {
+                    abilityAI =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            AbilitiesStrings,
+                            "/AbilityStrings/AI/string[@value='{0}']/@name",
+                            24 );
+                }
+                return abilityAI;
+            }
+        }
+
+        private static string[] abilityTypes;
+        public static string[] AbilityTypes
+        {
+            get
+            {
+                if( abilityTypes == null )
+                {
+                    abilityTypes =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            AbilitiesStrings,
+                            "/AbilityStrings/Types/string[@value='{0}']/@name",
+                            16 );
+                }
+                return abilityTypes;
+            }
+        }
+
+        private static string[] shopAvailabilities;
+        public static string[] ShopAvailabilities
+        {
+            get
+            {
+                if( shopAvailabilities == null )
+                {
+                    shopAvailabilities =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            ItemsStrings,
+                            "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
+                            21 );
+                }
+
+                return shopAvailabilities;
+            }
+        }
 
         public static byte[] AbilitiesBin { get { return dict["AbilitiesBin"] as byte[]; } }
         public static byte[] PoachProbabilitiesBin { get { return dict["PoachProbabilitiesBin"] as byte[]; } }

@@ -62,12 +62,21 @@ namespace FFTPatcher.Editors
             }
         }
 
+        private Context ourContext = Context.Default;
         private void UpdateView()
         {
             this.SuspendLayout();
             statusesCheckedListBox.SuspendLayout();
 
             ignoreChanges = true;
+
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                statusesCheckedListBox.Items.Clear();
+                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.Statuses : PSXResources.Statuses );
+            }
+        
             if( statuses.Default != null )
             {
                 statusesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( statuses, Statuses.FieldNames ), statuses.Default.ToBoolArray() );

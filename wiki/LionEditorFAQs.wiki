@@ -1,4 +1,5 @@
 #summary Frequently asked questions for Lion Editor
+#labels Featured
 
 === Do I really need custom firmware? ===
 Yes. The game expects the saves to be encrypted. LionEditor expects the saves to be decrypted. It is not currently possible to decrypt the savegame information without a PSP. The solution is the FFTSaveHook.prx kernel plugin, which intercepts the game's access to the Memory Stick and injects or extracts the decrypted data as necessary.

@@ -36,7 +36,7 @@ namespace FFTPatcher.Datatypes
         public AllItems( SubArray<byte> first, SubArray<byte> second )
         {
             Items = new List<Item>();
-            byte[] defaultFirst = second == null ? FFTPatcher.Properties.PSXResources.OldItemsBin : Resources.OldItemsBin;
+            byte[] defaultFirst = second == null ? PSXResources.OldItemsBin : Resources.OldItemsBin;
             byte[] defaultSecond = second == null ? null : Resources.NewItemsBin;
 
             for( UInt16 i = 0; i < 0x80; i++ )
@@ -189,7 +189,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
             }
         }
     }

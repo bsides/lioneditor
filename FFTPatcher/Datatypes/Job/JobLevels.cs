@@ -135,7 +135,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
             }
         }
     }

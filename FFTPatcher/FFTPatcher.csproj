@@ -482,6 +482,7 @@
     <Compile Include="Utilities\Codes.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\GZip.cs" />
+    <Compile Include="Utilities\PSXResources.cs" />
     <Compile Include="Utilities\ReflectionHelpers.cs" />
     <Compile Include="Utilities\Resources.cs" />
     <Compile Include="Utilities\Utilities.cs" />

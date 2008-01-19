@@ -69,20 +69,20 @@ namespace FFTPatcher.Datatypes
                     Font = new FFTFont( new SubArray<byte>( Resources.FontBin ), new SubArray<byte>( Resources.FontWidthsBin ) );
                     break;
                 case Context.US_PSX:
-                    Abilities = new AllAbilities( new SubArray<byte>( FFTPatcher.Properties.PSXResources.AbilitiesBin ) );
-                    Items = new AllItems( new SubArray<byte>( FFTPatcher.Properties.PSXResources.OldItemsBin ), null );
-                    ItemAttributes = new AllItemAttributes( new SubArray<byte>( FFTPatcher.Properties.PSXResources.OldItemAttributesBin ), null );
-                    Jobs = new AllJobs( Context, new SubArray<byte>( FFTPatcher.Properties.PSXResources.JobsBin ) );
-                    JobLevels = new JobLevels( Context, new SubArray<byte>( FFTPatcher.Properties.PSXResources.JobLevelsBin ),
-                        new JobLevels( Context, new SubArray<byte>( FFTPatcher.Properties.PSXResources.JobLevelsBin ) ) );
-                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( FFTPatcher.Properties.PSXResources.SkillSetsBin ),
-                        new SubArray<byte>( FFTPatcher.Properties.PSXResources.SkillSetsBin ) );
-                    MonsterSkills = new AllMonsterSkills( new SubArray<byte>( FFTPatcher.Properties.PSXResources.MonsterSkillsBin ) );
-                    ActionMenus = new AllActionMenus( new SubArray<byte>( FFTPatcher.Properties.PSXResources.ActionEventsBin ) );
-                    StatusAttributes = new AllStatusAttributes( new SubArray<byte>( FFTPatcher.Properties.PSXResources.StatusAttributesBin ) );
-                    InflictStatuses = new AllInflictStatuses( new SubArray<byte>( FFTPatcher.Properties.PSXResources.InflictStatusesBin ) );
-                    PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( FFTPatcher.Properties.PSXResources.PoachProbabilitiesBin ) );
-                    Font = new FFTFont( new SubArray<byte>( FFTPatcher.Properties.PSXResources.FontBin ), new SubArray<byte>( FFTPatcher.Properties.PSXResources.FontWidthsBin ) );
+                    Abilities = new AllAbilities( new SubArray<byte>( PSXResources.AbilitiesBin ) );
+                    Items = new AllItems( new SubArray<byte>( PSXResources.OldItemsBin ), null );
+                    ItemAttributes = new AllItemAttributes( new SubArray<byte>( PSXResources.OldItemAttributesBin ), null );
+                    Jobs = new AllJobs( Context, new SubArray<byte>( PSXResources.JobsBin ) );
+                    JobLevels = new JobLevels( Context, new SubArray<byte>( PSXResources.JobLevelsBin ),
+                        new JobLevels( Context, new SubArray<byte>( PSXResources.JobLevelsBin ) ) );
+                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( PSXResources.SkillSetsBin ),
+                        new SubArray<byte>( PSXResources.SkillSetsBin ) );
+                    MonsterSkills = new AllMonsterSkills( new SubArray<byte>( PSXResources.MonsterSkillsBin ) );
+                    ActionMenus = new AllActionMenus( new SubArray<byte>( PSXResources.ActionEventsBin ) );
+                    StatusAttributes = new AllStatusAttributes( new SubArray<byte>( PSXResources.StatusAttributesBin ) );
+                    InflictStatuses = new AllInflictStatuses( new SubArray<byte>( PSXResources.InflictStatusesBin ) );
+                    PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( PSXResources.PoachProbabilitiesBin ) );
+                    Font = new FFTFont( new SubArray<byte>( PSXResources.FontBin ), new SubArray<byte>( PSXResources.FontWidthsBin ) );
                     break;
                 default:
                     throw new ArgumentException();
@@ -142,9 +142,9 @@ namespace FFTPatcher.Datatypes
         {
             bool psp = Context == Context.US_PSP;
 
-            StringBuilder abilities = GetBase64StringIfNonDefault( Abilities.ToByteArray( Context ), psp ? Resources.AbilitiesBin : FFTPatcher.Properties.PSXResources.AbilitiesBin );
-            StringBuilder oldItems = GetBase64StringIfNonDefault( Items.ToFirstByteArray(), psp ? Resources.OldItemsBin : FFTPatcher.Properties.PSXResources.OldItemsBin );
-            StringBuilder oldItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToFirstByteArray(), psp ? Resources.OldItemAttributesBin : FFTPatcher.Properties.PSXResources.OldItemAttributesBin );
+            StringBuilder abilities = GetBase64StringIfNonDefault( Abilities.ToByteArray( Context ), psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin );
+            StringBuilder oldItems = GetBase64StringIfNonDefault( Items.ToFirstByteArray(), psp ? Resources.OldItemsBin : PSXResources.OldItemsBin );
+            StringBuilder oldItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToFirstByteArray(), psp ? Resources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
             StringBuilder newItems = null;
             StringBuilder newItemAttributes = null;
             if( psp )
@@ -152,20 +152,20 @@ namespace FFTPatcher.Datatypes
                 newItems = GetBase64StringIfNonDefault( Items.ToSecondByteArray(), Resources.NewItemsBin );
                 newItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToSecondByteArray(), Resources.NewItemAttributesBin );
             }
-            StringBuilder jobs = GetBase64StringIfNonDefault( Jobs.ToByteArray( Context ), psp ? Resources.JobsBin : FFTPatcher.Properties.PSXResources.JobsBin );
-            StringBuilder jobLevels = GetBase64StringIfNonDefault( JobLevels.ToByteArray( Context ), psp ? Resources.JobLevelsBin : FFTPatcher.Properties.PSXResources.JobLevelsBin );
-            StringBuilder monsterSkills = GetBase64StringIfNonDefault( MonsterSkills.ToByteArray( Context ), psp ? Resources.MonsterSkillsBin : FFTPatcher.Properties.PSXResources.MonsterSkillsBin );
-            StringBuilder skillSets = GetBase64StringIfNonDefault( SkillSets.ToByteArray( Context ), psp ? Resources.SkillSetsBin : FFTPatcher.Properties.PSXResources.SkillSetsBin );
-            StringBuilder actionMenus = GetBase64StringIfNonDefault( ActionMenus.ToByteArray( Context ), psp ? Resources.ActionEventsBin : FFTPatcher.Properties.PSXResources.ActionEventsBin );
-            StringBuilder statusAttributes = GetBase64StringIfNonDefault( StatusAttributes.ToByteArray( Context ), psp ? Resources.StatusAttributesBin : FFTPatcher.Properties.PSXResources.StatusAttributesBin );
-            StringBuilder inflictStatuses = GetBase64StringIfNonDefault( InflictStatuses.ToByteArray(), psp ? Resources.InflictStatusesBin : FFTPatcher.Properties.PSXResources.InflictStatusesBin );
-            StringBuilder poach = GetBase64StringIfNonDefault( PoachProbabilities.ToByteArray( Context ), psp ? Resources.PoachProbabilitiesBin : FFTPatcher.Properties.PSXResources.PoachProbabilitiesBin );
+            StringBuilder jobs = GetBase64StringIfNonDefault( Jobs.ToByteArray( Context ), psp ? Resources.JobsBin : PSXResources.JobsBin );
+            StringBuilder jobLevels = GetBase64StringIfNonDefault( JobLevels.ToByteArray( Context ), psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin );
+            StringBuilder monsterSkills = GetBase64StringIfNonDefault( MonsterSkills.ToByteArray( Context ), psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
+            StringBuilder skillSets = GetBase64StringIfNonDefault( SkillSets.ToByteArray( Context ), psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
+            StringBuilder actionMenus = GetBase64StringIfNonDefault( ActionMenus.ToByteArray( Context ), psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin );
+            StringBuilder statusAttributes = GetBase64StringIfNonDefault( StatusAttributes.ToByteArray( Context ), psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin );
+            StringBuilder inflictStatuses = GetBase64StringIfNonDefault( InflictStatuses.ToByteArray(), psp ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin );
+            StringBuilder poach = GetBase64StringIfNonDefault( PoachProbabilities.ToByteArray( Context ), psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
             StringBuilder entd1 = GetBase64StringIfNonDefault( ENTDs.ENTDs[0].ToByteArray(), Resources.ENTD1 );
             StringBuilder entd2 = GetBase64StringIfNonDefault( ENTDs.ENTDs[1].ToByteArray(), Resources.ENTD2 );
             StringBuilder entd3 = GetBase64StringIfNonDefault( ENTDs.ENTDs[2].ToByteArray(), Resources.ENTD3 );
             StringBuilder entd4 = GetBase64StringIfNonDefault( ENTDs.ENTDs[3].ToByteArray(), Resources.ENTD4 );
-            StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : FFTPatcher.Properties.PSXResources.FontBin );
-            StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : FFTPatcher.Properties.PSXResources.FontWidthsBin );
+            StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
+            StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
             XmlTextWriter writer = null;
             try
             {
@@ -262,35 +262,35 @@ namespace FFTPatcher.Datatypes
             Context = (Context)Enum.Parse( typeof( Context ), type );
             bool psp = Context == Context.US_PSP;
 
-            byte[] abilities = GetFromNodeOrReturnDefault( rootNode, "abilities", psp ? Resources.AbilitiesBin : FFTPatcher.Properties.PSXResources.AbilitiesBin );
+            byte[] abilities = GetFromNodeOrReturnDefault( rootNode, "abilities", psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin );
 
-            byte[] oldItems = GetFromNodeOrReturnDefault( rootNode, "items", psp ? Resources.OldItemsBin : FFTPatcher.Properties.PSXResources.OldItemsBin );
-            byte[] oldItemAttributes = GetFromNodeOrReturnDefault( rootNode, "itemAttributes", psp ? Resources.OldItemAttributesBin : FFTPatcher.Properties.PSXResources.OldItemAttributesBin );
+            byte[] oldItems = GetFromNodeOrReturnDefault( rootNode, "items", psp ? Resources.OldItemsBin : PSXResources.OldItemsBin );
+            byte[] oldItemAttributes = GetFromNodeOrReturnDefault( rootNode, "itemAttributes", psp ? Resources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
             byte[] newItems = psp ? GetFromNodeOrReturnDefault( rootNode, "pspItems", Resources.NewItemsBin ) : null;
             byte[] newItemAttributes = psp ? GetFromNodeOrReturnDefault( rootNode, "pspItemAttributes", Resources.NewItemAttributesBin ) : null;
-            byte[] jobs = GetFromNodeOrReturnDefault( rootNode, "jobs", psp ? Resources.JobsBin : FFTPatcher.Properties.PSXResources.JobsBin );
-            byte[] jobLevels = GetFromNodeOrReturnDefault( rootNode, "jobLevels", psp ? Resources.JobLevelsBin : FFTPatcher.Properties.PSXResources.JobLevelsBin );
-            byte[] skillSets = GetFromNodeOrReturnDefault( rootNode, "skillSets", psp ? Resources.SkillSetsBin : FFTPatcher.Properties.PSXResources.SkillSetsBin );
-            byte[] monsterSkills = GetFromNodeOrReturnDefault( rootNode, "monsterSkills", psp ? Resources.MonsterSkillsBin : FFTPatcher.Properties.PSXResources.MonsterSkillsBin );
-            byte[] actionMenus = GetFromNodeOrReturnDefault( rootNode, "actionMenus", psp ? Resources.ActionEventsBin : FFTPatcher.Properties.PSXResources.ActionEventsBin );
-            byte[] statusAttributes = GetFromNodeOrReturnDefault( rootNode, "statusAttributes", psp ? Resources.StatusAttributesBin : FFTPatcher.Properties.PSXResources.StatusAttributesBin );
-            byte[] inflictStatuses = GetFromNodeOrReturnDefault( rootNode, "inflictStatuses", psp ? Resources.InflictStatusesBin : FFTPatcher.Properties.PSXResources.InflictStatusesBin );
-            byte[] poach = GetFromNodeOrReturnDefault( rootNode, "poaching", psp ? Resources.PoachProbabilitiesBin : FFTPatcher.Properties.PSXResources.PoachProbabilitiesBin );
+            byte[] jobs = GetFromNodeOrReturnDefault( rootNode, "jobs", psp ? Resources.JobsBin : PSXResources.JobsBin );
+            byte[] jobLevels = GetFromNodeOrReturnDefault( rootNode, "jobLevels", psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin );
+            byte[] skillSets = GetFromNodeOrReturnDefault( rootNode, "skillSets", psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
+            byte[] monsterSkills = GetFromNodeOrReturnDefault( rootNode, "monsterSkills", psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
+            byte[] actionMenus = GetFromNodeOrReturnDefault( rootNode, "actionMenus", psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin );
+            byte[] statusAttributes = GetFromNodeOrReturnDefault( rootNode, "statusAttributes", psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin );
+            byte[] inflictStatuses = GetFromNodeOrReturnDefault( rootNode, "inflictStatuses", psp ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin );
+            byte[] poach = GetFromNodeOrReturnDefault( rootNode, "poaching", psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
             byte[] entd1 = GetFromNodeOrReturnDefault( rootNode, "entd1", Resources.ENTD1 );
             byte[] entd2 = GetFromNodeOrReturnDefault( rootNode, "entd2", Resources.ENTD2 );
             byte[] entd3 = GetFromNodeOrReturnDefault( rootNode, "entd3", Resources.ENTD3 );
             byte[] entd4 = GetFromNodeOrReturnDefault( rootNode, "entd4", Resources.ENTD4 );
-            byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? Resources.FontBin : FFTPatcher.Properties.PSXResources.FontBin );
-            byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? Resources.FontWidthsBin : FFTPatcher.Properties.PSXResources.FontWidthsBin );
+            byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? Resources.FontBin : PSXResources.FontBin );
+            byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
 
             Abilities = new AllAbilities( new SubArray<byte>( abilities ) );
             Items = new AllItems( new SubArray<byte>( oldItems ), newItems != null ? new SubArray<byte>( newItems ) : null );
             ItemAttributes = new AllItemAttributes( new SubArray<byte>( oldItemAttributes ), newItemAttributes != null ? new SubArray<byte>( newItemAttributes ) : null );
             Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
             JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ),
-                new JobLevels( Context, new SubArray<byte>( Context == Context.US_PSP ? Resources.JobLevelsBin : FFTPatcher.Properties.PSXResources.JobLevelsBin ) ) );
+                new JobLevels( Context, new SubArray<byte>( Context == Context.US_PSP ? Resources.JobLevelsBin : PSXResources.JobLevelsBin ) ) );
             SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ),
-                new SubArray<byte>( Context == Context.US_PSP ? Resources.SkillSetsBin : FFTPatcher.Properties.PSXResources.SkillSetsBin ) );
+                new SubArray<byte>( Context == Context.US_PSP ? Resources.SkillSetsBin : PSXResources.SkillSetsBin ) );
             MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
             ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );
             StatusAttributes = new AllStatusAttributes( new SubArray<byte>( statusAttributes ) );
@@ -341,15 +341,15 @@ namespace FFTPatcher.Datatypes
                 ItemAttributes = new AllItemAttributes( new SubArray<byte>( oldItemAttributes ), null );
                 Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
                 JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ),
-                    new JobLevels( Context.US_PSX, new SubArray<byte>( FFTPatcher.Properties.PSXResources.JobLevelsBin ) ) );
-                SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ), new SubArray<byte>( FFTPatcher.Properties.PSXResources.SkillSetsBin ) );
+                    new JobLevels( Context.US_PSX, new SubArray<byte>( PSXResources.JobLevelsBin ) ) );
+                SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ), new SubArray<byte>( PSXResources.SkillSetsBin ) );
                 MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
                 ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );
                 StatusAttributes = new AllStatusAttributes( new SubArray<byte>( statusAttributes ) );
                 InflictStatuses = new AllInflictStatuses( new SubArray<byte>( inflictStatuses ) );
                 PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( poach ) );
                 ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
-                Font = new FFTFont( new SubArray<byte>( FFTPatcher.Properties.PSXResources.FontBin ), new SubArray<byte>( FFTPatcher.Properties.PSXResources.FontWidthsBin ) );
+                Font = new FFTFont( new SubArray<byte>( PSXResources.FontBin ), new SubArray<byte>( PSXResources.FontWidthsBin ) );
                 FireDataChangedEvent();
             }
             catch( InvalidDataException )

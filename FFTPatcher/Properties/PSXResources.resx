@@ -119,66 +119,66 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Abilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\abilities.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\abilities.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="AbilitiesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\abilities.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\abilities.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ActionEventsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\actionevents.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\actionevents.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="EventNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\eventnames.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\eventnames.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="FontBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\font.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\font.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="FontWidthsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\fontwidths.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\fontwidths.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="InflictStatusesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\inflictstatuses.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\inflictstatuses.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ItemAttributes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\itemattributes.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\itemattributes.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Items" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\items.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\items.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="JobLevelsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\joblevels.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\joblevels.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Jobs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\jobs.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\jobs.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="JobsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\jobs.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\jobs.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="MonsterSkillsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\monsterskills.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\monsterskills.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="OldItemAttributesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\olditemattributes.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\olditemattributes.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="OldItemsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\olditems.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\olditems.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="PoachProbabilitiesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\poachprobabilities.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\poachprobabilities.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SkillSets" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\skillsets.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\skillsets.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="SkillSetsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\skillsetsbin.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\skillsetsbin.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SpecialNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\specialnames.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\specialnames.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="SpriteSets" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\spritesets.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\resources\psx-us\spritesets.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="StatusAttributesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx-us\bin\statusattributes.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx-us\bin\statusattributes.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

@@ -103,7 +103,7 @@ namespace FFTPatcher.Datatypes
         public AllItemAttributes( SubArray<byte> first, SubArray<byte> second )
         {
             List<ItemAttributes> temp = new List<ItemAttributes>( 0x65 );
-            byte[] defaultFirst = second == null ? FFTPatcher.Properties.PSXResources.OldItemAttributesBin : Resources.OldItemAttributesBin;
+            byte[] defaultFirst = second == null ? PSXResources.OldItemAttributesBin : Resources.OldItemAttributesBin;
             byte[] defaultSecond = second == null ? null : Resources.NewItemAttributesBin;
 
             for( byte i = 0; i < 0x50; i++ )
@@ -154,7 +154,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x0642C4 );
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x0642C4 );
             }
         }
     }

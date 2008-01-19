@@ -61,7 +61,7 @@ namespace FFTPatcher.Datatypes
             pspEventSkills.Add( 0xFF, equal );
 
             doc = new XmlDocument();
-            doc.LoadXml( FFTPatcher.Properties.PSXResources.SkillSets );
+            doc.LoadXml( PSXResources.SkillSets );
             psxSkills = new SkillSet[0xE0];
             psxEventSkills = new SortedDictionary<byte, SkillSet>();
             for( int i = 0; i < 0xE0; i++ )
@@ -227,7 +227,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.SkillSetsBin, this.ToByteArray( Context.US_PSX ), 0x064A94 );
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.SkillSetsBin, this.ToByteArray( Context.US_PSX ), 0x064A94 );
             }
         }
 

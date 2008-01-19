@@ -43,7 +43,7 @@ namespace FFTPatcher.Datatypes
             XmlDocument psxDoc = new XmlDocument();
 
             pspDoc.LoadXml( Resources.EventNames );
-            psxDoc.LoadXml( FFTPatcher.Properties.PSXResources.EventNames );
+            psxDoc.LoadXml( PSXResources.EventNames );
             pspEventNames = new string[0x200+77];
             psxEventNames = new string[0x200];
             for( int i = 0; i < 0x200; i++ )

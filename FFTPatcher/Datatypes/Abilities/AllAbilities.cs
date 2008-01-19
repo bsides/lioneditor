@@ -59,7 +59,7 @@ namespace FFTPatcher.Datatypes
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Resources.Abilities );
             XmlDocument psxDoc = new XmlDocument();
-            psxDoc.LoadXml( FFTPatcher.Properties.PSXResources.Abilities );
+            psxDoc.LoadXml( PSXResources.Abilities );
 
             PSPNames = new string[512];
             PSXNames = new string[512];
@@ -91,7 +91,7 @@ namespace FFTPatcher.Datatypes
 
         public AllAbilities( SubArray<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : FFTPatcher.Properties.PSXResources.AbilitiesBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : PSXResources.AbilitiesBin;
 
             Abilities = new Ability[512];
             DefaultAbilities = new Ability[512];
@@ -171,7 +171,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
             }
         }
     }

@@ -204,7 +204,7 @@ namespace FFTPatcher.Datatypes
             pspNames[0xA9] = "???";
 
             doc = new XmlDocument();
-            doc.LoadXml( FFTPatcher.Properties.PSXResources.Jobs );
+            doc.LoadXml( PSXResources.Jobs );
             psxNames = new string[0xA0];
             psxJobs = new Job[0xA0];
             for( int i = 0; i < 0xA0; i++ )
@@ -223,7 +223,7 @@ namespace FFTPatcher.Datatypes
         {
             int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
             int jobLength = context == Context.US_PSP ? 49 : 48;
-            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : FFTPatcher.Properties.PSXResources.JobsBin;
+            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : PSXResources.JobsBin;
             Jobs = new Job[numJobs];
             for( int i = 0; i < numJobs; i++ )
             {
@@ -256,7 +256,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
             }
         }
     }

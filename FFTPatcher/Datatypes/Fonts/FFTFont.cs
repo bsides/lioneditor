@@ -75,8 +75,8 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.FontBin, this.ToByteArray(), 0x13B8F8 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, FFTPatcher.Properties.PSXResources.FontWidthsBin, this.ToWidthsByteArray(), 0x1533E0 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.FontBin, this.ToByteArray(), 0x13B8F8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.FontWidthsBin, this.ToWidthsByteArray(), 0x1533E0 ) );
             }
             return strings;
         }

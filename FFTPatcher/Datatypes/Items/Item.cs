@@ -78,7 +78,7 @@ namespace FFTPatcher.Datatypes
             }
 
             doc = new XmlDocument();
-            doc.LoadXml( FFTPatcher.Properties.PSXResources.Items );
+            doc.LoadXml( PSXResources.Items );
             PSXNames = new List<string>( 256 );
             PSXDummies = new List<Item>( 256 );
             for( int i = 0; i < 256; i++ )

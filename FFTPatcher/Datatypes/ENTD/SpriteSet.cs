@@ -46,7 +46,7 @@ namespace FFTPatcher.Datatypes
 
                 pspSpriteSets[i] = new SpriteSet( (byte)i, name );
             }
-            doc.LoadXml( FFTPatcher.Properties.PSXResources.SpriteSets );
+            doc.LoadXml( PSXResources.SpriteSets );
             for( int i = 0; i < 256; i++ )
             {
                 XmlNode node = doc.SelectSingleNode( string.Format( "//Sprites/Sprite[byte='{0:X2}']", i ) );

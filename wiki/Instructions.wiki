@@ -1,5 +1,5 @@
 #summary Installation/usage instructions
-#labels idiots,Featured
+#labels Featured
 
 = Introduction =
 
@@ -38,7 +38,7 @@ Save games on the PSP memory stick are *[http://en.wikipedia.org/wiki/Encryption
 == PC Application instructions ==
   # Start the program `LionEditor.exe`
   # Click the Folder Icon or select the Open option from the File menu
-  # Browse to the location of the decrypted savegame `FFTA.SYS`
+  # Browse to the location of the decrypted savegame `lioneditor.bin`
   # Click Open
   # Modify the file using the GUI
   # Click the Disk Icon or select the Save option from the File menu to save your changes

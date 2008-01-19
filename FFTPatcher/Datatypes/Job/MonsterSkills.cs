@@ -18,11 +18,12 @@
 */
 
 using System.Collections.Generic;
-using System.Xml;
-
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents the <see cref="Ability"/>s a monster can use.
+    /// </summary>
     public class MonsterSkill
     {
         public Ability Ability1 { get; set; }
@@ -81,18 +82,22 @@ namespace FFTPatcher.Datatypes
     public class AllMonsterSkills
     {
         public MonsterSkill[] MonsterSkills { get; private set; }
-        public static string[] Names { get; private set; }
+        public static string[] Names { get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; } }
+        public static string[] PSXNames { get; private set; }
+        public static string[] PSPNames { get; private set; }
 
         static AllMonsterSkills()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Resources.Jobs );
-            Names = new string[48];
-            for( int i = 0; i < 48; i++ )
-            {
-                int j = i + 0x5E;
-                Names[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", j.ToString( "X2" ) ) ).InnerText;
-            }
+            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.Jobs,
+                "//Job[@offset='{0:X2}']/@name",
+                48,
+                0x5E );
+            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.Jobs,
+                "//Job[@offset='{0:X2}']/@name",
+                48,
+                0x5E );
         }
 
         public AllMonsterSkills( SubArray<byte> bytes )

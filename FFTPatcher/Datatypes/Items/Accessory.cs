@@ -21,6 +21,9 @@ using System;
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents an accessory.
+    /// </summary>
     public class Accessory : Item
     {
         public byte PhysicalEvade { get; set; }

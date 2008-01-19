@@ -41,6 +41,9 @@ namespace FFTPatcher.Datatypes
         Unknown6
     }
 
+    /// <summary>
+    /// Represents an ability and its attributes.
+    /// </summary>
     public class Ability
     {
         #region Fields
@@ -67,7 +70,6 @@ namespace FFTPatcher.Datatypes
 
         #region Common
 
-        public Ability Self { get { return this; } }
         public string Name { get; private set; }
         public UInt16 Offset { get; private set; }
         public UInt16 JPCost { get; set; }
@@ -213,7 +215,6 @@ namespace FFTPatcher.Datatypes
             Utilities.CopyByteToBooleans( first[7],
                 ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
         }
-
 
         public Ability( string name, UInt16 offset, SubArray<byte> first, SubArray<byte> second, Ability defaults )
             : this( name, offset, first, second )

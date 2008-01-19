@@ -18,11 +18,12 @@
 */
 
 using System.Collections.Generic;
-using System.Xml;
-
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents the set of <see cref="Ability"/> a <see cref="Job"/> can use.
+    /// </summary>
     public class SkillSet
     {
         private static SkillSet[] pspSkills;
@@ -44,13 +45,20 @@ namespace FFTPatcher.Datatypes
 
         static SkillSet()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Resources.SkillSets );
             pspSkills = new SkillSet[0xE3];
             pspEventSkills = new SortedDictionary<byte, SkillSet>();
+
+            string[] pspNames = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.SkillSets,
+                "//SkillSet[@byte='{0:X2}']",
+                0xE3 );
+            string[] psxNames = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.SkillSets,
+                "//SkillSet[@byte='{0:X2}']",
+                0xE0 );
             for( int i = 0; i < 0xE3; i++ )
             {
-                string n = doc.SelectSingleNode( string.Format( "//SkillSet[@byte='{0}']", i.ToString( "X2" ) ) ).InnerText;
+                string n = pspNames[i];
                 pspSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
                 pspEventSkills.Add( (byte)i, pspSkills[i] );
             }
@@ -60,13 +68,11 @@ namespace FFTPatcher.Datatypes
             pspEventSkills.Add( 0xFE, random );
             pspEventSkills.Add( 0xFF, equal );
 
-            doc = new XmlDocument();
-            doc.LoadXml( PSXResources.SkillSets );
             psxSkills = new SkillSet[0xE0];
             psxEventSkills = new SortedDictionary<byte, SkillSet>();
             for( int i = 0; i < 0xE0; i++ )
             {
-                string n = doc.SelectSingleNode( string.Format( "//SkillSet[@byte='{0}']", i.ToString( "X2" ) ) ).InnerText;
+                string n = psxNames[i];
                 psxSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
                 psxEventSkills.Add( (byte)i, psxSkills[i] );
             }
@@ -230,6 +236,5 @@ namespace FFTPatcher.Datatypes
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.SkillSetsBin, this.ToByteArray( Context.US_PSX ), 0x064A94 );
             }
         }
-
     }
 }

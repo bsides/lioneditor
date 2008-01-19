@@ -152,5 +152,4 @@ namespace FFTPatcher.Editors
             Value = value;
         }
     }
-
 }

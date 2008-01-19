@@ -19,9 +19,11 @@
 
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents statuses an <see cref="Ability"/> inflicts or cancels on its target.
+    /// </summary>
     public class InflictStatus
     {
         public byte Value { get; private set; }

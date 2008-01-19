@@ -17,13 +17,15 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
-using System.Xml;
-
 
 namespace FFTPatcher.Datatypes
 {
-    public class Event
+    /// <summary>
+    /// Represents an Event in the game
+    /// </summary>
+    public class Event : IEquatable<Event>
     {
         private static string[] pspEventNames;
         private static string[] psxEventNames;
@@ -39,26 +41,14 @@ namespace FFTPatcher.Datatypes
 
         static Event()
         {
-            XmlDocument pspDoc = new XmlDocument();
-            XmlDocument psxDoc = new XmlDocument();
-
-            pspDoc.LoadXml( Resources.EventNames );
-            psxDoc.LoadXml( PSXResources.EventNames );
-            pspEventNames = new string[0x200+77];
-            psxEventNames = new string[0x200];
-            for( int i = 0; i < 0x200; i++ )
-            {
-                pspEventNames[i] =
-                    pspDoc.SelectSingleNode(
-                    string.Format( "//Events/Event[@value='{0:X3}']/@name", i ) ).InnerText;
-                psxEventNames[i] =
-                    psxDoc.SelectSingleNode(
-                    string.Format( "//Events/Event[@value='{0:X3}']/@name", i ) ).InnerText;
-            }
-            for( int i = 0x200; i < (0x200 + 77); i++ )
-            {
-                pspEventNames[i] = "";
-            }
+            pspEventNames = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.EventNames,
+                "//Events/Event[@value='{0:X3}']/@name",
+                0x200 + 77 );
+            psxEventNames = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.EventNames,
+                "//Events/Event[@value='{0:X3}']/@name",
+                0x200 );
         }
 
         public Event( int value, SubArray<byte> bytes, Event defaults )
@@ -89,6 +79,17 @@ namespace FFTPatcher.Datatypes
         public override string ToString()
         {
             return string.Format( "{0:X3} {1}", Value, Name );
+        }
+
+        public bool Equals( Event other )
+        {
+            for( int i = 0; i < Units.Length; i++ )
+            {
+                if( !other.Units[i].Equals( Units[i] ) )
+                    return false;
+            }
+
+            return true;
         }
     }
 }

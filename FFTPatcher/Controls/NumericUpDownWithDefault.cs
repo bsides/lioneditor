@@ -25,12 +25,18 @@ using FFTPatcher.Editors;
 
 namespace FFTPatcher.Controls
 {
+    /// <summary>
+    /// Represents a <see cref="NumericUpDown"/> that allows a default value to be set.
+    /// </summary>
     public class NumericUpDownWithDefault : NumericUpDown
     {
         public decimal DefaultValue { get; private set; }
         public bool Default { get { return Value == DefaultValue; } }
         private bool borderOn = false;
 
+        /// <summary>
+        /// Gets the current value.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [ReadOnly(true)]
         public new decimal Value
@@ -39,6 +45,9 @@ namespace FFTPatcher.Controls
             private set { base.Value = value; }
         }
 
+        /// <summary>
+        /// Sets the value and its default.
+        /// </summary>
         public void SetValueAndDefault( decimal value, decimal defaultValue )
         {
             if( Hexadecimal )

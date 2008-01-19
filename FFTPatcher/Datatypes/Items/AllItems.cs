@@ -20,9 +20,11 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents all items in memory.
+    /// </summary>
     public class AllItems
     {
         public List<Item> Items { get; private set; }

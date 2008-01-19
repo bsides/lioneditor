@@ -19,6 +19,9 @@
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents an <see cref="Ability"/>'s AI behavior.
+    /// </summary>
     public class AIFlags
     {
         public bool HP;

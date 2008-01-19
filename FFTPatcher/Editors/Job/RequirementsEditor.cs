@@ -52,7 +52,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-
         public RequirementsEditor()
         {
             InitializeComponent();

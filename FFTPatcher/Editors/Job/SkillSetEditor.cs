@@ -122,6 +122,5 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
             this.ignoreChanges = false;
         }
-
     }
 }

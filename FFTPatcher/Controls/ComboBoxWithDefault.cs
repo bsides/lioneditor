@@ -23,10 +23,16 @@ using FFTPatcher.Editors;
 
 namespace FFTPatcher.Controls
 {
+    /// <summary>
+    /// Represents a <see cref="ComboBox"/> that allows a default value to be specified.
+    /// </summary>
     public class ComboBoxWithDefault : ComboBox
     {
         public object DefaultValue { get; private set; }
 
+        /// <summary>
+        /// Gets the currently selected item.
+        /// </summary>
         public new object SelectedItem
         {
             get { return base.SelectedItem; }
@@ -39,6 +45,9 @@ namespace FFTPatcher.Controls
             this.DrawMode = DrawMode.OwnerDrawFixed;
         }
 
+        /// <summary>
+        /// Sets the SelectedItem and its default value.
+        /// </summary>
         public void SetValueAndDefault( object value, object defaultValue )
         {
             FFTPatchEditor.ToolTip.SetToolTip( this, "Default: " + defaultValue.ToString() );

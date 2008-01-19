@@ -19,9 +19,11 @@
 
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represent's the common and uncommon items that can be poached from a monster.
+    /// </summary>
     public class PoachProbability
     {
         public string MonsterName { get; private set; }

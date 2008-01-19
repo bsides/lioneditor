@@ -50,7 +50,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-
         public JobEditor()
         {
             InitializeComponent();
@@ -161,6 +160,5 @@ namespace FFTPatcher.Editors
             startingStatusesEditor.ResumeLayout();
             this.ResumeLayout();
         }
-
     }
 }

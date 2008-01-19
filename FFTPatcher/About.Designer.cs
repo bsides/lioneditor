@@ -113,9 +113,5 @@ namespace FFTPatcher
 
         private TextBoxNoCaret textBoxNoCaret;
         private System.Windows.Forms.Label versionLabel;
-
-
-
-
     }
 }

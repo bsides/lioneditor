@@ -176,6 +176,5 @@ namespace FFTPatcher.Editors
                 ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
             }
         }
-
     }
 }

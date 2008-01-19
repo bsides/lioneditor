@@ -19,9 +19,11 @@
 
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents all Events in the game.
+    /// </summary>
     public class ENTD
     {
         public Event[] Events { get; private set; }
@@ -92,7 +94,5 @@ namespace FFTPatcher.Datatypes
                 }
             }
         }
-
-
     }
 }

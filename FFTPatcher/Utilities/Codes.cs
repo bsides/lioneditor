@@ -23,6 +23,9 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher
 {
+    /// <summary>
+    /// Utilities for generating cheat codes.
+    /// </summary>
     public static class Codes
     {
         private static List<string> GeneratePSPCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
@@ -136,6 +139,9 @@ namespace FFTPatcher
             return codes;
         }
 
+        /// <summary>
+        /// Generates codes based on context.
+        /// </summary>
         public static List<string> GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
         {
             switch( context )
@@ -148,6 +154,5 @@ namespace FFTPatcher
 
             return new List<string>();
         }
-
     }
 }

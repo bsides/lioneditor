@@ -21,6 +21,9 @@ using System;
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a piece of armor.
+    /// </summary>
     public class Armor : Item
     {
         public byte HPBonus { get; set; }

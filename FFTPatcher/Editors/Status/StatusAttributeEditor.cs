@@ -76,7 +76,6 @@ namespace FFTPatcher.Editors
             this.ignoreChanges = false;
         }
 
-
         public StatusAttributeEditor()
         {
             InitializeComponent();

@@ -31,6 +31,9 @@ namespace System.Runtime.CompilerServices
 
 namespace FFTPatcher
 {
+    /// <summary>
+    /// Extension methods for various types.
+    /// </summary>
     public static class ExtensionMethods
     {
         /// <summary>
@@ -75,16 +78,25 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Gets the upper nibble of this byte.
+        /// </summary>
         public static byte GetUpperNibble( this byte b )
         {
             return (byte)((b & 0xF0) >> 4);
         }
 
+        /// <summary>
+        /// Gets the lower nibble of this byte.
+        /// </summary>
         public static byte GetLowerNibble( this byte b )
         {
             return (byte)(b & 0x0F);
         }
 
+        /// <summary>
+        /// Converts this into a pair of big endian bytes.
+        /// </summary>
         public static byte[] ToBytes( this UInt16 value )
         {
             byte[] result = new byte[2];
@@ -93,6 +105,9 @@ namespace FFTPatcher
             return result;
         }
 
+        /// <summary>
+        /// Converts this to a string.
+        /// </summary>
         public static string ToUTF8String( this byte[] bytes )
         {
             if( (bytes[0] == 0xef) && (bytes[1] == 0xbb) && (bytes[2] == 0xbf) )

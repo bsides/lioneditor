@@ -27,6 +27,11 @@ namespace FFTPatcher.Datatypes
         Light = 3
     }
 
+    /// <summary>
+    /// <para>Represents an individual glyph in a <see cref="FFTFont"/>.</para>
+    /// <para>Each glyph is 10 pixels wide and 14 pixels tall.</para>
+    /// <para>Four pixels are packed into a single byte, for a total glyph size of 35 bytes.</para>
+    /// </summary>
     public class Glyph
     {
         public FontColor[] Pixels { get; private set; }

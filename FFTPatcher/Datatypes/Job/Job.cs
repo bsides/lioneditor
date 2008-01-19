@@ -18,11 +18,12 @@
 */
 
 using System.Collections.Generic;
-using System.Xml;
-
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a character's Job and its abilities and attributes.
+    /// </summary>
     public class Job
     {
         public string Name { get; private set; }
@@ -170,6 +171,9 @@ namespace FFTPatcher.Datatypes
         }
     }
 
+    /// <summary>
+    /// Represents all <see cref="Job"/>s in memory.
+    /// </summary>
     public class AllJobs
     {
         private static string[] psxNames;
@@ -191,25 +195,25 @@ namespace FFTPatcher.Datatypes
 
         static AllJobs()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Resources.Jobs );
-            pspNames = new string[0xAA];
             pspJobs = new Job[0xAA];
-            for( int i = 0; i < 0xA9; i++ )
+            psxJobs = new Job[0xA0];
+
+            pspNames = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.Jobs,
+                "//Job[@offset='{0:X2}']/@name",
+                0xAA );
+            psxNames = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.Jobs,
+                "//Job[@offset='{0:X2}']/@name",
+                0xA0 );
+
+            for( int i = 0; i < 0xAA; i++ )
             {
-                pspNames[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
                 pspJobs[i] = new Job( (byte)i, pspNames[i] );
             }
-            pspJobs[0xA9] = new Job( 0xA9, "???" );
-            pspNames[0xA9] = "???";
 
-            doc = new XmlDocument();
-            doc.LoadXml( PSXResources.Jobs );
-            psxNames = new string[0xA0];
-            psxJobs = new Job[0xA0];
             for( int i = 0; i < 0xA0; i++ )
             {
-                psxNames[i] = doc.SelectSingleNode( string.Format( "//Job[@offset='{0}']/@name", i.ToString( "X2" ) ) ).InnerText;
                 psxJobs[i] = new Job( (byte)i, psxNames[i] );
             }
         }

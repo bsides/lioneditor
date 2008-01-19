@@ -21,6 +21,9 @@ using System;
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a weapon.
+    /// </summary>
     public class Weapon : Item
     {
         public byte Range { get; set; }
@@ -95,6 +98,5 @@ namespace FFTPatcher.Datatypes
             return new bool[8] {
                 Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands };
         }
-
     }
 }

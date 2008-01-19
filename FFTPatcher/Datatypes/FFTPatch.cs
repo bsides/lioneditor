@@ -22,7 +22,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-
 namespace FFTPatcher.Datatypes
 {
     public static class FFTPatch
@@ -99,6 +98,9 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
+        /// <summary>
+        /// Saves the ENTD files to a path.
+        /// </summary>
         public static void ExportENTDFiles( string path )
         {
             FileStream writer = null;
@@ -123,6 +125,19 @@ namespace FFTPatcher.Datatypes
                 writer.Close();
                 writer = new FileStream( Path.Combine( path, "ENTD4.ENT" ), FileMode.Create );
                 writer.Write( entd4, 0, entd4.Length );
+                writer.Flush();
+                writer.Close();
+
+                if( Context == Context.US_PSP )
+                {
+                    writer = new FileStream( Path.Combine( path, "ENTD5.ENT" ), FileMode.Create );
+                    byte[] entd5 = ENTDs.ENTDs[4].ToByteArray();
+                    writer.Write( entd5, 0, entd5.Length );
+                    writer.Flush();
+                    writer.Close();
+                }
+
+                writer = null;
             }
             catch( Exception )
             {
@@ -138,6 +153,9 @@ namespace FFTPatcher.Datatypes
             }            
         }
 
+        /// <summary>
+        /// Saves this patch to an XML document.
+        /// </summary>
         public static void SavePatchToFile( string path )
         {
             bool psp = Context == Context.US_PSP;
@@ -220,6 +238,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        /// <summary>
+        /// Builds a new (unmodified) patch from a context.
+        /// </summary>
         public static void New( Context context )
         {
             Context = context;
@@ -253,6 +274,9 @@ namespace FFTPatcher.Datatypes
             return def;
         }
 
+        /// <summary>
+        /// Reads an XML fftpatch file.
+        /// </summary>
         public static void LoadPatch( string filename )
         {
             XmlDocument doc = new XmlDocument();
@@ -301,6 +325,9 @@ namespace FFTPatcher.Datatypes
             FireDataChangedEvent();
         }
 
+        /// <summary>
+        /// Opens a modified SCUS_942.21 file.
+        /// </summary>
         public static void OpenModifiedPSXFile( string filename )
         {
             FileStream stream = null;
@@ -370,6 +397,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        /// <summary>
+        /// Applies patches to a SCUS_942.21 file.
+        /// </summary>
         public static void ApplyPatchesToExecutable( string filename )
         {
             FileStream stream = null;
@@ -484,7 +514,6 @@ namespace FFTPatcher.Datatypes
                     WriteArrayToPosition( InflictStatuses.ToByteArray(), stream, inflictStatuses );
                     WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), stream, poach );
                 }
-
             }
             catch( InvalidDataException )
             {
@@ -562,6 +591,5 @@ namespace FFTPatcher.Datatypes
 
             throw new InvalidDataException();
         }
-
     }
 }

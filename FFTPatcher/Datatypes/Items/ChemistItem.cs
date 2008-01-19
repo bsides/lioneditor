@@ -21,6 +21,9 @@ using System;
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a Chemist's item.
+    /// </summary>
     public class ChemistItem : Item
     {
         public byte Formula { get; set; }

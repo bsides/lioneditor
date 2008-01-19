@@ -19,9 +19,11 @@
 
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents attributes of a specific Status ailment/effect.
+    /// </summary>
     public class StatusAttribute
     {
         public string Name { get; private set; }

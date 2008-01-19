@@ -19,15 +19,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
-
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents all of the Abilities in this file.
+    /// </summary>
     public class AllAbilities
     {
         public  static string[] PSXNames { get; private set; }
         public static string[] PSPNames { get; private set; }
+
+        /// <summary>
+        /// Gets the names of all abilities, based on the current Context.
+        /// </summary>
         public static string[] Names
         {
             get
@@ -53,25 +58,23 @@ namespace FFTPatcher.Datatypes
             get { return FFTPatch.Context == Context.US_PSP ? pspEventAbilites : psxEventAbilites; }
         }
 
-
         static AllAbilities()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Resources.Abilities );
-            XmlDocument psxDoc = new XmlDocument();
-            psxDoc.LoadXml( PSXResources.Abilities );
-
-            PSPNames = new string[512];
-            PSXNames = new string[512];
             PSPAbilities = new Ability[512];
             PSXAbilities = new Ability[512];
             psxEventAbilites = new Ability[512];
             pspEventAbilites = new Ability[512];
 
+            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.Abilities,
+                "/Abilities/Ability[@value='{0}']/@name",
+                512 );
+            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.Abilities,
+                "/Abilities/Ability[@value='{0}']/@name",
+                512 );
             for( int i = 0; i < 512; i++ )
             {
-                PSPNames[i] = doc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
-                PSXNames[i] = psxDoc.SelectSingleNode( string.Format( "/Abilities/Ability[@value='{0}']/@name", i ) ).InnerText;
                 PSPAbilities[i] = new Ability( PSPNames[i], (UInt16)i );
                 PSXAbilities[i] = new Ability( PSXNames[i], (UInt16)i );
                 pspEventAbilites[i] = new Ability( PSPNames[i], (UInt16)i );

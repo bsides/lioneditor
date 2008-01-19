@@ -17,11 +17,11 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Xml;
-
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a special "name" a unit can have.
+    /// </summary>
     public class SpecialName
     {
         private static SpecialName[] pspNames = new SpecialName[256];
@@ -33,30 +33,18 @@ namespace FFTPatcher.Datatypes
 
         static SpecialName()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Resources.SpecialNames );
+            string[] pspStrings = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.SpecialNames,
+                "//SpecialNames/SpecialName[@byte='{0:X2}']",
+                256 );
+            string[] psxStrings = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.SpecialNames,
+                "//SpecialNames/SpecialName[@byte='{0:X2}']",
+                256 );
             for( int i = 0; i < 256; i++ )
             {
-                XmlNode node = doc.SelectSingleNode( string.Format( "//SpecialNames/SpecialName[@byte='{0:X2}']", i ) );
-                string name = string.Empty;
-                if( node != null )
-                {
-                    name = node.SelectSingleNode( "@name" ).InnerText;
-                }
-
-                pspNames[i] = new SpecialName( (byte)i, name );
-            }
-            doc.LoadXml( PSXResources.SpecialNames );
-            for( int i = 0; i < 256; i++ )
-            {
-                XmlNode node = doc.SelectSingleNode( string.Format( "//SpecialNames/SpecialName[@byte='{0:X2}']", i ) );
-                string name = string.Empty;
-                if( node != null )
-                {
-                    name = node.SelectSingleNode( "@name" ).InnerText;
-                }
-
-                psxNames[i] = new SpecialName( (byte)i, name );
+                pspNames[i] = new SpecialName( (byte)i, pspStrings[i] );
+                psxNames[i] = new SpecialName( (byte)i, psxStrings[i] );
             }
         }
 

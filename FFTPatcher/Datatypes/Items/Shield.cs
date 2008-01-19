@@ -21,6 +21,9 @@ using System;
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a shield.
+    /// </summary>
     public class Shield : Item
     {
         public byte PhysicalBlockRate { get; set; }

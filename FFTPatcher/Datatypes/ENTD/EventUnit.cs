@@ -17,12 +17,15 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace FFTPatcher.Datatypes
 {
-    public class EventUnit
+    /// <summary>
+    /// Represents a unit that participates in an <see cref="Event"/>.
+    /// </summary>
+    public class EventUnit : IEquatable<EventUnit>
     {
         public SpriteSet SpriteSet { get; set; }
 
@@ -188,6 +191,11 @@ namespace FFTPatcher.Datatypes
         public override string ToString()
         {
             return Description;
+        }
+
+        public bool Equals( EventUnit other )
+        {
+            return Utilities.CompareArrays( other.ToByteArray(), this.ToByteArray() );
         }
     }
 }

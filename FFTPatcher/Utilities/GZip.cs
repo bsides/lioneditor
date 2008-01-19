@@ -24,8 +24,14 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher
 {
+    /// <summary>
+    /// Utilities for decompressing GZip files.
+    /// </summary>
     public static class GZip
     {
+        /// <summary>
+        /// Decompresses a file.
+        /// </summary>
         public static byte[] Decompress( byte[] bytes )
         {
             List<byte> result = new List<byte>( 1024 * 1024 );

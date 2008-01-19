@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-
 namespace FFTPatcher.Datatypes
 {
     public enum MenuAction

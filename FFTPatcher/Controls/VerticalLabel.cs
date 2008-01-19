@@ -47,8 +47,6 @@ namespace FFTPatcher.Controls
             base.Dispose( disposing );
         }
 
-
-
         private System.ComponentModel.Container components = null;
 
         [System.Diagnostics.DebuggerStepThrough()]
@@ -87,7 +85,6 @@ namespace FFTPatcher.Controls
             //default to left alignment
             float leftOffset = 0;
 
-
             //handle center alignment
             if( (this.labelTextAlign == System.Drawing.ContentAlignment.BottomCenter) ||
                 (this.labelTextAlign == System.Drawing.ContentAlignment.MiddleCenter) ||
@@ -109,7 +106,6 @@ namespace FFTPatcher.Controls
             e.Graphics.DrawString( labelText, Font, labelForeColorBrush, leftOffset, 0 );
         }
 
-
         /// 
         /// Invalidate on resize event
         /// 
@@ -119,8 +115,6 @@ namespace FFTPatcher.Controls
             Invalidate();
             base.OnResize( e );
         }
-
-
 
         #region windows form designer support
         /// 
@@ -152,8 +146,6 @@ namespace FFTPatcher.Controls
                 Invalidate();
             }
         }
-
-
 
         #endregion
 

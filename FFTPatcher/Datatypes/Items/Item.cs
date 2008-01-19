@@ -20,11 +20,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Xml;
-
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a generic item.
+    /// </summary>
     public class Item
     {
         public static List<string> PSXNames { get; private set; }
@@ -54,19 +55,23 @@ namespace FFTPatcher.Datatypes
             get { return FFTPatch.Context == Context.US_PSP ? pspEventItems : psxEventItems; }
         }
 
-
         static Item()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Resources.Items );
-            PSPNames = new List<string>( 316 );
             PSPDummies = new List<Item>( 316 );
             pspEventItems = new List<Item>( 256 );
             psxEventItems = new List<Item>( 256 );
 
+            PSPNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.Items,
+                "//Item[@offset='{0}']/name",
+                316 ) );
+            PSXNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.Items,
+                "//Item[@offset='{0}']/name",
+                256 ) );
+
             for( int i = 0; i < 316; i++ )
             {
-                PSPNames.Add( doc.SelectSingleNode( string.Format( "//Item[@offset='{0}']/name", i ) ).InnerText );
                 Item item = new Item();
                 item.Offset = (UInt16)i;
                 item.Name = PSPNames[i];
@@ -77,13 +82,9 @@ namespace FFTPatcher.Datatypes
                 }
             }
 
-            doc = new XmlDocument();
-            doc.LoadXml( PSXResources.Items );
-            PSXNames = new List<string>( 256 );
             PSXDummies = new List<Item>( 256 );
             for( int i = 0; i < 256; i++ )
             {
-                PSXNames.Add( doc.SelectSingleNode( string.Format( "//Item[@offset='{0}']/name", i ) ).InnerText );
                 Item item = new Item();
                 item.Offset = (UInt16)i;
                 item.Name = PSXNames[i];

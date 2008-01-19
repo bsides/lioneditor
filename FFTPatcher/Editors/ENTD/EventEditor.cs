@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 
@@ -49,6 +51,25 @@ namespace FFTPatcher.Editors
             InitializeComponent();
             unitSelectorListBox.SelectedIndexChanged += unitSelectorComboBox_SelectedIndexChanged;
             eventUnitEditor.DataChanged += eventUnitEditor_DataChanged;
+            unitSelectorListBox.DrawItem += unitSelectorListBox_DrawItem;
+            unitSelectorListBox.DrawMode = DrawMode.OwnerDrawFixed;
+        }
+
+        private void unitSelectorListBox_DrawItem( object sender, DrawItemEventArgs e )
+        {
+            EventUnit unit = unitSelectorListBox.Items[e.Index] as EventUnit;
+            using( Brush textBrush = new SolidBrush( e.ForeColor ) )
+            using( Brush backBrush = new SolidBrush( e.BackColor ) )
+            {
+                e.Graphics.FillRectangle( backBrush, e.Bounds );
+                e.Graphics.DrawString( unit.SpriteSet.Name, e.Font, textBrush, e.Bounds.X + 0, e.Bounds.Y + 0 );
+                e.Graphics.DrawString( unit.SpecialName.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0], e.Bounds.Y + 0 );
+                e.Graphics.DrawString( unit.Job.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0] + columnWidths[1], e.Bounds.Y + 0 );
+                if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )
+                {
+                    e.DrawFocusRectangle();
+                }
+            }
         }
 
         private void eventUnitEditor_DataChanged( object sender, System.EventArgs e )
@@ -62,9 +83,33 @@ namespace FFTPatcher.Editors
             eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
         }
 
+        private int[] columnWidths = new int[3] { 50, 50, 50 };
+
+        private void DetermineColumnWidths()
+        {
+            int maxSpriteWidth = 50;
+            int maxNameWidth = 50;
+            int maxJobWidth = 50;
+
+            foreach( EventUnit unit in evt.Units )
+            {
+                string sprite = unit.SpriteSet.Name;
+                string name = unit.SpecialName.Name;
+                string job = unit.Job.Name;
+                maxSpriteWidth = Math.Max( maxSpriteWidth, TextRenderer.MeasureText( sprite, unitSelectorListBox.Font ).Width );
+                maxNameWidth = Math.Max( maxNameWidth, TextRenderer.MeasureText( name, unitSelectorListBox.Font ).Width );
+                maxJobWidth = Math.Max( maxJobWidth, TextRenderer.MeasureText( job, unitSelectorListBox.Font ).Width );
+            }
+
+            columnWidths[0] = maxSpriteWidth + 10;
+            columnWidths[1] = maxNameWidth + 10;
+            columnWidths[2] = maxJobWidth + 10;
+        }
+
         private void UpdateView()
         {
             eventUnitEditor.SuspendLayout();
+            DetermineColumnWidths();
             unitSelectorListBox.DataSource = evt.Units;
             unitSelectorListBox.SelectedIndex = 0;
             eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;

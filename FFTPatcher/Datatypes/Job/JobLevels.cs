@@ -19,9 +19,11 @@
 
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
+    /// </summary>
     public class JobLevels
     {
         private string[] reqs = new string[] {
@@ -140,6 +142,9 @@ namespace FFTPatcher.Datatypes
         }
     }
 
+    /// <summary>
+    /// Represents the prerequisites to unlock a job.
+    /// </summary>
     public class Requirements
     {
         public int Squire { get; set; }

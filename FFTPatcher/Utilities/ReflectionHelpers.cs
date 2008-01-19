@@ -22,18 +22,31 @@ using System.Reflection;
 
 namespace FFTPatcher
 {
+    /// <summary>
+    /// Utilities to help with Reflection.
+    /// </summary>
     public static class ReflectionHelpers
     {
+        /// <summary>
+        /// Gets a boolean from an object.
+        /// </summary>
         public static bool GetFlag( object o, string name )
         {
             return GetFieldOrProperty<bool>( o, name );
         }
 
+        /// <summary>
+        /// Sets a boolean on an object.
+        /// </summary>
         public static void SetFlag( object o, string name, bool newValue )
         {
             SetFieldOrProperty( o, name, newValue );
         }
 
+        /// <summary>
+        /// Gets a field or property from an object.
+        /// </summary>
+        /// <typeparam name="T">Thet type of the field or property.</typeparam>
         public static T GetFieldOrProperty<T>( object target, string name )
         {
             PropertyInfo pi = target.GetType().GetProperty( name );
@@ -53,6 +66,10 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Gets an array of fields or properties from an object.
+        /// </summary>
+        /// <typeparam name="T">The type of the fields or properties.</typeparam>
         public static T[] GetFieldsOrProperties<T>( object target, string[] names )
         {
             T[] result = new T[names.Length];
@@ -64,6 +81,9 @@ namespace FFTPatcher
             return result;
         }
 
+        /// <summary>
+        /// Sets a field or property on an object.
+        /// </summary>
         public static void SetFieldOrProperty( object target, string name, object newValue )
         {
             PropertyInfo pi = target.GetType().GetProperty( name );

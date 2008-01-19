@@ -19,9 +19,11 @@
 
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents an item's attributes.
+    /// </summary>
     public class ItemAttributes
     {
         public byte Value { get; private set; }

@@ -17,11 +17,11 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Xml;
-
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents the sprite set of a unit.
+    /// </summary>
     public class SpriteSet
     {
         private static SpriteSet[] psxSpriteSets = new SpriteSet[256];
@@ -33,30 +33,19 @@ namespace FFTPatcher.Datatypes
 
         static SpriteSet()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Resources.SpriteSets );
+            string[] pspSpriteNames = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.SpriteSets,
+                "//Sprites/Sprite[byte='{0:X2}']/sprite",
+                256 );
+            string[] psxSpriteNames = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.SpriteSets,
+                "//Sprites/Sprite[byte='{0:X2}']/sprite",
+                256 );
+
             for( int i = 0; i < 256; i++ )
             {
-                XmlNode node = doc.SelectSingleNode( string.Format( "//Sprites/Sprite[byte='{0:X2}']", i ) );
-                string name = string.Empty;
-                if( node != null )
-                {
-                    name = node.SelectSingleNode( "sprite" ).InnerText;
-                }
-
-                pspSpriteSets[i] = new SpriteSet( (byte)i, name );
-            }
-            doc.LoadXml( PSXResources.SpriteSets );
-            for( int i = 0; i < 256; i++ )
-            {
-                XmlNode node = doc.SelectSingleNode( string.Format( "//Sprites/Sprite[byte='{0:X2}']", i ) );
-                string name = string.Empty;
-                if( node != null )
-                {
-                    name = node.SelectSingleNode( "sprite" ).InnerText;
-                }
-
-                psxSpriteSets[i] = new SpriteSet( (byte)i, name );
+                pspSpriteSets[i] = new SpriteSet( (byte)i, pspSpriteNames[i] );
+                psxSpriteSets[i] = new SpriteSet( (byte)i, psxSpriteNames[i] );
             }
         }
 

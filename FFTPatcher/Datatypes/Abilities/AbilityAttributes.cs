@@ -21,6 +21,9 @@ using System;
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents an <see cref="Ability"/>'s attributes.
+    /// </summary>
     public class AbilityAttributes
     {
         public byte Range;

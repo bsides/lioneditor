@@ -81,6 +81,5 @@ namespace FFTPatcher.Editors
             ResumeLayout();
             ignoreChanges = false;
         }
-
     }
 }

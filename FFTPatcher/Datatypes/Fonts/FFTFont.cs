@@ -19,9 +19,11 @@
 
 using System.Collections.Generic;
 
-
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// Represents a font used in FFT, which is an array of 2200 bitmaps.
+    /// </summary>
     public class FFTFont
     {
         public Glyph[] Glyphs { get; private set; }
@@ -58,12 +60,6 @@ namespace FFTPatcher.Datatypes
 
         public List<string> GenerateCodes()
         {
-            // PSP 0x27F7B8 and 0x2FB364
-            // PSX 0x13B8F8 
-
-            // character widths
-            // PSP 0x297EEC and 0x313A6C
-            // PSX 0x1533E0
             List<string> strings = new List<string>();
 
             if( FFTPatch.Context == Context.US_PSP )

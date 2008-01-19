@@ -22,8 +22,14 @@ using System.Xml;
 
 namespace FFTPatcher
 {
+    /// <summary>
+    /// Utilities
+    /// </summary>
     public static class Utilities
     {
+        /// <summary>
+        /// Builds a byte from the passed booleans.
+        /// </summary>
         public static byte ByteFromBooleans( bool msb, bool six, bool five, bool four, bool three, bool two, bool one, bool lsb )
         {
             bool[] flags = new bool[] { lsb, one, two, three, four, five, six, msb };
@@ -40,6 +46,9 @@ namespace FFTPatcher
             return result;
         }
 
+        /// <summary>
+        /// Copies the numbers to the upper and lower nibbles of a byte.
+        /// </summary>
         public static byte MoveToUpperAndLowerNibbles( int upper, int lower )
         {
             return (byte)(((upper & 0x0F) << 4) | (lower & 0x0F));
@@ -73,6 +82,9 @@ namespace FFTPatcher
             return result;
         }
 
+        /// <summary>
+        /// Copies an array of booleans into actual boolean instances.
+        /// </summary>
         public static void CopyBoolArrayToBooleans( bool[] bools,
             ref bool msb,
             ref bool six,
@@ -93,6 +105,9 @@ namespace FFTPatcher
             msb = bools[7];
         }
 
+        /// <summary>
+        /// Copies the bits of a byte into boolean instances.
+        /// </summary>
         public static void CopyByteToBooleans( byte b,
             ref bool msb,
             ref bool six,
@@ -106,6 +121,9 @@ namespace FFTPatcher
             CopyBoolArrayToBooleans( BooleansFromByte( b ), ref msb, ref six, ref five, ref four, ref three, ref two, ref one, ref lsb );
         }
 
+        /// <summary>
+        /// Joins the two bytes into a ushort.
+        /// </summary>
         public static UInt16 BytesToUShort( byte lsb, byte msb )
         {
             UInt16 result = 0;
@@ -114,6 +132,9 @@ namespace FFTPatcher
             return result;
         }
 
+        /// <summary>
+        /// Joins four bytes into a uint.
+        /// </summary>
         public static UInt32 BytesToUInt32( byte[] bytes )
         {
             UInt32 result = 0;
@@ -125,6 +146,9 @@ namespace FFTPatcher
             return result;
         }
 
+        /// <summary>
+        /// Compares two arrays of the same type.
+        /// </summary>
         public static bool CompareArrays<T>( T[] one, T[] two ) where T : IComparable, IEquatable<T>
         {
             if( one.Length != two.Length )
@@ -138,18 +162,29 @@ namespace FFTPatcher
             return true;
         }
 
-        public static string[] GetStringsFromNumberedXmlNodes( string xmlDoc, string xPath, int length )
+        /// <summary>
+        /// Iterates through an XML document, getting the string values of certain nodes.
+        /// </summary>
+        public static string[] GetStringsFromNumberedXmlNodes( string xmlDoc, string xPath, int length, int startIndex )
         {
             string[] result = new string[length];
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( xmlDoc );
-            for( int i = 0; i < length; i++ )
+            for( int i = startIndex; i < (length + startIndex); i++ )
             {
-                result[i] = doc.SelectSingleNode(
-                    string.Format( xPath, i ) ).InnerText;
+                XmlNode node = doc.SelectSingleNode( string.Format( xPath, i ) );
+                result[i - startIndex] = node == null ? string.Empty : node.InnerText;
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Iterates through an XML document, getting the string values of certain nodes.
+        /// </summary>
+        public static string[] GetStringsFromNumberedXmlNodes( string xmlDoc, string xPath, int length )
+        {
+            return GetStringsFromNumberedXmlNodes( xmlDoc, xPath, length, 0 );
         }
     }
 }

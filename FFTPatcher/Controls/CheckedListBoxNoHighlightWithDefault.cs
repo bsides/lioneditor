@@ -25,17 +25,27 @@ using System.Windows.Forms.VisualStyles;
 
 namespace FFTPatcher.Controls
 {
+    /// <summary>
+    /// Represents a <see cref="CheckedListBox"/> that allows default values to be specified.
+    /// </summary>
     public partial class CheckedListBoxNoHighlightWithDefault : CheckedListBox
     {
         private SortedList haveOutlines = new SortedList( null as IComparer );
 
         private bool[] defaults;
+
+        /// <summary>
+        /// Gets the default values for the items in this <see cref="CheckedListBoxNoHighlightWithDefault"/>.
+        /// </summary>
         public bool[] Defaults
         {
             get { return defaults; }
             private set { defaults = value; }
         }
 
+        /// <summary>
+        /// Sets a list of values and their defaults.
+        /// </summary>
         public void SetValuesAndDefaults( bool[] values, bool[] defaults )
         {
             if( (values != null) && (defaults != null) && (this.defaults == null) )
@@ -74,7 +84,6 @@ namespace FFTPatcher.Controls
         }
 
         public CheckedListBoxNoHighlightWithDefault()
-            : base()
         {
             this.CheckOnClick = true;
         }

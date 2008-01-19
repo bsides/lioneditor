@@ -19,6 +19,9 @@
 
 namespace FFTPatcher.Datatypes
 {
+    /// <summary>
+    /// The types of equipment a <see cref="Job"/> can use.
+    /// </summary>
     public class Equipment
     {
         public bool Unused;

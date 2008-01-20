@@ -63,11 +63,11 @@ namespace FFTPatcher.Datatypes
 
             PSPNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
                 Resources.Items,
-                "//Item[@offset='{0}']/name",
+                "/Items/Item[@offset='{0}']/@name",
                 316 ) );
             PSXNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Items,
-                "//Item[@offset='{0}']/name",
+                "/Items/Item[@offset='{0}']/@name",
                 256 ) );
 
             for( int i = 0; i < 316; i++ )

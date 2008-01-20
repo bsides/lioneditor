@@ -200,11 +200,11 @@ namespace FFTPatcher.Datatypes
 
             pspNames = Utilities.GetStringsFromNumberedXmlNodes(
                 Resources.Jobs,
-                "//Job[@offset='{0:X2}']/@name",
+                "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xAA );
             psxNames = Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Jobs,
-                "//Job[@offset='{0:X2}']/@name",
+                "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xA0 );
 
             for( int i = 0; i < 0xAA; i++ )

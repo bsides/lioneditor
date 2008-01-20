@@ -50,11 +50,11 @@ namespace FFTPatcher.Datatypes
 
             string[] pspNames = Utilities.GetStringsFromNumberedXmlNodes(
                 Resources.SkillSets,
-                "//SkillSet[@byte='{0:X2}']",
+                "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                 0xE3 );
             string[] psxNames = Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.SkillSets,
-                "//SkillSet[@byte='{0:X2}']",
+                "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                 0xE0 );
             for( int i = 0; i < 0xE3; i++ )
             {

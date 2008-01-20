@@ -55,7 +55,11 @@ namespace FFTPatcher
         /// <param name="lines">Lines to add</param>
         public static void AddGroups( this StringBuilder sb, int groupSize, string groupName, List<string> lines )
         {
-            if( lines.Count <= groupSize )
+            if( lines.Count == 0 )
+            {
+                return;
+            }
+            else if( lines.Count <= groupSize )
             {
                 if( groupName != string.Empty )
                     sb.AppendLine( groupName );

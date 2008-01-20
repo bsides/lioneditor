@@ -75,9 +75,7 @@
   <Job offset="36" name="White Mage"/>
   <Job offset="37" name="Black Mage"/>
   <Job offset="38" name="Mystic"/>
-  <Job offset="39" name=""/>
-  <Job offset="3A" name=""/>
-  <Job offset="3B" name=""/>
+
   <Job offset="3C" name="Gigas"/>
   <Job offset="3D" name="Knight"/>
   <Job offset="3E" name="Death Seraph"/>
@@ -173,11 +171,7 @@
   <Job offset="98" name="Holy Dragon"/>
   <Job offset="99" name="Archaeodaemon"/>
   <Job offset="9A" name="Ultima Daemon"/>
-  <Job offset="9B" name=""/>
-  <Job offset="9C" name=""/>
-  <Job offset="9D" name=""/>
-  <Job offset="9E" name=""/>
-  <Job offset="9F" name=""/>
+
   <Job offset="A0" name="Dark Knight"/>
   <Job offset="A1" name="Onion Knight"/>
   <Job offset="A2" name="Sky Pirate"/>

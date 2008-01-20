@@ -18,7 +18,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Events>
-  <Event value="000" name=""/>
+
   <Event value="001" name="Dorvauldar Marsh East 1"/>
   <Event value="002" name="Dorvauldar Marsh East 2"/>
   <Event value="003" name="Dorvauldar Marsh East 3"/>
@@ -27,10 +27,7 @@
   <Event value="006" name="Dorvauldar Marsh West 2"/>
   <Event value="007" name="Dorvauldar Marsh West 3"/>
   <Event value="008" name="Dorvauldar Marsh West 4"/>
-  <Event value="009" name=""/>
-  <Event value="00A" name=""/>
-  <Event value="00B" name=""/>
-  <Event value="00C" name=""/>
+
   <Event value="00D" name="Fovoham Windflats South 1"/>
   <Event value="00E" name="Fovoham Windflats South 2"/>
   <Event value="00F" name="Fovoham Windflats South 3"/>
@@ -51,10 +48,7 @@
   <Event value="01E" name="The Siedge Weald West 2"/>
   <Event value="01F" name="The Siedge Weald West 3"/>
   <Event value="020" name="The Siedge Weald West 4"/>
-  <Event value="021" name=""/>
-  <Event value="022" name=""/>
-  <Event value="023" name=""/>
-  <Event value="024" name=""/>
+
   <Event value="025" name="Mount Bervenia North 1"/>
   <Event value="026" name="Mount Bervenia North 2"/>
   <Event value="027" name="Mount Bervenia North 3"/>
@@ -63,10 +57,7 @@
   <Event value="02A" name="Mount Bervenia South 2"/>
   <Event value="02B" name="Mount Bervenia South 3"/>
   <Event value="02C" name="Mount Bervenia South 4"/>
-  <Event value="02D" name=""/>
-  <Event value="02E" name=""/>
-  <Event value="02F" name=""/>
-  <Event value="030" name=""/>
+
   <Event value="031" name="Zeklaus Desert North 1"/>
   <Event value="032" name="Zeklaus Desert North 2"/>
   <Event value="033" name="Zeklaus Desert North 3"/>
@@ -87,10 +78,7 @@
   <Event value="042" name="Lenalian Plateau North 2"/>
   <Event value="043" name="Lenalian Plateau North 3"/>
   <Event value="044" name="Lenalian Plateau North 4"/>
-  <Event value="045" name=""/>
-  <Event value="046" name=""/>
-  <Event value="047" name=""/>
-  <Event value="048" name=""/>
+
   <Event value="049" name="Tchigolith Fenlands East 1"/>
   <Event value="04A" name="Tchigolith Fenlands East 2"/>
   <Event value="04B" name="Tchigolith Fenlands East 3"/>
@@ -99,7 +87,7 @@
   <Event value="04E" name="Tchigolith Fenlands West 2"/>
   <Event value="04F" name="Tchigolith Fenlands West 3"/>
   <Event value="050" name="Tchigolith Fenlands West 4"/>
-  <Event value="051" name=""/>
+
   <Event value="052" name="Zeirchele Falls East 5"/>
   <Event value="053" name="Balias Tor South 5"/>
   <Event value="054" name="Lenalian Plateau South 5"/>
@@ -271,137 +259,7 @@
   <Event value="0FA" name="The Crevasse 2"/>
   <Event value="0FB" name="The Crevasse 3"/>
   <Event value="0FC" name="The Crevasse 4"/>
-  <Event value="0FD" name=""/>
-  <Event value="0FE" name=""/>
-  <Event value="0FF" name=""/>
-  <Event value="100" name=""/>
-  <Event value="101" name=""/>
-  <Event value="102" name=""/>
-  <Event value="103" name=""/>
-  <Event value="104" name=""/>
-  <Event value="105" name=""/>
-  <Event value="106" name=""/>
-  <Event value="107" name=""/>
-  <Event value="108" name=""/>
-  <Event value="109" name=""/>
-  <Event value="10A" name=""/>
-  <Event value="10B" name=""/>
-  <Event value="10C" name=""/>
-  <Event value="10D" name=""/>
-  <Event value="10E" name=""/>
-  <Event value="10F" name=""/>
-  <Event value="110" name=""/>
-  <Event value="111" name=""/>
-  <Event value="112" name=""/>
-  <Event value="113" name=""/>
-  <Event value="114" name=""/>
-  <Event value="115" name=""/>
-  <Event value="116" name=""/>
-  <Event value="117" name=""/>
-  <Event value="118" name=""/>
-  <Event value="119" name=""/>
-  <Event value="11A" name=""/>
-  <Event value="11B" name=""/>
-  <Event value="11C" name=""/>
-  <Event value="11D" name=""/>
-  <Event value="11E" name=""/>
-  <Event value="11F" name=""/>
-  <Event value="120" name=""/>
-  <Event value="121" name=""/>
-  <Event value="122" name=""/>
-  <Event value="123" name=""/>
-  <Event value="124" name=""/>
-  <Event value="125" name=""/>
-  <Event value="126" name=""/>
-  <Event value="127" name=""/>
-  <Event value="128" name=""/>
-  <Event value="129" name=""/>
-  <Event value="12A" name=""/>
-  <Event value="12B" name=""/>
-  <Event value="12C" name=""/>
-  <Event value="12D" name=""/>
-  <Event value="12E" name=""/>
-  <Event value="12F" name=""/>
-  <Event value="130" name=""/>
-  <Event value="131" name=""/>
-  <Event value="132" name=""/>
-  <Event value="133" name=""/>
-  <Event value="134" name=""/>
-  <Event value="135" name=""/>
-  <Event value="136" name=""/>
-  <Event value="137" name=""/>
-  <Event value="138" name=""/>
-  <Event value="139" name=""/>
-  <Event value="13A" name=""/>
-  <Event value="13B" name=""/>
-  <Event value="13C" name=""/>
-  <Event value="13D" name=""/>
-  <Event value="13E" name=""/>
-  <Event value="13F" name=""/>
-  <Event value="140" name=""/>
-  <Event value="141" name=""/>
-  <Event value="142" name=""/>
-  <Event value="143" name=""/>
-  <Event value="144" name=""/>
-  <Event value="145" name=""/>
-  <Event value="146" name=""/>
-  <Event value="147" name=""/>
-  <Event value="148" name=""/>
-  <Event value="149" name=""/>
-  <Event value="14A" name=""/>
-  <Event value="14B" name=""/>
-  <Event value="14C" name=""/>
-  <Event value="14D" name=""/>
-  <Event value="14E" name=""/>
-  <Event value="14F" name=""/>
-  <Event value="150" name=""/>
-  <Event value="151" name=""/>
-  <Event value="152" name=""/>
-  <Event value="153" name=""/>
-  <Event value="154" name=""/>
-  <Event value="155" name=""/>
-  <Event value="156" name=""/>
-  <Event value="157" name=""/>
-  <Event value="158" name=""/>
-  <Event value="159" name=""/>
-  <Event value="15A" name=""/>
-  <Event value="15B" name=""/>
-  <Event value="15C" name=""/>
-  <Event value="15D" name=""/>
-  <Event value="15E" name=""/>
-  <Event value="15F" name=""/>
-  <Event value="160" name=""/>
-  <Event value="161" name=""/>
-  <Event value="162" name=""/>
-  <Event value="163" name=""/>
-  <Event value="164" name=""/>
-  <Event value="165" name=""/>
-  <Event value="166" name=""/>
-  <Event value="167" name=""/>
-  <Event value="168" name=""/>
-  <Event value="169" name=""/>
-  <Event value="16A" name=""/>
-  <Event value="16B" name=""/>
-  <Event value="16C" name=""/>
-  <Event value="16D" name=""/>
-  <Event value="16E" name=""/>
-  <Event value="16F" name=""/>
-  <Event value="170" name=""/>
-  <Event value="171" name=""/>
-  <Event value="172" name=""/>
-  <Event value="173" name=""/>
-  <Event value="174" name=""/>
-  <Event value="175" name=""/>
-  <Event value="176" name=""/>
-  <Event value="177" name=""/>
-  <Event value="178" name=""/>
-  <Event value="179" name=""/>
-  <Event value="17A" name=""/>
-  <Event value="17B" name=""/>
-  <Event value="17C" name=""/>
-  <Event value="17D" name=""/>
-  <Event value="17E" name=""/>
-  <Event value="17F" name=""/>
+
   <Event value="180" name="The Siedge Weald"/>
   <Event value="181" name="Merchant City of Dorter"/>
   <Event value="182" name="Sand Rat's Sieve"/>
@@ -409,53 +267,48 @@
   <Event value="184" name="Magick City of Gariland"/>
   <Event value="185" name="Mandalia Plains"/>
   <Event value="186" name="Eagrose Castle"/>
-  <Event value="187" name=""/>
-  <Event value="188" name=""/>
-  <Event value="189" name=""/>
-  <Event value="18A" name=""/>
+
   <Event value="18B" name="Brigands' Den"/>
-  <Event value="18C" name=""/>
-  <Event value="18D" name=""/>
-  <Event value="18E" name=""/>
+
   <Event value="18F" name="Lenalian Plateau"/>
   <Event value="190" name="Windmill Shed"/>
   <Event value="191" name="Ziekden Fortress"/>
   <Event value="192" name="End"/>
-  <Event value="193" name=""/>
+
   <Event value="194" name="Araguay Woods"/>
   <Event value="195" name="Zeirchele Falls"/>
-  <Event value="196" name=""/>
+
   <Event value="197" name="Castled City of Zaland"/>
-  <Event value="198" name=""/>
+
   <Event value="199" name="Balias Tor"/>
   <Event value="19A" name="Tchigolith Fenlands"/>
   <Event value="19B" name="Clockwork City of Goug"/>
-  <Event value="19C" name=""/>
+
   <Event value="19D" name="Balias Swale"/>
   <Event value="19E" name="Golgollada Gallows"/>
   <Event value="19F" name="At the Gate of Lionel Castle"/>
   <Event value="1A0" name="Inside Lionel Castle"/>
   <Event value="1A1" name="Mining Town of Gollund"/>
-  <Event value="1A2" name=""/>
+
   <Event value="1A3" name="Trade City of Sal Ghidos"/>
   <Event value="1A4" name="Back Gate of Lesalia"/>
-  <Event value="1A5" name=""/>
+
   <Event value="1A6" name="Underground Book Storage Second Floor"/>
   <Event value="1A7" name="Underground Book Storage Third Floor"/>
   <Event value="1A8" name="Underground Book Storage First Floor"/>
-  <Event value="1A9" name=""/>
+
   <Event value="1AA" name="Grogh Heights"/>
-  <Event value="1AB" name=""/>
+
   <Event value="1AC" name="Royal City of Lesalia"/>
-  <Event value="1AD" name=""/>
+
   <Event value="1AE" name="The Yuguewood"/>
   <Event value="1AF" name="At the Gate of Riovanes Castle"/>
   <Event value="1B0" name="Inside of Riovanes Castle"/>
   <Event value="1B1" name="Riovanes Rooftop"/>
-  <Event value="1B2" name=""/>
+
   <Event value="1B3" name="Underground Book Storage Fourth Floor"/>
   <Event value="1B4" name="Underground Book Storage Fifth Floor"/>
-  <Event value="1B5" name=""/>
+
   <Event value="1B6" name="Mullonde"/>
   <Event value="1B7" name="Mullonde"/>
   <Event value="1B8" name="Airship Graveyard"/>
@@ -464,19 +317,19 @@
   <Event value="1BB" name="Free City of Bervenia"/>
   <Event value="1BC" name="Finnath Creek"/>
   <Event value="1BD" name="Outside of the Church"/>
-  <Event value="1BE" name=""/>
+  
   <Event value="1BF" name="Beddha Sandwaste"/>
   <Event value="1C0" name="South Wall of Fort Besselat"/>
   <Event value="1C1" name="North Wall of Fort Besselat"/>
   <Event value="1C2" name="Front Wall of Fort Besselat"/>
-  <Event value="1C3" name=""/>
+  
   <Event value="1C4" name="Mount Germinas"/>
   <Event value="1C5" name="Lake Poescas"/>
   <Event value="1C6" name="At the Gate of Limberry Castle"/>
-  <Event value="1C7" name=""/>
+  
   <Event value="1C8" name="Inside of Limberry Castle"/>
   <Event value="1C9" name="Underground Cemetery of Limberry Castle"/>
-  <Event value="1CA" name=""/>
+  
   <Event value="1CB" name="Inside of Eagrose Castle"/>
   <Event value="1CC" name="Mullonde Holy Place"/>
   <Event value="1CD" name="Hall of St. Mullonde Temple"/>
@@ -485,14 +338,12 @@
   <Event value="1D0" name="Collierry Underground Second Floor"/>
   <Event value="1D1" name="Collierry Underground First Floor"/>
   <Event value="1D2" name="Underground Passage in Gollund"/>
-  <Event value="1D3" name=""/>
+  
   <Event value="1D4" name="Nelveska Temple"/>
-  <Event value="1D5" name=""/>
-  <Event value="1D6" name=""/>
-  <Event value="1D7" name=""/>
+
   <Event value="1D8" name="Nelveska Temple"/>
   <Event value="1D9" name="End"/>
-  <Event value="1DA" name=""/>
+  
   <Event value="1DB" name="Test"/>
   <Event value="1DC" name="Test"/>
   <Event value="1DD" name="Test"/>
@@ -536,38 +387,10 @@
   <Event value="203" name="Luso Battle"/>
   <Event value="204" name="Battle 30"/>
   <Event value="205" name="Recruiting Luso"/>
-  <Event value="206" name=""/>
+  
   <Event value="207" name="Battle 46"/>
   <Event value="208" name="Battle 48"/>
-  <Event value="209" name=""/>
-  <Event value="20A" name=""/>
-  <Event value="20B" name=""/>
-  <Event value="20C" name=""/>
-  <Event value="20D" name=""/>
-  <Event value="20E" name=""/>
-  <Event value="20F" name=""/>
-  <Event value="210" name=""/>
-  <Event value="211" name=""/>
-  <Event value="212" name=""/>
-  <Event value="213" name=""/>
-  <Event value="214" name=""/>
-  <Event value="215" name=""/>
-  <Event value="216" name=""/>
-  <Event value="217" name=""/>
-  <Event value="218" name=""/>
-  <Event value="219" name=""/>
-  <Event value="21A" name=""/>
-  <Event value="21B" name=""/>
-  <Event value="21C" name=""/>
-  <Event value="21D" name=""/>
-  <Event value="21E" name=""/>
-  <Event value="21F" name=""/>
-  <Event value="220" name=""/>
-  <Event value="221" name=""/>
-  <Event value="222" name=""/>
-  <Event value="223" name=""/>
-  <Event value="224" name=""/>
-  <Event value="225" name=""/>
+  
   <Event value="226" name="Chocobo Defense Brigade"/>
   <Event value="227" name="Chicken Race"/>
   <Event value="228" name="Treasure Box Dash"/>
@@ -595,16 +418,5 @@
   <Event value="23E" name="Brave Story - Part 9"/>
   <Event value="23F" name="Brave Story - Part 10"/>
   <Event value="240" name="Whirlwind"/>
-  <Event value="241" name=""/>
-  <Event value="242" name=""/>
-  <Event value="243" name=""/>
-  <Event value="244" name=""/>
-  <Event value="245" name=""/>
-  <Event value="246" name=""/>
-  <Event value="247" name=""/>
-  <Event value="248" name=""/>
-  <Event value="249" name=""/>
-  <Event value="24A" name=""/>
-  <Event value="24B" name=""/>
-  <Event value="24C" name=""/>
+
 </Events>

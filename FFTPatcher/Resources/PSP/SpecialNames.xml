@@ -71,25 +71,18 @@
   <SpecialName byte="32" name="Cloud"/>
   <SpecialName byte="33" name="Zalbaag"/>
   <SpecialName byte="34" name="Agrias"/>
-  <SpecialName byte="35" name=""/>
-  <SpecialName byte="36" name=""/>
-  <SpecialName byte="37" name=""/>
-  <SpecialName byte="38" name=""/>
-  <SpecialName byte="39" name=""/>
-  <SpecialName byte="3A" name=""/>
-  <SpecialName byte="3B" name=""/>
+
   <SpecialName byte="3C" name="Belias"/>
-  <SpecialName byte="3D" name=""/>
+  
   <SpecialName byte="3E" name="Zalera"/>
-  <SpecialName byte="3F" name=""/>
+  
   <SpecialName byte="40" name="Hashmalum"/>
   <SpecialName byte="41" name="Altima"/>
-  <SpecialName byte="42" name=""/>
+  
   <SpecialName byte="43" name="Cuchulainn"/>
-  <SpecialName byte="44" name=""/>
+  
   <SpecialName byte="45" name="Adremmelech"/>
-  <SpecialName byte="46" name=""/>
-  <SpecialName byte="47" name=""/>
+  
   <SpecialName byte="48" name="Reis"/>
   <SpecialName byte="49" name="Altima"/>
   <SpecialName byte="4A" name="Gustav"/>

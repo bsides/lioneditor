@@ -18,7 +18,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <SpecialNames>
-  <SpecialName byte="00" name=""/>
+
   <SpecialName byte="01" name="Ramza"/>
   <SpecialName byte="02" name="Ramza"/>
   <SpecialName byte="03" name="Ramza"/>
@@ -71,68 +71,24 @@
   <SpecialName byte="32" name="Cloud"/>
   <SpecialName byte="33" name="Zalbag"/>
   <SpecialName byte="34" name="Agrias"/>
-  <SpecialName byte="35" name=""/>
-  <SpecialName byte="36" name=""/>
-  <SpecialName byte="37" name=""/>
-  <SpecialName byte="38" name=""/>
-  <SpecialName byte="39" name=""/>
-  <SpecialName byte="3A" name=""/>
-  <SpecialName byte="3B" name=""/>
+
   <SpecialName byte="3C" name="Velius"/>
-  <SpecialName byte="3D" name=""/>
+
   <SpecialName byte="3E" name="Zalera"/>
-  <SpecialName byte="3F" name=""/>
+  
   <SpecialName byte="40" name="Hashmalum"/>
   <SpecialName byte="41" name="Altima"/>
-  <SpecialName byte="42" name=""/>
+  
   <SpecialName byte="43" name="Queklain"/>
   <SpecialName byte="44" name="Rofokare"/>
   <SpecialName byte="45" name="Adramelk"/>
-  <SpecialName byte="46" name=""/>
-  <SpecialName byte="47" name=""/>
+  
   <SpecialName byte="48" name="Reis"/>
   <SpecialName byte="49" name="Altima"/>
   <SpecialName byte="4A" name="Gustav"/>
   <SpecialName byte="4B" name="Miluda"/>
   <SpecialName byte="4C" name="Golagros"/>
-  <SpecialName byte="4D" name=""/>
-  <SpecialName byte="4E" name=""/>
-  <SpecialName byte="4F" name=""/>
-  <SpecialName byte="50" name=""/>
-  <SpecialName byte="51" name=""/>
-  <SpecialName byte="52" name=""/>
-  <SpecialName byte="53" name=""/>
-  <SpecialName byte="54" name=""/>
-  <SpecialName byte="55" name=""/>
-  <SpecialName byte="56" name=""/>
-  <SpecialName byte="57" name=""/>
-  <SpecialName byte="58" name=""/>
-  <SpecialName byte="59" name=""/>
-  <SpecialName byte="5A" name=""/>
-  <SpecialName byte="5B" name=""/>
-  <SpecialName byte="5C" name=""/>
-  <SpecialName byte="5D" name=""/>
-  <SpecialName byte="5E" name=""/>
-  <SpecialName byte="5F" name=""/>
-  <SpecialName byte="60" name=""/>
-  <SpecialName byte="61" name=""/>
-  <SpecialName byte="62" name=""/>
-  <SpecialName byte="63" name=""/>
-  <SpecialName byte="64" name=""/>
-  <SpecialName byte="65" name=""/>
-  <SpecialName byte="66" name=""/>
-  <SpecialName byte="67" name=""/>
-  <SpecialName byte="68" name=""/>
-  <SpecialName byte="69" name=""/>
-  <SpecialName byte="6A" name=""/>
-  <SpecialName byte="6B" name=""/>
-  <SpecialName byte="6C" name=""/>
-  <SpecialName byte="6D" name=""/>
-  <SpecialName byte="6E" name=""/>
-  <SpecialName byte="6F" name=""/>
-  <SpecialName byte="70" name=""/>
-  <SpecialName byte="71" name=""/>
-  <SpecialName byte="72" name=""/>
+
   <SpecialName byte="73" name="Worker 7"/>
   <SpecialName byte="74" name="Sinogue"/>
   <SpecialName byte="75" name="Worker 8"/>
@@ -146,132 +102,7 @@
   <SpecialName byte="7D" name="Wezaleff"/>
   <SpecialName byte="7E" name="Lezales"/>
   <SpecialName byte="7F" name="Rad"/>
-  <SpecialName byte="80" name=""/>
-  <SpecialName byte="81" name=""/>
-  <SpecialName byte="82" name=""/>
-  <SpecialName byte="83" name=""/>
-  <SpecialName byte="84" name=""/>
-  <SpecialName byte="85" name=""/>
-  <SpecialName byte="86" name=""/>
-  <SpecialName byte="87" name=""/>
-  <SpecialName byte="88" name=""/>
-  <SpecialName byte="89" name=""/>
-  <SpecialName byte="8A" name=""/>
-  <SpecialName byte="8B" name=""/>
-  <SpecialName byte="8C" name=""/>
-  <SpecialName byte="8D" name=""/>
-  <SpecialName byte="8E" name=""/>
-  <SpecialName byte="8F" name=""/>
-  <SpecialName byte="90" name=""/>
-  <SpecialName byte="91" name=""/>
-  <SpecialName byte="92" name=""/>
-  <SpecialName byte="93" name=""/>
-  <SpecialName byte="94" name=""/>
-  <SpecialName byte="95" name=""/>
-  <SpecialName byte="96" name=""/>
-  <SpecialName byte="97" name=""/>
-  <SpecialName byte="98" name=""/>
-  <SpecialName byte="99" name=""/>
-  <SpecialName byte="9A" name=""/>
-  <SpecialName byte="9B" name=""/>
-  <SpecialName byte="9C" name=""/>
-  <SpecialName byte="9D" name=""/>
-  <SpecialName byte="9E" name=""/>
-  <SpecialName byte="9F" name=""/>
-  <SpecialName byte="A0" name=""/>
-  <SpecialName byte="A1" name=""/>
-  <SpecialName byte="A2" name=""/>
-  <SpecialName byte="A3" name=""/>
-  <SpecialName byte="A4" name=""/>
-  <SpecialName byte="A5" name=""/>
-  <SpecialName byte="A6" name=""/>
-  <SpecialName byte="A7" name=""/>
-  <SpecialName byte="A8" name=""/>
-  <SpecialName byte="A9" name=""/>
-  <SpecialName byte="AA" name=""/>
-  <SpecialName byte="AB" name=""/>
-  <SpecialName byte="AC" name=""/>
-  <SpecialName byte="AD" name=""/>
-  <SpecialName byte="AE" name=""/>
-  <SpecialName byte="AF" name=""/>
-  <SpecialName byte="B0" name=""/>
-  <SpecialName byte="B1" name=""/>
-  <SpecialName byte="B2" name=""/>
-  <SpecialName byte="B3" name=""/>
-  <SpecialName byte="B4" name=""/>
-  <SpecialName byte="B5" name=""/>
-  <SpecialName byte="B6" name=""/>
-  <SpecialName byte="B7" name=""/>
-  <SpecialName byte="B8" name=""/>
-  <SpecialName byte="B9" name=""/>
-  <SpecialName byte="BA" name=""/>
-  <SpecialName byte="BB" name=""/>
-  <SpecialName byte="BC" name=""/>
-  <SpecialName byte="BD" name=""/>
-  <SpecialName byte="BE" name=""/>
-  <SpecialName byte="BF" name=""/>
-  <SpecialName byte="C0" name=""/>
-  <SpecialName byte="C1" name=""/>
-  <SpecialName byte="C2" name=""/>
-  <SpecialName byte="C3" name=""/>
-  <SpecialName byte="C4" name=""/>
-  <SpecialName byte="C5" name=""/>
-  <SpecialName byte="C6" name=""/>
-  <SpecialName byte="C7" name=""/>
-  <SpecialName byte="C8" name=""/>
-  <SpecialName byte="C9" name=""/>
-  <SpecialName byte="CA" name=""/>
-  <SpecialName byte="CB" name=""/>
-  <SpecialName byte="CC" name=""/>
-  <SpecialName byte="CD" name=""/>
-  <SpecialName byte="CE" name=""/>
-  <SpecialName byte="CF" name=""/>
-  <SpecialName byte="D0" name=""/>
-  <SpecialName byte="D1" name=""/>
-  <SpecialName byte="D2" name=""/>
-  <SpecialName byte="D3" name=""/>
-  <SpecialName byte="D4" name=""/>
-  <SpecialName byte="D5" name=""/>
-  <SpecialName byte="D6" name=""/>
-  <SpecialName byte="D7" name=""/>
-  <SpecialName byte="D8" name=""/>
-  <SpecialName byte="D9" name=""/>
-  <SpecialName byte="DA" name=""/>
-  <SpecialName byte="DB" name=""/>
-  <SpecialName byte="DC" name=""/>
-  <SpecialName byte="DD" name=""/>
-  <SpecialName byte="DE" name=""/>
-  <SpecialName byte="DF" name=""/>
-  <SpecialName byte="E0" name=""/>
-  <SpecialName byte="E1" name=""/>
-  <SpecialName byte="E2" name=""/>
-  <SpecialName byte="E3" name=""/>
-  <SpecialName byte="E4" name=""/>
-  <SpecialName byte="E5" name=""/>
-  <SpecialName byte="E6" name=""/>
-  <SpecialName byte="E7" name=""/>
-  <SpecialName byte="E8" name=""/>
-  <SpecialName byte="E9" name=""/>
-  <SpecialName byte="EA" name=""/>
-  <SpecialName byte="EB" name=""/>
-  <SpecialName byte="EC" name=""/>
-  <SpecialName byte="ED" name=""/>
-  <SpecialName byte="EE" name=""/>
-  <SpecialName byte="EF" name=""/>
-  <SpecialName byte="F0" name=""/>
-  <SpecialName byte="F1" name=""/>
-  <SpecialName byte="F2" name=""/>
-  <SpecialName byte="F3" name=""/>
-  <SpecialName byte="F4" name=""/>
-  <SpecialName byte="F5" name=""/>
-  <SpecialName byte="F6" name=""/>
-  <SpecialName byte="F7" name=""/>
-  <SpecialName byte="F8" name=""/>
-  <SpecialName byte="F9" name=""/>
-  <SpecialName byte="FA" name=""/>
-  <SpecialName byte="FB" name=""/>
-  <SpecialName byte="FC" name=""/>
-  <SpecialName byte="FD" name=""/>
+
   <SpecialName byte="FE" name="Ramza Beoulve"/>
   <SpecialName byte="FF" name="&lt;Random&gt;"/>
 </SpecialNames>

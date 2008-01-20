@@ -43,11 +43,11 @@ namespace FFTPatcher.Datatypes
         {
             pspEventNames = Utilities.GetStringsFromNumberedXmlNodes(
                 Resources.EventNames,
-                "//Events/Event[@value='{0:X3}']/@name",
+                "/Events/Event[@value='{0:X3}']/@name",
                 0x200 + 77 );
             psxEventNames = Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.EventNames,
-                "//Events/Event[@value='{0:X3}']/@name",
+                "/Events/Event[@value='{0:X3}']/@name",
                 0x200 );
         }
 

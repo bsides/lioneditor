@@ -18,228 +18,167 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <SkillSets>
-  <SkillSet byte="00"/>
-  <SkillSet byte="01">Attack</SkillSet>
-  <SkillSet byte="02">Defend</SkillSet>
-  <SkillSet byte="03">Equip Change</SkillSet>
-  <SkillSet byte="04"/>
-  <SkillSet byte="05">Basic Skill</SkillSet>
-  <SkillSet byte="06">Item</SkillSet>
-  <SkillSet byte="07">Battle Skill</SkillSet>
-  <SkillSet byte="08">Charge</SkillSet>
-  <SkillSet byte="09">Punch Art</SkillSet>
-  <SkillSet byte="0A">White Magic</SkillSet>
-  <SkillSet byte="0B">Black Magic</SkillSet>
-  <SkillSet byte="0C">Time Magic</SkillSet>
-  <SkillSet byte="0D">Summon Magic</SkillSet>
-  <SkillSet byte="0E">Steal</SkillSet>
-  <SkillSet byte="0F">Talk Skill</SkillSet>
-  <SkillSet byte="10">Ying-Yang Magic</SkillSet>
-  <SkillSet byte="11">Elemental</SkillSet>
-  <SkillSet byte="12">Jump</SkillSet>
-  <SkillSet byte="13">Draw Out</SkillSet>
-  <SkillSet byte="14">Throw</SkillSet>
-  <SkillSet byte="15">Math Skill</SkillSet>
-  <SkillSet byte="16">Sing</SkillSet>
-  <SkillSet byte="17">Dance</SkillSet>
-  <SkillSet byte="18">Mimic</SkillSet>
-  <SkillSet byte="19">Guts</SkillSet>
-  <SkillSet byte="1A">Guts</SkillSet>
-  <SkillSet byte="1B">Guts</SkillSet>
-  <SkillSet byte="1C">Guts</SkillSet>
-  <SkillSet byte="1D">Holy Sword</SkillSet>
-  <SkillSet byte="1E">Mighty Sword</SkillSet>
-  <SkillSet byte="1F">Basic Skill</SkillSet>
-  <SkillSet byte="20">Dark Sword</SkillSet>
-  <SkillSet byte="21">Holy Sword</SkillSet>
-  <SkillSet byte="22">Holy Sword</SkillSet>
-  <SkillSet byte="23">Magic</SkillSet>
-  <SkillSet byte="24">Holy Magic</SkillSet>
-  <SkillSet byte="25">Snipe</SkillSet>
-  <SkillSet byte="26">Snipe</SkillSet>
-  <SkillSet byte="27">Dark Sword</SkillSet>
-  <SkillSet byte="28">Holy Sword</SkillSet>
-  <SkillSet byte="29">Limit</SkillSet>
-  <SkillSet byte="2A">White-Aid</SkillSet>
-  <SkillSet byte="2B">Dragon</SkillSet>
-  <SkillSet byte="2C">Breath</SkillSet>
-  <SkillSet byte="2D">Truth</SkillSet>
-  <SkillSet byte="2E">Un-Truth</SkillSet>
-  <SkillSet byte="2F">Starry Heaven</SkillSet>
-  <SkillSet byte="30">Holy Sword</SkillSet>
-  <SkillSet byte="31">Holy Magic</SkillSet>
-  <SkillSet byte="32">Truth</SkillSet>
-  <SkillSet byte="33">Battle Skill</SkillSet>
-  <SkillSet byte="34">Jump</SkillSet>
-  <SkillSet byte="35">Punch Skill</SkillSet>
-  <SkillSet byte="36">Use Hand</SkillSet>
-  <SkillSet byte="37">Use Hand</SkillSet>
-  <SkillSet byte="38">Throw</SkillSet>
-  <SkillSet byte="39">Throw</SkillSet>
-  <SkillSet byte="3A">Holy Sword</SkillSet>
-  <SkillSet byte="3B">Sword Spirit</SkillSet>
-  <SkillSet byte="3C">Mighty Sword</SkillSet>
-  <SkillSet byte="3D">All Magic</SkillSet>
-  <SkillSet byte="3E">Sword Spirit</SkillSet>
-  <SkillSet byte="3F">Blood Suck</SkillSet>
-  <SkillSet byte="40">Mighty Sword</SkillSet>
-  <SkillSet byte="41">All Magic</SkillSet>
-  <SkillSet byte="42">Mighty Sword</SkillSet>
-  <SkillSet byte="43">Mighty Sword</SkillSet>
-  <SkillSet byte="44">Snipe</SkillSet>
-  <SkillSet byte="45">Magic Sword</SkillSet>
-  <SkillSet byte="46">Sword Skill</SkillSet>
-  <SkillSet byte="47">All Magic</SkillSet>
-  <SkillSet byte="48">All Magic</SkillSet>
-  <SkillSet byte="49">Phantom</SkillSet>
-  <SkillSet byte="4A">All Swordskill</SkillSet>
-  <SkillSet byte="4B">Destroy Sword</SkillSet>
-  <SkillSet byte="4C">Holy Magic</SkillSet>
-  <SkillSet byte="4D"/>
-  <SkillSet byte="4E"/>
-  <SkillSet byte="4F"/>
-  <SkillSet byte="50"/>
-  <SkillSet byte="51"/>
-  <SkillSet byte="52"/>
-  <SkillSet byte="53"/>
-  <SkillSet byte="54"/>
-  <SkillSet byte="55"/>
-  <SkillSet byte="56"/>
-  <SkillSet byte="57"/>
-  <SkillSet byte="58"/>
-  <SkillSet byte="59"/>
-  <SkillSet byte="5A"/>
-  <SkillSet byte="5B"/>
-  <SkillSet byte="5C"/>
-  <SkillSet byte="5D"/>
-  <SkillSet byte="5E"/>
-  <SkillSet byte="5F"/>
-  <SkillSet byte="60"/>
-  <SkillSet byte="61"/>
-  <SkillSet byte="62"/>
-  <SkillSet byte="63"/>
-  <SkillSet byte="64"/>
-  <SkillSet byte="65"/>
-  <SkillSet byte="66"/>
-  <SkillSet byte="67">Fear</SkillSet>
-  <SkillSet byte="68">Warlock Summon</SkillSet>
-  <SkillSet byte="69"/>
-  <SkillSet byte="6A"/>
-  <SkillSet byte="6B">Fear</SkillSet>
-  <SkillSet byte="6C">Ja Magic</SkillSet>
-  <SkillSet byte="6D"/>
-  <SkillSet byte="6E"/>
-  <SkillSet byte="6F">Fear</SkillSet>
-  <SkillSet byte="70">Dimension Magic</SkillSet>
-  <SkillSet byte="71"/>
-  <SkillSet byte="72"/>
-  <SkillSet byte="73">Fear</SkillSet>
-  <SkillSet byte="74">Impure</SkillSet>
-  <SkillSet byte="75"/>
-  <SkillSet byte="76"/>
-  <SkillSet byte="77">Fear</SkillSet>
-  <SkillSet byte="78">All Magic</SkillSet>
-  <SkillSet byte="79"/>
-  <SkillSet byte="7A"/>
-  <SkillSet byte="7B">Ultimate Magic</SkillSet>
-  <SkillSet byte="7C">Chaos</SkillSet>
-  <SkillSet byte="7D">Complete Magic</SkillSet>
-  <SkillSet byte="7E">Saturation</SkillSet>
-  <SkillSet byte="7F"/>
-  <SkillSet byte="80"/>
-  <SkillSet byte="81"/>
-  <SkillSet byte="82"/>
-  <SkillSet byte="83"/>
-  <SkillSet byte="84"/>
-  <SkillSet byte="85"/>
-  <SkillSet byte="86"/>
-  <SkillSet byte="87"/>
-  <SkillSet byte="88"/>
-  <SkillSet byte="89"/>
-  <SkillSet byte="8A"/>
-  <SkillSet byte="8B"/>
-  <SkillSet byte="8C"/>
-  <SkillSet byte="8D"/>
-  <SkillSet byte="8E"/>
-  <SkillSet byte="8F"/>
-  <SkillSet byte="90"/>
-  <SkillSet byte="91"/>
-  <SkillSet byte="92"/>
-  <SkillSet byte="93"/>
-  <SkillSet byte="94"/>
-  <SkillSet byte="95"/>
-  <SkillSet byte="96"/>
-  <SkillSet byte="97"/>
-  <SkillSet byte="98"/>
-  <SkillSet byte="99"/>
-  <SkillSet byte="9A"/>
-  <SkillSet byte="9B">Sword Skill</SkillSet>
-  <SkillSet byte="9C">Charge</SkillSet>
-  <SkillSet byte="9D">Black Magic</SkillSet>
-  <SkillSet byte="9E">Time Magic</SkillSet>
-  <SkillSet byte="9F">Ying-Yang Magic</SkillSet>
-  <SkillSet byte="A0">Summon Magic</SkillSet>
-  <SkillSet byte="A1">Item</SkillSet>
-  <SkillSet byte="A2">White Magic</SkillSet>
-  <SkillSet byte="A3">Black Magic</SkillSet>
-  <SkillSet byte="A4">Ying-Yang Magic</SkillSet>
-  <SkillSet byte="A5"/>
-  <SkillSet byte="A6"/>
-  <SkillSet byte="A7"/>
-  <SkillSet byte="A8"/>
-  <SkillSet byte="A9"/>
-  <SkillSet byte="AA">Byblos</SkillSet>
-  <SkillSet byte="AB">Work</SkillSet>
-  <SkillSet byte="AC">Bio</SkillSet>
-  <SkillSet byte="AD">Dark Cloud</SkillSet>
-  <SkillSet byte="AE">Dark Magic</SkillSet>
-  <SkillSet byte="AF">Night Magic</SkillSet>
-  <SkillSet byte="B0">Chocobo</SkillSet>
-  <SkillSet byte="B1">Black Chocobo</SkillSet>
-  <SkillSet byte="B2">Red Chocobo</SkillSet>
-  <SkillSet byte="B3">Goblin</SkillSet>
-  <SkillSet byte="B4">Black Goblin</SkillSet>
-  <SkillSet byte="B5">Gobbledeguck</SkillSet>
-  <SkillSet byte="B6">Bomb</SkillSet>
-  <SkillSet byte="B7">Grenade</SkillSet>
-  <SkillSet byte="B8">Explosive</SkillSet>
-  <SkillSet byte="B9">Red Panther</SkillSet>
-  <SkillSet byte="BA">Cuar</SkillSet>
-  <SkillSet byte="BB">Vampire</SkillSet>
-  <SkillSet byte="BC">Pisco Demon</SkillSet>
-  <SkillSet byte="BD">Squidlarkin</SkillSet>
-  <SkillSet byte="BE">Mindflare</SkillSet>
-  <SkillSet byte="BF">Skeleton</SkillSet>
-  <SkillSet byte="C0">Bone Snatch</SkillSet>
-  <SkillSet byte="C1">Living Bone</SkillSet>
-  <SkillSet byte="C2">Ghoul</SkillSet>
-  <SkillSet byte="C3">Ghost</SkillSet>
-  <SkillSet byte="C4">Revenant</SkillSet>
-  <SkillSet byte="C5">Flotiball</SkillSet>
-  <SkillSet byte="C6">Ahriman</SkillSet>
-  <SkillSet byte="C7">Plague</SkillSet>
-  <SkillSet byte="C8">Juravis</SkillSet>
-  <SkillSet byte="C9">Steel Hawk</SkillSet>
-  <SkillSet byte="CA">Cockatoris</SkillSet>
-  <SkillSet byte="CB">Uribo</SkillSet>
-  <SkillSet byte="CC">Porky</SkillSet>
-  <SkillSet byte="CD">Wildbow</SkillSet>
-  <SkillSet byte="CE">Woodman</SkillSet>
-  <SkillSet byte="CF">Trent</SkillSet>
-  <SkillSet byte="D0">Taiju</SkillSet>
-  <SkillSet byte="D1">Bull Demon</SkillSet>
-  <SkillSet byte="D2">Minitaurus</SkillSet>
-  <SkillSet byte="D3">Sacred</SkillSet>
-  <SkillSet byte="D4">Morbol</SkillSet>
-  <SkillSet byte="D5">Ochu</SkillSet>
-  <SkillSet byte="D6">Great Morbol</SkillSet>
-  <SkillSet byte="D7">Behemoth</SkillSet>
-  <SkillSet byte="D8">King Behemoth</SkillSet>
-  <SkillSet byte="D9">Dark Behemoth</SkillSet>
-  <SkillSet byte="DA">Dragon</SkillSet>
-  <SkillSet byte="DB">Blue Dragon</SkillSet>
-  <SkillSet byte="DC">Red Dragon</SkillSet>
-  <SkillSet byte="DD">Hyudra</SkillSet>
-  <SkillSet byte="DE">Hydra</SkillSet>
-  <SkillSet byte="DF">Tiamat</SkillSet>
+
+  <SkillSet byte="01" name="Attack"/>
+  <SkillSet byte="02" name="Defend"/>
+  <SkillSet byte="03" name="Equip Change"/>
+
+  <SkillSet byte="05" name="Basic Skill"/>
+  <SkillSet byte="06" name="Item"/>
+  <SkillSet byte="07" name="Battle Skill"/>
+  <SkillSet byte="08" name="Charge"/>
+  <SkillSet byte="09" name="Punch Art"/>
+  <SkillSet byte="0A" name="White Magic"/>
+  <SkillSet byte="0B" name="Black Magic"/>
+  <SkillSet byte="0C" name="Time Magic"/>
+  <SkillSet byte="0D" name="Summon Magic"/>
+  <SkillSet byte="0E" name="Steal"/>
+  <SkillSet byte="0F" name="Talk Skill"/>
+  <SkillSet byte="10" name="Ying-Yang Magic"/>
+  <SkillSet byte="11" name="Elemental"/>
+  <SkillSet byte="12" name="Jump"/>
+  <SkillSet byte="13" name="Draw Out"/>
+  <SkillSet byte="14" name="Throw"/>
+  <SkillSet byte="15" name="Math Skill"/>
+  <SkillSet byte="16" name="Sing"/>
+  <SkillSet byte="17" name="Dance"/>
+  <SkillSet byte="18" name="Mimic"/>
+  <SkillSet byte="19" name="Guts"/>
+  <SkillSet byte="1A" name="Guts"/>
+  <SkillSet byte="1B" name="Guts"/>
+  <SkillSet byte="1C" name="Guts"/>
+  <SkillSet byte="1D" name="Holy Sword"/>
+  <SkillSet byte="1E" name="Mighty Sword"/>
+  <SkillSet byte="1F" name="Basic Skill"/>
+  <SkillSet byte="20" name="Dark Sword"/>
+  <SkillSet byte="21" name="Holy Sword"/>
+  <SkillSet byte="22" name="Holy Sword"/>
+  <SkillSet byte="23" name="Magic"/>
+  <SkillSet byte="24" name="Holy Magic"/>
+  <SkillSet byte="25" name="Snipe"/>
+  <SkillSet byte="26" name="Snipe"/>
+  <SkillSet byte="27" name="Dark Sword"/>
+  <SkillSet byte="28" name="Holy Sword"/>
+  <SkillSet byte="29" name="Limit"/>
+  <SkillSet byte="2A" name="White-Aid"/>
+  <SkillSet byte="2B" name="Dragon"/>
+  <SkillSet byte="2C" name="Breath"/>
+  <SkillSet byte="2D" name="Truth"/>
+  <SkillSet byte="2E" name="Un-Truth"/>
+  <SkillSet byte="2F" name="Starry Heaven"/>
+  <SkillSet byte="30" name="Holy Sword"/>
+  <SkillSet byte="31" name="Holy Magic"/>
+  <SkillSet byte="32" name="Truth"/>
+  <SkillSet byte="33" name="Battle Skill"/>
+  <SkillSet byte="34" name="Jump"/>
+  <SkillSet byte="35" name="Punch Skill"/>
+  <SkillSet byte="36" name="Use Hand"/>
+  <SkillSet byte="37" name="Use Hand"/>
+  <SkillSet byte="38" name="Throw"/>
+  <SkillSet byte="39" name="Throw"/>
+  <SkillSet byte="3A" name="Holy Sword"/>
+  <SkillSet byte="3B" name="Sword Spirit"/>
+  <SkillSet byte="3C" name="Mighty Sword"/>
+  <SkillSet byte="3D" name="All Magic"/>
+  <SkillSet byte="3E" name="Sword Spirit"/>
+  <SkillSet byte="3F" name="Blood Suck"/>
+  <SkillSet byte="40" name="Mighty Sword"/>
+  <SkillSet byte="41" name="All Magic"/>
+  <SkillSet byte="42" name="Mighty Sword"/>
+  <SkillSet byte="43" name="Mighty Sword"/>
+  <SkillSet byte="44" name="Snipe"/>
+  <SkillSet byte="45" name="Magic Sword"/>
+  <SkillSet byte="46" name="Sword Skill"/>
+  <SkillSet byte="47" name="All Magic"/>
+  <SkillSet byte="48" name="All Magic"/>
+  <SkillSet byte="49" name="Phantom"/>
+  <SkillSet byte="4A" name="All Swordskill"/>
+  <SkillSet byte="4B" name="Destroy Sword"/>
+  <SkillSet byte="4C" name="Holy Magic"/>
+
+  <SkillSet byte="67" name="Fear"/>
+  <SkillSet byte="68" name="Warlock Summon"/>
+
+  <SkillSet byte="6B" name="Fear"/>
+  <SkillSet byte="6C" name="Ja Magic"/>
+
+  <SkillSet byte="6F" name="Fear"/>
+  <SkillSet byte="70" name="Dimension Magic"/>
+
+  <SkillSet byte="73" name="Fear"/>
+  <SkillSet byte="74" name="Impure"/>
+
+  <SkillSet byte="77" name="Fear"/>
+  <SkillSet byte="78" name="All Magic"/>
+
+  <SkillSet byte="7B" name="Ultimate Magic"/>
+  <SkillSet byte="7C" name="Chaos"/>
+  <SkillSet byte="7D" name="Complete Magic"/>
+  <SkillSet byte="7E" name="Saturation"/>
+
+  <SkillSet byte="9B" name="Sword Skill"/>
+  <SkillSet byte="9C" name="Charge"/>
+  <SkillSet byte="9D" name="Black Magic"/>
+  <SkillSet byte="9E" name="Time Magic"/>
+  <SkillSet byte="9F" name="Ying-Yang Magic"/>
+  <SkillSet byte="A0" name="Summon Magic"/>
+  <SkillSet byte="A1" name="Item"/>
+  <SkillSet byte="A2" name="White Magic"/>
+  <SkillSet byte="A3" name="Black Magic"/>
+  <SkillSet byte="A4" name="Ying-Yang Magic"/>
+
+  <SkillSet byte="AA" name="Byblos"/>
+  <SkillSet byte="AB" name="Work"/>
+  <SkillSet byte="AC" name="Bio"/>
+  <SkillSet byte="AD" name="Dark Cloud"/>
+  <SkillSet byte="AE" name="Dark Magic"/>
+  <SkillSet byte="AF" name="Night Magic"/>
+  <SkillSet byte="B0" name="Chocobo"/>
+  <SkillSet byte="B1" name="Black Chocobo"/>
+  <SkillSet byte="B2" name="Red Chocobo"/>
+  <SkillSet byte="B3" name="Goblin"/>
+  <SkillSet byte="B4" name="Black Goblin"/>
+  <SkillSet byte="B5" name="Gobbledeguck"/>
+  <SkillSet byte="B6" name="Bomb"/>
+  <SkillSet byte="B7" name="Grenade"/>
+  <SkillSet byte="B8" name="Explosive"/>
+  <SkillSet byte="B9" name="Red Panther"/>
+  <SkillSet byte="BA" name="Cuar"/>
+  <SkillSet byte="BB" name="Vampire"/>
+  <SkillSet byte="BC" name="Pisco Demon"/>
+  <SkillSet byte="BD" name="Squidlarkin"/>
+  <SkillSet byte="BE" name="Mindflare"/>
+  <SkillSet byte="BF" name="Skeleton"/>
+  <SkillSet byte="C0" name="Bone Snatch"/>
+  <SkillSet byte="C1" name="Living Bone"/>
+  <SkillSet byte="C2" name="Ghoul"/>
+  <SkillSet byte="C3" name="Ghost"/>
+  <SkillSet byte="C4" name="Revenant"/>
+  <SkillSet byte="C5" name="Flotiball"/>
+  <SkillSet byte="C6" name="Ahriman"/>
+  <SkillSet byte="C7" name="Plague"/>
+  <SkillSet byte="C8" name="Juravis"/>
+  <SkillSet byte="C9" name="Steel Hawk"/>
+  <SkillSet byte="CA" name="Cockatoris"/>
+  <SkillSet byte="CB" name="Uribo"/>
+  <SkillSet byte="CC" name="Porky"/>
+  <SkillSet byte="CD" name="Wildbow"/>
+  <SkillSet byte="CE" name="Woodman"/>
+  <SkillSet byte="CF" name="Trent"/>
+  <SkillSet byte="D0" name="Taiju"/>
+  <SkillSet byte="D1" name="Bull Demon"/>
+  <SkillSet byte="D2" name="Minitaurus"/>
+  <SkillSet byte="D3" name="Sacred"/>
+  <SkillSet byte="D4" name="Morbol"/>
+  <SkillSet byte="D5" name="Ochu"/>
+  <SkillSet byte="D6" name="Great Morbol"/>
+  <SkillSet byte="D7" name="Behemoth"/>
+  <SkillSet byte="D8" name="King Behemoth"/>
+  <SkillSet byte="D9" name="Dark Behemoth"/>
+  <SkillSet byte="DA" name="Dragon"/>
+  <SkillSet byte="DB" name="Blue Dragon"/>
+  <SkillSet byte="DC" name="Red Dragon"/>
+  <SkillSet byte="DD" name="Hyudra"/>
+  <SkillSet byte="DE" name="Hydra"/>
+  <SkillSet byte="DF" name="Tiamat"/>
 </SkillSets>

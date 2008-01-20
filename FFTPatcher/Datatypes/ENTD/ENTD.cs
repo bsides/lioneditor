@@ -59,6 +59,7 @@ namespace FFTPatcher.Datatypes
     {
         public ENTD[] ENTDs { get; private set; }
         public List<Event> Events { get; private set; }
+        public List<Event> PSPEvent { get; private set; }
 
         public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4 )
         {
@@ -85,13 +86,17 @@ namespace FFTPatcher.Datatypes
             {
                 Events.AddRange( e.Events );
             }
+
             if( FFTPatch.Context == Context.US_PSP )
             {
+                PSPEvent = new List<Event>( 77 );
                 for( int i = 0; i < 77; i++ )
                 {
-                    Events.Add( new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
+                    PSPEvent.Add( new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
                         new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
                 }
+
+                Events.AddRange( PSPEvent );
             }
         }
     }

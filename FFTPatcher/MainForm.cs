@@ -30,18 +30,19 @@ namespace FFTPatcher
         {
             InitializeComponent();
             openMenuItem.Click += openMenuItem_Click;
-            applyMenuItem.Click += applyMenuItem_Click;
+            applySCUSMenuItem.Click += applyMenuItem_Click;
             saveMenuItem.Click += saveMenuItem_Click;
             newPSPMenuItem.Click += newPSPMenuItem_Click;
             newPSXMenuItem.Click += newPSXMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
             openModifiedMenuItem.Click += openModifiedMenuItem_Click;
             aboutMenuItem.Click += aboutMenuItem_Click;
-            applyMenuItem.Enabled = false;
+            applySCUSMenuItem.Enabled = false;
             saveMenuItem.Enabled = false;
             generateMenuItem.Click += generateMenuItem_Click;
             generateMenuItem.Enabled = false;
-
+            generateFontMenuItem.Click += generateFontMenuItem_Click;
+            applyBattleBinMenuItem.Click += applyBattleBinMenuItem_Click;
             FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
@@ -68,9 +69,11 @@ namespace FFTPatcher
 
         private void FFTPatch_DataChanged( object sender, EventArgs e )
         {
-            applyMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
             saveMenuItem.Enabled = true;
             generateMenuItem.Enabled = true;
+            generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
         }
 
         private void openModifiedMenuItem_Click( object sender, System.EventArgs e )
@@ -113,13 +116,57 @@ namespace FFTPatcher
 
         private void saveMenuItem_Click( object sender, System.EventArgs e )
         {
-            if( saveFileDialog.ShowDialog() == DialogResult.OK )
+            saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
                     FFTPatch.SavePatchToFile( saveFileDialog.FileName );
                 }
-                catch (Exception)
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+
+        private void generateFontMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.Filter = "FONT.BIN|FONT.BIN";
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.SaveFontsAs( saveFileDialog.FileName );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not open or create file.", "File not found", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+
+        private void applyBattleBinMenuItem_Click( object sender, EventArgs e )
+        {
+            applyPatchOpenFileDialog.Filter = "BATTLE.BIN|BATTLE.BIN";
+            if( applyPatchOpenFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.PatchBattleBin( applyPatchOpenFileDialog.FileName );
+                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
+                }
+                catch( InvalidDataException )
+                {
+                    MessageBox.Show(
+                        "Could not find patch locations.\n" +
+                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
+                        "Ensure that you have selected BATTLE.BIN if you are patching Final Fantasy Tactics",
+                        "Invalid data", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
                 {
                     MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
                 }
@@ -148,7 +195,7 @@ namespace FFTPatcher
                 {
                     MessageBox.Show(
                         "Could not find patch locations.\n" +
-                        "Ensure that the file is an ISO image if you are patching War of the Lions." +
+                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
                         "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
                         "Invalid data", MessageBoxButtons.OK );
                 }

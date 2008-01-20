@@ -61,7 +61,7 @@ namespace FFTPatcher.Datatypes
             {
                 Units[i] = new EventUnit( 
                     new SubArray<byte>( bytes, i * 40, (i + 1) * 40 - 1 ), 
-                    defaults == null ? null : defaults.Units[i] );
+                      defaults == null ? null : defaults.Units[i] );
             }
         }
 

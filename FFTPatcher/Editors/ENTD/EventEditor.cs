@@ -57,17 +57,20 @@ namespace FFTPatcher.Editors
 
         private void unitSelectorListBox_DrawItem( object sender, DrawItemEventArgs e )
         {
-            EventUnit unit = unitSelectorListBox.Items[e.Index] as EventUnit;
-            using( Brush textBrush = new SolidBrush( e.ForeColor ) )
-            using( Brush backBrush = new SolidBrush( e.BackColor ) )
+            if( (e.Index > -1) && (e.Index < unitSelectorListBox.Items.Count) )
             {
-                e.Graphics.FillRectangle( backBrush, e.Bounds );
-                e.Graphics.DrawString( unit.SpriteSet.Name, e.Font, textBrush, e.Bounds.X + 0, e.Bounds.Y + 0 );
-                e.Graphics.DrawString( unit.SpecialName.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0], e.Bounds.Y + 0 );
-                e.Graphics.DrawString( unit.Job.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0] + columnWidths[1], e.Bounds.Y + 0 );
-                if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )
+                EventUnit unit = unitSelectorListBox.Items[e.Index] as EventUnit;
+                using( Brush textBrush = new SolidBrush( e.ForeColor ) )
+                using( Brush backBrush = new SolidBrush( e.BackColor ) )
                 {
-                    e.DrawFocusRectangle();
+                    e.Graphics.FillRectangle( backBrush, e.Bounds );
+                    e.Graphics.DrawString( unit.SpriteSet.Name, e.Font, textBrush, e.Bounds.X + 0, e.Bounds.Y + 0 );
+                    e.Graphics.DrawString( unit.SpecialName.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0], e.Bounds.Y + 0 );
+                    e.Graphics.DrawString( unit.Job.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0] + columnWidths[1], e.Bounds.Y + 0 );
+                    if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )
+                    {
+                        e.DrawFocusRectangle();
+                    }
                 }
             }
         }

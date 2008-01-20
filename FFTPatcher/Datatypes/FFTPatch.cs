@@ -99,6 +99,35 @@ namespace FFTPatcher.Datatypes
         }
 
         /// <summary>
+        /// Saves the fonts to the path.
+        /// </summary>
+        public static void SaveFontsAs( string path )
+        {
+            FileStream writer = null;
+            try
+            {
+                writer = new FileStream( path, FileMode.Create );
+                byte[] bytes = FFTPatch.Font.ToByteArray();
+                writer.Write( bytes, 0, bytes.Length );
+                writer.Flush();
+                writer.Close();
+                writer = null;
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( writer != null )
+                {
+                    writer.Flush();
+                    writer.Close();
+                }
+            }
+        }
+
+        /// <summary>
         /// Saves the ENTD files to a path.
         /// </summary>
         public static void ExportENTDFiles( string path )
@@ -131,8 +160,12 @@ namespace FFTPatcher.Datatypes
                 if( Context == Context.US_PSP )
                 {
                     writer = new FileStream( Path.Combine( path, "ENTD5.ENT" ), FileMode.Create );
-                    byte[] entd5 = ENTDs.ENTDs[4].ToByteArray();
-                    writer.Write( entd5, 0, entd5.Length );
+                    foreach( Event e in ENTDs.PSPEvent )
+                    {
+                        byte[] bytes = e.ToByteArray();
+                        writer.Write( bytes, 0, bytes.Length );
+                    }
+                    writer.Write( new byte[0x780], 0, 0x780 );
                     writer.Flush();
                     writer.Close();
                 }
@@ -398,6 +431,36 @@ namespace FFTPatcher.Datatypes
         }
 
         /// <summary>
+        /// Applies font widths patches to BATTLE.BIN
+        /// </summary>
+        public static void PatchBattleBin( string fileName )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( fileName, FileMode.Open );
+                WriteArrayToPosition( FFTPatch.Font.ToWidthsByteArray(), stream, 0xFF0FC );
+            }
+            catch( InvalidDataException )
+            {
+                throw;
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                    stream.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
         /// Applies patches to a SCUS_942.21 file.
         /// </summary>
         public static void ApplyPatchesToExecutable( string filename )
@@ -489,7 +552,6 @@ namespace FFTPatcher.Datatypes
                 else
                 {
                     VerifyFileIsSCUS94221( stream );
-                    byte[] psx = new byte[stream.Length];
 
                     oldItemAttributes = 0x54AC4;
                     oldItems = 0x536B8;
@@ -591,5 +653,6 @@ namespace FFTPatcher.Datatypes
 
             throw new InvalidDataException();
         }
+
     }
 }

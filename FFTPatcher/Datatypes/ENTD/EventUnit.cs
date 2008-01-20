@@ -22,6 +22,47 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
+    public enum PreRequisiteJob
+    {
+        Base = 0x00,
+        Chemist = 0x01,
+        Knight = 0x02,
+        Archer = 0x03,
+        Monk = 0x04,
+        WhiteMage = 0x05,
+        BlackMage = 0x06,
+        TimeMage = 0x07,
+        Summoner = 0x08,
+        Thief = 0x09,
+        Mediator = 0x0A,
+        Oracle = 0x0B,
+        Geomancer = 0x0C,
+        Lancer = 0x0D,
+        Samurai = 0x0E,
+        Ninja = 0x0F,
+        Calculator = 0x10,
+        Bard = 0x11,
+        Dancer = 0x12,
+        Mime = 0x13,
+        DarkKnight = 0x14,
+        OnionKnight = 0x15,
+        Unknown = 0xA9,
+    }
+
+    public enum Facing
+    {
+        Southeast,
+        Southwest,
+        Northwest,
+        Northeast,
+        Unknown0x82 = 130,
+        Unknown0x80 = 128,
+        Unknown0x83 = 131,
+        Unknown0x30 = 48,
+        Unknown0x33 = 51,
+        Unknown0x81 = 129,
+    }
+
     /// <summary>
     /// Represents a unit that participates in an <see cref="Event"/>.
     /// </summary>
@@ -73,12 +114,12 @@ namespace FFTPatcher.Datatypes
         public byte X { get; set; }
         public byte Y { get; set; }
 
-        public byte Unknown1 { get; set; }
+        public Facing FacingDirection { get; set; }
         public byte Unknown2 { get; set; }
         public SkillSet SkillSet { get; set; }
         public byte Unknown3 { get; set; }
         public byte Unknown4 { get; set; }
-        public byte Unknown5 { get; set; }
+        public byte UnitID { get; set; }
         public byte Unknown6 { get; set; }
         public byte Unknown7 { get; set; }
         public byte Unknown8 { get; set; }
@@ -87,8 +128,8 @@ namespace FFTPatcher.Datatypes
         public byte Unknown11 { get; set; }
         public byte Unknown12 { get; set; }
 
-        public byte Unknown13 { get; set; }
-        public byte Unknown14 { get; set; }
+        public PreRequisiteJob PrerequisiteJob { get; set; }
+        public byte PrerequisiteJobLevel { get; set; }
 
         public EventUnit Default { get; private set; }
 
@@ -108,8 +149,8 @@ namespace FFTPatcher.Datatypes
             Day = bytes[5];
             Bravery = bytes[6];
             Faith = bytes[7];
-            Unknown13 = bytes[8];
-            Unknown14 = bytes[9];
+            PrerequisiteJob = (PreRequisiteJob)bytes[8];
+            PrerequisiteJobLevel = bytes[9];
             Job = AllJobs.DummyJobs[bytes[10]];
             SecondaryAction = SkillSet.EventSkillSets[bytes[11]];
             Reaction = AllAbilities.EventAbilities[Utilities.BytesToUShort( bytes[12], bytes[13] )];
@@ -124,12 +165,12 @@ namespace FFTPatcher.Datatypes
             Utilities.CopyByteToBooleans( bytes[24], ref Blank3, ref Blank4, ref Blank5, ref Enemy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
             X = bytes[25];
             Y = bytes[26];
-            Unknown1 = bytes[27];
+            FacingDirection = (Facing)bytes[27];
             Unknown2 = bytes[28];
             SkillSet = SkillSet.EventSkillSets[bytes[29]];
             Unknown3 = bytes[30];
             Unknown4 = bytes[31];
-            Unknown5 = bytes[32];
+            UnitID = bytes[32];
             Unknown6 = bytes[33];
             Unknown7 = bytes[34];
             Unknown8 = bytes[35];
@@ -137,7 +178,19 @@ namespace FFTPatcher.Datatypes
             Unknown10 = bytes[37];
             Unknown11 = bytes[38];
             Unknown12 = bytes[39];
+
+            int i = 0;
+            //if( FacingDirection > 0x03)
+            //{
+            //    if( !b.ContainsKey( FacingDirection ) )
+            //    {
+            //        b.Add( FacingDirection, null );
+            //        Console.Out.WriteLine( FacingDirection );
+            //    }
+            //}
         }
+
+        private static Dictionary<byte, object> b = new Dictionary<byte, object>();
 
         public EventUnit( SubArray<byte> bytes )
             : this( bytes, null )
@@ -155,8 +208,8 @@ namespace FFTPatcher.Datatypes
             result.Add( Day );
             result.Add( Bravery );
             result.Add( Faith );
-            result.Add( Unknown13 );
-            result.Add( Unknown14 );
+            result.Add( (byte)PrerequisiteJob );
+            result.Add( PrerequisiteJobLevel );
             result.Add( Job.Value );
             result.Add( SecondaryAction.Value );
             result.AddRange( Reaction.Offset.ToBytes() );
@@ -171,12 +224,12 @@ namespace FFTPatcher.Datatypes
             result.Add( Utilities.ByteFromBooleans( Blank3, Blank4, Blank5, Enemy, Control, Immortal, Blank6, Blank7 ) );
             result.Add( X );
             result.Add( Y );
-            result.Add( Unknown1 );
+            result.Add( (byte)FacingDirection );
             result.Add( Unknown2 );
             result.Add( SkillSet.Value );
             result.Add( Unknown3 );
             result.Add( Unknown4 );
-            result.Add( Unknown5 );
+            result.Add( UnitID );
             result.Add( Unknown6 );
             result.Add( Unknown7 );
             result.Add( Unknown8 );

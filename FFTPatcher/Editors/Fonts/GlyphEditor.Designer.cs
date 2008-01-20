@@ -47,64 +47,35 @@ namespace FFTPatcher.Editors
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Panel thumbnailPanelPanel;
             System.Windows.Forms.Label widthLabel;
-            this.thumbnailPanel = new System.Windows.Forms.Panel();
-            this.glyphPanel = new System.Windows.Forms.Panel();
-            this.glyphPanelPanel = new System.Windows.Forms.Panel();
+            System.Windows.Forms.Panel smallerThumbnailPanelPanel;
+            System.Windows.Forms.Panel thumbnailPanelPanel;
             this.widthSpinner = new System.Windows.Forms.NumericUpDown();
             this.blackRadioButton = new System.Windows.Forms.RadioButton();
             this.darkRadioButton = new System.Windows.Forms.RadioButton();
             this.lightRadioButton = new System.Windows.Forms.RadioButton();
             this.transparentRadioButton = new System.Windows.Forms.RadioButton();
-            thumbnailPanelPanel = new System.Windows.Forms.Panel();
+            this.smallerThumbnailPanel = new System.Windows.Forms.Panel();
+            this.glyphPanelPanel = new System.Windows.Forms.Panel();
+            this.glyphPanel = new System.Windows.Forms.Panel();
+            this.thumbnailPanel = new System.Windows.Forms.Panel();
             widthLabel = new System.Windows.Forms.Label();
-            thumbnailPanelPanel.SuspendLayout();
-            this.glyphPanelPanel.SuspendLayout();
+            smallerThumbnailPanelPanel = new System.Windows.Forms.Panel();
+            thumbnailPanelPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.widthSpinner)).BeginInit();
+            smallerThumbnailPanelPanel.SuspendLayout();
+            this.glyphPanelPanel.SuspendLayout();
+            thumbnailPanelPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // thumbnailPanelPanel
+            // widthLabel
             // 
-            thumbnailPanelPanel.AutoSize = true;
-            thumbnailPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            thumbnailPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
-            thumbnailPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            thumbnailPanelPanel.Controls.Add( this.thumbnailPanel );
-            thumbnailPanelPanel.Location = new System.Drawing.Point( 164, 3 );
-            thumbnailPanelPanel.Name = "thumbnailPanelPanel";
-            thumbnailPanelPanel.Size = new System.Drawing.Size( 28, 36 );
-            thumbnailPanelPanel.TabIndex = 2;
-            // 
-            // thumbnailPanel
-            // 
-            this.thumbnailPanel.BackColor = System.Drawing.Color.Transparent;
-            this.thumbnailPanel.Location = new System.Drawing.Point( 3, 3 );
-            this.thumbnailPanel.Name = "thumbnailPanel";
-            this.thumbnailPanel.Size = new System.Drawing.Size( 20, 28 );
-            this.thumbnailPanel.TabIndex = 1;
-            // 
-            // glyphPanel
-            // 
-            this.glyphPanel.BackColor = System.Drawing.Color.Transparent;
-            this.glyphPanel.Location = new System.Drawing.Point( 3, 5 );
-            this.glyphPanel.MaximumSize = new System.Drawing.Size( 150, 210 );
-            this.glyphPanel.MinimumSize = new System.Drawing.Size( 150, 210 );
-            this.glyphPanel.Name = "glyphPanel";
-            this.glyphPanel.Size = new System.Drawing.Size( 150, 210 );
-            this.glyphPanel.TabIndex = 0;
-            // 
-            // glyphPanelPanel
-            // 
-            this.glyphPanelPanel.AutoSize = true;
-            this.glyphPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.glyphPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
-            this.glyphPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.glyphPanelPanel.Controls.Add( this.glyphPanel );
-            this.glyphPanelPanel.Location = new System.Drawing.Point( 3, 3 );
-            this.glyphPanelPanel.Name = "glyphPanelPanel";
-            this.glyphPanelPanel.Size = new System.Drawing.Size( 160, 222 );
-            this.glyphPanelPanel.TabIndex = 3;
+            widthLabel.AutoSize = true;
+            widthLabel.Location = new System.Drawing.Point( 165, 132 );
+            widthLabel.Name = "widthLabel";
+            widthLabel.Size = new System.Drawing.Size( 35, 13 );
+            widthLabel.TabIndex = 5;
+            widthLabel.Text = "Width";
             // 
             // widthSpinner
             // 
@@ -124,15 +95,6 @@ namespace FFTPatcher.Editors
             0,
             0} );
             // 
-            // widthLabel
-            // 
-            widthLabel.AutoSize = true;
-            widthLabel.Location = new System.Drawing.Point( 165, 132 );
-            widthLabel.Name = "widthLabel";
-            widthLabel.Size = new System.Drawing.Size( 35, 13 );
-            widthLabel.TabIndex = 5;
-            widthLabel.Text = "Width";
-            // 
             // blackRadioButton
             // 
             this.blackRadioButton.AutoSize = true;
@@ -148,7 +110,7 @@ namespace FFTPatcher.Editors
             // darkRadioButton
             // 
             this.darkRadioButton.AutoSize = true;
-            this.darkRadioButton.Location = new System.Drawing.Point( 95, 226 );
+            this.darkRadioButton.Location = new System.Drawing.Point( 59, 226 );
             this.darkRadioButton.Name = "darkRadioButton";
             this.darkRadioButton.Size = new System.Drawing.Size( 48, 17 );
             this.darkRadioButton.TabIndex = 7;
@@ -170,7 +132,7 @@ namespace FFTPatcher.Editors
             // transparentRadioButton
             // 
             this.transparentRadioButton.AutoSize = true;
-            this.transparentRadioButton.Location = new System.Drawing.Point( 95, 249 );
+            this.transparentRadioButton.Location = new System.Drawing.Point( 59, 249 );
             this.transparentRadioButton.Name = "transparentRadioButton";
             this.transparentRadioButton.Size = new System.Drawing.Size( 82, 17 );
             this.transparentRadioButton.TabIndex = 9;
@@ -178,12 +140,75 @@ namespace FFTPatcher.Editors
             this.transparentRadioButton.Text = "Transparent";
             this.transparentRadioButton.UseVisualStyleBackColor = true;
             // 
+            // smallerThumbnailPanelPanel
+            // 
+            smallerThumbnailPanelPanel.AutoSize = true;
+            smallerThumbnailPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            smallerThumbnailPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
+            smallerThumbnailPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            smallerThumbnailPanelPanel.Controls.Add( this.smallerThumbnailPanel );
+            smallerThumbnailPanelPanel.Location = new System.Drawing.Point( 164, 45 );
+            smallerThumbnailPanelPanel.Name = "smallerThumbnailPanelPanel";
+            smallerThumbnailPanelPanel.Size = new System.Drawing.Size( 18, 22 );
+            smallerThumbnailPanelPanel.TabIndex = 10;
+            // 
+            // smallerThumbnailPanel
+            // 
+            this.smallerThumbnailPanel.BackColor = System.Drawing.Color.Transparent;
+            this.smallerThumbnailPanel.Location = new System.Drawing.Point( 3, 3 );
+            this.smallerThumbnailPanel.Name = "smallerThumbnailPanel";
+            this.smallerThumbnailPanel.Size = new System.Drawing.Size( 10, 14 );
+            this.smallerThumbnailPanel.TabIndex = 1;
+            // 
+            // glyphPanelPanel
+            // 
+            this.glyphPanelPanel.AutoSize = true;
+            this.glyphPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.glyphPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
+            this.glyphPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.glyphPanelPanel.Controls.Add( this.glyphPanel );
+            this.glyphPanelPanel.Location = new System.Drawing.Point( 3, 3 );
+            this.glyphPanelPanel.Name = "glyphPanelPanel";
+            this.glyphPanelPanel.Size = new System.Drawing.Size( 160, 222 );
+            this.glyphPanelPanel.TabIndex = 3;
+            // 
+            // glyphPanel
+            // 
+            this.glyphPanel.BackColor = System.Drawing.Color.Transparent;
+            this.glyphPanel.Location = new System.Drawing.Point( 3, 5 );
+            this.glyphPanel.MaximumSize = new System.Drawing.Size( 150, 210 );
+            this.glyphPanel.MinimumSize = new System.Drawing.Size( 150, 210 );
+            this.glyphPanel.Name = "glyphPanel";
+            this.glyphPanel.Size = new System.Drawing.Size( 150, 210 );
+            this.glyphPanel.TabIndex = 0;
+            // 
+            // thumbnailPanelPanel
+            // 
+            thumbnailPanelPanel.AutoSize = true;
+            thumbnailPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            thumbnailPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
+            thumbnailPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            thumbnailPanelPanel.Controls.Add( this.thumbnailPanel );
+            thumbnailPanelPanel.Location = new System.Drawing.Point( 164, 3 );
+            thumbnailPanelPanel.Name = "thumbnailPanelPanel";
+            thumbnailPanelPanel.Size = new System.Drawing.Size( 28, 36 );
+            thumbnailPanelPanel.TabIndex = 2;
+            // 
+            // thumbnailPanel
+            // 
+            this.thumbnailPanel.BackColor = System.Drawing.Color.Transparent;
+            this.thumbnailPanel.Location = new System.Drawing.Point( 3, 3 );
+            this.thumbnailPanel.Name = "thumbnailPanel";
+            this.thumbnailPanel.Size = new System.Drawing.Size( 20, 28 );
+            this.thumbnailPanel.TabIndex = 1;
+            // 
             // GlyphEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( smallerThumbnailPanelPanel );
             this.Controls.Add( this.transparentRadioButton );
             this.Controls.Add( this.lightRadioButton );
             this.Controls.Add( this.darkRadioButton );
@@ -194,9 +219,10 @@ namespace FFTPatcher.Editors
             this.Controls.Add( thumbnailPanelPanel );
             this.Name = "GlyphEditor";
             this.Size = new System.Drawing.Size( 210, 269 );
-            thumbnailPanelPanel.ResumeLayout( false );
-            this.glyphPanelPanel.ResumeLayout( false );
             ((System.ComponentModel.ISupportInitialize)(this.widthSpinner)).EndInit();
+            smallerThumbnailPanelPanel.ResumeLayout( false );
+            this.glyphPanelPanel.ResumeLayout( false );
+            thumbnailPanelPanel.ResumeLayout( false );
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -212,6 +238,7 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.RadioButton darkRadioButton;
         private System.Windows.Forms.RadioButton lightRadioButton;
         private System.Windows.Forms.RadioButton transparentRadioButton;
+        private System.Windows.Forms.Panel smallerThumbnailPanel;
 
     }
 }

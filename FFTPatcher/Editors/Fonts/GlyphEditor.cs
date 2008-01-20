@@ -67,6 +67,7 @@ namespace FFTPatcher.Editors
             glyphPanel.Paint += glyphPanel_Paint;
             thumbnailPanel.Paint += thumbnailPanel_Paint;
             widthSpinner.ValueChanged += widthSpinner_ValueChanged;
+            smallerThumbnailPanel.Paint += smallerThumbnailPanel_Paint;
 
             currentColor = FontColor.Black;
 
@@ -83,6 +84,19 @@ namespace FFTPatcher.Editors
             foreach( RadioButton r in radios )
             {
                 r.CheckedChanged += radioButton_CheckedChanged;
+            }
+        }
+
+        private void smallerThumbnailPanel_Paint( object sender, PaintEventArgs e )
+        {
+            if( Glyph != null )
+            {
+                for( int i = 0; i < Glyph.Pixels.Length; i++ )
+                {
+                    int col = i % 10;
+                    int row = i / 10;
+                    e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col, row, 1, 1 ) );
+                }
             }
         }
 
@@ -162,6 +176,7 @@ namespace FFTPatcher.Editors
                 Glyph.Pixels[row * 10 + column] = newValue;
                 glyphPanel.Invalidate( new Rectangle( column * 15, row * 15, 15, 15 ) );
                 thumbnailPanel.Invalidate( new Rectangle( column * 2, row * 2, 2, 2 ) );
+                smallerThumbnailPanel.Invalidate();
             }
         }
 

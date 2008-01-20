@@ -73,16 +73,17 @@
   <Sprite byte="34" name="Agrias"/>
 
   <Sprite byte="3C" name="Belias"/>
-
+  <Sprite byte="3D" name="Knight (Undead)"/>
   <Sprite byte="3E" name="Zalera"/>
-
+  <Sprite byte="3F" name="Archer (Undead)"/>
   <Sprite byte="40" name="Hashmalum"/>
   <Sprite byte="41" name="Altima, First Form"/>
-
+  <Sprite byte="42" name="Black Mage (Undead)"/>
   <Sprite byte="43" name="Cuchulainn"/>
-
+  <Sprite byte="44" name="Time Mage (Undead)"/>
   <Sprite byte="45" name="Adremmelech"/>
-
+  <Sprite byte="46" name="Mystic (Undead)"/>
+  <Sprite byte="47" name="Summoner (Undead)"/>
   <Sprite byte="48" name="Reis (Dragon)"/>
   <Sprite byte="49" name="Altima, Second Form"/>
   <Sprite byte="4A" name="Gustav"/>
@@ -108,4 +109,9 @@
   
   <Sprite byte="A2" name="Balthier"/>
   <Sprite byte="A3" name="Luso"/>
+
+  <Sprite byte="A5" name="Argath (Deathknight)"/>
+  <Sprite byte="A6" name="Aliste"/>
+  <Sprite byte="A7" name="Bremondt"/>
+  <Sprite byte="A8" name="Bremondt (Dark Dragon)"/>
 </Sprites>

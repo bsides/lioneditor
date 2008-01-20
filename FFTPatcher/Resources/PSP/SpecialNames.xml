@@ -106,7 +106,13 @@
   <SpecialName byte="A2" name="Balthier"/>
   <SpecialName byte="A3" name="Luso"/>
 
+  <SpecialName byte="6E" name="Construct 2"/>
   <SpecialName byte="6F" name="Gobith"/>
-  <SpecialName byte="72" name="Touhoufhai"/>
+  <SpecialName byte="70" name="Construct 3"/>
+  <SpecialName byte="71" name="Protoconstruct"/>
+  <SpecialName byte="72" name="Teioh"/>
   <SpecialName byte="A5" name="Argath (Deathknight)"/>
+  <SpecialName byte="A6" name="Aliste"/>
+  <SpecialName byte="A7" name="Bremondt"/>
+  <SpecialName byte="A8" name="Bremondt (Dark Dragon)"/>
 </SpecialNames>

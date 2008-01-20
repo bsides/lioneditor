@@ -20,6 +20,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Editors;
+using System.ComponentModel;
 
 namespace FFTPatcher.Controls
 {
@@ -29,7 +30,9 @@ namespace FFTPatcher.Controls
     public class ComboBoxWithDefault : ComboBox
     {
         public object DefaultValue { get; private set; }
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new ComboBoxStyle DropDownStyle { get { return base.DropDownStyle; } private set { base.DropDownStyle = value; } }
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new DrawMode DrawMode { get { return base.DrawMode; } private set { base.DrawMode = value; } }
 
         /// <summary>
@@ -41,10 +44,17 @@ namespace FFTPatcher.Controls
             private set { base.SelectedItem = value; }
         }
 
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+        public new AutoCompleteSource AutoCompleteSource { get { return base.AutoCompleteSource; } private set { base.AutoCompleteSource = value; } }
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+        public new AutoCompleteMode AutoCompleteMode { get { return base.AutoCompleteMode; } private set { base.AutoCompleteMode = value; } }
+
         public ComboBoxWithDefault()
             : base()
         {
             DropDownStyle = ComboBoxStyle.DropDownList;
+            AutoCompleteSource = AutoCompleteSource.ListItems;
+            AutoCompleteMode = AutoCompleteMode.Append;
         }
 
         /// <summary>

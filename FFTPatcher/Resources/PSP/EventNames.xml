@@ -260,80 +260,80 @@
   <Event value="0FB" name="The Crevasse 3"/>
   <Event value="0FC" name="The Crevasse 4"/>
 
-  <Event value="180" name="The Siedge Weald"/>
-  <Event value="181" name="Merchant City of Dorter"/>
-  <Event value="182" name="Sand Rat's Sieve"/>
-  <Event value="183" name="Orbonne Monastery"/>
-  <Event value="184" name="Magick City of Gariland"/>
-  <Event value="185" name="Mandalia Plains"/>
-  <Event value="186" name="Eagrose Castle"/>
+  <Event value="180" name="Chapter 1 - The Siedge Weald"/>
+  <Event value="181" name="Chapter 1 - Dorter Slums"/>
+  <Event value="182" name="Chapter 1 - Sand Rat's Sietch"/>
+  <Event value="183" name="Chapter 1 - Orbonne Monastery (Opening Battle)"/>
+  <Event value="184" name="Chapter 1 - Magick City of Gariland"/>
+  <Event value="185" name="Chapter 1 - Mandalia Plains"/>
+  <Event value="186" name="Chapter 1 - Eagrose Castle"/>
 
-  <Event value="18B" name="Brigands' Den"/>
+  <Event value="18B" name="Chapter 1 - Brigands' Den"/>
 
-  <Event value="18F" name="Lenalian Plateau"/>
-  <Event value="190" name="Windmill Shed"/>
-  <Event value="191" name="Ziekden Fortress"/>
+  <Event value="18F" name="Chapter 1 - Lenalian Plateau"/>
+  <Event value="190" name="Chapter 1 - Windmill Shed"/>
+  <Event value="191" name="Chapter 1 - Ziekden Fortress"/>
   <Event value="192" name="End"/>
+  <Event value="193" name="Chapter 2 - Merchant City of Dorter"/>
+  <Event value="194" name="Chapter 2 - Araguay Woods"/>
+  <Event value="195" name="Chapter 2 - Zeirchele Falls"/>
 
-  <Event value="194" name="Araguay Woods"/>
-  <Event value="195" name="Zeirchele Falls"/>
+  <Event value="197" name="Chapter 2 - Castled City of Zaland"/>
 
-  <Event value="197" name="Castled City of Zaland"/>
+  <Event value="199" name="Chapter 2 - Balias Tor"/>
+  <Event value="19A" name="Chapter 2 - Tchigolith Fenlands"/>
+  <Event value="19B" name="Chapter 2 - Goug Lowtown"/>
 
-  <Event value="199" name="Balias Tor"/>
-  <Event value="19A" name="Tchigolith Fenlands"/>
-  <Event value="19B" name="Clockwork City of Goug"/>
-
-  <Event value="19D" name="Balias Swale"/>
-  <Event value="19E" name="Golgollada Gallows"/>
-  <Event value="19F" name="At the Gate of Lionel Castle"/>
-  <Event value="1A0" name="Inside Lionel Castle"/>
-  <Event value="1A1" name="Mining Town of Gollund"/>
+  <Event value="19D" name="Chapter 2 - Balias Swale"/>
+  <Event value="19E" name="Chapter 2 - Golgollada Gallows"/>
+  <Event value="19F" name="Chapter 2 - Lionel Castle Gate"/>
+  <Event value="1A0" name="Chapter 2 - Lional Castle Oratory"/>
+  <Event value="1A1" name="Chapter 3 - Mining Town of Gollund"/>
 
   <Event value="1A3" name="Trade City of Sal Ghidos"/>
-  <Event value="1A4" name="Back Gate of Lesalia"/>
+  <Event value="1A4" name="Chapter 3 - Lesalia Castle Postern"/>
 
-  <Event value="1A6" name="Underground Book Storage Second Floor"/>
-  <Event value="1A7" name="Underground Book Storage Third Floor"/>
-  <Event value="1A8" name="Underground Book Storage First Floor"/>
+  <Event value="1A6" name="Chapter 3 - Monastery Vaults: Second Level"/>
+  <Event value="1A7" name="Chapter 3 - Monastery Vaults: Third Level"/>
+  <Event value="1A8" name="Chapter 3 - Monastery Vaults: First Level"/>
 
-  <Event value="1AA" name="Grogh Heights"/>
+  <Event value="1AA" name="Chapter 3 - Grogh Heights"/>
 
-  <Event value="1AC" name="Royal City of Lesalia"/>
+  <Event value="1AC" name="Chapter 3 - The Walled City of Yardrow"/>
 
-  <Event value="1AE" name="The Yuguewood"/>
-  <Event value="1AF" name="At the Gate of Riovanes Castle"/>
-  <Event value="1B0" name="Inside of Riovanes Castle"/>
-  <Event value="1B1" name="Riovanes Rooftop"/>
+  <Event value="1AE" name="Chapter 3 - The Yuguewood"/>
+  <Event value="1AF" name="Chapter 3 - Riovanes Castle Gate"/>
+  <Event value="1B0" name="Chapter 3 - Riovanes Castle Keep"/>
+  <Event value="1B1" name="Chapter 3 - Riovanes Castle Roof"/>
 
-  <Event value="1B3" name="Underground Book Storage Fourth Floor"/>
-  <Event value="1B4" name="Underground Book Storage Fifth Floor"/>
+  <Event value="1B3" name="Chapter 4 - Monastery Vaults: Fourth Level"/>
+  <Event value="1B4" name="Chapter 4 - Monastery Vaults: Fifth Level"/>
 
-  <Event value="1B6" name="Mullonde"/>
-  <Event value="1B7" name="Mullonde"/>
-  <Event value="1B8" name="Airship Graveyard"/>
-  <Event value="1B9" name="Airship Graveyard"/>
-  <Event value="1BA" name="Dugeura Pass"/>
-  <Event value="1BB" name="Free City of Bervenia"/>
-  <Event value="1BC" name="Finnath Creek"/>
-  <Event value="1BD" name="Outside of the Church"/>
+  <Event value="1B6" name="Chapter 4 - Necrohol of Mullonde"/>
+  <Event value="1B7" name="Chapter 4 - Lost Halidom"/>
+  <Event value="1B8" name="Chapter 4 - Airship Graveyard 1"/>
+  <Event value="1B9" name="Chapter 4 - Airship Graveyard 2"/>
+  <Event value="1BA" name="Chapter 4 - Dugeura Pass"/>
+  <Event value="1BB" name="Chapter 4 - Free City of Bervenia"/>
+  <Event value="1BC" name="Chapter 4 - Finnath Creek"/>
+  <Event value="1BD" name="Chapter 4 - Outlying Church"/>
   
-  <Event value="1BF" name="Beddha Sandwaste"/>
-  <Event value="1C0" name="South Wall of Fort Besselat"/>
-  <Event value="1C1" name="North Wall of Fort Besselat"/>
-  <Event value="1C2" name="Front Wall of Fort Besselat"/>
+  <Event value="1BF" name="Chapter 4 - Beddha Sandwaste"/>
+  <Event value="1C0" name="Chapter 4 - Fort Besselat: South Wall"/>
+  <Event value="1C1" name="Chapter 4 - Fort Besselat: North Wall"/>
+  <Event value="1C2" name="Chapter 4 - Fort Besselat Sluice"/>
   
-  <Event value="1C4" name="Mount Germinas"/>
-  <Event value="1C5" name="Lake Poescas"/>
-  <Event value="1C6" name="At the Gate of Limberry Castle"/>
+  <Event value="1C4" name="Chapter 4 - Mount Germinas"/>
+  <Event value="1C5" name="Chapter 4 - Lake Poescas"/>
+  <Event value="1C6" name="Chapter 4 - Limberry Castle Gate"/>
   
-  <Event value="1C8" name="Inside of Limberry Castle"/>
-  <Event value="1C9" name="Underground Cemetery of Limberry Castle"/>
+  <Event value="1C8" name="Chapter 4 - Limberry Castle Keep"/>
+  <Event value="1C9" name="Chapter 4 - Limberry Castle Undercroft"/>
   
-  <Event value="1CB" name="Inside of Eagrose Castle"/>
-  <Event value="1CC" name="Mullonde Holy Place"/>
-  <Event value="1CD" name="Hall of St. Mullonde Temple"/>
-  <Event value="1CE" name="Chapel of St. Mullonde Temple"/>
+  <Event value="1CB" name="Chapter 4 - Eagrose Castle Keep"/>
+  <Event value="1CC" name="Chapter 4 - Mullonde Cathedral"/>
+  <Event value="1CD" name="Chapter 4 - Mullonde Cathedral Nave"/>
+  <Event value="1CE" name="Chapter 4 - Mullonde Cathedral Sanctuary"/>
   <Event value="1CF" name="Collierry Underground Third Floor"/>
   <Event value="1D0" name="Collierry Underground Second Floor"/>
   <Event value="1D1" name="Collierry Underground First Floor"/>
@@ -381,42 +381,49 @@
   <Event value="1FD" name="Test"/>
   <Event value="1FE" name="Test"/>
   <Event value="1FF" name="Test"/>
-  <Event value="200" name="Battle 20"/>
+  <Event value="200" name="Chapter 2 - Zeirchele Falls"/>
   <Event value="201" name="Loffrey Recruiting Wiegraf"/>
   <Event value="202" name="Balthier Battle"/>
-  <Event value="203" name="Luso Battle"/>
+  <Event value="203" name="Chapter 3 - Protect Luso (Zeklaus Desert)"/>
   <Event value="204" name="Battle 30"/>
   <Event value="205" name="Recruiting Luso"/>
   
-  <Event value="207" name="Battle 46"/>
-  <Event value="208" name="Battle 48"/>
-  
-  <Event value="226" name="Chocobo Defense Brigade"/>
-  <Event value="227" name="Chicken Race"/>
-  <Event value="228" name="Treasure Box Dash"/>
-  <Event value="229" name="Defeat Touhoufhai!"/>
-  <Event value="22A" name="??? - Goug"/>
-  <Event value="22B" name="??? of the Night - Lionel"/>
-  <Event value="22C" name="10 ninjas"/>
-  <Event value="22D" name="Minefield"/>
-  <Event value="22E" name="Ghosts of the Death Squad"/>
-  <Event value="22F" name="Shrine Knight Test - Part 1"/>
-  <Event value="230" name="Shrine Knight Test - Part 2"/>
-  <Event value="231" name="Shrine Knight Test - Part 3"/>
-  <Event value="232" name="Shrine Knight Test - Part 4"/>
-  <Event value="233" name="Decisive All Star Battle"/>
-  <Event value="234" name="Countdown"/>
-  <Event value="235" name="Nightmare"/>
-  <Event value="236" name="Brave Story - Part 1"/>
-  <Event value="237" name="Brave Story - Part 2"/>
-  <Event value="238" name="Brave Story - Part 3"/>
-  <Event value="239" name="Brave Story - Part 4"/>
-  <Event value="23A" name="Brave Story - Part 5"/>
-  <Event value="23B" name="Brave Story - Part 6"/>
-  <Event value="23C" name="Brave Story - Part 7"/>
-  <Event value="23D" name="Brave Story - Part 8"/>
-  <Event value="23E" name="Brave Story - Part 9"/>
-  <Event value="23F" name="Brave Story - Part 10"/>
-  <Event value="240" name="Whirlwind"/>
+  <Event value="207" name="Chapter 4 - Limberry Castle Inner Court"/>
+  <Event value="208" name="He Who Knows The Answers - Dorter"/>
+  <Event value="209" name="Reunion With Ovelia"/>
+
+  <Event value="20B" name="A Voice From The Past - Lionel Castle Gate"/>
+  <Event value="20C" name="A Voice From The Past - Lionel Castle"/>
+
+  <Event value="20E" name="After the Storm - Brigands' Den"/>
+
+  <Event value="226" name="Rendezvous: Chocobo Defense"/>
+  <Event value="227" name="Rendezvous: Chicken Race"/>
+  <Event value="228" name="Rendezvous: Treasure Hunt"/>
+  <Event value="229" name="Rendezvous: Teioh"/>
+  <Event value="22A" name="Rendezvous: Lost Heirloom"/>
+  <Event value="22B" name="Rendezvous: The Fete"/>
+  <Event value="22C" name="Rendezvous: Littering"/>
+  <Event value="22D" name="Rendezvous: Desert Minefield"/>
+  <Event value="22E" name="Rendezvous: Shades of the Past"/>
+  <Event value="22F" name="Rendezvous: The Knights Templar - Part 1"/>
+  <Event value="230" name="Rendezvous: The Knights Templar - Part 2"/>
+  <Event value="231" name="Rendezvous: The Knights Templar - Part 3"/>
+  <Event value="232" name="Rendezvous: The Knights Templar - Part 4"/>
+  <Event value="233" name="Rendezvous: All-Star Melee"/>
+  <Event value="234" name="Rendezvous: The Guarded Temple"/>
+  <Event value="235" name="Rendezvous: Nightmares"/>
+  <Event value="236" name="Rendezvous: Brave Story - Part 1"/>
+  <Event value="237" name="Rendezvous: Brave Story - Part 2"/>
+  <Event value="238" name="Rendezvous: Brave Story - Part 3"/>
+  <Event value="239" name="Rendezvous: Brave Story - Part 4"/>
+  <Event value="23A" name="Rendezvous: Brave Story - Part 5"/>
+  <Event value="23B" name="Rendezvous: Brave Story - Part 6"/>
+  <Event value="23C" name="Rendezvous: Brave Story - Part 7"/>
+  <Event value="23D" name="Rendezvous: Brave Story - Part 8"/>
+  <Event value="23E" name="Rendezvous: Brave Story - Part 9"/>
+  <Event value="23F" name="Rendezvous: Brave Story - Part 10"/>
+
+  <Event value="249" name="Rendezvous: An Ill Wind"/>
 
 </Events>

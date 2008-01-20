@@ -178,16 +178,6 @@ namespace FFTPatcher.Datatypes
             Unknown10 = bytes[37];
             Unknown11 = bytes[38];
             Unknown12 = bytes[39];
-
-            int i = 0;
-            //if( FacingDirection > 0x03)
-            //{
-            //    if( !b.ContainsKey( FacingDirection ) )
-            //    {
-            //        b.Add( FacingDirection, null );
-            //        Console.Out.WriteLine( FacingDirection );
-            //    }
-            //}
         }
 
         private static Dictionary<byte, object> b = new Dictionary<byte, object>();

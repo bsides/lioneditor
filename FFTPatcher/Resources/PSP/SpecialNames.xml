@@ -112,4 +112,8 @@
   <SpecialName byte="FF" name="&lt;Random&gt;"/>
   <SpecialName byte="A2" name="Balthier"/>
   <SpecialName byte="A3" name="Luso"/>
+
+  <SpecialName byte="6F" name="Gobith"/>
+  <SpecialName byte="72" name="Touhoufhai"/>
+  <SpecialName byte="A5" name="Argath (Deathknight)"/>
 </SpecialNames>

@@ -35,11 +35,11 @@ namespace FFTPatcher.Datatypes
         {
             string[] pspStrings = Utilities.GetStringsFromNumberedXmlNodes(
                 Resources.SpecialNames,
-                "//SpecialNames/SpecialName[@byte='{0:X2}']",
+                "//SpecialNames/SpecialName[@byte='{0:X2}']/@name",
                 256 );
             string[] psxStrings = Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.SpecialNames,
-                "//SpecialNames/SpecialName[@byte='{0:X2}']",
+                "//SpecialNames/SpecialName[@byte='{0:X2}']/@name",
                 256 );
             for( int i = 0; i < 256; i++ )
             {

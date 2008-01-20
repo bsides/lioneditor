@@ -401,4 +401,8 @@
     <byte>A3</byte>
     <sprite>Luso</sprite>
   </Sprite>
+  <Sprite>
+    <byte>A5</byte>
+    <sprite>Argath (Deathknight)</sprite>
+  </Sprite>
 </Sprites>

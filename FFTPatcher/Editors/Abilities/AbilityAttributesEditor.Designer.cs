@@ -158,9 +158,7 @@ namespace FFTPatcher.Editors
             // 
             // flagsCheckedListBox
             // 
-            this.flagsCheckedListBox.CheckOnClick = true;
             this.flagsCheckedListBox.FormattingEnabled = true;
-
             this.flagsCheckedListBox.Location = new System.Drawing.Point( 164, 14 );
             this.flagsCheckedListBox.Name = "flagsCheckedListBox";
             this.flagsCheckedListBox.Size = new System.Drawing.Size( 144, 484 );

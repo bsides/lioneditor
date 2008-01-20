@@ -350,7 +350,6 @@ namespace FFTPatcher.Editors
             // 
             // skillsetComboBox
             // 
-            this.skillsetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.skillsetComboBox.FormattingEnabled = true;
             this.skillsetComboBox.Location = new System.Drawing.Point( 52, 3 );
             this.skillsetComboBox.Name = "skillsetComboBox";
@@ -572,7 +571,6 @@ namespace FFTPatcher.Editors
             // 
             // innateAComboBox
             // 
-            this.innateAComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.innateAComboBox.FormattingEnabled = true;
             this.innateAComboBox.Location = new System.Drawing.Point( 103, 361 );
             this.innateAComboBox.Name = "innateAComboBox";
@@ -582,7 +580,6 @@ namespace FFTPatcher.Editors
             // 
             // innateBComboBox
             // 
-            this.innateBComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.innateBComboBox.FormattingEnabled = true;
             this.innateBComboBox.Location = new System.Drawing.Point( 103, 383 );
             this.innateBComboBox.Name = "innateBComboBox";
@@ -592,7 +589,6 @@ namespace FFTPatcher.Editors
             // 
             // innateCComboBox
             // 
-            this.innateCComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.innateCComboBox.FormattingEnabled = true;
             this.innateCComboBox.Location = new System.Drawing.Point( 103, 405 );
             this.innateCComboBox.Name = "innateCComboBox";
@@ -602,7 +598,6 @@ namespace FFTPatcher.Editors
             // 
             // innateDComboBox
             // 
-            this.innateDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.innateDComboBox.FormattingEnabled = true;
             this.innateDComboBox.Location = new System.Drawing.Point( 103, 427 );
             this.innateDComboBox.Name = "innateDComboBox";

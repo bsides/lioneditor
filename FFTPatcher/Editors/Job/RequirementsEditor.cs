@@ -60,6 +60,26 @@ namespace FFTPatcher.Editors
             dataGridView1.CellValidating += dataGridView1_CellValidating;
             dataGridView1.CellToolTipTextNeeded += dataGridView1_CellToolTipTextNeeded;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+            dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
+        }
+
+        private void dataGridView1_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
+        {
+            e.Control.KeyDown += Control_KeyDown;
+        }
+
+        private void Control_KeyDown( object sender, KeyEventArgs e )
+        {
+            if( (e.KeyData == Keys.F12) &&
+                (dataGridView1.CurrentCell != null) &&
+                (dataGridView1.CurrentCell.ColumnIndex >= 0) &&
+                (dataGridView1.CurrentRow.DataBoundItem is Requirements) )
+            {
+                Requirements reqs = dataGridView1.CurrentRow.DataBoundItem as Requirements;
+                dataGridView1.EditingControl.Text = ReflectionHelpers.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[dataGridView1.CurrentCell.ColumnIndex].DataPropertyName ).ToString();
+                dataGridView1.EndEdit();
+                dataGridView1.InvalidateCell( dataGridView1.CurrentCell );
+            }
         }
 
         private void dataGridView1_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )

@@ -360,8 +360,6 @@ namespace FFTPatcher.Editors
             // 
             // throwingComboBox
             // 
-            this.throwingComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.throwingComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.throwingComboBox.FormattingEnabled = true;
             this.throwingComboBox.Location = new System.Drawing.Point( 3, 20 );
             this.throwingComboBox.Name = "throwingComboBox";
@@ -389,8 +387,6 @@ namespace FFTPatcher.Editors
             // 
             // itemUseComboBox
             // 
-            this.itemUseComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.itemUseComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.itemUseComboBox.FormattingEnabled = true;
             this.itemUseComboBox.Location = new System.Drawing.Point( 3, 21 );
             this.itemUseComboBox.Name = "itemUseComboBox";

@@ -77,7 +77,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox1
             // 
-            this.actionComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox1.FormattingEnabled = true;
             this.actionComboBox1.Location = new System.Drawing.Point(6, 19);
             this.actionComboBox1.Name = "actionComboBox1";
@@ -113,7 +112,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox16
             // 
-            this.actionComboBox16.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox16.FormattingEnabled = true;
             this.actionComboBox16.Location = new System.Drawing.Point(6, 334);
             this.actionComboBox16.Name = "actionComboBox16";
@@ -122,7 +120,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox15
             // 
-            this.actionComboBox15.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox15.FormattingEnabled = true;
             this.actionComboBox15.Location = new System.Drawing.Point(6, 313);
             this.actionComboBox15.Name = "actionComboBox15";
@@ -131,7 +128,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox14
             // 
-            this.actionComboBox14.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox14.FormattingEnabled = true;
             this.actionComboBox14.Location = new System.Drawing.Point(6, 292);
             this.actionComboBox14.Name = "actionComboBox14";
@@ -140,7 +136,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox13
             // 
-            this.actionComboBox13.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox13.FormattingEnabled = true;
             this.actionComboBox13.Location = new System.Drawing.Point(6, 271);
             this.actionComboBox13.Name = "actionComboBox13";
@@ -149,7 +144,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox12
             // 
-            this.actionComboBox12.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox12.FormattingEnabled = true;
             this.actionComboBox12.Location = new System.Drawing.Point(6, 250);
             this.actionComboBox12.Name = "actionComboBox12";
@@ -158,7 +152,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox11
             // 
-            this.actionComboBox11.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox11.FormattingEnabled = true;
             this.actionComboBox11.Location = new System.Drawing.Point(6, 229);
             this.actionComboBox11.Name = "actionComboBox11";
@@ -167,7 +160,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox10
             // 
-            this.actionComboBox10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox10.FormattingEnabled = true;
             this.actionComboBox10.Location = new System.Drawing.Point(6, 208);
             this.actionComboBox10.Name = "actionComboBox10";
@@ -176,7 +168,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox9
             // 
-            this.actionComboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox9.FormattingEnabled = true;
             this.actionComboBox9.Location = new System.Drawing.Point(6, 187);
             this.actionComboBox9.Name = "actionComboBox9";
@@ -185,7 +176,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox8
             // 
-            this.actionComboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox8.FormattingEnabled = true;
             this.actionComboBox8.Location = new System.Drawing.Point(6, 166);
             this.actionComboBox8.Name = "actionComboBox8";
@@ -194,7 +184,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox7
             // 
-            this.actionComboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox7.FormattingEnabled = true;
             this.actionComboBox7.Location = new System.Drawing.Point(6, 145);
             this.actionComboBox7.Name = "actionComboBox7";
@@ -203,7 +192,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox6
             // 
-            this.actionComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox6.FormattingEnabled = true;
             this.actionComboBox6.Location = new System.Drawing.Point(6, 124);
             this.actionComboBox6.Name = "actionComboBox6";
@@ -212,7 +200,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox5
             // 
-            this.actionComboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox5.FormattingEnabled = true;
             this.actionComboBox5.Location = new System.Drawing.Point(6, 103);
             this.actionComboBox5.Name = "actionComboBox5";
@@ -221,7 +208,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox4
             // 
-            this.actionComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox4.FormattingEnabled = true;
             this.actionComboBox4.Location = new System.Drawing.Point(6, 82);
             this.actionComboBox4.Name = "actionComboBox4";
@@ -230,7 +216,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox3
             // 
-            this.actionComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox3.FormattingEnabled = true;
             this.actionComboBox3.Location = new System.Drawing.Point(6, 61);
             this.actionComboBox3.Name = "actionComboBox3";
@@ -239,7 +224,6 @@ namespace FFTPatcher.Editors
             // 
             // actionComboBox2
             // 
-            this.actionComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.actionComboBox2.FormattingEnabled = true;
             this.actionComboBox2.Location = new System.Drawing.Point(6, 40);
             this.actionComboBox2.Name = "actionComboBox2";
@@ -264,7 +248,6 @@ namespace FFTPatcher.Editors
             // 
             // theRestComboBox6
             // 
-            this.theRestComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.theRestComboBox6.FormattingEnabled = true;
             this.theRestComboBox6.Location = new System.Drawing.Point(6, 124);
             this.theRestComboBox6.Name = "theRestComboBox6";
@@ -273,7 +256,6 @@ namespace FFTPatcher.Editors
             // 
             // theRestComboBox5
             // 
-            this.theRestComboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.theRestComboBox5.FormattingEnabled = true;
             this.theRestComboBox5.Location = new System.Drawing.Point(6, 103);
             this.theRestComboBox5.Name = "theRestComboBox5";
@@ -282,7 +264,6 @@ namespace FFTPatcher.Editors
             // 
             // theRestComboBox4
             // 
-            this.theRestComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.theRestComboBox4.FormattingEnabled = true;
             this.theRestComboBox4.Location = new System.Drawing.Point(6, 82);
             this.theRestComboBox4.Name = "theRestComboBox4";
@@ -291,7 +272,6 @@ namespace FFTPatcher.Editors
             // 
             // theRestComboBox3
             // 
-            this.theRestComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.theRestComboBox3.FormattingEnabled = true;
             this.theRestComboBox3.Location = new System.Drawing.Point(6, 61);
             this.theRestComboBox3.Name = "theRestComboBox3";
@@ -300,7 +280,6 @@ namespace FFTPatcher.Editors
             // 
             // theRestComboBox2
             // 
-            this.theRestComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.theRestComboBox2.FormattingEnabled = true;
             this.theRestComboBox2.Location = new System.Drawing.Point(6, 40);
             this.theRestComboBox2.Name = "theRestComboBox2";
@@ -309,7 +288,6 @@ namespace FFTPatcher.Editors
             // 
             // theRestComboBox1
             // 
-            this.theRestComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.theRestComboBox1.FormattingEnabled = true;
             this.theRestComboBox1.Location = new System.Drawing.Point(6, 19);
             this.theRestComboBox1.Name = "theRestComboBox1";

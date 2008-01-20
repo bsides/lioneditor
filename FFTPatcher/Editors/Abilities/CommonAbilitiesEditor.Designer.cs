@@ -106,7 +106,6 @@ namespace FFTPatcher.Editors
             // 
             // aiCheckedListBox
             // 
-            this.aiCheckedListBox.CheckOnClick = true;
             this.aiCheckedListBox.FormattingEnabled = true;
             this.aiCheckedListBox.Location = new System.Drawing.Point( 6, 19 );
             this.aiCheckedListBox.MultiColumn = true;
@@ -141,7 +140,6 @@ namespace FFTPatcher.Editors
             // 
             // propertiesCheckedListBox
             // 
-            this.propertiesCheckedListBox.CheckOnClick = true;
             this.propertiesCheckedListBox.FormattingEnabled = true;
             this.propertiesCheckedListBox.Items.AddRange( new object[] {
             "Learn with JP",
@@ -163,8 +161,6 @@ namespace FFTPatcher.Editors
             // 
             // abilityTypeComboBox
             // 
-            this.abilityTypeComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.abilityTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.abilityTypeComboBox.FormattingEnabled = true;
             this.abilityTypeComboBox.Location = new System.Drawing.Point( 6, 54 );
             this.abilityTypeComboBox.Name = "abilityTypeComboBox";

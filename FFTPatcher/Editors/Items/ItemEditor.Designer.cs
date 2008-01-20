@@ -458,7 +458,6 @@ namespace FFTPatcher.Editors
             // 
             // itemTypeComboBox
             // 
-            this.itemTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.itemTypeComboBox.FormattingEnabled = true;
             this.itemTypeComboBox.Location = new System.Drawing.Point( 90, 65 );
             this.itemTypeComboBox.Name = "itemTypeComboBox";
@@ -482,7 +481,6 @@ namespace FFTPatcher.Editors
             // 
             // shopAvailabilityComboBox
             // 
-            this.shopAvailabilityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.shopAvailabilityComboBox.FormattingEnabled = true;
             this.shopAvailabilityComboBox.Location = new System.Drawing.Point( 90, 129 );
             this.shopAvailabilityComboBox.Name = "shopAvailabilityComboBox";
@@ -563,7 +561,7 @@ namespace FFTPatcher.Editors
             this.weaponSpellStatusSpinner.Hexadecimal = true;
             this.weaponSpellStatusSpinner.Location = new System.Drawing.Point( 86, 105 );
             this.weaponSpellStatusSpinner.Maximum = new decimal( new int[] {
-            255,
+            127,
             0,
             0,
             0} );

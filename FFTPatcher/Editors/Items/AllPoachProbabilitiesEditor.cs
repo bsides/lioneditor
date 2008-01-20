@@ -73,6 +73,21 @@ namespace FFTPatcher.Editors
             {
                 c.DropDownStyle = ComboBoxStyle.DropDownList;
             }
+
+            e.Control.KeyDown += Control_KeyDown;
+        }
+
+        private void Control_KeyDown( object sender, KeyEventArgs e )
+        {
+            if( (e.KeyData == Keys.F12) &&
+                (dataGridView.CurrentCell is DataGridViewComboBoxCell) &&
+                (dataGridView.CurrentRow.DataBoundItem is PoachProbability) )
+            {
+                PoachProbability poach = dataGridView.CurrentRow.DataBoundItem as PoachProbability;
+                DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
+                c.SelectedItem = ReflectionHelpers.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[dataGridView.CurrentCell.ColumnIndex].DataPropertyName );
+                dataGridView.EndEdit();
+            }
         }
 
         private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )

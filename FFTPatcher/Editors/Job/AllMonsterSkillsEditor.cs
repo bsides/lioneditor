@@ -60,6 +60,19 @@ namespace FFTPatcher.Editors
             dataGridView.DataSource = skills.MonsterSkills;
         }
 
+        private void Control_KeyDown( object sender, KeyEventArgs e )
+        {
+            if( (e.KeyData == Keys.F12) &&
+                (dataGridView.CurrentCell is DataGridViewComboBoxCell) &&
+                (dataGridView.CurrentRow.DataBoundItem is MonsterSkill) )
+            {
+                MonsterSkill skill = dataGridView.CurrentRow.DataBoundItem as MonsterSkill;
+                DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
+                c.SelectedItem = ReflectionHelpers.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[dataGridView.CurrentCell.ColumnIndex].DataPropertyName );
+                dataGridView.EndEdit();
+            }
+        }
+        
         private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
         {
             if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
@@ -123,6 +136,7 @@ namespace FFTPatcher.Editors
             {
                 c.DropDownStyle = ComboBoxStyle.DropDownList;
             }
+            e.Control.KeyDown += Control_KeyDown;
         }
     }
 }

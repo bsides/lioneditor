@@ -32,7 +32,6 @@ namespace FFTPatcher.Controls
     {
         public decimal DefaultValue { get; private set; }
         public bool Default { get { return Value == DefaultValue; } }
-        private bool borderOn = false;
 
         /// <summary>
         /// Gets the current value.
@@ -56,32 +55,48 @@ namespace FFTPatcher.Controls
                 FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: {0}", defaultValue ) );
             
             DefaultValue = defaultValue;
-            Value = value;
+            Value = value > Maximum ? Maximum : value;
             OnValueChanged( EventArgs.Empty );
         }
-      
-        protected override void OnPaint( PaintEventArgs e )
+
+        protected override void OnKeyDown( KeyEventArgs e )
         {
-            base.OnPaint( e );
-            if( Enabled && (Value != DefaultValue) )
+            if( e.KeyData == Keys.F12 )
             {
-                e.Graphics.DrawRectangle( new Pen( Brushes.Blue, 2 ), e.ClipRectangle );
-                borderOn = true;
+                SetValueAndDefault( DefaultValue, DefaultValue );
+            }
+            base.OnKeyDown( e );
+        }
+
+        protected override void OnEnter( EventArgs e )
+        {
+            Select( 0, Text.Length );
+            base.OnEnter( e );
+        }
+
+        private void SetColors()
+        {
+            if( Enabled && (Value != DefaultValue))
+            {
+                BackColor = Color.Blue;
+                ForeColor = Color.White;
+            }
+            else if( Enabled && (Value==DefaultValue) )
+            {
+                BackColor = SystemColors.Window;
+                ForeColor = SystemColors.WindowText;
             }
             else
             {
-                borderOn = false;
+                BackColor = SystemColors.Window;
+                ForeColor = SystemColors.WindowText;
             }
         }
 
         protected override void OnValueChanged( EventArgs e )
         {
-            if( !(Default ^ borderOn) )
-            {
-                Refresh();
-            }
-
             base.OnValueChanged( e );
+            SetColors();
         }
     }
 }

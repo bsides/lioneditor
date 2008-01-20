@@ -99,6 +99,7 @@ namespace FFTPatcher.Editors
             public ElementsCheckedListBox()
                 : base()
             {
+                CheckOnClick = true;
             }
 
             public void SetValuesAndDefaults( bool[] values, bool[] defaults )
@@ -136,6 +137,12 @@ namespace FFTPatcher.Editors
                         SetItemChecked( i, values[i] );
                     }
                 }
+            }
+
+            protected override void OnKeyDown( KeyEventArgs e )
+            {
+                SetValuesAndDefaults( Defaults, Defaults );
+                base.OnKeyDown( e );
             }
 
             protected override void OnDrawItem( DrawItemEventArgs e )

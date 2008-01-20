@@ -423,8 +423,6 @@ namespace FFTPatcher.Editors
             // 
             // facingDirectionComboBox
             // 
-            this.facingDirectionComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.facingDirectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.facingDirectionComboBox.FormattingEnabled = true;
             this.facingDirectionComboBox.Location = new System.Drawing.Point( 82, 199 );
             this.facingDirectionComboBox.Name = "facingDirectionComboBox";
@@ -434,8 +432,6 @@ namespace FFTPatcher.Editors
             // 
             // levelComboBox
             // 
-            this.levelComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.levelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.levelComboBox.FormattingEnabled = true;
             this.levelComboBox.Location = new System.Drawing.Point( 82, 91 );
             this.levelComboBox.Name = "levelComboBox";
@@ -445,8 +441,6 @@ namespace FFTPatcher.Editors
             // 
             // dayComboBox
             // 
-            this.dayComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.dayComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayComboBox.FormattingEnabled = true;
             this.dayComboBox.Location = new System.Drawing.Point( 225, 47 );
             this.dayComboBox.Name = "dayComboBox";
@@ -456,8 +450,6 @@ namespace FFTPatcher.Editors
             // 
             // faithComboBox
             // 
-            this.faithComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.faithComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.faithComboBox.FormattingEnabled = true;
             this.faithComboBox.Location = new System.Drawing.Point( 82, 113 );
             this.faithComboBox.Name = "faithComboBox";
@@ -467,8 +459,6 @@ namespace FFTPatcher.Editors
             // 
             // braveryComboBox
             // 
-            this.braveryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.braveryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.braveryComboBox.FormattingEnabled = true;
             this.braveryComboBox.Location = new System.Drawing.Point( 209, 113 );
             this.braveryComboBox.Name = "braveryComboBox";
@@ -478,8 +468,6 @@ namespace FFTPatcher.Editors
             // 
             // preRequisiteJobComboBox
             // 
-            this.preRequisiteJobComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.preRequisiteJobComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.preRequisiteJobComboBox.FormattingEnabled = true;
             this.preRequisiteJobComboBox.Location = new System.Drawing.Point( 82, 177 );
             this.preRequisiteJobComboBox.Name = "preRequisiteJobComboBox";
@@ -489,7 +477,6 @@ namespace FFTPatcher.Editors
             // 
             // flags2CheckedListBox
             // 
-            this.flags2CheckedListBox.CheckOnClick = true;
             this.flags2CheckedListBox.FormattingEnabled = true;
             this.flags2CheckedListBox.Items.AddRange( new object[] {
             "",
@@ -508,8 +495,6 @@ namespace FFTPatcher.Editors
             // 
             // spriteSetComboBox
             // 
-            this.spriteSetComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.spriteSetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.spriteSetComboBox.FormattingEnabled = true;
             this.spriteSetComboBox.Location = new System.Drawing.Point( 82, 3 );
             this.spriteSetComboBox.Name = "spriteSetComboBox";
@@ -519,8 +504,6 @@ namespace FFTPatcher.Editors
             // 
             // jobComboBox
             // 
-            this.jobComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.jobComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.jobComboBox.FormattingEnabled = true;
             this.jobComboBox.Location = new System.Drawing.Point( 82, 69 );
             this.jobComboBox.Name = "jobComboBox";
@@ -545,8 +528,6 @@ namespace FFTPatcher.Editors
             // 
             // specialNameComboBox
             // 
-            this.specialNameComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.specialNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.specialNameComboBox.FormattingEnabled = true;
             this.specialNameComboBox.Location = new System.Drawing.Point( 82, 25 );
             this.specialNameComboBox.Name = "specialNameComboBox";
@@ -706,7 +687,6 @@ namespace FFTPatcher.Editors
             // 
             // flags1CheckedListBox
             // 
-            this.flags1CheckedListBox.CheckOnClick = true;
             this.flags1CheckedListBox.FormattingEnabled = true;
             this.flags1CheckedListBox.Items.AddRange( new object[] {
             "Male",
@@ -739,8 +719,6 @@ namespace FFTPatcher.Editors
             // 
             // monthComboBox
             // 
-            this.monthComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.monthComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.monthComboBox.FormattingEnabled = true;
             this.monthComboBox.Location = new System.Drawing.Point( 82, 47 );
             this.monthComboBox.Name = "monthComboBox";
@@ -750,8 +728,6 @@ namespace FFTPatcher.Editors
             // 
             // rightHandComboBox
             // 
-            this.rightHandComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.rightHandComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rightHandComboBox.FormattingEnabled = true;
             this.rightHandComboBox.Location = new System.Drawing.Point( 74, 15 );
             this.rightHandComboBox.Name = "rightHandComboBox";
@@ -761,8 +737,6 @@ namespace FFTPatcher.Editors
             // 
             // accessoryComboBox
             // 
-            this.accessoryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.accessoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.accessoryComboBox.FormattingEnabled = true;
             this.accessoryComboBox.Location = new System.Drawing.Point( 74, 103 );
             this.accessoryComboBox.Name = "accessoryComboBox";
@@ -772,8 +746,6 @@ namespace FFTPatcher.Editors
             // 
             // leftHandComboBox
             // 
-            this.leftHandComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.leftHandComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.leftHandComboBox.FormattingEnabled = true;
             this.leftHandComboBox.Location = new System.Drawing.Point( 74, 37 );
             this.leftHandComboBox.Name = "leftHandComboBox";
@@ -783,8 +755,6 @@ namespace FFTPatcher.Editors
             // 
             // bodyComboBox
             // 
-            this.bodyComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.bodyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.bodyComboBox.FormattingEnabled = true;
             this.bodyComboBox.Location = new System.Drawing.Point( 74, 81 );
             this.bodyComboBox.Name = "bodyComboBox";
@@ -794,8 +764,6 @@ namespace FFTPatcher.Editors
             // 
             // headComboBox
             // 
-            this.headComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.headComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.headComboBox.FormattingEnabled = true;
             this.headComboBox.Location = new System.Drawing.Point( 74, 59 );
             this.headComboBox.Name = "headComboBox";
@@ -820,8 +788,6 @@ namespace FFTPatcher.Editors
             // 
             // primarySkillComboBox
             // 
-            this.primarySkillComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.primarySkillComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.primarySkillComboBox.FormattingEnabled = true;
             this.primarySkillComboBox.Location = new System.Drawing.Point( 74, 15 );
             this.primarySkillComboBox.Name = "primarySkillComboBox";
@@ -831,8 +797,6 @@ namespace FFTPatcher.Editors
             // 
             // movementComboBox
             // 
-            this.movementComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.movementComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.movementComboBox.FormattingEnabled = true;
             this.movementComboBox.Location = new System.Drawing.Point( 74, 103 );
             this.movementComboBox.Name = "movementComboBox";
@@ -842,8 +806,6 @@ namespace FFTPatcher.Editors
             // 
             // secondaryActionComboBox
             // 
-            this.secondaryActionComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.secondaryActionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.secondaryActionComboBox.FormattingEnabled = true;
             this.secondaryActionComboBox.Location = new System.Drawing.Point( 74, 37 );
             this.secondaryActionComboBox.Name = "secondaryActionComboBox";
@@ -853,8 +815,6 @@ namespace FFTPatcher.Editors
             // 
             // supportComboBox
             // 
-            this.supportComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.supportComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.supportComboBox.FormattingEnabled = true;
             this.supportComboBox.Location = new System.Drawing.Point( 74, 81 );
             this.supportComboBox.Name = "supportComboBox";
@@ -864,8 +824,6 @@ namespace FFTPatcher.Editors
             // 
             // reactionComboBox
             // 
-            this.reactionComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.reactionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.reactionComboBox.FormattingEnabled = true;
             this.reactionComboBox.Location = new System.Drawing.Point( 74, 59 );
             this.reactionComboBox.Name = "reactionComboBox";

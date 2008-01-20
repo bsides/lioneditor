@@ -29,6 +29,8 @@ namespace FFTPatcher.Controls
     public class ComboBoxWithDefault : ComboBox
     {
         public object DefaultValue { get; private set; }
+        public new ComboBoxStyle DropDownStyle { get { return base.DropDownStyle; } private set { base.DropDownStyle = value; } }
+        public new DrawMode DrawMode { get { return base.DrawMode; } private set { base.DrawMode = value; } }
 
         /// <summary>
         /// Gets the currently selected item.
@@ -42,7 +44,7 @@ namespace FFTPatcher.Controls
         public ComboBoxWithDefault()
             : base()
         {
-            this.DrawMode = DrawMode.OwnerDrawFixed;
+            DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         /// <summary>
@@ -57,54 +59,53 @@ namespace FFTPatcher.Controls
             Invalidate();
         }
 
-        protected override void OnDrawItem( DrawItemEventArgs e )
+        protected override void OnKeyDown( KeyEventArgs e )
+        {
+            if( e.KeyData == Keys.F12 )
+            {
+                SetValueAndDefault( DefaultValue, DefaultValue );
+            }
+            base.OnKeyDown( e );
+        }
+
+        private void SetColors()
         {
             if( Enabled && !DroppedDown && (SelectedItem != null) && !SelectedItem.Equals( DefaultValue ) )
             {
-                using( Brush backBrush = new SolidBrush( BackColor ) )
-                using( Brush textBrush = new SolidBrush( ForeColor ) )
-                using( Pen borderPen = new Pen( Brushes.Blue, 2 ) )
-                {
-                    if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )
-                    {
-                        e.Graphics.FillRectangle( SystemBrushes.Highlight, e.Bounds );
-                        e.Graphics.DrawString( SelectedItem == null ? string.Empty : SelectedItem.ToString(), Font, SystemBrushes.HighlightText, e.Bounds.Location );
-                    }
-                    else
-                    {
-                        e.Graphics.FillRectangle( backBrush, e.Bounds );
-                        e.Graphics.DrawString( SelectedItem == null ? string.Empty : SelectedItem.ToString(), Font, textBrush, e.Bounds.Location );
-                    }
-                    e.Graphics.DrawRectangle( borderPen, e.Bounds );
-                }
+                BackColor = Color.Blue;
+                ForeColor = Color.White;
             }
-            else if( Enabled && !DroppedDown && ((e.State & DrawItemState.Focus) == DrawItemState.Focus) )
+            else if( Enabled && !DroppedDown )
             {
-                e.Graphics.FillRectangle( SystemBrushes.Highlight, e.Bounds );
-                e.Graphics.DrawString( SelectedItem == null ? string.Empty : SelectedItem.ToString(), Font, SystemBrushes.HighlightText, e.Bounds.Location );
+                BackColor = SystemColors.Window;
+                ForeColor = SystemColors.WindowText;
             }
-            else if( Enabled && (e.Index != -1) )
+            else if( Enabled && DroppedDown )
             {
-                if( ((e.State & DrawItemState.Focus) == DrawItemState.Focus) &&
-                    ((e.State & DrawItemState.ComboBoxEdit) == 0) )
-                {
-                    using( Brush highlightBrush = new SolidBrush( SystemColors.Highlight ) )
-                    using( Brush textBrush = new SolidBrush( SystemColors.HighlightText ) )
-                    {
-                        e.Graphics.FillRectangle( highlightBrush, e.Bounds );
-                        e.Graphics.DrawString( Items[e.Index].ToString(), Font, textBrush, e.Bounds.Location );
-                    }
-                }
-                else
-                {
-                    using( Brush highlightBrush = new SolidBrush( BackColor ) )
-                    using( Brush textBrush = new SolidBrush( ForeColor ) )
-                    {
-                        e.Graphics.FillRectangle( highlightBrush, e.Bounds );
-                        e.Graphics.DrawString( Items[e.Index].ToString(), Font, textBrush, e.Bounds.Location );
-                    }
-                }
+                BackColor = SystemColors.Window;
+                ForeColor = SystemColors.WindowText;
             }
+        }
+
+        protected override void OnInvalidated( InvalidateEventArgs e )
+        {
+            SetColors();
+            base.OnInvalidated( e );
+        }
+
+        protected override void OnSelectedIndexChanged( System.EventArgs e )
+        {
+            base.OnSelectedIndexChanged( e );
+            SetColors();
+        }
+
+        protected override void OnMouseClick( MouseEventArgs e )
+        {
+            if( (e.Button & MouseButtons.Right) == MouseButtons.Right )
+            {
+                SetValueAndDefault( DefaultValue, DefaultValue );
+            }
+            base.OnMouseClick( e );
         }
     }
 }

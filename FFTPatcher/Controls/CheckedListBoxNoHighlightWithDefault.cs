@@ -17,7 +17,6 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -30,8 +29,6 @@ namespace FFTPatcher.Controls
     /// </summary>
     public partial class CheckedListBoxNoHighlightWithDefault : CheckedListBox
     {
-        private SortedList haveOutlines = new SortedList( null as IComparer );
-
         private bool[] defaults;
 
         /// <summary>
@@ -42,6 +39,8 @@ namespace FFTPatcher.Controls
             get { return defaults; }
             private set { defaults = value; }
         }
+
+        public new bool CheckOnClick { get { return base.CheckOnClick; } private set { base.CheckOnClick = value; } }
 
         /// <summary>
         /// Sets a list of values and their defaults.
@@ -85,7 +84,7 @@ namespace FFTPatcher.Controls
 
         public CheckedListBoxNoHighlightWithDefault()
         {
-            this.CheckOnClick = true;
+            CheckOnClick = true;
         }
 
         protected override void OnItemCheck( ItemCheckEventArgs e )
@@ -96,30 +95,33 @@ namespace FFTPatcher.Controls
 
         protected override void OnDrawItem( DrawItemEventArgs e )
         {
-            Brush backColorBrush = new SolidBrush( this.BackColor );
-            Brush foreColorBrush = new SolidBrush( this.ForeColor );
-
-            e.Graphics.FillRectangle( backColorBrush, e.Bounds );
-            if( e.Index < Items.Count )
+            bool changed =
+                (Defaults != null) &&
+                (Defaults.Length == Items.Count) &&
+                (e.Index < Defaults.Length) &&
+                (e.Index < Items.Count) &&
+                GetItemChecked( e.Index ) ^ Defaults[e.Index];
+           
+            using( Brush backColorBrush = new SolidBrush( changed ? Color.Blue : BackColor ) )
+            using( Brush foreColorBrush = new SolidBrush( changed ? Color.White : ForeColor ) )
             {
-                CheckBoxState state = this.GetItemChecked( e.Index ) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
-                Size checkBoxSize = CheckBoxRenderer.GetGlyphSize( e.Graphics, state );
-                Point loc = new Point( 1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1 );
-                CheckBoxRenderer.DrawCheckBox( e.Graphics, new Point( loc.X + e.Bounds.X, loc.Y + e.Bounds.Y ), state );
-                e.Graphics.DrawString( this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF( loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y ) );
-
-                if( (Defaults != null) && (Defaults.Length > e.Index) && (Defaults[e.Index] != GetItemChecked( e.Index )) )
+                e.Graphics.FillRectangle( backColorBrush, e.Bounds );
+                if( e.Index < Items.Count )
                 {
-                    using( Pen p = new Pen( Color.Blue, 1 ) )
-                    {
-                        e.Graphics.DrawRectangle( p, new Rectangle( e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1 ) );
-                        if( !haveOutlines.Contains( e.Index ) )
-                        {
-                            haveOutlines.Add( e.Index, null );
-                        }
-                    }
+                    CheckBoxState state = this.GetItemChecked( e.Index ) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
+                    Size checkBoxSize = CheckBoxRenderer.GetGlyphSize( e.Graphics, state );
+                    Point loc = new Point( 1, (e.Bounds.Height - (checkBoxSize.Height + 1)) / 2 + 1 );
+                    CheckBoxRenderer.DrawCheckBox( e.Graphics, new Point( loc.X + e.Bounds.X, loc.Y + e.Bounds.Y ), state );
+                    e.Graphics.DrawString( this.Items[e.Index].ToString(), e.Font, foreColorBrush, new PointF( loc.X + checkBoxSize.Width + 1 + e.Bounds.X, loc.Y + e.Bounds.Y ) );
                 }
             }
         }
+
+        protected override void OnKeyDown( KeyEventArgs e )
+        {
+            SetValuesAndDefaults( Defaults, Defaults );
+            base.OnKeyDown( e );
+        }
+
     }
 }

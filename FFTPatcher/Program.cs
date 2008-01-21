@@ -19,6 +19,8 @@
 
 using System;
 using System.Windows.Forms;
+using FFTPatcher.Datatypes;
+using FFTPatcher.Editors;
 
 namespace FFTPatcher
 {
@@ -32,6 +34,22 @@ namespace FFTPatcher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Access some class members to force the static constructors to run.
+            object dummy = AllAbilities.PSPNames;
+            dummy = Resources.AbilityAttributes;
+            dummy = PSXResources.AbilityAttributes;
+            dummy = new GlyphEditor();
+            dummy = FFTPatchEditor.ToolTip;
+            dummy = SkillSet.DummySkillSets;
+            dummy = AllMonsterSkills.PSXNames;
+            dummy = AllJobs.Names;
+            dummy = ActionMenuEntry.AllActionMenuEntries;
+            dummy = ShopAvailability.AllAvailabilities;
+            dummy = SpriteSet.SpriteSets;
+            dummy = SpecialName.SpecialNames;
+            dummy = Event.EventNames;
+
             Application.Run(new MainForm());
         }
     }

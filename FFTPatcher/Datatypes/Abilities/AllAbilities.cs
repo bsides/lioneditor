@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AllAbilities
     {
-        public  static string[] PSXNames { get; private set; }
+        public static string[] PSXNames { get; private set; }
         public static string[] PSPNames { get; private set; }
 
         /// <summary>

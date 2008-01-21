@@ -17,10 +17,11 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Editors;
-using System.ComponentModel;
 
 namespace FFTPatcher.Controls
 {
@@ -66,7 +67,7 @@ namespace FFTPatcher.Controls
 
             DefaultValue = defaultValue;
             SelectedItem = value;
-            Invalidate();
+            OnSelectedIndexChanged( EventArgs.Empty );
         }
 
         protected override void OnKeyDown( KeyEventArgs e )
@@ -103,19 +104,10 @@ namespace FFTPatcher.Controls
             base.OnInvalidated( e );
         }
 
-        protected override void OnSelectedIndexChanged( System.EventArgs e )
+        protected override void OnSelectedIndexChanged( EventArgs e )
         {
             base.OnSelectedIndexChanged( e );
             SetColors();
-        }
-
-        protected override void OnMouseClick( MouseEventArgs e )
-        {
-            if( (e.Button & MouseButtons.Right) == MouseButtons.Right )
-            {
-                SetValueAndDefault( DefaultValue, DefaultValue );
-            }
-            base.OnMouseClick( e );
         }
     }
 }

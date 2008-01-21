@@ -180,8 +180,6 @@ namespace FFTPatcher.Datatypes
             Unknown12 = bytes[39];
         }
 
-        private static Dictionary<byte, object> b = new Dictionary<byte, object>();
-
         public EventUnit( SubArray<byte> bytes )
             : this( bytes, null )
         {

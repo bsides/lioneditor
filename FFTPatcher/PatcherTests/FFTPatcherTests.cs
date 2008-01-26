@@ -30,6 +30,14 @@ namespace PatcherTests
     [TestFixture]
     public class FFTPatcherTests
     {
+        [Test, Explicit]
+        public void ShouldExpandFile()
+        {
+            FileStream stream = new FileStream( @"M:\dev\LionEditor\fftpack\fftpack.bin", FileMode.Open );
+            //FFTPack.DumpToDirectory( stream, @"M:\dev\LionEditor\fftpack\test" );
+            FFTPack.MergeDumpedFiles( @"M:\dev\LionEditor\fftpack\test", @"M:\dev\LionEditor\fftpack\fftpack2.bin" );
+        }
+
         [Test]
         public void ShouldNotMangleAbilities()
         {

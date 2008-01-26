@@ -1,3 +1,22 @@
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <stdio.h>
 #include <string.h>
 
@@ -18,14 +37,13 @@ int main(int argc, char *argv[])
 {
     if (argc < 3)
     {
-        printf("Final Fantasy Tactics PSP De/Archivier 1.0 by Brisma\n"
-               "English translation by Joe Davidson\n"
+        printf("War of the Lions De/Archivier 1.0 by Joe Davidson, adapted from work by Brisma\n"
                "   -> fftpspext -d fftpack.bin //Extract\n"
                "   -> fftpspext -r newfile.bin //Rebuild\n");
     }
                          
     else if(strcmp(argv[1], "-d") == 0)
-    { //Dearchivia
+    {
     	
     	buildPaths(1);
         printf("Extracting file %s...", argv[2]);
@@ -40,7 +58,7 @@ int main(int argc, char *argv[])
         
         // Where does 3970 come from?
         // It is the number of entries in the file table
-        for(i=1; i <= 3970; i++)
+        for(i = 1; i <= 3970; i++)
         {
             // Read an int
             fread(&start_pointer, 4, 1, input);
@@ -67,7 +85,7 @@ int main(int argc, char *argv[])
             		sprintf(filename, "fftpack/%s", path[i]);
             	}
                 printf("\nExtracting file %s (%d bytes)", filename, size);
-                output=fopen(filename, "wb");
+                output = fopen(filename, "wb");
                 fseek(input, start_pointer, SEEK_SET);
                 fread(&buffer, size, 1, input);
                 fwrite(&buffer, size, 1, output);
@@ -96,14 +114,14 @@ int main(int argc, char *argv[])
     
         fclose(input);
         
-        printf("\n\nExtracted %d files, ignored %d dummy files.", (3970-dummy_count), dummy_count);
+        printf("\n\nExtracted %d files, ignored %d dummy files.", (3970 - dummy_count), dummy_count);
     }
     
     else if(strcmp(argv[1], "-r") == 0)
-    { //Riarchivia
+    {
     	buildPaths(0);
         printf("Rebuilding file %s...", argv[2]);
-        output=fopen(argv[2], "wb");
+        output = fopen(argv[2], "wb");
         
         //Rebuild header manually 
         fputc(0x80, output);
@@ -116,12 +134,12 @@ int main(int argc, char *argv[])
         fputc(0x00, output);
         
         fseek(output, 15888, SEEK_SET);
-        end_pointer=ftell(output);
+        end_pointer = ftell(output);
         
         // end_pointer is where we'll start writing data
         
-        start_pointer=8;
-        for(i=1; i <= 3970; i++)
+        start_pointer = 8;
+        for(i = 1; i <= 3970; i++)
         {
         	if (path[i][0] == 0)
         	{
@@ -137,7 +155,7 @@ int main(int argc, char *argv[])
             // Write the address of the beginning of the file to the file table
             fseek(output, start_pointer, SEEK_SET);
             fwrite(&end_pointer, 4, 1, output);
-            start_pointer+=4;
+            start_pointer += 4;
             
             fseek(output, end_pointer, SEEK_SET);
             if ((input = fopen(filename, "rb")) == NULL) 
@@ -148,23 +166,22 @@ int main(int argc, char *argv[])
             else 
             {
                 fseek(input, 0, SEEK_END);
-                size=ftell(input);
+                size = ftell(input);
                 fseek(input, 0, SEEK_SET);
                 fread(&buffer, size, 1, input);
                 fclose(input);
                 fwrite(&buffer, size, 1, output);
                 printf(" [OK]");
             }
-            end_pointer=ftell(output);
+            end_pointer = ftell(output);
         }
         fclose(output);
-        printf("\n\nRebuilt from %d files, ignoring %d dummy files", (3970-dummy_count), dummy_count);
+        printf("\n\nRebuilt from %d files, ignoring %d dummy files", (3970 - dummy_count), dummy_count);
     }
     
     else 
     {
-        printf("Final Fantasy Tactics PSP De/Archivier 1.0 by Brisma\n"
-               "English translation by Joe Davidson\n"
+        printf("War of the Liosn De/Archivier 1.0 by Joe Davidson, adapted from work by Brisma\n"
                "   -> fftpspext -d fftpack.bin //Extract\n"
                "   -> fftpspext -r newfile.bin //Rebuild\n");
     }
@@ -254,6 +271,7 @@ void buildPaths(int shouldMake)
 	strcpy(path[230], "BATTLE/ENTD2.ENT"); // Exact match
 	strcpy(path[231], "BATTLE/ENTD3.ENT"); // Exact match
 	strcpy(path[232], "BATTLE/ENTD4.ENT"); // Exact match
+	strcpy(path[897], "BATTLE/ENTD5.ENT");
 	strcpy(path[104], "BATTLE/ERU.SPR");
 	strcpy(path[105], "BATTLE/FURAIA.SPR");
 	strcpy(path[106], "BATTLE/FUSUI_M.SPR");
@@ -610,9 +628,9 @@ void buildPaths(int shouldMake)
 	strcpy(path[459], "EFFECT/E225.BIN");
 	strcpy(path[460], "EFFECT/E226.BIN");
 	strcpy(path[461], "EFFECT/E227.BIN"); // dummy
-	strcpy(path[461], "EFFECT/E228.BIN"); // Tentative
-	strcpy(path[462], "EFFECT/E229.BIN"); // Tentative
-	strcpy(path[463], "EFFECT/E230.BIN"); // Tentative
+	strcpy(path[462], "EFFECT/E228.BIN"); // Tentative
+	strcpy(path[463], "EFFECT/E229.BIN"); // Tentative
+	strcpy(path[464], "EFFECT/E230.BIN"); // Tentative
 	strcpy(path[465], "EFFECT/E231.BIN");
 	strcpy(path[466], "EFFECT/E232.BIN");
 	strcpy(path[467], "EFFECT/E233.BIN"); // Tentative
@@ -2897,8 +2915,6 @@ void buildPaths(int shouldMake)
 	strcpy(path[1335], "EFFECT/E484.BIN.duplicate");
 	strcpy(path[1337], "EFFECT/E486.BIN.duplicate");
 	strcpy(path[1338], "EFFECT/E509.BIN.duplicate");
-	strcpy(path[1338], "EFFECT/E510.BIN.duplicate");
-	strcpy(path[1339], "EFFECT/E509.BIN.duplicate");
 	strcpy(path[1339], "EFFECT/E510.BIN.duplicate");
 	strcpy(path[2355], "MAP/MAP011.22.duplicate");
 	strcpy(path[2357], "MAP/MAP011.28.duplicate");
@@ -2954,4 +2970,3 @@ void buildPaths(int shouldMake)
 	strcpy(path[997], "EFFECT/E062.BIN.duplicate");
 	strcpy(path[998], "EFFECT/E063.BIN.duplicate");
 }
-

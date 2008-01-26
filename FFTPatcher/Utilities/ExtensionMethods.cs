@@ -110,6 +110,33 @@ namespace FFTPatcher
         }
 
         /// <summary>
+        /// Converts this into a set of four big endian bytes.
+        /// </summary>
+        public static byte[] ToBytes( this UInt32 value )
+        {
+            byte[] result = new byte[4];
+            result[0] = (byte)(value & 0xFF);
+            result[1] = (byte)((value >> 8) & 0xFF);
+            result[2] = (byte)((value >> 16) & 0xFF);
+            result[3] = (byte)((value >> 24) & 0xFF);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts this array of bytes into a UInt32.
+        /// </summary>
+        public static UInt32 ToUInt32( this byte[] bytes )
+        {
+            UInt32 result = 0;
+            result += bytes[0];
+            result += (UInt32)(bytes[1] << 8);
+            result += (UInt32)(bytes[2] << 16);
+            result += (UInt32)(bytes[3] << 24);
+
+            return result;
+        }
+
+        /// <summary>
         /// Converts this to a string.
         /// </summary>
         public static string ToUTF8String( this byte[] bytes )

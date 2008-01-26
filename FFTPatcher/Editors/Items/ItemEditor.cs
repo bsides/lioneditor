@@ -175,7 +175,7 @@ namespace FFTPatcher.Editors
 
             if( item.Default != null )
             {
-                itemAttributesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( item, itemBools ), item.ToBoolArray() );
+                itemAttributesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( item, itemBools ), item.Default.ToBoolArray() );
             }
 
             weaponPanel.ResumeLayout();

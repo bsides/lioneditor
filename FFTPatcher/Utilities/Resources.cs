@@ -17,7 +17,9 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace FFTPatcher
 {
@@ -58,6 +60,8 @@ namespace FFTPatcher
             dict["SpecialNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.SpecialNames ).ToUTF8String();
             dict["SpriteSets"] = GZip.Decompress( FFTPatcher.Properties.Resources.SpriteSets ).ToUTF8String();
             dict["StatusNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.StatusNames ).ToUTF8String();
+
+            dict["FFTPackFiles"] = GZip.Decompress( FFTPatcher.Properties.Resources.FFTPackFiles ).ToUTF8String();
         }
 
         public static string SkillSets { get { return dict["SkillSets"] as string; } }
@@ -70,6 +74,29 @@ namespace FFTPatcher
         public static string SpecialNames { get { return dict["SpecialNames"] as string; } }
         public static string SpriteSets { get { return dict["SpriteSets"] as string; } }
         public static string StatusNames { get { return dict["StatusNames"] as string; } }
+
+        private static Dictionary<int, string> fftPackFiles;
+        public static Dictionary<int, string> FFTPackFiles
+        {
+            get
+            {
+                if( fftPackFiles == null )
+                {
+                    fftPackFiles = new Dictionary<int, string>();
+
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml( dict["FFTPackFiles"] as string );
+
+                    XmlNodeList nodes = doc.SelectNodes( "/files/file" );
+                    foreach( XmlNode node in nodes )
+                    {
+                        fftPackFiles.Add( Convert.ToInt32( node.Attributes["entry"].InnerText ), node.Attributes["name"].InnerText );
+                    }
+                }
+
+                return fftPackFiles;
+            }
+        }
 
         private static string[] statuses;
         public static string[] Statuses

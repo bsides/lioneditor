@@ -1,5 +1,29 @@
 FFTPatcher - v0.168
 
+TODO - rebuild fftpspext
+
+Changes since v0.168:
+  Added font editor
+    For PSP, fonts are stored in the executable, so you have to use CWCheat codes for now
+    For PSX, the Export menu has two new options
+      "Generate FONT.BIN" generates the FONT.BIN file (it goes in the EVENT folder)
+      "Apply font widths" patches the BATTLE.BIN file with the widths of the fonts
+  Fixed some strings that were inconsistent between PSX and PSP modes (not everything is fixed yet)
+  Added new PSP events to the ENTD editor
+    Balthier's equipment for battle 0x202 is incorrect. It is stored in another location on the disc,
+      and it is not editable yet
+    The "Generate ENTD files" menu item will create a new file called ENTD5
+    Use fftpspext.exe to import it into fftpack.bin
+  Added a command-line utility, fftpspext.exe, to the archive
+    This is based on a tool created by a PSP-ITA forum user, Brisma
+    It extracts the files from the FFTPACK.BIN file that is on the War of the Lions UMD
+    You can edit the files and then run it again to rebuild the FFTPACK.BIN with your changes
+  Refactored the ENTD editor based on feedback from the auritech forums
+  Compressed some of the internal XML and binary files to shrink the file size
+  ComboBoxes now "autocomplete", so if you tab to a ComboBox and type "w-a-t-e-r" it will 
+    take you to "Water Anima". If you then type "w" it will talk you to "Waterwalking"
+  All editing controls now have a "Reset" feature. Tab to a control and push F12
+  
 Changes since v0.164:
   Fixed bug in CheckedListBoxes where the highlighting was not always displayed correctly
   Added ENTD editor

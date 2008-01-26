@@ -196,6 +196,9 @@
   <data name="PoachProbabilitiesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\bin\poachprobabilities.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="FFTPackFiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\fftpackfiles.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="SkillSets" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\skillsets.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

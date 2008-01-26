@@ -201,6 +201,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] FFTPackFiles {
+            get {
+                object obj = ResourceManager.GetObject("FFTPackFiles", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] JobsBin {
             get {
                 object obj = ResourceManager.GetObject("JobsBin", resourceCulture);

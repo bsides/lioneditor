@@ -61,6 +61,36 @@ namespace FFTPatcher.Datatypes
         public List<Event> Events { get; private set; }
         public List<Event> PSPEvent { get; private set; }
 
+        public byte[] PSPEventsToByteArray()
+        {
+            List<byte> result = new List<byte>();
+            if( PSPEvent != null )
+            {
+                foreach( Event e in PSPEvent )
+                {
+                    result.AddRange( e.ToByteArray() );
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4, IList<byte> entd5 )
+            : this( entd1, entd2, entd3, entd4 )
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                PSPEvent = new List<Event>( 77 );
+                for( int i = 0; i < 77; i++ )
+                {
+                    PSPEvent.Add( new Event( 0x200 + i, new SubArray<byte>( entd5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
+                        new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
+                }
+
+                Events.AddRange( PSPEvent );
+            }
+        }
+
         public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4 )
         {
             ENTDs = new ENTD[4];
@@ -85,18 +115,6 @@ namespace FFTPatcher.Datatypes
             foreach( ENTD e in ENTDs )
             {
                 Events.AddRange( e.Events );
-            }
-
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                PSPEvent = new List<Event>( 77 );
-                for( int i = 0; i < 77; i++ )
-                {
-                    PSPEvent.Add( new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
-                        new Event( 0x200 + i, new SubArray<byte>( Resources.ENTD5, i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
-                }
-
-                Events.AddRange( PSPEvent );
             }
         }
     }

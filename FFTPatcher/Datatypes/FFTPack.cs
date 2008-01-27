@@ -1,12 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.IO;
 
 namespace FFTPatcher.Datatypes
 {
+    public class ProgressEventArgs : EventArgs
+    {
+        public int TotalTasks { get; private set; }
+        public int TasksComplete { get; private set; }
+
+        public ProgressEventArgs( int done, int total )
+        {
+            TotalTasks = total;
+            TasksComplete = done;
+        }
+    }
+
     public static class FFTPack
     {
+        public static event EventHandler<ProgressEventArgs> FileProgress;
+
+        private static void FireFileProgressEvent( int done, int total )
+        {
+            if( FileProgress != null )
+            {
+                FileProgress( null, new ProgressEventArgs( done, total ) );
+            }
+        }
+
         public static byte[] GetFile( FileStream stream, int index )
         {
             byte[] bytes = new byte[4];
@@ -94,6 +133,28 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void DumpToDirectory( string filename, string path )
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open );
+                DumpToDirectory( stream, path );
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Close();
+                }
+            }
+        }
+
         public static void DumpToDirectory( FileStream stream, string path )
         {
             MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown" );
@@ -118,6 +179,8 @@ namespace FFTPatcher.Datatypes
                 filename = Path.Combine( path, filename );
 
                 SaveToFile( bytes, filename );
+
+                FireFileProgressEvent( i, 3970 );
             }
         }
 
@@ -197,6 +260,8 @@ namespace FFTPatcher.Datatypes
                     }
 
                     end = (UInt32)stream.Position;
+
+                    FireFileProgressEvent( i, 3970 );
                 }
             }
             catch( Exception )

@@ -203,6 +203,14 @@ namespace FFTPatcher.Editors
                         e.Graphics.DrawRectangle( p, new Rectangle( e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1 ) );
                     }
                 }
+
+                if( !Enabled )
+                {
+                    using( SolidBrush disabledRect = new SolidBrush( Color.FromArgb( 100, Color.Gray ) ) )
+                    {
+                        e.Graphics.FillRectangle( disabledRect, e.Bounds );
+                    }
+                }
             }
         }
 

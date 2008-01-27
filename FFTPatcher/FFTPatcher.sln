@@ -12,13 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		gzip.exe = gzip.exe
 		psp1.2.fftpatch = psp1.2.fftpatch
 		psx1.2.fftpatch = psx1.2.fftpatch
+		readme.txt = readme.txt
 		zipResources.bat = zipResources.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fftpspext", "fftpspext", "{47407AA1-56F3-4400-942F-645239D286DD}"
 	ProjectSection(SolutionItems) = preProject
 		fftpspext\fftpspext.c = fftpspext\fftpspext.c
-		fftpspext\fftpspext.exe = fftpspext\fftpspext.exe
 	EndProjectSection
 EndProject
 Global

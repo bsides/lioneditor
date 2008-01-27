@@ -19,6 +19,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using FFTPatcher.Datatypes;
 
 namespace FFTPatcher
@@ -28,6 +30,91 @@ namespace FFTPatcher
     /// </summary>
     public static class Codes
     {
+        private const string usHeader = "_S ULUS-10297\n_G Final Fantasy Tactics: The War of the Lions";
+        private const string euHeader = "_S ULES-00850\n_G Final Fantasy Tactics: The War of the Lions";
+
+        public static void SaveToFile( string path )
+        {
+            string codes = GetAllCodes();
+            StreamWriter stream = null;
+            try
+            {
+                stream = new StreamWriter( path, false );
+                stream.WriteLine( usHeader );
+                stream.WriteLine( codes );
+                stream.WriteLine( euHeader );
+                stream.WriteLine( codes );
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                }
+            }
+        }
+
+        public static string GetAllCodes()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if( FFTPatch.Abilities != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Abilities" : "", FFTPatch.Abilities.GenerateCodes() );
+            }
+            if( FFTPatch.Jobs != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Jobs" : "", FFTPatch.Jobs.GenerateCodes() );
+            }
+            if( FFTPatch.SkillSets != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Skill Sets" : "", FFTPatch.SkillSets.GenerateCodes() );
+            }
+            if( FFTPatch.MonsterSkills != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Monster Skill Sets" : "", FFTPatch.MonsterSkills.GenerateCodes() );
+            }
+            if( FFTPatch.ActionMenus != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Action Menus" : "", FFTPatch.ActionMenus.GenerateCodes() );
+            }
+            if( FFTPatch.StatusAttributes != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Status Effects" : "", FFTPatch.StatusAttributes.GenerateCodes() );
+            }
+            if( FFTPatch.PoachProbabilities != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Poaching" : "", FFTPatch.PoachProbabilities.GenerateCodes() );
+            }
+            if( FFTPatch.JobLevels != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Job Levels" : "", FFTPatch.JobLevels.GenerateCodes() );
+            }
+            if( FFTPatch.Items != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Items" : "", FFTPatch.Items.GenerateCodes() );
+            }
+            if( FFTPatch.ItemAttributes != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Item Attributes" : "", FFTPatch.ItemAttributes.GenerateCodes() );
+            }
+            if( FFTPatch.InflictStatuses != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Inflict Statuses" : "", FFTPatch.InflictStatuses.GenerateCodes() );
+            }
+            if( FFTPatch.Font != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Font" : "", FFTPatch.Font.GenerateCodes() );
+            }
+
+            return sb.ToString();
+        }
+
         private static List<string> GeneratePSPCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
         {
             List<string> codes = new List<string>();

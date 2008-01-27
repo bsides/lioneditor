@@ -121,11 +121,17 @@
   <data name="Abilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\abilities\abilities.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="AbilitiesEffects" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx-us\abilities\effects.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="AbilitiesStrings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\abilities\strings.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="AbilitiesBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\bin\abilities.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AbilityEffectsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx-us\bin\abilityeffects.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ActionEventsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx-us\bin\actionevents.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

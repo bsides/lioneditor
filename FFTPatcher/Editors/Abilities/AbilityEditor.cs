@@ -51,6 +51,8 @@ namespace FFTPatcher.Editors
             commonAbilitiesEditor.Ability = ability;
 
             abilityAttributesEditor.Visible = ability.IsNormal;
+            effectComboBox.Visible = ability.IsNormal;
+            effectLabel.Visible = ability.IsNormal;
             abilityAttributesEditor.Attributes = ability.Attributes;
 
             foreach( NumericUpDownWithDefault spinner in spinners )
@@ -74,6 +76,7 @@ namespace FFTPatcher.Editors
                 ourContext = Context.US_PSP;
                 itemUseComboBox.Items.Clear();
                 itemUseComboBox.Items.AddRange( pspItems.ToArray() );
+                effectComboBox.DataSource = new List<Effect>( Effect.PSPEffects.Values );
                 throwingComboBox.DataSource = pspItemTypes;
             }
             else if( FFTPatch.Context == Context.US_PSX && ourContext != Context.US_PSX )
@@ -81,7 +84,13 @@ namespace FFTPatcher.Editors
                 ourContext = Context.US_PSX;
                 itemUseComboBox.Items.Clear();
                 itemUseComboBox.Items.AddRange( psxItems.ToArray() );
+                effectComboBox.DataSource = new List<Effect>( Effect.PSXEffects.Values );
                 throwingComboBox.DataSource = psxItemTypes;
+            }
+
+            if( ability.IsNormal )
+            {
+                effectComboBox.SetValueAndDefault( ability.Effect, ability.Default.Effect );
             }
 
             if( ability.IsItem )
@@ -109,7 +118,7 @@ namespace FFTPatcher.Editors
             InitializeComponent();
             spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { 
                 arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner } );
-            comboBoxes = new List<ComboBoxWithDefault>( new ComboBoxWithDefault[] { itemUseComboBox, throwingComboBox } );
+            comboBoxes = new List<ComboBoxWithDefault>( new ComboBoxWithDefault[] { itemUseComboBox, throwingComboBox, effectComboBox } );
 
             arithmeticksSpinner.Tag = "ArithmetickSkill";
             ctSpinner.Tag = "ChargeCT";

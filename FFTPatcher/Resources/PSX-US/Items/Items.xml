@@ -18,7 +18,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Items>
-  <Item offset="0" name="&lt;Nothing&gt;"/>
+  <Item offset="0" name="&lt;Nothing&gt; "/> <!-- leave trailing space -->
   <Item offset="1" name="Dagger"/>
   <Item offset="2" name="Mythril Knife"/>
   <Item offset="3" name="Blind Knife"/>
@@ -117,14 +117,14 @@
   <Item offset="96" name="Monster Dict"/>
   <Item offset="97" name="Papyrus Plate"/>
   <Item offset="98" name="Madlemgen"/>
-  <Item offset="99" name="Javelin"/>
+  <Item offset="99" name="Javelin "/> <!-- leave trailing space -->
   <Item offset="100" name="Spear"/>
   <Item offset="101" name="Mythril Spear"/>
   <Item offset="102" name="Partisan"/>
   <Item offset="103" name="Oberisk"/>
   <Item offset="104" name="Holy Lance"/>
   <Item offset="105" name="Dragon Whisker"/>
-  <Item offset="106" name="Javelin"/>
+  <Item offset="106" name="Javelin  "/> <!-- leave trailing space -->
   <Item offset="107" name="Cypress Rod"/>
   <Item offset="108" name="Battle Bamboo"/>
   <Item offset="109" name="Musk Rod"/>
@@ -146,7 +146,7 @@
   <Item offset="125" name="Fire Ball"/>
   <Item offset="126" name="Water Ball"/>
   <Item offset="127" name="Lightning Ball"/>
-  <Item offset="128" name="Escutcheon"/>
+  <Item offset="128" name="Escutcheon "/> <!-- leave trailing space -->
   <Item offset="129" name="Buckler"/>
   <Item offset="130" name="Bronze Shield"/>
   <Item offset="131" name="Round Shield"/>
@@ -161,7 +161,7 @@
   <Item offset="140" name="Genji Shield"/>
   <Item offset="141" name="Kaiser Plate"/>
   <Item offset="142" name="Venetian Shield"/>
-  <Item offset="143" name="Escutcheon"/>
+  <Item offset="143" name="Escutcheon  "/> <!-- leave trailing space -->
   <Item offset="144" name="Leather Helmet"/>
   <Item offset="145" name="Bronze Helmet"/>
   <Item offset="146" name="Iron Helmet"/>
@@ -272,6 +272,6 @@
   <Item offset="251" name="Holy Water"/>
   <Item offset="252" name="Remedy"/>
   <Item offset="253" name="Phoenix Down"/>
-  <Item offset="254" name="&lt;Nothing&gt;"/>
-  <Item offset="255" name="&lt;Nothing&gt;"/>
+  <Item offset="254" name="&lt;Nothing&gt;  "/> <!-- leave trailing space -->
+  <Item offset="255" name="&lt;Nothing&gt;   "/> <!-- leave trailing space -->
 </Items>

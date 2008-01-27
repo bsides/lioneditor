@@ -131,6 +131,7 @@ namespace FFTPatcher.Datatypes
 
         public bool IsNormal { get; private set; }
         public AbilityAttributes Attributes { get; private set; }
+        public Effect Effect { get; set; }
 
         #endregion Normal
 

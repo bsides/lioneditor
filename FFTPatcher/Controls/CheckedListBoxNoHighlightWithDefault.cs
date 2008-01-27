@@ -101,9 +101,32 @@ namespace FFTPatcher.Controls
                 (e.Index < Defaults.Length) &&
                 (e.Index < Items.Count) &&
                 GetItemChecked( e.Index ) ^ Defaults[e.Index];
-           
-            using( Brush backColorBrush = new SolidBrush( changed ? Color.Blue : BackColor ) )
-            using( Brush foreColorBrush = new SolidBrush( changed ? Color.White : ForeColor ) )
+
+            Color backColor = Color.Empty;
+            Color foreColor = Color.Empty;
+            if( !Enabled && changed )
+            {
+                backColor = Color.LightBlue;
+                foreColor = SystemColors.GrayText;
+            }
+            else if( Enabled && changed )
+            {
+                backColor = Color.Blue;
+                foreColor = Color.White;
+            }
+            else if( !Enabled && !changed )
+            {
+                backColor = BackColor;
+                foreColor = SystemColors.GrayText;
+            }
+            else
+            {
+                backColor = BackColor;
+                foreColor = ForeColor;
+            }
+
+            using( Brush backColorBrush = new SolidBrush( backColor ) )
+            using( Brush foreColorBrush = new SolidBrush( foreColor ) )
             {
                 e.Graphics.FillRectangle( backColorBrush, e.Bounds );
                 if( e.Index < Items.Count )

@@ -59,21 +59,10 @@ namespace FFTPatcher.Properties {
                 resourceCulture = value;
             }
         }
-
-        internal static byte[] Abilities
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject( "Abilities", resourceCulture );
-                return ((byte[])(obj));
-            }
-        }
-
-        internal static byte[] AbilitiesStrings
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject( "AbilitiesStrings", resourceCulture );
+        
+        internal static byte[] Abilities {
+            get {
+                object obj = ResourceManager.GetObject("Abilities", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -81,6 +70,27 @@ namespace FFTPatcher.Properties {
         internal static byte[] AbilitiesBin {
             get {
                 object obj = ResourceManager.GetObject("AbilitiesBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] AbilitiesEffects {
+            get {
+                object obj = ResourceManager.GetObject("AbilitiesEffects", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] AbilitiesStrings {
+            get {
+                object obj = ResourceManager.GetObject("AbilitiesStrings", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] AbilityEffectsBin {
+            get {
+                object obj = ResourceManager.GetObject("AbilityEffectsBin", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -141,6 +151,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] FFTPackFiles {
+            get {
+                object obj = ResourceManager.GetObject("FFTPackFiles", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] FontBin {
             get {
                 object obj = ResourceManager.GetObject("FontBin", resourceCulture);
@@ -168,25 +185,21 @@ namespace FFTPatcher.Properties {
                 return ((byte[])(obj));
             }
         }
-
-        internal static byte[] Items
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject( "Items", resourceCulture );
+        
+        internal static byte[] Items {
+            get {
+                object obj = ResourceManager.GetObject("Items", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
-        internal static byte[] ItemsStrings
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject( "ItemsStrings", resourceCulture );
+        
+        internal static byte[] ItemsStrings {
+            get {
+                object obj = ResourceManager.GetObject("ItemsStrings", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         internal static byte[] JobLevelsBin {
             get {
                 object obj = ResourceManager.GetObject("JobLevelsBin", resourceCulture);
@@ -197,13 +210,6 @@ namespace FFTPatcher.Properties {
         internal static byte[] Jobs {
             get {
                 object obj = ResourceManager.GetObject("Jobs", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] FFTPackFiles {
-            get {
-                object obj = ResourceManager.GetObject("FFTPackFiles", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -277,28 +283,24 @@ namespace FFTPatcher.Properties {
                 return ((byte[])(obj));
             }
         }
-
-        internal static byte[] SpriteSets
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject( "SpriteSets", resourceCulture );
+        
+        internal static byte[] SpriteSets {
+            get {
+                object obj = ResourceManager.GetObject("SpriteSets", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
-        internal static byte[] StatusNames
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject( "StatusNames", resourceCulture );
-                return ((byte[])(obj));
-            }
-        }
-
+        
         internal static byte[] StatusAttributesBin {
             get {
                 object obj = ResourceManager.GetObject("StatusAttributesBin", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] StatusNames {
+            get {
+                object obj = ResourceManager.GetObject("StatusNames", resourceCulture);
                 return ((byte[])(obj));
             }
         }

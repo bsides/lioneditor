@@ -18,6 +18,8 @@
 */
 
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
@@ -43,11 +45,149 @@ namespace FFTPatcher
             generateMenuItem.Enabled = false;
             generateFontMenuItem.Click += generateFontMenuItem_Click;
             applyBattleBinMenuItem.Click += applyBattleBinMenuItem_Click;
+            extractFFTPackMenuItem.Click += new EventHandler( extractFFTPackMenuItem_Click );
+            rebuildFFTPackMenuItem.Click += new EventHandler( rebuildFFTPackMenuItem_Click );
+
+            fftpackMenuItem.Click += new EventHandler( fftpackMenuItem_Click );
+            cheatdbMenuItem.Click += new EventHandler( cheatdbMenuItem_Click );
             FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void cheatdbMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.Filter = "CWCheat DB files|cheat.db";
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    Codes.SaveToFile( saveFileDialog.FileName );
+                }
+                catch
+                {
+                    MessageBox.Show( "Could not save file.", "Error", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void fftpackMenuItem_Click( object sender, EventArgs e )
+        {
+            applyPatchOpenFileDialog.Filter = "fftpack.bin|fftpack.bin";
+            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    byte[] entd1 = FFTPatch.ENTDs.ENTDs[0].ToByteArray();
+                    byte[] entd2 = FFTPatch.ENTDs.ENTDs[1].ToByteArray();
+                    byte[] entd3 = FFTPatch.ENTDs.ENTDs[2].ToByteArray();
+                    byte[] entd4 = FFTPatch.ENTDs.ENTDs[3].ToByteArray();
+                    List<byte> entd5 = new List<byte>();
+                    foreach( Event ev in FFTPatch.ENTDs.PSPEvent )
+                    {
+                        entd5.AddRange( ev.ToByteArray() );
+                    }
+                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 229, entd1 );
+                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 230, entd2 );
+                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 231, entd3 );
+                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 232, entd4 );
+                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 897, entd5.ToArray() );
+                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
+                }
+                catch( InvalidDataException )
+                {
+                    MessageBox.Show(
+                        "Could not find patch locations.\n" +
+                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
+                        "Ensure that you have selected an unmodified fftpack.bin",
+                        "Invalid data", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 0;
+            folderBrowserDialog.Description = "Where are the extracted files?";
+            bool oldEnabled = fftPatchEditor1.Enabled;
+
+            if( (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) && (saveFileDialog.ShowDialog( this ) == DialogResult.OK) )
+            {
+                try
+                {
+                    FFTPack.FileProgress += FFTPack_FileProgress;
+                    progressBar.Visible = true;
+                    fftPatchEditor1.Enabled = false;
+
+                    FFTPack.MergeDumpedFiles( folderBrowserDialog.SelectedPath, saveFileDialog.FileName );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show(
+                        "Could not merge files.\n" +
+                        "Make sure you chose the correct path and that there \n" +
+                        "enough room in the destination location.",
+                        "Error", MessageBoxButtons.OK );
+                }
+                finally
+                {
+                    FFTPack.FileProgress -= FFTPack_FileProgress;
+                    progressBar.Visible = false;
+                    fftPatchEditor1.Enabled = oldEnabled;
+                }
+            }
+        }
+
+        private void extractFFTPackMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
+            openFileDialog.FilterIndex = 0;
+            folderBrowserDialog.Description = "Where should the files be extracted?";
+
+            bool oldEnabled = fftPatchEditor1.Enabled;
+
+            if( (openFileDialog.ShowDialog( this ) == DialogResult.OK) && (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) )
+            {
+                try
+                {
+                    FFTPack.FileProgress += FFTPack_FileProgress;
+                    progressBar.Visible = true;
+                    fftPatchEditor1.Enabled = false;
+                    FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show(
+                        "Could not extract file.\n" +
+                        "Make sure you chose the correct file and that there \n" +
+                        "enough room in the destination directory.",
+                        "Error", MessageBoxButtons.OK );
+                }
+                finally
+                {
+                    FFTPack.FileProgress -= FFTPack_FileProgress;
+                    progressBar.Visible = false;
+                    fftPatchEditor1.Enabled = oldEnabled;
+                }
+            }
+        }
+
+        private void FFTPack_FileProgress( object sender, ProgressEventArgs e )
+        {
+            progressBar.Location = new Point( (Width - progressBar.Width) / 2, (Height - progressBar.Height) / 2 );
+            progressBar.Maximum = e.TotalTasks;
+            progressBar.Minimum = 0;
+            progressBar.Value = e.TasksComplete;
         }
 
         private void generateMenuItem_Click( object sender, EventArgs e )
         {
+            folderBrowserDialog.Description = "Where should the files be exported?\nAny files in the folder you choose with the n" +
+                "ames ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, or ENTD4.ENT will be overwritte" +
+                "n.";
             if( folderBrowserDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
@@ -74,12 +214,17 @@ namespace FFTPatcher
             generateMenuItem.Enabled = true;
             generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
             applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+
+            fftpackMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
+            cheatdbMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
+
         }
 
         private void openModifiedMenuItem_Click( object sender, System.EventArgs e )
         {
             openFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
-            if( openFileDialog.ShowDialog() == DialogResult.OK )
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
@@ -151,7 +296,7 @@ namespace FFTPatcher
         private void applyBattleBinMenuItem_Click( object sender, EventArgs e )
         {
             applyPatchOpenFileDialog.Filter = "BATTLE.BIN|BATTLE.BIN";
-            if( applyPatchOpenFileDialog.ShowDialog() == DialogResult.OK )
+            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
@@ -184,7 +329,7 @@ namespace FFTPatcher
                 applyPatchOpenFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
             }
 
-            if( applyPatchOpenFileDialog.ShowDialog() == DialogResult.OK )
+            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
@@ -195,7 +340,6 @@ namespace FFTPatcher
                 {
                     MessageBox.Show(
                         "Could not find patch locations.\n" +
-                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
                         "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
                         "Invalid data", MessageBoxButtons.OK );
                 }
@@ -209,7 +353,7 @@ namespace FFTPatcher
         private void openMenuItem_Click( object sender, System.EventArgs e )
         {
             openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
-            if( openFileDialog.ShowDialog() == DialogResult.OK )
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 FFTPatch.LoadPatch( openFileDialog.FileName );
             }

@@ -145,6 +145,7 @@ namespace FFTPatcher.Datatypes
         public ShopAvailability ShopAvailability { get; set; }
         public byte Unknown2 { get; set; }
         public Item Default { get; private set; }
+        public Item Self { get { return this; } }
 
         private Item()
         {

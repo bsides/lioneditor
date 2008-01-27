@@ -92,9 +92,11 @@ namespace FFTPatcher.Datatypes
 
         public Ability[] Abilities { get; private set; }
 
-        public AllAbilities( SubArray<byte> bytes )
+        public AllAbilities( SubArray<byte> bytes, SubArray<byte> effectsBytes )
         {
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : PSXResources.AbilitiesBin;
+            Dictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
+            byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
 
             Abilities = new Ability[512];
             DefaultAbilities = new Ability[512];
@@ -104,10 +106,15 @@ namespace FFTPatcher.Datatypes
                 SubArray<byte> first = new SubArray<byte>( bytes, i * 8, i * 8 + 7 );
                 SubArray<byte> second;
                 SubArray<byte> defaultSecond;
+                Effect effect = null;
+                Effect defaultEffect = null;
+
                 if( i <= 0x16F )
                 {
                     second = new SubArray<byte>( bytes, 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
                     defaultSecond = new SubArray<byte>( defaultBytes, 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
+                    effect = effects[Utilities.BytesToUShort( effectsBytes[i * 2], effectsBytes[i * 2 + 1] )];
+                    defaultEffect = effects[Utilities.BytesToUShort( defaultEffects[i * 2], defaultEffects[i * 2 + 1] )];
                 }
                 else if( i <= 0x17D )
                 {
@@ -141,6 +148,11 @@ namespace FFTPatcher.Datatypes
                 }
 
                 Abilities[i] = new Ability( Names[i], i, first, second, new Ability( Names[i], i, defaultFirst, defaultSecond ) );
+                if( i <= 0x16F )
+                {
+                    Abilities[i].Effect = effect;
+                    Abilities[i].Default.Effect = defaultEffect;
+                }
             }
         }
 
@@ -170,12 +182,29 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 );
+                List<string> result = new List<string>();
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
+                return result;
             }
             else
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
             }
+        }
+
+        public byte[] ToEffectsByteArray()
+        {
+            List<byte> result = new List<byte>( 0x2E0 );
+            foreach( Ability a in Abilities )
+            {
+                if( a.IsNormal )
+                {
+                    result.AddRange( a.Effect.Value.ToBytes() );
+                }
+            }
+
+            return result.ToArray();
         }
     }
 }

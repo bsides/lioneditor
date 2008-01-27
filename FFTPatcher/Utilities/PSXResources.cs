@@ -51,6 +51,9 @@ namespace FFTPatcher
             dict["SpecialNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpecialNames ).ToUTF8String();
             dict["SpriteSets"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpriteSets ).ToUTF8String();
             dict["StatusNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.StatusNames ).ToUTF8String();
+
+            dict["AbilitiesEffects"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesEffects ).ToUTF8String();
+            dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilityEffectsBin );
         }
 
         public static string SkillSets { get { return dict["SkillSets"] as string; } }
@@ -78,6 +81,23 @@ namespace FFTPatcher
                 }
 
                 return statuses;
+            }
+        }
+
+        private static string[] abilityEffects;
+        public static string[] AbilityEffects
+        {
+            get
+            {
+                if( abilityEffects == null )
+                {
+                    abilityEffects = Utilities.GetStringsFromNumberedXmlNodes(
+                        dict["AbilitiesEffects"] as string,
+                        "/Effects/Effect[@value='{0:X3}']/@name",
+                        512 );
+                }
+
+                return abilityEffects;
             }
         }
 
@@ -163,5 +183,6 @@ namespace FFTPatcher
         public static byte[] OldItemAttributesBin { get { return dict["OldItemAttributesBin"] as byte[]; } }
         public static byte[] OldItemsBin { get { return dict["OldItemsBin"] as byte[]; } }
         public static byte[] SkillSetsBin { get { return dict["SkillSetsBin"] as byte[]; } }
+        public static byte[] AbilityEffectsBin { get { return dict["AbilitiesEffectsBin"] as byte[]; } }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="Datatypes\Abilities\AllAbilities.cs" />
     <Compile Include="Datatypes\Abilities\Ability.cs" />
     <Compile Include="Datatypes\Abilities\AIFlags.cs" />
+    <Compile Include="Datatypes\Abilities\Effect.cs" />
     <Compile Include="Datatypes\Context.cs" />
     <Compile Include="Datatypes\Elements.cs" />
     <Compile Include="Datatypes\ENTD\ENTD.cs" />
@@ -429,7 +430,6 @@
       <LastGenOutput>PSXResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Datatypes\DataTypes.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -439,6 +439,7 @@
     <None Include="Resources\ENTD3.ENT" />
     <None Include="Resources\ENTD4.ENT" />
     <Compile Include="Resources\PSP\bin\Abilities.bin" />
+    <None Include="Resources\PSP\bin\AbilityEffects.bin" />
     <None Include="Resources\PSP\bin\ActionEvents.bin" />
     <None Include="Resources\PSP\bin\ENTD5.bin" />
     <None Include="Resources\PSP\bin\font.bin" />
@@ -455,6 +456,7 @@
     <None Include="Resources\PSP\bin\SkillSetsBin.bin" />
     <None Include="Resources\PSP\bin\StatusAttributes.bin" />
     <None Include="Resources\PSX-US\bin\Abilities.bin" />
+    <None Include="Resources\PSX-US\bin\AbilityEffects.bin" />
     <None Include="Resources\PSX-US\bin\ActionEvents.bin" />
     <None Include="Resources\PSX-US\bin\font.bin" />
     <None Include="Resources\PSX-US\bin\FontWidths.bin" />
@@ -493,6 +495,7 @@
   <ItemGroup>
     <Content Include="Resources\bg.gif" />
     <Content Include="Resources\PSP\Abilities\Abilities.xml" />
+    <Content Include="Resources\PSP\Abilities\Effects.xml" />
     <Content Include="Resources\PSP\Abilities\Strings.xml" />
     <Content Include="Resources\PSP\EventNames.xml" />
     <Content Include="Resources\PSP\FFTPackFiles.xml" />
@@ -505,6 +508,7 @@
     <Content Include="Resources\PSP\SpriteSets.xml" />
     <Content Include="Resources\PSP\StatusNames.xml" />
     <Content Include="Resources\PSX-US\Abilities\Abilities.xml" />
+    <Content Include="Resources\PSX-US\Abilities\Effects.xml" />
     <Content Include="Resources\PSX-US\Abilities\Strings.xml" />
     <Content Include="Resources\PSX-US\EventNames.xml" />
     <Content Include="Resources\PSX-US\Items\ItemAttributes.xml" />

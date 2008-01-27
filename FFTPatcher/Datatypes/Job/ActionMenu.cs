@@ -35,7 +35,7 @@ namespace FFTPatcher.Datatypes
         Arithmeticks,
         [Description( "Elements" )]
         Elements,
-        [Description( "Blank" )]
+        [Description( "Blank " )] // extra space is a hack to fix DataGridViewComboBoxColumn
         Blank1,
         [Description( "Monster" )]
         Monster,
@@ -51,11 +51,11 @@ namespace FFTPatcher.Datatypes
         Defend,
         [Description( "Change Equipment" )]
         ChangeEquip,
-        [Description( "Unknown" )]
+        [Description( "Unknown " )] // extra space is a hack to fix DataGridViewComboBoxColumn
         Unknown2,
-        [Description( "Blank" )]
+        [Description( "Blank  " )] // extra space is a hack to fix DataGridViewComboBoxColumn
         Blank2,
-        [Description( "Unknown" )]
+        [Description( "Unknown  " )] // extra space is a hack to fix DataGridViewComboBoxColumn
         Unknown3
     }
 
@@ -112,6 +112,7 @@ namespace FFTPatcher.Datatypes
         public string Name { get; private set; }
         public ActionMenuEntry MenuAction { get; set; }
 
+        public ActionMenu Self { get { return this; } }
         public ActionMenu Default { get; private set; }
         public string ActionName
         {

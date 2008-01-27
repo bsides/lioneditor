@@ -49,30 +49,45 @@ namespace FFTPatcher
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.MenuItem fileMenuItem;
-            System.Windows.Forms.MenuItem exportMenu;
+            System.Windows.Forms.MenuItem separator1;
+            System.Windows.Forms.MenuItem separator2;
+            System.Windows.Forms.MenuItem psxMenu;
+            System.Windows.Forms.MenuItem separator3;
+            System.Windows.Forms.MenuItem separator4;
+            System.Windows.Forms.MenuItem pspMenu;
+            System.Windows.Forms.MenuItem separator5;
+            System.Windows.Forms.MenuItem utilitiesMenuItem;
             this.newPSXMenuItem = new System.Windows.Forms.MenuItem();
             this.newPSPMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
-            this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
+            this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.applySCUSMenuItem = new System.Windows.Forms.MenuItem();
+            this.applyBattleBinMenuItem = new System.Windows.Forms.MenuItem();
+            this.generateFontMenuItem = new System.Windows.Forms.MenuItem();
             this.generateMenuItem = new System.Windows.Forms.MenuItem();
+            this.fftpackMenuItem = new System.Windows.Forms.MenuItem();
+            this.cheatdbMenuItem = new System.Windows.Forms.MenuItem();
+            this.extractFFTPackMenuItem = new System.Windows.Forms.MenuItem();
+            this.rebuildFFTPackMenuItem = new System.Windows.Forms.MenuItem();
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.applyPatchOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.applyBattleBinMenuItem = new System.Windows.Forms.MenuItem();
-            this.generateFontMenuItem = new System.Windows.Forms.MenuItem();
-            this.menuItem3 = new System.Windows.Forms.MenuItem();
-            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
             fileMenuItem = new System.Windows.Forms.MenuItem();
-            exportMenu = new System.Windows.Forms.MenuItem();
+            separator1 = new System.Windows.Forms.MenuItem();
+            separator2 = new System.Windows.Forms.MenuItem();
+            psxMenu = new System.Windows.Forms.MenuItem();
+            separator3 = new System.Windows.Forms.MenuItem();
+            separator4 = new System.Windows.Forms.MenuItem();
+            pspMenu = new System.Windows.Forms.MenuItem();
+            separator5 = new System.Windows.Forms.MenuItem();
+            utilitiesMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // fileMenuItem
@@ -81,11 +96,10 @@ namespace FFTPatcher
             fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.newPSXMenuItem,
             this.newPSPMenuItem,
-            this.menuItem4,
+            separator1,
             this.openMenuItem,
-            this.openModifiedMenuItem,
             this.saveMenuItem,
-            this.menuItem7,
+            separator2,
             this.exitMenuItem} );
             fileMenuItem.Text = "&File";
             // 
@@ -99,70 +113,140 @@ namespace FFTPatcher
             this.newPSPMenuItem.Index = 1;
             this.newPSPMenuItem.Text = "New PS&P patch";
             // 
-            // menuItem4
+            // separator1
             // 
-            this.menuItem4.Index = 2;
-            this.menuItem4.Text = "-";
+            separator1.Index = 2;
+            separator1.Text = "-";
             // 
             // openMenuItem
             // 
             this.openMenuItem.Index = 3;
             this.openMenuItem.Text = "&Open patch...";
             // 
-            // openModifiedMenuItem
-            // 
-            this.openModifiedMenuItem.Index = 4;
-            this.openModifiedMenuItem.Text = "Open modified SCUS_942.21...";
-            // 
             // saveMenuItem
             // 
-            this.saveMenuItem.Index = 5;
+            this.saveMenuItem.Enabled = false;
+            this.saveMenuItem.Index = 4;
             this.saveMenuItem.Text = "&Save patch...";
             // 
-            // menuItem7
+            // separator2
             // 
-            this.menuItem7.Index = 6;
-            this.menuItem7.Text = "-";
+            separator2.Index = 5;
+            separator2.Text = "-";
             // 
             // exitMenuItem
             // 
-            this.exitMenuItem.Index = 7;
+            this.exitMenuItem.Index = 6;
             this.exitMenuItem.Text = "E&xit";
             // 
-            // exportMenu
+            // psxMenu
             // 
-            exportMenu.Index = 1;
-            exportMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            psxMenu.Index = 1;
+            psxMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.openModifiedMenuItem,
+            separator3,
             this.applySCUSMenuItem,
-            this.menuItem3,
-            this.generateFontMenuItem,
             this.applyBattleBinMenuItem,
-            this.menuItem5,
+            separator4,
+            this.generateFontMenuItem,
             this.generateMenuItem} );
-            exportMenu.Text = "&Export";
+            psxMenu.Text = "PS&X";
+            // 
+            // openModifiedMenuItem
+            // 
+            this.openModifiedMenuItem.Index = 0;
+            this.openModifiedMenuItem.Text = "&Open modified SCUS_942.21...";
+            // 
+            // separator3
+            // 
+            separator3.Index = 1;
+            separator3.Text = "-";
             // 
             // applySCUSMenuItem
             // 
             this.applySCUSMenuItem.Enabled = false;
-            this.applySCUSMenuItem.Index = 0;
-            this.applySCUSMenuItem.Text = "&Apply patch to SCUS_942.21...";
+            this.applySCUSMenuItem.Index = 2;
+            this.applySCUSMenuItem.Text = "Patch &SCUS_942.21...";
+            // 
+            // applyBattleBinMenuItem
+            // 
+            this.applyBattleBinMenuItem.Enabled = false;
+            this.applyBattleBinMenuItem.Index = 3;
+            this.applyBattleBinMenuItem.Text = "Patch &BATTLE.BIN...";
+            // 
+            // separator4
+            // 
+            separator4.Index = 4;
+            separator4.Text = "-";
+            // 
+            // generateFontMenuItem
+            // 
+            this.generateFontMenuItem.Enabled = false;
+            this.generateFontMenuItem.Index = 5;
+            this.generateFontMenuItem.Text = "Generate &FONT.BIN...";
             // 
             // generateMenuItem
             // 
             this.generateMenuItem.Enabled = false;
-            this.generateMenuItem.Index = 5;
-            this.generateMenuItem.Text = "&Generate ENTD?.ENT files...";
+            this.generateMenuItem.Index = 6;
+            this.generateMenuItem.Text = "&Generate ENTD files...";
+            // 
+            // pspMenu
+            // 
+            pspMenu.Index = 2;
+            pspMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.fftpackMenuItem,
+            this.cheatdbMenuItem,
+            separator5,
+            utilitiesMenuItem} );
+            pspMenu.Text = "&PSP";
+            // 
+            // fftpackMenuItem
+            // 
+            this.fftpackMenuItem.Enabled = false;
+            this.fftpackMenuItem.Index = 0;
+            this.fftpackMenuItem.Text = "&Patch fftpack.bin...";
+            // 
+            // cheatdbMenuItem
+            // 
+            this.cheatdbMenuItem.Enabled = false;
+            this.cheatdbMenuItem.Index = 1;
+            this.cheatdbMenuItem.Text = "&Generate cheat.db...";
+            // 
+            // separator5
+            // 
+            separator5.Index = 2;
+            separator5.Text = "-";
+            // 
+            // utilitiesMenuItem
+            // 
+            utilitiesMenuItem.Index = 3;
+            utilitiesMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.extractFFTPackMenuItem,
+            this.rebuildFFTPackMenuItem} );
+            utilitiesMenuItem.Text = "&Utilities";
+            // 
+            // extractFFTPackMenuItem
+            // 
+            this.extractFFTPackMenuItem.Index = 0;
+            this.extractFFTPackMenuItem.Text = "E&xtract fftpack.bin...";
+            // 
+            // rebuildFFTPackMenuItem
+            // 
+            this.rebuildFFTPackMenuItem.Index = 1;
+            this.rebuildFFTPackMenuItem.Text = "&Rebuild fftpack.bin...";
             // 
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             fileMenuItem,
-            exportMenu,
+            psxMenu,
+            pspMenu,
             this.aboutMenuItem} );
             // 
             // aboutMenuItem
             // 
-            this.aboutMenuItem.Index = 2;
+            this.aboutMenuItem.Index = 3;
             this.aboutMenuItem.Text = "About...";
             // 
             // openFileDialog
@@ -177,42 +261,22 @@ namespace FFTPatcher
             // 
             this.applyPatchOpenFileDialog.Filter = "ISO files|*.iso";
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point( 87, 299 );
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size( 641, 23 );
+            this.progressBar.TabIndex = 1;
+            this.progressBar.Visible = false;
+            // 
             // fftPatchEditor1
             // 
             this.fftPatchEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fftPatchEditor1.Enabled = false;
             this.fftPatchEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.fftPatchEditor1.Name = "fftPatchEditor1";
-            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 671 );
+            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 596 );
             this.fftPatchEditor1.TabIndex = 0;
-            // 
-            // folderBrowserDialog
-            // 
-            this.folderBrowserDialog.Description = "Where should the files be exported?\nAny files in the folder you choose with the n" +
-                "ames ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, ENTD4.ENT, or ENTD5.ENT will be overwritte" +
-                "n.";
-            // 
-            // applyBattleBinMenuItem
-            // 
-            this.applyBattleBinMenuItem.Enabled = false;
-            this.applyBattleBinMenuItem.Index = 3;
-            this.applyBattleBinMenuItem.Text = "Apply font widths to BATTLE.BIN...";
-            // 
-            // generateFontMenuItem
-            // 
-            this.generateFontMenuItem.Enabled = false;
-            this.generateFontMenuItem.Index = 2;
-            this.generateFontMenuItem.Text = "Generate FONT.BIN...";
-            // 
-            // menuItem3
-            // 
-            this.menuItem3.Index = 1;
-            this.menuItem3.Text = "-";
-            // 
-            // menuItem5
-            // 
-            this.menuItem5.Index = 4;
-            this.menuItem5.Text = "-";
             // 
             // MainForm
             // 
@@ -220,7 +284,8 @@ namespace FFTPatcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size( 815, 671 );
+            this.ClientSize = new System.Drawing.Size( 815, 596 );
+            this.Controls.Add( this.progressBar );
             this.Controls.Add( this.fftPatchEditor1 );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
@@ -235,10 +300,8 @@ namespace FFTPatcher
         private System.Windows.Forms.MainMenu mainMenu;
         private System.Windows.Forms.MenuItem newPSXMenuItem;
         private System.Windows.Forms.MenuItem newPSPMenuItem;
-        private System.Windows.Forms.MenuItem menuItem4;
         private System.Windows.Forms.MenuItem openMenuItem;
         private System.Windows.Forms.MenuItem saveMenuItem;
-        private System.Windows.Forms.MenuItem menuItem7;
         private System.Windows.Forms.MenuItem applySCUSMenuItem;
         private System.Windows.Forms.MenuItem exitMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
@@ -248,10 +311,13 @@ namespace FFTPatcher
         private System.Windows.Forms.MenuItem aboutMenuItem;
         private System.Windows.Forms.MenuItem generateMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.MenuItem menuItem3;
         private System.Windows.Forms.MenuItem generateFontMenuItem;
         private System.Windows.Forms.MenuItem applyBattleBinMenuItem;
-        private System.Windows.Forms.MenuItem menuItem5;
+        private System.Windows.Forms.MenuItem fftpackMenuItem;
+        private System.Windows.Forms.MenuItem cheatdbMenuItem;
+        private System.Windows.Forms.MenuItem extractFFTPackMenuItem;
+        private System.Windows.Forms.MenuItem rebuildFFTPackMenuItem;
+        private System.Windows.Forms.ProgressBar progressBar;
 
     }
 }

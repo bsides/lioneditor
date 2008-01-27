@@ -39,7 +39,7 @@ namespace FFTPatcher.Editors
             "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", 
             "80", "81", "82", "83", "84", "85", "86", "87", "88", "89",
             "90", "91", "92", "93", "94", "95", "96", "97", "98", "99",
-
+            "Party level",
             "Party level + 1", "Party level + 2", "Party level + 3", "Party level + 4", "Party level + 5", "Party level + 6", "Party level + 7", "Party level + 8", "Party level + 9", 
             "Party level + 10", "Party level + 11", "Party level + 12", "Party level + 13", "Party level + 14", "Party level + 15", "Party level + 16", "Party level + 17", "Party level + 18", "Party level + 19", 
             "Party level + 20", "Party level + 21", "Party level + 22", "Party level + 23", "Party level + 24", "Party level + 25", "Party level + 26", "Party level + 27", "Party level + 28", "Party level + 29", 
@@ -284,8 +284,8 @@ namespace FFTPatcher.Editors
                     eventUnit.Day == 254 ? zeroTo31[32] : zeroTo31[eventUnit.Day],
                     eventUnit.Default.Day == 254 ? zeroTo31[32] : zeroTo31[eventUnit.Default.Day] );
                 levelComboBox.SetValueAndDefault(
-                    eventUnit.Level == 254 ? levelStrings[199] : levelStrings[eventUnit.Level],
-                    eventUnit.Default.Level == 254 ? levelStrings[199] : levelStrings[eventUnit.Default.Level] );
+                    eventUnit.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Level],
+                    eventUnit.Default.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Default.Level] );
             }
             ignoreChanges = false;
         }

@@ -70,6 +70,7 @@ namespace FFTPatcher.Datatypes
                 {
                     result.AddRange( e.ToByteArray() );
                 }
+                result.AddRange( new byte[1920] );
             }
 
             return result.ToArray();

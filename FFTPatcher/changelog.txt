@@ -1,4 +1,8 @@
-FFTPatcher - v0.190
+FFTPatcher - v0.192
+
+Changes since v0.190:
+  Fixed the "Level" field in the ENTD editor
+  Fixed some issues with .fftpatch file generation
 
 Changes since v0.168:
   Fixed a bug that would cause an exception when you tried to open a 

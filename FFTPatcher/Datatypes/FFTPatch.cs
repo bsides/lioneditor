@@ -248,7 +248,7 @@ namespace FFTPatcher.Datatypes
                 string[] elementNames = new string[] {
                     "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
                     "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-                    "entd1", "entd2", "entd3", "entd4", "font", "fontWidths" };
+                    "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths" };
                 for( int i = 0; i < builders.Length; i++ )
                 {
                     if( builders[i] != null )

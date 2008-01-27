@@ -1,12 +1,12 @@
 FFTPatcher - v0.190
 
-Changes since v0.190:
+Changes since v0.168:
   Fixed a bug that would cause an exception when you tried to open a 
     SCUS_942.21 file.
   Added utilities to unpack or rebuild the "fftpack.bin" file that is in on 
     the War of the Lions UMD
   Added Effects to Ability pages
-    This is the "effect" or "animation" that occurs when the effect is used.
+    This is the "effect" or "animation" that occurs when the ability is used.
   Added font editor
   Fixed some strings that were inconsistent between PSX and PSP modes 
     (not everything is fixed yet)

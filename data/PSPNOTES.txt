@@ -1,3 +1,4 @@
+00 30 8e 04
 ENTD?.ENT
 byte SpriteSet;
 byte Flags
@@ -23,9 +24,12 @@ ushort reaction
 ushort support
 ushort movement
 byte head
-byte body
+byte body 0x012F 11000110
+                100101111
 byte accessory
-byte righthand
+// 0x4A - 1001010
+        100000111
+byte righthand // 0x0107 
 byte lefthand
 byte palette
 byte Flags2

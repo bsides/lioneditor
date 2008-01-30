@@ -32,6 +32,7 @@ namespace FFTPatcher
             textBoxNoCaret.Text =
 @"Credits:
     ZodiacFFTM: For his awesome Excel spreadsheets on which this application is based.
+    Dakitty: Found the locations of the Dark Knight, Onion Knight, Balthier, Luso, Argath, Aliste, and Bremondt sprites in the fftpack.bin file
     Weltall: For CWCheat
     aerostar: Final Fantasy Tactics Battle Mechanics Guide
 

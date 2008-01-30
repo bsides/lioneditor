@@ -1017,6 +1017,17 @@
   <file entry="0878" name="SOUND/MUSIC_97.SMD"/>
   <file entry="0879" name="SOUND/MUSIC_98.SMD"/>
   <file entry="0880" name="SOUND/MUSIC_99.SMD"/>
+  <file entry="0885" name="BATTLE/MaleDarkKnight.SPR"/>
+  <file entry="0886" name="BATTLE/FemaleDarkKnight.SPR"/>
+  <file entry="0887" name="BATTLE/MaleOnionKnight.SPR"/>
+  <file entry="0888" name="BATTLE/FemaleOnionKnight.SPR"/>
+  <file entry="0889" name="BATTLE/Balthier.SPR"/>
+  <file entry="0890" name="BATTLE/Luso.SPR"/>
+  <file entry="0891" name="BATTLE/DeathKnightArgath.SPR"/>
+  <file entry="0892" name="BATTLE/Aliste.SPR"/>
+  <file entry="0893" name="BATTLE/BremondtHuman.SPR"/>
+  <file entry="0894" name="BATTLE/BremondtDarkDragon.SPR"/>
+  <file entry="0895" name="BATTLE/SwordInStore.SPR"/>
   <file entry="0897" name="BATTLE/ENTD5.ENT"/>
   <file entry="0902" name="SAVEIMAGE/902.png"/>
   <file entry="0903" name="SAVEIMAGE/903.png"/>

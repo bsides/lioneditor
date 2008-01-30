@@ -190,17 +190,17 @@ namespace FFTPatcher.Datatypes
 
             try
             {
-                if( Resources.FFTPackFiles.ContainsKey(index) )
+                if( Resources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, Resources.FFTPackFiles[index] ) ) )
                 {
                     stream = new FileStream( Path.Combine( path, Resources.FFTPackFiles[index] ), FileMode.Open );
-                }
-                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}.dummy", index ) ) ) )
-                {
-                    return new byte[0];
                 }
                 else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ) ) )
                 {
                     stream = new FileStream( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ), FileMode.Open );
+                }
+                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}.dummy", index ) ) ) )
+                {
+                    return new byte[0];
                 }
                 else
                 {

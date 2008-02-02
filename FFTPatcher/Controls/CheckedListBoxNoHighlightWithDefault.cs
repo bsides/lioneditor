@@ -98,6 +98,7 @@ namespace FFTPatcher.Controls
             bool changed =
                 (Defaults != null) &&
                 (Defaults.Length == Items.Count) &&
+                (e.Index != -1) &&
                 (e.Index < Defaults.Length) &&
                 (e.Index < Items.Count) &&
                 GetItemChecked( e.Index ) ^ Defaults[e.Index];
@@ -129,7 +130,7 @@ namespace FFTPatcher.Controls
             using( Brush foreColorBrush = new SolidBrush( foreColor ) )
             {
                 e.Graphics.FillRectangle( backColorBrush, e.Bounds );
-                if( e.Index < Items.Count )
+                if( (e.Index < Items.Count) && (e.Index != -1) )
                 {
                     CheckBoxState state = this.GetItemChecked( e.Index ) ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
                     Size checkBoxSize = CheckBoxRenderer.GetGlyphSize( e.Graphics, state );

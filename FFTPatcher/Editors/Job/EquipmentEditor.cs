@@ -30,6 +30,12 @@ namespace FFTPatcher.Editors
             "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "HairAdornment", "Armor",
             "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume",
             "Unknown1", "Unknown2", "Unknown3", "FellSword", "LipRouge", "Unknown6", "Unknown7", "Unknown8"};
+        private static string[] PSXFieldNames = new string[] {
+            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
+            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+            "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "HairAdornment", "Armor",
+            "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume" };
+
 
         private Equipment equipment;
         public Equipment Equipment
@@ -86,7 +92,7 @@ namespace FFTPatcher.Editors
             equipmentCheckedListBox.SuspendLayout();
 
             ignoreChanges = true;
-
+            string[] fields = FFTPatch.Context == Context.US_PSP ? FieldNames : PSXFieldNames;
             if( FFTPatch.Context == Context.US_PSP && equipmentCheckedListBox.Items.Count != pspItems.Length )
             {
                 equipmentCheckedListBox.Items.Clear();
@@ -97,9 +103,11 @@ namespace FFTPatcher.Editors
                 equipmentCheckedListBox.Items.Clear();
                 equipmentCheckedListBox.Items.AddRange( psxItems );
             }
-            if( equipment.Default != null )
+            if( (equipment.Default != null) && (fields != null) )
             {
-                equipmentCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( equipment, FieldNames ), equipment.Default.ToBoolArray() );
+                equipmentCheckedListBox.SetValuesAndDefaults(
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( equipment, fields ),
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( equipment.Default, fields ) );
             }
 
             ignoreChanges = false;

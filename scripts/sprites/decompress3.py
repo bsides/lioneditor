@@ -1,31 +1,16 @@
 from PIL import Image
 import sys
 
-SP2={"ARLI.SPR":["ARLI2.SP2"],
-"BEHI.SPR":["BEHI2.SP2"],
-"BIBUROS.SPR":["BIBU2.SP2"],
-"BOM.SPR":["BOM2.SP2"],
-"DEMON.SPR":["DEMON2.SP2"],
-"DORA2.SPR":["DORA22.SP2"],
-"HYOU.SPR":["HYOU2.SP2"],
+SP2={"ARLI.SPR":["ARLI2.SP2"],"BEHI.SPR":["BEHI2.SP2"],"BIBUROS.SPR":["BIBU2.SP2"],"BOM.SPR":["BOM2.SP2"],
+"DEMON.SPR":["DEMON2.SP2"],"DORA2.SPR":["DORA22.SP2"],"HYOU.SPR":["HYOU2.SP2"],
 "TETSU.SPR":["IRON2.SP2","IRON3.SP2","IRON4.SP2","IRON5.SP2"],
-"MINOTA.SPR":["MINOTA2.SP2"],
-"MOL.SPR":["MOL2.SP2"],
-"TORI.SPR":["TORI2.SP2"],
-"URI.SPR":["URI2.SP2"]}
+"MINOTA.SPR":["MINOTA2.SP2"],"MOL.SPR":["MOL2.SP2"],"TORI.SPR":["TORI2.SP2"],"URI.SPR":["URI2.SP2"]}
 
-def grow(dest, amt):
-  for i in range(amt):
-    dest.append(0)
-    
-def upper(b):
-  return (b&0xF0) >> 4
-
-def lower(b):
-  return b&0x0F
-  
+def upper(b): return (b&0xF0) >> 4
+def lower(b): return b&0x0F
 def SprDec(source):
   temp = []
+  # Build a list of ints from the nibbles
   for i in range(len(source)):
     temp.append(upper(ord(source[i])))
     temp.append(lower(ord(source[i])))
@@ -47,10 +32,11 @@ def SprDec(source):
         l = temp[i+2] + (temp[i+3] << 4) + (temp[i+4] << 8)
         i += 3
       i += 1
-      for j in range(l):
-        result.append(0)
+      # pad a bunch of 0's
+      for j in range(l): result.append(0)
     i += 1
   i = 0
+  # flip each pair of bytes
   while (i+1) < len(result):
     j = result[i]
     result[i] = result[i+1]
@@ -84,6 +70,7 @@ emptyPalette = [(0,0,0,0),(0,0,0,255),(0,0,0,255),(0,0,0,255),
 (0,0,0,255),(0,0,0,255),(0,0,0,255),(0,0,0,255),
 (0,0,0,255),(0,0,0,255),(0,0,0,255),(0,0,0,255),
 (0,0,0,255),(0,0,0,255),(0,0,0,255),(0,0,0,255)]
+
 def drawPixelsWithPaletteOnImage(pixels, palette, im):
   if palette == emptyPalette:
     return False
@@ -93,8 +80,6 @@ def drawPixelsWithPaletteOnImage(pixels, palette, im):
     except:
       e=0
   return True
-  
-h=488
 
 fn = sys.argv[1]
 print fn
@@ -104,12 +89,14 @@ compress_start = 0x9200
 if fn == "KASANEK.SPR" or fn == "KASANEM.SPR":
   compress_start = 0x8200
 
+h=0
 decompressed = []
 if len(data) >= compress_start and ord(data[compress_start]) != 0:
   decompressed = SprDec(data[compress_start:])
   h = 488
 else:
   h = 288
+  
 others=""
 if SP2.has_key(fn):
   for sp2 in SP2[fn]:

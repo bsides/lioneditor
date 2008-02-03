@@ -73,7 +73,7 @@ namespace FFTPatcher.Datatypes
         public static readonly string[] Flags1FieldNames = new string[] { 
             "Male", "Female", "Monster", "JoinAfterEvent", "LoadFormation", "Blank1", "Blank2", "SaveFormation" };
         public static readonly string[] Flags2FieldNames = new string[] { 
-            "Blank3", "Blank4", "Blank5", "Enemy", "Control", "Immortal", "Blank6", "Blank7" };
+            "AlwaysPresent", "RandomlyPresent", "Blank5", "Enemy", "Control", "Immortal", "Blank6", "Blank7" };
 
         public bool Male;
         public bool Female;
@@ -102,8 +102,8 @@ namespace FFTPatcher.Datatypes
         public Item LeftHand { get; set; }
         public byte Palette { get; set; }
 
-        public bool Blank3;
-        public bool Blank4;
+        public bool AlwaysPresent;
+        public bool RandomlyPresent;
         public bool Blank5;
         public bool Enemy;
         public bool Control;
@@ -162,7 +162,7 @@ namespace FFTPatcher.Datatypes
             RightHand = Item.EventItems[bytes[21]];
             LeftHand = Item.EventItems[bytes[22]];
             Palette = bytes[23];
-            Utilities.CopyByteToBooleans( bytes[24], ref Blank3, ref Blank4, ref Blank5, ref Enemy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
+            Utilities.CopyByteToBooleans( bytes[24], ref AlwaysPresent, ref RandomlyPresent, ref Blank5, ref Enemy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
             X = bytes[25];
             Y = bytes[26];
             FacingDirection = (Facing)bytes[27];
@@ -209,7 +209,7 @@ namespace FFTPatcher.Datatypes
             result.Add( (byte)(RightHand.Offset & 0xFF) );
             result.Add( (byte)(LeftHand.Offset & 0xFF) );
             result.Add( Palette );
-            result.Add( Utilities.ByteFromBooleans( Blank3, Blank4, Blank5, Enemy, Control, Immortal, Blank6, Blank7 ) );
+            result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, Blank5, Enemy, Control, Immortal, Blank6, Blank7 ) );
             result.Add( X );
             result.Add( Y );
             result.Add( (byte)FacingDirection );

@@ -479,8 +479,8 @@ namespace FFTPatcher.Editors
             // 
             this.flags2CheckedListBox.FormattingEnabled = true;
             this.flags2CheckedListBox.Items.AddRange( new object[] {
-            "",
-            "",
+            "Always Present",
+            "Randomly Present",
             "",
             "Enemy",
             "Control",

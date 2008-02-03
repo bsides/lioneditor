@@ -61,7 +61,8 @@ namespace FFTPatcher.Controls
                 List<int> itemsToRefresh = new List<int>( values.Length );
                 for( int i = 0; i < Items.Count; i++ )
                 {
-                    if( ((GetItemChecked( i ) ^ this.defaults[i]) && !(values[i] ^ defaults[i])) ||
+                    if( (i >= this.defaults.Length) || (i >= values.Length) || (i >= defaults.Length) || (i >= Items.Count) ||
+                        ((GetItemChecked( i ) ^ this.defaults[i]) && !(values[i] ^ defaults[i])) ||
                         (!(GetItemChecked( i ) ^ this.defaults[i]) && (values[i] ^ defaults[i])) )
                     {
                         itemsToRefresh.Add( i );

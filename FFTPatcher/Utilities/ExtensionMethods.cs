@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using FFTPatcher.Datatypes;
 
@@ -36,6 +37,19 @@ namespace FFTPatcher
     /// </summary>
     public static class ExtensionMethods
     {
+        public static void DrawSprite( this Graphics g, Sprite s, Palette p )
+        {
+            using( Bitmap b = new Bitmap( 256, 488 ) )
+            {
+                for( int i = 0; i < s.Pixels.Length; i++ )
+                {
+                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i]] );
+                }
+
+                g.DrawImage( b, 0, 0 );
+            }
+        }
+
         /// <summary>
         /// Adds <paramref name="lines"/> to the StringBuilder.
         /// </summary>

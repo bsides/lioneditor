@@ -90,6 +90,8 @@
     <Compile Include="Datatypes\Job\JobLevels.cs" />
     <Compile Include="Datatypes\Job\MonsterSkills.cs" />
     <Compile Include="Datatypes\Job\SkillSet.cs" />
+    <Compile Include="Datatypes\Sprites\Palette.cs" />
+    <Compile Include="Datatypes\Sprites\Sprite.cs" />
     <Compile Include="Datatypes\Status\InflictStatus.cs" />
     <Compile Include="Datatypes\Status\StatusAttribute.cs" />
     <Compile Include="Datatypes\Status\Statuses.cs" />

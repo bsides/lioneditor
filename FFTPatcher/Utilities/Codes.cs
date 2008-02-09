@@ -40,6 +40,7 @@ namespace FFTPatcher
             try
             {
                 stream = new StreamWriter( path, false );
+                stream.NewLine = "\n";
                 stream.WriteLine( usHeader );
                 stream.WriteLine( codes );
                 stream.WriteLine( euHeader );

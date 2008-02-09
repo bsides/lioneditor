@@ -444,8 +444,8 @@ namespace FFTPatcher.Datatypes
             try
             {
                 stream = new FileStream( fileName, FileMode.Open );
-                WriteArrayToPosition( FFTPatch.Font.ToWidthsByteArray(), stream, 0xFF0FC );
-                WriteArrayToPosition( FFTPatch.Abilities.ToEffectsByteArray(), stream, 0x14F3F0 );
+                stream.WriteArrayToPosition( FFTPatch.Font.ToWidthsByteArray(), 0xFF0FC );
+                stream.WriteArrayToPosition( FFTPatch.Abilities.ToEffectsByteArray(), 0x14F3F0 );
             }
             catch( InvalidDataException )
             {
@@ -476,8 +476,6 @@ namespace FFTPatcher.Datatypes
             {
                 bool psp = Context == Context.US_PSP;
                 stream = new FileStream( filename, FileMode.Open );
-                long newItems = -1;
-                long newItemAttributes = -1;
                 long abilities = -1;
                 long jobs = -1;
                 long skillSets = -1;
@@ -490,98 +488,31 @@ namespace FFTPatcher.Datatypes
                 long inflictStatuses = -1;
                 long oldItemAttributes = -1;
 
-                if( Context == Context.US_PSP )
-                {
-                    byte[] elf = new byte[] { 0x7F, 0x45, 0x4C, 0x46 };
-                    long bootBinLocation = FindArrayInStream( elf, stream );
-                    abilities = bootBinLocation + 0x271514;
-                    statusAttributes = bootBinLocation + 0x276DA4;
-                    skillSets = bootBinLocation + 0x275A38;
-                    oldItemAttributes = bootBinLocation + 0x3266E8;
-                    actionEvents = bootBinLocation + 0x276CA4;
-                    inflictStatuses = bootBinLocation + 0x3263E8;
-                    jobLevels = bootBinLocation + 0x277084;
-                    jobs = bootBinLocation + 0x2739DC;
-                    monsterSkills = bootBinLocation + 0x276BB4;
-                    newItemAttributes = bootBinLocation + 0x25720C;
-                    newItems = bootBinLocation + 0x256E00;
-                    oldItems = bootBinLocation + 0x3252DC;
-                    poach = bootBinLocation + 0x277024;
+                VerifyFileIsSCUS94221( stream );
 
-                    // Write to BOOT.BIN
-                    WriteArrayToPosition( Abilities.ToByteArray( Context ), stream, abilities );
-                    WriteArrayToPosition( Items.ToFirstByteArray(), stream, oldItems );
-                    WriteArrayToPosition( ItemAttributes.ToFirstByteArray(), stream, oldItemAttributes );
-                    WriteArrayToPosition( ItemAttributes.ToSecondByteArray(), stream, newItemAttributes );
-                    WriteArrayToPosition( Items.ToSecondByteArray(), stream, newItems );
-                    WriteArrayToPosition( Jobs.ToByteArray( Context ), stream, jobs );
-                    WriteArrayToPosition( JobLevels.ToByteArray( Context ), stream, jobLevels );
-                    WriteArrayToPosition( SkillSets.ToByteArray( Context ), stream, skillSets );
-                    WriteArrayToPosition( MonsterSkills.ToByteArray( Context ), stream, monsterSkills );
-                    WriteArrayToPosition( ActionMenus.ToByteArray( Context ), stream, actionEvents );
-                    WriteArrayToPosition( StatusAttributes.ToByteArray( Context ), stream, statusAttributes );
-                    WriteArrayToPosition( InflictStatuses.ToByteArray(), stream, inflictStatuses );
-                    WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), stream, poach );
+                oldItemAttributes = 0x54AC4;
+                oldItems = 0x536B8;
+                poach = 0x56864;
+                skillSets = 0x55294;
+                statusAttributes = 0x565E4;
+                abilities = 0x4F3F0;
+                actionEvents = 0x564B4;
+                inflictStatuses = 0x547C4;
+                jobLevels = 0x568C4;
+                jobs = 0x518B8;
+                monsterSkills = 0x563C4;
 
-                    byte[] psx = new byte[] { 0x50, 0x53, 0x2D, 0x58 };
-                    long slps00770Location = FindArrayInStream( psx, stream );
-                    oldItemAttributes = slps00770Location + 0x51B04;
-                    oldItems = slps00770Location + 0x506F8;
-                    poach = slps00770Location + 0x538A4;
-                    skillSets = slps00770Location + 0x522D4;
-                    statusAttributes = slps00770Location + 0x53624;
-                    abilities = slps00770Location + 0x4C430;
-                    actionEvents = slps00770Location + 0x534F4;
-                    inflictStatuses = slps00770Location + 0x51804;
-                    jobLevels = slps00770Location + 0x53904;
-                    jobs = slps00770Location + 0x4E8F8;
-                    monsterSkills = slps00770Location + 0x53404;
-
-                    byte[] jobsBytes = Jobs.ToByteArray( Context.US_PSX );
-                    byte[] realJobsBytes = new byte[0x1E00];
-                    Array.Copy( jobsBytes, 0, realJobsBytes, 0, 0x1E00 );
-                    WriteArrayToPosition( realJobsBytes, stream, jobs );
-                    WriteArrayToPosition( ActionMenus.ToByteArray( Context ), stream, actionEvents );
-                    WriteArrayToPosition( StatusAttributes.ToByteArray( Context ), stream, statusAttributes );
-                    WriteArrayToPosition( ItemAttributes.ToFirstByteArray(), stream, oldItemAttributes );
-                    WriteArrayToPosition( MonsterSkills.ToByteArray( Context ), stream, monsterSkills );
-                    WriteArrayToPosition( InflictStatuses.ToByteArray(), stream, inflictStatuses );
-                    byte[] skillSetsBytes = SkillSets.ToByteArray( Context );
-                    byte[] realSkillSetsBytes = new byte[0x1130];
-                    Array.Copy( skillSetsBytes, 0, realSkillSetsBytes, 0, 0x1130 );
-                    WriteArrayToPosition( realSkillSetsBytes, stream, skillSets );
-                    WriteArrayToPosition( Items.ToFirstByteArray(), stream, oldItems );
-                    WriteArrayToPosition( Abilities.ToByteArray( Context ), stream, abilities );
-                    WriteArrayToPosition( JobLevels.ToByteArray( Context.US_PSX ), stream, jobLevels );
-                    WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), stream, poach );
-                }
-                else
-                {
-                    VerifyFileIsSCUS94221( stream );
-
-                    oldItemAttributes = 0x54AC4;
-                    oldItems = 0x536B8;
-                    poach = 0x56864;
-                    skillSets = 0x55294;
-                    statusAttributes = 0x565E4;
-                    abilities = 0x4F3F0;
-                    actionEvents = 0x564B4;
-                    inflictStatuses = 0x547C4;
-                    jobLevels = 0x568C4;
-                    jobs = 0x518B8;
-                    monsterSkills = 0x563C4;
-                    WriteArrayToPosition( Abilities.ToByteArray( Context ), stream, abilities );
-                    WriteArrayToPosition( Items.ToFirstByteArray(), stream, oldItems );
-                    WriteArrayToPosition( ItemAttributes.ToFirstByteArray(), stream, oldItemAttributes );
-                    WriteArrayToPosition( Jobs.ToByteArray( Context ), stream, jobs );
-                    WriteArrayToPosition( JobLevels.ToByteArray( Context ), stream, jobLevels );
-                    WriteArrayToPosition( SkillSets.ToByteArray( Context ), stream, skillSets );
-                    WriteArrayToPosition( MonsterSkills.ToByteArray( Context ), stream, monsterSkills );
-                    WriteArrayToPosition( ActionMenus.ToByteArray( Context ), stream, actionEvents );
-                    WriteArrayToPosition( StatusAttributes.ToByteArray( Context ), stream, statusAttributes );
-                    WriteArrayToPosition( InflictStatuses.ToByteArray(), stream, inflictStatuses );
-                    WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), stream, poach );
-                }
+                stream.WriteArrayToPosition( Abilities.ToByteArray( Context ), abilities );
+                stream.WriteArrayToPosition( Items.ToFirstByteArray(), oldItems );
+                stream.WriteArrayToPosition( ItemAttributes.ToFirstByteArray(), oldItemAttributes );
+                stream.WriteArrayToPosition( Jobs.ToByteArray( Context ), jobs );
+                stream.WriteArrayToPosition( JobLevels.ToByteArray( Context ), jobLevels );
+                stream.WriteArrayToPosition( SkillSets.ToByteArray( Context ), skillSets );
+                stream.WriteArrayToPosition( MonsterSkills.ToByteArray( Context ), monsterSkills );
+                stream.WriteArrayToPosition( ActionMenus.ToByteArray( Context ), actionEvents );
+                stream.WriteArrayToPosition( StatusAttributes.ToByteArray( Context ), statusAttributes );
+                stream.WriteArrayToPosition( InflictStatuses.ToByteArray(), inflictStatuses );
+                stream.WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), poach );
             }
             catch( InvalidDataException )
             {
@@ -634,12 +565,6 @@ namespace FFTPatcher.Datatypes
             }
 
             return result.ToString();
-        }
-
-        private static void WriteArrayToPosition( byte[] array, FileStream stream, long position )
-        {
-            stream.Seek( position, SeekOrigin.Begin );
-            stream.Write( array, 0, array.Length );
         }
 
         private static long FindArrayInStream( byte[] array, FileStream stream )

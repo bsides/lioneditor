@@ -45,12 +45,39 @@ namespace FFTPatcher
             generateMenuItem.Enabled = false;
             generateFontMenuItem.Click += generateFontMenuItem_Click;
             applyBattleBinMenuItem.Click += applyBattleBinMenuItem_Click;
-            extractFFTPackMenuItem.Click += new EventHandler( extractFFTPackMenuItem_Click );
-            rebuildFFTPackMenuItem.Click += new EventHandler( rebuildFFTPackMenuItem_Click );
 
-            fftpackMenuItem.Click += new EventHandler( fftpackMenuItem_Click );
-            cheatdbMenuItem.Click += new EventHandler( cheatdbMenuItem_Click );
+            extractFFTPackMenuItem.Click += extractFFTPackMenuItem_Click;
+            rebuildFFTPackMenuItem.Click += rebuildFFTPackMenuItem_Click;
+            decryptMenuItem.Click += decryptMenuItem_Click;
+
+            patchPspIsoMenuItem.Click += patchPspIsoMenuItem_Click;
+            cheatdbMenuItem.Click += cheatdbMenuItem_Click;
+
             FFTPatch.DataChanged += FFTPatch_DataChanged;
+        }
+
+        private void decryptMenuItem_Click( object sender, EventArgs e )
+        {
+            applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
+            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    PspIso.DecryptISO( applyPatchOpenFileDialog.FileName );
+                }
+                catch( NotSupportedException )
+                {
+                    MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
+                }
+            }
         }
 
         private void cheatdbMenuItem_Click( object sender, EventArgs e )
@@ -69,40 +96,26 @@ namespace FFTPatcher
             }
         }
 
-        private void fftpackMenuItem_Click( object sender, EventArgs e )
+        private void patchPspIsoMenuItem_Click( object sender, EventArgs e )
         {
-            applyPatchOpenFileDialog.Filter = "fftpack.bin|fftpack.bin";
+            applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
             if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
-                    byte[] entd1 = FFTPatch.ENTDs.ENTDs[0].ToByteArray();
-                    byte[] entd2 = FFTPatch.ENTDs.ENTDs[1].ToByteArray();
-                    byte[] entd3 = FFTPatch.ENTDs.ENTDs[2].ToByteArray();
-                    byte[] entd4 = FFTPatch.ENTDs.ENTDs[3].ToByteArray();
-                    List<byte> entd5 = new List<byte>();
-                    foreach( Event ev in FFTPatch.ENTDs.PSPEvent )
-                    {
-                        entd5.AddRange( ev.ToByteArray() );
-                    }
-                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 229, entd1 );
-                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 230, entd2 );
-                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 231, entd3 );
-                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 232, entd4 );
-                    FFTPack.PatchFile( applyPatchOpenFileDialog.FileName, 897, entd5.ToArray() );
-                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
+                    PspIso.PatchISO( applyPatchOpenFileDialog.FileName );
                 }
-                catch( InvalidDataException )
+                catch( NotSupportedException )
                 {
-                    MessageBox.Show(
-                        "Could not find patch locations.\n" +
-                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
-                        "Ensure that you have selected an unmodified fftpack.bin",
-                        "Invalid data", MessageBoxButtons.OK );
+                    MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
                 }
                 catch( FileNotFoundException )
                 {
                     MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
                 }
             }
         }
@@ -216,7 +229,7 @@ namespace FFTPatcher
             applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
             generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
 
-            fftpackMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
+            patchPspIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
             cheatdbMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
 
         }

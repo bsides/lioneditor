@@ -57,6 +57,7 @@ namespace FFTPatcher
             System.Windows.Forms.MenuItem pspMenu;
             System.Windows.Forms.MenuItem separator5;
             System.Windows.Forms.MenuItem utilitiesMenuItem;
+            System.Windows.Forms.MenuItem separator6;
             this.newPSXMenuItem = new System.Windows.Forms.MenuItem();
             this.newPSPMenuItem = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
@@ -67,7 +68,7 @@ namespace FFTPatcher
             this.applyBattleBinMenuItem = new System.Windows.Forms.MenuItem();
             this.generateFontMenuItem = new System.Windows.Forms.MenuItem();
             this.generateMenuItem = new System.Windows.Forms.MenuItem();
-            this.fftpackMenuItem = new System.Windows.Forms.MenuItem();
+            this.patchPspIsoMenuItem = new System.Windows.Forms.MenuItem();
             this.cheatdbMenuItem = new System.Windows.Forms.MenuItem();
             this.extractFFTPackMenuItem = new System.Windows.Forms.MenuItem();
             this.rebuildFFTPackMenuItem = new System.Windows.Forms.MenuItem();
@@ -78,6 +79,7 @@ namespace FFTPatcher
             this.applyPatchOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.decryptMenuItem = new System.Windows.Forms.MenuItem();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
             fileMenuItem = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
@@ -88,6 +90,7 @@ namespace FFTPatcher
             pspMenu = new System.Windows.Forms.MenuItem();
             separator5 = new System.Windows.Forms.MenuItem();
             utilitiesMenuItem = new System.Windows.Forms.MenuItem();
+            separator6 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // fileMenuItem
@@ -195,17 +198,17 @@ namespace FFTPatcher
             // 
             pspMenu.Index = 2;
             pspMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.fftpackMenuItem,
+            this.patchPspIsoMenuItem,
             this.cheatdbMenuItem,
             separator5,
             utilitiesMenuItem} );
             pspMenu.Text = "&PSP";
             // 
-            // fftpackMenuItem
+            // patchPspIsoMenuItem
             // 
-            this.fftpackMenuItem.Enabled = false;
-            this.fftpackMenuItem.Index = 0;
-            this.fftpackMenuItem.Text = "&Patch fftpack.bin...";
+            this.patchPspIsoMenuItem.Enabled = false;
+            this.patchPspIsoMenuItem.Index = 0;
+            this.patchPspIsoMenuItem.Text = "&Patch War of the Lions ISO...";
             // 
             // cheatdbMenuItem
             // 
@@ -223,7 +226,9 @@ namespace FFTPatcher
             utilitiesMenuItem.Index = 3;
             utilitiesMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.extractFFTPackMenuItem,
-            this.rebuildFFTPackMenuItem} );
+            this.rebuildFFTPackMenuItem,
+            separator6,
+            this.decryptMenuItem} );
             utilitiesMenuItem.Text = "&Utilities";
             // 
             // extractFFTPackMenuItem
@@ -269,13 +274,23 @@ namespace FFTPatcher
             this.progressBar.TabIndex = 1;
             this.progressBar.Visible = false;
             // 
+            // separator6
+            // 
+            separator6.Index = 2;
+            separator6.Text = "-";
+            // 
+            // decryptMenuItem
+            // 
+            this.decryptMenuItem.Index = 3;
+            this.decryptMenuItem.Text = "&Decrypt War of the Lions ISO...";
+            // 
             // fftPatchEditor1
             // 
             this.fftPatchEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fftPatchEditor1.Enabled = false;
             this.fftPatchEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.fftPatchEditor1.Name = "fftPatchEditor1";
-            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 596 );
+            this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 599 );
             this.fftPatchEditor1.TabIndex = 0;
             // 
             // MainForm
@@ -284,7 +299,7 @@ namespace FFTPatcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size( 815, 596 );
+            this.ClientSize = new System.Drawing.Size( 815, 599 );
             this.Controls.Add( this.progressBar );
             this.Controls.Add( this.fftPatchEditor1 );
             this.Menu = this.mainMenu;
@@ -313,11 +328,12 @@ namespace FFTPatcher
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.MenuItem generateFontMenuItem;
         private System.Windows.Forms.MenuItem applyBattleBinMenuItem;
-        private System.Windows.Forms.MenuItem fftpackMenuItem;
+        private System.Windows.Forms.MenuItem patchPspIsoMenuItem;
         private System.Windows.Forms.MenuItem cheatdbMenuItem;
         private System.Windows.Forms.MenuItem extractFFTPackMenuItem;
         private System.Windows.Forms.MenuItem rebuildFFTPackMenuItem;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.MenuItem decryptMenuItem;
 
     }
 }

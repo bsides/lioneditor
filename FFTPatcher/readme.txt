@@ -5,7 +5,7 @@ Some info about each page on the editor:
     All usable abilities, reaction abilities, support abilities, and movement abilities.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21 and BATTLE.BIN.
         Note: Gameshark codes are not generated for changes to the "Effect" option.
@@ -15,7 +15,7 @@ Some info about each page on the editor:
     "Inflict Status" and "Item Attributes" are edited on separate page.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
 
@@ -23,7 +23,7 @@ Some info about each page on the editor:
     Each item here is a set of attributes an item can have when it is equipped.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
      
@@ -31,7 +31,7 @@ Some info about each page on the editor:
     All jobs/classes in the game and their properties.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
         
@@ -39,7 +39,7 @@ Some info about each page on the editor:
     The requirements to unlock certain jobs and the JP required to advance in job level.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
 
@@ -47,7 +47,7 @@ Some info about each page on the editor:
     The skills each job can use.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
 
@@ -55,7 +55,7 @@ Some info about each page on the editor:
     The skills each monster class can use.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
     
@@ -65,7 +65,7 @@ Some info about each page on the editor:
     of items in your inventory to use.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
     
@@ -73,7 +73,7 @@ Some info about each page on the editor:
     The behavior of all status effects a unit can have.    
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
         
@@ -82,7 +82,7 @@ Some info about each page on the editor:
     This is where those are edited.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
         
@@ -90,7 +90,7 @@ Some info about each page on the editor:
     Determines what items can be found by poaching monsters.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
         NOTE: It is not possible to select any of the new multiplayer items.
       PSX:
         Use the Gameshark codes or patch SCUS_942.21
@@ -101,7 +101,7 @@ Some info about each page on the editor:
     on the screen.
     To apply changes on this page to your game:
       PSP:
-        Use the CWCheat codes
+        Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes -or-
           Generate FONT.BIN and patch BATTLE.BIN
@@ -110,12 +110,7 @@ Some info about each page on the editor:
     "Events" and "Battles" that take place in the game and the units that appear in them.
     To apply changes on this page to your game:
       PSP:
-        Patch fftpack.bin
-        NOTE: It is not possible to select any of the new multiplayer items for the equipment filds.
+        Patch your ISO
+        NOTE: It is not possible to select any of the new multiplayer items for the equipment fields.
       PSX:
         Generate ENTD files
-
-FAQs:
-Q: Why do I have to use CWCheat to mod the PSP game?
-A: Some of the data on the UMD is encrypted so it can't be modified using a PC application.
-   The CWCheat codes modify the data in the PSP's memory after it has been decrypted by the kernel.

@@ -19,6 +19,7 @@
 
 using System;
 using System.IO;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher
 {
@@ -73,9 +74,89 @@ namespace FFTPatcher
             return true;
         }
 
+        public static void PatchISO( string filename )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open );
+                PatchISO( stream );
+            }
+            catch( NotSupportedException )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                    stream = null;
+                }
+            }
+        }
+
         public static void PatchISO( FileStream stream )
         {
-            
+            if( IsJP( stream ) )
+            {
+                throw new NotSupportedException( "Unrecognized image." );
+            }
+
+            DecryptISO( stream );
+
+            stream.WriteArrayToPositions( FFTPatch.SkillSets.ToByteArray( Context.US_PSP ), 0x285A38, 0x1014DA38 );
+            stream.WriteArrayToPositions( FFTPatch.MonsterSkills.ToByteArray( Context.US_PSP ), 0x286BB4, 0x2C7BC04, 0x1014EBB4 );
+
+            stream.WriteArrayToPositions( FFTPatch.PoachProbabilities.ToByteArray( Context.US_PSP ), 0x287024, 0x2C7C0A4, 0x1014F024 );
+            stream.WriteArrayToPositions( FFTPatch.Items.ToFirstByteArray(), 0x3352DC, 0x2C78EF8, 0x101FD2DC );
+            stream.WriteArrayToPositions( FFTPatch.Items.ToSecondByteArray(), 0x266E00, 0x1012EE00 );
+            stream.WriteArrayToPositions( FFTPatch.ItemAttributes.ToFirstByteArray(), 0x3366E8, 0x2C7A304, 0x101FE6E8 );
+            stream.WriteArrayToPositions( FFTPatch.ItemAttributes.ToSecondByteArray(), 0x26720C, 0x1012F20C );
+
+            stream.WriteArrayToPositions( FFTPatch.Abilities.ToByteArray( Context.US_PSP ), 0x281514, 0x10149514 );
+            stream.WriteArrayToPositions( FFTPatch.Abilities.ToEffectsByteArray(), 0x3277B4, 0x101EF7B4 );
+
+            stream.WriteArrayToPositions( FFTPatch.ActionMenus.ToByteArray( Context.US_PSP ), 0x286CA4, 0x2C7BCF4, 0x1014ECA4 );
+
+            stream.WriteArrayToPositions( FFTPatch.Jobs.ToByteArray( Context.US_PSP ), 0x2839DC, 0x1014B9DC );
+            stream.WriteArrayToPositions( FFTPatch.JobLevels.ToByteArray( Context.US_PSP ), 0x287084, 0x1014F084 );
+
+            stream.WriteArrayToPositions( FFTPatch.InflictStatuses.ToByteArray(), 0x3363E8, 0x2C7A004, 0x101FE3E8 );
+            stream.WriteArrayToPositions( FFTPatch.StatusAttributes.ToByteArray( Context.US_PSP ), 0x286DA4, 0x2C7BE24 );
+
+            stream.WriteArrayToPositions( FFTPatch.Font.ToByteArray(), 0x28B80C, 0x3073B8, 0x1015380C, 0x101CF3B8 );
+            stream.WriteArrayToPositions( FFTPatch.Font.ToWidthsByteArray(), 0x2A3F40, 0x31FAC0, 0x1016BF40, 0x101E7AC0 );
+
+            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[0].ToByteArray(), 0x44CA800 );
+            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[1].ToByteArray(), 0x44DE800 );
+            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[2].ToByteArray(), 0x44F2800 );
+            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[3].ToByteArray(), 0x4506800 );
+            stream.WriteArrayToPositions( FFTPatch.ENTDs.PSPEventsToByteArray(), 0x7500800 );
+        }
+
+        public static void DecryptISO( string filename )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open );
+                DecryptISO( stream );
+            }
+            catch( NotSupportedException )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                    stream = null;
+                }
+            }
         }
 
         public static void DecryptISO( FileStream stream )
@@ -94,7 +175,7 @@ namespace FFTPatcher
             }
             else
             {
-                throw new NotSupportedException( "Unrecognized file." );
+                throw new NotSupportedException( "Unrecognized image." );
             }
         }
 

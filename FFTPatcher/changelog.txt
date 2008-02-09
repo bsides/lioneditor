@@ -1,5 +1,20 @@
-FFTPatcher - v0.192
+FFTPatcher - v0.200
 
+Changes since v0.192:
+  Added the Dark Knight, Onion Knight, Balthier, Luso, Argath, Aliste, and 
+    Bremondt sprites to the fftpack.bin extractor. 
+    Thanks to Dakitty for this info.
+  Fixed bug in the Equipment Editor where some checkboxes weren't 
+    getting highlighted.
+  Added "Always present" and "Randomly present" labels to two checkboxes
+    in the ENTD editor. Thanks to Raijinili for this info.
+  Added a function to patch a War of the Lions ISO image file directly, so that
+    CWCheat codes are no longer required.
+    Thanks to NeXaR for the hint that made this possible.
+  Fixed the cheat.db file generation to use Unix-style linefeeds like CWCheat
+    expects. Thanks to Krakistophales on the GameFAQs forums for pointing
+    this out.
+    
 Changes since v0.190:
   Fixed the "Level" field in the ENTD editor
   Fixed some issues with .fftpatch file generation

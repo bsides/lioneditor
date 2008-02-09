@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using FFTPatcher.Datatypes;
 
@@ -37,6 +38,20 @@ namespace FFTPatcher
     /// </summary>
     public static class ExtensionMethods
     {
+        public static void WriteArrayToPosition( this FileStream stream, byte[] array, long position )
+        {
+            stream.Seek( position, SeekOrigin.Begin );
+            stream.Write( array, 0, array.Length );
+        }
+
+        public static void WriteArrayToPositions( this FileStream stream, byte[] array, params long[] positions )
+        {
+            foreach( long position in positions )
+            {
+                stream.WriteArrayToPosition( array, position );
+            }
+        }
+
         /// <summary>
         /// Converts this string to an array of bytes.
         /// Each character in the string should be a single byte ASCII character.
@@ -72,7 +87,7 @@ namespace FFTPatcher
         {
             foreach( string line in lines )
             {
-                sb.AppendLine( line );
+                sb.Append( line + "\n" );
             }
         }
 
@@ -91,7 +106,7 @@ namespace FFTPatcher
             else if( lines.Count <= groupSize )
             {
                 if( groupName != string.Empty )
-                    sb.AppendLine( groupName );
+                    sb.Append( groupName + "\n" );
                 sb.AppendLines( lines );
             }
             else
@@ -101,12 +116,12 @@ namespace FFTPatcher
                 for( i = 0; (i + 1) * groupSize < lines.Count; i++ )
                 {
                     if( groupName != string.Empty )
-                        sb.AppendLine( string.Format( "{0} (part {1})", groupName, j++ ) );
+                        sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
                     sb.AppendLines( new SubArray<string>( lines, i * groupSize, (i + 1) * groupSize - 1 ) );
                 }
 
                 if( groupName != string.Empty )
-                    sb.AppendLine( string.Format( "{0} (part {1})", groupName, j++ ) );
+                    sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
                 sb.AppendLines( new SubArray<string>( lines, i * groupSize, lines.Count - 1 ) );
             }
         }

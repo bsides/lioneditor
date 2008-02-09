@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using FFTPatcher.Datatypes;
 
-namespace FFTPatcher.Datatypes
+namespace FFTPatcher.SpriteEditor
 {
     public class Palette
     {
@@ -75,6 +75,20 @@ namespace FFTPatcher.Datatypes
             {
                 result[0] = 0x00;
                 result[1] = 0x00;
+            }
+
+            return result.ToArray();
+        }
+
+        public byte[] ToPALByteArray()
+        {
+            List<byte> result = new List<byte>( 0x40 );
+            foreach( Color c in Colors )
+            {
+                result.Add( c.R );
+                result.Add( c.G );
+                result.Add( c.B );
+                result.Add( 0x00 );
             }
 
             return result.ToArray();

@@ -37,6 +37,21 @@ namespace FFTPatcher
     /// </summary>
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// Converts this string to an array of bytes.
+        /// Each character in the string should be a single byte ASCII character.
+        /// </summary>
+        public static byte[] ToByteArray( this string s )
+        {
+            byte[] result = new byte[s.Length];
+            for( int i = 0; i < s.Length; i++ )
+            {
+                result[i] = (byte)s[i];
+            }
+
+            return result;
+        }
+
         public static void DrawSprite( this Graphics g, Sprite s, Palette p )
         {
             using( Bitmap b = new Bitmap( 256, 488 ) )

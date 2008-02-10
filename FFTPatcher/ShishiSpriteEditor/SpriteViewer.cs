@@ -17,12 +17,6 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 namespace FFTPatcher.SpriteEditor
@@ -63,15 +57,7 @@ namespace FFTPatcher.SpriteEditor
             base.OnPaint( e );
             if( sprite != null )
             {
-                using( Bitmap bmp = new Bitmap( 256, 488 ) )
-                {
-                    for( long i = 0; i < sprite.Pixels.LongLength; i++ )
-                    {
-                        bmp.SetPixel( (int)(i % 256), (int)(i / 256), sprite.Palettes[palette].Colors[sprite.Pixels[i]] );
-                    }
-
-                    e.Graphics.DrawImage( bmp, 0, 0 );
-                }
+                e.Graphics.DrawSprite( sprite, sprite.Palettes[palette] );
             }
         }
     }

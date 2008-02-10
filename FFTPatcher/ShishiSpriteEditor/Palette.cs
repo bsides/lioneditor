@@ -23,6 +23,26 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.SpriteEditor
 {
+    public static partial class ExtensionMethods
+    {
+        public static byte[] ToPALFile( this Palette[] palettes )
+        {
+            List<byte> result = new List<byte>( 0x418 );
+            result.AddRange( new byte[] { 
+                0x52, 0x49, 0x46, 0x46, // RIFF
+                0x10, 0x04, 0x00, 0x00, // Filesize or sommat
+                0x50, 0x41, 0x4C, 0x20, 0x64, 0x61, 0x74, 0x61,  // PAL data
+                0x04, 0x04, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01 } ); // filesize of sommat
+
+            foreach( Palette p in palettes )
+            {
+                result.AddRange( p.ToPALByteArray() );
+            }
+
+            return result.ToArray();
+        }
+    }
+
     public class Palette
     {
         public static Color BytesToColor(byte first, byte second)
@@ -49,7 +69,11 @@ namespace FFTPatcher.SpriteEditor
 
         public Color[] Colors { get; private set; }
 
-        public Palette( SubArray<byte> bytes )
+        private Palette()
+        {
+        }
+
+        public Palette( IList<byte> bytes )
         {
             Colors = new Color[16];
             for( int i = 0; i < 16; i++ )
@@ -61,6 +85,48 @@ namespace FFTPatcher.SpriteEditor
             {
                 Colors[0] = Color.Transparent;
             }
+        }
+
+        public Palette( IList<Color> colors )
+        {
+            Colors = new Color[16];
+            for( int i = 0; i < 16; i++ )
+            {
+                Colors[i] = Color.FromArgb( colors[i].R & 0xF8, colors[i].G & 0xF8, colors[i].B & 0xF8 );
+            }
+            if( Colors[0].ToArgb() == Color.Black.ToArgb() )
+            {
+                Colors[0] = Color.Transparent;
+            }
+        }
+
+        public static Palette[] FromPALFile( IList<byte> bytes )
+        {
+            Palette[] result = new Palette[16];
+            for( int i = 0; i < 16; i++ )
+            {
+                result[i] = Palette.FromPALFiledata( new SubArray<byte>( bytes, 24 + 4 * 16 * i, 24 + 4 * 16 * (i + 1) - 1 ) );
+            }
+
+            return result;
+        }
+
+        public static Palette FromPALFiledata( IList<byte> bytes )
+        {
+            Palette result = new Palette();
+            result.Colors = new Color[16];
+
+            for( int i = 0; i < 16 * 4; i+=4 )
+            {
+                result.Colors[i / 4] = Color.FromArgb( bytes[i] & 0xF8, bytes[i + 1] & 0xF8, bytes[i + 2] & 0xF8 );
+            }
+
+            if( result.Colors[0].ToArgb() == Color.FromArgb( 0, 0, 0 ).ToArgb() )
+            {
+                result.Colors[0] = Color.Transparent;
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -83,11 +149,19 @@ namespace FFTPatcher.SpriteEditor
         public byte[] ToPALByteArray()
         {
             List<byte> result = new List<byte>( 0x40 );
-            foreach( Color c in Colors )
+
+            int start = 0;
+            if( Colors[0].ToArgb() == Color.Transparent.ToArgb() )
             {
-                result.Add( c.R );
-                result.Add( c.G );
-                result.Add( c.B );
+                result.AddRange( new byte[] { 0x00, 0x00, 0x00, 0x00 } );
+                start = 1;
+            }
+
+            for( int i = start; i < Colors.Length; i++ )
+            {
+                result.Add( Colors[i].R );
+                result.Add( Colors[i].G );
+                result.Add( Colors[i].B );
                 result.Add( 0x00 );
             }
 

@@ -19,7 +19,7 @@
 
 namespace FFTPatcher.SpriteEditor
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -220,14 +220,14 @@ namespace FFTPatcher.SpriteEditor
             "Sprite #6",
             "Sprite #7",
             "Sprite #8",
-            "Palette #1",
-            "Palette #2",
-            "Palette #3",
-            "Palette #4",
-            "Palette #5",
-            "Palette #6",
-            "Palette #7",
-            "Palette #8"} );
+            "Portrait #1",
+            "Portrait #2",
+            "Portrait #3",
+            "Portrait #4",
+            "Portrait #5",
+            "Portrait #6",
+            "Portrait #7",
+            "Portrait #8"} );
             this.paletteSelector.Location = new System.Drawing.Point( 6, 19 );
             this.paletteSelector.Name = "paletteSelector";
             this.paletteSelector.Size = new System.Drawing.Size( 173, 21 );

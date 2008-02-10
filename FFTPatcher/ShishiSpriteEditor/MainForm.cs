@@ -17,24 +17,88 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Windows.Forms;
-using System.IO;
 using System;
+using System.IO;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace FFTPatcher.SpriteEditor
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         string filename = string.Empty;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+
             openMenuItem.Click += openMenuItem_Click;
-            saveAsMenuItem.Click += new EventHandler( saveAsMenuItem_Click );
-            saveMenuItem.Click += new EventHandler( saveMenuItem_Click );
-            paletteSelector.SelectedIndexChanged += new EventHandler( paletteSelector_SelectedIndexChanged );
+            saveAsMenuItem.Click += saveAsMenuItem_Click;
+            saveMenuItem.Click += saveMenuItem_Click;
+
+            paletteSaveMenuItem.Click += paletteSaveMenuItem_Click;
+            paletteOpenMenuItem.Click += paletteOpenMenuItem_Click;
+
+            exportMenuItem.Click += exportMenuItem_Click;
+            importMenuItem.Click += importMenuItem_Click;
+
+            paletteSelector.SelectedIndexChanged += paletteSelector_SelectedIndexChanged;
+
+            aboutMenuItem.Click += aboutMenuItem_Click;
+        }
+
+        private void aboutMenuItem_Click( object sender, EventArgs e )
+        {
+            new About().ShowDialog( this );
+        }
+
+        private void exportMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.Filter = "Bitmap files (*.BMP)|*.BMP";
+            saveFileDialog.FilterIndex = 0;
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                using( Bitmap bmp = spriteViewer1.Sprite.ToBitmap() )
+                {
+                    bmp.Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
+                }
+            }
+        }
+
+        private void paletteOpenMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
+            openFileDialog.FilterIndex = 0;
+
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                byte[] bytes = null;
+                try
+                {
+                    bytes = GetBytes( openFileDialog.FileName );
+                    spriteViewer1.Sprite.Palettes = Palette.FromPALFile( bytes );
+                    paletteSelector.SelectedIndex = 0;
+                    spriteViewer1.Invalidate();
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void paletteSaveMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
+            saveFileDialog.FilterIndex = 0;
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.Palettes.ToPALFile() );
+            }
         }
 
         private void saveMenuItem_Click( object sender, EventArgs e )
@@ -44,6 +108,7 @@ namespace FFTPatcher.SpriteEditor
 
         private void saveAsMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.FileName = filename;
             saveFileDialog.Filter = "Sprite files (*.SPR)|*.SPR";
             saveFileDialog.FilterIndex = 0;
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
@@ -58,8 +123,23 @@ namespace FFTPatcher.SpriteEditor
             spriteViewer1.Palette = paletteSelector.SelectedIndex;
         }
 
+        private void importMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = "Bitmap files (*.BMP)|*.BMP";
+            openFileDialog.FilterIndex = 0;
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                using( Bitmap b = new Bitmap( openFileDialog.FileName ) )
+                {
+                    spriteViewer1.Sprite.ImportBitmap( b );
+                }
+            }
+        }
+
         private void openMenuItem_Click( object sender, System.EventArgs e )
         {
+            openFileDialog.FileName = string.Empty;
             openFileDialog.Filter = "Sprite files (*.SPR)|*.SPR|Secondary sprite files (*.SP2)|*.SP2";
             openFileDialog.FilterIndex = 0;
             

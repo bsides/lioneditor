@@ -17,18 +17,46 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
-using FFTPatcher.Datatypes;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.SpriteEditor
 {
     public class Sprite
     {
-        public Palette[] Palettes { get; private set; }
+        public Palette[] Palettes { get; set; }
         public byte[] Pixels { get; private set; }
-        public byte[] AfterPixels { get; private set; }
         private long OriginalSize { get; set; }
+        private bool Compressed { get; set; }
+
+        public void ImportBitmap( Bitmap bmp )
+        {
+            if( bmp.PixelFormat != PixelFormat.Format8bppIndexed )
+            {
+                throw new BadImageFormatException();
+            }
+            if( bmp.Width != 256 )
+            {
+                throw new BadImageFormatException();
+            }
+
+            Palettes = new Palette[16];
+            for( int i = 0; i < 16; i++ )
+            {
+                Palettes[i] = new Palette( new SubArray<Color>( bmp.Palette.Entries, 16 * i, 16 * (i + 1) - 1 ) );
+            }
+
+            BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
+            for( int i = 0; (i < Pixels.Length) && (i / 256 < bmp.Height); i++ )
+            {
+                Pixels[i] = (byte)bmp.GetPixel( bmd, i % 256, i / 256 );
+            }
+
+            bmp.UnlockBits( bmd );
+        }
 
         public Sprite( IList<byte> bytes )
         {
@@ -39,15 +67,16 @@ namespace FFTPatcher.SpriteEditor
                 Palettes[i] = new Palette( new SubArray<byte>( bytes, i * 32, (i + 1) * 32 - 1 ) );
             }
 
-            if( bytes.Count < 0x9200 )
+            if( bytes.Count < 0x9200 || ((bytes.Count > 0x9200) && (bytes[0x9200] == 0x00)) )
             {
                 Pixels = BuildPixels( new SubArray<byte>( bytes, 16 * 32 ), new byte[0] );
+                Compressed = false;
             }
             else
             {
                 Pixels = BuildPixels( new SubArray<byte>( bytes, 16 * 32, 16 * 32 + 36864 - 1 ), new SubArray<byte>( bytes, 16 * 32 + 36864 ) );
+                Compressed = true;
             }
-            //AfterPixels = new SubArray<byte>( bytes, 0x9200 ).ToArray();
         }
 
         private static byte[] Recompress( IList<byte> bytes )
@@ -176,9 +205,6 @@ namespace FFTPatcher.SpriteEditor
                     }
                     else
                     {
-                        //if( (l % 2 == 1) && (l != 1) && (l != 0) )
-                        //if (l!=0)
-                        //    System.Console.Out.WriteLine( string.Format( "{0}", l ) );
                         l = s;
                     }
 
@@ -227,12 +253,16 @@ namespace FFTPatcher.SpriteEditor
                 result.AddRange( p.ToByteArray() );
             }
 
-            for( int i = 0; (i < 36864) && (2 * i + 1 < Pixels.Length); i++ )
+            for(
+                int i = 0;
+                (Compressed && (i < 36864) && (2 * i + 1 < Pixels.Length)) ||
+                (!Compressed && (2 * i + 1 < Pixels.Length));
+                i++ )
             {
                 result.Add( (byte)((Pixels[2 * i + 1] << 4) | (Pixels[2 * i] & 0x0F)) );
             }
 
-            if( Pixels.Length > 2 * 36864 )
+            if( Pixels.Length > 2 * 36864 && Compressed )
             {
                 result.AddRange( Recompress( new SubArray<byte>( Pixels, 2 * 36864 ) ) );
             }
@@ -243,6 +273,38 @@ namespace FFTPatcher.SpriteEditor
             }
 
             return result.ToArray();
+        }
+
+        public unsafe Bitmap ToBitmap()
+        {
+            Bitmap bmp = new Bitmap( 256, Math.Min( 488, Pixels.Length / 256 ), PixelFormat.Format8bppIndexed );
+            ColorPalette palette = bmp.Palette;
+
+            int k = 0;
+            for( int i = 0; i < Palettes.Length; i++ )
+            {
+                for( int j = 0; j < Palettes[i].Colors.Length; j++, k++)
+                {
+                    if( Palettes[i].Colors[j].ToArgb() == Color.Transparent.ToArgb() )
+                    {
+                        palette.Entries[k] = Color.Black;
+                    }
+                    else
+                    {
+                        palette.Entries[k] = Palettes[i].Colors[j];
+                    }
+                }
+            }
+            bmp.Palette = palette;
+
+            BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
+            for( int i = 0; (i < this.Pixels.Length) && (i / 256 < bmp.Height); i++ )
+            {
+                bmp.SetPixel( bmd, i % 256, i / 256, Pixels[i] );
+            }
+            bmp.UnlockBits( bmd );
+
+            return bmp;
         }
     }
 }

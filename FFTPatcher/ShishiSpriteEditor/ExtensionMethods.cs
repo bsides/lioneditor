@@ -18,44 +18,44 @@
 */
 
 using System.Drawing;
-using System.Collections.Generic;
+using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor
 {
     /// <summary>
     /// Extension methods for various types.
     /// </summary>
-    public static class ExtensionMethods
+    public static partial class ExtensionMethods
     {
         public static void DrawSprite( this Graphics g, Sprite s, Palette p )
         {
             using( Bitmap b = new Bitmap( 256, 488 ) )
             {
-                for( int i = 0; i < s.Pixels.Length; i++ )
-                {
-                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i]] );
-                }
-
+                b.DrawSprite( s, p );
                 g.DrawImage( b, 0, 0 );
             }
         }
 
-        public static byte[] ToPALFile( this Palette[] palettes )
+        public static void DrawSprite( this Bitmap b, Sprite s, Palette p )
         {
-            List<byte> result = new List<byte>( 0x418 );
-            result.AddRange( new byte[] { 
-                0x52, 0x49, 0x46, 0x46, // RIFF
-                0x10, 0x04, 0x00, 0x00, // Filesize or sommat
-                0x50, 0x41, 0x4C, 0x20, 0x64, 0x61, 0x74, 0x61,  // PAL data
-                0x04, 0x04, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01 } ); // filesize of sommat
-
-            foreach( Palette p in palettes )
+            for( int i = 0; (i < s.Pixels.Length) && (i / 256 < b.Height); i++ )
             {
-                result.AddRange( p.ToPALByteArray() );
+                b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i]] );
             }
-
-            return result.ToArray();
         }
 
+        public static unsafe void SetPixel( this Bitmap b, BitmapData bmd, int x, int y, int index )
+        {
+            byte* p = (byte*)bmd.Scan0.ToPointer();
+            int offset = y * bmd.Stride + x;
+            p[offset] = (byte)index;
+        }
+
+        public static unsafe int GetPixel( this Bitmap b, BitmapData bmd, int x, int y )
+        {
+            byte* p = (byte*)bmd.Scan0.ToPointer();
+            int offset = y * bmd.Stride + x;
+            return p[offset];
+        }
     }
 }

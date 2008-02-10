@@ -1,4 +1,11 @@
-FFTPatcher - v0.200
+FFTPatcher - v0.205
+
+Changes since v0.200:
+  Added detailed formula information to the Ability editor. These are mostly 
+    taken from the Battle Mechanics guide.
+  Added Sprite Viewer with decompression/recompression support. If you have
+    used Merlin Avery's FFT Sprite Manager, you'll find it works almost
+    exactly the same.
 
 Changes since v0.192:
   Added the Dark Knight, Onion Knight, Balthier, Luso, Argath, Aliste, and 

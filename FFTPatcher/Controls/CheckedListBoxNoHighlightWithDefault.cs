@@ -18,6 +18,7 @@
 */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -40,6 +41,7 @@ namespace FFTPatcher.Controls
             private set { defaults = value; }
         }
 
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new bool CheckOnClick { get { return base.CheckOnClick; } private set { base.CheckOnClick = value; } }
 
         /// <summary>

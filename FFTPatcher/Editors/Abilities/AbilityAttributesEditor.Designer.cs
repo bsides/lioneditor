@@ -49,7 +49,6 @@ namespace FFTPatcher.Editors
         {
             System.Windows.Forms.GroupBox attributesGroupBox;
             System.Windows.Forms.Label hLabel2;
-            System.Windows.Forms.Label hLabel1;
             System.Windows.Forms.Label mpLabel;
             System.Windows.Forms.Label ctLabel;
             System.Windows.Forms.Label yLabel;
@@ -58,6 +57,7 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label verticalLabel;
             System.Windows.Forms.Label effectLabel;
             System.Windows.Forms.Label rangeLabel;
+            this.formulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.inflictStatusLabel = new System.Windows.Forms.LinkLabel();
             this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.mpSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -65,14 +65,12 @@ namespace FFTPatcher.Editors
             this.statusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.ySpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.xSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.formulaSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.verticalSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.effectSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.rangeSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.elementsEditor = new FFTPatcher.Editors.ElementsEditor();
             attributesGroupBox = new System.Windows.Forms.GroupBox();
             hLabel2 = new System.Windows.Forms.Label();
-            hLabel1 = new System.Windows.Forms.Label();
             mpLabel = new System.Windows.Forms.Label();
             ctLabel = new System.Windows.Forms.Label();
             yLabel = new System.Windows.Forms.Label();
@@ -87,7 +85,6 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.statusSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.formulaSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.verticalSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.effectSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rangeSpinner)).BeginInit();
@@ -97,16 +94,15 @@ namespace FFTPatcher.Editors
             // 
             attributesGroupBox.AutoSize = true;
             attributesGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            attributesGroupBox.Controls.Add( this.formulaComboBox );
             attributesGroupBox.Controls.Add( this.inflictStatusLabel );
             attributesGroupBox.Controls.Add( hLabel2 );
-            attributesGroupBox.Controls.Add( hLabel1 );
             attributesGroupBox.Controls.Add( this.flagsCheckedListBox );
             attributesGroupBox.Controls.Add( this.mpSpinner );
             attributesGroupBox.Controls.Add( this.ctSpinner );
             attributesGroupBox.Controls.Add( this.statusSpinner );
             attributesGroupBox.Controls.Add( this.ySpinner );
             attributesGroupBox.Controls.Add( this.xSpinner );
-            attributesGroupBox.Controls.Add( this.formulaSpinner );
             attributesGroupBox.Controls.Add( this.verticalSpinner );
             attributesGroupBox.Controls.Add( this.effectSpinner );
             attributesGroupBox.Controls.Add( this.rangeSpinner );
@@ -122,16 +118,26 @@ namespace FFTPatcher.Editors
             attributesGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             attributesGroupBox.Location = new System.Drawing.Point( 0, 0 );
             attributesGroupBox.Name = "attributesGroupBox";
-            attributesGroupBox.Size = new System.Drawing.Size( 314, 517 );
+            attributesGroupBox.Size = new System.Drawing.Size( 575, 401 );
             attributesGroupBox.TabIndex = 0;
             attributesGroupBox.TabStop = false;
             attributesGroupBox.Text = "Attributes";
+            // 
+            // formulaComboBox
+            // 
+            this.formulaComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.formulaComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.formulaComboBox.FormattingEnabled = true;
+            this.formulaComboBox.Location = new System.Drawing.Point( 102, 185 );
+            this.formulaComboBox.Name = "formulaComboBox";
+            this.formulaComboBox.Size = new System.Drawing.Size( 467, 21 );
+            this.formulaComboBox.TabIndex = 6;
             // 
             // inflictStatusLabel
             // 
             this.inflictStatusLabel.AutoSize = true;
             this.inflictStatusLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.inflictStatusLabel.Location = new System.Drawing.Point( 6, 154 );
+            this.inflictStatusLabel.Location = new System.Drawing.Point( 6, 86 );
             this.inflictStatusLabel.Name = "inflictStatusLabel";
             this.inflictStatusLabel.Size = new System.Drawing.Size( 66, 13 );
             this.inflictStatusLabel.TabIndex = 12;
@@ -141,33 +147,58 @@ namespace FFTPatcher.Editors
             // hLabel2
             // 
             hLabel2.AutoSize = true;
-            hLabel2.Location = new System.Drawing.Point( 148, 154 );
+            hLabel2.Location = new System.Drawing.Point( 148, 86 );
             hLabel2.Name = "hLabel2";
             hLabel2.Size = new System.Drawing.Size( 13, 13 );
             hLabel2.TabIndex = 11;
             hLabel2.Text = "h";
             // 
-            // hLabel1
-            // 
-            hLabel1.AutoSize = true;
-            hLabel1.Location = new System.Drawing.Point( 148, 85 );
-            hLabel1.Name = "hLabel1";
-            hLabel1.Size = new System.Drawing.Size( 13, 13 );
-            hLabel1.TabIndex = 10;
-            hLabel1.Text = "h";
-            // 
             // flagsCheckedListBox
             // 
             this.flagsCheckedListBox.FormattingEnabled = true;
-            this.flagsCheckedListBox.Location = new System.Drawing.Point( 164, 14 );
+            this.flagsCheckedListBox.Items.AddRange( new object[] {
+            "Option 1",
+            "Option 2",
+            "Option 3",
+            "Option 4",
+            "Option 5",
+            "Option 6",
+            "Option 7",
+            "Option 8",
+            "Option 9",
+            "Option 10",
+            "Option 11",
+            "Option 12",
+            "Option 13",
+            "Option 14",
+            "Option 15",
+            "Option 16",
+            "Option 17",
+            "Option 18",
+            "Option 19",
+            "Option 20",
+            "Option 21",
+            "Option 22",
+            "Option 23",
+            "Option 24",
+            "Option 25",
+            "Option 26",
+            "Option 27",
+            "Option 28",
+            "Option 29",
+            "Option 30",
+            "Option 31",
+            "Option 32"} );
+            this.flagsCheckedListBox.Location = new System.Drawing.Point( 6, 258 );
+            this.flagsCheckedListBox.MultiColumn = true;
             this.flagsCheckedListBox.Name = "flagsCheckedListBox";
-            this.flagsCheckedListBox.Size = new System.Drawing.Size( 144, 484 );
+            this.flagsCheckedListBox.Size = new System.Drawing.Size( 563, 124 );
             this.flagsCheckedListBox.TabIndex = 9;
             // 
             // mpSpinner
             // 
             this.mpSpinner.AutoSize = true;
-            this.mpSpinner.Location = new System.Drawing.Point( 102, 198 );
+            this.mpSpinner.Location = new System.Drawing.Point( 102, 130 );
             this.mpSpinner.Maximum = new decimal( new int[] {
             255,
             0,
@@ -175,14 +206,14 @@ namespace FFTPatcher.Editors
             0} );
             this.mpSpinner.Name = "mpSpinner";
             this.mpSpinner.Size = new System.Drawing.Size( 45, 20 );
-            this.mpSpinner.TabIndex = 8;
+            this.mpSpinner.TabIndex = 5;
             this.mpSpinner.Tag = "MPCost";
             this.mpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ctSpinner
             // 
             this.ctSpinner.AutoSize = true;
-            this.ctSpinner.Location = new System.Drawing.Point( 102, 175 );
+            this.ctSpinner.Location = new System.Drawing.Point( 102, 107 );
             this.ctSpinner.Maximum = new decimal( new int[] {
             255,
             0,
@@ -190,7 +221,7 @@ namespace FFTPatcher.Editors
             0} );
             this.ctSpinner.Name = "ctSpinner";
             this.ctSpinner.Size = new System.Drawing.Size( 45, 20 );
-            this.ctSpinner.TabIndex = 7;
+            this.ctSpinner.TabIndex = 4;
             this.ctSpinner.Tag = "CT";
             this.ctSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -198,7 +229,7 @@ namespace FFTPatcher.Editors
             // 
             this.statusSpinner.AutoSize = true;
             this.statusSpinner.Hexadecimal = true;
-            this.statusSpinner.Location = new System.Drawing.Point( 102, 152 );
+            this.statusSpinner.Location = new System.Drawing.Point( 102, 84 );
             this.statusSpinner.Maximum = new decimal( new int[] {
             127,
             0,
@@ -206,14 +237,14 @@ namespace FFTPatcher.Editors
             0} );
             this.statusSpinner.Name = "statusSpinner";
             this.statusSpinner.Size = new System.Drawing.Size( 45, 20 );
-            this.statusSpinner.TabIndex = 6;
+            this.statusSpinner.TabIndex = 3;
             this.statusSpinner.Tag = "InflictStatus";
             this.statusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ySpinner
             // 
             this.ySpinner.AutoSize = true;
-            this.ySpinner.Location = new System.Drawing.Point( 102, 129 );
+            this.ySpinner.Location = new System.Drawing.Point( 102, 232 );
             this.ySpinner.Maximum = new decimal( new int[] {
             255,
             0,
@@ -221,14 +252,14 @@ namespace FFTPatcher.Editors
             0} );
             this.ySpinner.Name = "ySpinner";
             this.ySpinner.Size = new System.Drawing.Size( 45, 20 );
-            this.ySpinner.TabIndex = 5;
+            this.ySpinner.TabIndex = 8;
             this.ySpinner.Tag = "Y";
             this.ySpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // xSpinner
             // 
             this.xSpinner.AutoSize = true;
-            this.xSpinner.Location = new System.Drawing.Point( 102, 106 );
+            this.xSpinner.Location = new System.Drawing.Point( 102, 209 );
             this.xSpinner.Maximum = new decimal( new int[] {
             255,
             0,
@@ -236,24 +267,9 @@ namespace FFTPatcher.Editors
             0} );
             this.xSpinner.Name = "xSpinner";
             this.xSpinner.Size = new System.Drawing.Size( 45, 20 );
-            this.xSpinner.TabIndex = 4;
+            this.xSpinner.TabIndex = 7;
             this.xSpinner.Tag = "X";
             this.xSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // formulaSpinner
-            // 
-            this.formulaSpinner.Hexadecimal = true;
-            this.formulaSpinner.Location = new System.Drawing.Point( 102, 83 );
-            this.formulaSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.formulaSpinner.Name = "formulaSpinner";
-            this.formulaSpinner.Size = new System.Drawing.Size( 45, 20 );
-            this.formulaSpinner.TabIndex = 3;
-            this.formulaSpinner.Tag = "Formula";
-            this.formulaSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // verticalSpinner
             // 
@@ -303,7 +319,7 @@ namespace FFTPatcher.Editors
             // mpLabel
             // 
             mpLabel.AutoSize = true;
-            mpLabel.Location = new System.Drawing.Point( 6, 200 );
+            mpLabel.Location = new System.Drawing.Point( 6, 132 );
             mpLabel.Name = "mpLabel";
             mpLabel.Size = new System.Drawing.Size( 50, 13 );
             mpLabel.TabIndex = 9;
@@ -312,7 +328,7 @@ namespace FFTPatcher.Editors
             // ctLabel
             // 
             ctLabel.AutoSize = true;
-            ctLabel.Location = new System.Drawing.Point( 6, 177 );
+            ctLabel.Location = new System.Drawing.Point( 6, 109 );
             ctLabel.Name = "ctLabel";
             ctLabel.Size = new System.Drawing.Size( 24, 13 );
             ctLabel.TabIndex = 8;
@@ -321,7 +337,7 @@ namespace FFTPatcher.Editors
             // yLabel
             // 
             yLabel.AutoSize = true;
-            yLabel.Location = new System.Drawing.Point( 16, 131 );
+            yLabel.Location = new System.Drawing.Point( 16, 234 );
             yLabel.Name = "yLabel";
             yLabel.Size = new System.Drawing.Size( 14, 13 );
             yLabel.TabIndex = 6;
@@ -330,7 +346,7 @@ namespace FFTPatcher.Editors
             // xLabel
             // 
             xLabel.AutoSize = true;
-            xLabel.Location = new System.Drawing.Point( 16, 108 );
+            xLabel.Location = new System.Drawing.Point( 16, 211 );
             xLabel.Name = "xLabel";
             xLabel.Size = new System.Drawing.Size( 14, 13 );
             xLabel.TabIndex = 5;
@@ -339,7 +355,7 @@ namespace FFTPatcher.Editors
             // formulaLabel
             // 
             formulaLabel.AutoSize = true;
-            formulaLabel.Location = new System.Drawing.Point( 6, 85 );
+            formulaLabel.Location = new System.Drawing.Point( 6, 188 );
             formulaLabel.Name = "formulaLabel";
             formulaLabel.Size = new System.Drawing.Size( 47, 13 );
             formulaLabel.TabIndex = 4;
@@ -377,10 +393,10 @@ namespace FFTPatcher.Editors
             this.elementsEditor.AutoSize = true;
             this.elementsEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.elementsEditor.GroupBoxText = "Elements";
-            this.elementsEditor.Location = new System.Drawing.Point( 9, 224 );
+            this.elementsEditor.Location = new System.Drawing.Point( 205, 8 );
             this.elementsEditor.Name = "elementsEditor";
             this.elementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.elementsEditor.TabIndex = 0;
+            this.elementsEditor.TabIndex = 10;
             this.elementsEditor.TabStop = false;
             // 
             // AbilityAttributesEditor
@@ -391,7 +407,7 @@ namespace FFTPatcher.Editors
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add( attributesGroupBox );
             this.Name = "AbilityAttributesEditor";
-            this.Size = new System.Drawing.Size( 314, 517 );
+            this.Size = new System.Drawing.Size( 575, 401 );
             attributesGroupBox.ResumeLayout( false );
             attributesGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mpSpinner)).EndInit();
@@ -399,7 +415,6 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.statusSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.formulaSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.verticalSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.effectSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rangeSpinner)).EndInit();
@@ -416,11 +431,11 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.NumericUpDownWithDefault statusSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault ySpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault xSpinner;
-        private FFTPatcher.Controls.NumericUpDownWithDefault formulaSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault verticalSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault effectSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault rangeSpinner;
         private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault flagsCheckedListBox;
         private System.Windows.Forms.LinkLabel inflictStatusLabel;
+        private FFTPatcher.Controls.ComboBoxWithDefault formulaComboBox;
     }
 }

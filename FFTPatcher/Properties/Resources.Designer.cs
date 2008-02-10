@@ -95,6 +95,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] AbilityFormulas {
+            get {
+                object obj = ResourceManager.GetObject("AbilityFormulas", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] ActionEventsBin {
             get {
                 object obj = ResourceManager.GetObject("ActionEventsBin", resourceCulture);

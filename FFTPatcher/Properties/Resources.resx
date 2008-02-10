@@ -139,6 +139,9 @@
   <data name="ActionEventsBin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\bin\actionevents.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="AbilityFormulas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\abilityformulas.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ENTD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\entd1.ent.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

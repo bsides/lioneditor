@@ -61,6 +61,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Datatypes\Abilities\AbilityAttributes.cs" />
+    <Compile Include="Datatypes\Abilities\AbilityFormula.cs" />
     <Compile Include="Datatypes\Abilities\AllAbilities.cs" />
     <Compile Include="Datatypes\Abilities\Ability.cs" />
     <Compile Include="Datatypes\Abilities\AIFlags.cs" />
@@ -497,6 +498,7 @@
     <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\AbilityFormulas.xml" />
     <Content Include="Resources\bg.gif" />
     <Content Include="Resources\PSP\Abilities\Abilities.xml" />
     <Content Include="Resources\PSP\Abilities\Effects.xml" />

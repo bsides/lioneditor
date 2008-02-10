@@ -30,7 +30,7 @@ namespace FFTPatcher.Editors
 
         private List<NumericUpDownWithDefault> spinners;
         private static readonly List<string> FieldNames = new List<string>( new string[] {
-            "Range", "Effect", "Vertical", "Formula", "X", "Y", "InflictStatus", "CT", "MPCost" } );
+            "Range", "Effect", "Vertical", "X", "Y", "InflictStatus", "CT", "MPCost" } );
         private static readonly List<string> FlagNames = new List<string>( new string[] {
             "Blank6", "Blank7", "WeaponRange", "VerticalFixed", "VerticalTolerance", "WeaponStrike", "Auto", "TargetSelf",
             "HitEnemies", "HitAllies", "Blank8", "FollowTarget", "RandomFire", "LinearAttack", "ThreeDirections", "HitCaster",
@@ -71,6 +71,7 @@ namespace FFTPatcher.Editors
                 ourContext = FFTPatch.Context;
                 flagsCheckedListBox.Items.Clear();
                 flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.AbilityAttributes : PSXResources.AbilityAttributes );
+                formulaComboBox.DataSource = ourContext == Context.US_PSP ? AbilityFormula.PSPAbilityFormulas : AbilityFormula.PSXAbilityFormulas;
             }
 
             bool[] defaults = null;
@@ -88,6 +89,8 @@ namespace FFTPatcher.Editors
                     ReflectionHelpers.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
             }
 
+            formulaComboBox.SetValueAndDefault( attributes.Formula, attributes.Default.Formula );
+
             elementsEditor.SetValueAndDefaults( attributes.Elements, attributes.Default.Elements );
             ignoreChanges = false;
 
@@ -98,15 +101,18 @@ namespace FFTPatcher.Editors
         public AbilityAttributesEditor()
         {
             InitializeComponent();
-            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { rangeSpinner, effectSpinner, verticalSpinner, formulaSpinner, xSpinner, ySpinner, statusSpinner, ctSpinner, mpSpinner } );
+            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { rangeSpinner, effectSpinner, verticalSpinner, xSpinner, ySpinner, statusSpinner, ctSpinner, mpSpinner } );
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
+
+            formulaComboBox.SelectedIndexChanged += formulaComboBox_SelectedIndexChanged;
             flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
             inflictStatusLabel.Click += inflictStatusLabel_Click;
             inflictStatusLabel.TabStop = false;
         }
+
 
         private void inflictStatusLabel_Click( object sender, EventArgs e )
         {
@@ -129,6 +135,17 @@ namespace FFTPatcher.Editors
                 NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
                 int i = spinners.IndexOf( c );
                 ReflectionHelpers.SetFieldOrProperty( attributes, FieldNames[i], (byte)c.Value );
+            }
+        }
+
+        private void formulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                if( attributes != null )
+                {
+                    attributes.Formula = formulaComboBox.SelectedItem as AbilityFormula;
+                }
             }
         }
 

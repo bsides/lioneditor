@@ -8,3 +8,4 @@
 @for %%i in (%1\Resources\PSX-US\Items\*.xml) do "%1\gzip" -c "%%i" > "%1\Resources\PSX-US\Items\%%~ni.xml.gz"
 @for %%i in (%1\Resources\PSX-US\bin\*.bin) do "%1\gzip" -c "%%i" > "%1\Resources\PSX-US\bin\%%~ni.bin.gz"
 @for %%i in (%1\Resources\*.ENT) do "%1\gzip" -c "%%i" > "%1\Resources\%%~ni.ENT.gz"
+@for %%i in (%1\Resources\*.xml) do "%1\gzip" -c "%%i" > "%1\Resources\%%~ni.xml.gz"

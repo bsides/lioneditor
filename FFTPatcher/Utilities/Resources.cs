@@ -65,6 +65,8 @@ namespace FFTPatcher
 
             dict["AbilitiesEffects"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilitiesEffects ).ToUTF8String();
             dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilityEffectsBin );
+
+            dict["AbilityFormulas"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilityFormulas ).ToUTF8String();
         }
 
         public static string SkillSets { get { return dict["SkillSets"] as string; } }
@@ -77,6 +79,27 @@ namespace FFTPatcher
         public static string SpecialNames { get { return dict["SpecialNames"] as string; } }
         public static string SpriteSets { get { return dict["SpriteSets"] as string; } }
         public static string StatusNames { get { return dict["StatusNames"] as string; } }
+
+        private static Dictionary<byte, string> abilityFormulas;
+        public static Dictionary<byte, string> AbilityFormulas
+        {
+            get
+            {
+                if( abilityFormulas == null )
+                {
+                    abilityFormulas = new Dictionary<byte, string>();
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml( dict["AbilityFormulas"] as string );
+                    XmlNodeList nodes = doc.SelectNodes( "/AbilityFormulas/Ability" );
+                    foreach( XmlNode node in nodes )
+                    {
+                        abilityFormulas.Add( Convert.ToByte( node.Attributes["value"].InnerText, 16 ), node.InnerText );
+                    }
+                }
+
+                return abilityFormulas;
+            }
+        }
 
         private static Dictionary<int, string> fftPackFiles;
         public static Dictionary<int, string> FFTPackFiles

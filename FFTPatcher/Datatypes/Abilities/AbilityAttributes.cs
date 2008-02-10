@@ -29,7 +29,7 @@ namespace FFTPatcher.Datatypes
         public byte Range;
         public byte Effect;
         public byte Vertical;
-        public byte Formula;
+        public AbilityFormula Formula { get; set; }
         public byte X;
         public byte Y;
         public byte InflictStatus;
@@ -111,7 +111,8 @@ namespace FFTPatcher.Datatypes
             Targeting = !Targeting;
             Elements = new Elements( second[7] );
 
-            Formula = second[8];
+            byte b = second[8];
+            Formula = AbilityFormula.PSPAbilityFormulaHash[second[8]];
             X = second[9];
             Y = second[10];
             InflictStatus = second[11];
@@ -130,7 +131,7 @@ namespace FFTPatcher.Datatypes
             result[5] = Utilities.ByteFromBooleans( Reflect, Arithmetick, !Silence, !Mimic, NormalAttack, Perservere, ShowQuote, Unknown5 );
             result[6] = Utilities.ByteFromBooleans( CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade, Evadeable, !Targeting );
             result[7] = Elements.ToByte();
-            result[8] = Formula;
+            result[8] = Formula.Value;
             result[9] = X;
             result[10] = Y;
             result[11] = InflictStatus;

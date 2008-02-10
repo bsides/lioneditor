@@ -304,9 +304,9 @@ namespace FFTPatcher.Editors
             this.abilityAttributesEditor.Attributes = null;
             this.abilityAttributesEditor.AutoSize = true;
             this.abilityAttributesEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.abilityAttributesEditor.Location = new System.Drawing.Point( 172, 213 );
+            this.abilityAttributesEditor.Location = new System.Drawing.Point( 9, 277 );
             this.abilityAttributesEditor.Name = "abilityAttributesEditor";
-            this.abilityAttributesEditor.Size = new System.Drawing.Size( 314, 517 );
+            this.abilityAttributesEditor.Size = new System.Drawing.Size( 575, 401 );
             this.abilityAttributesEditor.TabIndex = 2;
             // 
             // commonAbilitiesEditor
@@ -433,7 +433,7 @@ namespace FFTPatcher.Editors
             this.Controls.Add( this.jumpingPanel );
             this.Controls.Add( this.chargingPanel );
             this.Name = "AbilityEditor";
-            this.Size = new System.Drawing.Size( 564, 733 );
+            this.Size = new System.Drawing.Size( 587, 681 );
             this.abilityIdPanel.ResumeLayout( false );
             this.abilityIdPanel.PerformLayout();
             this.arithmeticksPanel.ResumeLayout( false );

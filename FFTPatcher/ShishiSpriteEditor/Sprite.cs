@@ -32,6 +32,9 @@ namespace FFTPatcher.SpriteEditor
         private long OriginalSize { get; set; }
         private bool Compressed { get; set; }
 
+        public bool SP2 { get; private set; }
+        public bool SPR { get; private set; }
+
         public void ImportBitmap( Bitmap bmp )
         {
             if( bmp.PixelFormat != PixelFormat.Format8bppIndexed )
@@ -58,9 +61,21 @@ namespace FFTPatcher.SpriteEditor
             bmp.UnlockBits( bmd );
         }
 
-        public Sprite( IList<byte> bytes )
+        private static Palette BuildGreyscalePalette()
         {
-            OriginalSize = bytes.Count;
+            Color[] colors = new Color[16];
+            for( int i = 0; i < 16; i++ )
+            {
+                colors[i] = Color.FromArgb( (byte)(i << 4), (byte)(i << 4), (byte)(i << 4) );
+            }
+
+            return new Palette( colors );
+        }
+
+        private void FromSPR( IList<byte> bytes )
+        {
+            SPR = true;
+            SP2 = false;
             Palettes = new Palette[16];
             for( int i = 0; i < 16; i++ )
             {
@@ -76,6 +91,30 @@ namespace FFTPatcher.SpriteEditor
             {
                 Pixels = BuildPixels( new SubArray<byte>( bytes, 16 * 32, 16 * 32 + 36864 - 1 ), new SubArray<byte>( bytes, 16 * 32 + 36864 ) );
                 Compressed = true;
+            }
+        }
+
+        private void FromSP2( IList<byte> bytes )
+        {
+            SP2 = true;
+            SPR = false;
+            Pixels = BuildPixels( bytes, new byte[0] );
+            Compressed = false;
+            Palettes = new Palette[16];
+            for( int i = 0; i < 16; i++ )
+                Palettes[i] = BuildGreyscalePalette();
+        }
+
+        public Sprite( IList<byte> bytes )
+        {
+            OriginalSize = bytes.Count;
+            if( bytes.Count == 0x8000 )
+            {
+                FromSP2( bytes );
+            }
+            else
+            {
+                FromSPR( bytes );
             }
         }
 
@@ -248,9 +287,12 @@ namespace FFTPatcher.SpriteEditor
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>();
-            foreach( Palette p in Palettes )
+            if( SPR && !SP2 )
             {
-                result.AddRange( p.ToByteArray() );
+                foreach( Palette p in Palettes )
+                {
+                    result.AddRange( p.ToByteArray() );
+                }
             }
 
             for(

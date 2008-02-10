@@ -109,7 +109,7 @@ namespace FFTPatcher.SpriteEditor
         private void saveAsMenuItem_Click( object sender, EventArgs e )
         {
             saveFileDialog.FileName = filename;
-            saveFileDialog.Filter = "Sprite files (*.SPR)|*.SPR";
+            saveFileDialog.Filter = spriteViewer1.Sprite.SPR ? "Sprite files (*.SPR)|*.SPR" : "Secondary sprite files (*.SP2)|*.SP2";
             saveFileDialog.FilterIndex = 0;
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {

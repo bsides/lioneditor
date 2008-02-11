@@ -19,9 +19,26 @@
 
 using System;
 using System.Xml;
+using System.ComponentModel;
 
 namespace FFTPatcher
 {
+    public class PSXDescriptionAttribute : DescriptionAttribute
+    {
+        public PSXDescriptionAttribute( string description )
+            : base( description )
+        {
+        }
+    }
+
+    public class PSPDescriptionAttribute : DescriptionAttribute
+    {
+        public PSPDescriptionAttribute( string description )
+            : base( description )
+        {
+        }
+    }
+    
     /// <summary>
     /// Utilities
     /// </summary>

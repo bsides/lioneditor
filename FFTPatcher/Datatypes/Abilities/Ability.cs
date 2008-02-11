@@ -29,6 +29,9 @@ namespace FFTPatcher.Datatypes
         Throwing,
         Jumping,
         Charging,
+
+        [PSXDescription( "Mathematics" )]
+        [PSPDescription( "Arithmetick" )]
         Arithmetick,
         Reaction,
         Support,

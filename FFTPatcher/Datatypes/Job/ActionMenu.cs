@@ -31,7 +31,8 @@ namespace FFTPatcher.Datatypes
         ItemInventory,
         [Description( "Weapon Inventory" )]
         WeaponInventory,
-        [Description( "Arithmeticks" )]
+        [PSXDescription( "Mathematics" )]
+        [PSPDescription( "Arithmeticks" )]
         Arithmeticks,
         [Description( "Elements" )]
         Elements,
@@ -45,7 +46,8 @@ namespace FFTPatcher.Datatypes
         Attack,
         [Description( "Jump" )]
         Jump,
-        [Description( "Charge" )]
+        [PSXDescription( "Aim" )]
+        [PSPDescription( "Charge" )]
         Charge,
         [Description( "Defend" )]
         Defend,

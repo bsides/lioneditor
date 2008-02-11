@@ -121,7 +121,7 @@ namespace FFTPatcher.SpriteEditor
                 result.Colors[i / 4] = Color.FromArgb( bytes[i] & 0xF8, bytes[i + 1] & 0xF8, bytes[i + 2] & 0xF8 );
             }
 
-            if( result.Colors[0].ToArgb() == Color.FromArgb( 0, 0, 0 ).ToArgb() )
+            if( result.Colors[0].ToArgb() == 0 )
             {
                 result.Colors[0] = Color.Transparent;
             }

@@ -29,22 +29,49 @@ namespace FFTPatcher.Datatypes
         Knight = 0x02,
         Archer = 0x03,
         Monk = 0x04,
+
+        [PSXDescription( "Priest" )]
+        [PSPDescription( "White Mage" )]
         WhiteMage = 0x05,
+
+        [PSXDescription( "Wizard" )]
+        [PSPDescription( "Black Mage" )]
         BlackMage = 0x06,
+
+        [PSXDescription( "Time Mage" )]
+        [PSPDescription( "Time Mage" )]
         TimeMage = 0x07,
         Summoner = 0x08,
         Thief = 0x09,
+
+        [PSXDescription( "Mediator" )]
+        [PSPDescription( "Orator" )]
         Mediator = 0x0A,
+
+        [PSXDescription( "Oracle" )]
+        [PSPDescription( "Mystic" )]
         Oracle = 0x0B,
         Geomancer = 0x0C,
+
+        [PSXDescription( "Lancer" )]
+        [PSPDescription( "Dragoon" )]
         Lancer = 0x0D,
         Samurai = 0x0E,
         Ninja = 0x0F,
+
+        [PSXDescription( "Calculator" )]
+        [PSPDescription( "Arithmetician" )]
         Calculator = 0x10,
         Bard = 0x11,
         Dancer = 0x12,
         Mime = 0x13,
+
+        [PSXDescription( "" )]
+        [PSPDescription( "Dark Knight" )]
         DarkKnight = 0x14,
+
+        [PSXDescription( "" )]
+        [PSPDescription( "Onion Knight" )]
         OnionKnight = 0x15,
         Unknown = 0xA9,
     }

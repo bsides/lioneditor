@@ -60,6 +60,13 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
+        internal static byte[] ATCHELP_LZW {
+            get {
+                object obj = ResourceManager.GetObject("ATCHELP_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] SAMPLE_LZW {
             get {
                 object obj = ResourceManager.GetObject("SAMPLE_LZW", resourceCulture);

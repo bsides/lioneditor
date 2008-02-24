@@ -23,18 +23,19 @@ using FFTPatcher.TextEditor.Files.PSX;
 
 namespace FFTPatcher.TextEditor
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             GenericCharMap charmap = TextUtilities.PSPMap;
             Dictionary<string, int> back = charmap.Reverse;
             SAMPLELZW s = SAMPLELZW.GetInstance();
             WORLDLZW w = WORLDLZW.GetInstance();
+            ATCHELPLZW a = ATCHELPLZW.GetInstance();
             //byte[] bytes = s.ToByteArray();
 
-            stringSectionedEditor1.Strings = w;
+            stringSectionedEditor1.Strings = a;
         }
     }
 }

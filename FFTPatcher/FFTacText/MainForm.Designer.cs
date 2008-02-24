@@ -19,7 +19,7 @@
 
 namespace FFTPatcher.TextEditor
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -56,16 +56,17 @@ namespace FFTPatcher.TextEditor
             this.stringSectionedEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.stringSectionedEditor1.Name = "stringSectionedEditor1";
             this.stringSectionedEditor1.Size = new System.Drawing.Size( 459, 349 );
+            this.stringSectionedEditor1.Strings = null;
             this.stringSectionedEditor1.TabIndex = 0;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 459, 349 );
             this.Controls.Add( this.stringSectionedEditor1 );
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "MainForm";
+            this.Text = "FFTacText Editor";
             this.ResumeLayout( false );
 
         }

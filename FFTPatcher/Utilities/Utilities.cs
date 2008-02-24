@@ -18,8 +18,9 @@
 */
 
 using System;
-using System.Xml;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Xml;
 
 namespace FFTPatcher
 {
@@ -152,7 +153,7 @@ namespace FFTPatcher
         /// <summary>
         /// Joins four bytes into a uint.
         /// </summary>
-        public static UInt32 BytesToUInt32( byte[] bytes )
+        public static UInt32 BytesToUInt32( IList<byte> bytes )
         {
             UInt32 result = 0;
             result += bytes[0];

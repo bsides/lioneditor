@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
-    public class SubArray<T> : ICollection<T>, IList<T>
+    public class SubArray<T> : ICollection<T>, IList<T> 
     {
         private IList<T> baseArray;
         private int start;
@@ -99,6 +99,7 @@ namespace FFTPatcher.Datatypes
             }
             return result;
         }
+
 
         #region ICollection<T> Members
 

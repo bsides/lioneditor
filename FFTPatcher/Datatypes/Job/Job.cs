@@ -176,8 +176,6 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AllJobs
     {
-        private static string[] psxNames;
-        private static string[] pspNames;
         private static Job[] psxJobs;
         private static Job[] pspJobs;
 
@@ -188,8 +186,11 @@ namespace FFTPatcher.Datatypes
 
         public static string[] Names
         {
-            get { return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames; }
+            get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; }
         }
+
+        public static string[] PSPNames { get; private set; }
+        public static string[] PSXNames { get; private set; }
 
         public Job[] Jobs { get; private set; }
 
@@ -198,23 +199,23 @@ namespace FFTPatcher.Datatypes
             pspJobs = new Job[0xAA];
             psxJobs = new Job[0xA0];
 
-            pspNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
                 Resources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xAA );
-            psxNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xA0 );
 
             for( int i = 0; i < 0xAA; i++ )
             {
-                pspJobs[i] = new Job( (byte)i, pspNames[i] );
+                pspJobs[i] = new Job( (byte)i, PSPNames[i] );
             }
 
             for( int i = 0; i < 0xA0; i++ )
             {
-                psxJobs[i] = new Job( (byte)i, psxNames[i] );
+                psxJobs[i] = new Job( (byte)i, PSXNames[i] );
             }
         }
 

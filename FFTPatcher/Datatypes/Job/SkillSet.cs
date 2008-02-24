@@ -36,6 +36,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static string[] PSXNames { get; private set; }
+        public static string[] PSPNames { get; private set; }
+
         private static SortedDictionary<byte, SkillSet> pspEventSkills;
         private static SortedDictionary<byte, SkillSet> psxEventSkills;
         public static SortedDictionary<byte, SkillSet> EventSkillSets
@@ -48,17 +51,17 @@ namespace FFTPatcher.Datatypes
             pspSkills = new SkillSet[0xE3];
             pspEventSkills = new SortedDictionary<byte, SkillSet>();
 
-            string[] pspNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
                 Resources.SkillSets,
                 "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                 0xE3 );
-            string[] psxNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.SkillSets,
                 "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                 0xE0 );
             for( int i = 0; i < 0xE3; i++ )
             {
-                string n = pspNames[i];
+                string n = PSPNames[i];
                 pspSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
                 pspEventSkills.Add( (byte)i, pspSkills[i] );
             }
@@ -72,7 +75,7 @@ namespace FFTPatcher.Datatypes
             psxEventSkills = new SortedDictionary<byte, SkillSet>();
             for( int i = 0; i < 0xE0; i++ )
             {
-                string n = psxNames[i];
+                string n = PSXNames[i];
                 psxSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
                 psxEventSkills.Add( (byte)i, psxSkills[i] );
             }

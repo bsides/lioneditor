@@ -17,16 +17,17 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Collections.Generic;
 using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class ATCHELPLZW : IStringSectioned
+    public class ATCHELPLZW : AbstractStringSectioned
     {
+        protected override int NumberOfSections { get { return 21; } }
+
         private static Dictionary<string, long> locations;
-        public IDictionary<string, long> Locations
+        public override IDictionary<string, long> Locations
         {
             get
             {
@@ -40,8 +41,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private const int dataStart = 0x80;
-
         private static ATCHELPLZW Instance { get; set; }
         private static string[] sectionNames = new string[21] {
             "", "", "", "", "", "", 
@@ -49,17 +48,16 @@ namespace FFTPatcher.TextEditor.Files.PSX
             "Job descriptions", "Item descriptions", "", "Ability descriptions", "", "",
             "", "Skillset descriptions", "" };
 
-        public static string[][] entryNames;
+        private static string[][] entryNames;
 
-        public List<IList<string>> Sections { get; private set; }
-        public IList<string> SectionNames { get { return sectionNames; } }
-        public IList<IList<string>> EntryNames { get { return entryNames; } }
-        public int MaxLength { get { return 0x0160D5; } }
-        public int Length { get { return ToBytes().Count; } }
+        public override IList<string> SectionNames { get { return sectionNames; } }
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+        public override int MaxLength { get { return 0x0160D5; } }
 
         static ATCHELPLZW()
         {
             Instance = new ATCHELPLZW( Properties.Resources.ATCHELP_LZW );
+
             entryNames = new string[21][];
             for( int i = 0; i < entryNames.Length; i++ )
             {
@@ -84,68 +82,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
         private ATCHELPLZW( IList<byte> bytes )
+            : base( bytes )
         {
-            Sections = new List<IList<string>>( 21 );
-            for( int i = 0; i < 21; i++ )
-            {
-                uint start = Utilities.BytesToUInt32( new SubArray<byte>( bytes, i * 4, i * 4 + 3 ) );
-                uint stop = Utilities.BytesToUInt32( new SubArray<byte>( bytes, (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
-                if( i == 20 )
-                {
-                    stop = (uint)bytes.Count - 1 - dataStart;
-                }
-
-                IList<byte> thisSection = new SubArray<byte>( bytes, (int)(start + dataStart), (int)(stop + dataStart) );
-                Sections.Add( TextUtilities.ProcessList( thisSection, TextUtilities.CharMapType.PSX ) );
-            }
         }
 
         public static ATCHELPLZW GetInstance()
         {
             return Instance;
-        }
-
-        private List<byte> ToBytes()
-        {
-            List<List<byte>> byteSections = new List<List<byte>>( 21 );
-            foreach( List<string> section in Sections )
-            {
-                List<byte> sectionBytes = new List<byte>();
-                foreach( string s in section )
-                {
-                    sectionBytes.AddRange( TextUtilities.PSXMap.StringToByteArray( s ) );
-                }
-                byteSections.Add( sectionBytes );
-            }
-
-            List<byte> result = new List<byte>();
-            result.AddRange( new byte[] { 0x00, 0x00, 0x00, 0x00 } );
-            int old = 0;
-            for( int i = 0; i < 20; i++ )
-            {
-                result.AddRange( ((UInt32)(byteSections[i].Count + old)).ToBytes() );
-                old += byteSections[i].Count;
-            }
-            result.AddRange( new byte[0x2C] );
-
-            foreach( List<byte> bytes in byteSections )
-            {
-                result.AddRange( bytes );
-            }
-
-            return result;
-        }
-
-        public byte[] ToByteArray()
-        {
-            List<byte> result = ToBytes();
-
-            if( result.Count < MaxLength )
-            {
-                result.AddRange( new byte[MaxLength - result.Count] );
-            }
-
-            return result.ToArray();
         }
     }
 }

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -86,6 +87,7 @@
     <Compile Include="SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="WLDFACE.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FFTPatcher.csproj">

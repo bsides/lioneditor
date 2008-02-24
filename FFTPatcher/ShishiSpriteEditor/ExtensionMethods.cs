@@ -40,7 +40,7 @@ namespace FFTPatcher.SpriteEditor
         {
             for( int i = 0; (i < s.Pixels.Length) && (i / 256 < b.Height); i++ )
             {
-                b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i]] );
+                b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
             }
         }
 

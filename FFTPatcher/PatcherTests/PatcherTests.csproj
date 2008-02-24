@@ -52,6 +52,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SpriteTests.cs" />
+    <Compile Include="WLDFACETests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FFTPatcher.csproj">
@@ -259,6 +260,8 @@
     <None Include="Sprites\ZARU2.SPR" />
     <None Include="Sprites\ZARUE.SPR" />
     <None Include="Sprites\ZARUMOU.SPR" />
+    <None Include="WLDFACE.BIN" />
+    <None Include="WLDFACE4.BIN" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

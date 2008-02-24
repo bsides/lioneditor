@@ -559,4 +559,10 @@
   <data name="_60W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sprites\60w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="WLDFACE4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wldface4.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WLDFACE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wldface.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

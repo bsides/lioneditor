@@ -1040,6 +1040,20 @@ namespace PatcherTests {
             }
         }
         
+        internal static byte[] WLDFACE {
+            get {
+                object obj = ResourceManager.GetObject("WLDFACE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] WLDFACE4 {
+            get {
+                object obj = ResourceManager.GetObject("WLDFACE4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] YUMI_M {
             get {
                 object obj = ResourceManager.GetObject("YUMI_M", resourceCulture);

@@ -1,0 +1,31 @@
+Shishi ("Lion") Sprite Manager
+
+File menu:
+  Open - Open a SPR or SP2 file
+  Save/Save as - Save your SPR or SP2 file. Note that SP2 files are saved 
+    without palette information attached.
+  Import - Import an indexed 256 color bitmap file. The current sprite's
+    palette and pixels will be overwritten. You can then save the file
+    as an SPR or SP2
+  Export - Export an indexed 256 color bitmap file. You can open this
+    file in your image editor and change pixels around or change the palettes.
+    
+Palette menu:
+  Save - Save's this sprite's palette as a 256 color RIFF PAL file. 
+    You should be able to import thise palette into your image editor.
+  Load - Load a 256 color RIFF PAL file into the current sprite.
+
+*.SPR files:
+  These contain 16 16-color palettes and an image that is 256 pixels wide, with
+  variable height.
+  Some of the data in the SPR file is compressed. The program should detect it and 
+  decompress it. When you save it will compress what it needs to automatically.
+  Note: The KASANEK.SPR and KASANEM.SPR files do not work properly, so you
+  might get weird behavior if you try to edit them.
+*.SP2 files:
+  These contain an image that is 256x256 pixels, with no palette. The game will
+  use the palette in the SPR file that is associated with each SP2 file.
+  Ex. MOL.SPR's palette will be used for MOL2.SP2
+
+Thanks to Gemini on the ROMHacking forums for disassembling the compression
+algorithm.

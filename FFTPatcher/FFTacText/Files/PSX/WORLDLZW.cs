@@ -53,7 +53,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static WORLDLZW()
         {
-            Instance = new WORLDLZW( Properties.Resources.WORLD_LZW );
+            Instance = new WORLDLZW( PSXResources.WORLD_LZW );
 
             sectionNames = new string[32] {
                 "","","","","","","Job names","Item names",

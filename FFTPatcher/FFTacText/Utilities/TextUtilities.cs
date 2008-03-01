@@ -21,148 +21,10 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor
 {
-    public abstract class GenericCharMap : Dictionary<int, string>
-    {
-        private Dictionary<string, int> BuildValueToKeyMapping()
-        {
-            Dictionary<string, int> result = new Dictionary<string, int>();
-            foreach( KeyValuePair<int, string> kvp in this )
-            {
-                if( !result.ContainsKey( kvp.Value ) )
-                {
-                    result.Add( kvp.Value, kvp.Key );
-                }
-                else if( kvp.Key < result[kvp.Value] )
-                {
-                    result[kvp.Value] = kvp.Key;
-                }
-            }
-
-            return result;
-        }
-
-        private Dictionary<string, int> reverse = null;
-        public Dictionary<string, int> Reverse
-        {
-            get
-            {
-                if( reverse == null )
-                {
-                    reverse = BuildValueToKeyMapping();
-                }
-
-                return reverse;
-            }
-        }
-
-        public string GetNextChar( IList<byte> bytes, ref int pos )
-        {
-            int resultPos = pos + 1;
-            byte val = bytes[pos];
-            int key = val;
-            if( (val >= 0xD0 && val <= 0xDA) || (val == 0xE2) || (val == 0xE3) || (val == 0xEE) )
-            {
-                byte nextVal = bytes[pos + 1];
-                resultPos++;
-                key = val * 256 + nextVal;
-            }
-            else if( val >= 0xF0 && val <= 0xF3 && (pos + 2) < bytes.Count )
-            {
-                resultPos += 2;
-                key = val * 256 * 256 + bytes[pos + 1] * 256 + bytes[pos + 2];
-            }
-
-            string result = string.Format( "{{0x{0:X2}", key ) + @"}";
-            if( this.ContainsKey( key ) )
-            {
-                result = this[key];
-            }
-
-            pos = resultPos;
-
-            return result;
-        }
-
-        private static Regex regex = new Regex( @"{0x([0-9A-Fa-f]+)}" );
-
-        public byte[] StringToByteArray( string s )
-        {
-            List<byte> result = new List<byte>( s.Length );
-
-            for( int i = 0; i < s.Length; i++ )
-            {
-                int val = 0;
-                if( s[i] == '{' )
-                {
-                    int j = s.IndexOf( '}', i );
-                    string key = s.Substring( i, j - i + 1 );
-                    if( Reverse.ContainsKey( key ) )
-                    {
-                        val = Reverse[key];
-                    }
-                    else
-                    {
-                        Match match = regex.Match( key );
-                        if( match.Success )
-                        {
-                            result.AddRange( IntToOneOrTwoOrThreeBytes( Convert.ToInt32( match.Groups[1].Value, 16 ) ) );
-                            val = -1;
-                        }
-                        else
-                        {
-                            throw new Exception();
-                        }
-                    }
-                    i = j;
-                }
-                else if( s[i] == '\r' && (i + 1) < s.Length && s[i + 1] == '\n' )
-                {
-                    i += 1;
-                    val = Reverse["\r\n"];
-                }
-                else
-                {
-                    val = Reverse[s[i].ToString()];
-                }
-                if( val >= 0 )
-                {
-                    result.AddRange( IntToOneOrTwoOrThreeBytes( val ) );
-                }
-            }
-
-            return result.ToArray();
-        }
-
-        private byte[] IntToOneOrTwoOrThreeBytes( int i )
-        {
-            if( i < 256 )
-            {
-                return new byte[] { (byte)i };
-            }
-            else if( i < 65536 )
-            {
-                return new byte[] { (byte)((i & 0xFF00) >> 8), (byte)(i & 0xFF) };
-            }
-            else
-            {
-                return new byte[] { (byte)((i & 0xFF000) >> 16), (byte)((i & 0xFF00) >> 8), (byte)(i & 0xFF) };
-            }
-        }
-    }
-
-    public class PSPCharMap : GenericCharMap
-    {
-    }
-
-    public class PSXCharMap : GenericCharMap
-    {
-    }
-
     public static class TextUtilities
     {
         public enum CharMapType
@@ -381,7 +243,7 @@ namespace FFTPatcher.TextEditor
             PSXMap.Add( 0xD090, "\u3093" );
             PSXMap.Add( 0x92, "\u30A2" );
             PSXMap.Add( 0xD092, "\u30A2" );
-            
+
             for( int i = 0x94; i <= 0xB1; i++ )
             {
                 PSXMap.Add( i, ((char)(i - 0x94 + 0x30A4)).ToString() );

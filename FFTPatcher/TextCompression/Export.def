@@ -1,4 +1,4 @@
-LIBRARY	"MakeTempFilenameDLL2005"
+LIBRARY "FFTTextCompression"
 EXPORTS
      Compress
      CompressWithCallback

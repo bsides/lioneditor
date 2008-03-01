@@ -39,14 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharMap.cs" />
-    <Compile Include="CompressedStringSectionedEditor.cs">
+    <Compile Include="Editors\CompressedStringSectionedEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CompressedStringSectionedEditor.Designer.cs">
+    <Compile Include="Editors\CompressedStringSectionedEditor.Designer.cs">
       <DependentUpon>CompressedStringSectionedEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompressionEventArgs.cs" />
+    <Compile Include="Utilities\CompressionEventArgs.cs" />
     <Compile Include="Files\AbstractStringSectioned.cs" />
     <Compile Include="Files\ICompressed.cs" />
     <Compile Include="Files\IStringSectioned.cs" />
@@ -74,7 +73,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CompressedStringSectionedEditor.resx">
+    <EmbeddedResource Include="Editors\CompressedStringSectionedEditor.resx">
       <DependentUpon>CompressedStringSectionedEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -82,23 +81,23 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="Properties\PSXResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>PSXResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PSPResources.resx">
+    <EmbeddedResource Include="Properties\PSPResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PSPResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="StringSectionedEditor.resx">
+    <EmbeddedResource Include="Editors\StringSectionedEditor.resx">
       <DependentUpon>StringSectionedEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="Properties\PSXResources.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>PSXResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
@@ -124,17 +123,21 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PSPResources.Designer.cs">
+    <Compile Include="Properties\PSPResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PSPResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StringSectionedEditor.cs">
+    <Compile Include="Editors\StringSectionedEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StringSectionedEditor.Designer.cs">
+    <Compile Include="Editors\StringSectionedEditor.Designer.cs">
       <DependentUpon>StringSectionedEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\CharMap.cs" />
+    <Compile Include="Utilities\PSPResources.cs" />
+    <Compile Include="Utilities\PSXResources.cs" />
+    <Compile Include="Utilities\TextUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FFTPatcher.csproj">

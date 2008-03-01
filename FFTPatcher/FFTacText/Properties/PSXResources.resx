@@ -119,24 +119,24 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ATCHELP_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx\atchelp.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx\atchelp.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ATTACK_OUT_partial" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx\attack.out.partial;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx\attack.out.partial.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="JOIN_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx\join.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx\join.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="OPEN_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx\open.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx\open.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SAMPLE_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx\sample.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx\sample.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="WLDHELP_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx\wldhelp.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx\wldhelp.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="WORLD_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psx\world.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\psx\world.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

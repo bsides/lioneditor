@@ -53,7 +53,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static ATTACKOUT()
         {
-            Instance = new ATTACKOUT( Properties.Resources.ATTACK_OUT_partial );
+            Instance = new ATTACKOUT( PSXResources.ATTACK_OUT_partial );
 
             entryNames = new string[3][];
             for( int i = 0; i < entryNames.Length; i++ )

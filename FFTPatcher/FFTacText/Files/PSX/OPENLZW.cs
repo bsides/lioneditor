@@ -55,7 +55,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static OPENLZW()
         {
-            Instance = new OPENLZW( Properties.Resources.OPEN_LZW );
+            Instance = new OPENLZW( PSXResources.OPEN_LZW );
 
             entryNames = new string[32][];
             for( int i = 0; i < entryNames.Length; i++ )

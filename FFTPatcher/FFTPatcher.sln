@@ -12,11 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShishiSpriteEditor", "ShishiSpriteEditor\ShishiSpriteEditor.csproj", "{4017D65D-C72B-491E-B263-E12DB6537382}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTactext", "FFTactext\FFTactext.csproj", "{210DDF20-2CEA-4A2C-B2C6-D2EB7938BEB2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC} = {8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}
-	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MakeTempFilenameDLL2005", "TextCompression\MakeTempFilenameDLL2005.vcproj", "{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFTTextCompression", "TextCompression\TextCompression.vcproj", "{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,13 +94,11 @@ Global
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.asd|Win32.ActiveCfg = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.asd|Win32.Build.0 = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Any CPU.Build.0 = Debug|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Win32.ActiveCfg = Release|Win32
-		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Win32.Build.0 = Release|Win32
+		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Win32.Build.0 = Debug|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Any CPU.ActiveCfg = Release|Win32
-		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Any CPU.Build.0 = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Win32.ActiveCfg = Release|Win32

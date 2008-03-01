@@ -62,7 +62,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static WLDHELPLZW()
         {
-            Instance = new WLDHELPLZW( Properties.Resources.WLDHELP_LZW );
+            Instance = new WLDHELPLZW( PSXResources.WLDHELP_LZW );
 
             sectionNames = new string[21] {
                 "","Help", "Menu/Options Help", "", "Error/Confirmation messages", "", "",

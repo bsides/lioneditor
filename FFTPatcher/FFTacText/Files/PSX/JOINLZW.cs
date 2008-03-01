@@ -51,7 +51,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static JOINLZW()
         {
-            Instance = new JOINLZW( Properties.Resources.JOIN_LZW );
+            Instance = new JOINLZW( PSXResources.JOIN_LZW );
 
             entryNames = new string[5][];
             for( int i = 0; i < entryNames.Length; i++ )

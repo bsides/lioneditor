@@ -61,7 +61,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static SAMPLELZW()
         {
-            Instance = new SAMPLELZW( Properties.Resources.SAMPLE_LZW );
+            Instance = new SAMPLELZW( PSXResources.SAMPLE_LZW );
             entryNames = new string[24][];
             for( int i = 0; i < entryNames.Length; i++ )
             {
@@ -101,7 +101,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "","Charging","Performing","Move","Ride chocobo","Inherit crystal","Move confirmation",
                 "Select combo","Combo target","Select magic","Insufficient MP","Select target","Select target","Confirm attack","Confirm protect",
                 "Set direction","Select chargeup ability","Confirm chargeup ability","Confirm action","Silence" };
-            entryNames[17] = PSXResources.Statuses;
+            entryNames[17] = FFTPatcher.PSXResources.Statuses;
             entryNames[18] = new string[31] {
                 "No items", "Item out of stock", "No more shields", "No unequipped items", "Set number to dispose", "Cancel equip?", "No ability learned", "Learned all abilities",
                 "Is __ OK?", "Insufficient JP", "Remove __?", "Team not ready", "Team full", "Can't delete leader", "No memory card", "No saves",

@@ -56,7 +56,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static ATCHELPLZW()
         {
-            Instance = new ATCHELPLZW( Properties.Resources.ATCHELP_LZW );
+            Instance = new ATCHELPLZW( PSXResources.ATCHELP_LZW );
 
             entryNames = new string[21][];
             for( int i = 0; i < entryNames.Length; i++ )

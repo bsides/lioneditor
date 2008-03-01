@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FFTPatcher.TextEditor {
+namespace FFTPatcher.TextEditor.Properties {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace FFTPatcher.TextEditor {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class PSPResources {
+    internal class PSXResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PSPResources() {
+        internal PSXResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace FFTPatcher.TextEditor {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FFTPatcher.TextEditor.PSPResources", typeof(PSPResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FFTPatcher.TextEditor.Properties.PSXResources", typeof(PSXResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -67,37 +67,16 @@ namespace FFTPatcher.TextEditor {
             }
         }
         
-        internal static byte[] BOOT_299024 {
+        internal static byte[] ATTACK_OUT_partial {
             get {
-                object obj = ResourceManager.GetObject("BOOT_299024", resourceCulture);
+                object obj = ResourceManager.GetObject("ATTACK_OUT_partial", resourceCulture);
                 return ((byte[])(obj));
             }
         }
         
-        internal static byte[] BOOT_29E334 {
+        internal static byte[] JOIN_LZW {
             get {
-                object obj = ResourceManager.GetObject("BOOT_29E334", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_2A1630 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_2A1630", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_2EB4C0 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_2EB4C0", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_32D368 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_32D368", resourceCulture);
+                object obj = ResourceManager.GetObject("JOIN_LZW", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -105,6 +84,27 @@ namespace FFTPatcher.TextEditor {
         internal static byte[] OPEN_LZW {
             get {
                 object obj = ResourceManager.GetObject("OPEN_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] SAMPLE_LZW {
+            get {
+                object obj = ResourceManager.GetObject("SAMPLE_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] WLDHELP_LZW {
+            get {
+                object obj = ResourceManager.GetObject("WLDHELP_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] WORLD_LZW {
+            get {
+                object obj = ResourceManager.GetObject("WORLD_LZW", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -31,7 +31,12 @@ namespace FFTPatcher.TextEditor
         private bool ignoreChanges = false;
         private bool error = false;
 
-        public IStringSectioned Strings
+        protected virtual string LengthLabelFormatString
+        {
+            get { return "Length: {0} bytes"; }
+        }
+
+        public virtual IStringSectioned Strings
         {
             get { return strings; }
             set
@@ -95,7 +100,7 @@ namespace FFTPatcher.TextEditor
         {
             try
             {
-                lengthLabel.Text = string.Format( "Length: {0} bytes", strings.Length );
+                lengthLabel.Text = string.Format( LengthLabelFormatString, strings.EstimatedLength );
                 maxLengthLabel.Text = string.Format( "Max: {0} bytes", strings.MaxLength );
                 error = false;
                 errorLabel.Visible = false;

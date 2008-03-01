@@ -103,6 +103,7 @@ Global
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Win32.ActiveCfg = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Debug|Win32.Build.0 = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Any CPU.ActiveCfg = Release|Win32
+		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Any CPU.Build.0 = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Win32.ActiveCfg = Release|Win32

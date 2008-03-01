@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class SAMPLELZW : AbstractStringSectioned
+    public class SAMPLELZW : BasePSXFile
     {
         private static Dictionary<string, long> locations;
         public override IDictionary<string, long> Locations

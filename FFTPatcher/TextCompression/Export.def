@@ -1,3 +1,4 @@
 LIBRARY	"MakeTempFilenameDLL2005"
 EXPORTS
      Compress
+     CompressWithCallback

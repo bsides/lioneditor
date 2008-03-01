@@ -2,6 +2,10 @@
 //
 
 #include "stdafx.h"
+#include "memmem.h"
+#include <stdlib.h>
+#include <assert.h>
+
 #define MIN(x,y) (((x)<(y))?(x):(y))
 #define MAX(x,y) (((x)>(y))?(x):(y))
 
@@ -41,42 +45,18 @@ int FindByte(unsigned char byteToFind, unsigned char* whereToLook, int whereToSt
 	return -1;
 }
 
-BOOL PointersHaveSameData(unsigned char* one, unsigned char* two, int length)
-{
-	for (int i = 0; i < length; i++)
-	{
-		if (one[i] != two[i]) return FALSE;
-	}
-
-	return TRUE;
-}
-
-int FindSubArray(unsigned char* input, int inputLength, unsigned char* whatToFind, int subLength)
-{
-	for (int i = 0; i <= (inputLength-subLength); i++)
-	{
-		if (PointersHaveSameData(input+i, whatToFind, subLength))
-		{
-			return i;
-		}
-	}
-
-	return -1;
-}
-
-
-BOOL GetPositionOfMaxSubArray(unsigned char* whereToLook, int whereToStopLooking, unsigned char* whatToFind, int inputLength, 
+BOOL GetPositionOfMaxSubArray(unsigned char* haystack, int haystackLength, unsigned char* needle, int needleLength, 
 							  int* location, int* size)
 {
-    if (inputLength >= 4)
+    if (needleLength >= 4)
 	{
-		for (int i = inputLength; i >= 4; i--)
+		for (int i = MIN(needleLength,haystackLength); i >= 4; i--)
 		{
-			int loc = FindSubArray(whereToLook, whereToStopLooking, whatToFind, i);
-			if (loc > -1)
+			unsigned char* loc = (unsigned char*)memmem(haystack, haystackLength, needle, i);
+			if (loc != NULL)
 			{
 				*size = i;
-				*location = whereToStopLooking - loc;
+				*location = haystackLength - (loc-haystack);
 				return TRUE;
 			}
 		}
@@ -96,17 +76,23 @@ void AddJump(unsigned char* destination, int jump, int length)
 	destination[2] = j&0xFF;
 }
 
-__declspec(dllexport) void Compress(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength)
+typedef void (__stdcall *callback_t)(int);
+__declspec(dllexport) void CompressWithCallback(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, callback_t progressCallback)
 {
 	BuildCompressionJumps();
 
-    int outputPosition = 0;
+	int outputPosition = 0;
 	int loc = 0;
     int size = 0;
+
 	for (int i = 0; i < inputLength; i++)
 	{
 		if (bytes[i] == 0xFE)
 		{
+			if (progressCallback != NULL)
+			{
+				progressCallback(i*100/inputLength);
+			}
 			output[outputPosition++] = bytes[i];
 			continue;
 		}
@@ -115,12 +101,12 @@ __declspec(dllexport) void Compress(unsigned char* bytes, int inputLength, unsig
 		if (fe == -1) fe = i + 35;
 
 		if (GetPositionOfMaxSubArray(
-		   output+MAX(0,outputPosition-3792),
-		   MIN(outputPosition, 3792),
-		   bytes+i,
-		   fe - i,
-		   &loc,
-		   &size))
+			   output+MAX(0,outputPosition-3792),
+			   MIN(outputPosition, 3792),
+			   bytes+i,
+			   fe - i,
+			   &loc,
+			   &size))
 		{
 			AddJump(output+outputPosition, loc, size);
 			outputPosition += 3;
@@ -133,6 +119,11 @@ __declspec(dllexport) void Compress(unsigned char* bytes, int inputLength, unsig
 	}
 
 	*outputLength = outputPosition;
+}
+
+__declspec(dllexport) void Compress(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength)
+{
+	CompressWithCallback(bytes, inputLength, output, outputLength, NULL);
 }
 
 #ifdef _MANAGED

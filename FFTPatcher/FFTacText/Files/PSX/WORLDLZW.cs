@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class WORLDLZW : AbstractStringSectioned
+    public class WORLDLZW : BasePSXFile
     {
         private static Dictionary<string, long> locations;
         public override IDictionary<string, long> Locations

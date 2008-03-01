@@ -267,12 +267,14 @@ namespace FFTPatcher.Datatypes
 
         public static bool operator ==( SubArray<T> left, SubArray<T> right )
         {
-            return left.Equals( right );
+            return 
+                (object.ReferenceEquals( left, null ) && object.ReferenceEquals( right, null )) || 
+                (!object.ReferenceEquals( left, null ) && !object.ReferenceEquals( right, null ) && left.Equals( right ));
         }
 
         public static bool operator !=( SubArray<T> left, SubArray<T> right )
         {
-            return !left.Equals( right );
+            return !(left == right);
         }
 
         public override int GetHashCode()

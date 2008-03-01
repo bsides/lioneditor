@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="MakeTempFilenameDLL2005"
+	Name="FFTTextCompression"
 	ProjectGUID="{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}"
 	RootNamespace="MakeTempFilenameDLL2005"
 	Keyword="Win32Proj"
@@ -186,6 +186,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\memmem.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -212,6 +216,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\memmem.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
@@ -222,10 +230,6 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

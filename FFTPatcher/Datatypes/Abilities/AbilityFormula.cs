@@ -46,7 +46,15 @@ namespace FFTPatcher.Datatypes
                 a.Value = kvp.Key;
                 a.Formula = kvp.Value;
 
-                if( a.Value < 0x65 )
+                if( a.Value >= 0x65 && a.Value <= 0x6A )
+                {
+                    AbilityFormula ab = new AbilityFormula();
+                    ab.Value = kvp.Key;
+                    ab.Formula = string.Empty;
+                    PSXAbilityFormulas.Add( ab );
+                    PSXAbilityFormulaHash.Add( ab.Value, ab );
+                }
+                else
                 {
                     PSXAbilityFormulas.Add( a );
                     PSXAbilityFormulaHash.Add( a.Value, a );

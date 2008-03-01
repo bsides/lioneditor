@@ -17,19 +17,26 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files
+namespace FFTPatcher.TextEditor
 {
-    public interface IStringSectioned
+    public class CompressionEventArgs : EventArgs
     {
-        List<IList<string>> Sections { get; }
-        IList<string> SectionNames { get; }
-        IList<IList<string>> EntryNames { get; }
-        IDictionary<string, long> Locations { get; }
-        int EstimatedLength { get; }
-        int ActualLength { get; }
-        int MaxLength { get; }
-        byte[] ToByteArray();
+        public IList<byte> Result { get; private set; }
+        public int Progress { get; private set; }
+
+        public CompressionEventArgs( int progress )
+        {
+            Progress = progress;
+            Result = null;
+        }
+
+        public CompressionEventArgs( int progress, IList<byte> result )
+            : this( progress )
+        {
+            Result = result;
+        }
     }
 }

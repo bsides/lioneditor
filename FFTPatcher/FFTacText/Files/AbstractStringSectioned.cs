@@ -25,6 +25,8 @@ namespace FFTPatcher.TextEditor.Files
 {
     public abstract class AbstractStringSectioned : IStringSectioned
     {
+        public abstract TextUtilities.CharMapType CharMap { get; }
+
         protected const int dataStart = 0x80;
 
         protected abstract int NumberOfSections { get; }
@@ -37,13 +39,14 @@ namespace FFTPatcher.TextEditor.Files
 
         public abstract IDictionary<string, long> Locations { get; }
 
-        public int Length { get { return ToBytes().Count; } }
+        public virtual int EstimatedLength { get { return ToUncompressedBytes().Count; } }
+        public int ActualLength { get { return ToFinalBytes().Count; } }
 
         public abstract int MaxLength { get; }
 
         public byte[] ToByteArray()
         {
-            IList<byte> result = ToBytes();
+            IList<byte> result = ToFinalBytes();
 
             if( result.Count < MaxLength )
             {
@@ -53,15 +56,23 @@ namespace FFTPatcher.TextEditor.Files
             return result.ToArray();
         }
 
-        protected virtual IList<byte> ToBytes()
+        protected virtual IList<byte> ToFinalBytes()
         {
+            return ToUncompressedBytes();
+        }
+
+        protected virtual IList<byte> ToUncompressedBytes()
+        {
+            GenericCharMap map = CharMap == TextUtilities.CharMapType.PSX ? 
+                TextUtilities.PSXMap as GenericCharMap : 
+                TextUtilities.PSPMap as GenericCharMap;
             List<List<byte>> byteSections = new List<List<byte>>( NumberOfSections );
             foreach( List<string> section in Sections )
             {
                 List<byte> sectionBytes = new List<byte>();
                 foreach( string s in section )
                 {
-                    sectionBytes.AddRange( TextUtilities.PSXMap.StringToByteArray( s ) );
+                    sectionBytes.AddRange( map.StringToByteArray( s ) );
                 }
                 byteSections.Add( sectionBytes );
             }
@@ -101,7 +112,7 @@ namespace FFTPatcher.TextEditor.Files
                 }
 
                 IList<byte> thisSection = new SubArray<byte>( bytes, (int)(start + dataStart), (int)(stop + dataStart) );
-                Sections.Add( TextUtilities.ProcessList( thisSection, TextUtilities.CharMapType.PSX ) );
+                Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
             }
         }
     }

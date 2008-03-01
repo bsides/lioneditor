@@ -27,10 +27,18 @@ namespace FFTPatcher.Datatypes
         public int TotalTasks { get; private set; }
         public int TasksComplete { get; private set; }
 
+        public int Percentage { get { return TasksComplete * 100 / TotalTasks; } }
+
         public ProgressEventArgs( int done, int total )
         {
             TotalTasks = total;
             TasksComplete = done;
+        }
+
+        public ProgressEventArgs( int percentage )
+        {
+            TotalTasks = 100;
+            TasksComplete = percentage;
         }
     }
 

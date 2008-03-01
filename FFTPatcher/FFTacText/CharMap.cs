@@ -19,10 +19,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using FFTPatcher.Datatypes;
-using System.Runtime.InteropServices;
 
 namespace FFTPatcher.TextEditor
 {
@@ -65,7 +65,7 @@ namespace FFTPatcher.TextEditor
             int resultPos = pos + 1;
             byte val = bytes[pos];
             int key = val;
-            if( (val >= 0xD0 && val <= 0xDA) || (val == 0xE2) || (val == 0xE3) )
+            if( (val >= 0xD0 && val <= 0xDA) || (val == 0xE2) || (val == 0xE3) || (val == 0xEE) )
             {
                 byte nextVal = bytes[pos + 1];
                 resultPos++;
@@ -174,31 +174,10 @@ namespace FFTPatcher.TextEditor
         public static PSXCharMap PSXMap { get; private set; }
         public static PSPCharMap PSPMap { get; private set; }
 
-        private static IDictionary<int, int> BuildDict()
-        {
-            Dictionary<int, int> result = new Dictionary<int, int>( 3792 );
-            for( int i = 0; i < 3900; i++ )
-            {
-                int x = i - (i / 256) * 2;
-                if( !result.ContainsKey( x ) )
-                {
-                    result.Add( x, i );
-                }
-                else
-                {
-                    result[x] = i;
-                }
-            }
-
-            return result;
-        }
-
         private static IDictionary<int, int> CompressionJumps { get; set; }
 
         static TextUtilities()
         {
-            CompressionJumps = BuildDict();
-
             PSXMap = new PSXCharMap();
 
             for( int i = (int)'a'; i <= (int)'z'; i++ )
@@ -371,6 +350,7 @@ namespace FFTPatcher.TextEditor
                 // HACK
                 PSXMap.Add( 0xE200 + i, string.Format( "{{Delay {0:X2}", i ) + @"}" );
                 PSXMap.Add( 0xE300 + i, string.Format( "{{Color {0:X2}", i ) + @"}" );
+                PSXMap.Add( 0xEE00 + i, string.Format( "{{Tab {0:X2}", i ) + @"}" );
             }
 
             PSXMap.Add( 0x3F, "\u3042" );
@@ -443,6 +423,7 @@ namespace FFTPatcher.TextEditor
             {
                 PSPMap.Add( kvp.Key, kvp.Value );
             }
+
             PSPMap[0x95] = " ";
             PSPMap.Add( 0xDA60, "\xE1" );
             PSPMap.Add( 0xDA61, "\xE0" );
@@ -494,7 +475,6 @@ namespace FFTPatcher.TextEditor
                     int length;
                     int jump;
                     ProcessPointer( new byte[] { sectionBytes[i], sectionBytes[i + 1], sectionBytes[i + 2] }, out length, out jump );
-                    //ProcessPointer( new byte[] { bytes[i], bytes[i + 1], bytes[i + 2] }, out length, out jump );
                     if( (i + sectionStart - jump) < 0 || (i + sectionStart - jump + length) >= allBytes.Count )
                     {
                         result.AddRange( new byte[] { sectionBytes[i], sectionBytes[i + 1], sectionBytes[i + 2] } );
@@ -514,137 +494,37 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        public delegate void ProgressCallback( int progress );
+
         [DllImport( "MakeTempFilenameDLL2005.dll" )]
         static extern void Compress( byte[] bytes, int inputLength, byte[] output, ref int outputLength );
-
-        public static IList<byte> Recompress( IList<byte> bytes )
+        [DllImport( "MakeTempFilenameDLL2005.dll" )]
+        static extern void CompressWithCallback( byte[] bytes, int inputLength, byte[] output, ref int outputLength, ProgressCallback callback );
+        public static IList<byte> Recompress( IList<byte> bytes, ProgressCallback callback )
         {
             byte[] output = new byte[bytes.Count];
             int outputLength = 0;
-            Compress( 
-                //new SubArray<byte>(bytes, 0, 0x8000-1).ToArray(), 
-                bytes.ToArray(), 
-                //0x8000, 
-                bytes.Count, 
-                output, 
-                ref outputLength );
+            if( callback != null )
+            {
+                CompressWithCallback(
+                    bytes.ToArray(),
+                    bytes.Count,
+                    output,
+                    ref outputLength,
+                    callback );
+            }
+            else
+            {
+                Compress(
+                    bytes.ToArray(),
+                    bytes.Count,
+                    output,
+                    ref outputLength );
+            }
 
             byte[] result = new byte[outputLength];
             Array.Copy( output, result, outputLength );
             return result;
-            //def compress(bytes, windowSize):
-            //  d=buildDict()
-            //  m=max(d.keys())
-            //  result=""
-            //  i = 0
-            //  while i < len(bytes):
-            //    #if i%1000 == 0: print i
-            //    if bytes[i]== "\xfe":
-            //      result += bytes[i]
-            //      i+=1
-            //      continue
-            //    fe = bytes.find("\xfe",i,i+35)
-            //    if fe == -1: fe=i+35
-            //    size, loc = findBestSubStringInWindow(result[0-m:], bytes[i:fe])
-            //    if size!=-1 and loc!=-1:# and not (bytes[i]=="\xfa" and bytes[i+size-1]=="\xfa"):
-            //      a,b,c=buildPointer(d, loc, size)
-            //      result += chr(a)+chr(b)+chr(c)
-            //      i += size
-            //    else:
-            //      result += bytes[i]
-            //      i+=1
-            //  return result
-            //List<byte> result = new List<byte>();
-            //List<byte> bytesList = new List<byte>( bytes );
-            
-            //for (int i =0; i < bytes.Count; i++)
-            //{
-            //    if( bytes[i] == 0xFE )
-            //    {
-            //        result.Add( bytes[i] );
-            //        continue;
-            //    }
-            //    int fe = bytesList.IndexOf( 0xFE, i, Math.Min( 35, bytes.Count - i ) );
-            //    if( fe == -1 )
-            //    {
-            //        fe = i + 35;
-            //    }
-            //    int loc = 0;
-            //    int size = 0;
-            //    GetPositionOfMaxSubArray(
-            //        new SubArray<byte>( result, Math.Max( 0, result.Count - 3792 ) ), 
-            //        new SubArray<byte>( bytes, i, fe - 1 ), 
-            //        out loc, out size );
-            //    if( size != -1 && loc != -1 )
-            //    {
-            //        result.AddRange( BuildJump( loc, size ) );
-            //        i += size - 1;
-            //    }
-            //    else
-            //    {
-            //        result.Add( bytes[i] );
-            //    }
-            //}
-
-            //return result;
-        }
-
-        public static string BytesToString( IList<byte> bytes )
-        {
-            StringBuilder sb = new StringBuilder( bytes.Count );
-            foreach( byte b in bytes )
-            {
-                sb.Append( (char)b );
-            }
-            return sb.ToString();
-        }
-
-        private static IList<byte> BuildJump( int jump, int length )
-        {
-            byte[] result = new byte[] { 0, 0, 0 };
-            int l = length - 4;
-            int j = CompressionJumps[jump];
-
-            result[0] = (byte)(0xF0 | (byte)((l & 0x18) >> 3));
-            result[1] = (byte)((l & 0x07) << 5);
-            result[1] |= (byte)((j & 0x1F00) >> 8);
-            result[2] = (byte)(j & 0xFF);
-
-            return result;
-        }
-
-        private static void GetPositionOfMaxSubArray( IList<byte> window, IList<byte> bytes, out int position, out int maxLength )
-        {
-            if( bytes.Count >= 4 )
-            {
-                string windowString = GetString( window );
-                string bytesString = GetString( bytes );
-
-                for( int i = bytes.Count; i >= 4; i-- )
-                {
-                    string sub = bytesString.Substring( 0, i );
-                    int loc = windowString.IndexOf( sub );
-                    if( loc > -1 )
-                    {
-                        maxLength = i;
-                        position = window.Count - loc;
-                        return;
-                    }
-                }
-            }
-
-            maxLength = -1;
-            position = -1;
-        }
-
-        private static string GetString( IList<byte> bytes )
-        {
-            StringBuilder sb = new StringBuilder( bytes.Count );
-            foreach( byte b in bytes )
-            {
-                sb.Append( (char)b );
-            }
-            return sb.ToString();
         }
     }
 }

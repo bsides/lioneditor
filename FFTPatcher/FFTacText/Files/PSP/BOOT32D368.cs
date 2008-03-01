@@ -19,13 +19,21 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSX
+namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class OPENLZW : BasePSXFile
+    public class BOOT32D368 : BasePSPFile
     {
-        protected override int NumberOfSections { get { return 32; } }
+        protected override int NumberOfSections
+        {
+            get { return 21; }
+        }
 
+        private static string[][] entryNames;
         private static Dictionary<string, long> locations;
+        private static string[] sectionNames = new string[21];
+
+        public override IList<string> SectionNames { get { return sectionNames; } }
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
         public override IDictionary<string, long> Locations
         {
             get
@@ -33,43 +41,37 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/OPEN.LZW", 0x00 );
+                    locations.Add( "BOOT.BIN", 0x32D368 );
                 }
-
                 return locations;
             }
         }
 
-        private static OPENLZW Instance { get; set; }
-        private static string[] sectionNames = new string[32] {
-            "", "", "", "", "", "", "", "", 
-            "Unit names", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "Birthday",
-            "Track names", "Composers comments", "", "", "", "", "", "" };
-
-        private static string[][] entryNames;
-
-        public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
-        public override int MaxLength { get { return 0x5579; } }
-
-        static OPENLZW()
+        public override int MaxLength
         {
-            Instance = new OPENLZW( Properties.Resources.OPEN_LZW );
+            get { return 0x2CF5B; }
+        }
 
-            entryNames = new string[32][];
+        private static BOOT32D368 Instance { get; set; }
+
+
+        static BOOT32D368()
+        {
+            Instance = new BOOT32D368( PSPResources.BOOT_32D368 );
+
+            entryNames = new string[21][];
             for( int i = 0; i < entryNames.Length; i++ )
             {
                 entryNames[i] = new string[Instance.Sections[i].Count];
             }
         }
 
-        private OPENLZW( IList<byte> bytes )
+        private BOOT32D368( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-        public static OPENLZW GetInstance()
+        public static BOOT32D368 GetInstance()
         {
             return Instance;
         }

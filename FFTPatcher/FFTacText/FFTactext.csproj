@@ -40,10 +40,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharMap.cs" />
+    <Compile Include="CompressedStringSectionedEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CompressedStringSectionedEditor.Designer.cs">
+      <DependentUpon>CompressedStringSectionedEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompressionEventArgs.cs" />
     <Compile Include="Files\AbstractStringSectioned.cs" />
+    <Compile Include="Files\ICompressed.cs" />
     <Compile Include="Files\IStringSectioned.cs" />
+    <Compile Include="Files\PSP\ATCHELPLZW.cs" />
+    <Compile Include="Files\PSP\BasePSPFile.cs" />
+    <Compile Include="Files\PSP\BOOT299024.cs" />
+    <Compile Include="Files\PSP\BOOT29E334.cs" />
+    <Compile Include="Files\PSP\BOOT2A1630.cs" />
+    <Compile Include="Files\PSP\BOOT2EB4C0.cs" />
+    <Compile Include="Files\PSP\BOOT32D368.cs" />
+    <Compile Include="Files\PSP\OPENLZW.cs" />
     <Compile Include="Files\PSX\ATCHELPLZW.cs" />
     <Compile Include="Files\PSX\ATTACKOUT.cs" />
+    <Compile Include="Files\PSX\BasePSXFile.cs" />
     <Compile Include="Files\PSX\JOINLZW.cs" />
     <Compile Include="Files\PSX\OPENLZW.cs" />
     <Compile Include="Files\PSX\SAMPLELZW.cs" />
@@ -57,6 +74,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CompressedStringSectionedEditor.resx">
+      <DependentUpon>CompressedStringSectionedEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -64,6 +85,11 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PSPResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PSPResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="StringSectionedEditor.resx">
@@ -79,6 +105,13 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\PSP\ATCHELP.LZW" />
+    <None Include="Resources\PSP\BOOT.299024.BIN" />
+    <None Include="Resources\PSP\BOOT.29E334.BIN" />
+    <None Include="Resources\PSP\BOOT.2A1630.BIN" />
+    <None Include="Resources\PSP\BOOT.2EB4C0.BIN" />
+    <None Include="Resources\PSP\BOOT.32D368.BIN" />
+    <None Include="Resources\PSP\OPEN.LZW" />
     <None Include="Resources\PSX\ATCHELP.LZW" />
     <None Include="Resources\PSX\ATTACK.OUT.partial" />
     <None Include="Resources\PSX\JOIN.LZW" />
@@ -90,6 +123,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PSPResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PSPResources.resx</DependentUpon>
     </Compile>
     <Compile Include="StringSectionedEditor.cs">
       <SubType>UserControl</SubType>

@@ -19,17 +19,19 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files
+namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public interface IStringSectioned
+    public abstract class BasePSXFile : AbstractStringSectioned
     {
-        List<IList<string>> Sections { get; }
-        IList<string> SectionNames { get; }
-        IList<IList<string>> EntryNames { get; }
-        IDictionary<string, long> Locations { get; }
-        int EstimatedLength { get; }
-        int ActualLength { get; }
-        int MaxLength { get; }
-        byte[] ToByteArray();
+        public override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSX; } }
+
+        protected BasePSXFile( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
+
+        protected BasePSXFile()
+        {
+        }
     }
 }

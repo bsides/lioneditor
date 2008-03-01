@@ -19,17 +19,15 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files
+namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public interface IStringSectioned
+    public abstract class BasePSPFile : AbstractStringSectioned
     {
-        List<IList<string>> Sections { get; }
-        IList<string> SectionNames { get; }
-        IList<IList<string>> EntryNames { get; }
-        IDictionary<string, long> Locations { get; }
-        int EstimatedLength { get; }
-        int ActualLength { get; }
-        int MaxLength { get; }
-        byte[] ToByteArray();
+        public override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSP; } }
+
+        protected BasePSPFile( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
     }
 }

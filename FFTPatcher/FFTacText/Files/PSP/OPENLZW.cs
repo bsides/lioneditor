@@ -19,11 +19,17 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSX
+namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class OPENLZW : BasePSXFile
+    public class OPENLZW : BasePSPFile
     {
+        private static string[] sectionNames;
+        private static string[][] entryNames;
+
         protected override int NumberOfSections { get { return 32; } }
+
+        public override IList<string> SectionNames { get { return sectionNames; } }
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
         private static Dictionary<string, long> locations;
         public override IDictionary<string, long> Locations
@@ -40,23 +46,20 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
+        public override int MaxLength
+        {
+            get { return 0x608D; }
+        }
+
         private static OPENLZW Instance { get; set; }
-        private static string[] sectionNames = new string[32] {
-            "", "", "", "", "", "", "", "", 
-            "Unit names", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "Birthday",
-            "Track names", "Composers comments", "", "", "", "", "", "" };
-
-        private static string[][] entryNames;
-
-        public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
-        public override int MaxLength { get { return 0x5579; } }
-
         static OPENLZW()
         {
-            Instance = new OPENLZW( Properties.Resources.OPEN_LZW );
-
+            Instance = new OPENLZW( PSPResources.OPEN_LZW );
+            sectionNames = new string[32] {
+                "", "", "", "", "", "", "", "", 
+                "Unit names", "", "", "", "", "", "", "",
+                "", "", "", "", "", "", "", "Birthday",
+                "Track names", "Composers comments", "", "", "", "", "", "" };            
             entryNames = new string[32][];
             for( int i = 0; i < entryNames.Length; i++ )
             {
@@ -73,5 +76,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
             return Instance;
         }
+
     }
 }

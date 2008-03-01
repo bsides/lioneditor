@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class ATTACKOUT : AbstractStringSectioned
+    public class ATTACKOUT : BasePSXFile
     {
         protected override int NumberOfSections { get { return 3; } }
 

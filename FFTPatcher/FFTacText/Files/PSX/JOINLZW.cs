@@ -18,11 +18,10 @@
 */
 
 using System.Collections.Generic;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class JOINLZW : AbstractStringSectioned
+    public class JOINLZW : BasePSXFile
     {
         protected override int NumberOfSections { get { return 5; } }
 

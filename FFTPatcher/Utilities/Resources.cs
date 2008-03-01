@@ -88,12 +88,13 @@ namespace FFTPatcher
                 if( abilityFormulas == null )
                 {
                     abilityFormulas = new Dictionary<byte, string>();
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml( dict["AbilityFormulas"] as string );
-                    XmlNodeList nodes = doc.SelectNodes( "/AbilityFormulas/Ability" );
-                    foreach( XmlNode node in nodes )
+                    string[] formulaNames = Utilities.GetStringsFromNumberedXmlNodes(
+                        dict["AbilityFormulas"] as string,
+                        "/AbilityFormulas/Ability[@value='{0:X2}']",
+                        256 );
+                    for( int i = 0; i < 256; i++ )
                     {
-                        abilityFormulas.Add( Convert.ToByte( node.Attributes["value"].InnerText, 16 ), node.InnerText );
+                        abilityFormulas.Add( (byte)i, formulaNames[i] );
                     }
                 }
 

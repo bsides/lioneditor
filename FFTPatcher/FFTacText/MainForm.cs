@@ -20,38 +20,82 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.TextEditor.Files.PSX;
+using FFTPatcher.TextEditor.Files;
+using System;
 
 namespace FFTPatcher.TextEditor
 {
     public partial class MainForm : Form
     {
+        private Dictionary<string, AbstractStringSectioned> stringSections = new Dictionary<string, AbstractStringSectioned>();
+        private MenuItem[] menuItems;
+
         public MainForm()
         {
+            BuildStringSections();
             InitializeComponent();
-            GenericCharMap charmap = TextUtilities.PSPMap;
-            Dictionary<string, int> back = charmap.Reverse;
-            SAMPLELZW s = SAMPLELZW.GetInstance();
-            WORLDLZW w = WORLDLZW.GetInstance();
-            ATCHELPLZW a = ATCHELPLZW.GetInstance();
-            ATTACKOUT atk = ATTACKOUT.GetInstance();
-            OPENLZW o = OPENLZW.GetInstance();
-            JOINLZW j = JOINLZW.GetInstance();
-            //IList<byte> bytes = TextUtilities.Decompress( FFTPatcher.TextEditor.Properties.Resources.WLDHELP_LZW );
-            WLDHELPLZW wldh = WLDHELPLZW.GetInstance();
-            //byte[] bytes = s.ToByteArray();
-            //wldh.ToByteArray();
-            IList<byte> bytes = TextUtilities.Decompress(
-                new FFTPatcher.Datatypes.SubArray<byte>( FFTPatcher.TextEditor.Properties.Resources.WLDHELP_LZW, 0x80 ),
-                new FFTPatcher.Datatypes.SubArray<byte>( FFTPatcher.TextEditor.Properties.Resources.WLDHELP_LZW, 0x80 ),
-                0 );
+            menuItems = new MenuItem[] { 
+                atchelpMenuItem, attackoutMenuItem, joinlzwMenuItem, 
+                openlzwMenuItem, samplelzwMenuItem, wldhelplzwMenuItem, worldlzwMenuItem,
+                pspatchelpMenuItem, pspopenlzwMenuItem, psp299024MenuItem,psp29E334MenuItem,psp2A1630MenuItem,psp2EB4C0MenuItem,psp32D368MenuItem };
+            compressedStringSectionedEditor1.Visible = false;
+            compressedStringSectionedEditor1.Strings = stringSections["WLDHELP.LZW"];
 
-            IList<byte> dec = TextUtilities.Recompress( bytes );
-            System.IO.FileStream str = new System.IO.FileStream( "mine.bin", System.IO.FileMode.Create );
-            str.Write( dec.ToArray(), 0, dec.Count );
-            str.Flush();
-            str.Close();
+            stringSectionedEditor1.Visible = true;
+            stringSectionedEditor1.Strings = stringSections["ATCHELP.LZW"];
 
-            stringSectionedEditor1.Strings = wldh;
+            foreach( MenuItem menuItem in menuItems )
+            {
+                menuItem.Click +=  menuItem_Click;
+            }
+        }
+
+        private void menuItem_Click( object sender, EventArgs e )
+        {
+            UncheckAllMenuItems( menuItems );
+            MenuItem thisItem = sender as MenuItem;
+            thisItem.Checked = true;
+
+            AbstractStringSectioned file = stringSections[thisItem.Tag.ToString()];
+
+            if( file is ICompressed )
+            {
+                compressedStringSectionedEditor1.Strings = file;
+                compressedStringSectionedEditor1.Visible = true;
+                stringSectionedEditor1.Visible = false;
+            }
+            else
+            {
+                stringSectionedEditor1.Strings = file;
+                stringSectionedEditor1.Visible = true;
+                compressedStringSectionedEditor1.Visible = false;
+            }
+        }
+
+        private void UncheckAllMenuItems( MenuItem[] menuItems )
+        {
+            foreach (MenuItem item in menuItems)
+            {
+                item.Checked = false;
+            }
+        }
+
+        private void BuildStringSections()
+        {
+            stringSections.Add( "ATCHELP.LZW", FFTPatcher.TextEditor.Files.PSX.ATCHELPLZW.GetInstance() );
+            stringSections.Add( "ATTACK.OUT", FFTPatcher.TextEditor.Files.PSX.ATTACKOUT.GetInstance() );
+            stringSections.Add( "JOIN.LZW", FFTPatcher.TextEditor.Files.PSX.JOINLZW.GetInstance() );
+            stringSections.Add( "OPEN.LZW", FFTPatcher.TextEditor.Files.PSX.OPENLZW.GetInstance() );
+            stringSections.Add( "SAMPLE.LZW", FFTPatcher.TextEditor.Files.PSX.SAMPLELZW.GetInstance() );
+            stringSections.Add( "WLDHELP.LZW", FFTPatcher.TextEditor.Files.PSX.WLDHELPLZW.GetInstance() );
+            stringSections.Add( "WORLD.LZW", FFTPatcher.TextEditor.Files.PSX.WORLDLZW.GetInstance() );
+            stringSections.Add( "pspATCHELP.LZW", FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW.GetInstance() );
+            stringSections.Add( "pspOPEN.LZW", FFTPatcher.TextEditor.Files.PSP.OPENLZW.GetInstance() );
+            stringSections.Add( "psp299024", FFTPatcher.TextEditor.Files.PSP.BOOT299024.GetInstance() );
+            stringSections.Add( "psp29E334", FFTPatcher.TextEditor.Files.PSP.BOOT29E334.GetInstance() );
+            stringSections.Add( "psp2A1630", FFTPatcher.TextEditor.Files.PSP.BOOT2A1630.GetInstance() );
+            stringSections.Add( "psp2EB4C0", FFTPatcher.TextEditor.Files.PSP.BOOT2EB4C0.GetInstance() );
+            stringSections.Add( "psp32D368", FFTPatcher.TextEditor.Files.PSP.BOOT32D368.GetInstance() );
         }
     }
 }

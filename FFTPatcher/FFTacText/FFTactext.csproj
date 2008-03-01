@@ -8,7 +8,7 @@
     <ProjectGuid>{210DDF20-2CEA-4A2C-B2C6-D2EB7938BEB2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FFTactext</RootNamespace>
+    <RootNamespace>FFTPatcher.TextEditor</RootNamespace>
     <AssemblyName>FFTactext</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -43,7 +43,11 @@
     <Compile Include="Files\AbstractStringSectioned.cs" />
     <Compile Include="Files\IStringSectioned.cs" />
     <Compile Include="Files\PSX\ATCHELPLZW.cs" />
+    <Compile Include="Files\PSX\ATTACKOUT.cs" />
+    <Compile Include="Files\PSX\JOINLZW.cs" />
+    <Compile Include="Files\PSX\OPENLZW.cs" />
     <Compile Include="Files\PSX\SAMPLELZW.cs" />
+    <Compile Include="Files\PSX\WLDHELPLZW.cs" />
     <Compile Include="Files\PSX\WORLDLZW.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -76,7 +80,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\PSX\ATCHELP.LZW" />
+    <None Include="Resources\PSX\ATTACK.OUT.partial" />
+    <None Include="Resources\PSX\JOIN.LZW" />
+    <None Include="Resources\PSX\OPEN.LZW" />
     <None Include="Resources\PSX\SAMPLE.LZW" />
+    <None Include="Resources\PSX\WLDHELP.LZW" />
     <None Include="Resources\PSX\WORLD.LZW" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -107,4 +115,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(SolutionDir)\$(ConfigurationName)\MakeTempFilenameDLL2005.dll $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

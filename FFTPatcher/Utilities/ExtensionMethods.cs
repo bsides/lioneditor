@@ -36,33 +36,8 @@ namespace FFTPatcher
     /// <summary>
     /// Extension methods for various types.
     /// </summary>
-    public static class ExtensionMethods
+    public static partial class ExtensionMethods
     {
-        public static List<IList<T>> Split<T>( this IList<T> members, T value ) where T : IEquatable<T>
-        {
-            List<IList<T>> result = new List<IList<T>>();
-
-            int start = 0;
-            int stop = 0;
-
-            for( int i = 0; i < members.Count; i++ )
-            {
-                if( members[i].Equals( value ) )
-                {
-                    stop = i;
-                    result.Add( new SubArray<T>( members, start, stop ) );
-                    start = i + 1;
-                }
-            }
-
-            if( !members[members.Count - 1].Equals( value ) )
-            {
-                result.Add( new SubArray<T>( members, start, members.Count - 1 ) );
-            }
-
-            return result;
-        }
-
         public static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
         {
             foreach( T item in items )

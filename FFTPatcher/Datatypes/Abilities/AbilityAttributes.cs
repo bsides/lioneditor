@@ -61,7 +61,7 @@ namespace FFTPatcher.Datatypes
         public bool NormalAttack;
         public bool Perservere;
         public bool ShowQuote;
-        public bool Unknown5;
+        public bool AnimateMiss;
 
         public bool CounterFlood;
         public bool CounterMagic;
@@ -103,7 +103,7 @@ namespace FFTPatcher.Datatypes
             HitAllies = !HitAllies;
             HitCaster = !HitCaster;
             Utilities.CopyByteToBooleans( second[5],
-                ref Reflect, ref Arithmetick, ref Silence, ref Mimic, ref NormalAttack, ref Perservere, ref ShowQuote, ref Unknown5 );
+                ref Reflect, ref Arithmetick, ref Silence, ref Mimic, ref NormalAttack, ref Perservere, ref ShowQuote, ref AnimateMiss );
             Silence = !Silence;
             Mimic = !Mimic;
             Utilities.CopyByteToBooleans( second[6],
@@ -128,7 +128,7 @@ namespace FFTPatcher.Datatypes
             result[2] = Vertical;
             result[3] = Utilities.ByteFromBooleans( Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, !TargetSelf );
             result[4] = Utilities.ByteFromBooleans( !HitEnemies, !HitAllies, Blank8, !FollowTarget, RandomFire, LinearAttack, ThreeDirections, !HitCaster );
-            result[5] = Utilities.ByteFromBooleans( Reflect, Arithmetick, !Silence, !Mimic, NormalAttack, Perservere, ShowQuote, Unknown5 );
+            result[5] = Utilities.ByteFromBooleans( Reflect, Arithmetick, !Silence, !Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss );
             result[6] = Utilities.ByteFromBooleans( CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade, Evadeable, !Targeting );
             result[7] = Elements.ToByte();
             result[8] = Formula.Value;
@@ -146,7 +146,7 @@ namespace FFTPatcher.Datatypes
             return new bool[32] { 
                 Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, TargetSelf,
                 HitEnemies, HitAllies, Blank8, FollowTarget, RandomFire, LinearAttack, ThreeDirections, HitCaster,
-                Reflect, Arithmetick, Silence, Mimic, NormalAttack, Perservere, ShowQuote, Unknown5,
+                Reflect, Arithmetick, Silence, Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss,
                 CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade,Evadeable, Targeting };
         }
     }

@@ -68,7 +68,7 @@
     <string value="20" name="Normal Attack?"/>
     <string value="21" name="Persevere"/>
     <string value="22" name="Quote"/>
-    <string value="23" name="Unknown"/>
+    <string value="23" name="Animate on miss"/>
     <string value="24" name="Counter Flood"/>
     <string value="25" name="Counter Magic"/>
     <string value="26" name="Direct"/>

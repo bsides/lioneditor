@@ -29,7 +29,7 @@ namespace FFTPatcher.TextEditor.Files
 
         protected abstract int NumberOfSections { get; }
 
-        public List<IList<string>> Sections { get; private set; }
+        public List<IList<string>> Sections { get; protected set; }
 
         public abstract IList<string> SectionNames { get; }
 
@@ -43,7 +43,7 @@ namespace FFTPatcher.TextEditor.Files
 
         public byte[] ToByteArray()
         {
-            List<byte> result = ToBytes();
+            IList<byte> result = ToBytes();
 
             if( result.Count < MaxLength )
             {
@@ -53,7 +53,7 @@ namespace FFTPatcher.TextEditor.Files
             return result.ToArray();
         }
 
-        protected List<byte> ToBytes()
+        protected virtual IList<byte> ToBytes()
         {
             List<List<byte>> byteSections = new List<List<byte>>( NumberOfSections );
             foreach( List<string> section in Sections )
@@ -82,6 +82,10 @@ namespace FFTPatcher.TextEditor.Files
             }
 
             return result;
+        }
+
+        protected AbstractStringSectioned()
+        {
         }
 
         protected AbstractStringSectioned( IList<byte> bytes )

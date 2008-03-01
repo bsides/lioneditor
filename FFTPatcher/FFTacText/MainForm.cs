@@ -33,9 +33,25 @@ namespace FFTPatcher.TextEditor
             SAMPLELZW s = SAMPLELZW.GetInstance();
             WORLDLZW w = WORLDLZW.GetInstance();
             ATCHELPLZW a = ATCHELPLZW.GetInstance();
+            ATTACKOUT atk = ATTACKOUT.GetInstance();
+            OPENLZW o = OPENLZW.GetInstance();
+            JOINLZW j = JOINLZW.GetInstance();
+            //IList<byte> bytes = TextUtilities.Decompress( FFTPatcher.TextEditor.Properties.Resources.WLDHELP_LZW );
+            WLDHELPLZW wldh = WLDHELPLZW.GetInstance();
             //byte[] bytes = s.ToByteArray();
+            //wldh.ToByteArray();
+            IList<byte> bytes = TextUtilities.Decompress(
+                new FFTPatcher.Datatypes.SubArray<byte>( FFTPatcher.TextEditor.Properties.Resources.WLDHELP_LZW, 0x80 ),
+                new FFTPatcher.Datatypes.SubArray<byte>( FFTPatcher.TextEditor.Properties.Resources.WLDHELP_LZW, 0x80 ),
+                0 );
 
-            stringSectionedEditor1.Strings = a;
+            IList<byte> dec = TextUtilities.Recompress( bytes );
+            System.IO.FileStream str = new System.IO.FileStream( "mine.bin", System.IO.FileMode.Create );
+            str.Write( dec.ToArray(), 0, dec.Count );
+            str.Flush();
+            str.Close();
+
+            stringSectionedEditor1.Strings = wldh;
         }
     }
 }

@@ -20,9 +20,70 @@
 using System;
 using System.Collections.Generic;
 
+namespace FFTPatcher
+{
+    using FFTPatcher.Datatypes;
+
+    public static partial class ExtensionMethods
+    {
+        public static IList<T> Sub<T>( this IList<T> list, int start )
+        {
+            return new SubArray<T>( list, start );
+        }
+
+        public static IList<T> Sub<T>( this IList<T> list, int start, int stop )
+        {
+            return new SubArray<T>( list, start, stop );
+        }
+
+        public static List<IList<T>> Split<T>( this IList<T> members, T value ) where T : IEquatable<T>
+        {
+            List<IList<T>> result = new List<IList<T>>();
+
+            int start = 0;
+            int stop = 0;
+
+            for( int i = 0; i < members.Count; i++ )
+            {
+                if( members[i].Equals( value ) )
+                {
+                    stop = i;
+                    result.Add( new SubArray<T>( members, start, stop ) );
+                    start = i + 1;
+                }
+            }
+
+            if( !members[members.Count - 1].Equals( value ) )
+            {
+                result.Add( new SubArray<T>( members, start, members.Count - 1 ) );
+            }
+
+            return result;
+        }
+
+        public static int IndexOf<T>( this IList<T> list, IList<T> find ) where T : IEquatable<T>
+        {
+            if( find.Count > list.Count )
+            {
+                return -1;
+            }
+
+            for( int i = 0; i + find.Count < list.Count; i++ )
+            {
+                if( new SubArray<T>( list, i, i + find.Count - 1 ).Equals( find ) )
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+    }
+}
+
 namespace FFTPatcher.Datatypes
 {
-    public class SubArray<T> : ICollection<T>, IList<T> 
+    public class SubArray<T> : ICollection<T>, IList<T>
     {
         private IList<T> baseArray;
         private int start;
@@ -159,7 +220,15 @@ namespace FFTPatcher.Datatypes
 
         public int IndexOf( T item )
         {
-            throw new NotImplementedException();
+            for( int i = 0; i < Count; i++ )
+            {
+                if( this[i].Equals( item ) )
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         public void Insert( int index, T item )
@@ -173,6 +242,43 @@ namespace FFTPatcher.Datatypes
         }
 
         #endregion
+
+        public override bool Equals( object obj )
+        {
+            IList<T> other = obj as IList<T>;
+
+            if( (other == null) || (other.Count != Count) || !(this[0] is IEquatable<T>) )
+            {
+                return false;
+            }
+
+            for( int i = 0; i < Count; i++ )
+            {
+                IEquatable<T> mine = this[i] as IEquatable<T>;
+                IEquatable<T> theirs = other[i] as IEquatable<T>;
+                if( !mine.Equals( theirs ) )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool operator ==( SubArray<T> left, SubArray<T> right )
+        {
+            return left.Equals( right );
+        }
+
+        public static bool operator !=( SubArray<T> left, SubArray<T> right )
+        {
+            return !left.Equals( right );
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     public class SubArrayEnumerator<T> : IEnumerator<T>

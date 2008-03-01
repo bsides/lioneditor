@@ -39,7 +39,7 @@ namespace FFTPatcher.TextEditor.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FFTactext.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FFTPatcher.TextEditor.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -67,9 +67,37 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
+        internal static byte[] ATTACK_OUT_partial {
+            get {
+                object obj = ResourceManager.GetObject("ATTACK_OUT_partial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] JOIN_LZW {
+            get {
+                object obj = ResourceManager.GetObject("JOIN_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] OPEN_LZW {
+            get {
+                object obj = ResourceManager.GetObject("OPEN_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] SAMPLE_LZW {
             get {
                 object obj = ResourceManager.GetObject("SAMPLE_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] WLDHELP_LZW {
+            get {
+                object obj = ResourceManager.GetObject("WLDHELP_LZW", resourceCulture);
                 return ((byte[])(obj));
             }
         }

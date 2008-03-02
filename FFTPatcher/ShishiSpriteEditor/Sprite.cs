@@ -49,7 +49,7 @@ namespace FFTPatcher.SpriteEditor
             Palettes = new Palette[16];
             for( int i = 0; i < 16; i++ )
             {
-                Palettes[i] = new Palette( new SubArray<Color>( bmp.Palette.Entries, 16 * i, 16 * (i + 1) - 1 ) );
+                Palettes[i] = new Palette( bmp.Palette.Entries.Sub( 16 * i, 16 * (i + 1) - 1 ) );
             }
 
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
@@ -79,17 +79,17 @@ namespace FFTPatcher.SpriteEditor
             Palettes = new Palette[16];
             for( int i = 0; i < 16; i++ )
             {
-                Palettes[i] = new Palette( new SubArray<byte>( bytes, i * 32, (i + 1) * 32 - 1 ) );
+                Palettes[i] = new Palette( bytes.Sub( i * 32, (i + 1) * 32 - 1 ) );
             }
 
             if( bytes.Count < 0x9200 || ((bytes.Count > 0x9200) && (bytes[0x9200] == 0x00)) )
             {
-                Pixels = BuildPixels( new SubArray<byte>( bytes, 16 * 32 ), new byte[0] );
+                Pixels = BuildPixels( bytes.Sub( 16 * 32 ), new byte[0] );
                 Compressed = false;
             }
             else
             {
-                Pixels = BuildPixels( new SubArray<byte>( bytes, 16 * 32, 16 * 32 + 36864 - 1 ), new SubArray<byte>( bytes, 16 * 32 + 36864 ) );
+                Pixels = BuildPixels( bytes.Sub( 16 * 32, 16 * 32 + 36864 - 1 ), bytes.Sub( 16 * 32 + 36864 ) );
                 Compressed = true;
             }
         }
@@ -131,7 +131,7 @@ namespace FFTPatcher.SpriteEditor
             int pos = 0;
             while( pos < realBytes.Count )
             {
-                int z = NumberOfZeroes( new SubArray<byte>( realBytes, pos ) );
+                int z = NumberOfZeroes( realBytes.Sub( pos ) );
                 z = Math.Min( z, 0xFFF );
 
                 if( z == 0 )
@@ -306,7 +306,7 @@ namespace FFTPatcher.SpriteEditor
 
             if( Pixels.Length > 2 * 36864 && Compressed )
             {
-                result.AddRange( Recompress( new SubArray<byte>( Pixels, 2 * 36864 ) ) );
+                result.AddRange( Recompress( Pixels.Sub( 2 * 36864 ) ) );
             }
 
             if( result.Count < OriginalSize )
@@ -325,7 +325,7 @@ namespace FFTPatcher.SpriteEditor
             int k = 0;
             for( int i = 0; i < Palettes.Length; i++ )
             {
-                for( int j = 0; j < Palettes[i].Colors.Length; j++, k++)
+                for( int j = 0; j < Palettes[i].Colors.Length; j++, k++ )
                 {
                     if( Palettes[i].Colors[j].ToArgb() == Color.Transparent.ToArgb() )
                     {

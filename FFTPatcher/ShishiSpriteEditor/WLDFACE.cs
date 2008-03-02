@@ -10,12 +10,12 @@ namespace FFTPatcher.SpriteEditor
         public byte[] Pixels { get; private set; }
         public WLDFACE( IList<byte> bytes )
         {
-            Pixels = BuildPixels( new SubArray<byte>( bytes, 0x0000, 0x77FF ) );
+            Pixels = BuildPixels( bytes.Sub( 0x0000, 0x77FF ) );
 
             Palettes = new Palette[64];
             for( int i = 0; i < 64; i++ )
             {
-                Palettes[i] = new Palette( new SubArray<byte>( bytes, 0x7800 + 32 * i, 0x7800 + 32 * (i + 1) - 1 ) );
+                Palettes[i] = new Palette( bytes.Sub( 0x7800 + 32 * i, 0x7800 + 32 * (i + 1) - 1 ) );
             }
         }
 

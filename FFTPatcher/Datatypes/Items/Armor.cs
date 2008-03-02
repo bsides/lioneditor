@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -30,7 +31,7 @@ namespace FFTPatcher.Datatypes
         public byte MPBonus { get; set; }
         public Armor ArmorDefault { get; private set; }
 
-        public Armor( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> armorBytes, Armor defaults )
+        public Armor( UInt16 offset, IList<byte> itemBytes, IList<byte> armorBytes, Armor defaults )
             : base( offset, itemBytes, defaults )
         {
             ArmorDefault = defaults;
@@ -38,7 +39,7 @@ namespace FFTPatcher.Datatypes
             MPBonus = armorBytes[1];
         }
 
-        public Armor( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> armorBytes )
+        public Armor( UInt16 offset, IList<byte> itemBytes, IList<byte> armorBytes )
             : this( offset, itemBytes, armorBytes, null )
         {
         }

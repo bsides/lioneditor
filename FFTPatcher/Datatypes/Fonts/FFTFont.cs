@@ -28,12 +28,12 @@ namespace FFTPatcher.Datatypes
     {
         public Glyph[] Glyphs { get; private set; }
 
-        public FFTFont( SubArray<byte> bytes, SubArray<byte> widthBytes )
+        public FFTFont( IList<byte> bytes, IList<byte> widthBytes )
         {
             Glyphs = new Glyph[2200];
             for( int i = 0; i < 2200; i++ )
             {
-                Glyphs[i] = new Glyph( widthBytes[i], new SubArray<byte>( bytes, i * 35, (i + 1) * 35 - 1 ) );
+                Glyphs[i] = new Glyph( widthBytes[i], bytes.Sub( i * 35, (i + 1) * 35 - 1 ) );
             }
         }
 

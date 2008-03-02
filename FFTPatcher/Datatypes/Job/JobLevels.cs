@@ -62,17 +62,17 @@ namespace FFTPatcher.Datatypes
 
         public JobLevels Default { get; private set; }
 
-        public JobLevels( SubArray<byte> bytes )
+        public JobLevels( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
         {
         }
 
-        public JobLevels( Context context, SubArray<byte> bytes )
+        public JobLevels( Context context, IList<byte> bytes )
             : this( context, bytes, null )
         {
         }
 
-        public JobLevels( Context context, SubArray<byte> bytes, JobLevels defaults )
+        public JobLevels( Context context, IList<byte> bytes, JobLevels defaults )
         {
             Default = defaults;
             int jobCount = context == Context.US_PSP ? 22 : 19;
@@ -82,7 +82,7 @@ namespace FFTPatcher.Datatypes
             {
                 ReflectionHelpers.SetFieldOrProperty( this, reqs[i],
                     new Requirements( context,
-                        new SubArray<byte>( bytes, i * requirementsLength, (i + 1) * requirementsLength - 1 ),
+                        bytes.Sub( i * requirementsLength, (i + 1) * requirementsLength - 1 ),
                         defaults == null ? null : ReflectionHelpers.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
             }
 
@@ -174,12 +174,12 @@ namespace FFTPatcher.Datatypes
 
         public Requirements Default { get; private set; }
 
-        public Requirements( SubArray<byte> bytes )
+        public Requirements( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
         {
         }
 
-        public Requirements( Context context, SubArray<byte> bytes, Requirements defaults )
+        public Requirements( Context context, IList<byte> bytes, Requirements defaults )
         {
             Default = defaults;
             Squire = bytes[0].GetUpperNibble();
@@ -211,7 +211,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public Requirements( Context context, SubArray<byte> bytes )
+        public Requirements( Context context, IList<byte> bytes )
             : this( context, bytes, null )
         {
         }
@@ -237,7 +237,7 @@ namespace FFTPatcher.Datatypes
 
             return result.ToArray();
         }
-        
+
         public byte[] ToByteArray()
         {
             return ToByteArray( Context.US_PSP );

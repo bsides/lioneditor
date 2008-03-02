@@ -46,7 +46,7 @@ namespace FFTPatcher.Datatypes
 
         public ItemAttributes Default { get; private set; }
 
-        public ItemAttributes( byte value, SubArray<byte> bytes, ItemAttributes defaults )
+        public ItemAttributes( byte value, IList<byte> bytes, ItemAttributes defaults )
         {
             Default = defaults;
             Value = value;
@@ -56,9 +56,9 @@ namespace FFTPatcher.Datatypes
             Move = bytes[3];
             Jump = bytes[4];
 
-            PermanentStatuses = new Statuses( new SubArray<byte>( bytes, 5, 9 ), defaults == null ? null : defaults.PermanentStatuses );
-            StatusImmunity = new Statuses( new SubArray<byte>( bytes, 10, 14 ), defaults == null ? null : defaults.StatusImmunity );
-            StartingStatuses = new Statuses( new SubArray<byte>( bytes, 15, 19 ), defaults == null ? null : defaults.StartingStatuses );
+            PermanentStatuses = new Statuses( bytes.Sub( 5, 9 ), defaults == null ? null : defaults.PermanentStatuses );
+            StatusImmunity = new Statuses( bytes.Sub( 10, 14 ), defaults == null ? null : defaults.StatusImmunity );
+            StartingStatuses = new Statuses( bytes.Sub( 15, 19 ), defaults == null ? null : defaults.StartingStatuses );
 
             Absorb = new Elements( bytes[20] );
             Cancel = new Elements( bytes[21] );
@@ -67,7 +67,7 @@ namespace FFTPatcher.Datatypes
             Strong = new Elements( bytes[24] );
         }
 
-        public ItemAttributes( byte value, SubArray<byte> bytes )
+        public ItemAttributes( byte value, IList<byte> bytes )
             : this( value, bytes, null )
         {
         }
@@ -102,7 +102,7 @@ namespace FFTPatcher.Datatypes
     {
         public ItemAttributes[] ItemAttributes { get; private set; }
 
-        public AllItemAttributes( SubArray<byte> first, SubArray<byte> second )
+        public AllItemAttributes( IList<byte> first, IList<byte> second )
         {
             List<ItemAttributes> temp = new List<ItemAttributes>( 0x65 );
             byte[] defaultFirst = second == null ? PSXResources.OldItemAttributesBin : Resources.OldItemAttributesBin;
@@ -110,15 +110,15 @@ namespace FFTPatcher.Datatypes
 
             for( byte i = 0; i < 0x50; i++ )
             {
-                temp.Add( new ItemAttributes( i, new SubArray<byte>( first, i * 25, (i + 1) * 25 - 1 ),
-                    new ItemAttributes( i, new SubArray<byte>( defaultFirst, i * 25, (i + 1) * 25 - 1 ) ) ) );
+                temp.Add( new ItemAttributes( i, first.Sub( i * 25, (i + 1) * 25 - 1 ),
+                    new ItemAttributes( i, defaultFirst.Sub( i * 25, (i + 1) * 25 - 1 ) ) ) );
             }
             if( second != null )
             {
                 for( byte i = 0x50; i < 0x65; i++ )
                 {
-                    temp.Add( new ItemAttributes( i, new SubArray<byte>( second, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ),
-                        new ItemAttributes( i, new SubArray<byte>( defaultSecond, (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) ) ) );
+                    temp.Add( new ItemAttributes( i, second.Sub( (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ),
+                        new ItemAttributes( i, defaultSecond.Sub( (i - 0x50) * 25, ((i - 0x50) + 1) * 25 - 1 ) ) ) );
                 }
             }
 

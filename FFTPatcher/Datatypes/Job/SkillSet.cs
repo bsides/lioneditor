@@ -97,13 +97,13 @@ namespace FFTPatcher.Datatypes
 
         public SkillSet Default { get; private set; }
 
-        public SkillSet( byte value, SubArray<byte> bytes, SkillSet defaults )
+        public SkillSet( byte value, IList<byte> bytes, SkillSet defaults )
             : this( value, bytes )
         {
             Default = defaults;
         }
 
-        public SkillSet( byte value, SubArray<byte> bytes )
+        public SkillSet( byte value, IList<byte> bytes )
             : this( DummySkillSets[value].Name, value )
         {
             List<bool> actions = new List<bool>( 16 );
@@ -176,31 +176,31 @@ namespace FFTPatcher.Datatypes
     {
         public SkillSet[] SkillSets { get; private set; }
 
-        public AllSkillSets( SubArray<byte> bytes )
-            : this( Context.US_PSP, bytes, new SubArray<byte>( Resources.SkillSetsBin ) )
+        public AllSkillSets( IList<byte> bytes )
+            : this( Context.US_PSP, bytes, Resources.SkillSetsBin )
         {
         }
 
-        public AllSkillSets( Context context, SubArray<byte> bytes )
+        public AllSkillSets( Context context, IList<byte> bytes )
             : this( context, bytes, null )
         {
         }
 
-        public AllSkillSets( Context context, SubArray<byte> bytes, SubArray<byte> defaultBytes )
+        public AllSkillSets( Context context, IList<byte> bytes, IList<byte> defaultBytes )
         {
             List<SkillSet> tempSkills = new List<SkillSet>( 179 );
             for( int i = 0; i < 176; i++ )
             {
-                tempSkills.Add( new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * i, 25 * i + 24 ),
-                    new SkillSet( (byte)i, new SubArray<byte>( defaultBytes, 25 * i, 25 * i + 24 ) ) ) );
+                tempSkills.Add( new SkillSet( (byte)i, bytes.Sub( 25 * i, 25 * i + 24 ),
+                    new SkillSet( (byte)i, defaultBytes.Sub( 25 * i, 25 * i + 24 ) ) ) );
             }
 
             if( context == Context.US_PSP )
             {
                 for( int i = 0xE0; i <= 0xE2; i++ )
                 {
-                    tempSkills.Add( new SkillSet( (byte)i, new SubArray<byte>( bytes, 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ),
-                        new SkillSet( (byte)i, new SubArray<byte>( defaultBytes, 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ) ) ) );
+                    tempSkills.Add( new SkillSet( (byte)i, bytes.Sub( 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ),
+                        new SkillSet( (byte)i, defaultBytes.Sub( 25 * (i - 0xE0 + 176), 25 * (i - 0xE0 + 176) + 24 ) ) ) );
                 }
             }
 

@@ -65,14 +65,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             {
                 entryNames[i] = new string[Instance.Sections[i].Count];
             }
-            entryNames[6] = new SubArray<string>( FFTPatcher.Datatypes.AllJobs.PSXNames, 0, 154 ).ToArray();
-            IList<string> temp = new List<string>( new SubArray<string>( FFTPatcher.Datatypes.Item.PSXNames, 0 ).ToArray() );
+            entryNames[6] = FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ).ToArray();
+            IList<string> temp = new List<string>( FFTPatcher.Datatypes.Item.PSXNames.Sub( 0 ).ToArray() );
             temp.AddRange( new string[Instance.Sections[7].Count - temp.Count] );
             entryNames[7] = temp.ToArray();
             temp = new List<string>( AllAbilities.PSXNames );
             temp.AddRange( new string[Instance.Sections[14].Count - temp.Count] );
             entryNames[14] = temp.ToArray();
-            temp = new List<string>( new SubArray<string>( SkillSet.PSXNames, 0, 175 ) );
+            temp = new List<string>( SkillSet.PSXNames.Sub( 0, 175 ) );
             temp.AddRange( new string[Instance.Sections[22].Count - temp.Count] );
             entryNames[22] = temp.ToArray();
         }
@@ -87,5 +87,5 @@ namespace FFTPatcher.TextEditor.Files.PSX
             return Instance;
         }
 
-   }
+    }
 }

@@ -89,7 +89,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[13] = Item.PSXNames.ToArray();
             entryNames[15] = AllAbilities.PSXNames;
             List<string> temp = new List<string>( 188 );
-            temp.AddRange( new SubArray<string>( SkillSet.PSXNames, 0, 175 ) );
+            temp.AddRange( SkillSet.PSXNames.Sub( 0, 175 ) );
             temp.AddRange( new string[12] );
 
             entryNames[19] = temp.ToArray();
@@ -100,8 +100,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
             Sections = new List<IList<string>>( NumberOfSections );
             for( int i = 0; i < NumberOfSections; i++ )
             {
-                uint start = Utilities.BytesToUInt32( new SubArray<byte>( bytes, i * 4, i * 4 + 3 ) );
-                uint stop = Utilities.BytesToUInt32( new SubArray<byte>( bytes, (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
+                uint start = Utilities.BytesToUInt32( bytes.Sub( i * 4, i * 4 + 3 ) );
+                uint stop = Utilities.BytesToUInt32( bytes.Sub( (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
                 if( i == NumberOfSections - 1 )
                 {
                     stop = (uint)bytes.Count - 1 - dataStart;
@@ -109,7 +109,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
                 IList<byte> thisSection = TextUtilities.Decompress(
                     bytes,
-                    new SubArray<byte>( bytes, (int)(start + dataStart), (int)(stop + dataStart) ),
+                    bytes.Sub( (int)(start + dataStart), (int)(stop + dataStart) ),
                     (int)(start + dataStart) );
                 Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
             }
@@ -149,7 +149,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                     FireProgressChangedEvent( progress );
                 } );
 
-            IList<byte> bytes = TextUtilities.Recompress( new SubArray<byte>( ToUncompressedBytes(), 0x80 ), p );
+            IList<byte> bytes = TextUtilities.Recompress( ToUncompressedBytes().Sub( 0x80 ), p );
 
             List<UInt32> sectionOffsets = new List<UInt32>();
             sectionOffsets.Add( 0 );

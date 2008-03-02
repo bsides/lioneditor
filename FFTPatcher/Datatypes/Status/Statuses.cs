@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+
 namespace FFTPatcher.Datatypes
 {
     public class Statuses
@@ -71,13 +73,13 @@ namespace FFTPatcher.Datatypes
         public bool Reflect;
         public bool DeathSentence;
 
-        public Statuses( SubArray<byte> bytes, Statuses defaults )
+        public Statuses( IList<byte> bytes, Statuses defaults )
             : this( bytes )
         {
             Default = defaults;
         }
 
-        public Statuses( SubArray<byte> bytes )
+        public Statuses( IList<byte> bytes )
         {
             Utilities.CopyByteToBooleans( bytes[0], ref NoEffect, ref Crystal, ref Dead, ref Undead, ref Charging, ref Jump, ref Defending, ref Performing );
             Utilities.CopyByteToBooleans( bytes[1], ref Petrify, ref Invite, ref Darkness, ref Confusion, ref Silence, ref BloodSuck, ref DarkEvilLooking, ref Treasure );

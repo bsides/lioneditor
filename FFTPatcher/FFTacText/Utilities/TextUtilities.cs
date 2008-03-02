@@ -343,7 +343,7 @@ namespace FFTPatcher.TextEditor
                     }
                     else
                     {
-                        result.AddRange( new SubArray<byte>( allBytes, i + sectionStart - jump, i + sectionStart - jump + length - 1 ) );
+                        result.AddRange( allBytes.Sub( i + sectionStart - jump, i + sectionStart - jump + length - 1 ) );
                     }
                     i += 2;
                 }

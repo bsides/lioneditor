@@ -45,7 +45,7 @@ namespace FFTPatcher.SpriteEditor
 
     public class Palette
     {
-        public static Color BytesToColor(byte first, byte second)
+        public static Color BytesToColor( byte first, byte second )
         {
             int b = (second & 0x7C) << 1;
             int g = (second & 0x03) << 6 | (first & 0xE0) >> 2;
@@ -105,7 +105,7 @@ namespace FFTPatcher.SpriteEditor
             Palette[] result = new Palette[16];
             for( int i = 0; i < 16; i++ )
             {
-                result[i] = Palette.FromPALFiledata( new SubArray<byte>( bytes, 24 + 4 * 16 * i, 24 + 4 * 16 * (i + 1) - 1 ) );
+                result[i] = Palette.FromPALFiledata( bytes.Sub( 24 + 4 * 16 * i, 24 + 4 * 16 * (i + 1) - 1 ) );
             }
 
             return result;
@@ -116,7 +116,7 @@ namespace FFTPatcher.SpriteEditor
             Palette result = new Palette();
             result.Colors = new Color[16];
 
-            for( int i = 0; i < 16 * 4; i+=4 )
+            for( int i = 0; i < 16 * 4; i += 4 )
             {
                 result.Colors[i / 4] = Color.FromArgb( bytes[i] & 0xF8, bytes[i + 1] & 0xF8, bytes[i + 2] & 0xF8 );
             }

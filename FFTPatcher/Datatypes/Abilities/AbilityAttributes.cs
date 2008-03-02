@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -79,13 +80,13 @@ namespace FFTPatcher.Datatypes
 
         public AbilityAttributes Default { get; set; }
 
-        public AbilityAttributes( string name, UInt16 offset, SubArray<byte> second, AbilityAttributes defaults )
+        public AbilityAttributes( string name, UInt16 offset, IList<byte> second, AbilityAttributes defaults )
             : this( name, offset, second )
         {
             Default = defaults;
         }
 
-        public AbilityAttributes( string name, UInt16 offset, SubArray<byte> second )
+        public AbilityAttributes( string name, UInt16 offset, IList<byte> second )
         {
             Name = name;
             Offset = offset;

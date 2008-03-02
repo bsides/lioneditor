@@ -38,17 +38,17 @@ namespace FFTPatcher.Datatypes
         public Statuses Statuses { get; private set; }
         public InflictStatus Default { get; private set; }
 
-        public InflictStatus( byte value, SubArray<byte> bytes )
+        public InflictStatus( byte value, IList<byte> bytes )
             : this( value, bytes, null )
         {
         }
 
-        public InflictStatus( byte value, SubArray<byte> bytes, InflictStatus defaults )
+        public InflictStatus( byte value, IList<byte> bytes, InflictStatus defaults )
         {
             Default = defaults;
             Value = value;
             Utilities.CopyByteToBooleans( bytes[0], ref AllOrNothing, ref Random, ref Separate, ref Cancel, ref Blank1, ref Blank2, ref Blank3, ref Blank4 );
-            Statuses = new Statuses( new SubArray<byte>( bytes, 1, 5 ), defaults == null ? null : defaults.Statuses );
+            Statuses = new Statuses( bytes.Sub( 1, 5 ), defaults == null ? null : defaults.Statuses );
         }
 
         public byte[] ToByteArray()
@@ -58,7 +58,7 @@ namespace FFTPatcher.Datatypes
             result.AddRange( Statuses.ToByteArray() );
             return result.ToArray();
         }
-        
+
         public bool[] ToBoolArray()
         {
             return new bool[8] { 
@@ -75,14 +75,14 @@ namespace FFTPatcher.Datatypes
     {
         public InflictStatus[] InflictStatuses { get; private set; }
 
-        public AllInflictStatuses( SubArray<byte> bytes )
+        public AllInflictStatuses( IList<byte> bytes )
         {
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin;
             InflictStatuses = new InflictStatus[0x80];
             for( int i = 0; i < 0x80; i++ )
             {
-                InflictStatuses[i] = new InflictStatus( (byte)i, new SubArray<byte>( bytes, i * 6, (i + 1) * 6 - 1 ),
-                    new InflictStatus( (byte)i, new SubArray<byte>( defaultBytes, i * 6, (i + 1) * 6 - 1 ) ) );
+                InflictStatuses[i] = new InflictStatus( (byte)i, bytes.Sub( i * 6, (i + 1) * 6 - 1 ),
+                    new InflictStatus( (byte)i, defaultBytes.Sub( i * 6, (i + 1) * 6 - 1 ) ) );
             }
         }
 

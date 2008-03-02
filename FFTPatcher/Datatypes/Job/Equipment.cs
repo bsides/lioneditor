@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
@@ -67,12 +69,12 @@ namespace FFTPatcher.Datatypes
 
         public Equipment Default { get; private set; }
 
-        public Equipment( SubArray<byte> bytes )
+        public Equipment( IList<byte> bytes )
             : this( bytes, null )
         {
         }
 
-        public Equipment( SubArray<byte> bytes, Equipment defaults )
+        public Equipment( IList<byte> bytes, Equipment defaults )
         {
             Default = defaults;
             Utilities.CopyByteToBooleans( bytes[0], ref Unused, ref Knife, ref NinjaBlade, ref Sword, ref KnightsSword, ref Katana, ref Axe, ref Rod );

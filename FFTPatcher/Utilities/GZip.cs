@@ -50,7 +50,7 @@ namespace FFTPatcher
 
             if( b > 0 )
             {
-                result.AddRange( new SubArray<byte>( buffer, 0, b - 1 ) );
+                result.AddRange( buffer.Sub( 0, b - 1 ) );
             }
 
             return result.ToArray();

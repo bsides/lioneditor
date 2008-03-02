@@ -90,8 +90,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "","","","","","","","","","","","","","","","" };
             entryNames[4] = new string[] { "" };
             entryNames[5] = new string[] { "" };
-            entryNames[6] = new SubArray<string>( FFTPatcher.Datatypes.AllJobs.PSXNames, 0, 154 ).ToArray();
-            IList<string> temp = new List<string>( new SubArray<string>( FFTPatcher.Datatypes.Item.PSXNames, 0 ).ToArray() );
+            entryNames[6] = FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ).ToArray();
+            IList<string> temp = new List<string>( FFTPatcher.Datatypes.Item.PSXNames.Sub( 0 ).ToArray() );
             temp.AddRange( new string[Instance.Sections[7].Count - temp.Count] );
             entryNames[7] = temp.ToArray();
             temp = new List<string>( AllAbilities.PSXNames );
@@ -107,7 +107,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "Is __ OK?", "Insufficient JP", "Remove __?", "Team not ready", "Team full", "Can't delete leader", "No memory card", "No saves",
                 "No room on memory card", "Save?", "Can't remove unit", "Format memory card?", "Input birthday", "Input name", "Kanji search method", "First Kanji", 
                 "Kanji strokes", "Input name", "Is __ OK?", "Destroy egg?", "Save error", "Load error", "Save?" };
-            temp = new List<string>( new SubArray<string>( SkillSet.PSXNames, 0, 175 ) );
+            temp = new List<string>( SkillSet.PSXNames.Sub( 0, 175 ) );
             temp.AddRange( new string[Instance.Sections[22].Count - temp.Count] );
             entryNames[22] = temp.ToArray();
 

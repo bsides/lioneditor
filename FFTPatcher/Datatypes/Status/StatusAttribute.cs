@@ -57,7 +57,7 @@ namespace FFTPatcher.Datatypes
 
         public StatusAttribute Default { get; private set; }
 
-        public StatusAttribute( string name, byte value, SubArray<byte> bytes, StatusAttribute defaults )
+        public StatusAttribute( string name, byte value, IList<byte> bytes, StatusAttribute defaults )
         {
             Default = defaults;
             Name = name;
@@ -71,11 +71,11 @@ namespace FFTPatcher.Datatypes
             Utilities.CopyByteToBooleans( bytes[4], ref FreezeCT, ref Unknown1, ref Unknown2, ref Unknown3, ref Unknown4, ref Unknown5, ref Unknown6, ref KO );
             Utilities.CopyByteToBooleans( bytes[5], ref CanReact, ref Blank, ref IgnoreAttack, ref Unknown7, ref Unknown8, ref Unknown9, ref Unknown10, ref Unknown11 );
             CanReact = !CanReact;
-            Cancels = new Statuses( new SubArray<byte>( bytes, 6, 10 ), defaults == null ? null : defaults.Cancels );
-            CantStackOn = new Statuses( new SubArray<byte>( bytes, 11, 15 ), defaults == null ? null : defaults.CantStackOn );
+            Cancels = new Statuses( bytes.Sub( 6, 10 ), defaults == null ? null : defaults.Cancels );
+            CantStackOn = new Statuses( bytes.Sub( 11, 15 ), defaults == null ? null : defaults.CantStackOn );
         }
 
-        public StatusAttribute( string name, byte value, SubArray<byte> bytes )
+        public StatusAttribute( string name, byte value, IList<byte> bytes )
             : this( name, value, bytes, null )
         {
         }
@@ -112,7 +112,7 @@ namespace FFTPatcher.Datatypes
     {
         public StatusAttribute[] StatusAttributes { get; private set; }
 
-        public AllStatusAttributes( SubArray<byte> bytes )
+        public AllStatusAttributes( IList<byte> bytes )
         {
             StatusAttributes = new StatusAttribute[40];
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin;
@@ -121,8 +121,8 @@ namespace FFTPatcher.Datatypes
             for( int i = 0; i < 40; i++ )
             {
                 StatusAttributes[i] =
-                    new StatusAttribute( names[i], (byte)i, new SubArray<byte>( bytes, 16 * i, 16 * i + 15 ),
-                        new StatusAttribute( names[i], (byte)i, new SubArray<byte>( defaultBytes, 16 * i, 16 * i + 15 ) ) );
+                    new StatusAttribute( names[i], (byte)i, bytes.Sub( 16 * i, 16 * i + 15 ),
+                        new StatusAttribute( names[i], (byte)i, defaultBytes.Sub( 16 * i, 16 * i + 15 ) ) );
             }
         }
 
@@ -150,7 +150,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4 );
             }
         }
     }

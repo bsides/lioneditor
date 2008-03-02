@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -45,12 +46,12 @@ namespace FFTPatcher.Datatypes
         public byte InflictStatus { get; set; }
         public Weapon WeaponDefault { get; private set; }
 
-        public Weapon( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> weaponBytes )
+        public Weapon( UInt16 offset, IList<byte> itemBytes, IList<byte> weaponBytes )
             : this( offset, itemBytes, weaponBytes, null )
         {
         }
 
-        public Weapon( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> weaponBytes, Weapon defaults )
+        public Weapon( UInt16 offset, IList<byte> itemBytes, IList<byte> weaponBytes, Weapon defaults )
             : base( offset, itemBytes, defaults )
         {
             WeaponDefault = defaults;

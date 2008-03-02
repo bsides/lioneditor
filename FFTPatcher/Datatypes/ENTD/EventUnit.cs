@@ -165,7 +165,7 @@ namespace FFTPatcher.Datatypes
             get { return string.Format( "Sprite: {0} | Name: {1} | Job: {2}", SpriteSet.Name, SpecialName.Name, Job.Name ); }
         }
 
-        public EventUnit( SubArray<byte> bytes, EventUnit defaults )
+        public EventUnit( IList<byte> bytes, EventUnit defaults )
         {
             SpriteSet = SpriteSet.SpriteSets[bytes[0]];
             Default = defaults;
@@ -207,7 +207,7 @@ namespace FFTPatcher.Datatypes
             Unknown12 = bytes[39];
         }
 
-        public EventUnit( SubArray<byte> bytes )
+        public EventUnit( IList<byte> bytes )
             : this( bytes, null )
         {
         }

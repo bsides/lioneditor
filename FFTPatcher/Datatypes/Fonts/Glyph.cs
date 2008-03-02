@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+
 namespace FFTPatcher.Datatypes
 {
     public enum FontColor
@@ -37,7 +39,7 @@ namespace FFTPatcher.Datatypes
         public FontColor[] Pixels { get; private set; }
         public byte Width { get; set; }
 
-        public Glyph( byte width, SubArray<byte> bytes )
+        public Glyph( byte width, IList<byte> bytes )
         {
             Width = width;
             Pixels = new FontColor[14 * 10];

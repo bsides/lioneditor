@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -143,7 +144,7 @@ namespace FFTPatcher.Datatypes
         public bool IsItem { get; private set; }
         public UInt16 ItemOffset
         {
-            get 
+            get
             {
                 return (UInt16)(IsItem ? Item.Offset : 0);
             }
@@ -200,7 +201,7 @@ namespace FFTPatcher.Datatypes
             Offset = offset;
         }
 
-        private Ability( string name, UInt16 offset, SubArray<byte> first )
+        private Ability( string name, UInt16 offset, IList<byte> first )
         {
             Name = name;
             Offset = offset;
@@ -214,13 +215,13 @@ namespace FFTPatcher.Datatypes
 
             AbilityType = (AbilityType)(first[3] & 0x0F);
 
-            AIFlags = new AIFlags( new SubArray<byte>( first, 4, 6 ) );
+            AIFlags = new AIFlags( first.Sub( 4, 6 ) );
 
             Utilities.CopyByteToBooleans( first[7],
                 ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
         }
 
-        public Ability( string name, UInt16 offset, SubArray<byte> first, SubArray<byte> second, Ability defaults )
+        public Ability( string name, UInt16 offset, IList<byte> first, IList<byte> second, Ability defaults )
             : this( name, offset, first, second )
         {
             Default = defaults;
@@ -230,7 +231,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public Ability( string name, UInt16 offset, SubArray<byte> first, SubArray<byte> second )
+        public Ability( string name, UInt16 offset, IList<byte> first, IList<byte> second )
             : this( name, offset, first )
         {
             IsNormal = ((offset >= 0x000) && (offset <= 0x16F));

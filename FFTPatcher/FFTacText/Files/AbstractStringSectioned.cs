@@ -63,8 +63,8 @@ namespace FFTPatcher.TextEditor.Files
 
         protected virtual IList<byte> ToUncompressedBytes()
         {
-            GenericCharMap map = CharMap == TextUtilities.CharMapType.PSX ? 
-                TextUtilities.PSXMap as GenericCharMap : 
+            GenericCharMap map = CharMap == TextUtilities.CharMapType.PSX ?
+                TextUtilities.PSXMap as GenericCharMap :
                 TextUtilities.PSPMap as GenericCharMap;
             List<List<byte>> byteSections = new List<List<byte>>( NumberOfSections );
             foreach( List<string> section in Sections )
@@ -104,14 +104,14 @@ namespace FFTPatcher.TextEditor.Files
             Sections = new List<IList<string>>( NumberOfSections );
             for( int i = 0; i < NumberOfSections; i++ )
             {
-                uint start = Utilities.BytesToUInt32( new SubArray<byte>( bytes, i * 4, i * 4 + 3 ) );
-                uint stop = Utilities.BytesToUInt32( new SubArray<byte>( bytes, (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
+                uint start = Utilities.BytesToUInt32( bytes.Sub( i * 4, i * 4 + 3 ) );
+                uint stop = Utilities.BytesToUInt32( bytes.Sub( (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
                 if( i == NumberOfSections - 1 )
                 {
                     stop = (uint)bytes.Count - 1 - dataStart;
                 }
 
-                IList<byte> thisSection = new SubArray<byte>( bytes, (int)(start + dataStart), (int)(stop + dataStart) );
+                IList<byte> thisSection = bytes.Sub( (int)(start + dataStart), (int)(stop + dataStart) );
                 Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
             }
         }

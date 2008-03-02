@@ -51,7 +51,7 @@ namespace FFTPatcher.Datatypes
                 0x200 );
         }
 
-        public Event( int value, SubArray<byte> bytes, Event defaults )
+        public Event( int value, IList<byte> bytes, Event defaults )
         {
             Value = value;
             Name = EventNames[value];
@@ -59,9 +59,9 @@ namespace FFTPatcher.Datatypes
             Units = new EventUnit[16];
             for( int i = 0; i < 16; i++ )
             {
-                Units[i] = new EventUnit( 
-                    new SubArray<byte>( bytes, i * 40, (i + 1) * 40 - 1 ), 
-                      defaults == null ? null : defaults.Units[i] );
+                Units[i] = new EventUnit(
+                    bytes.Sub( i * 40, (i + 1) * 40 - 1 ),
+                    defaults == null ? null : defaults.Units[i] );
             }
         }
 

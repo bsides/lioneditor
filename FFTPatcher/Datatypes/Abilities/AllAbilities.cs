@@ -43,7 +43,7 @@ namespace FFTPatcher.Datatypes
 
         public static Ability[] PSPAbilities { get; private set; }
         public static Ability[] PSXAbilities { get; private set; }
-        public static Ability[] DummyAbilities 
+        public static Ability[] DummyAbilities
         {
             get
             {
@@ -92,7 +92,7 @@ namespace FFTPatcher.Datatypes
 
         public Ability[] Abilities { get; private set; }
 
-        public AllAbilities( SubArray<byte> bytes, SubArray<byte> effectsBytes )
+        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
         {
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : PSXResources.AbilitiesBin;
             Dictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
@@ -102,49 +102,49 @@ namespace FFTPatcher.Datatypes
             DefaultAbilities = new Ability[512];
             for( UInt16 i = 0; i < 512; i++ )
             {
-                SubArray<byte> defaultFirst = new SubArray<byte>( defaultBytes, i * 8, i * 8 + 7 );
-                SubArray<byte> first = new SubArray<byte>( bytes, i * 8, i * 8 + 7 );
-                SubArray<byte> second;
-                SubArray<byte> defaultSecond;
+                IList<byte> defaultFirst = defaultBytes.Sub( i * 8, i * 8 + 7 );
+                IList<byte> first = bytes.Sub( i * 8, i * 8 + 7 );
+                IList<byte> second;
+                IList<byte> defaultSecond;
                 Effect effect = null;
                 Effect defaultEffect = null;
 
                 if( i <= 0x16F )
                 {
-                    second = new SubArray<byte>( bytes, 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
-                    defaultSecond = new SubArray<byte>( defaultBytes, 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
+                    second = bytes.Sub( 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
+                    defaultSecond = defaultBytes.Sub( 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
                     effect = effects[Utilities.BytesToUShort( effectsBytes[i * 2], effectsBytes[i * 2 + 1] )];
                     defaultEffect = effects[Utilities.BytesToUShort( defaultEffects[i * 2], defaultEffects[i * 2 + 1] )];
                 }
                 else if( i <= 0x17D )
                 {
-                    second = new SubArray<byte>( bytes, 0x2420 + i - 0x170, 0x2420 + i - 0x170 );
-                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2420 + i - 0x170, 0x2420 + i - 0x170 );
+                    second = bytes.Sub( 0x2420 + i - 0x170, 0x2420 + i - 0x170 );
+                    defaultSecond = defaultBytes.Sub( 0x2420 + i - 0x170, 0x2420 + i - 0x170 );
                 }
                 else if( i <= 0x189 )
                 {
-                    second = new SubArray<byte>( bytes, 0x2430 + i - 0x17E, 0x2430 + i - 0x17E );
-                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2430 + i - 0x17E, 0x2430 + i - 0x17E );
+                    second = bytes.Sub( 0x2430 + i - 0x17E, 0x2430 + i - 0x17E );
+                    defaultSecond = defaultBytes.Sub( 0x2430 + i - 0x17E, 0x2430 + i - 0x17E );
                 }
                 else if( i <= 0x195 )
                 {
-                    second = new SubArray<byte>( bytes, 0x243C + (i - 0x18A) * 2, 0x243C + (i - 0x18A) * 2 + 1 );
-                    defaultSecond = new SubArray<byte>( defaultBytes, 0x243C + (i - 0x18A) * 2, 0x243C + (i - 0x18A) * 2 + 1 );
+                    second = bytes.Sub( 0x243C + (i - 0x18A) * 2, 0x243C + (i - 0x18A) * 2 + 1 );
+                    defaultSecond = defaultBytes.Sub( 0x243C + (i - 0x18A) * 2, 0x243C + (i - 0x18A) * 2 + 1 );
                 }
                 else if( i <= 0x19D )
                 {
-                    second = new SubArray<byte>( bytes, 0x2454 + (i - 0x196) * 2, 0x2454 + (i - 0x196) * 2 + 1 );
-                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2454 + (i - 0x196) * 2, 0x2454 + (i - 0x196) * 2 + 1 );
+                    second = bytes.Sub( 0x2454 + (i - 0x196) * 2, 0x2454 + (i - 0x196) * 2 + 1 );
+                    defaultSecond = defaultBytes.Sub( 0x2454 + (i - 0x196) * 2, 0x2454 + (i - 0x196) * 2 + 1 );
                 }
                 else if( i <= 0x1A5 )
                 {
-                    second = new SubArray<byte>( bytes, 0x2464 + i - 0x19E, 0x2464 + i - 0x19E );
-                    defaultSecond = new SubArray<byte>( defaultBytes, 0x2464 + i - 0x19E, 0x2464 + i - 0x19E );
+                    second = bytes.Sub( 0x2464 + i - 0x19E, 0x2464 + i - 0x19E );
+                    defaultSecond = defaultBytes.Sub( 0x2464 + i - 0x19E, 0x2464 + i - 0x19E );
                 }
                 else
                 {
-                    second = new SubArray<byte>( bytes, 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
-                    defaultSecond = new SubArray<byte>( defaultBytes, 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
+                    second = bytes.Sub( 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
+                    defaultSecond = defaultBytes.Sub( 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
                 }
 
                 Abilities[i] = new Ability( Names[i], i, first, second, new Ability( Names[i], i, defaultFirst, defaultSecond ) );

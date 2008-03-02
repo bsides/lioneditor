@@ -28,12 +28,12 @@ namespace FFTPatcher
     {
         public static IList<T> Sub<T>( this IList<T> list, int start )
         {
-            return new SubArray<T>( list, start );
+            return list.Sub( start );
         }
 
         public static IList<T> Sub<T>( this IList<T> list, int start, int stop )
         {
-            return new SubArray<T>( list, start, stop );
+            return list.Sub( start, stop );
         }
 
         public static List<IList<T>> Split<T>( this IList<T> members, T value ) where T : IEquatable<T>
@@ -48,14 +48,14 @@ namespace FFTPatcher
                 if( members[i].Equals( value ) )
                 {
                     stop = i;
-                    result.Add( new SubArray<T>( members, start, stop ) );
+                    result.Add( members.Sub( start, stop ) );
                     start = i + 1;
                 }
             }
 
             if( !members[members.Count - 1].Equals( value ) )
             {
-                result.Add( new SubArray<T>( members, start, members.Count - 1 ) );
+                result.Add( members.Sub( start, members.Count - 1 ) );
             }
 
             return result;
@@ -70,7 +70,7 @@ namespace FFTPatcher
 
             for( int i = 0; i + find.Count < list.Count; i++ )
             {
-                if( new SubArray<T>( list, i, i + find.Count - 1 ).Equals( find ) )
+                if( list.Sub( i, i + find.Count - 1 ).Equals( find ) )
                 {
                     return i;
                 }
@@ -267,8 +267,8 @@ namespace FFTPatcher.Datatypes
 
         public static bool operator ==( SubArray<T> left, SubArray<T> right )
         {
-            return 
-                (object.ReferenceEquals( left, null ) && object.ReferenceEquals( right, null )) || 
+            return
+                (object.ReferenceEquals( left, null ) && object.ReferenceEquals( right, null )) ||
                 (!object.ReferenceEquals( left, null ) && !object.ReferenceEquals( right, null ) && left.Equals( right ));
         }
 

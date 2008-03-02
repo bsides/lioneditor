@@ -41,7 +41,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
         public override IDictionary<string, long> Locations
         {
-            get 
+            get
             {
                 if( locations == null )
                 {
@@ -75,16 +75,16 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 "Speed", "ATK", "Weapon ATK", "", "Eva%", "SEv%", "AEv%", "Phys land effect",
                 "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
                 "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
-            IList<string> temp = new List<string>( new SubArray<string>( FFTPatcher.Datatypes.AllJobs.PSPNames, 0, 168 ) );
+            IList<string> temp = new List<string>( FFTPatcher.Datatypes.AllJobs.PSPNames.Sub( 0, 168 ) );
             temp.AddRange( new string[Instance.Sections[12].Count - temp.Count] );
             entryNames[12] = temp.ToArray();
             entryNames[13] = FFTPatcher.Datatypes.Item.PSPNames.ToArray();
             temp = new List<string>();
             temp.AddRange( new string[45] );
             temp.Add( FFTPatcher.Datatypes.AllAbilities.PSPNames[45] );
-            temp.AddRange( new string[184-46] );
+            temp.AddRange( new string[184 - 46] );
             temp.Add( FFTPatcher.Datatypes.AllAbilities.PSPNames[184] );
-            temp.AddRange( new string[219-185] );
+            temp.AddRange( new string[219 - 185] );
             temp.Add( FFTPatcher.Datatypes.AllAbilities.PSPNames[219] );
             temp.Add( FFTPatcher.Datatypes.AllAbilities.PSPNames[220] );
             temp.AddRange( new string[265 - 221] );

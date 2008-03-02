@@ -65,17 +65,17 @@ namespace FFTPatcher.Datatypes
 
         public Job Default { get; private set; }
 
-        public Job( Context context, SubArray<byte> bytes )
+        public Job( Context context, IList<byte> bytes )
             : this( context, 0, "", bytes )
         {
         }
 
-        public Job( Context context, byte value, string name, SubArray<byte> bytes )
+        public Job( Context context, byte value, string name, IList<byte> bytes )
             : this( context, value, name, bytes, null )
         {
         }
 
-        public Job( Context context, byte value, string name, SubArray<byte> bytes, Job defaults )
+        public Job( Context context, byte value, string name, IList<byte> bytes, Job defaults )
         {
             Default = defaults;
             Value = value;
@@ -86,7 +86,7 @@ namespace FFTPatcher.Datatypes
             InnateB = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[3], bytes[4] )];
             InnateC = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[5], bytes[6] )];
             InnateD = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[7], bytes[8] )];
-            Equipment = new Equipment( new SubArray<byte>( bytes, 9, equipEnd ), defaults == null ? null : defaults.Equipment );
+            Equipment = new Equipment( bytes.Sub( 9, equipEnd ), defaults == null ? null : defaults.Equipment );
             HPConstant = bytes[equipEnd + 1];
             HPMultiplier = bytes[equipEnd + 2];
             MPConstant = bytes[equipEnd + 3];
@@ -100,9 +100,9 @@ namespace FFTPatcher.Datatypes
             Move = bytes[equipEnd + 11];
             Jump = bytes[equipEnd + 12];
             CEvade = bytes[equipEnd + 13];
-            PermanentStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 14, equipEnd + 18 ), defaults == null ? null : defaults.PermanentStatus );
-            StatusImmunity = new Statuses( new SubArray<byte>( bytes, equipEnd + 19, equipEnd + 23 ), defaults == null ? null : defaults.StatusImmunity );
-            StartingStatus = new Statuses( new SubArray<byte>( bytes, equipEnd + 24, equipEnd + 28 ), defaults == null ? null : defaults.StartingStatus );
+            PermanentStatus = new Statuses( bytes.Sub( equipEnd + 14, equipEnd + 18 ), defaults == null ? null : defaults.PermanentStatus );
+            StatusImmunity = new Statuses( bytes.Sub( equipEnd + 19, equipEnd + 23 ), defaults == null ? null : defaults.StatusImmunity );
+            StartingStatus = new Statuses( bytes.Sub( equipEnd + 24, equipEnd + 28 ), defaults == null ? null : defaults.StartingStatus );
             AbsorbElement = new Elements( bytes[equipEnd + 29] );
             CancelElement = new Elements( bytes[equipEnd + 30] );
             HalfElement = new Elements( bytes[equipEnd + 31] );
@@ -113,7 +113,7 @@ namespace FFTPatcher.Datatypes
             MGraphic = bytes[equipEnd + 35];
         }
 
-        public Job( SubArray<byte> bytes )
+        public Job( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
         {
         }
@@ -219,12 +219,12 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public AllJobs( SubArray<byte> bytes )
+        public AllJobs( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
         {
         }
 
-        public AllJobs( Context context, SubArray<byte> bytes )
+        public AllJobs( Context context, IList<byte> bytes )
         {
             int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
             int jobLength = context == Context.US_PSP ? 49 : 48;
@@ -232,8 +232,8 @@ namespace FFTPatcher.Datatypes
             Jobs = new Job[numJobs];
             for( int i = 0; i < numJobs; i++ )
             {
-                Jobs[i] = new Job( context, (byte)i, Names[i], new SubArray<byte>( bytes, i * jobLength, (i + 1) * jobLength - 1 ),
-                    new Job( context, (byte)i, Names[i], new SubArray<byte>( defaultBytes, i * jobLength, (i + 1) * jobLength - 1 ) ) );
+                Jobs[i] = new Job( context, (byte)i, Names[i], bytes.Sub( i * jobLength, (i + 1) * jobLength - 1 ),
+                    new Job( context, (byte)i, Names[i], defaultBytes.Sub( i * jobLength, (i + 1) * jobLength - 1 ) ) );
             }
         }
 

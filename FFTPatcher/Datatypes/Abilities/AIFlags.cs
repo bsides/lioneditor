@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
@@ -51,7 +53,7 @@ namespace FFTPatcher.Datatypes
         public bool MagicDefenseUp;
         public bool DefenseUp;
 
-        public AIFlags( SubArray<byte> bytes )
+        public AIFlags( IList<byte> bytes )
         {
             Utilities.CopyByteToBooleans( bytes[0],
                 ref HP, ref MP, ref CancelStatus, ref AddStatus, ref Stats, ref Unequip, ref TargetEnemies, ref TargetAllies );

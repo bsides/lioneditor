@@ -30,12 +30,12 @@ namespace FFTPatcher.Datatypes
         public List<Item> Items { get; private set; }
         private byte[] afterPhoenixDown;
 
-        public AllItems( SubArray<byte> first )
+        public AllItems( IList<byte> first )
             : this( first, null )
         {
         }
 
-        public AllItems( SubArray<byte> first, SubArray<byte> second )
+        public AllItems( IList<byte> first, IList<byte> second )
         {
             Items = new List<Item>();
             byte[] defaultFirst = second == null ? PSXResources.OldItemsBin : Resources.OldItemsBin;
@@ -45,55 +45,55 @@ namespace FFTPatcher.Datatypes
             {
                 Items.Add( new Weapon(
                     i,
-                    new SubArray<byte>( first, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( first, 0xC00 + i * 8, 0xC00 + (i + 1) * 8 - 1 ),
+                    first.Sub( i * 12, (i + 1) * 12 - 1 ),
+                    first.Sub( 0xC00 + i * 8, 0xC00 + (i + 1) * 8 - 1 ),
                     new Weapon( i,
-                        new SubArray<byte>( defaultFirst, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( defaultFirst, 0xC00 + i * 8, 0xC00 + (i + 1) * 8 - 1 ) ) ) );
+                        defaultFirst.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        defaultFirst.Sub( 0xC00 + i * 8, 0xC00 + (i + 1) * 8 - 1 ) ) ) );
             }
             for( UInt16 i = 0x80; i < 0x90; i++ )
             {
                 Items.Add( new Shield(
                     i,
-                    new SubArray<byte>( first, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( first, 0x1000 + (i - 0x80) * 2, 0x1000 + ((i - 0x80) + 1) * 2 - 1 ),
+                    first.Sub( i * 12, (i + 1) * 12 - 1 ),
+                    first.Sub( 0x1000 + (i - 0x80) * 2, 0x1000 + ((i - 0x80) + 1) * 2 - 1 ),
                     new Shield(
                         i,
-                        new SubArray<byte>( defaultFirst, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( defaultFirst, 0x1000 + (i - 0x80) * 2, 0x1000 + ((i - 0x80) + 1) * 2 - 1 ) ) ) );
+                        defaultFirst.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        defaultFirst.Sub( 0x1000 + (i - 0x80) * 2, 0x1000 + ((i - 0x80) + 1) * 2 - 1 ) ) ) );
             }
             for( UInt16 i = 0x90; i < 0xD0; i++ )
             {
                 Items.Add( new Armor(
                     i,
-                    new SubArray<byte>( first, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( first, 0x1020 + (i - 0x90) * 2, 0x1020 + ((i - 0x90) + 1) * 2 - 1 ),
+                    first.Sub( i * 12, (i + 1) * 12 - 1 ),
+                    first.Sub( 0x1020 + (i - 0x90) * 2, 0x1020 + ((i - 0x90) + 1) * 2 - 1 ),
                     new Armor(
                         i,
-                        new SubArray<byte>( defaultFirst, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( defaultFirst, 0x1020 + (i - 0x90) * 2, 0x1020 + ((i - 0x90) + 1) * 2 - 1 ) ) ) );
+                        defaultFirst.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        defaultFirst.Sub( 0x1020 + (i - 0x90) * 2, 0x1020 + ((i - 0x90) + 1) * 2 - 1 ) ) ) );
             }
             for( UInt16 i = 0xD0; i < 0xF0; i++ )
             {
                 Items.Add( new Accessory(
                     i,
-                    new SubArray<byte>( first, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( first, 0x10A0 + (i - 0xD0) * 2, 0x10A0 + ((i - 0xD0) + 1) * 2 - 1 ),
+                    first.Sub( i * 12, (i + 1) * 12 - 1 ),
+                    first.Sub( 0x10A0 + (i - 0xD0) * 2, 0x10A0 + ((i - 0xD0) + 1) * 2 - 1 ),
                     new Accessory(
                         i,
-                        new SubArray<byte>( defaultFirst, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( defaultFirst, 0x10A0 + (i - 0xD0) * 2, 0x10A0 + ((i - 0xD0) + 1) * 2 - 1 ) ) ) );
+                        defaultFirst.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        defaultFirst.Sub( 0x10A0 + (i - 0xD0) * 2, 0x10A0 + ((i - 0xD0) + 1) * 2 - 1 ) ) ) );
             }
             for( UInt16 i = 0xF0; i < 0xFE; i++ )
             {
                 Items.Add( new ChemistItem(
                     i,
-                    new SubArray<byte>( first, i * 12, (i + 1) * 12 - 1 ),
-                    new SubArray<byte>( first, 0x10E0 + (i - 0xF0) * 3, 0x10E0 + ((i - 0xF0) + 1) * 3 - 1 ),
+                    first.Sub( i * 12, (i + 1) * 12 - 1 ),
+                    first.Sub( 0x10E0 + (i - 0xF0) * 3, 0x10E0 + ((i - 0xF0) + 1) * 3 - 1 ),
                     new ChemistItem(
                         i,
-                        new SubArray<byte>( defaultFirst, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( defaultFirst, 0x10E0 + (i - 0xF0) * 3, 0x10E0 + ((i - 0xF0) + 1) * 3 - 1 ) ) ) );
+                        defaultFirst.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        defaultFirst.Sub( 0x10E0 + (i - 0xF0) * 3, 0x10E0 + ((i - 0xF0) + 1) * 3 - 1 ) ) ) );
             }
             afterPhoenixDown = new byte[0x18];
             for( int i = 0; i < 0x18; i++ )
@@ -106,45 +106,45 @@ namespace FFTPatcher.Datatypes
                 {
                     Items.Add( new Weapon(
                         (UInt16)(i + 0x100),
-                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( second, 0x2D0 + i * 8, 0x2D0 + (i + 1) * 8 - 1 ),
+                        second.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        second.Sub( 0x2D0 + i * 8, 0x2D0 + (i + 1) * 8 - 1 ),
                         new Weapon(
                             (UInt16)(i + 0x100),
-                            new SubArray<byte>( defaultSecond, i * 12, (i + 1) * 12 - 1 ),
-                            new SubArray<byte>( defaultSecond, 0x2D0 + i * 8, 0x2D0 + (i + 1) * 8 - 1 ) ) ) );
+                            defaultSecond.Sub( i * 12, (i + 1) * 12 - 1 ),
+                            defaultSecond.Sub( 0x2D0 + i * 8, 0x2D0 + (i + 1) * 8 - 1 ) ) ) );
                 }
                 for( UInt16 i = 0x20; i < 0x24; i++ )
                 {
                     Items.Add( new Shield(
                         (UInt16)(i + 0x100),
-                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( second, 0x3D0 + (i - 0x20) * 2, 0x3D0 + ((i - 0x20) + 1) * 2 - 1 ),
+                        second.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        second.Sub( 0x3D0 + (i - 0x20) * 2, 0x3D0 + ((i - 0x20) + 1) * 2 - 1 ),
                         new Shield(
                             (UInt16)(i + 0x100),
-                            new SubArray<byte>( defaultSecond, i * 12, (i + 1) * 12 - 1 ),
-                            new SubArray<byte>( defaultSecond, 0x3D0 + (i - 0x20) * 2, 0x3D0 + ((i - 0x20) + 1) * 2 - 1 ) ) ) );
+                            defaultSecond.Sub( i * 12, (i + 1) * 12 - 1 ),
+                            defaultSecond.Sub( 0x3D0 + (i - 0x20) * 2, 0x3D0 + ((i - 0x20) + 1) * 2 - 1 ) ) ) );
                 }
                 for( UInt16 i = 0x24; i < 0x34; i++ )
                 {
                     Items.Add( new Armor(
                         (UInt16)(i + 0x100),
-                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( second, 0x3D8 + (i - 0x24) * 2, 0x3D8 + ((i - 0x24) + 1) * 2 - 1 ),
+                        second.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        second.Sub( 0x3D8 + (i - 0x24) * 2, 0x3D8 + ((i - 0x24) + 1) * 2 - 1 ),
                         new Armor(
                             (UInt16)(i + 0x100),
-                            new SubArray<byte>( defaultSecond, i * 12, (i + 1) * 12 - 1 ),
-                            new SubArray<byte>( defaultSecond, 0x3D8 + (i - 0x24) * 2, 0x3D8 + ((i - 0x24) + 1) * 2 - 1 ) ) ) );
+                            defaultSecond.Sub( i * 12, (i + 1) * 12 - 1 ),
+                            defaultSecond.Sub( 0x3D8 + (i - 0x24) * 2, 0x3D8 + ((i - 0x24) + 1) * 2 - 1 ) ) ) );
                 }
                 for( UInt16 i = 0x34; i < 0x3C; i++ )
                 {
                     Items.Add( new Accessory(
                         (UInt16)(i + 0x100),
-                        new SubArray<byte>( second, i * 12, (i + 1) * 12 - 1 ),
-                        new SubArray<byte>( second, 0x3F8 + (i - 0x34) * 2, 0x3F8 + ((i - 0x34) + 1) * 2 - 1 ),
+                        second.Sub( i * 12, (i + 1) * 12 - 1 ),
+                        second.Sub( 0x3F8 + (i - 0x34) * 2, 0x3F8 + ((i - 0x34) + 1) * 2 - 1 ),
                         new Accessory(
                             (UInt16)(i + 0x100),
-                            new SubArray<byte>( defaultSecond, i * 12, (i + 1) * 12 - 1 ),
-                            new SubArray<byte>( defaultSecond, 0x3F8 + (i - 0x34) * 2, 0x3F8 + ((i - 0x34) + 1) * 2 - 1 ) ) ) );
+                            defaultSecond.Sub( i * 12, (i + 1) * 12 - 1 ),
+                            defaultSecond.Sub( 0x3F8 + (i - 0x34) * 2, 0x3F8 + ((i - 0x34) + 1) * 2 - 1 ) ) ) );
                 }
             }
         }

@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -31,12 +32,12 @@ namespace FFTPatcher.Datatypes
         public byte InflictStatus { get; set; }
         public ChemistItem ChemistItemDefault { get; private set; }
 
-        public ChemistItem( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> chemistBytes ) :
+        public ChemistItem( UInt16 offset, IList<byte> itemBytes, IList<byte> chemistBytes ) :
             this( offset, itemBytes, chemistBytes, null )
         {
         }
 
-        public ChemistItem( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> chemistBytes, ChemistItem defaults )
+        public ChemistItem( UInt16 offset, IList<byte> itemBytes, IList<byte> chemistBytes, ChemistItem defaults )
             : base( offset, itemBytes, defaults )
         {
             ChemistItemDefault = defaults;

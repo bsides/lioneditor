@@ -48,41 +48,41 @@ namespace FFTPatcher.Datatypes
             switch( Context )
             {
                 case Context.US_PSP:
-                    Abilities = new AllAbilities( new SubArray<byte>( Resources.AbilitiesBin ), new SubArray<byte>( Resources.AbilityEffectsBin ) );
+                    Abilities = new AllAbilities( Resources.AbilitiesBin, Resources.AbilityEffectsBin );
                     Items = new AllItems(
-                        new SubArray<byte>( Resources.OldItemsBin ),
-                        new SubArray<byte>( Resources.NewItemsBin ) );
+                        Resources.OldItemsBin,
+                        Resources.NewItemsBin );
                     ItemAttributes = new AllItemAttributes(
-                        new SubArray<byte>( Resources.OldItemAttributesBin ),
-                        new SubArray<byte>( Resources.NewItemAttributesBin ) );
-                    Jobs = new AllJobs( Context, new SubArray<byte>( Resources.JobsBin ) );
-                    JobLevels = new JobLevels( Context, new SubArray<byte>( Resources.JobLevelsBin ),
-                        new JobLevels( Context, new SubArray<byte>( Resources.JobLevelsBin ) ) );
-                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( Resources.SkillSetsBin ),
-                        new SubArray<byte>( Resources.SkillSetsBin ) );
-                    MonsterSkills = new AllMonsterSkills( new SubArray<byte>( Resources.MonsterSkillsBin ) );
-                    ActionMenus = new AllActionMenus( new SubArray<byte>( Resources.ActionEventsBin ) );
-                    StatusAttributes = new AllStatusAttributes( new SubArray<byte>( Resources.StatusAttributesBin ) );
-                    InflictStatuses = new AllInflictStatuses( new SubArray<byte>( Resources.InflictStatusesBin ) );
-                    PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( Resources.PoachProbabilitiesBin ) );
-                    Font = new FFTFont( new SubArray<byte>( Resources.FontBin ), new SubArray<byte>( Resources.FontWidthsBin ) );
+                        Resources.OldItemAttributesBin,
+                        Resources.NewItemAttributesBin );
+                    Jobs = new AllJobs( Context, Resources.JobsBin );
+                    JobLevels = new JobLevels( Context, Resources.JobLevelsBin,
+                        new JobLevels( Context, Resources.JobLevelsBin ) );
+                    SkillSets = new AllSkillSets( Context, Resources.SkillSetsBin,
+                        Resources.SkillSetsBin );
+                    MonsterSkills = new AllMonsterSkills( Resources.MonsterSkillsBin );
+                    ActionMenus = new AllActionMenus( Resources.ActionEventsBin );
+                    StatusAttributes = new AllStatusAttributes( Resources.StatusAttributesBin );
+                    InflictStatuses = new AllInflictStatuses( Resources.InflictStatusesBin );
+                    PoachProbabilities = new AllPoachProbabilities( Resources.PoachProbabilitiesBin );
+                    Font = new FFTFont( Resources.FontBin, Resources.FontWidthsBin );
                     ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4, Resources.ENTD5 );
                     break;
                 case Context.US_PSX:
-                    Abilities = new AllAbilities( new SubArray<byte>( PSXResources.AbilitiesBin ), new SubArray<byte>( PSXResources.AbilityEffectsBin ) );
-                    Items = new AllItems( new SubArray<byte>( PSXResources.OldItemsBin ), null );
-                    ItemAttributes = new AllItemAttributes( new SubArray<byte>( PSXResources.OldItemAttributesBin ), null );
-                    Jobs = new AllJobs( Context, new SubArray<byte>( PSXResources.JobsBin ) );
-                    JobLevels = new JobLevels( Context, new SubArray<byte>( PSXResources.JobLevelsBin ),
-                        new JobLevels( Context, new SubArray<byte>( PSXResources.JobLevelsBin ) ) );
-                    SkillSets = new AllSkillSets( Context, new SubArray<byte>( PSXResources.SkillSetsBin ),
-                        new SubArray<byte>( PSXResources.SkillSetsBin ) );
-                    MonsterSkills = new AllMonsterSkills( new SubArray<byte>( PSXResources.MonsterSkillsBin ) );
-                    ActionMenus = new AllActionMenus( new SubArray<byte>( PSXResources.ActionEventsBin ) );
-                    StatusAttributes = new AllStatusAttributes( new SubArray<byte>( PSXResources.StatusAttributesBin ) );
-                    InflictStatuses = new AllInflictStatuses( new SubArray<byte>( PSXResources.InflictStatusesBin ) );
-                    PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( PSXResources.PoachProbabilitiesBin ) );
-                    Font = new FFTFont( new SubArray<byte>( PSXResources.FontBin ), new SubArray<byte>( PSXResources.FontWidthsBin ) );
+                    Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
+                    Items = new AllItems( PSXResources.OldItemsBin, null );
+                    ItemAttributes = new AllItemAttributes( PSXResources.OldItemAttributesBin, null );
+                    Jobs = new AllJobs( Context, PSXResources.JobsBin );
+                    JobLevels = new JobLevels( Context, PSXResources.JobLevelsBin,
+                        new JobLevels( Context, PSXResources.JobLevelsBin ) );
+                    SkillSets = new AllSkillSets( Context, PSXResources.SkillSetsBin,
+                        PSXResources.SkillSetsBin );
+                    MonsterSkills = new AllMonsterSkills( PSXResources.MonsterSkillsBin );
+                    ActionMenus = new AllActionMenus( PSXResources.ActionEventsBin );
+                    StatusAttributes = new AllStatusAttributes( PSXResources.StatusAttributesBin );
+                    InflictStatuses = new AllInflictStatuses( PSXResources.InflictStatusesBin );
+                    PoachProbabilities = new AllPoachProbabilities( PSXResources.PoachProbabilitiesBin );
+                    Font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
                     ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
                     break;
                 default:
@@ -184,7 +184,7 @@ namespace FFTPatcher.Datatypes
                     writer.Flush();
                     writer.Close();
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -345,21 +345,21 @@ namespace FFTPatcher.Datatypes
             byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? Resources.FontBin : PSXResources.FontBin );
             byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
 
-            Abilities = new AllAbilities( new SubArray<byte>( abilities ), new SubArray<byte>( abilityEffects ) );
-            Items = new AllItems( new SubArray<byte>( oldItems ), newItems != null ? new SubArray<byte>( newItems ) : null );
-            ItemAttributes = new AllItemAttributes( new SubArray<byte>( oldItemAttributes ), newItemAttributes != null ? new SubArray<byte>( newItemAttributes ) : null );
-            Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
-            JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ),
-                new JobLevels( Context, new SubArray<byte>( Context == Context.US_PSP ? Resources.JobLevelsBin : PSXResources.JobLevelsBin ) ) );
-            SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ),
-                new SubArray<byte>( Context == Context.US_PSP ? Resources.SkillSetsBin : PSXResources.SkillSetsBin ) );
-            MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
-            ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );
-            StatusAttributes = new AllStatusAttributes( new SubArray<byte>( statusAttributes ) );
-            InflictStatuses = new AllInflictStatuses( new SubArray<byte>( inflictStatuses ) );
-            PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( poach ) );
+            Abilities = new AllAbilities( abilities, abilityEffects );
+            Items = new AllItems( oldItems, newItems != null ? newItems : null );
+            ItemAttributes = new AllItemAttributes( oldItemAttributes, newItemAttributes != null ? newItemAttributes : null );
+            Jobs = new AllJobs( Context, jobs );
+            JobLevels = new JobLevels( Context, jobLevels,
+                new JobLevels( Context, Context == Context.US_PSP ? Resources.JobLevelsBin : PSXResources.JobLevelsBin ) );
+            SkillSets = new AllSkillSets( Context, skillSets,
+                Context == Context.US_PSP ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
+            MonsterSkills = new AllMonsterSkills( monsterSkills );
+            ActionMenus = new AllActionMenus( actionMenus );
+            StatusAttributes = new AllStatusAttributes( statusAttributes );
+            InflictStatuses = new AllInflictStatuses( inflictStatuses );
+            PoachProbabilities = new AllPoachProbabilities( poach );
             ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
-            Font = new FFTFont( new SubArray<byte>( font ), new SubArray<byte>( fontWidths ) );
+            Font = new FFTFont( font, fontWidths );
             FireDataChangedEvent();
         }
 
@@ -401,20 +401,20 @@ namespace FFTPatcher.Datatypes
                     stream.Read( buffers[i], 0, buffers[i].Length );
                 }
 
-                Abilities = new AllAbilities( new SubArray<byte>( abilities ), new SubArray<byte>( PSXResources.AbilityEffectsBin ) );
-                Items = new AllItems( new SubArray<byte>( oldItems ), null );
-                ItemAttributes = new AllItemAttributes( new SubArray<byte>( oldItemAttributes ), null );
-                Jobs = new AllJobs( Context, new SubArray<byte>( jobs ) );
-                JobLevels = new JobLevels( Context, new SubArray<byte>( jobLevels ),
-                    new JobLevels( Context.US_PSX, new SubArray<byte>( PSXResources.JobLevelsBin ) ) );
-                SkillSets = new AllSkillSets( Context, new SubArray<byte>( skillSets ), new SubArray<byte>( PSXResources.SkillSetsBin ) );
-                MonsterSkills = new AllMonsterSkills( new SubArray<byte>( monsterSkills ) );
-                ActionMenus = new AllActionMenus( new SubArray<byte>( actionMenus ) );
-                StatusAttributes = new AllStatusAttributes( new SubArray<byte>( statusAttributes ) );
-                InflictStatuses = new AllInflictStatuses( new SubArray<byte>( inflictStatuses ) );
-                PoachProbabilities = new AllPoachProbabilities( new SubArray<byte>( poach ) );
+                Abilities = new AllAbilities( abilities, PSXResources.AbilityEffectsBin );
+                Items = new AllItems( oldItems, null );
+                ItemAttributes = new AllItemAttributes( oldItemAttributes, null );
+                Jobs = new AllJobs( Context, jobs );
+                JobLevels = new JobLevels( Context, jobLevels,
+                    new JobLevels( Context.US_PSX, PSXResources.JobLevelsBin ) );
+                SkillSets = new AllSkillSets( Context, skillSets, PSXResources.SkillSetsBin );
+                MonsterSkills = new AllMonsterSkills( monsterSkills );
+                ActionMenus = new AllActionMenus( actionMenus );
+                StatusAttributes = new AllStatusAttributes( statusAttributes );
+                InflictStatuses = new AllInflictStatuses( inflictStatuses );
+                PoachProbabilities = new AllPoachProbabilities( poach );
                 ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
-                Font = new FFTFont( new SubArray<byte>( PSXResources.FontBin ), new SubArray<byte>( PSXResources.FontWidthsBin ) );
+                Font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
                 FireDataChangedEvent();
             }
             catch( InvalidDataException )

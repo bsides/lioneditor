@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -30,12 +31,12 @@ namespace FFTPatcher.Datatypes
         public byte MagicBlockRate { get; set; }
         public Shield ShieldDefault { get; private set; }
 
-        public Shield( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> shieldBytes )
+        public Shield( UInt16 offset, IList<byte> itemBytes, IList<byte> shieldBytes )
             : this( offset, itemBytes, shieldBytes, null )
         {
         }
 
-        public Shield( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> shieldBytes, Shield defaults )
+        public Shield( UInt16 offset, IList<byte> itemBytes, IList<byte> shieldBytes, Shield defaults )
             : base( offset, itemBytes, defaults )
         {
             ShieldDefault = defaults;

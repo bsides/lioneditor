@@ -141,7 +141,7 @@ namespace FFTPatcher.Datatypes
     {
         public ActionMenu[] ActionMenus { get; private set; }
 
-        public AllActionMenus( SubArray<byte> bytes )
+        public AllActionMenus( IList<byte> bytes )
         {
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.ActionEventsBin : PSXResources.ActionEventsBin;
 

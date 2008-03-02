@@ -69,14 +69,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "Speed", "ATK", "Weapon ATK", "", "Eva%", "SEv%", "AEv%", "Phys land effect",
                 "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
                 "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
-            IList<string> temp = new List<string>( new SubArray<string>( FFTPatcher.Datatypes.AllJobs.PSXNames, 0, 154 ) );
+            IList<string> temp = new List<string>( FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ) );
             temp.AddRange( new string[Instance.Sections[12].Count - temp.Count] );
             entryNames[12] = temp.ToArray();
             entryNames[13] = FFTPatcher.Datatypes.Item.PSXNames.ToArray();
             temp = new List<string>( new string[265] );
-            temp.AddRange( new SubArray<string>( FFTPatcher.Datatypes.AllAbilities.PSXNames, 265 ) );
+            temp.AddRange( FFTPatcher.Datatypes.AllAbilities.PSXNames.Sub( 265 ) );
             entryNames[15] = temp.ToArray();
-            temp = new List<string>( new SubArray<string>( FFTPatcher.Datatypes.SkillSet.PSXNames, 0, 0xAF ) );
+            temp = new List<string>( FFTPatcher.Datatypes.SkillSet.PSXNames.Sub( 0, 0xAF ) );
             temp.AddRange( new string[12] );
             entryNames[19] = temp.ToArray();
         }

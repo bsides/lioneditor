@@ -151,13 +151,13 @@ namespace FFTPatcher.Datatypes
         {
         }
 
-        protected Item( UInt16 offset, SubArray<byte> bytes, Item defaults )
+        protected Item( UInt16 offset, IList<byte> bytes, Item defaults )
             : this( offset, bytes )
         {
             Default = defaults;
         }
 
-        protected Item( UInt16 offset, SubArray<byte> bytes )
+        protected Item( UInt16 offset, IList<byte> bytes )
         {
             Name = ItemNames[offset];
             Offset = offset;

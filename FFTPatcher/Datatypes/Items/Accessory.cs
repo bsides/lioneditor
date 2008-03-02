@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -30,7 +31,7 @@ namespace FFTPatcher.Datatypes
         public byte MagicEvade { get; set; }
         public Accessory AccessoryDefault { get; private set; }
 
-        public Accessory( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> accessoryBytes, Accessory defaults )
+        public Accessory( UInt16 offset, IList<byte> itemBytes, IList<byte> accessoryBytes, Accessory defaults )
             : base( offset, itemBytes, defaults )
         {
             AccessoryDefault = defaults;
@@ -38,7 +39,7 @@ namespace FFTPatcher.Datatypes
             MagicEvade = accessoryBytes[1];
         }
 
-        public Accessory( UInt16 offset, SubArray<byte> itemBytes, SubArray<byte> accessoryBytes )
+        public Accessory( UInt16 offset, IList<byte> itemBytes, IList<byte> accessoryBytes )
             : this( offset, itemBytes, accessoryBytes, null )
         {
         }

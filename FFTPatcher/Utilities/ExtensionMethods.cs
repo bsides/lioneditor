@@ -119,12 +119,12 @@ namespace FFTPatcher
                 {
                     if( groupName != string.Empty )
                         sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
-                    sb.AppendLines( new SubArray<string>( lines, i * groupSize, (i + 1) * groupSize - 1 ) );
+                    sb.AppendLines( lines.Sub( i * groupSize, (i + 1) * groupSize - 1 ) );
                 }
 
                 if( groupName != string.Empty )
                     sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
-                sb.AppendLines( new SubArray<string>( lines, i * groupSize, lines.Count - 1 ) );
+                sb.AppendLines( lines.Sub( i * groupSize, lines.Count - 1 ) );
             }
         }
 

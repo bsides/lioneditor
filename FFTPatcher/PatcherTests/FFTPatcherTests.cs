@@ -38,7 +38,7 @@ namespace PatcherTests
             FFTPack.MergeDumpedFiles( @"M:\dev\LionEditor\fftpack\test", @"M:\dev\LionEditor\fftpack\fftpack2.bin" );
         }
 
-        [Test,Ignore]
+        [Test, Ignore]
         public void ShouldNotMangleAbilities()
         {
             //FileStream stream = new FileStream( "Abilities.bin", FileMode.Open );
@@ -46,7 +46,7 @@ namespace PatcherTests
             //stream.Read( bytes, 0, (int)stream.Length );
             //stream.Close();
 
-            //AllAbilities all = new AllAbilities( new SubArray<byte>( bytes ) );
+            //AllAbilities all = new AllAbilities( bytes );
             //byte[] outputBytes = all.ToByteArray();
             //Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -59,7 +59,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllJobs all = new AllJobs( new SubArray<byte>( bytes ) );
+            AllJobs all = new AllJobs( bytes );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -72,7 +72,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllSkillSets all = new AllSkillSets( new SubArray<byte>( bytes ) );
+            AllSkillSets all = new AllSkillSets( bytes );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -85,7 +85,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            FFTFont font = new FFTFont( new SubArray<byte>( bytes ), new SubArray<byte>( new byte[0x899] ) );
+            FFTFont font = new FFTFont( bytes, new byte[0x899] );
             byte[] outputBytes = font.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -98,7 +98,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllMonsterSkills all = new AllMonsterSkills( new SubArray<byte>( bytes ) );
+            AllMonsterSkills all = new AllMonsterSkills( bytes );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -114,7 +114,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllActionMenus all = new AllActionMenus( new SubArray<byte>( bytes ) );
+            AllActionMenus all = new AllActionMenus( bytes );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -127,7 +127,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllStatusAttributes all = new AllStatusAttributes( new SubArray<byte>( bytes ) );
+            AllStatusAttributes all = new AllStatusAttributes( bytes );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -140,7 +140,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            AllPoachProbabilities all = new AllPoachProbabilities( new SubArray<byte>( bytes ) );
+            AllPoachProbabilities all = new AllPoachProbabilities( bytes );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -153,7 +153,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            JobLevels all = new JobLevels( new SubArray<byte>( bytes ) );
+            JobLevels all = new JobLevels( bytes );
             byte[] outputBytes = all.ToByteArray();
             Assert.That( outputBytes, Is.EqualTo( bytes ) );
         }
@@ -172,8 +172,8 @@ namespace PatcherTests
             stream.Close();
 
             AllItems all = new AllItems(
-                new SubArray<byte>( oldBytes ),
-                new SubArray<byte>( newBytes ));
+                oldBytes,
+                newBytes );
             byte[] oldOutput = all.ToFirstByteArray();
             byte[] newOutput = all.ToSecondByteArray();
 
@@ -187,12 +187,12 @@ namespace PatcherTests
             FileStream stream = new FileStream( "ENTD3.ENT", FileMode.Open );
             MethodInfo mi = typeof( FFTPatch ).GetMethod( "set_Context", BindingFlags.Static | BindingFlags.NonPublic );
             mi.Invoke( null, new object[] { Context.US_PSP } );
-            
+
             byte[] bytes = new byte[stream.Length];
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            ENTD ent = new ENTD( 0x00, new SubArray<byte>( bytes ), null );
+            ENTD ent = new ENTD( 0x00, bytes, null );
             byte[] output = ent.ToByteArray();
 
             Assert.That( output, Is.EqualTo( bytes ) );
@@ -220,7 +220,7 @@ namespace PatcherTests
             stream.Read( bytes, 0, (int)stream.Length );
             stream.Close();
 
-            JobLevels all = new JobLevels( new SubArray<byte>( bytes ) );
+            JobLevels all = new JobLevels( bytes );
 
             Assert.That( all.Archer.Squire, Is.EqualTo( 2 ) );
 

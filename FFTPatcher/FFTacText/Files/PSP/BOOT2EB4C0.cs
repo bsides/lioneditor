@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT2EB4C0 : BasePSPFile
+    public class BOOT2EB4C0 : BasePSPSectionedFile
     {
         protected override int NumberOfSections
         {
@@ -30,7 +30,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[31];
+        private static string[] sectionNames;
 
         public override IList<string> SectionNames { get { return sectionNames; } }
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
@@ -52,28 +52,38 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x286F; }
         }
 
-        private static BOOT2EB4C0 Instance { get; set; }
-
-
         static BOOT2EB4C0()
         {
-            Instance = new BOOT2EB4C0( PSPResources.BOOT_2EB4C0 );
+            sectionNames = new string[31] {
+                "", "Unit names", "Job names", "", "",
+                "", "", "", "", "",
+                "", "", "", "", "",
+                "", "", "", "", "",
+                "", "", "", "", "",
+                "", "", "", "", "",
+                "" };
 
             entryNames = new string[31][];
+            int[] sectionLengths = new int[31] {
+                1,1024,170,1,1,
+                1,1,1,1,1,
+                1,1,1,1,1,
+                1,1,1,1,1,
+                1,1,1,1,1,
+                1,1,1,1,1,
+                1 };
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
+            List<string> temp = new List<string>( FFTPatcher.Datatypes.AllJobs.PSPNames );
+            temp.Add( string.Empty );
+            entryNames[2] = temp.ToArray();
         }
 
-        private BOOT2EB4C0( IList<byte> bytes )
+        public BOOT2EB4C0( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static BOOT2EB4C0 GetInstance()
-        {
-            return Instance;
         }
     }
 }

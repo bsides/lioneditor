@@ -27,26 +27,24 @@ namespace FFTPatcher.TextEditor
 {
     public partial class MainForm : Form
     {
-        private Dictionary<string, AbstractStringSectioned> stringSections = new Dictionary<string, AbstractStringSectioned>();
         private MenuItem[] menuItems;
 
         public MainForm()
         {
-            BuildStringSections();
             InitializeComponent();
-            menuItems = new MenuItem[] { 
-                atchelpMenuItem, attackoutMenuItem, joinlzwMenuItem, 
-                openlzwMenuItem, samplelzwMenuItem, wldhelplzwMenuItem, worldlzwMenuItem,
-                pspatchelpMenuItem, pspopenlzwMenuItem, psp299024MenuItem,psp29E334MenuItem,psp2A1630MenuItem,psp2EB4C0MenuItem,psp32D368MenuItem };
+
+            menuItems = BuildMenuItems().ToArray();
+            menuItems[0].Checked = true;
             compressedStringSectionedEditor1.Visible = false;
-            compressedStringSectionedEditor1.Strings = stringSections["WLDHELP.LZW"];
 
             stringSectionedEditor1.Visible = true;
-            stringSectionedEditor1.Strings = stringSections["ATCHELP.LZW"];
+            stringSectionedEditor1.Strings = menuItems[0].Tag as IStringSectioned;
+
+            partitionEditor1.Visible = false;
 
             foreach( MenuItem menuItem in menuItems )
             {
-                menuItem.Click +=  menuItem_Click;
+                menuItem.Click += menuItem_Click;
             }
         }
 
@@ -56,46 +54,100 @@ namespace FFTPatcher.TextEditor
             MenuItem thisItem = sender as MenuItem;
             thisItem.Checked = true;
 
-            AbstractStringSectioned file = stringSections[thisItem.Tag.ToString()];
+            object file = thisItem.Tag;
 
             if( file is ICompressed )
             {
-                compressedStringSectionedEditor1.Strings = file;
+                compressedStringSectionedEditor1.Strings = file as IStringSectioned;
                 compressedStringSectionedEditor1.Visible = true;
                 stringSectionedEditor1.Visible = false;
+                partitionEditor1.Visible = false;
             }
-            else
+            else if( file is IStringSectioned )
             {
-                stringSectionedEditor1.Strings = file;
+                stringSectionedEditor1.Strings = file as IStringSectioned;
                 stringSectionedEditor1.Visible = true;
                 compressedStringSectionedEditor1.Visible = false;
+                partitionEditor1.Visible = false;
+            }
+            else if( file is IPartition )
+            {
+                partitionEditor1.Visible = true;
+                partitionEditor1.Strings = file as IPartition;
+                compressedStringSectionedEditor1.Visible = false;
+                stringSectionedEditor1.Visible = false;
             }
         }
 
         private void UncheckAllMenuItems( MenuItem[] menuItems )
         {
-            foreach (MenuItem item in menuItems)
+            foreach( MenuItem item in menuItems )
             {
                 item.Checked = false;
             }
         }
 
-        private void BuildStringSections()
+        private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
         {
-            stringSections.Add( "ATCHELP.LZW", FFTPatcher.TextEditor.Files.PSX.ATCHELPLZW.GetInstance() );
-            stringSections.Add( "ATTACK.OUT", FFTPatcher.TextEditor.Files.PSX.ATTACKOUT.GetInstance() );
-            stringSections.Add( "JOIN.LZW", FFTPatcher.TextEditor.Files.PSX.JOINLZW.GetInstance() );
-            stringSections.Add( "OPEN.LZW", FFTPatcher.TextEditor.Files.PSX.OPENLZW.GetInstance() );
-            stringSections.Add( "SAMPLE.LZW", FFTPatcher.TextEditor.Files.PSX.SAMPLELZW.GetInstance() );
-            stringSections.Add( "WLDHELP.LZW", FFTPatcher.TextEditor.Files.PSX.WLDHELPLZW.GetInstance() );
-            stringSections.Add( "WORLD.LZW", FFTPatcher.TextEditor.Files.PSX.WORLDLZW.GetInstance() );
-            stringSections.Add( "pspATCHELP.LZW", FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW.GetInstance() );
-            stringSections.Add( "pspOPEN.LZW", FFTPatcher.TextEditor.Files.PSP.OPENLZW.GetInstance() );
-            stringSections.Add( "psp299024", FFTPatcher.TextEditor.Files.PSP.BOOT299024.GetInstance() );
-            stringSections.Add( "psp29E334", FFTPatcher.TextEditor.Files.PSP.BOOT29E334.GetInstance() );
-            stringSections.Add( "psp2A1630", FFTPatcher.TextEditor.Files.PSP.BOOT2A1630.GetInstance() );
-            stringSections.Add( "psp2EB4C0", FFTPatcher.TextEditor.Files.PSP.BOOT2EB4C0.GetInstance() );
-            stringSections.Add( "psp32D368", FFTPatcher.TextEditor.Files.PSP.BOOT32D368.GetInstance() );
+            MenuItem result = new MenuItem( text );
+            owner.MenuItems.Add( result );
+            result.Tag = tag;
+            return result;
+        }
+
+        private List<MenuItem> BuildMenuItems()
+        {
+            List<MenuItem> result = new List<MenuItem>();
+            result.Add( AddMenuItem( psxMenuItem, "ATCHELP.LZW", new ATCHELPLZW( PSXResources.ATCHELP_LZW ) ) );
+            result.Add( AddMenuItem( psxMenuItem, "ATTACK.OUT", new ATTACKOUT( PSXResources.ATTACK_OUT_partial ) ) );
+            result.Add( AddMenuItem( psxMenuItem, "JOIN.LZW", new JOINLZW( PSXResources.JOIN_LZW ) ) );
+            result.Add( AddMenuItem( psxMenuItem, "OPEN.LZW", new OPENLZW( PSXResources.OPEN_LZW ) ) );
+            result.Add( AddMenuItem( psxMenuItem, "SAMPLE.LZW", new SAMPLELZW( PSXResources.SAMPLE_LZW ) ) );
+            MenuItem item = AddMenuItem( psxMenuItem, "SNPLMES.BIN", null );
+            IPartitionedFile file = new SNPLMESBIN( PSXResources.SNPLMES_BIN );
+            for( int i = 0; i < 6; i++ )
+            {
+                result.Add( AddMenuItem( item, string.Format( "Section {0}", i + 1 ), file.Sections[i] ) );
+            }
+            result.Add( item );
+            result.Add( AddMenuItem( psxMenuItem, "WLDHELP.LZW", new WLDHELPLZW( PSXResources.WLDHELP_LZW ) ) );
+            item = AddMenuItem( psxMenuItem, "WLDMES.BIN", null );
+            file = new WLDMES( PSXResources.WLDMES_BIN );
+            for( int i = 0; i < file.NumberOfSections; i++ )
+            {
+                MenuItem newItem = AddMenuItem( item, string.Format( "Section {0}", i + 1 ), file.Sections[i] );
+                if( (i != 0) && (i % 25 == 0) )
+                {
+                    newItem.Break = true;
+                }
+                result.Add( newItem );
+            }
+            result.Add( item );
+            result.Add( AddMenuItem( psxMenuItem, "WORLD.LZW", new WORLDLZW( PSXResources.WORLD_LZW ) ) );
+
+            result.Add( AddMenuItem( pspMenuItem, "ATCHELP.LZW", new FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW( PSPResources.ATCHELP_LZW ) ) );
+            result.Add( AddMenuItem( pspMenuItem, "OPEN.LZW", new FFTPatcher.TextEditor.Files.PSP.OPENLZW( PSPResources.OPEN_LZW ) ) );
+
+            result.Add( AddMenuItem( pspMenuItem, "BOOT.BIN[0x299024]", new FFTPatcher.TextEditor.Files.PSP.BOOT299024( PSPResources.BOOT_299024 ) ) );
+            result.Add( AddMenuItem( pspMenuItem, "BOOT.BIN[0x29E334]", new FFTPatcher.TextEditor.Files.PSP.BOOT29E334( PSPResources.BOOT_29E334 ) ) );
+            result.Add( AddMenuItem( pspMenuItem, "BOOT.BIN[0x2A1630]", new FFTPatcher.TextEditor.Files.PSP.BOOT2A1630( PSPResources.BOOT_2A1630 ) ) );
+            result.Add( AddMenuItem( pspMenuItem, "BOOT.BIN[0x2EB4C0]", new FFTPatcher.TextEditor.Files.PSP.BOOT2EB4C0( PSPResources.BOOT_2EB4C0 ) ) );
+            result.Add( AddMenuItem( pspMenuItem, "BOOT.BIN[0x32D368]", new FFTPatcher.TextEditor.Files.PSP.BOOT32D368( PSPResources.BOOT_32D368 ) ) );
+
+            item = AddMenuItem( pspMenuItem, "WLDMES.BIN", null );
+            file = new FFTPatcher.TextEditor.Files.PSP.WLDMES( PSPResources.WLDMES_BIN );
+            for( int i = 0; i < file.NumberOfSections; i++ )
+            {
+                MenuItem newItem = AddMenuItem( item, string.Format( "Section {0}", i + 1 ), file.Sections[i] );
+                if( (i != 0) && (i % 25 == 0) )
+                {
+                    newItem.Break = true;
+                }
+                result.Add( newItem );
+            }
+            result.Add( item );
+
+            return result;
         }
     }
 }

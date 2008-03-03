@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT32D368 : BasePSPFile
+    public class BOOT32D368 : BasePSPSectionedFile
     {
         protected override int NumberOfSections
         {
@@ -52,28 +52,46 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x2CF5B; }
         }
 
-        private static BOOT32D368 Instance { get; set; }
-
-
         static BOOT32D368()
         {
-            Instance = new BOOT32D368( PSPResources.BOOT_32D368 );
+            sectionNames = new string[21] {
+                "", "Help", "Menu/Options help", "", "", "", "", "", "", "",
+                "", "Terrain descriptions", "Job descriptions", "Item descriptions", "", "Ability descriptions", "", "", "", "Skillset descriptions",
+                "Status messages" };
+
+            int[] sectionLengths = new int[21] {
+                1,50,157,1,1,1,1,
+                1,1,1,1,64,169,316,
+                1,512,1,1,1,227,40 };
 
             entryNames = new string[21][];
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
+
+            entryNames[1] = new string[50] {
+                "Unit #", "Level", "HP", "MP", "CT", "AT", "Exp", "Name",
+                "Brave", "Faith", "", "Move", "Jump", "", "", "",
+                "Speed", "ATK", "Weapon ATK", "", "Eva%", "SEv%", "AEv%", "Phys land effect",
+                "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
+                "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius",
+                "Add", "Don't add", "Details", "Dismiss", "Cancel dismiss", "Move", "Action", "End turn", "View status","AI" };
+            entryNames[12] = FFTPatcher.Datatypes.AllJobs.PSPNames;
+            entryNames[13] = FFTPatcher.Datatypes.Item.PSPNames.ToArray();
+            entryNames[15] = FFTPatcher.Datatypes.AllAbilities.PSPNames;
+            List<string> temp = new List<string>( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 0, 0xAF ) );
+            temp.AddRange( new string[48] );
+            temp.AddRange( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 0xE0, 0xE2 ) );
+            entryNames[19] = temp.ToArray();
+
+            entryNames[20] = FFTPatcher.PSXResources.Statuses;
+
         }
 
-        private BOOT32D368( IList<byte> bytes )
+        public BOOT32D368( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static BOOT32D368 GetInstance()
-        {
-            return Instance;
         }
     }
 }

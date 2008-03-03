@@ -28,15 +28,15 @@ namespace FFTPatcher
     {
         public static IList<T> Sub<T>( this IList<T> list, int start )
         {
-            return list.Sub( start );
+            return new SubArray<T>( list, start );
         }
 
         public static IList<T> Sub<T>( this IList<T> list, int start, int stop )
         {
-            return list.Sub( start, stop );
+            return new SubArray<T>( list, start, stop );
         }
 
-        public static List<IList<T>> Split<T>( this IList<T> members, T value ) where T : IEquatable<T>
+        public static IList<IList<T>> Split<T>( this IList<T> members, T value ) where T : IEquatable<T>
         {
             List<IList<T>> result = new List<IList<T>>();
 

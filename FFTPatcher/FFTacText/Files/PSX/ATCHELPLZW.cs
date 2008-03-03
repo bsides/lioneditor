@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class ATCHELPLZW : BasePSXFile
+    public class ATCHELPLZW : BasePSXSectionedFile
     {
         protected override int NumberOfSections { get { return 21; } }
 
@@ -41,7 +41,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private static ATCHELPLZW Instance { get; set; }
         private static string[] sectionNames = new string[21] {
             "", "", "", "", "", "", 
             "", "", "", "", "", "Help", 
@@ -56,12 +55,17 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static ATCHELPLZW()
         {
-            Instance = new ATCHELPLZW( PSXResources.ATCHELP_LZW );
-
             entryNames = new string[21][];
+            int[] sectionLengths = new int[] { 
+                1, 1, 1, 1, 1,
+                1, 1, 1, 1, 1,
+                1, 40, 160, 256, 1, 
+                512, 1, 1, 1, 188,
+                1 };
+
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
             entryNames[11] = new string[40] {
                 "Unit #", "Level", "HP", "MP", "CT", "AT", "Exp", "Name",
@@ -70,7 +74,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
                 "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
             IList<string> temp = new List<string>( FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ) );
-            temp.AddRange( new string[Instance.Sections[12].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[12] - temp.Count] );
             entryNames[12] = temp.ToArray();
             entryNames[13] = FFTPatcher.Datatypes.Item.PSXNames.ToArray();
             temp = new List<string>( new string[265] );
@@ -81,14 +85,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[19] = temp.ToArray();
         }
 
-        private ATCHELPLZW( IList<byte> bytes )
+        public ATCHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static ATCHELPLZW GetInstance()
-        {
-            return Instance;
         }
     }
 }

@@ -133,8 +133,14 @@
   <data name="SAMPLE_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx\sample.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="SNPLMES_BIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PSX\SNPLMES.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="WLDHELP_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx\wldhelp.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WLDMES_BIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PSX\WLDMES.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="WORLD_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx\world.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class OPENLZW : BasePSPFile
+    public class OPENLZW : BasePSPSectionedFile
     {
         private static string[] sectionNames;
         private static string[][] entryNames;
@@ -51,31 +51,29 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x608D; }
         }
 
-        private static OPENLZW Instance { get; set; }
         static OPENLZW()
         {
-            Instance = new OPENLZW( PSPResources.OPEN_LZW );
             sectionNames = new string[32] {
                 "", "", "", "", "", "", "", "", 
                 "Unit names", "", "", "", "", "", "", "",
                 "", "", "", "", "", "", "", "Birthday",
                 "Track names", "Composers comments", "", "", "", "", "", "" };            
             entryNames = new string[32][];
+
+            int[] sectionLengths = new int[32] {
+                1,1,1,1,1,1,1,1,
+                1024,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,16,
+                97,96,1,1,1,1,1,12};
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
         }
 
-        private OPENLZW( IList<byte> bytes )
+        public OPENLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
-
-        public static OPENLZW GetInstance()
-        {
-            return Instance;
-        }
-
     }
 }

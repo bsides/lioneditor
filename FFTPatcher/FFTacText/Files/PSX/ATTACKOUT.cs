@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class ATTACKOUT : BasePSXFile
+    public class ATTACKOUT : BasePSXSectionedFile
     {
         protected override int NumberOfSections { get { return 3; } }
 
@@ -42,7 +42,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private static ATTACKOUT Instance { get; set; }
         private static string[] sectionNames = new string[3] { "", "Unit names", "Job names" };
 
         private static string[][] entryNames;
@@ -53,25 +52,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static ATTACKOUT()
         {
-            Instance = new ATTACKOUT( PSXResources.ATTACK_OUT_partial );
-
             entryNames = new string[3][];
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[Instance.Sections[i].Count];
-            }
-
+            entryNames[0] = new string[1];
+            entryNames[1] = new string[1024];
             entryNames[2] = AllJobs.PSXNames;
         }
 
-        private ATTACKOUT( IList<byte> bytes )
+        public ATTACKOUT( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static ATTACKOUT GetInstance()
-        {
-            return Instance;
         }
     }
 }

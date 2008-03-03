@@ -19,7 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files
 {
@@ -31,7 +30,7 @@ namespace FFTPatcher.TextEditor.Files
 
         protected abstract int NumberOfSections { get; }
 
-        public List<IList<string>> Sections { get; protected set; }
+        public IList<IList<string>> Sections { get; protected set; }
 
         public abstract IList<string> SectionNames { get; }
 

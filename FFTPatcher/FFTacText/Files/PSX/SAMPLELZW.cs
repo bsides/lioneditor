@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class SAMPLELZW : BasePSXFile
+    public class SAMPLELZW : BasePSXSectionedFile
     {
         private static Dictionary<string, long> locations;
         public override IDictionary<string, long> Locations
@@ -43,7 +43,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         protected override int NumberOfSections { get { return 24; } }
 
-        private static SAMPLELZW Instance { get; set; }
         private static string[] sectionNames = new string[24] { 
             "Empty", "Empty", "Error/Battle Messages", "Battle messages",
             "Empty", "Empty", "Job names", "Item names",
@@ -61,11 +60,16 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static SAMPLELZW()
         {
-            Instance = new SAMPLELZW( PSXResources.SAMPLE_LZW );
             entryNames = new string[24][];
+
+            int[] sectionLengths = new int[24] {
+                1,1,38,80,1,1,
+                155,257,26,64,11,26,
+                1,1,513,1,20,40,
+                31,1,1,1,189,27 };
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
 
             entryNames[0] = new string[] { "" };
@@ -92,10 +96,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[5] = new string[] { "" };
             entryNames[6] = FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ).ToArray();
             IList<string> temp = new List<string>( FFTPatcher.Datatypes.Item.PSXNames.Sub( 0 ).ToArray() );
-            temp.AddRange( new string[Instance.Sections[7].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[7] - temp.Count] );
             entryNames[7] = temp.ToArray();
             temp = new List<string>( AllAbilities.PSXNames );
-            temp.AddRange( new string[Instance.Sections[14].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[14] - temp.Count] );
             entryNames[14] = temp.ToArray();
             entryNames[16] = new string[] {
                 "","Charging","Performing","Move","Ride chocobo","Inherit crystal","Move confirmation",
@@ -108,7 +112,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "No room on memory card", "Save?", "Can't remove unit", "Format memory card?", "Input birthday", "Input name", "Kanji search method", "First Kanji", 
                 "Kanji strokes", "Input name", "Is __ OK?", "Destroy egg?", "Save error", "Load error", "Save?" };
             temp = new List<string>( SkillSet.PSXNames.Sub( 0, 175 ) );
-            temp.AddRange( new string[Instance.Sections[22].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[22] - temp.Count] );
             entryNames[22] = temp.ToArray();
 
             entryNames[23] = new string[27] {
@@ -118,14 +122,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "Masamune","Chirijiraden","" };
         }
 
-        private SAMPLELZW( IList<byte> bytes )
+        public SAMPLELZW( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static SAMPLELZW GetInstance()
-        {
-            return Instance;
         }
     }
 }

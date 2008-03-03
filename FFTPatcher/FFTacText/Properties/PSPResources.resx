@@ -139,4 +139,7 @@
   <data name="OPEN_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psp\open.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="WLDMES_BIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PSP\WLDMES.BIN.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

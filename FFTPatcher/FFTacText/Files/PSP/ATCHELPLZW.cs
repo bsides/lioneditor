@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class ATCHELPLZW : BasePSPFile
+    public class ATCHELPLZW : BasePSPSectionedFile
     {
         protected override int NumberOfSections
         {
@@ -57,17 +57,18 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x1F834; }
         }
 
-        private static ATCHELPLZW Instance { get; set; }
-
-
         static ATCHELPLZW()
         {
-            Instance = new ATCHELPLZW( PSPResources.ATCHELP_LZW );
-
             entryNames = new string[21][];
+
+            int[] sectionLengths = new int[21] {
+                1,1,1,1,1,1,1,
+                1,1,1,1,40,169,316,
+                1,512,1,1,1,227,1};
+
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
             entryNames[11] = new string[40] {
                 "Unit #", "Level", "HP", "MP", "CT", "AT", "Exp", "Name",
@@ -76,7 +77,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
                 "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
             IList<string> temp = new List<string>( FFTPatcher.Datatypes.AllJobs.PSPNames.Sub( 0, 168 ) );
-            temp.AddRange( new string[Instance.Sections[12].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[12] - temp.Count] );
             entryNames[12] = temp.ToArray();
             entryNames[13] = FFTPatcher.Datatypes.Item.PSPNames.ToArray();
             temp = new List<string>();
@@ -96,14 +97,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
             entryNames[19] = temp.ToArray();
         }
 
-        private ATCHELPLZW( IList<byte> bytes )
+        public ATCHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static ATCHELPLZW GetInstance()
-        {
-            return Instance;
         }
     }
 }

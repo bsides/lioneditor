@@ -296,11 +296,11 @@ namespace FFTPatcher.TextEditor
             PSPMap.Add( 0xDA66, "\xF9" );
         }
 
-        public static List<string> ProcessList( IList<byte> bytes, CharMapType type )
+        public static IList<string> ProcessList( IList<byte> bytes, CharMapType type )
         {
             GenericCharMap charmap = type == CharMapType.PSP ? PSPMap as GenericCharMap : PSXMap as GenericCharMap;
 
-            List<IList<byte>> words = bytes.Split( (byte)0xFE );
+            IList<IList<byte>> words = bytes.Split( (byte)0xFE );
 
             List<string> result = new List<string>( words.Count );
 
@@ -358,9 +358,9 @@ namespace FFTPatcher.TextEditor
 
         public delegate void ProgressCallback( int progress );
 
-        [DllImport( "MakeTempFilenameDLL2005.dll" )]
+        [DllImport( "FFTTextCompression.dll" )]
         static extern void Compress( byte[] bytes, int inputLength, byte[] output, ref int outputLength );
-        [DllImport( "MakeTempFilenameDLL2005.dll" )]
+        [DllImport( "FFTTextCompression.dll" )]
         static extern void CompressWithCallback( byte[] bytes, int inputLength, byte[] output, ref int outputLength, ProgressCallback callback );
         public static IList<byte> Recompress( IList<byte> bytes, ProgressCallback callback )
         {

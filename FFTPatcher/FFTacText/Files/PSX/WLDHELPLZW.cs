@@ -23,7 +23,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class WLDHELPLZW : BasePSXFile, ICompressed
+    public class WLDHELPLZW : BasePSXSectionedFile, ICompressed
     {
         private static Dictionary<string, long> locations;
         public override IDictionary<string, long> Locations
@@ -47,7 +47,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
             get { return (int)(base.EstimatedLength * 0.65346430772862594919277); }
         }
-        private static WLDHELPLZW Instance { get; set; }
         private static string[] sectionNames;
 
         public static string[][] entryNames;
@@ -62,16 +61,20 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static WLDHELPLZW()
         {
-            Instance = new WLDHELPLZW( PSXResources.WLDHELP_LZW );
-
             sectionNames = new string[21] {
                 "","Help", "Menu/Options Help", "", "Error/Confirmation messages", "", "",
                 "","","","","","Job descriptions", "Item descriptions",
                 "","Ability descriptions","Location descriptions","Location descriptions","","Skillset descriptions","Unit quotes"};
             entryNames = new string[numberOfSections][];
+
+            int[] sectionLengths = new int[numberOfSections] {
+                1,40,155,1,31,1,1,
+                1,1,1,1,1,160,256,
+                1,512,44,116,1,188,768 };
+
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
 
             entryNames[1] = new string[40] {
@@ -95,7 +98,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[19] = temp.ToArray();
         }
 
-        private WLDHELPLZW( IList<byte> bytes )
+        public WLDHELPLZW( IList<byte> bytes )
         {
             Sections = new List<IList<string>>( NumberOfSections );
             for( int i = 0; i < NumberOfSections; i++ )
@@ -113,11 +116,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
                     (int)(start + dataStart) );
                 Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
             }
-        }
-
-        public static WLDHELPLZW GetInstance()
-        {
-            return Instance;
         }
 
         protected override IList<byte> ToFinalBytes()

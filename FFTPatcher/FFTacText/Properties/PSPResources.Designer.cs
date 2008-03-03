@@ -108,5 +108,12 @@ namespace FFTPatcher.TextEditor.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        internal static byte[] WLDMES_BIN {
+            get {
+                object obj = ResourceManager.GetObject("WLDMES_BIN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

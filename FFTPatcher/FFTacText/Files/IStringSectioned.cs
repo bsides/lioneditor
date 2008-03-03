@@ -23,7 +23,7 @@ namespace FFTPatcher.TextEditor.Files
 {
     public interface IStringSectioned
     {
-        List<IList<string>> Sections { get; }
+        IList<IList<string>> Sections { get; }
         IList<string> SectionNames { get; }
         IList<IList<string>> EntryNames { get; }
         IDictionary<string, long> Locations { get; }

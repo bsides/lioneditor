@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class JOINLZW : BasePSXFile
+    public class JOINLZW : BasePSXSectionedFile
     {
         protected override int NumberOfSections { get { return 5; } }
 
@@ -34,13 +34,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 {
                     locations = new Dictionary<string, long>();
                     locations.Add( "EVENT/JOIN.LZW", 0x00 );
+                    locations.Add( "EVENT/REQUIRE.OUT", 0xCE70 );
                 }
 
                 return locations;
             }
         }
 
-        private static JOINLZW Instance { get; set; }
         private static string[] sectionNames = new string[5];
 
         private static string[][] entryNames;
@@ -51,23 +51,17 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static JOINLZW()
         {
-            Instance = new JOINLZW( PSXResources.JOIN_LZW );
-
             entryNames = new string[5][];
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[Instance.Sections[i].Count];
-            }
+            entryNames[0] = new string[1];
+            entryNames[1] = new string[172];
+            entryNames[2] = new string[172];
+            entryNames[3] = new string[172];
+            entryNames[4] = new string[155];
         }
 
-        private JOINLZW( IList<byte> bytes )
+        public JOINLZW( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static JOINLZW GetInstance()
-        {
-            return Instance;
         }
     }
 }

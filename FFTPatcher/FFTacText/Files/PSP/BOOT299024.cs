@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT299024 : BasePSPFile
+    public class BOOT299024 : BasePSPSectionedFile
     {
         protected override int NumberOfSections
         {
@@ -52,28 +52,19 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x38AE; }
         }
 
-        private static BOOT299024 Instance { get; set; }
-
-
         static BOOT299024()
         {
-            Instance = new BOOT299024( PSPResources.BOOT_299024 );
-
             entryNames = new string[5][];
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[Instance.Sections[i].Count];
-            }
+            entryNames[0] = new string[1];
+            entryNames[1] = new string[176];
+            entryNames[2] = new string[176];
+            entryNames[3] = new string[175];
+            entryNames[4] = new string[155];
         }
 
-        private BOOT299024( IList<byte> bytes )
+        public BOOT299024( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static BOOT299024 GetInstance()
-        {
-            return Instance;
         }
     }
 }

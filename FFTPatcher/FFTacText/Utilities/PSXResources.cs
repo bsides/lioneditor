@@ -34,6 +34,8 @@ namespace FFTPatcher.TextEditor
             resourceMapping["SAMPLE_LZW"] = GZip.Decompress( Properties.PSXResources.SAMPLE_LZW );
             resourceMapping["WLDHELP_LZW"] = GZip.Decompress( Properties.PSXResources.WLDHELP_LZW );
             resourceMapping["WORLD_LZW"] = GZip.Decompress( Properties.PSXResources.WORLD_LZW );
+            resourceMapping["SNPLMES_BIN"] = GZip.Decompress( Properties.PSXResources.SNPLMES_BIN );
+            resourceMapping["WLDMES_BIN"] = GZip.Decompress( Properties.PSXResources.WLDMES_BIN );
         }
 
         public static byte[] ATCHELP_LZW { get { return resourceMapping["ATCHELP_LZW"] as byte[]; } }
@@ -43,5 +45,7 @@ namespace FFTPatcher.TextEditor
         public static byte[] SAMPLE_LZW { get { return resourceMapping["SAMPLE_LZW"] as byte[]; } }
         public static byte[] WLDHELP_LZW { get { return resourceMapping["WLDHELP_LZW"] as byte[]; } }
         public static byte[] WORLD_LZW { get { return resourceMapping["WORLD_LZW"] as byte[]; } }
+        public static byte[] SNPLMES_BIN { get { return resourceMapping["SNPLMES_BIN"] as byte[]; } }
+        public static byte[] WLDMES_BIN { get { return resourceMapping["WLDMES_BIN"] as byte[]; } }
     }
 }

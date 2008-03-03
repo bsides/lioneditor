@@ -34,6 +34,7 @@ namespace FFTPatcher.TextEditor
             resourceMapping["BOOT_2EB4C0"] = GZip.Decompress( Properties.PSPResources.BOOT_2EB4C0 );
             resourceMapping["BOOT_32D368"] = GZip.Decompress( Properties.PSPResources.BOOT_32D368 );
             resourceMapping["OPEN_LZW"] = GZip.Decompress( Properties.PSPResources.OPEN_LZW );
+            resourceMapping["WLDMES_BIN"] = GZip.Decompress( Properties.PSPResources.WLDMES_BIN );
         }
 
         public static byte[] ATCHELP_LZW { get { return resourceMapping["ATCHELP_LZW"] as byte[]; } }
@@ -43,5 +44,6 @@ namespace FFTPatcher.TextEditor
         public static byte[] BOOT_2EB4C0 { get { return resourceMapping["BOOT_2EB4C0"] as byte[]; } }
         public static byte[] BOOT_32D368 { get { return resourceMapping["BOOT_32D368"] as byte[]; } }
         public static byte[] OPEN_LZW { get { return resourceMapping["OPEN_LZW"] as byte[]; } }
+        public static byte[] WLDMES_BIN { get { return resourceMapping["WLDMES_BIN"] as byte[]; } }
     }
 }

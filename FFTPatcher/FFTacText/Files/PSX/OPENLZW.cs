@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class OPENLZW : BasePSXFile
+    public class OPENLZW : BasePSXSectionedFile
     {
         protected override int NumberOfSections { get { return 32; } }
 
@@ -40,7 +40,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private static OPENLZW Instance { get; set; }
         private static string[] sectionNames = new string[32] {
             "", "", "", "", "", "", "", "", 
             "Unit names", "", "", "", "", "", "", "",
@@ -55,23 +54,21 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static OPENLZW()
         {
-            Instance = new OPENLZW( PSXResources.OPEN_LZW );
-
             entryNames = new string[32][];
+            int[] sectionLengths = new int[32] {
+                1, 1, 1, 1, 1, 1, 1, 1,
+                1024, 1, 1, 1, 1, 1, 1, 1, 
+                1, 1, 1, 1, 1, 1, 1, 16,
+                97, 96, 1, 1, 1, 1, 1, 1 };
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
         }
 
-        private OPENLZW( IList<byte> bytes )
+        public OPENLZW( IList<byte> bytes )
             : base( bytes )
         {
-        }
-
-        public static OPENLZW GetInstance()
-        {
-            return Instance;
         }
     }
 }

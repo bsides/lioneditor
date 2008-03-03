@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class WORLDLZW : BasePSXFile
+    public class WORLDLZW : BasePSXSectionedFile
     {
         private static Dictionary<string, long> locations;
         public override IDictionary<string, long> Locations
@@ -41,7 +41,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         protected override int NumberOfSections { get { return 32; } }
 
-        private static WORLDLZW Instance { get; set; }
         private static string[] sectionNames;
 
         public static string[][] entryNames;
@@ -53,39 +52,37 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         static WORLDLZW()
         {
-            Instance = new WORLDLZW( PSXResources.WORLD_LZW );
-
             sectionNames = new string[32] {
                 "","","","","","","Job names","Item names",
                 "Character names","Character names","Battle menus","Help text","Errand names","","Ability names","Errand rewards",
                 "??","","Location names","Blank","Map menu","Event names","Skillsets","Tavern menu",
                 "Tutorial","Brave story","Errand names","Unexplored Land","Treasure","Record","Person","Errand objectives"};
             entryNames = new string[32][];
+
+            int[] sectionLengths = new int[32] {
+                1,1,1,1,1,1,155,257,
+                1024,1024,11,2,96,1,513,77,
+                41,1,44,24,1,115,189,272,
+                24,64,96,16,47,64,1024,96 };
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[Instance.Sections[i].Count];
+                entryNames[i] = new string[sectionLengths[i]];
             }
             entryNames[6] = FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ).ToArray();
             IList<string> temp = new List<string>( FFTPatcher.Datatypes.Item.PSXNames.Sub( 0 ).ToArray() );
-            temp.AddRange( new string[Instance.Sections[7].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[7] - temp.Count] );
             entryNames[7] = temp.ToArray();
             temp = new List<string>( AllAbilities.PSXNames );
-            temp.AddRange( new string[Instance.Sections[14].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[14] - temp.Count] );
             entryNames[14] = temp.ToArray();
             temp = new List<string>( SkillSet.PSXNames.Sub( 0, 175 ) );
-            temp.AddRange( new string[Instance.Sections[22].Count - temp.Count] );
+            temp.AddRange( new string[sectionLengths[22] - temp.Count] );
             entryNames[22] = temp.ToArray();
         }
 
-        private WORLDLZW( IList<byte> bytes )
+        public WORLDLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
-
-        public static WORLDLZW GetInstance()
-        {
-            return Instance;
-        }
-
     }
 }

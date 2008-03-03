@@ -95,9 +95,23 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
+        internal static byte[] SNPLMES_BIN {
+            get {
+                object obj = ResourceManager.GetObject("SNPLMES_BIN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] WLDHELP_LZW {
             get {
                 object obj = ResourceManager.GetObject("WLDHELP_LZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] WLDMES_BIN {
+            get {
+                object obj = ResourceManager.GetObject("WLDMES_BIN", resourceCulture);
                 return ((byte[])(obj));
             }
         }

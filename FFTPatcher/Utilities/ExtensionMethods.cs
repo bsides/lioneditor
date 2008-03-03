@@ -38,6 +38,19 @@ namespace FFTPatcher
     /// </summary>
     public static partial class ExtensionMethods
     {
+        public static int LastIndexOf<T>( this IList<T> list, T value ) where T : IEquatable<T>
+        {
+            for( int i = list.Count - 1; i >= 0; i-- )
+            {
+                if( list[i].Equals( value ) )
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         public static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
         {
             foreach( T item in items )

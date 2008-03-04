@@ -535,7 +535,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>$(ProjectDir)zipResources.bat "$(ProjectDir)"
+    <PreBuildEvent>"$(ProjectDir)zipResources.bat" "$(ProjectDir)"
 </PreBuildEvent>
   </PropertyGroup>
 </Project>

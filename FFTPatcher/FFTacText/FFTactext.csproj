@@ -179,6 +179,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(SolutionDir)\$(ConfigurationName)\FFTTextCompression.dll $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)\$(ConfigurationName)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -36,8 +36,18 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Glyph
     {
+
+		#region Properties (2) 
+
+
         public FontColor[] Pixels { get; private set; }
+
         public byte Width { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public Glyph( byte width, IList<byte> bytes )
         {
@@ -48,6 +58,11 @@ namespace FFTPatcher.Datatypes
                 CopyByteToPixels( bytes[i], Pixels, i * 4 );
             }
         }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
 
         private void CopyByteToPixels( byte b, FontColor[] destination, int index )
         {
@@ -77,5 +92,9 @@ namespace FFTPatcher.Datatypes
 
             return result;
         }
+
+
+		#endregion Methods 
+
     }
 }

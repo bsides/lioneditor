@@ -26,22 +26,49 @@ namespace FFTPatcher.Datatypes
 {
     public static class FFTPatch
     {
-        public static Context Context { get; private set; }
+
+		#region Properties (14) 
+
+
         public static AllAbilities Abilities { get; private set; }
-        public static AllItems Items { get; private set; }
-        public static AllItemAttributes ItemAttributes { get; private set; }
-        public static AllJobs Jobs { get; private set; }
-        public static JobLevels JobLevels { get; private set; }
-        public static AllSkillSets SkillSets { get; private set; }
-        public static AllMonsterSkills MonsterSkills { get; private set; }
+
         public static AllActionMenus ActionMenus { get; private set; }
-        public static AllStatusAttributes StatusAttributes { get; private set; }
-        public static AllInflictStatuses InflictStatuses { get; private set; }
-        public static AllPoachProbabilities PoachProbabilities { get; private set; }
+
+        public static Context Context { get; private set; }
+
         public static AllENTDs ENTDs { get; private set; }
+
         public static FFTFont Font { get; private set; }
 
+        public static AllInflictStatuses InflictStatuses { get; private set; }
+
+        public static AllItemAttributes ItemAttributes { get; private set; }
+
+        public static AllItems Items { get; private set; }
+
+        public static JobLevels JobLevels { get; private set; }
+
+        public static AllJobs Jobs { get; private set; }
+
+        public static AllMonsterSkills MonsterSkills { get; private set; }
+
+        public static AllPoachProbabilities PoachProbabilities { get; private set; }
+
+        public static AllSkillSets SkillSets { get; private set; }
+
+        public static AllStatusAttributes StatusAttributes { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Events (1) 
+
         public static event EventHandler DataChanged;
+
+		#endregion Events 
+
+		#region Methods (15) 
+
 
         private static void BuildFromContext()
         {
@@ -90,6 +117,32 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        private static long FindArrayInStream( byte[] array, FileStream stream )
+        {
+            byte[] read = new byte[4];
+
+            stream.Seek( 0, SeekOrigin.Begin );
+            while( stream.Position + read.Length <= stream.Length )
+            {
+                stream.Read( read, 0, array.Length );
+                if( Utilities.CompareArrays( array, read ) )
+                {
+                    return stream.Position - array.Length;
+                }
+                stream.Seek( 2044, SeekOrigin.Current );
+            }
+
+            throw new InvalidDataException();
+        }
+
+        private static void FireDataChangedEvent()
+        {
+            if( DataChanged != null )
+            {
+                DataChanged( null, EventArgs.Empty );
+            }
+        }
+
         private static StringBuilder GetBase64StringIfNonDefault( byte[] bytes, byte[] def )
         {
             if( !Utilities.CompareArrays( bytes, def ) )
@@ -99,31 +152,121 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
-        /// <summary>
-        /// Saves the fonts to the path.
-        /// </summary>
-        public static void SaveFontsAs( string path )
+        private static byte[] GetFromNodeOrReturnDefault( XmlNode node, string name, byte[] def )
         {
-            FileStream writer = null;
+            XmlNode n = node.SelectSingleNode( name );
+            if( n != null )
+            {
+                try
+                {
+                    byte[] result = Convert.FromBase64String( n.InnerText );
+                    return result;
+                }
+                catch( Exception )
+                {
+                }
+            }
+
+            return def;
+        }
+
+        private static string ReadString( FileStream stream, int length )
+        {
+            byte[] bytes = new byte[length];
+            stream.Read( bytes, 0, length );
+            StringBuilder result = new StringBuilder();
+            foreach( byte b in bytes )
+            {
+                result.Append( Convert.ToChar( b ) );
+            }
+
+            return result.ToString();
+        }
+
+        private static void VerifyFileIsSCUS94221( FileStream stream )
+        {
+            stream.Seek( 0, SeekOrigin.Begin );
+            string header = ReadString( stream, 8 );
+
+            stream.Seek( 0x4C, SeekOrigin.Begin );
+            string scea = ReadString( stream, 0x37 );
+
+            stream.Seek( 0x1C, SeekOrigin.Begin );
+            byte[] length = new byte[4];
+            stream.Read( length, 0, 4 );
+            UInt32 l = Utilities.BytesToUInt32( length ) + 0x800;
+
+            if( (header != "PS-X EXE") ||
+                (scea != "Sony Computer Entertainment Inc. for North America area") ||
+                (l != stream.Length) )
+            {
+                throw new InvalidDataException();
+            }
+        }
+
+        /// <summary>
+        /// Applies patches to a SCUS_942.21 file.
+        /// </summary>
+        public static void ApplyPatchesToExecutable( string filename )
+        {
+            FileStream stream = null;
             try
             {
-                writer = new FileStream( path, FileMode.Create );
-                byte[] bytes = FFTPatch.Font.ToByteArray();
-                writer.Write( bytes, 0, bytes.Length );
-                writer.Flush();
-                writer.Close();
-                writer = null;
+                bool psp = Context == Context.US_PSP;
+                stream = new FileStream( filename, FileMode.Open );
+                long abilities = -1;
+                long jobs = -1;
+                long skillSets = -1;
+                long monsterSkills = -1;
+                long actionEvents = -1;
+                long statusAttributes = -1;
+                long poach = -1;
+                long jobLevels = -1;
+                long oldItems = -1;
+                long inflictStatuses = -1;
+                long oldItemAttributes = -1;
+
+                VerifyFileIsSCUS94221( stream );
+
+                oldItemAttributes = 0x54AC4;
+                oldItems = 0x536B8;
+                poach = 0x56864;
+                skillSets = 0x55294;
+                statusAttributes = 0x565E4;
+                abilities = 0x4F3F0;
+                actionEvents = 0x564B4;
+                inflictStatuses = 0x547C4;
+                jobLevels = 0x568C4;
+                jobs = 0x518B8;
+                monsterSkills = 0x563C4;
+
+                stream.WriteArrayToPosition( Abilities.ToByteArray( Context ), abilities );
+                stream.WriteArrayToPosition( Items.ToFirstByteArray(), oldItems );
+                stream.WriteArrayToPosition( ItemAttributes.ToFirstByteArray(), oldItemAttributes );
+                stream.WriteArrayToPosition( Jobs.ToByteArray( Context ), jobs );
+                stream.WriteArrayToPosition( JobLevels.ToByteArray( Context ), jobLevels );
+                stream.WriteArrayToPosition( SkillSets.ToByteArray( Context ), skillSets );
+                stream.WriteArrayToPosition( MonsterSkills.ToByteArray( Context ), monsterSkills );
+                stream.WriteArrayToPosition( ActionMenus.ToByteArray( Context ), actionEvents );
+                stream.WriteArrayToPosition( StatusAttributes.ToByteArray( Context ), statusAttributes );
+                stream.WriteArrayToPosition( InflictStatuses.ToByteArray(), inflictStatuses );
+                stream.WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), poach );
             }
-            catch( Exception )
+            catch( InvalidDataException )
+            {
+                throw;
+            }
+            catch( FileNotFoundException )
             {
                 throw;
             }
             finally
             {
-                if( writer != null )
+                if( stream != null )
                 {
-                    writer.Flush();
-                    writer.Close();
+                    stream.Flush();
+                    stream.Close();
+                    stream.Dispose();
                 }
             }
         }
@@ -188,129 +331,6 @@ namespace FFTPatcher.Datatypes
         }
 
         /// <summary>
-        /// Saves this patch to an XML document.
-        /// </summary>
-        public static void SavePatchToFile( string path )
-        {
-            bool psp = Context == Context.US_PSP;
-
-            StringBuilder abilities = GetBase64StringIfNonDefault( Abilities.ToByteArray( Context ), psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin );
-            StringBuilder abilityEffects = GetBase64StringIfNonDefault( Abilities.ToEffectsByteArray(), psp ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin );
-            StringBuilder oldItems = GetBase64StringIfNonDefault( Items.ToFirstByteArray(), psp ? Resources.OldItemsBin : PSXResources.OldItemsBin );
-            StringBuilder oldItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToFirstByteArray(), psp ? Resources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
-            StringBuilder newItems = null;
-            StringBuilder newItemAttributes = null;
-            if( psp )
-            {
-                newItems = GetBase64StringIfNonDefault( Items.ToSecondByteArray(), Resources.NewItemsBin );
-                newItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToSecondByteArray(), Resources.NewItemAttributesBin );
-            }
-            StringBuilder jobs = GetBase64StringIfNonDefault( Jobs.ToByteArray( Context ), psp ? Resources.JobsBin : PSXResources.JobsBin );
-            StringBuilder jobLevels = GetBase64StringIfNonDefault( JobLevels.ToByteArray( Context ), psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin );
-            StringBuilder monsterSkills = GetBase64StringIfNonDefault( MonsterSkills.ToByteArray( Context ), psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
-            StringBuilder skillSets = GetBase64StringIfNonDefault( SkillSets.ToByteArray( Context ), psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
-            StringBuilder actionMenus = GetBase64StringIfNonDefault( ActionMenus.ToByteArray( Context ), psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin );
-            StringBuilder statusAttributes = GetBase64StringIfNonDefault( StatusAttributes.ToByteArray( Context ), psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin );
-            StringBuilder inflictStatuses = GetBase64StringIfNonDefault( InflictStatuses.ToByteArray(), psp ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin );
-            StringBuilder poach = GetBase64StringIfNonDefault( PoachProbabilities.ToByteArray( Context ), psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
-            StringBuilder entd1 = GetBase64StringIfNonDefault( ENTDs.ENTDs[0].ToByteArray(), Resources.ENTD1 );
-            StringBuilder entd2 = GetBase64StringIfNonDefault( ENTDs.ENTDs[1].ToByteArray(), Resources.ENTD2 );
-            StringBuilder entd3 = GetBase64StringIfNonDefault( ENTDs.ENTDs[2].ToByteArray(), Resources.ENTD3 );
-            StringBuilder entd4 = GetBase64StringIfNonDefault( ENTDs.ENTDs[3].ToByteArray(), Resources.ENTD4 );
-            StringBuilder entd5 = psp ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
-            StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
-            StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
-            XmlTextWriter writer = null;
-            try
-            {
-                writer = new XmlTextWriter( path, System.Text.Encoding.UTF8 );
-                writer.Formatting = Formatting.Indented;
-                writer.IndentChar = ' ';
-                writer.Indentation = 2;
-                writer.WriteStartDocument();
-                writer.WriteStartElement( "patch" );
-                writer.WriteAttributeString( "type", Context.ToString() );
-
-                StringBuilder[] builders = new StringBuilder[] { 
-                    abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, 
-                    skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach,
-                    entd1, entd2, entd3, entd4, entd5, font, fontWidths };
-                foreach( StringBuilder s in builders )
-                {
-                    if( s != null )
-                    {
-                        s.Insert( 0, "\r\n" );
-                        s.Replace( "\r\n", "\r\n    " );
-                        s.Append( "\r\n  " );
-                    }
-                }
-
-                string[] elementNames = new string[] {
-                    "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
-                    "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-                    "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths" };
-                for( int i = 0; i < builders.Length; i++ )
-                {
-                    if( builders[i] != null )
-                    {
-                        writer.WriteElementString( elementNames[i], builders[i].ToString() );
-                    }
-                }
-
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( writer != null )
-                {
-                    writer.Flush();
-                    writer.Close();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Builds a new (unmodified) patch from a context.
-        /// </summary>
-        public static void New( Context context )
-        {
-            Context = context;
-            BuildFromContext();
-            FireDataChangedEvent();
-        }
-
-        private static void FireDataChangedEvent()
-        {
-            if( DataChanged != null )
-            {
-                DataChanged( null, EventArgs.Empty );
-            }
-        }
-
-        private static byte[] GetFromNodeOrReturnDefault( XmlNode node, string name, byte[] def )
-        {
-            XmlNode n = node.SelectSingleNode( name );
-            if( n != null )
-            {
-                try
-                {
-                    byte[] result = Convert.FromBase64String( n.InnerText );
-                    return result;
-                }
-                catch( Exception )
-                {
-                }
-            }
-
-            return def;
-        }
-
-        /// <summary>
         /// Reads an XML fftpatch file.
         /// </summary>
         public static void LoadPatch( string filename )
@@ -360,6 +380,16 @@ namespace FFTPatcher.Datatypes
             PoachProbabilities = new AllPoachProbabilities( poach );
             ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
             Font = new FFTFont( font, fontWidths );
+            FireDataChangedEvent();
+        }
+
+        /// <summary>
+        /// Builds a new (unmodified) patch from a context.
+        /// </summary>
+        public static void New( Context context )
+        {
+            Context = context;
+            BuildFromContext();
             FireDataChangedEvent();
         }
 
@@ -467,123 +497,123 @@ namespace FFTPatcher.Datatypes
         }
 
         /// <summary>
-        /// Applies patches to a SCUS_942.21 file.
+        /// Saves the fonts to the path.
         /// </summary>
-        public static void ApplyPatchesToExecutable( string filename )
+        public static void SaveFontsAs( string path )
         {
-            FileStream stream = null;
+            FileStream writer = null;
             try
             {
-                bool psp = Context == Context.US_PSP;
-                stream = new FileStream( filename, FileMode.Open );
-                long abilities = -1;
-                long jobs = -1;
-                long skillSets = -1;
-                long monsterSkills = -1;
-                long actionEvents = -1;
-                long statusAttributes = -1;
-                long poach = -1;
-                long jobLevels = -1;
-                long oldItems = -1;
-                long inflictStatuses = -1;
-                long oldItemAttributes = -1;
-
-                VerifyFileIsSCUS94221( stream );
-
-                oldItemAttributes = 0x54AC4;
-                oldItems = 0x536B8;
-                poach = 0x56864;
-                skillSets = 0x55294;
-                statusAttributes = 0x565E4;
-                abilities = 0x4F3F0;
-                actionEvents = 0x564B4;
-                inflictStatuses = 0x547C4;
-                jobLevels = 0x568C4;
-                jobs = 0x518B8;
-                monsterSkills = 0x563C4;
-
-                stream.WriteArrayToPosition( Abilities.ToByteArray( Context ), abilities );
-                stream.WriteArrayToPosition( Items.ToFirstByteArray(), oldItems );
-                stream.WriteArrayToPosition( ItemAttributes.ToFirstByteArray(), oldItemAttributes );
-                stream.WriteArrayToPosition( Jobs.ToByteArray( Context ), jobs );
-                stream.WriteArrayToPosition( JobLevels.ToByteArray( Context ), jobLevels );
-                stream.WriteArrayToPosition( SkillSets.ToByteArray( Context ), skillSets );
-                stream.WriteArrayToPosition( MonsterSkills.ToByteArray( Context ), monsterSkills );
-                stream.WriteArrayToPosition( ActionMenus.ToByteArray( Context ), actionEvents );
-                stream.WriteArrayToPosition( StatusAttributes.ToByteArray( Context ), statusAttributes );
-                stream.WriteArrayToPosition( InflictStatuses.ToByteArray(), inflictStatuses );
-                stream.WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), poach );
+                writer = new FileStream( path, FileMode.Create );
+                byte[] bytes = FFTPatch.Font.ToByteArray();
+                writer.Write( bytes, 0, bytes.Length );
+                writer.Flush();
+                writer.Close();
+                writer = null;
             }
-            catch( InvalidDataException )
-            {
-                throw;
-            }
-            catch( FileNotFoundException )
+            catch( Exception )
             {
                 throw;
             }
             finally
             {
-                if( stream != null )
+                if( writer != null )
                 {
-                    stream.Flush();
-                    stream.Close();
-                    stream.Dispose();
+                    writer.Flush();
+                    writer.Close();
                 }
             }
         }
 
-        private static void VerifyFileIsSCUS94221( FileStream stream )
+        /// <summary>
+        /// Saves this patch to an XML document.
+        /// </summary>
+        public static void SavePatchToFile( string path )
         {
-            stream.Seek( 0, SeekOrigin.Begin );
-            string header = ReadString( stream, 8 );
+            bool psp = Context == Context.US_PSP;
 
-            stream.Seek( 0x4C, SeekOrigin.Begin );
-            string scea = ReadString( stream, 0x37 );
-
-            stream.Seek( 0x1C, SeekOrigin.Begin );
-            byte[] length = new byte[4];
-            stream.Read( length, 0, 4 );
-            UInt32 l = Utilities.BytesToUInt32( length ) + 0x800;
-
-            if( (header != "PS-X EXE") ||
-                (scea != "Sony Computer Entertainment Inc. for North America area") ||
-                (l != stream.Length) )
+            StringBuilder abilities = GetBase64StringIfNonDefault( Abilities.ToByteArray( Context ), psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin );
+            StringBuilder abilityEffects = GetBase64StringIfNonDefault( Abilities.ToEffectsByteArray(), psp ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin );
+            StringBuilder oldItems = GetBase64StringIfNonDefault( Items.ToFirstByteArray(), psp ? Resources.OldItemsBin : PSXResources.OldItemsBin );
+            StringBuilder oldItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToFirstByteArray(), psp ? Resources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
+            StringBuilder newItems = null;
+            StringBuilder newItemAttributes = null;
+            if( psp )
             {
-                throw new InvalidDataException();
+                newItems = GetBase64StringIfNonDefault( Items.ToSecondByteArray(), Resources.NewItemsBin );
+                newItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToSecondByteArray(), Resources.NewItemAttributesBin );
             }
-        }
-
-        private static string ReadString( FileStream stream, int length )
-        {
-            byte[] bytes = new byte[length];
-            stream.Read( bytes, 0, length );
-            StringBuilder result = new StringBuilder();
-            foreach( byte b in bytes )
+            StringBuilder jobs = GetBase64StringIfNonDefault( Jobs.ToByteArray( Context ), psp ? Resources.JobsBin : PSXResources.JobsBin );
+            StringBuilder jobLevels = GetBase64StringIfNonDefault( JobLevels.ToByteArray( Context ), psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin );
+            StringBuilder monsterSkills = GetBase64StringIfNonDefault( MonsterSkills.ToByteArray( Context ), psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
+            StringBuilder skillSets = GetBase64StringIfNonDefault( SkillSets.ToByteArray( Context ), psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
+            StringBuilder actionMenus = GetBase64StringIfNonDefault( ActionMenus.ToByteArray( Context ), psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin );
+            StringBuilder statusAttributes = GetBase64StringIfNonDefault( StatusAttributes.ToByteArray( Context ), psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin );
+            StringBuilder inflictStatuses = GetBase64StringIfNonDefault( InflictStatuses.ToByteArray(), psp ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin );
+            StringBuilder poach = GetBase64StringIfNonDefault( PoachProbabilities.ToByteArray( Context ), psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
+            StringBuilder entd1 = GetBase64StringIfNonDefault( ENTDs.ENTDs[0].ToByteArray(), Resources.ENTD1 );
+            StringBuilder entd2 = GetBase64StringIfNonDefault( ENTDs.ENTDs[1].ToByteArray(), Resources.ENTD2 );
+            StringBuilder entd3 = GetBase64StringIfNonDefault( ENTDs.ENTDs[2].ToByteArray(), Resources.ENTD3 );
+            StringBuilder entd4 = GetBase64StringIfNonDefault( ENTDs.ENTDs[3].ToByteArray(), Resources.ENTD4 );
+            StringBuilder entd5 = psp ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
+            StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
+            StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
+            XmlTextWriter writer = null;
+            try
             {
-                result.Append( Convert.ToChar( b ) );
-            }
+                writer = new XmlTextWriter( path, System.Text.Encoding.UTF8 );
+                writer.Formatting = Formatting.Indented;
+                writer.IndentChar = ' ';
+                writer.Indentation = 2;
+                writer.WriteStartDocument();
+                writer.WriteStartElement( "patch" );
+                writer.WriteAttributeString( "type", Context.ToString() );
 
-            return result.ToString();
-        }
-
-        private static long FindArrayInStream( byte[] array, FileStream stream )
-        {
-            byte[] read = new byte[4];
-
-            stream.Seek( 0, SeekOrigin.Begin );
-            while( stream.Position + read.Length <= stream.Length )
-            {
-                stream.Read( read, 0, array.Length );
-                if( Utilities.CompareArrays( array, read ) )
+                StringBuilder[] builders = new StringBuilder[] { 
+                    abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, 
+                    skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach,
+                    entd1, entd2, entd3, entd4, entd5, font, fontWidths };
+                foreach( StringBuilder s in builders )
                 {
-                    return stream.Position - array.Length;
+                    if( s != null )
+                    {
+                        s.Insert( 0, "\r\n" );
+                        s.Replace( "\r\n", "\r\n    " );
+                        s.Append( "\r\n  " );
+                    }
                 }
-                stream.Seek( 2044, SeekOrigin.Current );
-            }
 
-            throw new InvalidDataException();
+                string[] elementNames = new string[] {
+                    "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
+                    "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
+                    "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths" };
+                for( int i = 0; i < builders.Length; i++ )
+                {
+                    if( builders[i] != null )
+                    {
+                        writer.WriteElementString( elementNames[i], builders[i].ToString() );
+                    }
+                }
+
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( writer != null )
+                {
+                    writer.Flush();
+                    writer.Close();
+                }
+            }
         }
+
+
+		#endregion Methods 
 
     }
 }

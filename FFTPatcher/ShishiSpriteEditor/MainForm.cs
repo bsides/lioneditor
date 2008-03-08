@@ -26,7 +26,14 @@ namespace FFTPatcher.SpriteEditor
 {
     public partial class MainForm : Form
     {
+
+		#region Fields (1) 
+
         string filename = string.Empty;
+
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         public MainForm()
         {
@@ -48,6 +55,11 @@ namespace FFTPatcher.SpriteEditor
             aboutMenuItem.Click += aboutMenuItem_Click;
         }
 
+		#endregion Constructors 
+
+		#region Methods (11) 
+
+
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
             new About().ShowDialog( this );
@@ -67,60 +79,28 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private void paletteOpenMenuItem_Click( object sender, EventArgs e )
+        private byte[] GetBytes( string filename )
         {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
-            openFileDialog.FilterIndex = 0;
-
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            FileStream stream = null;
+            try
             {
-                byte[] bytes = null;
-                try
+                stream = new FileStream( filename, FileMode.Open );
+                byte[] result = new byte[stream.Length];
+                stream.Read( result, 0, (int)stream.Length );
+                return result;
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
                 {
-                    bytes = GetBytes( openFileDialog.FileName );
-                    spriteViewer1.Sprite.Palettes = Palette.FromPALFile( bytes );
-                    paletteSelector.SelectedIndex = 0;
-                    spriteViewer1.Invalidate();
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
+                    stream.Close();
+                    stream = null;
                 }
             }
-        }
-
-        private void paletteSaveMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.FileName = string.Empty;
-            saveFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
-            saveFileDialog.FilterIndex = 0;
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.Palettes.ToPALFile() );
-            }
-        }
-
-        private void saveMenuItem_Click( object sender, EventArgs e )
-        {
-            SaveBytes( filename, spriteViewer1.Sprite.ToByteArray() );
-        }
-
-        private void saveAsMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.FileName = filename;
-            saveFileDialog.Filter = spriteViewer1.Sprite.SPR ? "Sprite files (*.SPR)|*.SPR" : "Secondary sprite files (*.SP2)|*.SP2";
-            saveFileDialog.FilterIndex = 0;
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.ToByteArray() );
-                filename = saveFileDialog.FileName;
-            }
-        }
-
-        private void paletteSelector_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            spriteViewer1.Palette = paletteSelector.SelectedIndex;
         }
 
         private void importMenuItem_Click( object sender, EventArgs e )
@@ -169,6 +149,57 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        private void paletteOpenMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
+            openFileDialog.FilterIndex = 0;
+
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                byte[] bytes = null;
+                try
+                {
+                    bytes = GetBytes( openFileDialog.FileName );
+                    spriteViewer1.Sprite.Palettes = Palette.FromPALFile( bytes );
+                    paletteSelector.SelectedIndex = 0;
+                    spriteViewer1.Invalidate();
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void paletteSaveMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
+            saveFileDialog.FilterIndex = 0;
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.Palettes.ToPALFile() );
+            }
+        }
+
+        private void paletteSelector_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            spriteViewer1.Palette = paletteSelector.SelectedIndex;
+        }
+
+        private void saveAsMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.FileName = filename;
+            saveFileDialog.Filter = spriteViewer1.Sprite.SPR ? "Sprite files (*.SPR)|*.SPR" : "Secondary sprite files (*.SP2)|*.SP2";
+            saveFileDialog.FilterIndex = 0;
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.ToByteArray() );
+                filename = saveFileDialog.FileName;
+            }
+        }
+
         private void SaveBytes( string filename, byte[] bytes )
         {
             FileStream stream = null;
@@ -192,28 +223,13 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private byte[] GetBytes( string filename )
+        private void saveMenuItem_Click( object sender, EventArgs e )
         {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( filename, FileMode.Open );
-                byte[] result = new byte[stream.Length];
-                stream.Read( result, 0, (int)stream.Length );
-                return result;
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Close();
-                    stream = null;
-                }
-            }
+            SaveBytes( filename, spriteViewer1.Sprite.ToByteArray() );
         }
+
+
+		#endregion Methods 
+
     }
 }

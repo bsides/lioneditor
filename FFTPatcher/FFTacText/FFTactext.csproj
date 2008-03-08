@@ -51,15 +51,19 @@
     <Compile Include="Editors\PartitionEditor.Designer.cs">
       <DependentUpon>PartitionEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Files\AbstractCompressedFile.cs" />
     <Compile Include="Files\AbstractPartitionedFile.cs" />
     <Compile Include="Files\FilePartition.cs" />
     <Compile Include="Files\IPartition.cs" />
     <Compile Include="Files\IPartitionedFile.cs" />
-    <Compile Include="Files\PSP\BasePSXPartitionedFile.cs" />
+    <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
     <Compile Include="Files\PSP\WLDMES.cs" />
+    <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
+    <Compile Include="Files\PSX\HELPMENU.cs" />
     <Compile Include="Files\PSX\SNPLMESBIN.cs" />
     <Compile Include="Files\PSX\WLDMES.cs" />
+    <Compile Include="PSXText.cs" />
     <Compile Include="Utilities\CompressionEventArgs.cs" />
     <Compile Include="Files\AbstractStringSectioned.cs" />
     <Compile Include="Files\ICompressed.cs" />
@@ -119,6 +123,7 @@
       <DependentUpon>PSXResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -133,6 +138,7 @@
     <None Include="Resources\PSP\WLDMES.BIN" />
     <None Include="Resources\PSX\ATCHELP.LZW" />
     <None Include="Resources\PSX\ATTACK.OUT.partial" />
+    <None Include="Resources\PSX\HELPMENU.OUT" />
     <None Include="Resources\PSX\JOIN.LZW" />
     <None Include="Resources\PSX\OPEN.LZW" />
     <None Include="Resources\PSX\SAMPLE.LZW" />

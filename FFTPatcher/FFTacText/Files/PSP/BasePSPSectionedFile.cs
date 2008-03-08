@@ -23,11 +23,27 @@ namespace FFTPatcher.TextEditor.Files.PSP
 {
     public abstract class BasePSPSectionedFile : AbstractStringSectioned
     {
+
+		#region Properties (1) 
+
+
         public override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSP; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        protected BasePSPSectionedFile()
+        {
+        }
 
         protected BasePSPSectionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

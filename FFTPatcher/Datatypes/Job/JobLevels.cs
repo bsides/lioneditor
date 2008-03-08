@@ -26,41 +26,84 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class JobLevels
     {
+
+		#region Fields (1) 
+
         private string[] reqs = new string[] {
             "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
             "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown" };
-        public Requirements Chemist { get; private set; }
-        public Requirements Knight { get; private set; }
+
+		#endregion Fields 
+
+		#region Properties (31) 
+
+
         public Requirements Archer { get; private set; }
-        public Requirements Monk { get; private set; }
-        public Requirements WhiteMage { get; private set; }
-        public Requirements BlackMage { get; private set; }
-        public Requirements TimeMage { get; private set; }
-        public Requirements Summoner { get; private set; }
-        public Requirements Thief { get; private set; }
-        public Requirements Orator { get; private set; }
-        public Requirements Mystic { get; private set; }
-        public Requirements Geomancer { get; private set; }
-        public Requirements Dragoon { get; private set; }
-        public Requirements Samurai { get; private set; }
-        public Requirements Ninja { get; private set; }
+
         public Requirements Arithmetician { get; private set; }
+
         public Requirements Bard { get; private set; }
+
+        public Requirements BlackMage { get; private set; }
+
+        public Requirements Chemist { get; private set; }
+
         public Requirements Dancer { get; private set; }
-        public Requirements Mime { get; private set; }
+
         public Requirements DarkKnight { get; private set; }
-        public Requirements OnionKnight { get; private set; }
-        public Requirements Unknown { get; private set; }
-        public ushort Level1 { get; set; }
-        public ushort Level2 { get; set; }
-        public ushort Level3 { get; set; }
-        public ushort Level4 { get; set; }
-        public ushort Level5 { get; set; }
-        public ushort Level6 { get; set; }
-        public ushort Level7 { get; set; }
-        public ushort Level8 { get; set; }
 
         public JobLevels Default { get; private set; }
+
+        public Requirements Dragoon { get; private set; }
+
+        public Requirements Geomancer { get; private set; }
+
+        public Requirements Knight { get; private set; }
+
+        public ushort Level1 { get; set; }
+
+        public ushort Level2 { get; set; }
+
+        public ushort Level3 { get; set; }
+
+        public ushort Level4 { get; set; }
+
+        public ushort Level5 { get; set; }
+
+        public ushort Level6 { get; set; }
+
+        public ushort Level7 { get; set; }
+
+        public ushort Level8 { get; set; }
+
+        public Requirements Mime { get; private set; }
+
+        public Requirements Monk { get; private set; }
+
+        public Requirements Mystic { get; private set; }
+
+        public Requirements Ninja { get; private set; }
+
+        public Requirements OnionKnight { get; private set; }
+
+        public Requirements Orator { get; private set; }
+
+        public Requirements Samurai { get; private set; }
+
+        public Requirements Summoner { get; private set; }
+
+        public Requirements Thief { get; private set; }
+
+        public Requirements TimeMage { get; private set; }
+
+        public Requirements Unknown { get; private set; }
+
+        public Requirements WhiteMage { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
 
         public JobLevels( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
@@ -99,6 +142,23 @@ namespace FFTPatcher.Datatypes
             Level8 = Utilities.BytesToUShort( bytes[start + 14], bytes[start + 15] );
         }
 
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
+            }
+        }
+
         public byte[] ToByteArray()
         {
             return ToByteArray( Context.US_PSP );
@@ -129,17 +189,9 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 
     /// <summary>
@@ -147,35 +199,72 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Requirements
     {
-        public int Squire { get; set; }
-        public int Chemist { get; set; }
-        public int Knight { get; set; }
+
+		#region Properties (25) 
+
+
         public int Archer { get; set; }
-        public int Monk { get; set; }
-        public int WhiteMage { get; set; }
-        public int BlackMage { get; set; }
-        public int TimeMage { get; set; }
-        public int Summoner { get; set; }
-        public int Thief { get; set; }
-        public int Orator { get; set; }
-        public int Mystic { get; set; }
-        public int Geomancer { get; set; }
-        public int Dragoon { get; set; }
-        public int Samurai { get; set; }
-        public int Ninja { get; set; }
+
         public int Arithmetician { get; set; }
+
         public int Bard { get; set; }
+
+        public int BlackMage { get; set; }
+
+        public int Chemist { get; set; }
+
         public int Dancer { get; set; }
-        public int Mime { get; set; }
+
         public int DarkKnight { get; set; }
-        public int OnionKnight { get; set; }
-        public int Unknown1 { get; set; }
-        public int Unknown2 { get; set; }
 
         public Requirements Default { get; private set; }
 
+        public int Dragoon { get; set; }
+
+        public int Geomancer { get; set; }
+
+        public int Knight { get; set; }
+
+        public int Mime { get; set; }
+
+        public int Monk { get; set; }
+
+        public int Mystic { get; set; }
+
+        public int Ninja { get; set; }
+
+        public int OnionKnight { get; set; }
+
+        public int Orator { get; set; }
+
+        public int Samurai { get; set; }
+
+        public int Squire { get; set; }
+
+        public int Summoner { get; set; }
+
+        public int Thief { get; set; }
+
+        public int TimeMage { get; set; }
+
+        public int Unknown1 { get; set; }
+
+        public int Unknown2 { get; set; }
+
+        public int WhiteMage { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
+
         public Requirements( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
+        {
+        }
+
+        public Requirements( Context context, IList<byte> bytes )
+            : this( context, bytes, null )
         {
         }
 
@@ -211,10 +300,10 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public Requirements( Context context, IList<byte> bytes )
-            : this( context, bytes, null )
-        {
-        }
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         public byte[] ToByteArray( Context context )
         {
@@ -242,5 +331,9 @@ namespace FFTPatcher.Datatypes
         {
             return ToByteArray( Context.US_PSP );
         }
+
+
+		#endregion Methods 
+
     }
 }

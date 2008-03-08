@@ -26,6 +26,9 @@ namespace FFTPatcher
 {
     public partial class About : Form
     {
+
+		#region Constructors (1) 
+
         public About()
         {
             InitializeComponent();
@@ -47,18 +50,31 @@ FFTPatcher is distributed in the hope that it will be useful, but WITHOUT ANY WA
 You should have received a copy of the GNU General Public License along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.";
             versionLabel.Text = string.Format( "v0.{0}", Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString() );
         }
+
+		#endregion Constructors 
+
     }
 
     public class TextBoxNoCaret : TextBox
     {
+
+		#region Methods (2) 
+
+
         [DllImport( "user32.dll", EntryPoint = "HideCaret" )]
         public static extern bool HideCaret( IntPtr hwnd );
+
+
 
         protected override void WndProc( ref Message m )
         {
             base.WndProc( ref m );
             HideCaret( this.Handle );
         }
+
+
+		#endregion Methods 
+
     }
 }
 

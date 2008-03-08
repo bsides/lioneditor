@@ -24,7 +24,16 @@ namespace FFTPatcher.Editors
 {
     public partial class FFTPatchEditor : UserControl
     {
+
+		#region Static Properties (1) 
+
+
         public static ToolTip ToolTip { get; private set; }
+
+
+		#endregion Static Properties 
+
+		#region Constructors (2) 
 
         static FFTPatchEditor()
         {
@@ -41,6 +50,43 @@ namespace FFTPatcher.Editors
             allItemsEditor1.InflictStatusClicked += InflictStatusClicked;
             allItemsEditor1.ItemAttributesClicked += ItemAttributesClicked;
             allJobsEditor1.SkillSetClicked += SkillSetClicked;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
+        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
+        {
+            this.Enabled = true;
+            allAbilitiesEditor1.UpdateView( FFTPatch.Abilities );
+            allActionMenusEditor1.UpdateView( FFTPatch.ActionMenus );
+            allInflictStatusesEditor1.UpdateView( FFTPatch.InflictStatuses );
+            allItemAttributesEditor1.UpdateView( FFTPatch.ItemAttributes );
+            allItemsEditor1.UpdateView( FFTPatch.Items );
+            allJobsEditor1.UpdateView( FFTPatch.Jobs );
+            allMonsterSkillsEditor1.UpdateView( FFTPatch.MonsterSkills );
+            allPoachProbabilitiesEditor1.UpdateView( FFTPatch.PoachProbabilities );
+            allSkillSetsEditor1.UpdateView( FFTPatch.SkillSets );
+            allStatusAttributesEditor1.UpdateView( FFTPatch.StatusAttributes );
+            jobLevelsEditor1.UpdateView( FFTPatch.JobLevels );
+            entdEditor1.UpdateView( FFTPatch.ENTDs );
+            fontEditor1.FFTFont = FFTPatch.Font;
+            codeCreator1.UpdateView();
+            codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
+        }
+
+        private void InflictStatusClicked( object sender, LabelClickedEventArgs e )
+        {
+            allInflictStatusesEditor1.SelectedIndex = e.Value;
+            tabControl.SelectedTab = inflictStatusesTabPage;
+        }
+
+        private void ItemAttributesClicked( object sender, LabelClickedEventArgs e )
+        {
+            allItemAttributesEditor1.SelectedIndex = e.Value;
+            tabControl.SelectedTab = itemAttributesTabPage;
         }
 
         private void SkillSetClicked( object sender, LabelClickedEventArgs e )
@@ -62,36 +108,8 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void ItemAttributesClicked( object sender, LabelClickedEventArgs e )
-        {
-            allItemAttributesEditor1.SelectedIndex = e.Value;
-            tabControl.SelectedTab = itemAttributesTabPage;
-        }
 
-        private void InflictStatusClicked( object sender, LabelClickedEventArgs e )
-        {
-            allInflictStatusesEditor1.SelectedIndex = e.Value;
-            tabControl.SelectedTab = inflictStatusesTabPage;
-        }
+		#endregion Methods 
 
-        private void FFTPatch_DataChanged( object sender, System.EventArgs e )
-        {
-            this.Enabled = true;
-            allAbilitiesEditor1.UpdateView( FFTPatch.Abilities );
-            allActionMenusEditor1.UpdateView( FFTPatch.ActionMenus );
-            allInflictStatusesEditor1.UpdateView( FFTPatch.InflictStatuses );
-            allItemAttributesEditor1.UpdateView( FFTPatch.ItemAttributes );
-            allItemsEditor1.UpdateView( FFTPatch.Items );
-            allJobsEditor1.UpdateView( FFTPatch.Jobs );
-            allMonsterSkillsEditor1.UpdateView( FFTPatch.MonsterSkills );
-            allPoachProbabilitiesEditor1.UpdateView( FFTPatch.PoachProbabilities );
-            allSkillSetsEditor1.UpdateView( FFTPatch.SkillSets );
-            allStatusAttributesEditor1.UpdateView( FFTPatch.StatusAttributes );
-            jobLevelsEditor1.UpdateView( FFTPatch.JobLevels );
-            entdEditor1.UpdateView( FFTPatch.ENTDs );
-            fontEditor1.FFTFont = FFTPatch.Font;
-            codeCreator1.UpdateView();
-            codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
-        }
     }
 }

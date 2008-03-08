@@ -23,15 +23,20 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class WLDHELPLZW : BasePSXCompressedFile
+    public class HELPMENU : BasePSXCompressedFile
     {
 
-		#region Fields (4) 
+		#region Static Fields (3) 
 
         public static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private const int numberOfSections = 21;
         private static string[] sectionNames;
+
+		#endregion Static Fields 
+
+		#region Fields (1) 
+
+        private const int numberOfSections = 21;
 
 		#endregion Fields 
 
@@ -49,15 +54,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/WLDHELP.LZW", 0x00 );
-                    locations.Add( "WORLD/WORLD.BIN", 0x8EE68 );
+                    locations.Add( "EVENT/HELPMENU.OUT", 0x1B30 );
+                    locations.Add( "WORLD/WORLD.BIN", 0x777E0 );
                 }
 
                 return locations;
             }
         }
 
-        public override int MaxLength { get { return 0x01ADE4; } }
+        public override int MaxLength { get { return 0x169C0; } }
 
         public override IList<string> SectionNames { get { return sectionNames; } }
 
@@ -66,46 +71,18 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#region Constructors (2) 
 
-        static WLDHELPLZW()
+        static HELPMENU()
         {
-            sectionNames = new string[21] {
-                "","Help", "Menu/Options Help", "", "Error/Confirmation messages", "", "",
-                "","","","","","Job descriptions", "Item descriptions",
-                "","Ability descriptions","Location descriptions","Location descriptions","","Skillset descriptions","Unit quotes"};
+            sectionNames = new string[21];
             entryNames = new string[numberOfSections][];
-
-            int[] sectionLengths = new int[numberOfSections] {
-                1,40,155,1,31,1,1,
-                1,1,1,1,1,160,256,
-                1,512,44,116,1,188,768 };
 
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[sectionLengths[i]];
+                entryNames[i] = new string[2048];
             }
-
-            entryNames[1] = new string[40] {
-                "Unit #", "Level", "HP", "MP", "CT", "AT", "Exp", "Name",
-                "Brave", "Faith", "", "Move", "Jump", "", "", "",
-                "Speed", "ATK", "Weapon ATK", "", "Eva%", "SEv%", "AEv%", "Phys land effect",
-                "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
-                "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
-            entryNames[4] = new string[31] {
-                "No items", "Item out of stock", "No more shields", "No unequipped items", "Set number to dispose", "Cancel equip?", "No ability learned", "Learned all abilities",
-                "Is __ OK?", "Insufficient JP", "Remove __?", "Team not ready", "Team full", "Can't delete leader", "No memory card", "No saves",
-                "No room on memory card", "Save?", "Can't remove unit", "Format memory card?", "Input birthday", "Input name", "Kanji search method", "First Kanji", 
-                "Kanji strokes", "Input name", "Is __ OK?", "Destroy egg?", "Save error", "Load error", "Save?" };
-            entryNames[12] = AllJobs.PSXNames;
-            entryNames[13] = Item.PSXNames.ToArray();
-            entryNames[15] = AllAbilities.PSXNames;
-            List<string> temp = new List<string>( 188 );
-            temp.AddRange( SkillSet.PSXNames.Sub( 0, 175 ) );
-            temp.AddRange( new string[12] );
-
-            entryNames[19] = temp.ToArray();
         }
 
-        public WLDHELPLZW( IList<byte> bytes )
+        public HELPMENU( IList<byte> bytes )
         {
             Sections = new List<IList<string>>( NumberOfSections );
             for( int i = 0; i < NumberOfSections; i++ )

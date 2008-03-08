@@ -19,29 +19,101 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace FFTPatcher.TextEditor.Files
 {
     public abstract class AbstractStringSectioned : IStringSectioned
     {
-        public abstract TextUtilities.CharMapType CharMap { get; }
+
+		#region Fields (1) 
 
         protected const int dataStart = 0x80;
 
-        protected abstract int NumberOfSections { get; }
+		#endregion Fields 
+
+		#region Properties (3) 
+
+
+        public int ActualLength { get { return ToFinalBytes().Count; } }
 
         public IList<IList<string>> Sections { get; protected set; }
 
-        public abstract IList<string> SectionNames { get; }
 
-        public abstract IList<IList<string>> EntryNames { get; }
-
-        public abstract IDictionary<string, long> Locations { get; }
 
         public virtual int EstimatedLength { get { return ToUncompressedBytes().Count; } }
-        public int ActualLength { get { return ToFinalBytes().Count; } }
 
-        public abstract int MaxLength { get; }
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        protected AbstractStringSectioned()
+        {
+        }
+
+        protected AbstractStringSectioned( IList<byte> bytes )
+        {
+            Sections = new List<IList<string>>( NumberOfSections );
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                uint start = Utilities.BytesToUInt32( bytes.Sub( i * 4, i * 4 + 3 ) );
+                uint stop = Utilities.BytesToUInt32( bytes.Sub( (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
+                if( i == NumberOfSections - 1 )
+                {
+                    stop = (uint)bytes.Count - 1 - dataStart;
+                }
+
+                IList<byte> thisSection = bytes.Sub( (int)(start + dataStart), (int)(stop + dataStart) );
+                Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (6) 
+
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml( XmlReader reader )
+        {
+            reader.MoveToAttribute( "sections" );
+            int numberOfSections = reader.ReadContentAsInt();
+            reader.MoveToElement();
+            reader.ReadStartElement();
+
+            Sections = new string[numberOfSections][];
+
+            for( int i = 0; i < numberOfSections; i++ )
+            {
+                reader.MoveToAttribute( "entries" );
+                int numberOfEntries = reader.ReadContentAsInt();
+                reader.MoveToElement();
+                reader.MoveToAttribute( "value" );
+                int index = reader.ReadContentAsInt();
+                reader.MoveToElement();
+                reader.ReadStartElement( "section" );
+                Sections[index] = new string[numberOfEntries];
+
+                for( int j = 0; j < numberOfEntries; j++ )
+                {
+                    reader.MoveToAttribute( "value" );
+                    int entryIndex = reader.ReadContentAsInt();
+                    reader.MoveToElement();
+                    reader.ReadStartElement( "entry" );
+                    Sections[index][entryIndex] = reader.ReadString();
+                    reader.ReadEndElement();
+                }
+                reader.ReadEndElement();
+            }
+
+            reader.ReadEndElement();
+        }
 
         public byte[] ToByteArray()
         {
@@ -54,6 +126,27 @@ namespace FFTPatcher.TextEditor.Files
 
             return result.ToArray();
         }
+
+        public void WriteXml( XmlWriter writer )
+        {
+            writer.WriteAttributeString( "sections", Sections.Count.ToString() );
+            for( int i = 0; i < Sections.Count; i++ )
+            {
+                writer.WriteStartElement( "section" );
+                writer.WriteAttributeString( "value", i.ToString() );
+                writer.WriteAttributeString( "entries", Sections[i].Count.ToString() );
+                for( int j = 0; j < Sections[i].Count; j++ )
+                {
+                    writer.WriteStartElement( "entry" );
+                    writer.WriteAttributeString( "value", j.ToString() );
+                    writer.WriteString( Sections[i][j] );
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+        }
+
+
 
         protected virtual IList<byte> ToFinalBytes()
         {
@@ -94,25 +187,14 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
-        protected AbstractStringSectioned()
-        {
-        }
 
-        protected AbstractStringSectioned( IList<byte> bytes )
-        {
-            Sections = new List<IList<string>>( NumberOfSections );
-            for( int i = 0; i < NumberOfSections; i++ )
-            {
-                uint start = Utilities.BytesToUInt32( bytes.Sub( i * 4, i * 4 + 3 ) );
-                uint stop = Utilities.BytesToUInt32( bytes.Sub( (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
-                if( i == NumberOfSections - 1 )
-                {
-                    stop = (uint)bytes.Count - 1 - dataStart;
-                }
+		#endregion Methods 
+        public abstract TextUtilities.CharMapType CharMap { get; }
+        public abstract IList<IList<string>> EntryNames { get; }
+        public abstract IDictionary<string, long> Locations { get; }
+        public abstract int MaxLength { get; }
+        protected abstract int NumberOfSections { get; }
+        public abstract IList<string> SectionNames { get; }
 
-                IList<byte> thisSection = bytes.Sub( (int)(start + dataStart), (int)(stop + dataStart) );
-                Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
-            }
-        }
     }
 }

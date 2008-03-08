@@ -27,20 +27,28 @@ namespace FFTPatcher.Editors
 {
     public partial class ItemEditor : UserControl
     {
-        private string[] weaponBools = new string[] {
-            "Striking", "Lunging", "Direct", "Arc",
-            "TwoSwords", "TwoHands", "Blank", "Force2Hands" };
+
+		#region Fields (9) 
+
+        private List<ComboBoxWithDefault> comboBoxes = new List<ComboBoxWithDefault>();
+        private bool ignoreChanges = false;
+        private Item item;
         private string[] itemBools = new string[] {
             "Weapon", "Shield", "Head", "Body",
             "Accessory", "Blank1", "Rare", "Blank2" };
-        private List<NumericUpDownWithDefault> spinners = new List<NumericUpDownWithDefault>();
-        private List<ComboBoxWithDefault> comboBoxes = new List<ComboBoxWithDefault>();
+        private Context ourContext = Context.Default;
         private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
         private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
-        private Context ourContext = Context.Default;
+        private List<NumericUpDownWithDefault> spinners = new List<NumericUpDownWithDefault>();
+        private string[] weaponBools = new string[] {
+            "Striking", "Lunging", "Direct", "Arc",
+            "TwoSwords", "TwoHands", "Blank", "Force2Hands" };
 
-        private bool ignoreChanges = false;
-        private Item item;
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public Item Item
         {
             get { return item; }
@@ -56,6 +64,112 @@ namespace FFTPatcher.Editors
                     this.item = value;
                     this.Enabled = true;
                     UpdateView();
+                }
+            }
+        }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public ItemEditor()
+        {
+            InitializeComponent();
+            ignoreChanges = true;
+
+            spinners.AddRange( new NumericUpDownWithDefault[] { 
+                paletteSpinner, graphicSpinner, enemyLevelSpinner, itemAttributesSpinner, priceSpinner, 
+                weaponRangeSpinner, weaponFormulaSpinner, weaponPowerSpinner, weaponEvadePercentageSpinner, weaponSpellStatusSpinner, 
+                armorHPBonusSpinner, armorMPBonusSpinner, 
+                shieldMagicBlockRateSpinner, shieldPhysicalBlockRateSpinner, 
+                accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateLabel, 
+                chemistItemFormulaSpinner, chemistItemSpellStatusSpinner, chemistItemXSpinner } );
+            comboBoxes.AddRange( new ComboBoxWithDefault[] { itemTypeComboBox, shopAvailabilityComboBox } );
+            foreach( NumericUpDownWithDefault spinner in spinners )
+            {
+                spinner.ValueChanged += spinner_ValueChanged;
+            }
+            foreach( ComboBoxWithDefault comboBox in comboBoxes )
+            {
+                comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
+            }
+
+            itemAttributesCheckedListBox.ItemCheck += itemAttributesCheckedListBox_ItemCheck;
+            weaponAttributesCheckedListBox.ItemCheck += weaponAttributesCheckedListBox_ItemCheck;
+
+            shopAvailabilityComboBox.Items.Clear();
+            shopAvailabilityComboBox.Items.AddRange( ShopAvailability.AllAvailabilities.ToArray() );
+            psxItemTypes.Remove( ItemSubType.LipRouge );
+            psxItemTypes.Remove( ItemSubType.FellSword );
+
+            chemistItemSpellStatusLabel.Click += chemistItemSpellStatusLabel_Click;
+            chemistItemSpellStatusLabel.TabStop = false;
+            weaponSpellStatusLabel.Click += weaponSpellStatusLabel_Click;
+            weaponSpellStatusLabel.TabStop = false;
+            itemAttributesLabel.Click += itemAttributesLabel_Click;
+            itemAttributesLabel.TabStop = false;
+            ignoreChanges = false;
+        }
+
+		#endregion Constructors 
+
+		#region Events (2) 
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+
+        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
+
+		#endregion Events 
+
+		#region Methods (8) 
+
+
+        private void chemistItemSpellStatusLabel_Click( object sender, EventArgs e )
+        {
+            if( InflictStatusClicked != null )
+            {
+                InflictStatusClicked( this, new LabelClickedEventArgs( (byte)chemistItemSpellStatusSpinner.Value ) );
+            }
+        }
+
+        private void comboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( item, c.Tag.ToString(), c.SelectedItem );
+            }
+        }
+
+        private void itemAttributesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ReflectionHelpers.SetFieldOrProperty( item, itemBools[e.Index], e.NewValue == CheckState.Checked );
+            }
+        }
+
+        private void itemAttributesLabel_Click( object sender, EventArgs e )
+        {
+            if( ItemAttributesClicked != null )
+            {
+                ItemAttributesClicked( this, new LabelClickedEventArgs( (byte)itemAttributesSpinner.Value ) );
+            }
+        }
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+                if( spinner == priceSpinner )
+                {
+                    ReflectionHelpers.SetFieldOrProperty( item, spinner.Tag.ToString(), (UInt16)spinner.Value );
+                }
+                else
+                {
+                    ReflectionHelpers.SetFieldOrProperty( item, spinner.Tag.ToString(), (byte)spinner.Value );
                 }
             }
         }
@@ -187,51 +301,12 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
-        public ItemEditor()
+        private void weaponAttributesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
-            InitializeComponent();
-            ignoreChanges = true;
-
-            spinners.AddRange( new NumericUpDownWithDefault[] { 
-                paletteSpinner, graphicSpinner, enemyLevelSpinner, itemAttributesSpinner, priceSpinner, 
-                weaponRangeSpinner, weaponFormulaSpinner, weaponPowerSpinner, weaponEvadePercentageSpinner, weaponSpellStatusSpinner, 
-                armorHPBonusSpinner, armorMPBonusSpinner, 
-                shieldMagicBlockRateSpinner, shieldPhysicalBlockRateSpinner, 
-                accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateLabel, 
-                chemistItemFormulaSpinner, chemistItemSpellStatusSpinner, chemistItemXSpinner } );
-            comboBoxes.AddRange( new ComboBoxWithDefault[] { itemTypeComboBox, shopAvailabilityComboBox } );
-            foreach( NumericUpDownWithDefault spinner in spinners )
+            if( !ignoreChanges )
             {
-                spinner.ValueChanged += spinner_ValueChanged;
-            }
-            foreach( ComboBoxWithDefault comboBox in comboBoxes )
-            {
-                comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
-            }
-
-            itemAttributesCheckedListBox.ItemCheck += itemAttributesCheckedListBox_ItemCheck;
-            weaponAttributesCheckedListBox.ItemCheck += weaponAttributesCheckedListBox_ItemCheck;
-
-            shopAvailabilityComboBox.Items.Clear();
-            shopAvailabilityComboBox.Items.AddRange( ShopAvailability.AllAvailabilities.ToArray() );
-            psxItemTypes.Remove( ItemSubType.LipRouge );
-            psxItemTypes.Remove( ItemSubType.FellSword );
-
-            chemistItemSpellStatusLabel.Click += chemistItemSpellStatusLabel_Click;
-            chemistItemSpellStatusLabel.TabStop = false;
-            weaponSpellStatusLabel.Click += weaponSpellStatusLabel_Click;
-            weaponSpellStatusLabel.TabStop = false;
-            itemAttributesLabel.Click += itemAttributesLabel_Click;
-            itemAttributesLabel.TabStop = false;
-            ignoreChanges = false;
-        }
-
-        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
-        private void itemAttributesLabel_Click( object sender, EventArgs e )
-        {
-            if( ItemAttributesClicked != null )
-            {
-                ItemAttributesClicked( this, new LabelClickedEventArgs( (byte)itemAttributesSpinner.Value ) );
+                Weapon w = item as Weapon;
+                ReflectionHelpers.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue == CheckState.Checked );
             }
         }
 
@@ -243,55 +318,8 @@ namespace FFTPatcher.Editors
             }
         }
 
-        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
-        private void chemistItemSpellStatusLabel_Click( object sender, EventArgs e )
-        {
-            if( InflictStatusClicked != null )
-            {
-                InflictStatusClicked( this, new LabelClickedEventArgs( (byte)chemistItemSpellStatusSpinner.Value ) );
-            }
-        }
 
-        private void weaponAttributesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                Weapon w = item as Weapon;
-                ReflectionHelpers.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue == CheckState.Checked );
-            }
-        }
+		#endregion Methods 
 
-        private void itemAttributesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ReflectionHelpers.SetFieldOrProperty( item, itemBools[e.Index], e.NewValue == CheckState.Checked );
-            }
-        }
-
-        private void comboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( item, c.Tag.ToString(), c.SelectedItem );
-            }
-        }
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                if( spinner == priceSpinner )
-                {
-                    ReflectionHelpers.SetFieldOrProperty( item, spinner.Tag.ToString(), (UInt16)spinner.Value );
-                }
-                else
-                {
-                    ReflectionHelpers.SetFieldOrProperty( item, spinner.Tag.ToString(), (byte)spinner.Value );
-                }
-            }
-        }
     }
 }

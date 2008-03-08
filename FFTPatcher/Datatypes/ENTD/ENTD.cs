@@ -26,9 +26,18 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class ENTD
     {
-        public Event[] Events { get; private set; }
+
+		#region Properties (2) 
+
 
         public ENTD Default { get; private set; }
+
+        public Event[] Events { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public ENTD( int start, IList<byte> bytes, ENTD defaults )
         {
@@ -43,6 +52,11 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+		#endregion Constructors 
+
+		#region Methods (1) 
+
+
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 16 * 40 * 0x80 );
@@ -53,44 +67,28 @@ namespace FFTPatcher.Datatypes
 
             return result.ToArray();
         }
+
+
+		#endregion Methods 
+
     }
 
     public class AllENTDs
     {
+
+		#region Properties (3) 
+
+
         public ENTD[] ENTDs { get; private set; }
+
         public List<Event> Events { get; private set; }
+
         public List<Event> PSPEvent { get; private set; }
 
-        public byte[] PSPEventsToByteArray()
-        {
-            List<byte> result = new List<byte>();
-            if( PSPEvent != null )
-            {
-                foreach( Event e in PSPEvent )
-                {
-                    result.AddRange( e.ToByteArray() );
-                }
-                result.AddRange( new byte[1920] );
-            }
 
-            return result.ToArray();
-        }
+		#endregion Properties 
 
-        public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4, IList<byte> entd5 )
-            : this( entd1, entd2, entd3, entd4 )
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                PSPEvent = new List<Event>( 77 );
-                for( int i = 0; i < 77; i++ )
-                {
-                    PSPEvent.Add( new Event( 0x200 + i, entd5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
-                                  new Event( 0x200 + i, Resources.ENTD5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
-                }
-
-                Events.AddRange( PSPEvent );
-            }
-        }
+		#region Constructors (2) 
 
         public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4 )
         {
@@ -118,5 +116,45 @@ namespace FFTPatcher.Datatypes
                 Events.AddRange( e.Events );
             }
         }
+
+        public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4, IList<byte> entd5 )
+            : this( entd1, entd2, entd3, entd4 )
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                PSPEvent = new List<Event>( 77 );
+                for( int i = 0; i < 77; i++ )
+                {
+                    PSPEvent.Add( new Event( 0x200 + i, entd5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
+                                  new Event( 0x200 + i, Resources.ENTD5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
+                }
+
+                Events.AddRange( PSPEvent );
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (1) 
+
+
+        public byte[] PSPEventsToByteArray()
+        {
+            List<byte> result = new List<byte>();
+            if( PSPEvent != null )
+            {
+                foreach( Event e in PSPEvent )
+                {
+                    result.AddRange( e.ToByteArray() );
+                }
+                result.AddRange( new byte[1920] );
+            }
+
+            return result.ToArray();
+        }
+
+
+		#endregion Methods 
+
     }
 }

@@ -25,6 +25,36 @@ namespace FFTPatcher.TextEditor
 {
     public abstract class GenericCharMap : Dictionary<int, string>
     {
+
+		#region Fields (2) 
+
+        private static Regex regex = new Regex( @"{0x([0-9A-Fa-f]+)}" );
+        private Dictionary<string, int> reverse = null;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
+        public Dictionary<string, int> Reverse
+        {
+            get
+            {
+                if( reverse == null )
+                {
+                    reverse = BuildValueToKeyMapping();
+                }
+
+                return reverse;
+            }
+        }
+
+
+		#endregion Properties 
+
+		#region Methods (4) 
+
+
         private Dictionary<string, int> BuildValueToKeyMapping()
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
@@ -43,17 +73,19 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        private Dictionary<string, int> reverse = null;
-        public Dictionary<string, int> Reverse
+        private byte[] IntToOneOrTwoOrThreeBytes( int i )
         {
-            get
+            if( i < 256 )
             {
-                if( reverse == null )
-                {
-                    reverse = BuildValueToKeyMapping();
-                }
-
-                return reverse;
+                return new byte[] { (byte)i };
+            }
+            else if( i < 65536 )
+            {
+                return new byte[] { (byte)((i & 0xFF00) >> 8), (byte)(i & 0xFF) };
+            }
+            else
+            {
+                return new byte[] { (byte)((i & 0xFF000) >> 16), (byte)((i & 0xFF00) >> 8), (byte)(i & 0xFF) };
             }
         }
 
@@ -62,7 +94,7 @@ namespace FFTPatcher.TextEditor
             int resultPos = pos + 1;
             byte val = bytes[pos];
             int key = val;
-            if( (val >= 0xD0 && val <= 0xDA) || (val == 0xE2) || (val == 0xE3) || (val == 0xEE) )
+            if( (val >= 0xD0 && val <= 0xDA) || (val == 0xE2) || (val == 0xE3) || (val == 0xEE) || (val == 0xF5) || (val == 0xF6) )
             {
                 byte nextVal = bytes[pos + 1];
                 resultPos++;
@@ -84,8 +116,6 @@ namespace FFTPatcher.TextEditor
 
             return result;
         }
-
-        private static Regex regex = new Regex( @"{0x([0-9A-Fa-f]+)}" );
 
         public byte[] StringToByteArray( string s )
         {
@@ -135,21 +165,9 @@ namespace FFTPatcher.TextEditor
             return result.ToArray();
         }
 
-        private byte[] IntToOneOrTwoOrThreeBytes( int i )
-        {
-            if( i < 256 )
-            {
-                return new byte[] { (byte)i };
-            }
-            else if( i < 65536 )
-            {
-                return new byte[] { (byte)((i & 0xFF00) >> 8), (byte)(i & 0xFF) };
-            }
-            else
-            {
-                return new byte[] { (byte)((i & 0xFF000) >> 16), (byte)((i & 0xFF00) >> 8), (byte)(i & 0xFF) };
-            }
-        }
+
+		#endregion Methods 
+
     }
 
     public class PSPCharMap : GenericCharMap

@@ -20,7 +20,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher
 {
@@ -29,6 +28,10 @@ namespace FFTPatcher
     /// </summary>
     public static class GZip
     {
+
+		#region Methods (1) 
+
+
         /// <summary>
         /// Decompresses a file.
         /// </summary>
@@ -55,5 +58,9 @@ namespace FFTPatcher
 
             return result.ToArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

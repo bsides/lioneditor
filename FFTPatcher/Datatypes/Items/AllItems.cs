@@ -27,8 +27,22 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AllItems
     {
-        public List<Item> Items { get; private set; }
+
+		#region Fields (1) 
+
         private byte[] afterPhoenixDown;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
+        public List<Item> Items { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public AllItems( IList<byte> first )
             : this( first, null )
@@ -149,6 +163,26 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                List<string> strings = new List<string>();
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
+                return strings;
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
+            }
+        }
+
         public byte[] ToFirstByteArray()
         {
             List<byte> result = new List<byte>( 0x110A );
@@ -180,19 +214,8 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                List<string> strings = new List<string>();
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
-                return strings;
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 }

@@ -23,12 +23,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class WLDMES : BasePSXPartitionedFile
     {
+
+		#region Fields (5) 
+
+        private static string[][] entryNames;
+        private static Dictionary<string, long> locations;
         private const int numberOfSections = 112;
         private const int sectionLength = 0xB000;
         private static string[] sectionNames;
-        private static string[][] entryNames;
 
-        private static Dictionary<string, long> locations;
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -44,9 +54,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
         public override int NumberOfSections { get { return numberOfSections; } }
+
         public override int SectionLength { get { return sectionLength; } }
+
         public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static WLDMES()
         {
@@ -79,5 +95,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

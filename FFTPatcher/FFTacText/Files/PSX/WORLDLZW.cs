@@ -24,7 +24,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class WORLDLZW : BasePSXSectionedFile
     {
+
+		#region Fields (3) 
+
+        public static string[][] entryNames;
         private static Dictionary<string, long> locations;
+        private static string[] sectionNames;
+
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
+        protected override int NumberOfSections { get { return 32; } }
+
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -39,16 +54,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        protected override int NumberOfSections { get { return 32; } }
-
-        private static string[] sectionNames;
-
-        public static string[][] entryNames;
+        public override int MaxLength { get { return 0xE2DD; } }
 
         public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
-        public override int MaxLength { get { return 0xE2DD; } }
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static WORLDLZW()
         {
@@ -84,5 +97,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

@@ -24,12 +24,36 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class SpecialName
     {
+
+		#region Static Fields (2) 
+
         private static SpecialName[] pspNames = new SpecialName[256];
         private static SpecialName[] psxNames = new SpecialName[256];
+
+		#endregion Static Fields 
+
+		#region Static Properties (1) 
+
+
         public static SpecialName[] SpecialNames
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames; }
         }
+
+
+		#endregion Static Properties 
+
+		#region Properties (2) 
+
+
+        public string Name { get; private set; }
+
+        public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static SpecialName()
         {
@@ -48,23 +72,31 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public byte Value { get; private set; }
-        public string Name { get; private set; }
-
         private SpecialName( byte value, string name )
         {
             Value = value;
             Name = name;
         }
 
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
         public byte ToByte()
         {
             return Value;
         }
 
+
+
         public override string ToString()
         {
             return string.Format( "{0:X2} {1}", Value, Name );
         }
+
+
+		#endregion Methods 
+
     }
 }

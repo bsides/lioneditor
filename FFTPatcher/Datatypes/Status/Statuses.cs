@@ -23,61 +23,67 @@ namespace FFTPatcher.Datatypes
 {
     public class Statuses
     {
+
+		#region Fields (41) 
+
+        public bool Berserk;
+        public bool BloodSuck;
+        public bool Charging;
+        public bool Charm;
+        public bool Chicken;
+        public bool Confusion;
+        public bool Critical;
+        public bool Crystal;
+        public bool DarkEvilLooking;
+        public bool Darkness;
+        public bool Dead;
+        public bool DeathSentence;
+        public bool Defending;
+        public bool DontAct;
+        public bool DontMove;
+        public bool Faith;
         public static string[] FieldNames = new string[] {
             "NoEffect","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
             "Petrify","Invite","Darkness","Confusion","Silence","BloodSuck","DarkEvilLooking","Treasure",
             "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
             "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
             "Faith","Innocent","Charm","Sleep","DontMove","DontAct","Reflect","DeathSentence" };
+        public bool Float;
+        public bool Frog;
+        public bool Haste;
+        public bool Innocent;
+        public bool Invite;
+        public bool Jump;
+        public bool NoEffect;
+        public bool Oil;
+        public bool Performing;
+        public bool Petrify;
+        public bool Poison;
+        public bool Protect;
+        public bool Reflect;
+        public bool Regen;
+        public bool Reraise;
+        public bool Shell;
+        public bool Silence;
+        public bool Sleep;
+        public bool Slow;
+        public bool Stop;
+        public bool Transparent;
+        public bool Treasure;
+        public bool Undead;
+        public bool Wall;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
 
         public Statuses Default { get; private set; }
 
-        public bool NoEffect;
-        public bool Crystal;
-        public bool Dead;
-        public bool Undead;
-        public bool Charging;
-        public bool Jump;
-        public bool Defending;
-        public bool Performing;
-        public bool Petrify;
-        public bool Invite;
-        public bool Darkness;
-        public bool Confusion;
-        public bool Silence;
-        public bool BloodSuck;
-        public bool DarkEvilLooking;
-        public bool Treasure;
-        public bool Oil;
-        public bool Float;
-        public bool Reraise;
-        public bool Transparent;
-        public bool Berserk;
-        public bool Chicken;
-        public bool Frog;
-        public bool Critical;
-        public bool Poison;
-        public bool Regen;
-        public bool Protect;
-        public bool Shell;
-        public bool Haste;
-        public bool Slow;
-        public bool Stop;
-        public bool Wall;
-        public bool Faith;
-        public bool Innocent;
-        public bool Charm;
-        public bool Sleep;
-        public bool DontMove;
-        public bool DontAct;
-        public bool Reflect;
-        public bool DeathSentence;
 
-        public Statuses( IList<byte> bytes, Statuses defaults )
-            : this( bytes )
-        {
-            Default = defaults;
-        }
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public Statuses( IList<byte> bytes )
         {
@@ -86,6 +92,27 @@ namespace FFTPatcher.Datatypes
             Utilities.CopyByteToBooleans( bytes[2], ref Oil, ref Float, ref Reraise, ref Transparent, ref Berserk, ref Chicken, ref Frog, ref Critical );
             Utilities.CopyByteToBooleans( bytes[3], ref Poison, ref Regen, ref Protect, ref Shell, ref Haste, ref Slow, ref Stop, ref Wall );
             Utilities.CopyByteToBooleans( bytes[4], ref Faith, ref Innocent, ref Charm, ref Sleep, ref DontMove, ref DontAct, ref Reflect, ref DeathSentence );
+        }
+
+        public Statuses( IList<byte> bytes, Statuses defaults )
+            : this( bytes )
+        {
+            Default = defaults;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[40] { 
+                NoEffect, Crystal, Dead, Undead, Charging, Jump, Defending, Performing,
+                Petrify, Invite, Darkness, Confusion, Silence, BloodSuck, DarkEvilLooking, Treasure,
+                Oil, Float, Reraise, Transparent, Berserk, Chicken, Frog, Critical,
+                Poison, Regen, Protect, Shell, Haste, Slow, Stop, Wall,
+                Faith, Innocent, Charm, Sleep, DontMove, DontAct, Reflect, DeathSentence };
         }
 
         public byte[] ToByteArray()
@@ -99,14 +126,8 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[40] { 
-                NoEffect, Crystal, Dead, Undead, Charging, Jump, Defending, Performing,
-                Petrify, Invite, Darkness, Confusion, Silence, BloodSuck, DarkEvilLooking, Treasure,
-                Oil, Float, Reraise, Transparent, Berserk, Chicken, Frog, Critical,
-                Poison, Regen, Protect, Shell, Haste, Slow, Stop, Wall,
-                Faith, Innocent, Charm, Sleep, DontMove, DontAct, Reflect, DeathSentence };
-        }
+
+		#endregion Methods 
+
     }
 }

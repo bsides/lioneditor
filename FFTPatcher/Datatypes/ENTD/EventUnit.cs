@@ -95,74 +95,124 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class EventUnit : IEquatable<EventUnit>
     {
-        public SpriteSet SpriteSet { get; set; }
+
+		#region Static Fields (2) 
 
         public static readonly string[] Flags1FieldNames = new string[] { 
             "Male", "Female", "Monster", "JoinAfterEvent", "LoadFormation", "Blank1", "Blank2", "SaveFormation" };
         public static readonly string[] Flags2FieldNames = new string[] { 
             "AlwaysPresent", "RandomlyPresent", "Blank5", "Enemy", "Control", "Immortal", "Blank6", "Blank7" };
 
-        public bool Male;
-        public bool Female;
-        public bool Monster;
-        public bool JoinAfterEvent;
-        public bool LoadFormation;
-        public bool Blank1;
-        public bool Blank2;
-        public bool SaveFormation;
+		#endregion Static Fields 
 
-        public SpecialName SpecialName;
-        public byte Level { get; set; }
-        public Month Month { get; set; }
-        public byte Day { get; set; }
-        public byte Bravery { get; set; }
-        public byte Faith { get; set; }
-        public Job Job { get; set; }
-        public SkillSet SecondaryAction { get; set; }
-        public Ability Reaction { get; set; }
-        public Ability Support { get; set; }
-        public Ability Movement { get; set; }
-        public Item Head { get; set; }
-        public Item Body { get; set; }
-        public Item Accessory { get; set; }
-        public Item RightHand { get; set; }
-        public Item LeftHand { get; set; }
-        public byte Palette { get; set; }
+		#region Fields (17) 
 
         public bool AlwaysPresent;
-        public bool RandomlyPresent;
+        public bool Blank1;
+        public bool Blank2;
         public bool Blank5;
-        public bool Enemy;
-        public bool Control;
-        public bool Immortal;
         public bool Blank6;
         public bool Blank7;
+        public bool Control;
+        public bool Enemy;
+        public bool Female;
+        public bool Immortal;
+        public bool JoinAfterEvent;
+        public bool LoadFormation;
+        public bool Male;
+        public bool Monster;
+        public bool RandomlyPresent;
+        public bool SaveFormation;
+        public SpecialName SpecialName;
 
-        public byte X { get; set; }
-        public byte Y { get; set; }
+		#endregion Fields 
 
-        public Facing FacingDirection { get; set; }
-        public byte Unknown2 { get; set; }
-        public SkillSet SkillSet { get; set; }
-        public byte Unknown3 { get; set; }
-        public byte Unknown4 { get; set; }
-        public byte UnitID { get; set; }
-        public byte Unknown6 { get; set; }
-        public byte Unknown7 { get; set; }
-        public byte Unknown8 { get; set; }
-        public byte Unknown9 { get; set; }
-        public byte Unknown10 { get; set; }
-        public byte Unknown11 { get; set; }
-        public byte Unknown12 { get; set; }
+		#region Properties (36) 
 
-        public PreRequisiteJob PrerequisiteJob { get; set; }
-        public byte PrerequisiteJobLevel { get; set; }
+
+        public Item Accessory { get; set; }
+
+        public Item Body { get; set; }
+
+        public byte Bravery { get; set; }
+
+        public byte Day { get; set; }
 
         public EventUnit Default { get; private set; }
 
         public string Description
         {
             get { return string.Format( "Sprite: {0} | Name: {1} | Job: {2}", SpriteSet.Name, SpecialName.Name, Job.Name ); }
+        }
+
+        public Facing FacingDirection { get; set; }
+
+        public byte Faith { get; set; }
+
+        public Item Head { get; set; }
+
+        public Job Job { get; set; }
+
+        public Item LeftHand { get; set; }
+
+        public byte Level { get; set; }
+
+        public Month Month { get; set; }
+
+        public Ability Movement { get; set; }
+
+        public byte Palette { get; set; }
+
+        public PreRequisiteJob PrerequisiteJob { get; set; }
+
+        public byte PrerequisiteJobLevel { get; set; }
+
+        public Ability Reaction { get; set; }
+
+        public Item RightHand { get; set; }
+
+        public SkillSet SecondaryAction { get; set; }
+
+        public SkillSet SkillSet { get; set; }
+
+        public SpriteSet SpriteSet { get; set; }
+
+        public Ability Support { get; set; }
+
+        public byte UnitID { get; set; }
+
+        public byte Unknown10 { get; set; }
+
+        public byte Unknown11 { get; set; }
+
+        public byte Unknown12 { get; set; }
+
+        public byte Unknown2 { get; set; }
+
+        public byte Unknown3 { get; set; }
+
+        public byte Unknown4 { get; set; }
+
+        public byte Unknown6 { get; set; }
+
+        public byte Unknown7 { get; set; }
+
+        public byte Unknown8 { get; set; }
+
+        public byte Unknown9 { get; set; }
+
+        public byte X { get; set; }
+
+        public byte Y { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public EventUnit( IList<byte> bytes )
+            : this( bytes, null )
+        {
         }
 
         public EventUnit( IList<byte> bytes, EventUnit defaults )
@@ -207,9 +257,14 @@ namespace FFTPatcher.Datatypes
             Unknown12 = bytes[39];
         }
 
-        public EventUnit( IList<byte> bytes )
-            : this( bytes, null )
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public bool Equals( EventUnit other )
         {
+            return Utilities.CompareArrays( other.ToByteArray(), this.ToByteArray() );
         }
 
         public byte[] ToByteArray()
@@ -256,14 +311,15 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+
+
         public override string ToString()
         {
             return Description;
         }
 
-        public bool Equals( EventUnit other )
-        {
-            return Utilities.CompareArrays( other.ToByteArray(), this.ToByteArray() );
-        }
+
+		#endregion Methods 
+
     }
 }

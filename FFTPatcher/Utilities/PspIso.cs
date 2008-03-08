@@ -25,25 +25,23 @@ namespace FFTPatcher
 {
     public static class PspIso
     {
-        private const int bufferSize = 1024;
+
+		#region Static Fields (3) 
+
         private static byte[] buffer = new byte[1024];
-        private static byte[] jpSizes = new byte[] { 0xE4, 0xD9, 0x37, 0x00, 0x00, 0x37, 0xD9, 0xE4 };
         private static byte[] euSizes = new byte[] { 0xA4, 0x84, 0x3A, 0x00, 0x00, 0x3A, 0x84, 0xA4 };
+        private static byte[] jpSizes = new byte[] { 0xE4, 0xD9, 0x37, 0x00, 0x00, 0x37, 0xD9, 0xE4 };
 
-        public static bool IsUS( FileStream stream )
-        {
-            return CheckFile( stream, "ULUS-10297", "ULUS10297", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
-        }
+		#endregion Static Fields 
 
-        public static bool IsEU( FileStream stream )
-        {
-            return CheckFile( stream, "ULES-00850", "ULES00850", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
-        }
+		#region Fields (1) 
 
-        public static bool IsJP( FileStream stream )
-        {
-            return CheckFile( stream, "ULJM-05194", "ULJM05194", new long[] { 0x8373, 0xE000 }, new long[] { 0x2BF0128, 0xFD619FC, 0xFD97A5C } );
-        }
+        private const int bufferSize = 1024;
+
+		#endregion Fields 
+
+		#region Methods (9) 
+
 
         private static bool CheckFile( FileStream stream, string str1, string str2, long[] loc1, long[] loc2 )
         {
@@ -72,6 +70,89 @@ namespace FFTPatcher
             }
 
             return true;
+        }
+
+        private static void CopyBytes( FileStream stream, long src, long srcSize, long dest, long destOldSize )
+        {
+            long bytesRead = 0;
+            while( (bytesRead + bufferSize) < srcSize )
+            {
+                stream.Seek( src + bytesRead, SeekOrigin.Begin );
+                stream.Read( buffer, 0, bufferSize );
+                stream.Seek( dest + bytesRead, SeekOrigin.Begin );
+                stream.Write( buffer, 0, bufferSize );
+                bytesRead += bufferSize;
+            }
+
+            stream.Seek( src + bytesRead, SeekOrigin.Begin );
+            stream.Read( buffer, 0, (int)(srcSize - bytesRead) );
+            stream.Seek( dest + bytesRead, SeekOrigin.Begin );
+            stream.Write( buffer, 0, (int)(srcSize - bytesRead) );
+
+            if( destOldSize > srcSize )
+            {
+                buffer = new byte[bufferSize];
+                stream.Seek( dest + srcSize, SeekOrigin.Begin );
+                stream.Write( buffer, 0, (int)(destOldSize - srcSize) );
+            }
+        }
+
+        public static void DecryptISO( string filename )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open );
+                DecryptISO( stream );
+            }
+            catch( NotSupportedException )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                    stream = null;
+                }
+            }
+        }
+
+        public static void DecryptISO( FileStream stream )
+        {
+            if( IsJP( stream ) )
+            {
+                CopyBytes( stream, 0xFA68000, 0x37D9E4, 0x10000, 0x37DB40 );
+                stream.Seek( 0xC0A2, SeekOrigin.Begin );
+                stream.Write( jpSizes, 0, 8 );
+            }
+            else if( IsUS( stream ) || IsEU( stream ) )
+            {
+                CopyBytes( stream, 0xFED8000, 0x3A84A4, 0x10000, 0x3A8600 );
+                stream.Seek( 0xC0A2, SeekOrigin.Begin );
+                stream.Write( euSizes, 0, 8 );
+            }
+            else
+            {
+                throw new NotSupportedException( "Unrecognized image." );
+            }
+        }
+
+        public static bool IsEU( FileStream stream )
+        {
+            return CheckFile( stream, "ULES-00850", "ULES00850", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
+        }
+
+        public static bool IsJP( FileStream stream )
+        {
+            return CheckFile( stream, "ULJM-05194", "ULJM05194", new long[] { 0x8373, 0xE000 }, new long[] { 0x2BF0128, 0xFD619FC, 0xFD97A5C } );
+        }
+
+        public static bool IsUS( FileStream stream )
+        {
+            return CheckFile( stream, "ULUS-10297", "ULUS10297", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
         }
 
         public static void PatchISO( string filename )
@@ -136,72 +217,8 @@ namespace FFTPatcher
             stream.WriteArrayToPositions( FFTPatch.ENTDs.PSPEventsToByteArray(), 0x7500800 );
         }
 
-        public static void DecryptISO( string filename )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( filename, FileMode.Open );
-                DecryptISO( stream );
-            }
-            catch( NotSupportedException )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                    stream = null;
-                }
-            }
-        }
 
-        public static void DecryptISO( FileStream stream )
-        {
-            if( IsJP( stream ) )
-            {
-                CopyBytes( stream, 0xFA68000, 0x37D9E4, 0x10000, 0x37DB40 );
-                stream.Seek( 0xC0A2, SeekOrigin.Begin );
-                stream.Write( jpSizes, 0, 8 );
-            }
-            else if( IsUS( stream ) || IsEU( stream ) )
-            {
-                CopyBytes( stream, 0xFED8000, 0x3A84A4, 0x10000, 0x3A8600 );
-                stream.Seek( 0xC0A2, SeekOrigin.Begin );
-                stream.Write( euSizes, 0, 8 );
-            }
-            else
-            {
-                throw new NotSupportedException( "Unrecognized image." );
-            }
-        }
+		#endregion Methods 
 
-        private static void CopyBytes( FileStream stream, long src, long srcSize, long dest, long destOldSize )
-        {
-            long bytesRead = 0;
-            while( (bytesRead + bufferSize) < srcSize )
-            {
-                stream.Seek( src + bytesRead, SeekOrigin.Begin );
-                stream.Read( buffer, 0, bufferSize );
-                stream.Seek( dest + bytesRead, SeekOrigin.Begin );
-                stream.Write( buffer, 0, bufferSize );
-                bytesRead += bufferSize;
-            }
-
-            stream.Seek( src + bytesRead, SeekOrigin.Begin );
-            stream.Read( buffer, 0, (int)(srcSize - bytesRead) );
-            stream.Seek( dest + bytesRead, SeekOrigin.Begin );
-            stream.Write( buffer, 0, (int)(srcSize - bytesRead) );
-
-            if( destOldSize > srcSize )
-            {
-                buffer = new byte[bufferSize];
-                stream.Seek( dest + srcSize, SeekOrigin.Begin );
-                stream.Write( buffer, 0, (int)(destOldSize - srcSize) );
-            }
-        }
     }
 }

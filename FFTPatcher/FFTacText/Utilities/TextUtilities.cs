@@ -27,18 +27,29 @@ namespace FFTPatcher.TextEditor
 {
     public static class TextUtilities
     {
+
         public enum CharMapType
         {
             PSX,
             PSP
         }
 
-        public static PSXCharMap PSXMap { get; private set; }
-        public static PSPCharMap PSPMap { get; private set; }
+
+		#region Properties (3) 
+
 
         private static IDictionary<int, int> CompressionJumps { get; set; }
 
-        static TextUtilities()
+        public static PSPCharMap PSPMap { get; private set; }
+
+        public static PSXCharMap PSXMap { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+static TextUtilities()
         {
             PSXMap = new PSXCharMap();
 
@@ -296,28 +307,22 @@ namespace FFTPatcher.TextEditor
             PSPMap.Add( 0xDA66, "\xF9" );
         }
 
-        public static IList<string> ProcessList( IList<byte> bytes, CharMapType type )
-        {
-            GenericCharMap charmap = type == CharMapType.PSP ? PSPMap as GenericCharMap : PSXMap as GenericCharMap;
+		#endregion Constructors 
 
-            IList<IList<byte>> words = bytes.Split( (byte)0xFE );
+		#region Delegates (1) 
 
-            List<string> result = new List<string>( words.Count );
+        public delegate void ProgressCallback( int progress );
 
-            foreach( IList<byte> word in words )
-            {
-                StringBuilder sb = new StringBuilder();
-                int pos = 0;
-                while( pos < word.Count )
-                {
-                    sb.Append( charmap.GetNextChar( word, ref pos ) );
-                }
+		#endregion Delegates 
 
-                result.Add( sb.ToString() );
-            }
+		#region Methods (6) 
 
-            return result;
-        }
+
+        [DllImport( "FFTTextCompression.dll" )]
+        static extern void Compress( byte[] bytes, int inputLength, byte[] output, ref int outputLength );
+
+        [DllImport( "FFTTextCompression.dll" )]
+        static extern void CompressWithCallback( byte[] bytes, int inputLength, byte[] output, ref int outputLength, ProgressCallback callback );
 
         private static void ProcessPointer( IList<byte> bytes, out int length, out int jump )
         {
@@ -356,12 +361,29 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        public delegate void ProgressCallback( int progress );
+        public static IList<string> ProcessList( IList<byte> bytes, CharMapType type )
+        {
+            GenericCharMap charmap = type == CharMapType.PSP ? PSPMap as GenericCharMap : PSXMap as GenericCharMap;
 
-        [DllImport( "FFTTextCompression.dll" )]
-        static extern void Compress( byte[] bytes, int inputLength, byte[] output, ref int outputLength );
-        [DllImport( "FFTTextCompression.dll" )]
-        static extern void CompressWithCallback( byte[] bytes, int inputLength, byte[] output, ref int outputLength, ProgressCallback callback );
+            IList<IList<byte>> words = bytes.Split( (byte)0xFE );
+
+            List<string> result = new List<string>( words.Count );
+
+            foreach( IList<byte> word in words )
+            {
+                StringBuilder sb = new StringBuilder();
+                int pos = 0;
+                while( pos < word.Count )
+                {
+                    sb.Append( charmap.GetNextChar( word, ref pos ) );
+                }
+
+                result.Add( sb.ToString() );
+            }
+
+            return result;
+        }
+
         public static IList<byte> Recompress( IList<byte> bytes, ProgressCallback callback )
         {
             byte[] output = new byte[bytes.Count];
@@ -388,5 +410,9 @@ namespace FFTPatcher.TextEditor
             Array.Copy( output, result, outputLength );
             return result;
         }
+
+
+		#endregion Methods 
+
     }
 }

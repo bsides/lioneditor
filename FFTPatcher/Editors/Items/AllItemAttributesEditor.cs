@@ -25,11 +25,30 @@ namespace FFTPatcher.Editors
 {
     public partial class AllItemAttributesEditor : UserControl
     {
+
+		#region Properties (1) 
+
+
         public int SelectedIndex { get { return offsetListBox.SelectedIndex; } set { offsetListBox.SelectedIndex = value; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllItemAttributesEditor()
         {
             InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
         }
 
         public void UpdateView( AllItemAttributes attributes )
@@ -42,9 +61,8 @@ namespace FFTPatcher.Editors
             itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
         }
 
-        private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
-        }
+
+		#endregion Methods 
+
     }
 }

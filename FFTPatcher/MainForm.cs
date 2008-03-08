@@ -18,7 +18,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -28,6 +27,9 @@ namespace FFTPatcher
 {
     public partial class MainForm : Form
     {
+
+		#region Constructors (1) 
+
         public MainForm()
         {
             InitializeComponent();
@@ -56,6 +58,90 @@ namespace FFTPatcher
             FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
+		#endregion Constructors 
+
+		#region Methods (18) 
+
+
+        private void aboutMenuItem_Click( object sender, EventArgs e )
+        {
+            About a = new About();
+            a.ShowDialog( this );
+        }
+
+        private void applyBattleBinMenuItem_Click( object sender, EventArgs e )
+        {
+            applyPatchOpenFileDialog.Filter = "BATTLE.BIN|BATTLE.BIN";
+            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.PatchBattleBin( applyPatchOpenFileDialog.FileName );
+                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
+                }
+                catch( InvalidDataException )
+                {
+                    MessageBox.Show(
+                        "Could not find patch locations.\n" +
+                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
+                        "Ensure that you have selected BATTLE.BIN if you are patching Final Fantasy Tactics",
+                        "Invalid data", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void applyMenuItem_Click( object sender, System.EventArgs e )
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                applyPatchOpenFileDialog.Filter = "ISO Files (*.iso) |*.iso";
+            }
+            else
+            {
+                applyPatchOpenFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
+            }
+
+            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.ApplyPatchesToExecutable( applyPatchOpenFileDialog.FileName );
+                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
+                }
+                catch( InvalidDataException )
+                {
+                    MessageBox.Show(
+                        "Could not find patch locations.\n" +
+                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
+                        "Invalid data", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void cheatdbMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.Filter = "CWCheat DB files|cheat.db";
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    Codes.SaveToFile( saveFileDialog.FileName );
+                }
+                catch
+                {
+                    MessageBox.Show( "Could not save file.", "Error", MessageBoxButtons.OK );
+                }
+            }
+        }
+
         private void decryptMenuItem_Click( object sender, EventArgs e )
         {
             applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
@@ -80,18 +166,139 @@ namespace FFTPatcher
             }
         }
 
-        private void cheatdbMenuItem_Click( object sender, EventArgs e )
+        private void exitMenuItem_Click( object sender, System.EventArgs e )
         {
-            saveFileDialog.Filter = "CWCheat DB files|cheat.db";
+            this.Close();
+        }
+
+        private void extractFFTPackMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
+            openFileDialog.FilterIndex = 0;
+            folderBrowserDialog.Description = "Where should the files be extracted?";
+
+            bool oldEnabled = fftPatchEditor1.Enabled;
+
+            if( (openFileDialog.ShowDialog( this ) == DialogResult.OK) && (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) )
+            {
+                try
+                {
+                    FFTPack.FileProgress += FFTPack_FileProgress;
+                    progressBar.Visible = true;
+                    fftPatchEditor1.Enabled = false;
+                    FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show(
+                        "Could not extract file.\n" +
+                        "Make sure you chose the correct file and that there \n" +
+                        "enough room in the destination directory.",
+                        "Error", MessageBoxButtons.OK );
+                }
+                finally
+                {
+                    FFTPack.FileProgress -= FFTPack_FileProgress;
+                    progressBar.Visible = false;
+                    fftPatchEditor1.Enabled = oldEnabled;
+                }
+            }
+        }
+
+        private void FFTPack_FileProgress( object sender, ProgressEventArgs e )
+        {
+            progressBar.Location = new Point( (Width - progressBar.Width) / 2, (Height - progressBar.Height) / 2 );
+            progressBar.Maximum = e.TotalTasks;
+            progressBar.Minimum = 0;
+            progressBar.Value = e.TasksComplete;
+        }
+
+        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        {
+            applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            saveMenuItem.Enabled = true;
+            generateMenuItem.Enabled = true;
+            generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+
+            patchPspIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
+            cheatdbMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
+
+        }
+
+        private void generateFontMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.Filter = "FONT.BIN|FONT.BIN";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
-                    Codes.SaveToFile( saveFileDialog.FileName );
+                    FFTPatch.SaveFontsAs( saveFileDialog.FileName );
                 }
-                catch
+                catch( Exception )
                 {
-                    MessageBox.Show( "Could not save file.", "Error", MessageBoxButtons.OK );
+                    MessageBox.Show( "Could not open or create file.", "File not found", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void generateMenuItem_Click( object sender, EventArgs e )
+        {
+            folderBrowserDialog.Description = "Where should the files be exported?\nAny files in the folder you choose with the n" +
+                "ames ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, or ENTD4.ENT will be overwritte" +
+                "n.";
+            if( folderBrowserDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.ExportENTDFiles( folderBrowserDialog.SelectedPath );
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( "Could not save files.", "Error", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void newPSPMenuItem_Click( object sender, System.EventArgs e )
+        {
+            FFTPatch.New( Context.US_PSP );
+        }
+
+        private void newPSXMenuItem_Click( object sender, System.EventArgs e )
+        {
+            FFTPatch.New( Context.US_PSX );
+        }
+
+        private void openMenuItem_Click( object sender, System.EventArgs e )
+        {
+            openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                FFTPatch.LoadPatch( openFileDialog.FileName );
+            }
+        }
+
+        private void openModifiedMenuItem_Click( object sender, System.EventArgs e )
+        {
+            openFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    FFTPatch.OpenModifiedPSXFile( openFileDialog.FileName );
+                }
+                catch( InvalidDataException )
+                {
+                    MessageBox.Show(
+                        "Could not find patch locations.\n" +
+                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
+                        "Invalid data", MessageBoxButtons.OK );
+                }
+                catch( FileNotFoundException )
+                {
+                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
                 }
             }
         }
@@ -154,124 +361,6 @@ namespace FFTPatcher
             }
         }
 
-        private void extractFFTPackMenuItem_Click( object sender, EventArgs e )
-        {
-            openFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
-            openFileDialog.FilterIndex = 0;
-            folderBrowserDialog.Description = "Where should the files be extracted?";
-
-            bool oldEnabled = fftPatchEditor1.Enabled;
-
-            if( (openFileDialog.ShowDialog( this ) == DialogResult.OK) && (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) )
-            {
-                try
-                {
-                    FFTPack.FileProgress += FFTPack_FileProgress;
-                    progressBar.Visible = true;
-                    fftPatchEditor1.Enabled = false;
-                    FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show(
-                        "Could not extract file.\n" +
-                        "Make sure you chose the correct file and that there \n" +
-                        "enough room in the destination directory.",
-                        "Error", MessageBoxButtons.OK );
-                }
-                finally
-                {
-                    FFTPack.FileProgress -= FFTPack_FileProgress;
-                    progressBar.Visible = false;
-                    fftPatchEditor1.Enabled = oldEnabled;
-                }
-            }
-        }
-
-        private void FFTPack_FileProgress( object sender, ProgressEventArgs e )
-        {
-            progressBar.Location = new Point( (Width - progressBar.Width) / 2, (Height - progressBar.Height) / 2 );
-            progressBar.Maximum = e.TotalTasks;
-            progressBar.Minimum = 0;
-            progressBar.Value = e.TasksComplete;
-        }
-
-        private void generateMenuItem_Click( object sender, EventArgs e )
-        {
-            folderBrowserDialog.Description = "Where should the files be exported?\nAny files in the folder you choose with the n" +
-                "ames ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, or ENTD4.ENT will be overwritte" +
-                "n.";
-            if( folderBrowserDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.ExportENTDFiles( folderBrowserDialog.SelectedPath );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not save files.", "Error", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void aboutMenuItem_Click( object sender, EventArgs e )
-        {
-            About a = new About();
-            a.ShowDialog( this );
-        }
-
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
-        {
-            applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            saveMenuItem.Enabled = true;
-            generateMenuItem.Enabled = true;
-            generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-
-            patchPspIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
-            cheatdbMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
-
-        }
-
-        private void openModifiedMenuItem_Click( object sender, System.EventArgs e )
-        {
-            openFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.OpenModifiedPSXFile( openFileDialog.FileName );
-                }
-                catch( InvalidDataException )
-                {
-                    MessageBox.Show(
-                        "Could not find patch locations.\n" +
-                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
-                        "Invalid data", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void exitMenuItem_Click( object sender, System.EventArgs e )
-        {
-            this.Close();
-        }
-
-        private void newPSXMenuItem_Click( object sender, System.EventArgs e )
-        {
-            FFTPatch.New( Context.US_PSX );
-        }
-
-        private void newPSPMenuItem_Click( object sender, System.EventArgs e )
-        {
-            FFTPatch.New( Context.US_PSP );
-        }
-
         private void saveMenuItem_Click( object sender, System.EventArgs e )
         {
             saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
@@ -289,87 +378,7 @@ namespace FFTPatcher
         }
 
 
-        private void generateFontMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.Filter = "FONT.BIN|FONT.BIN";
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.SaveFontsAs( saveFileDialog.FileName );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not open or create file.", "File not found", MessageBoxButtons.OK );
-                }
-            }
-        }
+		#endregion Methods 
 
-
-        private void applyBattleBinMenuItem_Click( object sender, EventArgs e )
-        {
-            applyPatchOpenFileDialog.Filter = "BATTLE.BIN|BATTLE.BIN";
-            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.PatchBattleBin( applyPatchOpenFileDialog.FileName );
-                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
-                }
-                catch( InvalidDataException )
-                {
-                    MessageBox.Show(
-                        "Could not find patch locations.\n" +
-                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
-                        "Ensure that you have selected BATTLE.BIN if you are patching Final Fantasy Tactics",
-                        "Invalid data", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void applyMenuItem_Click( object sender, System.EventArgs e )
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                applyPatchOpenFileDialog.Filter = "ISO Files (*.iso) |*.iso";
-            }
-            else
-            {
-                applyPatchOpenFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
-            }
-
-            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.ApplyPatchesToExecutable( applyPatchOpenFileDialog.FileName );
-                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
-                }
-                catch( InvalidDataException )
-                {
-                    MessageBox.Show(
-                        "Could not find patch locations.\n" +
-                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
-                        "Invalid data", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void openMenuItem_Click( object sender, System.EventArgs e )
-        {
-            openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                FFTPatch.LoadPatch( openFileDialog.FileName );
-            }
-        }
     }
 }

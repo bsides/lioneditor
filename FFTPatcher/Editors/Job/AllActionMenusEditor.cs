@@ -25,6 +25,9 @@ namespace FFTPatcher.Editors
 {
     public partial class AllActionMenusEditor : UserControl
     {
+
+		#region Constructors (1) 
+
         public AllActionMenusEditor()
         {
             InitializeComponent();
@@ -41,9 +44,22 @@ namespace FFTPatcher.Editors
             dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
-        public void UpdateView( AllActionMenus actionMenus )
+		#endregion Constructors 
+
+		#region Methods (6) 
+
+
+        private void Control_KeyDown( object sender, KeyEventArgs e )
         {
-            dataGridView.DataSource = actionMenus.ActionMenus;
+            if( (e.KeyData == Keys.F12) &&
+                (dataGridView.CurrentCell is DataGridViewComboBoxCell) &&
+                (dataGridView.CurrentRow.DataBoundItem is ActionMenu) )
+            {
+                ActionMenu action = dataGridView.CurrentRow.DataBoundItem as ActionMenu;
+                DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
+                c.SelectedItem = ReflectionHelpers.GetFieldOrProperty<ActionMenuEntry>( action.Default, dataGridView.Columns[dataGridView.CurrentCell.ColumnIndex].DataPropertyName );
+                dataGridView.EndEdit();
+            }
         }
 
         private void dataGridView_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
@@ -74,6 +90,16 @@ namespace FFTPatcher.Editors
             }
         }
 
+        private void dataGridView_CellParsing( object sender, DataGridViewCellParsingEventArgs e )
+        {
+            DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
+            if( c != null )
+            {
+                e.Value = c.SelectedItem;
+                e.ParsingApplied = true;
+            }
+        }
+
         private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
         {
             if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
@@ -88,16 +114,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void dataGridView_CellParsing( object sender, DataGridViewCellParsingEventArgs e )
-        {
-            DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
-            if( c != null )
-            {
-                e.Value = c.SelectedItem;
-                e.ParsingApplied = true;
-            }
-        }
-
         private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
         {
             DataGridViewComboBoxEditingControl c = e.Control as DataGridViewComboBoxEditingControl;
@@ -109,17 +125,13 @@ namespace FFTPatcher.Editors
             e.Control.KeyDown += Control_KeyDown;
         }
 
-        private void Control_KeyDown( object sender, KeyEventArgs e )
+        public void UpdateView( AllActionMenus actionMenus )
         {
-            if( (e.KeyData == Keys.F12) &&
-                (dataGridView.CurrentCell is DataGridViewComboBoxCell) &&
-                (dataGridView.CurrentRow.DataBoundItem is ActionMenu) )
-            {
-                ActionMenu action = dataGridView.CurrentRow.DataBoundItem as ActionMenu;
-                DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
-                c.SelectedItem = ReflectionHelpers.GetFieldOrProperty<ActionMenuEntry>( action.Default, dataGridView.Columns[dataGridView.CurrentCell.ColumnIndex].DataPropertyName );
-                dataGridView.EndEdit();
-            }
+            dataGridView.DataSource = actionMenus.ActionMenus;
         }
+
+
+		#endregion Methods 
+
     }
 }

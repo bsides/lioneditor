@@ -27,9 +27,20 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Shield : Item
     {
-        public byte PhysicalBlockRate { get; set; }
+
+		#region Properties (3) 
+
+
         public byte MagicBlockRate { get; set; }
+
+        public byte PhysicalBlockRate { get; set; }
+
         public Shield ShieldDefault { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public Shield( UInt16 offset, IList<byte> itemBytes, IList<byte> shieldBytes )
             : this( offset, itemBytes, shieldBytes, null )
@@ -44,6 +55,11 @@ namespace FFTPatcher.Datatypes
             MagicBlockRate = shieldBytes[1];
         }
 
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
         public byte[] ToItemByteArray()
         {
             return base.ToByteArray().ToArray();
@@ -54,6 +70,8 @@ namespace FFTPatcher.Datatypes
             return new byte[2] { PhysicalBlockRate, MagicBlockRate };
         }
 
+
+
         public override byte[] ToFirstByteArray()
         {
             return ToItemByteArray();
@@ -63,5 +81,9 @@ namespace FFTPatcher.Datatypes
         {
             return ToShieldByteArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

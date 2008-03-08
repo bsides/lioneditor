@@ -26,7 +26,17 @@ namespace FFTPatcher.Editors
 {
     public partial class EventEditor : UserControl
     {
+
+		#region Fields (2) 
+
+        private int[] columnWidths = new int[3] { 50, 50, 50 };
         private Event evt;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public Event Event
         {
             get { return evt; }
@@ -46,6 +56,11 @@ namespace FFTPatcher.Editors
             }
         }
 
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public EventEditor()
         {
             InitializeComponent();
@@ -55,38 +70,10 @@ namespace FFTPatcher.Editors
             unitSelectorListBox.DrawMode = DrawMode.OwnerDrawFixed;
         }
 
-        private void unitSelectorListBox_DrawItem( object sender, DrawItemEventArgs e )
-        {
-            if( (e.Index > -1) && (e.Index < unitSelectorListBox.Items.Count) )
-            {
-                EventUnit unit = unitSelectorListBox.Items[e.Index] as EventUnit;
-                using( Brush textBrush = new SolidBrush( e.ForeColor ) )
-                using( Brush backBrush = new SolidBrush( e.BackColor ) )
-                {
-                    e.Graphics.FillRectangle( backBrush, e.Bounds );
-                    e.Graphics.DrawString( unit.SpriteSet.Name, e.Font, textBrush, e.Bounds.X + 0, e.Bounds.Y + 0 );
-                    e.Graphics.DrawString( unit.SpecialName.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0], e.Bounds.Y + 0 );
-                    e.Graphics.DrawString( unit.Job.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0] + columnWidths[1], e.Bounds.Y + 0 );
-                    if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )
-                    {
-                        e.DrawFocusRectangle();
-                    }
-                }
-            }
-        }
+		#endregion Constructors 
 
-        private void eventUnitEditor_DataChanged( object sender, System.EventArgs e )
-        {
-            CurrencyManager cm = (CurrencyManager)BindingContext[evt.Units];
-            cm.Refresh();
-        }
+		#region Methods (5) 
 
-        private void unitSelectorComboBox_SelectedIndexChanged( object sender, System.EventArgs e )
-        {
-            eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
-        }
-
-        private int[] columnWidths = new int[3] { 50, 50, 50 };
 
         private void DetermineColumnWidths()
         {
@@ -109,6 +96,37 @@ namespace FFTPatcher.Editors
             columnWidths[2] = maxJobWidth + 10;
         }
 
+        private void eventUnitEditor_DataChanged( object sender, System.EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[evt.Units];
+            cm.Refresh();
+        }
+
+        private void unitSelectorComboBox_SelectedIndexChanged( object sender, System.EventArgs e )
+        {
+            eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
+        }
+
+        private void unitSelectorListBox_DrawItem( object sender, DrawItemEventArgs e )
+        {
+            if( (e.Index > -1) && (e.Index < unitSelectorListBox.Items.Count) )
+            {
+                EventUnit unit = unitSelectorListBox.Items[e.Index] as EventUnit;
+                using( Brush textBrush = new SolidBrush( e.ForeColor ) )
+                using( Brush backBrush = new SolidBrush( e.BackColor ) )
+                {
+                    e.Graphics.FillRectangle( backBrush, e.Bounds );
+                    e.Graphics.DrawString( unit.SpriteSet.Name, e.Font, textBrush, e.Bounds.X + 0, e.Bounds.Y + 0 );
+                    e.Graphics.DrawString( unit.SpecialName.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0], e.Bounds.Y + 0 );
+                    e.Graphics.DrawString( unit.Job.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0] + columnWidths[1], e.Bounds.Y + 0 );
+                    if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )
+                    {
+                        e.DrawFocusRectangle();
+                    }
+                }
+            }
+        }
+
         private void UpdateView()
         {
             eventUnitEditor.SuspendLayout();
@@ -118,5 +136,9 @@ namespace FFTPatcher.Editors
             eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
             eventUnitEditor.ResumeLayout();
         }
+
+
+		#endregion Methods 
+
     }
 }

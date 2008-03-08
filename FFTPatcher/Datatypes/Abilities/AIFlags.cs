@@ -26,32 +26,39 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AIFlags
     {
-        public bool HP;
-        public bool MP;
-        public bool CancelStatus;
+
+		#region Fields (24) 
+
         public bool AddStatus;
-        public bool Stats;
-        public bool Unequip;
-        public bool TargetEnemies;
-        public bool TargetAllies;
-
-        public bool IgnoreRange;
-        public bool Reflectable;
-        public bool UndeadReverse;
-        public bool Unknown1;
-        public bool RandomHits;
-        public bool Unknown2;
-        public bool Unknown3;
-        public bool Silence; // inverted
-
+ // inverted
         public bool Blank;
+        public bool CancelStatus;
+        public bool DefenseUp;
         public bool DirectAttack;
+        public bool HP;
+        public bool IgnoreRange;
         public bool LineAttack;
-        public bool VerticalIncrease; // inverted
+        public bool MagicDefenseUp;
+        public bool MP;
+        public bool RandomHits;
+        public bool Reflectable;
+        public bool Silence;
+        public bool Stats;
+        public bool TargetAllies;
+        public bool TargetEnemies;
+ // inverted
         public bool TripleAttack;
         public bool TripleBracelet;
-        public bool MagicDefenseUp;
-        public bool DefenseUp;
+        public bool UndeadReverse;
+        public bool Unequip;
+        public bool Unknown1;
+        public bool Unknown2;
+        public bool Unknown3;
+        public bool VerticalIncrease;
+
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         public AIFlags( IList<byte> bytes )
         {
@@ -67,6 +74,19 @@ namespace FFTPatcher.Datatypes
             VerticalIncrease = !VerticalIncrease;
         }
 
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[24] { 
+                HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies,
+                IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, Silence,
+                Blank, DirectAttack, LineAttack, VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp };
+        }
+
         public byte[] ToByteArray()
         {
             byte[] result = new byte[3];
@@ -76,12 +96,8 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[24] { 
-                HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies,
-                IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, Silence,
-                Blank, DirectAttack, LineAttack, VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp };
-        }
+
+		#endregion Methods 
+
     }
 }

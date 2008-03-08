@@ -18,10 +18,11 @@
 */
 
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace FFTPatcher.TextEditor.Files
 {
-    public interface IStringSectioned
+    public interface IStringSectioned : IXmlSerializable
     {
         IList<IList<string>> Sections { get; }
         IList<string> SectionNames { get; }

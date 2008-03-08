@@ -23,15 +23,27 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public abstract class BasePSXSectionedFile : AbstractStringSectioned
     {
+
+		#region Properties (1) 
+
+
         public override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSX; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        protected BasePSXSectionedFile()
+        {
+        }
 
         protected BasePSXSectionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-        protected BasePSXSectionedFile()
-        {
-        }
+		#endregion Constructors 
+
     }
 }

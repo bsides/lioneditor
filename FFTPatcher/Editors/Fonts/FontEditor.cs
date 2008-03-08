@@ -25,7 +25,16 @@ namespace FFTPatcher.Editors
 {
     public partial class FontEditor : UserControl
     {
+
+		#region Fields (1) 
+
         private FFTFont font;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public FFTFont FFTFont 
         {
             get { return font; }
@@ -40,11 +49,21 @@ namespace FFTPatcher.Editors
             }
         }
 
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public FontEditor()
         {
             InitializeComponent();
             numericUpDown1.ValueChanged += new EventHandler( numericUpDown1_ValueChanged );
         }
+
+		#endregion Constructors 
+
+		#region Methods (1) 
+
 
         private void numericUpDown1_ValueChanged( object sender, EventArgs e )
         {
@@ -53,5 +72,9 @@ namespace FFTPatcher.Editors
                 glyphEditor1.Glyph = FFTFont.Glyphs[(int)numericUpDown1.Value];
             }
         }
+
+
+		#endregion Methods 
+
     }
 }

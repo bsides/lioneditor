@@ -27,83 +27,26 @@ namespace FFTPatcher.SpriteEditor
 {
     public class Sprite
     {
-        public Palette[] Palettes { get; set; }
-        public byte[] Pixels { get; private set; }
-        private long OriginalSize { get; set; }
+
+		#region Properties (6) 
+
+
         private bool Compressed { get; set; }
 
+        private long OriginalSize { get; set; }
+
+        public Palette[] Palettes { get; set; }
+
+        public byte[] Pixels { get; private set; }
+
         public bool SP2 { get; private set; }
+
         public bool SPR { get; private set; }
 
-        public void ImportBitmap( Bitmap bmp )
-        {
-            if( bmp.PixelFormat != PixelFormat.Format8bppIndexed )
-            {
-                throw new BadImageFormatException();
-            }
-            if( bmp.Width != 256 )
-            {
-                throw new BadImageFormatException();
-            }
 
-            Palettes = new Palette[16];
-            for( int i = 0; i < 16; i++ )
-            {
-                Palettes[i] = new Palette( bmp.Palette.Entries.Sub( 16 * i, 16 * (i + 1) - 1 ) );
-            }
+		#endregion Properties 
 
-            BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
-            for( int i = 0; (i < Pixels.Length) && (i / 256 < bmp.Height); i++ )
-            {
-                Pixels[i] = (byte)bmp.GetPixel( bmd, i % 256, i / 256 );
-            }
-
-            bmp.UnlockBits( bmd );
-        }
-
-        private static Palette BuildGreyscalePalette()
-        {
-            Color[] colors = new Color[16];
-            for( int i = 0; i < 16; i++ )
-            {
-                colors[i] = Color.FromArgb( (byte)(i << 4), (byte)(i << 4), (byte)(i << 4) );
-            }
-
-            return new Palette( colors );
-        }
-
-        private void FromSPR( IList<byte> bytes )
-        {
-            SPR = true;
-            SP2 = false;
-            Palettes = new Palette[16];
-            for( int i = 0; i < 16; i++ )
-            {
-                Palettes[i] = new Palette( bytes.Sub( i * 32, (i + 1) * 32 - 1 ) );
-            }
-
-            if( bytes.Count < 0x9200 || ((bytes.Count > 0x9200) && (bytes[0x9200] == 0x00)) )
-            {
-                Pixels = BuildPixels( bytes.Sub( 16 * 32 ), new byte[0] );
-                Compressed = false;
-            }
-            else
-            {
-                Pixels = BuildPixels( bytes.Sub( 16 * 32, 16 * 32 + 36864 - 1 ), bytes.Sub( 16 * 32 + 36864 ) );
-                Compressed = true;
-            }
-        }
-
-        private void FromSP2( IList<byte> bytes )
-        {
-            SP2 = true;
-            SPR = false;
-            Pixels = BuildPixels( bytes, new byte[0] );
-            Compressed = false;
-            Palettes = new Palette[16];
-            for( int i = 0; i < 16; i++ )
-                Palettes[i] = BuildGreyscalePalette();
-        }
+		#region Constructors (1) 
 
         public Sprite( IList<byte> bytes )
         {
@@ -118,63 +61,37 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private static byte[] Recompress( IList<byte> bytes )
+		#endregion Constructors 
+
+		#region Methods (11) 
+
+
+        private static Palette BuildGreyscalePalette()
         {
-            List<byte> realBytes = new List<byte>( bytes.Count );
-            for( int i = 0; (i + 1) < bytes.Count; i += 2 )
+            Color[] colors = new Color[16];
+            for( int i = 0; i < 16; i++ )
             {
-                realBytes.Add( bytes[i + 1] );
-                realBytes.Add( bytes[i] );
+                colors[i] = Color.FromArgb( (byte)(i << 4), (byte)(i << 4), (byte)(i << 4) );
             }
 
-            List<byte> result = new List<byte>();
-            int pos = 0;
-            while( pos < realBytes.Count )
+            return new Palette( colors );
+        }
+
+        private static byte[] BuildPixels( IList<byte> bytes, IList<byte> compressedBytes )
+        {
+            List<byte> result = new List<byte>( 36864 * 2 );
+            foreach( byte b in bytes )
             {
-                int z = NumberOfZeroes( realBytes.Sub( pos ) );
-                z = Math.Min( z, 0xFFF );
-
-                if( z == 0 )
-                {
-                    byte b = realBytes[pos];
-                    result.Add( realBytes[pos] );
-                    pos += 1;
-                }
-                else if( z < 16 )
-                {
-                    if( (z == 8) ||
-                        (z == 7) )
-                    {
-                        result.Add( 0x00 );
-                        result.Add( 0x00 );
-                        result.Add( (byte)z );
-                    }
-                    else
-                    {
-                        result.Add( 0x00 );
-                        result.Add( (byte)z );
-                    }
-                }
-                else if( z < 256 )
-                {
-                    result.Add( 0x00 );
-                    result.Add( 0x07 );
-                    result.Add( ((byte)z).GetLowerNibble() );
-                    result.Add( ((byte)z).GetUpperNibble() );
-                }
-                else if( z < 4096 )
-                {
-                    result.Add( 0x00 );
-                    result.Add( 0x08 );
-                    result.Add( ((byte)z).GetLowerNibble() );
-                    result.Add( ((byte)z).GetUpperNibble() );
-                    result.Add( (byte)((z & 0xF00) >> 8) );
-                }
-
-                pos += z;
+                result.Add( b.GetLowerNibble() );
+                result.Add( b.GetUpperNibble() );
             }
 
-            return CompressNibbles( result );
+            if( compressedBytes.Count > 0 )
+            {
+                result.AddRange( Decompress( compressedBytes ) );
+            }
+
+            return result.ToArray();
         }
 
         private static byte[] CompressNibbles( IList<byte> bytes )
@@ -192,17 +109,6 @@ namespace FFTPatcher.SpriteEditor
                 }
             }
             return result.ToArray();
-        }
-
-        private static int NumberOfZeroes( IList<byte> bytes )
-        {
-            for( int i = 0; i < bytes.Count; i++ )
-            {
-                if( bytes[i] != 0 )
-                    return i;
-            }
-
-            return bytes.Count;
         }
 
         private static byte[] Decompress( IList<byte> bytes )
@@ -267,21 +173,165 @@ namespace FFTPatcher.SpriteEditor
             return result.ToArray();
         }
 
-        private static byte[] BuildPixels( IList<byte> bytes, IList<byte> compressedBytes )
+        private void FromSP2( IList<byte> bytes )
         {
-            List<byte> result = new List<byte>( 36864 * 2 );
-            foreach( byte b in bytes )
+            SP2 = true;
+            SPR = false;
+            Pixels = BuildPixels( bytes, new byte[0] );
+            Compressed = false;
+            Palettes = new Palette[16];
+            for( int i = 0; i < 16; i++ )
+                Palettes[i] = BuildGreyscalePalette();
+        }
+
+        private void FromSPR( IList<byte> bytes )
+        {
+            SPR = true;
+            SP2 = false;
+            Palettes = new Palette[16];
+            for( int i = 0; i < 16; i++ )
             {
-                result.Add( b.GetLowerNibble() );
-                result.Add( b.GetUpperNibble() );
+                Palettes[i] = new Palette( bytes.Sub( i * 32, (i + 1) * 32 - 1 ) );
             }
 
-            if( compressedBytes.Count > 0 )
+            if( bytes.Count < 0x9200 || ((bytes.Count > 0x9200) && (bytes[0x9200] == 0x00)) )
             {
-                result.AddRange( Decompress( compressedBytes ) );
+                Pixels = BuildPixels( bytes.Sub( 16 * 32 ), new byte[0] );
+                Compressed = false;
+            }
+            else
+            {
+                Pixels = BuildPixels( bytes.Sub( 16 * 32, 16 * 32 + 36864 - 1 ), bytes.Sub( 16 * 32 + 36864 ) );
+                Compressed = true;
+            }
+        }
+
+        private static int NumberOfZeroes( IList<byte> bytes )
+        {
+            for( int i = 0; i < bytes.Count; i++ )
+            {
+                if( bytes[i] != 0 )
+                    return i;
             }
 
-            return result.ToArray();
+            return bytes.Count;
+        }
+
+        private static byte[] Recompress( IList<byte> bytes )
+        {
+            List<byte> realBytes = new List<byte>( bytes.Count );
+            for( int i = 0; (i + 1) < bytes.Count; i += 2 )
+            {
+                realBytes.Add( bytes[i + 1] );
+                realBytes.Add( bytes[i] );
+            }
+
+            List<byte> result = new List<byte>();
+            int pos = 0;
+            while( pos < realBytes.Count )
+            {
+                int z = NumberOfZeroes( realBytes.Sub( pos ) );
+                z = Math.Min( z, 0xFFF );
+
+                if( z == 0 )
+                {
+                    byte b = realBytes[pos];
+                    result.Add( realBytes[pos] );
+                    pos += 1;
+                }
+                else if( z < 16 )
+                {
+                    if( (z == 8) ||
+                        (z == 7) )
+                    {
+                        result.Add( 0x00 );
+                        result.Add( 0x00 );
+                        result.Add( (byte)z );
+                    }
+                    else
+                    {
+                        result.Add( 0x00 );
+                        result.Add( (byte)z );
+                    }
+                }
+                else if( z < 256 )
+                {
+                    result.Add( 0x00 );
+                    result.Add( 0x07 );
+                    result.Add( ((byte)z).GetLowerNibble() );
+                    result.Add( ((byte)z).GetUpperNibble() );
+                }
+                else if( z < 4096 )
+                {
+                    result.Add( 0x00 );
+                    result.Add( 0x08 );
+                    result.Add( ((byte)z).GetLowerNibble() );
+                    result.Add( ((byte)z).GetUpperNibble() );
+                    result.Add( (byte)((z & 0xF00) >> 8) );
+                }
+
+                pos += z;
+            }
+
+            return CompressNibbles( result );
+        }
+
+        public void ImportBitmap( Bitmap bmp )
+        {
+            if( bmp.PixelFormat != PixelFormat.Format8bppIndexed )
+            {
+                throw new BadImageFormatException();
+            }
+            if( bmp.Width != 256 )
+            {
+                throw new BadImageFormatException();
+            }
+
+            Palettes = new Palette[16];
+            for( int i = 0; i < 16; i++ )
+            {
+                Palettes[i] = new Palette( bmp.Palette.Entries.Sub( 16 * i, 16 * (i + 1) - 1 ) );
+            }
+
+            BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
+            for( int i = 0; (i < Pixels.Length) && (i / 256 < bmp.Height); i++ )
+            {
+                Pixels[i] = (byte)bmp.GetPixel( bmd, i % 256, i / 256 );
+            }
+
+            bmp.UnlockBits( bmd );
+        }
+
+        public unsafe Bitmap ToBitmap()
+        {
+            Bitmap bmp = new Bitmap( 256, Math.Min( 488, Pixels.Length / 256 ), PixelFormat.Format8bppIndexed );
+            ColorPalette palette = bmp.Palette;
+
+            int k = 0;
+            for( int i = 0; i < Palettes.Length; i++ )
+            {
+                for( int j = 0; j < Palettes[i].Colors.Length; j++, k++ )
+                {
+                    if( Palettes[i].Colors[j].ToArgb() == Color.Transparent.ToArgb() )
+                    {
+                        palette.Entries[k] = Color.Black;
+                    }
+                    else
+                    {
+                        palette.Entries[k] = Palettes[i].Colors[j];
+                    }
+                }
+            }
+            bmp.Palette = palette;
+
+            BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
+            for( int i = 0; (i < this.Pixels.Length) && (i / 256 < bmp.Height); i++ )
+            {
+                bmp.SetPixel( bmd, i % 256, i / 256, Pixels[i] );
+            }
+            bmp.UnlockBits( bmd );
+
+            return bmp;
         }
 
         public byte[] ToByteArray()
@@ -316,37 +366,8 @@ namespace FFTPatcher.SpriteEditor
 
             return result.ToArray();
         }
+        
+		#endregion Methods 
 
-        public unsafe Bitmap ToBitmap()
-        {
-            Bitmap bmp = new Bitmap( 256, Math.Min( 488, Pixels.Length / 256 ), PixelFormat.Format8bppIndexed );
-            ColorPalette palette = bmp.Palette;
-
-            int k = 0;
-            for( int i = 0; i < Palettes.Length; i++ )
-            {
-                for( int j = 0; j < Palettes[i].Colors.Length; j++, k++ )
-                {
-                    if( Palettes[i].Colors[j].ToArgb() == Color.Transparent.ToArgb() )
-                    {
-                        palette.Entries[k] = Color.Black;
-                    }
-                    else
-                    {
-                        palette.Entries[k] = Palettes[i].Colors[j];
-                    }
-                }
-            }
-            bmp.Palette = palette;
-
-            BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
-            for( int i = 0; (i < this.Pixels.Length) && (i / 256 < bmp.Height); i++ )
-            {
-                bmp.SetPixel( bmd, i % 256, i / 256, Pixels[i] );
-            }
-            bmp.UnlockBits( bmd );
-
-            return bmp;
-        }
     }
 }

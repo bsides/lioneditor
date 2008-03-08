@@ -26,10 +26,19 @@ namespace FFTPatcher.Editors
 {
     public partial class JobEditor : UserControl
     {
-        private Job job;
-        private bool ignoreChanges;
-        private NumericUpDownWithDefault[] spinners;
+
+		#region Fields (5) 
+
         private ComboBoxWithDefault[] comboBoxes;
+        private bool ignoreChanges;
+        private Job job;
+        private Context ourContext = Context.Default;
+        private NumericUpDownWithDefault[] spinners;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
 
         public Job Job
         {
@@ -49,6 +58,11 @@ namespace FFTPatcher.Editors
                 }
             }
         }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public JobEditor()
         {
@@ -74,14 +88,16 @@ namespace FFTPatcher.Editors
             skillSetLabel.Click += skillSetLabel_Click;
         }
 
+		#endregion Constructors 
+
+		#region Events (1) 
+
         public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
-        private void skillSetLabel_Click( object sender, EventArgs e )
-        {
-            if( SkillSetClicked != null )
-            {
-                SkillSetClicked( this, new LabelClickedEventArgs( (byte)skillsetComboBox.SelectedIndex ) );
-            }
-        }
+
+		#endregion Events 
+
+		#region Methods (4) 
+
 
         private void comboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -89,6 +105,14 @@ namespace FFTPatcher.Editors
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
+            }
+        }
+
+        private void skillSetLabel_Click( object sender, EventArgs e )
+        {
+            if( SkillSetClicked != null )
+            {
+                SkillSetClicked( this, new LabelClickedEventArgs( (byte)skillsetComboBox.SelectedIndex ) );
             }
         }
 
@@ -100,7 +124,7 @@ namespace FFTPatcher.Editors
                 ReflectionHelpers.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
-        private Context ourContext = Context.Default;
+
         private void UpdateView()
         {
             ignoreChanges = true;
@@ -160,5 +184,9 @@ namespace FFTPatcher.Editors
             startingStatusesEditor.ResumeLayout();
             this.ResumeLayout();
         }
+
+
+		#endregion Methods 
+
     }
 }

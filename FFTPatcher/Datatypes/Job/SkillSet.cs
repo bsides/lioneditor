@@ -26,8 +26,23 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class SkillSet
     {
+
+		#region Fields (4) 
+
+        private static SortedDictionary<byte, SkillSet> pspEventSkills;
         private static SkillSet[] pspSkills;
+        private static SortedDictionary<byte, SkillSet> psxEventSkills;
         private static SkillSet[] psxSkills;
+
+		#endregion Fields 
+
+		#region Properties (9) 
+
+
+        public Ability[] Actions { get; private set; }
+
+        public SkillSet Default { get; private set; }
+
         public static SkillSet[] DummySkillSets
         {
             get
@@ -36,15 +51,25 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static string[] PSXNames { get; private set; }
-        public static string[] PSPNames { get; private set; }
-
-        private static SortedDictionary<byte, SkillSet> pspEventSkills;
-        private static SortedDictionary<byte, SkillSet> psxEventSkills;
         public static SortedDictionary<byte, SkillSet> EventSkillSets
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspEventSkills : psxEventSkills; }
         }
+
+        public string Name { get; private set; }
+
+        public static string[] PSPNames { get; private set; }
+
+        public static string[] PSXNames { get; private set; }
+
+        public Ability[] TheRest { get; private set; }
+
+        public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (4) 
 
         static SkillSet()
         {
@@ -83,24 +108,10 @@ namespace FFTPatcher.Datatypes
             psxEventSkills.Add( 0xFF, equal );
         }
 
-        public byte Value { get; private set; }
-        public string Name { get; private set; }
-
         private SkillSet( string name, byte value )
         {
             Name = name;
             Value = value;
-        }
-
-        public Ability[] Actions { get; private set; }
-        public Ability[] TheRest { get; private set; }
-
-        public SkillSet Default { get; private set; }
-
-        public SkillSet( byte value, IList<byte> bytes, SkillSet defaults )
-            : this( value, bytes )
-        {
-            Default = defaults;
         }
 
         public SkillSet( byte value, IList<byte> bytes )
@@ -123,6 +134,17 @@ namespace FFTPatcher.Datatypes
                 TheRest[i] = AllAbilities.DummyAbilities[(theRest[i] ? (bytes[19 + i] + 0x100) : (bytes[19 + i]))];
             }
         }
+
+        public SkillSet( byte value, IList<byte> bytes, SkillSet defaults )
+            : this( value, bytes )
+        {
+            Default = defaults;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         public byte[] ToByteArray()
         {
@@ -166,15 +188,30 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+
+
         public override string ToString()
         {
             return Value.ToString( "X2" ) + " " + Name;
         }
+
+
+		#endregion Methods 
+
     }
 
     public class AllSkillSets
     {
+
+		#region Properties (1) 
+
+
         public SkillSet[] SkillSets { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
 
         public AllSkillSets( IList<byte> bytes )
             : this( Context.US_PSP, bytes, Resources.SkillSetsBin )
@@ -207,6 +244,23 @@ namespace FFTPatcher.Datatypes
             SkillSets = tempSkills.ToArray();
         }
 
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.SkillSetsBin, this.ToByteArray( Context.US_PSX ), 0x064A94 );
+            }
+        }
+
         public byte[] ToByteArray()
         {
             return ToByteArray( Context.US_PSP );
@@ -228,16 +282,8 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.SkillSetsBin, this.ToByteArray( Context.US_PSX ), 0x064A94 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 }

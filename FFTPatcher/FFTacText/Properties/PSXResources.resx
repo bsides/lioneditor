@@ -145,4 +145,7 @@
   <data name="WORLD_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\psx\world.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="HELPMENU_OUT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx\helpmenu.out.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

@@ -28,7 +28,8 @@ namespace FFTPatcher.Editors
     public partial class AbilityAttributesEditor : UserControl
     {
 
-        private List<NumericUpDownWithDefault> spinners;
+		#region Static Fields (2) 
+
         private static readonly List<string> FieldNames = new List<string>( new string[] {
             "Range", "Effect", "Vertical", "X", "Y", "InflictStatus", "CT", "MPCost" } );
         private static readonly List<string> FlagNames = new List<string>( new string[] {
@@ -37,7 +38,20 @@ namespace FFTPatcher.Editors
             "Reflect", "Arithmetick", "Silence", "Mimic", "NormalAttack", "Perservere", "ShowQuote", "AnimateMiss",
             "CounterFlood", "CounterMagic", "Direct", "Shirahadori", "RequiresSword", "RequiresMateriaBlade", "Evadeable", "Targeting"} );
 
+		#endregion Static Fields 
+
+		#region Fields (4) 
+
         private AbilityAttributes attributes;
+        private bool ignoreChanges = false;
+        private Context ourContext = Context.Default;
+        private List<NumericUpDownWithDefault> spinners;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public AbilityAttributes Attributes
         {
             get { return attributes; }
@@ -57,7 +71,78 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private Context ourContext = Context.Default;
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public AbilityAttributesEditor()
+        {
+            InitializeComponent();
+            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { rangeSpinner, effectSpinner, verticalSpinner, xSpinner, ySpinner, statusSpinner, ctSpinner, mpSpinner } );
+            foreach( NumericUpDownWithDefault spinner in spinners )
+            {
+                spinner.ValueChanged += spinner_ValueChanged;
+            }
+
+            formulaComboBox.SelectedIndexChanged += formulaComboBox_SelectedIndexChanged;
+            flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
+            inflictStatusLabel.Click += inflictStatusLabel_Click;
+            inflictStatusLabel.TabStop = false;
+        }
+
+		#endregion Constructors 
+
+		#region Events (1) 
+
+        public event EventHandler<LabelClickedEventArgs> LinkClicked;
+
+		#endregion Events 
+
+		#region Methods (6) 
+
+
+        private void FireLinkClickedEvent()
+        {
+            if( LinkClicked != null )
+            {
+                LinkClicked( this, new LabelClickedEventArgs( (byte)statusSpinner.Value ) );
+            }
+        }
+
+        private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ReflectionHelpers.SetFlag( attributes, FlagNames[e.Index], e.NewValue == CheckState.Checked );
+            }
+        }
+
+        private void formulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                if( attributes != null )
+                {
+                    attributes.Formula = formulaComboBox.SelectedItem as AbilityFormula;
+                }
+            }
+        }
+
+        private void inflictStatusLabel_Click( object sender, EventArgs e )
+        {
+            FireLinkClickedEvent();
+        }
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
+                int i = spinners.IndexOf( c );
+                ReflectionHelpers.SetFieldOrProperty( attributes, FieldNames[i], (byte)c.Value );
+            }
+        }
 
         private void UpdateView()
         {
@@ -98,75 +183,30 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
-        public AbilityAttributesEditor()
-        {
-            InitializeComponent();
-            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { rangeSpinner, effectSpinner, verticalSpinner, xSpinner, ySpinner, statusSpinner, ctSpinner, mpSpinner } );
-            foreach( NumericUpDownWithDefault spinner in spinners )
-            {
-                spinner.ValueChanged += spinner_ValueChanged;
-            }
 
-            formulaComboBox.SelectedIndexChanged += formulaComboBox_SelectedIndexChanged;
-            flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
-            inflictStatusLabel.Click += inflictStatusLabel_Click;
-            inflictStatusLabel.TabStop = false;
-        }
+		#endregion Methods 
 
-
-        private void inflictStatusLabel_Click( object sender, EventArgs e )
-        {
-            FireLinkClickedEvent();
-        }
-
-        public event EventHandler<LabelClickedEventArgs> LinkClicked;
-        private void FireLinkClickedEvent()
-        {
-            if( LinkClicked != null )
-            {
-                LinkClicked( this, new LabelClickedEventArgs( (byte)statusSpinner.Value ) );
-            }
-        }
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
-                int i = spinners.IndexOf( c );
-                ReflectionHelpers.SetFieldOrProperty( attributes, FieldNames[i], (byte)c.Value );
-            }
-        }
-
-        private void formulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                if( attributes != null )
-                {
-                    attributes.Formula = formulaComboBox.SelectedItem as AbilityFormula;
-                }
-            }
-        }
-
-        private bool ignoreChanges = false;
-
-        private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ReflectionHelpers.SetFlag( attributes, FlagNames[e.Index], e.NewValue == CheckState.Checked );
-            }
-        }
     }
 
     public class LabelClickedEventArgs : EventArgs
     {
+
+		#region Properties (1) 
+
+
         public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public LabelClickedEventArgs( byte value )
         {
             Value = value;
         }
+
+		#endregion Constructors 
+
     }
 }

@@ -26,18 +26,30 @@ namespace FFTPatcher
 {
     public class PSXDescriptionAttribute : DescriptionAttribute
     {
+
+		#region Constructors (1) 
+
         public PSXDescriptionAttribute( string description )
             : base( description )
         {
         }
+
+		#endregion Constructors 
+
     }
 
     public class PSPDescriptionAttribute : DescriptionAttribute
     {
+
+		#region Constructors (1) 
+
         public PSPDescriptionAttribute( string description )
             : base( description )
         {
         }
+
+		#endregion Constructors 
+
     }
     
     /// <summary>
@@ -45,32 +57,9 @@ namespace FFTPatcher
     /// </summary>
     public static class Utilities
     {
-        /// <summary>
-        /// Builds a byte from the passed booleans.
-        /// </summary>
-        public static byte ByteFromBooleans( bool msb, bool six, bool five, bool four, bool three, bool two, bool one, bool lsb )
-        {
-            bool[] flags = new bool[] { lsb, one, two, three, four, five, six, msb };
-            byte result = 0;
 
-            for( int i = 0; i < 8; i++ )
-            {
-                if( flags[i] )
-                {
-                    result |= (byte)(1 << i);
-                }
-            }
+		#region Methods (11) 
 
-            return result;
-        }
-
-        /// <summary>
-        /// Copies the numbers to the upper and lower nibbles of a byte.
-        /// </summary>
-        public static byte MoveToUpperAndLowerNibbles( int upper, int lower )
-        {
-            return (byte)(((upper & 0x0F) << 4) | (lower & 0x0F));
-        }
 
         /// <summary>
         /// Creates an array of booleans from a byte. Index 0 in the array is the least significant bit.
@@ -98,6 +87,66 @@ namespace FFTPatcher
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Builds a byte from the passed booleans.
+        /// </summary>
+        public static byte ByteFromBooleans( bool msb, bool six, bool five, bool four, bool three, bool two, bool one, bool lsb )
+        {
+            bool[] flags = new bool[] { lsb, one, two, three, four, five, six, msb };
+            byte result = 0;
+
+            for( int i = 0; i < 8; i++ )
+            {
+                if( flags[i] )
+                {
+                    result |= (byte)(1 << i);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Joins four bytes into a uint.
+        /// </summary>
+        public static UInt32 BytesToUInt32( IList<byte> bytes )
+        {
+            UInt32 result = 0;
+            result += bytes[0];
+            result += (UInt32)(bytes[1] << 8);
+            result += (UInt32)(bytes[2] << 16);
+            result += (UInt32)(bytes[3] << 24);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Joins the two bytes into a ushort.
+        /// </summary>
+        public static UInt16 BytesToUShort( byte lsb, byte msb )
+        {
+            UInt16 result = 0;
+            result += lsb;
+            result += (UInt16)(msb << 8);
+            return result;
+        }
+
+        /// <summary>
+        /// Compares two arrays of the same type.
+        /// </summary>
+        public static bool CompareArrays<T>( T[] one, T[] two ) where T : IComparable, IEquatable<T>
+        {
+            if( one.Length != two.Length )
+                return false;
+            for( long i = 0; i < one.Length; i++ )
+            {
+                if( !one[i].Equals( two[i] ) )
+                    return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -140,47 +189,6 @@ namespace FFTPatcher
         }
 
         /// <summary>
-        /// Joins the two bytes into a ushort.
-        /// </summary>
-        public static UInt16 BytesToUShort( byte lsb, byte msb )
-        {
-            UInt16 result = 0;
-            result += lsb;
-            result += (UInt16)(msb << 8);
-            return result;
-        }
-
-        /// <summary>
-        /// Joins four bytes into a uint.
-        /// </summary>
-        public static UInt32 BytesToUInt32( IList<byte> bytes )
-        {
-            UInt32 result = 0;
-            result += bytes[0];
-            result += (UInt32)(bytes[1] << 8);
-            result += (UInt32)(bytes[2] << 16);
-            result += (UInt32)(bytes[3] << 24);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Compares two arrays of the same type.
-        /// </summary>
-        public static bool CompareArrays<T>( T[] one, T[] two ) where T : IComparable, IEquatable<T>
-        {
-            if( one.Length != two.Length )
-                return false;
-            for( long i = 0; i < one.Length; i++ )
-            {
-                if( !one[i].Equals( two[i] ) )
-                    return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Iterates through an XML document, getting the string values of certain nodes.
         /// </summary>
         public static string[] GetStringsFromNumberedXmlNodes( string xmlDoc, string xPath, int length, int startIndex )
@@ -204,5 +212,17 @@ namespace FFTPatcher
         {
             return GetStringsFromNumberedXmlNodes( xmlDoc, xPath, length, 0 );
         }
+
+        /// <summary>
+        /// Copies the numbers to the upper and lower nibbles of a byte.
+        /// </summary>
+        public static byte MoveToUpperAndLowerNibbles( int upper, int lower )
+        {
+            return (byte)(((upper & 0x0F) << 4) | (lower & 0x0F));
+        }
+
+
+		#endregion Methods 
+
     }
 }

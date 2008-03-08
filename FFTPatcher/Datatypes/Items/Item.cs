@@ -28,8 +28,43 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Item
     {
-        public static List<string> PSXNames { get; private set; }
-        public static List<string> PSPNames { get; private set; }
+
+        #region Static Fields (2)
+
+        private static List<Item> pspEventItems;
+        private static List<Item> psxEventItems;
+
+        #endregion Static Fields
+
+        #region Fields (8)
+
+        private bool accessory;
+        private bool blank1;
+        private bool blank2;
+        private bool body;
+        private bool head;
+        private bool rare;
+        private bool shield;
+        private bool weapon;
+
+        #endregion Fields
+
+        #region Static Properties (7)
+
+
+        public static List<Item> DummyItems
+        {
+            get
+            {
+                return FFTPatch.Context == Context.US_PSP ? PSPDummies : PSXDummies;
+            }
+        }
+
+        public static List<Item> EventItems
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspEventItems : psxEventItems; }
+        }
+
         public static List<string> ItemNames
         {
             get
@@ -39,21 +74,67 @@ namespace FFTPatcher.Datatypes
         }
 
         public static List<Item> PSPDummies { get; private set; }
-        public static List<Item> PSXDummies { get; private set; }
-        public static List<Item> DummyItems
-        {
-            get
-            {
-                return FFTPatch.Context == Context.US_PSP ? PSPDummies : PSXDummies;
-            }
-        }
 
-        private static List<Item> pspEventItems;
-        private static List<Item> psxEventItems;
-        public static List<Item> EventItems
-        {
-            get { return FFTPatch.Context == Context.US_PSP ? pspEventItems : psxEventItems; }
-        }
+        public static List<string> PSPNames { get; private set; }
+
+        public static List<Item> PSXDummies { get; private set; }
+
+        public static List<string> PSXNames { get; private set; }
+
+
+        #endregion Static Properties
+
+        #region Properties (22)
+
+
+        public bool Accessory { get { return accessory; } set { accessory = value; } }
+
+        public bool Blank1 { get { return blank1; } set { blank1 = value; } }
+
+        public bool Blank2 { get { return blank2; } set { blank2 = value; } }
+
+        public bool Body { get { return body; } set { body = value; } }
+
+        public Item Default { get; private set; }
+
+        public byte EnemyLevel { get; set; }
+
+        public byte Graphic { get; set; }
+
+        public bool Head { get { return head; } set { head = value; } }
+
+        public ItemSubType ItemType { get; set; }
+
+        public string Name { get; private set; }
+
+        public UInt16 Offset { get; private set; }
+
+        public byte Palette { get; set; }
+
+        public UInt16 Price { get; set; }
+
+        public bool Rare { get { return rare; } set { rare = value; } }
+
+        public byte SecondTableId { get; set; }
+
+        public Item Self { get { return this; } }
+
+        public bool Shield { get { return shield; } set { shield = value; } }
+
+        public ShopAvailability ShopAvailability { get; set; }
+
+        public byte SIA { get; set; }
+
+        public byte Unknown1 { get; set; }
+
+        public byte Unknown2 { get; set; }
+
+        public bool Weapon { get { return weapon; } set { weapon = value; } }
+
+
+        #endregion Properties
+
+        #region Constructors (4)
 
         static Item()
         {
@@ -105,56 +186,8 @@ namespace FFTPatcher.Datatypes
             psxEventItems[0xFF] = none;
         }
 
-        public static Item GetItemAtOffset( UInt16 offset )
-        {
-            return DummyItems.Find(
-                delegate( Item i )
-                {
-                    return i.Offset == offset;
-                } );
-        }
-
-        public UInt16 Offset { get; private set; }
-        public string Name { get; private set; }
-        public byte Palette { get; set; }
-        public byte Graphic { get; set; }
-        public byte EnemyLevel { get; set; }
-
-        private bool weapon;
-        private bool shield;
-        private bool head;
-        private bool body;
-        private bool accessory;
-        private bool blank1;
-        private bool rare;
-        private bool blank2;
-        public bool Weapon { get { return weapon; } set { weapon = value; } }
-        public bool Shield { get { return shield; } set { shield = value; } }
-        public bool Head { get { return head; } set { head = value; } }
-        public bool Body { get { return body; } set { body = value; } }
-        public bool Accessory { get { return accessory; } set { accessory = value; } }
-        public bool Blank1 { get { return blank1; } set { blank1 = value; } }
-        public bool Rare { get { return rare; } set { rare = value; } }
-        public bool Blank2 { get { return blank2; } set { blank2 = value; } }
-
-        public byte SecondTableId { get; set; }
-        public ItemSubType ItemType { get; set; }
-        public byte Unknown1 { get; set; }
-        public byte SIA { get; set; }
-        public UInt16 Price { get; set; }
-        public ShopAvailability ShopAvailability { get; set; }
-        public byte Unknown2 { get; set; }
-        public Item Default { get; private set; }
-        public Item Self { get { return this; } }
-
         private Item()
         {
-        }
-
-        protected Item( UInt16 offset, IList<byte> bytes, Item defaults )
-            : this( offset, bytes )
-        {
-            Default = defaults;
         }
 
         protected Item( UInt16 offset, IList<byte> bytes )
@@ -174,6 +207,17 @@ namespace FFTPatcher.Datatypes
             Unknown2 = bytes[11];
         }
 
+        protected Item( UInt16 offset, IList<byte> bytes, Item defaults )
+            : this( offset, bytes )
+        {
+            Default = defaults;
+        }
+
+        #endregion Constructors
+
+        #region Methods (6)
+
+
         protected List<byte> ToByteArray()
         {
             List<byte> result = new List<byte>( 12 );
@@ -191,6 +235,30 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+        public static Item GetItemAtOffset( UInt16 offset )
+        {
+            return DummyItems.Find(
+                delegate( Item i )
+                {
+                    return i.Offset == offset;
+                } );
+        }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[8] {
+                Weapon, Shield, Head, Body, Accessory, Blank1, Rare, Blank2 };
+        }
+
+
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+
+
         public virtual byte[] ToFirstByteArray()
         {
             return new byte[0];
@@ -201,24 +269,31 @@ namespace FFTPatcher.Datatypes
             return new byte[0];
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[8] {
-                Weapon, Shield, Head, Body, Accessory, Blank1, Rare, Blank2 };
-        }
+        #endregion Methods
+
     }
 
     public class ShopAvailability
     {
+
+		#region Static Fields (1) 
+
+        private static List<ShopAvailability> all;
+
+		#endregion Static Fields 
+
+		#region Fields (3) 
+
+        private byte b;
         private string name;
         private string psxName;
 
-        private static List<ShopAvailability> all;
+		#endregion Fields 
+
+		#region Static Properties (1) 
+
+
         public static List<ShopAvailability> AllAvailabilities
         {
             get
@@ -248,20 +323,35 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        private byte b;
+
+		#endregion Static Properties 
+
+		#region Constructors (1) 
+
         private ShopAvailability()
         {
         }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        public byte ToByte()
+        {
+            return b;
+        }
+
+
 
         public override string ToString()
         {
             return FFTPatch.Context == Context.US_PSP ? name : psxName;
         }
 
-        public byte ToByte()
-        {
-            return b;
-        }
+
+		#endregion Methods 
+
     }
 
     /// <summary>

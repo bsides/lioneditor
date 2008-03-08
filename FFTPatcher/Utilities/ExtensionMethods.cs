@@ -19,10 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Text;
-using FFTPatcher.Datatypes;
 
 namespace System.Runtime.CompilerServices
 {
@@ -38,73 +36,9 @@ namespace FFTPatcher
     /// </summary>
     public static partial class ExtensionMethods
     {
-        public static int LastIndexOf<T>( this IList<T> list, T value ) where T : IEquatable<T>
-        {
-            for( int i = list.Count - 1; i >= 0; i-- )
-            {
-                if( list[i].Equals( value ) )
-                {
-                    return i;
-                }
-            }
 
-            return -1;
-        }
+		#region Methods (14) 
 
-        public static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
-        {
-            foreach( T item in items )
-            {
-                list.Add( item );
-            }
-        }
-
-        public static T[] ToArray<T>( this IList<T> list )
-        {
-            T[] result = new T[list.Count];
-            list.CopyTo( result, 0 );
-            return result;
-        }
-
-        public static void WriteArrayToPosition( this FileStream stream, byte[] array, long position )
-        {
-            stream.Seek( position, SeekOrigin.Begin );
-            stream.Write( array, 0, array.Length );
-        }
-
-        public static void WriteArrayToPositions( this FileStream stream, byte[] array, params long[] positions )
-        {
-            foreach( long position in positions )
-            {
-                stream.WriteArrayToPosition( array, position );
-            }
-        }
-
-        /// <summary>
-        /// Converts this string to an array of bytes.
-        /// Each character in the string should be a single byte ASCII character.
-        /// </summary>
-        public static byte[] ToByteArray( this string s )
-        {
-            byte[] result = new byte[s.Length];
-            for( int i = 0; i < s.Length; i++ )
-            {
-                result[i] = (byte)s[i];
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Adds <paramref name="lines"/> to the StringBuilder.
-        /// </summary>
-        public static void AppendLines( this StringBuilder sb, IEnumerable<string> lines )
-        {
-            foreach( string line in lines )
-            {
-                sb.Append( line + "\n" );
-            }
-        }
 
         /// <summary>
         /// Adds lines of text in groups of a specified size to the StringBuilder.
@@ -141,12 +75,23 @@ namespace FFTPatcher
             }
         }
 
-        /// <summary>
-        /// Gets the upper nibble of this byte.
-        /// </summary>
-        public static byte GetUpperNibble( this byte b )
+        public static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
         {
-            return (byte)((b & 0xF0) >> 4);
+            foreach( T item in items )
+            {
+                list.Add( item );
+            }
+        }
+
+        /// <summary>
+        /// Adds <paramref name="lines"/> to the StringBuilder.
+        /// </summary>
+        public static void AppendLines( this StringBuilder sb, IEnumerable<string> lines )
+        {
+            foreach( string line in lines )
+            {
+                sb.Append( line + "\n" );
+            }
         }
 
         /// <summary>
@@ -155,6 +100,49 @@ namespace FFTPatcher
         public static byte GetLowerNibble( this byte b )
         {
             return (byte)(b & 0x0F);
+        }
+
+        /// <summary>
+        /// Gets the upper nibble of this byte.
+        /// </summary>
+        public static byte GetUpperNibble( this byte b )
+        {
+            return (byte)((b & 0xF0) >> 4);
+        }
+
+        public static int LastIndexOf<T>( this IList<T> list, T value ) where T : IEquatable<T>
+        {
+            for( int i = list.Count - 1; i >= 0; i-- )
+            {
+                if( list[i].Equals( value ) )
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public static T[] ToArray<T>( this IList<T> list )
+        {
+            T[] result = new T[list.Count];
+            list.CopyTo( result, 0 );
+            return result;
+        }
+
+        /// <summary>
+        /// Converts this string to an array of bytes.
+        /// Each character in the string should be a single byte ASCII character.
+        /// </summary>
+        public static byte[] ToByteArray( this string s )
+        {
+            byte[] result = new byte[s.Length];
+            for( int i = 0; i < s.Length; i++ )
+            {
+                result[i] = (byte)s[i];
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -209,5 +197,23 @@ namespace FFTPatcher
                 return Encoding.UTF8.GetString( bytes );
             }
         }
+
+        public static void WriteArrayToPosition( this FileStream stream, byte[] array, long position )
+        {
+            stream.Seek( position, SeekOrigin.Begin );
+            stream.Write( array, 0, array.Length );
+        }
+
+        public static void WriteArrayToPositions( this FileStream stream, byte[] array, params long[] positions )
+        {
+            foreach( long position in positions )
+            {
+                stream.WriteArrayToPosition( array, position );
+            }
+        }
+
+
+		#endregion Methods 
+
     }
 }

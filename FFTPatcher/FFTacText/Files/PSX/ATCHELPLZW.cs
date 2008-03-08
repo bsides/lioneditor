@@ -24,9 +24,26 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class ATCHELPLZW : BasePSXSectionedFile
     {
+
+		#region Fields (3) 
+
+        private static string[][] entryNames;
+        private static Dictionary<string, long> locations;
+        private static string[] sectionNames = new string[21] {
+            "", "", "", "", "", "", 
+            "", "", "", "", "", "Help", 
+            "Job descriptions", "Item descriptions", "", "Ability descriptions", "", "",
+            "", "Skillset descriptions", "" };
+
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
         protected override int NumberOfSections { get { return 21; } }
 
-        private static Dictionary<string, long> locations;
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -41,17 +58,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private static string[] sectionNames = new string[21] {
-            "", "", "", "", "", "", 
-            "", "", "", "", "", "Help", 
-            "Job descriptions", "Item descriptions", "", "Ability descriptions", "", "",
-            "", "Skillset descriptions", "" };
-
-        private static string[][] entryNames;
+        public override int MaxLength { get { return 0x0160D5; } }
 
         public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
-        public override int MaxLength { get { return 0x0160D5; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
 
         static ATCHELPLZW()
         {
@@ -85,9 +99,16 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[19] = temp.ToArray();
         }
 
+        private ATCHELPLZW()
+        {
+        }
+
         public ATCHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

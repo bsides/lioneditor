@@ -25,11 +25,30 @@ namespace FFTPatcher.Editors
 {
     public partial class AllInflictStatusesEditor : UserControl
     {
+
+		#region Properties (1) 
+
+
         public int SelectedIndex { get { return offsetListBox.SelectedIndex; } set { offsetListBox.SelectedIndex = value; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllInflictStatusesEditor()
         {
             InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;
         }
 
         public void UpdateView( AllInflictStatuses statuses )
@@ -42,9 +61,8 @@ namespace FFTPatcher.Editors
             inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;
         }
 
-        private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;
-        }
+
+		#endregion Methods 
+
     }
 }

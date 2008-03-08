@@ -26,25 +26,49 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class ItemAttributes
     {
-        public byte Value { get; private set; }
 
-        public byte PA { get; set; }
-        public byte MA { get; set; }
-        public byte Speed { get; set; }
-        public byte Move { get; set; }
-        public byte Jump { get; set; }
+		#region Properties (15) 
 
-        public Statuses PermanentStatuses { get; private set; }
-        public Statuses StatusImmunity { get; private set; }
-        public Statuses StartingStatuses { get; private set; }
 
         public Elements Absorb { get; private set; }
+
         public Elements Cancel { get; private set; }
-        public Elements Half { get; private set; }
-        public Elements Weak { get; private set; }
-        public Elements Strong { get; private set; }
 
         public ItemAttributes Default { get; private set; }
+
+        public Elements Half { get; private set; }
+
+        public byte Jump { get; set; }
+
+        public byte MA { get; set; }
+
+        public byte Move { get; set; }
+
+        public byte PA { get; set; }
+
+        public Statuses PermanentStatuses { get; private set; }
+
+        public byte Speed { get; set; }
+
+        public Statuses StartingStatuses { get; private set; }
+
+        public Statuses StatusImmunity { get; private set; }
+
+        public Elements Strong { get; private set; }
+
+        public byte Value { get; private set; }
+
+        public Elements Weak { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public ItemAttributes( byte value, IList<byte> bytes )
+            : this( value, bytes, null )
+        {
+        }
 
         public ItemAttributes( byte value, IList<byte> bytes, ItemAttributes defaults )
         {
@@ -67,10 +91,10 @@ namespace FFTPatcher.Datatypes
             Strong = new Elements( bytes[24] );
         }
 
-        public ItemAttributes( byte value, IList<byte> bytes )
-            : this( value, bytes, null )
-        {
-        }
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         public byte[] ToByteArray()
         {
@@ -92,15 +116,30 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+
+
         public override string ToString()
         {
             return Value.ToString( "X2" );
         }
+
+
+		#endregion Methods 
+
     }
 
     public class AllItemAttributes
     {
+
+		#region Properties (1) 
+
+
         public ItemAttributes[] ItemAttributes { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllItemAttributes( IList<byte> first, IList<byte> second )
         {
@@ -125,6 +164,26 @@ namespace FFTPatcher.Datatypes
             ItemAttributes = temp.ToArray();
         }
 
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                List<string> strings = new List<string>();
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694 ) );
+                return strings;
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x0642C4 );
+            }
+        }
+
         public byte[] ToFirstByteArray()
         {
             List<byte> result = new List<byte>( 0x50 * 25 );
@@ -145,19 +204,8 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                List<string> strings = new List<string>();
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694 ) );
-                return strings;
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x0642C4 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 }

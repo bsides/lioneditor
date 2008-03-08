@@ -24,8 +24,17 @@ namespace FFTPatcher.Editors
 {
     public partial class StatusesEditor : UserControl
     {
-        private Statuses statuses;
+
+		#region Fields (3) 
+
         private bool ignoreChanges = false;
+        private Context ourContext = Context.Default;
+        private Statuses statuses;
+
+		#endregion Fields 
+
+		#region Properties (2) 
+
 
         public string Status { get { return statusGroupBox.Text; } set { statusGroupBox.Text = value; } }
 
@@ -48,11 +57,21 @@ namespace FFTPatcher.Editors
             }
         }
 
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public StatusesEditor()
         {
             InitializeComponent();
             statusesCheckedListBox.ItemCheck += statusesCheckedListBox_ItemCheck;
         }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         private void statusesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
@@ -62,7 +81,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private Context ourContext = Context.Default;
         private void UpdateView()
         {
             this.SuspendLayout();
@@ -86,5 +104,9 @@ namespace FFTPatcher.Editors
             statusesCheckedListBox.ResumeLayout();
             this.ResumeLayout();
         }
+
+
+		#endregion Methods 
+
     }
 }

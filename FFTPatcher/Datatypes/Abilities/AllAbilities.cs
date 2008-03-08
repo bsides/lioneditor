@@ -27,8 +27,29 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AllAbilities
     {
-        public static string[] PSXNames { get; private set; }
-        public static string[] PSPNames { get; private set; }
+
+		#region Static Fields (2) 
+
+        private static Ability[] pspEventAbilites;
+        private static Ability[] psxEventAbilites;
+
+		#endregion Static Fields 
+
+		#region Static Properties (7) 
+
+
+        public static Ability[] DummyAbilities
+        {
+            get
+            {
+                return FFTPatch.Context == Context.US_PSP ? PSPAbilities : PSXAbilities;
+            }
+        }
+
+        public static Ability[] EventAbilities
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspEventAbilites : psxEventAbilites; }
+        }
 
         /// <summary>
         /// Gets the names of all abilities, based on the current Context.
@@ -42,21 +63,27 @@ namespace FFTPatcher.Datatypes
         }
 
         public static Ability[] PSPAbilities { get; private set; }
-        public static Ability[] PSXAbilities { get; private set; }
-        public static Ability[] DummyAbilities
-        {
-            get
-            {
-                return FFTPatch.Context == Context.US_PSP ? PSPAbilities : PSXAbilities;
-            }
-        }
 
-        private static Ability[] pspEventAbilites;
-        private static Ability[] psxEventAbilites;
-        public static Ability[] EventAbilities
-        {
-            get { return FFTPatch.Context == Context.US_PSP ? pspEventAbilites : psxEventAbilites; }
-        }
+        public static string[] PSPNames { get; private set; }
+
+        public static Ability[] PSXAbilities { get; private set; }
+
+        public static string[] PSXNames { get; private set; }
+
+
+		#endregion Static Properties 
+
+		#region Properties (2) 
+
+
+        public Ability[] Abilities { get; private set; }
+
+        public Ability[] DefaultAbilities { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static AllAbilities()
         {
@@ -87,10 +114,6 @@ namespace FFTPatcher.Datatypes
             psxEventAbilites[511] = new Ability( "Nothing", 511 );
 
         }
-
-        public Ability[] DefaultAbilities { get; private set; }
-
-        public Ability[] Abilities { get; private set; }
 
         public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
         {
@@ -156,6 +179,26 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                List<string> result = new List<string>();
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
+                return result;
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
+            }
+        }
+
         public byte[] ToByteArray()
         {
             List<byte> bytes = new List<byte>();
@@ -178,21 +221,6 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                List<string> result = new List<string>();
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
-                return result;
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
-            }
-        }
-
         public byte[] ToEffectsByteArray()
         {
             List<byte> result = new List<byte>( 0x2E0 );
@@ -206,5 +234,9 @@ namespace FFTPatcher.Datatypes
 
             return result.ToArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

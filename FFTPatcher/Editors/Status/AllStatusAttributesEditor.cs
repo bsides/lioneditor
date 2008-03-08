@@ -25,9 +25,23 @@ namespace FFTPatcher.Editors
 {
     public partial class AllStatusAttributesEditor : UserControl
     {
+
+		#region Constructors (1) 
+
         public AllStatusAttributesEditor()
         {
             InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        private void listBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            StatusAttribute a = listBox.SelectedItem as StatusAttribute;
+            statusAttributeEditor.StatusAttribute = a;
         }
 
         public void UpdateView( AllStatusAttributes attributes )
@@ -40,10 +54,8 @@ namespace FFTPatcher.Editors
             statusAttributeEditor.StatusAttribute = listBox.SelectedItem as StatusAttribute;
         }
 
-        private void listBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            StatusAttribute a = listBox.SelectedItem as StatusAttribute;
-            statusAttributeEditor.StatusAttribute = a;
-        }
+
+		#endregion Methods 
+
     }
 }

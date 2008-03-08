@@ -25,16 +25,31 @@ namespace FFTPatcher.Editors
 {
     public partial class CommonAbilitiesEditor : UserControl
     {
-        private static readonly string[] PropertiesNames = new string[] { 
-            "LearnWithJP", "Action", "LearnOnHit", "Blank1", 
-            "Unknown1", "Unknown2", "Unknown3", "Blank2", 
-            "Blank3", "Blank4", "Blank5", "Unknown4" };
+
+		#region Static Fields (2) 
+
         private static readonly string[] AIPropertyNames = new string[] {
             "AIHP", "AIMP", "AICancelStatus", "AIAddStatus", "AIStats", "AIUnequip", "AITargetEnemies", "AITargetAllies",
             "AIIgnoreRange", "AIReflectable", "AIUndeadReverse", "AIUnknown1", "AIRandomHits", "AIUnknown2", "AIUnknown3", "AISilence",
             "AIBlank", "AIDirectAttack", "AILineAttack", "AIVerticalIncrease", "AITripleAttack", "AITripleBracelet", "AIMagicDefenseUp", "AIDefenseUp" };
+        private static readonly string[] PropertiesNames = new string[] { 
+            "LearnWithJP", "Action", "LearnOnHit", "Blank1", 
+            "Unknown1", "Unknown2", "Unknown3", "Blank2", 
+            "Blank3", "Blank4", "Blank5", "Unknown4" };
+
+		#endregion Static Fields 
+
+		#region Fields (3) 
 
         private Ability ability;
+        bool ignoreChanges = false;
+        private Context ourContext = Context.Default;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public Ability Ability
         {
             get { return ability; }
@@ -48,7 +63,10 @@ namespace FFTPatcher.Editors
             }
         }
 
-        bool ignoreChanges = false;
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public CommonAbilitiesEditor()
         {
@@ -76,6 +94,11 @@ namespace FFTPatcher.Editors
             aiCheckedListBox.ItemCheck += CheckedListBox_ItemCheck;
         }
 
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
         private void CheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
             if( !ignoreChanges )
@@ -101,8 +124,6 @@ namespace FFTPatcher.Editors
         {
             ReflectionHelpers.SetFlag( ability, name, newValue );
         }
-
-        private Context ourContext = Context.Default;
 
         private void UpdateView()
         {
@@ -135,5 +156,9 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
             this.ResumeLayout();
         }
+
+
+		#endregion Methods 
+
     }
 }

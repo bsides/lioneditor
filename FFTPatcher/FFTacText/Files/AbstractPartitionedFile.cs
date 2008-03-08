@@ -17,33 +17,52 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Schema;
 
 namespace FFTPatcher.TextEditor.Files
 {
     public abstract class AbstractPartitionedFile : IPartitionedFile
     {
-        public abstract int SectionLength { get; }
-        public abstract int NumberOfSections { get; }
-        protected abstract TextUtilities.CharMapType CharMap { get; }
-        public IList<IPartition> Sections { get; protected set; }
 
-        public abstract IList<string> SectionNames { get; }
+		#region Properties (3) 
 
-        public abstract IList<IList<string>> EntryNames { get; }
 
-        public abstract IDictionary<string, long> Locations { get; }
+        public int ActualLength
+        {
+            get { return ToFinalBytes().Count; }
+        }
 
         public int EstimatedLength
         {
             get { return ToFinalBytes().Count; }
         }
 
-        public int ActualLength
+        public IList<IPartition> Sections { get; protected set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        protected AbstractPartitionedFile()
         {
-            get { return ToFinalBytes().Count; }
         }
+
+        protected AbstractPartitionedFile( IList<byte> bytes )
+        {
+            Sections = new List<IPartition>( NumberOfSections );
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                Sections.Add( new FilePartition( bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], CharMap ) );
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (5) 
+
 
         protected IList<byte> ToFinalBytes()
         {
@@ -56,18 +75,81 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml( XmlReader reader )
+        {
+            reader.MoveToAttribute( "sections" );
+            int numberOfSections = reader.ReadContentAsInt();
+            reader.MoveToElement();
+            reader.ReadStartElement();
+
+            Sections = new IPartition[numberOfSections];
+
+            for( int i = 0; i < numberOfSections; i++ )
+            {
+                reader.MoveToAttribute( "entries" );
+                int numberOfEntries = reader.ReadContentAsInt();
+                reader.MoveToElement();
+                reader.MoveToAttribute( "value" );
+                int index = reader.ReadContentAsInt();
+                reader.MoveToElement();
+                reader.ReadStartElement( "section" );
+
+                string[] entries = new string[numberOfEntries];
+
+                for( int j = 0; j < numberOfEntries; j++ )
+                {
+                    reader.MoveToAttribute( "value" );
+                    int entryIndex = reader.ReadContentAsInt();
+                    reader.MoveToElement();
+                    reader.ReadStartElement( "entry" );
+                    entries[entryIndex] = reader.ReadString();
+                    reader.ReadEndElement();
+                }
+
+                Sections[index] = new FilePartition( entries, SectionLength, EntryNames[index], CharMap );
+                reader.ReadEndElement();
+            }
+
+            reader.ReadEndElement();
+        }
+
         public byte[] ToByteArray()
         {
             return ToFinalBytes().ToArray();
         }
 
-        protected AbstractPartitionedFile( IList<byte> bytes )
+        public void WriteXml( XmlWriter writer )
         {
-            Sections = new List<IPartition>( NumberOfSections );
-            for( int i = 0; i < NumberOfSections; i++ )
+            writer.WriteAttributeString( "sections", Sections.Count.ToString() );
+            for( int i = 0; i < Sections.Count; i++ )
             {
-                Sections.Add( new FilePartition( bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], CharMap ) );
+                writer.WriteStartElement( "section" );
+                writer.WriteAttributeString( "value", i.ToString() );
+                writer.WriteAttributeString( "entries", Sections[i].Entries.Count.ToString() );
+                for( int j = 0; j < Sections[i].Entries.Count; j++ )
+                {
+                    writer.WriteStartElement( "entry" );
+                    writer.WriteAttributeString( "value", j.ToString() );
+                    writer.WriteString( Sections[i].Entries[j] );
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
             }
         }
+
+
+		#endregion Methods 
+        protected abstract TextUtilities.CharMapType CharMap { get; }
+        public abstract IList<IList<string>> EntryNames { get; }
+        public abstract IDictionary<string, long> Locations { get; }
+        public abstract int NumberOfSections { get; }
+        public abstract int SectionLength { get; }
+        public abstract IList<string> SectionNames { get; }
+
     }
 }

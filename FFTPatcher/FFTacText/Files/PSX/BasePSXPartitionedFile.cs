@@ -22,11 +22,27 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public abstract class BasePSXPartitionedFile : AbstractPartitionedFile
     {
+
+		#region Properties (1) 
+
+
         protected override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSX; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        protected BasePSXPartitionedFile()
+        {
+        }
 
         protected BasePSXPartitionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

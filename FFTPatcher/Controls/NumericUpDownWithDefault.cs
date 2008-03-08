@@ -30,8 +30,15 @@ namespace FFTPatcher.Controls
     /// </summary>
     public class NumericUpDownWithDefault : NumericUpDown
     {
-        public decimal DefaultValue { get; private set; }
+
+		#region Properties (3) 
+
+
         public bool Default { get { return Value == DefaultValue; } }
+
+        public decimal DefaultValue { get; private set; }
+
+
 
         /// <summary>
         /// Gets the current value.
@@ -44,35 +51,11 @@ namespace FFTPatcher.Controls
             private set { base.Value = value; }
         }
 
-        /// <summary>
-        /// Sets the value and its default.
-        /// </summary>
-        public void SetValueAndDefault( decimal value, decimal defaultValue )
-        {
-            if( Hexadecimal )
-                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: 0x{0:X2}", (int)defaultValue ) );
-            else
-                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: {0}", defaultValue ) );
-            
-            DefaultValue = defaultValue;
-            Value = value > Maximum ? Maximum : value;
-            OnValueChanged( EventArgs.Empty );
-        }
 
-        protected override void OnKeyDown( KeyEventArgs e )
-        {
-            if( e.KeyData == Keys.F12 )
-            {
-                SetValueAndDefault( DefaultValue, DefaultValue );
-            }
-            base.OnKeyDown( e );
-        }
+		#endregion Properties 
 
-        protected override void OnEnter( EventArgs e )
-        {
-            Select( 0, Text.Length );
-            base.OnEnter( e );
-        }
+		#region Methods (5) 
+
 
         private void SetColors()
         {
@@ -93,10 +76,46 @@ namespace FFTPatcher.Controls
             }
         }
 
+        /// <summary>
+        /// Sets the value and its default.
+        /// </summary>
+        public void SetValueAndDefault( decimal value, decimal defaultValue )
+        {
+            if( Hexadecimal )
+                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: 0x{0:X2}", (int)defaultValue ) );
+            else
+                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: {0}", defaultValue ) );
+            
+            DefaultValue = defaultValue;
+            Value = value > Maximum ? Maximum : value;
+            OnValueChanged( EventArgs.Empty );
+        }
+
+
+
+        protected override void OnEnter( EventArgs e )
+        {
+            Select( 0, Text.Length );
+            base.OnEnter( e );
+        }
+
+        protected override void OnKeyDown( KeyEventArgs e )
+        {
+            if( e.KeyData == Keys.F12 )
+            {
+                SetValueAndDefault( DefaultValue, DefaultValue );
+            }
+            base.OnKeyDown( e );
+        }
+
         protected override void OnValueChanged( EventArgs e )
         {
             base.OnValueChanged( e );
             SetColors();
         }
+
+
+		#endregion Methods 
+
     }
 }

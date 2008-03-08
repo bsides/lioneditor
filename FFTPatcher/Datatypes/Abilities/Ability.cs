@@ -50,98 +50,120 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Ability
     {
-        #region Fields
 
-        private bool learnWithJP; // inverted
+		#region Fields (12) 
+
+ // inverted
         private bool action;
-        private bool learnOnHit;
         private bool blank1;
-
-        private bool unknown1;
-        private bool unknown2;
-        private bool unknown3;
         private bool blank2;
         private bool blank3;
         private bool blank4;
         private bool blank5;
+        private bool learnOnHit;
+        private bool learnWithJP;
+        private bool unknown1;
+        private bool unknown2;
+        private bool unknown3;
         private bool unknown4;
 
-        #endregion
+		#endregion Fields 
 
-        #region Properties
+		#region Properties (61) 
+
+
+        public AbilityType AbilityType { get; set; }
+
+        public bool Action { get { return action; } set { action = value; } }
+
+        public bool AIAddStatus { get { return AIFlags.AddStatus; } set { AIFlags.AddStatus = value; } }
+
+        public bool AIBlank { get { return AIFlags.Blank; } set { AIFlags.Blank = value; } }
+
+        public bool AICancelStatus { get { return AIFlags.CancelStatus; } set { AIFlags.CancelStatus = value; } }
+
+        public bool AIDefenseUp { get { return AIFlags.DefenseUp; } set { AIFlags.DefenseUp = value; } }
+
+        public bool AIDirectAttack { get { return AIFlags.DirectAttack; } set { AIFlags.DirectAttack = value; } }
+
+        public AIFlags AIFlags { get; private set; }
+
+        public bool AIHP { get { return AIFlags.HP; } set { AIFlags.HP = value; } }
+
+        public bool AIIgnoreRange { get { return AIFlags.IgnoreRange; } set { AIFlags.IgnoreRange = value; } }
+
+        public bool AILineAttack { get { return AIFlags.LineAttack; } set { AIFlags.LineAttack = value; } }
+
+        public bool AIMagicDefenseUp { get { return AIFlags.MagicDefenseUp; } set { AIFlags.MagicDefenseUp = value; } }
+
+        public bool AIMP { get { return AIFlags.MP; } set { AIFlags.MP = value; } }
+
+        public bool AIRandomHits { get { return AIFlags.RandomHits; } set { AIFlags.RandomHits = value; } }
+
+        public bool AIReflectable { get { return AIFlags.Reflectable; } set { AIFlags.Reflectable = value; } }
+
+        public bool AISilence { get { return AIFlags.Silence; } set { AIFlags.Silence = value; } }
+
+        public bool AIStats { get { return AIFlags.Stats; } set { AIFlags.Stats = value; } }
+
+        public bool AITargetAllies { get { return AIFlags.TargetAllies; } set { AIFlags.TargetAllies = value; } }
+
+        public bool AITargetEnemies { get { return AIFlags.TargetEnemies; } set { AIFlags.TargetEnemies = value; } }
+
+        public bool AITripleAttack { get { return AIFlags.TripleAttack; } set { AIFlags.TripleAttack = value; } }
+
+        public bool AITripleBracelet { get { return AIFlags.TripleBracelet; } set { AIFlags.TripleBracelet = value; } }
+
+        public bool AIUndeadReverse { get { return AIFlags.UndeadReverse; } set { AIFlags.UndeadReverse = value; } }
+
+        public bool AIUnequip { get { return AIFlags.Unequip; } set { AIFlags.Unequip = value; } }
+
+        public bool AIUnknown1 { get { return AIFlags.Unknown1; } set { AIFlags.Unknown1 = value; } }
+
+        public bool AIUnknown2 { get { return AIFlags.Unknown2; } set { AIFlags.Unknown2 = value; } }
+
+        public bool AIUnknown3 { get { return AIFlags.Unknown3; } set { AIFlags.Unknown3 = value; } }
+
+        public bool AIVerticalIncrease { get { return AIFlags.VerticalIncrease; } set { AIFlags.VerticalIncrease = value; } }
+
+        public byte ArithmetickSkill { get; set; }
+
+        public AbilityAttributes Attributes { get; private set; }
+
+        public bool Blank1 { get { return blank1; } set { blank1 = value; } }
+
+        public bool Blank2 { get { return blank2; } set { blank2 = value; } }
+
+        public bool Blank3 { get { return blank3; } set { blank3 = value; } }
+
+        public bool Blank4 { get { return blank4; } set { blank4 = value; } }
+
+        public bool Blank5 { get { return blank5; } set { blank5 = value; } }
+
+        public byte ChargeBonus { get; set; }
+
+        public byte ChargeCT { get; set; }
 
         public Ability Default { get; private set; }
 
-        #region Common
-
-        public string Name { get; private set; }
-        public UInt16 Offset { get; private set; }
-        public UInt16 JPCost { get; set; }
-        public byte LearnRate { get; set; }
-
-        public bool LearnWithJP { get { return learnWithJP; } set { learnWithJP = value; } }
-        public bool Action { get { return action; } set { action = value; } }
-        public bool LearnOnHit { get { return learnOnHit; } set { learnOnHit = value; } }
-        public bool Blank1 { get { return blank1; } set { blank1 = value; } }
-
-        public AbilityType AbilityType { get; set; }
-        public AIFlags AIFlags { get; private set; }
-
-        #region AI flags
-
-        public bool AIHP { get { return AIFlags.HP; } set { AIFlags.HP = value; } }
-        public bool AIMP { get { return AIFlags.MP; } set { AIFlags.MP = value; } }
-        public bool AICancelStatus { get { return AIFlags.CancelStatus; } set { AIFlags.CancelStatus = value; } }
-        public bool AIAddStatus { get { return AIFlags.AddStatus; } set { AIFlags.AddStatus = value; } }
-        public bool AIStats { get { return AIFlags.Stats; } set { AIFlags.Stats = value; } }
-        public bool AIUnequip { get { return AIFlags.Unequip; } set { AIFlags.Unequip = value; } }
-        public bool AITargetEnemies { get { return AIFlags.TargetEnemies; } set { AIFlags.TargetEnemies = value; } }
-        public bool AITargetAllies { get { return AIFlags.TargetAllies; } set { AIFlags.TargetAllies = value; } }
-
-        public bool AIIgnoreRange { get { return AIFlags.IgnoreRange; } set { AIFlags.IgnoreRange = value; } }
-        public bool AIReflectable { get { return AIFlags.Reflectable; } set { AIFlags.Reflectable = value; } }
-        public bool AIUndeadReverse { get { return AIFlags.UndeadReverse; } set { AIFlags.UndeadReverse = value; } }
-        public bool AIUnknown1 { get { return AIFlags.Unknown1; } set { AIFlags.Unknown1 = value; } }
-        public bool AIRandomHits { get { return AIFlags.RandomHits; } set { AIFlags.RandomHits = value; } }
-        public bool AIUnknown2 { get { return AIFlags.Unknown2; } set { AIFlags.Unknown2 = value; } }
-        public bool AIUnknown3 { get { return AIFlags.Unknown3; } set { AIFlags.Unknown3 = value; } }
-        public bool AISilence { get { return AIFlags.Silence; } set { AIFlags.Silence = value; } }
-
-        public bool AIBlank { get { return AIFlags.Blank; } set { AIFlags.Blank = value; } }
-        public bool AIDirectAttack { get { return AIFlags.DirectAttack; } set { AIFlags.DirectAttack = value; } }
-        public bool AILineAttack { get { return AIFlags.LineAttack; } set { AIFlags.LineAttack = value; } }
-        public bool AIVerticalIncrease { get { return AIFlags.VerticalIncrease; } set { AIFlags.VerticalIncrease = value; } }
-        public bool AITripleAttack { get { return AIFlags.TripleAttack; } set { AIFlags.TripleAttack = value; } }
-        public bool AITripleBracelet { get { return AIFlags.TripleBracelet; } set { AIFlags.TripleBracelet = value; } }
-        public bool AIMagicDefenseUp { get { return AIFlags.MagicDefenseUp; } set { AIFlags.MagicDefenseUp = value; } }
-        public bool AIDefenseUp { get { return AIFlags.DefenseUp; } set { AIFlags.DefenseUp = value; } }
-
-        #endregion
-
-        public bool Unknown1 { get { return unknown1; } set { unknown1 = value; } }
-        public bool Unknown2 { get { return unknown2; } set { unknown2 = value; } }
-        public bool Unknown3 { get { return unknown3; } set { unknown3 = value; } }
-        public bool Blank2 { get { return blank2; } set { blank2 = value; } }
-        public bool Blank3 { get { return blank3; } set { blank3 = value; } }
-        public bool Blank4 { get { return blank4; } set { blank4 = value; } }
-        public bool Blank5 { get { return blank5; } set { blank5 = value; } }
-        public bool Unknown4 { get { return unknown4; } set { unknown4 = value; } }
-
-        #endregion
-
-        #region Specialty
-
-        #region Normal
-
-        public bool IsNormal { get; private set; }
-        public AbilityAttributes Attributes { get; private set; }
         public Effect Effect { get; set; }
 
-        #endregion Normal
+        public bool IsArithmetick { get; private set; }
 
-        #region Item
+        public bool IsCharging { get; private set; }
 
         public bool IsItem { get; private set; }
+
+        public bool IsJumping { get; private set; }
+
+        public bool IsNormal { get; private set; }
+
+        public bool IsOther { get; private set; }
+
+        public bool IsThrowing { get; private set; }
+
+        public Item Item { get; set; }
+
         public UInt16 ItemOffset
         {
             get
@@ -150,56 +172,39 @@ namespace FFTPatcher.Datatypes
             }
             set { Item = Item.GetItemAtOffset( value ); }
         }
-        public Item Item { get; set; }
 
-        #endregion Item
+        public UInt16 JPCost { get; set; }
 
-        #region Throwing
-
-        public bool IsThrowing { get; private set; }
-        public ItemSubType Throwing { get; set; }
-
-        #endregion Throwing
-
-        #region Jumping
-
-        public bool IsJumping { get; private set; }
         public byte JumpHorizontal { get; set; }
+
         public byte JumpVertical { get; set; }
 
-        #endregion Jumping
+        public bool LearnOnHit { get { return learnOnHit; } set { learnOnHit = value; } }
 
-        #region Charging
+        public byte LearnRate { get; set; }
 
-        public bool IsCharging { get; private set; }
-        public byte ChargeCT { get; set; }
-        public byte ChargeBonus { get; set; }
+        public bool LearnWithJP { get { return learnWithJP; } set { learnWithJP = value; } }
 
-        #endregion Charging
+        public string Name { get; private set; }
 
-        #region Arithmeticks
+        public UInt16 Offset { get; private set; }
 
-        public bool IsArithmetick { get; private set; }
-        public byte ArithmetickSkill { get; set; }
-
-        #endregion Arithmeticks
-
-        #region Other
-
-        public bool IsOther { get; private set; }
         public byte OtherID { get; set; }
 
-        #endregion Other
+        public ItemSubType Throwing { get; set; }
 
-        #endregion Specialty
+        public bool Unknown1 { get { return unknown1; } set { unknown1 = value; } }
 
-        #endregion
+        public bool Unknown2 { get { return unknown2; } set { unknown2 = value; } }
 
-        public Ability( string name, UInt16 offset )
-        {
-            Name = name;
-            Offset = offset;
-        }
+        public bool Unknown3 { get { return unknown3; } set { unknown3 = value; } }
+
+        public bool Unknown4 { get { return unknown4; } set { unknown4 = value; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (4) 
 
         private Ability( string name, UInt16 offset, IList<byte> first )
         {
@@ -221,14 +226,10 @@ namespace FFTPatcher.Datatypes
                 ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
         }
 
-        public Ability( string name, UInt16 offset, IList<byte> first, IList<byte> second, Ability defaults )
-            : this( name, offset, first, second )
+        public Ability( string name, UInt16 offset )
         {
-            Default = defaults;
-            if( IsNormal )
-            {
-                Attributes.Default = Default.Attributes;
-            }
+            Name = name;
+            Offset = offset;
         }
 
         public Ability( string name, UInt16 offset, IList<byte> first, IList<byte> second )
@@ -272,6 +273,28 @@ namespace FFTPatcher.Datatypes
             {
                 OtherID = second[0];
             }
+        }
+
+        public Ability( string name, UInt16 offset, IList<byte> first, IList<byte> second, Ability defaults )
+            : this( name, offset, first, second )
+        {
+            Default = defaults;
+            if( IsNormal )
+            {
+                Attributes.Default = Default.Attributes;
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (6) 
+
+
+        public bool[] PropertiesToBoolArray()
+        {
+            return new bool[12] {
+                LearnWithJP, Action, LearnOnHit, Blank1,
+                Unknown1, Unknown2, Unknown3, Blank2, Blank3, Blank4, Blank5, Unknown4 };
         }
 
         public byte[] ToByteArray()
@@ -329,16 +352,15 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
+
+
         public override string ToString()
         {
             return Name;
         }
 
-        public bool[] PropertiesToBoolArray()
-        {
-            return new bool[12] {
-                LearnWithJP, Action, LearnOnHit, Blank1,
-                Unknown1, Unknown2, Unknown3, Blank2, Blank3, Blank4, Blank5, Unknown4 };
-        }
+
+		#endregion Methods 
+
     }
 }

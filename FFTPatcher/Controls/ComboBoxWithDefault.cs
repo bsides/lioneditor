@@ -30,11 +30,25 @@ namespace FFTPatcher.Controls
     /// </summary>
     public class ComboBoxWithDefault : ComboBox
     {
+
+		#region Properties (6) 
+
+
         public object DefaultValue { get; private set; }
+
+
+
         [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
-        public new ComboBoxStyle DropDownStyle { get { return base.DropDownStyle; } private set { base.DropDownStyle = value; } }
+        public new AutoCompleteMode AutoCompleteMode { get { return base.AutoCompleteMode; } private set { base.AutoCompleteMode = value; } }
+
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+        public new AutoCompleteSource AutoCompleteSource { get { return base.AutoCompleteSource; } private set { base.AutoCompleteSource = value; } }
+
         [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new DrawMode DrawMode { get { return base.DrawMode; } private set { base.DrawMode = value; } }
+
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+        public new ComboBoxStyle DropDownStyle { get { return base.DropDownStyle; } private set { base.DropDownStyle = value; } }
 
         /// <summary>
         /// Gets the currently selected item.
@@ -45,10 +59,10 @@ namespace FFTPatcher.Controls
             private set { base.SelectedItem = value; }
         }
 
-        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
-        public new AutoCompleteSource AutoCompleteSource { get { return base.AutoCompleteSource; } private set { base.AutoCompleteSource = value; } }
-        [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
-        public new AutoCompleteMode AutoCompleteMode { get { return base.AutoCompleteMode; } private set { base.AutoCompleteMode = value; } }
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public ComboBoxWithDefault()
             : base()
@@ -58,26 +72,10 @@ namespace FFTPatcher.Controls
             AutoCompleteMode = AutoCompleteMode.Append;
         }
 
-        /// <summary>
-        /// Sets the SelectedItem and its default value.
-        /// </summary>
-        public void SetValueAndDefault( object value, object defaultValue )
-        {
-            FFTPatchEditor.ToolTip.SetToolTip( this, "Default: " + defaultValue.ToString() );
+		#endregion Constructors 
 
-            DefaultValue = defaultValue;
-            SelectedItem = value;
-            OnSelectedIndexChanged( EventArgs.Empty );
-        }
+		#region Methods (5) 
 
-        protected override void OnKeyDown( KeyEventArgs e )
-        {
-            if( e.KeyData == Keys.F12 )
-            {
-                SetValueAndDefault( DefaultValue, DefaultValue );
-            }
-            base.OnKeyDown( e );
-        }
 
         private void SetColors()
         {
@@ -98,10 +96,33 @@ namespace FFTPatcher.Controls
             }
         }
 
+        /// <summary>
+        /// Sets the SelectedItem and its default value.
+        /// </summary>
+        public void SetValueAndDefault( object value, object defaultValue )
+        {
+            FFTPatchEditor.ToolTip.SetToolTip( this, "Default: " + defaultValue.ToString() );
+
+            DefaultValue = defaultValue;
+            SelectedItem = value;
+            OnSelectedIndexChanged( EventArgs.Empty );
+        }
+
+
+
         protected override void OnInvalidated( InvalidateEventArgs e )
         {
             SetColors();
             base.OnInvalidated( e );
+        }
+
+        protected override void OnKeyDown( KeyEventArgs e )
+        {
+            if( e.KeyData == Keys.F12 )
+            {
+                SetValueAndDefault( DefaultValue, DefaultValue );
+            }
+            base.OnKeyDown( e );
         }
 
         protected override void OnSelectedIndexChanged( EventArgs e )
@@ -109,5 +130,9 @@ namespace FFTPatcher.Controls
             base.OnSelectedIndexChanged( e );
             SetColors();
         }
+
+
+		#endregion Methods 
+
     }
 }

@@ -24,6 +24,9 @@ namespace FFTPatcher.Editors
 {
     public partial class EquipmentEditor : UserControl
     {
+
+		#region Static Fields (2) 
+
         private static string[] FieldNames = new string[] {
             "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
             "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
@@ -36,8 +39,20 @@ namespace FFTPatcher.Editors
             "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "HairAdornment", "Armor",
             "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume" };
 
+		#endregion Static Fields 
+
+		#region Fields (4) 
 
         private Equipment equipment;
+        private bool ignoreChanges = false;
+        private object[] pspItems;
+        private object[] psxItems;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public Equipment Equipment
         {
             get { return equipment; }
@@ -57,9 +72,10 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private bool ignoreChanges = false;
-        private object[] pspItems;
-        private object[] psxItems;
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public EquipmentEditor()
         {
@@ -77,6 +93,11 @@ namespace FFTPatcher.Editors
                 "Armor", "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume",
                 "Unknown1", "Unknown2", "Unknown3", "Fell Sword", "Lip Rouge", "Unknown6", "Unknown7", "Unknown8"};
         }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         private void equipmentCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -114,5 +135,9 @@ namespace FFTPatcher.Editors
             equipmentCheckedListBox.ResumeLayout();
             this.ResumeLayout();
         }
+
+
+		#endregion Methods 
+
     }
 }

@@ -26,48 +26,61 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Equipment
     {
-        public bool Unused;
-        public bool Knife;
-        public bool NinjaBlade;
-        public bool Sword;
-        public bool KnightsSword;
-        public bool Katana;
+
+		#region Fields (40) 
+
+        public bool Armguard;
+        public bool Armlet;
+        public bool Armor;
         public bool Axe;
-        public bool Rod;
-        public bool Staff;
+        public bool Bag;
+        public bool Book;
+        public bool Bow;
+        public bool Cloak;
+        public bool Cloth;
+        public bool Clothing;
+        public bool Crossbow;
+        public bool FellSword;
         public bool Flail;
         public bool Gun;
-        public bool Crossbow;
-        public bool Bow;
-        public bool Instrument;
-        public bool Book;
-        public bool Polearm;
-        public bool Pole;
-        public bool Bag;
-        public bool Cloth;
-        public bool Shield;
-        public bool Helmet;
-        public bool Hat;
         public bool HairAdornment;
-        public bool Armor;
-        public bool Clothing;
-        public bool Robe;
-        public bool Shoes;
-        public bool Armguard;
-        public bool Ring;
-        public bool Armlet;
-        public bool Cloak;
+        public bool Hat;
+        public bool Helmet;
+        public bool Instrument;
+        public bool Katana;
+        public bool Knife;
+        public bool KnightsSword;
+        public bool LipRouge;
+        public bool NinjaBlade;
         public bool Perfume;
+        public bool Pole;
+        public bool Polearm;
+        public bool Ring;
+        public bool Robe;
+        public bool Rod;
+        public bool Shield;
+        public bool Shoes;
+        public bool Staff;
+        public bool Sword;
         public bool Unknown1;
         public bool Unknown2;
         public bool Unknown3;
-        public bool FellSword;
-        public bool LipRouge;
         public bool Unknown6;
         public bool Unknown7;
         public bool Unknown8;
+        public bool Unused;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
 
         public Equipment Default { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public Equipment( IList<byte> bytes )
             : this( bytes, null )
@@ -87,16 +100,10 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public byte[] ToByteArray()
-        {
-            byte[] result = new byte[5];
-            result[0] = Utilities.ByteFromBooleans( Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod );
-            result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
-            result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
-            result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
-            result[4] = Utilities.ByteFromBooleans( Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 );
-            return result;
-        }
+		#endregion Constructors 
+
+		#region Methods (4) 
+
 
         private byte[] ToByteArrayPSX()
         {
@@ -105,6 +112,27 @@ namespace FFTPatcher.Datatypes
             result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
             result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
             result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
+            return result;
+        }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[40] {
+                Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod,
+                Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm,
+                Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor,
+                Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume,
+                Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 };
+        }
+
+        public byte[] ToByteArray()
+        {
+            byte[] result = new byte[5];
+            result[0] = Utilities.ByteFromBooleans( Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod );
+            result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
+            result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
+            result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
+            result[4] = Utilities.ByteFromBooleans( Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 );
             return result;
         }
 
@@ -119,14 +147,8 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[40] {
-                Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod,
-                Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm,
-                Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor,
-                Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume,
-                Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 };
-        }
+
+		#endregion Methods 
+
     }
 }

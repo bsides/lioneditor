@@ -22,29 +22,17 @@ using System.IO;
 
 namespace FFTPatcher.Datatypes
 {
-    public class ProgressEventArgs : EventArgs
-    {
-        public int TotalTasks { get; private set; }
-        public int TasksComplete { get; private set; }
-
-        public int Percentage { get { return TasksComplete * 100 / TotalTasks; } }
-
-        public ProgressEventArgs( int done, int total )
-        {
-            TotalTasks = total;
-            TasksComplete = done;
-        }
-
-        public ProgressEventArgs( int percentage )
-        {
-            TotalTasks = 100;
-            TasksComplete = percentage;
-        }
-    }
-
     public static class FFTPack
     {
+
+		#region Events (1) 
+
         public static event EventHandler<ProgressEventArgs> FileProgress;
+
+		#endregion Events 
+
+		#region Methods (9) 
+
 
         private static void FireFileProgressEvent( int done, int total )
         {
@@ -54,47 +42,41 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static byte[] GetFile( FileStream stream, int index )
+        private static void MakeDirectories( string path, params string[] dirs )
         {
-            byte[] bytes = new byte[4];
-            stream.Seek( index * 4 + 4, SeekOrigin.Begin );
-            stream.Read( bytes, 0, 4 );
-            UInt32 start = bytes.ToUInt32();
-
-            UInt32 end;
-            if( index == 3970 )
+            foreach( string dir in dirs )
             {
-                end = (UInt32)stream.Length;
+                Directory.CreateDirectory( Path.Combine( path, dir ) );
             }
-            else
-            {
-                stream.Read( bytes, 0, 4 );
-                end = bytes.ToUInt32();
-            }
-
-            UInt32 length = end - start;
-
-            byte[] result = new byte[length];
-
-            stream.Seek( start, SeekOrigin.Begin );
-            stream.Read( result, 0, (int)length );
-
-            return result;
         }
 
-        public static void PatchFile( string filename, int index, byte[] bytes )
+        private static byte[] ReadFile( string path, int index )
         {
             FileStream stream = null;
+
             try
             {
-                stream = new FileStream( filename, FileMode.Open );
-                stream.Seek( (index - 1) * 4 + 8, SeekOrigin.Begin );
-                byte[] pointer = new byte[4];
-                stream.Read( pointer, 0, 4 );
+                if( Resources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, Resources.FFTPackFiles[index] ) ) )
+                {
+                    stream = new FileStream( Path.Combine( path, Resources.FFTPackFiles[index] ), FileMode.Open );
+                }
+                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ) ) )
+                {
+                    stream = new FileStream( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ), FileMode.Open );
+                }
+                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}.dummy", index ) ) ) )
+                {
+                    return new byte[0];
+                }
+                else
+                {
+                    throw new Exception();
+                }
 
-                stream.Seek( pointer.ToUInt32(), SeekOrigin.Begin );
+                byte[] result = new byte[stream.Length];
+                stream.Read( result, 0, (int)stream.Length );
 
-                stream.Write( bytes, 0, bytes.Length );
+                return result;
             }
             catch( Exception )
             {
@@ -104,7 +86,6 @@ namespace FFTPatcher.Datatypes
             {
                 if( stream != null )
                 {
-                    stream.Flush();
                     stream.Close();
                     stream = null;
                 }
@@ -130,14 +111,6 @@ namespace FFTPatcher.Datatypes
                     stream.Flush();
                     stream.Close();
                 }
-            }
-        }
-
-        private static void MakeDirectories( string path, params string[] dirs )
-        {
-            foreach( string dir in dirs )
-            {
-                Directory.CreateDirectory( Path.Combine( path, dir ) );
             }
         }
 
@@ -192,46 +165,32 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        private static byte[] ReadFile( string path, int index )
+        public static byte[] GetFile( FileStream stream, int index )
         {
-            FileStream stream = null;
+            byte[] bytes = new byte[4];
+            stream.Seek( index * 4 + 4, SeekOrigin.Begin );
+            stream.Read( bytes, 0, 4 );
+            UInt32 start = bytes.ToUInt32();
 
-            try
+            UInt32 end;
+            if( index == 3970 )
             {
-                if( Resources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, Resources.FFTPackFiles[index] ) ) )
-                {
-                    stream = new FileStream( Path.Combine( path, Resources.FFTPackFiles[index] ), FileMode.Open );
-                }
-                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ) ) )
-                {
-                    stream = new FileStream( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ), FileMode.Open );
-                }
-                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}.dummy", index ) ) ) )
-                {
-                    return new byte[0];
-                }
-                else
-                {
-                    throw new Exception();
-                }
+                end = (UInt32)stream.Length;
+            }
+            else
+            {
+                stream.Read( bytes, 0, 4 );
+                end = bytes.ToUInt32();
+            }
 
-                byte[] result = new byte[stream.Length];
-                stream.Read( result, 0, (int)stream.Length );
+            UInt32 length = end - start;
 
-                return result;
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Close();
-                    stream = null;
-                }
-            }
+            byte[] result = new byte[length];
+
+            stream.Seek( start, SeekOrigin.Begin );
+            stream.Read( result, 0, (int)length );
+
+            return result;
         }
 
         public static void MergeDumpedFiles( string path, string filename )
@@ -286,5 +245,71 @@ namespace FFTPatcher.Datatypes
                 }
             }
         }
+
+        public static void PatchFile( string filename, int index, byte[] bytes )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open );
+                stream.Seek( (index - 1) * 4 + 8, SeekOrigin.Begin );
+                byte[] pointer = new byte[4];
+                stream.Read( pointer, 0, 4 );
+
+                stream.Seek( pointer.ToUInt32(), SeekOrigin.Begin );
+
+                stream.Write( bytes, 0, bytes.Length );
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                    stream = null;
+                }
+            }
+        }
+
+
+		#endregion Methods 
+
+    }
+
+    public class ProgressEventArgs : EventArgs
+    {
+
+		#region Properties (3) 
+
+
+        public int Percentage { get { return TasksComplete * 100 / TotalTasks; } }
+
+        public int TasksComplete { get; private set; }
+
+        public int TotalTasks { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public ProgressEventArgs( int percentage )
+        {
+            TotalTasks = 100;
+            TasksComplete = percentage;
+        }
+
+        public ProgressEventArgs( int done, int total )
+        {
+            TotalTasks = total;
+            TasksComplete = done;
+        }
+
+		#endregion Constructors 
+
     }
 }

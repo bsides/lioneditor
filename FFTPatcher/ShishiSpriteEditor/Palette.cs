@@ -25,6 +25,10 @@ namespace FFTPatcher.SpriteEditor
 {
     public static partial class ExtensionMethods
     {
+
+		#region Methods (1) 
+
+
         public static byte[] ToPALFile( this Palette[] palettes )
         {
             List<byte> result = new List<byte>( 0x418 );
@@ -41,33 +45,24 @@ namespace FFTPatcher.SpriteEditor
 
             return result.ToArray();
         }
+
+
+		#endregion Methods 
+
     }
 
     public class Palette
     {
-        public static Color BytesToColor( byte first, byte second )
-        {
-            int b = (second & 0x7C) << 1;
-            int g = (second & 0x03) << 6 | (first & 0xE0) >> 2;
-            int r = (first & 0x1F) << 3;
 
-            return Color.FromArgb( r, g, b );
-        }
+		#region Properties (1) 
 
-        public static byte[] ColorToBytes( Color c )
-        {
-            byte r = (byte)((c.R & 0xF8) >> 3);
-            byte g = (byte)((c.G & 0xF8) >> 3);
-            byte b = (byte)((c.B & 0xF8) >> 3);
-
-            byte[] result = new byte[2];
-            result[0] = (byte)(((g & 0x07) << 5) | r);
-            result[1] = (byte)((b << 2) | ((g & 0x18) >> 3));
-
-            return result;
-        }
 
         public Color[] Colors { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
 
         private Palette()
         {
@@ -98,6 +93,33 @@ namespace FFTPatcher.SpriteEditor
             {
                 Colors[0] = Color.Transparent;
             }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (6) 
+
+
+        public static Color BytesToColor( byte first, byte second )
+        {
+            int b = (second & 0x7C) << 1;
+            int g = (second & 0x03) << 6 | (first & 0xE0) >> 2;
+            int r = (first & 0x1F) << 3;
+
+            return Color.FromArgb( r, g, b );
+        }
+
+        public static byte[] ColorToBytes( Color c )
+        {
+            byte r = (byte)((c.R & 0xF8) >> 3);
+            byte g = (byte)((c.G & 0xF8) >> 3);
+            byte b = (byte)((c.B & 0xF8) >> 3);
+
+            byte[] result = new byte[2];
+            result[0] = (byte)(((g & 0x07) << 5) | r);
+            result[1] = (byte)((b << 2) | ((g & 0x18) >> 3));
+
+            return result;
         }
 
         public static Palette[] FromPALFile( IList<byte> bytes )
@@ -167,5 +189,9 @@ namespace FFTPatcher.SpriteEditor
 
             return result.ToArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

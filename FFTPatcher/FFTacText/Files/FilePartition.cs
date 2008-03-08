@@ -23,23 +23,56 @@ namespace FFTPatcher.TextEditor.Files
 {
     public class FilePartition : IPartition
     {
-        private int length;
-        public int MaxLength { get { return length; } }
-        public IList<string> EntryNames { get; private set; }
-        public IList<string> Entries { get; private set; }
-        public int Length { get { return CalcLength(); } }
+
+		#region Fields (2) 
 
         private GenericCharMap charmap;
+        private int length;
+
+		#endregion Fields 
+
+		#region Properties (4) 
+
+
+        public IList<string> Entries { get; private set; }
+
+        public IList<string> EntryNames { get; private set; }
+
+        public int Length { get { return CalcLength(); } }
+
+        public int MaxLength { get { return length; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
+
+        private FilePartition( IList<string> entryNames, TextUtilities.CharMapType charmap )
+        {
+            this.charmap = charmap == TextUtilities.CharMapType.PSP ?
+                TextUtilities.PSPMap as GenericCharMap :
+                TextUtilities.PSXMap as GenericCharMap;
+            EntryNames = entryNames;
+        }
 
         public FilePartition( IList<byte> bytes, IList<string> entryNames, TextUtilities.CharMapType charmap )
+            : this( entryNames, charmap )
         {
-            this.charmap = charmap == TextUtilities.CharMapType.PSP ? 
-                TextUtilities.PSPMap as GenericCharMap : 
-                TextUtilities.PSXMap as GenericCharMap;
             length = bytes.Count;
-            EntryNames = entryNames;
             Entries = TextUtilities.ProcessList( bytes.Sub( 0, bytes.LastIndexOf( (byte)0xFE ) ), charmap );
         }
+
+        public FilePartition( IList<string> entries, int length, IList<string> entryNames, TextUtilities.CharMapType charmap )
+            : this( entryNames, charmap )
+        {
+            this.length = length;
+            Entries = entries;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
 
         private int CalcLength()
         {
@@ -68,5 +101,9 @@ namespace FFTPatcher.TextEditor.Files
 
             return result.ToArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

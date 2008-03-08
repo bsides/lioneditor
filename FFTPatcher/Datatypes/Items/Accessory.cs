@@ -27,9 +27,25 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Accessory : Item
     {
-        public byte PhysicalEvade { get; set; }
-        public byte MagicEvade { get; set; }
+
+		#region Properties (3) 
+
+
         public Accessory AccessoryDefault { get; private set; }
+
+        public byte MagicEvade { get; set; }
+
+        public byte PhysicalEvade { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public Accessory( UInt16 offset, IList<byte> itemBytes, IList<byte> accessoryBytes )
+            : this( offset, itemBytes, accessoryBytes, null )
+        {
+        }
 
         public Accessory( UInt16 offset, IList<byte> itemBytes, IList<byte> accessoryBytes, Accessory defaults )
             : base( offset, itemBytes, defaults )
@@ -39,9 +55,14 @@ namespace FFTPatcher.Datatypes
             MagicEvade = accessoryBytes[1];
         }
 
-        public Accessory( UInt16 offset, IList<byte> itemBytes, IList<byte> accessoryBytes )
-            : this( offset, itemBytes, accessoryBytes, null )
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
+        public byte[] ToAccessoryByteArray()
         {
+            return new byte[2] { PhysicalEvade, MagicEvade };
         }
 
         public byte[] ToItemByteArray()
@@ -49,10 +70,7 @@ namespace FFTPatcher.Datatypes
             return base.ToByteArray().ToArray();
         }
 
-        public byte[] ToAccessoryByteArray()
-        {
-            return new byte[2] { PhysicalEvade, MagicEvade };
-        }
+
 
         public override byte[] ToFirstByteArray()
         {
@@ -63,5 +81,9 @@ namespace FFTPatcher.Datatypes
         {
             return ToAccessoryByteArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

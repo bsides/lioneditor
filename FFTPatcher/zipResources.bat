@@ -16,4 +16,5 @@
 @for %%i in (%1\FFTacText\Resources\PSX\*.LZW) do %1\gzip -c "%%i" > %1\FFTacText\Resources\PSX\%%~ni.lzw.gz
 @for %%i in (%1\FFTacText\Resources\PSX\*.BIN) do %1\gzip -c "%%i" > %1\FFTacText\Resources\PSX\%%~ni.bin.gz
 @for %%i in (%1\FFTacText\Resources\PSX\*.partial) do %1\gzip -c "%%i" > %1\FFTacText\Resources\PSX\%%~ni.partial.gz
+@for %%i in (%1\FFTacText\Resources\PSX\*.out) do %1\gzip -c "%%i" > %1\FFTacText\Resources\PSX\%%~ni.out.gz
 

@@ -24,8 +24,28 @@ namespace FFTPatcher.Datatypes
 {
     public class Effect
     {
-        public static Dictionary<UInt16, Effect> PSXEffects { get; private set; }
+
+		#region Static Properties (2) 
+
+
         public static Dictionary<UInt16, Effect> PSPEffects { get; private set; }
+
+        public static Dictionary<UInt16, Effect> PSXEffects { get; private set; }
+
+
+		#endregion Static Properties 
+
+		#region Properties (2) 
+
+
+        public string Name { get; private set; }
+
+        public UInt16 Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static Effect()
         {
@@ -42,18 +62,24 @@ namespace FFTPatcher.Datatypes
             PSXEffects[0xFFFF] = new Effect( 0xFFFF, "" );
         }
 
-        public UInt16 Value { get; private set; }
-        public string Name { get; private set; }
-
         private Effect( UInt16 value, string name )
         {
             Value = value;
             Name = name;
         }
 
+		#endregion Constructors 
+
+		#region Methods (1) 
+
+
         public override string ToString()
         {
             return string.Format( "{0:X3} {1}", Value, Name );
         }
+
+
+		#endregion Methods 
+
     }
 }

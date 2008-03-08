@@ -26,6 +26,10 @@ namespace FFTPatcher
 {
     static class Program
     {
+
+		#region Methods (1) 
+
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -52,5 +56,9 @@ namespace FFTPatcher
 
             Application.Run(new MainForm());
         }
+
+
+		#endregion Methods 
+
     }
 }

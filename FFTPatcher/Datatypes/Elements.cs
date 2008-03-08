@@ -21,14 +21,30 @@ namespace FFTPatcher.Datatypes
 {
     public class Elements
     {
-        public bool Fire { get; set; }
-        public bool Lightning { get; set; }
-        public bool Ice { get; set; }
-        public bool Wind { get; set; }
-        public bool Earth { get; set; }
-        public bool Water { get; set; }
-        public bool Holy { get; set; }
+
+		#region Properties (8) 
+
+
         public bool Dark { get; set; }
+
+        public bool Earth { get; set; }
+
+        public bool Fire { get; set; }
+
+        public bool Holy { get; set; }
+
+        public bool Ice { get; set; }
+
+        public bool Lightning { get; set; }
+
+        public bool Water { get; set; }
+
+        public bool Wind { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public Elements( byte b )
         {
@@ -43,15 +59,24 @@ namespace FFTPatcher.Datatypes
             Dark = flags[0];
         }
 
-        public byte ToByte()
-        {
-            return Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
-        }
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         public bool[] ToBoolArray()
         {
             return new bool[8] {
                 Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark };
         }
+
+        public byte ToByte()
+        {
+            return Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
+        }
+
+
+		#endregion Methods 
+
     }
 }

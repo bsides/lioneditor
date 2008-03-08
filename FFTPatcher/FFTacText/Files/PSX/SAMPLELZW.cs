@@ -24,7 +24,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class SAMPLELZW : BasePSXSectionedFile
     {
+
+		#region Fields (3) 
+
+        public static string[][] entryNames;
         private static Dictionary<string, long> locations;
+        private static string[] sectionNames = new string[24] { 
+            "Empty", "Empty", "Error/Battle Messages", "Battle messages",
+            "Empty", "Empty", "Job names", "Item names",
+            "Empty (spaces)", "Japanese text", "Battle menus", "Empty (spaces)",
+            "Empty", "Empty", "Ability names", "Empty", 
+            "Battle messages", "Status effects", "Misc. messages", "Empty",
+            "Empty", "Empty", "Skillset names", "Summons/Draw Out"};
+
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
+        protected override int NumberOfSections { get { return 24; } }
+
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -41,22 +62,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        protected override int NumberOfSections { get { return 24; } }
-
-        private static string[] sectionNames = new string[24] { 
-            "Empty", "Empty", "Error/Battle Messages", "Battle messages",
-            "Empty", "Empty", "Job names", "Item names",
-            "Empty (spaces)", "Japanese text", "Battle menus", "Empty (spaces)",
-            "Empty", "Empty", "Ability names", "Empty", 
-            "Battle messages", "Status effects", "Misc. messages", "Empty",
-            "Empty", "Empty", "Skillset names", "Summons/Draw Out"};
-
-        public static string[][] entryNames;
+        public override int MaxLength { get { return 0x4B88; } }
 
         public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
-        public override int MaxLength { get { return 0x4B88; } }
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static SAMPLELZW()
         {
@@ -126,5 +139,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

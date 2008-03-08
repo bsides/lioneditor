@@ -26,6 +26,10 @@ namespace FFTPatcher.TextEditor
 {
     public partial class CompressedStringSectionedEditor : StringSectionedEditor
     {
+
+		#region Properties (2) 
+
+
         protected override string LengthLabelFormatString
         {
             get { return "Estimated length: {0} bytes"; }
@@ -54,11 +58,28 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public CompressedStringSectionedEditor()
         {
             InitializeComponent();
             compressButton.Click += new EventHandler( compressButton_Click );
         }
+
+		#endregion Constructors 
+
+		#region Delegates (2) 
+
+        private delegate void FinishedCallback( ICompressed compressed, IList<byte> result );
+        private delegate void ProgressCallback( int progress );
+
+		#endregion Delegates 
+
+		#region Methods (3) 
+
 
         private void compressButton_Click( object sender, EventArgs e )
         {
@@ -92,9 +113,6 @@ namespace FFTPatcher.TextEditor
                     } ), sender as ICompressed, e.Result );
         }
 
-        private delegate void ProgressCallback( int progress );
-        private delegate void FinishedCallback( ICompressed compressed, IList<byte> result );
-
         private void compressed_ProgressChanged( object sender, CompressionEventArgs e )
         {
             compressionProgressBar.Invoke(
@@ -104,5 +122,9 @@ namespace FFTPatcher.TextEditor
                         compressionProgressBar.Value = progress;
                     } ), e.Progress );
         }
+
+
+		#endregion Methods 
+
     }
 }

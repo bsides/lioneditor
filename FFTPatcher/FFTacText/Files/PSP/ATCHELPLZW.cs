@@ -24,10 +24,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
 {
     public class ATCHELPLZW : BasePSPSectionedFile
     {
-        protected override int NumberOfSections
-        {
-            get { return 21; }
-        }
+
+		#region Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
@@ -37,8 +35,18 @@ namespace FFTPatcher.TextEditor.Files.PSP
             "Job descriptions", "Item descriptions", "", "Ability descriptions", "", "",
             "", "Skillset descriptions", "", };
 
-        public override IList<string> SectionNames { get { return sectionNames; } }
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
+        protected override int NumberOfSections
+        {
+            get { return 21; }
+        }
+
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -56,6 +64,13 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
             get { return 0x1F834; }
         }
+
+        public override IList<string> SectionNames { get { return sectionNames; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
 
         static ATCHELPLZW()
         {
@@ -97,9 +112,16 @@ namespace FFTPatcher.TextEditor.Files.PSP
             entryNames[19] = temp.ToArray();
         }
 
+        private ATCHELPLZW()
+        {
+        }
+
         public ATCHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

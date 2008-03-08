@@ -26,13 +26,25 @@ namespace FFTPatcher.Editors
 {
     public partial class GlyphEditor : UserControl
     {
-        private static Dictionary<FontColor, Brush> colors = new Dictionary<FontColor, Brush>();
-        private bool ignoreChanges = false;
-        private FontColor currentColor;
 
+		#region Static Fields (1) 
+
+        private static Dictionary<FontColor, Brush> colors = new Dictionary<FontColor, Brush>();
+
+		#endregion Static Fields 
+
+		#region Fields (4) 
+
+        private FontColor currentColor;
+        private Glyph glyph;
+        private bool ignoreChanges = false;
         private RadioButton[] radios = new RadioButton[4];
 
-        private Glyph glyph;
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public Glyph Glyph 
         {
             get { return glyph; }
@@ -50,6 +62,11 @@ namespace FFTPatcher.Editors
                 }
             }
         }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static GlyphEditor()
         {
@@ -87,53 +104,22 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void smallerThumbnailPanel_Paint( object sender, PaintEventArgs e )
+		#endregion Constructors 
+
+		#region Methods (7) 
+
+
+        private void glyphPanel_MouseClick( object sender, MouseEventArgs e )
         {
             if( Glyph != null )
             {
-                for( int i = 0; i < Glyph.Pixels.Length; i++ )
-                {
-                    int col = i % 10;
-                    int row = i / 10;
-                    e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col, row, 1, 1 ) );
-                }
-            }
-        }
-
-        private void radioButton_CheckedChanged( object sender, System.EventArgs e )
-        {
-            RadioButton r = sender as RadioButton;
-            currentColor = (FontColor)r.Tag;
-        }
-
-        private void widthSpinner_ValueChanged( object sender, System.EventArgs e )
-        {
-            if( !ignoreChanges && glyph != null )
-            {
-                glyph.Width = (byte)widthSpinner.Value;
-                glyphPanel.Invalidate();
-            }
-        }
-
-        private void thumbnailPanel_Paint( object sender, PaintEventArgs e )
-        {
-            if( Glyph != null )
-            {
-                if( e.ClipRectangle == e.Graphics.VisibleClipBounds )
-                {
-                    for( int i = 0; i < Glyph.Pixels.Length; i++ )
-                    {
-                        int col = i % 10;
-                        int row = i / 10;
-                        e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col * 2, row * 2, 2, 2 ) );
-                    }
-                }
-                else
-                {
-                    int col = e.ClipRectangle.Location.X / 2;
-                    int row = e.ClipRectangle.Location.Y / 2;
-                    e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col * 2, row * 2, 2, 2 ) );
-                }
+                int column = e.X / 15;
+                int row = e.Y / 15;
+                FontColor newValue = currentColor;
+                Glyph.Pixels[row * 10 + column] = newValue;
+                glyphPanel.Invalidate( new Rectangle( column * 15, row * 15, 15, 15 ) );
+                thumbnailPanel.Invalidate( new Rectangle( column * 2, row * 2, 2, 2 ) );
+                smallerThumbnailPanel.Invalidate();
             }
         }
 
@@ -166,23 +152,63 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void glyphPanel_MouseClick( object sender, MouseEventArgs e )
+        private void radioButton_CheckedChanged( object sender, System.EventArgs e )
         {
-            if( Glyph != null )
-            {
-                int column = e.X / 15;
-                int row = e.Y / 15;
-                FontColor newValue = currentColor;
-                Glyph.Pixels[row * 10 + column] = newValue;
-                glyphPanel.Invalidate( new Rectangle( column * 15, row * 15, 15, 15 ) );
-                thumbnailPanel.Invalidate( new Rectangle( column * 2, row * 2, 2, 2 ) );
-                smallerThumbnailPanel.Invalidate();
-            }
+            RadioButton r = sender as RadioButton;
+            currentColor = (FontColor)r.Tag;
         }
 
         private void RedrawPixel( int col, int row, FontColor color, Graphics g )
         {
             g.FillRectangle( colors[color], new Rectangle( col * 15, row * 15, 15, 15 ) );
         }
+
+        private void smallerThumbnailPanel_Paint( object sender, PaintEventArgs e )
+        {
+            if( Glyph != null )
+            {
+                for( int i = 0; i < Glyph.Pixels.Length; i++ )
+                {
+                    int col = i % 10;
+                    int row = i / 10;
+                    e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col, row, 1, 1 ) );
+                }
+            }
+        }
+
+        private void thumbnailPanel_Paint( object sender, PaintEventArgs e )
+        {
+            if( Glyph != null )
+            {
+                if( e.ClipRectangle == e.Graphics.VisibleClipBounds )
+                {
+                    for( int i = 0; i < Glyph.Pixels.Length; i++ )
+                    {
+                        int col = i % 10;
+                        int row = i / 10;
+                        e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col * 2, row * 2, 2, 2 ) );
+                    }
+                }
+                else
+                {
+                    int col = e.ClipRectangle.Location.X / 2;
+                    int row = e.ClipRectangle.Location.Y / 2;
+                    e.Graphics.FillRectangle( colors[Glyph.Pixels[row * 10 + col]], new Rectangle( col * 2, row * 2, 2, 2 ) );
+                }
+            }
+        }
+
+        private void widthSpinner_ValueChanged( object sender, System.EventArgs e )
+        {
+            if( !ignoreChanges && glyph != null )
+            {
+                glyph.Width = (byte)widthSpinner.Value;
+                glyphPanel.Invalidate();
+            }
+        }
+
+
+		#endregion Methods 
+
     }
 }

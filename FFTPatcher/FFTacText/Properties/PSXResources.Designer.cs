@@ -74,6 +74,13 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
+        internal static byte[] HELPMENU_OUT {
+            get {
+                object obj = ResourceManager.GetObject("HELPMENU_OUT", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] JOIN_LZW {
             get {
                 object obj = ResourceManager.GetObject("JOIN_LZW", resourceCulture);

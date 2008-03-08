@@ -27,21 +27,9 @@ namespace FFTPatcher
     /// </summary>
     public static class ReflectionHelpers
     {
-        /// <summary>
-        /// Gets a boolean from an object.
-        /// </summary>
-        public static bool GetFlag( object o, string name )
-        {
-            return GetFieldOrProperty<bool>( o, name );
-        }
 
-        /// <summary>
-        /// Sets a boolean on an object.
-        /// </summary>
-        public static void SetFlag( object o, string name, bool newValue )
-        {
-            SetFieldOrProperty( o, name, newValue );
-        }
+		#region Methods (5) 
+
 
         /// <summary>
         /// Gets a field or property from an object.
@@ -82,6 +70,14 @@ namespace FFTPatcher
         }
 
         /// <summary>
+        /// Gets a boolean from an object.
+        /// </summary>
+        public static bool GetFlag( object o, string name )
+        {
+            return GetFieldOrProperty<bool>( o, name );
+        }
+
+        /// <summary>
         /// Sets a field or property on an object.
         /// </summary>
         public static void SetFieldOrProperty( object target, string name, object newValue )
@@ -101,5 +97,17 @@ namespace FFTPatcher
                 throw new ArgumentException();
             }
         }
+
+        /// <summary>
+        /// Sets a boolean on an object.
+        /// </summary>
+        public static void SetFlag( object o, string name, bool newValue )
+        {
+            SetFieldOrProperty( o, name, newValue );
+        }
+
+
+		#endregion Methods 
+
     }
 }

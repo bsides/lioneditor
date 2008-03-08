@@ -26,14 +26,26 @@ namespace FFTPatcher
 
     public static partial class ExtensionMethods
     {
-        public static IList<T> Sub<T>( this IList<T> list, int start )
-        {
-            return new SubArray<T>( list, start );
-        }
 
-        public static IList<T> Sub<T>( this IList<T> list, int start, int stop )
+		#region Methods (4) 
+
+
+        public static int IndexOf<T>( this IList<T> list, IList<T> find ) where T : IEquatable<T>
         {
-            return new SubArray<T>( list, start, stop );
+            if( find.Count > list.Count )
+            {
+                return -1;
+            }
+
+            for( int i = 0; i + find.Count < list.Count; i++ )
+            {
+                if( list.Sub( i, i + find.Count - 1 ).Equals( find ) )
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         public static IList<IList<T>> Split<T>( this IList<T> members, T value ) where T : IEquatable<T>
@@ -61,23 +73,19 @@ namespace FFTPatcher
             return result;
         }
 
-        public static int IndexOf<T>( this IList<T> list, IList<T> find ) where T : IEquatable<T>
+        public static IList<T> Sub<T>( this IList<T> list, int start )
         {
-            if( find.Count > list.Count )
-            {
-                return -1;
-            }
-
-            for( int i = 0; i + find.Count < list.Count; i++ )
-            {
-                if( list.Sub( i, i + find.Count - 1 ).Equals( find ) )
-                {
-                    return i;
-                }
-            }
-
-            return -1;
+            return new SubArray<T>( list, start );
         }
+
+        public static IList<T> Sub<T>( this IList<T> list, int start, int stop )
+        {
+            return new SubArray<T>( list, start, stop );
+        }
+
+
+		#endregion Methods 
+
     }
 }
 
@@ -85,9 +93,27 @@ namespace FFTPatcher.Datatypes
 {
     public class SubArray<T> : ICollection<T>, IList<T>
     {
+
+		#region Fields (3) 
+
         private IList<T> baseArray;
         private int start;
         private int stop;
+
+		#endregion Fields 
+
+		#region Properties (3) 
+
+
+        public int Count
+        {
+            get { return stop - start + 1; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
 
         public T this[int index]
         {
@@ -103,9 +129,19 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public int Count
+
+		#endregion Properties 
+
+		#region Constructors (4) 
+
+        public SubArray( IList<T> baseArray )
+            : this( baseArray, 0 )
         {
-            get { return stop - start + 1; }
+        }
+
+        public SubArray( IList<T> baseArray, int start )
+            : this( baseArray, start, baseArray.Count - 1 )
+        {
         }
 
         public SubArray( SubArray<T> baseArray, int start, int stop )
@@ -133,15 +169,10 @@ namespace FFTPatcher.Datatypes
             this.baseArray = baseArray;
         }
 
-        public SubArray( IList<T> baseArray, int start )
-            : this( baseArray, start, baseArray.Count - 1 )
-        {
-        }
+		#endregion Constructors 
 
-        public SubArray( IList<T> baseArray )
-            : this( baseArray, 0 )
-        {
-        }
+		#region Methods (16) 
+
 
         private void CheckIndex( int index )
         {
@@ -151,18 +182,22 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public T[] ToArray()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            T[] result = new T[this.Count];
-            for( int i = 0; i < this.Count; i++ )
-            {
-                result[i] = this[i];
-            }
-            return result;
+            return new SubArrayEnumerator<T>( this );
         }
 
+        public static bool operator !=( SubArray<T> left, SubArray<T> right )
+        {
+            return !(left == right);
+        }
 
-        #region ICollection<T> Members
+        public static bool operator ==( SubArray<T> left, SubArray<T> right )
+        {
+            return
+                (object.ReferenceEquals( left, null ) && object.ReferenceEquals( right, null )) ||
+                (!object.ReferenceEquals( left, null ) && !object.ReferenceEquals( right, null ) && left.Equals( right ));
+        }
 
         public void Add( T item )
         {
@@ -186,37 +221,10 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        public bool Remove( T item )
-        {
-            return false;
-        }
-
-        #endregion
-
-        #region IEnumerable<T> Members
-
         public IEnumerator<T> GetEnumerator()
         {
             return new SubArrayEnumerator<T>( this );
         }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new SubArrayEnumerator<T>( this );
-        }
-
-        #endregion
-
-        #region IList<T> Members
 
         public int IndexOf( T item )
         {
@@ -236,12 +244,27 @@ namespace FFTPatcher.Datatypes
             throw new NotImplementedException();
         }
 
+        public bool Remove( T item )
+        {
+            return false;
+        }
+
         public void RemoveAt( int index )
         {
             throw new NotImplementedException();
         }
 
-        #endregion
+        public T[] ToArray()
+        {
+            T[] result = new T[this.Count];
+            for( int i = 0; i < this.Count; i++ )
+            {
+                result[i] = this[i];
+            }
+            return result;
+        }
+
+
 
         public override bool Equals( object obj )
         {
@@ -265,36 +288,42 @@ namespace FFTPatcher.Datatypes
             return true;
         }
 
-        public static bool operator ==( SubArray<T> left, SubArray<T> right )
-        {
-            return
-                (object.ReferenceEquals( left, null ) && object.ReferenceEquals( right, null )) ||
-                (!object.ReferenceEquals( left, null ) && !object.ReferenceEquals( right, null ) && left.Equals( right ));
-        }
-
-        public static bool operator !=( SubArray<T> left, SubArray<T> right )
-        {
-            return !(left == right);
-        }
-
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
+
+
+		#endregion Methods 
+
     }
 
     public class SubArrayEnumerator<T> : IEnumerator<T>
     {
-        SubArray<T> array;
 
-        public SubArrayEnumerator( SubArray<T> array )
+		#region Fields (2) 
+
+        SubArray<T> array;
+        int currentIndex = -1;
+
+		#endregion Fields 
+
+		#region Properties (2) 
+
+
+        object System.Collections.IEnumerator.Current
         {
-            this.array = array;
+            get
+            {
+                if( (currentIndex != -1) && (currentIndex < array.Count) )
+                {
+                    return array[currentIndex];
+                }
+
+                return null;
+            }
         }
 
-        #region IEnumerator<T> Members
-
-        int currentIndex = -1;
         public T Current
         {
             get
@@ -308,29 +337,23 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregion
 
-        #region IDisposable Members
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public SubArrayEnumerator( SubArray<T> array )
+        {
+            this.array = array;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
 
         public void Dispose()
         {
-        }
-
-        #endregion
-
-        #region IEnumerator Members
-
-        object System.Collections.IEnumerator.Current
-        {
-            get
-            {
-                if( (currentIndex != -1) && (currentIndex < array.Count) )
-                {
-                    return array[currentIndex];
-                }
-
-                return null;
-            }
         }
 
         public bool MoveNext()
@@ -350,6 +373,8 @@ namespace FFTPatcher.Datatypes
             currentIndex = 0;
         }
 
-        #endregion
+
+		#endregion Methods 
+
     }
 }

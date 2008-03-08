@@ -27,17 +27,40 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Event : IEquatable<Event>
     {
+
+		#region Static Fields (2) 
+
         private static string[] pspEventNames;
         private static string[] psxEventNames;
+
+		#endregion Static Fields 
+
+		#region Static Properties (1) 
+
+
         public static string[] EventNames
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspEventNames : psxEventNames; }
         }
 
-        public EventUnit[] Units { get; private set; }
-        public int Value { get; private set; }
+
+		#endregion Static Properties 
+
+		#region Properties (4) 
+
+
         public Event Default { get; private set; }
+
         public string Name { get; private set; }
+
+        public EventUnit[] Units { get; private set; }
+
+        public int Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static Event()
         {
@@ -65,21 +88,10 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public byte[] ToByteArray()
-        {
-            List<byte> result = new List<byte>( 16 * 40 );
-            foreach( EventUnit unit in Units )
-            {
-                result.AddRange( unit.ToByteArray() );
-            }
+		#endregion Constructors 
 
-            return result.ToArray();
-        }
+		#region Methods (3) 
 
-        public override string ToString()
-        {
-            return string.Format( "{0:X3} {1}", Value, Name );
-        }
 
         public bool Equals( Event other )
         {
@@ -91,5 +103,27 @@ namespace FFTPatcher.Datatypes
 
             return true;
         }
+
+        public byte[] ToByteArray()
+        {
+            List<byte> result = new List<byte>( 16 * 40 );
+            foreach( EventUnit unit in Units )
+            {
+                result.AddRange( unit.ToByteArray() );
+            }
+
+            return result.ToArray();
+        }
+
+
+
+        public override string ToString()
+        {
+            return string.Format( "{0:X3} {1}", Value, Name );
+        }
+
+
+		#endregion Methods 
+
     }
 }

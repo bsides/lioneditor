@@ -23,9 +23,26 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class OPENLZW : BasePSXSectionedFile
     {
+
+		#region Fields (3) 
+
+        private static string[][] entryNames;
+        private static Dictionary<string, long> locations;
+        private static string[] sectionNames = new string[32] {
+            "", "", "", "", "", "", "", "", 
+            "Unit names", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "Birthday",
+            "Track names", "Composers comments", "", "", "", "", "", "" };
+
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
         protected override int NumberOfSections { get { return 32; } }
 
-        private static Dictionary<string, long> locations;
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -40,17 +57,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private static string[] sectionNames = new string[32] {
-            "", "", "", "", "", "", "", "", 
-            "Unit names", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "Birthday",
-            "Track names", "Composers comments", "", "", "", "", "", "" };
-
-        private static string[][] entryNames;
+        public override int MaxLength { get { return 0x5579; } }
 
         public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
-        public override int MaxLength { get { return 0x5579; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static OPENLZW()
         {
@@ -70,5 +84,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

@@ -18,22 +18,79 @@ namespace FFTPatcher.Controls
     public class VerticalLabel : System.Windows.Forms.Control
     {
 
+		#region Fields (3) 
+
+        private System.ComponentModel.Container components = null;
         /// 
         /// internal variable for the current label text
         /// 
         private string labelText;
-
         /// 
         /// internal variable for the alignment of the vertical text
         /// 
         private System.Drawing.ContentAlignment labelTextAlign;
 
-        #region default constructor, destructor and initialisation code
+		#endregion Fields 
+
+		#region Properties (2) 
+
+
+        [Category( "Verticallabel" ), Description( "Text Alignment" )]
+        public System.Drawing.ContentAlignment TextAlign
+        {
+            get
+            {
+                return labelTextAlign;
+            }
+            set
+            {
+                labelTextAlign = value;
+                Invalidate();
+            }
+        }
+
+
+
+        /// 
+        /// Windows designer Text setting
+        /// 
+        [Category( "Verticallabel" ), Description( "Text is displayed vertiaclly in container" )]
+        public override string Text
+        {
+            get
+            {
+                return labelText;
+            }
+            set
+            {
+                labelText = value;
+                Invalidate();
+            }
+        }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public VerticalLabel()
         {
             //base.New();
             InitializeComponent();
         }
+
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
+        [System.Diagnostics.DebuggerStepThrough()]
+        private void InitializeComponent()
+        {
+            this.Size = new System.Drawing.Size( 24, 100 );
+        }
+
+
 
         protected override void Dispose( bool disposing )
         {
@@ -46,16 +103,6 @@ namespace FFTPatcher.Controls
             }
             base.Dispose( disposing );
         }
-
-        private System.ComponentModel.Container components = null;
-
-        [System.Diagnostics.DebuggerStepThrough()]
-        private void InitializeComponent()
-        {
-            this.Size = new System.Drawing.Size( 24, 100 );
-        }
-
-        #endregion
 
         /// 
         /// Override the onPaint method to draw a string vertically on the screen
@@ -81,7 +128,6 @@ namespace FFTPatcher.Controls
             e.Graphics.TranslateTransform( sngTransformX, sngTransformY );
             e.Graphics.RotateTransform( 270 );
 
-            #region figure out offset to achieve the desired alignment
             //default to left alignment
             float leftOffset = 0;
 
@@ -101,7 +147,6 @@ namespace FFTPatcher.Controls
                 System.Drawing.SizeF sf = e.Graphics.MeasureString( this.labelText, Font );
                 leftOffset = this.Size.Height - sf.Width;
             }
-            #endregion
 
             e.Graphics.DrawString( labelText, Font, labelForeColorBrush, leftOffset, 0 );
         }
@@ -116,38 +161,8 @@ namespace FFTPatcher.Controls
             base.OnResize( e );
         }
 
-        #region windows form designer support
-        /// 
-        /// Windows designer Text setting
-        /// 
-        [Category( "Verticallabel" ), Description( "Text is displayed vertiaclly in container" )]
-        public override string Text
-        {
-            get
-            {
-                return labelText;
-            }
-            set
-            {
-                labelText = value;
-                Invalidate();
-            }
-        }
-        [Category( "Verticallabel" ), Description( "Text Alignment" )]
-        public System.Drawing.ContentAlignment TextAlign
-        {
-            get
-            {
-                return labelTextAlign;
-            }
-            set
-            {
-                labelTextAlign = value;
-                Invalidate();
-            }
-        }
 
-        #endregion
+		#endregion Methods 
 
     }
 }

@@ -24,9 +24,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class ATTACKOUT : BasePSXSectionedFile
     {
+
+		#region Fields (3) 
+
+        private static string[][] entryNames;
+        private static Dictionary<string, long> locations;
+        private static string[] sectionNames = new string[3] { "", "Unit names", "Job names" };
+
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
         protected override int NumberOfSections { get { return 3; } }
 
-        private static Dictionary<string, long> locations;
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -42,13 +55,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private static string[] sectionNames = new string[3] { "", "Unit names", "Job names" };
-
-        private static string[][] entryNames;
+        public override int MaxLength { get { return 0x1E67; } }
 
         public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
-        public override int MaxLength { get { return 0x1E67; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static ATTACKOUT()
         {
@@ -62,5 +76,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

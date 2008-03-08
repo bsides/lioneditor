@@ -24,12 +24,36 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class SpriteSet
     {
-        private static SpriteSet[] psxSpriteSets = new SpriteSet[256];
+
+		#region Static Fields (2) 
+
         private static SpriteSet[] pspSpriteSets = new SpriteSet[256];
+        private static SpriteSet[] psxSpriteSets = new SpriteSet[256];
+
+		#endregion Static Fields 
+
+		#region Static Properties (1) 
+
+
         public static SpriteSet[] SpriteSets
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspSpriteSets : psxSpriteSets; }
         }
+
+
+		#endregion Static Properties 
+
+		#region Properties (2) 
+
+
+        public string Name { get; private set; }
+
+        public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static SpriteSet()
         {
@@ -49,23 +73,31 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public byte Value { get; private set; }
-        public string Name { get; private set; }
-
         private SpriteSet( byte value, string name )
         {
             Value = value;
             Name = name;
         }
 
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
         public byte ToByte()
         {
             return Value;
         }
 
+
+
         public override string ToString()
         {
             return string.Format( "{0:X2} {1}", Value, Name );
         }
+
+
+		#endregion Methods 
+
     }
 }

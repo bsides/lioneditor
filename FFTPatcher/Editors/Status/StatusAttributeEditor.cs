@@ -27,13 +27,24 @@ namespace FFTPatcher.Editors
     public partial class StatusAttributeEditor : UserControl
     {
 
+		#region Static Fields (1) 
+
         private static readonly string[] PropertyNames = new string[] {
             "FreezeCT", "Unknown1", "Unknown2", "Unknown3", "Unknown4", "Unknown5", "Unknown6", "KO",
             "CanReact", "Blank", "IgnoreAttack", "Unknown7", "Unknown8", "Unknown9", "Unknown10", "Unknown11" };
 
-        private StatusAttribute statusAttribute;
+		#endregion Static Fields 
+
+		#region Fields (3) 
+
         private bool ignoreChanges = false;
         private NumericUpDownWithDefault[] spinners;
+        private StatusAttribute statusAttribute;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
 
         public StatusAttribute StatusAttribute
         {
@@ -51,6 +62,44 @@ namespace FFTPatcher.Editors
                     this.Enabled = true;
                     UpdateView();
                 }
+            }
+        }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public StatusAttributeEditor()
+        {
+            InitializeComponent();
+            spinners = new NumericUpDownWithDefault[4] { unknown1Spinner, unknown2Spinner, orderSpinner, ctSpinner };
+            foreach( NumericUpDownWithDefault spinner in spinners )
+            {
+                spinner.ValueChanged += spinner_ValueChanged;
+            }
+            checkedListBox.ItemCheck += checkedListBox_ItemCheck;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        private void checkedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ReflectionHelpers.SetFieldOrProperty( statusAttribute, PropertyNames[e.Index], e.NewValue == CheckState.Checked );
+            }
+        }
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( statusAttribute, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
 
@@ -76,32 +125,8 @@ namespace FFTPatcher.Editors
             this.ignoreChanges = false;
         }
 
-        public StatusAttributeEditor()
-        {
-            InitializeComponent();
-            spinners = new NumericUpDownWithDefault[4] { unknown1Spinner, unknown2Spinner, orderSpinner, ctSpinner };
-            foreach( NumericUpDownWithDefault spinner in spinners )
-            {
-                spinner.ValueChanged += spinner_ValueChanged;
-            }
-            checkedListBox.ItemCheck += checkedListBox_ItemCheck;
-        }
 
-        private void checkedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ReflectionHelpers.SetFieldOrProperty( statusAttribute, PropertyNames[e.Index], e.NewValue == CheckState.Checked );
-            }
-        }
+		#endregion Methods 
 
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( statusAttribute, spinner.Tag.ToString(), (byte)spinner.Value );
-            }
-        }
     }
 }

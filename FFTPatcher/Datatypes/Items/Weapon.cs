@@ -27,24 +27,43 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Weapon : Item
     {
-        public byte Range { get; set; }
 
-        public bool Striking;
-        public bool Lunging;
-        public bool Direct;
+		#region Fields (8) 
+
         public bool Arc;
-        public bool TwoSwords;
-        public bool TwoHands;
         public bool Blank;
+        public bool Direct;
         public bool Force2Hands;
+        public bool Lunging;
+        public bool Striking;
+        public bool TwoHands;
+        public bool TwoSwords;
+
+		#endregion Fields 
+
+		#region Properties (8) 
+
+
+        public Elements Elements { get; private set; }
+
+        public byte EvadePercentage { get; set; }
 
         public byte Formula { get; set; }
-        public byte Unknown { get; set; }
-        public byte WeaponPower { get; set; }
-        public byte EvadePercentage { get; set; }
-        public Elements Elements { get; private set; }
+
         public byte InflictStatus { get; set; }
+
+        public byte Range { get; set; }
+
+        public byte Unknown { get; set; }
+
         public Weapon WeaponDefault { get; private set; }
+
+        public byte WeaponPower { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public Weapon( UInt16 offset, IList<byte> itemBytes, IList<byte> weaponBytes )
             : this( offset, itemBytes, weaponBytes, null )
@@ -65,9 +84,20 @@ namespace FFTPatcher.Datatypes
             InflictStatus = weaponBytes[7];
         }
 
+		#endregion Constructors 
+
+		#region Methods (5) 
+
+
         public byte[] ToItemByteArray()
         {
             return base.ToByteArray().ToArray();
+        }
+
+        public bool[] ToWeaponBoolArray()
+        {
+            return new bool[8] {
+                Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands };
         }
 
         public byte[] ToWeaponByteArray()
@@ -84,6 +114,8 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+
+
         public override byte[] ToFirstByteArray()
         {
             return ToItemByteArray();
@@ -94,10 +126,8 @@ namespace FFTPatcher.Datatypes
             return ToWeaponByteArray();
         }
 
-        public bool[] ToWeaponBoolArray()
-        {
-            return new bool[8] {
-                Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands };
-        }
+
+		#endregion Methods 
+
     }
 }

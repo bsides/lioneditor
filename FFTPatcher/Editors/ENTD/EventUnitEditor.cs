@@ -27,6 +27,9 @@ namespace FFTPatcher.Editors
 {
     public partial class EventUnitEditor : UserControl
     {
+
+		#region Static Fields (3) 
+
         private static readonly string[] levelStrings = new string[] { 
             "Party level", 
             "1", "2", "3", "4", "5", "6", "7", "8", "9", 
@@ -53,7 +56,6 @@ namespace FFTPatcher.Editors
 
             "Party level - Random"
         };
-
         private static readonly string[] zeroTo100 = new string[] {
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
             "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", 
@@ -72,9 +74,20 @@ namespace FFTPatcher.Editors
             "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
             "30", "31", "Random" };
 
+		#endregion Static Fields 
+
+		#region Fields (5) 
+
+        private ComboBoxWithDefault[] comboBoxes;
         private EventUnit eventUnit = null;
         private bool ignoreChanges = false;
         private Context ourContext = Context.Default;
+        private NumericUpDownWithDefault[] spinners;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
 
         public EventUnit EventUnit
         {
@@ -95,8 +108,10 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private NumericUpDownWithDefault[] spinners;
-        private ComboBoxWithDefault[] comboBoxes;
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public EventUnitEditor()
         {
@@ -129,6 +144,46 @@ namespace FFTPatcher.Editors
             flags2CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
         }
 
+		#endregion Constructors 
+
+		#region Events (1) 
+
+        public event EventHandler DataChanged;
+
+		#endregion Events 
+
+		#region Methods (9) 
+
+
+        private void comboBox_SelectedIndexChanged( object sender, System.EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), c.SelectedItem );
+                if( (c == spriteSetComboBox) || (c == specialNameComboBox) || (c == jobComboBox) )
+                {
+                    FireDataChangedEvent();
+                }
+            }
+        }
+
+        private void FireDataChangedEvent()
+        {
+            if( DataChanged != null )
+            {
+                DataChanged( this, EventArgs.Empty );
+            }
+        }
+
+        private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            if (sender == flags1CheckedListBox)
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
+            else if( sender == flags2CheckedListBox )
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
+        }
+
         private void levelComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             if( !ignoreChanges )
@@ -141,35 +196,13 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void zeroTo99ComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        private void spinner_ValueChanged( object sender, System.EventArgs e )
         {
             if( !ignoreChanges )
             {
-                ComboBoxWithDefault combo = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty(
-                    eventUnit,
-                    combo.Tag.ToString(),
-                    (byte)(combo.SelectedIndex > 100 ? 254 : combo.SelectedIndex) );
+                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), (byte)c.Value );
             }
-        }
-        private void zeroTo31ComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault combo = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty(
-                    eventUnit,
-                    combo.Tag.ToString(),
-                    (byte)(combo.SelectedIndex > 31 ? 254 : combo.SelectedIndex) );
-            }
-        }
-
-        private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
-        {
-            if (sender == flags1CheckedListBox)
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
-            else if( sender == flags2CheckedListBox )
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
         }
 
         private void UpdateDataSources()
@@ -206,38 +239,6 @@ namespace FFTPatcher.Editors
 
             facingDirectionComboBox.DataSource = Enum.GetValues( typeof( Facing ) );
             preRequisiteJobComboBox.DataSource = Enum.GetValues( typeof( PreRequisiteJob ) );
-        }
-
-        public event EventHandler DataChanged;
-
-        private void FireDataChangedEvent()
-        {
-            if( DataChanged != null )
-            {
-                DataChanged( this, EventArgs.Empty );
-            }
-        }
-
-        private void comboBox_SelectedIndexChanged( object sender, System.EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), c.SelectedItem );
-                if( (c == spriteSetComboBox) || (c == specialNameComboBox) || (c == jobComboBox) )
-                {
-                    FireDataChangedEvent();
-                }
-            }
-        }
- 
-        private void spinner_ValueChanged( object sender, System.EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), (byte)c.Value );
-            }
         }
 
         private void UpdateView()
@@ -289,5 +290,33 @@ namespace FFTPatcher.Editors
             }
             ignoreChanges = false;
         }
+
+        private void zeroTo31ComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault combo = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty(
+                    eventUnit,
+                    combo.Tag.ToString(),
+                    (byte)(combo.SelectedIndex > 31 ? 254 : combo.SelectedIndex) );
+            }
+        }
+
+        private void zeroTo99ComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault combo = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty(
+                    eventUnit,
+                    combo.Tag.ToString(),
+                    (byte)(combo.SelectedIndex > 100 ? 254 : combo.SelectedIndex) );
+            }
+        }
+
+
+		#endregion Methods 
+
     }
 }

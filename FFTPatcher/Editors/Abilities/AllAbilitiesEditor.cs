@@ -25,13 +25,31 @@ namespace FFTPatcher.Editors
 {
     public partial class AllAbilitiesEditor : UserControl
     {
+
+		#region Constructors (1) 
+
         public AllAbilitiesEditor()
         {
             InitializeComponent();
             abilityEditor.InflictStatusLabelClicked += abilityEditor_InflictStatusLabelClicked;
         }
 
+		#endregion Constructors 
+
+		#region Events (1) 
+
         public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+
+		#endregion Events 
+
+		#region Methods (3) 
+
+
+        private void abilitiesListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            Ability a = abilitiesListBox.SelectedItem as Ability;
+            abilityEditor.Ability = a;
+        }
 
         private void abilityEditor_InflictStatusLabelClicked( object sender, LabelClickedEventArgs e )
         {
@@ -51,10 +69,8 @@ namespace FFTPatcher.Editors
             abilityEditor.Ability = abilitiesListBox.SelectedItem as Ability;
         }
 
-        private void abilitiesListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            Ability a = abilitiesListBox.SelectedItem as Ability;
-            abilityEditor.Ability = a;
-        }
+
+		#endregion Methods 
+
     }
 }

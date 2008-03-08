@@ -23,9 +23,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class JOINLZW : BasePSXSectionedFile
     {
+
+		#region Fields (3) 
+
+        private static string[][] entryNames;
+        private static Dictionary<string, long> locations;
+        private static string[] sectionNames = new string[5];
+
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
         protected override int NumberOfSections { get { return 5; } }
 
-        private static Dictionary<string, long> locations;
+        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -41,13 +54,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-        private static string[] sectionNames = new string[5];
-
-        private static string[][] entryNames;
+        public override int MaxLength { get { return 0x41F6; } }
 
         public override IList<string> SectionNames { get { return sectionNames; } }
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
-        public override int MaxLength { get { return 0x41F6; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static JOINLZW()
         {
@@ -63,5 +77,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

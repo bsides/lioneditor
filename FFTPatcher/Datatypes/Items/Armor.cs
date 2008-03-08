@@ -27,9 +27,25 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Armor : Item
     {
-        public byte HPBonus { get; set; }
-        public byte MPBonus { get; set; }
+
+		#region Properties (3) 
+
+
         public Armor ArmorDefault { get; private set; }
+
+        public byte HPBonus { get; set; }
+
+        public byte MPBonus { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public Armor( UInt16 offset, IList<byte> itemBytes, IList<byte> armorBytes )
+            : this( offset, itemBytes, armorBytes, null )
+        {
+        }
 
         public Armor( UInt16 offset, IList<byte> itemBytes, IList<byte> armorBytes, Armor defaults )
             : base( offset, itemBytes, defaults )
@@ -39,9 +55,14 @@ namespace FFTPatcher.Datatypes
             MPBonus = armorBytes[1];
         }
 
-        public Armor( UInt16 offset, IList<byte> itemBytes, IList<byte> armorBytes )
-            : this( offset, itemBytes, armorBytes, null )
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
+        public byte[] ToArmorByteArray()
         {
+            return new byte[2] { HPBonus, MPBonus };
         }
 
         public byte[] ToItemByteArray()
@@ -49,10 +70,7 @@ namespace FFTPatcher.Datatypes
             return base.ToByteArray().ToArray();
         }
 
-        public byte[] ToArmorByteArray()
-        {
-            return new byte[2] { HPBonus, MPBonus };
-        }
+
 
         public override byte[] ToFirstByteArray()
         {
@@ -63,5 +81,9 @@ namespace FFTPatcher.Datatypes
         {
             return ToArmorByteArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

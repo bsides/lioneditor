@@ -23,15 +23,22 @@ namespace FFTPatcher.TextEditor.Files.PSP
 {
     public class OPENLZW : BasePSPSectionedFile
     {
-        private static string[] sectionNames;
+
+		#region Fields (3) 
+
         private static string[][] entryNames;
+        private static Dictionary<string, long> locations;
+        private static string[] sectionNames;
+
+		#endregion Fields 
+
+		#region Properties (5) 
+
 
         protected override int NumberOfSections { get { return 32; } }
 
-        public override IList<string> SectionNames { get { return sectionNames; } }
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
-        private static Dictionary<string, long> locations;
         public override IDictionary<string, long> Locations
         {
             get
@@ -50,6 +57,13 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
             get { return 0x608D; }
         }
+
+        public override IList<string> SectionNames { get { return sectionNames; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static OPENLZW()
         {
@@ -75,5 +89,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

@@ -63,7 +63,16 @@ namespace FFTPatcher.Datatypes
 
     public class ActionMenuEntry
     {
+
+		#region Static Fields (1) 
+
         private static List<ActionMenuEntry> allActionMenuEntries;
+
+		#endregion Static Fields 
+
+		#region Static Properties (1) 
+
+
         public static List<ActionMenuEntry> AllActionMenuEntries
         {
             get
@@ -81,7 +90,33 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+
+		#endregion Static Properties 
+
+		#region Properties (1) 
+
+
         public MenuAction MenuAction { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        private ActionMenuEntry( byte b )
+        {
+            MenuAction = (MenuAction)b;
+        }
+
+        private ActionMenuEntry( MenuAction a )
+        {
+            MenuAction = a;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (1) 
+
 
         public override string ToString()
         {
@@ -98,30 +133,41 @@ namespace FFTPatcher.Datatypes
             return base.ToString();
         }
 
-        private ActionMenuEntry( byte b )
-        {
-            MenuAction = (MenuAction)b;
-        }
 
-        private ActionMenuEntry( MenuAction a )
-        {
-            MenuAction = a;
-        }
+		#endregion Methods 
+
     }
 
     public class ActionMenu
     {
-        public string Name { get; private set; }
-        public ActionMenuEntry MenuAction { get; set; }
 
-        public ActionMenu Self { get { return this; } }
-        public ActionMenu Default { get; private set; }
+		#region Properties (6) 
+
+
         public string ActionName
         {
             get { return MenuAction.ToString(); }
         }
 
+        public ActionMenu Default { get; private set; }
+
+        public ActionMenuEntry MenuAction { get; set; }
+
+        public string Name { get; private set; }
+
+        public ActionMenu Self { get { return this; } }
+
         public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public ActionMenu( byte value, string name, MenuAction action )
+            : this( value, name, action, null )
+        {
+        }
 
         public ActionMenu( byte value, string name, MenuAction action, ActionMenu defaults )
         {
@@ -131,15 +177,22 @@ namespace FFTPatcher.Datatypes
             Value = value;
         }
 
-        public ActionMenu( byte value, string name, MenuAction action )
-            : this( value, name, action, null )
-        {
-        }
+		#endregion Constructors 
+
     }
     
     public class AllActionMenus
     {
+
+		#region Properties (1) 
+
+
         public ActionMenu[] ActionMenus { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllActionMenus( IList<byte> bytes )
         {
@@ -165,6 +218,23 @@ namespace FFTPatcher.Datatypes
             ActionMenus = tempActions.ToArray();
         }
 
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.ActionEventsBin, this.ToByteArray(), 0x065CB4 );
+            }
+        }
+
         public byte[] ToByteArray()
         {
             byte[] result = new byte[ActionMenus.Length];
@@ -182,16 +252,8 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.ActionEventsBin, this.ToByteArray(), 0x065CB4 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 }

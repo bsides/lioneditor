@@ -25,6 +25,9 @@ namespace FFTPatcher.Editors
 {
     public partial class AllItemsEditor : UserControl
     {
+
+		#region Constructors (1) 
+
         public AllItemsEditor()
         {
             InitializeComponent();
@@ -32,7 +35,27 @@ namespace FFTPatcher.Editors
             itemEditor.ItemAttributesClicked += itemEditor_ItemAttributesClicked;
         }
 
+		#endregion Constructors 
+
+		#region Events (2) 
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+
         public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
+
+		#endregion Events 
+
+		#region Methods (4) 
+
+
+        private void itemEditor_InflictStatusClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( InflictStatusClicked != null )
+            {
+                InflictStatusClicked( this, e );
+            }
+        }
+
         private void itemEditor_ItemAttributesClicked( object sender, LabelClickedEventArgs e )
         {
             if( ItemAttributesClicked != null )
@@ -41,15 +64,11 @@ namespace FFTPatcher.Editors
             }
         }
 
-        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
-        private void itemEditor_InflictStatusClicked( object sender, LabelClickedEventArgs e )
+        private void itemListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
-            if( InflictStatusClicked != null )
-            {
-                InflictStatusClicked( this, e );
-            }
+            itemEditor.Item = itemListBox.SelectedItem as Item;
         }
-        
+
         public void UpdateView( AllItems items )
         {
             itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;
@@ -60,9 +79,8 @@ namespace FFTPatcher.Editors
             itemEditor.Item = itemListBox.SelectedItem as Item;
         }
 
-        private void itemListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            itemEditor.Item = itemListBox.SelectedItem as Item;
-        }
+
+		#endregion Methods 
+
     }
 }

@@ -24,11 +24,20 @@ namespace FFTPatcher.Editors
 {
     public partial class InflictStatusEditor : UserControl
     {
+
+		#region Fields (3) 
+
         private readonly string[] flags = new string[] { 
             "AllOrNothing", "Random", "Separate", "Cancel", 
             "Blank1", "Blank2", "Blank3", "Blank4" };
         private bool ignoreChanges = false;
         private InflictStatus status;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public InflictStatus InflictStatus
         {
             get { return status; }
@@ -48,11 +57,21 @@ namespace FFTPatcher.Editors
             }
         }
 
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public InflictStatusEditor()
         {
             InitializeComponent();
             flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
         }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
@@ -81,5 +100,9 @@ namespace FFTPatcher.Editors
             ResumeLayout();
             ignoreChanges = false;
         }
+
+
+		#endregion Methods 
+
     }
 }

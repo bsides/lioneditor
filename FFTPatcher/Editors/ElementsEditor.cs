@@ -28,19 +28,24 @@ namespace FFTPatcher.Editors
 {
     public partial class ElementsEditor : UserControl
     {
-        private Elements elements = new Elements( 0 );
-        private Elements defaults;
+
+		#region Static Fields (1) 
 
         private static string[] elementNames = new string[] {
                 "Fire", "Lightning", "Ice", "Wind", "Earth", "Water", "Holy", "Dark" };
 
-        public void SetValueAndDefaults( Elements value, Elements defaults )
-        {
-            elements = value;
-            this.defaults = defaults;
-            Enabled = true;
-            UpdateView();
-        }
+		#endregion Static Fields 
+
+		#region Fields (3) 
+
+        private Elements defaults;
+        private Elements elements = new Elements( 0 );
+        private bool ignoreChanges = false;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
 
         public string GroupBoxText
         {
@@ -48,11 +53,21 @@ namespace FFTPatcher.Editors
             set { elementsGroupBox.Text = value; }
         }
 
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public ElementsEditor()
         {
             InitializeComponent();
             elementsCheckedListBox.ItemCheck += elementsCheckedListBox_ItemCheck;
         }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
 
         private void elementsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
@@ -63,8 +78,6 @@ namespace FFTPatcher.Editors
                 pi.SetValue( elements, e.NewValue == CheckState.Checked, null );
             }
         }
-
-        private bool ignoreChanges = false;
 
         private void UpdateView()
         {
@@ -79,11 +92,21 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
-        #region CheckedListBox
+        public void SetValueAndDefaults( Elements value, Elements defaults )
+        {
+            elements = value;
+            this.defaults = defaults;
+            Enabled = true;
+            UpdateView();
+        }
+
+
+		#endregion Methods 
+
 
         private class ElementsCheckedListBox : CheckedListBox
         {
-            public bool[] Defaults { get; private set; }
+
             private enum Elements
             {
                 Fire,
@@ -96,11 +119,27 @@ namespace FFTPatcher.Editors
                 Dark
             }
 
+
+    		#region Properties (1) 
+
+
+            public bool[] Defaults { get; private set; }
+
+
+		    #endregion Properties 
+
+    		#region Constructors (1) 
+
             public ElementsCheckedListBox()
                 : base()
             {
                 CheckOnClick = true;
             }
+
+		    #endregion Constructors 
+
+    		#region Methods (3) 
+
 
             public void SetValuesAndDefaults( bool[] values, bool[] defaults )
             {
@@ -139,11 +178,7 @@ namespace FFTPatcher.Editors
                 }
             }
 
-            protected override void OnKeyDown( KeyEventArgs e )
-            {
-                SetValuesAndDefaults( Defaults, Defaults );
-                base.OnKeyDown( e );
-            }
+
 
             protected override void OnDrawItem( DrawItemEventArgs e )
             {
@@ -212,8 +247,17 @@ namespace FFTPatcher.Editors
                     }
                 }
             }
+
+            protected override void OnKeyDown( KeyEventArgs e )
+            {
+                SetValuesAndDefaults( Defaults, Defaults );
+                base.OnKeyDown( e );
+            }
+
+
+		    #endregion Methods 
+
         }
 
-        #endregion
     }
 }

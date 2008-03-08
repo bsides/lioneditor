@@ -27,10 +27,22 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class ChemistItem : Item
     {
-        public byte Formula { get; set; }
-        public byte X { get; set; }
-        public byte InflictStatus { get; set; }
+
+		#region Properties (4) 
+
+
         public ChemistItem ChemistItemDefault { get; private set; }
+
+        public byte Formula { get; set; }
+
+        public byte InflictStatus { get; set; }
+
+        public byte X { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public ChemistItem( UInt16 offset, IList<byte> itemBytes, IList<byte> chemistBytes ) :
             this( offset, itemBytes, chemistBytes, null )
@@ -46,15 +58,22 @@ namespace FFTPatcher.Datatypes
             InflictStatus = chemistBytes[2];
         }
 
-        public byte[] ToItemByteArray()
-        {
-            return base.ToByteArray().ToArray();
-        }
+		#endregion Constructors 
+
+		#region Methods (4) 
+
 
         public byte[] ToChemistItemByteArray()
         {
             return new byte[3] { Formula, X, InflictStatus };
         }
+
+        public byte[] ToItemByteArray()
+        {
+            return base.ToByteArray().ToArray();
+        }
+
+
 
         public override byte[] ToFirstByteArray()
         {
@@ -65,5 +84,9 @@ namespace FFTPatcher.Datatypes
         {
             return ToChemistItemByteArray();
         }
+
+
+		#endregion Methods 
+
     }
 }

@@ -23,7 +23,171 @@ namespace FFTPatcher
 {
     public static class PSXResources
     {
+
+		#region Static Fields (7) 
+
+        private static string[] abilityAI;
+        private static string[] abilityAttributes;
+        private static string[] abilityEffects;
+        private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
+        private static string[] shopAvailabilities;
+        private static string[] statuses;
+
+		#endregion Static Fields 
+
+		#region Static Properties (30) 
+
+
+        public static string Abilities { get { return dict["Abilities"] as string; } }
+
+        public static byte[] AbilitiesBin { get { return dict["AbilitiesBin"] as byte[]; } }
+
+        public static string AbilitiesStrings { get { return dict["AbilitiesStrings"] as string; } }
+
+        public static string[] AbilityAI
+        {
+            get
+            {
+                if( abilityAI == null )
+                {
+                    abilityAI =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            AbilitiesStrings,
+                            "/AbilityStrings/AI/string[@value='{0}']/@name",
+                            24 );
+                }
+                return abilityAI;
+            }
+        }
+
+        public static string[] AbilityAttributes
+        {
+            get
+            {
+                if( abilityAttributes == null )
+                {
+                    abilityAttributes =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            AbilitiesStrings, 
+                            "/AbilityStrings/Attributes/string[@value='{0}']/@name", 
+                            32 );
+                }
+                return abilityAttributes;
+            }
+        }
+
+        public static string[] AbilityEffects
+        {
+            get
+            {
+                if( abilityEffects == null )
+                {
+                    abilityEffects = Utilities.GetStringsFromNumberedXmlNodes(
+                        dict["AbilitiesEffects"] as string,
+                        "/Effects/Effect[@value='{0:X3}']/@name",
+                        512 );
+                }
+
+                return abilityEffects;
+            }
+        }
+
+        public static byte[] AbilityEffectsBin { get { return dict["AbilitiesEffectsBin"] as byte[]; } }
+
+        public static string[] AbilityTypes
+        {
+            get
+            {
+                if( abilityTypes == null )
+                {
+                    abilityTypes =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            AbilitiesStrings,
+                            "/AbilityStrings/Types/string[@value='{0}']/@name",
+                            16 );
+                }
+                return abilityTypes;
+            }
+        }
+
+        public static byte[] ActionEventsBin { get { return dict["ActionEventsBin"] as byte[]; } }
+
+        public static string EventNames { get { return dict["EventNames"] as string; } }
+
+        public static byte[] FontBin { get { return dict["FontBin"] as byte[]; } }
+
+        public static byte[] FontWidthsBin { get { return dict["FontWidthsBin"] as byte[]; } }
+
+        public static byte[] InflictStatusesBin { get { return dict["InflictStatusesBin"] as byte[]; } }
+
+        public static string Items { get { return dict["Items"] as string; } }
+
+        public static string ItemsStrings { get { return dict["ItemsStrings"] as string; } }
+
+        public static byte[] JobLevelsBin { get { return dict["JobLevelsBin"] as byte[]; } }
+
+        public static string Jobs { get { return dict["Jobs"] as string; } }
+
+        public static byte[] JobsBin { get { return dict["JobsBin"] as byte[]; } }
+
+        public static byte[] MonsterSkillsBin { get { return dict["MonsterSkillsBin"] as byte[]; } }
+
+        public static byte[] OldItemAttributesBin { get { return dict["OldItemAttributesBin"] as byte[]; } }
+
+        public static byte[] OldItemsBin { get { return dict["OldItemsBin"] as byte[]; } }
+
+        public static byte[] PoachProbabilitiesBin { get { return dict["PoachProbabilitiesBin"] as byte[]; } }
+
+        public static string[] ShopAvailabilities
+        {
+            get
+            {
+                if( shopAvailabilities == null )
+                {
+                    shopAvailabilities =
+                        Utilities.GetStringsFromNumberedXmlNodes(
+                            ItemsStrings,
+                            "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
+                            21 );
+                }
+
+                return shopAvailabilities;
+            }
+        }
+
+        public static string SkillSets { get { return dict["SkillSets"] as string; } }
+
+        public static byte[] SkillSetsBin { get { return dict["SkillSetsBin"] as byte[]; } }
+
+        public static string SpecialNames { get { return dict["SpecialNames"] as string; } }
+
+        public static string SpriteSets { get { return dict["SpriteSets"] as string; } }
+
+        public static byte[] StatusAttributesBin { get { return dict["StatusAttributesBin"] as byte[]; } }
+
+        public static string[] Statuses
+        {
+            get
+            {
+                if( statuses == null )
+                {
+                    statuses = Utilities.GetStringsFromNumberedXmlNodes(
+                        StatusNames,
+                        "/Statuses/Status[@offset='{0}']/@name",
+                        40 );
+                }
+
+                return statuses;
+            }
+        }
+
+        public static string StatusNames { get { return dict["StatusNames"] as string; } }
+
+
+		#endregion Static Properties 
+
+		#region Constructors (1) 
 
         static PSXResources()
         {
@@ -56,133 +220,7 @@ namespace FFTPatcher
             dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilityEffectsBin );
         }
 
-        public static string SkillSets { get { return dict["SkillSets"] as string; } }
-        public static string Abilities { get { return dict["Abilities"] as string; } }
-        public static string AbilitiesStrings { get { return dict["AbilitiesStrings"] as string; } }
-        public static string EventNames { get { return dict["EventNames"] as string; } }
-        public static string Items { get { return dict["Items"] as string; } }
-        public static string ItemsStrings { get { return dict["ItemsStrings"] as string; } }
-        public static string Jobs { get { return dict["Jobs"] as string; } }
-        public static string SpecialNames { get { return dict["SpecialNames"] as string; } }
-        public static string SpriteSets { get { return dict["SpriteSets"] as string; } }
-        public static string StatusNames { get { return dict["StatusNames"] as string; } }
+		#endregion Constructors 
 
-        private static string[] statuses;
-        public static string[] Statuses
-        {
-            get
-            {
-                if( statuses == null )
-                {
-                    statuses = Utilities.GetStringsFromNumberedXmlNodes(
-                        StatusNames,
-                        "/Statuses/Status[@offset='{0}']/@name",
-                        40 );
-                }
-
-                return statuses;
-            }
-        }
-
-        private static string[] abilityEffects;
-        public static string[] AbilityEffects
-        {
-            get
-            {
-                if( abilityEffects == null )
-                {
-                    abilityEffects = Utilities.GetStringsFromNumberedXmlNodes(
-                        dict["AbilitiesEffects"] as string,
-                        "/Effects/Effect[@value='{0:X3}']/@name",
-                        512 );
-                }
-
-                return abilityEffects;
-            }
-        }
-
-        private static string[] abilityAttributes;
-        public static string[] AbilityAttributes
-        {
-            get
-            {
-                if( abilityAttributes == null )
-                {
-                    abilityAttributes =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings, 
-                            "/AbilityStrings/Attributes/string[@value='{0}']/@name", 
-                            32 );
-                }
-                return abilityAttributes;
-            }
-        }
-
-        private static string[] abilityAI;
-        public static string[] AbilityAI
-        {
-            get
-            {
-                if( abilityAI == null )
-                {
-                    abilityAI =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/AI/string[@value='{0}']/@name",
-                            24 );
-                }
-                return abilityAI;
-            }
-        }
-
-        private static string[] abilityTypes;
-        public static string[] AbilityTypes
-        {
-            get
-            {
-                if( abilityTypes == null )
-                {
-                    abilityTypes =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/Types/string[@value='{0}']/@name",
-                            16 );
-                }
-                return abilityTypes;
-            }
-        }
-
-        private static string[] shopAvailabilities;
-        public static string[] ShopAvailabilities
-        {
-            get
-            {
-                if( shopAvailabilities == null )
-                {
-                    shopAvailabilities =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            ItemsStrings,
-                            "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
-                            21 );
-                }
-
-                return shopAvailabilities;
-            }
-        }
-
-        public static byte[] AbilitiesBin { get { return dict["AbilitiesBin"] as byte[]; } }
-        public static byte[] PoachProbabilitiesBin { get { return dict["PoachProbabilitiesBin"] as byte[]; } }
-        public static byte[] ActionEventsBin { get { return dict["ActionEventsBin"] as byte[]; } }
-        public static byte[] FontBin { get { return dict["FontBin"] as byte[]; } }
-        public static byte[] FontWidthsBin { get { return dict["FontWidthsBin"] as byte[]; } }
-        public static byte[] InflictStatusesBin { get { return dict["InflictStatusesBin"] as byte[]; } }
-        public static byte[] JobLevelsBin { get { return dict["JobLevelsBin"] as byte[]; } }
-        public static byte[] JobsBin { get { return dict["JobsBin"] as byte[]; } }
-        public static byte[] MonsterSkillsBin { get { return dict["MonsterSkillsBin"] as byte[]; } }
-        public static byte[] StatusAttributesBin { get { return dict["StatusAttributesBin"] as byte[]; } }
-        public static byte[] OldItemAttributesBin { get { return dict["OldItemAttributesBin"] as byte[]; } }
-        public static byte[] OldItemsBin { get { return dict["OldItemsBin"] as byte[]; } }
-        public static byte[] SkillSetsBin { get { return dict["SkillSetsBin"] as byte[]; } }
-        public static byte[] AbilityEffectsBin { get { return dict["AbilitiesEffectsBin"] as byte[]; } }
     }
 }

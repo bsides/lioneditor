@@ -23,14 +23,32 @@ namespace FFTPatcher.Datatypes
 {
     public class AbilityFormula
     {
-        public byte Value { get; private set; }
-        public string Formula { get; private set; }
 
-        public static List<AbilityFormula> PSXAbilityFormulas { get; private set; }
-        public static Dictionary<byte, AbilityFormula> PSXAbilityFormulaHash { get; private set; }
+		#region Static Properties (4) 
+
+
+        public static Dictionary<byte, AbilityFormula> PSPAbilityFormulaHash { get; private set; }
 
         public static List<AbilityFormula> PSPAbilityFormulas { get; private set; }
-        public static Dictionary<byte, AbilityFormula> PSPAbilityFormulaHash { get; private set; }
+
+        public static Dictionary<byte, AbilityFormula> PSXAbilityFormulaHash { get; private set; }
+
+        public static List<AbilityFormula> PSXAbilityFormulas { get; private set; }
+
+
+		#endregion Static Properties 
+
+		#region Properties (2) 
+
+
+        public string Formula { get; private set; }
+
+        public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static AbilityFormula()
         {
@@ -68,9 +86,18 @@ namespace FFTPatcher.Datatypes
         {
         }
 
+		#endregion Constructors 
+
+		#region Methods (1) 
+
+
         public override string ToString()
         {
             return string.Format( "{0:X2} {1}", Value, Formula );
         }
+
+
+		#endregion Methods 
+
     }
 }

@@ -26,16 +26,36 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class MonsterSkill
     {
+
+		#region Properties (7) 
+
+
         public Ability Ability1 { get; set; }
+
         public Ability Ability2 { get; set; }
+
         public Ability Ability3 { get; set; }
+
         public Ability Beastmaster { get; set; }
-        public byte Value { get; private set; }
-        public string Name { get; private set; }
+
         public MonsterSkill Default { get; private set; }
+
+        public string Name { get; private set; }
+
+        public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
 
         public MonsterSkill( IList<byte> bytes )
             : this( 0, "", bytes, null )
+        {
+        }
+
+        public MonsterSkill( byte value, string name, IList<byte> bytes )
+            : this( value, name, bytes, null )
         {
         }
 
@@ -51,10 +71,10 @@ namespace FFTPatcher.Datatypes
             Beastmaster = AllAbilities.DummyAbilities[flags[3] ? (bytes[4] + 0x100) : bytes[4]];
         }
 
-        public MonsterSkill( byte value, string name, IList<byte> bytes )
-            : this( value, name, bytes, null )
-        {
-        }
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         public byte[] ToByteArray()
         {
@@ -77,14 +97,36 @@ namespace FFTPatcher.Datatypes
         {
             return ToByteArray();
         }
+
+
+		#endregion Methods 
+
     }
 
     public class AllMonsterSkills
     {
-        public MonsterSkill[] MonsterSkills { get; private set; }
+
+        #region Static Properties (3)
+
+
         public static string[] Names { get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; } }
-        public static string[] PSXNames { get; private set; }
+
         public static string[] PSPNames { get; private set; }
+
+        public static string[] PSXNames { get; private set; }
+
+
+        #endregion Static Properties
+
+        #region Properties (1)
+
+
+        public MonsterSkill[] MonsterSkills { get; private set; }
+
+
+        #endregion Properties
+
+        #region Constructors (2)
 
         static AllMonsterSkills()
         {
@@ -112,6 +154,23 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        #endregion Constructors
+
+        #region Methods (3)
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.MonsterSkillsBin, this.ToByteArray(), 0x065BC4 );
+            }
+        }
+
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 5 * MonsterSkills.Length );
@@ -128,16 +187,8 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.MonsterSkillsBin, this.ToByteArray(), 0x065BC4 );
-            }
-        }
+
+        #endregion Methods
+
     }
 }

@@ -27,64 +27,77 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AbilityAttributes
     {
-        public byte Range;
-        public byte Effect;
-        public byte Vertical;
-        public AbilityFormula Formula { get; set; }
-        public byte X;
-        public byte Y;
-        public byte InflictStatus;
-        public byte CT;
-        public byte MPCost;
 
+		#region Fields (40) 
+
+        public bool AnimateMiss;
+        public bool Arithmetick;
+        public bool Auto;
         public bool Blank6;
         public bool Blank7;
-        public bool WeaponRange;
-        public bool VerticalFixed;
-        public bool VerticalTolerance;
-        public bool WeaponStrike;
-        public bool Auto;
-        public bool TargetSelf; // inverted
-
-        public bool HitEnemies; // inverted
-        public bool HitAllies; // inverted
+ // inverted
         public bool Blank8;
-        public bool FollowTarget; // inverted
-        public bool RandomFire;
-        public bool LinearAttack;
-        public bool ThreeDirections;
-        public bool HitCaster; // inerted
-
-        public bool Reflect;
-        public bool Arithmetick;
-        public bool Silence; // inverted
-        public bool Mimic; // inverted
-        public bool NormalAttack;
-        public bool Perservere;
-        public bool ShowQuote;
-        public bool AnimateMiss;
-
         public bool CounterFlood;
         public bool CounterMagic;
+        public byte CT;
         public bool Direct;
-        public bool Shirahadori;
-        public bool RequiresSword;
-        public bool RequiresMateriaBlade;
+        public byte Effect;
         public bool Evadeable;
-        public bool Targeting; // inverted
+        public bool FollowTarget;
+ // inverted
+        public bool HitAllies;
+        public bool HitCaster;
+ // inverted
+        public bool HitEnemies;
+        public byte InflictStatus;
+        public bool LinearAttack;
+ // inverted
+        public bool Mimic;
+        public byte MPCost;
+ // inverted
+        public bool NormalAttack;
+        public bool Perservere;
+ // inverted
+        public bool RandomFire;
+        public byte Range;
+ // inerted
+        public bool Reflect;
+        public bool RequiresMateriaBlade;
+        public bool RequiresSword;
+        public bool Shirahadori;
+        public bool ShowQuote;
+        public bool Silence;
+        public bool Targeting;
+        public bool TargetSelf;
+        public bool ThreeDirections;
+        public byte Vertical;
+        public bool VerticalFixed;
+        public bool VerticalTolerance;
+        public bool WeaponRange;
+        public bool WeaponStrike;
+        public byte X;
+        public byte Y;
 
-        public Elements Elements { get; private set; }
+		#endregion Fields 
 
-        public string Name { get; private set; }
-        public UInt16 Offset { get; private set; }
+		#region Properties (5) 
+
 
         public AbilityAttributes Default { get; set; }
 
-        public AbilityAttributes( string name, UInt16 offset, IList<byte> second, AbilityAttributes defaults )
-            : this( name, offset, second )
-        {
-            Default = defaults;
-        }
+ // inverted
+        public Elements Elements { get; private set; }
+
+        public AbilityFormula Formula { get; set; }
+
+        public string Name { get; private set; }
+
+        public UInt16 Offset { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public AbilityAttributes( string name, UInt16 offset, IList<byte> second )
         {
@@ -121,6 +134,26 @@ namespace FFTPatcher.Datatypes
             MPCost = second[13];
         }
 
+        public AbilityAttributes( string name, UInt16 offset, IList<byte> second, AbilityAttributes defaults )
+            : this( name, offset, second )
+        {
+            Default = defaults;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[32] { 
+                Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, TargetSelf,
+                HitEnemies, HitAllies, Blank8, FollowTarget, RandomFire, LinearAttack, ThreeDirections, HitCaster,
+                Reflect, Arithmetick, Silence, Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss,
+                CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade,Evadeable, Targeting };
+        }
+
         public byte[] ToByteArray()
         {
             byte[] result = new byte[14];
@@ -142,13 +175,8 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[32] { 
-                Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, TargetSelf,
-                HitEnemies, HitAllies, Blank8, FollowTarget, RandomFire, LinearAttack, ThreeDirections, HitCaster,
-                Reflect, Arithmetick, Silence, Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss,
-                CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade,Evadeable, Targeting };
-        }
+
+		#endregion Methods 
+
     }
 }

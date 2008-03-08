@@ -25,11 +25,31 @@ namespace FFTPatcher.Editors
 {
     public partial class AllSkillSetsEditor : UserControl
     {
+
+		#region Properties (1) 
+
+
         public int SelectedIndex { get { return skillSetListBox.SelectedIndex; } set { skillSetListBox.SelectedIndex = value; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllSkillSetsEditor()
         {
             InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        private void skillSetListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            SkillSet s = skillSetListBox.SelectedItem as SkillSet;
+            skillSetEditor.SkillSet = s;
         }
 
         public void UpdateView( AllSkillSets skills )
@@ -42,10 +62,8 @@ namespace FFTPatcher.Editors
             skillSetEditor.SkillSet = skillSetListBox.SelectedItem as SkillSet;
         }
 
-        private void skillSetListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            SkillSet s = skillSetListBox.SelectedItem as SkillSet;
-            skillSetEditor.SkillSet = s;
-        }
+
+		#endregion Methods 
+
     }
 }

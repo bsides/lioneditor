@@ -24,8 +24,18 @@ namespace FFTPatcher.TextEditor
 {
     public class CompressionEventArgs : EventArgs
     {
-        public IList<byte> Result { get; private set; }
+
+		#region Properties (2) 
+
+
         public int Progress { get; private set; }
+
+        public IList<byte> Result { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public CompressionEventArgs( int progress )
         {
@@ -38,5 +48,8 @@ namespace FFTPatcher.TextEditor
         {
             Result = result;
         }
+
+		#endregion Constructors 
+
     }
 }

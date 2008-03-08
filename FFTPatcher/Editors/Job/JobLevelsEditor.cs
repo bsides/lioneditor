@@ -27,11 +27,29 @@ namespace FFTPatcher.Editors
 {
     public partial class JobLevelsEditor : UserControl
     {
+
+		#region Fields (1) 
+
         private JobLevels levels;
+
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         public JobLevelsEditor()
         {
             InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+            ReflectionHelpers.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
         }
 
         public void UpdateView( JobLevels levels )
@@ -73,10 +91,8 @@ namespace FFTPatcher.Editors
             requirementsEditor1.Requirements = reqs;
         }
 
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-            ReflectionHelpers.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
-        }
+
+		#endregion Methods 
+
     }
 }

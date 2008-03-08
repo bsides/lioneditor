@@ -17,22 +17,31 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using FFTPatcher.TextEditor.Files.PSX;
 using FFTPatcher.TextEditor.Files;
-using System;
+using FFTPatcher.TextEditor.Files.PSX;
+using System.IO;
 
 namespace FFTPatcher.TextEditor
 {
     public partial class MainForm : Form
     {
+
+		#region Fields (1) 
+
         private MenuItem[] menuItems;
+
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         public MainForm()
         {
             InitializeComponent();
 
+            FillFiles();
             menuItems = BuildMenuItems().ToArray();
             menuItems[0].Checked = true;
             compressedStringSectionedEditor1.Visible = false;
@@ -48,44 +57,10 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private void menuItem_Click( object sender, EventArgs e )
-        {
-            UncheckAllMenuItems( menuItems );
-            MenuItem thisItem = sender as MenuItem;
-            thisItem.Checked = true;
+		#endregion Constructors 
 
-            object file = thisItem.Tag;
+		#region Methods (5) 
 
-            if( file is ICompressed )
-            {
-                compressedStringSectionedEditor1.Strings = file as IStringSectioned;
-                compressedStringSectionedEditor1.Visible = true;
-                stringSectionedEditor1.Visible = false;
-                partitionEditor1.Visible = false;
-            }
-            else if( file is IStringSectioned )
-            {
-                stringSectionedEditor1.Strings = file as IStringSectioned;
-                stringSectionedEditor1.Visible = true;
-                compressedStringSectionedEditor1.Visible = false;
-                partitionEditor1.Visible = false;
-            }
-            else if( file is IPartition )
-            {
-                partitionEditor1.Visible = true;
-                partitionEditor1.Strings = file as IPartition;
-                compressedStringSectionedEditor1.Visible = false;
-                stringSectionedEditor1.Visible = false;
-            }
-        }
-
-        private void UncheckAllMenuItems( MenuItem[] menuItems )
-        {
-            foreach( MenuItem item in menuItems )
-            {
-                item.Checked = false;
-            }
-        }
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
         {
@@ -100,6 +75,7 @@ namespace FFTPatcher.TextEditor
             List<MenuItem> result = new List<MenuItem>();
             result.Add( AddMenuItem( psxMenuItem, "ATCHELP.LZW", new ATCHELPLZW( PSXResources.ATCHELP_LZW ) ) );
             result.Add( AddMenuItem( psxMenuItem, "ATTACK.OUT", new ATTACKOUT( PSXResources.ATTACK_OUT_partial ) ) );
+            result.Add( AddMenuItem( psxMenuItem, "HELPMENU.OUT", new HELPMENU( PSXResources.HELPMENU_OUT ) ) );
             result.Add( AddMenuItem( psxMenuItem, "JOIN.LZW", new JOINLZW( PSXResources.JOIN_LZW ) ) );
             result.Add( AddMenuItem( psxMenuItem, "OPEN.LZW", new OPENLZW( PSXResources.OPEN_LZW ) ) );
             result.Add( AddMenuItem( psxMenuItem, "SAMPLE.LZW", new SAMPLELZW( PSXResources.SAMPLE_LZW ) ) );
@@ -149,5 +125,160 @@ namespace FFTPatcher.TextEditor
 
             return result;
         }
+
+        private void FillFiles()
+        {
+            BasePSXSectionedFile[] psxFiles1 = new BasePSXSectionedFile[] {
+                new ATCHELPLZW(PSXResources.ATCHELP_LZW),
+                new ATTACKOUT(PSXResources.ATTACK_OUT_partial),
+                new JOINLZW(PSXResources.JOIN_LZW),
+                new OPENLZW(PSXResources.OPEN_LZW),
+                new SAMPLELZW(PSXResources.SAMPLE_LZW),
+                new WORLDLZW(PSXResources.WORLD_LZW)};
+            BasePSXCompressedFile[] psxFiles2 = new BasePSXCompressedFile[] {
+                new WLDHELPLZW(PSXResources.WLDHELP_LZW),
+                new HELPMENU(PSXResources.HELPMENU_OUT)};
+            //BasePSXPartitionedFile[] psxFiles3 = new BasePSXPartitionedFile[] {
+            //    new SNPLMESBIN(PSXResources.SNPLMES_BIN),
+            //    new WLDMES(PSXResources.WLDMES_BIN) };
+
+            foreach( BasePSXSectionedFile sectionFile in psxFiles1 )
+            {
+                foreach( KeyValuePair<string, long> kvp in sectionFile.Locations )
+                {
+                    var filename = kvp.Key;
+                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    int dotIndex = realFilename.LastIndexOf( '.' );
+                    if( dotIndex < 0 )
+                        dotIndex = realFilename.Length - 1;
+                    realFilename = realFilename.Substring( 0, dotIndex );
+                    string format = "{0}/{1}/{2:X}";
+                    if( realFilename == "ATTACK" )
+                    {
+                        realFilename = "A";
+                        format = "{0}{1}{2:X}";
+                    }
+                    else if( realFilename == "SMALL" )
+                    {
+                        realFilename = "S";
+                        format = "{0}{1}{2:X}";
+                    }
+                    else if( filename.Contains( "WORLD.LZW" ) )
+                    {
+                        realFilename = "WLD";
+                    }
+                    for( int section = 0; section < sectionFile.Sections.Count; section++ )
+                    {
+                        for( int i = 0; i < sectionFile.Sections[section].Count; i++ )
+                        {
+                            string newString = string.Format( format, realFilename, section, i );
+                            if( sectionFile.Sections[section][i].IndexOf( @"{END}" ) != -1 )
+                            {
+                                newString += @"{END}";
+                            }
+                            sectionFile.Sections[section][i] = newString;
+                        }
+                    }
+
+                    byte[] bytes = sectionFile.ToByteArray();
+                    if( bytes.Length <= sectionFile.MaxLength )
+                    {
+                        FileStream stream = new FileStream( Path.Combine( @"M:\dev\LionEditor\fftpack\US\changed", filename.Substring( filename.LastIndexOf( "/" ) + 1 ) ), FileMode.Open );
+                        stream.Seek( kvp.Value, SeekOrigin.Begin );
+                        stream.Write( bytes, 0, bytes.Length );
+                        stream.Flush();
+                        stream.Close();
+                        stream.Dispose();
+                    }
+                    else
+                    {
+                    }
+                }
+            }
+
+            foreach( BasePSXCompressedFile sectionFile in psxFiles2 )
+            {
+                foreach( var kvp in sectionFile.Locations )
+                {
+                    var filename = kvp.Key;
+                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    int dotIndex = realFilename.LastIndexOf( '.' );
+                    if( dotIndex < 0 )
+                        dotIndex = realFilename.Length - 1;
+                    realFilename = realFilename.Substring( 0, dotIndex );
+                    string format = "{0}/{1}/{2:X}";
+
+                    for( int section = 0; section < sectionFile.Sections.Count; section++ )
+                    {
+                        for( int i = 0; i < sectionFile.Sections[section].Count; i++ )
+                        {
+                            string newString = string.Format( format, realFilename, section, i );
+                            if( sectionFile.Sections[section][i].IndexOf( @"{END}" ) != -1 )
+                            {
+                                newString += @"{END}";
+                            }
+                            sectionFile.Sections[section][i] = newString;
+                        }
+                    }
+
+                    byte[] bytes = sectionFile.ToByteArray();
+                    if( bytes.Length <= sectionFile.MaxLength )
+                    {
+                        FileStream stream = new FileStream( Path.Combine( @"M:\dev\LionEditor\fftpack\US\changed", filename.Substring( filename.LastIndexOf( "/" ) + 1 ) ), FileMode.Open );
+                        stream.Seek( kvp.Value, SeekOrigin.Begin );
+                        stream.Write( bytes, 0, bytes.Length );
+                        stream.Flush();
+                        stream.Close();
+                        stream.Dispose();
+                    }
+                    else
+                    {
+                    }
+                }
+            }
+        }
+
+        private void menuItem_Click( object sender, EventArgs e )
+        {
+            UncheckAllMenuItems( menuItems );
+            MenuItem thisItem = sender as MenuItem;
+            thisItem.Checked = true;
+
+            object file = thisItem.Tag;
+
+            if( file is ICompressed )
+            {
+                compressedStringSectionedEditor1.Strings = file as IStringSectioned;
+                compressedStringSectionedEditor1.Visible = true;
+                stringSectionedEditor1.Visible = false;
+                partitionEditor1.Visible = false;
+            }
+            else if( file is IStringSectioned )
+            {
+                stringSectionedEditor1.Strings = file as IStringSectioned;
+                stringSectionedEditor1.Visible = true;
+                compressedStringSectionedEditor1.Visible = false;
+                partitionEditor1.Visible = false;
+            }
+            else if( file is IPartition )
+            {
+                partitionEditor1.Visible = true;
+                partitionEditor1.Strings = file as IPartition;
+                compressedStringSectionedEditor1.Visible = false;
+                stringSectionedEditor1.Visible = false;
+            }
+        }
+
+        private void UncheckAllMenuItems( MenuItem[] menuItems )
+        {
+            foreach( MenuItem item in menuItems )
+            {
+                item.Checked = false;
+            }
+        }
+
+
+		#endregion Methods 
+
     }
 }

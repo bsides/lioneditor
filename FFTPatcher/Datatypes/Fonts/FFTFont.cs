@@ -26,7 +26,16 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class FFTFont
     {
+
+		#region Properties (1) 
+
+
         public Glyph[] Glyphs { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public FFTFont( IList<byte> bytes, IList<byte> widthBytes )
         {
@@ -35,6 +44,30 @@ namespace FFTPatcher.Datatypes
             {
                 Glyphs[i] = new Glyph( widthBytes[i], bytes.Sub( i * 35, (i + 1) * 35 - 1 ) );
             }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            List<string> strings = new List<string>();
+
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x2FB364 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
+            }
+            else
+            {
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.FontBin, this.ToByteArray(), 0x13B8F8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.FontWidthsBin, this.ToWidthsByteArray(), 0x1533E0 ) );
+            }
+            return strings;
         }
 
         public byte[] ToByteArray()
@@ -58,23 +91,8 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public List<string> GenerateCodes()
-        {
-            List<string> strings = new List<string>();
 
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x2FB364 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
-            }
-            else
-            {
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.FontBin, this.ToByteArray(), 0x13B8F8 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.FontWidthsBin, this.ToWidthsByteArray(), 0x1533E0 ) );
-            }
-            return strings;
-        }
+		#endregion Methods 
+
     }
 }

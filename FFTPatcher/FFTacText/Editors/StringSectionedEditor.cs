@@ -27,9 +27,17 @@ namespace FFTPatcher.TextEditor
 {
     public partial class StringSectionedEditor : UserControl
     {
-        private IStringSectioned strings;
-        private bool ignoreChanges = false;
+
+		#region Fields (3) 
+
         private bool error = false;
+        private bool ignoreChanges = false;
+        private IStringSectioned strings;
+
+		#endregion Fields 
+
+		#region Properties (2) 
+
 
         protected virtual string LengthLabelFormatString
         {
@@ -54,32 +62,10 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private void AddSections()
-        {
-            sectionComboBox.Items.Clear();
-            for( int i = 0; i < strings.Sections.Count; i++ )
-            {
-                sectionComboBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.SectionNames[i] ) );
-            }
-        }
 
-        private void UpdateCurrentStringListBox()
-        {
-            currentStringListBox.Items.Clear();
-            for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
-            {
-                currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[sectionComboBox.SelectedIndex][i] ) );
-            }
-            currentStringListBox.SelectedIndex = 0;
-            UpdateCurrentString();
-        }
+		#endregion Properties 
 
-        private void UpdateCurrentString()
-        {
-            ignoreChanges = true;
-            currentString.Text = strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )][Math.Max( 0, currentStringListBox.SelectedIndex )];
-            ignoreChanges = false;
-        }
+		#region Constructors (1) 
 
         public StringSectionedEditor()
         {
@@ -91,9 +77,60 @@ namespace FFTPatcher.TextEditor
             currentString.Font = new Font( "Arial Unicode MS", 10 );
         }
 
+		#endregion Constructors 
+
+		#region Methods (8) 
+
+
+        private void AddSections()
+        {
+            sectionComboBox.Items.Clear();
+            for( int i = 0; i < strings.Sections.Count; i++ )
+            {
+                sectionComboBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.SectionNames[i] ) );
+            }
+        }
+
+        private void currentString_TextChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) && (currentStringListBox.SelectedIndex > -1) )
+            {
+                strings.Sections[sectionComboBox.SelectedIndex][currentStringListBox.SelectedIndex] = currentString.Text;
+                UpdateLengthLabels();
+            }
+        }
+
         private void currentString_Validating( object sender, CancelEventArgs e )
         {
             e.Cancel = error;
+        }
+
+        private void currentStringListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            UpdateCurrentString();
+        }
+
+        private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            UpdateCurrentStringListBox();
+        }
+
+        private void UpdateCurrentString()
+        {
+            ignoreChanges = true;
+            currentString.Text = strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )][Math.Max( 0, currentStringListBox.SelectedIndex )];
+            ignoreChanges = false;
+        }
+
+        private void UpdateCurrentStringListBox()
+        {
+            currentStringListBox.Items.Clear();
+            for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
+            {
+                currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[sectionComboBox.SelectedIndex][i] ) );
+            }
+            currentStringListBox.SelectedIndex = 0;
+            UpdateCurrentString();
         }
 
         private void UpdateLengthLabels()
@@ -112,23 +149,8 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private void currentString_TextChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) && (currentStringListBox.SelectedIndex > -1) )
-            {
-                strings.Sections[sectionComboBox.SelectedIndex][currentStringListBox.SelectedIndex] = currentString.Text;
-                UpdateLengthLabels();
-            }
-        }
 
-        private void currentStringListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            UpdateCurrentString();
-        }
+		#endregion Methods 
 
-        private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            UpdateCurrentStringListBox();
-        }
     }
 }

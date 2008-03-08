@@ -26,9 +26,18 @@ namespace FFTPatcher.Editors
 {
     public partial class ItemAttributeEditor : UserControl
     {
+
+		#region Fields (3) 
+
+        private ItemAttributes attributes;
         private bool ignoreChanges = false;
         private NumericUpDownWithDefault[] spinners;
-        private ItemAttributes attributes;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public ItemAttributes ItemAttributes
         {
             get { return attributes; }
@@ -45,6 +54,35 @@ namespace FFTPatcher.Editors
                     this.Enabled = true;
                     UpdateView();
                 }
+            }
+        }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public ItemAttributeEditor()
+        {
+            InitializeComponent();
+            spinners = new NumericUpDownWithDefault[] { maSpinner, paSpinner, speedSpinner, moveSpinner, jumpSpinner };
+            foreach( NumericUpDownWithDefault spinner in spinners )
+            {
+                spinner.ValueChanged += spinner_ValueChanged;
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
             }
         }
 
@@ -89,23 +127,8 @@ namespace FFTPatcher.Editors
             this.ignoreChanges = false;
         }
 
-        public ItemAttributeEditor()
-        {
-            InitializeComponent();
-            spinners = new NumericUpDownWithDefault[] { maSpinner, paSpinner, speedSpinner, moveSpinner, jumpSpinner };
-            foreach( NumericUpDownWithDefault spinner in spinners )
-            {
-                spinner.ValueChanged += spinner_ValueChanged;
-            }
-        }
 
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
-            }
-        }
+		#endregion Methods 
+
     }
 }

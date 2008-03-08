@@ -22,52 +22,221 @@ using System.Collections.Generic;
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
+    /// Represents all <see cref="Job"/>s in memory.
+    /// </summary>
+    public class AllJobs
+    {
+
+		#region Static Fields (2) 
+
+        private static Job[] pspJobs;
+        private static Job[] psxJobs;
+
+		#endregion Static Fields 
+
+		#region Static Properties (4) 
+
+
+        public static Job[] DummyJobs
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspJobs : psxJobs; }
+        }
+
+        public static string[] Names
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; }
+        }
+
+        public static string[] PSPNames { get; private set; }
+
+        public static string[] PSXNames { get; private set; }
+
+
+		#endregion Static Properties 
+
+		#region Properties (1) 
+
+
+        public Job[] Jobs { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (3) 
+
+        static AllJobs()
+        {
+            pspJobs = new Job[0xAA];
+            psxJobs = new Job[0xA0];
+
+            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
+                Resources.Jobs,
+                "/Jobs/Job[@offset='{0:X2}']/@name",
+                0xAA );
+            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
+                PSXResources.Jobs,
+                "/Jobs/Job[@offset='{0:X2}']/@name",
+                0xA0 );
+
+            for( int i = 0; i < 0xAA; i++ )
+            {
+                pspJobs[i] = new Job( (byte)i, PSPNames[i] );
+            }
+
+            for( int i = 0; i < 0xA0; i++ )
+            {
+                psxJobs[i] = new Job( (byte)i, PSXNames[i] );
+            }
+        }
+
+        public AllJobs( IList<byte> bytes )
+            : this( Context.US_PSP, bytes )
+        {
+        }
+
+        public AllJobs( Context context, IList<byte> bytes )
+        {
+            int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
+            int jobLength = context == Context.US_PSP ? 49 : 48;
+            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : PSXResources.JobsBin;
+            Jobs = new Job[numJobs];
+            for( int i = 0; i < numJobs; i++ )
+            {
+                Jobs[i] = new Job( context, (byte)i, Names[i], bytes.Sub( i * jobLength, (i + 1) * jobLength - 1 ),
+                    new Job( context, (byte)i, Names[i], defaultBytes.Sub( i * jobLength, (i + 1) * jobLength - 1 ) ) );
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
+            }
+        }
+
+        public byte[] ToByteArray()
+        {
+            return ToByteArray( Context.US_PSP );
+        }
+
+        public byte[] ToByteArray( Context context )
+        {
+            List<byte> result = new List<byte>( 0x205C );
+            foreach( Job j in Jobs )
+            {
+                result.AddRange( j.ToByteArray( context ) );
+            }
+
+            return result.ToArray();
+        }
+
+
+		#endregion Methods 
+
+    }
+
+    /// <summary>
     /// Represents a character's Job and its abilities and attributes.
     /// </summary>
     public class Job
     {
-        public string Name { get; private set; }
-        public byte Value { get; private set; }
-        public SkillSet SkillSet { get; set; }
-        public Ability InnateA { get; set; }
-        public Ability InnateB { get; set; }
-        public Ability InnateC { get; set; }
-        public Ability InnateD { get; set; }
+
+		#region Properties (32) 
+
+
+        public Elements AbsorbElement { get; private set; }
+
+        public Elements CancelElement { get; private set; }
+
+        public byte CEvade { get; set; }
+
+        public Job Default { get; private set; }
 
         public Equipment Equipment { get; private set; }
 
-        public byte HPConstant { get; set; }
-        public byte HPMultiplier { get; set; }
-        public byte MPConstant { get; set; }
-        public byte MPMultiplier { get; set; }
-        public byte SpeedConstant { get; set; }
-        public byte SpeedMultiplier { get; set; }
-        public byte PAConstant { get; set; }
-        public byte PAMultiplier { get; set; }
-        public byte MAConstant { get; set; }
-        public byte MAMultiplier { get; set; }
-        public byte Move { get; set; }
-        public byte Jump { get; set; }
-        public byte CEvade { get; set; }
-
-        public Statuses PermanentStatus { get; private set; }
-        public Statuses StatusImmunity { get; private set; }
-        public Statuses StartingStatus { get; private set; }
-
-        public Elements AbsorbElement { get; private set; }
-        public Elements CancelElement { get; private set; }
         public Elements HalfElement { get; private set; }
-        public Elements WeakElement { get; private set; }
 
-        public byte MPortrait { get; set; }
-        public byte MPalette { get; set; }
+        public byte HPConstant { get; set; }
+
+        public byte HPMultiplier { get; set; }
+
+        public Ability InnateA { get; set; }
+
+        public Ability InnateB { get; set; }
+
+        public Ability InnateC { get; set; }
+
+        public Ability InnateD { get; set; }
+
+        public byte Jump { get; set; }
+
+        public byte MAConstant { get; set; }
+
+        public byte MAMultiplier { get; set; }
+
         public byte MGraphic { get; set; }
 
-        public Job Default { get; private set; }
+        public byte Move { get; set; }
+
+        public byte MPalette { get; set; }
+
+        public byte MPConstant { get; set; }
+
+        public byte MPMultiplier { get; set; }
+
+        public byte MPortrait { get; set; }
+
+        public string Name { get; private set; }
+
+        public byte PAConstant { get; set; }
+
+        public byte PAMultiplier { get; set; }
+
+        public Statuses PermanentStatus { get; private set; }
+
+        public SkillSet SkillSet { get; set; }
+
+        public byte SpeedConstant { get; set; }
+
+        public byte SpeedMultiplier { get; set; }
+
+        public Statuses StartingStatus { get; private set; }
+
+        public Statuses StatusImmunity { get; private set; }
+
+        public byte Value { get; private set; }
+
+        public Elements WeakElement { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (5) 
+
+        public Job( IList<byte> bytes )
+            : this( Context.US_PSP, bytes )
+        {
+        }
 
         public Job( Context context, IList<byte> bytes )
             : this( context, 0, "", bytes )
         {
+        }
+
+        public Job( byte value, string name )
+        {
+            Value = value;
+            Name = name;
         }
 
         public Job( Context context, byte value, string name, IList<byte> bytes )
@@ -113,16 +282,10 @@ namespace FFTPatcher.Datatypes
             MGraphic = bytes[equipEnd + 35];
         }
 
-        public Job( IList<byte> bytes )
-            : this( Context.US_PSP, bytes )
-        {
-        }
+		#endregion Constructors 
 
-        public Job( byte value, string name )
-        {
-            Value = value;
-            Name = name;
-        }
+		#region Methods (3) 
+
 
         public byte[] ToByteArray()
         {
@@ -165,104 +328,15 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+
+
         public override string ToString()
         {
             return Value.ToString( "X2" ) + " " + Name;
         }
-    }
 
-    /// <summary>
-    /// Represents all <see cref="Job"/>s in memory.
-    /// </summary>
-    public class AllJobs
-    {
-        private static Job[] psxJobs;
-        private static Job[] pspJobs;
 
-        public static Job[] DummyJobs
-        {
-            get { return FFTPatch.Context == Context.US_PSP ? pspJobs : psxJobs; }
-        }
+		#endregion Methods 
 
-        public static string[] Names
-        {
-            get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; }
-        }
-
-        public static string[] PSPNames { get; private set; }
-        public static string[] PSXNames { get; private set; }
-
-        public Job[] Jobs { get; private set; }
-
-        static AllJobs()
-        {
-            pspJobs = new Job[0xAA];
-            psxJobs = new Job[0xA0];
-
-            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.Jobs,
-                "/Jobs/Job[@offset='{0:X2}']/@name",
-                0xAA );
-            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.Jobs,
-                "/Jobs/Job[@offset='{0:X2}']/@name",
-                0xA0 );
-
-            for( int i = 0; i < 0xAA; i++ )
-            {
-                pspJobs[i] = new Job( (byte)i, PSPNames[i] );
-            }
-
-            for( int i = 0; i < 0xA0; i++ )
-            {
-                psxJobs[i] = new Job( (byte)i, PSXNames[i] );
-            }
-        }
-
-        public AllJobs( IList<byte> bytes )
-            : this( Context.US_PSP, bytes )
-        {
-        }
-
-        public AllJobs( Context context, IList<byte> bytes )
-        {
-            int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
-            int jobLength = context == Context.US_PSP ? 49 : 48;
-            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : PSXResources.JobsBin;
-            Jobs = new Job[numJobs];
-            for( int i = 0; i < numJobs; i++ )
-            {
-                Jobs[i] = new Job( context, (byte)i, Names[i], bytes.Sub( i * jobLength, (i + 1) * jobLength - 1 ),
-                    new Job( context, (byte)i, Names[i], defaultBytes.Sub( i * jobLength, (i + 1) * jobLength - 1 ) ) );
-            }
-        }
-
-        public byte[] ToByteArray()
-        {
-            return ToByteArray( Context.US_PSP );
-        }
-
-        public byte[] ToByteArray( Context context )
-        {
-            List<byte> result = new List<byte>( 0x205C );
-            foreach( Job j in Jobs )
-            {
-                result.AddRange( j.ToByteArray( context ) );
-            }
-
-            return result.ToArray();
-        }
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
-            }
-        }
     }
 }

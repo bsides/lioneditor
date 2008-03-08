@@ -26,11 +26,27 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class PoachProbability
     {
-        public string MonsterName { get; private set; }
+
+		#region Properties (4) 
+
+
         public Item Common { get; set; }
-        public Item Uncommon { get; set; }
 
         public PoachProbability Default { get; private set; }
+
+        public string MonsterName { get; private set; }
+
+        public Item Uncommon { get; set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public PoachProbability( string name, IList<byte> bytes )
+            : this( name, bytes, null )
+        {
+        }
 
         public PoachProbability( string name, IList<byte> bytes, PoachProbability defaults )
         {
@@ -40,10 +56,10 @@ namespace FFTPatcher.Datatypes
             Uncommon = Item.GetItemAtOffset( bytes[1] );
         }
 
-        public PoachProbability( string name, IList<byte> bytes )
-            : this( name, bytes, null )
-        {
-        }
+		#endregion Constructors 
+
+		#region Methods (1) 
+
 
         public byte[] ToByteArray()
         {
@@ -52,11 +68,24 @@ namespace FFTPatcher.Datatypes
             result[1] = (byte)(Uncommon.Offset & 0xFF);
             return result;
         }
+
+
+		#endregion Methods 
+
     }
 
     public class AllPoachProbabilities
     {
+
+		#region Properties (1) 
+
+
         public PoachProbability[] PoachProbabilities { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllPoachProbabilities( IList<byte> bytes )
         {
@@ -67,6 +96,23 @@ namespace FFTPatcher.Datatypes
             {
                 PoachProbabilities[i] = new PoachProbability( AllJobs.Names[i + 0x5E], bytes.Sub( i * 2, i * 2 + 1 ),
                     new PoachProbability( AllJobs.Names[i + 0x5E], defaultBytes.Sub( i * 2, i * 2 + 1 ) ) );
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064 );
             }
         }
 
@@ -86,16 +132,8 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 }

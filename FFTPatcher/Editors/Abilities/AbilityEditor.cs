@@ -27,7 +27,24 @@ namespace FFTPatcher.Editors
 {
     public partial class AbilityEditor : UserControl
     {
+
+		#region Fields (9) 
+
         private Ability ability;
+        private List<ComboBoxWithDefault> comboBoxes;
+        private bool ignoreChanges = false;
+        private Context ourContext = Context.Default;
+        private List<Item> pspItems = new List<Item>( 256 );
+        private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+        private List<Item> psxItems = new List<Item>( 256 );
+        private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+        private List<NumericUpDownWithDefault> spinners;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public Ability Ability
         {
             get { return ability; }
@@ -41,8 +58,92 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private bool ignoreChanges = false;
-        private Context ourContext = Context.Default;
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public AbilityEditor()
+        {
+            InitializeComponent();
+            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { 
+                arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner } );
+            comboBoxes = new List<ComboBoxWithDefault>( new ComboBoxWithDefault[] { itemUseComboBox, throwingComboBox, effectComboBox } );
+
+            arithmeticksSpinner.Tag = "ArithmetickSkill";
+            ctSpinner.Tag = "ChargeCT";
+            powerSpinner.Tag = "ChargeBonus";
+            horizontalSpinner.Tag = "JumpHorizontal";
+            verticalSpinner.Tag = "JumpVertical";
+            itemUseComboBox.Tag = "Item";
+            throwingComboBox.Tag = "Throwing";
+            idSpinner.Tag = "OtherID";
+
+            foreach( NumericUpDownWithDefault spinner in spinners )
+            {
+                spinner.ValueChanged += spinner_ValueChanged;
+            }
+            foreach( ComboBoxWithDefault combo in comboBoxes )
+            {
+                combo.SelectedIndexChanged += combo_SelectedIndexChanged;
+            }
+
+            foreach( Item i in Item.PSPDummies )
+            {
+                if( i.Offset <= 0xFF )
+                {
+                    pspItems.Add( i );
+                }
+            }
+            foreach( Item i in Item.PSXDummies )
+            {
+                if( i.Offset <= 0xFF )
+                {
+                    psxItems.Add( i );
+                }
+            }
+            psxItemTypes.Remove( ItemSubType.LipRouge );
+            psxItemTypes.Remove( ItemSubType.FellSword );
+
+            abilityAttributesEditor.LinkClicked += abilityAttributesEditor_LinkClicked;
+        }
+
+		#endregion Constructors 
+
+		#region Events (1) 
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusLabelClicked;
+
+		#endregion Events 
+
+		#region Methods (4) 
+
+
+        private void abilityAttributesEditor_LinkClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( InflictStatusLabelClicked != null )
+            {
+                InflictStatusLabelClicked( this, e );
+            }
+        }
+
+        private void combo_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
+            }
+        }
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
+            }
+        }
 
         private void UpdateView()
         {
@@ -106,84 +207,8 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
-        private List<NumericUpDownWithDefault> spinners;
-        private List<ComboBoxWithDefault> comboBoxes;
-        private List<Item> psxItems = new List<Item>( 256 );
-        private List<Item> pspItems = new List<Item>( 256 );
-        private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
-        private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
 
-        public AbilityEditor()
-        {
-            InitializeComponent();
-            spinners = new List<NumericUpDownWithDefault>( new NumericUpDownWithDefault[] { 
-                arithmeticksSpinner, ctSpinner, powerSpinner, horizontalSpinner, verticalSpinner, idSpinner } );
-            comboBoxes = new List<ComboBoxWithDefault>( new ComboBoxWithDefault[] { itemUseComboBox, throwingComboBox, effectComboBox } );
+		#endregion Methods 
 
-            arithmeticksSpinner.Tag = "ArithmetickSkill";
-            ctSpinner.Tag = "ChargeCT";
-            powerSpinner.Tag = "ChargeBonus";
-            horizontalSpinner.Tag = "JumpHorizontal";
-            verticalSpinner.Tag = "JumpVertical";
-            itemUseComboBox.Tag = "Item";
-            throwingComboBox.Tag = "Throwing";
-            idSpinner.Tag = "OtherID";
-
-            foreach( NumericUpDownWithDefault spinner in spinners )
-            {
-                spinner.ValueChanged += spinner_ValueChanged;
-            }
-            foreach( ComboBoxWithDefault combo in comboBoxes )
-            {
-                combo.SelectedIndexChanged += combo_SelectedIndexChanged;
-            }
-
-            foreach( Item i in Item.PSPDummies )
-            {
-                if( i.Offset <= 0xFF )
-                {
-                    pspItems.Add( i );
-                }
-            }
-            foreach( Item i in Item.PSXDummies )
-            {
-                if( i.Offset <= 0xFF )
-                {
-                    psxItems.Add( i );
-                }
-            }
-            psxItemTypes.Remove( ItemSubType.LipRouge );
-            psxItemTypes.Remove( ItemSubType.FellSword );
-
-            abilityAttributesEditor.LinkClicked += abilityAttributesEditor_LinkClicked;
-        }
-
-        public event EventHandler<LabelClickedEventArgs> InflictStatusLabelClicked;
-
-        private void abilityAttributesEditor_LinkClicked( object sender, LabelClickedEventArgs e )
-        {
-            if( InflictStatusLabelClicked != null )
-            {
-                InflictStatusLabelClicked( this, e );
-            }
-        }
-
-        private void combo_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
-            }
-        }
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
-            }
-        }
     }
 }

@@ -27,9 +27,20 @@ namespace FFTPatcher.Editors
 {
     public partial class SkillSetEditor : UserControl
     {
+
+		#region Fields (5) 
+
+        private List<ComboBoxWithDefault> actionComboBoxes;
         private bool ignoreChanges = false;
-        private SkillSet skillSet;
         private Context ourContext = Context.Default;
+        private SkillSet skillSet;
+        private List<ComboBoxWithDefault> theRestComboBoxes;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public SkillSet SkillSet
         {
             get { return skillSet; }
@@ -49,8 +60,10 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private List<ComboBoxWithDefault> actionComboBoxes;
-        private List<ComboBoxWithDefault> theRestComboBoxes;
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public SkillSetEditor()
         {
@@ -64,6 +77,11 @@ namespace FFTPatcher.Editors
                 theRestComboBox1, theRestComboBox2, theRestComboBox3,
                 theRestComboBox4, theRestComboBox5, theRestComboBox6 } );
         }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
 
         private void actionComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -122,5 +140,9 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
             this.ignoreChanges = false;
         }
+
+
+		#endregion Methods 
+
     }
 }

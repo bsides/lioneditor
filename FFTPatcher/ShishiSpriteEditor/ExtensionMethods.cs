@@ -27,6 +27,10 @@ namespace FFTPatcher.SpriteEditor
     /// </summary>
     public static partial class ExtensionMethods
     {
+
+		#region Methods (4) 
+
+
         public static void DrawSprite( this Graphics g, Sprite s, Palette p )
         {
             using( Bitmap b = new Bitmap( 256, 488 ) )
@@ -57,5 +61,8 @@ namespace FFTPatcher.SpriteEditor
             int offset = y * bmd.Stride + x;
             return p[offset];
         }
+
+		#endregion Methods 
+
     }
 }

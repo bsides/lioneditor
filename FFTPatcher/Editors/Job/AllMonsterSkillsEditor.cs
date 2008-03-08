@@ -25,6 +25,10 @@ namespace FFTPatcher.Editors
 {
     public partial class AllMonsterSkillsEditor : UserControl
     {
+
+		#region Properties (1) 
+
+
         public int SelectedIndex
         {
             get { return dataGridView.CurrentRow.Index; }
@@ -34,6 +38,11 @@ namespace FFTPatcher.Editors
                 dataGridView.CurrentCell = dataGridView[0, value];
             }
         }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllMonsterSkillsEditor()
         {
@@ -48,17 +57,10 @@ namespace FFTPatcher.Editors
             dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
-        public void UpdateView( AllMonsterSkills skills )
-        {
-            dataGridView.DataSource = null;
-            foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
-            {
-                col.Items.Clear();
-                col.Items.AddRange( AllAbilities.DummyAbilities );
-                col.ValueType = typeof( Ability );
-            }
-            dataGridView.DataSource = skills.MonsterSkills;
-        }
+		#endregion Constructors 
+
+		#region Methods (6) 
+
 
         private void Control_KeyDown( object sender, KeyEventArgs e )
         {
@@ -70,21 +72,6 @@ namespace FFTPatcher.Editors
                 DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
                 c.SelectedItem = ReflectionHelpers.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[dataGridView.CurrentCell.ColumnIndex].DataPropertyName );
                 dataGridView.EndEdit();
-            }
-        }
-        
-        private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
-        {
-            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
-                (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
-                (dataGridView.Rows[e.RowIndex].DataBoundItem is MonsterSkill) )
-            {
-                MonsterSkill skill = dataGridView.Rows[e.RowIndex].DataBoundItem as MonsterSkill;
-                if( skill.Default != null )
-                {
-                    Ability a = ReflectionHelpers.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
-                    e.ToolTipText = "Default: " + a.Name;
-                }
             }
         }
 
@@ -129,6 +116,21 @@ namespace FFTPatcher.Editors
             }
         }
 
+        private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
+        {
+            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                (dataGridView.Rows[e.RowIndex].DataBoundItem is MonsterSkill) )
+            {
+                MonsterSkill skill = dataGridView.Rows[e.RowIndex].DataBoundItem as MonsterSkill;
+                if( skill.Default != null )
+                {
+                    Ability a = ReflectionHelpers.GetFieldOrProperty<Ability>( skill.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                    e.ToolTipText = "Default: " + a.Name;
+                }
+            }
+        }
+
         private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
         {
             DataGridViewComboBoxEditingControl c = e.Control as DataGridViewComboBoxEditingControl;
@@ -138,5 +140,21 @@ namespace FFTPatcher.Editors
             }
             e.Control.KeyDown += Control_KeyDown;
         }
+
+        public void UpdateView( AllMonsterSkills skills )
+        {
+            dataGridView.DataSource = null;
+            foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
+            {
+                col.Items.Clear();
+                col.Items.AddRange( AllAbilities.DummyAbilities );
+                col.ValueType = typeof( Ability );
+            }
+            dataGridView.DataSource = skills.MonsterSkills;
+        }
+
+
+		#endregion Methods 
+
     }
 }

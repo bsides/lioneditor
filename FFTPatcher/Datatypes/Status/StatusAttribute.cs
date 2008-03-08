@@ -26,36 +26,59 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class StatusAttribute
     {
-        public string Name { get; private set; }
-        public byte Value { get; private set; }
 
-        public byte Blank1 { get; set; }
-        public byte Blank2 { get; set; }
-        public byte Order { get; set; }
-        public byte CT { get; set; }
+		#region Fields (16) 
 
+ // inverted
+        public bool Blank;
+        public bool CanReact;
         public bool FreezeCT;
+        public bool IgnoreAttack;
+        public bool KO;
         public bool Unknown1;
+        public bool Unknown10;
+        public bool Unknown11;
         public bool Unknown2;
         public bool Unknown3;
         public bool Unknown4;
         public bool Unknown5;
         public bool Unknown6;
-        public bool KO;
-
-        public bool CanReact; // inverted
-        public bool Blank;
-        public bool IgnoreAttack;
         public bool Unknown7;
         public bool Unknown8;
         public bool Unknown9;
-        public bool Unknown10;
-        public bool Unknown11;
+
+		#endregion Fields 
+
+		#region Properties (9) 
+
+
+        public byte Blank1 { get; set; }
+
+        public byte Blank2 { get; set; }
 
         public Statuses Cancels { get; private set; }
+
         public Statuses CantStackOn { get; private set; }
 
+        public byte CT { get; set; }
+
         public StatusAttribute Default { get; private set; }
+
+        public string Name { get; private set; }
+
+        public byte Order { get; set; }
+
+        public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        public StatusAttribute( string name, byte value, IList<byte> bytes )
+            : this( name, value, bytes, null )
+        {
+        }
 
         public StatusAttribute( string name, byte value, IList<byte> bytes, StatusAttribute defaults )
         {
@@ -75,9 +98,16 @@ namespace FFTPatcher.Datatypes
             CantStackOn = new Statuses( bytes.Sub( 11, 15 ), defaults == null ? null : defaults.CantStackOn );
         }
 
-        public StatusAttribute( string name, byte value, IList<byte> bytes )
-            : this( name, value, bytes, null )
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public bool[] ToBoolArray()
         {
+            return new bool[16] {
+                FreezeCT, Unknown1, Unknown2, Unknown3, Unknown4, Unknown5, Unknown6, KO,
+                CanReact, Blank, IgnoreAttack, Unknown7, Unknown8, Unknown9, Unknown10, Unknown11 };
         }
 
         public byte[] ToByteArray()
@@ -95,22 +125,30 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+
+
         public override string ToString()
         {
             return Name;
         }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[16] {
-                FreezeCT, Unknown1, Unknown2, Unknown3, Unknown4, Unknown5, Unknown6, KO,
-                CanReact, Blank, IgnoreAttack, Unknown7, Unknown8, Unknown9, Unknown10, Unknown11 };
-        }
+
+		#endregion Methods 
+
     }
 
     public class AllStatusAttributes
     {
+
+		#region Properties (1) 
+
+
         public StatusAttribute[] StatusAttributes { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllStatusAttributes( IList<byte> bytes )
         {
@@ -123,6 +161,23 @@ namespace FFTPatcher.Datatypes
                 StatusAttributes[i] =
                     new StatusAttribute( names[i], (byte)i, bytes.Sub( 16 * i, 16 * i + 15 ),
                         new StatusAttribute( names[i], (byte)i, defaultBytes.Sub( 16 * i, 16 * i + 15 ) ) );
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4 );
             }
         }
 
@@ -142,16 +197,8 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 }

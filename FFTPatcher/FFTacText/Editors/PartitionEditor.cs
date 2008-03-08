@@ -8,14 +8,17 @@ namespace FFTPatcher.TextEditor.Editors
 {
     public partial class PartitionEditor : UserControl
     {
-        private IPartition strings;
-        private bool ignoreChanges = false;
-        private bool error = false;
 
-        protected virtual string LengthLabelFormatString
-        {
-            get { return "Length: {0} bytes"; }
-        }
+		#region Fields (3) 
+
+        private bool error = false;
+        private bool ignoreChanges = false;
+        private IPartition strings;
+
+		#endregion Fields 
+
+		#region Properties (2) 
+
 
         public IPartition Strings
         {
@@ -33,23 +36,17 @@ namespace FFTPatcher.TextEditor.Editors
             }
         }
 
-        private void UpdateCurrentStringListBox()
+
+
+        protected virtual string LengthLabelFormatString
         {
-            currentStringListBox.Items.Clear();
-            for( int i = 0; i < strings.Entries.Count; i++ )
-            {
-                currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[i] ) );
-            }
-            currentStringListBox.SelectedIndex = 0;
-            UpdateCurrentString();
+            get { return "Length: {0} bytes"; }
         }
 
-        private void UpdateCurrentString()
-        {
-            ignoreChanges = true;
-            currentString.Text = strings.Entries[Math.Max( 0, currentStringListBox.SelectedIndex )];
-            ignoreChanges = false;
-        }
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public PartitionEditor()
         {
@@ -60,9 +57,51 @@ namespace FFTPatcher.TextEditor.Editors
             currentString.Font = new Font( "Arial Unicode MS", 10 );
         }
 
+		#endregion Constructors 
+
+		#region Methods (7) 
+
+
+        private void currentString_TextChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && (currentStringListBox.SelectedIndex > -1) )
+            {
+                strings.Entries[currentStringListBox.SelectedIndex] = currentString.Text;
+                UpdateLengthLabels();
+            }
+        }
+
         private void currentString_Validating( object sender, CancelEventArgs e )
         {
             e.Cancel = error;
+        }
+
+        private void currentStringListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            UpdateCurrentString();
+        }
+
+        private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            UpdateCurrentStringListBox();
+        }
+
+        private void UpdateCurrentString()
+        {
+            ignoreChanges = true;
+            currentString.Text = strings.Entries[Math.Max( 0, currentStringListBox.SelectedIndex )];
+            ignoreChanges = false;
+        }
+
+        private void UpdateCurrentStringListBox()
+        {
+            currentStringListBox.Items.Clear();
+            for( int i = 0; i < strings.Entries.Count; i++ )
+            {
+                currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[i] ) );
+            }
+            currentStringListBox.SelectedIndex = 0;
+            UpdateCurrentString();
         }
 
         private void UpdateLengthLabels()
@@ -81,23 +120,8 @@ namespace FFTPatcher.TextEditor.Editors
             }
         }
 
-        private void currentString_TextChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges && (currentStringListBox.SelectedIndex > -1) )
-            {
-                strings.Entries[currentStringListBox.SelectedIndex] = currentString.Text;
-                UpdateLengthLabels();
-            }
-        }
 
-        private void currentStringListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            UpdateCurrentString();
-        }
+		#endregion Methods 
 
-        private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            UpdateCurrentStringListBox();
-        }
     }
 }

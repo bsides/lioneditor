@@ -20,13 +20,25 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public abstract class BasePSXPartitionedFile : AbstractPartitionedFile
+    public abstract class BasePSPPartitionedFile : AbstractPartitionedFile
     {
+
+		#region Properties (1) 
+
+
         protected override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSP; } }
 
-        protected BasePSXPartitionedFile( IList<byte> bytes )
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        protected BasePSPPartitionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

@@ -23,7 +23,36 @@ namespace FFTPatcher.TextEditor
 {
     public static class PSPResources
     {
+
+		#region Fields (1) 
+
         private static Dictionary<string, object> resourceMapping = new Dictionary<string, object>();
+
+		#endregion Fields 
+
+		#region Properties (8) 
+
+
+        public static byte[] ATCHELP_LZW { get { return resourceMapping["ATCHELP_LZW"] as byte[]; } }
+
+        public static byte[] BOOT_299024 { get { return resourceMapping["BOOT_299024"] as byte[]; } }
+
+        public static byte[] BOOT_29E334 { get { return resourceMapping["BOOT_29E334"] as byte[]; } }
+
+        public static byte[] BOOT_2A1630 { get { return resourceMapping["BOOT_2A1630"] as byte[]; } }
+
+        public static byte[] BOOT_2EB4C0 { get { return resourceMapping["BOOT_2EB4C0"] as byte[]; } }
+
+        public static byte[] BOOT_32D368 { get { return resourceMapping["BOOT_32D368"] as byte[]; } }
+
+        public static byte[] OPEN_LZW { get { return resourceMapping["OPEN_LZW"] as byte[]; } }
+
+        public static byte[] WLDMES_BIN { get { return resourceMapping["WLDMES_BIN"] as byte[]; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         static PSPResources()
         {
@@ -37,13 +66,7 @@ namespace FFTPatcher.TextEditor
             resourceMapping["WLDMES_BIN"] = GZip.Decompress( Properties.PSPResources.WLDMES_BIN );
         }
 
-        public static byte[] ATCHELP_LZW { get { return resourceMapping["ATCHELP_LZW"] as byte[]; } }
-        public static byte[] BOOT_299024 { get { return resourceMapping["BOOT_299024"] as byte[]; } }
-        public static byte[] BOOT_29E334 { get { return resourceMapping["BOOT_29E334"] as byte[]; } }
-        public static byte[] BOOT_2A1630 { get { return resourceMapping["BOOT_2A1630"] as byte[]; } }
-        public static byte[] BOOT_2EB4C0 { get { return resourceMapping["BOOT_2EB4C0"] as byte[]; } }
-        public static byte[] BOOT_32D368 { get { return resourceMapping["BOOT_32D368"] as byte[]; } }
-        public static byte[] OPEN_LZW { get { return resourceMapping["OPEN_LZW"] as byte[]; } }
-        public static byte[] WLDMES_BIN { get { return resourceMapping["WLDMES_BIN"] as byte[]; } }
+		#endregion Constructors 
+
     }
 }

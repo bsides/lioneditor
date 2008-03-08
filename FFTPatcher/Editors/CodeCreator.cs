@@ -24,20 +24,34 @@ namespace FFTPatcher.Editors
 {
     public partial class CodeCreator : UserControl
     {
+
+		#region Constructors (1) 
+
         public CodeCreator()
         {
             InitializeComponent();
         }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         public void UpdateView()
         {
             OnVisibleChanged( EventArgs.Empty );
         }
 
+
+
         protected override void OnVisibleChanged( EventArgs e )
         {
             textBox1.Text = Codes.GetAllCodes();
             base.OnVisibleChanged( e );
         }
+
+
+		#endregion Methods 
+
     }
 }

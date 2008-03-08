@@ -26,17 +26,33 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class InflictStatus
     {
-        public byte Value { get; private set; }
+
+		#region Fields (8) 
+
         public bool AllOrNothing;
-        public bool Random;
-        public bool Separate;
-        public bool Cancel;
         public bool Blank1;
         public bool Blank2;
         public bool Blank3;
         public bool Blank4;
-        public Statuses Statuses { get; private set; }
+        public bool Cancel;
+        public bool Random;
+        public bool Separate;
+
+		#endregion Fields 
+
+		#region Properties (3) 
+
+
         public InflictStatus Default { get; private set; }
+
+        public Statuses Statuses { get; private set; }
+
+        public byte Value { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         public InflictStatus( byte value, IList<byte> bytes )
             : this( value, bytes, null )
@@ -51,6 +67,17 @@ namespace FFTPatcher.Datatypes
             Statuses = new Statuses( bytes.Sub( 1, 5 ), defaults == null ? null : defaults.Statuses );
         }
 
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[8] { 
+                AllOrNothing, Random, Separate, Cancel, Blank1, Blank2, Blank3, Blank4 };
+        }
+
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 6 );
@@ -59,21 +86,30 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[8] { 
-                AllOrNothing, Random, Separate, Cancel, Blank1, Blank2, Blank3, Blank4 };
-        }
+
 
         public override string ToString()
         {
             return Value.ToString( "X2" );
         }
+
+
+		#endregion Methods 
+
     }
 
     public class AllInflictStatuses
     {
+
+		#region Properties (1) 
+
+
         public InflictStatus[] InflictStatuses { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public AllInflictStatuses( IList<byte> bytes )
         {
@@ -83,6 +119,23 @@ namespace FFTPatcher.Datatypes
             {
                 InflictStatuses[i] = new InflictStatus( (byte)i, bytes.Sub( i * 6, (i + 1) * 6 - 1 ),
                     new InflictStatus( (byte)i, defaultBytes.Sub( i * 6, (i + 1) * 6 - 1 ) ) );
+            }
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Resources.InflictStatusesBin, this.ToByteArray(), 0x32A394 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.InflictStatusesBin, this.ToByteArray(), 0x063FC4 );
             }
         }
 
@@ -97,16 +150,8 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.InflictStatusesBin, this.ToByteArray(), 0x32A394 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.InflictStatusesBin, this.ToByteArray(), 0x063FC4 );
-            }
-        }
+
+		#endregion Methods 
+
     }
 }

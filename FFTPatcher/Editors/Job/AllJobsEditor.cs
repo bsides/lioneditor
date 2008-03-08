@@ -25,19 +25,38 @@ namespace FFTPatcher.Editors
 {
     public partial class AllJobsEditor : UserControl
     {
+
+		#region Constructors (1) 
+
         public AllJobsEditor()
         {
             InitializeComponent();
             jobEditor.SkillSetClicked += jobEditor_SkillSetClicked;
         }
 
+		#endregion Constructors 
+
+		#region Events (1) 
+
         public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
+
+		#endregion Events 
+
+		#region Methods (3) 
+
+
         private void jobEditor_SkillSetClicked( object sender, LabelClickedEventArgs e )
         {
             if( SkillSetClicked != null )
             {
                 SkillSetClicked( this, e );
             }
+        }
+
+        private void jobsListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            Job j = jobsListBox.SelectedItem as Job;
+            jobEditor.Job = j;
         }
 
         public void UpdateView( AllJobs jobs )
@@ -50,10 +69,8 @@ namespace FFTPatcher.Editors
             jobEditor.Job = jobsListBox.SelectedItem as Job;
         }
 
-        private void jobsListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            Job j = jobsListBox.SelectedItem as Job;
-            jobEditor.Job = j;
-        }
+
+		#endregion Methods 
+
     }
 }

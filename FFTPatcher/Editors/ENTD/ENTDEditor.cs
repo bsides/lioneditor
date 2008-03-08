@@ -24,6 +24,24 @@ namespace FFTPatcher.Editors
 {
     public partial class ENTDEditor : UserControl
     {
+
+		#region Constructors (1) 
+
+        public ENTDEditor()
+        {
+            InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        private void eventListBox_SelectedIndexChanged( object sender, System.EventArgs e )
+        {
+            eventEditor1.Event = eventListBox.SelectedItem as Event;
+        }
+
         public void UpdateView( AllENTDs entds )
         {
             eventListBox.SelectedIndexChanged -= eventListBox_SelectedIndexChanged;
@@ -33,14 +51,8 @@ namespace FFTPatcher.Editors
             eventEditor1.Event = eventListBox.SelectedItem as Event;
         }
 
-        private void eventListBox_SelectedIndexChanged( object sender, System.EventArgs e )
-        {
-            eventEditor1.Event = eventListBox.SelectedItem as Event;
-        }
 
-        public ENTDEditor()
-        {
-            InitializeComponent();
-        }
+		#endregion Methods 
+
     }
 }

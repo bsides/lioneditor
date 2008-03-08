@@ -23,17 +23,25 @@ namespace FFTPatcher.TextEditor.Files.PSP
 {
     public class BOOT2EB4C0 : BasePSPSectionedFile
     {
-        protected override int NumberOfSections
-        {
-            get { return 31; }
-        }
+
+		#region Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
-        public override IList<string> SectionNames { get { return sectionNames; } }
+		#endregion Fields 
+
+		#region Properties (5) 
+
+
+        protected override int NumberOfSections
+        {
+            get { return 31; }
+        }
+
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
         public override IDictionary<string, long> Locations
         {
             get
@@ -51,6 +59,13 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
             get { return 0x286F; }
         }
+
+        public override IList<string> SectionNames { get { return sectionNames; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
 
         static BOOT2EB4C0()
         {
@@ -85,5 +100,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

@@ -30,7 +30,15 @@ namespace FFTPatcher.Controls
     /// </summary>
     public partial class CheckedListBoxNoHighlightWithDefault : CheckedListBox
     {
+
+		#region Fields (1) 
+
         private bool[] defaults;
+
+		#endregion Fields 
+
+		#region Properties (2) 
+
 
         /// <summary>
         /// Gets the default values for the items in this <see cref="CheckedListBoxNoHighlightWithDefault"/>.
@@ -41,8 +49,25 @@ namespace FFTPatcher.Controls
             private set { defaults = value; }
         }
 
+
+
         [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new bool CheckOnClick { get { return base.CheckOnClick; } private set { base.CheckOnClick = value; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public CheckedListBoxNoHighlightWithDefault()
+        {
+            CheckOnClick = true;
+        }
+
+		#endregion Constructors 
+
+		#region Methods (4) 
+
 
         /// <summary>
         /// Sets a list of values and their defaults.
@@ -85,16 +110,7 @@ namespace FFTPatcher.Controls
             }
         }
 
-        public CheckedListBoxNoHighlightWithDefault()
-        {
-            CheckOnClick = true;
-        }
 
-        protected override void OnItemCheck( ItemCheckEventArgs e )
-        {
-            RefreshItem( e.Index );
-            base.OnItemCheck( e );
-        }
 
         protected override void OnDrawItem( DrawItemEventArgs e )
         {
@@ -144,11 +160,20 @@ namespace FFTPatcher.Controls
             }
         }
 
+        protected override void OnItemCheck( ItemCheckEventArgs e )
+        {
+            RefreshItem( e.Index );
+            base.OnItemCheck( e );
+        }
+
         protected override void OnKeyDown( KeyEventArgs e )
         {
             SetValuesAndDefaults( Defaults, Defaults );
             base.OnKeyDown( e );
         }
+
+
+		#endregion Methods 
 
     }
 }

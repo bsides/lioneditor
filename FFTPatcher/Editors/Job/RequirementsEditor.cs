@@ -27,7 +27,16 @@ namespace FFTPatcher.Editors
 {
     public partial class RequirementsEditor : UserControl
     {
+
+		#region Fields (1) 
+
         private List<Requirements> requirements;
+
+		#endregion Fields 
+
+		#region Properties (1) 
+
+
         public List<Requirements> Requirements
         {
             get { return requirements; }
@@ -52,6 +61,11 @@ namespace FFTPatcher.Editors
             }
         }
 
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
         public RequirementsEditor()
         {
             InitializeComponent();
@@ -63,10 +77,10 @@ namespace FFTPatcher.Editors
             dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
         }
 
-        private void dataGridView1_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
-        {
-            e.Control.KeyDown += Control_KeyDown;
-        }
+		#endregion Constructors 
+
+		#region Methods (6) 
+
 
         private void Control_KeyDown( object sender, KeyEventArgs e )
         {
@@ -79,15 +93,6 @@ namespace FFTPatcher.Editors
                 dataGridView1.EditingControl.Text = ReflectionHelpers.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[dataGridView1.CurrentCell.ColumnIndex].DataPropertyName ).ToString();
                 dataGridView1.EndEdit();
                 dataGridView1.InvalidateCell( dataGridView1.CurrentCell );
-            }
-        }
-
-        private void dataGridView1_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
-        {
-            int result;
-            if( !Int32.TryParse( e.FormattedValue.ToString(), out result ) || (result < 0) || (result > 8) )
-            {
-                e.Cancel = true;
             }
         }
 
@@ -140,5 +145,23 @@ namespace FFTPatcher.Editors
                 }
             }
         }
+
+        private void dataGridView1_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
+        {
+            int result;
+            if( !Int32.TryParse( e.FormattedValue.ToString(), out result ) || (result < 0) || (result > 8) )
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void dataGridView1_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
+        {
+            e.Control.KeyDown += Control_KeyDown;
+        }
+
+
+		#endregion Methods 
+
     }
 }

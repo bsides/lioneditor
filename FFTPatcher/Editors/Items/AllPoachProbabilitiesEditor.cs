@@ -25,6 +25,9 @@ namespace FFTPatcher.Editors
 {
     public partial class AllPoachProbabilitiesEditor : UserControl
     {
+
+		#region Constructors (1) 
+
         public AllPoachProbabilitiesEditor()
         {
             InitializeComponent();
@@ -40,42 +43,10 @@ namespace FFTPatcher.Editors
             dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
-        public void UpdateView( AllPoachProbabilities probs )
-        {
-            dataGridView.DataSource = null;
-            CommonItem.Items.Clear();
-            UncommonItem.Items.Clear();
-            foreach( Item i in Item.DummyItems )
-            {
-                if( i.Offset <= 0xFF )
-                {
-                    CommonItem.Items.Add( i );
-                    UncommonItem.Items.Add( i );
-                }
-            }
-            dataGridView.DataSource = probs.PoachProbabilities;
-        }
+		#endregion Constructors 
 
-        private void dataGridView_CellParsing( object sender, DataGridViewCellParsingEventArgs e )
-        {
-            DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
-            if( c != null )
-            {
-                e.Value = c.SelectedItem;
-                e.ParsingApplied = true;
-            }
-        }
+		#region Methods (6) 
 
-        private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
-        {
-            DataGridViewComboBoxEditingControl c = e.Control as DataGridViewComboBoxEditingControl;
-            if( c != null )
-            {
-                c.DropDownStyle = ComboBoxStyle.DropDownList;
-            }
-
-            e.Control.KeyDown += Control_KeyDown;
-        }
 
         private void Control_KeyDown( object sender, KeyEventArgs e )
         {
@@ -87,21 +58,6 @@ namespace FFTPatcher.Editors
                 DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
                 c.SelectedItem = ReflectionHelpers.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[dataGridView.CurrentCell.ColumnIndex].DataPropertyName );
                 dataGridView.EndEdit();
-            }
-        }
-
-        private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
-        {
-            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
-                (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
-                (dataGridView.Rows[e.RowIndex].DataBoundItem is PoachProbability) )
-            {
-                PoachProbability poach = dataGridView.Rows[e.RowIndex].DataBoundItem as PoachProbability;
-                if( poach.Default != null )
-                {
-                    Item i = ReflectionHelpers.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
-                    e.ToolTipText = "Default: " + i.Name;
-                }
             }
         }
 
@@ -127,5 +83,61 @@ namespace FFTPatcher.Editors
                 }
             }
         }
+
+        private void dataGridView_CellParsing( object sender, DataGridViewCellParsingEventArgs e )
+        {
+            DataGridViewComboBoxEditingControl c = dataGridView.EditingControl as DataGridViewComboBoxEditingControl;
+            if( c != null )
+            {
+                e.Value = c.SelectedItem;
+                e.ParsingApplied = true;
+            }
+        }
+
+        private void dataGridView_CellToolTipTextNeeded( object sender, DataGridViewCellToolTipTextNeededEventArgs e )
+        {
+            if( (e.RowIndex >= 0) && (e.ColumnIndex >= 0) &&
+                (dataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) &&
+                (dataGridView.Rows[e.RowIndex].DataBoundItem is PoachProbability) )
+            {
+                PoachProbability poach = dataGridView.Rows[e.RowIndex].DataBoundItem as PoachProbability;
+                if( poach.Default != null )
+                {
+                    Item i = ReflectionHelpers.GetFieldOrProperty<Item>( poach.Default, dataGridView.Columns[e.ColumnIndex].DataPropertyName );
+                    e.ToolTipText = "Default: " + i.Name;
+                }
+            }
+        }
+
+        private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
+        {
+            DataGridViewComboBoxEditingControl c = e.Control as DataGridViewComboBoxEditingControl;
+            if( c != null )
+            {
+                c.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
+
+            e.Control.KeyDown += Control_KeyDown;
+        }
+
+        public void UpdateView( AllPoachProbabilities probs )
+        {
+            dataGridView.DataSource = null;
+            CommonItem.Items.Clear();
+            UncommonItem.Items.Clear();
+            foreach( Item i in Item.DummyItems )
+            {
+                if( i.Offset <= 0xFF )
+                {
+                    CommonItem.Items.Add( i );
+                    UncommonItem.Items.Add( i );
+                }
+            }
+            dataGridView.DataSource = probs.PoachProbabilities;
+        }
+
+
+		#endregion Methods 
+
     }
 }

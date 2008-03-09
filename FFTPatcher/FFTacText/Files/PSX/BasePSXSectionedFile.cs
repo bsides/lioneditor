@@ -17,10 +17,12 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    [Serializable]
     public abstract class BasePSXSectionedFile : AbstractStringSectioned
     {
 

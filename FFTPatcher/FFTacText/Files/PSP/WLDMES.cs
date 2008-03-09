@@ -24,20 +24,28 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class WLDMES : BasePSPPartitionedFile
     {
 
-		#region Fields (5) 
+		#region Static Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
+        private static string[] sectionNames;
+
+		#endregion Static Fields 
+
+		#region Fields (3) 
+
+        private const string filename = "WLDMES.BIN";
         private const int numberOfSections = 121;
         private const int sectionLength = 0x8000;
-        private static string[] sectionNames;
 
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        public override string Filename { get { return filename; } }
 
         public override IDictionary<string, long> Locations
         {

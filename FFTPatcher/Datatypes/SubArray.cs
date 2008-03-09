@@ -91,7 +91,7 @@ namespace FFTPatcher
 
 namespace FFTPatcher.Datatypes
 {
-    public class SubArray<T> : ICollection<T>, IList<T>
+    public class SubArray<T> : ICollection<T>, IList<T>, IDisposable
     {
 
 		#region Fields (3) 
@@ -171,7 +171,7 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Constructors 
 
-		#region Methods (16) 
+		#region Methods (17) 
 
 
         private void CheckIndex( int index )
@@ -199,14 +199,6 @@ namespace FFTPatcher.Datatypes
                 (!object.ReferenceEquals( left, null ) && !object.ReferenceEquals( right, null ) && left.Equals( right ));
         }
 
-        public void Add( T item )
-        {
-        }
-
-        public void Clear()
-        {
-        }
-
         public bool Contains( T item )
         {
             int index = baseArray.IndexOf( item );
@@ -219,6 +211,11 @@ namespace FFTPatcher.Datatypes
             {
                 array[i + arrayIndex] = baseArray[start + i];
             }
+        }
+
+        public void Dispose()
+        {
+            baseArray = null;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -237,21 +234,6 @@ namespace FFTPatcher.Datatypes
             }
 
             return -1;
-        }
-
-        public void Insert( int index, T item )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove( T item )
-        {
-            return false;
-        }
-
-        public void RemoveAt( int index )
-        {
-            throw new NotImplementedException();
         }
 
         public T[] ToArray()
@@ -293,6 +275,24 @@ namespace FFTPatcher.Datatypes
             return base.GetHashCode();
         }
 
+        void ICollection<T>.Add( T item )
+        {
+        }
+        void ICollection<T>.Clear()
+        {
+        }
+        void IList<T>.Insert( int index, T item )
+        {
+            throw new NotImplementedException();
+        }
+        bool ICollection<T>.Remove( T item )
+        {
+            return false;
+        }
+        void IList<T>.RemoveAt( int index )
+        {
+            throw new NotImplementedException();
+        }
 
 		#endregion Methods 
 
@@ -303,8 +303,8 @@ namespace FFTPatcher.Datatypes
 
 		#region Fields (2) 
 
-        SubArray<T> array;
-        int currentIndex = -1;
+        private SubArray<T> array;
+        private int currentIndex = -1;
 
 		#endregion Fields 
 
@@ -354,6 +354,7 @@ namespace FFTPatcher.Datatypes
 
         public void Dispose()
         {
+            array = null;
         }
 
         public bool MoveNext()

@@ -24,20 +24,28 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class OPENLZW : BasePSPSectionedFile
     {
 
-		#region Fields (3) 
+		#region Static Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
+		#endregion Static Fields 
+
+		#region Fields (1) 
+
+        private const string filename = "OPEN.LZW";
+
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         protected override int NumberOfSections { get { return 32; } }
 
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        public override string Filename { get { return filename; } }
 
         public override IDictionary<string, long> Locations
         {

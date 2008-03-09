@@ -35,28 +35,47 @@ namespace FFTPatcher
         /// <summary>
         /// Decompresses a file.
         /// </summary>
-        public static byte[] Decompress( byte[] bytes )
+        public static byte[] Decompress( IList<byte> bytes )
         {
             List<byte> result = new List<byte>( 1024 * 1024 );
-            GZipStream stream = new GZipStream( new MemoryStream( bytes ), CompressionMode.Decompress, false );
-            byte[] buffer = new byte[2048];
-
-            int b = 0;
-            while( true )
+            using( GZipStream stream = new GZipStream( new MemoryStream( bytes.ToArray() ), CompressionMode.Decompress, false ) )
             {
-                b = stream.Read( buffer, 0, 2048 );
-                if( b < 2048 )
-                    break;
-                else
-                    result.AddRange( buffer );
-            }
+                byte[] buffer = new byte[2048];
 
-            if( b > 0 )
-            {
-                result.AddRange( buffer.Sub( 0, b - 1 ) );
+                int b = 0;
+                while( true )
+                {
+                    b = stream.Read( buffer, 0, 2048 );
+                    if( b < 2048 )
+                        break;
+                    else
+                        result.AddRange( buffer );
+                }
+
+                if( b > 0 )
+                {
+                    result.AddRange( buffer.Sub( 0, b - 1 ) );
+                }
             }
 
             return result.ToArray();
+        }
+
+        public static IList<byte> Compress( byte[] bytes )
+        {
+            MemoryStream ms = new MemoryStream();
+            using( GZipStream stream = new GZipStream( ms, CompressionMode.Compress, true ) )
+            {
+                stream.Write( bytes, 0, bytes.Length );
+            }
+
+            byte[] result = new byte[ms.Length];
+            ms.Seek( 0, SeekOrigin.Begin );
+            ms.Read( result, 0, result.Length );
+            ms.Close();
+            ms.Dispose();
+
+            return result;
         }
 
 

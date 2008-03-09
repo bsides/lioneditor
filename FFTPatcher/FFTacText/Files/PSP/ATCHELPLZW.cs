@@ -17,15 +17,16 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    [Serializable]
     public class ATCHELPLZW : BasePSPSectionedFile
     {
 
-		#region Fields (3) 
+		#region Static Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
@@ -35,9 +36,15 @@ namespace FFTPatcher.TextEditor.Files.PSP
             "Job descriptions", "Item descriptions", "", "Ability descriptions", "", "",
             "", "Skillset descriptions", "", };
 
+		#endregion Static Fields 
+
+		#region Fields (1) 
+
+        private const string filename = "ATCHELP.LZW";
+
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         protected override int NumberOfSections
@@ -46,6 +53,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        public override string Filename { get { return filename; } }
 
         public override IDictionary<string, long> Locations
         {

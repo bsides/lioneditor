@@ -24,20 +24,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class JOINLZW : BasePSXSectionedFile
     {
 
-		#region Fields (3) 
+		#region Static Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames = new string[5];
 
+		#endregion Static Fields 
+
+		#region Fields (1) 
+
+        private const string filename = "JOIN.LZW";
+
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         protected override int NumberOfSections { get { return 5; } }
 
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        public override string Filename { get { return filename; } }
 
         public override IDictionary<string, long> Locations
         {

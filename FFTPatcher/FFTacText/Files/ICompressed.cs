@@ -24,8 +24,10 @@ namespace FFTPatcher.TextEditor.Files
 {
     public interface ICompressed
     {
+        string Filename { get; }
         IList<byte> Compress();
         event EventHandler<CompressionEventArgs> ProgressChanged;
         event EventHandler<CompressionEventArgs> CompressionFinished;
+        IList<byte> ToUncompressedBytes();
     }
 }

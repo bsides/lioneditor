@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using FFTPatcher.TextEditor.Files;
 using FFTPatcher.TextEditor.Files.PSX;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FFTPatcher.TextEditor
 {
@@ -41,7 +42,7 @@ namespace FFTPatcher.TextEditor
         {
             InitializeComponent();
 
-            FillFiles();
+            //FillFiles();
             menuItems = BuildMenuItems().ToArray();
             menuItems[0].Checked = true;
             compressedStringSectionedEditor1.Visible = false;
@@ -73,33 +74,10 @@ namespace FFTPatcher.TextEditor
         private List<MenuItem> BuildMenuItems()
         {
             List<MenuItem> result = new List<MenuItem>();
-            result.Add( AddMenuItem( psxMenuItem, "ATCHELP.LZW", new ATCHELPLZW( PSXResources.ATCHELP_LZW ) ) );
-            result.Add( AddMenuItem( psxMenuItem, "ATTACK.OUT", new ATTACKOUT( PSXResources.ATTACK_OUT_partial ) ) );
-            result.Add( AddMenuItem( psxMenuItem, "HELPMENU.OUT", new HELPMENU( PSXResources.HELPMENU_OUT ) ) );
-            result.Add( AddMenuItem( psxMenuItem, "JOIN.LZW", new JOINLZW( PSXResources.JOIN_LZW ) ) );
-            result.Add( AddMenuItem( psxMenuItem, "OPEN.LZW", new OPENLZW( PSXResources.OPEN_LZW ) ) );
-            result.Add( AddMenuItem( psxMenuItem, "SAMPLE.LZW", new SAMPLELZW( PSXResources.SAMPLE_LZW ) ) );
-            MenuItem item = AddMenuItem( psxMenuItem, "SNPLMES.BIN", null );
-            IPartitionedFile file = new SNPLMESBIN( PSXResources.SNPLMES_BIN );
-            for( int i = 0; i < 6; i++ )
-            {
-                result.Add( AddMenuItem( item, string.Format( "Section {0}", i + 1 ), file.Sections[i] ) );
-            }
-            result.Add( item );
-            result.Add( AddMenuItem( psxMenuItem, "WLDHELP.LZW", new WLDHELPLZW( PSXResources.WLDHELP_LZW ) ) );
-            item = AddMenuItem( psxMenuItem, "WLDMES.BIN", null );
-            file = new WLDMES( PSXResources.WLDMES_BIN );
-            for( int i = 0; i < file.NumberOfSections; i++ )
-            {
-                MenuItem newItem = AddMenuItem( item, string.Format( "Section {0}", i + 1 ), file.Sections[i] );
-                if( (i != 0) && (i % 25 == 0) )
-                {
-                    newItem.Break = true;
-                }
-                result.Add( newItem );
-            }
-            result.Add( item );
-            result.Add( AddMenuItem( psxMenuItem, "WORLD.LZW", new WORLDLZW( PSXResources.WORLD_LZW ) ) );
+            PSXText p = new PSXText( "psxText.xml" );
+            IList<MenuItem> items = p.GetMenuItems();
+            psxMenuItem.MenuItems.AddRange( items.ToArray() );
+            result.AddRange( items );
 
             result.Add( AddMenuItem( pspMenuItem, "ATCHELP.LZW", new FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW( PSPResources.ATCHELP_LZW ) ) );
             result.Add( AddMenuItem( pspMenuItem, "OPEN.LZW", new FFTPatcher.TextEditor.Files.PSP.OPENLZW( PSPResources.OPEN_LZW ) ) );
@@ -110,8 +88,8 @@ namespace FFTPatcher.TextEditor
             result.Add( AddMenuItem( pspMenuItem, "BOOT.BIN[0x2EB4C0]", new FFTPatcher.TextEditor.Files.PSP.BOOT2EB4C0( PSPResources.BOOT_2EB4C0 ) ) );
             result.Add( AddMenuItem( pspMenuItem, "BOOT.BIN[0x32D368]", new FFTPatcher.TextEditor.Files.PSP.BOOT32D368( PSPResources.BOOT_32D368 ) ) );
 
-            item = AddMenuItem( pspMenuItem, "WLDMES.BIN", null );
-            file = new FFTPatcher.TextEditor.Files.PSP.WLDMES( PSPResources.WLDMES_BIN );
+            MenuItem item = AddMenuItem( pspMenuItem, "WLDMES.BIN", null );
+            FFTPatcher.TextEditor.Files.PSP.WLDMES file = new FFTPatcher.TextEditor.Files.PSP.WLDMES( PSPResources.WLDMES_BIN );
             for( int i = 0; i < file.NumberOfSections; i++ )
             {
                 MenuItem newItem = AddMenuItem( item, string.Format( "Section {0}", i + 1 ), file.Sections[i] );

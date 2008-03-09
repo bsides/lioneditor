@@ -25,7 +25,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class SAMPLELZW : BasePSXSectionedFile
     {
 
-		#region Fields (3) 
+		#region Static Fields (3) 
 
         public static string[][] entryNames;
         private static Dictionary<string, long> locations;
@@ -37,14 +37,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
             "Battle messages", "Status effects", "Misc. messages", "Empty",
             "Empty", "Empty", "Skillset names", "Summons/Draw Out"};
 
+		#endregion Static Fields 
+
+		#region Fields (1) 
+
+        private const string filename = "SAMPLE.LZW";
+
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         protected override int NumberOfSections { get { return 24; } }
 
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        public override string Filename { get { return filename; } }
 
         public override IDictionary<string, long> Locations
         {

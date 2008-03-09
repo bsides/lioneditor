@@ -24,6 +24,7 @@ using System.Xml.Schema;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    [Serializable]
     public abstract class AbstractStringSectioned : IStringSectioned
     {
 
@@ -32,6 +33,26 @@ namespace FFTPatcher.TextEditor.Files
         protected const int dataStart = 0x80;
 
 		#endregion Fields 
+
+		#region Abstract Properties (7) 
+
+
+        protected abstract int NumberOfSections { get; }
+
+        public abstract TextUtilities.CharMapType CharMap { get; }
+
+        public abstract IList<IList<string>> EntryNames { get; }
+
+        public abstract string Filename { get; }
+
+        public abstract IDictionary<string, long> Locations { get; }
+
+        public abstract int MaxLength { get; }
+
+        public abstract IList<string> SectionNames { get; }
+
+
+		#endregion Abstract Properties 
 
 		#region Properties (3) 
 
@@ -72,48 +93,8 @@ namespace FFTPatcher.TextEditor.Files
 
 		#endregion Constructors 
 
-		#region Methods (6) 
+		#region Methods (3) 
 
-
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml( XmlReader reader )
-        {
-            reader.MoveToAttribute( "sections" );
-            int numberOfSections = reader.ReadContentAsInt();
-            reader.MoveToElement();
-            reader.ReadStartElement();
-
-            Sections = new string[numberOfSections][];
-
-            for( int i = 0; i < numberOfSections; i++ )
-            {
-                reader.MoveToAttribute( "entries" );
-                int numberOfEntries = reader.ReadContentAsInt();
-                reader.MoveToElement();
-                reader.MoveToAttribute( "value" );
-                int index = reader.ReadContentAsInt();
-                reader.MoveToElement();
-                reader.ReadStartElement( "section" );
-                Sections[index] = new string[numberOfEntries];
-
-                for( int j = 0; j < numberOfEntries; j++ )
-                {
-                    reader.MoveToAttribute( "value" );
-                    int entryIndex = reader.ReadContentAsInt();
-                    reader.MoveToElement();
-                    reader.ReadStartElement( "entry" );
-                    Sections[index][entryIndex] = reader.ReadString();
-                    reader.ReadEndElement();
-                }
-                reader.ReadEndElement();
-            }
-
-            reader.ReadEndElement();
-        }
 
         public byte[] ToByteArray()
         {
@@ -127,25 +108,6 @@ namespace FFTPatcher.TextEditor.Files
             return result.ToArray();
         }
 
-        public void WriteXml( XmlWriter writer )
-        {
-            writer.WriteAttributeString( "sections", Sections.Count.ToString() );
-            for( int i = 0; i < Sections.Count; i++ )
-            {
-                writer.WriteStartElement( "section" );
-                writer.WriteAttributeString( "value", i.ToString() );
-                writer.WriteAttributeString( "entries", Sections[i].Count.ToString() );
-                for( int j = 0; j < Sections[i].Count; j++ )
-                {
-                    writer.WriteStartElement( "entry" );
-                    writer.WriteAttributeString( "value", j.ToString() );
-                    writer.WriteString( Sections[i][j] );
-                    writer.WriteEndElement();
-                }
-                writer.WriteEndElement();
-            }
-        }
-
 
 
         protected virtual IList<byte> ToFinalBytes()
@@ -153,7 +115,7 @@ namespace FFTPatcher.TextEditor.Files
             return ToUncompressedBytes();
         }
 
-        protected virtual IList<byte> ToUncompressedBytes()
+        public virtual IList<byte> ToUncompressedBytes()
         {
             GenericCharMap map = CharMap == TextUtilities.CharMapType.PSX ?
                 TextUtilities.PSXMap as GenericCharMap :
@@ -189,12 +151,6 @@ namespace FFTPatcher.TextEditor.Files
 
 
 		#endregion Methods 
-        public abstract TextUtilities.CharMapType CharMap { get; }
-        public abstract IList<IList<string>> EntryNames { get; }
-        public abstract IDictionary<string, long> Locations { get; }
-        public abstract int MaxLength { get; }
-        protected abstract int NumberOfSections { get; }
-        public abstract IList<string> SectionNames { get; }
 
     }
 }

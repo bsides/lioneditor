@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 using System.Xml;
 
 namespace FFTPatcher
@@ -58,7 +59,7 @@ namespace FFTPatcher
     public static class Utilities
     {
 
-		#region Methods (11) 
+		#region Methods (12) 
 
 
         /// <summary>
@@ -186,6 +187,16 @@ namespace FFTPatcher
             ref bool lsb )
         {
             CopyBoolArrayToBooleans( BooleansFromByte( b ), ref msb, ref six, ref five, ref four, ref three, ref two, ref one, ref lsb );
+        }
+
+        public static string GetPrettyBase64( byte[] bytes )
+        {
+            StringBuilder sb = new StringBuilder( Convert.ToBase64String( bytes, Base64FormattingOptions.InsertLineBreaks ) );
+            sb.Insert( 0, "\r\n" );
+            sb.Replace( "\r\n", "\r\n    " );
+            sb.Append( "\r\n  " );
+
+            return sb.ToString();
         }
 
         /// <summary>

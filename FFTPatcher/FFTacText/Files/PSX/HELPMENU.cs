@@ -34,18 +34,21 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Static Fields 
 
-		#region Fields (1) 
+		#region Fields (2) 
 
+        private const string filename = "HELPMENU.OUT";
         private const int numberOfSections = 21;
 
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         protected override int NumberOfSections { get { return numberOfSections; } }
 
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        public override string Filename { get { return filename; } }
 
         public override IDictionary<string, long> Locations
         {

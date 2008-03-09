@@ -26,21 +26,29 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class WLDHELPLZW : BasePSXCompressedFile
     {
 
-		#region Fields (4) 
+		#region Static Fields (3) 
 
         public static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private const int numberOfSections = 21;
         private static string[] sectionNames;
+
+		#endregion Static Fields 
+
+		#region Fields (2) 
+
+        private const string filename = "WLDHELP.LZW";
+        private const int numberOfSections = 21;
 
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         protected override int NumberOfSections { get { return numberOfSections; } }
 
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        public override string Filename { get { return filename; } }
 
         public override IDictionary<string, long> Locations
         {

@@ -54,6 +54,7 @@
     <Compile Include="Files\AbstractCompressedFile.cs" />
     <Compile Include="Files\AbstractPartitionedFile.cs" />
     <Compile Include="Files\FilePartition.cs" />
+    <Compile Include="Files\IFile.cs" />
     <Compile Include="Files\IPartition.cs" />
     <Compile Include="Files\IPartitionedFile.cs" />
     <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Files\PSX\HELPMENUOUT.cs" />
     <Compile Include="Files\PSX\SNPLMESBIN.cs" />
     <Compile Include="Files\PSX\WLDMESBIN.cs" />
+    <Compile Include="Files\SavingFileEventArgs.cs" />
     <Compile Include="PSXText.cs" />
     <Compile Include="Utilities\CompressionEventArgs.cs" />
     <Compile Include="Files\AbstractStringSectioned.cs" />

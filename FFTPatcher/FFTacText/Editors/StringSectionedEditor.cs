@@ -57,6 +57,7 @@ namespace FFTPatcher.TextEditor
                     UpdateCurrentStringListBox();
                     currentStringListBox.SelectedIndex = 0;
                     UpdateCurrentString();
+                    UpdateFilenames();
                     UpdateLengthLabels();
                 }
             }
@@ -75,11 +76,19 @@ namespace FFTPatcher.TextEditor
             currentString.TextChanged += new EventHandler( currentString_TextChanged );
             currentString.Validating += new CancelEventHandler( currentString_Validating );
             currentString.Font = new Font( "Arial Unicode MS", 10 );
+            filesListBox.SelectedIndexChanged += new EventHandler( filesListBox_SelectedIndexChanged );
+            saveButton.Click += saveButton_Click;
         }
 
 		#endregion Constructors 
 
-		#region Methods (8) 
+		#region Events (1) 
+
+        public event EventHandler<SavingFileEventArgs> SavingFile;
+
+		#endregion Events 
+
+		#region Methods (12) 
 
 
         private void AddSections()
@@ -110,6 +119,27 @@ namespace FFTPatcher.TextEditor
             UpdateCurrentString();
         }
 
+        private void filesListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            saveButton.Enabled = filesListBox.SelectedIndex > -1;
+        }
+
+        private void FireSavingFileEvent(string suggested)
+        {
+            if( SavingFile != null )
+            {
+                SavingFile( this, new SavingFileEventArgs( strings, suggested ) );
+            }
+        }
+
+        private void saveButton_Click( object sender, EventArgs e )
+        {
+            if( filesListBox.SelectedIndex > -1 )
+            {
+                FireSavingFileEvent( filesListBox.SelectedItem.ToString() );
+            }
+        }
+
         private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             UpdateCurrentStringListBox();
@@ -124,6 +154,7 @@ namespace FFTPatcher.TextEditor
 
         private void UpdateCurrentStringListBox()
         {
+            currentString.SuspendLayout();
             currentStringListBox.Items.Clear();
             for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
             {
@@ -131,6 +162,20 @@ namespace FFTPatcher.TextEditor
             }
             currentStringListBox.SelectedIndex = 0;
             UpdateCurrentString();
+            currentString.ResumeLayout();
+        }
+
+        private void UpdateFilenames()
+        {
+            filesListBox.SuspendLayout();
+            filesListBox.ClearSelected();
+            filesListBox.Items.Clear();
+            foreach( string s in strings.Locations.Keys )
+            {
+                filesListBox.Items.Add( s );
+            }
+
+            filesListBox.ResumeLayout();
         }
 
         private void UpdateLengthLabels()

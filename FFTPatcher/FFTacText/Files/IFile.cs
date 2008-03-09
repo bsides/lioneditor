@@ -18,17 +18,12 @@
 */
 
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 namespace FFTPatcher.TextEditor.Files
 {
-    public interface IPartitionedFile : IXmlSerializable, IFile
+    public interface IFile
     {
-        string Filename { get; }
-        IList<IPartition> Sections { get; }
-        IList<string> SectionNames { get; }
-        IList<IList<string>> EntryNames { get; }
-        int SectionLength { get; }
-        int NumberOfSections { get; }
+        IDictionary<string, long> Locations { get; }
+        byte[] ToByteArray();
     }
 }

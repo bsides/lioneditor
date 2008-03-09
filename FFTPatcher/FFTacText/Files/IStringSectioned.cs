@@ -22,16 +22,14 @@ using System.Xml.Serialization;
 
 namespace FFTPatcher.TextEditor.Files
 {
-    public interface IStringSectioned : IXmlSerializable
+    public interface IStringSectioned : IXmlSerializable, IFile
     {
         string Filename { get; }
         IList<IList<string>> Sections { get; }
         IList<string> SectionNames { get; }
         IList<IList<string>> EntryNames { get; }
-        IDictionary<string, long> Locations { get; }
         int EstimatedLength { get; }
         int ActualLength { get; }
         int MaxLength { get; }
-        byte[] ToByteArray();
     }
 }

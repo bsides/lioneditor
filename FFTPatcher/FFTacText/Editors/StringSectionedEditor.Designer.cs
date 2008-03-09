@@ -53,6 +53,8 @@ namespace FFTPatcher.TextEditor
             this.lengthLabel = new System.Windows.Forms.Label();
             this.maxLengthLabel = new System.Windows.Forms.Label();
             this.errorLabel = new System.Windows.Forms.Label();
+            this.filesListBox = new System.Windows.Forms.ListBox();
+            this.saveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // sectionComboBox
@@ -117,10 +119,33 @@ namespace FFTPatcher.TextEditor
             this.errorLabel.TabIndex = 5;
             this.errorLabel.Text = "ERROR";
             // 
+            // filesListBox
+            // 
+            this.filesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.filesListBox.FormattingEnabled = true;
+            this.filesListBox.Location = new System.Drawing.Point( 318, 239 );
+            this.filesListBox.MultiColumn = true;
+            this.filesListBox.Name = "filesListBox";
+            this.filesListBox.Size = new System.Drawing.Size( 188, 82 );
+            this.filesListBox.TabIndex = 6;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.saveButton.Enabled = false;
+            this.saveButton.Location = new System.Drawing.Point( 318, 328 );
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size( 188, 23 );
+            this.saveButton.TabIndex = 7;
+            this.saveButton.Text = "Save to selected file";
+            this.saveButton.UseVisualStyleBackColor = true;
+            // 
             // StringSectionedEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add( this.saveButton );
+            this.Controls.Add( this.filesListBox );
             this.Controls.Add( this.errorLabel );
             this.Controls.Add( this.maxLengthLabel );
             this.Controls.Add( this.lengthLabel );
@@ -142,5 +167,7 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.Label lengthLabel;
         private System.Windows.Forms.Label maxLengthLabel;
         private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.ListBox filesListBox;
+        private System.Windows.Forms.Button saveButton;
     }
 }

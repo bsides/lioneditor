@@ -85,6 +85,8 @@ namespace FFTPatcher.TextEditor
             stringSectionedEditor1.Visible = false;
             compressedStringSectionedEditor1.Visible = false;
             partitionEditor1.Visible = false;
+            stringSectionedEditor1.SavingFile += editor_SavingFile;
+            compressedStringSectionedEditor1.SavingFile += editor_SavingFile;
 
             newPspMenuItem.Click += newPspMenuItem_Click;
             newPsxMenuItem.Click += newPsxMenuItem_Click;
@@ -95,7 +97,7 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Constructors 
 
-		#region Methods (11) 
+		#region Methods (12) 
 
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -125,6 +127,26 @@ namespace FFTPatcher.TextEditor
             result.AddRange( items );
 
             return result;
+        }
+
+        private void editor_SavingFile( object sender, SavingFileEventArgs e )
+        {
+            string name = Path.GetFileName( e.SuggestedFilename );
+            saveFileDialog.Filter = string.Format( "{0}|{0}", name );
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    using( FileStream stream = new FileStream( saveFileDialog.FileName, FileMode.Open ) )
+                    {
+                        stream.WriteArrayToPosition( e.File.ToByteArray(), e.File.Locations[e.SuggestedFilename] );
+                    }
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( this, "Error writing to file", "Error", MessageBoxButtons.OK );
+                }
+            }
         }
 
         private void exitMenuItem_Click( object sender, EventArgs e )
@@ -297,7 +319,7 @@ namespace FFTPatcher.TextEditor
         private void openMenuItem_Click( object sender, EventArgs e )
         {
             openFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
-            if( openFileDialog.ShowDialog() == DialogResult.OK )
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
@@ -317,7 +339,7 @@ namespace FFTPatcher.TextEditor
         private void saveMenuItem_Click( object sender, EventArgs e )
         {
             saveFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
-            if( saveFileDialog.ShowDialog() == DialogResult.OK )
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {

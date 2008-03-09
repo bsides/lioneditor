@@ -17,18 +17,32 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
-using System.Xml.Serialization;
+using System;
 
 namespace FFTPatcher.TextEditor.Files
 {
-    public interface IPartitionedFile : IXmlSerializable, IFile
+    public class SavingFileEventArgs : EventArgs
     {
-        string Filename { get; }
-        IList<IPartition> Sections { get; }
-        IList<string> SectionNames { get; }
-        IList<IList<string>> EntryNames { get; }
-        int SectionLength { get; }
-        int NumberOfSections { get; }
+
+		#region Properties (2) 
+
+
+        public IFile File { get; private set; }
+
+        public string SuggestedFilename { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public SavingFileEventArgs( IFile file, string suggestedFilename )
+        {
+            File = file;
+            SuggestedFilename = suggestedFilename;
+        }
+
+		#endregion Constructors 
+
     }
 }

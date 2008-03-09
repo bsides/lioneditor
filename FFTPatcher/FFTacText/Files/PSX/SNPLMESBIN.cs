@@ -70,7 +70,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static SNPLMESBIN()
         {
@@ -82,6 +82,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[3] = new string[217];
             entryNames[4] = new string[39];
             entryNames[5] = new string[14];
+        }
+
+        private SNPLMESBIN()
+        {
         }
 
         public SNPLMESBIN( IList<byte> bytes )

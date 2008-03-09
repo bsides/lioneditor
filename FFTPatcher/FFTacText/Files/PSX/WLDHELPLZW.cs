@@ -17,7 +17,6 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Collections.Generic;
 using FFTPatcher.Datatypes;
 
@@ -72,7 +71,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static WLDHELPLZW()
         {
@@ -111,6 +110,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
             temp.AddRange( new string[12] );
 
             entryNames[19] = temp.ToArray();
+        }
+
+        private WLDHELPLZW()
+        {
         }
 
         public WLDHELPLZW( IList<byte> bytes )

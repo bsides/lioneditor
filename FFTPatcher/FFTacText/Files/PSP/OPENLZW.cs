@@ -71,7 +71,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static OPENLZW()
         {
@@ -91,6 +91,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
             {
                 entryNames[i] = new string[sectionLengths[i]];
             }
+        }
+
+        private OPENLZW()
+        {
         }
 
         public OPENLZW( IList<byte> bytes )

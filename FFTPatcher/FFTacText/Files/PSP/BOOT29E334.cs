@@ -73,7 +73,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static BOOT29E334()
         {
@@ -95,6 +95,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
             List<string> jobNames = new List<string>( FFTPatcher.Datatypes.AllJobs.PSPNames );
             jobNames.Add( string.Empty );
             entryNames[2] = jobNames.ToArray();
+        }
+
+        private BOOT29E334()
+        {
         }
 
         public BOOT29E334( IList<byte> bytes )

@@ -73,7 +73,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static BOOT2A1630()
         {
@@ -106,6 +106,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
             temp.AddRange( new string[48] );
             temp.AddRange( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 0xE0, 0xE2 ) );
             entryNames[19] = temp.ToArray();
+        }
+
+        private BOOT2A1630()
+        {
         }
 
         public BOOT2A1630( IList<byte> bytes )

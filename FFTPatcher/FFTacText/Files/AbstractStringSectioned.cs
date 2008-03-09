@@ -19,12 +19,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 
 namespace FFTPatcher.TextEditor.Files
 {
-    [Serializable]
     public abstract class AbstractStringSectioned : IStringSectioned
     {
 
@@ -93,8 +93,28 @@ namespace FFTPatcher.TextEditor.Files
 
 		#endregion Constructors 
 
-		#region Methods (3) 
+		#region Methods (6) 
 
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml( XmlReader reader )
+        {
+            reader.ReadStartElement();
+            string s = Encoding.UTF8.GetString( GZip.Decompress( Convert.FromBase64String( reader.ReadString() ) ) );
+            string[] sectionArray = s.Split( '\u2801' );
+
+            Sections = new string[sectionArray.Length][];
+
+            for( int i = 0; i < sectionArray.Length; i++ )
+            {
+                Sections[i] = sectionArray[i].Split( '\u2800' );
+            }
+            reader.ReadEndElement();
+        }
 
         public byte[] ToByteArray()
         {
@@ -106,6 +126,23 @@ namespace FFTPatcher.TextEditor.Files
             }
 
             return result.ToArray();
+        }
+
+        public void WriteXml( XmlWriter writer )
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach( IList<string> section in Sections )
+            {
+                foreach( string entry in section )
+                {
+                    sb.Append( entry );
+                    sb.Append( "\u2800" );
+                }
+                sb.Remove( sb.Length - 1, 1 );
+                sb.Append( "\u2801" );
+            }
+            sb.Remove( sb.Length - 1, 1 );
+            writer.WriteString( Utilities.GetPrettyBase64( GZip.Compress( Encoding.UTF8.GetBytes( sb.ToString() ) ) ) );
         }
 
 
@@ -121,7 +158,7 @@ namespace FFTPatcher.TextEditor.Files
                 TextUtilities.PSXMap as GenericCharMap :
                 TextUtilities.PSPMap as GenericCharMap;
             List<List<byte>> byteSections = new List<List<byte>>( NumberOfSections );
-            foreach( List<string> section in Sections )
+            foreach( IList<string> section in Sections )
             {
                 List<byte> sectionBytes = new List<byte>();
                 foreach( string s in section )

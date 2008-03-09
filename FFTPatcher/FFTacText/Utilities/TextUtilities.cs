@@ -21,7 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor
 {
@@ -35,21 +34,21 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#region Properties (3) 
+		#region Static Properties (3) 
 
 
-        private static IDictionary<int, int> CompressionJumps { get; set; }
+private static IDictionary<int, int> CompressionJumps { get; set; }
 
         public static PSPCharMap PSPMap { get; private set; }
 
         public static PSXCharMap PSXMap { get; private set; }
 
 
-		#endregion Properties 
+		#endregion Static Properties 
 
 		#region Constructors (1) 
 
-static TextUtilities()
+        static TextUtilities()
         {
             PSXMap = new PSXCharMap();
 

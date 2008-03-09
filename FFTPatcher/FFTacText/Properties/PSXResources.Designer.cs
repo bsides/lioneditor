@@ -60,72 +60,9 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
-        internal static byte[] ATCHELP_LZW {
+        internal static byte[] psxText_ffttext {
             get {
-                object obj = ResourceManager.GetObject("ATCHELP_LZW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] ATTACK_OUT_partial {
-            get {
-                object obj = ResourceManager.GetObject("ATTACK_OUT_partial", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] HELPMENU_OUT {
-            get {
-                object obj = ResourceManager.GetObject("HELPMENU_OUT", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] JOIN_LZW {
-            get {
-                object obj = ResourceManager.GetObject("JOIN_LZW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] OPEN_LZW {
-            get {
-                object obj = ResourceManager.GetObject("OPEN_LZW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] SAMPLE_LZW {
-            get {
-                object obj = ResourceManager.GetObject("SAMPLE_LZW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] SNPLMES_BIN {
-            get {
-                object obj = ResourceManager.GetObject("SNPLMES_BIN", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] WLDHELP_LZW {
-            get {
-                object obj = ResourceManager.GetObject("WLDHELP_LZW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] WLDMES_BIN {
-            get {
-                object obj = ResourceManager.GetObject("WLDMES_BIN", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] WORLD_LZW {
-            get {
-                object obj = ResourceManager.GetObject("WORLD_LZW", resourceCulture);
+                object obj = ResourceManager.GetObject("psxText_ffttext", resourceCulture);
                 return ((byte[])(obj));
             }
         }

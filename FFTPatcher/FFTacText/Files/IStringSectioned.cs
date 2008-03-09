@@ -22,7 +22,7 @@ using System.Xml.Serialization;
 
 namespace FFTPatcher.TextEditor.Files
 {
-    public interface IStringSectioned
+    public interface IStringSectioned : IXmlSerializable
     {
         string Filename { get; }
         IList<IList<string>> Sections { get; }

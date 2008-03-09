@@ -70,7 +70,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static ATTACKOUT()
         {
@@ -78,6 +78,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[0] = new string[1];
             entryNames[1] = new string[1024];
             entryNames[2] = AllJobs.PSXNames;
+        }
+
+        private ATTACKOUT()
+        {
         }
 
         public ATTACKOUT( IList<byte> bytes )

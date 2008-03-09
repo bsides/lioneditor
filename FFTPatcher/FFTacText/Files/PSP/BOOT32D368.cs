@@ -73,7 +73,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static BOOT32D368()
         {
@@ -110,6 +110,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
             entryNames[20] = FFTPatcher.PSXResources.Statuses;
 
+        }
+
+        private BOOT32D368()
+        {
         }
 
         public BOOT32D368( IList<byte> bytes )

@@ -22,7 +22,6 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    [Serializable]
     public class ATCHELPLZW : BasePSXSectionedFile
     {
 

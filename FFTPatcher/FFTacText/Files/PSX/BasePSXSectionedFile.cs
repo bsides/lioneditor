@@ -22,7 +22,6 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    [Serializable]
     public abstract class BasePSXSectionedFile : AbstractStringSectioned
     {
 

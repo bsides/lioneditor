@@ -1,22 +1,46 @@
-﻿using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using System.IO;
-using FFTPatcher.TextEditor.Files;
-using System.Collections.Generic;
-using System.Text;
-using FFTPatcher.TextEditor.Files.PSX;
+﻿/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+using FFTPatcher.TextEditor.Files;
 
 namespace FFTPatcher.TextEditor
 {
-    public class PSXText
+    public enum Filetype
+    {
+        PSX,
+        PSP
+    }
+
+    public class FFTText : IXmlSerializable
     {
 
-		#region Properties (2) 
+		#region Properties (3) 
 
+
+        public Filetype Filetype { get; private set; }
 
         public IList<IPartitionedFile> PartitionedFiles { get; private set; }
 
@@ -25,41 +49,17 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Properties 
 
-		#region Constructors (3) 
+		#region Constructors (1) 
 
-        public PSXText()
+        private FFTText()
         {
             PartitionedFiles = new List<IPartitionedFile>();
             SectionedFiles = new List<IStringSectioned>();
-
-            PartitionedFiles.Add( new WLDMES( PSXResources.WLDMES_BIN ) );
-            PartitionedFiles.Add( new SNPLMESBIN( PSXResources.SNPLMES_BIN ) );
-
-            SectionedFiles.Add( new ATCHELPLZW( PSXResources.ATCHELP_LZW ) );
-            SectionedFiles.Add( new ATTACKOUT( PSXResources.ATTACK_OUT_partial ) );
-            SectionedFiles.Add( new HELPMENU( PSXResources.HELPMENU_OUT ) );
-            SectionedFiles.Add( new JOINLZW( PSXResources.JOIN_LZW ) );
-            SectionedFiles.Add( new OPENLZW( PSXResources.OPEN_LZW ) );
-            SectionedFiles.Add( new SAMPLELZW( PSXResources.SAMPLE_LZW ) );
-            SectionedFiles.Add( new WLDHELPLZW( PSXResources.WLDHELP_LZW ) );
-            SectionedFiles.Add( new WORLDLZW( PSXResources.WORLD_LZW ) );
-        }
-
-        public PSXText( string filename )
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load( filename );
-            LoadFromXmlNode( doc );
-        }
-
-        public PSXText( XmlNode document )
-        {
-            LoadFromXmlNode( document );
         }
 
 		#endregion Constructors 
 
-		#region Methods (6) 
+		#region Methods (5) 
 
 
         private void AddToAppropriateCollection(object o)
@@ -71,24 +71,6 @@ namespace FFTPatcher.TextEditor
             else if( o is IStringSectioned )
             {
                 SectionedFiles.Add( o as IStringSectioned );
-            }
-        }
-
-        private void LoadFromXmlNode( XmlNode document )
-        {
-            PartitionedFiles = new List<IPartitionedFile>();
-            SectionedFiles = new List<IStringSectioned>();
-
-            XmlNodeList nodes = document.SelectNodes( "/ffttext/file" );
-            foreach( XmlNode node in nodes )
-            {
-                string type = node.Attributes["type"].InnerText;
-                Type t = Type.GetType( type );
-                ConstructorInfo ci = t.GetConstructor( new Type[] { typeof( IList<byte> ) } );
-
-                byte[] bytes = GZip.Decompress( Convert.FromBase64String( node.InnerText ) );
-                object o = ci.Invoke( new object[] { bytes } );
-                AddToAppropriateCollection( o );
             }
         }
 
@@ -128,28 +110,48 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        public void Save( string filename )
+        public XmlSchema GetSchema()
         {
-            XmlTextWriter writer = new XmlTextWriter( filename, Encoding.UTF8 );
-            writer.Formatting = Formatting.Indented;
-            writer.IndentChar = ' ';
-            writer.Indentation = 2;
-
-            Save( writer, true );
+            return null;
         }
 
-        public void Save( XmlTextWriter writer, bool closeStream )
+        public void ReadXml( XmlReader reader )
         {
-            writer.WriteStartDocument();
-            writer.WriteStartElement( "ffttext" );
-            writer.WriteAttributeString( "type", "psx" );
+            reader.MoveToAttribute( "files" );
+            int numberOfFiles = reader.ReadContentAsInt();
+            reader.MoveToElement();
+            reader.MoveToAttribute( "type" );
+            Filetype = (Filetype)Enum.Parse( typeof( Filetype ), reader.ReadContentAsString() );
+            reader.MoveToElement();
+
+            reader.ReadStartElement();
+
+            for( int i = 0; i < numberOfFiles; i++ )
+            {
+                reader.MoveToAttribute( "type" );
+                string type = reader.ReadContentAsString();
+                reader.MoveToElement();
+                Type t = Type.GetType( type );
+                ConstructorInfo ci = t.GetConstructor( BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[0], null );
+                var o = ci.Invoke( new object[0] ) as IXmlSerializable;
+                o.ReadXml( reader );
+                AddToAppropriateCollection( o );
+            }
+
+            reader.ReadEndElement();
+        }
+
+        public void WriteXml( XmlWriter writer )
+        {
+            writer.WriteAttributeString( "type", this.Filetype.ToString() );
             writer.WriteAttributeString( "version", "1" );
+            writer.WriteAttributeString( "files", string.Format( "{0}", PartitionedFiles.Count + SectionedFiles.Count ) );
 
             foreach( IPartitionedFile file in PartitionedFiles )
             {
                 writer.WriteStartElement( "file" );
                 writer.WriteAttributeString( "type", file.GetType().ToString() );
-                writer.WriteString( Utilities.GetPrettyBase64( GZip.Compress( file.ToByteArray() ).ToArray() ) );
+                file.WriteXml( writer );
                 writer.WriteEndElement();
             }
 
@@ -157,32 +159,9 @@ namespace FFTPatcher.TextEditor
             {
                 writer.WriteStartElement( "file" );
                 writer.WriteAttributeString( "type", file.GetType().ToString() );
-                byte[] byteArray;
-                if( file is ICompressed )
-                {
-                    byteArray = (file as ICompressed).ToUncompressedBytes().ToArray();
-                }
-                else
-                {
-                    byteArray = file.ToByteArray();
-                }
-                writer.WriteString( Utilities.GetPrettyBase64( GZip.Compress( byteArray ).ToArray() ) );
+                file.WriteXml( writer );
                 writer.WriteEndElement();
             }
-
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-
-            if( closeStream )
-            {
-                writer.Flush();
-                writer.Close();
-            }
-        }
-
-        public void Save( XmlTextWriter writer )
-        {
-            Save( writer, false );
         }
 
 

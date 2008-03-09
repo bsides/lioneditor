@@ -26,9 +26,14 @@ namespace FFTPatcher.TextEditor
     public abstract class GenericCharMap : Dictionary<int, string>
     {
 
-		#region Fields (2) 
+		#region Static Fields (1) 
 
         private static Regex regex = new Regex( @"{0x([0-9A-Fa-f]+)}" );
+
+		#endregion Static Fields 
+
+		#region Fields (1) 
+
         private Dictionary<string, int> reverse = null;
 
 		#endregion Fields 

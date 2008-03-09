@@ -60,58 +60,9 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
-        internal static byte[] ATCHELP_LZW {
+        internal static byte[] pspText_ffttext {
             get {
-                object obj = ResourceManager.GetObject("ATCHELP_LZW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_299024 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_299024", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_29E334 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_29E334", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_2A1630 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_2A1630", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_2EB4C0 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_2EB4C0", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] BOOT_32D368 {
-            get {
-                object obj = ResourceManager.GetObject("BOOT_32D368", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] OPEN_LZW {
-            get {
-                object obj = ResourceManager.GetObject("OPEN_LZW", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] WLDMES_BIN {
-            get {
-                object obj = ResourceManager.GetObject("WLDMES_BIN", resourceCulture);
+                object obj = ResourceManager.GetObject("pspText_ffttext", resourceCulture);
                 return ((byte[])(obj));
             }
         }

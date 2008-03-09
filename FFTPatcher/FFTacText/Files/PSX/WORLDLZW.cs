@@ -69,7 +69,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static WORLDLZW()
         {
@@ -99,6 +99,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
             temp = new List<string>( SkillSet.PSXNames.Sub( 0, 175 ) );
             temp.AddRange( new string[sectionLengths[22] - temp.Count] );
             entryNames[22] = temp.ToArray();
+        }
+
+        private WORLDLZW()
+        {
         }
 
         public WORLDLZW( IList<byte> bytes )

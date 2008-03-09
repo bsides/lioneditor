@@ -69,7 +69,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static JOINLZW()
         {
@@ -79,6 +79,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[2] = new string[172];
             entryNames[3] = new string[172];
             entryNames[4] = new string[155];
+        }
+
+        private JOINLZW()
+        {
         }
 
         public JOINLZW( IList<byte> bytes )

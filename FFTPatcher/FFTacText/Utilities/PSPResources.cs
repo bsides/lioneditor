@@ -24,46 +24,42 @@ namespace FFTPatcher.TextEditor
     public static class PSPResources
     {
 
-		#region Fields (1) 
+		#region Static Fields (1) 
 
         private static Dictionary<string, object> resourceMapping = new Dictionary<string, object>();
 
-		#endregion Fields 
+		#endregion Static Fields 
 
-		#region Properties (8) 
-
-
-        public static byte[] ATCHELP_LZW { get { return resourceMapping["ATCHELP_LZW"] as byte[]; } }
-
-        public static byte[] BOOT_299024 { get { return resourceMapping["BOOT_299024"] as byte[]; } }
-
-        public static byte[] BOOT_29E334 { get { return resourceMapping["BOOT_29E334"] as byte[]; } }
-
-        public static byte[] BOOT_2A1630 { get { return resourceMapping["BOOT_2A1630"] as byte[]; } }
-
-        public static byte[] BOOT_2EB4C0 { get { return resourceMapping["BOOT_2EB4C0"] as byte[]; } }
-
-        public static byte[] BOOT_32D368 { get { return resourceMapping["BOOT_32D368"] as byte[]; } }
-
-        public static byte[] OPEN_LZW { get { return resourceMapping["OPEN_LZW"] as byte[]; } }
-
-        public static byte[] WLDMES_BIN { get { return resourceMapping["WLDMES_BIN"] as byte[]; } }
+		#region Static Properties (1) 
 
 
-		#endregion Properties 
+        public static byte[] DefaultDocument { get { return resourceMapping["pspText_ffttext"] as byte[]; } }
+
+
+		#endregion Static Properties 
 
 		#region Constructors (1) 
 
+        //public static byte[] ATCHELP_LZW { get { return resourceMapping["ATCHELP_LZW"] as byte[]; } }
+        //public static byte[] BOOT_299024 { get { return resourceMapping["BOOT_299024"] as byte[]; } }
+        //public static byte[] BOOT_29E334 { get { return resourceMapping["BOOT_29E334"] as byte[]; } }
+        //public static byte[] BOOT_2A1630 { get { return resourceMapping["BOOT_2A1630"] as byte[]; } }
+        //public static byte[] BOOT_2EB4C0 { get { return resourceMapping["BOOT_2EB4C0"] as byte[]; } }
+        //public static byte[] BOOT_32D368 { get { return resourceMapping["BOOT_32D368"] as byte[]; } }
+        //public static byte[] OPEN_LZW { get { return resourceMapping["OPEN_LZW"] as byte[]; } }
+        //public static byte[] WLDMES_BIN { get { return resourceMapping["WLDMES_BIN"] as byte[]; } }
         static PSPResources()
         {
-            resourceMapping["ATCHELP_LZW"] = GZip.Decompress( Properties.PSPResources.ATCHELP_LZW );
-            resourceMapping["BOOT_299024"] = GZip.Decompress( Properties.PSPResources.BOOT_299024 );
-            resourceMapping["BOOT_29E334"] = GZip.Decompress( Properties.PSPResources.BOOT_29E334 );
-            resourceMapping["BOOT_2A1630"] = GZip.Decompress( Properties.PSPResources.BOOT_2A1630 );
-            resourceMapping["BOOT_2EB4C0"] = GZip.Decompress( Properties.PSPResources.BOOT_2EB4C0 );
-            resourceMapping["BOOT_32D368"] = GZip.Decompress( Properties.PSPResources.BOOT_32D368 );
-            resourceMapping["OPEN_LZW"] = GZip.Decompress( Properties.PSPResources.OPEN_LZW );
-            resourceMapping["WLDMES_BIN"] = GZip.Decompress( Properties.PSPResources.WLDMES_BIN );
+            //resourceMapping["pspText_ffttext"] = Encoding.UTF8.GetString( GZip.Decompress( Properties.PSPResources.pspText_ffttext ) );
+            resourceMapping["pspText_ffttext"] = GZip.Decompress( Properties.PSPResources.pspText_ffttext );
+            //resourceMapping["ATCHELP_LZW"] = GZip.Decompress( Properties.PSPResources.ATCHELP_LZW );
+            //resourceMapping["BOOT_299024"] = GZip.Decompress( Properties.PSPResources.BOOT_299024 );
+            //resourceMapping["BOOT_29E334"] = GZip.Decompress( Properties.PSPResources.BOOT_29E334 );
+            //resourceMapping["BOOT_2A1630"] = GZip.Decompress( Properties.PSPResources.BOOT_2A1630 );
+            //resourceMapping["BOOT_2EB4C0"] = GZip.Decompress( Properties.PSPResources.BOOT_2EB4C0 );
+            //resourceMapping["BOOT_32D368"] = GZip.Decompress( Properties.PSPResources.BOOT_32D368 );
+            //resourceMapping["OPEN_LZW"] = GZip.Decompress( Properties.PSPResources.OPEN_LZW );
+            //resourceMapping["WLDMES_BIN"] = GZip.Decompress( Properties.PSPResources.WLDMES_BIN );
         }
 
 		#endregion Constructors 

@@ -118,28 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ATCHELP_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\atchelp.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BOOT_299024" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\boot.299024.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BOOT_29E334" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\boot.29e334.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BOOT_2A1630" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\boot.2a1630.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BOOT_2EB4C0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\boot.2eb4c0.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BOOT_32D368" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\boot.32d368.bin.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="OPEN_LZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\psp\open.lzw.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="WLDMES_BIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PSP\WLDMES.BIN.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="pspText_ffttext" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PSP\pspText.ffttext.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

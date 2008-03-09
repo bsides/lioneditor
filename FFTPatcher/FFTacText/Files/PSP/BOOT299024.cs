@@ -73,7 +73,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static BOOT299024()
         {
@@ -83,6 +83,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
             entryNames[2] = new string[176];
             entryNames[3] = new string[175];
             entryNames[4] = new string[155];
+        }
+
+        private BOOT299024()
+        {
         }
 
         public BOOT299024( IList<byte> bytes )

@@ -31,7 +31,12 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Properties 
 
-		#region Constructors (1) 
+		#region Constructors (2) 
+
+        protected BasePSPPartitionedFile()
+            : base()
+        {
+        }
 
         protected BasePSPPartitionedFile( IList<byte> bytes )
             : base( bytes )

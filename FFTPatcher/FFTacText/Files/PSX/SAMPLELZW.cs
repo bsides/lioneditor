@@ -77,7 +77,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Properties 
 
-		#region Constructors (2) 
+		#region Constructors (3) 
 
         static SAMPLELZW()
         {
@@ -141,6 +141,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 "Odin","Leviathan","Salamander","Silf","Fairy","Rich","Clops","Zodiac",
                 "Asura","Koutetsu","Bizen Boat","Murasame","Heaven's Cloud","Kiyomori","Muramasa","Kikuichimoji",
                 "Masamune","Chirijiraden","" };
+        }
+
+        private SAMPLELZW()
+        {
         }
 
         public SAMPLELZW( IList<byte> bytes )

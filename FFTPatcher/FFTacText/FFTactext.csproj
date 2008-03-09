@@ -57,12 +57,12 @@
     <Compile Include="Files\IPartition.cs" />
     <Compile Include="Files\IPartitionedFile.cs" />
     <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
-    <Compile Include="Files\PSP\WLDMES.cs" />
+    <Compile Include="Files\PSP\WLDMESBIN.cs" />
     <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
-    <Compile Include="Files\PSX\HELPMENU.cs" />
+    <Compile Include="Files\PSX\HELPMENUOUT.cs" />
     <Compile Include="Files\PSX\SNPLMESBIN.cs" />
-    <Compile Include="Files\PSX\WLDMES.cs" />
+    <Compile Include="Files\PSX\WLDMESBIN.cs" />
     <Compile Include="PSXText.cs" />
     <Compile Include="Utilities\CompressionEventArgs.cs" />
     <Compile Include="Files\AbstractStringSectioned.cs" />
@@ -128,24 +128,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\PSP\ATCHELP.LZW" />
-    <None Include="Resources\PSP\BOOT.299024.BIN" />
-    <None Include="Resources\PSP\BOOT.29E334.BIN" />
-    <None Include="Resources\PSP\BOOT.2A1630.BIN" />
-    <None Include="Resources\PSP\BOOT.2EB4C0.BIN" />
-    <None Include="Resources\PSP\BOOT.32D368.BIN" />
-    <None Include="Resources\PSP\OPEN.LZW" />
-    <None Include="Resources\PSP\WLDMES.BIN" />
-    <None Include="Resources\PSX\ATCHELP.LZW" />
-    <None Include="Resources\PSX\ATTACK.OUT.partial" />
-    <None Include="Resources\PSX\HELPMENU.OUT" />
-    <None Include="Resources\PSX\JOIN.LZW" />
-    <None Include="Resources\PSX\OPEN.LZW" />
-    <None Include="Resources\PSX\SAMPLE.LZW" />
-    <None Include="Resources\PSX\SNPLMES.BIN" />
-    <None Include="Resources\PSX\WLDHELP.LZW" />
-    <None Include="Resources\PSX\WLDMES.BIN" />
-    <None Include="Resources\PSX\WORLD.LZW" />
+    <None Include="Resources\PSP\pspText.ffttext" />
+    <None Include="Resources\PSX\psxText.ffttext" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

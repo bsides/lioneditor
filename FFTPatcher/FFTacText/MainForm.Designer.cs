@@ -48,36 +48,100 @@ namespace FFTPatcher.TextEditor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.MenuItem separator1;
+            System.Windows.Forms.MenuItem separator2;
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.fileMenuItem = new System.Windows.Forms.MenuItem();
+            this.newPsxMenuItem = new System.Windows.Forms.MenuItem();
+            this.newPspMenuItem = new System.Windows.Forms.MenuItem();
+            this.openMenuItem = new System.Windows.Forms.MenuItem();
+            this.saveMenuItem = new System.Windows.Forms.MenuItem();
+            this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.psxMenuItem = new System.Windows.Forms.MenuItem();
             this.pspMenuItem = new System.Windows.Forms.MenuItem();
+            this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.stringSectionedEditor1 = new FFTPatcher.TextEditor.StringSectionedEditor();
             this.compressedStringSectionedEditor1 = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
             this.partitionEditor1 = new FFTPatcher.TextEditor.Editors.PartitionEditor();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            separator1 = new System.Windows.Forms.MenuItem();
+            separator2 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
+            // 
+            // separator1
+            // 
+            separator1.Index = 2;
+            separator1.Text = "-";
+            // 
+            // separator2
+            // 
+            separator2.Index = 5;
+            separator2.Text = "-";
             // 
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.fileMenuItem,
             this.psxMenuItem,
-            this.pspMenuItem} );
+            this.pspMenuItem,
+            this.aboutMenuItem} );
             // 
             // fileMenuItem
             // 
             this.fileMenuItem.Index = 0;
+            this.fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.newPsxMenuItem,
+            this.newPspMenuItem,
+            separator1,
+            this.openMenuItem,
+            this.saveMenuItem,
+            separator2,
+            this.exitMenuItem} );
             this.fileMenuItem.Text = "File";
+            // 
+            // newPsxMenuItem
+            // 
+            this.newPsxMenuItem.Index = 0;
+            this.newPsxMenuItem.Text = "New PS&X text";
+            // 
+            // newPspMenuItem
+            // 
+            this.newPspMenuItem.Index = 1;
+            this.newPspMenuItem.Text = "New PS&P text";
+            // 
+            // openMenuItem
+            // 
+            this.openMenuItem.Index = 3;
+            this.openMenuItem.Text = "&Open .ffttext...";
+            // 
+            // saveMenuItem
+            // 
+            this.saveMenuItem.Enabled = false;
+            this.saveMenuItem.Index = 4;
+            this.saveMenuItem.Text = "&Save .ffttext...";
+            // 
+            // exitMenuItem
+            // 
+            this.exitMenuItem.Index = 6;
+            this.exitMenuItem.Text = "E&xit";
             // 
             // psxMenuItem
             // 
             this.psxMenuItem.Index = 1;
             this.psxMenuItem.Text = "PSX";
-            //
+            this.psxMenuItem.Visible = false;
+            // 
             // pspMenuItem
-            //
+            // 
             this.pspMenuItem.Index = 2;
             this.pspMenuItem.Text = "PSP";
+            this.pspMenuItem.Visible = false;
+            // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Index = 3;
+            this.aboutMenuItem.Text = "About...";
             // 
             // stringSectionedEditor1
             // 
@@ -130,6 +194,14 @@ namespace FFTPatcher.TextEditor
         private StringSectionedEditor stringSectionedEditor1;
         private CompressedStringSectionedEditor compressedStringSectionedEditor1;
         private FFTPatcher.TextEditor.Editors.PartitionEditor partitionEditor1;
+        private System.Windows.Forms.MenuItem newPsxMenuItem;
+        private System.Windows.Forms.MenuItem newPspMenuItem;
+        private System.Windows.Forms.MenuItem openMenuItem;
+        private System.Windows.Forms.MenuItem saveMenuItem;
+        private System.Windows.Forms.MenuItem exitMenuItem;
+        private System.Windows.Forms.MenuItem aboutMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
 
     }
 }

@@ -17,7 +17,10 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Xml;
 
 namespace FFTPatcher.TextEditor.Files
 {
@@ -79,7 +82,7 @@ namespace FFTPatcher.TextEditor.Files
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (5) 
 
 
         protected IList<byte> ToFinalBytes()
@@ -93,9 +96,48 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml( XmlReader reader )
+        {
+            reader.ReadStartElement();
+            string s = Encoding.UTF8.GetString( GZip.Decompress( Convert.FromBase64String( reader.ReadString() ) ) );
+            string[] sectionArray = s.Split( '\u2801' );
+
+            Sections = new IPartition[sectionArray.Length];
+
+            for( int i = 0; i < sectionArray.Length; i++ )
+            {
+                string[] entries = sectionArray[i].Split( '\u2800' );
+                Sections[i] = new FilePartition( entries, SectionLength, EntryNames[i], CharMap );
+            }
+
+            reader.ReadEndElement();
+        }
+
         public byte[] ToByteArray()
         {
             return ToFinalBytes().ToArray();
+        }
+
+        public void WriteXml( XmlWriter writer )
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach( IPartition section in Sections )
+            {
+                foreach( string entry in section.Entries )
+                {
+                    sb.Append( entry );
+                    sb.Append( "\u2800" );
+                }
+                sb.Remove( sb.Length - 1, 1 );
+                sb.Append( "\u2801" );
+            }
+            sb.Remove( sb.Length - 1, 1 );
+            writer.WriteString( Utilities.GetPrettyBase64( GZip.Compress( Encoding.UTF8.GetBytes( sb.ToString() ) ) ) );
         }
 
 

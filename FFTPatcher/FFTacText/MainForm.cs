@@ -93,6 +93,8 @@ namespace FFTPatcher.TextEditor
             saveMenuItem.Click += saveMenuItem_Click;
             openMenuItem.Click += openMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
+
+            FillFiles();
         }
 
 		#endregion Constructors 
@@ -169,101 +171,83 @@ namespace FFTPatcher.TextEditor
             ////BasePSXPartitionedFile[] psxFiles3 = new BasePSXPartitionedFile[] {
             ////    new SNPLMESBIN(PSXResources.SNPLMES_BIN),
             ////    new WLDMES(PSXResources.WLDMES_BIN) };
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
 
-            //foreach( BasePSXSectionedFile sectionFile in psxFiles1 )
-            //{
-            //    foreach( KeyValuePair<string, long> kvp in sectionFile.Locations )
-            //    {
-            //        var filename = kvp.Key;
-            //        var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
-            //        int dotIndex = realFilename.LastIndexOf( '.' );
-            //        if( dotIndex < 0 )
-            //            dotIndex = realFilename.Length - 1;
-            //        realFilename = realFilename.Substring( 0, dotIndex );
-            //        string format = "{0}/{1}/{2:X}";
-            //        if( realFilename == "ATTACK" )
-            //        {
-            //            realFilename = "A";
-            //            format = "{0}{1}{2:X}";
-            //        }
-            //        else if( realFilename == "SMALL" )
-            //        {
-            //            realFilename = "S";
-            //            format = "{0}{1}{2:X}";
-            //        }
-            //        else if( filename.Contains( "WORLD.LZW" ) )
-            //        {
-            //            realFilename = "WLD";
-            //        }
-            //        for( int section = 0; section < sectionFile.Sections.Count; section++ )
-            //        {
-            //            for( int i = 0; i < sectionFile.Sections[section].Count; i++ )
-            //            {
-            //                string newString = string.Format( format, realFilename, section, i );
-            //                if( sectionFile.Sections[section][i].IndexOf( @"{END}" ) != -1 )
-            //                {
-            //                    newString += @"{END}";
-            //                }
-            //                sectionFile.Sections[section][i] = newString;
-            //            }
-            //        }
+            FFTText mine = null;
+            using( MemoryStream ms = new MemoryStream( PSXResources.DefaultDocument ) )
+            {
+                mine = xs.Deserialize( ms ) as FFTText;
+            }
 
-            //        byte[] bytes = sectionFile.ToByteArray();
-            //        if( bytes.Length <= sectionFile.MaxLength )
-            //        {
-            //            FileStream stream = new FileStream( Path.Combine( @"M:\dev\LionEditor\fftpack\US\changed", filename.Substring( filename.LastIndexOf( "/" ) + 1 ) ), FileMode.Open );
-            //            stream.Seek( kvp.Value, SeekOrigin.Begin );
-            //            stream.Write( bytes, 0, bytes.Length );
-            //            stream.Flush();
-            //            stream.Close();
-            //            stream.Dispose();
-            //        }
-            //        else
-            //        {
-            //        }
-            //    }
-            //}
 
-            //foreach( BasePSXCompressedFile sectionFile in psxFiles2 )
-            //{
-            //    foreach( var kvp in sectionFile.Locations )
-            //    {
-            //        var filename = kvp.Key;
-            //        var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
-            //        int dotIndex = realFilename.LastIndexOf( '.' );
-            //        if( dotIndex < 0 )
-            //            dotIndex = realFilename.Length - 1;
-            //        realFilename = realFilename.Substring( 0, dotIndex );
-            //        string format = "{0}/{1}/{2:X}";
+            foreach( IStringSectioned sectionFile in mine.SectionedFiles )
+            {
+                foreach( KeyValuePair<string, long> kvp in sectionFile.Locations )
+                {
+                    var filename = kvp.Key;
+                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    int dotIndex = realFilename.LastIndexOf( '.' );
+                    if( dotIndex < 0 )
+                        dotIndex = realFilename.Length - 1;
+                    realFilename = realFilename.Substring( 0, dotIndex );
+                    string format = "{0}/{1}/{2:X}";
+                    if( realFilename == "ATTACK" )
+                    {
+                        realFilename = "A";
+                        format = "{0}{1}{2:X}";
+                    }
+                    else if( realFilename == "SMALL" )
+                    {
+                        realFilename = "S";
+                        format = "{0}{1}{2:X}";
+                    }
+                    else if( filename.Contains( "WORLD.LZW" ) )
+                    {
+                        realFilename = "WLD";
+                    }
+                    for( int section = 0; section < sectionFile.Sections.Count; section++ )
+                    {
+                        for( int i = 0; i < sectionFile.Sections[section].Count; i++ )
+                        {
+                            string newString = string.Format( format, realFilename, section, i );
+                            if( sectionFile.Sections[section][i].IndexOf( @"{END}" ) != -1 )
+                            {
+                                newString += @"{END}";
+                            }
+                            sectionFile.Sections[section][i] = newString;
+                        }
+                    }
+                }
+            }
 
-            //        for( int section = 0; section < sectionFile.Sections.Count; section++ )
-            //        {
-            //            for( int i = 0; i < sectionFile.Sections[section].Count; i++ )
-            //            {
-            //                string newString = string.Format( format, realFilename, section, i );
-            //                if( sectionFile.Sections[section][i].IndexOf( @"{END}" ) != -1 )
-            //                {
-            //                    newString += @"{END}";
-            //                }
-            //                sectionFile.Sections[section][i] = newString;
-            //            }
-            //        }
+            foreach( IPartitionedFile partitionedFile in mine.PartitionedFiles )
+            {
+                foreach( var kvp in partitionedFile.Locations )
+                {
+                    var filename = kvp.Key;
+                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    int dotIndex = realFilename.LastIndexOf( '.' );
+                    if( dotIndex < 0 )
+                        dotIndex = realFilename.Length - 1;
+                    realFilename = realFilename.Substring( 0, dotIndex );
+                    string format = "{0}/{1}/{2:X}";
 
-            //        byte[] bytes = sectionFile.ToByteArray();
-            //        if( bytes.Length <= sectionFile.MaxLength )
-            //        {
-            //            FileStream stream = new FileStream( Path.Combine( @"M:\dev\LionEditor\fftpack\US\changed", filename.Substring( filename.LastIndexOf( "/" ) + 1 ) ), FileMode.Open );
-            //            stream.Seek( kvp.Value, SeekOrigin.Begin );
-            //            stream.Write( bytes, 0, bytes.Length );
-            //            stream.Flush();
-            //            stream.Close();
-            //            stream.Dispose();
-            //        }
-            //        else
-            //        {
-            //        }
-            //    }
-            //}
+                    for( int section = 0; section < partitionedFile.Sections.Count; section++ )
+                    {
+                        for( int i = 0; i < partitionedFile.Sections[section].Entries.Count; i++ )
+                        {
+                            string newString = string.Format( format, realFilename, section, i );
+                            if( partitionedFile.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
+                            {
+                                newString += @"{END}";
+                            }
+                            partitionedFile.Sections[section].Entries[i] = newString;
+                        }
+                    }
+                }
+            }
+
+            File = mine;
         }
 
         private void LoadFileFromByteArray( byte[] bytes )

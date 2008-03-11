@@ -189,9 +189,9 @@ namespace FFTPatcher
             CopyBoolArrayToBooleans( BooleansFromByte( b ), ref msb, ref six, ref five, ref four, ref three, ref two, ref one, ref lsb );
         }
 
-        public static string GetPrettyBase64( byte[] bytes )
+        public static string GetPrettyBase64( IList<byte> bytes )
         {
-            StringBuilder sb = new StringBuilder( Convert.ToBase64String( bytes, Base64FormattingOptions.InsertLineBreaks ) );
+            StringBuilder sb = new StringBuilder( Convert.ToBase64String( bytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );
             sb.Insert( 0, "\r\n" );
             sb.Replace( "\r\n", "\r\n    " );
             sb.Append( "\r\n  " );

@@ -105,6 +105,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
             entryNames[12] = AllJobs.PSXNames;
             entryNames[13] = Item.PSXNames.ToArray();
             entryNames[15] = AllAbilities.PSXNames;
+            entryNames[16] = new string[44] {
+                "Lesalia Imperial Capital", "Riovanes Castle", "Igros Castle", "Lionel Castle", "Limberry Castle", "Zeltennia Castle", "Magic City Gariland",
+                "Yardow Fort City", "Goland Coal City", "Dorter Trade City", "Zaland Fort City", "Goug Machine City", "Warjils Trade City", "Bervenia Free City",
+                "Zarghidas Trade City", "Fort Zeakden", "Murond Holy Place", "Thieves Fort", "Orbonne Monastery", "Golgorand Execution Site", "Murond Death City",
+                "Bethla Garrison", "Deep Dungeon", "Nelveska Temple", "Mandalia Plains", "Fovoham Plains", "Sweegy Woods", "Bervenia Volcano", 
+                "Zeklaus Desert", "Lenalia Plateau", "Zigolis Swamp", "Yuguo Woods", "Araguay Woods", "Grog Hill", "Bed Desert", 
+                "Zirekile Falls", "Dolbodar Swamp", "Bariaus Hill", "Doguola Pass", "Bariaus Valley", "Finath River", "Poeskas Lake",
+                "Germinas Peak", "" };
             List<string> temp = new List<string>( 188 );
             temp.AddRange( SkillSet.PSXNames.Sub( 0, 175 ) );
             temp.AddRange( new string[12] );

@@ -93,15 +93,10 @@ namespace FFTPatcher.TextEditor.Files
 
 		#endregion Constructors 
 
-		#region Methods (6) 
+		#region Methods (11) 
 
 
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml( XmlReader reader )
+        private void ReadXmlBase64( XmlReader reader )
         {
             reader.ReadStartElement();
             string s = Encoding.UTF8.GetString( GZip.Decompress( Convert.FromBase64String( reader.ReadString() ) ) );
@@ -114,6 +109,106 @@ namespace FFTPatcher.TextEditor.Files
                 Sections[i] = sectionArray[i].Split( '\u2800' );
             }
             reader.ReadEndElement();
+        }
+
+        private void ReadXmlUncompressed( XmlReader reader )
+        {
+            reader.MoveToAttribute( "sections" );
+            int sectionCount = reader.ReadContentAsInt();
+            reader.MoveToElement();
+            reader.ReadStartElement();
+            Sections = new string[sectionCount][];
+
+            for( int i = 0; i < sectionCount; i++ )
+            {
+                reader.MoveToAttribute( "entries" );
+                int entryCount = reader.ReadContentAsInt();
+                reader.MoveToElement();
+                reader.MoveToAttribute( "value" );
+                int currentSection = reader.ReadContentAsInt();
+                reader.MoveToElement();
+                reader.ReadStartElement( "section" );
+
+                Sections[currentSection] = new string[entryCount];
+
+                for( int j = 0; j < entryCount; j++ )
+                {
+                    reader.MoveToAttribute( "value" );
+                    int currentEntry = reader.ReadContentAsInt();
+                    reader.MoveToElement();
+                    reader.ReadStartElement( "entry" );
+                    Sections[currentSection][currentEntry] = reader.ReadString().Replace( @"\n", "\r\n" );
+                    reader.ReadEndElement();
+                }
+
+                reader.ReadEndElement();
+            }
+
+            reader.ReadEndElement();
+        }
+
+        private void WriteXmlBase64( XmlWriter writer )
+        {
+            writer.WriteAttributeString( "compressed", "true" );
+            StringBuilder sb = new StringBuilder();
+            foreach( IList<string> section in Sections )
+            {
+                foreach( string entry in section )
+                {
+                    sb.Append( entry );
+                    sb.Append( "\u2800" );
+                }
+                sb.Remove( sb.Length - 1, 1 );
+                sb.Append( "\u2801" );
+            }
+            sb.Remove( sb.Length - 1, 1 );
+            writer.WriteString( Utilities.GetPrettyBase64( GZip.Compress( Encoding.UTF8.GetBytes( sb.ToString() ) ) ) );
+        }
+
+        private void WriteXmlUncompressed( XmlWriter writer )
+        {
+            writer.WriteAttributeString( "compressed", "false" );
+            writer.WriteAttributeString( "sections", Sections.Count.ToString() );
+
+            for( int i = 0; i < Sections.Count; i++ )
+            {
+                IList<string> section = Sections[i];
+
+                writer.WriteStartElement( "section" );
+                writer.WriteAttributeString( "value", i.ToString() );
+                writer.WriteAttributeString( "entries", section.Count.ToString() );
+
+                for( int j = 0; j < section.Count; j++ )
+                {
+                    writer.WriteStartElement( "entry" );
+                    writer.WriteAttributeString( "value", j.ToString() );
+                    writer.WriteAttributeString( "xml:space", "preserve" );
+                    writer.WriteString( section[j].Replace( "\r\n", @"\n" ) );
+                    writer.WriteEndElement();
+                }
+
+                writer.WriteEndElement();
+            }
+        }
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml( XmlReader reader )
+        {
+            bool b = reader.MoveToAttribute( "compressed" );
+            bool compressed = reader.ReadContentAsBoolean();
+            reader.MoveToElement();
+            if( compressed )
+            {
+                ReadXmlBase64( reader );
+            }
+            else
+            {
+                ReadXmlUncompressed( reader );
+            }
         }
 
         public byte[] ToByteArray()
@@ -130,19 +225,19 @@ namespace FFTPatcher.TextEditor.Files
 
         public void WriteXml( XmlWriter writer )
         {
-            StringBuilder sb = new StringBuilder();
-            foreach( IList<string> section in Sections )
+            WriteXmlUncompressed( writer );
+        }
+
+        public void WriteXml( XmlWriter writer, bool compressed )
+        {
+            if( compressed )
             {
-                foreach( string entry in section )
-                {
-                    sb.Append( entry );
-                    sb.Append( "\u2800" );
-                }
-                sb.Remove( sb.Length - 1, 1 );
-                sb.Append( "\u2801" );
+                WriteXmlBase64( writer );
             }
-            sb.Remove( sb.Length - 1, 1 );
-            writer.WriteString( Utilities.GetPrettyBase64( GZip.Compress( Encoding.UTF8.GetBytes( sb.ToString() ) ) ) );
+            else
+            {
+                WriteXmlUncompressed( writer );
+            }
         }
 
 

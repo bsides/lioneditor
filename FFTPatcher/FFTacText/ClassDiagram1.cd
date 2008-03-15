@@ -26,13 +26,13 @@
       <Method Name="WriteXml" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAABAAAABAACACAAIIAAAACEABAAQAAAEAQgAAAAgg=</HashCode>
+      <HashCode>AAAABAAAABAASECAAIIAAIACEABAAQgAAEAQgAAEAgg=</HashCode>
       <FileName>Files\AbstractStringSectioned.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.AbstractPartitionedFile">
-    <Position X="25.75" Y="3.5" Width="2.5" />
+    <Position X="25.5" Y="2.75" Width="2.5" />
     <Members>
       <Method Name="AbstractPartitionedFile" Hidden="true" />
       <Method Name="GetSchema" Hidden="true" />
@@ -40,7 +40,7 @@
       <Method Name="WriteXml" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAACACAAIIAAAACEABAARAAAEAAgAAAAgg=</HashCode>
+      <HashCode>AAAAAAAAABAASECAAIIAAIACEABAARgAAEAAgAAEAgg=</HashCode>
       <FileName>Files\AbstractPartitionedFile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -68,7 +68,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSX.BasePSXCompressedFile">
     <Position X="5.25" Y="7.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAABAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Files\PSX\BasePSXCompressedFile.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -95,98 +95,98 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSX.WLDHELPLZW" Collapsed="true">
     <Position X="5.25" Y="9" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAEACACAAAoAAAASEAAAAAAAAAAQIAAAAgg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAAAAAAAAQAAAAAgg=</HashCode>
       <FileName>Files\PSX\WLDHELPLZW.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW" Collapsed="true">
     <Position X="11.75" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\ATCHELPLZW.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT299024" Collapsed="true">
     <Position X="9.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT299024.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT29E334" Collapsed="true">
     <Position X="9.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT29E334.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT2A1630" Collapsed="true">
     <Position X="11.75" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT2A1630.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT2EB4C0" Collapsed="true">
     <Position X="14" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT2EB4C0.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT32D368" Collapsed="true">
     <Position X="14" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT32D368.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.OPENLZW" Collapsed="true">
     <Position X="11.75" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\OPENLZW.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.ATCHELPLZW" Collapsed="true">
     <Position X="17" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSX\ATCHELPLZW.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.ATTACKOUT" Collapsed="true">
     <Position X="17" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSX\ATTACKOUT.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.JOINLZW" Collapsed="true">
     <Position X="19.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSX\JOINLZW.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.OPENLZW" Collapsed="true">
     <Position X="21.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSX\OPENLZW.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.SAMPLELZW" Collapsed="true">
     <Position X="21.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSX\SAMPLELZW.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.WORLDLZW" Collapsed="true">
     <Position X="19.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSX\WORLDLZW.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -200,7 +200,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSX.SNPLMESBIN" Collapsed="true">
     <Position X="26.5" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAACAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
       <FileName>Files\PSX\SNPLMESBIN.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -214,7 +214,7 @@
   <Interface Name="FFTPatcher.TextEditor.Files.ICompressed" Collapsed="true">
     <Position X="14.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <HashCode>AAAABAAAABEAQAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>Files\ICompressed.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -228,14 +228,14 @@
   <Interface Name="FFTPatcher.TextEditor.Files.IPartitionedFile" Collapsed="true">
     <Position X="14.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAAAAIIAAAAAEAAAABAAAEAAAAAAAAg=</HashCode>
+      <HashCode>AAAAAAAAAAAASAAAAAAAAAAAEAAAABAAAEAAAAAAAAg=</HashCode>
       <FileName>Files\IPartitionedFile.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FFTPatcher.TextEditor.Files.IStringSectioned" Collapsed="true">
     <Position X="16.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACACAAIIAAAAAAAAAAQAAAEAQAAAAAAg=</HashCode>
+      <HashCode>AAAAAAAAAAAASACAAAAAAAAAAAAAAQAAAEAQAAAAAAg=</HashCode>
       <FileName>Files\IStringSectioned.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -99,7 +99,14 @@ namespace FFTPatcher.TextEditor
             int resultPos = pos + 1;
             byte val = bytes[pos];
             int key = val;
-            if( (val >= 0xD0 && val <= 0xDA) || (val == 0xE2) || (val == 0xE3) || (val == 0xEE) || (val == 0xF5) || (val == 0xF6) )
+            if( (val >= 0xD0 && val <= 0xDA) || 
+                (val == 0xE2) || 
+                (val == 0xE3) || 
+                (val == 0xE8) ||
+                (val == 0xEC) ||
+                (val == 0xEE) || 
+                (val == 0xF5) || 
+                (val == 0xF6) )
             {
                 byte nextVal = bytes[pos + 1];
                 resultPos++;

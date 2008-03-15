@@ -18,6 +18,7 @@
 */
 
 using System.Collections.Generic;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace FFTPatcher.TextEditor.Files
@@ -31,5 +32,6 @@ namespace FFTPatcher.TextEditor.Files
         int EstimatedLength { get; }
         int ActualLength { get; }
         int MaxLength { get; }
+        void WriteXml( XmlWriter writer, bool compressed );
     }
 }

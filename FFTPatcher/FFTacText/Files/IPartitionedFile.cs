@@ -18,6 +18,7 @@
 */
 
 using System.Collections.Generic;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace FFTPatcher.TextEditor.Files
@@ -30,5 +31,6 @@ namespace FFTPatcher.TextEditor.Files
         IList<IList<string>> EntryNames { get; }
         int SectionLength { get; }
         int NumberOfSections { get; }
+        void WriteXml( XmlWriter writer, bool compressed );
     }
 }

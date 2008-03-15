@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
 
@@ -94,12 +95,12 @@ namespace FFTPatcher.TextEditor
             openMenuItem.Click += openMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
 
-            FillFiles();
+            //FillFiles();
         }
 
 		#endregion Constructors 
 
-		#region Methods (12) 
+		#region Methods (13) 
 
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -118,6 +119,8 @@ namespace FFTPatcher.TextEditor
             MenuItem parent = File.Filetype == Filetype.PSP ? pspMenuItem : psxMenuItem;
             pspMenuItem.Visible = File.Filetype == Filetype.PSP;
             psxMenuItem.Visible = File.Filetype == Filetype.PSX;
+
+            RemoveAllDescendants( parent );
 
             foreach( MenuItem psxItem in items )
             {
@@ -320,6 +323,16 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+        private void RemoveAllDescendants( MenuItem item )
+        {
+            foreach( MenuItem subitem in item.MenuItems )
+            {
+                RemoveAllDescendants( subitem );
+            }
+
+            item.MenuItems.Clear();
+        }
+
         private void saveMenuItem_Click( object sender, EventArgs e )
         {
             saveFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
@@ -329,8 +342,10 @@ namespace FFTPatcher.TextEditor
                 {
                     XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
                     using( FileStream stream = new FileStream( saveFileDialog.FileName, FileMode.Create ) )
+                    using( XmlTextWriter writer = new XmlTextWriter( stream, System.Text.Encoding.UTF8 ) )
                     {
-                        xs.Serialize( stream, File );
+                        writer.Formatting = Formatting.Indented;
+                        xs.Serialize( writer, File );
                     }
                 }
                 catch( Exception )

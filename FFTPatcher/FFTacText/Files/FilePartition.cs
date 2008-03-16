@@ -34,7 +34,7 @@ namespace FFTPatcher.TextEditor.Files
 
 		#endregion Fields 
 
-		#region Properties (4) 
+		#region Properties (5) 
 
 
         /// <summary>
@@ -57,28 +57,34 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public int MaxLength { get { return length; } }
 
+        /// <summary>
+        /// Gets the owner of this instance.
+        /// </summary>
+        public IPartitionedFile Owner { get; private set; }
+
 
 		#endregion Properties 
 
 		#region Constructors (3) 
 
-        private FilePartition( IList<string> entryNames, TextUtilities.CharMapType charmap )
+        private FilePartition( IPartitionedFile owner, IList<string> entryNames, TextUtilities.CharMapType charmap )
         {
+            Owner = owner;
             this.charmap = charmap == TextUtilities.CharMapType.PSP ?
                 TextUtilities.PSPMap as GenericCharMap :
                 TextUtilities.PSXMap as GenericCharMap;
             EntryNames = entryNames;
         }
 
-        public FilePartition( IList<byte> bytes, IList<string> entryNames, TextUtilities.CharMapType charmap )
-            : this( entryNames, charmap )
+        public FilePartition( IPartitionedFile owner, IList<byte> bytes, IList<string> entryNames, TextUtilities.CharMapType charmap )
+            : this( owner, entryNames, charmap )
         {
             length = bytes.Count;
             Entries = TextUtilities.ProcessList( bytes.Sub( 0, bytes.LastIndexOf( (byte)0xFE ) ), charmap );
         }
 
-        public FilePartition( IList<string> entries, int length, IList<string> entryNames, TextUtilities.CharMapType charmap )
-            : this( entryNames, charmap )
+        public FilePartition( IPartitionedFile owner, IList<string> entries, int length, IList<string> entryNames, TextUtilities.CharMapType charmap )
+            : this( owner, entryNames, charmap )
         {
             this.length = length;
             Entries = entries;

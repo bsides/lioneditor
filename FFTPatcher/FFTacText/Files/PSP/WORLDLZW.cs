@@ -21,35 +21,31 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT299024 : BasePSPSectionedFile
+    public class WORLDLZW : BasePSPSectionedFile
     {
 
-		#region Static Fields (3) 
+        #region Static Fields (3)
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[5] {
-            "", "Bravery/Faith too low/high", "Bravery/Faith too low/high", "Leaving quotes", "Job names" };
+        private static string[] sectionNames;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (1)
 
-        private const string filename = "BOOT.BIN[0x299024]";
+        private const string filename = "WORLD.LZW";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (6) 
+        #region Properties (6)
 
 
         /// <summary>
         /// Gets the number of sections.
         /// </summary>
         /// <value>The number of sections.</value>
-        protected override int NumberOfSections
-        {
-            get { return 5; }
-        }
+        protected override int NumberOfSections { get { return 32; } }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.
@@ -74,8 +70,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "BOOT.BIN", 0x299024 );
+                    locations.Add( "EVENT/WORLD.LZW", 0x00 );
                 }
+
                 return locations;
             }
         }
@@ -86,7 +83,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <value></value>
         public override int MaxLength
         {
-            get { return 0x38AE; }
+            get { return 0x14000; }
         }
 
         /// <summary>
@@ -96,30 +93,47 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
-        static BOOT299024()
+        static WORLDLZW()
         {
-            entryNames = new string[5][];
-            entryNames[0] = new string[1];
-            entryNames[1] = new string[176];
-            entryNames[2] = new string[176];
-            entryNames[3] = new string[175];
-            entryNames[4] = FFTPatcher.Datatypes.AllJobs.PSPNames;
+            sectionNames = new string[32] {
+                "","","","","","","Job names","Item names",
+                "Unit names", "Unit names", "Battle menus","Map help", "Errand names","","Ability names","Feat rewards",
+                "Tutorial menus","","Location names","Empty","Map menu text","Event names","Skillset names","Tavern text",
+                "Tutorial menus","Rumors/Multiplayer text", "Feats names", "Wonders names", "Artefacts names","Events names","Personae names","Feats descriptions" };
+            int[] sectionLengths = new int[32] {
+                1,1,1,1,1,1,169,316,
+                1024,1024,11,2,96,1,512,77,
+                76,1,44,24,1,115,227,374,
+                32,185,96,16,47,78,1024,96 };
+            entryNames = new string[32][];
+            for( int i = 0; i < entryNames.Length; i++ )
+            {
+                entryNames[i] = new string[sectionLengths[i]];
+            }
+
+            entryNames[6] = FFTPatcher.Datatypes.AllJobs.PSPNames;
+            entryNames[7] = FFTPatcher.Datatypes.Item.PSPNames.ToArray();
+            entryNames[14] = FFTPatcher.Datatypes.AllAbilities.PSPNames;
+            List<string> temp = new List<string>( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 0, 175 ) );
+            temp.AddRange( new string[48] );
+            temp.AddRange( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 224, 226 ) );
+            entryNames[22] = temp.ToArray();
         }
 
-        private BOOT299024()
+        private WORLDLZW()
         {
         }
 
-        public BOOT299024( IList<byte> bytes )
+        public WORLDLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

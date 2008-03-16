@@ -21,8 +21,6 @@
   <!-- EVENT/BONUS.BIN not found (958464 bytes) -->
   <!-- EVENT/ITEM.BIN not found (33280 bytes) -->
   <!-- EVENT/MAPTITLE.BIN not found (307200 bytes) -->
-  <!-- EVENT/SPELL.MES not found (16984 bytes) -->
-  <!-- EVENT/WORLD.LZW not found (56508 bytes) -->
   <!-- MAP/MAP001.GNS not found (2388 bytes) -->
   <!-- MAP/MAP002.GNS not found (2288 bytes) -->
   <!-- MAP/MAP003.GNS not found (568 bytes) -->
@@ -181,7 +179,9 @@
   <file entry="0039" name="EVENT/END4.BIN"/>
   <file entry="0040" name="EVENT/END5.BIN"/>
   <file entry="0041" name="EVENT/ATCHELP.LZW"/>
+  <file entry="0042" name="EVENT/SPELL.MES"/>
   <file entry="0043" name="EVENT/SAMPLE.LZW"/>
+  <file entry="0044" name="EVENT/WORLD.LZW"/>
   <file entry="0045" name="EVENT/OPEN.LZW"/>
   <file entry="0046" name="EVENT/JOIN.LZW"/>
   <file entry="0047" name="EVENT/HELP.LZW"/>

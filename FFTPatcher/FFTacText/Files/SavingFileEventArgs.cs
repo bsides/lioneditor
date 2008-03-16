@@ -27,13 +27,18 @@ namespace FFTPatcher.TextEditor.Files
     public class SavingFileEventArgs : EventArgs
     {
 
-		#region Properties (2) 
+		#region Properties (3) 
 
 
         /// <summary>
         /// Gets the <see cref="IFile"/> the user wants to save.
         /// </summary>
         public IFile File { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the partition number to save.
+        /// </summary>
+        public int PartitionNumber { get; private set; }
 
         /// <summary>
         /// Gets the suggested filename to use in the save dialog.
@@ -43,12 +48,19 @@ namespace FFTPatcher.TextEditor.Files
 
 		#endregion Properties 
 
-		#region Constructors (1) 
+		#region Constructors (2) 
 
         public SavingFileEventArgs( IFile file, string suggestedFilename )
         {
             File = file;
             SuggestedFilename = suggestedFilename;
+            PartitionNumber = -1;
+        }
+
+        public SavingFileEventArgs( IPartitionedFile file, string suggestedFilename, int whichPartition )
+            : this( file, suggestedFilename )
+        {
+            PartitionNumber = whichPartition;
         }
 
 		#endregion Constructors 

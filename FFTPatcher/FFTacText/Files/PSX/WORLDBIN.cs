@@ -334,7 +334,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 {
                     writer.WriteStartElement( "entry" );
                     writer.WriteAttributeString( "value", j.ToString() );
-                    writer.WriteAttributeString( "xml:space", "preserve" );
                     writer.WriteString( section[j].Replace( "\r\n", @"\n" ) );
                     writer.WriteEndElement();
                 }

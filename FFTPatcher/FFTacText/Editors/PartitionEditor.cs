@@ -55,6 +55,7 @@ namespace FFTPatcher.TextEditor.Editors
                     strings = value;
                     UpdateCurrentStringListBox();
                     currentStringListBox.SelectedIndex = 0;
+                    UpdateFilenames();
                     UpdateCurrentString();
                     UpdateLengthLabels();
                 }
@@ -76,15 +77,24 @@ namespace FFTPatcher.TextEditor.Editors
         public PartitionEditor()
         {
             InitializeComponent();
-            currentStringListBox.SelectedIndexChanged += new EventHandler( currentStringListBox_SelectedIndexChanged );
-            currentString.TextChanged += new EventHandler( currentString_TextChanged );
-            currentString.Validating += new CancelEventHandler( currentString_Validating );
+            currentStringListBox.SelectedIndexChanged += currentStringListBox_SelectedIndexChanged;
+            currentString.TextChanged += currentString_TextChanged;
+            currentString.Validating += currentString_Validating;
             currentString.Font = new Font( "Arial Unicode MS", 10 );
+            filesListBox.SelectedIndexChanged += filesListBox_SelectedIndexChanged;
+            saveAllButton.Click += saveAllButton_Click;
+            saveThisButton.Click += saveThisButton_Click;
         }
 
 		#endregion Constructors 
 
-		#region Methods (7) 
+		#region Events (1) 
+
+        public event EventHandler<SavingFileEventArgs> SavingFile;
+
+		#endregion Events 
+
+		#region Methods (11) 
 
 
         private void currentString_TextChanged( object sender, EventArgs e )
@@ -104,6 +114,57 @@ namespace FFTPatcher.TextEditor.Editors
         private void currentStringListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             UpdateCurrentString();
+        }
+
+        private void filesListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            saveThisButton.Enabled = filesListBox.SelectedIndex > -1;
+            saveAllButton.Enabled = filesListBox.SelectedIndex > -1;
+        }
+
+        private void UpdateFilenames()
+        {
+            filesListBox.SuspendLayout();
+            filesListBox.ClearSelected();
+            filesListBox.Items.Clear();
+
+            foreach( string s in strings.Owner.Locations.Keys )
+            {
+                filesListBox.Items.Add( s );
+            }
+
+            filesListBox.ResumeLayout();
+        }
+
+        private void FireSavingFileEvent( string suggested, int partition )
+        {
+            if( SavingFile != null )
+            {
+                if( partition != -1 )
+                {
+                    SavingFile( this, new SavingFileEventArgs( strings.Owner, suggested, partition ) );
+                }
+                else
+                {
+                    SavingFile( this, new SavingFileEventArgs( strings.Owner as IFile, suggested ) );
+                }
+            }
+        }
+
+        private void saveAllButton_Click( object sender, EventArgs e )
+        {
+            if( filesListBox.SelectedIndex > -1 )
+            {
+                FireSavingFileEvent( filesListBox.SelectedItem.ToString(), -1 );
+            }
+        }
+
+        private void saveThisButton_Click( object sender, EventArgs e )
+        {
+            if( filesListBox.SelectedIndex > -1 )
+            {
+                FireSavingFileEvent( filesListBox.SelectedItem.ToString(), strings.Owner.Sections.IndexOf( strings ) );
+            }
         }
 
         private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )

@@ -60,9 +60,9 @@ namespace FFTPatcher.TextEditor
             this.psxMenuItem = new System.Windows.Forms.MenuItem();
             this.pspMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
-            this.stringSectionedEditor1 = new FFTPatcher.TextEditor.StringSectionedEditor();
-            this.compressedStringSectionedEditor1 = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
-            this.partitionEditor1 = new FFTPatcher.TextEditor.Editors.PartitionEditor();
+            this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
+            this.compressedStringSectionedEditor = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
+            this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             separator1 = new System.Windows.Forms.MenuItem();
@@ -143,41 +143,41 @@ namespace FFTPatcher.TextEditor
             this.aboutMenuItem.Index = 3;
             this.aboutMenuItem.Text = "About...";
             // 
-            // stringSectionedEditor1
+            // stringSectionedEditor
             // 
-            this.stringSectionedEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stringSectionedEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.stringSectionedEditor1.Name = "stringSectionedEditor1";
-            this.stringSectionedEditor1.Size = new System.Drawing.Size( 543, 416 );
-            this.stringSectionedEditor1.Strings = null;
-            this.stringSectionedEditor1.TabIndex = 0;
+            this.stringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.stringSectionedEditor.Name = "stringSectionedEditor";
+            this.stringSectionedEditor.Size = new System.Drawing.Size( 543, 416 );
+            this.stringSectionedEditor.Strings = null;
+            this.stringSectionedEditor.TabIndex = 0;
             // 
-            // compressedStringSectionedEditor1
+            // compressedStringSectionedEditor
             // 
-            this.compressedStringSectionedEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compressedStringSectionedEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.compressedStringSectionedEditor1.Name = "compressedStringSectionedEditor1";
-            this.compressedStringSectionedEditor1.Size = new System.Drawing.Size( 543, 416 );
-            this.compressedStringSectionedEditor1.Strings = null;
-            this.compressedStringSectionedEditor1.TabIndex = 1;
+            this.compressedStringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedStringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.compressedStringSectionedEditor.Name = "compressedStringSectionedEditor";
+            this.compressedStringSectionedEditor.Size = new System.Drawing.Size( 543, 416 );
+            this.compressedStringSectionedEditor.Strings = null;
+            this.compressedStringSectionedEditor.TabIndex = 1;
             // 
-            // partitionEditor1
+            // partitionEditor
             // 
-            this.partitionEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.partitionEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.partitionEditor1.Name = "partitionEditor1";
-            this.partitionEditor1.Size = new System.Drawing.Size( 543, 416 );
-            this.partitionEditor1.Strings = null;
-            this.partitionEditor1.TabIndex = 2;
+            this.partitionEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.partitionEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.partitionEditor.Name = "partitionEditor";
+            this.partitionEditor.Size = new System.Drawing.Size( 543, 416 );
+            this.partitionEditor.Strings = null;
+            this.partitionEditor.TabIndex = 2;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 543, 416 );
-            this.Controls.Add( this.partitionEditor1 );
-            this.Controls.Add( this.stringSectionedEditor1 );
-            this.Controls.Add( this.compressedStringSectionedEditor1 );
+            this.Controls.Add( this.partitionEditor );
+            this.Controls.Add( this.stringSectionedEditor );
+            this.Controls.Add( this.compressedStringSectionedEditor );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTacText Editor";
@@ -191,9 +191,9 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem fileMenuItem;
         private System.Windows.Forms.MenuItem psxMenuItem;
         private System.Windows.Forms.MenuItem pspMenuItem;
-        private StringSectionedEditor stringSectionedEditor1;
-        private CompressedStringSectionedEditor compressedStringSectionedEditor1;
-        private FFTPatcher.TextEditor.Editors.PartitionEditor partitionEditor1;
+        private StringSectionedEditor stringSectionedEditor;
+        private CompressedStringSectionedEditor compressedStringSectionedEditor;
+        private FFTPatcher.TextEditor.Editors.PartitionEditor partitionEditor;
         private System.Windows.Forms.MenuItem newPsxMenuItem;
         private System.Windows.Forms.MenuItem newPspMenuItem;
         private System.Windows.Forms.MenuItem openMenuItem;

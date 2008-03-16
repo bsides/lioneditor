@@ -58,7 +58,9 @@
     <Compile Include="Files\IPartition.cs" />
     <Compile Include="Files\IPartitionedFile.cs" />
     <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
+    <Compile Include="Files\PSP\SNPLMESBIN.cs" />
     <Compile Include="Files\PSP\WLDMESBIN.cs" />
+    <Compile Include="Files\PSP\WORLDLZW.cs" />
     <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
     <Compile Include="Files\PSX\HELPMENUOUT.cs" />
@@ -126,7 +128,7 @@
       <DependentUpon>PSXResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="Files.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

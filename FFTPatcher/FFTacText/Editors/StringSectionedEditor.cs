@@ -78,11 +78,11 @@ namespace FFTPatcher.TextEditor
         {
             InitializeComponent();
             sectionComboBox.SelectedIndexChanged += sectionComboBox_SelectedIndexChanged;
-            currentStringListBox.SelectedIndexChanged += new EventHandler( currentStringListBox_SelectedIndexChanged );
-            currentString.TextChanged += new EventHandler( currentString_TextChanged );
-            currentString.Validating += new CancelEventHandler( currentString_Validating );
+            currentStringListBox.SelectedIndexChanged += currentStringListBox_SelectedIndexChanged;
+            currentString.TextChanged += currentString_TextChanged;
+            currentString.Validating += currentString_Validating;
             currentString.Font = new Font( "Arial Unicode MS", 10 );
-            filesListBox.SelectedIndexChanged += new EventHandler( filesListBox_SelectedIndexChanged );
+            filesListBox.SelectedIndexChanged += filesListBox_SelectedIndexChanged;
             saveButton.Click += saveButton_Click;
         }
 

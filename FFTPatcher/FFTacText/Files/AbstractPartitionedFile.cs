@@ -109,7 +109,7 @@ namespace FFTPatcher.TextEditor.Files
             Sections = new List<IPartition>( NumberOfSections );
             for( int i = 0; i < NumberOfSections; i++ )
             {
-                Sections.Add( new FilePartition( bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], CharMap ) );
+                Sections.Add( new FilePartition( this, bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], CharMap ) );
             }
         }
 
@@ -129,7 +129,7 @@ namespace FFTPatcher.TextEditor.Files
             for( int i = 0; i < sectionArray.Length; i++ )
             {
                 string[] entries = sectionArray[i].Split( '\u2800' );
-                Sections[i] = new FilePartition( entries, SectionLength, EntryNames[i], CharMap );
+                Sections[i] = new FilePartition( this, entries, SectionLength, EntryNames[i], CharMap );
             }
 
             reader.ReadEndElement();
@@ -165,7 +165,7 @@ namespace FFTPatcher.TextEditor.Files
                     reader.ReadEndElement();
                 }
 
-                Sections[currentSection] = new FilePartition( currentStrings, currentStrings.Length, EntryNames[currentSection], CharMap );
+                Sections[currentSection] = new FilePartition( this, currentStrings, currentStrings.Length, EntryNames[currentSection], CharMap );
 
                 reader.ReadEndElement();
             }
@@ -209,7 +209,6 @@ namespace FFTPatcher.TextEditor.Files
                 {
                     writer.WriteStartElement( "entry" );
                     writer.WriteAttributeString( "value", j.ToString() );
-                    writer.WriteAttributeString( "xml:space", "preserve" );
                     writer.WriteString( section.Entries[j].Replace( "\r\n", @"\n" ) );
                     writer.WriteEndElement();
                 }

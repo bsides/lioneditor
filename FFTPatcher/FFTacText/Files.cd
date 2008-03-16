@@ -14,7 +14,7 @@
       <HashCode>AAAAAAABAAAAACAAAMAAAABAAAAAAAAAAEAQAAAAABg=</HashCode>
       <FileName>Files\FilePartition.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.AbstractStringSectioned">
     <Position X="11.25" Y="0.5" Width="2.75" />
@@ -93,7 +93,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.WLDHELPLZW" Collapsed="true">
-    <Position X="5.25" Y="10" Width="2.25" />
+    <Position X="4" Y="10" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSX\WLDHELPLZW.cs</FileName>
@@ -191,25 +191,67 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.WLDMESBIN" Collapsed="true">
-    <Position X="24" Y="9" Width="1.5" />
+    <Position X="24.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
       <FileName>Files\PSP\WLDMESBIN.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.SNPLMESBIN" Collapsed="true">
-    <Position X="26.5" Y="9" Width="1.5" />
+    <Position X="26.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
       <FileName>Files\PSX\SNPLMESBIN.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.WLDMESBIN" Collapsed="true">
-    <Position X="28.75" Y="9" Width="1.5" />
+    <Position X="28.5" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
       <FileName>Files\PSX\WLDMESBIN.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSP.WORLDLZW" Collapsed="true">
+    <Position X="9.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <FileName>Files\PSP\WORLDLZW.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSX.HELPMENUOUT" Collapsed="true">
+    <Position X="6.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABAAAAASAAAAAoAAAASEIAAAAAAAAAQAAAAAgg=</HashCode>
+      <FileName>Files\PSX\HELPMENUOUT.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSX.WORLDBIN" Collapsed="true">
+    <Position X="16.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAADABAABACSECAAIoAEIACEIBAAwgAAEAQgAAEAgg=</HashCode>
+      <FileName>Files\PSX\WORLDBIN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSP.SNPLMESBIN" Collapsed="true">
+    <Position X="23" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
+      <FileName>Files\PSP\SNPLMESBIN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.FFTText">
+    <Position X="21.5" Y="1" Width="3" />
+    <Members>
+      <Method Name="AddToAppropriateCollection" Hidden="true" />
+      <Method Name="FFTText" Hidden="true" />
+      <Method Name="GetSchema" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>IAAAEAAAAAAAAAAAAAAAAAACAABAAAAiAAIAgAAAAAA=</HashCode>
+      <FileName>PSXText.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="FFTPatcher.TextEditor.Files.ICompressed" Collapsed="true">
     <Position X="14.5" Y="2" Width="1.5" />
@@ -226,18 +268,32 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="FFTPatcher.TextEditor.Files.IPartitionedFile" Collapsed="true">
-    <Position X="14.5" Y="2.75" Width="1.5" />
+    <Position X="17.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAASAAAAAAAAAAAEAAAABAAAEAAgAAAAAg=</HashCode>
       <FileName>Files\IPartitionedFile.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FFTPatcher.TextEditor.Files.IStringSectioned" Collapsed="true">
-    <Position X="16.25" Y="2.75" Width="1.5" />
+    <Position X="19.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAASACAAAAAAAAAAAAAAQAAAEAQgAAAAAg=</HashCode>
       <FileName>Files\IStringSectioned.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="FFTPatcher.TextEditor.Files.IFile" Collapsed="true">
+    <Position X="18.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Files\IFile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="FFTPatcher.TextEditor.Filetype">
+    <Position X="24.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PSXText.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>

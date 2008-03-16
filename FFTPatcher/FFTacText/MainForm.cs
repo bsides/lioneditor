@@ -47,9 +47,9 @@ namespace FFTPatcher.TextEditor
             {
                 if( value == null )
                 {
-                    stringSectionedEditor1.Visible = false;
-                    compressedStringSectionedEditor1.Visible = false;
-                    partitionEditor1.Visible = false;
+                    stringSectionedEditor.Visible = false;
+                    compressedStringSectionedEditor.Visible = false;
+                    partitionEditor.Visible = false;
                 }
                 else if( file != value )
                 {
@@ -83,11 +83,12 @@ namespace FFTPatcher.TextEditor
         {
             InitializeComponent();
 
-            stringSectionedEditor1.Visible = false;
-            compressedStringSectionedEditor1.Visible = false;
-            partitionEditor1.Visible = false;
-            stringSectionedEditor1.SavingFile += editor_SavingFile;
-            compressedStringSectionedEditor1.SavingFile += editor_SavingFile;
+            stringSectionedEditor.Visible = false;
+            compressedStringSectionedEditor.Visible = false;
+            partitionEditor.Visible = false;
+            stringSectionedEditor.SavingFile += editor_SavingFile;
+            compressedStringSectionedEditor.SavingFile += editor_SavingFile;
+            partitionEditor.SavingFile += partitionEditor_SavingFile;
 
             newPspMenuItem.Click += newPspMenuItem_Click;
             newPsxMenuItem.Click += newPsxMenuItem_Click;
@@ -140,19 +141,48 @@ namespace FFTPatcher.TextEditor
             saveFileDialog.Filter = string.Format( "{0}|{0}", name );
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                try
+                WriteBytesToFile( e.File.ToByteArray(), saveFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
+            }
+        }
+
+        private void WriteBytesToFile( byte[] bytes, string filename, long position )
+        {
+            try
+            {
+                using( FileStream stream = new FileStream( filename, FileMode.Open ) )
                 {
-                    using( FileStream stream = new FileStream( saveFileDialog.FileName, FileMode.Open ) )
-                    {
-                        stream.WriteArrayToPosition( e.File.ToByteArray(), e.File.Locations[e.SuggestedFilename] );
-                    }
+                    stream.WriteArrayToPosition( bytes, position );
                 }
-                catch( Exception )
+            }
+            catch( Exception )
+            {
+                MessageBox.Show( this, "Error writing to file", "Error", MessageBoxButtons.OK );
+            }
+        }
+
+        private void partitionEditor_SavingFile( object sender, SavingFileEventArgs e )
+        {
+            IPartitionedFile file = e.File as IPartitionedFile;
+            if( file != null )
+            {
+                string name = Path.GetFileName( e.SuggestedFilename );
+                saveFileDialog.Filter = string.Format( "{0}|{0}", name );
+
+                if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
                 {
-                    MessageBox.Show( this, "Error writing to file", "Error", MessageBoxButtons.OK );
+                    if( e.PartitionNumber == -1 )
+                    {
+                        WriteBytesToFile( file.ToByteArray(), saveFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
+                    }
+                    else
+                    {
+                        WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), saveFileDialog.FileName,
+                            e.File.Locations[e.SuggestedFilename] + file.SectionLength * e.PartitionNumber );
+                    }
                 }
             }
         }
+
 
         private void exitMenuItem_Click( object sender, EventArgs e )
         {
@@ -272,24 +302,24 @@ namespace FFTPatcher.TextEditor
 
             if( file is ICompressed )
             {
-                compressedStringSectionedEditor1.Strings = file as IStringSectioned;
-                compressedStringSectionedEditor1.Visible = true;
-                stringSectionedEditor1.Visible = false;
-                partitionEditor1.Visible = false;
+                compressedStringSectionedEditor.Strings = file as IStringSectioned;
+                compressedStringSectionedEditor.Visible = true;
+                stringSectionedEditor.Visible = false;
+                partitionEditor.Visible = false;
             }
             else if( file is IStringSectioned )
             {
-                stringSectionedEditor1.Strings = file as IStringSectioned;
-                stringSectionedEditor1.Visible = true;
-                compressedStringSectionedEditor1.Visible = false;
-                partitionEditor1.Visible = false;
+                stringSectionedEditor.Strings = file as IStringSectioned;
+                stringSectionedEditor.Visible = true;
+                compressedStringSectionedEditor.Visible = false;
+                partitionEditor.Visible = false;
             }
             else if( file is IPartition )
             {
-                partitionEditor1.Visible = true;
-                partitionEditor1.Strings = file as IPartition;
-                compressedStringSectionedEditor1.Visible = false;
-                stringSectionedEditor1.Visible = false;
+                partitionEditor.Visible = true;
+                partitionEditor.Strings = file as IPartition;
+                compressedStringSectionedEditor.Visible = false;
+                stringSectionedEditor.Visible = false;
             }
         }
 

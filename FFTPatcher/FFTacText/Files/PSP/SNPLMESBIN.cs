@@ -14,42 +14,34 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+    along with FFTPatcher.  If not, see <http:,www.gnu.org/licenses/>.
 */
 
 using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT299024 : BasePSPSectionedFile
+    public class SNPLMESBIN : BasePSPPartitionedFile
     {
 
-		#region Static Fields (3) 
+        #region Static Fields (3)
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[5] {
-            "", "Bravery/Faith too low/high", "Bravery/Faith too low/high", "Leaving quotes", "Job names" };
+        private static string[] sectionNames;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (3)
 
-        private const string filename = "BOOT.BIN[0x299024]";
+        private const string filename = "SNPLMES.BIN";
+        private const int numberOfSections = 6;
+        private const int sectionLength = 0xA000;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (6) 
+        #region Properties (6)
 
-
-        /// <summary>
-        /// Gets the number of sections.
-        /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections
-        {
-            get { return 5; }
-        }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.
@@ -74,20 +66,24 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "BOOT.BIN", 0x299024 );
+                    locations.Add( "WORLD/SNPLMES.BIN", 0x00 );
                 }
+
                 return locations;
             }
         }
 
         /// <summary>
-        /// Gets the maximum length of this file as a byte array.
+        /// Gets the number of sections in this file.
         /// </summary>
         /// <value></value>
-        public override int MaxLength
-        {
-            get { return 0x38AE; }
-        }
+        public override int NumberOfSections { get { return numberOfSections; } }
+
+        /// <summary>
+        /// Gets the length of every section in this file.
+        /// </summary>
+        /// <value></value>
+        public override int SectionLength { get { return sectionLength; } }
 
         /// <summary>
         /// Gets a collection of strings with a description of each section in this file.
@@ -96,30 +92,33 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
-        static BOOT299024()
+        static SNPLMESBIN()
         {
-            entryNames = new string[5][];
-            entryNames[0] = new string[1];
-            entryNames[1] = new string[176];
-            entryNames[2] = new string[176];
-            entryNames[3] = new string[175];
-            entryNames[4] = FFTPatcher.Datatypes.AllJobs.PSPNames;
+            int[] sectionLengths = new int[6] {
+                204,168,186,217,40,14 };
+
+            sectionNames = new string[numberOfSections];
+            entryNames = new string[numberOfSections][];
+            for( int i = 0; i < numberOfSections; i++ )
+            {
+                entryNames[i] = new string[sectionLengths[i]];
+            }
         }
 
-        private BOOT299024()
+        private SNPLMESBIN()
         {
         }
 
-        public BOOT299024( IList<byte> bytes )
+        public SNPLMESBIN( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

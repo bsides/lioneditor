@@ -50,5 +50,10 @@ namespace FFTPatcher.TextEditor.Files
         /// Creates a byte array representing this partition.
         /// </summary>
         byte[] ToByteArray();
+
+        /// <summary>
+        /// Gets the owner of this instance.
+        /// </summary>
+        IPartitionedFile Owner { get; }
     }
 }

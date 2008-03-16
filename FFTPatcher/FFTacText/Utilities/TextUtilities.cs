@@ -24,6 +24,9 @@ using System.Text;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// Utilities for manipulating FFT text.
+    /// </summary>
     public static class TextUtilities
     {
 
@@ -37,10 +40,16 @@ namespace FFTPatcher.TextEditor
 		#region Static Properties (3) 
 
 
-private static IDictionary<int, int> CompressionJumps { get; set; }
+        private static IDictionary<int, int> CompressionJumps { get; set; }
 
+        /// <summary>
+        /// Gets the PSP character map.
+        /// </summary>
         public static PSPCharMap PSPMap { get; private set; }
 
+        /// <summary>
+        /// Gets the PSX character map.
+        /// </summary>
         public static PSXCharMap PSXMap { get; private set; }
 
 
@@ -310,6 +319,9 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
 
 		#region Delegates (1) 
 
+        /// <summary>
+        /// A delegate to call when the progress of an operation has changed.
+        /// </summary>
         public delegate void ProgressCallback( int progress );
 
 		#endregion Delegates 
@@ -317,9 +329,24 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
 		#region Methods (6) 
 
 
+        /// <summary>
+        /// Compresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="inputLength">Length of the input.</param>
+        /// <param name="output">The output.</param>
+        /// <param name="outputLength">Length of the output.</param>
         [DllImport( "FFTTextCompression.dll" )]
         static extern void Compress( byte[] bytes, int inputLength, byte[] output, ref int outputLength );
 
+        /// <summary>
+        /// Compresses the specified bytes with callback for progress reporting.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="inputLength">Length of the input.</param>
+        /// <param name="output">The output.</param>
+        /// <param name="outputLength">Length of the output.</param>
+        /// <param name="callback">The callback.</param>
         [DllImport( "FFTTextCompression.dll" )]
         static extern void CompressWithCallback( byte[] bytes, int inputLength, byte[] output, ref int outputLength, ProgressCallback callback );
 
@@ -330,6 +357,13 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             jump = j - (j / 256) * 2;
         }
 
+        /// <summary>
+        /// Decompresses the specified section.
+        /// </summary>
+        /// <param name="allBytes">A collection containing the bytes to decompress.</param>
+        /// <param name="sectionBytes">A collection consisting ONLY of the bytes to decompress</param>
+        /// <param name="sectionStart">The relative position of <paramref name="sectionBytes"/> in <paramref name="allBytes"/></param>
+        /// <returns></returns>
         public static IList<byte> Decompress( IList<byte> allBytes, IList<byte> sectionBytes, int sectionStart )
         {
             IList<byte> result = new List<byte>();
@@ -360,6 +394,11 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             return result;
         }
 
+        /// <summary>
+        /// Processes a list of FFT text bytes into a list of FFTacText strings.
+        /// </summary>
+        /// <param name="bytes">The bytes to process</param>
+        /// <param name="type">The charmap to use</param>
         public static IList<string> ProcessList( IList<byte> bytes, CharMapType type )
         {
             GenericCharMap charmap = type == CharMapType.PSP ? PSPMap as GenericCharMap : PSXMap as GenericCharMap;
@@ -383,6 +422,11 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             return result;
         }
 
+        /// <summary>
+        /// Recompresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="callback">A callback to use for progress reporting.</param>
         public static IList<byte> Recompress( IList<byte> bytes, ProgressCallback callback )
         {
             byte[] output = new byte[bytes.Count];

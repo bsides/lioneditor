@@ -22,14 +22,23 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// Contains data for reporting the progress of a compression operation.
+    /// </summary>
     public class CompressionEventArgs : EventArgs
     {
 
 		#region Properties (2) 
 
 
+        /// <summary>
+        /// Gets the progress so far.
+        /// </summary>
         public int Progress { get; private set; }
 
+        /// <summary>
+        /// Gets the result of the compression.
+        /// </summary>
         public IList<byte> Result { get; private set; }
 
 

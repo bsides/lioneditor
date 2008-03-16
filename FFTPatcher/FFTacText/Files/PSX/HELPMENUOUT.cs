@@ -42,12 +42,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Properties (6) 
 
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
         protected override int NumberOfSections { get { return numberOfSections; } }
 
+        /// <summary>
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
+        /// </summary>
+        /// <value></value>
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
+        /// <value></value>
         public override string Filename { get { return filename; } }
 
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
+        /// <value></value>
         public override IDictionary<string, long> Locations
         {
             get
@@ -63,8 +79,16 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        /// <value></value>
         public override int MaxLength { get { return 0x169C0; } }
 
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
+        /// <value></value>
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
@@ -76,15 +100,37 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
         }
 
+        private static readonly int[] sectionLengths = new int[21] {
+            1, 40, 155, 1, 1, 1, 1,
+            1, 1, 1, 1, 64, 160, 256,
+            1, 512, 1, 1, 1, 188, 40 };
+
         static HELPMENUOUT()
         {
-            sectionNames = new string[21];
+            sectionNames = new string[21] {
+                "","Help","Menu/Options Help","","","","",
+                "","","","","Terrain descriptions","Job descriptions","Item descriptions",
+                "","Ability descriptions","","","","Skillset descriptions","Status descriptions" };
             entryNames = new string[numberOfSections][];
 
             for( int i = 0; i < entryNames.Length; i++ )
             {
-                entryNames[i] = new string[2048];
+                entryNames[i] = new string[sectionLengths[i]];
             }
+
+            entryNames[1] = new string[40] {
+                "Unit #", "Level", "HP", "MP", "CT", "AT", "Exp", "Name",
+                "Brave", "Faith", "", "Move", "Jump", "", "", "",
+                "Speed", "ATK", "Weapon ATK", "", "Eva%", "SEv%", "AEv%", "Phys land effect",
+                "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
+                "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
+            entryNames[12] = FFTPatcher.Datatypes.AllJobs.PSXNames;
+            entryNames[13] = FFTPatcher.Datatypes.Item.PSXNames.ToArray();
+            entryNames[15] = FFTPatcher.Datatypes.AllAbilities.PSXNames;
+            List<string> temp = new List<string>( FFTPatcher.Datatypes.SkillSet.PSXNames.Sub( 0, 175 ) );
+            temp.AddRange( new string[13] );
+            entryNames[19] = temp.ToArray();
+            entryNames[20] = FFTPatcher.PSXResources.Statuses;
         }
 
         public HELPMENUOUT( IList<byte> bytes )

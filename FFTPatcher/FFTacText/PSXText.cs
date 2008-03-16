@@ -34,16 +34,28 @@ namespace FFTPatcher.TextEditor
         PSP
     }
 
+    /// <summary>
+    /// Represents a collection of FFT text files.
+    /// </summary>
     public class FFTText : IXmlSerializable
     {
 
 		#region Properties (3) 
 
 
+        /// <summary>
+        /// Gets the filetype.
+        /// </summary>
         public Filetype Filetype { get; private set; }
 
+        /// <summary>
+        /// Gets a collection of the <see cref="IPartitionedFile"/>s in this object.
+        /// </summary>
         public IList<IPartitionedFile> PartitionedFiles { get; private set; }
 
+        /// <summary>
+        /// Gets a collection of the <see cref="IStringSectioned"/>s in this object.
+        /// </summary>
         public IList<IStringSectioned> SectionedFiles { get; private set; }
 
 
@@ -74,6 +86,9 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+        /// <summary>
+        /// Gets the menu items for this object.
+        /// </summary>
         public IList<MenuItem> GetMenuItems()
         {
             List<MenuItem> result = new List<MenuItem>();
@@ -110,11 +125,21 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        /// <summary>
+        /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
+        /// </returns>
         public XmlSchema GetSchema()
         {
             return null;
         }
 
+        /// <summary>
+        /// Generates an object from its XML representation.
+        /// </summary>
+        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
         public void ReadXml( XmlReader reader )
         {
             reader.MoveToAttribute( "files" );
@@ -141,6 +166,10 @@ namespace FFTPatcher.TextEditor
             reader.ReadEndElement();
         }
 
+        /// <summary>
+        /// Converts an object into its XML representation.
+        /// </summary>
+        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
         public void WriteXml( XmlWriter writer )
         {
             writer.WriteAttributeString( "type", this.Filetype.ToString() );

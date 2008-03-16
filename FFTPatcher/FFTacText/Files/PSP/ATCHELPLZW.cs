@@ -46,15 +46,28 @@ namespace FFTPatcher.TextEditor.Files.PSP
 		#region Properties (6) 
 
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
         protected override int NumberOfSections
         {
             get { return 21; }
         }
 
+        /// <summary>
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
+        /// </summary>
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
         public override string Filename { get { return filename; } }
 
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
         public override IDictionary<string, long> Locations
         {
             get
@@ -68,11 +81,17 @@ namespace FFTPatcher.TextEditor.Files.PSP
             }
         }
 
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
         public override int MaxLength
         {
             get { return 0x1F834; }
         }
 
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 

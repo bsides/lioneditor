@@ -168,6 +168,9 @@ namespace FFTPatcher
             return new List<string>();
         }
 
+        /// <summary>
+        /// Gets all codes.
+        /// </summary>
         public static string GetAllCodes()
         {
             StringBuilder sb = new StringBuilder();
@@ -224,6 +227,9 @@ namespace FFTPatcher
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Saves CWCheat codes to a file.
+        /// </summary>
         public static void SaveToFile( string path )
         {
             string codes = GetAllCodes();

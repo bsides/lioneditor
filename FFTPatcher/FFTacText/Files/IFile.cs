@@ -21,9 +21,19 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// A file that can be edited.
+    /// </summary>
     public interface IFile
     {
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
         IDictionary<string, long> Locations { get; }
+
+        /// <summary>
+        /// Creates a byte array representing this file.
+        /// </summary>
         byte[] ToByteArray();
     }
 }

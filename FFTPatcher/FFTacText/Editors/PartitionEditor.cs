@@ -25,6 +25,9 @@ using FFTPatcher.TextEditor.Files;
 
 namespace FFTPatcher.TextEditor.Editors
 {
+    /// <summary>
+    /// An editor for <see cref="IPartition"/> objects.
+    /// </summary>
     public partial class PartitionEditor : UserControl
     {
 
@@ -39,6 +42,9 @@ namespace FFTPatcher.TextEditor.Editors
 		#region Properties (2) 
 
 
+        /// <summary>
+        /// Gets or sets the <see cref="IPartition"/> object being edited.
+        /// </summary>
         public IPartition Strings
         {
             get { return strings; }

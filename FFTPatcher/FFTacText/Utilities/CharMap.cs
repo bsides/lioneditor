@@ -23,6 +23,9 @@ using System.Text.RegularExpressions;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// A map between FFT text and UTF8.
+    /// </summary>
     public abstract class GenericCharMap : Dictionary<int, string>
     {
 
@@ -41,6 +44,9 @@ namespace FFTPatcher.TextEditor
 		#region Properties (1) 
 
 
+        /// <summary>
+        /// Gets a dictionary mapping FFTacText strings into FFT text bytes.
+        /// </summary>
         public Dictionary<string, int> Reverse
         {
             get
@@ -94,6 +100,12 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+        /// <summary>
+        /// Gets the character or characters at a particular position in the list.
+        /// </summary>
+        /// <param name="bytes">The list whose next value is needed</param>
+        /// <param name="pos">The current position of the list, this value is updated based on how many bytes were read.</param>
+        /// <returns>A FFTText string</returns>
         public string GetNextChar( IList<byte> bytes, ref int pos )
         {
             int resultPos = pos + 1;
@@ -102,6 +114,7 @@ namespace FFTPatcher.TextEditor
             if( (val >= 0xD0 && val <= 0xDA) || 
                 (val == 0xE2) || 
                 (val == 0xE3) || 
+                (val == 0xE7) ||
                 (val == 0xE8) ||
                 (val == 0xEC) ||
                 (val == 0xEE) || 
@@ -129,6 +142,9 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        /// <summary>
+        /// Converts a FFTacText string into a FFT text byte array.
+        /// </summary>
         public byte[] StringToByteArray( string s )
         {
             List<byte> result = new List<byte>( s.Length );
@@ -182,10 +198,16 @@ namespace FFTPatcher.TextEditor
 
     }
 
+    /// <summary>
+    /// A PSP character map.
+    /// </summary>
     public class PSPCharMap : GenericCharMap
     {
     }
 
+    /// <summary>
+    /// A PSX character map.
+    /// </summary>
     public class PSXCharMap : GenericCharMap
     {
     }

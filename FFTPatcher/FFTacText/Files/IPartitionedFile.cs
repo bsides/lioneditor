@@ -23,14 +23,46 @@ using System.Xml.Serialization;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// A <see cref="IFile"/> that is divided into partitions of equal length.
+    /// </summary>
     public interface IPartitionedFile : IXmlSerializable, IFile
     {
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
         string Filename { get; }
+
+        /// <summary>
+        /// Gets a collection of <see cref="IPartition"/>, representing the entries in this file.
+        /// </summary>
         IList<IPartition> Sections { get; }
+
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
         IList<string> SectionNames { get; }
+
+        /// <summary>
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
+        /// </summary>
         IList<IList<string>> EntryNames { get; }
+
+        /// <summary>
+        /// Gets the length of every section in this file.
+        /// </summary>
         int SectionLength { get; }
+
+        /// <summary>
+        /// Gets the number of sections in this file.
+        /// </summary>
         int NumberOfSections { get; }
+
+        /// <summary>
+        /// Serializes this file to an XML node.
+        /// </summary>
+        /// <param name="writer">The writer to use to write the node</param>
+        /// <param name="compressed">Whether or not this object's data should be compressed.</param>
         void WriteXml( XmlWriter writer, bool compressed );
     }
 }

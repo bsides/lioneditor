@@ -25,6 +25,9 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.SpriteEditor
 {
+    /// <summary>
+    /// A FFT sprite.
+    /// </summary>
     public class Sprite
     {
 
@@ -35,12 +38,24 @@ namespace FFTPatcher.SpriteEditor
 
         private long OriginalSize { get; set; }
 
+        /// <summary>
+        /// Gets or sets the palettes used to draw this sprite.
+        /// </summary>
         public Palette[] Palettes { get; set; }
 
+        /// <summary>
+        /// Gets the pixels used to draw this sprite.
+        /// </summary>
         public byte[] Pixels { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this sprite is a SP2 file.
+        /// </summary>
         public bool SP2 { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this sprite is a SPR file.
+        /// </summary>
         public bool SPR { get; private set; }
 
 
@@ -276,6 +291,9 @@ namespace FFTPatcher.SpriteEditor
             return CompressNibbles( result );
         }
 
+        /// <summary>
+        /// Imports a bitmap and tries to convert it to a FFT sprite.
+        /// </summary>
         public void ImportBitmap( Bitmap bmp )
         {
             if( bmp.PixelFormat != PixelFormat.Format8bppIndexed )
@@ -302,6 +320,9 @@ namespace FFTPatcher.SpriteEditor
             bmp.UnlockBits( bmd );
         }
 
+        /// <summary>
+        /// Converts this sprite to an indexed bitmap.
+        /// </summary>
         public unsafe Bitmap ToBitmap()
         {
             Bitmap bmp = new Bitmap( 256, Math.Min( 488, Pixels.Length / 256 ), PixelFormat.Format8bppIndexed );
@@ -334,6 +355,9 @@ namespace FFTPatcher.SpriteEditor
             return bmp;
         }
 
+        /// <summary>
+        /// Converts this sprite to an array of bytes.
+        /// </summary>
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>();

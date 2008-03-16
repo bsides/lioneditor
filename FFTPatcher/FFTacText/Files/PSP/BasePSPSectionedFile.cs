@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public abstract class BasePSPSectionedFile : AbstractStringSectioned
+    public abstract class BasePSPSectionedFile : AbstractCompressedFile
     {
 
 		#region Properties (1) 

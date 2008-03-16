@@ -43,10 +43,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Properties (6) 
 
 
+        /// <summary>
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
+        /// </summary>
+        /// <value></value>
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
+        /// <value></value>
         public override string Filename { get { return filename; } }
 
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
+        /// <value></value>
         public override IDictionary<string, long> Locations
         {
             get
@@ -61,10 +73,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
+        /// <summary>
+        /// Gets the number of sections in this file.
+        /// </summary>
+        /// <value></value>
         public override int NumberOfSections { get { return numberOfSections; } }
 
+        /// <summary>
+        /// Gets the length of every section in this file.
+        /// </summary>
+        /// <value></value>
         public override int SectionLength { get { return sectionLength; } }
 
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
+        /// <value></value>
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 

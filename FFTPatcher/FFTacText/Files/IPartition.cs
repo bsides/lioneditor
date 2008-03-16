@@ -21,12 +21,34 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// A part of a <see cref="IPartitionedFile"/>.
+    /// </summary>
     public interface IPartition
     {
+        /// <summary>
+        /// Gets a collection of strings, each string being a description of an entry in this partition.
+        /// </summary>
         IList<string> EntryNames { get; }
+
+        /// <summary>
+        /// Gets the entries.
+        /// </summary>
         IList<string> Entries { get; }
+
+        /// <summary>
+        /// Gets the maximum length of this partition.
+        /// </summary>
         int MaxLength { get; }
+
+        /// <summary>
+        /// Gets the current length of this partition.
+        /// </summary>
         int Length { get; }
+
+        /// <summary>
+        /// Creates a byte array representing this partition.
+        /// </summary>
         byte[] ToByteArray();
     }
 }

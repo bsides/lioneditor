@@ -144,7 +144,6 @@
   <!-- MAP/MAP118.GNS not found (208 bytes) -->
   <!-- MAP/MAP119.GNS not found (208 bytes) -->
   <!-- MAP/MAP125.GNS not found (208 bytes) -->
-  <!-- WORLD/SNPLMES.BIN not found (245760 bytes) -->
   <!-- WORLD/WLDTEX.TM2 not found (274432 bytes) -->
   <file entry="0003" name="SYSTEM.CNF"/>
   <file entry="0004" name="SLPS_007.70"/>
@@ -911,6 +910,7 @@
   <file entry="0771" name="WORLD/WLDPIC.BIN"/>
   <file entry="0772" name="WORLD/WLDMES.BIN"/>
   <file entry="0773" name="WORLD/SNPLBIN.BIN"/>
+  <file entry="0774" name="WORLD/SNPLMES.BIN"/>
   <file entry="0775" name="WORLD/WLDBK.BIN"/>
   <file entry="0776" name="WORLD/WLDCORE.BIN"/>
   <file entry="0777" name="WORLD/WORLD.BIN"/>

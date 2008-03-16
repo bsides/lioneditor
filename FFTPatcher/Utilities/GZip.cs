@@ -61,6 +61,11 @@ namespace FFTPatcher
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Compresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns></returns>
         public static IList<byte> Compress( byte[] bytes )
         {
             MemoryStream ms = new MemoryStream();

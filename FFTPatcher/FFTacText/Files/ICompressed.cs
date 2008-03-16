@@ -24,10 +24,29 @@ namespace FFTPatcher.TextEditor.Files
 {
     public interface ICompressed
     {
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
         string Filename { get; }
+
+        /// <summary>
+        /// Compresses this instance.
+        /// </summary>
         IList<byte> Compress();
+
+        /// <summary>
+        /// Occurs when the progress of a compresison operation has changed.
+        /// </summary>
         event EventHandler<CompressionEventArgs> ProgressChanged;
+
+        /// <summary>
+        /// Occurs when a compression operation has finished.
+        /// </summary>
         event EventHandler<CompressionEventArgs> CompressionFinished;
+
+        /// <summary>
+        /// Creates an uncompressed byte array representing this file.
+        /// </summary>
         IList<byte> ToUncompressedBytes();
     }
 }

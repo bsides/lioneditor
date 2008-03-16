@@ -43,12 +43,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Properties (6) 
 
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
         protected override int NumberOfSections { get { return numberOfSections; } }
 
+        /// <summary>
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
+        /// </summary>
+        /// <value></value>
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
+        /// <value></value>
         public override string Filename { get { return filename; } }
 
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
+        /// <value></value>
         public override IDictionary<string, long> Locations
         {
             get
@@ -64,8 +80,16 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        /// <value></value>
         public override int MaxLength { get { return 0x01ADE4; } }
 
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
+        /// <value></value>
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
@@ -145,17 +169,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
 		#endregion Constructors 
-
-		#region Methods (1) 
-
-
-        protected override IList<byte> ToFinalBytes()
-        {
-            return Compress();
-        }
-
-
-		#endregion Methods 
 
     }
 }

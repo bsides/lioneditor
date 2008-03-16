@@ -64,6 +64,7 @@
     <Compile Include="Files\PSX\HELPMENUOUT.cs" />
     <Compile Include="Files\PSX\SNPLMESBIN.cs" />
     <Compile Include="Files\PSX\WLDMESBIN.cs" />
+    <Compile Include="Files\PSX\WORLDBIN.cs" />
     <Compile Include="Files\SavingFileEventArgs.cs" />
     <Compile Include="PSXText.cs" />
     <Compile Include="Utilities\CompressionEventArgs.cs" />

@@ -21,14 +21,23 @@ using System;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// Contains data for an event that indicates the user wants to save a file.
+    /// </summary>
     public class SavingFileEventArgs : EventArgs
     {
 
 		#region Properties (2) 
 
 
+        /// <summary>
+        /// Gets the <see cref="IFile"/> the user wants to save.
+        /// </summary>
         public IFile File { get; private set; }
 
+        /// <summary>
+        /// Gets the suggested filename to use in the save dialog.
+        /// </summary>
         public string SuggestedFilename { get; private set; }
 
 

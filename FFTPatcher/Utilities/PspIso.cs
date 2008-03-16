@@ -97,6 +97,10 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Decrypts the ISO.
+        /// </summary>
+        /// <param name="filename">The filename of the ISO to decrypt.</param>
         public static void DecryptISO( string filename )
         {
             FileStream stream = null;
@@ -120,6 +124,10 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Decrypts the ISO.
+        /// </summary>
+        /// <param name="stream">The stream of the ISO to decrypt.</param>
         public static void DecryptISO( FileStream stream )
         {
             if( IsJP( stream ) )
@@ -140,21 +148,46 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified stream is EU.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified stream is EU; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsEU( FileStream stream )
         {
             return CheckFile( stream, "ULES-00850", "ULES00850", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
         }
 
+        /// <summary>
+        /// Determines whether the specified stream is JP.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified stream is JP; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsJP( FileStream stream )
         {
             return CheckFile( stream, "ULJM-05194", "ULJM05194", new long[] { 0x8373, 0xE000 }, new long[] { 0x2BF0128, 0xFD619FC, 0xFD97A5C } );
         }
 
+        /// <summary>
+        /// Determines whether the specified stream is US.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified stream is US; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsUS( FileStream stream )
         {
             return CheckFile( stream, "ULUS-10297", "ULUS10297", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
         }
 
+        /// <summary>
+        /// Patches the ISO.
+        /// </summary>
+        /// <param name="filename">The filename of the ISO to patch.</param>
         public static void PatchISO( string filename )
         {
             FileStream stream = null;
@@ -178,6 +211,10 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Patches the ISO.
+        /// </summary>
+        /// <param name="stream">The stream of the ISO to patch.</param>
         public static void PatchISO( FileStream stream )
         {
             if( IsJP( stream ) )

@@ -25,6 +25,9 @@ using FFTPatcher.TextEditor.Files;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// An editor for <see cref="IStringSectioned"/> objects.
+    /// </summary>
     public partial class StringSectionedEditor : UserControl
     {
 
@@ -44,6 +47,9 @@ namespace FFTPatcher.TextEditor
             get { return "Length: {0} bytes"; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="IStringSectioned"/> object being edited.
+        /// </summary>
         public virtual IStringSectioned Strings
         {
             get { return strings; }
@@ -124,7 +130,7 @@ namespace FFTPatcher.TextEditor
             saveButton.Enabled = filesListBox.SelectedIndex > -1;
         }
 
-        private void FireSavingFileEvent(string suggested)
+        private void FireSavingFileEvent( string suggested )
         {
             if( SavingFile != null )
             {

@@ -22,18 +22,41 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// An <see cref="AbstractStringSectioned"/> whose text can be compressed.
+    /// </summary>
     public abstract class AbstractCompressedFile : AbstractStringSectioned, ICompressed
     {
 
+		#region Constructors (2) 
+
+        protected AbstractCompressedFile()
+            : base()
+        {
+        }
+
+        protected AbstractCompressedFile( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
+
+		#endregion Constructors 
+
 		#region Events (2) 
 
+        /// <summary>
+        /// Occurs when a compression operation has finished.
+        /// </summary>
         public event EventHandler<CompressionEventArgs> CompressionFinished;
 
+        /// <summary>
+        /// Occurs when the progress of a compresison operation has changed.
+        /// </summary>
         public event EventHandler<CompressionEventArgs> ProgressChanged;
 
 		#endregion Events 
 
-		#region Methods (4) 
+		#region Methods (5) 
 
 
         private IList<byte> BuildHeaderFromSectionOffsets( IList<UInt32> offsets )
@@ -68,6 +91,9 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
+        /// <summary>
+        /// Compresses this instance.
+        /// </summary>
         public IList<byte> Compress()
         {
             TextUtilities.ProgressCallback p = new TextUtilities.ProgressCallback(
@@ -101,6 +127,13 @@ namespace FFTPatcher.TextEditor.Files
             FireCompressionFinishedEvent( result );
 
             return result;
+        }
+
+
+
+        protected override IList<byte> ToFinalBytes()
+        {
+            return Compress();
         }
 
 

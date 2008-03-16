@@ -189,6 +189,10 @@ namespace FFTPatcher
             CopyBoolArrayToBooleans( BooleansFromByte( b ), ref msb, ref six, ref five, ref four, ref three, ref two, ref one, ref lsb );
         }
 
+        /// <summary>
+        /// Gets a nicely formatted Base64 representation of a list of bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public static string GetPrettyBase64( IList<byte> bytes )
         {
             StringBuilder sb = new StringBuilder( Convert.ToBase64String( bytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );

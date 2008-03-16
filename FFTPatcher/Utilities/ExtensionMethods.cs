@@ -75,6 +75,10 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Adds a collection of values to the list.
+        /// </summary>
+        /// <param name="items">The items to add</param>
         public static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
         {
             foreach( T item in items )
@@ -110,6 +114,11 @@ namespace FFTPatcher
             return (byte)((b & 0xF0) >> 4);
         }
 
+        /// <summary>
+        /// Finds the last index of the specified value in this list.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The index of the item found. -1 if not found.</returns>
         public static int LastIndexOf<T>( this IList<T> list, T value ) where T : IEquatable<T>
         {
             for( int i = list.Count - 1; i >= 0; i-- )
@@ -123,6 +132,9 @@ namespace FFTPatcher
             return -1;
         }
 
+        /// <summary>
+        /// Converts this list into an array.
+        /// </summary>
         public static T[] ToArray<T>( this IList<T> list )
         {
             T[] result = new T[list.Count];
@@ -172,7 +184,7 @@ namespace FFTPatcher
         /// <summary>
         /// Converts this array of bytes into a UInt32.
         /// </summary>
-        public static UInt32 ToUInt32( this byte[] bytes )
+        public static UInt32 ToUInt32( this IList<byte> bytes )
         {
             UInt32 result = 0;
             result += bytes[0];
@@ -198,12 +210,24 @@ namespace FFTPatcher
             }
         }
 
+        /// <summary>
+        /// Writes an array to the specified position in the stream.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <param name="array">The array to write.</param>
+        /// <param name="position">The position to start writing.</param>
         public static void WriteArrayToPosition( this FileStream stream, byte[] array, long position )
         {
             stream.Seek( position, SeekOrigin.Begin );
             stream.Write( array, 0, array.Length );
         }
 
+        /// <summary>
+        /// Writes an array to the specified positions in the stream.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <param name="array">The array to write.</param>
+        /// <param name="positions">The positions to start writing.</param>
         public static void WriteArrayToPositions( this FileStream stream, byte[] array, params long[] positions )
         {
             foreach( long position in positions )

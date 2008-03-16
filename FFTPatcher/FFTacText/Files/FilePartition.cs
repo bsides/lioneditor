@@ -21,6 +21,9 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// A portion of a file that has a fixed length.
+    /// </summary>
     public class FilePartition : IPartition
     {
 
@@ -34,12 +37,24 @@ namespace FFTPatcher.TextEditor.Files
 		#region Properties (4) 
 
 
+        /// <summary>
+        /// Gets the entries.
+        /// </summary>
         public IList<string> Entries { get; private set; }
 
+        /// <summary>
+        /// Gets a collection of strings, each string being a description of an entry in this partition.
+        /// </summary>
         public IList<string> EntryNames { get; private set; }
 
+        /// <summary>
+        /// Gets the current length of this partition.
+        /// </summary>
         public int Length { get { return CalcLength(); } }
 
+        /// <summary>
+        /// Gets the maximum length of this partition.
+        /// </summary>
         public int MaxLength { get { return length; } }
 
 
@@ -90,6 +105,9 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
+        /// <summary>
+        /// Creates a byte array representing this partition.
+        /// </summary>
         public byte[] ToByteArray()
         {
             List<byte> result = ToUnpaddedBytes();

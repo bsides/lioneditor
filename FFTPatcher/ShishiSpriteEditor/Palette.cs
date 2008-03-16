@@ -51,6 +51,9 @@ namespace FFTPatcher.SpriteEditor
 
     }
 
+    /// <summary>
+    /// A palette for a FFT sprite.
+    /// </summary>
     public class Palette
     {
 
@@ -100,6 +103,9 @@ namespace FFTPatcher.SpriteEditor
 		#region Methods (6) 
 
 
+        /// <summary>
+        /// Converts two bytes into a FFT color.
+        /// </summary>
         public static Color BytesToColor( byte first, byte second )
         {
             int b = (second & 0x7C) << 1;
@@ -109,6 +115,9 @@ namespace FFTPatcher.SpriteEditor
             return Color.FromArgb( r, g, b );
         }
 
+        /// <summary>
+        /// Converts a color into two bytes suitable for using in a FFT palette.
+        /// </summary>
         public static byte[] ColorToBytes( Color c )
         {
             byte r = (byte)((c.R & 0xF8) >> 3);
@@ -122,6 +131,9 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        /// <summary>
+        /// Creates a colection of palettes from a PAL file.
+        /// </summary>
         public static Palette[] FromPALFile( IList<byte> bytes )
         {
             Palette[] result = new Palette[16];
@@ -133,6 +145,9 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        /// <summary>
+        /// Creates a palette from a portion of a PAL file.
+        /// </summary>
         public static Palette FromPALFiledata( IList<byte> bytes )
         {
             Palette result = new Palette();
@@ -151,6 +166,9 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        /// <summary>
+        /// Converts this palette into an array of bytes suitable for including in a SPR file.
+        /// </summary>
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 16 * 2 );
@@ -168,6 +186,9 @@ namespace FFTPatcher.SpriteEditor
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Converts this palette into an array of bytes suitable for including in a PAL file.
+        /// </summary>
         public byte[] ToPALByteArray()
         {
             List<byte> result = new List<byte>( 0x40 );

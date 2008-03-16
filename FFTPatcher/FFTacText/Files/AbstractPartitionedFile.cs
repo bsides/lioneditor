@@ -24,24 +24,48 @@ using System.Xml;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// A file with many partitions of equal lenght.
+    /// </summary>
     public abstract class AbstractPartitionedFile : IPartitionedFile
     {
 
 		#region Abstract Properties (7) 
 
 
+        /// <summary>
+        /// Gets the character map used for this file.
+        /// </summary>
         protected abstract TextUtilities.CharMapType CharMap { get; }
 
+        /// <summary>
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
+        /// </summary>
         public abstract IList<IList<string>> EntryNames { get; }
 
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
         public abstract string Filename { get; }
 
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
         public abstract IDictionary<string, long> Locations { get; }
 
+        /// <summary>
+        /// Gets the number of sections in this file.
+        /// </summary>
         public abstract int NumberOfSections { get; }
 
+        /// <summary>
+        /// Gets the length of every section in this file.
+        /// </summary>
         public abstract int SectionLength { get; }
 
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
         public abstract IList<string> SectionNames { get; }
 
 
@@ -50,16 +74,25 @@ namespace FFTPatcher.TextEditor.Files
 		#region Properties (3) 
 
 
+        /// <summary>
+        /// Gets the actual length.
+        /// </summary>
         public int ActualLength
         {
             get { return ToFinalBytes().Count; }
         }
 
+        /// <summary>
+        /// Gets the estimated length of this file.
+        /// </summary>
         public int EstimatedLength
         {
             get { return ToFinalBytes().Count; }
         }
 
+        /// <summary>
+        /// Gets a collection of <see cref="IPartition"/>, representing the entries in this file.
+        /// </summary>
         public IList<IPartition> Sections { get; protected set; }
 
 
@@ -196,11 +229,21 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
+        /// <summary>
+        /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
+        /// </returns>
         public System.Xml.Schema.XmlSchema GetSchema()
         {
             return null;
         }
 
+        /// <summary>
+        /// Generates an object from its XML representation.
+        /// </summary>
+        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
         public void ReadXml( XmlReader reader )
         {
             bool b = reader.MoveToAttribute( "compressed" );
@@ -216,16 +259,29 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
+        /// <summary>
+        /// Creates a byte array representing this file.
+        /// </summary>
+        /// <returns></returns>
         public byte[] ToByteArray()
         {
             return ToFinalBytes().ToArray();
         }
 
+        /// <summary>
+        /// Converts an object into its XML representation.
+        /// </summary>
+        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
         public void WriteXml( XmlWriter writer )
         {
             WriteXmlUncompressed( writer );
         }
 
+        /// <summary>
+        /// Serializes this file to an XML node.
+        /// </summary>
+        /// <param name="writer">The writer to use to write the node</param>
+        /// <param name="compressed">Whether or not this object's data should be compressed.</param>
         public void WriteXml( XmlWriter writer, bool compressed )
         {
             if( compressed )

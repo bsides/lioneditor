@@ -24,6 +24,9 @@ using FFTPatcher.TextEditor.Files;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// An editor for <see cref="IStringSectioned"/> objects that implement <see cref="ICompressed"/>.
+    /// </summary>
     public partial class CompressedStringSectionedEditor : StringSectionedEditor
     {
 
@@ -35,6 +38,9 @@ namespace FFTPatcher.TextEditor
             get { return "Estimated length: {0} bytes"; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="IStringSectioned"/> object being edited.
+        /// </summary>
         public override IStringSectioned Strings
         {
             get { return base.Strings; }
@@ -53,6 +59,7 @@ namespace FFTPatcher.TextEditor
                         (Strings as ICompressed).CompressionFinished -= compressed_CompressionFinished;
                     }
 
+                    compressButton.Text = "Get Compressed Size";
                     base.Strings = value;
                 }
             }

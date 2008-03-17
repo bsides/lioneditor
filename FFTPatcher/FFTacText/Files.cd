@@ -11,7 +11,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.FilePartition" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAACAAAMAAAABAAAAAAAAAAEAQAAAAABg=</HashCode>
+      <HashCode>AAAAAACBAAAAACAAAMAAAABAAAAAAAAAAEAQAAAAABg=</HashCode>
       <FileName>Files\FilePartition.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -253,6 +253,13 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT28E5EC" Collapsed="true">
+    <Position X="14" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <FileName>Files\PSP\BOOT28E5EC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="FFTPatcher.TextEditor.Files.ICompressed" Collapsed="true">
     <Position X="14.5" Y="2" Width="1.5" />
     <TypeIdentifier>
@@ -263,7 +270,7 @@
   <Interface Name="FFTPatcher.TextEditor.Files.IPartition" Collapsed="true">
     <Position X="16.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACAAAIAAAABAAAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAAAACAAAAAACAAAIAAAABAAAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\IPartition.cs</FileName>
     </TypeIdentifier>
   </Interface>

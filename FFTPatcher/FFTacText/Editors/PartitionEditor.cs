@@ -181,6 +181,8 @@ namespace FFTPatcher.TextEditor.Editors
 
         private void UpdateCurrentStringListBox()
         {
+            currentStringListBox.SuspendLayout();
+            currentStringListBox.BeginUpdate();
             currentStringListBox.Items.Clear();
             for( int i = 0; i < strings.Entries.Count; i++ )
             {
@@ -188,6 +190,8 @@ namespace FFTPatcher.TextEditor.Editors
             }
             currentStringListBox.SelectedIndex = 0;
             UpdateCurrentString();
+            currentStringListBox.EndUpdate();
+            currentStringListBox.ResumeLayout();
         }
 
         private void UpdateLengthLabels()

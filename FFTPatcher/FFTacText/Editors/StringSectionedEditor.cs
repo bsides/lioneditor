@@ -99,11 +99,13 @@ namespace FFTPatcher.TextEditor
 
         private void AddSections()
         {
+            sectionComboBox.BeginUpdate();
             sectionComboBox.Items.Clear();
             for( int i = 0; i < strings.Sections.Count; i++ )
             {
                 sectionComboBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.SectionNames[i] ) );
             }
+            sectionComboBox.EndUpdate();
         }
 
         private void currentString_TextChanged( object sender, EventArgs e )
@@ -160,7 +162,8 @@ namespace FFTPatcher.TextEditor
 
         private void UpdateCurrentStringListBox()
         {
-            currentString.SuspendLayout();
+            currentStringListBox.SuspendLayout();
+            currentStringListBox.BeginUpdate();
             currentStringListBox.Items.Clear();
             for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
             {
@@ -168,19 +171,21 @@ namespace FFTPatcher.TextEditor
             }
             currentStringListBox.SelectedIndex = 0;
             UpdateCurrentString();
-            currentString.ResumeLayout();
+            currentStringListBox.EndUpdate();
+            currentStringListBox.ResumeLayout();
         }
 
         private void UpdateFilenames()
         {
             filesListBox.SuspendLayout();
+            filesListBox.BeginUpdate();
             filesListBox.ClearSelected();
             filesListBox.Items.Clear();
             foreach( string s in strings.Locations.Keys )
             {
                 filesListBox.Items.Add( s );
             }
-
+            filesListBox.EndUpdate();
             filesListBox.ResumeLayout();
         }
 

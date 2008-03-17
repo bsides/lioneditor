@@ -109,7 +109,7 @@ namespace FFTPatcher.TextEditor.Files
             Sections = new List<IPartition>( NumberOfSections );
             for( int i = 0; i < NumberOfSections; i++ )
             {
-                Sections.Add( new FilePartition( this, bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], CharMap ) );
+                Sections.Add( new FilePartition( this, bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], SectionLength, CharMap ) );
             }
         }
 
@@ -161,12 +161,12 @@ namespace FFTPatcher.TextEditor.Files
                     int currentEntry = reader.ReadContentAsInt();
                     reader.MoveToElement();
                     reader.ReadStartElement( "entry" );
-                    currentStrings[currentEntry] = reader.ReadString().Replace( "@\n", "\r\n" );
+                    currentStrings[currentEntry] = reader.ReadString().Replace( @"\n", "\r\n" );
                     reader.ReadEndElement();
                 }
 
-                Sections[currentSection] = new FilePartition( this, currentStrings, currentStrings.Length, EntryNames[currentSection], CharMap );
-
+                Sections[currentSection] = new FilePartition( this, currentStrings, SectionLength, EntryNames[currentSection], CharMap );
+                
                 reader.ReadEndElement();
             }
 

@@ -39,6 +39,21 @@ namespace FFTPatcher
 
 		#region Methods (14) 
 
+        /// <summary>
+        /// Finds the specified item in the list.
+        /// </summary>
+        public static T Find<T>( this IList<T> list, Predicate<T> match ) where T : class
+        {
+            foreach( T item in list )
+            {
+                if( match( item ) )
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Adds lines of text in groups of a specified size to the StringBuilder.

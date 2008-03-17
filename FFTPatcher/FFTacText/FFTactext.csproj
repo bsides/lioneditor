@@ -58,6 +58,7 @@
     <Compile Include="Files\IPartition.cs" />
     <Compile Include="Files\IPartitionedFile.cs" />
     <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
+    <Compile Include="Files\PSP\BOOT28E5EC.cs" />
     <Compile Include="Files\PSP\SNPLMESBIN.cs" />
     <Compile Include="Files\PSP\WLDMESBIN.cs" />
     <Compile Include="Files\PSP\WORLDLZW.cs" />

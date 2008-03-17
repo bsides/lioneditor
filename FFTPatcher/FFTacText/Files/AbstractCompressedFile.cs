@@ -28,6 +28,17 @@ namespace FFTPatcher.TextEditor.Files
     public abstract class AbstractCompressedFile : AbstractStringSectioned, ICompressed
     {
 
+		#region Properties (1) 
+
+
+        public override int EstimatedLength
+        {
+            get { return (int)(base.EstimatedLength * 0.65346430772862594919277); }
+        }
+
+
+		#endregion Properties 
+
 		#region Constructors (2) 
 
         protected AbstractCompressedFile()

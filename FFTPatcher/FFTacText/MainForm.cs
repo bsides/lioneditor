@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
@@ -40,6 +41,9 @@ namespace FFTPatcher.TextEditor
 		#region Properties (1) 
 
 
+        /// <summary>
+        /// Gets or sets the file being edited.
+        /// </summary>
         public FFTText File
         {
             get { return file; }
@@ -81,6 +85,7 @@ namespace FFTPatcher.TextEditor
 
         public MainForm()
         {
+            FillPSPFiles();
             InitializeComponent();
 
             stringSectionedEditor.Visible = false;
@@ -95,13 +100,11 @@ namespace FFTPatcher.TextEditor
             saveMenuItem.Click += saveMenuItem_Click;
             openMenuItem.Click += openMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
-
-            //FillFiles();
         }
 
 		#endregion Constructors 
 
-		#region Methods (13) 
+		#region Methods (16) 
 
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -145,50 +148,12 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private void WriteBytesToFile( byte[] bytes, string filename, long position )
-        {
-            try
-            {
-                using( FileStream stream = new FileStream( filename, FileMode.Open ) )
-                {
-                    stream.WriteArrayToPosition( bytes, position );
-                }
-            }
-            catch( Exception )
-            {
-                MessageBox.Show( this, "Error writing to file", "Error", MessageBoxButtons.OK );
-            }
-        }
-
-        private void partitionEditor_SavingFile( object sender, SavingFileEventArgs e )
-        {
-            IPartitionedFile file = e.File as IPartitionedFile;
-            if( file != null )
-            {
-                string name = Path.GetFileName( e.SuggestedFilename );
-                saveFileDialog.Filter = string.Format( "{0}|{0}", name );
-
-                if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-                {
-                    if( e.PartitionNumber == -1 )
-                    {
-                        WriteBytesToFile( file.ToByteArray(), saveFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
-                    }
-                    else
-                    {
-                        WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), saveFileDialog.FileName,
-                            e.File.Locations[e.SuggestedFilename] + file.SectionLength * e.PartitionNumber );
-                    }
-                }
-            }
-        }
-
-
         private void exitMenuItem_Click( object sender, EventArgs e )
         {
             Application.Exit();
         }
 
+        [Conditional( "DEBUG" )]
         private void FillFiles()
         {
             //BasePSXSectionedFile[] psxFiles1 = new BasePSXSectionedFile[] {
@@ -283,6 +248,139 @@ namespace FFTPatcher.TextEditor
             File = mine;
         }
 
+        [Conditional( "DEBUG" )]
+        private void FillPSPFiles()
+        {
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+
+            FFTText mine = null;
+            using( MemoryStream ms = new MemoryStream( PSPResources.DefaultDocument ) )
+            {
+                mine = xs.Deserialize( ms ) as FFTText;
+            }
+
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES" );
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES" );
+
+            foreach( IStringSectioned sectioned in mine.SectionedFiles )
+            {
+                FillFileExcept(
+                    sectioned,
+                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ),
+                    new int[0] );
+            }
+
+            using( FileStream fs = new FileStream( "Filled.xml", FileMode.Create ) )
+            {
+                xs.Serialize( fs, mine );
+            }
+        }
+
+#if DEBUG
+        private string[] GetLayoutOfCloseAndNewLines( string s )
+        {
+            List<string> result = new List<string>();
+            int lastIndex = 0;
+
+            while( lastIndex != -1 )
+            {
+                int lastIndexA = s.IndexOf( @"{Close}", lastIndex );
+                int lastIndexB = s.IndexOf( "\r\n", lastIndex );
+                if( lastIndexA == -1 && lastIndexB == -1 )
+                {
+                    lastIndex = -1;
+                }
+                else if (lastIndexA != -1 && lastIndexB != -1)
+                {
+                    lastIndex = Math.Min( lastIndexA, lastIndexB );
+                    if( lastIndex == lastIndexA )
+                    {
+                        lastIndex += @"{Close}".Length;
+                        result.Add( @"{Close}" );
+                    }
+                    else
+                    {
+                        lastIndex += "\r\n".Length;
+                        result.Add( "\r\n" );
+                    }
+                }
+                else if( lastIndexA != -1 )
+                {
+                    lastIndex = lastIndexA;
+                    lastIndex += @"{Close}".Length;
+                    result.Add( @"{Close}" );
+                }
+                else
+                {
+                    lastIndex = lastIndexB;
+                    lastIndex += "\r\n".Length;
+                    result.Add( "\r\n" );
+                }
+            }
+
+            return result.ToArray();
+        }
+#endif
+
+        [Conditional( "DEBUG" )]
+        private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
+        {
+            string format = "{0}/{1}/{2:X}";
+            for (int section =0; section < file.Sections.Count; section++)
+            {
+                if( !badSections.Contains( section ) )
+                {
+                    for( int i = 0; i < file.Sections[section].Count; i++ )
+                    {
+                        string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section][i] );
+
+                        string newString = string.Format( format, filename, section + 1, i + 1 );
+                        int sub = 2;
+                        foreach( string divider in layout )
+                        {
+                            newString += divider;
+                            newString += sub.ToString();
+                            sub++;
+                        }
+
+                        if( file.Sections[section][i].IndexOf( @"{END}" ) != -1 )
+                        {
+                            newString += @"{END}";
+                        }
+                        file.Sections[section][i] = newString;
+                    }
+                }
+            }
+        }
+
+        [Conditional( "DEBUG" )]
+        private void FillFile( IPartitionedFile file, string filename )
+        {
+            string format = "{0}/{1}/{2:X}";
+            for( int section = 0; section < file.Sections.Count; section++ )
+            {
+                for( int i = 0; i < file.Sections[section].Entries.Count; i++ )
+                {
+                    string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section].Entries[i] );
+
+                    string newString = string.Format( format, filename, section + 1, i + 1 );
+                    int sub = 2;
+                    foreach( string divider in layout )
+                    {
+                        newString += divider;
+                        newString += sub.ToString();
+                        sub++;
+                    }
+
+                    if( file.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
+                    {
+                        newString += @"{END}";
+                    }
+                    file.Sections[section].Entries[i] = newString;
+                }
+            }
+        }
+
         private void LoadFileFromByteArray( byte[] bytes )
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
@@ -353,6 +451,29 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+        private void partitionEditor_SavingFile( object sender, SavingFileEventArgs e )
+        {
+            IPartitionedFile file = e.File as IPartitionedFile;
+            if( file != null )
+            {
+                string name = Path.GetFileName( e.SuggestedFilename );
+                saveFileDialog.Filter = string.Format( "{0}|{0}", name );
+
+                if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+                {
+                    if( e.PartitionNumber == -1 )
+                    {
+                        WriteBytesToFile( file.ToByteArray(), saveFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
+                    }
+                    else
+                    {
+                        WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), saveFileDialog.FileName,
+                            e.File.Locations[e.SuggestedFilename] + file.SectionLength * e.PartitionNumber );
+                    }
+                }
+            }
+        }
+
         private void RemoveAllDescendants( MenuItem item )
         {
             foreach( MenuItem subitem in item.MenuItems )
@@ -390,6 +511,21 @@ namespace FFTPatcher.TextEditor
             foreach( MenuItem item in menuItems )
             {
                 item.Checked = false;
+            }
+        }
+
+        private void WriteBytesToFile( byte[] bytes, string filename, long position )
+        {
+            try
+            {
+                using( FileStream stream = new FileStream( filename, FileMode.Open ) )
+                {
+                    stream.WriteArrayToPosition( bytes, position );
+                }
+            }
+            catch( Exception )
+            {
+                MessageBox.Show( this, "Error writing to file", "Error", MessageBoxButtons.OK );
             }
         }
 

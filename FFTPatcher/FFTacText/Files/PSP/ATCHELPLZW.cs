@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class ATCHELPLZW : BasePSPSectionedFile
+    public class ATCHELPLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
 		#region Static Fields (3) 
@@ -37,13 +37,24 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Static Fields 
 
-		#region Fields (1) 
+		#region Fields (2) 
 
+        private const int fftpackIndex = 41;
         private const string filename = "ATCHELP.LZW";
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (7) 
+
+
+        /// <summary>
+        /// Gets the index of this file in fftpack.bin
+        /// </summary>
+        public int Index
+        {
+            get { return fftpackIndex; }
+        }
+
 
 
         /// <summary>

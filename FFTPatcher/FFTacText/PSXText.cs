@@ -25,6 +25,8 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
+using System.IO;
+using FFTPatcher.TextEditor.Files.PSP;
 
 namespace FFTPatcher.TextEditor
 {
@@ -39,6 +41,12 @@ namespace FFTPatcher.TextEditor
     /// </summary>
     public class FFTText : IXmlSerializable
     {
+
+		#region Fields (1) 
+
+        public const int CurrentVersion = 2;
+
+		#endregion Fields 
 
 		#region Properties (3) 
 
@@ -71,10 +79,10 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Constructors 
 
-		#region Methods (5) 
+		#region Methods (6) 
 
 
-        private void AddToAppropriateCollection(object o)
+        private void AddToAppropriateCollection( object o )
         {
             if( o is IPartitionedFile )
             {
@@ -148,6 +156,9 @@ namespace FFTPatcher.TextEditor
             reader.MoveToAttribute( "type" );
             Filetype = (Filetype)Enum.Parse( typeof( Filetype ), reader.ReadContentAsString() );
             reader.MoveToElement();
+            reader.MoveToAttribute( "version" );
+            int version = reader.ReadContentAsInt();
+            reader.MoveToElement();
 
             reader.ReadStartElement();
 
@@ -164,6 +175,64 @@ namespace FFTPatcher.TextEditor
             }
 
             reader.ReadEndElement();
+
+            GenericCharMap charmap = Filetype == Filetype.PSP ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
+            if( version != CurrentVersion )
+            {
+                foreach( IStringSectioned stringSectioned in SectionedFiles )
+                {
+                    foreach( IList<string> section in stringSectioned.Sections )
+                    {
+                        for( int i = 0; i < section.Count; i++ )
+                        {
+                            section[i] = TextUtilities.UpgradeString( section[i], charmap );
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates a PSP War of the Lions ISO with the text files in this instance..
+        /// </summary>
+        /// <param name="stream">The stream that represents a War of the Lions image.</param>
+        public void UpdatePspIso( FileStream stream )
+        {
+            List<IFFTPackFile> fftpackFiles = new List<IFFTPackFile>();
+            List<IBootBin> bootBinFiles = new List<IBootBin>();
+            foreach( IStringSectioned sectioned in SectionedFiles )
+            {
+                if( sectioned is IFFTPackFile )
+                {
+                    fftpackFiles.Add( sectioned as IFFTPackFile );
+                }
+                else if( sectioned is IBootBin )
+                {
+                    bootBinFiles.Add( sectioned as IBootBin );
+                }
+            }
+
+            foreach( IPartitionedFile part in PartitionedFiles )
+            {
+                if( part is IFFTPackFile )
+                {
+                    fftpackFiles.Add( part as IFFTPackFile );
+                }
+                else if( part is IBootBin )
+                {
+                    bootBinFiles.Add( part as IBootBin );
+                }
+            }
+
+            foreach( IFFTPackFile packFile in fftpackFiles )
+            {
+                PspIso.UpdateFFTPack( stream, packFile.Index, packFile.ToByteArray() );
+            }
+
+            foreach( IBootBin bootFile in bootBinFiles )
+            {
+                PspIso.UpdateBootBin( stream, bootFile.Location, bootFile.ToByteArray() );
+            }
         }
 
         /// <summary>

@@ -252,13 +252,7 @@ namespace FFTPatcher.Datatypes
             try
             {
                 stream = new FileStream( filename, FileMode.Open );
-                stream.Seek( (index - 1) * 4 + 8, SeekOrigin.Begin );
-                byte[] pointer = new byte[4];
-                stream.Read( pointer, 0, 4 );
-
-                stream.Seek( pointer.ToUInt32(), SeekOrigin.Begin );
-
-                stream.Write( bytes, 0, bytes.Length );
+                PatchFile( stream, index, bytes );
             }
             catch( Exception )
             {
@@ -275,7 +269,29 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void PatchFile( FileStream stream, int index, byte[] bytes )
+        {
+            PatchFile( stream, 0, index, bytes );
+        }
 
+        public static void PatchFile( FileStream stream, long streamPosition, int index, byte[] bytes )
+        {
+            try
+            {
+                stream.Seek( streamPosition + (index - 1) * 4 + 8, SeekOrigin.Begin );
+                byte[] pointer = new byte[4];
+                stream.Read( pointer, 0, 4 );
+
+                stream.Seek( streamPosition + pointer.ToUInt32(), SeekOrigin.Begin );
+
+                stream.Write( bytes, 0, bytes.Length );
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+        }
+        
 		#endregion Methods 
 
     }

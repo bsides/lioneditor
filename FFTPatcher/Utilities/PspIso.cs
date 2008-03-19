@@ -26,21 +26,23 @@ namespace FFTPatcher
     public static class PspIso
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (4) 
 
+        private static readonly long[] bootBinLocations = { 0x10000, 0x0FED8000 };
         private static byte[] buffer = new byte[1024];
         private static byte[] euSizes = new byte[] { 0xA4, 0x84, 0x3A, 0x00, 0x00, 0x3A, 0x84, 0xA4 };
         private static byte[] jpSizes = new byte[] { 0xE4, 0xD9, 0x37, 0x00, 0x00, 0x37, 0xD9, 0xE4 };
 
 		#endregion Static Fields 
 
-		#region Fields (1) 
+		#region Fields (2) 
 
         private const int bufferSize = 1024;
+        private const long fftpackLocation = 0x02C20000;
 
 		#endregion Fields 
 
-		#region Methods (9) 
+		#region Methods (11) 
 
 
         private static bool CheckFile( FileStream stream, string str1, string str2, long[] loc1, long[] loc2 )
@@ -252,6 +254,33 @@ namespace FFTPatcher
             stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[2].ToByteArray(), 0x44F2800 );
             stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[3].ToByteArray(), 0x4506800 );
             stream.WriteArrayToPositions( FFTPatch.ENTDs.PSPEventsToByteArray(), 0x7500800 );
+        }
+
+        /// <summary>
+        /// Updates the BOOT.BIN file in a War of the Lions ISO image.
+        /// </summary>
+        /// <param name="stream">The stream that represents a War of the Lions ISO image.</param>
+        /// <param name="location">The location in BOOT.BIN to update.</param>
+        /// <param name="bytes">The bytes to update BOOT.BIN with.</param>
+        public static void UpdateBootBin( FileStream stream, long location, byte[] bytes )
+        {
+            DecryptISO( stream );
+
+            foreach( long loc in bootBinLocations )
+            {
+                stream.WriteArrayToPosition( bytes, loc + location );
+            }
+        }
+
+        /// <summary>
+        /// Updates the specified fftpack.bin file with new data.
+        /// </summary>
+        /// <param name="stream">The stream that represents a War of the Lions ISO image.</param>
+        /// <param name="index">The index of the file in fftpack.bin to update.</param>
+        /// <param name="bytes">The bytes to update the file with.</param>
+        public static void UpdateFFTPack( FileStream stream, int index, byte[] bytes )
+        {
+            FFTPack.PatchFile( stream, fftpackLocation, index, bytes );
         }
 
 

@@ -3,7 +3,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.AbstractCompressedFile">
     <Position X="4.5" Y="5.25" Width="3.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABEAAAAAAAAAAAAAAACAAAACAAAAIBAAAgA=</HashCode>
+      <HashCode>AAAAAAAAABEAAACAAAAAAAAAAACAAAACAAAAIBAAAgA=</HashCode>
       <FileName>Files\AbstractCompressedFile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -68,7 +68,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSX.BasePSXCompressedFile">
     <Position X="5.25" Y="8.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Files\PSX\BasePSXCompressedFile.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -100,53 +100,69 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW" Collapsed="true">
-    <Position X="11.75" Y="8" Width="1.5" />
+    <Position X="9.5" Y="8.75" Width="1.5" />
+    <InheritanceLine Type="FFTPatcher.TextEditor.Files.PSP.BasePSPSectionedFile" FixedToPoint="true">
+      <Path>
+        <Point X="12.5" Y="6.351" />
+        <Point X="12.5" Y="9.062" />
+        <Point X="11" Y="9.062" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAQCEAAAAAAAAAEQAAAAAAg=</HashCode>
       <FileName>Files\PSP\ATCHELPLZW.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT299024" Collapsed="true">
-    <Position X="9.5" Y="8" Width="1.5" />
+    <Position X="12.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT299024.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT29E334" Collapsed="true">
-    <Position X="9.5" Y="7" Width="1.5" />
+    <Position X="12.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT29E334.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT2A1630" Collapsed="true">
-    <Position X="11.75" Y="7" Width="1.5" />
+    <Position X="12.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT2A1630.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT2EB4C0" Collapsed="true">
-    <Position X="14" Y="7" Width="1.5" />
+    <Position X="15" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT2EB4C0.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT32D368" Collapsed="true">
-    <Position X="14" Y="8" Width="1.5" />
+    <Position X="15" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT32D368.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.OPENLZW" Collapsed="true">
-    <Position X="11.75" Y="9" Width="1.5" />
+    <Position X="9.5" Y="7.75" Width="1.5" />
+    <InheritanceLine Type="FFTPatcher.TextEditor.Files.PSP.BasePSPSectionedFile" FixedToPoint="true">
+      <Path>
+        <Point X="12.5" Y="6.351" />
+        <Point X="12.5" Y="8.062" />
+        <Point X="11" Y="8.062" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAQCEAAAAAAAAAEQAAAAAAg=</HashCode>
       <FileName>Files\PSP\OPENLZW.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.ATCHELPLZW" Collapsed="true">
     <Position X="17" Y="7.75" Width="1.5" />
@@ -193,9 +209,10 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSP.WLDMESBIN" Collapsed="true">
     <Position X="24.75" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAQSEAAAABAAAAEAAAAAAAg=</HashCode>
       <FileName>Files\PSP\WLDMESBIN.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.SNPLMESBIN" Collapsed="true">
     <Position X="26.75" Y="9" Width="1.5" />
@@ -212,11 +229,19 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.WORLDLZW" Collapsed="true">
-    <Position X="9.5" Y="9" Width="1.5" />
+    <Position X="9.5" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="FFTPatcher.TextEditor.Files.PSP.BasePSPSectionedFile" FixedToPoint="true">
+      <Path>
+        <Point X="12.5" Y="6.351" />
+        <Point X="12.5" Y="7.125" />
+        <Point X="11" Y="7.125" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAQCEAAAAAAAAAEQAAAAAAg=</HashCode>
       <FileName>Files\PSP\WORLDLZW.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSX.HELPMENUOUT" Collapsed="true">
     <Position X="6.75" Y="10" Width="1.5" />
@@ -236,9 +261,10 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSP.SNPLMESBIN" Collapsed="true">
     <Position X="23" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACABAAAAASAAAAAoAAAASEAAAABAAAAAAAAAAAAg=</HashCode>
+      <HashCode>AAAACABAAAAASAAAAAoAAAQSEAAAABAAAAEAAAAAAAg=</HashCode>
       <FileName>Files\PSP\SNPLMESBIN.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.FFTText">
     <Position X="21.5" Y="1" Width="3" />
@@ -248,17 +274,32 @@
       <Method Name="GetSchema" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>IAAAEAAAAAAAAAAAAAAAAAACAABAAAAiAAIAgAAAAAA=</HashCode>
+      <HashCode>IAAAEAAAAAAAAAAAAAAAAAACAABAAAgiAAIAgAAAAAA=</HashCode>
       <FileName>PSXText.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT28E5EC" Collapsed="true">
-    <Position X="14" Y="9" Width="1.5" />
+    <Position X="15" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACABAAAAASAAAAAoAAAACEAAAAAAAAAAQAAAAAAg=</HashCode>
       <FileName>Files\PSP\BOOT28E5EC.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSP.AbstractBootBinFile" Collapsed="true">
+    <Position X="13.75" Y="6.75" Width="1.75" />
+    <InheritanceLine Type="FFTPatcher.TextEditor.Files.PSP.BasePSPSectionedFile" FixedToPoint="true">
+      <Path>
+        <Point X="12.5" Y="6.351" />
+        <Point X="12.5" Y="7.125" />
+        <Point X="13.75" Y="7.125" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Files\PSP\AbstractBootBinFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="FFTPatcher.TextEditor.Files.ICompressed" Collapsed="true">
     <Position X="14.5" Y="2" Width="1.5" />
@@ -293,6 +334,20 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Files\IFile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FFTPatcher.TextEditor.Files.PSP.IFFTPackFile" Collapsed="true">
+    <Position X="14.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Files\PSP\IFFTPackFile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FFTPatcher.TextEditor.Files.PSP.IBootBin" Collapsed="true">
+    <Position X="14.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Files\PSP\IBootBin.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="FFTPatcher.TextEditor.Filetype">

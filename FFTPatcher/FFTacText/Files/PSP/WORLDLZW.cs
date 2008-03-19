@@ -21,24 +21,35 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class WORLDLZW : BasePSPSectionedFile
+    public class WORLDLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-        #region Static Fields (3)
+		#region Static Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
-        #endregion Static Fields
+		#endregion Static Fields 
 
-        #region Fields (1)
+		#region Fields (2) 
 
+        private const int fftpackIndex = 44;
         private const string filename = "WORLD.LZW";
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (6)
+		#region Properties (7) 
+
+
+        /// <summary>
+        /// Gets the index of this file in fftpack.bin
+        /// </summary>
+        public int Index
+        {
+            get { return fftpackIndex; }
+        }
+
 
 
         /// <summary>
@@ -93,9 +104,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (3)
+		#region Constructors (3) 
 
         static WORLDLZW()
         {
@@ -133,7 +144,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
     }
 }

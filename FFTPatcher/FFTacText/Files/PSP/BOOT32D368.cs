@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT32D368 : BasePSPSectionedFile
+    public class BOOT32D368 : AbstractBootBinFile
     {
 
 		#region Static Fields (3) 

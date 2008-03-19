@@ -21,26 +21,37 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class SNPLMESBIN : BasePSPPartitionedFile
+    public class SNPLMESBIN : BasePSPPartitionedFile, IFFTPackFile
     {
 
-        #region Static Fields (3)
+		#region Static Fields (3) 
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
-        #endregion Static Fields
+		#endregion Static Fields 
 
-        #region Fields (3)
+		#region Fields (4) 
 
+        private const int fftpackIndex = 774;
         private const string filename = "SNPLMES.BIN";
         private const int numberOfSections = 6;
         private const int sectionLength = 0xA000;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (6)
+		#region Properties (7) 
+
+
+        /// <summary>
+        /// Gets the index of this file in fftpack.bin
+        /// </summary>
+        public int Index
+        {
+            get { return fftpackIndex; }
+        }
+
 
 
         /// <summary>
@@ -92,9 +103,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (3)
+		#region Constructors (3) 
 
         static SNPLMESBIN()
         {
@@ -118,7 +129,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
     }
 }

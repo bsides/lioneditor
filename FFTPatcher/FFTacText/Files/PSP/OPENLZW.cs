@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class OPENLZW : BasePSPSectionedFile
+    public class OPENLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
 		#region Static Fields (3) 
@@ -32,13 +32,24 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Static Fields 
 
-		#region Fields (1) 
+		#region Fields (2) 
 
+        private const int fftpackIndex = 45;
         private const string filename = "OPEN.LZW";
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (7) 
+
+
+        /// <summary>
+        /// Gets the index of this file in fftpack.bin
+        /// </summary>
+        public int Index
+        {
+            get { return fftpackIndex; }
+        }
+
 
 
         /// <summary>

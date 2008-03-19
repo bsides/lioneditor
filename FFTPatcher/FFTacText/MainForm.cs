@@ -31,8 +31,9 @@ namespace FFTPatcher.TextEditor
     public partial class MainForm : Form
     {
 
-		#region Fields (2) 
+		#region Fields (3) 
 
+        private readonly MenuItem[] defaultPspMenuItems;
         private FFTText file;
         private MenuItem[] menuItems;
 
@@ -72,6 +73,11 @@ namespace FFTPatcher.TextEditor
                         item.Click += menuItem_Click;
                     }
 
+                    if( File.Filetype == Filetype.PSP )
+                    {
+                        pspMenuItem.MenuItems.AddRange( defaultPspMenuItems );
+                    }
+
                     menuItem_Click( menuItems[0], EventArgs.Empty );
                     saveMenuItem.Enabled = true;
                 }
@@ -100,11 +106,15 @@ namespace FFTPatcher.TextEditor
             saveMenuItem.Click += saveMenuItem_Click;
             openMenuItem.Click += openMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
+
+            defaultPspMenuItems = new MenuItem[2] { 
+                new MenuItem( "-" ), 
+                new MenuItem( "Patch ISO...", new EventHandler( patchMenuItem_Click ) ) };
         }
 
 		#endregion Constructors 
 
-		#region Methods (16) 
+		#region Methods (19) 
 
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -126,11 +136,11 @@ namespace FFTPatcher.TextEditor
 
             RemoveAllDescendants( parent );
 
-            foreach( MenuItem psxItem in items )
+            foreach( MenuItem item in items )
             {
-                if( psxItem.Parent == null )
+                if( item.Parent == null )
                 {
-                    parent.MenuItems.Add( psxItem );
+                    parent.MenuItems.Add( item );
                 }
             }
             result.AddRange( items );
@@ -141,16 +151,75 @@ namespace FFTPatcher.TextEditor
         private void editor_SavingFile( object sender, SavingFileEventArgs e )
         {
             string name = Path.GetFileName( e.SuggestedFilename );
-            saveFileDialog.Filter = string.Format( "{0}|{0}", name );
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            openFileDialog.Filter = string.Format( "{0}|{0}", name );
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                WriteBytesToFile( e.File.ToByteArray(), saveFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
+                WriteBytesToFile( e.File.ToByteArray(), openFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
             }
         }
 
         private void exitMenuItem_Click( object sender, EventArgs e )
         {
             Application.Exit();
+        }
+
+        [Conditional( "DEBUG" )]
+        private void FillFile( IPartitionedFile file, string filename )
+        {
+            string format = "{0}/{1}/{2:X}";
+            for( int section = 0; section < file.Sections.Count; section++ )
+            {
+                for( int i = 0; i < file.Sections[section].Entries.Count; i++ )
+                {
+                    string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section].Entries[i] );
+
+                    string newString = string.Format( format, filename, section + 1, i + 1 );
+                    int sub = 2;
+                    foreach( string divider in layout )
+                    {
+                        newString += divider;
+                        newString += sub.ToString();
+                        sub++;
+                    }
+
+                    if( file.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
+                    {
+                        newString += @"{END}";
+                    }
+                    file.Sections[section].Entries[i] = newString;
+                }
+            }
+        }
+
+        [Conditional( "DEBUG" )]
+        private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
+        {
+            string format = "{0}/{1}/{2:X}";
+            for (int section =0; section < file.Sections.Count; section++)
+            {
+                if( !badSections.Contains( section ) )
+                {
+                    for( int i = 0; i < file.Sections[section].Count; i++ )
+                    {
+                        string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section][i] );
+
+                        string newString = string.Format( format, filename, section + 1, i + 1 );
+                        int sub = 2;
+                        foreach( string divider in layout )
+                        {
+                            newString += divider;
+                            newString += sub.ToString();
+                            sub++;
+                        }
+
+                        if( file.Sections[section][i].IndexOf( @"{END}" ) != -1 )
+                        {
+                            newString += @"{END}";
+                        }
+                        file.Sections[section][i] = newString;
+                    }
+                }
+            }
         }
 
         [Conditional( "DEBUG" )]
@@ -276,111 +345,6 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-#if DEBUG
-        private string[] GetLayoutOfCloseAndNewLines( string s )
-        {
-            List<string> result = new List<string>();
-            int lastIndex = 0;
-
-            while( lastIndex != -1 )
-            {
-                int lastIndexA = s.IndexOf( @"{Close}", lastIndex );
-                int lastIndexB = s.IndexOf( "\r\n", lastIndex );
-                if( lastIndexA == -1 && lastIndexB == -1 )
-                {
-                    lastIndex = -1;
-                }
-                else if (lastIndexA != -1 && lastIndexB != -1)
-                {
-                    lastIndex = Math.Min( lastIndexA, lastIndexB );
-                    if( lastIndex == lastIndexA )
-                    {
-                        lastIndex += @"{Close}".Length;
-                        result.Add( @"{Close}" );
-                    }
-                    else
-                    {
-                        lastIndex += "\r\n".Length;
-                        result.Add( "\r\n" );
-                    }
-                }
-                else if( lastIndexA != -1 )
-                {
-                    lastIndex = lastIndexA;
-                    lastIndex += @"{Close}".Length;
-                    result.Add( @"{Close}" );
-                }
-                else
-                {
-                    lastIndex = lastIndexB;
-                    lastIndex += "\r\n".Length;
-                    result.Add( "\r\n" );
-                }
-            }
-
-            return result.ToArray();
-        }
-#endif
-
-        [Conditional( "DEBUG" )]
-        private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
-        {
-            string format = "{0}/{1}/{2:X}";
-            for (int section =0; section < file.Sections.Count; section++)
-            {
-                if( !badSections.Contains( section ) )
-                {
-                    for( int i = 0; i < file.Sections[section].Count; i++ )
-                    {
-                        string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section][i] );
-
-                        string newString = string.Format( format, filename, section + 1, i + 1 );
-                        int sub = 2;
-                        foreach( string divider in layout )
-                        {
-                            newString += divider;
-                            newString += sub.ToString();
-                            sub++;
-                        }
-
-                        if( file.Sections[section][i].IndexOf( @"{END}" ) != -1 )
-                        {
-                            newString += @"{END}";
-                        }
-                        file.Sections[section][i] = newString;
-                    }
-                }
-            }
-        }
-
-        [Conditional( "DEBUG" )]
-        private void FillFile( IPartitionedFile file, string filename )
-        {
-            string format = "{0}/{1}/{2:X}";
-            for( int section = 0; section < file.Sections.Count; section++ )
-            {
-                for( int i = 0; i < file.Sections[section].Entries.Count; i++ )
-                {
-                    string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section].Entries[i] );
-
-                    string newString = string.Format( format, filename, section + 1, i + 1 );
-                    int sub = 2;
-                    foreach( string divider in layout )
-                    {
-                        newString += divider;
-                        newString += sub.ToString();
-                        sub++;
-                    }
-
-                    if( file.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
-                    {
-                        newString += @"{END}";
-                    }
-                    file.Sections[section].Entries[i] = newString;
-                }
-            }
-        }
-
         private void LoadFileFromByteArray( byte[] bytes )
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
@@ -457,19 +421,38 @@ namespace FFTPatcher.TextEditor
             if( file != null )
             {
                 string name = Path.GetFileName( e.SuggestedFilename );
-                saveFileDialog.Filter = string.Format( "{0}|{0}", name );
+                openFileDialog.Filter = string.Format( "{0}|{0}", name );
 
-                if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+                if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
                 {
                     if( e.PartitionNumber == -1 )
                     {
-                        WriteBytesToFile( file.ToByteArray(), saveFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
+                        WriteBytesToFile( file.ToByteArray(), openFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
                     }
                     else
                     {
-                        WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), saveFileDialog.FileName,
+                        WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), openFileDialog.FileName,
                             e.File.Locations[e.SuggestedFilename] + file.SectionLength * e.PartitionNumber );
                     }
+                }
+            }
+        }
+
+        private void patchMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "ISO images (*.iso)|*.iso";
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
+                    {
+                        File.UpdatePspIso( stream );
+                    }
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( this, "Error patching file.", "Error", MessageBoxButtons.OK );
                 }
             }
         }
@@ -531,6 +514,51 @@ namespace FFTPatcher.TextEditor
 
 
 		#endregion Methods 
+#if DEBUG
+        private string[] GetLayoutOfCloseAndNewLines( string s )
+        {
+            List<string> result = new List<string>();
+            int lastIndex = 0;
+
+            while( lastIndex != -1 )
+            {
+                int lastIndexA = s.IndexOf( @"{Close}", lastIndex );
+                int lastIndexB = s.IndexOf( "\r\n", lastIndex );
+                if( lastIndexA == -1 && lastIndexB == -1 )
+                {
+                    lastIndex = -1;
+                }
+                else if (lastIndexA != -1 && lastIndexB != -1)
+                {
+                    lastIndex = Math.Min( lastIndexA, lastIndexB );
+                    if( lastIndex == lastIndexA )
+                    {
+                        lastIndex += @"{Close}".Length;
+                        result.Add( @"{Close}" );
+                    }
+                    else
+                    {
+                        lastIndex += "\r\n".Length;
+                        result.Add( "\r\n" );
+                    }
+                }
+                else if( lastIndexA != -1 )
+                {
+                    lastIndex = lastIndexA;
+                    lastIndex += @"{Close}".Length;
+                    result.Add( @"{Close}" );
+                }
+                else
+                {
+                    lastIndex = lastIndexB;
+                    lastIndex += "\r\n".Length;
+                    result.Add( "\r\n" );
+                }
+            }
+
+            return result.ToArray();
+        }
+#endif
 
     }
 }

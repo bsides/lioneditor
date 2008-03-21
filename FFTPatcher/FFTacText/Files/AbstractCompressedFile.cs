@@ -31,11 +31,21 @@ namespace FFTPatcher.TextEditor.Files
 		#region Properties (1) 
 
 
+        /// <summary>
+        /// Gets the estimated length of this file if it were turned into a byte array.
+        /// </summary>
         public override int EstimatedLength
         {
             get { return (int)(base.EstimatedLength * 0.65346430772862594919277); }
         }
 
+        /// <summary>
+        /// Gets the entries that are excluded from compression.
+        /// </summary>
+        public virtual IList<int> ExcludedEntries
+        {
+            get { return new int[0]; }
+        }
 
 		#endregion Properties 
 
@@ -113,23 +123,18 @@ namespace FFTPatcher.TextEditor.Files
                     FireProgressChangedEvent( progress );
                 } );
 
-            IList<byte> bytes = TextUtilities.Recompress( ToUncompressedBytes().Sub( 0x80 ), p );
+            IList<byte> bytes = TextUtilities.Recompress( ToUncompressedBytes().Sub( 0x80 ), ExcludedEntries, p );
 
-            List<UInt32> sectionOffsets = new List<UInt32>();
-            sectionOffsets.Add( 0 );
+            IList<int> feLocations = bytes.IndexOfEvery( (byte)0xFE );
 
-            int i = 0;
-            for( int s = 0; s < Sections.Count - 1; s++ )
-            {
-                IList<string> section = Sections[s];
-                int feFound = 0;
-                for( int j = i; j < bytes.Count && feFound != section.Count; j++, i++ )
-                {
-                    if( bytes[j] == 0xFE )
-                        feFound++;
-                }
-                sectionOffsets.Add( (UInt32)i );
-            }
+            List<UInt32> sectionOffsets = new List<UInt32>( new UInt32[32] );
+            //sectionOffsets.Add( 0 );
+            //int last = 0;
+            //foreach( IList<string> section in Sections )
+            //{
+            //    last += section.Count;
+            //    sectionOffsets.Add( (UInt32)feLocations[last - 1] + 1 );
+            //}
 
             List<byte> result = new List<byte>( 0x80 + bytes.Count );
             result.AddRange( BuildHeaderFromSectionOffsets( sectionOffsets ) );

@@ -1,4 +1,6 @@
 LIBRARY "FFTTextCompression"
 EXPORTS
      Compress
+     CompressExcept
      CompressWithCallback
+     CompressWithCallbackExcept

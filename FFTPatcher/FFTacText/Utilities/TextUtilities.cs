@@ -509,6 +509,18 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         static extern void Compress( byte[] bytes, int inputLength, byte[] output, ref int outputLength );
 
         /// <summary>
+        /// Compresses the specified bytes except those bytes that are in excluded sections.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="inputLength">Length of the input.</param>
+        /// <param name="output">The output.</param>
+        /// <param name="outputLength">Length of the output.</param>
+        /// <param name="exceptions">A list of section numbers to NOT compress</param>
+        /// <param name="numberOfExceptions">The number of entries in <paramref name="exceptions"/></param>
+        [DllImport( "FFTTextCompression.dll" )]
+        static extern void CompressExcept( byte[] bytes, int inputLength, byte[] output, ref int outputLengthm, int[] exceptions, int numberOfExceptions );
+
+        /// <summary>
         /// Compresses the specified bytes with callback for progress reporting.
         /// </summary>
         /// <param name="bytes">The bytes.</param>
@@ -518,6 +530,19 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// <param name="callback">The callback.</param>
         [DllImport( "FFTTextCompression.dll" )]
         static extern void CompressWithCallback( byte[] bytes, int inputLength, byte[] output, ref int outputLength, ProgressCallback callback );
+
+        /// <summary>
+        /// Compresses the specified bytes except those bytes that are in excluded sections with callback for progress reporting.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="inputLength">Length of the input.</param>
+        /// <param name="output">The output.</param>
+        /// <param name="outputLength">Length of the output.</param>
+        /// <param name="exceptions">A list of section numbers to NOT compress</param>
+        /// <param name="numberOfExceptions">The number of entries in <paramref name="exceptions"/></param>
+        /// <param name="callback">The callback.</param>
+        [DllImport( "FFTTextCompression.dll" )]
+        static extern void CompressWithCallbackExcept( byte[] bytes, int inputLength, byte[] output, ref int outputLength, int[] exceptions, int numberOfExceptions, ProgressCallback callback );
 
         private static void ProcessPointer( IList<byte> bytes, out int length, out int jump )
         {
@@ -598,24 +623,66 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// <param name="callback">A callback to use for progress reporting.</param>
         public static IList<byte> Recompress( IList<byte> bytes, ProgressCallback callback )
         {
+            return Recompress( bytes, null, callback );
+        }
+
+        /// <summary>
+        /// Recompresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        public static IList<byte> Recompress( IList<byte> bytes )
+        {
+            return Recompress( bytes, null, null );
+        }
+
+        /// <summary>
+        /// Recompresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="excludedSections">The excluded sections.</param>
+        public static IList<byte> Recompress( IList<byte> bytes, IList<int> excludedSections )
+        {
+            return Recompress( bytes, excludedSections, null );
+        }
+
+        /// <summary>
+        /// Recompresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="excludedSections">The excluded sections.</param>
+        /// <param name="callback">A callback to use for progress reporting.</param>
+        public static IList<byte> Recompress( IList<byte> bytes, IList<int> excludedSections, ProgressCallback callback )
+        {
             byte[] output = new byte[bytes.Count];
             int outputLength = 0;
-            if( callback != null )
+
+            if( excludedSections != null && excludedSections.Count != 0 && callback != null )
+            {
+                CompressWithCallbackExcept( 
+                    bytes.ToArray(), bytes.Count, 
+                    output, ref outputLength, 
+                    excludedSections.ToArray(), excludedSections.Count, 
+                    callback );
+            }
+            else if( excludedSections != null && excludedSections.Count != 0 )
+            {
+                CompressExcept(
+                    bytes.ToArray(), bytes.Count,
+                    output, ref outputLength,
+                    excludedSections.ToArray(), excludedSections.Count );
+            }
+            else if( callback != null )
             {
                 CompressWithCallback(
-                    bytes.ToArray(),
-                    bytes.Count,
-                    output,
-                    ref outputLength,
+                    bytes.ToArray(), bytes.Count,
+                    output, ref outputLength,
                     callback );
             }
             else
             {
                 Compress(
-                    bytes.ToArray(),
-                    bytes.Count,
-                    output,
-                    ref outputLength );
+                    bytes.ToArray(), bytes.Count,
+                    output, ref outputLength );
             }
 
             byte[] result = new byte[outputLength];

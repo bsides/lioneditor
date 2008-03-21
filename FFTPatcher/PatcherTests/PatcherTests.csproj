@@ -267,6 +267,7 @@
     <None Include="Sprites\ZARUMOU.SPR" />
     <None Include="WLDFACE.BIN" />
     <None Include="WLDFACE4.BIN" />
+    <None Include="WORLD.LZW" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

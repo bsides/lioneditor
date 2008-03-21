@@ -5,12 +5,43 @@ using FFTPatcher;
 using System;
 using NUnit.Framework.SyntaxHelpers;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace PatcherTests
 {
     [TestFixture]
     public class TextTests
     {
+        [Test]
+        public void ShouldNotCompressExcludedEntries()
+        {
+            FFTPatcher.TextEditor.Files.PSP.WORLDLZW w = new FFTPatcher.TextEditor.Files.PSP.WORLDLZW( Resources.pspWORLDLZW );
+            IList<byte> uncompressed = w.ToUncompressedBytes();
+            FieldInfo fi = w.GetType().GetField( "exclusions", BindingFlags.Static | BindingFlags.NonPublic );
+            List<int> newExclusions = new List<int>();
+
+            int count = 0;
+            foreach( IList<string> s in w.Sections )
+            {
+                foreach( string st in s )
+                {
+                    newExclusions.Add( count );
+                    count++;
+                }
+            }
+            fi.SetValue( null, newExclusions.ToArray() );
+
+            byte[] compressed = w.ToByteArray();
+
+            //for( int i = 0; i < uncompressed.Count; i++ )
+            //{
+            //    Assert.That( uncompressed[i], Is.EqualTo( compressed[i] ), "{0}", i );
+            //}
+
+            File.WriteAllBytes( "uncompressed.bin", uncompressed.ToArray() );
+            File.WriteAllBytes( "compressed.bin", compressed );
+        }
+
         //[Test]
         //public void ShouldSerializeAndDeserialize()
         //{

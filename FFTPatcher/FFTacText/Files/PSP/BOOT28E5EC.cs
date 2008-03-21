@@ -24,9 +24,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class BOOT28E5EC : AbstractBootBinFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (4) 
 
         private static string[][] entryNames;
+        private static readonly int[] exclusions;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
@@ -38,7 +39,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (7) 
 
 
         /// <summary>
@@ -55,6 +56,15 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// </summary>
         /// <value></value>
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
+
+        /// <summary>
+        /// Gets the entries that are excluded from compression.
+        /// </summary>
+        /// <value></value>
+        public override IList<int> ExcludedEntries
+        {
+            get { return exclusions; }
+        }
 
         /// <summary>
         /// Gets the filename.
@@ -148,6 +158,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 "Odin","Leviathan","Salamander","Sylph","Faerie","Lich","Cyclops","Zodiark",
                 "Ashura","Kotetsu","Osafune","Murasame","Ama-no-Murakumo","Kiyomori","Muramasa","Kiku-ichimonji",
                 "Masamune","Chirijiraden","" };
+
+            exclusions = new int[2];
+            exclusions[0] = 1 + 1 + 39 + 80 + 1 + 1 + 169 + 316 + 26 + 64;
+            exclusions[1] = 1 + 1 + 39 + 80 + 1 + 1 + 169 + 316 + 26 + 64 + 10;
         }
 
         private BOOT28E5EC()

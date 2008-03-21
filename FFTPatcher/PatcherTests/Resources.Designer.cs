@@ -788,6 +788,13 @@ namespace PatcherTests {
             }
         }
         
+        internal static byte[] pspWORLDLZW {
+            get {
+                object obj = ResourceManager.GetObject("pspWORLDLZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] RAFA {
             get {
                 object obj = ResourceManager.GetObject("RAFA", resourceCulture);

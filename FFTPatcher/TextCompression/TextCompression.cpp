@@ -21,6 +21,7 @@
 #include "memmem.h"
 #include <stdlib.h>
 #include <assert.h>
+#include <set>
 
 #define MIN(x,y) (((x)<(y))?(x):(y))
 #define MAX(x,y) (((x)>(y))?(x):(y))
@@ -93,13 +94,19 @@ void AddJump(unsigned char* destination, int jump, int length)
 }
 
 typedef void (__stdcall *callback_t)(int);
-__declspec(dllexport) void CompressWithCallback(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, callback_t progressCallback)
+
+__declspec(dllexport) void CompressWithCallbackExcept(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, int* exceptions, int numberOfExceptions, callback_t progressCallback)
 {
+	std::set<int> exceptionsSet;
+
+	for (int i = 0; i < numberOfExceptions; i++) exceptionsSet.insert(exceptions[i]);
+
     BuildCompressionJumps();
 
     int outputPosition = 0;
     int loc = 0;
     int size = 0;
+    int currentEntry = 0;
 
     for (int i = 0; i < inputLength; i++)
     {
@@ -109,7 +116,23 @@ __declspec(dllexport) void CompressWithCallback(unsigned char* bytes, int inputL
             {
                 progressCallback(i*100/inputLength);
             }
-            output[outputPosition++] = bytes[i];
+
+			currentEntry++;
+
+			if (exceptionsSet.find(currentEntry) != exceptionsSet.end())
+			{
+				output[outputPosition++] = bytes[i]; // Copy the 0xFE
+
+				while (((i+1) < inputLength) && (bytes[i+1] != 0xFE))
+				{
+					output[outputPosition++] = bytes[++i];
+				}
+			}
+			else
+			{
+				output[outputPosition++] = bytes[i];
+			}
+
             continue;
         }
 
@@ -137,9 +160,19 @@ __declspec(dllexport) void CompressWithCallback(unsigned char* bytes, int inputL
     *outputLength = outputPosition;
 }
 
+__declspec(dllexport) void CompressWithCallback(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, callback_t progressCallback)
+{
+	CompressWithCallbackExcept(bytes, inputLength, output, outputLength, NULL, 0, progressCallback);
+}
+
 __declspec(dllexport) void Compress(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength)
 {
     CompressWithCallback(bytes, inputLength, output, outputLength, NULL);
+}
+
+__declspec(dllexport) void CompressExcept(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, int* exceptions, int numberOfExceptions)
+{
+	CompressWithCallbackExcept(bytes, inputLength, output, outputLength, exceptions, numberOfExceptions, NULL);
 }
 
 #ifdef _MANAGED

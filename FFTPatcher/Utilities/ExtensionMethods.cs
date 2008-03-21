@@ -40,6 +40,25 @@ namespace FFTPatcher
 		#region Methods (14) 
 
         /// <summary>
+        /// Returns the location of every item in the list that is equal to a given item.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <param name="item">The item to match.</param>
+        public static IList<int> IndexOfEvery<T>( this IList<T> list, T item ) where T : IEquatable<T>
+        {
+            List<int> result = new List<int>();
+            for( int i = 0; i < list.Count; i++ )
+            {
+                if( list[i].Equals( item ) )
+                {
+                    result.Add( i );
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Finds the specified item in the list.
         /// </summary>
         public static T Find<T>( this IList<T> list, Predicate<T> match ) where T : class

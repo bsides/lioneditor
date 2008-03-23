@@ -28,10 +28,12 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class WORLDBIN : IStringSectioned
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (4) 
 
         private static string[][] entryNames;
         private static IDictionary<string, long> locations;
+        private static readonly int[] sectionLengths = 
+            new int[] { 190, 156, 513, 32, 173, 95, 10, 74 };
         private static string[] sectionNames;
 
 		#endregion Static Fields 
@@ -55,7 +57,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <summary>
         /// Gets the character map used for this file.
         /// </summary>
-        public TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSX; } }
+        public GenericCharMap CharMap { get { return TextUtilities.PSXMap; } }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.
@@ -132,8 +134,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public IList<IList<string>> Sections { get; private set; }
 
-        private static readonly int[] sectionLengths = 
-            new int[] { 190, 156, 513, 32, 173, 95, 10, 74 };
 
 		#endregion Properties 
 
@@ -392,7 +392,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// </summary>
         public IList<byte> ToUncompressedBytes()
         {
-            PSXCharMap map = TextUtilities.PSXMap;
+            GenericCharMap map = CharMap;
 
             List<List<byte>> byteSections = new List<List<byte>>( NumberOfSections );
             foreach( IList<string> section in Sections )

@@ -73,7 +73,8 @@ namespace FFTPatcher.TextEditor
         public CompressedStringSectionedEditor()
         {
             InitializeComponent();
-            compressButton.Click += new EventHandler( compressButton_Click );
+            compressButton.Click += compressButton_Click;
+            errorLabel.VisibleChanged += errorLabel_VisibleChanged;
         }
 
 		#endregion Constructors 
@@ -85,7 +86,7 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Delegates 
 
-		#region Methods (3) 
+		#region Methods (4) 
 
 
         private void compressButton_Click( object sender, EventArgs e )
@@ -128,6 +129,11 @@ namespace FFTPatcher.TextEditor
                     {
                         compressionProgressBar.Value = progress;
                     } ), e.Progress );
+        }
+
+        private void errorLabel_VisibleChanged( object sender, EventArgs e )
+        {
+            compressButton.Enabled = !error;
         }
 
 

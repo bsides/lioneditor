@@ -24,9 +24,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class WORLDLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (4) 
 
         private static string[][] entryNames;
+        private static readonly IDictionary<int, IList<int>> exclusions;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
@@ -36,16 +37,6 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
         private const int fftpackIndex = 44;
         private const string filename = "WORLD.LZW";
-        private static readonly int[] exclusions;
-
-        /// <summary>
-        /// Gets the entries that are excluded from compression.
-        /// </summary>
-        /// <value></value>
-        public override IList<int> ExcludedEntries
-        {
-            get { return exclusions; }
-        }
 
 		#endregion Fields 
 
@@ -144,10 +135,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
             temp.AddRange( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 224, 226 ) );
             entryNames[22] = temp.ToArray();
 
-            exclusions = new int[3];
-            exclusions[0] = 1 + 1 + 1 + 1 + 1 + 1 + 169 + 316 + 1024 + 1024;
-            exclusions[1] = 1 + 1 + 1 + 1 + 1 + 1 + 169 + 316 + 1024 + 1024 + 10;
-            exclusions[2] = 1 + 1 + 1 + 1 + 1 + 1 + 169 + 316 + 1024 + 1024 + 11 + 2 + 96 + 1 + 512 + 77 + 76 + 1 + 44 + 24;
+            exclusions = new Dictionary<int, IList<int>>();
+            exclusions.Add( 10, new int[] { 0, 10 } );
+            exclusions.Add( 20, new int[] { 0 } );
         }
 
         private WORLDLZW()

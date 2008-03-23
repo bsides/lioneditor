@@ -36,7 +36,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the character map used for this file.
         /// </summary>
-        protected abstract TextUtilities.CharMapType CharMap { get; }
+        protected abstract GenericCharMap CharMap { get; }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.

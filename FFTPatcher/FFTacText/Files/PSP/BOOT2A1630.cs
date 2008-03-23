@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT2A1630 : AbstractBootBinFile
+    public class BOOT2A1630 : BasePSPCompressedFile, IBootBin
     {
 
 		#region Static Fields (3) 
@@ -38,7 +38,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (7) 
+
+
+        ICollection<long> IBootBin.Locations
+        {
+            get { return (this as AbstractStringSectioned).Locations.Values; }
+        }
+
 
 
         /// <summary>
@@ -137,8 +144,23 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
         public BOOT2A1630( IList<byte> bytes )
-            : base( bytes )
         {
+            Sections = new List<IList<string>>( NumberOfSections );
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                uint start = Utilities.BytesToUInt32( bytes.Sub( i * 4, i * 4 + 3 ) );
+                uint stop = Utilities.BytesToUInt32( bytes.Sub( (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
+                if( i == NumberOfSections - 1 )
+                {
+                    stop = (uint)bytes.Count - 1 - dataStart;
+                }
+
+                IList<byte> thisSection = TextUtilities.Decompress(
+                    bytes,
+                    bytes.Sub( (int)(start + dataStart), (int)(stop + dataStart) ),
+                    (int)(start + dataStart) );
+                Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
+            }
         }
 
 		#endregion Constructors 

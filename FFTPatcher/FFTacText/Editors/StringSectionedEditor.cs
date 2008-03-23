@@ -33,7 +33,7 @@ namespace FFTPatcher.TextEditor
 
 		#region Fields (3) 
 
-        private bool error = false;
+        protected bool error = false;
         private bool ignoreChanges = false;
         private IStringSectioned strings;
 
@@ -84,6 +84,7 @@ namespace FFTPatcher.TextEditor
             currentString.Font = new Font( "Arial Unicode MS", 10 );
             filesListBox.SelectedIndexChanged += filesListBox_SelectedIndexChanged;
             saveButton.Click += saveButton_Click;
+            errorLabel.VisibleChanged += errorLabel_VisibleChanged;
         }
 
 		#endregion Constructors 
@@ -94,7 +95,7 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Events 
 
-		#region Methods (12) 
+		#region Methods (13) 
 
 
         private void AddSections()
@@ -127,9 +128,14 @@ namespace FFTPatcher.TextEditor
             UpdateCurrentString();
         }
 
+        private void errorLabel_VisibleChanged( object sender, EventArgs e )
+        {
+            saveButton.Enabled = filesListBox.SelectedIndex > -1 && !error;
+        }
+
         private void filesListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
-            saveButton.Enabled = filesListBox.SelectedIndex > -1;
+            saveButton.Enabled = filesListBox.SelectedIndex > -1 && !error;
         }
 
         private void FireSavingFileEvent( string suggested )
@@ -195,6 +201,7 @@ namespace FFTPatcher.TextEditor
             {
                 lengthLabel.Text = string.Format( LengthLabelFormatString, strings.EstimatedLength );
                 maxLengthLabel.Text = string.Format( "Max: {0} bytes", strings.MaxLength );
+
                 error = false;
                 errorLabel.Visible = false;
             }
@@ -204,7 +211,6 @@ namespace FFTPatcher.TextEditor
                 errorLabel.Visible = true;
             }
         }
-
 
 		#endregion Methods 
 

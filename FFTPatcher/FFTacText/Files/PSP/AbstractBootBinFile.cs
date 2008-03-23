@@ -27,9 +27,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
 		#region Properties (1) 
 
 
-        public long Location
+        ICollection<long> IBootBin.Locations
         {
-            get { return Locations["BOOT.BIN"]; }
+            get { return (this as AbstractStringSectioned).Locations.Values; }
         }
 
 

@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <set>
+#include "CompressionJumps.h"
 
 #define MIN(x,y) (((x)<(y))?(x):(y))
 #define MAX(x,y) (((x)>(y))?(x):(y))
@@ -38,17 +39,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-int CompressionJumps[3793];
-
-void BuildCompressionJumps(void)
-{
-    if ((CompressionJumps[3792]==3820) && (CompressionJumps[2634]==2654)) return;
-    for (int i = 0; i <= 3820; i++)
-    {
-        int x = i - (i/256) * 2;
-        CompressionJumps[x] = i;
-    }
-}
 
 TCHAR szReturn[MAX_PATH];
 
@@ -95,84 +85,42 @@ void AddJump(unsigned char* destination, int jump, int length)
 
 typedef void (__stdcall *callback_t)(int);
 
-__declspec(dllexport) void CompressWithCallbackExcept(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, int* exceptions, int numberOfExceptions, callback_t progressCallback)
+__declspec(dllexport) void CompressSection(unsigned char* input, int inputLength, unsigned char* output, int* outputPosition)
 {
-	std::set<int> exceptionsSet;
-
-	for (int i = 0; i < numberOfExceptions; i++) exceptionsSet.insert(exceptions[i]);
-
-    BuildCompressionJumps();
-
-    int outputPosition = 0;
     int loc = 0;
     int size = 0;
-    int currentEntry = 0;
 
     for (int i = 0; i < inputLength; i++)
     {
-        if (bytes[i] == 0xFE)
+        if (input[i] == 0xFE)
         {
-            if (progressCallback != NULL)
-            {
-                progressCallback(i*100/inputLength);
-            }
-
-			currentEntry++;
-
-			if (exceptionsSet.find(currentEntry) != exceptionsSet.end())
-			{
-				output[outputPosition++] = bytes[i]; // Copy the 0xFE
-
-				while (((i+1) < inputLength) && (bytes[i+1] != 0xFE))
-				{
-					output[outputPosition++] = bytes[++i];
-				}
-			}
-			else
-			{
-				output[outputPosition++] = bytes[i];
-			}
-
+			output[*outputPosition] = input[i];
+			(*outputPosition) += 1;
             continue;
         }
 
-        int fe = FindByte(0xFE, bytes, i, i+MIN(35, inputLength-i)-1);
+        int fe = FindByte(0xFE, input, i, i+MIN(35, inputLength-i)-1);
         if (fe == -1) fe = i + 35;
 
         if (GetPositionOfMaxSubArray(
-               output+MAX(0,outputPosition-3792),
-               MIN(outputPosition, 3792),
-               bytes+i,
+               output+MAX(0,*outputPosition-3792),
+               MIN(*outputPosition, 3792),
+               input+i,
                fe - i,
                &loc,
                &size))
         {
-            AddJump(output+outputPosition, loc, size);
-            outputPosition += 3;
+            AddJump(output+*outputPosition, loc, size);
+            (*outputPosition) += 3;
             i += size -1;
         }
         else
         {
-            output[outputPosition++] = bytes[i];
+			output[*outputPosition] = input[i];
+			(*outputPosition) += 1;
+            continue;
         }
     }
-
-    *outputLength = outputPosition;
-}
-
-__declspec(dllexport) void CompressWithCallback(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, callback_t progressCallback)
-{
-	CompressWithCallbackExcept(bytes, inputLength, output, outputLength, NULL, 0, progressCallback);
-}
-
-__declspec(dllexport) void Compress(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength)
-{
-    CompressWithCallback(bytes, inputLength, output, outputLength, NULL);
-}
-
-__declspec(dllexport) void CompressExcept(unsigned char* bytes, int inputLength, unsigned char* output, int* outputLength, int* exceptions, int numberOfExceptions)
-{
-	CompressWithCallbackExcept(bytes, inputLength, output, outputLength, exceptions, numberOfExceptions, NULL);
 }
 
 #ifdef _MANAGED

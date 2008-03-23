@@ -45,7 +45,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the character map that is used for this file.
         /// </summary>
-        public abstract TextUtilities.CharMapType CharMap { get; }
+        public abstract GenericCharMap CharMap { get; }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.
@@ -124,7 +124,7 @@ namespace FFTPatcher.TextEditor.Files
 
 		#endregion Constructors 
 
-		#region Methods (11) 
+		#region Methods (12) 
 
 
         private void ReadXmlBase64( XmlReader reader )
@@ -232,6 +232,24 @@ namespace FFTPatcher.TextEditor.Files
             return null;
         }
 
+        public IList<IList<byte>> GetSectionByteArrays()
+        {
+            IList<IList<byte>> result = new List<IList<byte>>( NumberOfSections );
+
+            foreach( IList<string> section in Sections )
+            {
+                List<byte> sectionBytes = new List<byte>();
+                foreach( string s in section )
+                {
+                    sectionBytes.AddRange( CharMap.StringToByteArray( s ) );
+                }
+
+                result.Add( sectionBytes );
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Generates an object from its XML representation.
         /// </summary>
@@ -303,19 +321,7 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public virtual IList<byte> ToUncompressedBytes()
         {
-            GenericCharMap map = CharMap == TextUtilities.CharMapType.PSX ?
-                TextUtilities.PSXMap as GenericCharMap :
-                TextUtilities.PSPMap as GenericCharMap;
-            List<List<byte>> byteSections = new List<List<byte>>( NumberOfSections );
-            foreach( IList<string> section in Sections )
-            {
-                List<byte> sectionBytes = new List<byte>();
-                foreach( string s in section )
-                {
-                    sectionBytes.AddRange( map.StringToByteArray( s ) );
-                }
-                byteSections.Add( sectionBytes );
-            }
+            IList<IList<byte>> byteSections = GetSectionByteArrays();
 
             List<byte> result = new List<byte>();
             result.AddRange( new byte[] { 0x00, 0x00, 0x00, 0x00 } );

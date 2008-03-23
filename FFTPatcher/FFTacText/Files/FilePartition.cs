@@ -36,7 +36,6 @@ namespace FFTPatcher.TextEditor.Files
 
 		#region Properties (5) 
 
-
         /// <summary>
         /// Gets the entries.
         /// </summary>
@@ -67,23 +66,21 @@ namespace FFTPatcher.TextEditor.Files
 
 		#region Constructors (3) 
 
-        private FilePartition( IPartitionedFile owner, IList<string> entryNames, int maxLength, TextUtilities.CharMapType charmap )
+        private FilePartition( IPartitionedFile owner, IList<string> entryNames, int maxLength, GenericCharMap charmap )
         {
             length = maxLength;
             Owner = owner;
-            this.charmap = charmap == TextUtilities.CharMapType.PSP ?
-                TextUtilities.PSPMap as GenericCharMap :
-                TextUtilities.PSXMap as GenericCharMap;
+            this.charmap = charmap;
             EntryNames = entryNames;
         }
 
-        public FilePartition( IPartitionedFile owner, IList<byte> bytes, IList<string> entryNames, int maxLength, TextUtilities.CharMapType charmap )
+        public FilePartition( IPartitionedFile owner, IList<byte> bytes, IList<string> entryNames, int maxLength, GenericCharMap charmap )
             : this( owner, entryNames, maxLength, charmap )
         {
             Entries = TextUtilities.ProcessList( bytes.Sub( 0, bytes.LastIndexOf( (byte)0xFE ) ), charmap );
         }
 
-        public FilePartition( IPartitionedFile owner, IList<string> entries, int maxLength, IList<string> entryNames, TextUtilities.CharMapType charmap )
+        public FilePartition( IPartitionedFile owner, IList<string> entries, int maxLength, IList<string> entryNames, GenericCharMap charmap )
             : this( owner, entryNames, maxLength, charmap )
         {
             Entries = entries;

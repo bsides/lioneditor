@@ -191,7 +191,7 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.TextBox currentString;
         private System.Windows.Forms.Label lengthLabel;
         private System.Windows.Forms.Label maxLengthLabel;
-        private System.Windows.Forms.Label errorLabel;
+        protected System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.ListBox filesListBox;
         private System.Windows.Forms.Button saveButton;
         protected System.Windows.Forms.SplitContainer splitContainer;

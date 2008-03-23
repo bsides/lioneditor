@@ -28,7 +28,7 @@ namespace FFTPatcher.TextEditor.Files
     public abstract class AbstractCompressedFile : AbstractStringSectioned, ICompressed
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
 
         /// <summary>
@@ -39,13 +39,16 @@ namespace FFTPatcher.TextEditor.Files
             get { return (int)(base.EstimatedLength * 0.65346430772862594919277); }
         }
 
+
+
         /// <summary>
         /// Gets the entries that are excluded from compression.
         /// </summary>
-        public virtual IList<int> ExcludedEntries
+        public virtual IDictionary<int, IList<int>> ExcludedEntries
         {
-            get { return new int[0]; }
+            get { return null; }
         }
+
 
 		#endregion Properties 
 
@@ -93,7 +96,7 @@ namespace FFTPatcher.TextEditor.Files
                 result.Add( 0x00 );
             }
 
-            return result;
+            return result.Sub( 0, 0x7F );
         }
 
         private void FireCompressionFinishedEvent( IList<byte> result )
@@ -117,28 +120,27 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public IList<byte> Compress()
         {
-            TextUtilities.ProgressCallback p = new TextUtilities.ProgressCallback(
+           TextUtilities.ProgressCallback p = new TextUtilities.ProgressCallback(
                 delegate( int progress )
                 {
                     FireProgressChangedEvent( progress );
                 } );
 
-            IList<byte> bytes = TextUtilities.Recompress( ToUncompressedBytes().Sub( 0x80 ), ExcludedEntries, p );
 
-            IList<int> feLocations = bytes.IndexOfEvery( (byte)0xFE );
+            TextUtilities.CompressionResult r = TextUtilities.Compress( this, ExcludedEntries, p );
 
-            List<UInt32> sectionOffsets = new List<UInt32>( new UInt32[32] );
-            //sectionOffsets.Add( 0 );
-            //int last = 0;
-            //foreach( IList<string> section in Sections )
-            //{
-            //    last += section.Count;
-            //    sectionOffsets.Add( (UInt32)feLocations[last - 1] + 1 );
-            //}
-
-            List<byte> result = new List<byte>( 0x80 + bytes.Count );
-            result.AddRange( BuildHeaderFromSectionOffsets( sectionOffsets ) );
-            result.AddRange( bytes );
+            List<UInt32> offsets = new List<UInt32>( 32 );
+            offsets.Add( 0 );
+            int pos = 0;
+            for( int i = 0; i < r.SectionLengths.Count; i++ )
+            {
+                pos += r.SectionLengths[i];
+                offsets.Add( (UInt32)pos );
+            }
+            
+            List<byte> result = new List<byte>( 0x80 + r.Bytes.Count );
+            result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
+            result.AddRange( r.Bytes );
 
             FireCompressionFinishedEvent( result );
 

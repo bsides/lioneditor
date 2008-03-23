@@ -21,13 +21,13 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public abstract class BasePSPSectionedFile : AbstractCompressedFile
+    public abstract class BasePSPSectionedFile : AbstractStringSectioned
     {
 
 		#region Properties (1) 
 
 
-        public override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSP; } }
+        public override GenericCharMap CharMap { get { return TextUtilities.PSPMap; } }
 
 
 		#endregion Properties 

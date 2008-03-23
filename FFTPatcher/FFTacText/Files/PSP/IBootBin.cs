@@ -29,7 +29,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the location of this file in BOOT.BIN
         /// </summary>
-        long Location { get; }
+        System.Collections.Generic.ICollection<long> Locations { get; }
         
         /// <summary>
         /// Converts this file into an array of bytes.

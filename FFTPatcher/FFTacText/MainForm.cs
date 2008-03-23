@@ -80,6 +80,7 @@ namespace FFTPatcher.TextEditor
 
                     menuItem_Click( menuItems[0], EventArgs.Empty );
                     saveMenuItem.Enabled = true;
+                    allowedSymbolsMenuItem.Enabled = true;
                 }
             }
         }
@@ -91,7 +92,10 @@ namespace FFTPatcher.TextEditor
 
         public MainForm()
         {
+#if DEBUG
             FillPSPFiles();
+            FillPSXFiles();
+#endif
             InitializeComponent();
 
             stringSectionedEditor.Visible = false;
@@ -106,7 +110,8 @@ namespace FFTPatcher.TextEditor
             saveMenuItem.Click += saveMenuItem_Click;
             openMenuItem.Click += openMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
-
+            aboutMenuItem.Click += aboutMenuItem_Click;
+            allowedSymbolsMenuItem.Click += allowedSymbolsMenuItem_Click;
             defaultPspMenuItems = new MenuItem[2] { 
                 new MenuItem( "-" ), 
                 new MenuItem( "Patch ISO...", new EventHandler( patchMenuItem_Click ) ) };
@@ -114,8 +119,13 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Constructors 
 
-		#region Methods (19) 
+		#region Methods (22) 
 
+
+        private void aboutMenuItem_Click( object sender, EventArgs e )
+        {
+            new About().ShowDialog( this );
+        }
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
         {
@@ -123,6 +133,11 @@ namespace FFTPatcher.TextEditor
             owner.MenuItems.Add( result );
             result.Tag = tag;
             return result;
+        }
+
+        private void allowedSymbolsMenuItem_Click( object sender, EventArgs e )
+        {
+            CharmapForm.Show( File.CharMap );
         }
 
         private List<MenuItem> BuildMenuItems()
@@ -340,6 +355,32 @@ namespace FFTPatcher.TextEditor
             }
 
             using( FileStream fs = new FileStream( "Filled.xml", FileMode.Create ) )
+            {
+                xs.Serialize( fs, mine );
+            }
+        }
+
+        [Conditional( "DEBUG" )]
+        private void FillPSXFiles()
+        {
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+            FFTText mine = null;
+            using( MemoryStream ms = new MemoryStream( PSXResources.DefaultDocument ) )
+            {
+                mine = xs.Deserialize( ms ) as FFTText;
+            }
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES" );
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES" );
+
+            foreach( IStringSectioned sectioned in mine.SectionedFiles )
+            {
+                FillFileExcept(
+                    sectioned,
+                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ),
+                    new int[0] );
+            }
+
+            using( FileStream fs = new FileStream( "FilledPSX.xml", FileMode.Create ) )
             {
                 xs.Serialize( fs, mine );
             }

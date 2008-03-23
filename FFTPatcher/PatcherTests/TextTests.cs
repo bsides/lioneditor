@@ -23,11 +23,11 @@ namespace PatcherTests
             int count = 0;
             foreach( IList<string> s in w.Sections )
             {
-                foreach( string st in s )
-                {
+                //foreach( string st in s )
+                //{
                     newExclusions.Add( count );
                     count++;
-                }
+                //}
             }
             fi.SetValue( null, newExclusions.ToArray() );
 

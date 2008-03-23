@@ -17,7 +17,6 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 namespace FFTPatcher.TextEditor.Files.PSX
 {
     public abstract class BasePSXCompressedFile : AbstractCompressedFile
@@ -26,7 +25,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Properties (1) 
 
 
-        public override TextUtilities.CharMapType CharMap { get { return TextUtilities.CharMapType.PSX; } }
+        public override GenericCharMap CharMap { get { return TextUtilities.PSXMap; } }
 
 
 		#endregion Properties 

@@ -63,7 +63,7 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Properties 
 
-		#region Methods (4) 
+		#region Methods (5) 
 
 
         private Dictionary<string, int> BuildValueToKeyMapping()
@@ -143,6 +143,19 @@ namespace FFTPatcher.TextEditor
         }
 
         /// <summary>
+        /// Converts a collection of FFTacText strings into a FFT text byte array.
+        /// </summary>
+        public byte[] StringsToByteArray( IList<string> strings )
+        {
+            List<byte> result = new List<byte>();
+            foreach( string s in strings )
+            {
+                result.AddRange( StringToByteArray( s ) );
+            }
+            return result.ToArray();
+        }
+
+        /// <summary>
         /// Converts a FFTacText string into a FFT text byte array.
         /// </summary>
         public byte[] StringToByteArray( string s )
@@ -211,5 +224,5 @@ namespace FFTPatcher.TextEditor
     public class PSXCharMap : GenericCharMap
     {
     }
-
+   
 }

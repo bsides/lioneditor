@@ -50,6 +50,7 @@ namespace FFTPatcher.TextEditor
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.MenuItem separator1;
             System.Windows.Forms.MenuItem separator2;
+            System.Windows.Forms.MenuItem separator3;
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.fileMenuItem = new System.Windows.Forms.MenuItem();
             this.newPsxMenuItem = new System.Windows.Forms.MenuItem();
@@ -60,13 +61,16 @@ namespace FFTPatcher.TextEditor
             this.psxMenuItem = new System.Windows.Forms.MenuItem();
             this.pspMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
-            this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
-            this.compressedStringSectionedEditor = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
-            this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.helpMenuItem = new System.Windows.Forms.MenuItem();
+            this.allowedSymbolsMenuItem = new System.Windows.Forms.MenuItem();
+            this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
+            this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
+            this.compressedStringSectionedEditor = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
+            separator3 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // separator1
@@ -85,7 +89,7 @@ namespace FFTPatcher.TextEditor
             this.fileMenuItem,
             this.psxMenuItem,
             this.pspMenuItem,
-            this.aboutMenuItem} );
+            this.helpMenuItem} );
             // 
             // fileMenuItem
             // 
@@ -140,15 +144,44 @@ namespace FFTPatcher.TextEditor
             // 
             // aboutMenuItem
             // 
-            this.aboutMenuItem.Index = 3;
+            this.aboutMenuItem.Index = 2;
             this.aboutMenuItem.Text = "About...";
+            // 
+            // helpMenuItem
+            // 
+            this.helpMenuItem.Index = 3;
+            this.helpMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.allowedSymbolsMenuItem,
+            separator3,
+            this.aboutMenuItem} );
+            this.helpMenuItem.Text = "Help";
+            // 
+            // separator3
+            // 
+            separator3.Index = 1;
+            separator3.Text = "-";
+            // 
+            // allowedSymbolsMenuItem
+            // 
+            this.allowedSymbolsMenuItem.Enabled = false;
+            this.allowedSymbolsMenuItem.Index = 0;
+            this.allowedSymbolsMenuItem.Text = "Allowed symbols";
+            // 
+            // partitionEditor
+            // 
+            this.partitionEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.partitionEditor.Location = new System.Drawing.Point( 0, 0 );
+            this.partitionEditor.Name = "partitionEditor";
+            this.partitionEditor.Size = new System.Drawing.Size( 543, 374 );
+            this.partitionEditor.Strings = null;
+            this.partitionEditor.TabIndex = 2;
             // 
             // stringSectionedEditor
             // 
             this.stringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.stringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
             this.stringSectionedEditor.Name = "stringSectionedEditor";
-            this.stringSectionedEditor.Size = new System.Drawing.Size( 543, 416 );
+            this.stringSectionedEditor.Size = new System.Drawing.Size( 543, 374 );
             this.stringSectionedEditor.Strings = null;
             this.stringSectionedEditor.TabIndex = 0;
             // 
@@ -157,24 +190,15 @@ namespace FFTPatcher.TextEditor
             this.compressedStringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.compressedStringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
             this.compressedStringSectionedEditor.Name = "compressedStringSectionedEditor";
-            this.compressedStringSectionedEditor.Size = new System.Drawing.Size( 543, 416 );
+            this.compressedStringSectionedEditor.Size = new System.Drawing.Size( 543, 374 );
             this.compressedStringSectionedEditor.Strings = null;
             this.compressedStringSectionedEditor.TabIndex = 1;
-            // 
-            // partitionEditor
-            // 
-            this.partitionEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.partitionEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.partitionEditor.Name = "partitionEditor";
-            this.partitionEditor.Size = new System.Drawing.Size( 543, 416 );
-            this.partitionEditor.Strings = null;
-            this.partitionEditor.TabIndex = 2;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 543, 416 );
+            this.ClientSize = new System.Drawing.Size( 543, 374 );
             this.Controls.Add( this.partitionEditor );
             this.Controls.Add( this.stringSectionedEditor );
             this.Controls.Add( this.compressedStringSectionedEditor );
@@ -202,6 +226,8 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem aboutMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.MenuItem helpMenuItem;
+        private System.Windows.Forms.MenuItem allowedSymbolsMenuItem;
 
     }
 }

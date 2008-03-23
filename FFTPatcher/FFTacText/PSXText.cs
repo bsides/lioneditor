@@ -48,8 +48,13 @@ namespace FFTPatcher.TextEditor
 
 		#endregion Fields 
 
-		#region Properties (3) 
+		#region Properties (4) 
 
+
+        /// <summary>
+        /// Gets the character map.
+        /// </summary>
+        public GenericCharMap CharMap { get; private set; }
 
         /// <summary>
         /// Gets the filetype.
@@ -177,6 +182,8 @@ namespace FFTPatcher.TextEditor
             reader.ReadEndElement();
 
             GenericCharMap charmap = Filetype == Filetype.PSP ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
+            CharMap = charmap;
+
             if( version != CurrentVersion )
             {
                 foreach( IStringSectioned stringSectioned in SectionedFiles )
@@ -231,7 +238,11 @@ namespace FFTPatcher.TextEditor
 
             foreach( IBootBin bootFile in bootBinFiles )
             {
-                PspIso.UpdateBootBin( stream, bootFile.Location, bootFile.ToByteArray() );
+                byte[] bytes = bootFile.ToByteArray();
+                foreach( long location in bootFile.Locations )
+                {
+                    PspIso.UpdateBootBin( stream, location, bytes );
+                }
             }
         }
 

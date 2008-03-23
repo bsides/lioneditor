@@ -27,7 +27,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 		#region Static Fields (4) 
 
         private static string[][] entryNames;
-        private static readonly int[] exclusions;
+        private static readonly IDictionary<int, IList<int>> exclusions;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
@@ -39,7 +39,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Fields 
 
-		#region Properties (7) 
+		#region Properties (6) 
 
 
         /// <summary>
@@ -56,15 +56,6 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// </summary>
         /// <value></value>
         public override IList<IList<string>> EntryNames { get { return entryNames; } }
-
-        /// <summary>
-        /// Gets the entries that are excluded from compression.
-        /// </summary>
-        /// <value></value>
-        public override IList<int> ExcludedEntries
-        {
-            get { return exclusions; }
-        }
 
         /// <summary>
         /// Gets the filename.
@@ -84,6 +75,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 {
                     locations = new Dictionary<string, long>();
                     locations.Add( "BOOT.BIN", 0x28E5EC );
+                    locations.Add( "BOOT.BIN ", 0x30A198 );
                 }
                 return locations;
             }
@@ -159,9 +151,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 "Ashura","Kotetsu","Osafune","Murasame","Ama-no-Murakumo","Kiyomori","Muramasa","Kiku-ichimonji",
                 "Masamune","Chirijiraden","" };
 
-            exclusions = new int[2];
-            exclusions[0] = 1 + 1 + 39 + 80 + 1 + 1 + 169 + 316 + 26 + 64;
-            exclusions[1] = 1 + 1 + 39 + 80 + 1 + 1 + 169 + 316 + 26 + 64 + 10;
+            exclusions = new Dictionary<int, IList<int>>();
+            exclusions.Add( 10, new int[] { 0, 10 } );
         }
 
         private BOOT28E5EC()

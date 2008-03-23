@@ -73,6 +73,41 @@ namespace FFTPatcher.Editors
 
 		#region Constructors (1) 
 
+        private static List<string> weaponFormulaItems;
+        private static List<string> itemFormulaItems;
+
+        static ItemEditor()
+        {
+            weaponFormulaItems = new List<string>( 256 );
+            weaponFormulaItems.Add( "00" );
+            weaponFormulaItems.AddRange( new string[] {
+                "01 - Normal", "02 - Cast spell at random", "03 - Gun",
+                "04 - Elemental gun", "05", "06 - Drain HP", "07 - Restore HP" } );
+            for( int i = 8; i < 256; i++ )
+            {
+                weaponFormulaItems.Add( string.Format( "{0:X2}", i ) );
+            }
+
+            itemFormulaItems = new List<string>( 256 );
+            Dictionary<int, string> t = new Dictionary<int, string>( 5 );
+            t.Add( 0x38, "Remove status" );
+            t.Add( 0x48, "Restore 10*X HP" );
+            t.Add( 0x49, "Restore 10*X MP" );
+            t.Add( 0x4A, "Restore all HP/MP" );
+            t.Add( 0x4B, "Remove status and restore (1..(X-1)) HP" );
+            for( int i = 0; i < 256; i++ )
+            {
+                if( t.ContainsKey( i ) )
+                {
+                    itemFormulaItems.Add( t[i] );
+                }
+                else
+                {
+                    itemFormulaItems.Add( string.Format( "{0:X2}", i ) );
+                }
+            }
+        }
+
         public ItemEditor()
         {
             InitializeComponent();
@@ -80,11 +115,11 @@ namespace FFTPatcher.Editors
 
             spinners.AddRange( new NumericUpDownWithDefault[] { 
                 paletteSpinner, graphicSpinner, enemyLevelSpinner, itemAttributesSpinner, priceSpinner, 
-                weaponRangeSpinner, weaponFormulaSpinner, weaponPowerSpinner, weaponEvadePercentageSpinner, weaponSpellStatusSpinner, 
+                weaponRangeSpinner, weaponPowerSpinner, weaponEvadePercentageSpinner, weaponSpellStatusSpinner, 
                 armorHPBonusSpinner, armorMPBonusSpinner, 
                 shieldMagicBlockRateSpinner, shieldPhysicalBlockRateSpinner, 
                 accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateLabel, 
-                chemistItemFormulaSpinner, chemistItemSpellStatusSpinner, chemistItemXSpinner } );
+                chemistItemSpellStatusSpinner, chemistItemXSpinner } );
             comboBoxes.AddRange( new ComboBoxWithDefault[] { itemTypeComboBox, shopAvailabilityComboBox } );
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
@@ -94,6 +129,9 @@ namespace FFTPatcher.Editors
             {
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
+
+            weaponFormulaComboBox.SelectedIndexChanged += weaponFormulaComboBox_SelectedIndexChanged;
+            chemistItemFormulaComboBox.SelectedIndexChanged += chemistItemFormulaComboBox_SelectedIndexChanged;
 
             itemAttributesCheckedListBox.ItemCheck += itemAttributesCheckedListBox_ItemCheck;
             weaponAttributesCheckedListBox.ItemCheck += weaponAttributesCheckedListBox_ItemCheck;
@@ -109,7 +147,26 @@ namespace FFTPatcher.Editors
             weaponSpellStatusLabel.TabStop = false;
             itemAttributesLabel.Click += itemAttributesLabel_Click;
             itemAttributesLabel.TabStop = false;
+            weaponFormulaComboBox.DataSource = weaponFormulaItems;
+            chemistItemFormulaComboBox.DataSource = itemFormulaItems;
+
             ignoreChanges = false;
+        }
+
+        private void chemistItemFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && item is ChemistItem )
+            {
+                (item as ChemistItem).Formula = (byte)chemistItemFormulaComboBox.SelectedIndex;
+            }
+        }
+
+        private void weaponFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && item is Weapon )
+            {
+                (item as Weapon).Formula = (byte)weaponFormulaComboBox.SelectedIndex;
+            }
         }
 
 		#endregion Constructors 
@@ -211,9 +268,9 @@ namespace FFTPatcher.Editors
                 weaponRangeSpinner.SetValueAndDefault(
                     w.Range,
                     w.WeaponDefault.Range );
-                weaponFormulaSpinner.SetValueAndDefault( 
-                    w.Formula, 
-                    w.WeaponDefault.Formula );
+                weaponFormulaComboBox.SetValueAndDefault(
+                    weaponFormulaComboBox.Items[w.Formula],
+                    weaponFormulaComboBox.Items[w.WeaponDefault.Formula] );
                 weaponPowerSpinner.SetValueAndDefault( 
                     w.WeaponPower, 
                     w.WeaponDefault.WeaponPower );
@@ -255,9 +312,9 @@ namespace FFTPatcher.Editors
             }
             else if( item is ChemistItem )
             {
-                chemistItemFormulaSpinner.SetValueAndDefault( 
-                    (item as ChemistItem).Formula,
-                    (item as ChemistItem).ChemistItemDefault.Formula );
+                chemistItemFormulaComboBox.SetValueAndDefault(
+                    chemistItemFormulaComboBox.Items[(item as ChemistItem).Formula],
+                    chemistItemFormulaComboBox.Items[(item as ChemistItem).ChemistItemDefault.Formula] );
                 chemistItemSpellStatusSpinner.SetValueAndDefault( 
                     (item as ChemistItem).InflictStatus,
                     (item as ChemistItem).ChemistItemDefault.InflictStatus );

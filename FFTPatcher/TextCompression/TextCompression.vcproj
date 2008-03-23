@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				Version="0.236"
 				LinkIncremental="2"
 				ModuleDefinitionFile="Export.def"
 				GenerateDebugInformation="true"

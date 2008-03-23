@@ -73,6 +73,26 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label unitIdLabel;
             System.Windows.Forms.Label jobsUnlockedLabel;
             System.Windows.Forms.Label initialDirectionLabel;
+            this.primarySkillComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.movementComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.secondaryActionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.supportComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.reactionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.rightHandComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.accessoryComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.leftHandComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.bodyComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.headComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.unknown12Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown11Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown10Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown9Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown8Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown7Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown6Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown4Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown3Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.unknown2Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.facingDirectionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.levelComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.dayComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
@@ -84,30 +104,10 @@ namespace FFTPatcher.Editors
             this.jobComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.unitIDSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.specialNameComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.unknown12Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown11Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown10Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown9Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown8Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown7Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown6Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown4Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown3Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown2Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.flags1CheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.jobLevelSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.monthComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.rightHandComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.accessoryComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.leftHandComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.bodyComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.headComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.paletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.primarySkillComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.movementComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.secondaryActionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.supportComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.reactionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.ySpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.xSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             skillsGroupBox = new System.Windows.Forms.GroupBox();
@@ -139,7 +139,6 @@ namespace FFTPatcher.Editors
             skillsGroupBox.SuspendLayout();
             equipmentGroupBox.SuspendLayout();
             unknownGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.unitIDSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown12Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown11Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown10Spinner)).BeginInit();
@@ -150,6 +149,7 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.unknown4Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown3Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown2Spinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unitIDSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobLevelSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).BeginInit();
@@ -220,6 +220,51 @@ namespace FFTPatcher.Editors
             primarySkillLabel.TabIndex = 20;
             primarySkillLabel.Text = "Primary";
             // 
+            // primarySkillComboBox
+            // 
+            this.primarySkillComboBox.FormattingEnabled = true;
+            this.primarySkillComboBox.Location = new System.Drawing.Point( 74, 15 );
+            this.primarySkillComboBox.Name = "primarySkillComboBox";
+            this.primarySkillComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.primarySkillComboBox.TabIndex = 0;
+            this.primarySkillComboBox.Tag = "SkillSet";
+            // 
+            // movementComboBox
+            // 
+            this.movementComboBox.FormattingEnabled = true;
+            this.movementComboBox.Location = new System.Drawing.Point( 74, 103 );
+            this.movementComboBox.Name = "movementComboBox";
+            this.movementComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.movementComboBox.TabIndex = 4;
+            this.movementComboBox.Tag = "Movement";
+            // 
+            // secondaryActionComboBox
+            // 
+            this.secondaryActionComboBox.FormattingEnabled = true;
+            this.secondaryActionComboBox.Location = new System.Drawing.Point( 74, 37 );
+            this.secondaryActionComboBox.Name = "secondaryActionComboBox";
+            this.secondaryActionComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.secondaryActionComboBox.TabIndex = 1;
+            this.secondaryActionComboBox.Tag = "SecondaryAction";
+            // 
+            // supportComboBox
+            // 
+            this.supportComboBox.FormattingEnabled = true;
+            this.supportComboBox.Location = new System.Drawing.Point( 74, 81 );
+            this.supportComboBox.Name = "supportComboBox";
+            this.supportComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.supportComboBox.TabIndex = 3;
+            this.supportComboBox.Tag = "Support";
+            // 
+            // reactionComboBox
+            // 
+            this.reactionComboBox.FormattingEnabled = true;
+            this.reactionComboBox.Location = new System.Drawing.Point( 74, 59 );
+            this.reactionComboBox.Name = "reactionComboBox";
+            this.reactionComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.reactionComboBox.TabIndex = 2;
+            this.reactionComboBox.Tag = "Reaction";
+            // 
             // equipmentGroupBox
             // 
             equipmentGroupBox.Controls.Add( accessoryLabel );
@@ -283,6 +328,51 @@ namespace FFTPatcher.Editors
             rightHandLabel.Size = new System.Drawing.Size( 61, 13 );
             rightHandLabel.TabIndex = 30;
             rightHandLabel.Text = "Right Hand";
+            // 
+            // rightHandComboBox
+            // 
+            this.rightHandComboBox.FormattingEnabled = true;
+            this.rightHandComboBox.Location = new System.Drawing.Point( 74, 15 );
+            this.rightHandComboBox.Name = "rightHandComboBox";
+            this.rightHandComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.rightHandComboBox.TabIndex = 0;
+            this.rightHandComboBox.Tag = "RightHand";
+            // 
+            // accessoryComboBox
+            // 
+            this.accessoryComboBox.FormattingEnabled = true;
+            this.accessoryComboBox.Location = new System.Drawing.Point( 74, 103 );
+            this.accessoryComboBox.Name = "accessoryComboBox";
+            this.accessoryComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.accessoryComboBox.TabIndex = 4;
+            this.accessoryComboBox.Tag = "Accessory";
+            // 
+            // leftHandComboBox
+            // 
+            this.leftHandComboBox.FormattingEnabled = true;
+            this.leftHandComboBox.Location = new System.Drawing.Point( 74, 37 );
+            this.leftHandComboBox.Name = "leftHandComboBox";
+            this.leftHandComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.leftHandComboBox.TabIndex = 1;
+            this.leftHandComboBox.Tag = "LeftHand";
+            // 
+            // bodyComboBox
+            // 
+            this.bodyComboBox.FormattingEnabled = true;
+            this.bodyComboBox.Location = new System.Drawing.Point( 74, 81 );
+            this.bodyComboBox.Name = "bodyComboBox";
+            this.bodyComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.bodyComboBox.TabIndex = 3;
+            this.bodyComboBox.Tag = "Body";
+            // 
+            // headComboBox
+            // 
+            this.headComboBox.FormattingEnabled = true;
+            this.headComboBox.Location = new System.Drawing.Point( 74, 59 );
+            this.headComboBox.Name = "headComboBox";
+            this.headComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.headComboBox.TabIndex = 2;
+            this.headComboBox.Tag = "Head";
             // 
             // spriteSetLabel
             // 
@@ -384,156 +474,6 @@ namespace FFTPatcher.Editors
             unknownGroupBox.TabIndex = 19;
             unknownGroupBox.TabStop = false;
             unknownGroupBox.Text = "Unknown";
-            // 
-            // jobLabel
-            // 
-            jobLabel.AutoSize = true;
-            jobLabel.Location = new System.Drawing.Point( 2, 72 );
-            jobLabel.Name = "jobLabel";
-            jobLabel.Size = new System.Drawing.Size( 24, 13 );
-            jobLabel.TabIndex = 31;
-            jobLabel.Text = "Job";
-            // 
-            // unitIdLabel
-            // 
-            unitIdLabel.AutoSize = true;
-            unitIdLabel.Location = new System.Drawing.Point( 160, 137 );
-            unitIdLabel.Name = "unitIdLabel";
-            unitIdLabel.Size = new System.Drawing.Size( 40, 13 );
-            unitIdLabel.TabIndex = 32;
-            unitIdLabel.Text = "Unit ID";
-            // 
-            // jobsUnlockedLabel
-            // 
-            jobsUnlockedLabel.AutoSize = true;
-            jobsUnlockedLabel.Location = new System.Drawing.Point( 2, 180 );
-            jobsUnlockedLabel.Name = "jobsUnlockedLabel";
-            jobsUnlockedLabel.Size = new System.Drawing.Size( 76, 13 );
-            jobsUnlockedLabel.TabIndex = 34;
-            jobsUnlockedLabel.Text = "Jobs unlocked";
-            // 
-            // initialDirectionLabel
-            // 
-            initialDirectionLabel.AutoSize = true;
-            initialDirectionLabel.Location = new System.Drawing.Point( 2, 202 );
-            initialDirectionLabel.Name = "initialDirectionLabel";
-            initialDirectionLabel.Size = new System.Drawing.Size( 74, 13 );
-            initialDirectionLabel.TabIndex = 36;
-            initialDirectionLabel.Text = "Initial direction";
-            // 
-            // facingDirectionComboBox
-            // 
-            this.facingDirectionComboBox.FormattingEnabled = true;
-            this.facingDirectionComboBox.Location = new System.Drawing.Point( 82, 199 );
-            this.facingDirectionComboBox.Name = "facingDirectionComboBox";
-            this.facingDirectionComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.facingDirectionComboBox.TabIndex = 14;
-            this.facingDirectionComboBox.Tag = "FacingDirection";
-            // 
-            // levelComboBox
-            // 
-            this.levelComboBox.FormattingEnabled = true;
-            this.levelComboBox.Location = new System.Drawing.Point( 82, 91 );
-            this.levelComboBox.Name = "levelComboBox";
-            this.levelComboBox.Size = new System.Drawing.Size( 142, 21 );
-            this.levelComboBox.TabIndex = 5;
-            this.levelComboBox.Tag = "Level";
-            // 
-            // dayComboBox
-            // 
-            this.dayComboBox.FormattingEnabled = true;
-            this.dayComboBox.Location = new System.Drawing.Point( 225, 47 );
-            this.dayComboBox.Name = "dayComboBox";
-            this.dayComboBox.Size = new System.Drawing.Size( 68, 21 );
-            this.dayComboBox.TabIndex = 3;
-            this.dayComboBox.Tag = "Day";
-            // 
-            // faithComboBox
-            // 
-            this.faithComboBox.FormattingEnabled = true;
-            this.faithComboBox.Location = new System.Drawing.Point( 82, 113 );
-            this.faithComboBox.Name = "faithComboBox";
-            this.faithComboBox.Size = new System.Drawing.Size( 65, 21 );
-            this.faithComboBox.TabIndex = 6;
-            this.faithComboBox.Tag = "Faith";
-            // 
-            // braveryComboBox
-            // 
-            this.braveryComboBox.FormattingEnabled = true;
-            this.braveryComboBox.Location = new System.Drawing.Point( 209, 113 );
-            this.braveryComboBox.Name = "braveryComboBox";
-            this.braveryComboBox.Size = new System.Drawing.Size( 65, 21 );
-            this.braveryComboBox.TabIndex = 7;
-            this.braveryComboBox.Tag = "Bravery";
-            // 
-            // preRequisiteJobComboBox
-            // 
-            this.preRequisiteJobComboBox.FormattingEnabled = true;
-            this.preRequisiteJobComboBox.Location = new System.Drawing.Point( 82, 177 );
-            this.preRequisiteJobComboBox.Name = "preRequisiteJobComboBox";
-            this.preRequisiteJobComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.preRequisiteJobComboBox.TabIndex = 12;
-            this.preRequisiteJobComboBox.Tag = "PrerequisiteJob";
-            // 
-            // flags2CheckedListBox
-            // 
-            this.flags2CheckedListBox.FormattingEnabled = true;
-            this.flags2CheckedListBox.Items.AddRange( new object[] {
-            "Always Present",
-            "Randomly Present",
-            "",
-            "Enemy",
-            "Control",
-            "Immortal",
-            "",
-            ""} );
-            this.flags2CheckedListBox.Location = new System.Drawing.Point( 422, 3 );
-            this.flags2CheckedListBox.Name = "flags2CheckedListBox";
-            this.flags2CheckedListBox.Size = new System.Drawing.Size( 121, 124 );
-            this.flags2CheckedListBox.TabIndex = 16;
-            this.flags2CheckedListBox.TabStop = false;
-            // 
-            // spriteSetComboBox
-            // 
-            this.spriteSetComboBox.FormattingEnabled = true;
-            this.spriteSetComboBox.Location = new System.Drawing.Point( 82, 3 );
-            this.spriteSetComboBox.Name = "spriteSetComboBox";
-            this.spriteSetComboBox.Size = new System.Drawing.Size( 142, 21 );
-            this.spriteSetComboBox.TabIndex = 0;
-            this.spriteSetComboBox.Tag = "SpriteSet";
-            // 
-            // jobComboBox
-            // 
-            this.jobComboBox.FormattingEnabled = true;
-            this.jobComboBox.Location = new System.Drawing.Point( 82, 69 );
-            this.jobComboBox.Name = "jobComboBox";
-            this.jobComboBox.Size = new System.Drawing.Size( 142, 21 );
-            this.jobComboBox.TabIndex = 4;
-            this.jobComboBox.Tag = "Job";
-            // 
-            // unitIDSpinner
-            // 
-            this.unitIDSpinner.Hexadecimal = true;
-            this.unitIDSpinner.Location = new System.Drawing.Point( 209, 135 );
-            this.unitIDSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.unitIDSpinner.Name = "unitIDSpinner";
-            this.unitIDSpinner.Size = new System.Drawing.Size( 45, 20 );
-            this.unitIDSpinner.TabIndex = 9;
-            this.unitIDSpinner.Tag = "UnitID";
-            this.unitIDSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // specialNameComboBox
-            // 
-            this.specialNameComboBox.FormattingEnabled = true;
-            this.specialNameComboBox.Location = new System.Drawing.Point( 82, 25 );
-            this.specialNameComboBox.Name = "specialNameComboBox";
-            this.specialNameComboBox.Size = new System.Drawing.Size( 142, 21 );
-            this.specialNameComboBox.TabIndex = 1;
-            this.specialNameComboBox.Tag = "SpecialName";
             // 
             // unknown12Spinner
             // 
@@ -685,6 +625,156 @@ namespace FFTPatcher.Editors
             this.unknown2Spinner.Tag = "Unknown2";
             this.unknown2Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // jobLabel
+            // 
+            jobLabel.AutoSize = true;
+            jobLabel.Location = new System.Drawing.Point( 2, 72 );
+            jobLabel.Name = "jobLabel";
+            jobLabel.Size = new System.Drawing.Size( 24, 13 );
+            jobLabel.TabIndex = 31;
+            jobLabel.Text = "Job";
+            // 
+            // unitIdLabel
+            // 
+            unitIdLabel.AutoSize = true;
+            unitIdLabel.Location = new System.Drawing.Point( 160, 137 );
+            unitIdLabel.Name = "unitIdLabel";
+            unitIdLabel.Size = new System.Drawing.Size( 40, 13 );
+            unitIdLabel.TabIndex = 32;
+            unitIdLabel.Text = "Unit ID";
+            // 
+            // jobsUnlockedLabel
+            // 
+            jobsUnlockedLabel.AutoSize = true;
+            jobsUnlockedLabel.Location = new System.Drawing.Point( 2, 180 );
+            jobsUnlockedLabel.Name = "jobsUnlockedLabel";
+            jobsUnlockedLabel.Size = new System.Drawing.Size( 76, 13 );
+            jobsUnlockedLabel.TabIndex = 34;
+            jobsUnlockedLabel.Text = "Jobs unlocked";
+            // 
+            // initialDirectionLabel
+            // 
+            initialDirectionLabel.AutoSize = true;
+            initialDirectionLabel.Location = new System.Drawing.Point( 2, 202 );
+            initialDirectionLabel.Name = "initialDirectionLabel";
+            initialDirectionLabel.Size = new System.Drawing.Size( 74, 13 );
+            initialDirectionLabel.TabIndex = 36;
+            initialDirectionLabel.Text = "Initial direction";
+            // 
+            // facingDirectionComboBox
+            // 
+            this.facingDirectionComboBox.FormattingEnabled = true;
+            this.facingDirectionComboBox.Location = new System.Drawing.Point( 82, 199 );
+            this.facingDirectionComboBox.Name = "facingDirectionComboBox";
+            this.facingDirectionComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.facingDirectionComboBox.TabIndex = 14;
+            this.facingDirectionComboBox.Tag = "FacingDirection";
+            // 
+            // levelComboBox
+            // 
+            this.levelComboBox.FormattingEnabled = true;
+            this.levelComboBox.Location = new System.Drawing.Point( 82, 91 );
+            this.levelComboBox.Name = "levelComboBox";
+            this.levelComboBox.Size = new System.Drawing.Size( 142, 21 );
+            this.levelComboBox.TabIndex = 5;
+            this.levelComboBox.Tag = "Level";
+            // 
+            // dayComboBox
+            // 
+            this.dayComboBox.FormattingEnabled = true;
+            this.dayComboBox.Location = new System.Drawing.Point( 225, 47 );
+            this.dayComboBox.Name = "dayComboBox";
+            this.dayComboBox.Size = new System.Drawing.Size( 68, 21 );
+            this.dayComboBox.TabIndex = 3;
+            this.dayComboBox.Tag = "Day";
+            // 
+            // faithComboBox
+            // 
+            this.faithComboBox.FormattingEnabled = true;
+            this.faithComboBox.Location = new System.Drawing.Point( 82, 113 );
+            this.faithComboBox.Name = "faithComboBox";
+            this.faithComboBox.Size = new System.Drawing.Size( 65, 21 );
+            this.faithComboBox.TabIndex = 6;
+            this.faithComboBox.Tag = "Faith";
+            // 
+            // braveryComboBox
+            // 
+            this.braveryComboBox.FormattingEnabled = true;
+            this.braveryComboBox.Location = new System.Drawing.Point( 209, 113 );
+            this.braveryComboBox.Name = "braveryComboBox";
+            this.braveryComboBox.Size = new System.Drawing.Size( 65, 21 );
+            this.braveryComboBox.TabIndex = 7;
+            this.braveryComboBox.Tag = "Bravery";
+            // 
+            // preRequisiteJobComboBox
+            // 
+            this.preRequisiteJobComboBox.FormattingEnabled = true;
+            this.preRequisiteJobComboBox.Location = new System.Drawing.Point( 82, 177 );
+            this.preRequisiteJobComboBox.Name = "preRequisiteJobComboBox";
+            this.preRequisiteJobComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.preRequisiteJobComboBox.TabIndex = 12;
+            this.preRequisiteJobComboBox.Tag = "PrerequisiteJob";
+            // 
+            // flags2CheckedListBox
+            // 
+            this.flags2CheckedListBox.FormattingEnabled = true;
+            this.flags2CheckedListBox.Items.AddRange( new object[] {
+            "Always Present",
+            "Randomly Present",
+            "",
+            "Enemy",
+            "Control",
+            "Immortal",
+            "",
+            ""} );
+            this.flags2CheckedListBox.Location = new System.Drawing.Point( 422, 3 );
+            this.flags2CheckedListBox.Name = "flags2CheckedListBox";
+            this.flags2CheckedListBox.Size = new System.Drawing.Size( 121, 124 );
+            this.flags2CheckedListBox.TabIndex = 16;
+            this.flags2CheckedListBox.TabStop = false;
+            // 
+            // spriteSetComboBox
+            // 
+            this.spriteSetComboBox.FormattingEnabled = true;
+            this.spriteSetComboBox.Location = new System.Drawing.Point( 82, 3 );
+            this.spriteSetComboBox.Name = "spriteSetComboBox";
+            this.spriteSetComboBox.Size = new System.Drawing.Size( 142, 21 );
+            this.spriteSetComboBox.TabIndex = 0;
+            this.spriteSetComboBox.Tag = "SpriteSet";
+            // 
+            // jobComboBox
+            // 
+            this.jobComboBox.FormattingEnabled = true;
+            this.jobComboBox.Location = new System.Drawing.Point( 82, 69 );
+            this.jobComboBox.Name = "jobComboBox";
+            this.jobComboBox.Size = new System.Drawing.Size( 142, 21 );
+            this.jobComboBox.TabIndex = 4;
+            this.jobComboBox.Tag = "Job";
+            // 
+            // unitIDSpinner
+            // 
+            this.unitIDSpinner.Hexadecimal = true;
+            this.unitIDSpinner.Location = new System.Drawing.Point( 209, 135 );
+            this.unitIDSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.unitIDSpinner.Name = "unitIDSpinner";
+            this.unitIDSpinner.Size = new System.Drawing.Size( 45, 20 );
+            this.unitIDSpinner.TabIndex = 9;
+            this.unitIDSpinner.Tag = "UnitID";
+            this.unitIDSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // specialNameComboBox
+            // 
+            this.specialNameComboBox.FormattingEnabled = true;
+            this.specialNameComboBox.Location = new System.Drawing.Point( 82, 25 );
+            this.specialNameComboBox.Name = "specialNameComboBox";
+            this.specialNameComboBox.Size = new System.Drawing.Size( 142, 21 );
+            this.specialNameComboBox.TabIndex = 1;
+            this.specialNameComboBox.Tag = "SpecialName";
+            // 
             // flags1CheckedListBox
             // 
             this.flags1CheckedListBox.FormattingEnabled = true;
@@ -694,7 +784,7 @@ namespace FFTPatcher.Editors
             "Monster",
             "Join After Event",
             "Load Formation",
-            "",
+            "Zodiac monster",
             "",
             "Save Formation"} );
             this.flags1CheckedListBox.Location = new System.Drawing.Point( 295, 3 );
@@ -726,51 +816,6 @@ namespace FFTPatcher.Editors
             this.monthComboBox.TabIndex = 2;
             this.monthComboBox.Tag = "Month";
             // 
-            // rightHandComboBox
-            // 
-            this.rightHandComboBox.FormattingEnabled = true;
-            this.rightHandComboBox.Location = new System.Drawing.Point( 74, 15 );
-            this.rightHandComboBox.Name = "rightHandComboBox";
-            this.rightHandComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.rightHandComboBox.TabIndex = 0;
-            this.rightHandComboBox.Tag = "RightHand";
-            // 
-            // accessoryComboBox
-            // 
-            this.accessoryComboBox.FormattingEnabled = true;
-            this.accessoryComboBox.Location = new System.Drawing.Point( 74, 103 );
-            this.accessoryComboBox.Name = "accessoryComboBox";
-            this.accessoryComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.accessoryComboBox.TabIndex = 4;
-            this.accessoryComboBox.Tag = "Accessory";
-            // 
-            // leftHandComboBox
-            // 
-            this.leftHandComboBox.FormattingEnabled = true;
-            this.leftHandComboBox.Location = new System.Drawing.Point( 74, 37 );
-            this.leftHandComboBox.Name = "leftHandComboBox";
-            this.leftHandComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.leftHandComboBox.TabIndex = 1;
-            this.leftHandComboBox.Tag = "LeftHand";
-            // 
-            // bodyComboBox
-            // 
-            this.bodyComboBox.FormattingEnabled = true;
-            this.bodyComboBox.Location = new System.Drawing.Point( 74, 81 );
-            this.bodyComboBox.Name = "bodyComboBox";
-            this.bodyComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.bodyComboBox.TabIndex = 3;
-            this.bodyComboBox.Tag = "Body";
-            // 
-            // headComboBox
-            // 
-            this.headComboBox.FormattingEnabled = true;
-            this.headComboBox.Location = new System.Drawing.Point( 74, 59 );
-            this.headComboBox.Name = "headComboBox";
-            this.headComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.headComboBox.TabIndex = 2;
-            this.headComboBox.Tag = "Head";
-            // 
             // paletteSpinner
             // 
             this.paletteSpinner.Hexadecimal = true;
@@ -785,51 +830,6 @@ namespace FFTPatcher.Editors
             this.paletteSpinner.TabIndex = 8;
             this.paletteSpinner.Tag = "Palette";
             this.paletteSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // primarySkillComboBox
-            // 
-            this.primarySkillComboBox.FormattingEnabled = true;
-            this.primarySkillComboBox.Location = new System.Drawing.Point( 74, 15 );
-            this.primarySkillComboBox.Name = "primarySkillComboBox";
-            this.primarySkillComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.primarySkillComboBox.TabIndex = 0;
-            this.primarySkillComboBox.Tag = "SkillSet";
-            // 
-            // movementComboBox
-            // 
-            this.movementComboBox.FormattingEnabled = true;
-            this.movementComboBox.Location = new System.Drawing.Point( 74, 103 );
-            this.movementComboBox.Name = "movementComboBox";
-            this.movementComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.movementComboBox.TabIndex = 4;
-            this.movementComboBox.Tag = "Movement";
-            // 
-            // secondaryActionComboBox
-            // 
-            this.secondaryActionComboBox.FormattingEnabled = true;
-            this.secondaryActionComboBox.Location = new System.Drawing.Point( 74, 37 );
-            this.secondaryActionComboBox.Name = "secondaryActionComboBox";
-            this.secondaryActionComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.secondaryActionComboBox.TabIndex = 1;
-            this.secondaryActionComboBox.Tag = "SecondaryAction";
-            // 
-            // supportComboBox
-            // 
-            this.supportComboBox.FormattingEnabled = true;
-            this.supportComboBox.Location = new System.Drawing.Point( 74, 81 );
-            this.supportComboBox.Name = "supportComboBox";
-            this.supportComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.supportComboBox.TabIndex = 3;
-            this.supportComboBox.Tag = "Support";
-            // 
-            // reactionComboBox
-            // 
-            this.reactionComboBox.FormattingEnabled = true;
-            this.reactionComboBox.Location = new System.Drawing.Point( 74, 59 );
-            this.reactionComboBox.Name = "reactionComboBox";
-            this.reactionComboBox.Size = new System.Drawing.Size( 121, 21 );
-            this.reactionComboBox.TabIndex = 2;
-            this.reactionComboBox.Tag = "Reaction";
             // 
             // ySpinner
             // 
@@ -905,7 +905,6 @@ namespace FFTPatcher.Editors
             equipmentGroupBox.ResumeLayout( false );
             equipmentGroupBox.PerformLayout();
             unknownGroupBox.ResumeLayout( false );
-            ((System.ComponentModel.ISupportInitialize)(this.unitIDSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown12Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown11Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown10Spinner)).EndInit();
@@ -916,6 +915,7 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.unknown4Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown3Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown2Spinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unitIDSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobLevelSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).EndInit();

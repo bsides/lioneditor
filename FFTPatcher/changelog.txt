@@ -1,5 +1,15 @@
-FFTPatcher - v0.205
+FFTPatcher - v0.236
 
+Changes since v0.205:
+  Fixed bug in sprite viewer when loading a BMP with an invalid palette
+  Changed the abilities formula combo box to allow all 256 possible values
+  Changed Weapon formula combo box to be more descriptive
+  Changed Item formula combo box to be more descriptive
+  Added "Zodiac monster" checkbox to the ENTD editor. THanks to Armorvil for this info
+  Added beta release of FFTacText text editor
+  Updated the FFTPACK.BIN file extractor with the locations of SPELL.MES, WORLD.LZW,
+    and SNPLMES.BIN
+    
 Changes since v0.200:
   Added detailed formula information to the Ability editor. These are mostly 
     taken from the Battle Mechanics guide.

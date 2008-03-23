@@ -28,6 +28,13 @@ namespace FFTPatcher.Editors
     public partial class ItemEditor : UserControl
     {
 
+		#region Static Fields (2) 
+
+        private static List<string> itemFormulaItems;
+        private static List<string> weaponFormulaItems;
+
+		#endregion Static Fields 
+
 		#region Fields (9) 
 
         private List<ComboBoxWithDefault> comboBoxes = new List<ComboBoxWithDefault>();
@@ -71,10 +78,7 @@ namespace FFTPatcher.Editors
 
 		#endregion Properties 
 
-		#region Constructors (1) 
-
-        private static List<string> weaponFormulaItems;
-        private static List<string> itemFormulaItems;
+		#region Constructors (2) 
 
         static ItemEditor()
         {
@@ -153,22 +157,6 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
-        private void chemistItemFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges && item is ChemistItem )
-            {
-                (item as ChemistItem).Formula = (byte)chemistItemFormulaComboBox.SelectedIndex;
-            }
-        }
-
-        private void weaponFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges && item is Weapon )
-            {
-                (item as Weapon).Formula = (byte)weaponFormulaComboBox.SelectedIndex;
-            }
-        }
-
 		#endregion Constructors 
 
 		#region Events (2) 
@@ -179,8 +167,16 @@ namespace FFTPatcher.Editors
 
 		#endregion Events 
 
-		#region Methods (8) 
+		#region Methods (10) 
 
+
+        private void chemistItemFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && item is ChemistItem )
+            {
+                (item as ChemistItem).Formula = (byte)chemistItemFormulaComboBox.SelectedIndex;
+            }
+        }
 
         private void chemistItemSpellStatusLabel_Click( object sender, EventArgs e )
         {
@@ -364,6 +360,14 @@ namespace FFTPatcher.Editors
             {
                 Weapon w = item as Weapon;
                 ReflectionHelpers.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue == CheckState.Checked );
+            }
+        }
+
+        private void weaponFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && item is Weapon )
+            {
+                (item as Weapon).Formula = (byte)weaponFormulaComboBox.SelectedIndex;
             }
         }
 

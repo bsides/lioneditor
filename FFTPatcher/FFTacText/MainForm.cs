@@ -178,7 +178,7 @@ namespace FFTPatcher.TextEditor
             Application.Exit();
         }
 
-        [Conditional( "DEBUG" )]
+#if DEBUG
         private void FillFile( IPartitionedFile file, string filename )
         {
             string format = "{0}/{1}/{2:X}";
@@ -206,7 +206,6 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        [Conditional( "DEBUG" )]
         private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
         {
             string format = "{0}/{1}/{2:X}";
@@ -237,7 +236,6 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        [Conditional( "DEBUG" )]
         private void FillFiles()
         {
             //BasePSXSectionedFile[] psxFiles1 = new BasePSXSectionedFile[] {
@@ -332,7 +330,6 @@ namespace FFTPatcher.TextEditor
             File = mine;
         }
 
-        [Conditional( "DEBUG" )]
         private void FillPSPFiles()
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
@@ -360,7 +357,6 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        [Conditional( "DEBUG" )]
         private void FillPSXFiles()
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
@@ -385,6 +381,7 @@ namespace FFTPatcher.TextEditor
                 xs.Serialize( fs, mine );
             }
         }
+#endif
 
         private void LoadFileFromByteArray( byte[] bytes )
         {

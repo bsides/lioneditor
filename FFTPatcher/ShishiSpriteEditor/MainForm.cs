@@ -53,16 +53,22 @@ namespace FFTPatcher.SpriteEditor
             paletteSelector.SelectedIndexChanged += paletteSelector_SelectedIndexChanged;
 
             aboutMenuItem.Click += aboutMenuItem_Click;
+            exitMenuItem.Click += exitMenuItem_Click;
         }
 
 		#endregion Constructors 
 
-		#region Methods (11) 
+		#region Methods (12) 
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
             new About().ShowDialog( this );
+        }
+
+        private void exitMenuItem_Click( object sender, EventArgs e )
+        {
+            Application.Exit();
         }
 
         private void exportMenuItem_Click( object sender, EventArgs e )

@@ -1,5 +1,6 @@
 from PIL import Image
 from PIL import ImageDraw
+import sys
 
 def upper(b): return (b&0xF0) >> 4
 def lower(b): return b&0x0F
@@ -75,6 +76,7 @@ def drawPixelsWithPaletteOnImage(pixels, palette, im):
     except:
       e=0
   return True
+  
 def replaceTransparentWithBlack(im):
 	for row in xrange(im.size[1]):
 		for col in xrange(im.size[0]):
@@ -127,7 +129,7 @@ def copyRectangleToPoint(sourceImage, x, y, width, height, destImage, destX, des
 				#print col,row
 				p = sourceImage.getpixel((x+col,y+row))
 				if p[3] != 0:
-					destImage.putpixel((destX+col,destY+row), p)
+					destImage.putpixel((destX+(width-col-1),destY+row), p)
 				
 def splitImage(im):
 	result = Image.new("RGBA", im.size, (0,0,0,0))
@@ -175,13 +177,15 @@ def getFrames(file, imageIn):
 		innerGetFrames(file[jump:], imageIn, secondHalf, n)
 	else:
 		innerGetFrames(file[8:], imageIn, secondHalf)
-	
+
+fToSize = { 1: (16,8), 2:(16,16), 3:(16,24), 4:(24,8), 5:(24,16), 6:(24,24), 7:(32,8), 8:(32,16), 9:(32,24), 0xA:(32,32), 0xB:(32,40), 0xC:(48,16), 0xD:(40,32), 0xE:(48,48), 0xF:(56,56) }
+
 def innerGetFrames(bytes, imageIn, secondHalf, startingFrameNumber=0):
 	numberOfFrames = 0x100
 	global goods
 	global counter
 	for frameNumber in xrange(startingFrameNumber,numberOfFrames+startingFrameNumber):
-		im = Image.new("RGBA", (128,160), (0,0,0,0))
+		im = Image.new("RGBA", (210,160), (0,0,0,0))
 		frameStart = 0x402+bytesToInt(bytes[(frameNumber-startingFrameNumber)*0x04:(frameNumber-startingFrameNumber)*0x04+4])
 		if frameStart==0x402 and frameNumber != startingFrameNumber:
 			break
@@ -196,33 +200,10 @@ def innerGetFrames(bytes, imageIn, secondHalf, startingFrameNumber=0):
 			flags = bytesToInt(bytes[frameStart+0x02+tileNumber*4+2:frameStart+0x02+tileNumber*4+2+2] + [0,0])
 			mirror = ((flags & 0x4000) == 0x4000)
 			f = (flags>>10) & 0xF
-			if f==0x06:
-				width=24
-				height=24
-			elif f==0x04:
-				width=24
-				height=32
-			elif f==0x08:
-				width=32
-				height=16
-			elif f==0x09:
-				width=32
-				height=24
-			elif f==0x0A or f==0x07:
-				width=32
-				height=32
-			elif f==0x0B:
-				width=32
-				height=40
-			elif f==0x0D:
-				width=40
-				height=32
-			elif f==0x0E:
-				width=56
-				height=48
-			elif f==5:
-				width=24
-				height=16
+			
+			
+			if fToSize.has_key(f):
+				(width, height) = fToSize[f]
 			else:
 				print "%d Unknown sprite value %04X" % (counter, (flags>>10)&0x0F)
 				width=4
@@ -233,15 +214,16 @@ def innerGetFrames(bytes, imageIn, secondHalf, startingFrameNumber=0):
 			tileY = ((flags>>5)&0x001F) * 8
 			if (frameNumber-startingFrameNumber) >= secondHalf:
 				tileY+=256
+			if (frameNumber==156):
+				goods.append(counter)
 			logInfo(counter, bytes[frameStart+0x02+tileNumber*0x04:frameStart+0x02+tileNumber*0x04+4])
-			
-			# big = Image.open("dongs.png")
-			# draw = ImageDraw.Draw(big)
-			# draw.rectangle([(tileX, tileY), (tileX+width,tileY+height)], outline=(255,255,0))
-			# big.save("big%04d.png"%counter, "PNG")
+			big = Image.open("dongs.png")
+			draw = ImageDraw.Draw(big)
+			draw.rectangle([(tileX, tileY), (tileX+width,tileY+height)], outline=(255,255,0))
+			big.save("big%04d.png"%counter, "PNG")
 			
 			#rects.append((imageIn, tileX, tileY, width, height, im, x-80, y-256,0))
-			rects.append((imageIn, tileX, tileY, width, height, im, x-82, y, mirror))
+			rects.append((imageIn, tileX, tileY, width, height, im, x, y, mirror))
 		rects.reverse()
 		for r in rects:
 			copyRectangleToPoint(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8])
@@ -277,20 +259,20 @@ for i in range(len(decompressed)):
 size=(256,h)
 
 im = Image.new("RGBA", size, (0,0,0,0))
-drawPixelsWithPaletteOnImage(pixels, buildPalette(data[i*32:(i+1)*32]), im)
+drawPixelsWithPaletteOnImage(pixels, buildPalette(data[0:32]), im)
 
-im=splitImage(im)
+im2=splitImage(im)
 shp=charsToInts(open(sys.argv[2]).read())
 
-getFrames(shp, im)
+im3=im2.copy()
+replaceTransparentWithBlack(im3)
+im3.save("dongs.png", "PNG")
+
+getFrames(shp, im2)
 
 #im=Image.open("KANZEN.SPR.palette00split.png")
 #innerGetFrames(charsToInts(open("KANZEN.SHP").read()), im)
 
 #im=splitImage(Image.open("RAMUZA.SPR.palette00.png"))
-#im2=splitImage(Image.open("RAMUZA.SPR.palette00.png"))
-#replaceTransparentWithBlack(im2)
-#im2.save("dongs.png", "PNG")
-
 #getFrames(charsToInts(open("TYPE1.SHP").read()), im)
 #im.save("output.png", "PNG")

@@ -1,6 +1,7 @@
 from PIL import Image
 from PIL import ImageDraw
 import sys
+import os.path
 
 def upper(b): return (b&0xF0) >> 4
 def lower(b): return b&0x0F
@@ -68,21 +69,20 @@ emptyPalette = [(0,0,0,0),(0,0,0,255),(0,0,0,255),(0,0,0,255),
 (0,0,0,255),(0,0,0,255),(0,0,0,255),(0,0,0,255)]
 
 def drawPixelsWithPaletteOnImage(pixels, palette, im):
-  if palette == emptyPalette:
-    return False
-  for i in range(len(pixels)):
-    try:
-      im.putpixel((i%256,i/256), palette[pixels[i]])
-    except:
-      e=0
-  return True
+	if palette == emptyPalette:
+		return False
+	imArray = im.load()
+	for i in range(len(pixels)):
+		try: imArray[i%256,i/256] = palette[pixels[i]]
+		except: e=0
+	return True
   
 def replaceTransparentWithBlack(im):
+	imArray = im.load()
 	for row in xrange(im.size[1]):
 		for col in xrange(im.size[0]):
-			p = im.getpixel((col,row))
-			if p[3] == 0:
-				im.putpixel((col,row), (0,0,0,255))
+			p = imArray[col,row]
+			if p[3] == 0: imArray[col,row] = (0,0,0,255)
 				
 def charsToInts(chars):
   result = [0] * len(chars)
@@ -113,23 +113,23 @@ def bytesToChars(bytes):
 
 def copyRectangleToPoint(sourceImage, x, y, width, height, destImage, destX, destY, mirror):
 	#print x,y,width,height
+	sourceArray = sourceImage.load()
+	destArray = destImage.load()
 	if destX < 0 or destY < 0 or destX+width>destImage.size[0] or destY+height>destImage.size[1]:
 		print destX, destY
 	if not mirror:
 		for row in xrange(height):
 			for col in xrange(width):
 				#print col,row
-				p = sourceImage.getpixel((x+col,y+row))
-				if p[3] != 0:
-					destImage.putpixel((destX+col,destY+row), p)
+				p = sourceArray[x+col,y+row]
+				if p[3] != 0: destArray[destX+col, destY+row] = p
 	else:
 		# TODO : handle mirroring
 		for row in xrange(height):
 			for col in xrange(width):
 				#print col,row
-				p = sourceImage.getpixel((x+col,y+row))
-				if p[3] != 0:
-					destImage.putpixel((destX+(width-col-1),destY+row), p)
+				p = sourceArray[x+col,y+row]
+				if p[3] != 0: destArray[destX+(width-col-1), destY+row] = p
 				
 def splitImage(im):
 	result = Image.new("RGBA", im.size, (0,0,0,0))
@@ -137,6 +137,9 @@ def splitImage(im):
 	copyRectangleToPoint(im, 0, 0, 256, 256, result, 0, 0, False)
 	copyRectangleToPoint(im, 0, 288, 256, 200, result, 0, 256, False)
 	copyRectangleToPoint(im, 0, 256, 256, 32, result, 0, 456, False)
+
+	if im.size[1] > 488:
+		copyRectangleToPoint(im, 0, 488, 256, im.size[1]-488, result, 0, 488, False)
 	result.save("split.png", "PNG")
 	return result
 	
@@ -164,30 +167,42 @@ def logInfo(index, bytes):
 	except:
 		return
 
-goods=[]
+goods=[52]
 counter = -1
 
-def getFrames(file, imageIn):
-	jump = bytesToInt(file[0:4])
-	print jump
-	secondHalf = file[0x04]
-	if jump > 8:
-		n=innerGetFrames(file[8:jump], imageIn, secondHalf)
-		print n
-		innerGetFrames(file[jump:], imageIn, secondHalf, n)
+def getFrames(file, imageIn, wep=False):
+	if wep:
+		start = 0x802
 	else:
-		innerGetFrames(file[8:], imageIn, secondHalf)
+		start = 0x402
+		
+	jump = bytesToInt(file[0:4])
+	#print jump
+	secondHalf = bytesToInt(file[4:6]+[0,0])
+	thirdHalf = bytesToInt(file[6:8]+[0,0])
+	if jump > 8:
+		n=innerGetFrames(file[8:jump], imageIn, secondHalf, thirdHalf, start)
+		innerGetFrames(file[jump:], imageIn, secondHalf, thirdHalf, start, n)
+	else:
+		if wep:
+			innerGetFrames(file[0x44:], imageIn, secondHalf, thirdHalf, start)
+		else:
+			innerGetFrames(file[8:], imageIn, secondHalf, thirdHalf, start)
 
-fToSize = { 1: (16,8), 2:(16,16), 3:(16,24), 4:(24,8), 5:(24,16), 6:(24,24), 7:(32,8), 8:(32,16), 9:(32,24), 0xA:(32,32), 0xB:(32,40), 0xC:(48,16), 0xD:(40,32), 0xE:(48,48), 0xF:(56,56) }
+fToSize = { 0:(8,8),
+1: (16,8), 2:(16,16), 3:(16,24), 
+4:(24,8), 
+#4:(24,24),
+5:(24,16), 6:(24,24), 7:(32,8), 8:(32,16), 9:(32,24), 0xA:(32,32), 0xB:(32,40), 0xC:(48,16), 0xD:(40,32), 0xE:(48,48), 0xF:(56,56) }
 
-def innerGetFrames(bytes, imageIn, secondHalf, startingFrameNumber=0):
+def innerGetFrames(bytes, imageIn, secondHalf, thirdHalf, start, startingFrameNumber=0):
 	numberOfFrames = 0x100
 	global goods
 	global counter
 	for frameNumber in xrange(startingFrameNumber,numberOfFrames+startingFrameNumber):
 		im = Image.new("RGBA", (210,160), (0,0,0,0))
-		frameStart = 0x402+bytesToInt(bytes[(frameNumber-startingFrameNumber)*0x04:(frameNumber-startingFrameNumber)*0x04+4])
-		if frameStart==0x402 and frameNumber != startingFrameNumber:
+		frameStart = start+bytesToInt(bytes[(frameNumber-startingFrameNumber)*0x04:(frameNumber-startingFrameNumber)*0x04+4])
+		if frameStart==start and frameNumber != startingFrameNumber:
 			break
 		numberOfTile = bytesToInt(bytes[frameStart:frameStart+2] + [0,0])
 		rects = []
@@ -206,73 +221,100 @@ def innerGetFrames(bytes, imageIn, secondHalf, startingFrameNumber=0):
 				(width, height) = fToSize[f]
 			else:
 				print "%d Unknown sprite value %04X" % (counter, (flags>>10)&0x0F)
+				#continue
 				width=4
 				height=4
-				#0x9418
-				#00011000 10010100 
 			tileX = (flags&0x001F) * 8
 			tileY = ((flags>>5)&0x001F) * 8
 			if (frameNumber-startingFrameNumber) >= secondHalf:
 				tileY+=256
-			if (frameNumber==156):
-				goods.append(counter)
+			if (frameNumber-startingFrameNumber) >= secondHalf+thirdHalf:
+				tileY-=256
+			# if (frameNumber-startingFrameNumber) >= secondHalf+thirdHalf+16:
+				# tileY-= 232
+			# if (frameNumber-startingFrameNumber) >= secondHalf+thirdHalf+16+83:
+				# tileY-=256
+			#if (frameNumber==25):
+			goods.append(counter)
 			logInfo(counter, bytes[frameStart+0x02+tileNumber*0x04:frameStart+0x02+tileNumber*0x04+4])
+			
+			
 			big = Image.open("dongs.png")
 			draw = ImageDraw.Draw(big)
 			draw.rectangle([(tileX, tileY), (tileX+width,tileY+height)], outline=(255,255,0))
-			big.save("big%04d.png"%counter, "PNG")
+			big.save("big%04d.png"%counter, "png")
 			
-			#rects.append((imageIn, tileX, tileY, width, height, im, x-80, y-256,0))
+			
+			#print "%02X %02X %d %d %d %d %d %d" % (xbyte, ybyte, xbyte, ybyte, width, height, (flags&0x8000)>>15, (flags&0x4000)>>14)
+			
 			rects.append((imageIn, tileX, tileY, width, height, im, x, y, mirror))
 		rects.reverse()
 		for r in rects:
 			copyRectangleToPoint(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8])
 		im.save("out%d.png" % (frameNumber), "PNG")
 	return frameNumber
+
+SP2={"ARLI.SPR":["ARLI2.SP2"],"BEHI.SPR":["BEHI2.SP2"],"BIBUROS.SPR":["BIBU2.SP2"],"BOM.SPR":["BOM2.SP2"],
+"DEMON.SPR":["DEMON2.SP2"],"DORA2.SPR":["DORA22.SP2"],"HYOU.SPR":["HYOU2.SP2"],
+"TETSU.SPR":["IRON2.SP2","IRON3.SP2","IRON4.SP2","IRON5.SP2"],
+"MINOTA.SPR":["MINOTA2.SP2"],"MOL.SPR":["MOL2.SP2"],"TORI.SPR":["TORI2.SP2"],"URI.SPR":["URI2.SP2"]}
 	
-	
-	
-	
-	
-fn = sys.argv[1]
-print fn
-data = open(fn).read()
+def main(argv=None):
+	if argv is None:
+		argv = sys.argv
+	fn = argv[1]
+	print fn
+	print argv[2]
+	data = open(fn).read()
 
-compress_start = 0x9200
-if fn == "KASANEK.SPR" or fn == "KASANEM.SPR":
-	compress_start = 0x8200
+	compress_start = 0x9200
+	if fn == "KASANEK.SPR" or fn == "KASANEM.SPR":
+		compress_start = 0x8200
 
-h=0
-decompressed = []
-if len(data) >= compress_start and ord(data[compress_start]) != 0:
-	decompressed = SprDec(data[compress_start:])
-	h = 488
-else:
-	h = 288
- 
-bytes=data[16*32:compress_start]
+	h=0
+	decompressed = []
+	if len(data) >= compress_start and ord(data[compress_start]) != 0:
+		decompressed = SprDec(data[compress_start:])
+		h = 488	
+	else:
+		h = 288
+		
+	others=""
+	if SP2.has_key(os.path.split(fn)[-1]):
+		for sp2 in SP2[os.path.split(fn)[-1]]:
+			others += open(os.path.join(os.path.split(fn)[0],sp2)).read()
+			h += 256
+	 
+	bytes=data[16*32:compress_start]
 
-pixels = buildPixels(bytes)
-for i in range(len(decompressed)):
-	pixels.append(decompressed[i])
+	pixels = buildPixels(bytes)
+	for i in range(len(decompressed)):
+		pixels.append(decompressed[i])
+		
+	otherPixels = buildPixels(others)
+	for i in range(len(otherPixels)):
+		pixels.append(otherPixels[i])
+		
+	size=(256,max(488,h))
 
-size=(256,h)
+	im = Image.new("RGBA", size, (0,0,0,0))
+	drawPixelsWithPaletteOnImage(pixels, buildPalette(data[0:32]), im)
 
-im = Image.new("RGBA", size, (0,0,0,0))
-drawPixelsWithPaletteOnImage(pixels, buildPalette(data[0:32]), im)
+	im2=splitImage(im)
+	shp=charsToInts(open(argv[2]).read())
 
-im2=splitImage(im)
-shp=charsToInts(open(sys.argv[2]).read())
+	im3=im2.copy()
+	replaceTransparentWithBlack(im3)
+	im3.save("dongs.png", "PNG")
 
-im3=im2.copy()
-replaceTransparentWithBlack(im3)
-im3.save("dongs.png", "PNG")
+	wep=False
+	try:
+		argv[1].index("WEP")
+		print "weapons" 
+		wep=True
+	except:
+		a=0
+	getFrames(shp, im2, wep)
 
-getFrames(shp, im2)
-
-#im=Image.open("KANZEN.SPR.palette00split.png")
-#innerGetFrames(charsToInts(open("KANZEN.SHP").read()), im)
-
-#im=splitImage(Image.open("RAMUZA.SPR.palette00.png"))
-#getFrames(charsToInts(open("TYPE1.SHP").read()), im)
-#im.save("output.png", "PNG")
+if __name__ == "__main__":
+    sys.exit(main())

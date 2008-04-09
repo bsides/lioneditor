@@ -98,11 +98,29 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllInflictStatuses
+    public class AllInflictStatuses : IChangeable
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                foreach( InflictStatus s in InflictStatuses )
+                {
+                    if( s.Default != null && !Utilities.CompareArrays( s.ToByteArray(), s.Default.ToByteArray() ) )
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         public InflictStatus[] InflictStatuses { get; private set; }
 

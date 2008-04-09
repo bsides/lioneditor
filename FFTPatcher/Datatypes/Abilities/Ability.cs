@@ -48,7 +48,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an ability and its attributes.
     /// </summary>
-    public class Ability
+    public class Ability : IChangeable
     {
 
 		#region Fields (12) 
@@ -69,7 +69,7 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Fields 
 
-		#region Properties (61) 
+		#region Properties (62) 
 
 
         public AbilityType AbilityType { get; set; }
@@ -147,6 +147,66 @@ namespace FFTPatcher.Datatypes
         public Ability Default { get; private set; }
 
         public Effect Effect { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        public bool HasChanged
+        {
+            get
+            {
+                return
+                    (Default != null) &&
+                    (AbilityType != Default.AbilityType ||
+                    Action != Default.Action ||
+                    AIAddStatus != Default.AIAddStatus ||
+                    AIBlank != Default.AIBlank ||
+                    AICancelStatus != Default.AICancelStatus ||
+                    AIDefenseUp != Default.AIDefenseUp ||
+                    AIDirectAttack != Default.AIDirectAttack ||
+                    AIFlags != Default.AIFlags ||
+                    AIHP != Default.AIHP ||
+                    AIIgnoreRange != Default.AIIgnoreRange ||
+                    AILineAttack != Default.AILineAttack ||
+                    AIMagicDefenseUp != Default.AIMagicDefenseUp ||
+                    AIMP != Default.AIMP ||
+                    AIRandomHits != Default.AIRandomHits ||
+                    AIReflectable != Default.AIReflectable ||
+                    AISilence != Default.AISilence ||
+                    AIStats != Default.AIStats ||
+                    AITargetAllies != Default.AITargetAllies ||
+                    AITargetEnemies != Default.AITargetEnemies ||
+                    AITripleAttack != Default.AITripleAttack ||
+                    AITripleBracelet != Default.AITripleBracelet ||
+                    AIUndeadReverse != Default.AIUndeadReverse ||
+                    AIUnequip != Default.AIUnequip ||
+                    AIUnknown1 != Default.AIUnknown1 ||
+                    AIUnknown2 != Default.AIUnknown2 ||
+                    AIUnknown3 != Default.AIUnknown3 ||
+                    AIVerticalIncrease != Default.AIVerticalIncrease ||
+                    Blank1 != Default.Blank1 ||
+                    Blank2 != Default.Blank2 ||
+                    Blank3 != Default.Blank3 ||
+                    Blank4 != Default.Blank4 ||
+                    Blank5 != Default.Blank5 ||
+                    Effect.Value != Default.Effect.Value ||
+                    JPCost != Default.JPCost ||
+                    LearnOnHit != Default.LearnOnHit ||
+                    LearnRate != Default.LearnRate ||
+                    LearnWithJP != Default.LearnWithJP ||
+                    Unknown1 != Default.Unknown1 ||
+                    Unknown2 != Default.Unknown2 ||
+                    Unknown3 != Default.Unknown3 ||
+                    Unknown4 != Default.Unknown4 ||
+                    (IsArithmetick && ArithmetickSkill != Default.ArithmetickSkill) ||
+                    (IsCharging && (ChargeBonus != Default.ChargeBonus || ChargeCT != Default.ChargeCT)) ||
+                    (IsItem && ItemOffset != Default.ItemOffset) ||
+                    (IsJumping && (JumpHorizontal != Default.JumpHorizontal || JumpVertical != Default.JumpVertical)) ||
+                    (IsNormal && Attributes.HasChanged) ||
+                    (IsOther && OtherID != Default.OtherID) ||
+                    (IsThrowing && Throwing != Default.Throwing));
+            }
+        }
 
         public bool IsArithmetick { get; private set; }
 

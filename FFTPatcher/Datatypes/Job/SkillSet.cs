@@ -24,24 +24,20 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the set of <see cref="Ability"/> a <see cref="Job"/> can use.
     /// </summary>
-    public class SkillSet
+    public class SkillSet :  IChangeable
     {
 
-		#region Fields (4) 
+		#region Static Fields (4) 
 
         private static SortedDictionary<byte, SkillSet> pspEventSkills;
         private static SkillSet[] pspSkills;
         private static SortedDictionary<byte, SkillSet> psxEventSkills;
         private static SkillSet[] psxSkills;
 
-		#endregion Fields 
+		#endregion Static Fields 
 
-		#region Properties (9) 
+		#region Static Properties (4) 
 
-
-        public Ability[] Actions { get; private set; }
-
-        public SkillSet Default { get; private set; }
 
         public static SkillSet[] DummySkillSets
         {
@@ -56,11 +52,47 @@ namespace FFTPatcher.Datatypes
             get { return FFTPatch.Context == Context.US_PSP ? pspEventSkills : psxEventSkills; }
         }
 
-        public string Name { get; private set; }
-
         public static string[] PSPNames { get; private set; }
 
         public static string[] PSXNames { get; private set; }
+
+
+		#endregion Static Properties 
+
+		#region Properties (6) 
+
+
+        public Ability[] Actions { get; private set; }
+
+        public SkillSet Default { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                if( Default != null )
+                {
+                    for( int i = 0; i < Actions.Length; i++ )
+                    {
+                        if( Actions[i].Offset != Default.Actions[i].Offset )
+                            return true;
+                    }
+                    for( int i = 0; i < TheRest.Length; i++ )
+                    {
+                        if( TheRest[i].Offset != Default.TheRest[i].Offset )
+                            return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        public string Name { get; private set; }
 
         public Ability[] TheRest { get; private set; }
 
@@ -200,11 +232,29 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllSkillSets
+    public class AllSkillSets : IChangeable
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                foreach( SkillSet s in SkillSets )
+                {
+                    if( s.HasChanged )
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         public SkillSet[] SkillSets { get; private set; }
 

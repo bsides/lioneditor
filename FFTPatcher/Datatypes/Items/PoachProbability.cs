@@ -24,15 +24,27 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represent's the common and uncommon items that can be poached from a monster.
     /// </summary>
-    public class PoachProbability
+    public class PoachProbability : IChangeable
     {
 
-		#region Properties (4) 
+		#region Properties (5) 
 
 
         public Item Common { get; set; }
 
         public PoachProbability Default { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get { return 
+                Default != null && 
+                (Common.Offset != Default.Common.Offset || 
+                Uncommon.Offset != Default.Uncommon.Offset); }
+        }
 
         public string MonsterName { get; private set; }
 
@@ -74,11 +86,29 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllPoachProbabilities
+    public class AllPoachProbabilities : IChangeable
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                foreach( PoachProbability p in PoachProbabilities )
+                {
+                    if( p.HasChanged )
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         public PoachProbability[] PoachProbabilities { get; private set; }
 

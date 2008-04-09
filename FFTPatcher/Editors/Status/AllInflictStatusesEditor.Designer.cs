@@ -47,8 +47,11 @@ namespace FFTPatcher.Editors
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Panel panel;
             this.offsetListBox = new System.Windows.Forms.ListBox();
             this.inflictStatusEditor = new FFTPatcher.Editors.InflictStatusEditor();
+            panel = new System.Windows.Forms.Panel();
+            panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // offsetListBox
@@ -65,21 +68,32 @@ namespace FFTPatcher.Editors
             this.inflictStatusEditor.AutoSize = true;
             this.inflictStatusEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.inflictStatusEditor.InflictStatus = null;
-            this.inflictStatusEditor.Location = new System.Drawing.Point( 52, 0 );
+            this.inflictStatusEditor.Location = new System.Drawing.Point( 0, 0 );
             this.inflictStatusEditor.Name = "inflictStatusEditor";
             this.inflictStatusEditor.Size = new System.Drawing.Size( 601, 188 );
             this.inflictStatusEditor.TabIndex = 0;
+            // 
+            // panel
+            // 
+            panel.AutoScroll = true;
+            panel.Controls.Add( this.inflictStatusEditor );
+            panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel.Location = new System.Drawing.Point( 46, 0 );
+            panel.Name = "panel";
+            panel.Size = new System.Drawing.Size( 692, 437 );
+            panel.TabIndex = 2;
             // 
             // AllInflictStatusesEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add( panel );
             this.Controls.Add( this.offsetListBox );
-            this.Controls.Add( this.inflictStatusEditor );
             this.Name = "AllInflictStatusesEditor";
             this.Size = new System.Drawing.Size( 738, 437 );
+            panel.ResumeLayout( false );
+            panel.PerformLayout();
             this.ResumeLayout( false );
-            this.PerformLayout();
 
         }
 

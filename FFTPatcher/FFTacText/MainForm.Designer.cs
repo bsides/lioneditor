@@ -60,11 +60,11 @@ namespace FFTPatcher.TextEditor
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.psxMenuItem = new System.Windows.Forms.MenuItem();
             this.pspMenuItem = new System.Windows.Forms.MenuItem();
+            this.helpMenuItem = new System.Windows.Forms.MenuItem();
+            this.allowedSymbolsMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.helpMenuItem = new System.Windows.Forms.MenuItem();
-            this.allowedSymbolsMenuItem = new System.Windows.Forms.MenuItem();
             this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
             this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
             this.compressedStringSectionedEditor = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
@@ -82,6 +82,11 @@ namespace FFTPatcher.TextEditor
             // 
             separator2.Index = 5;
             separator2.Text = "-";
+            // 
+            // separator3
+            // 
+            separator3.Index = 1;
+            separator3.Text = "-";
             // 
             // mainMenu
             // 
@@ -142,11 +147,6 @@ namespace FFTPatcher.TextEditor
             this.pspMenuItem.Text = "PSP";
             this.pspMenuItem.Visible = false;
             // 
-            // aboutMenuItem
-            // 
-            this.aboutMenuItem.Index = 2;
-            this.aboutMenuItem.Text = "About...";
-            // 
             // helpMenuItem
             // 
             this.helpMenuItem.Index = 3;
@@ -156,16 +156,16 @@ namespace FFTPatcher.TextEditor
             this.aboutMenuItem} );
             this.helpMenuItem.Text = "Help";
             // 
-            // separator3
-            // 
-            separator3.Index = 1;
-            separator3.Text = "-";
-            // 
             // allowedSymbolsMenuItem
             // 
             this.allowedSymbolsMenuItem.Enabled = false;
             this.allowedSymbolsMenuItem.Index = 0;
             this.allowedSymbolsMenuItem.Text = "Allowed symbols";
+            // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Index = 2;
+            this.aboutMenuItem.Text = "About...";
             // 
             // partitionEditor
             // 

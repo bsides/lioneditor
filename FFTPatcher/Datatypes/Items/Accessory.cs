@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     public class Accessory : Item
     {
 
-		#region Properties (3) 
+		#region Properties (4) 
 
 
         public Accessory AccessoryDefault { get; private set; }
@@ -36,6 +36,23 @@ namespace FFTPatcher.Datatypes
         public byte MagicEvade { get; set; }
 
         public byte PhysicalEvade { get; set; }
+
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public override bool HasChanged
+        {
+            get
+            {
+                return base.HasChanged ||
+                    (AccessoryDefault != null &&
+                    (MagicEvade != AccessoryDefault.MagicEvade ||
+                    PhysicalEvade != AccessoryDefault.PhysicalEvade));
+            }
+        }
 
 
 		#endregion Properties 

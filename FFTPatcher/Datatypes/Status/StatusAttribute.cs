@@ -137,11 +137,29 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllStatusAttributes
+    public class AllStatusAttributes : IChangeable
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                foreach( StatusAttribute s in StatusAttributes )
+                {
+                    if( s.Default != null && !Utilities.CompareArrays( s.ToByteArray(), s.Default.ToByteArray() ) )
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         public StatusAttribute[] StatusAttributes { get; private set; }
 

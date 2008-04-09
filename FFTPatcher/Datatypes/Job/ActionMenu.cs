@@ -181,13 +181,31 @@ namespace FFTPatcher.Datatypes
 
     }
     
-    public class AllActionMenus
+    public class AllActionMenus : IChangeable
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
 
         public ActionMenu[] ActionMenus { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                foreach( ActionMenu a in ActionMenus )
+                {
+                    if( a.Default != null && a.MenuAction.MenuAction != a.Default.MenuAction.MenuAction )
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
 
 		#endregion Properties 

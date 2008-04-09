@@ -24,10 +24,10 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the <see cref="Ability"/>s a monster can use.
     /// </summary>
-    public class MonsterSkill
+    public class MonsterSkill : IChangeable
     {
 
-		#region Properties (7) 
+		#region Properties (8) 
 
 
         public Ability Ability1 { get; set; }
@@ -39,6 +39,22 @@ namespace FFTPatcher.Datatypes
         public Ability Beastmaster { get; set; }
 
         public MonsterSkill Default { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                return (Default != null) &&
+                    Ability1.Offset != Default.Ability1.Offset ||
+                    Ability2.Offset != Default.Ability2.Offset ||
+                    Ability3.Offset != Default.Ability3.Offset ||
+                    Beastmaster.Offset != Default.Beastmaster.Offset;
+            }
+        }
 
         public string Name { get; private set; }
 
@@ -103,7 +119,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllMonsterSkills
+    public class AllMonsterSkills : IChangeable
     {
 
         #region Static Properties (3)
@@ -118,11 +134,29 @@ namespace FFTPatcher.Datatypes
 
         #endregion Static Properties
 
-        #region Properties (1)
+        #region Properties (2)
 
 
         public MonsterSkill[] MonsterSkills { get; private set; }
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                foreach( MonsterSkill m in MonsterSkills )
+                {
+                    if( m.HasChanged )
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         #endregion Properties
 
@@ -189,6 +223,5 @@ namespace FFTPatcher.Datatypes
 
 
         #endregion Methods
-
     }
 }

@@ -30,7 +30,6 @@ namespace FFTPatcher.Datatypes
 		#region Fields (24) 
 
         public bool AddStatus;
- // inverted
         public bool Blank;
         public bool CancelStatus;
         public bool DefenseUp;
@@ -46,7 +45,6 @@ namespace FFTPatcher.Datatypes
         public bool Stats;
         public bool TargetAllies;
         public bool TargetEnemies;
- // inverted
         public bool TripleAttack;
         public bool TripleBracelet;
         public bool UndeadReverse;

@@ -116,25 +116,29 @@ namespace FFTPatcher.Editors
             // jpCostSpinner
             // 
             this.jpCostSpinner.AutoSize = true;
-            this.jpCostSpinner.Location = new System.Drawing.Point( 97, 4 );
+            this.jpCostSpinner.Location = new System.Drawing.Point( 95, 5 );
             this.jpCostSpinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.jpCostSpinner.MinimumSize = new System.Drawing.Size( 51, 0 );
             this.jpCostSpinner.Name = "jpCostSpinner";
-            this.jpCostSpinner.Size = new System.Drawing.Size( 51, 20 );
+            this.jpCostSpinner.Size = new System.Drawing.Size( 53, 20 );
             this.jpCostSpinner.TabIndex = 0;
             this.jpCostSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // chanceSpinner
             // 
-            this.chanceSpinner.AutoSize = true;
-            this.chanceSpinner.Location = new System.Drawing.Point( 97, 28 );
+            this.chanceSpinner.Location = new System.Drawing.Point( 95, 28 );
+            this.chanceSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
             this.chanceSpinner.MinimumSize = new System.Drawing.Size( 51, 0 );
             this.chanceSpinner.Name = "chanceSpinner";
-            this.chanceSpinner.Size = new System.Drawing.Size( 51, 20 );
+            this.chanceSpinner.Size = new System.Drawing.Size( 53, 20 );
             this.chanceSpinner.TabIndex = 1;
             this.chanceSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 

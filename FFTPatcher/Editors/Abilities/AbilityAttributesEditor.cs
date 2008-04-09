@@ -104,7 +104,7 @@ namespace FFTPatcher.Editors
 
         private void FireLinkClickedEvent()
         {
-            if( LinkClicked != null )
+            if( LinkClicked != null && statusSpinner.Value <= 127 )
             {
                 LinkClicked( this, new LabelClickedEventArgs( (byte)statusSpinner.Value ) );
             }

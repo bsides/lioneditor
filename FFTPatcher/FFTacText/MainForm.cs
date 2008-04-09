@@ -34,6 +34,8 @@ namespace FFTPatcher.TextEditor
 		#region Fields (3) 
 
         private readonly MenuItem[] defaultPspMenuItems;
+        private readonly MenuItem[] defaultPsxMenuItems;
+
         private FFTText file;
         private MenuItem[] menuItems;
 
@@ -77,6 +79,10 @@ namespace FFTPatcher.TextEditor
                     {
                         pspMenuItem.MenuItems.AddRange( defaultPspMenuItems );
                     }
+                    else if( File.Filetype == Filetype.PSX )
+                    {
+                        psxMenuItem.MenuItems.AddRange( defaultPsxMenuItems );
+                    }
 
                     menuItem_Click( menuItems[0], EventArgs.Empty );
                     saveMenuItem.Enabled = true;
@@ -114,7 +120,10 @@ namespace FFTPatcher.TextEditor
             allowedSymbolsMenuItem.Click += allowedSymbolsMenuItem_Click;
             defaultPspMenuItems = new MenuItem[2] { 
                 new MenuItem( "-" ), 
-                new MenuItem( "Patch ISO...", new EventHandler( patchMenuItem_Click ) ) };
+                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
+            defaultPsxMenuItems = new MenuItem[2] {
+                new MenuItem("-"),
+                new MenuItem("Patch ISO...", patchMenuItem_Click ) };
         }
 
 		#endregion Constructors 
@@ -481,16 +490,23 @@ namespace FFTPatcher.TextEditor
             openFileDialog.Filter = "ISO images (*.iso)|*.iso";
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                try
+                if( File.Filetype == Filetype.PSP )
                 {
-                    using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
+                    try
                     {
-                        File.UpdatePspIso( stream );
+                        using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
+                        {
+                            File.UpdatePspIso( stream );
+                        }
+                    }
+                    catch( Exception )
+                    {
+                        MessageBox.Show( this, "Error patching file.", "Error", MessageBoxButtons.OK );
                     }
                 }
-                catch( Exception )
+                else if( File.Filetype == Filetype.PSX )
                 {
-                    MessageBox.Show( this, "Error patching file.", "Error", MessageBoxButtons.OK );
+                    File.UpdatePsxIso( openFileDialog.FileName );
                 }
             }
         }

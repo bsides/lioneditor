@@ -24,10 +24,10 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an item's attributes.
     /// </summary>
-    public class ItemAttributes
+    public class ItemAttributes : IChangeable
     {
 
-		#region Properties (15) 
+		#region Properties (16) 
 
 
         public Elements Absorb { get; private set; }
@@ -37,6 +37,18 @@ namespace FFTPatcher.Datatypes
         public ItemAttributes Default { get; private set; }
 
         public Elements Half { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                return Default != null && !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() );
+            }
+        }
 
         public byte Jump { get; set; }
 
@@ -128,11 +140,28 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllItemAttributes
+    public class AllItemAttributes : IChangeable
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                foreach( ItemAttributes a in ItemAttributes )
+                {
+                    if( a.HasChanged )
+                        return true;
+                }
+                return false;
+            }
+        }
 
         public ItemAttributes[] ItemAttributes { get; private set; }
 

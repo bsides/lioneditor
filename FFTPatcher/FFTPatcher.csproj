@@ -78,6 +78,7 @@
     <Compile Include="Datatypes\FFTPatch.cs" />
     <Compile Include="Datatypes\Fonts\FFTFont.cs" />
     <Compile Include="Datatypes\Fonts\Glyph.cs" />
+    <Compile Include="Datatypes\IChangeable.cs" />
     <Compile Include="Datatypes\ISupportDigest.cs" />
     <Compile Include="Datatypes\Items\Accessory.cs" />
     <Compile Include="Datatypes\Items\AllItems.cs" />
@@ -434,6 +435,7 @@
       <LastGenOutput>PSXResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -488,6 +490,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PSXResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\CDTool.cs" />
     <Compile Include="Utilities\Codes.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\GZip.cs" />

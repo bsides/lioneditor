@@ -73,6 +73,8 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label unitIdLabel;
             System.Windows.Forms.Label jobsUnlockedLabel;
             System.Windows.Forms.Label initialDirectionLabel;
+            System.Windows.Forms.Label hLabel1;
+            System.Windows.Forms.Label hLabel2;
             this.primarySkillComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.movementComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.secondaryActionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
@@ -136,6 +138,8 @@ namespace FFTPatcher.Editors
             unitIdLabel = new System.Windows.Forms.Label();
             jobsUnlockedLabel = new System.Windows.Forms.Label();
             initialDirectionLabel = new System.Windows.Forms.Label();
+            hLabel1 = new System.Windows.Forms.Label();
+            hLabel2 = new System.Windows.Forms.Label();
             skillsGroupBox.SuspendLayout();
             equipmentGroupBox.SuspendLayout();
             unknownGroupBox.SuspendLayout();
@@ -797,7 +801,7 @@ namespace FFTPatcher.Editors
             // 
             this.jobLevelSpinner.Location = new System.Drawing.Point( 209, 177 );
             this.jobLevelSpinner.Maximum = new decimal( new int[] {
-            8,
+            255,
             0,
             0,
             0} );
@@ -859,12 +863,32 @@ namespace FFTPatcher.Editors
             this.xSpinner.Tag = "X";
             this.xSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // hLabel1
+            // 
+            hLabel1.AutoSize = true;
+            hLabel1.Location = new System.Drawing.Point( 256, 139 );
+            hLabel1.Name = "hLabel1";
+            hLabel1.Size = new System.Drawing.Size( 13, 13 );
+            hLabel1.TabIndex = 37;
+            hLabel1.Text = "h";
+            // 
+            // hLabel2
+            // 
+            hLabel2.AutoSize = true;
+            hLabel2.Location = new System.Drawing.Point( 128, 139 );
+            hLabel2.Name = "hLabel2";
+            hLabel2.Size = new System.Drawing.Size( 13, 13 );
+            hLabel2.TabIndex = 38;
+            hLabel2.Text = "h";
+            // 
             // EventUnitEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( hLabel2 );
+            this.Controls.Add( hLabel1 );
             this.Controls.Add( initialDirectionLabel );
             this.Controls.Add( this.facingDirectionComboBox );
             this.Controls.Add( this.levelComboBox );

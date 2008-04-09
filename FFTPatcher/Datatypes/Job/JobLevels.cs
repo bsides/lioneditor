@@ -24,7 +24,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
     /// </summary>
-    public class JobLevels
+    public class JobLevels : IChangeable
     {
 
 		#region Fields (1) 
@@ -35,7 +35,7 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Fields 
 
-		#region Properties (31) 
+		#region Properties (32) 
 
 
         public Requirements Archer { get; private set; }
@@ -57,6 +57,48 @@ namespace FFTPatcher.Datatypes
         public Requirements Dragoon { get; private set; }
 
         public Requirements Geomancer { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                return (Default != null) &&
+                    Level1 != Default.Level1 ||
+                    Level2 != Default.Level2 ||
+                    Level3 != Default.Level3 ||
+                    Level4 != Default.Level4 ||
+                    Level5 != Default.Level5 ||
+                    Level6 != Default.Level6 ||
+                    Level7 != Default.Level7 ||
+                    Level8 != Default.Level8 ||
+                    Archer.HasChanged ||
+                    Arithmetician.HasChanged ||
+                    Bard.HasChanged ||
+                    BlackMage.HasChanged ||
+                    Chemist.HasChanged ||
+                    Dancer.HasChanged ||
+                    Dragoon.HasChanged ||
+                    Geomancer.HasChanged ||
+                    Knight.HasChanged ||
+                    Mime.HasChanged ||
+                    Monk.HasChanged ||
+                    Mystic.HasChanged ||
+                    Ninja.HasChanged ||
+                    Orator.HasChanged ||
+                    Samurai.HasChanged ||
+                    Summoner.HasChanged ||
+                    Thief.HasChanged ||
+                    TimeMage.HasChanged ||
+                    WhiteMage.HasChanged ||
+                    (OnionKnight != null && OnionKnight.HasChanged) ||
+                    (DarkKnight != null && DarkKnight.HasChanged) ||
+                    (Unknown != null && Unknown.HasChanged);
+            }
+        }
 
         public Requirements Knight { get; private set; }
 
@@ -197,10 +239,10 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the prerequisites to unlock a job.
     /// </summary>
-    public class Requirements
+    public class Requirements : IChangeable
     {
 
-		#region Properties (25) 
+		#region Properties (26) 
 
 
         public int Archer { get; set; }
@@ -222,6 +264,20 @@ namespace FFTPatcher.Datatypes
         public int Dragoon { get; set; }
 
         public int Geomancer { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                return
+                    Default != null &&
+                    !Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) ); 
+            }
+        }
 
         public int Knight { get; set; }
 

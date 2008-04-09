@@ -25,7 +25,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an Event in the game
     /// </summary>
-    public class Event : IEquatable<Event>
+    public class Event : IEquatable<Event>, IChangeable
     {
 
 		#region Static Fields (2) 
@@ -46,10 +46,19 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Static Properties 
 
-		#region Properties (4) 
+		#region Properties (5) 
 
 
         public Event Default { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get { return Default != null && !Default.Equals( this ); }
+        }
 
         public string Name { get; private set; }
 

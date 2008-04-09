@@ -24,13 +24,22 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a font used in FFT, which is an array of 2200 bitmaps.
     /// </summary>
-    public class FFTFont
+    public class FFTFont : IChangeable
     {
 
-		#region Properties (1) 
+		#region Properties (2) 
 
 
         public Glyph[] Glyphs { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get { return true; }
+        }
 
 
 		#endregion Properties 

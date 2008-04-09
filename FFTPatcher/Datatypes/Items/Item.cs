@@ -26,17 +26,17 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a generic item.
     /// </summary>
-    public class Item
+    public class Item : IChangeable
     {
 
-        #region Static Fields (2)
+		#region Static Fields (2) 
 
         private static List<Item> pspEventItems;
         private static List<Item> psxEventItems;
 
-        #endregion Static Fields
+		#endregion Static Fields 
 
-        #region Fields (8)
+		#region Fields (8) 
 
         private bool accessory;
         private bool blank1;
@@ -47,9 +47,9 @@ namespace FFTPatcher.Datatypes
         private bool shield;
         private bool weapon;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Static Properties (7)
+		#region Static Properties (7) 
 
 
         public static List<Item> DummyItems
@@ -82,9 +82,9 @@ namespace FFTPatcher.Datatypes
         public static List<string> PSXNames { get; private set; }
 
 
-        #endregion Static Properties
+		#endregion Static Properties 
 
-        #region Properties (22)
+		#region Properties (23) 
 
 
         public bool Accessory { get { return accessory; } set { accessory = value; } }
@@ -132,9 +132,40 @@ namespace FFTPatcher.Datatypes
         public bool Weapon { get { return weapon; } set { weapon = value; } }
 
 
-        #endregion Properties
 
-        #region Constructors (4)
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public virtual bool HasChanged
+        {
+            get
+            {
+                return (Default != null) &&
+                    (Accessory != Default.Accessory ||
+                    Blank1 != Default.Blank1 ||
+                    Blank2 != Default.Blank2 ||
+                    Body != Default.Body ||
+                    EnemyLevel != Default.EnemyLevel ||
+                    Graphic != Default.Graphic ||
+                    Head != Default.Head ||
+                    Palette != Default.Palette ||
+                    Price != Default.Price ||
+                    Rare != Default.Rare ||
+                    SecondTableId != Default.SecondTableId ||
+                    Shield != Default.Shield ||
+                    ShopAvailability.ToByte() != Default.ShopAvailability.ToByte() ||
+                    SIA != Default.SIA ||
+                    Unknown1 != Default.Unknown1 ||
+                    Unknown2 != Default.Unknown2 ||
+                    Weapon != Default.Weapon);
+            }
+        }
+
+
+		#endregion Properties 
+
+		#region Constructors (4) 
 
         static Item()
         {
@@ -213,9 +244,9 @@ namespace FFTPatcher.Datatypes
             Default = defaults;
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (6)
+		#region Methods (6) 
 
 
         protected List<byte> ToByteArray()
@@ -270,7 +301,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-        #endregion Methods
+		#endregion Methods 
 
     }
 

@@ -122,7 +122,7 @@ namespace FFTPatcher.Editors
                 weaponRangeSpinner, weaponPowerSpinner, weaponEvadePercentageSpinner, weaponSpellStatusSpinner, 
                 armorHPBonusSpinner, armorMPBonusSpinner, 
                 shieldMagicBlockRateSpinner, shieldPhysicalBlockRateSpinner, 
-                accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateLabel, 
+                accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateSpinner, 
                 chemistItemSpellStatusSpinner, chemistItemXSpinner } );
             comboBoxes.AddRange( new ComboBoxWithDefault[] { itemTypeComboBox, shopAvailabilityComboBox } );
             foreach( NumericUpDownWithDefault spinner in spinners )
@@ -180,7 +180,7 @@ namespace FFTPatcher.Editors
 
         private void chemistItemSpellStatusLabel_Click( object sender, EventArgs e )
         {
-            if( InflictStatusClicked != null )
+            if( InflictStatusClicked != null && chemistItemSpellStatusSpinner.Value <= 127 )
             {
                 InflictStatusClicked( this, new LabelClickedEventArgs( (byte)chemistItemSpellStatusSpinner.Value ) );
             }
@@ -205,7 +205,7 @@ namespace FFTPatcher.Editors
 
         private void itemAttributesLabel_Click( object sender, EventArgs e )
         {
-            if( ItemAttributesClicked != null )
+            if( ItemAttributesClicked != null && itemAttributesSpinner.Value <= (FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F) )
             {
                 ItemAttributesClicked( this, new LabelClickedEventArgs( (byte)itemAttributesSpinner.Value ) );
             }
@@ -302,7 +302,7 @@ namespace FFTPatcher.Editors
                 accessoryMagicEvadeRateSpinner.SetValueAndDefault( 
                     (item as Accessory).MagicEvade,
                     (item as Accessory).AccessoryDefault.MagicEvade );
-                accessoryPhysicalEvadeRateLabel.SetValueAndDefault( 
+                accessoryPhysicalEvadeRateSpinner.SetValueAndDefault( 
                     (item as Accessory).PhysicalEvade,
                     (item as Accessory).AccessoryDefault.PhysicalEvade );
             }
@@ -336,7 +336,6 @@ namespace FFTPatcher.Editors
             itemTypeComboBox.SetValueAndDefault( item.ItemType, item.Default.ItemType );
 
             itemAttributesSpinner.SetValueAndDefault( item.SIA, item.Default.SIA );
-            itemAttributesSpinner.Maximum = FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F;
             priceSpinner.SetValueAndDefault( item.Price, item.Default.Price );
             shopAvailabilityComboBox.SetValueAndDefault( item.ShopAvailability, item.Default.ShopAvailability );
 
@@ -373,7 +372,7 @@ namespace FFTPatcher.Editors
 
         private void weaponSpellStatusLabel_Click( object sender, EventArgs e )
         {
-            if( InflictStatusClicked != null )
+            if( InflictStatusClicked != null && weaponSpellStatusSpinner.Value <= 127 )
             {
                 InflictStatusClicked( this, new LabelClickedEventArgs( (byte)weaponSpellStatusSpinner.Value ) );
             }

@@ -93,7 +93,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a unit that participates in an <see cref="Event"/>.
     /// </summary>
-    public class EventUnit : IEquatable<EventUnit>
+    public class EventUnit : IEquatable<EventUnit>, IChangeable
     {
 
 		#region Static Fields (2) 
@@ -127,7 +127,7 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Fields 
 
-		#region Properties (36) 
+		#region Properties (37) 
 
 
         public Item Accessory { get; set; }
@@ -148,6 +148,15 @@ namespace FFTPatcher.Datatypes
         public Facing FacingDirection { get; set; }
 
         public byte Faith { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get { return Default != null && !Default.Equals( this ); }
+        }
 
         public Item Head { get; set; }
 

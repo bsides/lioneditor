@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     public class Shield : Item
     {
 
-		#region Properties (3) 
+		#region Properties (4) 
 
 
         public byte MagicBlockRate { get; set; }
@@ -36,6 +36,23 @@ namespace FFTPatcher.Datatypes
         public byte PhysicalBlockRate { get; set; }
 
         public Shield ShieldDefault { get; private set; }
+
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public override bool HasChanged
+        {
+            get
+            {
+                return base.HasChanged ||
+                    (ShieldDefault != null &&
+                    (MagicBlockRate != ShieldDefault.MagicBlockRate ||
+                    PhysicalBlockRate != ShieldDefault.PhysicalBlockRate));
+            }
+        }
 
 
 		#endregion Properties 

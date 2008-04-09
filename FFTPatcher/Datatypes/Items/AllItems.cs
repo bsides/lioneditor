@@ -25,7 +25,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all items in memory.
     /// </summary>
-    public class AllItems
+    public class AllItems : IChangeable
     {
 
 		#region Fields (1) 
@@ -34,8 +34,26 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Fields 
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                foreach( Item i in Items )
+                {
+                    if( i.HasChanged )
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         public List<Item> Items { get; private set; }
 

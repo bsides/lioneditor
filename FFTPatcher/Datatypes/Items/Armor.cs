@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     public class Armor : Item
     {
 
-		#region Properties (3) 
+		#region Properties (4) 
 
 
         public Armor ArmorDefault { get; private set; }
@@ -36,6 +36,23 @@ namespace FFTPatcher.Datatypes
         public byte HPBonus { get; set; }
 
         public byte MPBonus { get; set; }
+
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public override bool HasChanged
+        {
+            get
+            {
+                return base.HasChanged ||
+                    (ArmorDefault != null &&
+                    (MPBonus != ArmorDefault.MPBonus ||
+                    HPBonus != ArmorDefault.HPBonus));
+            }
+        }
 
 
 		#endregion Properties 

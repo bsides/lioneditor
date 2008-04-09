@@ -24,7 +24,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all <see cref="Job"/>s in memory.
     /// </summary>
-    public class AllJobs
+    public class AllJobs : IChangeable
     {
 
 		#region Static Fields (2) 
@@ -54,8 +54,25 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Static Properties 
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                foreach( Job j in Jobs )
+                {
+                    if( j.HasChanged )
+                        return true;
+                }
+                return false;
+            }
+        }
 
         public Job[] Jobs { get; private set; }
 
@@ -148,10 +165,10 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a character's Job and its abilities and attributes.
     /// </summary>
-    public class Job
+    public class Job : IChangeable
     {
 
-		#region Properties (32) 
+		#region Properties (33) 
 
 
         public Elements AbsorbElement { get; private set; }
@@ -165,6 +182,47 @@ namespace FFTPatcher.Datatypes
         public Equipment Equipment { get; private set; }
 
         public Elements HalfElement { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                return Default != null &&
+                    (CEvade != Default.CEvade ||
+                    HPConstant != Default.HPConstant ||
+                    HPMultiplier != Default.HPMultiplier ||
+                    InnateA.Offset != Default.InnateA.Offset ||
+                    InnateB.Offset != Default.InnateB.Offset ||
+                    InnateC.Offset != Default.InnateC.Offset ||
+                    InnateD.Offset != Default.InnateD.Offset ||
+                    Jump != Default.Jump ||
+                    MAConstant != Default.MAConstant ||
+                    MAMultiplier != Default.MAMultiplier ||
+                    MGraphic != Default.MGraphic ||
+                    Move != Default.Move ||
+                    MPalette != Default.MPalette ||
+                    MPConstant != Default.MPConstant ||
+                    MPMultiplier != Default.MPMultiplier ||
+                    MPortrait != Default.MPortrait ||
+                    PAConstant != Default.PAConstant ||
+                    SkillSet.Value != Default.SkillSet.Value ||
+                    SpeedConstant != Default.SpeedConstant ||
+                    SpeedMultiplier != Default.SpeedMultiplier ||
+                    AbsorbElement.ToByte() != Default.AbsorbElement.ToByte() ||
+                    CancelElement.ToByte() != Default.CancelElement.ToByte() ||
+                    HalfElement.ToByte() != Default.HalfElement.ToByte() ||
+                    WeakElement.ToByte() != Default.WeakElement.ToByte() ||
+                    !Utilities.CompareArrays( PermanentStatus.ToByteArray(), Default.PermanentStatus.ToByteArray() ) ||
+                    !Utilities.CompareArrays( Equipment.ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) ) ||
+                    !Utilities.CompareArrays( StartingStatus.ToByteArray(), Default.StartingStatus.ToByteArray() ) ||
+                    !Utilities.CompareArrays( StatusImmunity.ToByteArray(), Default.StatusImmunity.ToByteArray() )
+                    );
+            }
+        }
 
         public byte HPConstant { get; set; }
 

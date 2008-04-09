@@ -41,7 +41,7 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Fields 
 
-		#region Properties (8) 
+		#region Properties (9) 
 
 
         public Elements Elements { get; private set; }
@@ -59,6 +59,28 @@ namespace FFTPatcher.Datatypes
         public Weapon WeaponDefault { get; private set; }
 
         public byte WeaponPower { get; set; }
+
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public override bool HasChanged
+        {
+            get
+            {
+                return base.HasChanged ||
+                    (WeaponDefault != null &&
+                    (Elements.ToByte() != WeaponDefault.Elements.ToByte() ||
+                    EvadePercentage != WeaponDefault.EvadePercentage ||
+                    Formula != WeaponDefault.Formula ||
+                    InflictStatus != WeaponDefault.InflictStatus ||
+                    Range != WeaponDefault.Range ||
+                    Unknown != WeaponDefault.Unknown ||
+                    WeaponPower != WeaponDefault.WeaponPower));
+            }
+        }
 
 
 		#endregion Properties 

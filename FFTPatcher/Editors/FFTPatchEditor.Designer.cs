@@ -247,12 +247,10 @@ namespace FFTPatcher.Editors
             // 
             // allMonsterSkillsEditor1
             // 
-            this.allMonsterSkillsEditor1.AutoSize = true;
-            this.allMonsterSkillsEditor1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.allMonsterSkillsEditor1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.allMonsterSkillsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allMonsterSkillsEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allMonsterSkillsEditor1.Name = "allMonsterSkillsEditor1";
-            this.allMonsterSkillsEditor1.Size = new System.Drawing.Size( 289, 709 );
+            this.allMonsterSkillsEditor1.Size = new System.Drawing.Size( 786, 709 );
             this.allMonsterSkillsEditor1.TabIndex = 0;
             // 
             // actionMenusTabPage
@@ -386,7 +384,7 @@ namespace FFTPatcher.Editors
             this.fontEditor1.FFTFont = null;
             this.fontEditor1.Location = new System.Drawing.Point( 6, 6 );
             this.fontEditor1.Name = "fontEditor1";
-            this.fontEditor1.Size = new System.Drawing.Size( 249, 313 );
+            this.fontEditor1.Size = new System.Drawing.Size( 240, 313 );
             this.fontEditor1.TabIndex = 0;
             // 
             // FFTPatchEditor
@@ -406,7 +404,6 @@ namespace FFTPatcher.Editors
             this.jobLevelsTab.PerformLayout();
             this.skillSetsPage.ResumeLayout( false );
             this.monsterSkillsTab.ResumeLayout( false );
-            this.monsterSkillsTab.PerformLayout();
             this.actionMenusTabPage.ResumeLayout( false );
             this.statusEffectsTab.ResumeLayout( false );
             this.inflictStatusesTabPage.ResumeLayout( false );

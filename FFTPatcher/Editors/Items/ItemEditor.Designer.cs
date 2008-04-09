@@ -92,7 +92,7 @@ namespace FFTPatcher.Editors
             this.chemistItemSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.chemistItemXSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.accessoryMagicEvadeRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.accessoryPhysicalEvadeRateLabel = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.accessoryPhysicalEvadeRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.armorMPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.armorHPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.shieldMagicBlockRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -144,7 +144,7 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateLabel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).BeginInit();
@@ -453,7 +453,7 @@ namespace FFTPatcher.Editors
             this.accessoryPanel.Controls.Add( magicEvadeRateLabel );
             this.accessoryPanel.Controls.Add( physicalEvadeRateLabel );
             this.accessoryPanel.Controls.Add( this.accessoryMagicEvadeRateSpinner );
-            this.accessoryPanel.Controls.Add( this.accessoryPhysicalEvadeRateLabel );
+            this.accessoryPanel.Controls.Add( this.accessoryPhysicalEvadeRateSpinner );
             this.accessoryPanel.Location = new System.Drawing.Point( 4, 159 );
             this.accessoryPanel.Name = "accessoryPanel";
             this.accessoryPanel.Size = new System.Drawing.Size( 376, 167 );
@@ -547,7 +547,7 @@ namespace FFTPatcher.Editors
             // 
             this.enemyLevelSpinner.Location = new System.Drawing.Point( 90, 44 );
             this.enemyLevelSpinner.Maximum = new decimal( new int[] {
-            99,
+            255,
             0,
             0,
             0} );
@@ -561,6 +561,11 @@ namespace FFTPatcher.Editors
             // 
             this.itemAttributesSpinner.Hexadecimal = true;
             this.itemAttributesSpinner.Location = new System.Drawing.Point( 90, 87 );
+            this.itemAttributesSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
             this.itemAttributesSpinner.Name = "itemAttributesSpinner";
             this.itemAttributesSpinner.Size = new System.Drawing.Size( 41, 20 );
             this.itemAttributesSpinner.TabIndex = 4;
@@ -602,7 +607,7 @@ namespace FFTPatcher.Editors
             this.chemistItemSpellStatusSpinner.Hexadecimal = true;
             this.chemistItemSpellStatusSpinner.Location = new System.Drawing.Point( 86, 46 );
             this.chemistItemSpellStatusSpinner.Maximum = new decimal( new int[] {
-            127,
+            255,
             0,
             0,
             0} );
@@ -629,20 +634,30 @@ namespace FFTPatcher.Editors
             // accessoryMagicEvadeRateSpinner
             // 
             this.accessoryMagicEvadeRateSpinner.Location = new System.Drawing.Point( 86, 24 );
+            this.accessoryMagicEvadeRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
             this.accessoryMagicEvadeRateSpinner.Name = "accessoryMagicEvadeRateSpinner";
             this.accessoryMagicEvadeRateSpinner.Size = new System.Drawing.Size( 42, 20 );
             this.accessoryMagicEvadeRateSpinner.TabIndex = 1;
             this.accessoryMagicEvadeRateSpinner.Tag = "MagicEvade";
             this.accessoryMagicEvadeRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // accessoryPhysicalEvadeRateLabel
+            // accessoryPhysicalEvadeRateSpinner
             // 
-            this.accessoryPhysicalEvadeRateLabel.Location = new System.Drawing.Point( 86, 3 );
-            this.accessoryPhysicalEvadeRateLabel.Name = "accessoryPhysicalEvadeRateLabel";
-            this.accessoryPhysicalEvadeRateLabel.Size = new System.Drawing.Size( 42, 20 );
-            this.accessoryPhysicalEvadeRateLabel.TabIndex = 0;
-            this.accessoryPhysicalEvadeRateLabel.Tag = "PhysicalEvade";
-            this.accessoryPhysicalEvadeRateLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.accessoryPhysicalEvadeRateSpinner.Location = new System.Drawing.Point( 86, 3 );
+            this.accessoryPhysicalEvadeRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.accessoryPhysicalEvadeRateSpinner.Name = "accessoryPhysicalEvadeRateSpinner";
+            this.accessoryPhysicalEvadeRateSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.accessoryPhysicalEvadeRateSpinner.TabIndex = 0;
+            this.accessoryPhysicalEvadeRateSpinner.Tag = "PhysicalEvade";
+            this.accessoryPhysicalEvadeRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // armorMPBonusSpinner
             // 
@@ -675,6 +690,11 @@ namespace FFTPatcher.Editors
             // shieldMagicBlockRateSpinner
             // 
             this.shieldMagicBlockRateSpinner.Location = new System.Drawing.Point( 86, 24 );
+            this.shieldMagicBlockRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
             this.shieldMagicBlockRateSpinner.Name = "shieldMagicBlockRateSpinner";
             this.shieldMagicBlockRateSpinner.Size = new System.Drawing.Size( 42, 20 );
             this.shieldMagicBlockRateSpinner.TabIndex = 1;
@@ -684,6 +704,11 @@ namespace FFTPatcher.Editors
             // shieldPhysicalBlockRateSpinner
             // 
             this.shieldPhysicalBlockRateSpinner.Location = new System.Drawing.Point( 86, 3 );
+            this.shieldPhysicalBlockRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
             this.shieldPhysicalBlockRateSpinner.Name = "shieldPhysicalBlockRateSpinner";
             this.shieldPhysicalBlockRateSpinner.Size = new System.Drawing.Size( 42, 20 );
             this.shieldPhysicalBlockRateSpinner.TabIndex = 0;
@@ -733,7 +758,7 @@ namespace FFTPatcher.Editors
             this.weaponSpellStatusSpinner.Hexadecimal = true;
             this.weaponSpellStatusSpinner.Location = new System.Drawing.Point( 121, 106 );
             this.weaponSpellStatusSpinner.Maximum = new decimal( new int[] {
-            127,
+            255,
             0,
             0,
             0} );
@@ -844,7 +869,7 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateLabel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).EndInit();
@@ -882,7 +907,7 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.NumericUpDownWithDefault armorHPBonusSpinner;
         private System.Windows.Forms.Panel accessoryPanel;
         private FFTPatcher.Controls.NumericUpDownWithDefault accessoryMagicEvadeRateSpinner;
-        private FFTPatcher.Controls.NumericUpDownWithDefault accessoryPhysicalEvadeRateLabel;
+        private FFTPatcher.Controls.NumericUpDownWithDefault accessoryPhysicalEvadeRateSpinner;
         private System.Windows.Forms.Panel chemistItemPanel;
         private FFTPatcher.Controls.NumericUpDownWithDefault chemistItemXSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault chemistItemSpellStatusSpinner;

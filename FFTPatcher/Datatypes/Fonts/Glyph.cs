@@ -34,11 +34,20 @@ namespace FFTPatcher.Datatypes
     /// <para>Each glyph is 10 pixels wide and 14 pixels tall.</para>
     /// <para>Four pixels are packed into a single byte, for a total glyph size of 35 bytes.</para>
     /// </summary>
-    public class Glyph
+    public class Glyph : IChangeable
     {
 
-		#region Properties (2) 
+		#region Properties (3) 
 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get { return true; }
+        }
 
         public FontColor[] Pixels { get; private set; }
 

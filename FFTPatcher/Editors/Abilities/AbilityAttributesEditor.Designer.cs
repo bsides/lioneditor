@@ -231,7 +231,7 @@ namespace FFTPatcher.Editors
             this.statusSpinner.Hexadecimal = true;
             this.statusSpinner.Location = new System.Drawing.Point( 102, 84 );
             this.statusSpinner.Maximum = new decimal( new int[] {
-            127,
+            255,
             0,
             0,
             0} );

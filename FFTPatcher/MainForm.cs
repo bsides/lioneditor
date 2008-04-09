@@ -53,6 +53,7 @@ namespace FFTPatcher
             decryptMenuItem.Click += decryptMenuItem_Click;
 
             patchPspIsoMenuItem.Click += patchPspIsoMenuItem_Click;
+            patchPsxIsoMenuItem.Click += patchPsxIsoMenuItem_Click;
             cheatdbMenuItem.Click += cheatdbMenuItem_Click;
 
             FFTPatch.DataChanged += FFTPatch_DataChanged;
@@ -216,6 +217,7 @@ namespace FFTPatcher
         private void FFTPatch_DataChanged( object sender, EventArgs e )
         {
             applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            patchPsxIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
             saveMenuItem.Enabled = true;
             generateMenuItem.Enabled = true;
             generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
@@ -325,6 +327,13 @@ namespace FFTPatcher
                     MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
                 }
             }
+        }
+
+        private void patchPsxIsoMenuItem_Click( object sender, EventArgs e )
+        {
+            CDTool.PatchISOWithFFTPatchAsync( "", FFTPatch.Abilities, FFTPatch.Items, FFTPatch.ItemAttributes, FFTPatch.Jobs, FFTPatch.JobLevels,
+                FFTPatch.SkillSets, FFTPatch.MonsterSkills, FFTPatch.ActionMenus, FFTPatch.StatusAttributes, FFTPatch.InflictStatuses,
+                FFTPatch.PoachProbabilities, FFTPatch.Font, FFTPatch.ENTDs );
         }
 
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )

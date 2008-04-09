@@ -205,6 +205,11 @@ namespace FFTPatcher.TextEditor
         /// <param name="stream">The stream that represents a War of the Lions image.</param>
         public void UpdatePspIso( FileStream stream )
         {
+            if( Filetype != Filetype.PSP )
+            {
+                throw new InvalidOperationException();
+            }
+
             List<IFFTPackFile> fftpackFiles = new List<IFFTPackFile>();
             List<IBootBin> bootBinFiles = new List<IBootBin>();
             foreach( IStringSectioned sectioned in SectionedFiles )
@@ -244,6 +249,54 @@ namespace FFTPatcher.TextEditor
                     PspIso.UpdateBootBin( stream, location, bytes );
                 }
             }
+        }
+
+        private string GetISOFilename( string filename )
+        {
+            string result = filename;
+            if( !result.StartsWith( "/" ) )
+            {
+                result = "/" + result;
+            }
+            if( !result.EndsWith( ";1" ) )
+            {
+                result += ";1";
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Updates a PSX FFT ISO with the text files in this instance.
+        /// </summary>
+        public void UpdatePsxIso( string filename )
+        {
+            if( Filetype != Filetype.PSX )
+            {
+                throw new InvalidOperationException();
+            }
+
+            List<CDTool.PatchedByteArray> patches = new List<CDTool.PatchedByteArray>();
+            foreach( IStringSectioned sectioned in SectionedFiles )
+            {
+                byte[] bytes = sectioned.ToByteArray();
+                foreach( KeyValuePair<string, long> kvp in sectioned.Locations )
+                {
+
+                    patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                }
+            }
+
+            foreach( IPartitionedFile partitioned in PartitionedFiles )
+            {
+                byte[] bytes = partitioned.ToByteArray();
+                foreach( KeyValuePair<string, long> kvp in partitioned.Locations )
+                {
+                    patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                }
+            }
+
+            CDTool.PatchISO( filename, patches.ToArray() );
         }
 
         /// <summary>

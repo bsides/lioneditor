@@ -24,15 +24,35 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all Events in the game.
     /// </summary>
-    public class ENTD
+    public class ENTD : IChangeable
     {
 
-		#region Properties (2) 
+		#region Properties (3) 
 
 
         public ENTD Default { get; private set; }
 
         public Event[] Events { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get 
+            {
+                foreach( Event e in Events )
+                {
+                    if( e.HasChanged )
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
 
 
 		#endregion Properties 
@@ -73,15 +93,46 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllENTDs
+    public class AllENTDs : IChangeable
     {
 
-		#region Properties (3) 
+		#region Properties (4) 
 
 
         public ENTD[] ENTDs { get; private set; }
 
         public List<Event> Events { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                foreach( Event e in Events )
+                {
+                    if( e.HasChanged )
+                    {
+                        return true;
+                    }
+                }
+
+                if( PSPEvent != null && PSPEvent.Count > 0 )
+                {
+                    foreach( Event e in PSPEvent )
+                    {
+                        if( e.HasChanged )
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
 
         public List<Event> PSPEvent { get; private set; }
 

@@ -47,8 +47,11 @@ namespace FFTPatcher.Editors
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Panel panel;
             this.itemListBox = new System.Windows.Forms.ListBox();
             this.itemEditor = new FFTPatcher.Editors.ItemEditor();
+            panel = new System.Windows.Forms.Panel();
+            panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // itemListBox
@@ -64,23 +67,33 @@ namespace FFTPatcher.Editors
             // 
             this.itemEditor.AutoSize = true;
             this.itemEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.itemEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.itemEditor.Item = null;
-            this.itemEditor.Location = new System.Drawing.Point( 120, 0 );
+            this.itemEditor.Location = new System.Drawing.Point( 0, 0 );
             this.itemEditor.Name = "itemEditor";
-            this.itemEditor.Size = new System.Drawing.Size( 583, 445 );
+            this.itemEditor.Size = new System.Drawing.Size( 503, 329 );
             this.itemEditor.TabIndex = 1;
+            // 
+            // panel
+            // 
+            panel.AutoScroll = true;
+            panel.Controls.Add( this.itemEditor );
+            panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel.Location = new System.Drawing.Point( 120, 0 );
+            panel.Name = "panel";
+            panel.Size = new System.Drawing.Size( 583, 445 );
+            panel.TabIndex = 2;
             // 
             // AllItemsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.itemEditor );
+            this.Controls.Add( panel );
             this.Controls.Add( this.itemListBox );
             this.Name = "AllItemsEditor";
             this.Size = new System.Drawing.Size( 703, 445 );
+            panel.ResumeLayout( false );
+            panel.PerformLayout();
             this.ResumeLayout( false );
-            this.PerformLayout();
 
         }
 

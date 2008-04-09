@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     public class ChemistItem : Item
     {
 
-		#region Properties (4) 
+		#region Properties (5) 
 
 
         public ChemistItem ChemistItemDefault { get; private set; }
@@ -38,6 +38,24 @@ namespace FFTPatcher.Datatypes
         public byte InflictStatus { get; set; }
 
         public byte X { get; set; }
+
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public override bool HasChanged
+        {
+            get
+            {
+                return base.HasChanged ||
+                    (ChemistItemDefault != null &&
+                    (Formula != ChemistItemDefault.Formula ||
+                    InflictStatus != ChemistItemDefault.InflictStatus) ||
+                    X != ChemistItemDefault.X);
+            }
+        }
 
 
 		#endregion Properties 

@@ -49,6 +49,8 @@ namespace FFTPatcher.Editors
         {
             this.unitSelectorListBox = new System.Windows.Forms.ListBox();
             this.eventUnitEditor = new FFTPatcher.Editors.EventUnitEditor();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // unitSelectorListBox
@@ -66,24 +68,33 @@ namespace FFTPatcher.Editors
             this.eventUnitEditor.AutoSize = true;
             this.eventUnitEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.eventUnitEditor.EventUnit = null;
-            this.eventUnitEditor.Location = new System.Drawing.Point( 0, 218 );
+            this.eventUnitEditor.Location = new System.Drawing.Point( 0, 0 );
             this.eventUnitEditor.Name = "eventUnitEditor";
-            this.eventUnitEditor.Size = new System.Drawing.Size( 536, 388 );
+            this.eventUnitEditor.Size = new System.Drawing.Size( 546, 476 );
             this.eventUnitEditor.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add( this.eventUnitEditor );
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point( 0, 212 );
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size( 539, 397 );
+            this.panel1.TabIndex = 2;
             // 
             // EventEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.panel1 );
             this.Controls.Add( this.unitSelectorListBox );
-            this.Controls.Add( this.eventUnitEditor );
             this.Name = "EventEditor";
             this.Size = new System.Drawing.Size( 539, 609 );
+            this.panel1.ResumeLayout( false );
+            this.panel1.PerformLayout();
             this.ResumeLayout( false );
-            this.PerformLayout();
 
         }
 
@@ -91,5 +102,6 @@ namespace FFTPatcher.Editors
 
         private EventUnitEditor eventUnitEditor;
         private System.Windows.Forms.ListBox unitSelectorListBox;
+        private System.Windows.Forms.Panel panel1;
     }
 }

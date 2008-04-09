@@ -693,12 +693,12 @@ namespace FFTPatcher.Editors
             // 
             this.level1Spinner.Location = new System.Drawing.Point( 78, 633 );
             this.level1Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level1Spinner.Name = "level1Spinner";
-            this.level1Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level1Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level1Spinner.TabIndex = 71;
             this.level1Spinner.Tag = "Level1";
             this.level1Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -707,12 +707,12 @@ namespace FFTPatcher.Editors
             // 
             this.level2Spinner.Location = new System.Drawing.Point( 78, 653 );
             this.level2Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level2Spinner.Name = "level2Spinner";
-            this.level2Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level2Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level2Spinner.TabIndex = 72;
             this.level2Spinner.Tag = "Level2";
             this.level2Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -721,12 +721,12 @@ namespace FFTPatcher.Editors
             // 
             this.level3Spinner.Location = new System.Drawing.Point( 78, 673 );
             this.level3Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level3Spinner.Name = "level3Spinner";
-            this.level3Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level3Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level3Spinner.TabIndex = 73;
             this.level3Spinner.Tag = "Level3";
             this.level3Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -735,12 +735,12 @@ namespace FFTPatcher.Editors
             // 
             this.level4Spinner.Location = new System.Drawing.Point( 78, 693 );
             this.level4Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level4Spinner.Name = "level4Spinner";
-            this.level4Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level4Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level4Spinner.TabIndex = 74;
             this.level4Spinner.Tag = "Level4";
             this.level4Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -749,12 +749,12 @@ namespace FFTPatcher.Editors
             // 
             this.level5Spinner.Location = new System.Drawing.Point( 78, 713 );
             this.level5Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level5Spinner.Name = "level5Spinner";
-            this.level5Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level5Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level5Spinner.TabIndex = 75;
             this.level5Spinner.Tag = "Level5";
             this.level5Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -763,12 +763,12 @@ namespace FFTPatcher.Editors
             // 
             this.level6Spinner.Location = new System.Drawing.Point( 78, 733 );
             this.level6Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level6Spinner.Name = "level6Spinner";
-            this.level6Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level6Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level6Spinner.TabIndex = 76;
             this.level6Spinner.Tag = "Level6";
             this.level6Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -777,12 +777,12 @@ namespace FFTPatcher.Editors
             // 
             this.level7Spinner.Location = new System.Drawing.Point( 78, 753 );
             this.level7Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level7Spinner.Name = "level7Spinner";
-            this.level7Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level7Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level7Spinner.TabIndex = 77;
             this.level7Spinner.Tag = "Level7";
             this.level7Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -791,12 +791,12 @@ namespace FFTPatcher.Editors
             // 
             this.level8Spinner.Location = new System.Drawing.Point( 78, 773 );
             this.level8Spinner.Maximum = new decimal( new int[] {
-            9999,
+            65535,
             0,
             0,
             0} );
             this.level8Spinner.Name = "level8Spinner";
-            this.level8Spinner.Size = new System.Drawing.Size( 54, 20 );
+            this.level8Spinner.Size = new System.Drawing.Size( 65, 20 );
             this.level8Spinner.TabIndex = 78;
             this.level8Spinner.Tag = "Level8";
             this.level8Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;

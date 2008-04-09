@@ -25,7 +25,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an <see cref="Ability"/>'s attributes.
     /// </summary>
-    public class AbilityAttributes
+    public class AbilityAttributes : IChangeable
     {
 
 		#region Fields (40) 
@@ -80,15 +80,25 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Fields 
 
-		#region Properties (5) 
+		#region Properties (6) 
 
 
         public AbilityAttributes Default { get; set; }
 
- // inverted
         public Elements Elements { get; private set; }
 
         public AbilityFormula Formula { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        public bool HasChanged
+        {
+            get
+            {
+                return Default != null && !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() );
+            }
+        }
 
         public string Name { get; private set; }
 

@@ -25,7 +25,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
-    public class AllAbilities
+    public class AllAbilities : IChangeable
     {
 
 		#region Static Fields (2) 
@@ -73,12 +73,31 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Static Properties 
 
-		#region Properties (2) 
+		#region Properties (3) 
 
 
         public Ability[] Abilities { get; private set; }
 
         public Ability[] DefaultAbilities { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public bool HasChanged
+        {
+            get
+            {
+                foreach( Ability a in Abilities )
+                {
+                    if( a.HasChanged )
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
 
 
 		#endregion Properties 

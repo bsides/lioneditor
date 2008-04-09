@@ -49,15 +49,12 @@ namespace FFTPatcher.SpriteEditor
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.MenuItem fileMenu;
-            System.Windows.Forms.MenuItem paletteMenu;
             System.Windows.Forms.MenuItem separator1;
             System.Windows.Forms.MenuItem separator2;
             System.Windows.Forms.MenuItem separator3;
+            System.Windows.Forms.MenuItem paletteMenu;
             System.Windows.Forms.GroupBox paletteGroupBox;
-            this.spriteViewer1 = new FFTPatcher.SpriteEditor.SpriteViewer();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
-            this.aboutMenuItem = new System.Windows.Forms.MenuItem();
+            System.Windows.Forms.Label shpLabel;
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.saveAsMenuItem = new System.Windows.Forms.MenuItem();
@@ -66,49 +63,26 @@ namespace FFTPatcher.SpriteEditor
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.paletteSaveMenuItem = new System.Windows.Forms.MenuItem();
             this.paletteOpenMenuItem = new System.Windows.Forms.MenuItem();
+            this.portraitCheckbox = new System.Windows.Forms.CheckBox();
             this.paletteSelector = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
+            this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.shapesListBox = new System.Windows.Forms.ListBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.spriteViewer1 = new FFTPatcher.SpriteEditor.SpriteViewer();
             fileMenu = new System.Windows.Forms.MenuItem();
-            paletteMenu = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
+            paletteMenu = new System.Windows.Forms.MenuItem();
             paletteGroupBox = new System.Windows.Forms.GroupBox();
-            this.panel1.SuspendLayout();
+            shpLabel = new System.Windows.Forms.Label();
             paletteGroupBox.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // spriteViewer1
-            // 
-            this.spriteViewer1.Location = new System.Drawing.Point( 3, 3 );
-            this.spriteViewer1.Name = "spriteViewer1";
-            this.spriteViewer1.Palette = 0;
-            this.spriteViewer1.Size = new System.Drawing.Size( 256, 488 );
-            this.spriteViewer1.Sprite = null;
-            this.spriteViewer1.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.AutoSize = true;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add( this.spriteViewer1 );
-            this.panel1.Location = new System.Drawing.Point( 10, 3 );
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size( 266, 498 );
-            this.panel1.TabIndex = 1;
-            // 
-            // mainMenu
-            // 
-            this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            fileMenu,
-            paletteMenu,
-            this.aboutMenuItem} );
-            // 
-            // aboutMenuItem
-            // 
-            this.aboutMenuItem.Index = 2;
-            this.aboutMenuItem.Text = "About...";
             // 
             // fileMenu
             // 
@@ -124,14 +98,6 @@ namespace FFTPatcher.SpriteEditor
             separator3,
             this.exitMenuItem} );
             fileMenu.Text = "&File";
-            // 
-            // paletteMenu
-            // 
-            paletteMenu.Index = 1;
-            paletteMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.paletteSaveMenuItem,
-            this.paletteOpenMenuItem} );
-            paletteMenu.Text = "&Palette";
             // 
             // openMenuItem
             // 
@@ -182,6 +148,14 @@ namespace FFTPatcher.SpriteEditor
             this.exitMenuItem.Index = 8;
             this.exitMenuItem.Text = "E&xit";
             // 
+            // paletteMenu
+            // 
+            paletteMenu.Index = 1;
+            paletteMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.paletteSaveMenuItem,
+            this.paletteOpenMenuItem} );
+            paletteMenu.Text = "&Palette";
+            // 
             // paletteSaveMenuItem
             // 
             this.paletteSaveMenuItem.Enabled = false;
@@ -198,13 +172,26 @@ namespace FFTPatcher.SpriteEditor
             // 
             paletteGroupBox.AutoSize = true;
             paletteGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            paletteGroupBox.Controls.Add( this.portraitCheckbox );
             paletteGroupBox.Controls.Add( this.paletteSelector );
             paletteGroupBox.Location = new System.Drawing.Point( 282, 3 );
             paletteGroupBox.Name = "paletteGroupBox";
-            paletteGroupBox.Size = new System.Drawing.Size( 185, 59 );
+            paletteGroupBox.Size = new System.Drawing.Size( 185, 106 );
             paletteGroupBox.TabIndex = 2;
             paletteGroupBox.TabStop = false;
             paletteGroupBox.Text = "Palette";
+            // 
+            // portraitCheckbox
+            // 
+            this.portraitCheckbox.Checked = true;
+            this.portraitCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.portraitCheckbox.Enabled = false;
+            this.portraitCheckbox.Location = new System.Drawing.Point( 6, 50 );
+            this.portraitCheckbox.Name = "portraitCheckbox";
+            this.portraitCheckbox.Size = new System.Drawing.Size( 153, 37 );
+            this.portraitCheckbox.TabIndex = 3;
+            this.portraitCheckbox.Text = "Always use corresponding palette for portrait";
+            this.portraitCheckbox.UseVisualStyleBackColor = true;
             // 
             // paletteSelector
             // 
@@ -233,6 +220,28 @@ namespace FFTPatcher.SpriteEditor
             this.paletteSelector.Size = new System.Drawing.Size( 173, 21 );
             this.paletteSelector.TabIndex = 0;
             // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add( this.spriteViewer1 );
+            this.panel1.Location = new System.Drawing.Point( 10, 3 );
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size( 266, 498 );
+            this.panel1.TabIndex = 1;
+            // 
+            // mainMenu
+            // 
+            this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            fileMenu,
+            paletteMenu,
+            this.aboutMenuItem} );
+            // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Index = 2;
+            this.aboutMenuItem.Text = "About...";
+            // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog1";
@@ -241,11 +250,55 @@ namespace FFTPatcher.SpriteEditor
             // 
             this.saveFileDialog.Filter = "Sprite files (*.SPR)|*.SPR|Secondary sprite files (*.SP2)|*.SP2";
             // 
-            // Form1
+            // shapesListBox
+            // 
+            this.shapesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.shapesListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.shapesListBox.FormattingEnabled = true;
+            this.shapesListBox.IntegralHeight = false;
+            this.shapesListBox.Location = new System.Drawing.Point( 283, 116 );
+            this.shapesListBox.MultiColumn = true;
+            this.shapesListBox.Name = "shapesListBox";
+            this.shapesListBox.Size = new System.Drawing.Size( 185, 353 );
+            this.shapesListBox.TabIndex = 3;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point( 354, 475 );
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size( 113, 21 );
+            this.comboBox1.TabIndex = 4;
+            // 
+            // shpLabel
+            // 
+            shpLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            shpLabel.AutoSize = true;
+            shpLabel.Location = new System.Drawing.Point( 316, 478 );
+            shpLabel.Name = "shpLabel";
+            shpLabel.Size = new System.Drawing.Size( 32, 13 );
+            shpLabel.TabIndex = 5;
+            shpLabel.Text = "SHP:";
+            // 
+            // spriteViewer1
+            // 
+            this.spriteViewer1.Location = new System.Drawing.Point( 3, 3 );
+            this.spriteViewer1.Name = "spriteViewer1";
+            this.spriteViewer1.Size = new System.Drawing.Size( 256, 488 );
+            this.spriteViewer1.Sprite = null;
+            this.spriteViewer1.TabIndex = 0;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 480, 512 );
+            this.ClientSize = new System.Drawing.Size( 480, 533 );
+            this.Controls.Add( shpLabel );
+            this.Controls.Add( this.comboBox1 );
+            this.Controls.Add( this.shapesListBox );
             this.Controls.Add( paletteGroupBox );
             this.Controls.Add( this.panel1 );
             this.MaximizeBox = false;
@@ -253,11 +306,11 @@ namespace FFTPatcher.SpriteEditor
             this.Menu = this.mainMenu;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size( 488, 560 );
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Shishi Sprite Manager";
-            this.panel1.ResumeLayout( false );
             paletteGroupBox.ResumeLayout( false );
+            this.panel1.ResumeLayout( false );
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -280,6 +333,9 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.ComboBox paletteSelector;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.CheckBox portraitCheckbox;
+        private System.Windows.Forms.ListBox shapesListBox;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

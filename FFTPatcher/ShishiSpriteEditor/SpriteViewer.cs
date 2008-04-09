@@ -24,28 +24,16 @@ namespace FFTPatcher.SpriteEditor
     public class SpriteViewer : UserControl
     {
 
-		#region Fields (2) 
+		#region Fields (3) 
 
         private int palette = 0;
+        private int portraitPalette = 8;
         private Sprite sprite = null;
 
 		#endregion Fields 
 
-		#region Properties (2) 
+		#region Properties (1) 
 
-
-        public int Palette
-        {
-            get { return palette; }
-            set
-            {
-                if( value != palette )
-                {
-                    palette = value;
-                    Invalidate();
-                }
-            }
-        }
 
         public Sprite Sprite
         {
@@ -63,7 +51,7 @@ namespace FFTPatcher.SpriteEditor
 
 		#endregion Properties 
 
-		#region Methods (1) 
+		#region Methods (3) 
 
 
         protected override void OnPaint( PaintEventArgs e )
@@ -71,7 +59,22 @@ namespace FFTPatcher.SpriteEditor
             base.OnPaint( e );
             if( sprite != null )
             {
-                e.Graphics.DrawSprite( sprite, sprite.Palettes[palette] );
+                e.Graphics.DrawSprite( sprite, sprite.Palettes[palette], sprite.Palettes[portraitPalette] );
+            }
+        }
+
+        public void SetPalette( int paletteId )
+        {
+            SetPalette( paletteId, paletteId );
+        }
+
+        public void SetPalette( int paletteId, int portraitPaletteId )
+        {
+            if( palette != paletteId || portraitPalette != portraitPaletteId )
+            {
+                palette = paletteId;
+                portraitPalette = portraitPaletteId;
+                Invalidate();
             }
         }
 

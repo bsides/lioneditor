@@ -27,6 +27,7 @@ namespace FFTPatcher.SpriteEditor
     /// </summary>
     public static partial class ExtensionMethods
     {
+        private static readonly Rectangle portraitRectangle = new Rectangle( 80, 256, 48, 32 );
 
 		#region Methods (4) 
 
@@ -37,11 +38,11 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         /// <param name="s">The <see cref="Sprite"/> to draw.</param>
         /// <param name="p">The <see cref="Palette"/> to use to draw the sprite.</param>
-        public static void DrawSprite( this Graphics g, Sprite s, Palette p )
+        public static void DrawSprite( this Graphics g, Sprite s, Palette p, Palette portrait )
         {
             using( Bitmap b = new Bitmap( 256, 488 ) )
             {
-                b.DrawSprite( s, p );
+                b.DrawSprite( s, p, portrait );
                 g.DrawImage( b, 0, 0 );
             }
         }
@@ -52,11 +53,19 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="b">The <see cref="Bitmap"/> object to draw on.</param>
         /// <param name="s">The <see cref="Sprite"/> to draw.</param>
         /// <param name="p">The <see cref="Palette"/> to use to draw the sprite.</param>
-        public static void DrawSprite( this Bitmap b, Sprite s, Palette p )
+        public static void DrawSprite( this Bitmap b, Sprite s, Palette p, Palette portrait )
         {
             for( int i = 0; (i < s.Pixels.Length) && (i / 256 < b.Height); i++ )
             {
                 b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
+            }
+
+            for( int x = portraitRectangle.X; x < portraitRectangle.Right; x++ )
+            {
+                for( int y = portraitRectangle.Y; y < portraitRectangle.Bottom && (x + y * 256 < s.Pixels.Length); y++ )
+                {
+                    b.SetPixel( x, y, portrait.Colors[s.Pixels[x + y * 256] % 16] );
+                }
             }
         }
 

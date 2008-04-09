@@ -51,6 +51,7 @@ namespace FFTPatcher.SpriteEditor
             importMenuItem.Click += importMenuItem_Click;
 
             paletteSelector.SelectedIndexChanged += paletteSelector_SelectedIndexChanged;
+            portraitCheckbox.CheckedChanged += portraitCheckbox_CheckedChanged;
 
             aboutMenuItem.Click += aboutMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
@@ -58,7 +59,7 @@ namespace FFTPatcher.SpriteEditor
 
 		#endregion Constructors 
 
-		#region Methods (12) 
+		#region Methods (13) 
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
@@ -135,10 +136,12 @@ namespace FFTPatcher.SpriteEditor
                 try
                 {
                     bytes = GetBytes( openFileDialog.FileName );
+                    spriteViewer1.SetPalette( 0, 8 );
                     paletteSelector.SelectedIndex = 0;
                     spriteViewer1.Sprite = new Sprite( bytes );
 
                     paletteSelector.Enabled = true;
+                    portraitCheckbox.Enabled = true;
                     saveMenuItem.Enabled = true;
                     saveAsMenuItem.Enabled = true;
                     importMenuItem.Enabled = true;
@@ -191,7 +194,12 @@ namespace FFTPatcher.SpriteEditor
 
         private void paletteSelector_SelectedIndexChanged( object sender, EventArgs e )
         {
-            spriteViewer1.Palette = paletteSelector.SelectedIndex;
+            spriteViewer1.SetPalette( paletteSelector.SelectedIndex, portraitCheckbox.Checked ? (paletteSelector.SelectedIndex % 8 + 8) : paletteSelector.SelectedIndex );
+        }
+
+        private void portraitCheckbox_CheckedChanged( object sender, EventArgs e )
+        {
+            spriteViewer1.SetPalette( paletteSelector.SelectedIndex, portraitCheckbox.Checked ? (paletteSelector.SelectedIndex % 8 + 8) : paletteSelector.SelectedIndex );
         }
 
         private void saveAsMenuItem_Click( object sender, EventArgs e )

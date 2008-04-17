@@ -48,7 +48,7 @@ namespace FFTPatcher.SpriteEditor
         private void InitializeComponent()
         {
             System.Windows.Forms.Button closeButton;
-            this.textBoxNoCaret = new FFTPatcher.TextBoxNoCaret();
+            this.textBox = new System.Windows.Forms.TextBox();
             this.versionLabel = new System.Windows.Forms.Label();
             closeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -65,17 +65,17 @@ namespace FFTPatcher.SpriteEditor
             // 
             // textBoxNoCaret
             // 
-            this.textBoxNoCaret.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBoxNoCaret.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxNoCaret.Location = new System.Drawing.Point( 0, 0 );
-            this.textBoxNoCaret.Multiline = true;
-            this.textBoxNoCaret.Name = "textBoxNoCaret";
-            this.textBoxNoCaret.ReadOnly = true;
-            this.textBoxNoCaret.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxNoCaret.ShortcutsEnabled = false;
-            this.textBoxNoCaret.Size = new System.Drawing.Size( 380, 229 );
-            this.textBoxNoCaret.TabIndex = 0;
-            this.textBoxNoCaret.TabStop = false;
+            this.textBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBox.Location = new System.Drawing.Point( 0, 0 );
+            this.textBox.Multiline = true;
+            this.textBox.Name = "textBoxNoCaret";
+            this.textBox.ReadOnly = true;
+            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox.ShortcutsEnabled = false;
+            this.textBox.Size = new System.Drawing.Size( 380, 229 );
+            this.textBox.TabIndex = 0;
+            this.textBox.TabStop = false;
             // 
             // versionLabel
             // 
@@ -93,7 +93,7 @@ namespace FFTPatcher.SpriteEditor
             this.ClientSize = new System.Drawing.Size( 380, 277 );
             this.Controls.Add( this.versionLabel );
             this.Controls.Add( closeButton );
-            this.Controls.Add( this.textBoxNoCaret );
+            this.Controls.Add( this.textBox );
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size( 388, 304 );
             this.MinimizeBox = false;
@@ -111,7 +111,7 @@ namespace FFTPatcher.SpriteEditor
 
         #endregion
 
-        private TextBoxNoCaret textBoxNoCaret;
+        private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.Label versionLabel;
     }
 }

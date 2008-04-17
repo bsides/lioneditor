@@ -32,7 +32,7 @@ namespace FFTPatcher
         public About()
         {
             InitializeComponent();
-            textBoxNoCaret.Text =
+            textBox.Text =
 @"Credits:
     ZodiacFFTM: For his awesome Excel spreadsheets on which this application is based.
     Dakitty: Found the locations of the Dark Knight, Onion Knight, Balthier, Luso, Argath, Aliste, and Bremondt sprites in the fftpack.bin file
@@ -52,28 +52,6 @@ You should have received a copy of the GNU General Public License along with FFT
         }
 
 		#endregion Constructors 
-
-    }
-
-    public class TextBoxNoCaret : TextBox
-    {
-
-		#region Methods (2) 
-
-
-        [DllImport( "user32.dll", EntryPoint = "HideCaret" )]
-        public static extern bool HideCaret( IntPtr hwnd );
-
-
-
-        protected override void WndProc( ref Message m )
-        {
-            base.WndProc( ref m );
-            HideCaret( this.Handle );
-        }
-
-
-		#endregion Methods 
 
     }
 }

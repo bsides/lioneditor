@@ -32,7 +32,7 @@ namespace FFTPatcher.TextEditor
         public About()
         {
             InitializeComponent();
-            textBoxNoCaret.Text =
+            textBox.Text =
 @"Credits:
   Gomtuu: His page helped me understand the text compression algorithm and how the double-byte characters were processed. Check out his page at http://gomtuu.org/fft/
   Zodiac: Got me started with a list of text locations in the Playstation version.

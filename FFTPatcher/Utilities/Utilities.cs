@@ -59,8 +59,15 @@ namespace FFTPatcher
     public static class Utilities
     {
 
-		#region Methods (12) 
+		#region Methods (13) 
 
+        /// <summary>
+        /// Determines if the code is currently running on Mono (vs. MS .NET)
+        /// </summary>
+        public static bool IsRunningOnMono()
+        {
+            return Type.GetType( "Mono.Runtime" ) != null;
+        }
 
         /// <summary>
         /// Creates an array of booleans from a byte. Index 0 in the array is the least significant bit.

@@ -30,7 +30,7 @@ namespace FFTPatcher.SpriteEditor
         public About()
         {
             InitializeComponent();
-            textBoxNoCaret.Text =
+            textBox.Text =
 @"Credits:
     Dakitty: Found the locations of the Dark Knight, Onion Knight, Balthier, Luso, Argath, Aliste, and Bremondt sprites in the fftpack.bin file
     Gemini: Disassembled the sprite compression routine

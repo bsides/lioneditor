@@ -92,8 +92,16 @@ namespace FFTPatcher.Editors
                 Requirements reqs = dataGridView1.CurrentRow.DataBoundItem as Requirements;
                 dataGridView1.EditingControl.Text = ReflectionHelpers.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[dataGridView1.CurrentCell.ColumnIndex].DataPropertyName ).ToString();
                 dataGridView1.EndEdit();
-                dataGridView1.InvalidateCell( dataGridView1.CurrentCell );
+                if( !Utilities.IsRunningOnMono() )
+                {
+                    InvalidateCell( dataGridView1.CurrentCell );
+                }
             }
+        }
+
+        private void InvalidateCell( DataGridViewCell cell )
+        {
+            dataGridView1.InvalidateCell( cell );
         }
 
         private void dataGridView1_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )

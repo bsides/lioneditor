@@ -193,6 +193,7 @@
     <None Include="Sprites\ITEM_M.SPR" />
     <None Include="Sprites\ITEM_W.SPR" />
     <None Include="Sprites\KANBA.SPR" />
+    <None Include="Sprites\KANZEN.SHP" />
     <None Include="Sprites\KANZEN.SPR" />
     <None Include="Sprites\KI.SPR" />
     <None Include="Sprites\KNIGHT_M.SPR" />

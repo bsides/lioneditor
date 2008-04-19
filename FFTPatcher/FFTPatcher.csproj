@@ -79,7 +79,7 @@
     <Compile Include="Datatypes\Fonts\FFTFont.cs" />
     <Compile Include="Datatypes\Fonts\Glyph.cs" />
     <Compile Include="Datatypes\IChangeable.cs" />
-    <Compile Include="Datatypes\ISupportDigest.cs" />
+    <Compile Include="Datatypes\IXmlDigest.cs" />
     <Compile Include="Datatypes\Items\Accessory.cs" />
     <Compile Include="Datatypes\Items\AllItems.cs" />
     <Compile Include="Datatypes\Items\Armor.cs" />

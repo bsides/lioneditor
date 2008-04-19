@@ -568,4 +568,7 @@
   <data name="pspWORLDLZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>world.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="KANZEN_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\kanzen.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

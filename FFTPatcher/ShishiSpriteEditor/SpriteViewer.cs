@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FFTPatcher.SpriteEditor
@@ -24,16 +26,31 @@ namespace FFTPatcher.SpriteEditor
     public class SpriteViewer : UserControl
     {
 
-		#region Fields (3) 
+		#region Fields (5) 
 
         private int palette = 0;
         private int portraitPalette = 8;
+        private bool proper = true;
         private Sprite sprite = null;
+        private IList<Tile> tiles;
 
 		#endregion Fields 
 
-		#region Properties (1) 
+		#region Properties (2) 
 
+
+        public bool Proper
+        {
+            get { return proper; }
+            set
+            {
+                if( proper ^ value )
+                {
+                    proper = value;
+                    Invalidate();
+                }
+            }
+        }
 
         public Sprite Sprite
         {
@@ -51,16 +68,22 @@ namespace FFTPatcher.SpriteEditor
 
 		#endregion Properties 
 
-		#region Methods (3) 
+		#region Constructors (1) 
 
-
-        protected override void OnPaint( PaintEventArgs e )
+        public SpriteViewer()
         {
-            base.OnPaint( e );
-            if( sprite != null )
-            {
-                e.Graphics.DrawSprite( sprite, sprite.Palettes[palette], sprite.Palettes[portraitPalette] );
-            }
+            SetStyle( ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true );
+        }
+
+		#endregion Constructors 
+
+		#region Methods (4) 
+
+
+        public void HighlightTiles( IList<Tile> tiles )
+        {
+            this.tiles = tiles;
+            Invalidate();
         }
 
         public void SetPalette( int paletteId )
@@ -75,6 +98,21 @@ namespace FFTPatcher.SpriteEditor
                 palette = paletteId;
                 portraitPalette = portraitPaletteId;
                 Invalidate();
+            }
+        }
+
+
+
+        protected override void OnPaint( PaintEventArgs e )
+        {
+            base.OnPaint( e );
+            if( sprite != null )
+            {
+                e.Graphics.DrawSprite( sprite, sprite.Palettes[palette], sprite.Palettes[portraitPalette], proper );
+                if( tiles != null )
+                    using( Pen p = new Pen( Color.Yellow ) )
+                        foreach( Tile t in tiles )
+                            e.Graphics.DrawRectangle( p, t.Rectangle );
             }
         }
 

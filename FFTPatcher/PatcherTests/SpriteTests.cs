@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
+using System.Drawing;
 using System.Reflection;
 using FFTPatcher.SpriteEditor;
-using NUnit.Framework.SyntaxHelpers;
+using NUnit.Framework;
 
 namespace PatcherTests
 {
     [TestFixture]
     public class SpriteTests
     {
+
+        [Test]
+        public void ShouldReadSHP()
+        {
+            Shape s = new Shape( Resources.KANZEN_SHP, "" );
+            Sprite sp = new Sprite( Resources.KANZEN );
+            sp.ToBitmap( true ).Save( "dongs.bmp" );
+            IList<Bitmap> frames = s.GetFrames( sp );
+            for( int i = 0; i < frames.Count; i++ )
+            {
+                frames[i].Save( string.Format( "kanzen{0}.bmp", i ) );
+            }
+        }
+
         [Test]
         public void ShouldSaveSprites()
         {

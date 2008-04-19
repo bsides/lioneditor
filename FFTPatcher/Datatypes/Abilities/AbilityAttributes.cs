@@ -19,13 +19,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
     /// Represents an <see cref="Ability"/>'s attributes.
     /// </summary>
-    public class AbilityAttributes : IChangeable
+    public class AbilityAttributes : IChangeable, IXmlDigest
     {
 
 		#region Fields (40) 
@@ -152,7 +153,7 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
 
         public bool[] ToBoolArray()
@@ -183,6 +184,29 @@ namespace FFTPatcher.Datatypes
             result[13] = MPCost;
 
             return result;
+        }
+
+        public void WriteXml( XmlWriter writer )
+        {
+            writer.WriteAttributeString( "changed", HasChanged.ToString() );
+            writer.WriteStartElement( "Range" );
+            writer.WriteAttributeString( "changed", Range.Equals( Default.Range ).ToString() );
+            writer.WriteAttributeString( "default", Default.Range.ToString() );
+            writer.WriteAttributeString( "value", Range.ToString() );
+            writer.WriteEndElement();
+
+            writer.WriteStartElement( "Range" );
+            writer.WriteAttributeString( "changed", Range.Equals( Default.Range ).ToString() );
+            writer.WriteAttributeString( "default", Default.Range.ToString() );
+            writer.WriteAttributeString( "value", Range.ToString() );
+            writer.WriteEndElement();
+
+            writer.WriteStartElement( "Range" );
+            writer.WriteAttributeString( "changed", Range.Equals( Default.Range ).ToString() );
+            writer.WriteAttributeString( "default", Default.Range.ToString() );
+            writer.WriteAttributeString( "value", Range.ToString() );
+            writer.WriteEndElement();
+
         }
 
 

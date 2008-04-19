@@ -592,6 +592,13 @@ namespace PatcherTests {
             }
         }
         
+        internal static byte[] KANZEN_SHP {
+            get {
+                object obj = ResourceManager.GetObject("KANZEN_SHP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] KI {
             get {
                 object obj = ResourceManager.GetObject("KI", resourceCulture);

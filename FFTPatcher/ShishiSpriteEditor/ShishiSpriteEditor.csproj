@@ -8,7 +8,7 @@
     <ProjectGuid>{4017D65D-C72B-491E-B263-E12DB6537382}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShishiSpriteEditor</RootNamespace>
+    <RootNamespace>FFTPatcher.SpriteEditor</RootNamespace>
     <AssemblyName>ShishiSpriteEditor</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -48,6 +48,7 @@
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Frame.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,20 +74,34 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\ARUTE.SHP" />
+    <None Include="Resources\CYOKO.SHP" />
+    <None Include="Resources\EFF1.SHP" />
+    <None Include="Resources\EFF2.SHP" />
+    <None Include="Resources\kanzen.shp" />
+    <None Include="Resources\MON.SHP" />
+    <None Include="Resources\OTHER.SHP" />
+    <None Include="Resources\TYPE1.SHP" />
+    <None Include="Resources\TYPE2.SHP" />
+    <None Include="Resources\WEP1.SHP" />
+    <None Include="Resources\WEP2.SHP" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Shape.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Tile.cs" />
     <Compile Include="WLDFACE.cs" />
   </ItemGroup>
   <ItemGroup>

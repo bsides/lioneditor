@@ -18,7 +18,10 @@
 */
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Resources;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -27,9 +30,11 @@ namespace FFTPatcher.SpriteEditor
     public partial class MainForm : Form
     {
 
-		#region Fields (1) 
+		#region Fields (3) 
 
         string filename = string.Empty;
+        IList<Bitmap> frames;
+        private List<Shape> shapes;
 
 		#endregion Fields 
 
@@ -52,19 +57,38 @@ namespace FFTPatcher.SpriteEditor
 
             paletteSelector.SelectedIndexChanged += paletteSelector_SelectedIndexChanged;
             portraitCheckbox.CheckedChanged += portraitCheckbox_CheckedChanged;
+            properCheckbox.CheckedChanged += new EventHandler( properCheckbox_CheckedChanged );
 
             aboutMenuItem.Click += aboutMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
+
+            shapesListBox.MeasureItem += new MeasureItemEventHandler( shapesListBox_MeasureItem );
+            shapesListBox.DrawItem += new DrawItemEventHandler( shapesListBox_DrawItem );
+            shapesListBox.SelectedIndexChanged += new EventHandler( shapesListBox_SelectedIndexChanged );
+
+            BuildShapes();
+            shapesComboBox.Items.AddRange( shapes.ToArray() );
+            shapesComboBox.SelectedIndexChanged += new EventHandler( shapesComboBox_SelectedIndexChanged );
         }
 
 		#endregion Constructors 
 
-		#region Methods (13) 
+		#region Methods (19) 
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
             new About().ShowDialog( this );
+        }
+
+        private void BuildShapes()
+        {
+            shapes = new List<Shape>();
+            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.ARUTE_SHP, "ARUTE.SHP" ) );
+            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.TYPE1_SHP, "TYPE1.SHP" ) );
+            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.TYPE2_SHP, "TYPE2.SHP" ) );
+            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.CYOKO_SHP, "CYOKO.SHP" ) );
+            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.KANZEN_SHP, "KANZEN.SHP" ) );
         }
 
         private void exitMenuItem_Click( object sender, EventArgs e )
@@ -121,6 +145,10 @@ namespace FFTPatcher.SpriteEditor
                 {
                     spriteViewer1.Sprite.ImportBitmap( b );
                 }
+                if( shapesComboBox.SelectedIndex != -1 )
+                {
+                    shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
+                }
             }
         }
 
@@ -139,8 +167,13 @@ namespace FFTPatcher.SpriteEditor
                     spriteViewer1.SetPalette( 0, 8 );
                     paletteSelector.SelectedIndex = 0;
                     spriteViewer1.Sprite = new Sprite( bytes );
+                    if( shapesComboBox.SelectedIndex != -1 )
+                    {
+                        shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
+                    }
 
                     paletteSelector.Enabled = true;
+                    properCheckbox.Enabled = true;
                     portraitCheckbox.Enabled = true;
                     saveMenuItem.Enabled = true;
                     saveAsMenuItem.Enabled = true;
@@ -148,6 +181,7 @@ namespace FFTPatcher.SpriteEditor
                     exportMenuItem.Enabled = true;
                     paletteSaveMenuItem.Enabled = true;
                     paletteOpenMenuItem.Enabled = true;
+                    shapesComboBox.Enabled = true;
 
                     filename = openFileDialog.FileName;
                 }
@@ -173,6 +207,10 @@ namespace FFTPatcher.SpriteEditor
                     spriteViewer1.Sprite.Palettes = Palette.FromPALFile( bytes );
                     paletteSelector.SelectedIndex = 0;
                     spriteViewer1.Invalidate();
+                    if( shapesComboBox.SelectedIndex != -1 )
+                    {
+                        shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
+                    }
                 }
                 catch( Exception )
                 {
@@ -200,6 +238,11 @@ namespace FFTPatcher.SpriteEditor
         private void portraitCheckbox_CheckedChanged( object sender, EventArgs e )
         {
             spriteViewer1.SetPalette( paletteSelector.SelectedIndex, portraitCheckbox.Checked ? (paletteSelector.SelectedIndex % 8 + 8) : paletteSelector.SelectedIndex );
+        }
+
+        private void properCheckbox_CheckedChanged( object sender, EventArgs e )
+        {
+            spriteViewer1.Proper = properCheckbox.Checked;
         }
 
         private void saveAsMenuItem_Click( object sender, EventArgs e )
@@ -240,6 +283,61 @@ namespace FFTPatcher.SpriteEditor
         private void saveMenuItem_Click( object sender, EventArgs e )
         {
             SaveBytes( filename, spriteViewer1.Sprite.ToByteArray() );
+        }
+
+        private void shapesComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( shapesComboBox.SelectedIndex != -1 )
+            {
+                Shape s = shapesComboBox.Items[shapesComboBox.SelectedIndex] as Shape;
+                if( s != null )
+                {
+                    IList<Frame> f = s.Frames;
+                    frames = new List<Bitmap>( f.Count );
+                    foreach( Frame frame in f )
+                    {
+                        frames.Add( frame.GetFrame( spriteViewer1.Sprite ) );
+                    }
+
+                    shapesListBox.BeginUpdate();
+                    shapesListBox.Items.Clear();
+                    shapesListBox.Items.AddRange( f.ToArray() );
+                    shapesListBox.EndUpdate();
+                }
+            }
+        }
+
+        private void shapesListBox_DrawItem( object sender, DrawItemEventArgs e )
+        {
+            if( shapesListBox.Items.Count > 0 && spriteViewer1.Sprite != null )
+            {
+                if( (e.State & DrawItemState.Selected) == DrawItemState.Selected )
+                {
+                    e.Graphics.FillRectangle( SystemBrushes.Highlight, e.Bounds );
+                }
+                else
+                {
+                    e.Graphics.FillRectangle( SystemBrushes.Window, e.Bounds );
+                }
+
+                Bitmap f = frames[e.Index];
+                e.Graphics.DrawImage( f, new Point( e.Bounds.Location.X + 10, e.Bounds.Location.Y + 10 ) );
+            }
+        }
+
+        private void shapesListBox_MeasureItem( object sender, MeasureItemEventArgs e )
+        {
+            e.ItemHeight = 180;
+            e.ItemWidth = 230;
+        }
+
+        private void shapesListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            Frame f = shapesListBox.Items[shapesListBox.SelectedIndex] as Frame;
+            if( f != null )
+            {
+                spriteViewer1.HighlightTiles( f.Tiles );
+            }
         }
 
 

@@ -159,7 +159,7 @@ namespace FFTPatcher.Datatypes
 
         public byte[] ToByteArray()
         {
-            List<byte> result = new List<byte>( 0x280 );
+            List<byte> result = new List<byte>( 0x300 );
             foreach( InflictStatus i in InflictStatuses )
             {
                 result.AddRange( i.ToByteArray() );

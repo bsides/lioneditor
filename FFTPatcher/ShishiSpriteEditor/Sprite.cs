@@ -314,7 +314,7 @@ namespace FFTPatcher.SpriteEditor
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
             for( int i = 0; (i < Pixels.Length) && (i / 256 < bmp.Height); i++ )
             {
-                Pixels[i] = (byte)bmp.GetPixel( bmd, i % 256, i / 256 );
+                Pixels[i] = (byte)bmd.GetPixel( i % 256, i / 256 );
             }
 
             bmp.UnlockBits( bmd );
@@ -325,7 +325,12 @@ namespace FFTPatcher.SpriteEditor
         /// </summary>
         public unsafe Bitmap ToBitmap()
         {
-            Bitmap bmp = new Bitmap( 256, Math.Min( 488, Pixels.Length / 256 ), PixelFormat.Format8bppIndexed );
+            return ToBitmap( false );
+        }
+
+        public unsafe Bitmap ToBitmap( bool proper )
+        {
+            Bitmap bmp = new Bitmap( 256, 488, PixelFormat.Format8bppIndexed );
             ColorPalette palette = bmp.Palette;
 
             int k = 0;
@@ -346,9 +351,27 @@ namespace FFTPatcher.SpriteEditor
             bmp.Palette = palette;
 
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
-            for( int i = 0; (i < this.Pixels.Length) && (i / 256 < bmp.Height); i++ )
+            if( proper )
             {
-                bmp.SetPixel( bmd, i % 256, i / 256, Pixels[i] );
+                for( int i = 0; (i < this.Pixels.Length) && (i / 256 < 256); i++ )
+                {
+                    bmd.SetPixel( i % 256, i / 256, Pixels[i] );
+                }
+                for( int i = 288 * 256; (i < this.Pixels.Length) && (i / 256 < 488); i++ )
+                {
+                    bmd.SetPixel( i % 256, i / 256 - 32, Pixels[i] );
+                }
+                for( int i = 256 * 256; (i < this.Pixels.Length) && (i / 256 < 288); i++ )
+                {
+                    bmd.SetPixel( i % 256, i / 256 + 200, Pixels[i] );
+                }
+            }
+            else
+            {
+                for( int i = 0; (i < this.Pixels.Length) && (i / 256 < bmp.Height); i++ )
+                {
+                    bmd.SetPixel( i % 256, i / 256, Pixels[i] );
+                }
             }
             bmp.UnlockBits( bmd );
 

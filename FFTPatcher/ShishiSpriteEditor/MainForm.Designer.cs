@@ -66,13 +66,14 @@ namespace FFTPatcher.SpriteEditor
             this.portraitCheckbox = new System.Windows.Forms.CheckBox();
             this.paletteSelector = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.spriteViewer1 = new FFTPatcher.SpriteEditor.SpriteViewer();
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.shapesListBox = new System.Windows.Forms.ListBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.spriteViewer1 = new FFTPatcher.SpriteEditor.SpriteViewer();
+            this.shapesComboBox = new System.Windows.Forms.ComboBox();
+            this.properCheckbox = new System.Windows.Forms.CheckBox();
             fileMenu = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
@@ -220,6 +221,16 @@ namespace FFTPatcher.SpriteEditor
             this.paletteSelector.Size = new System.Drawing.Size( 173, 21 );
             this.paletteSelector.TabIndex = 0;
             // 
+            // shpLabel
+            // 
+            shpLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            shpLabel.AutoSize = true;
+            shpLabel.Location = new System.Drawing.Point( 376, 540 );
+            shpLabel.Name = "shpLabel";
+            shpLabel.Size = new System.Drawing.Size( 32, 13 );
+            shpLabel.TabIndex = 5;
+            shpLabel.Text = "SHP:";
+            // 
             // panel1
             // 
             this.panel1.AutoSize = true;
@@ -229,6 +240,15 @@ namespace FFTPatcher.SpriteEditor
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size( 266, 498 );
             this.panel1.TabIndex = 1;
+            // 
+            // spriteViewer1
+            // 
+            this.spriteViewer1.Location = new System.Drawing.Point( 3, 3 );
+            this.spriteViewer1.Name = "spriteViewer1";
+            this.spriteViewer1.Proper = true;
+            this.spriteViewer1.Size = new System.Drawing.Size( 256, 488 );
+            this.spriteViewer1.Sprite = null;
+            this.spriteViewer1.TabIndex = 0;
             // 
             // mainMenu
             // 
@@ -255,54 +275,51 @@ namespace FFTPatcher.SpriteEditor
             this.shapesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.shapesListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.shapesListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.shapesListBox.FormattingEnabled = true;
             this.shapesListBox.IntegralHeight = false;
-            this.shapesListBox.Location = new System.Drawing.Point( 283, 116 );
-            this.shapesListBox.MultiColumn = true;
+            this.shapesListBox.ItemHeight = 180;
+            this.shapesListBox.Location = new System.Drawing.Point( 283, 140 );
             this.shapesListBox.Name = "shapesListBox";
-            this.shapesListBox.Size = new System.Drawing.Size( 185, 353 );
+            this.shapesListBox.Size = new System.Drawing.Size( 245, 391 );
             this.shapesListBox.TabIndex = 3;
             // 
-            // comboBox1
+            // shapesComboBox
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point( 354, 475 );
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size( 113, 21 );
-            this.comboBox1.TabIndex = 4;
+            this.shapesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.shapesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.shapesComboBox.Enabled = false;
+            this.shapesComboBox.FormattingEnabled = true;
+            this.shapesComboBox.Location = new System.Drawing.Point( 414, 537 );
+            this.shapesComboBox.Name = "shapesComboBox";
+            this.shapesComboBox.Size = new System.Drawing.Size( 113, 21 );
+            this.shapesComboBox.TabIndex = 4;
             // 
-            // shpLabel
+            // properCheckbox
             // 
-            shpLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            shpLabel.AutoSize = true;
-            shpLabel.Location = new System.Drawing.Point( 316, 478 );
-            shpLabel.Name = "shpLabel";
-            shpLabel.Size = new System.Drawing.Size( 32, 13 );
-            shpLabel.TabIndex = 5;
-            shpLabel.Text = "SHP:";
-            // 
-            // spriteViewer1
-            // 
-            this.spriteViewer1.Location = new System.Drawing.Point( 3, 3 );
-            this.spriteViewer1.Name = "spriteViewer1";
-            this.spriteViewer1.Size = new System.Drawing.Size( 256, 488 );
-            this.spriteViewer1.Sprite = null;
-            this.spriteViewer1.TabIndex = 0;
+            this.properCheckbox.AutoSize = true;
+            this.properCheckbox.Checked = true;
+            this.properCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.properCheckbox.Enabled = false;
+            this.properCheckbox.Location = new System.Drawing.Point( 288, 117 );
+            this.properCheckbox.Name = "properCheckbox";
+            this.properCheckbox.Size = new System.Drawing.Size( 105, 17 );
+            this.properCheckbox.TabIndex = 6;
+            this.properCheckbox.Text = "Proper alignment";
+            this.properCheckbox.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 480, 533 );
+            this.ClientSize = new System.Drawing.Size( 540, 595 );
+            this.Controls.Add( this.properCheckbox );
             this.Controls.Add( shpLabel );
-            this.Controls.Add( this.comboBox1 );
+            this.Controls.Add( this.shapesComboBox );
             this.Controls.Add( this.shapesListBox );
             this.Controls.Add( paletteGroupBox );
             this.Controls.Add( this.panel1 );
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size( 488, 560 );
             this.Menu = this.mainMenu;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size( 488, 560 );
@@ -335,7 +352,8 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.CheckBox portraitCheckbox;
         private System.Windows.Forms.ListBox shapesListBox;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox shapesComboBox;
+        private System.Windows.Forms.CheckBox properCheckbox;
     }
 }
 

@@ -19,13 +19,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
-using System.IO;
 using FFTPatcher.TextEditor.Files.PSP;
 
 namespace FFTPatcher.TextEditor

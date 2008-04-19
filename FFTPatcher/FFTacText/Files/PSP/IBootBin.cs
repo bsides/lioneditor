@@ -17,7 +17,6 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {

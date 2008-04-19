@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTactext", "FFTactext\FFTa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFTTextCompression", "TextCompression\TextCompression.vcproj", "{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication2", "..\ConsoleApplication2\ConsoleApplication2.csproj", "{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		asd|Any CPU = asd|Any CPU
@@ -117,21 +115,6 @@ Global
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Win32.ActiveCfg = Release|Win32
 		{8CE70FE1-C8EF-4E71-BDEB-8A56CC2C92BC}.Release|Win32.Build.0 = Release|Win32
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.asd|Any CPU.ActiveCfg = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.asd|Any CPU.Build.0 = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.asd|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.asd|Mixed Platforms.Build.0 = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.asd|Win32.ActiveCfg = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{8FDEF1B2-CCA1-47E9-ACB2-5CBCF5781C8D}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

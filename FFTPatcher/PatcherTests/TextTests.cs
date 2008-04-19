@@ -1,11 +1,9 @@
-﻿using NUnit.Framework;
-using FFTPatcher.TextEditor.Files.PSX;
+﻿using System.Collections.Generic;
 using System.IO;
-using FFTPatcher;
-using System;
-using NUnit.Framework.SyntaxHelpers;
-using System.Collections.Generic;
 using System.Reflection;
+using FFTPatcher;
+using NUnit.Framework;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace PatcherTests
 {

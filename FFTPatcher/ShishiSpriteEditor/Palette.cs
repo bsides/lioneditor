@@ -19,7 +19,6 @@
 
 using System.Collections.Generic;
 using System.Drawing;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.SpriteEditor
 {

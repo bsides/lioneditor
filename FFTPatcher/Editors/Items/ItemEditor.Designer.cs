@@ -53,10 +53,9 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label paletteLabel;
             System.Windows.Forms.Label graphicLabel;
             System.Windows.Forms.Label enemyLevelLabel;
-            System.Windows.Forms.Label itemTypeLabel;
+            System.Windows.Forms.Label itemIconLabel;
             System.Windows.Forms.Label priceLabel;
             System.Windows.Forms.Label shopAvailabilityLabel;
-            System.Windows.Forms.Label hLabel4;
             System.Windows.Forms.Label formulaLabel;
             System.Windows.Forms.Label rangeLabel;
             System.Windows.Forms.Label weaponPowerLabel;
@@ -71,16 +70,41 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label percentLabel5;
             System.Windows.Forms.Label magicEvadeRateLabel;
             System.Windows.Forms.Label physicalEvadeRateLabel;
-            System.Windows.Forms.Label xLabel;
+            System.Windows.Forms.Label zLabel;
             System.Windows.Forms.Label itemFormulaLabel;
+            System.Windows.Forms.Label label1;
+            this.hLabel4 = new System.Windows.Forms.Label();
             this.weaponPanel = new System.Windows.Forms.Panel();
+            this.weaponFormulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.weaponSpellStatusLabel = new System.Windows.Forms.LinkLabel();
+            this.weaponAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
+            this.weaponElementsEditor = new FFTPatcher.Editors.ElementsEditor();
+            this.weaponSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.weaponEvadePercentageSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.weaponPowerSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.weaponRangeSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.shieldPanel = new System.Windows.Forms.Panel();
+            this.shieldMagicBlockRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.shieldPhysicalBlockRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.armorPanel = new System.Windows.Forms.Panel();
+            this.armorMPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.armorHPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.accessoryPanel = new System.Windows.Forms.Panel();
+            this.accessoryMagicEvadeRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.accessoryPhysicalEvadeRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.chemistItemPanel = new System.Windows.Forms.Panel();
+            this.chemistItemFormulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.chemistItemSpellStatusLabel = new System.Windows.Forms.LinkLabel();
+            this.chemistItemSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.chemistItemXSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.itemAttributesLabel = new System.Windows.Forms.LinkLabel();
+            this.secondTableLabel = new System.Windows.Forms.Label();
+            this.weaponJumpLabel = new System.Windows.Forms.LinkLabel();
+            this.shieldJumpLabel = new System.Windows.Forms.LinkLabel();
+            this.headBodyJumpLabel = new System.Windows.Forms.LinkLabel();
+            this.accessoryJumpLabel = new System.Windows.Forms.LinkLabel();
+            this.chemistItemJumpLabel = new System.Windows.Forms.LinkLabel();
+            this.secondTableIdSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.itemAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             this.shopAvailabilityComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.priceSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -89,32 +113,17 @@ namespace FFTPatcher.Editors
             this.itemAttributesSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.graphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.paletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.chemistItemSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.chemistItemXSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.accessoryMagicEvadeRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.accessoryPhysicalEvadeRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.armorMPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.armorHPBonusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.shieldMagicBlockRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.shieldPhysicalBlockRateSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.weaponFormulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.weaponAttributesCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
-            this.weaponElementsEditor = new FFTPatcher.Editors.ElementsEditor();
-            this.weaponSpellStatusSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.weaponEvadePercentageSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.weaponPowerSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.weaponRangeSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.chemistItemFormulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.weaponCastSpellLabel = new System.Windows.Forms.Label();
+            this.weaponCastSpellComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             hLabel5 = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
             hLabel2 = new System.Windows.Forms.Label();
             paletteLabel = new System.Windows.Forms.Label();
             graphicLabel = new System.Windows.Forms.Label();
             enemyLevelLabel = new System.Windows.Forms.Label();
-            itemTypeLabel = new System.Windows.Forms.Label();
+            itemIconLabel = new System.Windows.Forms.Label();
             priceLabel = new System.Windows.Forms.Label();
             shopAvailabilityLabel = new System.Windows.Forms.Label();
-            hLabel4 = new System.Windows.Forms.Label();
             formulaLabel = new System.Windows.Forms.Label();
             rangeLabel = new System.Windows.Forms.Label();
             weaponPowerLabel = new System.Windows.Forms.Label();
@@ -129,30 +138,32 @@ namespace FFTPatcher.Editors
             percentLabel5 = new System.Windows.Forms.Label();
             magicEvadeRateLabel = new System.Windows.Forms.Label();
             physicalEvadeRateLabel = new System.Windows.Forms.Label();
-            xLabel = new System.Windows.Forms.Label();
+            zLabel = new System.Windows.Forms.Label();
             itemFormulaLabel = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
             this.weaponPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponSpellStatusSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponEvadePercentageSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponPowerSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponRangeSpinner)).BeginInit();
             this.shieldPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shieldPhysicalBlockRateSpinner)).BeginInit();
             this.armorPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).BeginInit();
             this.accessoryPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).BeginInit();
             this.chemistItemPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondTableIdSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.enemyLevelSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemAttributesSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphicSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldPhysicalBlockRateSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponSpellStatusSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponEvadePercentageSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponPowerSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponRangeSpinner)).BeginInit();
             this.SuspendLayout();
             // 
             // hLabel5
@@ -209,14 +220,14 @@ namespace FFTPatcher.Editors
             enemyLevelLabel.TabIndex = 9;
             enemyLevelLabel.Text = "Enemy level";
             // 
-            // itemTypeLabel
+            // itemIconLabel
             // 
-            itemTypeLabel.AutoSize = true;
-            itemTypeLabel.Location = new System.Drawing.Point( 4, 68 );
-            itemTypeLabel.Name = "itemTypeLabel";
-            itemTypeLabel.Size = new System.Drawing.Size( 54, 13 );
-            itemTypeLabel.TabIndex = 13;
-            itemTypeLabel.Text = "Item Type";
+            itemIconLabel.AutoSize = true;
+            itemIconLabel.Location = new System.Drawing.Point( 4, 68 );
+            itemIconLabel.Name = "itemIconLabel";
+            itemIconLabel.Size = new System.Drawing.Size( 51, 13 );
+            itemIconLabel.TabIndex = 13;
+            itemIconLabel.Text = "Item Icon";
             // 
             // priceLabel
             // 
@@ -238,12 +249,12 @@ namespace FFTPatcher.Editors
             // 
             // hLabel4
             // 
-            hLabel4.AutoSize = true;
-            hLabel4.Location = new System.Drawing.Point( 162, 108 );
-            hLabel4.Name = "hLabel4";
-            hLabel4.Size = new System.Drawing.Size( 13, 13 );
-            hLabel4.TabIndex = 16;
-            hLabel4.Text = "h";
+            this.hLabel4.AutoSize = true;
+            this.hLabel4.Location = new System.Drawing.Point( 162, 108 );
+            this.hLabel4.Name = "hLabel4";
+            this.hLabel4.Size = new System.Drawing.Size( 13, 13 );
+            this.hLabel4.TabIndex = 16;
+            this.hLabel4.Text = "h";
             // 
             // formulaLabel
             // 
@@ -371,14 +382,14 @@ namespace FFTPatcher.Editors
             physicalEvadeRateLabel.TabIndex = 2;
             physicalEvadeRateLabel.Text = "P. Evade Rate";
             // 
-            // xLabel
+            // zLabel
             // 
-            xLabel.AutoSize = true;
-            xLabel.Location = new System.Drawing.Point( 4, 27 );
-            xLabel.Name = "xLabel";
-            xLabel.Size = new System.Drawing.Size( 14, 13 );
-            xLabel.TabIndex = 3;
-            xLabel.Text = "X";
+            zLabel.AutoSize = true;
+            zLabel.Location = new System.Drawing.Point( 4, 27 );
+            zLabel.Name = "zLabel";
+            zLabel.Size = new System.Drawing.Size( 14, 13 );
+            zLabel.TabIndex = 3;
+            zLabel.Text = "Z";
             // 
             // itemFormulaLabel
             // 
@@ -389,11 +400,21 @@ namespace FFTPatcher.Editors
             itemFormulaLabel.TabIndex = 2;
             itemFormulaLabel.Text = "Formula";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point( 427, 132 );
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size( 13, 13 );
+            label1.TabIndex = 19;
+            label1.Text = "h";
+            // 
             // weaponPanel
             // 
             this.weaponPanel.AutoSize = true;
             this.weaponPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.weaponPanel.Controls.Add( this.weaponFormulaComboBox );
+            this.weaponPanel.Controls.Add( this.weaponCastSpellLabel );
             this.weaponPanel.Controls.Add( this.weaponSpellStatusLabel );
             this.weaponPanel.Controls.Add( this.weaponAttributesCheckedListBox );
             this.weaponPanel.Controls.Add( this.weaponElementsEditor );
@@ -401,15 +422,26 @@ namespace FFTPatcher.Editors
             this.weaponPanel.Controls.Add( weaponPowerLabel );
             this.weaponPanel.Controls.Add( rangeLabel );
             this.weaponPanel.Controls.Add( formulaLabel );
-            this.weaponPanel.Controls.Add( hLabel4 );
+            this.weaponPanel.Controls.Add( this.hLabel4 );
             this.weaponPanel.Controls.Add( this.weaponSpellStatusSpinner );
             this.weaponPanel.Controls.Add( this.weaponEvadePercentageSpinner );
             this.weaponPanel.Controls.Add( this.weaponPowerSpinner );
             this.weaponPanel.Controls.Add( this.weaponRangeSpinner );
+            this.weaponPanel.Controls.Add( this.weaponCastSpellComboBox );
             this.weaponPanel.Location = new System.Drawing.Point( 4, 159 );
             this.weaponPanel.Name = "weaponPanel";
-            this.weaponPanel.Size = new System.Drawing.Size( 496, 167 );
+            this.weaponPanel.Size = new System.Drawing.Size( 283, 289 );
             this.weaponPanel.TabIndex = 12;
+            // 
+            // weaponFormulaComboBox
+            // 
+            this.weaponFormulaComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.weaponFormulaComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.weaponFormulaComboBox.FormattingEnabled = true;
+            this.weaponFormulaComboBox.Location = new System.Drawing.Point( 121, 42 );
+            this.weaponFormulaComboBox.Name = "weaponFormulaComboBox";
+            this.weaponFormulaComboBox.Size = new System.Drawing.Size( 159, 21 );
+            this.weaponFormulaComboBox.TabIndex = 1;
             // 
             // weaponSpellStatusLabel
             // 
@@ -421,6 +453,92 @@ namespace FFTPatcher.Editors
             this.weaponSpellStatusLabel.TabIndex = 23;
             this.weaponSpellStatusLabel.TabStop = true;
             this.weaponSpellStatusLabel.Text = "Inflict Status/Cast Spell";
+            // 
+            // weaponAttributesCheckedListBox
+            // 
+            this.weaponAttributesCheckedListBox.FormattingEnabled = true;
+            this.weaponAttributesCheckedListBox.Items.AddRange( new object[] {
+            "Striking",
+            "Lunging",
+            "Direct",
+            "Arc",
+            "2 Swords",
+            "2 Hands",
+            "",
+            "Forced 2 Hands"} );
+            this.weaponAttributesCheckedListBox.Location = new System.Drawing.Point( 103, 143 );
+            this.weaponAttributesCheckedListBox.Name = "weaponAttributesCheckedListBox";
+            this.weaponAttributesCheckedListBox.Size = new System.Drawing.Size( 107, 124 );
+            this.weaponAttributesCheckedListBox.TabIndex = 5;
+            this.weaponAttributesCheckedListBox.TabStop = false;
+            // 
+            // weaponElementsEditor
+            // 
+            this.weaponElementsEditor.AutoSize = true;
+            this.weaponElementsEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.weaponElementsEditor.GroupBoxText = "Elements";
+            this.weaponElementsEditor.Location = new System.Drawing.Point( 3, 124 );
+            this.weaponElementsEditor.Name = "weaponElementsEditor";
+            this.weaponElementsEditor.Size = new System.Drawing.Size( 94, 162 );
+            this.weaponElementsEditor.TabIndex = 22;
+            this.weaponElementsEditor.TabStop = false;
+            // 
+            // weaponSpellStatusSpinner
+            // 
+            this.weaponSpellStatusSpinner.Hexadecimal = true;
+            this.weaponSpellStatusSpinner.Location = new System.Drawing.Point( 121, 106 );
+            this.weaponSpellStatusSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.weaponSpellStatusSpinner.Name = "weaponSpellStatusSpinner";
+            this.weaponSpellStatusSpinner.Size = new System.Drawing.Size( 41, 20 );
+            this.weaponSpellStatusSpinner.TabIndex = 4;
+            this.weaponSpellStatusSpinner.Tag = "InflictStatus";
+            this.weaponSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // weaponEvadePercentageSpinner
+            // 
+            this.weaponEvadePercentageSpinner.Location = new System.Drawing.Point( 121, 85 );
+            this.weaponEvadePercentageSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.weaponEvadePercentageSpinner.Name = "weaponEvadePercentageSpinner";
+            this.weaponEvadePercentageSpinner.Size = new System.Drawing.Size( 41, 20 );
+            this.weaponEvadePercentageSpinner.TabIndex = 3;
+            this.weaponEvadePercentageSpinner.Tag = "EvadePercentage";
+            this.weaponEvadePercentageSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // weaponPowerSpinner
+            // 
+            this.weaponPowerSpinner.Location = new System.Drawing.Point( 121, 64 );
+            this.weaponPowerSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.weaponPowerSpinner.Name = "weaponPowerSpinner";
+            this.weaponPowerSpinner.Size = new System.Drawing.Size( 41, 20 );
+            this.weaponPowerSpinner.TabIndex = 2;
+            this.weaponPowerSpinner.Tag = "WeaponPower";
+            this.weaponPowerSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // weaponRangeSpinner
+            // 
+            this.weaponRangeSpinner.Location = new System.Drawing.Point( 121, 21 );
+            this.weaponRangeSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.weaponRangeSpinner.Name = "weaponRangeSpinner";
+            this.weaponRangeSpinner.Size = new System.Drawing.Size( 41, 20 );
+            this.weaponRangeSpinner.TabIndex = 0;
+            this.weaponRangeSpinner.Tag = "Range";
+            this.weaponRangeSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // shieldPanel
             // 
@@ -435,6 +553,34 @@ namespace FFTPatcher.Editors
             this.shieldPanel.Size = new System.Drawing.Size( 376, 167 );
             this.shieldPanel.TabIndex = 11;
             // 
+            // shieldMagicBlockRateSpinner
+            // 
+            this.shieldMagicBlockRateSpinner.Location = new System.Drawing.Point( 86, 24 );
+            this.shieldMagicBlockRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.shieldMagicBlockRateSpinner.Name = "shieldMagicBlockRateSpinner";
+            this.shieldMagicBlockRateSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.shieldMagicBlockRateSpinner.TabIndex = 1;
+            this.shieldMagicBlockRateSpinner.Tag = "MagicBlockRate";
+            this.shieldMagicBlockRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // shieldPhysicalBlockRateSpinner
+            // 
+            this.shieldPhysicalBlockRateSpinner.Location = new System.Drawing.Point( 86, 3 );
+            this.shieldPhysicalBlockRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.shieldPhysicalBlockRateSpinner.Name = "shieldPhysicalBlockRateSpinner";
+            this.shieldPhysicalBlockRateSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.shieldPhysicalBlockRateSpinner.TabIndex = 0;
+            this.shieldPhysicalBlockRateSpinner.Tag = "PhysicalBlockRate";
+            this.shieldPhysicalBlockRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // armorPanel
             // 
             this.armorPanel.Controls.Add( mpBonusLabel );
@@ -445,6 +591,34 @@ namespace FFTPatcher.Editors
             this.armorPanel.Name = "armorPanel";
             this.armorPanel.Size = new System.Drawing.Size( 376, 167 );
             this.armorPanel.TabIndex = 10;
+            // 
+            // armorMPBonusSpinner
+            // 
+            this.armorMPBonusSpinner.Location = new System.Drawing.Point( 85, 24 );
+            this.armorMPBonusSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.armorMPBonusSpinner.Name = "armorMPBonusSpinner";
+            this.armorMPBonusSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.armorMPBonusSpinner.TabIndex = 1;
+            this.armorMPBonusSpinner.Tag = "MPBonus";
+            this.armorMPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // armorHPBonusSpinner
+            // 
+            this.armorHPBonusSpinner.Location = new System.Drawing.Point( 85, 3 );
+            this.armorHPBonusSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.armorHPBonusSpinner.Name = "armorHPBonusSpinner";
+            this.armorHPBonusSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.armorHPBonusSpinner.TabIndex = 0;
+            this.armorHPBonusSpinner.Tag = "HPBonus";
+            this.armorHPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // accessoryPanel
             // 
@@ -459,18 +633,56 @@ namespace FFTPatcher.Editors
             this.accessoryPanel.Size = new System.Drawing.Size( 376, 167 );
             this.accessoryPanel.TabIndex = 9;
             // 
+            // accessoryMagicEvadeRateSpinner
+            // 
+            this.accessoryMagicEvadeRateSpinner.Location = new System.Drawing.Point( 86, 24 );
+            this.accessoryMagicEvadeRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.accessoryMagicEvadeRateSpinner.Name = "accessoryMagicEvadeRateSpinner";
+            this.accessoryMagicEvadeRateSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.accessoryMagicEvadeRateSpinner.TabIndex = 1;
+            this.accessoryMagicEvadeRateSpinner.Tag = "MagicEvade";
+            this.accessoryMagicEvadeRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // accessoryPhysicalEvadeRateSpinner
+            // 
+            this.accessoryPhysicalEvadeRateSpinner.Location = new System.Drawing.Point( 86, 3 );
+            this.accessoryPhysicalEvadeRateSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.accessoryPhysicalEvadeRateSpinner.Name = "accessoryPhysicalEvadeRateSpinner";
+            this.accessoryPhysicalEvadeRateSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.accessoryPhysicalEvadeRateSpinner.TabIndex = 0;
+            this.accessoryPhysicalEvadeRateSpinner.Tag = "PhysicalEvade";
+            this.accessoryPhysicalEvadeRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // chemistItemPanel
             // 
             this.chemistItemPanel.Controls.Add( this.chemistItemFormulaComboBox );
             this.chemistItemPanel.Controls.Add( this.chemistItemSpellStatusLabel );
             this.chemistItemPanel.Controls.Add( this.chemistItemSpellStatusSpinner );
-            this.chemistItemPanel.Controls.Add( xLabel );
+            this.chemistItemPanel.Controls.Add( zLabel );
             this.chemistItemPanel.Controls.Add( itemFormulaLabel );
             this.chemistItemPanel.Controls.Add( this.chemistItemXSpinner );
-            this.chemistItemPanel.Location = new System.Drawing.Point( 4, 159 );
+            this.chemistItemPanel.Location = new System.Drawing.Point( 4, 163 );
             this.chemistItemPanel.Name = "chemistItemPanel";
             this.chemistItemPanel.Size = new System.Drawing.Size( 376, 167 );
             this.chemistItemPanel.TabIndex = 8;
+            // 
+            // chemistItemFormulaComboBox
+            // 
+            this.chemistItemFormulaComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.chemistItemFormulaComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.chemistItemFormulaComboBox.FormattingEnabled = true;
+            this.chemistItemFormulaComboBox.Location = new System.Drawing.Point( 86, 3 );
+            this.chemistItemFormulaComboBox.Name = "chemistItemFormulaComboBox";
+            this.chemistItemFormulaComboBox.Size = new System.Drawing.Size( 211, 21 );
+            this.chemistItemFormulaComboBox.TabIndex = 0;
             // 
             // chemistItemSpellStatusLabel
             // 
@@ -483,6 +695,35 @@ namespace FFTPatcher.Editors
             this.chemistItemSpellStatusLabel.TabStop = true;
             this.chemistItemSpellStatusLabel.Text = "Inflict Status";
             // 
+            // chemistItemSpellStatusSpinner
+            // 
+            this.chemistItemSpellStatusSpinner.Hexadecimal = true;
+            this.chemistItemSpellStatusSpinner.Location = new System.Drawing.Point( 86, 46 );
+            this.chemistItemSpellStatusSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.chemistItemSpellStatusSpinner.Name = "chemistItemSpellStatusSpinner";
+            this.chemistItemSpellStatusSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.chemistItemSpellStatusSpinner.TabIndex = 2;
+            this.chemistItemSpellStatusSpinner.Tag = "Formula";
+            this.chemistItemSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // chemistItemXSpinner
+            // 
+            this.chemistItemXSpinner.Location = new System.Drawing.Point( 86, 25 );
+            this.chemistItemXSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.chemistItemXSpinner.Name = "chemistItemXSpinner";
+            this.chemistItemXSpinner.Size = new System.Drawing.Size( 42, 20 );
+            this.chemistItemXSpinner.TabIndex = 1;
+            this.chemistItemXSpinner.Tag = "X";
+            this.chemistItemXSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // itemAttributesLabel
             // 
             this.itemAttributesLabel.AutoSize = true;
@@ -493,6 +734,85 @@ namespace FFTPatcher.Editors
             this.itemAttributesLabel.TabIndex = 17;
             this.itemAttributesLabel.TabStop = true;
             this.itemAttributesLabel.Text = "Item Attributes";
+            // 
+            // secondTableLabel
+            // 
+            this.secondTableLabel.AutoSize = true;
+            this.secondTableLabel.Location = new System.Drawing.Point( 306, 132 );
+            this.secondTableLabel.Name = "secondTableLabel";
+            this.secondTableLabel.Size = new System.Drawing.Size( 74, 13 );
+            this.secondTableLabel.TabIndex = 21;
+            this.secondTableLabel.Text = "Second Table";
+            // 
+            // weaponJumpLabel
+            // 
+            this.weaponJumpLabel.AutoSize = true;
+            this.weaponJumpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.weaponJumpLabel.Location = new System.Drawing.Point( 383, 153 );
+            this.weaponJumpLabel.Name = "weaponJumpLabel";
+            this.weaponJumpLabel.Size = new System.Drawing.Size( 88, 13 );
+            this.weaponJumpLabel.TabIndex = 22;
+            this.weaponJumpLabel.TabStop = true;
+            this.weaponJumpLabel.Text = "Jump to Weapon";
+            // 
+            // shieldJumpLabel
+            // 
+            this.shieldJumpLabel.AutoSize = true;
+            this.shieldJumpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.shieldJumpLabel.Location = new System.Drawing.Point( 383, 172 );
+            this.shieldJumpLabel.Name = "shieldJumpLabel";
+            this.shieldJumpLabel.Size = new System.Drawing.Size( 76, 13 );
+            this.shieldJumpLabel.TabIndex = 23;
+            this.shieldJumpLabel.TabStop = true;
+            this.shieldJumpLabel.Text = "Jump to Shield";
+            // 
+            // headBodyJumpLabel
+            // 
+            this.headBodyJumpLabel.AutoSize = true;
+            this.headBodyJumpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.headBodyJumpLabel.Location = new System.Drawing.Point( 383, 191 );
+            this.headBodyJumpLabel.Name = "headBodyJumpLabel";
+            this.headBodyJumpLabel.Size = new System.Drawing.Size( 102, 13 );
+            this.headBodyJumpLabel.TabIndex = 24;
+            this.headBodyJumpLabel.TabStop = true;
+            this.headBodyJumpLabel.Text = "Jump to Head/Body";
+            // 
+            // accessoryJumpLabel
+            // 
+            this.accessoryJumpLabel.AutoSize = true;
+            this.accessoryJumpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.accessoryJumpLabel.Location = new System.Drawing.Point( 383, 210 );
+            this.accessoryJumpLabel.Name = "accessoryJumpLabel";
+            this.accessoryJumpLabel.Size = new System.Drawing.Size( 96, 13 );
+            this.accessoryJumpLabel.TabIndex = 25;
+            this.accessoryJumpLabel.TabStop = true;
+            this.accessoryJumpLabel.Text = "Jump to Accessory";
+            // 
+            // chemistItemJumpLabel
+            // 
+            this.chemistItemJumpLabel.AutoSize = true;
+            this.chemistItemJumpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.chemistItemJumpLabel.Location = new System.Drawing.Point( 383, 229 );
+            this.chemistItemJumpLabel.Name = "chemistItemJumpLabel";
+            this.chemistItemJumpLabel.Size = new System.Drawing.Size( 107, 13 );
+            this.chemistItemJumpLabel.TabIndex = 26;
+            this.chemistItemJumpLabel.TabStop = true;
+            this.chemistItemJumpLabel.Text = "Jump to Chemist Item";
+            // 
+            // secondTableIdSpinner
+            // 
+            this.secondTableIdSpinner.Hexadecimal = true;
+            this.secondTableIdSpinner.Location = new System.Drawing.Point( 386, 130 );
+            this.secondTableIdSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.secondTableIdSpinner.Name = "secondTableIdSpinner";
+            this.secondTableIdSpinner.Size = new System.Drawing.Size( 41, 20 );
+            this.secondTableIdSpinner.TabIndex = 8;
+            this.secondTableIdSpinner.Tag = "SecondTableId";
+            this.secondTableIdSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // itemAttributesCheckedListBox
             // 
@@ -510,6 +830,7 @@ namespace FFTPatcher.Editors
             this.itemAttributesCheckedListBox.Name = "itemAttributesCheckedListBox";
             this.itemAttributesCheckedListBox.Size = new System.Drawing.Size( 107, 124 );
             this.itemAttributesCheckedListBox.TabIndex = 7;
+            this.itemAttributesCheckedListBox.TabStop = false;
             // 
             // shopAvailabilityComboBox
             // 
@@ -602,223 +923,24 @@ namespace FFTPatcher.Editors
             this.paletteSpinner.Tag = "Palette";
             this.paletteSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // chemistItemSpellStatusSpinner
+            // weaponCastSpellLabel
             // 
-            this.chemistItemSpellStatusSpinner.Hexadecimal = true;
-            this.chemistItemSpellStatusSpinner.Location = new System.Drawing.Point( 86, 46 );
-            this.chemistItemSpellStatusSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.chemistItemSpellStatusSpinner.Name = "chemistItemSpellStatusSpinner";
-            this.chemistItemSpellStatusSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.chemistItemSpellStatusSpinner.TabIndex = 2;
-            this.chemistItemSpellStatusSpinner.Tag = "Formula";
-            this.chemistItemSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.weaponCastSpellLabel.AutoSize = true;
+            this.weaponCastSpellLabel.Location = new System.Drawing.Point( 0, 108 );
+            this.weaponCastSpellLabel.Name = "weaponCastSpellLabel";
+            this.weaponCastSpellLabel.Size = new System.Drawing.Size( 34, 13 );
+            this.weaponCastSpellLabel.TabIndex = 27;
+            this.weaponCastSpellLabel.Text = "Ability";
             // 
-            // chemistItemXSpinner
+            // weaponCastSpellComboBox
             // 
-            this.chemistItemXSpinner.Location = new System.Drawing.Point( 86, 25 );
-            this.chemistItemXSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.chemistItemXSpinner.Name = "chemistItemXSpinner";
-            this.chemistItemXSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.chemistItemXSpinner.TabIndex = 1;
-            this.chemistItemXSpinner.Tag = "X";
-            this.chemistItemXSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // accessoryMagicEvadeRateSpinner
-            // 
-            this.accessoryMagicEvadeRateSpinner.Location = new System.Drawing.Point( 86, 24 );
-            this.accessoryMagicEvadeRateSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.accessoryMagicEvadeRateSpinner.Name = "accessoryMagicEvadeRateSpinner";
-            this.accessoryMagicEvadeRateSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.accessoryMagicEvadeRateSpinner.TabIndex = 1;
-            this.accessoryMagicEvadeRateSpinner.Tag = "MagicEvade";
-            this.accessoryMagicEvadeRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // accessoryPhysicalEvadeRateSpinner
-            // 
-            this.accessoryPhysicalEvadeRateSpinner.Location = new System.Drawing.Point( 86, 3 );
-            this.accessoryPhysicalEvadeRateSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.accessoryPhysicalEvadeRateSpinner.Name = "accessoryPhysicalEvadeRateSpinner";
-            this.accessoryPhysicalEvadeRateSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.accessoryPhysicalEvadeRateSpinner.TabIndex = 0;
-            this.accessoryPhysicalEvadeRateSpinner.Tag = "PhysicalEvade";
-            this.accessoryPhysicalEvadeRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // armorMPBonusSpinner
-            // 
-            this.armorMPBonusSpinner.Location = new System.Drawing.Point( 85, 24 );
-            this.armorMPBonusSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.armorMPBonusSpinner.Name = "armorMPBonusSpinner";
-            this.armorMPBonusSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.armorMPBonusSpinner.TabIndex = 1;
-            this.armorMPBonusSpinner.Tag = "MPBonus";
-            this.armorMPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // armorHPBonusSpinner
-            // 
-            this.armorHPBonusSpinner.Location = new System.Drawing.Point( 85, 3 );
-            this.armorHPBonusSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.armorHPBonusSpinner.Name = "armorHPBonusSpinner";
-            this.armorHPBonusSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.armorHPBonusSpinner.TabIndex = 0;
-            this.armorHPBonusSpinner.Tag = "HPBonus";
-            this.armorHPBonusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // shieldMagicBlockRateSpinner
-            // 
-            this.shieldMagicBlockRateSpinner.Location = new System.Drawing.Point( 86, 24 );
-            this.shieldMagicBlockRateSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.shieldMagicBlockRateSpinner.Name = "shieldMagicBlockRateSpinner";
-            this.shieldMagicBlockRateSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.shieldMagicBlockRateSpinner.TabIndex = 1;
-            this.shieldMagicBlockRateSpinner.Tag = "MagicBlockRate";
-            this.shieldMagicBlockRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // shieldPhysicalBlockRateSpinner
-            // 
-            this.shieldPhysicalBlockRateSpinner.Location = new System.Drawing.Point( 86, 3 );
-            this.shieldPhysicalBlockRateSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.shieldPhysicalBlockRateSpinner.Name = "shieldPhysicalBlockRateSpinner";
-            this.shieldPhysicalBlockRateSpinner.Size = new System.Drawing.Size( 42, 20 );
-            this.shieldPhysicalBlockRateSpinner.TabIndex = 0;
-            this.shieldPhysicalBlockRateSpinner.Tag = "PhysicalBlockRate";
-            this.shieldPhysicalBlockRateSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // weaponFormulaComboBox
-            // 
-            this.weaponFormulaComboBox.BackColor = System.Drawing.SystemColors.Window;
-            this.weaponFormulaComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.weaponFormulaComboBox.FormattingEnabled = true;
-            this.weaponFormulaComboBox.Location = new System.Drawing.Point( 121, 42 );
-            this.weaponFormulaComboBox.Name = "weaponFormulaComboBox";
-            this.weaponFormulaComboBox.Size = new System.Drawing.Size( 159, 21 );
-            this.weaponFormulaComboBox.TabIndex = 24;
-            // 
-            // weaponAttributesCheckedListBox
-            // 
-            this.weaponAttributesCheckedListBox.FormattingEnabled = true;
-            this.weaponAttributesCheckedListBox.Items.AddRange( new object[] {
-            "Striking",
-            "Lunging",
-            "Direct",
-            "Arc",
-            "2 Swords",
-            "2 Hands",
-            "",
-            "Forced 2 Hands"} );
-            this.weaponAttributesCheckedListBox.Location = new System.Drawing.Point( 386, 21 );
-            this.weaponAttributesCheckedListBox.Name = "weaponAttributesCheckedListBox";
-            this.weaponAttributesCheckedListBox.Size = new System.Drawing.Size( 107, 124 );
-            this.weaponAttributesCheckedListBox.TabIndex = 5;
-            // 
-            // weaponElementsEditor
-            // 
-            this.weaponElementsEditor.AutoSize = true;
-            this.weaponElementsEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.weaponElementsEditor.GroupBoxText = "Elements";
-            this.weaponElementsEditor.Location = new System.Drawing.Point( 286, 2 );
-            this.weaponElementsEditor.Name = "weaponElementsEditor";
-            this.weaponElementsEditor.Size = new System.Drawing.Size( 94, 162 );
-            this.weaponElementsEditor.TabIndex = 22;
-            this.weaponElementsEditor.TabStop = false;
-            // 
-            // weaponSpellStatusSpinner
-            // 
-            this.weaponSpellStatusSpinner.Hexadecimal = true;
-            this.weaponSpellStatusSpinner.Location = new System.Drawing.Point( 121, 106 );
-            this.weaponSpellStatusSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.weaponSpellStatusSpinner.Name = "weaponSpellStatusSpinner";
-            this.weaponSpellStatusSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponSpellStatusSpinner.TabIndex = 4;
-            this.weaponSpellStatusSpinner.Tag = "InflictStatus";
-            this.weaponSpellStatusSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // weaponEvadePercentageSpinner
-            // 
-            this.weaponEvadePercentageSpinner.Location = new System.Drawing.Point( 121, 85 );
-            this.weaponEvadePercentageSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.weaponEvadePercentageSpinner.Name = "weaponEvadePercentageSpinner";
-            this.weaponEvadePercentageSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponEvadePercentageSpinner.TabIndex = 3;
-            this.weaponEvadePercentageSpinner.Tag = "EvadePercentage";
-            this.weaponEvadePercentageSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // weaponPowerSpinner
-            // 
-            this.weaponPowerSpinner.Location = new System.Drawing.Point( 121, 64 );
-            this.weaponPowerSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.weaponPowerSpinner.Name = "weaponPowerSpinner";
-            this.weaponPowerSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponPowerSpinner.TabIndex = 2;
-            this.weaponPowerSpinner.Tag = "WeaponPower";
-            this.weaponPowerSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // weaponRangeSpinner
-            // 
-            this.weaponRangeSpinner.Location = new System.Drawing.Point( 121, 21 );
-            this.weaponRangeSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.weaponRangeSpinner.Name = "weaponRangeSpinner";
-            this.weaponRangeSpinner.Size = new System.Drawing.Size( 41, 20 );
-            this.weaponRangeSpinner.TabIndex = 0;
-            this.weaponRangeSpinner.Tag = "Range";
-            this.weaponRangeSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // chemistItemFormulaComboBox
-            // 
-            this.chemistItemFormulaComboBox.BackColor = System.Drawing.SystemColors.Window;
-            this.chemistItemFormulaComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.chemistItemFormulaComboBox.FormattingEnabled = true;
-            this.chemistItemFormulaComboBox.Location = new System.Drawing.Point( 86, 3 );
-            this.chemistItemFormulaComboBox.Name = "chemistItemFormulaComboBox";
-            this.chemistItemFormulaComboBox.Size = new System.Drawing.Size( 211, 21 );
-            this.chemistItemFormulaComboBox.TabIndex = 7;
+            this.weaponCastSpellComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.weaponCastSpellComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.weaponCastSpellComboBox.FormattingEnabled = true;
+            this.weaponCastSpellComboBox.Location = new System.Drawing.Point( 121, 106 );
+            this.weaponCastSpellComboBox.Name = "weaponCastSpellComboBox";
+            this.weaponCastSpellComboBox.Size = new System.Drawing.Size( 159, 21 );
+            this.weaponCastSpellComboBox.TabIndex = 6;
             // 
             // ItemEditor
             // 
@@ -826,11 +948,19 @@ namespace FFTPatcher.Editors
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.chemistItemJumpLabel );
+            this.Controls.Add( this.accessoryJumpLabel );
+            this.Controls.Add( this.headBodyJumpLabel );
+            this.Controls.Add( this.shieldJumpLabel );
+            this.Controls.Add( this.weaponJumpLabel );
+            this.Controls.Add( this.secondTableLabel );
+            this.Controls.Add( label1 );
+            this.Controls.Add( this.secondTableIdSpinner );
             this.Controls.Add( this.itemAttributesLabel );
             this.Controls.Add( this.itemAttributesCheckedListBox );
             this.Controls.Add( shopAvailabilityLabel );
             this.Controls.Add( priceLabel );
-            this.Controls.Add( itemTypeLabel );
+            this.Controls.Add( itemIconLabel );
             this.Controls.Add( this.shopAvailabilityComboBox );
             this.Controls.Add( this.priceSpinner );
             this.Controls.Add( this.itemTypeComboBox );
@@ -844,40 +974,41 @@ namespace FFTPatcher.Editors
             this.Controls.Add( this.graphicSpinner );
             this.Controls.Add( hLabel5 );
             this.Controls.Add( this.paletteSpinner );
+            this.Controls.Add( this.weaponPanel );
             this.Controls.Add( this.chemistItemPanel );
             this.Controls.Add( this.accessoryPanel );
             this.Controls.Add( this.armorPanel );
             this.Controls.Add( this.shieldPanel );
-            this.Controls.Add( this.weaponPanel );
             this.Name = "ItemEditor";
-            this.Size = new System.Drawing.Size( 503, 329 );
+            this.Size = new System.Drawing.Size( 493, 451 );
             this.weaponPanel.ResumeLayout( false );
             this.weaponPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponSpellStatusSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponEvadePercentageSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponPowerSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weaponRangeSpinner)).EndInit();
             this.shieldPanel.ResumeLayout( false );
             this.shieldPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shieldPhysicalBlockRateSpinner)).EndInit();
             this.armorPanel.ResumeLayout( false );
             this.armorPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).EndInit();
             this.accessoryPanel.ResumeLayout( false );
             this.accessoryPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).EndInit();
             this.chemistItemPanel.ResumeLayout( false );
             this.chemistItemPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondTableIdSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.enemyLevelSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemAttributesSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.graphicSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldPhysicalBlockRateSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponSpellStatusSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponEvadePercentageSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponPowerSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponRangeSpinner)).EndInit();
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -917,6 +1048,16 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.LinkLabel weaponSpellStatusLabel;
         private FFTPatcher.Controls.ComboBoxWithDefault weaponFormulaComboBox;
         private FFTPatcher.Controls.ComboBoxWithDefault chemistItemFormulaComboBox;
+        private FFTPatcher.Controls.NumericUpDownWithDefault secondTableIdSpinner;
+        private System.Windows.Forms.Label secondTableLabel;
+        private System.Windows.Forms.LinkLabel weaponJumpLabel;
+        private System.Windows.Forms.LinkLabel shieldJumpLabel;
+        private System.Windows.Forms.LinkLabel headBodyJumpLabel;
+        private System.Windows.Forms.LinkLabel accessoryJumpLabel;
+        private System.Windows.Forms.LinkLabel chemistItemJumpLabel;
+        private System.Windows.Forms.Label weaponCastSpellLabel;
+        private System.Windows.Forms.Label hLabel4;
+        private FFTPatcher.Controls.ComboBoxWithDefault weaponCastSpellComboBox;
 
     }
 }

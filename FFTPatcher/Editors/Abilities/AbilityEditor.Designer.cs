@@ -67,8 +67,8 @@ namespace FFTPatcher.Editors
             this.itemUsePanel = new System.Windows.Forms.Panel();
             this.effectLabel = new System.Windows.Forms.Label();
             this.effectComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
-            this.abilityAttributesEditor = new FFTPatcher.Editors.AbilityAttributesEditor();
             this.commonAbilitiesEditor = new FFTPatcher.Editors.CommonAbilitiesEditor();
+            this.abilityAttributesEditor = new FFTPatcher.Editors.AbilityAttributesEditor();
             this.arithmeticksSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.itemUseComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.idSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -299,16 +299,6 @@ namespace FFTPatcher.Editors
             this.effectComboBox.TabIndex = 27;
             this.effectComboBox.Tag = "Effect";
             // 
-            // abilityAttributesEditor
-            // 
-            this.abilityAttributesEditor.Attributes = null;
-            this.abilityAttributesEditor.AutoSize = true;
-            this.abilityAttributesEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.abilityAttributesEditor.Location = new System.Drawing.Point( 9, 277 );
-            this.abilityAttributesEditor.Name = "abilityAttributesEditor";
-            this.abilityAttributesEditor.Size = new System.Drawing.Size( 575, 401 );
-            this.abilityAttributesEditor.TabIndex = 2;
-            // 
             // commonAbilitiesEditor
             // 
             this.commonAbilitiesEditor.Ability = null;
@@ -318,6 +308,16 @@ namespace FFTPatcher.Editors
             this.commonAbilitiesEditor.Name = "commonAbilitiesEditor";
             this.commonAbilitiesEditor.Size = new System.Drawing.Size( 558, 268 );
             this.commonAbilitiesEditor.TabIndex = 1;
+            // 
+            // abilityAttributesEditor
+            // 
+            this.abilityAttributesEditor.Attributes = null;
+            this.abilityAttributesEditor.AutoSize = true;
+            this.abilityAttributesEditor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.abilityAttributesEditor.Location = new System.Drawing.Point( 9, 277 );
+            this.abilityAttributesEditor.Name = "abilityAttributesEditor";
+            this.abilityAttributesEditor.Size = new System.Drawing.Size( 575, 401 );
+            this.abilityAttributesEditor.TabIndex = 2;
             // 
             // arithmeticksSpinner
             // 
@@ -424,8 +424,8 @@ namespace FFTPatcher.Editors
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add( this.effectLabel );
             this.Controls.Add( this.effectComboBox );
-            this.Controls.Add( this.abilityAttributesEditor );
             this.Controls.Add( this.commonAbilitiesEditor );
+            this.Controls.Add( this.abilityAttributesEditor );
             this.Controls.Add( this.arithmeticksPanel );
             this.Controls.Add( this.itemUsePanel );
             this.Controls.Add( this.abilityIdPanel );

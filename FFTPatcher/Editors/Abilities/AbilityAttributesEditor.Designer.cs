@@ -206,6 +206,7 @@ namespace FFTPatcher.Editors
             this.flagsCheckedListBox.Name = "flagsCheckedListBox";
             this.flagsCheckedListBox.Size = new System.Drawing.Size( 563, 124 );
             this.flagsCheckedListBox.TabIndex = 9;
+            this.flagsCheckedListBox.TabStop = false;
             // 
             // mpSpinner
             // 

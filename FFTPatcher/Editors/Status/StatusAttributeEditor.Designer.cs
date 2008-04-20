@@ -204,6 +204,7 @@ namespace FFTPatcher.Editors
             this.cancelStatusesEditor.Status = "Cancels";
             this.cancelStatusesEditor.Statuses = null;
             this.cancelStatusesEditor.TabIndex = 5;
+            this.cancelStatusesEditor.TabStop = false;
             // 
             // cantStackStatusesEditor
             // 
@@ -213,6 +214,7 @@ namespace FFTPatcher.Editors
             this.cantStackStatusesEditor.Status = "Can\'t Stack On Top Of";
             this.cantStackStatusesEditor.Statuses = null;
             this.cantStackStatusesEditor.TabIndex = 6;
+            this.cantStackStatusesEditor.TabStop = false;
             // 
             // checkedListBox
             // 
@@ -239,6 +241,7 @@ namespace FFTPatcher.Editors
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size( 269, 124 );
             this.checkedListBox.TabIndex = 4;
+            this.checkedListBox.TabStop = false;
             // 
             // StatusAttributeEditor
             // 

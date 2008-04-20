@@ -112,6 +112,7 @@ namespace FFTPatcher.Editors
             this.aiCheckedListBox.Name = "aiCheckedListBox";
             this.aiCheckedListBox.Size = new System.Drawing.Size( 374, 124 );
             this.aiCheckedListBox.TabIndex = 0;
+            this.aiCheckedListBox.TabStop = false;
             // 
             // jpCostSpinner
             // 
@@ -162,6 +163,7 @@ namespace FFTPatcher.Editors
             this.propertiesCheckedListBox.Name = "propertiesCheckedListBox";
             this.propertiesCheckedListBox.Size = new System.Drawing.Size( 142, 184 );
             this.propertiesCheckedListBox.TabIndex = 3;
+            this.propertiesCheckedListBox.TabStop = false;
             // 
             // abilityTypeComboBox
             // 

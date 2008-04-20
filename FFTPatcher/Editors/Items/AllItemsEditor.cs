@@ -33,6 +33,7 @@ namespace FFTPatcher.Editors
             InitializeComponent();
             itemEditor.InflictStatusClicked += itemEditor_InflictStatusClicked;
             itemEditor.ItemAttributesClicked += itemEditor_ItemAttributesClicked;
+            itemEditor.SecondTableLinkClicked += itemEditor_SecondTableLinkClicked;
         }
 
 		#endregion Constructors 
@@ -45,7 +46,7 @@ namespace FFTPatcher.Editors
 
 		#endregion Events 
 
-		#region Methods (4) 
+		#region Methods (5) 
 
 
         private void itemEditor_InflictStatusClicked( object sender, LabelClickedEventArgs e )
@@ -61,6 +62,46 @@ namespace FFTPatcher.Editors
             if( ItemAttributesClicked != null )
             {
                 ItemAttributesClicked( this, e );
+            }
+        }
+
+        private void itemEditor_SecondTableLinkClicked( object sender, LabelClickedEventArgs e )
+        {
+            int navigate = -1;
+            switch( e.SecondTable )
+            {
+                case LabelClickedEventArgs.SecondTableType.Weapon:
+                    if( e.Value <= 0x7F )
+                        navigate = e.Value;
+                    break;
+                case LabelClickedEventArgs.SecondTableType.Shield:
+                    if( e.Value <= 0x0F )
+                        navigate = e.Value + 0x80;
+                    break;
+                case LabelClickedEventArgs.SecondTableType.HeadBody:
+                    if( e.Value <= 0x3F )
+                        navigate = e.Value + 0x90;
+                    break;
+                case LabelClickedEventArgs.SecondTableType.Accessory:
+                    if( e.Value <= 0x1F )
+                        navigate = e.Value + 0xD0;
+                    break;
+                case LabelClickedEventArgs.SecondTableType.ChemistItem:
+                    if( e.Value <= 0x0D )
+                    {
+                        if( e.Value <= 0x04 )
+                            navigate = e.Value + 0xF0;
+                        else if( e.Value == 0x0D )
+                            navigate = 0xF5;
+                        else if( e.Value <= 0x0C )
+                            navigate = e.Value - 0x05 + 0xF6;
+                    }
+                    break;
+
+            }
+            if( navigate != -1 )
+            {
+                itemListBox.SelectedIndex = navigate;
             }
         }
 

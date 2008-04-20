@@ -59,6 +59,7 @@ namespace FFTPatcher.Editors
             this.inflictStatusesEditor.Status = "Status";
             this.inflictStatusesEditor.Statuses = null;
             this.inflictStatusesEditor.TabIndex = 1;
+            this.inflictStatusesEditor.TabStop = false;
             // 
             // flagsCheckedListBox
             // 
@@ -76,6 +77,7 @@ namespace FFTPatcher.Editors
             this.flagsCheckedListBox.Name = "flagsCheckedListBox";
             this.flagsCheckedListBox.Size = new System.Drawing.Size( 92, 124 );
             this.flagsCheckedListBox.TabIndex = 0;
+            this.flagsCheckedListBox.TabStop = false;
             // 
             // InflictStatusEditor
             // 

@@ -628,6 +628,7 @@ namespace FFTPatcher.Editors
             this.startingStatusesEditor.Status = "Starting Status";
             this.startingStatusesEditor.Statuses = null;
             this.startingStatusesEditor.TabIndex = 27;
+            this.startingStatusesEditor.TabStop = false;
             // 
             // statusImmunityEditor
             // 
@@ -637,6 +638,7 @@ namespace FFTPatcher.Editors
             this.statusImmunityEditor.Status = "Status Immunity";
             this.statusImmunityEditor.Statuses = null;
             this.statusImmunityEditor.TabIndex = 28;
+            this.statusImmunityEditor.TabStop = false;
             // 
             // innateStatusesEditor
             // 
@@ -646,6 +648,7 @@ namespace FFTPatcher.Editors
             this.innateStatusesEditor.Status = "Innate Status";
             this.innateStatusesEditor.Statuses = null;
             this.innateStatusesEditor.TabIndex = 26;
+            this.innateStatusesEditor.TabStop = false;
             // 
             // equipmentEditor
             // 
@@ -654,6 +657,7 @@ namespace FFTPatcher.Editors
             this.equipmentEditor.Name = "equipmentEditor";
             this.equipmentEditor.Size = new System.Drawing.Size( 394, 250 );
             this.equipmentEditor.TabIndex = 25;
+            this.equipmentEditor.TabStop = false;
             // 
             // weakElementsEditor
             // 
@@ -664,6 +668,7 @@ namespace FFTPatcher.Editors
             this.weakElementsEditor.Name = "weakElementsEditor";
             this.weakElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.weakElementsEditor.TabIndex = 24;
+            this.weakElementsEditor.TabStop = false;
             // 
             // halfElementsEditor
             // 
@@ -674,6 +679,7 @@ namespace FFTPatcher.Editors
             this.halfElementsEditor.Name = "halfElementsEditor";
             this.halfElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.halfElementsEditor.TabIndex = 23;
+            this.halfElementsEditor.TabStop = false;
             // 
             // cancelElementsEditor
             // 
@@ -684,6 +690,7 @@ namespace FFTPatcher.Editors
             this.cancelElementsEditor.Name = "cancelElementsEditor";
             this.cancelElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.cancelElementsEditor.TabIndex = 22;
+            this.cancelElementsEditor.TabStop = false;
             // 
             // absorbElementsEditor
             // 
@@ -694,6 +701,7 @@ namespace FFTPatcher.Editors
             this.absorbElementsEditor.Name = "absorbElementsEditor";
             this.absorbElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.absorbElementsEditor.TabIndex = 21;
+            this.absorbElementsEditor.TabStop = false;
             // 
             // skillSetLabel
             // 

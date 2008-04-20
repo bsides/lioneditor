@@ -52,11 +52,11 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label speedLabel;
             System.Windows.Forms.Label moveLabel;
             System.Windows.Forms.Label jumpLabel;
-            this.paSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.maSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.moveSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.speedSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.jumpSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.speedSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.moveSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.maSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.paSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.strongElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.weakElementsEditor = new FFTPatcher.Editors.ElementsEditor();
             this.halfElementsEditor = new FFTPatcher.Editors.ElementsEditor();
@@ -70,11 +70,11 @@ namespace FFTPatcher.Editors
             speedLabel = new System.Windows.Forms.Label();
             moveLabel = new System.Windows.Forms.Label();
             jumpLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.paSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moveSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.jumpSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paSpinner)).BeginInit();
             this.SuspendLayout();
             // 
             // paLabel
@@ -122,47 +122,19 @@ namespace FFTPatcher.Editors
             jumpLabel.TabIndex = 17;
             jumpLabel.Text = "Jump";
             // 
-            // paSpinner
+            // jumpSpinner
             // 
-            this.paSpinner.Location = new System.Drawing.Point( 48, 3 );
-            this.paSpinner.Maximum = new decimal( new int[] {
+            this.jumpSpinner.Location = new System.Drawing.Point( 48, 107 );
+            this.jumpSpinner.Maximum = new decimal( new int[] {
             255,
             0,
             0,
             0} );
-            this.paSpinner.Name = "paSpinner";
-            this.paSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.paSpinner.TabIndex = 0;
-            this.paSpinner.Tag = "PA";
-            this.paSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // maSpinner
-            // 
-            this.maSpinner.Location = new System.Drawing.Point( 48, 29 );
-            this.maSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.maSpinner.Name = "maSpinner";
-            this.maSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.maSpinner.TabIndex = 1;
-            this.maSpinner.Tag = "MA";
-            this.maSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // moveSpinner
-            // 
-            this.moveSpinner.Location = new System.Drawing.Point( 48, 81 );
-            this.moveSpinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.moveSpinner.Name = "moveSpinner";
-            this.moveSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.moveSpinner.TabIndex = 3;
-            this.moveSpinner.Tag = "Move";
-            this.moveSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.jumpSpinner.Name = "jumpSpinner";
+            this.jumpSpinner.Size = new System.Drawing.Size( 47, 20 );
+            this.jumpSpinner.TabIndex = 4;
+            this.jumpSpinner.Tag = "Jump";
+            this.jumpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // speedSpinner
             // 
@@ -178,19 +150,47 @@ namespace FFTPatcher.Editors
             this.speedSpinner.Tag = "Speed";
             this.speedSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // jumpSpinner
+            // moveSpinner
             // 
-            this.jumpSpinner.Location = new System.Drawing.Point( 48, 107 );
-            this.jumpSpinner.Maximum = new decimal( new int[] {
+            this.moveSpinner.Location = new System.Drawing.Point( 48, 81 );
+            this.moveSpinner.Maximum = new decimal( new int[] {
             255,
             0,
             0,
             0} );
-            this.jumpSpinner.Name = "jumpSpinner";
-            this.jumpSpinner.Size = new System.Drawing.Size( 47, 20 );
-            this.jumpSpinner.TabIndex = 4;
-            this.jumpSpinner.Tag = "Jump";
-            this.jumpSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.moveSpinner.Name = "moveSpinner";
+            this.moveSpinner.Size = new System.Drawing.Size( 47, 20 );
+            this.moveSpinner.TabIndex = 3;
+            this.moveSpinner.Tag = "Move";
+            this.moveSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // maSpinner
+            // 
+            this.maSpinner.Location = new System.Drawing.Point( 48, 29 );
+            this.maSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.maSpinner.Name = "maSpinner";
+            this.maSpinner.Size = new System.Drawing.Size( 47, 20 );
+            this.maSpinner.TabIndex = 1;
+            this.maSpinner.Tag = "MA";
+            this.maSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // paSpinner
+            // 
+            this.paSpinner.Location = new System.Drawing.Point( 48, 3 );
+            this.paSpinner.Maximum = new decimal( new int[] {
+            255,
+            0,
+            0,
+            0} );
+            this.paSpinner.Name = "paSpinner";
+            this.paSpinner.Size = new System.Drawing.Size( 47, 20 );
+            this.paSpinner.TabIndex = 0;
+            this.paSpinner.Tag = "PA";
+            this.paSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // strongElementsEditor
             // 
@@ -201,6 +201,7 @@ namespace FFTPatcher.Editors
             this.strongElementsEditor.Name = "strongElementsEditor";
             this.strongElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.strongElementsEditor.TabIndex = 9;
+            this.strongElementsEditor.TabStop = false;
             // 
             // weakElementsEditor
             // 
@@ -211,6 +212,7 @@ namespace FFTPatcher.Editors
             this.weakElementsEditor.Name = "weakElementsEditor";
             this.weakElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.weakElementsEditor.TabIndex = 8;
+            this.weakElementsEditor.TabStop = false;
             // 
             // halfElementsEditor
             // 
@@ -221,6 +223,7 @@ namespace FFTPatcher.Editors
             this.halfElementsEditor.Name = "halfElementsEditor";
             this.halfElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.halfElementsEditor.TabIndex = 7;
+            this.halfElementsEditor.TabStop = false;
             // 
             // cancelElementsEditor
             // 
@@ -231,6 +234,7 @@ namespace FFTPatcher.Editors
             this.cancelElementsEditor.Name = "cancelElementsEditor";
             this.cancelElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.cancelElementsEditor.TabIndex = 6;
+            this.cancelElementsEditor.TabStop = false;
             // 
             // absorbElementsEditor
             // 
@@ -241,6 +245,7 @@ namespace FFTPatcher.Editors
             this.absorbElementsEditor.Name = "absorbElementsEditor";
             this.absorbElementsEditor.Size = new System.Drawing.Size( 94, 162 );
             this.absorbElementsEditor.TabIndex = 5;
+            this.absorbElementsEditor.TabStop = false;
             // 
             // startingStatusesEditor
             // 
@@ -250,6 +255,7 @@ namespace FFTPatcher.Editors
             this.startingStatusesEditor.Status = "Starting Status";
             this.startingStatusesEditor.Statuses = null;
             this.startingStatusesEditor.TabIndex = 12;
+            this.startingStatusesEditor.TabStop = false;
             // 
             // statusImmunityEditor
             // 
@@ -259,6 +265,7 @@ namespace FFTPatcher.Editors
             this.statusImmunityEditor.Status = "Status Immunity";
             this.statusImmunityEditor.Statuses = null;
             this.statusImmunityEditor.TabIndex = 11;
+            this.statusImmunityEditor.TabStop = false;
             // 
             // permanentStatusesEditor
             // 
@@ -268,6 +275,7 @@ namespace FFTPatcher.Editors
             this.permanentStatusesEditor.Status = "Permanent Status";
             this.permanentStatusesEditor.Statuses = null;
             this.permanentStatusesEditor.TabIndex = 10;
+            this.permanentStatusesEditor.TabStop = false;
             // 
             // ItemAttributeEditor
             // 
@@ -296,11 +304,11 @@ namespace FFTPatcher.Editors
             this.Controls.Add( this.permanentStatusesEditor );
             this.Name = "ItemAttributeEditor";
             this.Size = new System.Drawing.Size( 598, 707 );
-            ((System.ComponentModel.ISupportInitialize)(this.paSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moveSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.jumpSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paSpinner)).EndInit();
             this.ResumeLayout( false );
             this.PerformLayout();
 

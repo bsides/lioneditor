@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Controls;
@@ -32,10 +33,11 @@ namespace FFTPatcher.Editors
 
         private static List<string> itemFormulaItems;
         private static List<string> weaponFormulaItems;
+        private static List<string> weaponCastSpellItems;
 
 		#endregion Static Fields 
 
-		#region Fields (9) 
+		#region Fields (10) 
 
         private List<ComboBoxWithDefault> comboBoxes = new List<ComboBoxWithDefault>();
         private bool ignoreChanges = false;
@@ -46,6 +48,7 @@ namespace FFTPatcher.Editors
         private Context ourContext = Context.Default;
         private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
         private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
+        private List<LinkLabel> secondTableLinks = new List<LinkLabel>();
         private List<NumericUpDownWithDefault> spinners = new List<NumericUpDownWithDefault>();
         private string[] weaponBools = new string[] {
             "Striking", "Lunging", "Direct", "Arc",
@@ -92,6 +95,12 @@ namespace FFTPatcher.Editors
                 weaponFormulaItems.Add( string.Format( "{0:X2}", i ) );
             }
 
+            weaponCastSpellItems = new List<string>( 256 );
+            for( int i = 0; i < 256; i++ )
+            {
+                weaponCastSpellItems.Add( string.Format( "{0:X2} - {1}", i, AllAbilities.Names[i] ) );
+            }
+
             itemFormulaItems = new List<string>( 256 );
             Dictionary<int, string> t = new Dictionary<int, string>( 5 );
             t.Add( 0x38, "Remove status" );
@@ -125,6 +134,8 @@ namespace FFTPatcher.Editors
                 accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateSpinner, 
                 chemistItemSpellStatusSpinner, chemistItemXSpinner } );
             comboBoxes.AddRange( new ComboBoxWithDefault[] { itemTypeComboBox, shopAvailabilityComboBox } );
+            secondTableLinks.AddRange( new LinkLabel[] { weaponJumpLabel, shieldJumpLabel, headBodyJumpLabel, accessoryJumpLabel, chemistItemJumpLabel } );
+
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
                 spinner.ValueChanged += spinner_ValueChanged;
@@ -133,9 +144,20 @@ namespace FFTPatcher.Editors
             {
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
+            foreach( LinkLabel jumpLabel in secondTableLinks )
+            {
+                jumpLabel.Click += new EventHandler( jumpLabel_Click );
+                jumpLabel.TabStop = false;
+            }
+            weaponJumpLabel.Tag = LabelClickedEventArgs.SecondTableType.Weapon;
+            shieldJumpLabel.Tag = LabelClickedEventArgs.SecondTableType.Shield;
+            headBodyJumpLabel.Tag = LabelClickedEventArgs.SecondTableType.HeadBody;
+            accessoryJumpLabel.Tag = LabelClickedEventArgs.SecondTableType.Accessory;
+            chemistItemJumpLabel.Tag = LabelClickedEventArgs.SecondTableType.ChemistItem;
 
             weaponFormulaComboBox.SelectedIndexChanged += weaponFormulaComboBox_SelectedIndexChanged;
             chemistItemFormulaComboBox.SelectedIndexChanged += chemistItemFormulaComboBox_SelectedIndexChanged;
+            weaponCastSpellComboBox.SelectedIndexChanged += weaponCastSpellComboBox_SelectedIndexChanged;
 
             itemAttributesCheckedListBox.ItemCheck += itemAttributesCheckedListBox_ItemCheck;
             weaponAttributesCheckedListBox.ItemCheck += weaponAttributesCheckedListBox_ItemCheck;
@@ -152,6 +174,7 @@ namespace FFTPatcher.Editors
             itemAttributesLabel.Click += itemAttributesLabel_Click;
             itemAttributesLabel.TabStop = false;
             weaponFormulaComboBox.DataSource = weaponFormulaItems;
+            weaponCastSpellComboBox.DataSource = weaponCastSpellItems;
             chemistItemFormulaComboBox.DataSource = itemFormulaItems;
 
             ignoreChanges = false;
@@ -159,15 +182,17 @@ namespace FFTPatcher.Editors
 
 		#endregion Constructors 
 
-		#region Events (2) 
+		#region Events (3) 
 
         public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
 
         public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
 
+        public event EventHandler<LabelClickedEventArgs> SecondTableLinkClicked;
+
 		#endregion Events 
 
-		#region Methods (10) 
+		#region Methods (11) 
 
 
         private void chemistItemFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
@@ -208,6 +233,18 @@ namespace FFTPatcher.Editors
             if( ItemAttributesClicked != null && itemAttributesSpinner.Value <= (FFTPatch.Context == Context.US_PSP ? 0x64 : 0x4F) )
             {
                 ItemAttributesClicked( this, new LabelClickedEventArgs( (byte)itemAttributesSpinner.Value ) );
+            }
+        }
+
+        private void jumpLabel_Click( object sender, EventArgs e )
+        {
+            if( (secondTableLinks as IList).Contains( sender ) )
+            {
+                if( SecondTableLinkClicked != null )
+                {
+                    LabelClickedEventArgs.SecondTableType type = (LabelClickedEventArgs.SecondTableType)((sender as LinkLabel).Tag);
+                    SecondTableLinkClicked( this, new LabelClickedEventArgs( (byte)secondTableIdSpinner.Value, type ) );
+                }
             }
         }
 
@@ -273,9 +310,29 @@ namespace FFTPatcher.Editors
                 weaponEvadePercentageSpinner.SetValueAndDefault(
                     w.EvadePercentage,
                     w.WeaponDefault.EvadePercentage );
-                weaponSpellStatusSpinner.SetValueAndDefault(
-                    w.InflictStatus,
-                    w.WeaponDefault.InflictStatus );
+
+                if( w.Formula == 2 )
+                {
+                    weaponCastSpellComboBox.SetValueAndDefault(
+                        weaponCastSpellComboBox.Items[w.InflictStatus],
+                        weaponCastSpellComboBox.Items[w.WeaponDefault.InflictStatus] );
+                    weaponCastSpellComboBox.Visible = true;
+                    weaponCastSpellLabel.Visible = true;
+                    weaponSpellStatusSpinner.Visible = false;
+                    hLabel4.Visible = false;
+                    weaponSpellStatusLabel.Visible = false;
+                }
+                else
+                {
+                    weaponSpellStatusSpinner.SetValueAndDefault(
+                        w.InflictStatus,
+                        w.WeaponDefault.InflictStatus );
+                    weaponCastSpellComboBox.Visible = false;
+                    weaponCastSpellLabel.Visible = false;
+                    weaponSpellStatusSpinner.Visible = true;
+                    hLabel4.Visible = true;
+                    weaponSpellStatusLabel.Visible = true;
+                }
 
                 weaponElementsEditor.SetValueAndDefaults( w.Elements, w.WeaponDefault.Elements );
             }
@@ -336,6 +393,7 @@ namespace FFTPatcher.Editors
             itemTypeComboBox.SetValueAndDefault( item.ItemType, item.Default.ItemType );
 
             itemAttributesSpinner.SetValueAndDefault( item.SIA, item.Default.SIA );
+            secondTableIdSpinner.SetValueAndDefault( item.SecondTableId, item.Default.SecondTableId );
             priceSpinner.SetValueAndDefault( item.Price, item.Default.Price );
             shopAvailabilityComboBox.SetValueAndDefault( item.ShopAvailability, item.Default.ShopAvailability );
 
@@ -367,6 +425,44 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges && item is Weapon )
             {
                 (item as Weapon).Formula = (byte)weaponFormulaComboBox.SelectedIndex;
+                if( weaponFormulaComboBox.SelectedIndex == 2 )
+                {
+                    weaponSpellStatusLabel.Visible = false;
+                    hLabel4.Visible = false;
+                    weaponSpellStatusSpinner.Visible = false;
+
+                    weaponCastSpellComboBox.Visible = true;
+                    weaponCastSpellLabel.Visible = true;
+
+                    bool old = ignoreChanges;
+                    ignoreChanges = true;
+                    weaponCastSpellComboBox.SelectedIndex = (byte)((item as Weapon).InflictStatus);
+                    ignoreChanges = old;
+                }
+                else
+                {
+                    weaponSpellStatusLabel.Visible = true;
+                    hLabel4.Visible = true;
+                    weaponSpellStatusSpinner.Visible = true;
+
+                    weaponCastSpellComboBox.Visible = false;
+                    weaponCastSpellLabel.Visible = false;
+
+                    bool old = ignoreChanges;
+                    ignoreChanges = true;
+                    weaponSpellStatusSpinner.SetValueAndDefault(
+                        (byte)((item as Weapon).InflictStatus),
+                        (item as Weapon).WeaponDefault.InflictStatus );
+                    ignoreChanges = old;
+                }
+            }
+        }
+
+        private void weaponCastSpellComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && item is Weapon && weaponFormulaComboBox.SelectedIndex == 2 )
+            {
+                (item as Weapon).InflictStatus = (byte)weaponCastSpellComboBox.SelectedIndex;
             }
         }
 

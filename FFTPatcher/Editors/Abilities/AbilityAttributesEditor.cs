@@ -191,19 +191,38 @@ namespace FFTPatcher.Editors
     public class LabelClickedEventArgs : EventArgs
     {
 
-		#region Properties (1) 
+        public enum SecondTableType
+        {
+            None,
+            Weapon,
+            Shield,
+            HeadBody,
+            Accessory,
+            ChemistItem
+        }
 
+
+		#region Properties (2) 
+
+
+        public SecondTableType SecondTable { get; private set; }
 
         public byte Value { get; private set; }
 
 
 		#endregion Properties 
 
-		#region Constructors (1) 
+		#region Constructors (2) 
 
         public LabelClickedEventArgs( byte value )
+            : this( value, SecondTableType.None )
+        {
+        }
+
+        public LabelClickedEventArgs( byte value, SecondTableType secondTable )
         {
             Value = value;
+            SecondTable = secondTable;
         }
 
 		#endregion Constructors 

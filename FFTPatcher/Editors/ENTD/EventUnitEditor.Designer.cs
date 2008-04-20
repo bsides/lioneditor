@@ -75,6 +75,11 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label initialDirectionLabel;
             System.Windows.Forms.Label hLabel1;
             System.Windows.Forms.Label hLabel2;
+            System.Windows.Forms.Label teamColorLabel;
+            System.Windows.Forms.GroupBox spoilsGroupBox;
+            System.Windows.Forms.Label bonusMoneyLabel;
+            System.Windows.Forms.Label warTrophyLabel;
+            System.Windows.Forms.Label x100GilLabel;
             this.primarySkillComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.movementComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.secondaryActionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
@@ -88,12 +93,11 @@ namespace FFTPatcher.Editors
             this.unknown12Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.unknown11Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.unknown10Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown9Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.targetSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.unknown8Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.unknown7Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.unknown6Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown4Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.unknown3Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.bonusMoneySpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.unknown2Spinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.facingDirectionComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.levelComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
@@ -112,6 +116,9 @@ namespace FFTPatcher.Editors
             this.paletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.ySpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.xSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.teamColorComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.warTrophyComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
+            this.targetLabel = new System.Windows.Forms.Label();
             skillsGroupBox = new System.Windows.Forms.GroupBox();
             movementSkillLabel = new System.Windows.Forms.Label();
             supportSkillLabel = new System.Windows.Forms.Label();
@@ -140,24 +147,29 @@ namespace FFTPatcher.Editors
             initialDirectionLabel = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
             hLabel2 = new System.Windows.Forms.Label();
+            teamColorLabel = new System.Windows.Forms.Label();
+            spoilsGroupBox = new System.Windows.Forms.GroupBox();
+            bonusMoneyLabel = new System.Windows.Forms.Label();
+            warTrophyLabel = new System.Windows.Forms.Label();
+            x100GilLabel = new System.Windows.Forms.Label();
             skillsGroupBox.SuspendLayout();
             equipmentGroupBox.SuspendLayout();
             unknownGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unknown12Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown11Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown10Spinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unknown9Spinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.targetSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown8Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown7Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown6Spinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unknown4Spinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unknown3Spinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bonusMoneySpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown2Spinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unitIDSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobLevelSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xSpinner)).BeginInit();
+            spoilsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // skillsGroupBox
@@ -465,12 +477,9 @@ namespace FFTPatcher.Editors
             unknownGroupBox.Controls.Add( this.unknown12Spinner );
             unknownGroupBox.Controls.Add( this.unknown11Spinner );
             unknownGroupBox.Controls.Add( this.unknown10Spinner );
-            unknownGroupBox.Controls.Add( this.unknown9Spinner );
             unknownGroupBox.Controls.Add( this.unknown8Spinner );
             unknownGroupBox.Controls.Add( this.unknown7Spinner );
             unknownGroupBox.Controls.Add( this.unknown6Spinner );
-            unknownGroupBox.Controls.Add( this.unknown4Spinner );
-            unknownGroupBox.Controls.Add( this.unknown3Spinner );
             unknownGroupBox.Controls.Add( this.unknown2Spinner );
             unknownGroupBox.Location = new System.Drawing.Point( 5, 370 );
             unknownGroupBox.Name = "unknownGroupBox";
@@ -524,20 +533,20 @@ namespace FFTPatcher.Editors
             this.unknown10Spinner.Tag = "Unknown10";
             this.unknown10Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // unknown9Spinner
+            // targetSpinner
             // 
-            this.unknown9Spinner.Hexadecimal = true;
-            this.unknown9Spinner.Location = new System.Drawing.Point( 6, 69 );
-            this.unknown9Spinner.Maximum = new decimal( new int[] {
+            this.targetSpinner.Hexadecimal = true;
+            this.targetSpinner.Location = new System.Drawing.Point( 366, 155 );
+            this.targetSpinner.Maximum = new decimal( new int[] {
             255,
             0,
             0,
             0} );
-            this.unknown9Spinner.Name = "unknown9Spinner";
-            this.unknown9Spinner.Size = new System.Drawing.Size( 45, 20 );
-            this.unknown9Spinner.TabIndex = 10;
-            this.unknown9Spinner.Tag = "Unknown9";
-            this.unknown9Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.targetSpinner.Name = "targetSpinner";
+            this.targetSpinner.Size = new System.Drawing.Size( 45, 20 );
+            this.targetSpinner.TabIndex = 10;
+            this.targetSpinner.Tag = "Target";
+            this.targetSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // unknown8Spinner
             // 
@@ -584,35 +593,19 @@ namespace FFTPatcher.Editors
             this.unknown6Spinner.Tag = "Unknown6";
             this.unknown6Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // unknown4Spinner
+            // bonusMoneySpinner
             // 
-            this.unknown4Spinner.Hexadecimal = true;
-            this.unknown4Spinner.Location = new System.Drawing.Point( 6, 43 );
-            this.unknown4Spinner.Maximum = new decimal( new int[] {
+            this.bonusMoneySpinner.Location = new System.Drawing.Point( 84, 23 );
+            this.bonusMoneySpinner.Maximum = new decimal( new int[] {
             255,
             0,
             0,
             0} );
-            this.unknown4Spinner.Name = "unknown4Spinner";
-            this.unknown4Spinner.Size = new System.Drawing.Size( 45, 20 );
-            this.unknown4Spinner.TabIndex = 5;
-            this.unknown4Spinner.Tag = "Unknown4";
-            this.unknown4Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // unknown3Spinner
-            // 
-            this.unknown3Spinner.Hexadecimal = true;
-            this.unknown3Spinner.Location = new System.Drawing.Point( 210, 17 );
-            this.unknown3Spinner.Maximum = new decimal( new int[] {
-            255,
-            0,
-            0,
-            0} );
-            this.unknown3Spinner.Name = "unknown3Spinner";
-            this.unknown3Spinner.Size = new System.Drawing.Size( 45, 20 );
-            this.unknown3Spinner.TabIndex = 4;
-            this.unknown3Spinner.Tag = "Unknown3";
-            this.unknown3Spinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.bonusMoneySpinner.Name = "bonusMoneySpinner";
+            this.bonusMoneySpinner.Size = new System.Drawing.Size( 52, 20 );
+            this.bonusMoneySpinner.TabIndex = 5;
+            this.bonusMoneySpinner.Tag = "BonusMoney";
+            this.bonusMoneySpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // unknown2Spinner
             // 
@@ -664,6 +657,33 @@ namespace FFTPatcher.Editors
             initialDirectionLabel.Size = new System.Drawing.Size( 74, 13 );
             initialDirectionLabel.TabIndex = 36;
             initialDirectionLabel.Text = "Initial direction";
+            // 
+            // hLabel1
+            // 
+            hLabel1.AutoSize = true;
+            hLabel1.Location = new System.Drawing.Point( 256, 139 );
+            hLabel1.Name = "hLabel1";
+            hLabel1.Size = new System.Drawing.Size( 13, 13 );
+            hLabel1.TabIndex = 37;
+            hLabel1.Text = "h";
+            // 
+            // hLabel2
+            // 
+            hLabel2.AutoSize = true;
+            hLabel2.Location = new System.Drawing.Point( 128, 139 );
+            hLabel2.Name = "hLabel2";
+            hLabel2.Size = new System.Drawing.Size( 13, 13 );
+            hLabel2.TabIndex = 38;
+            hLabel2.Text = "h";
+            // 
+            // teamColorLabel
+            // 
+            teamColorLabel.AutoSize = true;
+            teamColorLabel.Location = new System.Drawing.Point( 292, 136 );
+            teamColorLabel.Name = "teamColorLabel";
+            teamColorLabel.Size = new System.Drawing.Size( 61, 13 );
+            teamColorLabel.TabIndex = 40;
+            teamColorLabel.Text = "Team Color";
             // 
             // facingDirectionComboBox
             // 
@@ -725,8 +745,6 @@ namespace FFTPatcher.Editors
             this.flags2CheckedListBox.Items.AddRange( new object[] {
             "Always Present",
             "Randomly Present",
-            "",
-            "Enemy",
             "Control",
             "Immortal",
             "",
@@ -788,7 +806,7 @@ namespace FFTPatcher.Editors
             "Monster",
             "Join After Event",
             "Load Formation",
-            "Zodiac monster",
+            "Has ??? stats",
             "",
             "Save Formation"} );
             this.flags1CheckedListBox.Location = new System.Drawing.Point( 295, 3 );
@@ -863,23 +881,77 @@ namespace FFTPatcher.Editors
             this.xSpinner.Tag = "X";
             this.xSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // hLabel1
+            // teamColorComboBox
             // 
-            hLabel1.AutoSize = true;
-            hLabel1.Location = new System.Drawing.Point( 256, 139 );
-            hLabel1.Name = "hLabel1";
-            hLabel1.Size = new System.Drawing.Size( 13, 13 );
-            hLabel1.TabIndex = 37;
-            hLabel1.Text = "h";
+            this.teamColorComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.teamColorComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.teamColorComboBox.FormattingEnabled = true;
+            this.teamColorComboBox.Location = new System.Drawing.Point( 366, 133 );
+            this.teamColorComboBox.Name = "teamColorComboBox";
+            this.teamColorComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.teamColorComboBox.TabIndex = 39;
             // 
-            // hLabel2
+            // warTrophyComboBox
             // 
-            hLabel2.AutoSize = true;
-            hLabel2.Location = new System.Drawing.Point( 128, 139 );
-            hLabel2.Name = "hLabel2";
-            hLabel2.Size = new System.Drawing.Size( 13, 13 );
-            hLabel2.TabIndex = 38;
-            hLabel2.Text = "h";
+            this.warTrophyComboBox.BackColor = System.Drawing.SystemColors.Window;
+            this.warTrophyComboBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.warTrophyComboBox.FormattingEnabled = true;
+            this.warTrophyComboBox.Location = new System.Drawing.Point( 84, 44 );
+            this.warTrophyComboBox.Name = "warTrophyComboBox";
+            this.warTrophyComboBox.Size = new System.Drawing.Size( 121, 21 );
+            this.warTrophyComboBox.TabIndex = 41;
+            this.warTrophyComboBox.Tag = "WarTrophy";
+            // 
+            // spoilsGroupBox
+            // 
+            spoilsGroupBox.AutoSize = true;
+            spoilsGroupBox.Controls.Add( x100GilLabel );
+            spoilsGroupBox.Controls.Add( warTrophyLabel );
+            spoilsGroupBox.Controls.Add( bonusMoneyLabel );
+            spoilsGroupBox.Controls.Add( this.bonusMoneySpinner );
+            spoilsGroupBox.Controls.Add( this.warTrophyComboBox );
+            spoilsGroupBox.Location = new System.Drawing.Point( 275, 370 );
+            spoilsGroupBox.Name = "spoilsGroupBox";
+            spoilsGroupBox.Size = new System.Drawing.Size( 211, 103 );
+            spoilsGroupBox.TabIndex = 42;
+            spoilsGroupBox.TabStop = false;
+            spoilsGroupBox.Text = "Spoils";
+            // 
+            // bonusMoneyLabel
+            // 
+            bonusMoneyLabel.AutoSize = true;
+            bonusMoneyLabel.Location = new System.Drawing.Point( 7, 25 );
+            bonusMoneyLabel.Name = "bonusMoneyLabel";
+            bonusMoneyLabel.Size = new System.Drawing.Size( 72, 13 );
+            bonusMoneyLabel.TabIndex = 42;
+            bonusMoneyLabel.Text = "Bonus Money";
+            // 
+            // warTrophyLabel
+            // 
+            warTrophyLabel.AutoSize = true;
+            warTrophyLabel.Location = new System.Drawing.Point( 7, 47 );
+            warTrophyLabel.Name = "warTrophyLabel";
+            warTrophyLabel.Size = new System.Drawing.Size( 63, 13 );
+            warTrophyLabel.TabIndex = 43;
+            warTrophyLabel.Text = "War Trophy";
+            // 
+            // x100GilLabel
+            // 
+            x100GilLabel.AutoSize = true;
+            x100GilLabel.Location = new System.Drawing.Point( 142, 25 );
+            x100GilLabel.Name = "x100GilLabel";
+            x100GilLabel.Size = new System.Drawing.Size( 48, 13 );
+            x100GilLabel.TabIndex = 44;
+            x100GilLabel.Text = "x 100 Gil";
+            // 
+            // targetLabel
+            // 
+            this.targetLabel.AutoSize = true;
+            this.targetLabel.Location = new System.Drawing.Point( 292, 159 );
+            this.targetLabel.Name = "targetLabel";
+            this.targetLabel.Size = new System.Drawing.Size( 74, 13 );
+            this.targetLabel.TabIndex = 43;
+            this.targetLabel.Text = "Target Unit ID";
             // 
             // EventUnitEditor
             // 
@@ -887,7 +959,12 @@ namespace FFTPatcher.Editors
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.targetLabel );
+            this.Controls.Add( spoilsGroupBox );
+            this.Controls.Add( teamColorLabel );
+            this.Controls.Add( this.teamColorComboBox );
             this.Controls.Add( hLabel2 );
+            this.Controls.Add( this.targetSpinner );
             this.Controls.Add( hLabel1 );
             this.Controls.Add( initialDirectionLabel );
             this.Controls.Add( this.facingDirectionComboBox );
@@ -932,18 +1009,19 @@ namespace FFTPatcher.Editors
             ((System.ComponentModel.ISupportInitialize)(this.unknown12Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown11Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown10Spinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unknown9Spinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.targetSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown8Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown7Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown6Spinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unknown4Spinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unknown3Spinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bonusMoneySpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown2Spinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unitIDSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.jobLevelSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xSpinner)).EndInit();
+            spoilsGroupBox.ResumeLayout( false );
+            spoilsGroupBox.PerformLayout();
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -972,13 +1050,12 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.NumericUpDownWithDefault unknown12Spinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault unknown11Spinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault unknown10Spinner;
-        private FFTPatcher.Controls.NumericUpDownWithDefault unknown9Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault targetSpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault unknown8Spinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault unknown7Spinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault unknown6Spinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault unitIDSpinner;
-        private FFTPatcher.Controls.NumericUpDownWithDefault unknown4Spinner;
-        private FFTPatcher.Controls.NumericUpDownWithDefault unknown3Spinner;
+        private FFTPatcher.Controls.NumericUpDownWithDefault bonusMoneySpinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault unknown2Spinner;
         private FFTPatcher.Controls.NumericUpDownWithDefault jobLevelSpinner;
         private FFTPatcher.Controls.ComboBoxWithDefault jobComboBox;
@@ -988,5 +1065,8 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.ComboBoxWithDefault dayComboBox;
         private FFTPatcher.Controls.ComboBoxWithDefault levelComboBox;
         private FFTPatcher.Controls.ComboBoxWithDefault facingDirectionComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault teamColorComboBox;
+        private FFTPatcher.Controls.ComboBoxWithDefault warTrophyComboBox;
+        private System.Windows.Forms.Label targetLabel;
     }
 }

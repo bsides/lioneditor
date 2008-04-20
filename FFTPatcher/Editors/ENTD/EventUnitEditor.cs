@@ -28,7 +28,7 @@ namespace FFTPatcher.Editors
     public partial class EventUnitEditor : UserControl
     {
 
-		#region Static Fields (3) 
+        #region Static Fields (3)
 
         private static readonly string[] levelStrings = new string[] { 
             "Party level", 
@@ -74,9 +74,9 @@ namespace FFTPatcher.Editors
             "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
             "30", "31", "Random" };
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (5) 
+        #region Fields (5)
 
         private ComboBoxWithDefault[] comboBoxes;
         private EventUnit eventUnit = null;
@@ -84,9 +84,9 @@ namespace FFTPatcher.Editors
         private Context ourContext = Context.Default;
         private NumericUpDownWithDefault[] spinners;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
         public EventUnit EventUnit
@@ -109,9 +109,9 @@ namespace FFTPatcher.Editors
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public EventUnitEditor()
         {
@@ -119,13 +119,13 @@ namespace FFTPatcher.Editors
             spinners = new NumericUpDownWithDefault[] {
                 paletteSpinner, xSpinner, ySpinner,
                 unknown10Spinner, unknown11Spinner, unknown12Spinner, jobLevelSpinner,
-                unknown2Spinner, unknown3Spinner, unknown4Spinner, unitIDSpinner, 
-                unknown6Spinner, unknown7Spinner, unknown8Spinner, unknown9Spinner };
+                unknown2Spinner, bonusMoneySpinner, unitIDSpinner, 
+                unknown6Spinner, unknown7Spinner, unknown8Spinner, targetSpinner };
             comboBoxes = new ComboBoxWithDefault[] {
                 spriteSetComboBox, specialNameComboBox, monthComboBox, jobComboBox, 
                 primarySkillComboBox, secondaryActionComboBox, reactionComboBox, supportComboBox, movementComboBox,
                 rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox,
-                preRequisiteJobComboBox, facingDirectionComboBox };
+                preRequisiteJobComboBox, facingDirectionComboBox, warTrophyComboBox };
 
             foreach( NumericUpDownWithDefault spinner in spinners )
             {
@@ -144,15 +144,15 @@ namespace FFTPatcher.Editors
             flags2CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Events (1) 
+        #region Events (1)
 
         public event EventHandler DataChanged;
 
-		#endregion Events 
+        #endregion Events
 
-		#region Methods (9) 
+        #region Methods (9)
 
 
         private void comboBox_SelectedIndexChanged( object sender, System.EventArgs e )
@@ -178,7 +178,7 @@ namespace FFTPatcher.Editors
 
         private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
-            if (sender == flags1CheckedListBox)
+            if( sender == flags1CheckedListBox )
                 ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
             else if( sender == flags2CheckedListBox )
                 ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
@@ -207,8 +207,8 @@ namespace FFTPatcher.Editors
 
         private void UpdateDataSources()
         {
-            foreach( ComboBoxWithDefault itemComboBox in 
-                new ComboBoxWithDefault[] { rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox } )
+            foreach( ComboBoxWithDefault itemComboBox in
+                new ComboBoxWithDefault[] { rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox, warTrophyComboBox } )
             {
                 itemComboBox.BindingContext = new BindingContext();
                 itemComboBox.DataSource = Item.EventItems;
@@ -218,7 +218,7 @@ namespace FFTPatcher.Editors
             primarySkillComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
             secondaryActionComboBox.BindingContext = new BindingContext();
             secondaryActionComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
-            foreach( ComboBoxWithDefault abilityComboBox in 
+            foreach( ComboBoxWithDefault abilityComboBox in
                 new ComboBoxWithDefault[] { reactionComboBox, supportComboBox, movementComboBox } )
             {
                 abilityComboBox.BindingContext = new BindingContext();
@@ -236,7 +236,7 @@ namespace FFTPatcher.Editors
             specialNameComboBox.DataSource = SpecialName.SpecialNames;
             jobComboBox.DataSource = AllJobs.DummyJobs;
             monthComboBox.DataSource = Enum.GetValues( typeof( Month ) );
-
+            teamColorComboBox.DataSource = Enum.GetValues( typeof( TeamColor ) );
             facingDirectionComboBox.DataSource = Enum.GetValues( typeof( Facing ) );
             preRequisiteJobComboBox.DataSource = Enum.GetValues( typeof( PreRequisiteJob ) );
         }
@@ -274,7 +274,9 @@ namespace FFTPatcher.Editors
                 flags2CheckedListBox.SetValuesAndDefaults(
                     ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags2FieldNames ),
                     ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags2FieldNames ) );
-
+                teamColorComboBox.SetValueAndDefault(
+                    eventUnit.TeamColor,
+                    eventUnit.Default.TeamColor );
                 faithComboBox.SetValueAndDefault(
                     eventUnit.Faith == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Faith],
                     eventUnit.Default.Faith == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Default.Faith] );
@@ -316,7 +318,7 @@ namespace FFTPatcher.Editors
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

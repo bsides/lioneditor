@@ -90,31 +90,36 @@ namespace FFTPatcher.Datatypes
         Unknown0x81 = 129,
     }
 
+    public enum TeamColor
+    {
+        Blue = 0,
+        Red = 1,
+        LightBlue = 2,
+        Green = 3
+    }
+
     /// <summary>
     /// Represents a unit that participates in an <see cref="Event"/>.
     /// </summary>
     public class EventUnit : IEquatable<EventUnit>, IChangeable
     {
 
-		#region Static Fields (2) 
+        #region Static Fields (2)
 
         public static readonly string[] Flags1FieldNames = new string[] { 
-            "Male", "Female", "Monster", "JoinAfterEvent", "LoadFormation", "Blank1", "Blank2", "SaveFormation" };
+            "Male", "Female", "Monster", "JoinAfterEvent", "LoadFormation", "ZodiacMonster", "Blank2", "SaveFormation" };
         public static readonly string[] Flags2FieldNames = new string[] { 
-            "AlwaysPresent", "RandomlyPresent", "Blank5", "Enemy", "Control", "Immortal", "Blank6", "Blank7" };
+            "AlwaysPresent", "RandomlyPresent", "Control", "Immortal", "Blank6", "Blank7" };
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (17) 
+        #region Fields (14)
 
         public bool AlwaysPresent;
-        public bool Blank1;
         public bool Blank2;
-        public bool Blank5;
         public bool Blank6;
         public bool Blank7;
         public bool Control;
-        public bool Enemy;
         public bool Female;
         public bool Immortal;
         public bool JoinAfterEvent;
@@ -123,16 +128,18 @@ namespace FFTPatcher.Datatypes
         public bool Monster;
         public bool RandomlyPresent;
         public bool SaveFormation;
-        public SpecialName SpecialName;
+        public bool ZodiacMonster;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (37) 
+        #region Properties (39)
 
 
         public Item Accessory { get; set; }
 
         public Item Body { get; set; }
+
+        public byte BonusMoney { get; set; }
 
         public byte Bravery { get; set; }
 
@@ -184,9 +191,15 @@ namespace FFTPatcher.Datatypes
 
         public SkillSet SkillSet { get; set; }
 
+        public SpecialName SpecialName { get; set; }
+
         public SpriteSet SpriteSet { get; set; }
 
         public Ability Support { get; set; }
+
+        public byte Target { get; set; }
+
+        public TeamColor TeamColor { get; set; }
 
         public byte UnitID { get; set; }
 
@@ -198,26 +211,22 @@ namespace FFTPatcher.Datatypes
 
         public byte Unknown2 { get; set; }
 
-        public byte Unknown3 { get; set; }
-
-        public byte Unknown4 { get; set; }
-
         public byte Unknown6 { get; set; }
 
         public byte Unknown7 { get; set; }
 
         public byte Unknown8 { get; set; }
 
-        public byte Unknown9 { get; set; }
+        public Item WarTrophy { get; set; }
 
         public byte X { get; set; }
 
         public byte Y { get; set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public EventUnit( IList<byte> bytes )
             : this( bytes, null )
@@ -228,7 +237,7 @@ namespace FFTPatcher.Datatypes
         {
             SpriteSet = SpriteSet.SpriteSets[bytes[0]];
             Default = defaults;
-            Utilities.CopyByteToBooleans( bytes[1], ref Male, ref Female, ref Monster, ref JoinAfterEvent, ref LoadFormation, ref Blank1, ref Blank2, ref SaveFormation );
+            Utilities.CopyByteToBooleans( bytes[1], ref Male, ref Female, ref Monster, ref JoinAfterEvent, ref LoadFormation, ref ZodiacMonster, ref Blank2, ref SaveFormation );
             SpecialName = SpecialName.SpecialNames[bytes[2]];
             Level = bytes[3];
             Month = (Month)bytes[4];
@@ -248,27 +257,29 @@ namespace FFTPatcher.Datatypes
             RightHand = Item.EventItems[bytes[21]];
             LeftHand = Item.EventItems[bytes[22]];
             Palette = bytes[23];
-            Utilities.CopyByteToBooleans( bytes[24], ref AlwaysPresent, ref RandomlyPresent, ref Blank5, ref Enemy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
+            bool dummy = false;
+            Utilities.CopyByteToBooleans( bytes[24], ref AlwaysPresent, ref RandomlyPresent, ref dummy, ref dummy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
+            TeamColor = (TeamColor)((bytes[24] & 0x30) >> 4);
             X = bytes[25];
             Y = bytes[26];
             FacingDirection = (Facing)bytes[27];
             Unknown2 = bytes[28];
             SkillSet = SkillSet.EventSkillSets[bytes[29]];
-            Unknown3 = bytes[30];
-            Unknown4 = bytes[31];
+            WarTrophy = Item.EventItems[bytes[30]];
+            BonusMoney = bytes[31];
             UnitID = bytes[32];
             Unknown6 = bytes[33];
             Unknown7 = bytes[34];
             Unknown8 = bytes[35];
-            Unknown9 = bytes[36];
+            Target = bytes[36];
             Unknown10 = bytes[37];
             Unknown11 = bytes[38];
             Unknown12 = bytes[39];
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (3)
 
 
         public bool Equals( EventUnit other )
@@ -280,7 +291,7 @@ namespace FFTPatcher.Datatypes
         {
             List<byte> result = new List<byte>( 40 );
             result.Add( SpriteSet.ToByte() );
-            result.Add( Utilities.ByteFromBooleans( Male, Female, Monster, JoinAfterEvent, LoadFormation, Blank1, Blank2, SaveFormation ) );
+            result.Add( Utilities.ByteFromBooleans( Male, Female, Monster, JoinAfterEvent, LoadFormation, ZodiacMonster, Blank2, SaveFormation ) );
             result.Add( SpecialName.ToByte() );
             result.Add( Level );
             result.Add( (byte)Month );
@@ -300,19 +311,19 @@ namespace FFTPatcher.Datatypes
             result.Add( (byte)(RightHand.Offset & 0xFF) );
             result.Add( (byte)(LeftHand.Offset & 0xFF) );
             result.Add( Palette );
-            result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, Blank5, Enemy, Control, Immortal, Blank6, Blank7 ) );
+            result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, (((int)TeamColor) & 0x02) == 2, (((int)TeamColor) & 0x01) == 1, Control, Immortal, Blank6, Blank7 ) );
             result.Add( X );
             result.Add( Y );
             result.Add( (byte)FacingDirection );
             result.Add( Unknown2 );
             result.Add( SkillSet.Value );
-            result.Add( Unknown3 );
-            result.Add( Unknown4 );
+            result.Add( (byte)(WarTrophy.Offset & 0xFF) );
+            result.Add( BonusMoney );
             result.Add( UnitID );
             result.Add( Unknown6 );
             result.Add( Unknown7 );
             result.Add( Unknown8 );
-            result.Add( Unknown9 );
+            result.Add( Target );
             result.Add( Unknown10 );
             result.Add( Unknown11 );
             result.Add( Unknown12 );
@@ -328,7 +339,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

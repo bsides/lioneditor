@@ -227,7 +227,7 @@ namespace FFTPatcher.Editors
             itemIconLabel.Name = "itemIconLabel";
             itemIconLabel.Size = new System.Drawing.Size( 51, 13 );
             itemIconLabel.TabIndex = 13;
-            itemIconLabel.Text = "Item Icon";
+            itemIconLabel.Text = "Item Type";
             // 
             // priceLabel
             // 

@@ -120,6 +120,18 @@
   <metadata name="attributesGroupBox.GenerateMember" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
+  <data name="formulasHelpLabel.Text" xml:space="preserve">
+    <value>Formulas:
+[Weapon] = ((PA*Brave/100)*PA) with Abilities 
+48 &amp;&amp; 49 will always restore 30 points when used as abilities.
+Weapons can use any formula but have a set X=0 &amp; Y=0 which cannot be altered. 
+
+NS = No status infliction possible 
+%chance to add status is 25% unless specified else. 
+F = Caster's Faith * Target's Faith /100^2 
+Rdm = Random 
+// = comment</value>
+  </data>
   <metadata name="hLabel2.GenerateMember" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>

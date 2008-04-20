@@ -48,6 +48,7 @@ namespace FFTPatcher.Editors
         private void InitializeComponent()
         {
             System.Windows.Forms.GroupBox attributesGroupBox;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( AbilityAttributesEditor ) );
             System.Windows.Forms.Label hLabel2;
             System.Windows.Forms.Label mpLabel;
             System.Windows.Forms.Label ctLabel;
@@ -57,6 +58,7 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label verticalLabel;
             System.Windows.Forms.Label effectLabel;
             System.Windows.Forms.Label rangeLabel;
+            this.formulasHelpLabel = new System.Windows.Forms.Label();
             this.formulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.inflictStatusLabel = new System.Windows.Forms.LinkLabel();
             this.flagsCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
@@ -94,6 +96,7 @@ namespace FFTPatcher.Editors
             // 
             attributesGroupBox.AutoSize = true;
             attributesGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            attributesGroupBox.Controls.Add( this.formulasHelpLabel );
             attributesGroupBox.Controls.Add( this.formulaComboBox );
             attributesGroupBox.Controls.Add( this.inflictStatusLabel );
             attributesGroupBox.Controls.Add( hLabel2 );
@@ -122,6 +125,15 @@ namespace FFTPatcher.Editors
             attributesGroupBox.TabIndex = 0;
             attributesGroupBox.TabStop = false;
             attributesGroupBox.Text = "Attributes";
+            // 
+            // formulasHelpLabel
+            // 
+            this.formulasHelpLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.formulasHelpLabel.Location = new System.Drawing.Point( 306, 8 );
+            this.formulasHelpLabel.Name = "formulasHelpLabel";
+            this.formulasHelpLabel.Size = new System.Drawing.Size( 263, 174 );
+            this.formulasHelpLabel.TabIndex = 13;
+            this.formulasHelpLabel.Text = resources.GetString( "formulasHelpLabel.Text" );
             // 
             // formulaComboBox
             // 
@@ -437,5 +449,6 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault flagsCheckedListBox;
         private System.Windows.Forms.LinkLabel inflictStatusLabel;
         private FFTPatcher.Controls.ComboBoxWithDefault formulaComboBox;
+        private System.Windows.Forms.Label formulasHelpLabel;
     }
 }

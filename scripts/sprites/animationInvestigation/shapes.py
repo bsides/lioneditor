@@ -215,7 +215,6 @@ def getOffsetBasedOnCount(count, second=0, mon=True):
 		else: return 256
 	else:
 		if count >= second:
-			print "S"
 			return 256
 		else: return 0
 
@@ -235,7 +234,7 @@ def innerGetFrames(bytes, imageIn, secondHalf, thirdHalf, start, startingFrameNu
 			counter += 1
 			xbyte=bytes[frameStart+0x02+tileNumber*0x04]
 			ybyte=bytes[frameStart+0x02+tileNumber*0x04+1];
-			x=abs(xbyte-129)
+			x=abs(xbyte-129)-74
 			y=abs(ybyte-129)
 			flags = bytesToInt(bytes[frameStart+0x02+tileNumber*4+2:frameStart+0x02+tileNumber*4+2+2] + [0,0])
 			mirror = ((flags & 0x4000) == 0x4000)
@@ -264,22 +263,22 @@ def innerGetFrames(bytes, imageIn, secondHalf, thirdHalf, start, startingFrameNu
 				# tileY-=256
 			#if (frameNumber==25):
 			goods.append(counter)
-			logInfo(counter, bytes[frameStart+0x02+tileNumber*0x04:frameStart+0x02+tileNumber*0x04+4])
+			#logInfo(counter, bytes[frameStart+0x02+tileNumber*0x04:frameStart+0x02+tileNumber*0x04+4])
 
 
-			big = Image.open("dongs.png")
-			draw = ImageDraw.Draw(big)
-			topY = ((flags>>5)&0x001F) * 8
-			midY = ((flags>>5)&0x001F) * 8 + 256
-			botY = ((flags>>5)&0x001F) * 8 + 488
-			draw.rectangle([(tileX, topY), (tileX+width,topY+height)], outline=(255,255,0))
-			draw.rectangle([(tileX, midY), (tileX+width,midY+height)], outline=(255,255,0))
-			draw.rectangle([(tileX, botY), (tileX+width,botY+height)], outline=(255,255,0))
-			big.save("big%04d.png"%counter, "png")
+			# big = Image.open("dongs.png")
+			# draw = ImageDraw.Draw(big)
+			# topY = ((flags>>5)&0x001F) * 8
+			# midY = ((flags>>5)&0x001F) * 8 + 256
+			# botY = ((flags>>5)&0x001F) * 8 + 488
+			# draw.rectangle([(tileX, topY), (tileX+width,topY+height)], outline=(255,255,0))
+			# draw.rectangle([(tileX, midY), (tileX+width,midY+height)], outline=(255,255,0))
+			# draw.rectangle([(tileX, botY), (tileX+width,botY+height)], outline=(255,255,0))
+			# big.save("big%04d.png"%counter, "png")
 
 
 			#print "%02X %02X %d %d %d %d %d %d" % (xbyte, ybyte, xbyte, ybyte, width, height, (flags&0x8000)>>15, (flags&0x4000)>>14)
-
+			print x,y
 			rects.append((imageIn, tileX, tileY, width, height, im, x, y, mirror))
 		rects.reverse()
 		for r in rects:

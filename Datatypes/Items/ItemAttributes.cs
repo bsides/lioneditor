@@ -249,7 +249,7 @@ namespace FFTPatcher.Datatypes
         public void WriteXml( System.Xml.XmlWriter writer )
         {
             writer.WriteStartElement( this.GetType().ToString() );
-            writer.WriteAttributeString( "changed", HasChanged );
+            writer.WriteAttributeString( "changed", HasChanged.ToString() );
             foreach( ItemAttributes attr in ItemAttributes )
             {
                 writer.WriteStartElement( attr.GetType().ToString() );

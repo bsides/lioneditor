@@ -1,0 +1,750 @@
+﻿/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.RegularExpressions;
+using FFTPatcher.TextEditor.Files;
+
+namespace FFTPatcher.TextEditor
+{
+    /// <summary>
+    /// Utilities for manipulating FFT text.
+    /// </summary>
+    public static class TextUtilities
+    {
+
+        public enum CharMapType
+        {
+            PSX,
+            PSP
+        }
+
+
+		#region Static Properties (3) 
+
+
+private static IDictionary<int, int> CompressionJumps { get; set; }
+
+        /// <summary>
+        /// Gets the PSP character map.
+        /// </summary>
+        public static PSPCharMap PSPMap { get; private set; }
+
+        /// <summary>
+        /// Gets the PSX character map.
+        /// </summary>
+        public static PSXCharMap PSXMap { get; private set; }
+
+
+		#endregion Static Properties 
+
+		#region Constructors (1) 
+
+        static TextUtilities()
+        {
+            PSXMap = new PSXCharMap();
+            PSPMap = new PSPCharMap();
+            BuildVersion1Charmap( PSXMap, PSPMap );
+            BuildVersion2Charmap( PSXMap, PSPMap );
+        }
+
+		#endregion Constructors 
+
+		#region Delegates (1) 
+
+        /// <summary>
+        /// A delegate to call when the progress of an operation has changed.
+        /// </summary>
+        public delegate void ProgressCallback( int progress );
+
+		#endregion Delegates 
+
+		#region Methods (12) 
+
+
+        private static void BuildVersion1Charmap( PSXCharMap psx, PSPCharMap psp )
+        {
+            for( int i = (int)'a'; i <= (int)'z'; i++ )
+            {
+                psx.Add( i - (ushort)'a' + 0x24, ((char)i).ToString() );
+                psx.Add( i - (ushort)'a' + 0x24 + 0xD000, ((char)i).ToString() );
+            }
+            psx.Add( 0x40, "?" );
+            psx.Add( 0xD040, "?" );
+            psx.Add( 0xD9C9, "?" );
+            psx.Add( 0xB2, "\u266A" );
+            psx.Add( 0xD0B2, "\u266A" );
+            psx.Add( 0xD0E7, "\u2014" );
+            psx.Add( 0xD117, "\u2014" );
+            psx.Add( 0xD0E8, "\u300C" );
+            psx.Add( 0xD118, "\u300C" );
+            psx.Add( 0xD0EB, "\u22EF" );
+            psx.Add( 0xD11B, "\u22EF" );
+            psx.Add( 0xD0EF, "\xD7" );
+            psx.Add( 0xD11F, "\xD7" );
+            psx.Add( 0xD120, "\xF7" );
+            psx.Add( 0xD121, "\u2229" );
+            psx.Add( 0xD122, "\u222A" );
+            psx.Add( 0xD123, "=" );
+            psx.Add( 0xDA70, "=" );
+            psx.Add( 0xD0F4, "\u2260" );
+            psx.Add( 0xD124, "\u2260" );
+            psx.Add( 0xD9B5, "\u221E" );
+            psx.Add( 0xD9B7, "&" );
+            psx.Add( 0xD9B8, "%" );
+            psx.Add( 0xD9B9, "\u25CB" );
+            psx.Add( 0xD9BA, "\u2190" );
+            psx.Add( 0xD9BB, "\u2192" );
+            psx.Add( 0xD9C2, "\u300E" );
+            psx.Add( 0xD9C3, "\u300F" );
+            psx.Add( 0xD9C4, "\u300D" );
+            psx.Add( 0xD9C5, "\uFF5E" );
+            psx.Add( 0xD9C7, "\u25B3" );
+            psx.Add( 0xD9C8, "\u25A1" );
+            psx.Add( 0xD9CA, "\u2665" );
+            psx.Add( 0xD9CB, "\u2160" );
+            psx.Add( 0xD9CC, "\u2161" );
+            psx.Add( 0xD9CD, "\u2162" );
+            psx.Add( 0xD9CE, "\u2163" );
+            psx.Add( 0xD9CF, "\u2164" );
+            psx.Add( 0xDA00, "\u2648" );
+            psx.Add( 0xDA01, "\u2649" );
+            psx.Add( 0xDA02, "\u264A" );
+            psx.Add( 0xDA03, "\u264B" );
+            psx.Add( 0xDA04, "\u264C" );
+            psx.Add( 0xDA05, "\u264D" );
+            psx.Add( 0xDA06, "\u264E" );
+            psx.Add( 0xDA07, "\u264F" );
+            psx.Add( 0xDA08, "\u2650" );
+            psx.Add( 0xDA09, "\u2651" );
+            psx.Add( 0xDA0A, "\u2652" );
+            psx.Add( 0xDA0B, "\u2653" );
+            psx.Add( 0xDA0C, "{Serpentarius}" );
+            psx.Add( 0xDA71, "$" );
+            psx.Add( 0xDA72, "\xA5" );
+            psx.Add( 0xDA74, "," );
+            psx.Add( 0xDA75, ";" );
+
+            psx.Add( 0xD0ED, "-" );
+            psx.Add( 0xD11D, "-" );
+
+            psx.Add( 0x42, "+" );
+            psx.Add( 0xD042, "+" );
+            psx.Add( 0xD0EE, "+" );
+            psx.Add( 0xD11E, "+" );
+
+            psx.Add( 0x46, ":" );
+            psx.Add( 0xD046, ":" );
+            psx.Add( 0xD9BD, ":" );
+
+            psx.Add( 0x8D, "(" );
+            psx.Add( 0xD08D, "(" );
+            psx.Add( 0xD9BE, "(" );
+
+            psx.Add( 0x8E, ")" );
+            psx.Add( 0xD08E, ")" );
+            psx.Add( 0xD9BF, ")" );
+
+            psx.Add( 0x91, "\"" );
+            psx.Add( 0xD091, "\"" );
+            psx.Add( 0xD9C0, "\"" );
+            psx.Add( 0xDA77, "\"" );
+
+            psx.Add( 0x93, "'" );
+            psx.Add( 0xD093, "'" );
+            psx.Add( 0xD9C1, "'" );
+            psx.Add( 0xDA76, "'" );
+
+            psx.Add( 0x8B, "\xB7" );
+            psx.Add( 0xD08B, "\xB7" );
+            psx.Add( 0xD9BC, "\xB7" );
+
+            psx.Add( 0x44, "/" );
+            psx.Add( 0xD044, "/" );
+            psx.Add( 0xD9C6, "/" );
+
+            psx.Add( 0xD0F5, ">" );
+            psx.Add( 0xD125, ">" );
+
+            psx.Add( 0xD0F6, "<" );
+            psx.Add( 0xD126, "<" );
+
+            psx.Add( 0xD0F7, "\u2267" );
+            psx.Add( 0xD127, "\u2267" );
+
+            psx.Add( 0xD128, "\u2266" );
+
+            psx.Add( 0xFA, " " );
+            psx.Add( 0xD0FA, " " );
+            psx.Add( 0xD12A, " " );
+            psx.Add( 0xDA73, " " );
+
+            psx.Add( 0x5F, "." );
+            psx.Add( 0xD05F, "." );
+            psx.Add( 0xD0E9, "." );
+            psx.Add( 0xD119, "." );
+            psx.Add( 0xD0EC, "." );
+            psx.Add( 0xD11C, "." );
+            psx.Add( 0xD9B6, "." );
+
+            psx.Add( 0x3E, "!" );
+            psx.Add( 0xD03E, "!" );
+            psx.Add( 0xD0EA, "!" );
+            psx.Add( 0xD11A, "!" );
+
+            psx.Add( 0xB5, "*" );
+            psx.Add( 0xD0B5, "*" );
+            psx.Add( 0xD0E1, "*" );
+            psx.Add( 0xD111, "*" );
+            psx.Add( 0xD0F9, "*" );
+            psx.Add( 0xD129, "*" );
+            psx.Add( 0xD0FB, "*" );
+            psx.Add( 0xD12B, "*" );
+            psx.Add( 0xD0FC, "*" );
+            psx.Add( 0xD12C, "*" );
+            psx.Add( 0xD0FD, "*" );
+            psx.Add( 0xD12D, "*" );
+            psx.Add( 0xD0FE, "*" );
+            psx.Add( 0xD12E, "*" );
+            psx.Add( 0xD0FF, "*" );
+            psx.Add( 0xD12F, "*" );
+            psx.Add( 0xD130, "*" );
+            psx.Add( 0xD131, "*" );
+            psx.Add( 0xD132, "*" );
+            psx.Add( 0xE0, "{Ramza}" );
+            psx.Add( 0xF8, "\r\n" );
+            psx.Add( 0xFB, "{Begin List}" );
+            psx.Add( 0xFC, "{End List}" );
+            psx.Add( 0xFE, "{END}" );
+            psx.Add( 0xFF, "{Close}" );
+
+            for( int i = 0; i < 10; i++ )
+            {
+                psx.Add( i, i.ToString() );
+                psx.Add( i + 0xD000, i.ToString() );
+            }
+            for( int i = (int)'A'; i <= (int)'Z'; i++ )
+            {
+                psx.Add( i - (ushort)'A' + 0x0A, ((char)i).ToString() );
+                psx.Add( i - (ushort)'A' + 0x0A + 0xD000, ((char)i).ToString() );
+            }
+
+            for( int i = 0; i < 256; i++ )
+            {
+                // HACK
+                psx.Add( 0xE200 + i, string.Format( "{{Delay {0:X2}", i ) + @"}" );
+                psx.Add( 0xE300 + i, string.Format( "{{Color {0:X2}", i ) + @"}" );
+                psx.Add( 0xEE00 + i, string.Format( "{{Tab {0:X2}", i ) + @"}" );
+            }
+
+            psx.Add( 0x3F, "\u3042" );
+            psx.Add( 0x41, "\u3044" );
+            psx.Add( 0x43, "\u3046" );
+            psx.Add( 0x45, "\u3048" );
+            psx.Add( 0xD03F, "\u3042" );
+            psx.Add( 0xD041, "\u3044" );
+            psx.Add( 0xD043, "\u3046" );
+            psx.Add( 0xD045, "\u3048" );
+
+            for( int i = 0x47; i <= 0x5E; i++ )
+            {
+                psx.Add( i, ((char)(i - 0x47 + 0x304A)).ToString() );
+                psx.Add( i + 0xD000, ((char)(i - 0x47 + 0x304A)).ToString() );
+            }
+            for( int i = 0x60; i <= 0x8A; i++ )
+            {
+                psx.Add( i, ((char)(i - 0x60 + 0x3063)).ToString() );
+                psx.Add( i + 0xD000, ((char)(i - 0x60 + 0x3063)).ToString() );
+            }
+
+            psx.Add( 0x8C, "\u308F" );
+            psx.Add( 0xD08C, "\u308F" );
+            psx.Add( 0x8F, "\u3092" );
+            psx.Add( 0xD08F, "\u3092" );
+            psx.Add( 0x90, "\u3093" );
+            psx.Add( 0xD090, "\u3093" );
+            psx.Add( 0x92, "\u30A2" );
+            psx.Add( 0xD092, "\u30A2" );
+
+            for( int i = 0x94; i <= 0xB1; i++ )
+            {
+                psx.Add( i, ((char)(i - 0x94 + 0x30A4)).ToString() );
+                psx.Add( i + 0xD000, ((char)(i - 0x94 + 0x30A4)).ToString() );
+            }
+
+            psx.Add( 0xB3, "\u30C3" );
+            psx.Add( 0xD0B3, "\u30C3" );
+            psx.Add( 0xB4, "\u30C4" );
+            psx.Add( 0xD0B4, "\u30C4" );
+
+            for( int i = 0xB6; i <= 0xCF; i++ )
+            {
+                psx.Add( i, ((char)(i - 0xB6 + 0x30C6)).ToString() );
+                psx.Add( i + 0xD000, ((char)(i - 0xB6 + 0x30C6)).ToString() );
+            }
+
+            for( int i = 0xD0; i <= 0xDB; i++ )
+            {
+                psx.Add( i + 0xD000, ((char)(i - 0xD0 + 0x30E0)).ToString() );
+                psx.Add( i - 0xD0 + 0xD100, ((char)(i - 0xD0 + 0x30E0)).ToString() );
+            }
+
+            psx.Add( 0xD10C, "\u30EC" );
+            psx.Add( 0xD10D, "\u30ED" );
+            psx.Add( 0xD0DE, "\u30EE" );
+            psx.Add( 0xD10E, "\u30EE" );
+            psx.Add( 0xD0DF, "\u30EF" );
+            psx.Add( 0xD10F, "\u30EF" );
+
+            for( int i = 0xE2; i <= 0xE6; i++ )
+            {
+                psx.Add( i + 0xD000, ((char)(i - 0xE2 + 0x30F2)).ToString() );
+                psx.Add( i - 0xE2 + 0xD112, ((char)(i - 0xE2 + 0x30F2)).ToString() );
+            }
+
+            foreach( KeyValuePair<int, string> kvp in psx )
+            {
+                psp.Add( kvp.Key, kvp.Value );
+            }
+
+            psp[0x95] = " ";
+            psp.Add( 0xDA60, "\xE1" );
+            psp.Add( 0xDA61, "\xE0" );
+            psp.Add( 0xDA62, "\xE9" );
+            psp.Add( 0xDA63, "\xE8" );
+            psp.Add( 0xDA64, "\xED" );
+            psp.Add( 0xDA65, "\xFA" );
+            psp.Add( 0xDA66, "\xF9" );
+        }
+
+        private static void BuildVersion2Charmap( PSXCharMap psx, PSPCharMap psp )
+        {
+            foreach( GenericCharMap map in new GenericCharMap[] { psx, psp } )
+            {
+                map.Add( 0xD133, "\u5263" );
+                map.Add( 0xD134, "\u4E00" );
+                map.Add( 0xD135, "\u4E59" );
+                map.Add( 0xD136, "\u4E03" );
+                map.Add( 0xD137, "\u4E01" );
+                map.Add( 0xD138, "\u4E5D" );
+                map.Add( 0xD139, "\u4E86" );
+                map.Add( 0xD13A, "\u61E8" );
+                map.Add( 0xD13B, "\u4EBA" );
+                map.Add( 0xD13C, "\u5165" );
+                map.Add( 0xD13D, "\u516B" );
+                map.Add( 0xD13E, "\u5200" );
+                map.Add( 0xD13F, "\u529B" );
+                map.Add( 0xD140, "\u5341" );
+                map.Add( 0xD141, "\u4E0B" );
+                map.Add( 0xD142, "\u4E09" );
+                map.Add( 0xD143, "\u4E0A" );
+                map.Add( 0xD144, "\u4E08" );
+                map.Add( 0xD145, "\u4E07" );
+                map.Add( 0xD146, "\u4E0E" );
+                map.Add( 0xD147, "\u4E45" );
+                map.Add( 0xD148, "\u4E38" );
+                map.Add( 0xD149, "\u4E5E" );
+                map.Add( 0xD14A, "\u4E5F" );
+                map.Add( 0xD14B, "\u4EA1" );
+                map.Add( 0xD14C, "\u51E1" );
+                map.Add( 0xD14D, "\u5203" );
+                map.Add( 0xD14E, "\u5343" );
+                map.Add( 0xD14F, "\u98EF" );
+                map.Add( 0xD150, "\u571F" );
+                map.Add( 0xD151, "\u58EB" );
+                map.Add( 0xD152, "\u5915" );
+                map.Add( 0xD153, "\u5927" );
+                map.Add( 0xD154, "\u5973" );
+                map.Add( 0xD155, "\u5B50" );
+                map.Add( 0xD156, "\u5BF8" );
+                map.Add( 0xD157, "\u5C0F" );
+                map.Add( 0xD158, "\u5C71" );
+                map.Add( 0xD159, "\u5DDD" );
+                map.Add( 0xD15A, "\u5DE5" );
+                map.Add( 0xD15B, "\u5DF1" );
+                map.Add( 0xD15C, "\u5E72" );
+                map.Add( 0xD15D, "\u5F13" );
+                map.Add( 0xD15E, "\u3005" );
+                map.Add( 0xD15F, "\u6CB9" );
+                map.Add( 0xD160, "\u796D" );
+                map.Add( 0xD161, "\u5947" );
+                map.Add( 0xD162, "\u8DE1" );
+                map.Add( 0xD164, "\u4E0D" );
+                map.Add( 0xD165, "\u4E2D" );
+                map.Add( 0xD166, "\u4E88" );
+                map.Add( 0xD167, "\u4E94" );
+                map.Add( 0xD168, "\u4E92" );
+                map.Add( 0xD169, "\u4E95" );
+                map.Add( 0xD16A, "\u4ECB" );
+                map.Add( 0xD16B, "\u4EC7" );
+                map.Add( 0xD16C, "\u4ECA" );
+                map.Add( 0xD16D, "\u4EC1" );
+                map.Add( 0xD16E, "\u5185" );
+                map.Add( 0xD16F, "\u5143" );
+                map.Add( 0xD170, "\u516C" );
+                map.Add( 0xD171, "\u516D" );
+                map.Add( 0xD172, "\u5186" );
+                map.Add( 0xD173, "\u5197" );
+                map.Add( 0xD174, "\u51F6" );
+                map.Add( 0xD175, "\u5207" );
+                map.Add( 0xD176, "\u5206" );
+                map.Add( 0xD177, "\u5302" );
+                map.Add( 0xD178, "\u5316" );
+                map.Add( 0xD179, "\u5DE8" );
+                map.Add( 0xD17A, "\u5339" );
+                map.Add( 0xD17B, "\u725B" );
+                map.Add( 0xD17C, "\u5384" );
+                map.Add( 0xD17D, "\u53CC" );
+                map.Add( 0xD17E, "\u53CD" );
+                map.Add( 0xD17F, "\u53CB" );
+                map.Add( 0xD180, "\u592A" );
+                map.Add( 0xD181, "\u5929" );
+                map.Add( 0xD182, "\u5C11" );
+                map.Add( 0xD183, "\u5E7B" );
+                map.Add( 0xD184, "\u5F15" );
+                map.Add( 0xD185, "\u5FC3" );
+                map.Add( 0xD186, "\u6238" );
+                map.Add( 0xD187, "\u624B" );
+                map.Add( 0xD188, "\u652F" );
+                map.Add( 0xD189, "\u6587" );
+                map.Add( 0xD18A, "\u6597" );
+                map.Add( 0xD18B, "\u65B9" );
+                map.Add( 0xD18C, "\u65E5" );
+                map.Add( 0xD18D, "\u6708" );
+                map.Add( 0xD18E, "\u6728" );
+                map.Add( 0xD18F, "\u6B20" );
+                map.Add( 0xD190, "\u6B62" );
+                map.Add( 0xD191, "\u6BD4" );
+                map.Add( 0xD192, "\u6BDB" );
+                map.Add( 0xD193, "\u6C34" );
+                map.Add( 0xD194, "\u706B" );
+                map.Add( 0xD195, "\u722A" );
+                map.Add( 0xD196, "\u7236" );
+                map.Add( 0xD197, "\u7247" );
+                map.Add( 0xD198, "\u725B" );
+                map.Add( 0xD199, "\u72AC" );
+                map.Add( 0xD19A, "\u738B" );
+                map.Add( 0xD19C, "\u5EB7" );
+                map.Add( 0xD19D, "\u808C" );
+                map.Add( 0xD19E, "\u72AF" );
+                map.Add( 0xD19F, "\u5C4D" );
+                map.Add( 0xD1A0, "\u6557" );
+                map.Add( 0xD1A1, "\u6211" );
+                map.Add( 0xD1A2, "\u767B" );
+                map.Add( 0xD1A3, "\u9332" );
+                map.Add( 0xD1A4, "\u4E18" );
+                map.Add( 0xD1A5, "\u4E16" );
+                map.Add( 0xD1A6, "\u4E3B" );
+                map.Add( 0xD1A7, "\u4EE5" );
+                map.Add( 0xD1A8, "\u4ED5" );
+                map.Add( 0xD1A9, "\u4ED9" );
+                map.Add( 0xD1AA, "\u4ED6" );
+                map.Add( 0xD1AB, "\u4EE3" );
+                map.Add( 0xD1AC, "\u4ED8" );
+                map.Add( 0xD1AD, "\u4EE4" );
+                map.Add( 0xD1AE, "\u5144" );
+                map.Add( 0xD1AF, "\u5199" );
+                map.Add( 0xD1B1, "\u51FA" );
+                map.Add( 0xD1B2, "\u52A0" );
+                map.Add( 0xD1B3, "\u5305" );
+                map.Add( 0xD1B4, "\u5317" );
+                map.Add( 0xD1B5, "\u534A" );
+                map.Add( 0xD1B6, "\u5360" );
+                map.Add( 0xD1B7, "\u53BB" );
+                map.Add( 0xD1B8, "\u53CE" );
+                map.Add( 0xD1B9, "\u53EF" );
+                map.Add( 0xD1BA, "\u529F" );
+                map.Add( 0xD1BB, "\u53E5" );
+                map.Add( 0xD1BC, "\u53E4" );
+                map.Add( 0xD1BD, "\u53F7" );
+                map.Add( 0xD1BE, "\u53F2" );
+                map.Add( 0xD1BF, "\u53F8" );
+                map.Add( 0xD1C0, "\u53EC" );
+                map.Add( 0xD1C1, "\u53F0" );
+                map.Add( 0xD1C2, "\u53F3" );
+                map.Add( 0xD1C3, "\u56DB" );
+                map.Add( 0xD1C4, "\u56DA" );
+                map.Add( 0xD1C5, "\u5727" );
+                map.Add( 0xD1C6, "\u51AC" );
+                map.Add( 0xD1C7, "\u5916" );
+                map.Add( 0xD1C8, "\u592E" );
+                map.Add( 0xD1C9, "\u5931" );
+                map.Add( 0xD1CA, "\u5974" );
+                map.Add( 0xD1CB, "\u5C3B" );
+                map.Add( 0xD1CC, "\u5DE6" );
+                map.Add( 0xD1CD, "\u5E02" );
+                map.Add( 0xD1CE, "\u5E03" );
+                map.Add( 0xD1CF, "\u5E73" );
+                map.Add( 0xD200, "\u5E7C" );
+                map.Add( 0xD201, "\u5E83" );
+            }
+        }
+
+        /// <summary>
+        /// Compresses the section.
+        /// </summary>
+        /// <param name="input">The section to compress.</param>
+        /// <param name="inputLength">Length of the section.</param>
+        /// <param name="output">The output array.</param>
+        /// <param name="outputPosition">Where in <paramref name="output"/> to start writing</param>
+        [DllImport( "FFTTextCompression.dll" )]
+        static extern void CompressSection( byte[] input, int inputLength, byte[] output, ref int outputPosition );
+
+        /// <summary>
+        /// Compresses some bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes to compress.</param>
+        /// <param name="output">Where to copy the compressed bytes.</param>
+        /// <param name="outputPosition">The position to start copying.</param>
+        private static void CompressSection( IList<byte> bytes, byte[] output, ref int outputPosition )
+        {
+            CompressSection( bytes.ToArray(), bytes.Count, output, ref outputPosition );
+        }
+
+        private static void ProcessPointer( IList<byte> bytes, out int length, out int jump )
+        {
+            length = ((bytes[0] & 0x03) << 3) + ((bytes[1] & 0xE0) >> 5) + 4;
+            int j = ((bytes[1] & 0x1F) << 8) + bytes[2];
+            jump = j - (j / 256) * 2;
+        }
+
+        /// <summary>
+        /// Compresses the specified file.
+        /// </summary>
+        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <param name="file">The file to compress.</param>
+        /// <param name="callback">The progress callback.</param>
+        public static CompressionResult Compress<T>( T file, ProgressCallback callback ) where T : IStringSectioned, ICompressed
+        {
+            return Compress( file, null, callback );
+        }
+
+        /// <summary>
+        /// Compresses the specified file.
+        /// </summary>
+        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <param name="file">The file to compress.</param>
+        /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
+        /// entries and each item in the value being an entry to ignore</param>
+        /// <param name="callback">The progress callback.</param>
+        public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections, ProgressCallback callback ) where T : IStringSectioned, ICompressed
+        {
+            int length = 0;
+            foreach( IList<string> section in file.Sections )
+            {
+                length += file.CharMap.StringsToByteArray( section ).Length;
+            }
+
+            byte[] result = new byte[length];
+            int[] lengths = new int[file.Sections.Count];
+
+            int pos = 0;
+            for( int section = 0; section < file.Sections.Count; section++ )
+            {
+                int oldPos = pos;
+
+                if( ignoreSections != null && ignoreSections.ContainsKey( section ) )
+                {
+                    for( int entry = 0; entry < file.Sections[section].Count; entry++ )
+                    {
+                        byte[] bytes = file.CharMap.StringToByteArray( file.Sections[section][entry] );
+                        if( ignoreSections[section].Contains( entry ) )
+                        {
+                            Array.Copy( bytes, 0, result, pos, bytes.Length );
+                            pos += bytes.Length;
+                        }
+                        else
+                        {
+                            CompressSection( bytes, result, ref pos );
+                        }
+                    }
+                }
+                else
+                {
+                    CompressSection( file.CharMap.StringsToByteArray( file.Sections[section] ), result, ref pos );
+                }
+
+                lengths[section] = pos - oldPos;
+
+                if( callback != null )
+                {
+                    callback( section * 100 / file.Sections.Count );
+                }
+            }
+
+            return new CompressionResult( result.Sub( 0, pos - 1 ), lengths );
+        }
+
+        /// <summary>
+        /// Compresses the specified file.
+        /// </summary>
+        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <param name="file">The file to compress.</param>
+        public static CompressionResult Compress<T>( T file ) where T : IStringSectioned, ICompressed
+        {
+            return Compress( file, null, null );
+        }
+
+        /// <summary>
+        /// Compresses the specified file.
+        /// </summary>
+        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <param name="file">The file to compress.</param>
+        /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
+        /// entries and each item in the value being an entry to ignore</param>
+        public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections ) where T : IStringSectioned, ICompressed
+        {
+            return Compress( file, ignoreSections, null );
+        }
+
+        /// <summary>
+        /// Decompresses the specified section.
+        /// </summary>
+        /// <param name="allBytes">A collection containing the bytes to decompress.</param>
+        /// <param name="sectionBytes">A collection consisting ONLY of the bytes to decompress</param>
+        /// <param name="sectionStart">The relative position of <paramref name="sectionBytes"/> in <paramref name="allBytes"/></param>
+        /// <returns></returns>
+        public static IList<byte> Decompress( IList<byte> allBytes, IList<byte> sectionBytes, int sectionStart )
+        {
+            IList<byte> result = new List<byte>();
+
+            for( int i = 0; i < sectionBytes.Count; i++ )
+            {
+                if( sectionBytes[i] >= 0xF0 && sectionBytes[i] <= 0xF3 )
+                {
+                    int length;
+                    int jump;
+                    ProcessPointer( new byte[] { sectionBytes[i], sectionBytes[i + 1], sectionBytes[i + 2] }, out length, out jump );
+                    if( (i + sectionStart - jump) < 0 || (i + sectionStart - jump + length) >= allBytes.Count )
+                    {
+                        result.AddRange( new byte[] { sectionBytes[i], sectionBytes[i + 1], sectionBytes[i + 2] } );
+                    }
+                    else
+                    {
+                        result.AddRange( allBytes.Sub( i + sectionStart - jump, i + sectionStart - jump + length - 1 ) );
+                    }
+                    i += 2;
+                }
+                else
+                {
+                    result.Add( sectionBytes[i] );
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Processes a list of FFT text bytes into a list of FFTacText strings.
+        /// </summary>
+        /// <param name="bytes">The bytes to process</param>
+        /// <param name="type">The charmap to use</param>
+        public static IList<string> ProcessList( IList<byte> bytes, GenericCharMap charmap )
+        {
+            IList<IList<byte>> words = bytes.Split( (byte)0xFE );
+
+            List<string> result = new List<string>( words.Count );
+
+            foreach( IList<byte> word in words )
+            {
+                StringBuilder sb = new StringBuilder();
+                int pos = 0;
+                while( pos < word.Count )
+                {
+                    sb.Append( charmap.GetNextChar( word, ref pos ) );
+                }
+
+                result.Add( sb.ToString() );
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Replaces bracketed hex values (e.g. {0xD2E3}) with Unicode characters, if known.
+        /// </summary>
+        /// <param name="s">The string to update.</param>
+        /// <param name="charMap">The character map to use.</param>
+        /// <returns>The updated string</returns>
+        public static string UpgradeString( string s, GenericCharMap charMap )
+        {
+            string pattern = @"{0x[A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9]}";
+            MatchCollection matches = Regex.Matches( s, pattern );
+            if( matches.Count > 0 )
+            {
+                StringBuilder sb = new StringBuilder( s );
+                foreach( Match m in matches )
+                {
+                    int val = Convert.ToInt32( m.Value.Substring( 3, 4 ), 16 );
+                    if( charMap.ContainsKey( val ) )
+                    {
+                        sb.Replace( m.Value, charMap[val] );
+                    }
+                }
+
+                return s.ToString();
+            }
+
+            return s;
+        }
+
+
+		#endregion Methods 
+
+
+        public class CompressionResult
+        {
+
+		#region Properties (2) 
+
+
+            /// <summary>
+            /// Gets the compressed bytes.
+            /// </summary>
+            public IList<byte> Bytes { get; private set; }
+
+            /// <summary>
+            /// Gets the lenght of each section.
+            /// </summary>
+            public IList<int> SectionLengths { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+            private CompressionResult()
+            {
+            }
+
+            public CompressionResult( IList<byte> bytes, IList<int> sectionLengths )
+            {
+                Bytes = bytes;
+                SectionLengths = sectionLengths;
+            }
+
+		#endregion Constructors 
+
+        }
+
+    }
+}

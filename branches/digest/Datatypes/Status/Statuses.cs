@@ -87,7 +87,7 @@ namespace FFTPatcher.Datatypes
 
         public IList<string> DigestableProperties
         {
-            get { return FieldNames }
+            get { return FieldNames; }
         }
 
         public bool HasChanged

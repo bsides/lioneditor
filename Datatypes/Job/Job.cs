@@ -185,7 +185,7 @@ namespace FFTPatcher.Datatypes
         #region Static Fields (1)
 
         private static readonly string[] digestableAttributes = new string[] {
-            "Skillset", "HPConstant", "HPMultiplier", "MPConstant", "MPMultiplier", "SpeedConstant", "SpeedMultiplier",
+            "SkillSet", "HPConstant", "HPMultiplier", "MPConstant", "MPMultiplier", "SpeedConstant", "SpeedMultiplier",
             "PAConstant", "PAMultiplier", "MAConstant", "MAMultiplier", "Move", "Jump", "CEvade", "MPortrait",
             "MPalette", "MGraphic", "InnateA", "InnateB", "InnateC", "InnateD", "AbsorbElement", "CancelElement",
             "HalfElement", "WeakElement", "Equipment", "PermanentStatus", "StartingStatus", "StatusImmunity" };

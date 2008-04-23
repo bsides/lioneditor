@@ -24,15 +24,27 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represent's the common and uncommon items that can be poached from a monster.
     /// </summary>
-    public class PoachProbability : IChangeable
+    public class PoachProbability : IChangeable, ISupportDigest
     {
 
-		#region Properties (5) 
+        #region Static Fields (1)
+
+        private static readonly string[] digestableProperties = new string[] {
+            "Common", "Uncommon" };
+
+        #endregion Static Fields
+
+        #region Properties (6)
 
 
         public Item Common { get; set; }
 
         public PoachProbability Default { get; private set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -40,10 +52,13 @@ namespace FFTPatcher.Datatypes
         /// <value></value>
         public bool HasChanged
         {
-            get { return 
-                Default != null && 
-                (Common.Offset != Default.Common.Offset || 
-                Uncommon.Offset != Default.Uncommon.Offset); }
+            get
+            {
+                return
+                    Default != null &&
+                    (Common.Offset != Default.Common.Offset ||
+                    Uncommon.Offset != Default.Uncommon.Offset);
+            }
         }
 
         public string MonsterName { get; private set; }
@@ -51,9 +66,9 @@ namespace FFTPatcher.Datatypes
         public Item Uncommon { get; set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public PoachProbability( string name, IList<byte> bytes )
             : this( name, bytes, null )
@@ -68,9 +83,9 @@ namespace FFTPatcher.Datatypes
             Uncommon = Item.GetItemAtOffset( bytes[1] );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (1) 
+        #region Methods (1)
 
 
         public byte[] ToByteArray()
@@ -82,14 +97,14 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class AllPoachProbabilities : IChangeable
+    public class AllPoachProbabilities : IChangeable, IXmlDigest
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -98,7 +113,7 @@ namespace FFTPatcher.Datatypes
         /// <value></value>
         public bool HasChanged
         {
-            get 
+            get
             {
                 foreach( PoachProbability p in PoachProbabilities )
                 {
@@ -113,9 +128,9 @@ namespace FFTPatcher.Datatypes
         public PoachProbability[] PoachProbabilities { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public AllPoachProbabilities( IList<byte> bytes )
         {
@@ -129,9 +144,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (4)
 
 
         public List<string> GenerateCodes()
@@ -162,8 +177,21 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            writer.WriteStartElement( this.GetType().ToString() );
+            writer.WriteAttributeString( "changed", HasChanged.ToString() );
+            foreach( PoachProbability p in PoachProbabilities )
+            {
+                writer.WriteStartElement( p.GetType().ToString() );
+                writer.WriteAttributeString( "name", p.MonsterName );
+                DigestGenerator.WriteXmlDigest( p, writer, false, true );
+            }
+            writer.WriteEndElement();
+        }
 
-		#endregion Methods 
+
+        #endregion Methods
 
     }
 }

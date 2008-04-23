@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     public static class FFTPatch
     {
 
-		#region Properties (14) 
+        #region Properties (14)
 
 
         public static AllAbilities Abilities { get; private set; }
@@ -59,15 +59,15 @@ namespace FFTPatcher.Datatypes
         public static AllStatusAttributes StatusAttributes { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Events (1) 
+        #region Events (1)
 
         public static event EventHandler DataChanged;
 
-		#endregion Events 
+        #endregion Events
 
-		#region Methods (15) 
+        #region Methods (15)
 
 
         private static void BuildFromContext()
@@ -597,6 +597,8 @@ namespace FFTPatcher.Datatypes
 
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
+
+                GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.xml" ) );
             }
             catch( Exception )
             {
@@ -612,8 +614,25 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void GenerateDigest( string filename )
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            using( XmlWriter writer = XmlWriter.Create( filename, settings ) )
+            {
+                writer.WriteStartElement( "digest" );
+                IXmlDigest[] digestable = new IXmlDigest[] {
+                    Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
+                    InflictStatuses, PoachProbabilities, ENTDs };
+                foreach( IXmlDigest digest in digestable )
+                {
+                    digest.WriteXml( writer );
+                }
+                writer.WriteEndElement();
+            }
+        }
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

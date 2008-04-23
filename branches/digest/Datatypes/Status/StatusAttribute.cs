@@ -88,7 +88,7 @@ namespace FFTPatcher.Datatypes
                     Blank2 != Default.Blank2 ||
                     CT != Default.CT ||
                     Order != Default.Order ||
-                    Blank != Default.Blank2 ||
+                    Blank != Default.Blank ||
                     CanReact != Default.CanReact ||
                     FreezeCT != Default.FreezeCT ||
                     IgnoreAttack != Default.IgnoreAttack ||
@@ -102,7 +102,7 @@ namespace FFTPatcher.Datatypes
                     Unknown7 != Default.Unknown7 ||
                     Unknown8 != Default.Unknown8 ||
                     Unknown9 != Default.Unknown9 ||
-                    Unknown0 != Default.Unknown10 ||
+                    Unknown10 != Default.Unknown10 ||
                     Unknown11 != Default.Unknown11);
             }
         }
@@ -266,7 +266,7 @@ namespace FFTPatcher.Datatypes
             {
                 writer.WriteStartElement( attr.GetType().ToString() );
                 writer.WriteAttributeString( "name", attr.Name );
-                writer.WriteAttributeString( "value", attr.Value );
+                writer.WriteAttributeString( "value", attr.Value.ToString( "X2" ) );
                 DigestGenerator.WriteXmlDigest( attr, writer, false, true );
             }
 

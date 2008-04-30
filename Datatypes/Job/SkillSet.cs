@@ -394,13 +394,13 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( SkillSet s in SkillSets )
                 {
                     if( !changesOnly || s.HasChanged )
                     {
-                        writer.WriteStartElement( s.GetType().ToString() );
+                        writer.WriteStartElement( s.GetType().Name );
                         writer.WriteAttributeString( "value", s.Value.ToString( "X2" ) );
                         writer.WriteAttributeString( "name", s.Name );
                         DigestGenerator.WriteXmlDigest( s, writer, false, true, changesOnly );

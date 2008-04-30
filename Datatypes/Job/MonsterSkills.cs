@@ -242,13 +242,13 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( MonsterSkill m in MonsterSkills )
                 {
                     if( !changesOnly || m.HasChanged )
                     {
-                        writer.WriteStartElement( m.GetType().ToString() );
+                        writer.WriteStartElement( m.GetType().Name );
                         writer.WriteAttributeString( "value", m.Value.ToString( "X2" ) );
                         writer.WriteAttributeString( "name", m.Name );
                         DigestGenerator.WriteXmlDigest( m, writer, false, true, changesOnly );

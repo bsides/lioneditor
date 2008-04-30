@@ -48,7 +48,7 @@ namespace FFTPatcher
             {
                 if( writeStartElement )
                 {
-                    writer.WriteStartElement( digest.GetType().ToString() );
+                    writer.WriteStartElement( digest.GetType().Name );
                 }
 
                 object defaultObject = ReflectionHelpers.GetFieldOrProperty<object>( digest, "Default" );

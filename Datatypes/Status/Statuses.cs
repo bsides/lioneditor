@@ -92,7 +92,7 @@ namespace FFTPatcher.Datatypes
 
         public bool HasChanged
         {
-            get { return Default != null && !Utilities.CompareArrays( ToBoolArray(), Default.ToBoolArray() ); }
+            get { return Default != null && !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() ); }
         }
 
 
@@ -117,7 +117,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (2)
+        #region Methods (5)
 
 
         public bool[] ToBoolArray()
@@ -139,6 +139,18 @@ namespace FFTPatcher.Datatypes
             result[3] = Utilities.ByteFromBooleans( Poison, Regen, Protect, Shell, Haste, Slow, Stop, Wall );
             result[4] = Utilities.ByteFromBooleans( Faith, Innocent, Charm, Sleep, DontMove, DontAct, Reflect, DeathSentence );
             return result;
+        }
+
+
+
+        public override bool Equals( object obj )
+        {
+            return obj is Statuses && Utilities.CompareArrays( ToByteArray(), (obj as Statuses).ToByteArray() );
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public override string ToString()

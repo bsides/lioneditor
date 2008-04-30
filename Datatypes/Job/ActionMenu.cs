@@ -295,13 +295,13 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( ActionMenu a in ActionMenus )
                 {
                     if( !changesOnly || a.HasChanged )
                     {
-                        writer.WriteStartElement( a.GetType().ToString() );
+                        writer.WriteStartElement( a.GetType().Name );
                         writer.WriteAttributeString( "value", a.Value.ToString( "X2" ) );
                         writer.WriteAttributeString( "name", a.Name );
                         DigestGenerator.WriteXmlDigest( a, writer, false, true, changesOnly );

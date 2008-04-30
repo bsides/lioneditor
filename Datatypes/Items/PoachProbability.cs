@@ -186,13 +186,13 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( PoachProbability p in PoachProbabilities )
                 {
                     if( !changesOnly || p.HasChanged )
                     {
-                        writer.WriteStartElement( p.GetType().ToString() );
+                        writer.WriteStartElement( p.GetType().Name );
                         writer.WriteAttributeString( "name", p.MonsterName );
                         DigestGenerator.WriteXmlDigest( p, writer, false, true, changesOnly );
                     }

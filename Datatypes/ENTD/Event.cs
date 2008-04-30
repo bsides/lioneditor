@@ -133,14 +133,14 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( GetType().ToString() );
+                writer.WriteStartElement( GetType().Name );
                 writer.WriteAttributeString( "value", this.ToString() );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 for( int i = 0; i < 16; i++ )
                 {
                     if( !changesOnly || Units[i].HasChanged )
                     {
-                        writer.WriteStartElement( typeof( EventUnit ).ToString() );
+                        writer.WriteStartElement( typeof( EventUnit ).Name );
                         writer.WriteAttributeString( "value", i.ToString() );
                         DigestGenerator.WriteXmlDigest( Units[i], writer, false, true, changesOnly );
                     }

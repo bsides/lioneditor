@@ -201,13 +201,13 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( InflictStatus i in InflictStatuses )
                 {
                     if( !changesOnly || i.HasChanged )
                     {
-                        writer.WriteStartElement( i.GetType().ToString() );
+                        writer.WriteStartElement( i.GetType().Name );
                         writer.WriteAttributeString( "value", i.Value.ToString( "X2" ) );
                         DigestGenerator.WriteXmlDigest( i, writer, false, true, changesOnly );
                     }

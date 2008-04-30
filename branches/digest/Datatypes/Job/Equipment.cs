@@ -27,6 +27,22 @@ namespace FFTPatcher.Datatypes
     public class Equipment : IChangeable
     {
 
+        #region Static Fields (2)
+
+        private static readonly string[] pspNames = new string[40] {
+            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
+            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
+            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume",
+            "Unknown1","Unknown2","Unknown3","FellSword","LipRouge","Unknown6","Unknown7","Unknown8" };
+        private static readonly string[] psxNames = new string[32] {
+            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
+            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
+            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume" };
+
+        #endregion Static Fields
+
         #region Fields (40)
 
         public bool Armguard;
@@ -79,7 +95,7 @@ namespace FFTPatcher.Datatypes
 
         public bool HasChanged
         {
-            get { return Default != null && !Utilities.CompareArrays( ToBoolArray(), Default.ToBoolArray() ); }
+            get { return Default != null && !Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) ); }
         }
 
 
@@ -107,7 +123,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Methods (7)
 
 
         private byte[] ToByteArrayPSX()
@@ -150,6 +166,33 @@ namespace FFTPatcher.Datatypes
                 default:
                     return ToByteArray();
             }
+        }
+
+
+
+        public override bool Equals( object obj )
+        {
+            return (obj is Equipment) &&
+                Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), (obj as Equipment).ToByteArray( FFTPatch.Context ) );
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            List<string> strings = new List<string>( 40 );
+            string[] names = FFTPatch.Context == Context.US_PSP ? pspNames : psxNames;
+            foreach( string name in names )
+            {
+                if( ReflectionHelpers.GetFieldOrProperty<bool>( this, name ) )
+                {
+                    strings.Add( name );
+                }
+            }
+            return string.Join( " | ", strings.ToArray() );
         }
 
 

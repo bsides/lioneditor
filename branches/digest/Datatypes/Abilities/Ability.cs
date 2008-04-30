@@ -429,7 +429,7 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( GetType().ToString() );
+                writer.WriteStartElement( GetType().Name );
                 writer.WriteAttributeString( "value", Offset.ToString( "X4" ) );
                 writer.WriteAttributeString( "name", Name );
                 DigestGenerator.WriteXmlDigest( this, writer, false, false, changesOnly );

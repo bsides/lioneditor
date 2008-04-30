@@ -213,7 +213,7 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( GetType().ToString() );
+                writer.WriteStartElement( GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( Event e in Events )
                 {

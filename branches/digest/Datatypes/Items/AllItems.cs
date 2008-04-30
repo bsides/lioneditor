@@ -241,13 +241,13 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( GetType().ToString() );
+                writer.WriteStartElement( GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( Item i in Items )
                 {
                     if( !changesOnly || i.HasChanged )
                     {
-                        writer.WriteStartElement( i.GetType().ToString() );
+                        writer.WriteStartElement( i.GetType().Name );
                         writer.WriteAttributeString( "name", i.Name );
                         DigestGenerator.WriteXmlDigest( i, writer, false, true, changesOnly );
                     }

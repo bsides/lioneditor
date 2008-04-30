@@ -166,13 +166,13 @@ namespace FFTPatcher.Datatypes
         {
             if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( Job j in Jobs )
                 {
                     if( !changesOnly || j.HasChanged )
                     {
-                        writer.WriteStartElement( j.GetType().ToString() );
+                        writer.WriteStartElement( j.GetType().Name );
                         writer.WriteAttributeString( "value", j.Value.ToString( "X2" ) );
                         writer.WriteAttributeString( "name", j.Name );
                         DigestGenerator.WriteXmlDigest( j, writer, false, true, changesOnly );
@@ -257,7 +257,7 @@ namespace FFTPatcher.Datatypes
                     HalfElement.ToByte() != Default.HalfElement.ToByte() ||
                     WeakElement.ToByte() != Default.WeakElement.ToByte() ||
                     !Utilities.CompareArrays( PermanentStatus.ToByteArray(), Default.PermanentStatus.ToByteArray() ) ||
-                    !Utilities.CompareArrays( Equipment.ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) ) ||
+                    !Utilities.CompareArrays( Equipment.ToByteArray( FFTPatch.Context ), Default.Equipment.ToByteArray( FFTPatch.Context ) ) ||
                     !Utilities.CompareArrays( StartingStatus.ToByteArray(), Default.StartingStatus.ToByteArray() ) ||
                     !Utilities.CompareArrays( StatusImmunity.ToByteArray(), Default.StatusImmunity.ToByteArray() )
                     );

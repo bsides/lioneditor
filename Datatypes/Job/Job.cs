@@ -159,16 +159,27 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            writer.WriteStartElement( this.GetType().ToString() );
-            writer.WriteAttributeString( "changed", HasChanged.ToString() );
-            foreach( Job j in Jobs )
+            WriteXml( writer, false );
+        }
+
+        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
+        {
+            if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( j.GetType().ToString() );
-                writer.WriteAttributeString( "value", j.Value.ToString( "X2" ) );
-                writer.WriteAttributeString( "name", j.Name );
-                DigestGenerator.WriteXmlDigest( j, writer, false, true );
+                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( Job j in Jobs )
+                {
+                    if( !changesOnly || j.HasChanged )
+                    {
+                        writer.WriteStartElement( j.GetType().ToString() );
+                        writer.WriteAttributeString( "value", j.Value.ToString( "X2" ) );
+                        writer.WriteAttributeString( "name", j.Name );
+                        DigestGenerator.WriteXmlDigest( j, writer, false, true, changesOnly );
+                    }
+                }
+                writer.WriteEndElement();
             }
-            writer.WriteEndElement();
         }
 
 

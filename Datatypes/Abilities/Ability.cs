@@ -425,49 +425,57 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
+        public void WriteXml( XmlWriter writer, bool changesOnly )
+        {
+            if( !changesOnly || HasChanged )
+            {
+                writer.WriteStartElement( GetType().ToString() );
+                writer.WriteAttributeString( "value", Offset.ToString( "X4" ) );
+                writer.WriteAttributeString( "name", Name );
+                DigestGenerator.WriteXmlDigest( this, writer, false, false, changesOnly );
+                DigestGenerator.WriteXmlDigest( AIFlags, writer, true, true, changesOnly );
+                if( IsNormal )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "Effect", Default.Effect, Effect, changesOnly );
+                    DigestGenerator.WriteXmlDigest( Attributes, writer, true, true, changesOnly );
+                }
+                else if( IsItem )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "ItemOffset", Default.ItemOffset, ItemOffset, changesOnly );
+                }
+                else if( IsThrowing )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "Throwing", Default.Throwing, Throwing, changesOnly );
+                }
+                else if( IsJumping )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "JumpHorizontal", Default.JumpHorizontal, JumpHorizontal, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "JumpVertical", Default.JumpVertical, JumpVertical, changesOnly );
+                }
+                else if( IsCharging )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "ChargeCT", Default.ChargeCT, ChargeCT, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "ChargeBonus", Default.ChargeBonus, ChargeBonus, changesOnly );
+                }
+                else if( IsArithmetick )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "ArithmetickSkill", Default.ArithmetickSkill, ArithmetickSkill, changesOnly );
+                }
+                else if( IsOther )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID, changesOnly );
+                }
+                writer.WriteEndElement();
+            }
+        }
+
         /// <summary>
         /// Converts an object into its XML representation.
         /// </summary>
         /// <param name="writer">The stream to which the object is serialized.</param>
         public void WriteXml( XmlWriter writer )
         {
-            writer.WriteStartElement( GetType().ToString() );
-            writer.WriteAttributeString( "value", Offset.ToString( "X4" ) );
-            writer.WriteAttributeString( "name", Name );
-            DigestGenerator.WriteXmlDigest( this, writer, false, false );
-            DigestGenerator.WriteXmlDigest( AIFlags, writer, true, true );
-            if( IsNormal )
-            {
-                DigestGenerator.WriteDigestEntry( writer, "Effect", Default.Effect, Effect );
-                DigestGenerator.WriteXmlDigest( Attributes, writer, true, true );
-            }
-            else if( IsItem )
-            {
-                DigestGenerator.WriteDigestEntry( writer, "ItemOffset", Default.ItemOffset, ItemOffset );
-            }
-            else if( IsThrowing )
-            {
-                DigestGenerator.WriteDigestEntry( writer, "Throwing", Default.Throwing, Throwing );
-            }
-            else if( IsJumping )
-            {
-                DigestGenerator.WriteDigestEntry( writer, "JumpHorizontal", Default.JumpHorizontal, JumpHorizontal );
-                DigestGenerator.WriteDigestEntry( writer, "JumpVertical", Default.JumpVertical, JumpVertical );
-            }
-            else if( IsCharging )
-            {
-                DigestGenerator.WriteDigestEntry( writer, "ChargeCT", Default.ChargeCT, ChargeCT );
-                DigestGenerator.WriteDigestEntry( writer, "ChargeBonus", Default.ChargeBonus, ChargeBonus );
-            }
-            else if( IsArithmetick )
-            {
-                DigestGenerator.WriteDigestEntry( writer, "ArithmetickSkill", Default.ArithmetickSkill, ArithmetickSkill );
-            }
-            else if( IsOther )
-            {
-                DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID );
-            }
-            writer.WriteEndElement();
+            WriteXml( writer, false );
         }
 
 

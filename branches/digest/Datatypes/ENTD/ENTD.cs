@@ -186,7 +186,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (2)
+        #region Methods (3)
 
 
         public byte[] PSPEventsToByteArray()
@@ -206,15 +206,22 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            writer.WriteStartElement( GetType().ToString() );
-            writer.WriteAttributeString( "changed", HasChanged.ToString() );
-            foreach( Event e in Events )
-            {
-                e.WriteXml( writer );
-            }
-            writer.WriteEndElement();
+            WriteXml( writer, false );
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
+        {
+            if( !changesOnly || HasChanged )
+            {
+                writer.WriteStartElement( GetType().ToString() );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( Event e in Events )
+                {
+                    e.WriteXml( writer, changesOnly );
+                }
+                writer.WriteEndElement();
+            }
+        }
 
         #endregion Methods
 

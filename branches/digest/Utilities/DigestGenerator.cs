@@ -28,43 +28,51 @@ namespace FFTPatcher
         #region Methods (3)
 
 
-        public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur )
+        public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur, bool changesOnly )
         {
-            writer.WriteStartElement( name );
-            writer.WriteAttributeString( "changed", (!def.Equals( cur )).ToString() );
-            writer.WriteAttributeString( "default", def.ToString() );
-            writer.WriteAttributeString( "value", cur.ToString() );
-            writer.WriteEndElement();
-        }
-
-        public static void WriteXmlDigest( ISupportDigest digest, XmlWriter writer, bool writeStartElement, bool writeEndElement )
-        {
-            if( writeStartElement )
+            bool changed = !def.Equals( cur );
+            if( !changesOnly || changed )
             {
-                writer.WriteStartElement( digest.GetType().ToString() );
-            }
-
-            object defaultObject = ReflectionHelpers.GetFieldOrProperty<object>( digest, "Default" );
-            writer.WriteAttributeString( "changed", digest.HasChanged.ToString() );
-            foreach( string value in digest.DigestableProperties )
-            {
-                object def = ReflectionHelpers.GetFieldOrProperty<object>( defaultObject, value );
-                object cur = ReflectionHelpers.GetFieldOrProperty<object>( digest, value );
-                if( def != null && cur != null )
-                {
-                    WriteDigestEntry( writer, value, def, cur );
-                }
-            }
-
-            if( writeEndElement )
-            {
+                writer.WriteStartElement( name );
+                writer.WriteAttributeString( "changed", changed.ToString() );
+                writer.WriteAttributeString( "default", def.ToString() );
+                writer.WriteAttributeString( "value", cur.ToString() );
                 writer.WriteEndElement();
             }
         }
 
-        public static void WriteXmlDigest( ISupportDigest digest, XmlWriter writer )
+        public static void WriteXmlDigest( ISupportDigest digest, XmlWriter writer, bool writeStartElement, bool writeEndElement, bool changesOnly )
         {
-            WriteXmlDigest( digest, writer, true, true );
+            bool changed = digest.HasChanged;
+            if( !changesOnly || changed )
+            {
+                if( writeStartElement )
+                {
+                    writer.WriteStartElement( digest.GetType().ToString() );
+                }
+
+                object defaultObject = ReflectionHelpers.GetFieldOrProperty<object>( digest, "Default" );
+                writer.WriteAttributeString( "changed", changed.ToString() );
+                foreach( string value in digest.DigestableProperties )
+                {
+                    object def = ReflectionHelpers.GetFieldOrProperty<object>( defaultObject, value );
+                    object cur = ReflectionHelpers.GetFieldOrProperty<object>( digest, value );
+                    if( def != null && cur != null )
+                    {
+                        WriteDigestEntry( writer, value, def, cur, changesOnly );
+                    }
+                }
+
+                if( writeEndElement )
+                {
+                    writer.WriteEndElement();
+                }
+            }
+        }
+
+        public static void WriteXmlDigest( ISupportDigest digest, XmlWriter writer, bool changesOnly )
+        {
+            WriteXmlDigest( digest, writer, true, true, changesOnly );
         }
 
 

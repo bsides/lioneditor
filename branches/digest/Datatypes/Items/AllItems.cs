@@ -183,7 +183,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -234,15 +234,26 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            writer.WriteStartElement( GetType().ToString() );
-            writer.WriteAttributeString( "changed", HasChanged.ToString() );
-            foreach( Item i in Items )
+            WriteXml( writer, false );
+        }
+
+        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
+        {
+            if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( i.GetType().ToString() );
-                writer.WriteAttributeString( "name", i.Name );
-                DigestGenerator.WriteXmlDigest( i, writer, false, true );
+                writer.WriteStartElement( GetType().ToString() );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( Item i in Items )
+                {
+                    if( !changesOnly || i.HasChanged )
+                    {
+                        writer.WriteStartElement( i.GetType().ToString() );
+                        writer.WriteAttributeString( "name", i.Name );
+                        DigestGenerator.WriteXmlDigest( i, writer, false, true, changesOnly );
+                    }
+                }
+                writer.WriteEndElement();
             }
-            writer.WriteEndElement();
         }
 
 

@@ -192,7 +192,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -239,8 +239,14 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            DigestGenerator.WriteXmlDigest( this, writer, true, true );
+            WriteXml( writer, false );
         }
+
+        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
+        {
+            DigestGenerator.WriteXmlDigest( this, writer, true, true, changesOnly );
+        }
+
 
 
         #endregion Methods

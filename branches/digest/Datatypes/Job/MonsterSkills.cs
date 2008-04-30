@@ -202,7 +202,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -235,16 +235,27 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            writer.WriteStartElement( this.GetType().ToString() );
-            writer.WriteAttributeString( "changed", HasChanged.ToString() );
-            foreach( MonsterSkill m in MonsterSkills )
+            WriteXml( writer, false );
+        }
+
+        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
+        {
+            if( !changesOnly || HasChanged )
             {
-                writer.WriteStartElement( m.GetType().ToString() );
-                writer.WriteAttributeString( "value", m.Value.ToString( "X2" ) );
-                writer.WriteAttributeString( "name", m.Name );
-                DigestGenerator.WriteXmlDigest( m, writer, false, true );
+                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( MonsterSkill m in MonsterSkills )
+                {
+                    if( !changesOnly || m.HasChanged )
+                    {
+                        writer.WriteStartElement( m.GetType().ToString() );
+                        writer.WriteAttributeString( "value", m.Value.ToString( "X2" ) );
+                        writer.WriteAttributeString( "name", m.Name );
+                        DigestGenerator.WriteXmlDigest( m, writer, false, true, changesOnly );
+                    }
+                }
+                writer.WriteEndElement();
             }
-            writer.WriteEndElement();
         }
 
         #endregion Methods

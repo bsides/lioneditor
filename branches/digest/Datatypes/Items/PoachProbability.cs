@@ -146,7 +146,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -179,17 +179,27 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            writer.WriteStartElement( this.GetType().ToString() );
-            writer.WriteAttributeString( "changed", HasChanged.ToString() );
-            foreach( PoachProbability p in PoachProbabilities )
-            {
-                writer.WriteStartElement( p.GetType().ToString() );
-                writer.WriteAttributeString( "name", p.MonsterName );
-                DigestGenerator.WriteXmlDigest( p, writer, false, true );
-            }
-            writer.WriteEndElement();
+            WriteXml( writer, false );
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
+        {
+            if( !changesOnly || HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( PoachProbability p in PoachProbabilities )
+                {
+                    if( !changesOnly || p.HasChanged )
+                    {
+                        writer.WriteStartElement( p.GetType().ToString() );
+                        writer.WriteAttributeString( "name", p.MonsterName );
+                        DigestGenerator.WriteXmlDigest( p, writer, false, true, changesOnly );
+                    }
+                }
+                writer.WriteEndElement();
+            }
+        }
 
         #endregion Methods
 

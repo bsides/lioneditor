@@ -255,15 +255,23 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public void WriteXml( XmlWriter writer, bool changesOnly )
+        {
+            if( !changesOnly || HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().ToString() );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( Ability a in Abilities )
+                {
+                    a.WriteXml( writer, changesOnly );
+                }
+                writer.WriteEndElement();
+            }
+        }
+
         public void WriteXml( XmlWriter writer )
         {
-            writer.WriteStartElement( this.GetType().ToString() );
-            writer.WriteAttributeString( "changed", HasChanged.ToString() );
-            foreach( Ability a in Abilities )
-            {
-                a.WriteXml( writer );
-            }
-            writer.WriteEndElement();
+            WriteXml( writer, false );
         }
 
 

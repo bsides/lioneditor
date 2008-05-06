@@ -28,7 +28,7 @@ namespace FFTPatcher
     public static class ReflectionHelpers
     {
 
-		#region Methods (5) 
+        #region Methods (5)
 
 
         /// <summary>
@@ -51,6 +51,32 @@ namespace FFTPatcher
             else
             {
                 throw new ArgumentException();
+            }
+        }
+
+        /// <summary>
+        /// Determines if a field or property in an object has a particular attribute.
+        /// </summary>
+        /// <typeparam name="TAttribute">The type of the attribute.</typeparam>
+        /// <param name="target">The object that owns the field or property.</param>
+        /// <param name="propertyName">Name of the field or property.</param>
+        /// <returns></returns>
+        public static bool FieldOrPropertyHasAttribute<TAttribute>( object target, string propertyName ) where TAttribute : Attribute
+        {
+            MemberInfo mi = target.GetType().GetField( propertyName );
+            if( mi == null )
+            {
+                mi = target.GetType().GetProperty( propertyName );
+            }
+
+            if( mi != null )
+            {
+                object[] attrs = mi.GetCustomAttributes( typeof( TAttribute ), true );
+                return attrs != null && attrs.Length > 0;
+            }
+            else
+            {
+                throw new ArgumentException( "propertyName" );
             }
         }
 
@@ -107,7 +133,7 @@ namespace FFTPatcher
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

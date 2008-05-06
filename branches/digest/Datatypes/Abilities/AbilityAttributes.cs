@@ -40,7 +40,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Static Fields
 
-        #region Fields (40)
+        #region Fields (41)
 
         public bool AnimateMiss;
         public bool Arithmetick;
@@ -51,6 +51,7 @@ namespace FFTPatcher.Datatypes
         public bool CounterFlood;
         public bool CounterMagic;
         public byte CT;
+        private AbilityAttributes defaults;
         public bool Direct;
         public byte Effect;
         public bool Evadeable;
@@ -58,6 +59,7 @@ namespace FFTPatcher.Datatypes
         public bool HitAllies;
         public bool HitCaster;
         public bool HitEnemies;
+        [Hex]
         public byte InflictStatus;
         public bool LinearAttack;
         public bool Mimic;
@@ -88,7 +90,18 @@ namespace FFTPatcher.Datatypes
         #region Properties (7)
 
 
-        public AbilityAttributes Default { get; set; }
+        public AbilityAttributes Default
+        {
+            get { return defaults; }
+            set
+            {
+                defaults = value;
+                if( defaults != null )
+                {
+                    Elements.Default = defaults.Elements;
+                }
+            }
+        }
 
         public IList<string> DigestableProperties
         {
@@ -157,7 +170,11 @@ namespace FFTPatcher.Datatypes
         public AbilityAttributes( string name, UInt16 offset, IList<byte> second, AbilityAttributes defaults )
             : this( name, offset, second )
         {
-            Default = defaults;
+            if( defaults != null )
+            {
+                Default = defaults;
+                Elements.Default = defaults.Elements;
+            }
         }
 
         #endregion Constructors

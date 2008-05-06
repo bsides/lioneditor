@@ -30,13 +30,18 @@ namespace FFTPatcher
 
         public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur, bool changesOnly )
         {
+            WriteDigestEntry( writer, name, def, cur, changesOnly, "{0}" );
+        }
+
+        public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur, bool changesOnly, string formatString )
+        {
             bool changed = !def.Equals( cur );
             if( !changesOnly || changed )
             {
                 writer.WriteStartElement( name );
                 writer.WriteAttributeString( "changed", changed.ToString() );
-                writer.WriteAttributeString( "default", def.ToString() );
-                writer.WriteAttributeString( "value", cur.ToString() );
+                writer.WriteAttributeString( "default", string.Format( formatString, def ) );
+                writer.WriteAttributeString( "value", string.Format( formatString, cur ) );
                 writer.WriteEndElement();
             }
         }
@@ -55,11 +60,31 @@ namespace FFTPatcher
                 writer.WriteAttributeString( "changed", changed.ToString() );
                 foreach( string value in digest.DigestableProperties )
                 {
-                    object def = ReflectionHelpers.GetFieldOrProperty<object>( defaultObject, value );
                     object cur = ReflectionHelpers.GetFieldOrProperty<object>( digest, value );
-                    if( def != null && cur != null )
+                    if( cur != null )
                     {
-                        WriteDigestEntry( writer, value, def, cur, changesOnly );
+                        if( (cur is ISupportDigest) && ReflectionHelpers.GetFieldOrProperty<object>( cur, "Default" ) != null )
+                        {
+                            ISupportDigest curDigest = cur as ISupportDigest;
+                            if( !changesOnly || curDigest.HasChanged )
+                            {
+                                writer.WriteStartElement( value );
+                                WriteXmlDigest( cur as ISupportDigest, writer, false, true, changesOnly );
+                            }
+                        }
+                        else
+                        {
+                            object def = ReflectionHelpers.GetFieldOrProperty<object>( defaultObject, value );
+                            if( def != null )
+                            {
+                                string formatString = "{0}";
+                                if( ReflectionHelpers.FieldOrPropertyHasAttribute<HexAttribute>( digest, value ) )
+                                {
+                                    formatString = "0x{0:X2}";
+                                }
+                                WriteDigestEntry( writer, value, def, cur, changesOnly, formatString );
+                            }
+                        }
                     }
                 }
 

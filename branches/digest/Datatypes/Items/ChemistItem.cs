@@ -39,8 +39,10 @@ namespace FFTPatcher.Datatypes
 
         public ChemistItem ChemistItemDefault { get; private set; }
 
+        [Hex]
         public byte Formula { get; set; }
 
+        [Hex]
         public byte InflictStatus { get; set; }
 
         public byte X { get; set; }

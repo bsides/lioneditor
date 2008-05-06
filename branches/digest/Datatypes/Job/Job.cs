@@ -282,16 +282,19 @@ namespace FFTPatcher.Datatypes
 
         public byte MAMultiplier { get; set; }
 
+        [Hex]
         public byte MGraphic { get; set; }
 
         public byte Move { get; set; }
 
+        [Hex]
         public byte MPalette { get; set; }
 
         public byte MPConstant { get; set; }
 
         public byte MPMultiplier { get; set; }
 
+        [Hex]
         public byte MPortrait { get; set; }
 
         public string Name { get; private set; }
@@ -344,7 +347,6 @@ namespace FFTPatcher.Datatypes
 
         public Job( Context context, byte value, string name, IList<byte> bytes, Job defaults )
         {
-            Default = defaults;
             Value = value;
             Name = name;
             int equipEnd = context == Context.US_PSP ? 13 : 12;
@@ -378,6 +380,15 @@ namespace FFTPatcher.Datatypes
             MPortrait = bytes[equipEnd + 33];
             MPalette = bytes[equipEnd + 34];
             MGraphic = bytes[equipEnd + 35];
+
+            if( defaults != null )
+            {
+                Default = defaults;
+                AbsorbElement.Default = defaults.AbsorbElement;
+                CancelElement.Default = defaults.CancelElement;
+                HalfElement.Default = defaults.HalfElement;
+                WeakElement.Default = defaults.WeakElement;
+            }
         }
 
         #endregion Constructors

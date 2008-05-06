@@ -634,7 +634,7 @@ namespace FFTPatcher.Datatypes
             }
 
 
-#if _DEBUG
+#if DEBUG
             using( FileStream stream = new FileStream( filename + ".xml", FileMode.Create ) )
             {
                 byte[] bytes = sb.ToString().ToByteArray();

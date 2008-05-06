@@ -5,49 +5,75 @@
       <head>
         <title>FFTPatcher changes report</title>
         <style type="text/css">
-          .fire
+          body
+          {
+          background-color: white;
+          }
+          table.differencesTable td.fire
           {
           background-color: red;
           color: white;
           }
-          .lightning
+          table.differencesTable td.lightning
           {
           background-color: purple;
           color: white;
           }
-          .ice
+          table.differencesTable td.ice
           {
           background-color: lightcyan;
           color: black;
           }
-          .wind
+          table.differencesTable td.wind
           {
           background-color: yellow;
           color: black;
           }
-          .earth
+          table.differencesTable td.earth
           {
           background-color: green;
           color: white;
           }
-          .water
+          table.differencesTable td.water
           {
           background-color: lightblue;
           color: black;
           }
-          .holy
+          table.differencesTable td.holy
           {
           background-color: white;
           color: black;
           }
-          .dark
+          table.differencesTable td.dark
           {
           background-color: black;
           color: white;
           }
-          .differenceTable
-          {
-          border: 1px;
+          table.differencesTable {
+          border-width: 2px;
+          border-spacing: 5px;
+          border-style: outset;
+          border-color: #0000ff;
+          border-collapse: collapse;
+          background-color: #ffffff;
+          table-layout: fixed;
+          }
+          table.differencesTable th {
+          border-width: thin;
+          padding: 5px;
+          border-style: dashed;
+          border-color: #808080;
+          background-color: #fffafa;
+          width: 100px;
+          }
+          table.differencesTable td {
+          border-width: thin;
+          padding: 5px;
+          border-style: dashed;
+          border-color: #808080;
+          text-align: center;
+          background-color: #fffafa;
+          width: 200px;
           }
         </style>
       </head>
@@ -71,7 +97,7 @@
     <h1>Abilities</h1>
     <xsl:for-each select="Ability">
       <h2>
-        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/><xsl:text xml:space="preserve"> </xsl:text><xsl:value-of select="@name"/>
       </h2>
       <table class="differencesTable">
         <tr>
@@ -92,7 +118,7 @@
             </td>
           </tr>
         </xsl:for-each>
-        <xsl:for-each select="AIFlags/AddStatus|AIFlags/Blank|AIFlags/CancelStatus|AIFlags/DefenseUp|AIFlags/DirectAttack|AIFlags/HP|AIFlags/IgnoreRange|AIFlags/LineAttack|AIFlags/MagicDefenseUp|AIFlags/MP|AIFlags/RandomHits|AIFlags/Reflectable|AIFlags/Silence|AIFlags/Stats|AIFlags/TargetAllies|AIFlags/TargetEnemies|AIFlags/TripleAttack|AIFlags/TripleBracelet|AIFlags/UndeadReverse|AIFlags/Unequip|AIFlags/Unknown1|AIFlags/Unknown2|AIFlags/Unknown3">
+        <xsl:for-each select="AIFlags/HP|AIFlags/MP|AIFlags/CancelStatus|AIFlags/AddStatus|AIFlags/Stats|AIFlags/Unequip|AIFlags/TargetEnemies|AIFlags/TargetAllies|AIFlags/IgnoreRange|AIFlags/Reflectable|AIFlags/UndeadReverse|AIFlags/Unknown1|AIFlags/RandomHits|AIFlags/Unknown2|AIFlags/Unknown3|AIFlags/Silence|AIFlags/Blank|AIFlags/DirectAttack|AIFlags/LineAttack|AIFlags/VerticalIncrease|AIFlags/TripleAttack|AIFlags/TripleBracelet|AIFlags/MagicDefenseUp|AIFlags/DefenseUp">
           <tr>
             <td>
               AI:
@@ -370,7 +396,7 @@
     <h1>Jobs</h1>
     <xsl:for-each select="Job">
       <h2>
-        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/><xsl:text xml:space="preserve"> </xsl:text><xsl:value-of select="@name"/>
       </h2>
       <table class="differencesTable">
         <tr>
@@ -378,7 +404,7 @@
           <th>Default</th>
           <th>New value</th>
         </tr>
-        <xsl:for-each select="SkillSet|HPConstant|HPMultiplier|MPConstant|MPMultiplier|SpeedConstant|SpeedMultiplier|PAConstant|PAMultiplier|Move|Jump|CEvade|MPortrait|MPalette|MGraphic|InnateA|InnateB|InnateC|InnateD">
+        <xsl:for-each select="SkillSet|HPConstant|HPMultiplier|MPConstant|MPMultiplier|SpeedConstant|SpeedMultiplier|PAConstant|PAMultiplier|MAConstant|MAMultiplier|Move|Jump|CEvade|MPortrait|MPalette|MGraphic|InnateA|InnateB|InnateC|InnateD">
           <tr>
             <td>
               <xsl:value-of select="name(.)"/>
@@ -423,7 +449,7 @@
     <h1>Skillsets</h1>
     <xsl:for-each select="SkillSet">
       <h2>
-        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/><xsl:text xml:space="preserve"> </xsl:text><xsl:value-of select="@name"/>
       </h2>
       <table class="differencesTable">
         <tr>
@@ -451,7 +477,7 @@
     <h1>Monster Skills</h1>
     <xsl:for-each select="MonsterSkill">
       <h2>
-        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/><xsl:text xml:space="preserve"> </xsl:text><xsl:value-of select="@name"/>
       </h2>
       <table class="differencesTable">
         <tr>
@@ -479,7 +505,7 @@
     <h1>Action Menus</h1>
     <xsl:for-each select="ActionMenu">
       <h2>
-        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/><xsl:text xml:space="preserve"> </xsl:text><xsl:value-of select="@name"/>
       </h2>
       <table class="differencesTable">
         <tr>

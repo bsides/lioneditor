@@ -28,31 +28,10 @@ namespace FFTPatcher
     public static class ReflectionHelpers
     {
 
-        #region Methods (5)
+		#region Methods (7) 
 
 
-        /// <summary>
-        /// Gets a field or property from an object.
-        /// </summary>
-        /// <typeparam name="T">Thet type of the field or property.</typeparam>
-        public static T GetFieldOrProperty<T>( object target, string name )
-        {
-            PropertyInfo pi = target.GetType().GetProperty( name );
-            FieldInfo fi = target.GetType().GetField( name );
-
-            if( pi != null )
-            {
-                return (T)pi.GetValue( target, null );
-            }
-            else if( fi != null )
-            {
-                return (T)fi.GetValue( target );
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
-        }
+		// Public Methods (7) 
 
         /// <summary>
         /// Determines if a field or property in an object has a particular attribute.
@@ -78,6 +57,42 @@ namespace FFTPatcher
             {
                 throw new ArgumentException( "propertyName" );
             }
+        }
+
+        /// <summary>
+        /// Gets a field or property from an object.
+        /// </summary>
+        /// <typeparam name="T">Thet type of the field or property.</typeparam>
+        public static T GetFieldOrProperty<T>( object target, string name, bool throwOnError )
+        {
+            PropertyInfo pi = target.GetType().GetProperty( name );
+            FieldInfo fi = target.GetType().GetField( name );
+
+            if( pi != null )
+            {
+                return (T)pi.GetValue( target, null );
+            }
+            else if( fi != null )
+            {
+                return (T)fi.GetValue( target );
+            }
+            else if( throwOnError )
+            {
+                throw new ArgumentException();
+            }
+            else
+            {
+                return default( T );
+            }
+        }
+
+        /// <summary>
+        /// Gets a field or property from an object.
+        /// </summary>
+        /// <typeparam name="T">Thet type of the field or property.</typeparam>
+        public static T GetFieldOrProperty<T>( object target, string name )
+        {
+            return GetFieldOrProperty<T>( target, name, true );
         }
 
         /// <summary>
@@ -133,7 +148,7 @@ namespace FFTPatcher
         }
 
 
-        #endregion Methods
+		#endregion Methods 
 
     }
 }

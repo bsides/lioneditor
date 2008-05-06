@@ -17,32 +17,72 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
     /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
     /// </summary>
-    public class JobLevels : IChangeable, IXmlDigest, ISupportDigest
+    public class JobLevels : IChangeable, IXmlDigest
     {
 
-        #region Fields (1)
-
-        private string[] reqs = new string[] {
-            "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
-            "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown" };
+		#region Fields (4) 
 
         private static readonly string[] digestableProperties = new string[] {
             "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
             "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown",
             "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8" };
+        private string[] levelFields = new string[] {
+            "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8" };
+        private ushort[] levels = new ushort[8];
+        private string[] reqs = new string[] {
+            "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
+            "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown" };
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (32)
+		#region Constructors (3) 
 
+        public JobLevels( Context context, IList<byte> bytes, JobLevels defaults )
+        {
+            Default = defaults;
+            int jobCount = context == Context.US_PSP ? 22 : 19;
+            int requirementsLength = context == Context.US_PSP ? 12 : 10;
+
+            for( int i = 0; i < jobCount; i++ )
+            {
+                ReflectionHelpers.SetFieldOrProperty( this, reqs[i],
+                    new Requirements( context,
+                        bytes.Sub( i * requirementsLength, (i + 1) * requirementsLength - 1 ),
+                        defaults == null ? null : ReflectionHelpers.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
+            }
+
+            int start = requirementsLength * jobCount;
+            if( context == Context.US_PSX )
+                start += 2;
+
+            for( int i = 0; i < levels.Length; i++ )
+            {
+                levels[i] = Utilities.BytesToUShort( bytes[start + i * 2], bytes[start + i * 2 + 1] );
+            }
+        }
+
+        public JobLevels( Context context, IList<byte> bytes )
+            : this( context, bytes, null )
+        {
+        }
+
+        public JobLevels( IList<byte> bytes )
+            : this( Context.US_PSP, bytes )
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (32) 
 
         public Requirements Archer { get; private set; }
 
@@ -108,21 +148,53 @@ namespace FFTPatcher.Datatypes
 
         public Requirements Knight { get; private set; }
 
-        public ushort Level1 { get; set; }
+        public ushort Level1
+        {
+            get { return levels[0]; }
+            set { levels[0] = value; }
+        }
 
-        public ushort Level2 { get; set; }
+        public ushort Level2
+        {
+            get { return levels[1]; }
+            set { levels[1] = value; }
+        }
 
-        public ushort Level3 { get; set; }
+        public ushort Level3
+        {
+            get { return levels[2]; }
+            set { levels[2] = value; }
+        }
 
-        public ushort Level4 { get; set; }
+        public ushort Level4
+        {
+            get { return levels[3]; }
+            set { levels[3] = value; }
+        }
 
-        public ushort Level5 { get; set; }
+        public ushort Level5
+        {
+            get { return levels[4]; }
+            set { levels[4] = value; }
+        }
 
-        public ushort Level6 { get; set; }
+        public ushort Level6
+        {
+            get { return levels[5]; }
+            set { levels[5] = value; }
+        }
 
-        public ushort Level7 { get; set; }
+        public ushort Level7
+        {
+            get { return levels[6]; }
+            set { levels[6] = value; }
+        }
 
-        public ushort Level8 { get; set; }
+        public ushort Level8
+        {
+            get { return levels[7]; }
+            set { levels[7] = value; }
+        }
 
         public Requirements Mime { get; private set; }
 
@@ -148,52 +220,12 @@ namespace FFTPatcher.Datatypes
 
         public Requirements WhiteMage { get; private set; }
 
+		#endregion Properties 
 
-        #endregion Properties
+		#region Methods (5) 
 
-        #region Constructors (3)
 
-        public JobLevels( IList<byte> bytes )
-            : this( Context.US_PSP, bytes )
-        {
-        }
-
-        public JobLevels( Context context, IList<byte> bytes )
-            : this( context, bytes, null )
-        {
-        }
-
-        public JobLevels( Context context, IList<byte> bytes, JobLevels defaults )
-        {
-            Default = defaults;
-            int jobCount = context == Context.US_PSP ? 22 : 19;
-            int requirementsLength = context == Context.US_PSP ? 12 : 10;
-
-            for( int i = 0; i < jobCount; i++ )
-            {
-                ReflectionHelpers.SetFieldOrProperty( this, reqs[i],
-                    new Requirements( context,
-                        bytes.Sub( i * requirementsLength, (i + 1) * requirementsLength - 1 ),
-                        defaults == null ? null : ReflectionHelpers.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
-            }
-
-            int start = requirementsLength * jobCount;
-            if( context == Context.US_PSX )
-                start += 2;
-            Level1 = Utilities.BytesToUShort( bytes[start + 0], bytes[start + 1] );
-            Level2 = Utilities.BytesToUShort( bytes[start + 2], bytes[start + 3] );
-            Level3 = Utilities.BytesToUShort( bytes[start + 4], bytes[start + 5] );
-            Level4 = Utilities.BytesToUShort( bytes[start + 6], bytes[start + 7] );
-            Level5 = Utilities.BytesToUShort( bytes[start + 8], bytes[start + 9] );
-            Level6 = Utilities.BytesToUShort( bytes[start + 10], bytes[start + 11] );
-            Level7 = Utilities.BytesToUShort( bytes[start + 12], bytes[start + 13] );
-            Level8 = Utilities.BytesToUShort( bytes[start + 14], bytes[start + 15] );
-        }
-
-        #endregion Constructors
-
-        #region Methods (5)
-
+		// Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
@@ -225,14 +257,11 @@ namespace FFTPatcher.Datatypes
                 result.Add( 0x00 );
                 result.Add( 0x00 );
             }
-            result.AddRange( Level1.ToBytes() );
-            result.AddRange( Level2.ToBytes() );
-            result.AddRange( Level3.ToBytes() );
-            result.AddRange( Level4.ToBytes() );
-            result.AddRange( Level5.ToBytes() );
-            result.AddRange( Level6.ToBytes() );
-            result.AddRange( Level7.ToBytes() );
-            result.AddRange( Level8.ToBytes() );
+
+            foreach( ushort level in levels )
+            {
+                result.AddRange( level.ToBytes() );
+            }
 
             return result.ToArray();
         }
@@ -244,22 +273,37 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
         {
-            DigestGenerator.WriteXmlDigest( this, writer, true, true, changesOnly );
+            writer.WriteStartElement( GetType().Name );
+            writer.WriteAttributeString( "changed", HasChanged.ToString() );
+
+            foreach( string req in reqs )
+            {
+                Requirements r = ReflectionHelpers.GetFieldOrProperty<Requirements>( this, req, false );
+                if( r != null )
+                {
+                    writer.WriteStartElement( req );
+                    r.WriteXml( writer );
+                    writer.WriteEndElement();
+                }
+            }
+
+            for( int i = 0; i < levels.Length; i++ )
+            {
+                if( !changesOnly || levels[i] != Default.levels[i] )
+                {
+                    writer.WriteStartElement( string.Format( "Level{0}", i ) );
+                    writer.WriteAttributeString( "changed", (levels[i] != Default.levels[i]).ToString() );
+                    writer.WriteAttributeString( "default", Default.levels[i].ToString() );
+                    writer.WriteAttributeString( "value", levels[i].ToString() );
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
         }
 
 
+		#endregion Methods 
 
-        #endregion Methods
-
-
-        #region ISupportDigest Members
-
-        public IList<string> DigestableProperties
-        {
-            get { return digestableProperties; }
-        }
-
-        #endregion
     }
 
     /// <summary>
@@ -387,7 +431,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (6)
+        #region Methods (7)
 
 
         public byte[] ToByteArray( Context context )
@@ -453,6 +497,24 @@ namespace FFTPatcher.Datatypes
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        internal void WriteXml( System.Xml.XmlWriter writer )
+        {
+            writer.WriteAttributeString( "changed", HasChanged.ToString() );
+            foreach( string field in fields )
+            {
+                int current = ReflectionHelpers.GetFieldOrProperty<int>( this, field );
+                int def = ReflectionHelpers.GetFieldOrProperty<int>( Default, field );
+                if( current > 0 || def > 0 )
+                {
+                    writer.WriteStartElement( field );
+                    writer.WriteAttributeString( "changed", (current != def).ToString() );
+                    writer.WriteAttributeString( "default", def.ToString() );
+                    writer.WriteAttributeString( "value", current.ToString() );
+                    writer.WriteEndElement();
+                }
+            }
         }
 
         #endregion Methods

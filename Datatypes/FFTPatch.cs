@@ -624,14 +624,23 @@ namespace FFTPatcher.Datatypes
             {
                 writer.WriteStartElement( "digest" );
                 IXmlDigest[] digestable = new IXmlDigest[] {
-            Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
-            InflictStatuses, PoachProbabilities, ENTDs };
+                    Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
+                    InflictStatuses, PoachProbabilities, ENTDs };
                 foreach( IXmlDigest digest in digestable )
                 {
                     digest.WriteXml( writer, true );
                 }
                 writer.WriteEndElement();
             }
+
+
+#if _DEBUG
+            using( FileStream stream = new FileStream( filename + ".xml", FileMode.Create ) )
+            {
+                byte[] bytes = sb.ToString().ToByteArray();
+                stream.Write( bytes, 0, bytes.Length );
+            }
+#endif
 
             settings.ConformanceLevel = ConformanceLevel.Fragment;
             using( StringReader transformStringReader = new StringReader( FFTPatcher.Properties.Resources.digestTransform ) )

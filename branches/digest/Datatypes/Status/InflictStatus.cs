@@ -70,7 +70,8 @@ namespace FFTPatcher.Datatypes
                     Blank1 != Default.Blank1 ||
                     Blank2 != Default.Blank2 ||
                     Blank3 != Default.Blank3 ||
-                    Blank4 != Default.Blank4);
+                    Blank4 != Default.Blank4 ||
+                    Statuses.HasChanged );
             }
         }
 

@@ -132,7 +132,7 @@ namespace FFTPatcher.Editors
                 armorHPBonusSpinner, armorMPBonusSpinner, 
                 shieldMagicBlockRateSpinner, shieldPhysicalBlockRateSpinner, 
                 accessoryMagicEvadeRateSpinner, accessoryPhysicalEvadeRateSpinner, 
-                chemistItemSpellStatusSpinner, chemistItemXSpinner } );
+                chemistItemSpellStatusSpinner, chemistItemXSpinner, secondTableIdSpinner } );
             comboBoxes.AddRange( new ComboBoxWithDefault[] { itemTypeComboBox, shopAvailabilityComboBox } );
             secondTableLinks.AddRange( new LinkLabel[] { weaponJumpLabel, shieldJumpLabel, headBodyJumpLabel, accessoryJumpLabel, chemistItemJumpLabel } );
 

@@ -1,12 +1,79 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/digest">
+    <html>
+      <head>
+        <title>FFTPatcher changes report</title>
+        <style type="text/css">
+          .fire
+          {
+          background-color: red;
+          color: white;
+          }
+          .lightning
+          {
+          background-color: purple;
+          color: white;
+          }
+          .ice
+          {
+          background-color: lightcyan;
+          color: black;
+          }
+          .wind
+          {
+          background-color: yellow;
+          color: black;
+          }
+          .earth
+          {
+          background-color: green;
+          color: white;
+          }
+          .water
+          {
+          background-color: lightblue;
+          color: black;
+          }
+          .holy
+          {
+          background-color: white;
+          color: black;
+          }
+          .dark
+          {
+          background-color: black;
+          color: white;
+          }
+          .differenceTable
+          {
+          border: 1px;
+          }
+        </style>
+      </head>
+      <body>
+        <xsl:apply-templates select="AllAbilities"/>
+        <xsl:apply-templates select="AllItems"/>
+        <xsl:apply-templates select="AllItemAttributes"/>
+        <xsl:apply-templates select="AllJobs"/>
+        <xsl:apply-templates select="AllJobLevels"/>
+        <xsl:apply-templates select="AllSkillSets"/>
+        <xsl:apply-templates select="AllMonsterSkills"/>
+        <xsl:apply-templates select="AllActionMenus"/>
+        <xsl:apply-templates select="AllStatusAttributes"/>
+        <xsl:apply-templates select="AllInflictStatuses"/>
+        <xsl:apply-templates select="AllPoachProbabilities"/>
+        <xsl:apply-templates select="AllENTDs"/>
+      </body>
+    </html>
+  </xsl:template>
   <xsl:template match="/digest/AllAbilities">
     <h1>Abilities</h1>
     <xsl:for-each select="Ability">
       <h2>
-        <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -150,7 +217,7 @@
       <h2>
         <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -261,9 +328,9 @@
     <h1>Item Attribute</h1>
     <xsl:for-each select="ItemAttributes">
       <h2>
-        <xsl:value-of select="@value"/>
+        0x<xsl:value-of select="@value"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -303,9 +370,9 @@
     <h1>Jobs</h1>
     <xsl:for-each select="Job">
       <h2>
-        <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -356,9 +423,9 @@
     <h1>Skillsets</h1>
     <xsl:for-each select="SkillSet">
       <h2>
-        <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -384,9 +451,9 @@
     <h1>Monster Skills</h1>
     <xsl:for-each select="MonsterSkill">
       <h2>
-        <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -412,9 +479,9 @@
     <h1>Action Menus</h1>
     <xsl:for-each select="ActionMenu">
       <h2>
-        <xsl:value-of select="@name"/>
+        0x<xsl:value-of select="@value"/> <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -442,7 +509,7 @@
       <h2>
         <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -476,9 +543,9 @@
     <h1>Inflict Statuses</h1>
     <xsl:for-each select="InflictStatus">
       <h2>
-        <xsl:value-of select="@value"/>
+        0x<xsl:value-of select="@value"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -513,7 +580,7 @@
       <h2>
         <xsl:value-of select="@name"/>
       </h2>
-      <table border="1">
+      <table class="differencesTable">
         <tr>
           <th>Setting</th>
           <th>Default</th>
@@ -546,7 +613,7 @@
           Unit
           <xsl:value-of select="@value"/>
         </h3>
-        <table border="1">
+        <table class="differencesTable">
           <tr>
             <th>Setting</th>
             <th>Default</th>

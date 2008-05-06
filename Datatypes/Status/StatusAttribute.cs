@@ -32,7 +32,7 @@ namespace FFTPatcher.Datatypes
         private static readonly string[] digestableProperties = new string[] {
             "Blank1", "Blank2", "Order", "CT", "FreezeCT", "Unknown1", "Unknown2", "Unknown3", "Unknown4",
             "Unknown5", "Unknown6", "KO", "CanReact", "Blank", "IgnoreAttack", "Unknown7", "Unknown8",
-            "Unknown9", "Unknown10", "Unknown11" };
+            "Unknown9", "Unknown10", "Unknown11", "Cancels", "CantStackOn" };
 
         #endregion Static Fields
 
@@ -60,8 +60,10 @@ namespace FFTPatcher.Datatypes
         #region Properties (11)
 
 
+        [Hex]
         public byte Blank1 { get; set; }
 
+        [Hex]
         public byte Blank2 { get; set; }
 
         public Statuses Cancels { get; private set; }
@@ -109,6 +111,7 @@ namespace FFTPatcher.Datatypes
 
         public string Name { get; private set; }
 
+        [Hex]
         public byte Order { get; set; }
 
         public byte Value { get; private set; }

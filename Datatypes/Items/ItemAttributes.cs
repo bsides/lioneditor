@@ -97,7 +97,6 @@ namespace FFTPatcher.Datatypes
 
         public ItemAttributes( byte value, IList<byte> bytes, ItemAttributes defaults )
         {
-            Default = defaults;
             Value = value;
             PA = bytes[0];
             MA = bytes[1];
@@ -114,6 +113,16 @@ namespace FFTPatcher.Datatypes
             Half = new Elements( bytes[22] );
             Weak = new Elements( bytes[23] );
             Strong = new Elements( bytes[24] );
+
+            if( defaults != null )
+            {
+                Default = defaults;
+                Absorb.Default = Default.Absorb;
+                Cancel.Default = Default.Cancel;
+                Half.Default = Default.Half;
+                Weak.Default = Default.Weak;
+                Strong.Default = Default.Strong;
+            }
         }
 
         #endregion Constructors

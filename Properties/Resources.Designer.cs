@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FFTPatcher.Properties
-{
-
-
+namespace FFTPatcher.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -113,6 +113,29 @@ namespace FFTPatcher.Properties
             get {
                 object obj = ResourceManager.GetObject("bg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;
+        ///  &lt;xsl:template match=&quot;/digest/AllAbilities&quot;&gt;
+        ///    &lt;h1&gt;Abilities&lt;/h1&gt;
+        ///    &lt;xsl:for-each select=&quot;Ability&quot;&gt;
+        ///      &lt;h2&gt;
+        ///        &lt;xsl:value-of select=&quot;@name&quot;/&gt;
+        ///      &lt;/h2&gt;
+        ///      &lt;table border=&quot;1&quot;&gt;
+        ///        &lt;tr&gt;
+        ///          &lt;th&gt;Setting&lt;/th&gt;
+        ///          &lt;th&gt;Default&lt;/th&gt;
+        ///          &lt;th&gt;New value&lt;/th&gt;
+        ///        &lt;/tr&gt;
+        ///        &lt;xsl:for-each select=&quot;JPCost|LearnRate|AbilityType|LearnWithJP|Action|LearnOnHit|Blank [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string digestTransform {
+            get {
+                return ResourceManager.GetString("digestTransform", resourceCulture);
             }
         }
         

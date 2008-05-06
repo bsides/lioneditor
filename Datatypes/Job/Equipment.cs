@@ -24,7 +24,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// The types of equipment a <see cref="Job"/> can use.
     /// </summary>
-    public class Equipment : IChangeable
+    public class Equipment : IChangeable, ISupportDigest
     {
 
         #region Static Fields (2)
@@ -88,10 +88,15 @@ namespace FFTPatcher.Datatypes
 
         #endregion Fields
 
-        #region Properties (2)
+        #region Properties (3)
 
 
         public Equipment Default { get; private set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames; }
+        }
 
         public bool HasChanged
         {

@@ -54,8 +54,10 @@ namespace FFTPatcher.Datatypes
 
         public byte EvadePercentage { get; set; }
 
+        [Hex]
         public byte Formula { get; set; }
 
+        [Hex]
         public byte InflictStatus { get; set; }
 
         public byte Range { get; set; }
@@ -115,15 +117,20 @@ namespace FFTPatcher.Datatypes
         public Weapon( UInt16 offset, IList<byte> itemBytes, IList<byte> weaponBytes, Weapon defaults )
             : base( offset, itemBytes, defaults )
         {
-            WeaponDefault = defaults;
             Range = weaponBytes[0];
             Utilities.CopyByteToBooleans( weaponBytes[1], ref Striking, ref Lunging, ref Direct, ref Arc, ref TwoSwords, ref TwoHands, ref Blank, ref Force2Hands );
             Formula = weaponBytes[2];
             Unknown = weaponBytes[3];
             WeaponPower = weaponBytes[4];
             EvadePercentage = weaponBytes[5];
-            Elements = new Elements( weaponBytes[6] );
             InflictStatus = weaponBytes[7];
+            Elements = new Elements( weaponBytes[6] );
+
+            if( defaults != null )
+            {
+                WeaponDefault = defaults;
+                Elements.Default = WeaponDefault.Elements;
+            }
         }
 
         #endregion Constructors

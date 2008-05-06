@@ -135,6 +135,7 @@ namespace FFTPatcher.Datatypes
 
         public bool AIVerticalIncrease { get { return AIFlags.VerticalIncrease; } set { AIFlags.VerticalIncrease = value; } }
 
+        [Hex]
         public byte ArithmetickSkill { get; set; }
 
         public AbilityAttributes Attributes { get; private set; }
@@ -261,6 +262,7 @@ namespace FFTPatcher.Datatypes
 
         public UInt16 Offset { get; private set; }
 
+        [Hex]
         public byte OtherID { get; set; }
 
         public ItemSubType Throwing { get; set; }
@@ -441,7 +443,7 @@ namespace FFTPatcher.Datatypes
                 }
                 else if( IsItem )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "ItemOffset", Default.ItemOffset, ItemOffset, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "ItemOffset", Default.ItemOffset, ItemOffset, changesOnly, "0x{0:X2}" );
                 }
                 else if( IsThrowing )
                 {
@@ -459,11 +461,11 @@ namespace FFTPatcher.Datatypes
                 }
                 else if( IsArithmetick )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "ArithmetickSkill", Default.ArithmetickSkill, ArithmetickSkill, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "ArithmetickSkill", Default.ArithmetickSkill, ArithmetickSkill, changesOnly, "0x{0:X2}" );
                 }
                 else if( IsOther )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID, changesOnly, "0x{0:X2}" );
                 }
                 writer.WriteEndElement();
             }

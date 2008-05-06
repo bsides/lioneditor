@@ -102,6 +102,7 @@ namespace FFTPatcher.Datatypes
 
         public byte EnemyLevel { get; set; }
 
+        [Hex]
         public byte Graphic { get; set; }
 
         public bool Head { get { return head; } set { head = value; } }
@@ -112,12 +113,14 @@ namespace FFTPatcher.Datatypes
 
         public UInt16 Offset { get; private set; }
 
+        [Hex]
         public byte Palette { get; set; }
 
         public UInt16 Price { get; set; }
 
         public bool Rare { get { return rare; } set { rare = value; } }
 
+        [Hex]
         public byte SecondTableId { get; set; }
 
         public Item Self { get { return this; } }
@@ -126,6 +129,7 @@ namespace FFTPatcher.Datatypes
 
         public ShopAvailability ShopAvailability { get; set; }
 
+        [Hex]
         public byte SIA { get; set; }
 
         public byte Unknown1 { get; set; }

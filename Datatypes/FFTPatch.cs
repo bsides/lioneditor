@@ -598,7 +598,7 @@ namespace FFTPatcher.Datatypes
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
 
-                GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.xml" ) );
+                GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.html" ) );
             }
             catch( Exception )
             {
@@ -618,17 +618,31 @@ namespace FFTPatcher.Datatypes
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
-            using( XmlWriter writer = XmlWriter.Create( filename, settings ) )
+            StringBuilder sb = new StringBuilder();
+
+            using( XmlWriter writer = XmlWriter.Create( sb, settings ) )
             {
                 writer.WriteStartElement( "digest" );
                 IXmlDigest[] digestable = new IXmlDigest[] {
-                    Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
-                    InflictStatuses, PoachProbabilities, ENTDs };
+            Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
+            InflictStatuses, PoachProbabilities, ENTDs };
                 foreach( IXmlDigest digest in digestable )
                 {
                     digest.WriteXml( writer, true );
                 }
                 writer.WriteEndElement();
+            }
+
+            settings.ConformanceLevel = ConformanceLevel.Fragment;
+            using( StringReader transformStringReader = new StringReader( FFTPatcher.Properties.Resources.digestTransform ) )
+            using( XmlReader transformXmlReader = XmlReader.Create( transformStringReader ) )
+            using( StringReader inputReader = new StringReader( sb.ToString() ) )
+            using( XmlReader inputXmlReader = XmlReader.Create( inputReader ) )
+            using( XmlWriter outputWriter = XmlWriter.Create( filename, settings ) )
+            {
+                System.Xml.Xsl.XslCompiledTransform t = new System.Xml.Xsl.XslCompiledTransform();
+                t.Load( transformXmlReader );
+                t.Transform( inputXmlReader, outputWriter );
             }
         }
 

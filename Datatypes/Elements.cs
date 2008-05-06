@@ -21,10 +21,10 @@ using System.Collections.Generic;
 using System;
 namespace FFTPatcher.Datatypes
 {
-    public class Elements : IEquatable<Elements>
+    public class Elements : IEquatable<Elements>, ISupportDigest
     {
 
-        #region Static Fields (1)
+        #region Static Fields (2)
 
         private static readonly string[] elementNames = new string[8] {
             "Fire", "Lightning", "Ice", "Wind", 
@@ -32,14 +32,26 @@ namespace FFTPatcher.Datatypes
 
         #endregion Static Fields
 
-        #region Properties (8)
+        #region Properties (11)
 
 
         public bool Dark { get; set; }
 
+        public Elements Default { get; set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return elementNames; }
+        }
+
         public bool Earth { get; set; }
 
         public bool Fire { get; set; }
+
+        public bool HasChanged
+        {
+            get { return !Equals( Default ); }
+        }
 
         public bool Holy { get; set; }
 

@@ -164,7 +164,7 @@ namespace FFTPatcher.Datatypes
 
         public bool HasChanged
         {
-            get { return Default != null && Default.Value != Value; }
+            get { return Default != null && MenuAction.MenuAction != Default.MenuAction.MenuAction; }
         }
 
         public ActionMenuEntry MenuAction { get; set; }

@@ -190,6 +190,7 @@ namespace FFTPatcher.Datatypes
 
         public Ability Movement { get; set; }
 
+        [Hex]
         public byte Palette { get; set; }
 
         public PreRequisiteJob PrerequisiteJob { get; set; }
@@ -210,24 +211,33 @@ namespace FFTPatcher.Datatypes
 
         public Ability Support { get; set; }
 
+        [Hex]
         public byte Target { get; set; }
 
         public TeamColor TeamColor { get; set; }
 
+        [Hex]
         public byte UnitID { get; set; }
 
+        [Hex]
         public byte Unknown10 { get; set; }
 
+        [Hex]
         public byte Unknown11 { get; set; }
 
+        [Hex]
         public byte Unknown12 { get; set; }
 
+        [Hex]
         public byte Unknown2 { get; set; }
 
+        [Hex]
         public byte Unknown6 { get; set; }
 
+        [Hex]
         public byte Unknown7 { get; set; }
 
+        [Hex]
         public byte Unknown8 { get; set; }
 
         public Item WarTrophy { get; set; }

@@ -254,7 +254,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (5)
+        #region Methods (4)
 
 
         public List<string> GenerateCodes()
@@ -288,29 +288,25 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            WriteXml( writer, false );
-        }
-
-        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
-        {
-            if( !changesOnly || HasChanged )
+            if( HasChanged )
             {
                 writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( ActionMenu a in ActionMenus )
                 {
-                    if( !changesOnly || a.HasChanged )
+                    if( a.HasChanged )
                     {
                         writer.WriteStartElement( a.GetType().Name );
                         writer.WriteAttributeString( "value", a.Value.ToString( "X2" ) );
                         writer.WriteAttributeString( "name", a.Name );
-                        DigestGenerator.WriteXmlDigest( a, writer, false, true, changesOnly );
+                        DigestGenerator.WriteXmlDigest( a, writer, false, true );
                     }
                 }
 
                 writer.WriteEndElement();
             }
         }
+
 
         #endregion Methods
 

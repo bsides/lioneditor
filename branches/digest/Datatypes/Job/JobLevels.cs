@@ -29,12 +29,17 @@ namespace FFTPatcher.Datatypes
     public class JobLevels : IChangeable, IXmlDigest
     {
 
-		#region Fields (4) 
+        #region Static Fields (1)
 
         private static readonly string[] digestableProperties = new string[] {
             "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
             "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown",
             "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8" };
+
+        #endregion Static Fields
+
+        #region Fields (3)
+
         private string[] levelFields = new string[] {
             "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8" };
         private ushort[] levels = new ushort[8];
@@ -42,47 +47,10 @@ namespace FFTPatcher.Datatypes
             "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
             "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown" };
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (3) 
+        #region Properties (32)
 
-        public JobLevels( Context context, IList<byte> bytes, JobLevels defaults )
-        {
-            Default = defaults;
-            int jobCount = context == Context.US_PSP ? 22 : 19;
-            int requirementsLength = context == Context.US_PSP ? 12 : 10;
-
-            for( int i = 0; i < jobCount; i++ )
-            {
-                ReflectionHelpers.SetFieldOrProperty( this, reqs[i],
-                    new Requirements( context,
-                        bytes.Sub( i * requirementsLength, (i + 1) * requirementsLength - 1 ),
-                        defaults == null ? null : ReflectionHelpers.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
-            }
-
-            int start = requirementsLength * jobCount;
-            if( context == Context.US_PSX )
-                start += 2;
-
-            for( int i = 0; i < levels.Length; i++ )
-            {
-                levels[i] = Utilities.BytesToUShort( bytes[start + i * 2], bytes[start + i * 2 + 1] );
-            }
-        }
-
-        public JobLevels( Context context, IList<byte> bytes )
-            : this( context, bytes, null )
-        {
-        }
-
-        public JobLevels( IList<byte> bytes )
-            : this( Context.US_PSP, bytes )
-        {
-        }
-
-		#endregion Constructors 
-
-		#region Properties (32) 
 
         public Requirements Archer { get; private set; }
 
@@ -220,12 +188,49 @@ namespace FFTPatcher.Datatypes
 
         public Requirements WhiteMage { get; private set; }
 
-		#endregion Properties 
 
-		#region Methods (5) 
+        #endregion Properties
 
+        #region Constructors (3)
 
-		// Public Methods (5) 
+        public JobLevels( IList<byte> bytes )
+            : this( Context.US_PSP, bytes )
+        {
+        }
+
+        public JobLevels( Context context, IList<byte> bytes )
+            : this( context, bytes, null )
+        {
+        }
+
+        public JobLevels( Context context, IList<byte> bytes, JobLevels defaults )
+        {
+            Default = defaults;
+            int jobCount = context == Context.US_PSP ? 22 : 19;
+            int requirementsLength = context == Context.US_PSP ? 12 : 10;
+
+            for( int i = 0; i < jobCount; i++ )
+            {
+                ReflectionHelpers.SetFieldOrProperty( this, reqs[i],
+                    new Requirements( context,
+                        bytes.Sub( i * requirementsLength, (i + 1) * requirementsLength - 1 ),
+                        defaults == null ? null : ReflectionHelpers.GetFieldOrProperty<Requirements>( defaults, reqs[i] ) ) );
+            }
+
+            int start = requirementsLength * jobCount;
+            if( context == Context.US_PSX )
+                start += 2;
+
+            for( int i = 0; i < levels.Length; i++ )
+            {
+                levels[i] = Utilities.BytesToUShort( bytes[start + i * 2], bytes[start + i * 2 + 1] );
+            }
+        }
+
+        #endregion Constructors
+
+        #region Methods (4)
+
 
         public List<string> GenerateCodes()
         {
@@ -268,11 +273,6 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            WriteXml( writer, false );
-        }
-
-        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
-        {
             writer.WriteStartElement( GetType().Name );
             writer.WriteAttributeString( "changed", HasChanged.ToString() );
 
@@ -289,7 +289,7 @@ namespace FFTPatcher.Datatypes
 
             for( int i = 0; i < levels.Length; i++ )
             {
-                if( !changesOnly || levels[i] != Default.levels[i] )
+                if( levels[i] != Default.levels[i] )
                 {
                     writer.WriteStartElement( string.Format( "Level{0}", i ) );
                     writer.WriteAttributeString( "changed", (levels[i] != Default.levels[i]).ToString() );
@@ -302,7 +302,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 

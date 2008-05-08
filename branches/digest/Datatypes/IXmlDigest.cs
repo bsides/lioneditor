@@ -29,6 +29,6 @@ namespace FFTPatcher.Datatypes
         /// <param name="writer">The stream to which the object is serialized.</param>
         void WriteXml( XmlWriter writer );
 
-        void WriteXml( XmlWriter writer, bool changesOnly );
+        //void WriteXml( XmlWriter writer, bool changesOnly );
     }
 }

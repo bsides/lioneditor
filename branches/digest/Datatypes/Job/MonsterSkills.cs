@@ -235,23 +235,18 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            WriteXml( writer, false );
-        }
-
-        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
-        {
-            if( !changesOnly || HasChanged )
+            if( HasChanged )
             {
                 writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( MonsterSkill m in MonsterSkills )
                 {
-                    if( !changesOnly || m.HasChanged )
+                    if( m.HasChanged )
                     {
                         writer.WriteStartElement( m.GetType().Name );
                         writer.WriteAttributeString( "value", m.Value.ToString( "X2" ) );
                         writer.WriteAttributeString( "name", m.Name );
-                        DigestGenerator.WriteXmlDigest( m, writer, false, true, changesOnly );
+                        DigestGenerator.WriteXmlDigest( m, writer, false, true );
                     }
                 }
                 writer.WriteEndElement();

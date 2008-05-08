@@ -255,23 +255,18 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( XmlWriter writer, bool changesOnly )
+        public void WriteXml( XmlWriter writer )
         {
-            if( !changesOnly || HasChanged )
+            if( HasChanged )
             {
                 writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( Ability a in Abilities )
                 {
-                    a.WriteXml( writer, changesOnly );
+                    a.WriteXml( writer );
                 }
                 writer.WriteEndElement();
             }
-        }
-
-        public void WriteXml( XmlWriter writer )
-        {
-            WriteXml( writer, false );
         }
 
 

@@ -99,7 +99,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (5)
+        #region Methods (4)
 
 
         public bool Equals( Event other )
@@ -126,28 +126,24 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            WriteXml( writer, false );
-        }
-
-        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
-        {
-            if( !changesOnly || HasChanged )
+            if( HasChanged )
             {
                 writer.WriteStartElement( GetType().Name );
                 writer.WriteAttributeString( "value", this.ToString() );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 for( int i = 0; i < 16; i++ )
                 {
-                    if( !changesOnly || Units[i].HasChanged )
+                    if( Units[i].HasChanged )
                     {
                         writer.WriteStartElement( typeof( EventUnit ).Name );
                         writer.WriteAttributeString( "value", i.ToString() );
-                        DigestGenerator.WriteXmlDigest( Units[i], writer, false, true, changesOnly );
+                        DigestGenerator.WriteXmlDigest( Units[i], writer, false, true );
                     }
                 }
                 writer.WriteEndElement();
             }
         }
+
 
 
         public override string ToString()

@@ -263,23 +263,18 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            WriteXml( writer, false );
-        }
-
-        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
-        {
-            if( !changesOnly || HasChanged )
+            if( HasChanged )
             {
                 writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( StatusAttribute attr in StatusAttributes )
                 {
-                    if( !changesOnly || attr.HasChanged )
+                    if( attr.HasChanged )
                     {
                         writer.WriteStartElement( attr.GetType().Name );
                         writer.WriteAttributeString( "name", attr.Name );
                         writer.WriteAttributeString( "value", attr.Value.ToString( "X2" ) );
-                        DigestGenerator.WriteXmlDigest( attr, writer, false, true, changesOnly );
+                        DigestGenerator.WriteXmlDigest( attr, writer, false, true );
                     }
                 }
 

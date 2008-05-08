@@ -427,57 +427,48 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
-        public void WriteXml( XmlWriter writer, bool changesOnly )
+        public void WriteXml( XmlWriter writer )
         {
-            if( !changesOnly || HasChanged )
+            if( HasChanged )
             {
                 writer.WriteStartElement( GetType().Name );
                 writer.WriteAttributeString( "value", Offset.ToString( "X4" ) );
                 writer.WriteAttributeString( "name", Name );
-                DigestGenerator.WriteXmlDigest( this, writer, false, false, changesOnly );
-                DigestGenerator.WriteXmlDigest( AIFlags, writer, true, true, changesOnly );
+                DigestGenerator.WriteXmlDigest( this, writer, false, false );
+                DigestGenerator.WriteXmlDigest( AIFlags, writer, true, true );
                 if( IsNormal )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "Effect", Default.Effect, Effect, changesOnly );
-                    DigestGenerator.WriteXmlDigest( Attributes, writer, true, true, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "Effect", Default.Effect, Effect );
+                    DigestGenerator.WriteXmlDigest( Attributes, writer, true, true );
                 }
                 else if( IsItem )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "ItemOffset", Default.ItemOffset, ItemOffset, changesOnly, "0x{0:X2}" );
+                    DigestGenerator.WriteDigestEntry( writer, "ItemOffset", Default.ItemOffset, ItemOffset, "0x{0:X2}" );
                 }
                 else if( IsThrowing )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "Throwing", Default.Throwing, Throwing, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "Throwing", Default.Throwing, Throwing );
                 }
                 else if( IsJumping )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "JumpHorizontal", Default.JumpHorizontal, JumpHorizontal, changesOnly );
-                    DigestGenerator.WriteDigestEntry( writer, "JumpVertical", Default.JumpVertical, JumpVertical, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "JumpHorizontal", Default.JumpHorizontal, JumpHorizontal );
+                    DigestGenerator.WriteDigestEntry( writer, "JumpVertical", Default.JumpVertical, JumpVertical );
                 }
                 else if( IsCharging )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "ChargeCT", Default.ChargeCT, ChargeCT, changesOnly );
-                    DigestGenerator.WriteDigestEntry( writer, "ChargeBonus", Default.ChargeBonus, ChargeBonus, changesOnly );
+                    DigestGenerator.WriteDigestEntry( writer, "ChargeCT", Default.ChargeCT, ChargeCT );
+                    DigestGenerator.WriteDigestEntry( writer, "ChargeBonus", Default.ChargeBonus, ChargeBonus );
                 }
                 else if( IsArithmetick )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "ArithmetickSkill", Default.ArithmetickSkill, ArithmetickSkill, changesOnly, "0x{0:X2}" );
+                    DigestGenerator.WriteDigestEntry( writer, "ArithmetickSkill", Default.ArithmetickSkill, ArithmetickSkill, "0x{0:X2}" );
                 }
                 else if( IsOther )
                 {
-                    DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID, changesOnly, "0x{0:X2}" );
+                    DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID, "0x{0:X2}" );
                 }
                 writer.WriteEndElement();
             }
-        }
-
-        /// <summary>
-        /// Converts an object into its XML representation.
-        /// </summary>
-        /// <param name="writer">The stream to which the object is serialized.</param>
-        public void WriteXml( XmlWriter writer )
-        {
-            WriteXml( writer, false );
         }
 
 

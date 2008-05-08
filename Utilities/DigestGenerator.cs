@@ -28,15 +28,15 @@ namespace FFTPatcher
         #region Methods (3)
 
 
-        public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur, bool changesOnly )
+        public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur )
         {
-            WriteDigestEntry( writer, name, def, cur, changesOnly, "{0}" );
+            WriteDigestEntry( writer, name, def, cur, "{0}" );
         }
 
-        public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur, bool changesOnly, string formatString )
+        public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur, string formatString )
         {
             bool changed = !def.Equals( cur );
-            if( !changesOnly || changed )
+            if( changed )
             {
                 writer.WriteStartElement( name );
                 writer.WriteAttributeString( "changed", changed.ToString() );
@@ -46,10 +46,10 @@ namespace FFTPatcher
             }
         }
 
-        public static void WriteXmlDigest( ISupportDigest digest, XmlWriter writer, bool writeStartElement, bool writeEndElement, bool changesOnly )
+        public static void WriteXmlDigest( ISupportDigest digest, XmlWriter writer, bool writeStartElement, bool writeEndElement )
         {
             bool changed = digest.HasChanged;
-            if( !changesOnly || changed )
+            if( changed )
             {
                 if( writeStartElement )
                 {
@@ -66,10 +66,10 @@ namespace FFTPatcher
                         if( (cur is ISupportDigest) && ReflectionHelpers.GetFieldOrProperty<object>( cur, "Default" ) != null )
                         {
                             ISupportDigest curDigest = cur as ISupportDigest;
-                            if( !changesOnly || curDigest.HasChanged )
+                            if( curDigest.HasChanged )
                             {
                                 writer.WriteStartElement( value );
-                                WriteXmlDigest( cur as ISupportDigest, writer, false, true, changesOnly );
+                                WriteXmlDigest( cur as ISupportDigest, writer, false, true );
                             }
                         }
                         else
@@ -82,7 +82,7 @@ namespace FFTPatcher
                                 {
                                     formatString = "0x{0:X2}";
                                 }
-                                WriteDigestEntry( writer, value, def, cur, changesOnly, formatString );
+                                WriteDigestEntry( writer, value, def, cur, formatString );
                             }
                         }
                     }
@@ -93,11 +93,6 @@ namespace FFTPatcher
                     writer.WriteEndElement();
                 }
             }
-        }
-
-        public static void WriteXmlDigest( ISupportDigest digest, XmlWriter writer, bool changesOnly )
-        {
-            WriteXmlDigest( digest, writer, true, true, changesOnly );
         }
 
 

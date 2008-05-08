@@ -71,7 +71,7 @@ namespace FFTPatcher.Datatypes
                     Blank2 != Default.Blank2 ||
                     Blank3 != Default.Blank3 ||
                     Blank4 != Default.Blank4 ||
-                    Statuses.HasChanged );
+                    Statuses.HasChanged);
             }
         }
 
@@ -172,7 +172,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Methods (3)
 
 
         public List<string> GenerateCodes()
@@ -198,28 +198,23 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer, bool changesOnly )
+        public void WriteXml( System.Xml.XmlWriter writer )
         {
-            if( !changesOnly || HasChanged )
+            if( HasChanged )
             {
                 writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( InflictStatus i in InflictStatuses )
                 {
-                    if( !changesOnly || i.HasChanged )
+                    if( i.HasChanged )
                     {
                         writer.WriteStartElement( i.GetType().Name );
                         writer.WriteAttributeString( "value", i.Value.ToString( "X2" ) );
-                        DigestGenerator.WriteXmlDigest( i, writer, false, true, changesOnly );
+                        DigestGenerator.WriteXmlDigest( i, writer, false, true );
                     }
                 }
                 writer.WriteEndElement();
             }
-        }
-
-        public void WriteXml( System.Xml.XmlWriter writer )
-        {
-            WriteXml( writer, false );
         }
 
 

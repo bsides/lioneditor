@@ -48,8 +48,59 @@ namespace FFTPatcher.Datatypes
 
         #endregion Fields
 
-        #region Properties (5)
+        #region Properties (8)
 
+
+        public string CorrespondingAbilities
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Ability a in FFTPatch.Abilities.Abilities )
+                {
+                    if( a.Attributes != null && a.Attributes.Formula.Value != 0x02 && a.Attributes.InflictStatus == Value )
+                    {
+                        result.Add( a.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
+
+        public string CorrespondingChemistItems
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Item i in FFTPatch.Items.Items )
+                {
+                    if( i is ChemistItem && (i as ChemistItem).InflictStatus == Value )
+                    {
+                        result.Add( i.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
+
+        public string CorrespondingWeapons
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Item i in FFTPatch.Items.Items )
+                {
+                    if( i is Weapon && (i as Weapon).Formula != 0x02 && (i as Weapon).InflictStatus == Value )
+                    {
+                        result.Add( i.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
 
         public InflictStatus Default { get; private set; }
 
@@ -210,7 +261,11 @@ namespace FFTPatcher.Datatypes
                     {
                         writer.WriteStartElement( i.GetType().Name );
                         writer.WriteAttributeString( "value", i.Value.ToString( "X2" ) );
-                        DigestGenerator.WriteXmlDigest( i, writer, false, true );
+                        DigestGenerator.WriteXmlDigest( i, writer, false, false );
+                        writer.WriteElementString( "CorrespondingAbilities", i.CorrespondingAbilities );
+                        writer.WriteElementString( "CorrespondingChemistItems", i.CorrespondingChemistItems );
+                        writer.WriteElementString( "CorrespondingWeapons", i.CorrespondingWeapons );
+                        writer.WriteEndElement();
                     }
                 }
                 writer.WriteEndElement();

@@ -244,7 +244,28 @@ namespace FFTPatcher.Datatypes
                     {
                         writer.WriteStartElement( i.GetType().Name );
                         writer.WriteAttributeString( "name", i.Name );
-                        DigestGenerator.WriteXmlDigest( i, writer, false, true );
+                        DigestGenerator.WriteXmlDigest( i, writer, false, false );
+                        if( i is Weapon )
+                        {
+                            Weapon w = i as Weapon;
+                            if( w.Formula == 0x02 &&
+                                (w.Formula != w.WeaponDefault.Formula || w.InflictStatus != w.WeaponDefault.InflictStatus) )
+                            {
+                                writer.WriteStartElement( "CastSpell" );
+                                writer.WriteAttributeString( "default", AllAbilities.Names[w.WeaponDefault.InflictStatus] );
+                                writer.WriteAttributeString( "value", AllAbilities.Names[w.InflictStatus] );
+                                writer.WriteEndElement();
+                            }
+                            else if( w.InflictStatus != w.WeaponDefault.InflictStatus )
+                            {
+                                writer.WriteStartElement( "InflictStatusDescription" );
+                                writer.WriteAttributeString( "default", FFTPatch.InflictStatuses.InflictStatuses[w.WeaponDefault.InflictStatus].Statuses.ToString() );
+                                writer.WriteAttributeString( "value", FFTPatch.InflictStatuses.InflictStatuses[w.InflictStatus].Statuses.ToString() );
+                                writer.WriteEndElement();
+                            }
+                        }
+
+                        writer.WriteEndElement();
                     }
                 }
                 writer.WriteEndElement();

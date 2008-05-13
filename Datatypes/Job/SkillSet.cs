@@ -63,8 +63,25 @@ namespace FFTPatcher.Datatypes
 
         #endregion Static Properties
 
-        #region Properties (29)
+        #region Properties (30)
 
+
+        public string CorrespondingJobs
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Job j in FFTPatch.Jobs.Jobs )
+                {
+                    if( j.SkillSet.Value == Value )
+                    {
+                        result.Add( j.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
 
         public Ability Action1 { get { return Actions[0]; } }
 
@@ -398,7 +415,9 @@ namespace FFTPatcher.Datatypes
                         writer.WriteStartElement( s.GetType().Name );
                         writer.WriteAttributeString( "value", s.Value.ToString( "X2" ) );
                         writer.WriteAttributeString( "name", s.Name );
-                        DigestGenerator.WriteXmlDigest( s, writer, false, true );
+                        DigestGenerator.WriteXmlDigest( s, writer, false, false );
+                        writer.WriteElementString( "CorrespondingJobs", s.CorrespondingJobs );
+                        writer.WriteEndElement();
                     }
                 }
                 writer.WriteEndElement();

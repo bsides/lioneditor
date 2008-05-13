@@ -150,6 +150,19 @@
             <xsl:with-param name="prepend">Elements</xsl:with-param>
           </xsl:apply-templates>
         </xsl:for-each>
+        <xsl:for-each select="InflictStatusDescription|CastSpell">
+          <tr>
+            <td>
+              <xsl:value-of select="name(.)"/>
+            </td>
+            <td>
+              <xsl:value-of select="@default"/>
+            </td>
+            <td>
+              <xsl:value-of select="@value"/>
+            </td>
+          </tr>
+        </xsl:for-each>
         <xsl:for-each select="ItemOffset">
           <tr>
             <td>
@@ -282,6 +295,19 @@
               <xsl:with-param name="prepend">Weapon: Elements</xsl:with-param>
             </xsl:call-template>
           </xsl:for-each>
+          <xsl:for-each select="InflictStatusDescription|CastSpell">
+            <tr>
+              <td>
+                <xsl:value-of select="name(.)"/>
+              </td>
+              <td>
+                <xsl:value-of select="@default"/>
+              </td>
+              <td>
+                <xsl:value-of select="@value"/>
+              </td>
+            </tr>
+          </xsl:for-each>
         </xsl:if>
         <xsl:if test="name(.)=&apos;Shield&apos;">
           <xsl:for-each select="PhysicalBlockRate|MagicBlockRate">
@@ -356,6 +382,11 @@
       <h2>
         0x<xsl:value-of select="@value"/>
       </h2>
+      <ul>
+        <li>
+          Corresponding items: <xsl:value-of select="CorrespondingItems"/>
+        </li>
+      </ul>
       <table class="differencesTable">
         <tr>
           <th>Setting</th>
@@ -451,6 +482,11 @@
       <h2>
         0x<xsl:value-of select="@value"/><xsl:text xml:space="preserve"> </xsl:text><xsl:value-of select="@name"/>
       </h2>
+      <ul>
+        <li>
+          Corresponding jobs: <xsl:value-of select="CorrespondingJobs"/>
+        </li>
+      </ul>
       <table class="differencesTable">
         <tr>
           <th>Setting</th>
@@ -571,6 +607,17 @@
       <h2>
         0x<xsl:value-of select="@value"/>
       </h2>
+      <ul>
+        <li>
+          Corresponding abilities: <xsl:value-of select="CorrespondingAbilities"/>
+        </li>
+        <li>
+          Corresponding weapons: <xsl:value-of select="CorrespondingWeapons"/>
+        </li>
+        <li>
+          Corresponding chemist items: <xsl:value-of select="CorrespondingChemistItems"/>
+        </li>
+      </ul>
       <table class="differencesTable">
         <tr>
           <th>Setting</th>

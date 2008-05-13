@@ -35,8 +35,25 @@ namespace FFTPatcher.Datatypes
 
         #endregion Static Fields
 
-        #region Properties (17)
+        #region Properties (18)
 
+
+        public string CorrespondingItems
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Item i in FFTPatch.Items.Items )
+                {
+                    if( i.SIA == this.Value )
+                    {
+                        result.Add( i.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
 
         public Elements Absorb { get; private set; }
 
@@ -267,7 +284,9 @@ namespace FFTPatcher.Datatypes
                     {
                         writer.WriteStartElement( attr.GetType().Name );
                         writer.WriteAttributeString( "value", attr.Value.ToString( "X2" ) );
-                        DigestGenerator.WriteXmlDigest( attr, writer, false, true );
+                        DigestGenerator.WriteXmlDigest( attr, writer, false, false );
+                        writer.WriteElementString( "CorrespondingItems", attr.CorrespondingItems );
+                        writer.WriteEndElement();
                     }
                 }
                 writer.WriteEndElement();

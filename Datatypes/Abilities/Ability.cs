@@ -436,10 +436,26 @@ namespace FFTPatcher.Datatypes
                 writer.WriteAttributeString( "name", Name );
                 DigestGenerator.WriteXmlDigest( this, writer, false, false );
                 DigestGenerator.WriteXmlDigest( AIFlags, writer, true, true );
+
                 if( IsNormal )
                 {
                     DigestGenerator.WriteDigestEntry( writer, "Effect", Default.Effect, Effect );
                     DigestGenerator.WriteXmlDigest( Attributes, writer, true, true );
+                    if( Attributes.Formula.Value == 0x02 &&
+                        (Attributes.Formula.Value != Attributes.Default.Formula.Value || Attributes.InflictStatus != Attributes.Default.InflictStatus) )
+                    {
+                        writer.WriteStartElement( "CastSpell" );
+                        writer.WriteAttributeString( "default", AllAbilities.Names[Attributes.Default.InflictStatus] );
+                        writer.WriteAttributeString( "value", AllAbilities.Names[Attributes.InflictStatus] );
+                        writer.WriteEndElement();
+                    }
+                    else if( Attributes.InflictStatus != Attributes.Default.InflictStatus )
+                    {
+                        writer.WriteStartElement( "InflictStatusDescription" );
+                        writer.WriteAttributeString( "default", FFTPatch.InflictStatuses.InflictStatuses[Attributes.Default.InflictStatus].Statuses.ToString() );
+                        writer.WriteAttributeString( "value", FFTPatch.InflictStatuses.InflictStatuses[Attributes.InflictStatus].Statuses.ToString() );
+                        writer.WriteEndElement();
+                    }
                 }
                 else if( IsItem )
                 {
@@ -467,6 +483,7 @@ namespace FFTPatcher.Datatypes
                 {
                     DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID, "0x{0:X2}" );
                 }
+
                 writer.WriteEndElement();
             }
         }

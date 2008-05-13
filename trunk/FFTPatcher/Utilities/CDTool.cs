@@ -25,6 +25,7 @@ using System.Text;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 using FFTPatcher.Properties;
+using System.Threading;
 
 namespace FFTPatcher
 {
@@ -44,7 +45,7 @@ namespace FFTPatcher
             }
         }
 
-        private const string patchFunction = 
+        private const string patchFunction =
 @"function patchFile(filename, p)
 	f=cdutil:findpath(filename)
     file = cdfile(cdutil, f)
@@ -156,7 +157,7 @@ function bin.bor(a, b)
 end
 
 ";
-        private const string b64Module=
+        private const string b64Module =
 @"b64 = { }
 local cb64 = ""ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/""
 
@@ -233,14 +234,14 @@ end
             using( OpenFileDialog ofd = new OpenFileDialog() )
             {
                 ofd.Filter = "CD-Tool executables|cd-tool.exe";
-          
+
                 bool cancelled = false;
 
                 string configuredPath = Settings.Default.cdToolPath;
                 if( !File.Exists( configuredPath ) )
                 {
                     MessageBox.Show( "Please locate cd-tool.exe" );
-                    while( !File.Exists( configuredPath ) || cancelled )
+                    while( !File.Exists( configuredPath ) && !cancelled )
                     {
                         switch( ofd.ShowDialog() )
                         {
@@ -261,80 +262,91 @@ end
                 else
                 {
                     Settings.Default.cdToolPath = configuredPath;
+                    Settings.Default.Save();
                     return configuredPath;
                 }
             }
         }
 
-        public static void PatchISO( string imageFilename, params PatchedByteArray[] patches )
+        public delegate IList<PatchedByteArray> PatchedByteArrayListGenerator();
+
+        public static void PatchISO( string filename, DataReceivedEventHandler dataReceived, EventHandler finished, PatchedByteArrayListGenerator generator )
         {
             string cdToolPath = GetPathOfCdTool();
             if( cdToolPath == null )
             {
+                finished( null, EventArgs.Empty );
                 return;
             }
 
-            string isoFilename = null;
-            using( SaveFileDialog sfd = new SaveFileDialog() )
-            {
-                sfd.Filter = "Final Fantasy Tactics images|*.bin";
-                if( sfd.ShowDialog() == DialogResult.OK )
+            ThreadStart mi = new ThreadStart(
+                delegate()
                 {
-                    isoFilename = sfd.FileName;
-                }
-                else
-                {
-                    return;
-                }
-            }
+                    IList<PatchedByteArray> patches = generator();
 
-            Dictionary<string, IList<string>> patchDictionary = new Dictionary<string, IList<string>>( patches.Length );
-            foreach( PatchedByteArray p in patches )
-            {
-                string s = string.Format( "[{0}]=\"{1}\"", p.Offset, Convert.ToBase64String( p.Bytes ) );
-                if( !patchDictionary.ContainsKey( p.Filename ) )
-                {
-                    patchDictionary.Add( p.Filename, new List<string>() );
-                }
+                    string isoFilename = filename;
 
-                patchDictionary[p.Filename].Add( s );
-            }
+                    Dictionary<string, IList<string>> patchDictionary = new Dictionary<string, IList<string>>( patches.Count );
+                    foreach( PatchedByteArray p in patches )
+                    {
+                        string s = string.Format( "[{0}]=\"{1}\"", p.Offset, Convert.ToBase64String( p.Bytes ) );
+                        if( !patchDictionary.ContainsKey( p.Filename ) )
+                        {
+                            patchDictionary.Add( p.Filename, new List<string>() );
+                        }
 
-            StringBuilder output = new StringBuilder();
-            output.AppendLine( binModule );
-            output.AppendLine( b64Module );
-            output.AppendLine( patchFunction );
-            output.AppendLine( @"patches = {" );
-            string[] patchStrings = new string[patchDictionary.Count];
+                        patchDictionary[p.Filename].Add( s );
+                    }
 
-            int i = 0;
-            foreach( KeyValuePair<string, IList<string>> kvp in patchDictionary )
-            {
-                patchStrings[i++] = string.Format( "[\"{0}\"]={{ {1} }}", kvp.Key, string.Join( ", ", kvp.Value.ToArray() ) );
-            }
+                    StringBuilder output = new StringBuilder();
+                    output.AppendLine( binModule );
+                    output.AppendLine( b64Module );
+                    output.AppendLine( patchFunction );
+                    output.AppendLine( @"patches = {" );
+                    string[] patchStrings = new string[patchDictionary.Count];
 
-            output.AppendLine( string.Join( ", \n", patchStrings ) );
-            output.AppendLine( "}" );
+                    int i = 0;
+                    foreach( KeyValuePair<string, IList<string>> kvp in patchDictionary )
+                    {
+                        patchStrings[i++] = string.Format( "[\"{0}\"]={{ {1} }}", kvp.Key, string.Join( ", " + Environment.NewLine, kvp.Value.ToArray() ) );
+                    }
 
-            using( StreamWriter sw = new StreamWriter( "fftpatcher.lua", false, Encoding.ASCII ) )
-            {
-                sw.WriteLine( output.ToString() );
-            }
+                    output.AppendLine( string.Join( ", \n", patchStrings ) );
+                    output.AppendLine( "}" );
 
-            currentProcess = new Process();
-            currentProcess.StartInfo = new ProcessStartInfo( 
-                    cdToolPath, 
-                    string.Format( "-f {0} -w -e \"doPatch()\" fftpatcher.lua", isoFilename ) );
-            currentProcess.OutputDataReceived += FireConsoleOutputChangedEvent;
-            currentProcess.EnableRaisingEvents = true;
-            currentProcess.Exited += FireOperationCompleteEvent;
+                    using( StreamWriter sw = new StreamWriter( "fftpatcher.lua", false, Encoding.ASCII ) )
+                    {
+                        sw.WriteLine( output.ToString() );
+                    }
 
-            currentProcess.Start();
+                    currentProcess = new Process();
+                    currentProcess.StartInfo = new ProcessStartInfo(
+                            cdToolPath,
+                            string.Format( "-f \"{0}\" -w -e \"doPatch()\" fftpatcher.lua", isoFilename ) );
+                    currentProcess.StartInfo.RedirectStandardOutput = false;
+                    currentProcess.StartInfo.RedirectStandardError = false;
+                    currentProcess.StartInfo.UseShellExecute = false;
+                    currentProcess.EnableRaisingEvents = true;
+
+                    if( dataReceived != null )
+                    {
+                        currentProcess.OutputDataReceived += dataReceived;
+                        currentProcess.ErrorDataReceived += dataReceived;
+                    }
+                    if( finished != null )
+                    {
+                        currentProcess.Exited += finished;
+                    }
+
+                    currentProcess.Start();
+                } );
+            Thread t = new Thread( mi );
+            t.Start();
         }
 
         private static Process currentProcess;
 
-        public static void PatchISOWithFFTPatchAsync( string imageFilename,
+        public static void PatchISOWithFFTPatchAsync(
             AllAbilities abilities,
             AllItems items,
             AllItemAttributes itemAttributes,
@@ -347,86 +359,102 @@ end
             AllInflictStatuses inflictStatuses,
             AllPoachProbabilities poach,
             FFTFont font,
-            AllENTDs entds)
+            AllENTDs entds,
+            DataReceivedEventHandler dataReceived, EventHandler finished )
         {
-            const string scus = "/SCUS_942.21;1";
-            const string battle = "/BATTLE.BIN;1";
-            List<PatchedByteArray> patches = new List<PatchedByteArray>();
-            if( abilities.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x4F3F0, abilities.ToByteArray() ) );
-                FireProgressChangedEvent( 1, 18 );
-                patches.Add( new PatchedByteArray( battle, 0x14F3F0, abilities.ToEffectsByteArray() ) );
-                FireProgressChangedEvent( 2, 18 );
-            }
-            if( items.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x536B8, items.ToFirstByteArray() ) );
-                FireProgressChangedEvent( 3, 18 );
-            }
-            if( itemAttributes.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x54AC4, itemAttributes.ToFirstByteArray() ) );
-                FireProgressChangedEvent( 4, 18 );
-            }
-            if( jobs.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x518B8, jobs.ToByteArray( Context.US_PSX ) ) );
-                FireProgressChangedEvent( 5, 18 );
-            }
-            if( jobLevels.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x568C4, jobLevels.ToByteArray( Context.US_PSX ) ) );
-                FireProgressChangedEvent( 6, 18 );
-            }
-            if( skillsets.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x55294, skillsets.ToByteArray( Context.US_PSX ) ) );
-                FireProgressChangedEvent( 7, 18 );
-            }
-            if( monsters.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x563C4, monsters.ToByteArray( Context.US_PSX ) ) );
-                FireProgressChangedEvent( 8, 18 );
-            }
-            if( actionMenus.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x564B4, actionMenus.ToByteArray( Context.US_PSX ) ) );
-                FireProgressChangedEvent( 9, 18 );
-            }
-            if( statuses.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x565E4, statuses.ToByteArray( Context.US_PSX ) ) );
-                FireProgressChangedEvent( 10, 18 );
-            }
-            if( inflictStatuses.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x547C4, inflictStatuses.ToByteArray() ) );
-                FireProgressChangedEvent( 11, 18 );
-            }
-            if( poach.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( scus, 0x56864, poach.ToByteArray( Context.US_PSX ) ) );
-                FireProgressChangedEvent( 12, 18 );
-            }
-            if( entds.HasChanged )
-            {
-                patches.Add( new PatchedByteArray( "/BATTLE/ENTD1.ENT;1", 0, entds.ENTDs[0].ToByteArray() ) );
-                FireProgressChangedEvent( 13, 18 );
-                patches.Add( new PatchedByteArray( "/BATTLE/ENTD2.ENT;1", 0, entds.ENTDs[1].ToByteArray() ) );
-                FireProgressChangedEvent( 14, 18 );
-                patches.Add( new PatchedByteArray( "/BATTLE/ENTD3.ENT;1", 0, entds.ENTDs[2].ToByteArray() ) );
-                FireProgressChangedEvent( 15, 18 );
-                patches.Add( new PatchedByteArray( "/BATTLE/ENTD4.ENT;1", 0, entds.ENTDs[3].ToByteArray() ) );
-                FireProgressChangedEvent( 16, 18 );
-            }
+            PatchedByteArrayListGenerator generator = new PatchedByteArrayListGenerator(
+                delegate()
+                {
+                    const string scus = "/SCUS_942.21;1";
+                    const string battle = "/BATTLE.BIN;1";
+                    List<PatchedByteArray> patches = new List<PatchedByteArray>();
+                    if( abilities.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x4F3F0, abilities.ToByteArray() ) );
+                        FireProgressChangedEvent( 1, 18 );
+                        patches.Add( new PatchedByteArray( battle, 0x14F3F0, abilities.ToEffectsByteArray() ) );
+                        FireProgressChangedEvent( 2, 18 );
+                    }
+                    if( items.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x536B8, items.ToFirstByteArray() ) );
+                        FireProgressChangedEvent( 3, 18 );
+                    }
+                    if( itemAttributes.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x54AC4, itemAttributes.ToFirstByteArray() ) );
+                        FireProgressChangedEvent( 4, 18 );
+                    }
+                    if( jobs.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x518B8, jobs.ToByteArray( Context.US_PSX ) ) );
+                        FireProgressChangedEvent( 5, 18 );
+                    }
+                    if( jobLevels.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x568C4, jobLevels.ToByteArray( Context.US_PSX ) ) );
+                        FireProgressChangedEvent( 6, 18 );
+                    }
+                    if( skillsets.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x55294, skillsets.ToByteArray( Context.US_PSX ) ) );
+                        FireProgressChangedEvent( 7, 18 );
+                    }
+                    if( monsters.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x563C4, monsters.ToByteArray( Context.US_PSX ) ) );
+                        FireProgressChangedEvent( 8, 18 );
+                    }
+                    if( actionMenus.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x564B4, actionMenus.ToByteArray( Context.US_PSX ) ) );
+                        FireProgressChangedEvent( 9, 18 );
+                    }
+                    if( statuses.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x565E4, statuses.ToByteArray( Context.US_PSX ) ) );
+                        FireProgressChangedEvent( 10, 18 );
+                    }
+                    if( inflictStatuses.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x547C4, inflictStatuses.ToByteArray() ) );
+                        FireProgressChangedEvent( 11, 18 );
+                    }
+                    if( poach.HasChanged )
+                    {
+                        patches.Add( new PatchedByteArray( scus, 0x56864, poach.ToByteArray( Context.US_PSX ) ) );
+                        FireProgressChangedEvent( 12, 18 );
+                    }
 
-            patches.Add( new PatchedByteArray( "/EVENT/FONT.BIN;1", 0, font.ToByteArray() ) );
-            FireProgressChangedEvent( 17, 18 );
-            patches.Add( new PatchedByteArray( battle, 0xFF0FC, font.ToWidthsByteArray() ) );
-            FireProgressChangedEvent( 18, 18 );
+                    for( int i = 0; i < 4; i++ )
+                    {
+                        if( entds.ENTDs[i].HasChanged )
+                        {
+                            patches.Add( new PatchedByteArray( string.Format( "/BATTLE/ENTD{0}.ENT;1", i + 1 ), 0, entds.ENTDs[i].ToByteArray() ) );
+                        }
+                        FireProgressChangedEvent( 13 + i, 18 );
+                    }
 
-            PatchISO( imageFilename, patches.ToArray() );
+                    patches.Add( new PatchedByteArray( "/EVENT/FONT.BIN;1", 0, font.ToByteArray() ) );
+                    FireProgressChangedEvent( 17, 18 );
+                    patches.Add( new PatchedByteArray( battle, 0xFF0FC, font.ToWidthsByteArray() ) );
+                    FireProgressChangedEvent( 18, 18 );
+
+                    return patches;
+                } );
+
+            using( SaveFileDialog sfd = new SaveFileDialog() )
+            {
+                sfd.Filter = "Final Fantasy Tactics images|*.bin;*.img;*.iso";
+                if( sfd.ShowDialog() == DialogResult.OK )
+                {
+                    PatchISO( sfd.FileName, dataReceived, finished, generator );
+                }
+                else
+                {
+                    finished( null, EventArgs.Empty );
+                }
+            }
         }
     }
 }

@@ -24,10 +24,17 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the <see cref="Ability"/>s a monster can use.
     /// </summary>
-    public class MonsterSkill : IChangeable
+    public class MonsterSkill : IChangeable, ISupportDigest
     {
 
-		#region Properties (8) 
+        #region Static Fields (1)
+
+        private static readonly string[] digestableProperties = new string[4] {
+            "Ability1", "Ability2", "Ability3", "Beastmaster" };
+
+        #endregion Static Fields
+
+        #region Properties (9)
 
 
         public Ability Ability1 { get; set; }
@@ -40,13 +47,18 @@ namespace FFTPatcher.Datatypes
 
         public MonsterSkill Default { get; private set; }
 
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
+
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
         public bool HasChanged
         {
-            get 
+            get
             {
                 return (Default != null) &&
                     Ability1.Offset != Default.Ability1.Offset ||
@@ -61,9 +73,9 @@ namespace FFTPatcher.Datatypes
         public byte Value { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
         public MonsterSkill( IList<byte> bytes )
             : this( 0, "", bytes, null )
@@ -87,9 +99,9 @@ namespace FFTPatcher.Datatypes
             Beastmaster = AllAbilities.DummyAbilities[flags[3] ? (bytes[4] + 0x100) : bytes[4]];
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (2)
 
 
         public byte[] ToByteArray()
@@ -115,11 +127,11 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class AllMonsterSkills : IChangeable
+    public class AllMonsterSkills : IChangeable, IXmlDigest
     {
 
         #region Static Properties (3)
@@ -190,7 +202,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Constructors
 
-        #region Methods (3)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -221,6 +233,25 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( MonsterSkill m in MonsterSkills )
+                {
+                    if( m.HasChanged )
+                    {
+                        writer.WriteStartElement( m.GetType().Name );
+                        writer.WriteAttributeString( "value", m.Value.ToString( "X2" ) );
+                        writer.WriteAttributeString( "name", m.Name );
+                        DigestGenerator.WriteXmlDigest( m, writer, false, true );
+                    }
+                }
+                writer.WriteEndElement();
+            }
+        }
 
         #endregion Methods
     }

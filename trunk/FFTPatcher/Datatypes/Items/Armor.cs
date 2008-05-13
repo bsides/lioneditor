@@ -28,7 +28,13 @@ namespace FFTPatcher.Datatypes
     public class Armor : Item
     {
 
-		#region Properties (4) 
+        #region Static Fields (1)
+
+        private static readonly List<string> armorDigestableProperties;
+
+        #endregion Static Fields
+
+        #region Properties (5)
 
 
         public Armor ArmorDefault { get; private set; }
@@ -38,6 +44,11 @@ namespace FFTPatcher.Datatypes
         public byte MPBonus { get; set; }
 
 
+
+        public override IList<string> DigestableProperties
+        {
+            get { return armorDigestableProperties; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -55,9 +66,16 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (3)
+
+        static Armor()
+        {
+            armorDigestableProperties = new List<string>( Item.digestableProperties );
+            armorDigestableProperties.Add( "HPBonus" );
+            armorDigestableProperties.Add( "MPBonus" );
+        }
 
         public Armor( UInt16 offset, IList<byte> itemBytes, IList<byte> armorBytes )
             : this( offset, itemBytes, armorBytes, null )
@@ -72,9 +90,9 @@ namespace FFTPatcher.Datatypes
             MPBonus = armorBytes[1];
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (4) 
+        #region Methods (4)
 
 
         public byte[] ToArmorByteArray()
@@ -100,7 +118,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

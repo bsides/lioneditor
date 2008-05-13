@@ -17,12 +17,18 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
+using System.Xml;
 
 namespace FFTPatcher.Datatypes
 {
-    public interface ISupportDigest : IChangeable
+    interface IXmlDigest
     {
-        IList<string> DigestableProperties { get; }
+        /// <summary>
+        /// Converts an object into its XML representation.
+        /// </summary>
+        /// <param name="writer">The stream to which the object is serialized.</param>
+        void WriteXml( XmlWriter writer );
+
+        //void WriteXml( XmlWriter writer, bool changesOnly );
     }
 }

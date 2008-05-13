@@ -24,19 +24,23 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the set of <see cref="Ability"/> a <see cref="Job"/> can use.
     /// </summary>
-    public class SkillSet :  IChangeable
+    public class SkillSet : IChangeable, ISupportDigest
     {
 
-		#region Static Fields (4) 
+        #region Static Fields (5)
 
+        private static readonly string[] digestableProperties = new string[22] {
+            "Action1", "Action2", "Action3", "Action4", "Action5", "Action6", "Action7", "Action8", 
+            "Action9", "Action10", "Action11", "Action12", "Action13", "Action14", "Action15", "Action16", 
+            "TheRest1", "TheRest2", "TheRest3", "TheRest4", "TheRest5", "TheRest6" };
         private static SortedDictionary<byte, SkillSet> pspEventSkills;
         private static SkillSet[] pspSkills;
         private static SortedDictionary<byte, SkillSet> psxEventSkills;
         private static SkillSet[] psxSkills;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Static Properties (4) 
+        #region Static Properties (4)
 
 
         public static SkillSet[] DummySkillSets
@@ -57,14 +61,68 @@ namespace FFTPatcher.Datatypes
         public static string[] PSXNames { get; private set; }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Properties (6) 
+        #region Properties (30)
 
+
+        public string CorrespondingJobs
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Job j in FFTPatch.Jobs.Jobs )
+                {
+                    if( j.SkillSet.Value == Value )
+                    {
+                        result.Add( j.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
+
+        public Ability Action1 { get { return Actions[0]; } }
+
+        public Ability Action10 { get { return Actions[9]; } }
+
+        public Ability Action11 { get { return Actions[10]; } }
+
+        public Ability Action12 { get { return Actions[11]; } }
+
+        public Ability Action13 { get { return Actions[12]; } }
+
+        public Ability Action14 { get { return Actions[13]; } }
+
+        public Ability Action15 { get { return Actions[14]; } }
+
+        public Ability Action16 { get { return Actions[15]; } }
+
+        public Ability Action2 { get { return Actions[1]; } }
+
+        public Ability Action3 { get { return Actions[2]; } }
+
+        public Ability Action4 { get { return Actions[3]; } }
+
+        public Ability Action5 { get { return Actions[4]; } }
+
+        public Ability Action6 { get { return Actions[5]; } }
+
+        public Ability Action7 { get { return Actions[6]; } }
+
+        public Ability Action8 { get { return Actions[7]; } }
+
+        public Ability Action9 { get { return Actions[8]; } }
 
         public Ability[] Actions { get; private set; }
 
         public SkillSet Default { get; private set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -72,7 +130,7 @@ namespace FFTPatcher.Datatypes
         /// <value></value>
         public bool HasChanged
         {
-            get 
+            get
             {
                 if( Default != null )
                 {
@@ -96,12 +154,24 @@ namespace FFTPatcher.Datatypes
 
         public Ability[] TheRest { get; private set; }
 
+        public Ability TheRest1 { get { return TheRest[0]; } }
+
+        public Ability TheRest2 { get { return TheRest[1]; } }
+
+        public Ability TheRest3 { get { return TheRest[2]; } }
+
+        public Ability TheRest4 { get { return TheRest[3]; } }
+
+        public Ability TheRest5 { get { return TheRest[4]; } }
+
+        public Ability TheRest6 { get { return TheRest[5]; } }
+
         public byte Value { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (4) 
+        #region Constructors (4)
 
         static SkillSet()
         {
@@ -173,9 +243,9 @@ namespace FFTPatcher.Datatypes
             Default = defaults;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (2)
 
 
         public byte[] ToByteArray()
@@ -228,14 +298,14 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class AllSkillSets : IChangeable
+    public class AllSkillSets : IChangeable, IXmlDigest
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -244,7 +314,7 @@ namespace FFTPatcher.Datatypes
         /// <value></value>
         public bool HasChanged
         {
-            get 
+            get
             {
                 foreach( SkillSet s in SkillSets )
                 {
@@ -259,9 +329,9 @@ namespace FFTPatcher.Datatypes
         public SkillSet[] SkillSets { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
         public AllSkillSets( IList<byte> bytes )
             : this( Context.US_PSP, bytes, Resources.SkillSetsBin )
@@ -294,9 +364,9 @@ namespace FFTPatcher.Datatypes
             SkillSets = tempSkills.ToArray();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (4)
 
 
         public List<string> GenerateCodes()
@@ -332,8 +402,30 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( SkillSet s in SkillSets )
+                {
+                    if( s.HasChanged )
+                    {
+                        writer.WriteStartElement( s.GetType().Name );
+                        writer.WriteAttributeString( "value", s.Value.ToString( "X2" ) );
+                        writer.WriteAttributeString( "name", s.Name );
+                        DigestGenerator.WriteXmlDigest( s, writer, false, false );
+                        writer.WriteElementString( "CorrespondingJobs", s.CorrespondingJobs );
+                        writer.WriteEndElement();
+                    }
+                }
+                writer.WriteEndElement();
+            }
+        }
 
-		#endregion Methods 
+
+        #endregion Methods
 
     }
 }

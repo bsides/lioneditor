@@ -22,13 +22,14 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using System.Diagnostics;
 
 namespace FFTPatcher
 {
     public partial class MainForm : Form
     {
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public MainForm()
         {
@@ -59,9 +60,9 @@ namespace FFTPatcher
             FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (18) 
+        #region Methods (18)
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
@@ -186,6 +187,7 @@ namespace FFTPatcher
                 {
                     FFTPack.FileProgress += FFTPack_FileProgress;
                     progressBar.Visible = true;
+                    progressBar.BringToFront();
                     fftPatchEditor1.Enabled = false;
                     FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath );
                 }
@@ -200,6 +202,7 @@ namespace FFTPatcher
                 finally
                 {
                     FFTPack.FileProgress -= FFTPack_FileProgress;
+                    progressBar.SendToBack();
                     progressBar.Visible = false;
                     fftPatchEditor1.Enabled = oldEnabled;
                 }
@@ -331,9 +334,49 @@ namespace FFTPatcher
 
         private void patchPsxIsoMenuItem_Click( object sender, EventArgs e )
         {
-            CDTool.PatchISOWithFFTPatchAsync( "", FFTPatch.Abilities, FFTPatch.Items, FFTPatch.ItemAttributes, FFTPatch.Jobs, FFTPatch.JobLevels,
+            Enabled = false;
+            CDTool.PatchISOWithFFTPatchAsync( FFTPatch.Abilities, FFTPatch.Items, FFTPatch.ItemAttributes, FFTPatch.Jobs, FFTPatch.JobLevels,
                 FFTPatch.SkillSets, FFTPatch.MonsterSkills, FFTPatch.ActionMenus, FFTPatch.StatusAttributes, FFTPatch.InflictStatuses,
-                FFTPatch.PoachProbabilities, FFTPatch.Font, FFTPatch.ENTDs );
+                FFTPatch.PoachProbabilities, FFTPatch.Font, FFTPatch.ENTDs, PatchDataReceived, PatchFinished );
+        }
+
+        private void PatchDataReceived( object sender, DataReceivedEventArgs e )
+        {
+        }
+
+        private void PatchFinished( object sender, EventArgs e )
+        {
+            Process p = sender as Process;
+            if( p != null && p.ExitCode != 0 )
+            {
+                MethodInvoker mii = new MethodInvoker(
+                    delegate()
+                    {
+                        MessageBox.Show( "Error while patching", "Error", MessageBoxButtons.OK );
+                    } );
+                if( InvokeRequired )
+                {
+                    Invoke( mii );
+                }
+                else
+                {
+                    mii();
+                }
+            }
+
+            MethodInvoker mi = new MethodInvoker(
+                delegate()
+                {
+                    Enabled = true;
+                } );
+            if( fftPatchEditor1.InvokeRequired )
+            {
+                Invoke( mi );
+            }
+            else
+            {
+                mi();
+            }
         }
 
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
@@ -387,7 +430,7 @@ namespace FFTPatcher
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

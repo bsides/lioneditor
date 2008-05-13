@@ -118,6 +118,11 @@
       <Link>StatusAttributes.bin</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\abilityeffects.bin" />
+    <None Include="Resources\entd1.ent" />
+    <None Include="Resources\entd2.ent" />
+    <None Include="Resources\entd4.ent" />
+    <None Include="Resources\entd5.bin" />
     <None Include="Sprites\10M.SPR" />
     <None Include="Sprites\10W.SPR" />
     <None Include="Sprites\20M.SPR" />

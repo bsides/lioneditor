@@ -25,16 +25,16 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all items in memory.
     /// </summary>
-    public class AllItems : IChangeable
+    public class AllItems : IChangeable, IXmlDigest
     {
 
-		#region Fields (1) 
+        #region Fields (1)
 
         private byte[] afterPhoenixDown;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace FFTPatcher.Datatypes
         public List<Item> Items { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public AllItems( IList<byte> first )
             : this( first, null )
@@ -181,9 +181,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (4)
 
 
         public List<string> GenerateCodes()
@@ -232,8 +232,48 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( Item i in Items )
+                {
+                    if( i.HasChanged )
+                    {
+                        writer.WriteStartElement( i.GetType().Name );
+                        writer.WriteAttributeString( "name", i.Name );
+                        DigestGenerator.WriteXmlDigest( i, writer, false, false );
+                        if( i is Weapon )
+                        {
+                            Weapon w = i as Weapon;
+                            if( w.Formula == 0x02 &&
+                                (w.Formula != w.WeaponDefault.Formula || w.InflictStatus != w.WeaponDefault.InflictStatus) )
+                            {
+                                writer.WriteStartElement( "CastSpell" );
+                                writer.WriteAttributeString( "default", AllAbilities.Names[w.WeaponDefault.InflictStatus] );
+                                writer.WriteAttributeString( "value", AllAbilities.Names[w.InflictStatus] );
+                                writer.WriteEndElement();
+                            }
+                            else if( w.InflictStatus != w.WeaponDefault.InflictStatus )
+                            {
+                                writer.WriteStartElement( "InflictStatusDescription" );
+                                writer.WriteAttributeString( "default", FFTPatch.InflictStatuses.InflictStatuses[w.WeaponDefault.InflictStatus].Statuses.ToString() );
+                                writer.WriteAttributeString( "value", FFTPatch.InflictStatuses.InflictStatuses[w.InflictStatus].Statuses.ToString() );
+                                writer.WriteEndElement();
+                            }
+                        }
 
-		#endregion Methods 
+                        writer.WriteEndElement();
+                    }
+                }
+                writer.WriteEndElement();
+            }
+        }
+
+
+        #endregion Methods
 
     }
 }

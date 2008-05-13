@@ -28,7 +28,13 @@ namespace FFTPatcher.Datatypes
     public class Accessory : Item
     {
 
-		#region Properties (4) 
+        #region Static Fields (1)
+
+        private static readonly List<string> accessoryDigestableProperties;
+
+        #endregion Static Fields
+
+        #region Properties (5)
 
 
         public Accessory AccessoryDefault { get; private set; }
@@ -38,6 +44,11 @@ namespace FFTPatcher.Datatypes
         public byte PhysicalEvade { get; set; }
 
 
+
+        public override IList<string> DigestableProperties
+        {
+            get { return accessoryDigestableProperties; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -55,9 +66,16 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (3)
+
+        static Accessory()
+        {
+            accessoryDigestableProperties = new List<string>( Item.digestableProperties );
+            accessoryDigestableProperties.AddRange( new string[] {
+                "PhysicalEvade", "MagicEvade" } );
+        }
 
         public Accessory( UInt16 offset, IList<byte> itemBytes, IList<byte> accessoryBytes )
             : this( offset, itemBytes, accessoryBytes, null )
@@ -72,9 +90,9 @@ namespace FFTPatcher.Datatypes
             MagicEvade = accessoryBytes[1];
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (4) 
+        #region Methods (4)
 
 
         public byte[] ToAccessoryByteArray()
@@ -100,7 +118,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

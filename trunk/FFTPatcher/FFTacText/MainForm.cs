@@ -24,13 +24,14 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
+using System.Diagnostics;
 
 namespace FFTPatcher.TextEditor
 {
     public partial class MainForm : Form
     {
 
-		#region Fields (3) 
+        #region Fields (3)
 
         private readonly MenuItem[] defaultPspMenuItems;
         private readonly MenuItem[] defaultPsxMenuItems;
@@ -38,9 +39,9 @@ namespace FFTPatcher.TextEditor
         private FFTText file;
         private MenuItem[] menuItems;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
         /// <summary>
@@ -91,9 +92,9 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public MainForm()
         {
@@ -125,9 +126,9 @@ namespace FFTPatcher.TextEditor
                 new MenuItem("Patch ISO...", patchMenuItem_Click ) };
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (22) 
+        #region Methods (22)
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
@@ -217,7 +218,7 @@ namespace FFTPatcher.TextEditor
         private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
         {
             string format = "{0}/{1}/{2:X}";
-            for (int section =0; section < file.Sections.Count; section++)
+            for( int section = 0; section < file.Sections.Count; section++ )
             {
                 if( !badSections.Contains( section ) )
                 {
@@ -484,12 +485,12 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private void patchMenuItem_Click(object sender, EventArgs e)
+        private void patchMenuItem_Click( object sender, EventArgs e )
         {
-            openFileDialog.Filter = "ISO images (*.iso)|*.iso";
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if( File.Filetype == Filetype.PSP )
             {
-                if( File.Filetype == Filetype.PSP )
+                openFileDialog.Filter = "ISO images (*.iso)|*.iso";
+                if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
                 {
                     try
                     {
@@ -503,10 +504,25 @@ namespace FFTPatcher.TextEditor
                         MessageBox.Show( this, "Error patching file.", "Error", MessageBoxButtons.OK );
                     }
                 }
-                else if( File.Filetype == Filetype.PSX )
-                {
-                    File.UpdatePsxIso( openFileDialog.FileName );
-                }
+            }
+            else if( File.Filetype == Filetype.PSX )
+            {
+                Enabled = false;
+                DataReceivedEventHandler dataReceived = new DataReceivedEventHandler( delegate( object o, DataReceivedEventArgs drea ) { } );
+                EventHandler finished = new EventHandler(
+                    delegate( object o2, EventArgs ea )
+                    {
+                        MethodInvoker mi = new MethodInvoker( delegate() { Enabled = true; } );
+                        if( InvokeRequired )
+                        {
+                            Invoke( mi );
+                        }
+                        else
+                        {
+                            mi();
+                        }
+                    } );
+                File.UpdatePsxIso( dataReceived, finished );
             }
         }
 
@@ -566,7 +582,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 #if DEBUG
         private string[] GetLayoutOfCloseAndNewLines( string s )
         {
@@ -581,7 +597,7 @@ namespace FFTPatcher.TextEditor
                 {
                     lastIndex = -1;
                 }
-                else if (lastIndexA != -1 && lastIndexB != -1)
+                else if( lastIndexA != -1 && lastIndexB != -1 )
                 {
                     lastIndex = Math.Min( lastIndexA, lastIndexB );
                     if( lastIndex == lastIndexA )

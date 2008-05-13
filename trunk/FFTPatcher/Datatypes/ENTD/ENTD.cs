@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     public class ENTD : IChangeable
     {
 
-		#region Properties (3) 
+        #region Properties (3)
 
 
         public ENTD Default { get; private set; }
@@ -40,7 +40,7 @@ namespace FFTPatcher.Datatypes
         /// <value></value>
         public bool HasChanged
         {
-            get 
+            get
             {
                 foreach( Event e in Events )
                 {
@@ -55,9 +55,9 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public ENTD( int start, IList<byte> bytes, ENTD defaults )
         {
@@ -72,9 +72,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (1) 
+        #region Methods (1)
 
 
         public byte[] ToByteArray()
@@ -89,14 +89,14 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class AllENTDs : IChangeable
+    public class AllENTDs : IChangeable, IXmlDigest
     {
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         public ENTD[] ENTDs { get; private set; }
@@ -137,9 +137,9 @@ namespace FFTPatcher.Datatypes
         public List<Event> PSPEvent { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public AllENTDs( IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4 )
         {
@@ -184,9 +184,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (1) 
+        #region Methods (2)
 
 
         public byte[] PSPEventsToByteArray()
@@ -204,8 +204,22 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( Event e in Events )
+                {
+                    e.WriteXml( writer );
+                }
+                writer.WriteEndElement();
+            }
+        }
 
-		#endregion Methods 
+
+        #endregion Methods
 
     }
 }

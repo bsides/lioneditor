@@ -19,23 +19,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
-    public class AllAbilities : IChangeable
+    public class AllAbilities : IChangeable, IXmlDigest
     {
 
-		#region Static Fields (2) 
+        #region Static Fields (2)
 
         private static Ability[] pspEventAbilites;
         private static Ability[] psxEventAbilites;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Static Properties (7) 
+        #region Static Properties (7)
 
 
         public static Ability[] DummyAbilities
@@ -71,9 +72,9 @@ namespace FFTPatcher.Datatypes
         public static string[] PSXNames { get; private set; }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Properties (3) 
+        #region Properties (3)
 
 
         public Ability[] Abilities { get; private set; }
@@ -100,9 +101,9 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         static AllAbilities()
         {
@@ -198,9 +199,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (4) 
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -254,8 +255,22 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public void WriteXml( XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( Ability a in Abilities )
+                {
+                    a.WriteXml( writer );
+                }
+                writer.WriteEndElement();
+            }
+        }
 
-		#endregion Methods 
+
+        #endregion Methods
 
     }
 }

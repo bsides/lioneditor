@@ -21,10 +21,21 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
-    public class Statuses
+    public class Statuses : ISupportDigest
     {
 
-		#region Fields (41) 
+        #region Static Fields (1)
+
+        public static string[] FieldNames = new string[] {
+            "NoEffect","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
+            "Petrify","Invite","Darkness","Confusion","Silence","BloodSuck","DarkEvilLooking","Treasure",
+            "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
+            "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
+            "Faith","Innocent","Charm","Sleep","DontMove","DontAct","Reflect","DeathSentence" };
+
+        #endregion Static Fields
+
+        #region Fields (40)
 
         public bool Berserk;
         public bool BloodSuck;
@@ -42,12 +53,6 @@ namespace FFTPatcher.Datatypes
         public bool DontAct;
         public bool DontMove;
         public bool Faith;
-        public static string[] FieldNames = new string[] {
-            "NoEffect","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
-            "Petrify","Invite","Darkness","Confusion","Silence","BloodSuck","DarkEvilLooking","Treasure",
-            "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
-            "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
-            "Faith","Innocent","Charm","Sleep","DontMove","DontAct","Reflect","DeathSentence" };
         public bool Float;
         public bool Frog;
         public bool Haste;
@@ -73,17 +78,27 @@ namespace FFTPatcher.Datatypes
         public bool Undead;
         public bool Wall;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (1) 
+        #region Properties (3)
 
 
         public Statuses Default { get; private set; }
 
+        public IList<string> DigestableProperties
+        {
+            get { return FieldNames; }
+        }
 
-		#endregion Properties 
+        public bool HasChanged
+        {
+            get { return Default != null && !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() ); }
+        }
 
-		#region Constructors (2) 
+
+        #endregion Properties
+
+        #region Constructors (2)
 
         public Statuses( IList<byte> bytes )
         {
@@ -100,9 +115,9 @@ namespace FFTPatcher.Datatypes
             Default = defaults;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (5)
 
 
         public bool[] ToBoolArray()
@@ -127,7 +142,33 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+
+        public override bool Equals( object obj )
+        {
+            return obj is Statuses && Utilities.CompareArrays( ToByteArray(), (obj as Statuses).ToByteArray() );
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            List<string> strings = new List<string>( 40 );
+            foreach( string name in FieldNames )
+            {
+                if( ReflectionHelpers.GetFieldOrProperty<bool>( this, name ) )
+                {
+                    strings.Add( name );
+                }
+            }
+
+            return string.Join( " | ", strings.ToArray() );
+        }
+
+
+        #endregion Methods
 
     }
 }

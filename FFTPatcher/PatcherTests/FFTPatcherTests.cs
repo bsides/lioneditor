@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Xml;
 using FFTPatcher;
 using FFTPatcher.Datatypes;
 using NUnit.Framework;
@@ -30,6 +31,77 @@ namespace PatcherTests
     [TestFixture]
     public class FFTPatcherTests
     {
+        [Test]
+        public void ShouldXmlDigestAllItems()
+        {
+            MethodInfo mi = typeof( FFTPatch ).GetMethod( "set_Context", BindingFlags.Static | BindingFlags.NonPublic );
+            mi.Invoke( null, new object[] { Context.US_PSP } );
+            AllItems i = new AllItems( Resources.OldItems, Resources.NewItems );
+
+            XmlWriterSettings s = new XmlWriterSettings();
+            s.Indent = true;
+            using( XmlWriter w = XmlWriter.Create( "test.xml", s ) )
+            {
+                i.WriteXml( w );
+            }
+        }
+
+        [Test]
+        public void ShouldXmlDigestAllENTDs()
+        {
+            MethodInfo mi = typeof( FFTPatch ).GetMethod( "set_Context", BindingFlags.Static | BindingFlags.NonPublic );
+            mi.Invoke( null, new object[] { Context.US_PSP } );
+            AllENTDs e = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4, Resources.ENTD5 );
+            using( XmlWriter w = XmlWriter.Create( "test.xml" ) )
+            {
+                e.WriteXml( w );
+            }
+        }
+
+        [Test]
+        public void ShouldXmlDigestAbilityAttributes()
+        {
+            AllAbilities a = new AllAbilities( Resources.Abilities, Resources.AbilityEffects );
+            AbilityAttributes attributes = a.Abilities[0].Attributes;
+            foreach( string n in attributes.DigestableProperties )
+            {
+                object o = ReflectionHelpers.GetFieldOrProperty<object>( attributes, n );
+                if( o is bool )
+                {
+                    ReflectionHelpers.SetFieldOrProperty( attributes, n, !(bool)o );
+                }
+                else if( o is Elements )
+                {
+                    Elements e = o as Elements;
+                    e.Fire = !e.Fire;
+                    e.Earth = !e.Earth;
+                    e.Ice = !e.Ice;
+                }
+                else if( o is AbilityFormula )
+                {
+                    AbilityFormula f = o as AbilityFormula;
+                    ReflectionHelpers.SetFieldOrProperty( attributes, n,
+                        AbilityFormula.PSPAbilityFormulas[(AbilityFormula.PSPAbilityFormulas.IndexOf( f ) + 1) % (AbilityFormula.PSPAbilityFormulas.Count)] );
+                }
+            }
+            using( XmlWriter w = XmlWriter.Create( "test.xml" ) )
+            {
+                DigestGenerator.WriteXmlDigest( attributes, w );
+            }
+        }
+
+        [Test]
+        public void ShouldXmlDigestAllAbilities()
+        {
+            MethodInfo mi = typeof( FFTPatch ).GetMethod( "set_Context", BindingFlags.Static | BindingFlags.NonPublic );
+            mi.Invoke( null, new object[] { Context.US_PSP } );
+            AllAbilities a = new AllAbilities( Resources.Abilities, Resources.AbilityEffects );
+            using( XmlWriter w = XmlWriter.Create( "test.xml" ) )
+            {
+                a.WriteXml( w );
+            }
+        }
+
         [Test, Explicit]
         public void ShouldExpandFile()
         {

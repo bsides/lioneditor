@@ -17,19 +17,41 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+using System;
 namespace FFTPatcher.Datatypes
 {
-    public class Elements
+    public class Elements : IEquatable<Elements>, ISupportDigest
     {
 
-		#region Properties (8) 
+        #region Static Fields (2)
+
+        private static readonly string[] elementNames = new string[8] {
+            "Fire", "Lightning", "Ice", "Wind", 
+            "Earth", "Water", "Holy", "Dark" };
+
+        #endregion Static Fields
+
+        #region Properties (11)
 
 
         public bool Dark { get; set; }
 
+        public Elements Default { get; set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return elementNames; }
+        }
+
         public bool Earth { get; set; }
 
         public bool Fire { get; set; }
+
+        public bool HasChanged
+        {
+            get { return !Equals( Default ); }
+        }
 
         public bool Holy { get; set; }
 
@@ -42,9 +64,9 @@ namespace FFTPatcher.Datatypes
         public bool Wind { get; set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public Elements( byte b )
         {
@@ -59,10 +81,24 @@ namespace FFTPatcher.Datatypes
             Dark = flags[0];
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (6)
 
+
+        public bool Equals( Elements other )
+        {
+            return
+                other != null &&
+                other.Fire == Fire &&
+                other.Lightning == Lightning &&
+                other.Ice == Ice &&
+                other.Wind == Wind &&
+                other.Earth == Earth &&
+                other.Water == Water &&
+                other.Holy == Holy &&
+                other.Dark == Dark;
+        }
 
         public bool[] ToBoolArray()
         {
@@ -76,7 +112,39 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+
+        public override bool Equals( object obj )
+        {
+            if( obj is Elements )
+            {
+                return Equals( obj as Elements );
+            }
+            else
+            {
+                return base.Equals( obj );
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            List<string> strings = new List<string>( 8 );
+            foreach( string name in elementNames )
+            {
+                if( ReflectionHelpers.GetFieldOrProperty<bool>( this, name ) )
+                {
+                    strings.Add( name );
+                }
+            }
+            return string.Join( " | ", strings.ToArray() );
+        }
+
+
+        #endregion Methods
 
     }
 }

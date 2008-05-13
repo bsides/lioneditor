@@ -24,10 +24,26 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// The types of equipment a <see cref="Job"/> can use.
     /// </summary>
-    public class Equipment
+    public class Equipment : IChangeable, ISupportDigest
     {
 
-		#region Fields (40) 
+        #region Static Fields (2)
+
+        private static readonly string[] pspNames = new string[40] {
+            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
+            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
+            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume",
+            "Unknown1","Unknown2","Unknown3","FellSword","LipRouge","Unknown6","Unknown7","Unknown8" };
+        private static readonly string[] psxNames = new string[32] {
+            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
+            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
+            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume" };
+
+        #endregion Static Fields
+
+        #region Fields (40)
 
         public bool Armguard;
         public bool Armlet;
@@ -70,17 +86,27 @@ namespace FFTPatcher.Datatypes
         public bool Unknown8;
         public bool Unused;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (1) 
+        #region Properties (3)
 
 
         public Equipment Default { get; private set; }
 
+        public IList<string> DigestableProperties
+        {
+            get { return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames; }
+        }
 
-		#endregion Properties 
+        public bool HasChanged
+        {
+            get { return Default != null && !Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) ); }
+        }
 
-		#region Constructors (2) 
+
+        #endregion Properties
+
+        #region Constructors (2)
 
         public Equipment( IList<byte> bytes )
             : this( bytes, null )
@@ -100,9 +126,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (4) 
+        #region Methods (7)
 
 
         private byte[] ToByteArrayPSX()
@@ -148,7 +174,34 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+
+        public override bool Equals( object obj )
+        {
+            return (obj is Equipment) &&
+                Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), (obj as Equipment).ToByteArray( FFTPatch.Context ) );
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            List<string> strings = new List<string>( 40 );
+            string[] names = FFTPatch.Context == Context.US_PSP ? pspNames : psxNames;
+            foreach( string name in names )
+            {
+                if( ReflectionHelpers.GetFieldOrProperty<bool>( this, name ) )
+                {
+                    strings.Add( name );
+                }
+            }
+            return string.Join( " | ", strings.ToArray() );
+        }
+
+
+        #endregion Methods
 
     }
 }

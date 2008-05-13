@@ -19,49 +19,55 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
 
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
     /// Represents an <see cref="Ability"/>'s attributes.
     /// </summary>
-    public class AbilityAttributes : IChangeable, IXmlDigest
+    public class AbilityAttributes : IChangeable, ISupportDigest
     {
 
-		#region Fields (40) 
+        #region Static Fields (1)
+
+        private static readonly string[] valuesToSerialize = new string[] {
+            "AnimateMiss","Arithmetick","Auto","Blank6","Blank7","Blank8","CounterFlood","CounterMagic",
+            "CT","Direct","Effect","Evadeable","FollowTarget","HitAllies","HitCaster","HitEnemies",
+            "InflictStatus","LinearAttack","Mimic","MPCost","NormalAttack","Perservere","RandomFire",
+            "Range","Reflect","RequiresMateriaBlade","RequiresSword","Shirahadori","ShowQuote","Silence",
+            "Targeting","TargetSelf","ThreeDirections","Vertical","VerticalFixed","VerticalTolerance",
+            "WeaponRange","WeaponStrike","X","Y", "Elements", "Formula" };
+
+        #endregion Static Fields
+
+        #region Fields (41)
 
         public bool AnimateMiss;
         public bool Arithmetick;
         public bool Auto;
         public bool Blank6;
         public bool Blank7;
- // inverted
         public bool Blank8;
         public bool CounterFlood;
         public bool CounterMagic;
         public byte CT;
+        private AbilityAttributes defaults;
         public bool Direct;
         public byte Effect;
         public bool Evadeable;
         public bool FollowTarget;
- // inverted
         public bool HitAllies;
         public bool HitCaster;
- // inverted
         public bool HitEnemies;
+        [Hex]
         public byte InflictStatus;
         public bool LinearAttack;
- // inverted
         public bool Mimic;
         public byte MPCost;
- // inverted
         public bool NormalAttack;
         public bool Perservere;
- // inverted
         public bool RandomFire;
         public byte Range;
- // inerted
         public bool Reflect;
         public bool RequiresMateriaBlade;
         public bool RequiresSword;
@@ -79,12 +85,28 @@ namespace FFTPatcher.Datatypes
         public byte X;
         public byte Y;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (6) 
+        #region Properties (7)
 
 
-        public AbilityAttributes Default { get; set; }
+        public AbilityAttributes Default
+        {
+            get { return defaults; }
+            set
+            {
+                defaults = value;
+                if( defaults != null )
+                {
+                    Elements.Default = defaults.Elements;
+                }
+            }
+        }
+
+        public IList<string> DigestableProperties
+        {
+            get { return valuesToSerialize; }
+        }
 
         public Elements Elements { get; private set; }
 
@@ -106,9 +128,9 @@ namespace FFTPatcher.Datatypes
         public UInt16 Offset { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public AbilityAttributes( string name, UInt16 offset, IList<byte> second )
         {
@@ -148,12 +170,16 @@ namespace FFTPatcher.Datatypes
         public AbilityAttributes( string name, UInt16 offset, IList<byte> second, AbilityAttributes defaults )
             : this( name, offset, second )
         {
-            Default = defaults;
+            if( defaults != null )
+            {
+                Default = defaults;
+                Elements.Default = defaults.Elements;
+            }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (2)
 
 
         public bool[] ToBoolArray()
@@ -186,31 +212,8 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public void WriteXml( XmlWriter writer )
-        {
-            writer.WriteAttributeString( "changed", HasChanged.ToString() );
-            writer.WriteStartElement( "Range" );
-            writer.WriteAttributeString( "changed", Range.Equals( Default.Range ).ToString() );
-            writer.WriteAttributeString( "default", Default.Range.ToString() );
-            writer.WriteAttributeString( "value", Range.ToString() );
-            writer.WriteEndElement();
 
-            writer.WriteStartElement( "Range" );
-            writer.WriteAttributeString( "changed", Range.Equals( Default.Range ).ToString() );
-            writer.WriteAttributeString( "default", Default.Range.ToString() );
-            writer.WriteAttributeString( "value", Range.ToString() );
-            writer.WriteEndElement();
-
-            writer.WriteStartElement( "Range" );
-            writer.WriteAttributeString( "changed", Range.Equals( Default.Range ).ToString() );
-            writer.WriteAttributeString( "default", Default.Range.ToString() );
-            writer.WriteAttributeString( "value", Range.ToString() );
-            writer.WriteEndElement();
-
-        }
-
-
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

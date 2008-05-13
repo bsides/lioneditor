@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace FFTPatcher.Datatypes
 {
@@ -48,12 +49,20 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an ability and its attributes.
     /// </summary>
-    public class Ability : IChangeable
+    public class Ability : IChangeable, IXmlDigest, ISupportDigest
     {
 
-		#region Fields (12) 
+        #region Static Fields (1)
 
- // inverted
+        private static readonly string[] digestableProperties = new string[] {
+            "JPCost", "LearnRate", "AbilityType", "LearnWithJP", "Action",
+            "LearnOnHit", "Blank1", "Unknown1", "Unknown2", "Unknown3",
+            "Blank2", "Blank3", "Blank4", "Blank5", "Unknown4"};
+
+        #endregion Static Fields
+
+        #region Fields (12)
+
         private bool action;
         private bool blank1;
         private bool blank2;
@@ -67,9 +76,9 @@ namespace FFTPatcher.Datatypes
         private bool unknown3;
         private bool unknown4;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (62) 
+        #region Properties (63)
 
 
         public AbilityType AbilityType { get; set; }
@@ -126,6 +135,7 @@ namespace FFTPatcher.Datatypes
 
         public bool AIVerticalIncrease { get { return AIFlags.VerticalIncrease; } set { AIFlags.VerticalIncrease = value; } }
 
+        [Hex]
         public byte ArithmetickSkill { get; set; }
 
         public AbilityAttributes Attributes { get; private set; }
@@ -146,6 +156,11 @@ namespace FFTPatcher.Datatypes
 
         public Ability Default { get; private set; }
 
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
+
         public Effect Effect { get; set; }
 
         /// <summary>
@@ -164,7 +179,6 @@ namespace FFTPatcher.Datatypes
                     AICancelStatus != Default.AICancelStatus ||
                     AIDefenseUp != Default.AIDefenseUp ||
                     AIDirectAttack != Default.AIDirectAttack ||
-                    AIFlags != Default.AIFlags ||
                     AIHP != Default.AIHP ||
                     AIIgnoreRange != Default.AIIgnoreRange ||
                     AILineAttack != Default.AILineAttack ||
@@ -189,7 +203,6 @@ namespace FFTPatcher.Datatypes
                     Blank3 != Default.Blank3 ||
                     Blank4 != Default.Blank4 ||
                     Blank5 != Default.Blank5 ||
-                    Effect.Value != Default.Effect.Value ||
                     JPCost != Default.JPCost ||
                     LearnOnHit != Default.LearnOnHit ||
                     LearnRate != Default.LearnRate ||
@@ -202,7 +215,7 @@ namespace FFTPatcher.Datatypes
                     (IsCharging && (ChargeBonus != Default.ChargeBonus || ChargeCT != Default.ChargeCT)) ||
                     (IsItem && ItemOffset != Default.ItemOffset) ||
                     (IsJumping && (JumpHorizontal != Default.JumpHorizontal || JumpVertical != Default.JumpVertical)) ||
-                    (IsNormal && Attributes.HasChanged) ||
+                    (IsNormal && (Attributes.HasChanged || Effect.Value != Default.Effect.Value)) ||
                     (IsOther && OtherID != Default.OtherID) ||
                     (IsThrowing && Throwing != Default.Throwing));
             }
@@ -249,6 +262,7 @@ namespace FFTPatcher.Datatypes
 
         public UInt16 Offset { get; private set; }
 
+        [Hex]
         public byte OtherID { get; set; }
 
         public ItemSubType Throwing { get; set; }
@@ -262,9 +276,9 @@ namespace FFTPatcher.Datatypes
         public bool Unknown4 { get { return unknown4; } set { unknown4 = value; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (4) 
+        #region Constructors (4)
 
         private Ability( string name, UInt16 offset, IList<byte> first )
         {
@@ -343,11 +357,12 @@ namespace FFTPatcher.Datatypes
             {
                 Attributes.Default = Default.Attributes;
             }
+            AIFlags.Default = Default.AIFlags;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (6) 
+        #region Methods (7)
 
 
         public bool[] PropertiesToBoolArray()
@@ -412,6 +427,67 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
+        public void WriteXml( XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( GetType().Name );
+                writer.WriteAttributeString( "value", Offset.ToString( "X4" ) );
+                writer.WriteAttributeString( "name", Name );
+                DigestGenerator.WriteXmlDigest( this, writer, false, false );
+                DigestGenerator.WriteXmlDigest( AIFlags, writer, true, true );
+
+                if( IsNormal )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "Effect", Default.Effect, Effect );
+                    DigestGenerator.WriteXmlDigest( Attributes, writer, true, true );
+                    if( Attributes.Formula.Value == 0x02 &&
+                        (Attributes.Formula.Value != Attributes.Default.Formula.Value || Attributes.InflictStatus != Attributes.Default.InflictStatus) )
+                    {
+                        writer.WriteStartElement( "CastSpell" );
+                        writer.WriteAttributeString( "default", AllAbilities.Names[Attributes.Default.InflictStatus] );
+                        writer.WriteAttributeString( "value", AllAbilities.Names[Attributes.InflictStatus] );
+                        writer.WriteEndElement();
+                    }
+                    else if( Attributes.InflictStatus != Attributes.Default.InflictStatus )
+                    {
+                        writer.WriteStartElement( "InflictStatusDescription" );
+                        writer.WriteAttributeString( "default", FFTPatch.InflictStatuses.InflictStatuses[Attributes.Default.InflictStatus].Statuses.ToString() );
+                        writer.WriteAttributeString( "value", FFTPatch.InflictStatuses.InflictStatuses[Attributes.InflictStatus].Statuses.ToString() );
+                        writer.WriteEndElement();
+                    }
+                }
+                else if( IsItem )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "ItemOffset", Default.ItemOffset, ItemOffset, "0x{0:X2}" );
+                }
+                else if( IsThrowing )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "Throwing", Default.Throwing, Throwing );
+                }
+                else if( IsJumping )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "JumpHorizontal", Default.JumpHorizontal, JumpHorizontal );
+                    DigestGenerator.WriteDigestEntry( writer, "JumpVertical", Default.JumpVertical, JumpVertical );
+                }
+                else if( IsCharging )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "ChargeCT", Default.ChargeCT, ChargeCT );
+                    DigestGenerator.WriteDigestEntry( writer, "ChargeBonus", Default.ChargeBonus, ChargeBonus );
+                }
+                else if( IsArithmetick )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "ArithmetickSkill", Default.ArithmetickSkill, ArithmetickSkill, "0x{0:X2}" );
+                }
+                else if( IsOther )
+                {
+                    DigestGenerator.WriteDigestEntry( writer, "OtherID", Default.OtherID, OtherID, "0x{0:X2}" );
+                }
+
+                writer.WriteEndElement();
+            }
+        }
+
 
 
         public override string ToString()
@@ -420,7 +496,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

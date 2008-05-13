@@ -24,10 +24,20 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an <see cref="Ability"/>'s AI behavior.
     /// </summary>
-    public class AIFlags
+    public class AIFlags : ISupportDigest
     {
 
-		#region Fields (24) 
+        #region Static Fields (1)
+
+        private static readonly string[] digestableProperties = new string[] {
+            "AddStatus","Blank","CancelStatus","DefenseUp","DirectAttack","HP","IgnoreRange","LineAttack",
+            "MagicDefenseUp","MP","RandomHits","Reflectable","Silence","Stats","TargetAllies","TargetEnemies",
+            "TripleAttack","TripleBracelet","UndeadReverse","Unequip","Unknown1","Unknown2","Unknown3",
+            "VerticalIncrease" };
+
+        #endregion Static Fields
+
+        #region Fields (24)
 
         public bool AddStatus;
         public bool Blank;
@@ -54,12 +64,37 @@ namespace FFTPatcher.Datatypes
         public bool Unknown3;
         public bool VerticalIncrease;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Properties (3)
+
+
+        public AIFlags Default { get; set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
+
+        public bool HasChanged
+        {
+            get { return !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() ); }
+        }
+
+
+        #endregion Properties
+
+        #region Constructors (2)
 
         public AIFlags( IList<byte> bytes )
+            : this( bytes, null )
         {
+        }
+
+        public AIFlags( IList<byte> bytes, AIFlags defaults )
+        {
+            Default = defaults;
+
             Utilities.CopyByteToBooleans( bytes[0],
                 ref HP, ref MP, ref CancelStatus, ref AddStatus, ref Stats, ref Unequip, ref TargetEnemies, ref TargetAllies );
 
@@ -72,9 +107,9 @@ namespace FFTPatcher.Datatypes
             VerticalIncrease = !VerticalIncrease;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (2)
 
 
         public bool[] ToBoolArray()
@@ -95,7 +130,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

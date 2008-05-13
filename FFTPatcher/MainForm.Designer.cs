@@ -66,6 +66,7 @@ namespace FFTPatcher
             this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.applySCUSMenuItem = new System.Windows.Forms.MenuItem();
             this.applyBattleBinMenuItem = new System.Windows.Forms.MenuItem();
+            this.patchPsxIsoMenuItem = new System.Windows.Forms.MenuItem();
             this.generateFontMenuItem = new System.Windows.Forms.MenuItem();
             this.generateMenuItem = new System.Windows.Forms.MenuItem();
             this.patchPspIsoMenuItem = new System.Windows.Forms.MenuItem();
@@ -81,7 +82,6 @@ namespace FFTPatcher
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
-            this.patchPsxIsoMenuItem = new System.Windows.Forms.MenuItem();
             fileMenuItem = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
@@ -178,6 +178,12 @@ namespace FFTPatcher
             this.applyBattleBinMenuItem.Enabled = false;
             this.applyBattleBinMenuItem.Index = 3;
             this.applyBattleBinMenuItem.Text = "Patch &BATTLE.BIN...";
+            // 
+            // patchPsxIsoMenuItem
+            // 
+            this.patchPsxIsoMenuItem.Enabled = false;
+            this.patchPsxIsoMenuItem.Index = 4;
+            this.patchPsxIsoMenuItem.Text = "Patch &ISO...";
             // 
             // separator4
             // 
@@ -295,12 +301,6 @@ namespace FFTPatcher
             this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 599 );
             this.fftPatchEditor1.TabIndex = 0;
             // 
-            // patchPsxIsoMenuItem
-            // 
-            this.patchPsxIsoMenuItem.Enabled = false;
-            this.patchPsxIsoMenuItem.Index = 4;
-            this.patchPsxIsoMenuItem.Text = "Patch &ISO...";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -308,8 +308,8 @@ namespace FFTPatcher
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size( 815, 599 );
-            this.Controls.Add( this.progressBar );
             this.Controls.Add( this.fftPatchEditor1 );
+            this.Controls.Add( this.progressBar );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTPatcher";

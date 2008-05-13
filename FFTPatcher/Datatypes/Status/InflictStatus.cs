@@ -24,10 +24,18 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents statuses an <see cref="Ability"/> inflicts or cancels on its target.
     /// </summary>
-    public class InflictStatus
+    public class InflictStatus : ISupportDigest
     {
 
-		#region Fields (8) 
+        #region Static Fields (1)
+
+        public static readonly string[] digestableProperties = new string[] {
+            "AllOrNothing", "Random", "Separate", "Cancel", "Blank1", "Blank2", "Blank3",
+            "Blank4", "Statuses" };
+
+        #endregion Static Fields
+
+        #region Fields (8)
 
         public bool AllOrNothing;
         public bool Blank1;
@@ -38,21 +46,94 @@ namespace FFTPatcher.Datatypes
         public bool Random;
         public bool Separate;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (3) 
+        #region Properties (8)
 
+
+        public string CorrespondingAbilities
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Ability a in FFTPatch.Abilities.Abilities )
+                {
+                    if( a.Attributes != null && a.Attributes.Formula.Value != 0x02 && a.Attributes.InflictStatus == Value )
+                    {
+                        result.Add( a.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
+
+        public string CorrespondingChemistItems
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Item i in FFTPatch.Items.Items )
+                {
+                    if( i is ChemistItem && (i as ChemistItem).InflictStatus == Value )
+                    {
+                        result.Add( i.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
+
+        public string CorrespondingWeapons
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Item i in FFTPatch.Items.Items )
+                {
+                    if( i is Weapon && (i as Weapon).Formula != 0x02 && (i as Weapon).InflictStatus == Value )
+                    {
+                        result.Add( i.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
 
         public InflictStatus Default { get; private set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
+
+        public bool HasChanged
+        {
+            get
+            {
+                return Default != null &&
+                    (AllOrNothing != Default.AllOrNothing ||
+                    Random != Default.Random ||
+                    Separate != Default.Separate ||
+                    Cancel != Default.Cancel ||
+                    Blank1 != Default.Blank1 ||
+                    Blank2 != Default.Blank2 ||
+                    Blank3 != Default.Blank3 ||
+                    Blank4 != Default.Blank4 ||
+                    Statuses.HasChanged);
+            }
+        }
 
         public Statuses Statuses { get; private set; }
 
         public byte Value { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public InflictStatus( byte value, IList<byte> bytes )
             : this( value, bytes, null )
@@ -67,9 +148,9 @@ namespace FFTPatcher.Datatypes
             Statuses = new Statuses( bytes.Sub( 1, 5 ), defaults == null ? null : defaults.Statuses );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (3)
 
 
         public bool[] ToBoolArray()
@@ -94,14 +175,14 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class AllInflictStatuses : IChangeable
+    public class AllInflictStatuses : IChangeable, IXmlDigest
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -125,9 +206,9 @@ namespace FFTPatcher.Datatypes
         public InflictStatus[] InflictStatuses { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public AllInflictStatuses( IList<byte> bytes )
         {
@@ -140,9 +221,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (3)
 
 
         public List<string> GenerateCodes()
@@ -168,8 +249,31 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( InflictStatus i in InflictStatuses )
+                {
+                    if( i.HasChanged )
+                    {
+                        writer.WriteStartElement( i.GetType().Name );
+                        writer.WriteAttributeString( "value", i.Value.ToString( "X2" ) );
+                        DigestGenerator.WriteXmlDigest( i, writer, false, false );
+                        writer.WriteElementString( "CorrespondingAbilities", i.CorrespondingAbilities );
+                        writer.WriteElementString( "CorrespondingChemistItems", i.CorrespondingChemistItems );
+                        writer.WriteElementString( "CorrespondingWeapons", i.CorrespondingWeapons );
+                        writer.WriteEndElement();
+                    }
+                }
+                writer.WriteEndElement();
+            }
+        }
 
-		#endregion Methods 
+
+        #endregion Methods
 
     }
 }

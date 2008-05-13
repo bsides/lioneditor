@@ -27,6 +27,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
 using FFTPatcher.TextEditor.Files.PSP;
+using System.Diagnostics;
 
 namespace FFTPatcher.TextEditor
 {
@@ -42,13 +43,13 @@ namespace FFTPatcher.TextEditor
     public class FFTText : IXmlSerializable
     {
 
-		#region Fields (1) 
+        #region Fields (1)
 
         public const int CurrentVersion = 2;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -72,9 +73,9 @@ namespace FFTPatcher.TextEditor
         public IList<IStringSectioned> SectionedFiles { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         private FFTText()
         {
@@ -82,9 +83,9 @@ namespace FFTPatcher.TextEditor
             SectionedFiles = new List<IStringSectioned>();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (6) 
+        #region Methods (6)
 
 
         private void AddToAppropriateCollection( object o )
@@ -269,34 +270,51 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Updates a PSX FFT ISO with the text files in this instance.
         /// </summary>
-        public void UpdatePsxIso( string filename )
+        public void UpdatePsxIso( DataReceivedEventHandler dataReceived, EventHandler finished )
         {
-            if( Filetype != Filetype.PSX )
-            {
-                throw new InvalidOperationException();
-            }
-
-            List<CDTool.PatchedByteArray> patches = new List<CDTool.PatchedByteArray>();
-            foreach( IStringSectioned sectioned in SectionedFiles )
-            {
-                byte[] bytes = sectioned.ToByteArray();
-                foreach( KeyValuePair<string, long> kvp in sectioned.Locations )
+            CDTool.PatchedByteArrayListGenerator generator = new CDTool.PatchedByteArrayListGenerator(
+                delegate()
                 {
+                    if( Filetype != Filetype.PSX )
+                    {
+                        throw new InvalidOperationException();
+                    }
 
-                    patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                    List<CDTool.PatchedByteArray> patches = new List<CDTool.PatchedByteArray>();
+                    foreach( IStringSectioned sectioned in SectionedFiles )
+                    {
+                        byte[] bytes = sectioned.ToByteArray();
+                        foreach( KeyValuePair<string, long> kvp in sectioned.Locations )
+                        {
+
+                            patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                        }
+                    }
+
+                    foreach( IPartitionedFile partitioned in PartitionedFiles )
+                    {
+                        byte[] bytes = partitioned.ToByteArray();
+                        foreach( KeyValuePair<string, long> kvp in partitioned.Locations )
+                        {
+                            patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                        }
+                    }
+
+                    return patches;
+                } );
+
+            using( SaveFileDialog sfd = new SaveFileDialog() )
+            {
+                sfd.Filter = "Final Fantasy Tactics images|*.bin;*.img;*.iso";
+                if( sfd.ShowDialog() == DialogResult.OK )
+                {
+                    CDTool.PatchISO( sfd.FileName, dataReceived, finished, generator );
+                }
+                else
+                {
+                    finished( null, EventArgs.Empty );
                 }
             }
-
-            foreach( IPartitionedFile partitioned in PartitionedFiles )
-            {
-                byte[] bytes = partitioned.ToByteArray();
-                foreach( KeyValuePair<string, long> kvp in partitioned.Locations )
-                {
-                    patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
-                }
-            }
-
-            CDTool.PatchISO( filename, patches.ToArray() );
         }
 
         /// <summary>
@@ -327,7 +345,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

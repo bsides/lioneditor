@@ -24,17 +24,47 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an item's attributes.
     /// </summary>
-    public class ItemAttributes : IChangeable
+    public class ItemAttributes : IChangeable, ISupportDigest
     {
 
-		#region Properties (16) 
+        #region Static Fields (1)
 
+        private static readonly string[] digestableProperties = new string[] {
+            "PA", "MA", "Speed", "Move", "Jump", "Absorb", "Cancel", "Half", "Weak", "Strong",
+            "PermanentStatuses", "StatusImmunity", "StartingStatuses" };
+
+        #endregion Static Fields
+
+        #region Properties (18)
+
+
+        public string CorrespondingItems
+        {
+            get
+            {
+                List<string> result = new List<string>();
+                foreach( Item i in FFTPatch.Items.Items )
+                {
+                    if( i.SIA == this.Value )
+                    {
+                        result.Add( i.ToString() );
+                    }
+                }
+
+                return string.Join( ", ", result.ToArray() );
+            }
+        }
 
         public Elements Absorb { get; private set; }
 
         public Elements Cancel { get; private set; }
 
         public ItemAttributes Default { get; private set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
 
         public Elements Half { get; private set; }
 
@@ -44,7 +74,7 @@ namespace FFTPatcher.Datatypes
         /// <value></value>
         public bool HasChanged
         {
-            get 
+            get
             {
                 return Default != null && !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() );
             }
@@ -73,9 +103,9 @@ namespace FFTPatcher.Datatypes
         public Elements Weak { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public ItemAttributes( byte value, IList<byte> bytes )
             : this( value, bytes, null )
@@ -84,7 +114,6 @@ namespace FFTPatcher.Datatypes
 
         public ItemAttributes( byte value, IList<byte> bytes, ItemAttributes defaults )
         {
-            Default = defaults;
             Value = value;
             PA = bytes[0];
             MA = bytes[1];
@@ -101,11 +130,21 @@ namespace FFTPatcher.Datatypes
             Half = new Elements( bytes[22] );
             Weak = new Elements( bytes[23] );
             Strong = new Elements( bytes[24] );
+
+            if( defaults != null )
+            {
+                Default = defaults;
+                Absorb.Default = Default.Absorb;
+                Cancel.Default = Default.Cancel;
+                Half.Default = Default.Half;
+                Weak.Default = Default.Weak;
+                Strong.Default = Default.Strong;
+            }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (2)
 
 
         public byte[] ToByteArray()
@@ -136,14 +175,14 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class AllItemAttributes : IChangeable
+    public class AllItemAttributes : IChangeable, IXmlDigest
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -152,7 +191,7 @@ namespace FFTPatcher.Datatypes
         /// <value></value>
         public bool HasChanged
         {
-            get 
+            get
             {
                 foreach( ItemAttributes a in ItemAttributes )
                 {
@@ -166,9 +205,9 @@ namespace FFTPatcher.Datatypes
         public ItemAttributes[] ItemAttributes { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public AllItemAttributes( IList<byte> first, IList<byte> second )
         {
@@ -193,9 +232,9 @@ namespace FFTPatcher.Datatypes
             ItemAttributes = temp.ToArray();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (4)
 
 
         public List<string> GenerateCodes()
@@ -233,8 +272,29 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( ItemAttributes attr in ItemAttributes )
+                {
+                    if( attr.HasChanged )
+                    {
+                        writer.WriteStartElement( attr.GetType().Name );
+                        writer.WriteAttributeString( "value", attr.Value.ToString( "X2" ) );
+                        DigestGenerator.WriteXmlDigest( attr, writer, false, false );
+                        writer.WriteElementString( "CorrespondingItems", attr.CorrespondingItems );
+                        writer.WriteEndElement();
+                    }
+                }
+                writer.WriteEndElement();
+            }
+        }
 
-		#endregion Methods 
+
+        #endregion Methods
 
     }
 }

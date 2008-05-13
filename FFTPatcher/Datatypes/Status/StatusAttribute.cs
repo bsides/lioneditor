@@ -24,12 +24,20 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents attributes of a specific Status ailment/effect.
     /// </summary>
-    public class StatusAttribute
+    public class StatusAttribute : ISupportDigest
     {
 
-		#region Fields (16) 
+        #region Static Fields (1)
 
- // inverted
+        private static readonly string[] digestableProperties = new string[] {
+            "Blank1", "Blank2", "Order", "CT", "FreezeCT", "Unknown1", "Unknown2", "Unknown3", "Unknown4",
+            "Unknown5", "Unknown6", "KO", "CanReact", "Blank", "IgnoreAttack", "Unknown7", "Unknown8",
+            "Unknown9", "Unknown10", "Unknown11", "Cancels", "CantStackOn" };
+
+        #endregion Static Fields
+
+        #region Fields (16)
+
         public bool Blank;
         public bool CanReact;
         public bool FreezeCT;
@@ -47,13 +55,15 @@ namespace FFTPatcher.Datatypes
         public bool Unknown8;
         public bool Unknown9;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (9) 
+        #region Properties (11)
 
 
+        [Hex]
         public byte Blank1 { get; set; }
 
+        [Hex]
         public byte Blank2 { get; set; }
 
         public Statuses Cancels { get; private set; }
@@ -64,16 +74,52 @@ namespace FFTPatcher.Datatypes
 
         public StatusAttribute Default { get; private set; }
 
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
+
+        public bool HasChanged
+        {
+            get
+            {
+                return Default != null &&
+                    (Cancels.HasChanged ||
+                    CantStackOn.HasChanged ||
+                    Blank1 != Default.Blank1 ||
+                    Blank2 != Default.Blank2 ||
+                    CT != Default.CT ||
+                    Order != Default.Order ||
+                    Blank != Default.Blank ||
+                    CanReact != Default.CanReact ||
+                    FreezeCT != Default.FreezeCT ||
+                    IgnoreAttack != Default.IgnoreAttack ||
+                    KO != Default.KO ||
+                    Unknown1 != Default.Unknown1 ||
+                    Unknown2 != Default.Unknown2 ||
+                    Unknown3 != Default.Unknown3 ||
+                    Unknown4 != Default.Unknown4 ||
+                    Unknown5 != Default.Unknown5 ||
+                    Unknown6 != Default.Unknown6 ||
+                    Unknown7 != Default.Unknown7 ||
+                    Unknown8 != Default.Unknown8 ||
+                    Unknown9 != Default.Unknown9 ||
+                    Unknown10 != Default.Unknown10 ||
+                    Unknown11 != Default.Unknown11);
+            }
+        }
+
         public string Name { get; private set; }
 
+        [Hex]
         public byte Order { get; set; }
 
         public byte Value { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public StatusAttribute( string name, byte value, IList<byte> bytes )
             : this( name, value, bytes, null )
@@ -98,9 +144,9 @@ namespace FFTPatcher.Datatypes
             CantStackOn = new Statuses( bytes.Sub( 11, 15 ), defaults == null ? null : defaults.CantStackOn );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (3)
 
 
         public bool[] ToBoolArray()
@@ -133,14 +179,14 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class AllStatusAttributes : IChangeable
+    public class AllStatusAttributes : IChangeable, IXmlDigest
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -164,9 +210,9 @@ namespace FFTPatcher.Datatypes
         public StatusAttribute[] StatusAttributes { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public AllStatusAttributes( IList<byte> bytes )
         {
@@ -182,9 +228,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -215,8 +261,29 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( StatusAttribute attr in StatusAttributes )
+                {
+                    if( attr.HasChanged )
+                    {
+                        writer.WriteStartElement( attr.GetType().Name );
+                        writer.WriteAttributeString( "name", attr.Name );
+                        writer.WriteAttributeString( "value", attr.Value.ToString( "X2" ) );
+                        DigestGenerator.WriteXmlDigest( attr, writer, false, true );
+                    }
+                }
 
-		#endregion Methods 
+                writer.WriteEndElement();
+            }
+        }
+
+
+        #endregion Methods
 
     }
 }

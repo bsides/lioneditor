@@ -101,11 +101,19 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a unit that participates in an <see cref="Event"/>.
     /// </summary>
-    public class EventUnit : IEquatable<EventUnit>, IChangeable
+    public class EventUnit : IEquatable<EventUnit>, IChangeable, ISupportDigest
     {
 
-        #region Static Fields (2)
+        #region Static Fields (3)
 
+        private static readonly string[] digestableProperties = new string[] {
+            "SpriteSet", "SpecialName", "Month", "Day", "Job", "Level", "Faith", "Bravery", "Palette", "UnitID",
+            "X", "Y", "PrerequisiteJob", "PrerequisiteJobLevel", "FacingDirection", "TeamColor", "Target", 
+            "SkillSet", "SecondaryAction", "Reaction", "Support", "Movement", "RightHand", "LeftHand", "Head",
+            "Body", "Accessory", "BonusMoney", "WarTrophy", "Male", "Female", "Monster", "JoinAfterEvent",
+            "LoadFormation", "ZodiacMonster", "Blank2", "SaveFormation", "AlwaysPresent", "RandomlyPresent",
+            "Control", "Immortal", "Blank6", "Blank7", "Unknown2", "Unknown6", "Unknown7", "Unknown8", 
+            "Unknown10", "Unknown11", "Unknown12" };
         public static readonly string[] Flags1FieldNames = new string[] { 
             "Male", "Female", "Monster", "JoinAfterEvent", "LoadFormation", "ZodiacMonster", "Blank2", "SaveFormation" };
         public static readonly string[] Flags2FieldNames = new string[] { 
@@ -132,7 +140,7 @@ namespace FFTPatcher.Datatypes
 
         #endregion Fields
 
-        #region Properties (39)
+        #region Properties (40)
 
 
         public Item Accessory { get; set; }
@@ -150,6 +158,11 @@ namespace FFTPatcher.Datatypes
         public string Description
         {
             get { return string.Format( "Sprite: {0} | Name: {1} | Job: {2}", SpriteSet.Name, SpecialName.Name, Job.Name ); }
+        }
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
         }
 
         public Facing FacingDirection { get; set; }
@@ -177,6 +190,7 @@ namespace FFTPatcher.Datatypes
 
         public Ability Movement { get; set; }
 
+        [Hex]
         public byte Palette { get; set; }
 
         public PreRequisiteJob PrerequisiteJob { get; set; }
@@ -197,24 +211,33 @@ namespace FFTPatcher.Datatypes
 
         public Ability Support { get; set; }
 
+        [Hex]
         public byte Target { get; set; }
 
         public TeamColor TeamColor { get; set; }
 
+        [Hex]
         public byte UnitID { get; set; }
 
+        [Hex]
         public byte Unknown10 { get; set; }
 
+        [Hex]
         public byte Unknown11 { get; set; }
 
+        [Hex]
         public byte Unknown12 { get; set; }
 
+        [Hex]
         public byte Unknown2 { get; set; }
 
+        [Hex]
         public byte Unknown6 { get; set; }
 
+        [Hex]
         public byte Unknown7 { get; set; }
 
+        [Hex]
         public byte Unknown8 { get; set; }
 
         public Item WarTrophy { get; set; }

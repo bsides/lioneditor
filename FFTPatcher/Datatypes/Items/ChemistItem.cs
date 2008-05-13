@@ -28,18 +28,31 @@ namespace FFTPatcher.Datatypes
     public class ChemistItem : Item
     {
 
-		#region Properties (5) 
+        #region Static Fields (1)
+
+        private static readonly List<string> chemistItemDigestableProperties;
+
+        #endregion Static Fields
+
+        #region Properties (6)
 
 
         public ChemistItem ChemistItemDefault { get; private set; }
 
+        [Hex]
         public byte Formula { get; set; }
 
+        [Hex]
         public byte InflictStatus { get; set; }
 
         public byte X { get; set; }
 
 
+
+        public override IList<string> DigestableProperties
+        {
+            get { return chemistItemDigestableProperties; }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -58,9 +71,17 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (3)
+
+        static ChemistItem()
+        {
+            chemistItemDigestableProperties = new List<string>( Item.digestableProperties );
+            chemistItemDigestableProperties.Add( "Formula" );
+            chemistItemDigestableProperties.Add( "X" );
+            chemistItemDigestableProperties.Add( "InflictStatus" );
+        }
 
         public ChemistItem( UInt16 offset, IList<byte> itemBytes, IList<byte> chemistBytes ) :
             this( offset, itemBytes, chemistBytes, null )
@@ -76,9 +97,9 @@ namespace FFTPatcher.Datatypes
             InflictStatus = chemistBytes[2];
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (4) 
+        #region Methods (4)
 
 
         public byte[] ToChemistItemByteArray()
@@ -104,7 +125,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

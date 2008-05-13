@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     public static class FFTPatch
     {
 
-		#region Properties (14) 
+        #region Properties (14)
 
 
         public static AllAbilities Abilities { get; private set; }
@@ -59,15 +59,15 @@ namespace FFTPatcher.Datatypes
         public static AllStatusAttributes StatusAttributes { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Events (1) 
+        #region Events (1)
 
         public static event EventHandler DataChanged;
 
-		#endregion Events 
+        #endregion Events
 
-		#region Methods (15) 
+        #region Methods (15)
 
 
         private static void BuildFromContext()
@@ -597,6 +597,8 @@ namespace FFTPatcher.Datatypes
 
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
+
+                GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.html" ) );
             }
             catch( Exception )
             {
@@ -612,8 +614,48 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void GenerateDigest( string filename )
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            StringBuilder sb = new StringBuilder();
 
-		#endregion Methods 
+            using( XmlWriter writer = XmlWriter.Create( sb, settings ) )
+            {
+                writer.WriteStartElement( "digest" );
+                IXmlDigest[] digestable = new IXmlDigest[] {
+                    Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
+                    InflictStatuses, PoachProbabilities, ENTDs };
+                foreach( IXmlDigest digest in digestable )
+                {
+                    digest.WriteXml( writer );
+                }
+                writer.WriteEndElement();
+            }
+
+
+#if DEBUG
+            using( FileStream stream = new FileStream( filename + ".xml", FileMode.Create ) )
+            {
+                byte[] bytes = sb.ToString().ToByteArray();
+                stream.Write( bytes, 0, bytes.Length );
+            }
+#endif
+
+            settings.ConformanceLevel = ConformanceLevel.Fragment;
+            using( StringReader transformStringReader = new StringReader( FFTPatcher.Properties.Resources.digestTransform ) )
+            using( XmlReader transformXmlReader = XmlReader.Create( transformStringReader ) )
+            using( StringReader inputReader = new StringReader( sb.ToString() ) )
+            using( XmlReader inputXmlReader = XmlReader.Create( inputReader ) )
+            using( XmlWriter outputWriter = XmlWriter.Create( filename, settings ) )
+            {
+                System.Xml.Xsl.XslCompiledTransform t = new System.Xml.Xsl.XslCompiledTransform();
+                t.Load( transformXmlReader );
+                t.Transform( inputXmlReader, outputWriter );
+            }
+        }
+
+        #endregion Methods
 
     }
 }

@@ -64,13 +64,13 @@ namespace FFTPatcher.Datatypes
     public class ActionMenuEntry
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static List<ActionMenuEntry> allActionMenuEntries;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Static Properties (1) 
+        #region Static Properties (1)
 
 
         public static List<ActionMenuEntry> AllActionMenuEntries
@@ -91,17 +91,17 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
         public MenuAction MenuAction { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private ActionMenuEntry( byte b )
         {
@@ -113,9 +113,9 @@ namespace FFTPatcher.Datatypes
             MenuAction = a;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (1) 
+        #region Methods (1)
 
 
         public override string ToString()
@@ -134,14 +134,20 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 
-    public class ActionMenu
+    public class ActionMenu : ISupportDigest
     {
 
-		#region Properties (6) 
+        #region Static Fields (1)
+
+        public static readonly string[] digestableProperties = new string[] { "MenuAction" };
+
+        #endregion Static Fields
+
+        #region Properties (8)
 
 
         public string ActionName
@@ -150,6 +156,16 @@ namespace FFTPatcher.Datatypes
         }
 
         public ActionMenu Default { get; private set; }
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
+
+        public bool HasChanged
+        {
+            get { return Default != null && MenuAction.MenuAction != Default.MenuAction.MenuAction; }
+        }
 
         public ActionMenuEntry MenuAction { get; set; }
 
@@ -160,9 +176,9 @@ namespace FFTPatcher.Datatypes
         public byte Value { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public ActionMenu( byte value, string name, MenuAction action )
             : this( value, name, action, null )
@@ -177,14 +193,14 @@ namespace FFTPatcher.Datatypes
             Value = value;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
-    
-    public class AllActionMenus : IChangeable
+
+    public class AllActionMenus : IChangeable, IXmlDigest
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         public ActionMenu[] ActionMenus { get; private set; }
@@ -208,9 +224,9 @@ namespace FFTPatcher.Datatypes
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public AllActionMenus( IList<byte> bytes )
         {
@@ -236,9 +252,9 @@ namespace FFTPatcher.Datatypes
             ActionMenus = tempActions.ToArray();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (4)
 
 
         public List<string> GenerateCodes()
@@ -270,8 +286,29 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( ActionMenu a in ActionMenus )
+                {
+                    if( a.HasChanged )
+                    {
+                        writer.WriteStartElement( a.GetType().Name );
+                        writer.WriteAttributeString( "value", a.Value.ToString( "X2" ) );
+                        writer.WriteAttributeString( "name", a.Name );
+                        DigestGenerator.WriteXmlDigest( a, writer, false, true );
+                    }
+                }
 
-		#endregion Methods 
+                writer.WriteEndElement();
+            }
+        }
+
+
+        #endregion Methods
 
     }
 }

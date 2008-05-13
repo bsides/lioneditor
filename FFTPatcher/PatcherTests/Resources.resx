@@ -571,4 +571,31 @@
   <data name="KANZEN_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sprites\kanzen.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Abilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\bin\abilities.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AbilityEffects" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\abilityeffects.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd1.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd2.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\entd3.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd4.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd5.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NewItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\bin\newitems.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="OldItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\bin\olditems.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

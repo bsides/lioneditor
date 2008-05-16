@@ -92,7 +92,7 @@ namespace FFTPatcher.Datatypes
                 List<string> result = new List<string>();
                 foreach( Item i in FFTPatch.Items.Items )
                 {
-                    if( i is Weapon && (i as Weapon).Formula != 0x02 && (i as Weapon).InflictStatus == Value )
+                    if( i is Weapon && (i as Weapon).Formula.Value != 0x02 && (i as Weapon).InflictStatus == Value )
                     {
                         result.Add( i.ToString() );
                     }

@@ -32,7 +32,6 @@ namespace FFTPatcher.Editors
 		#region Static Fields (2) 
 
         private static List<string> itemFormulaItems;
-        private static List<string> weaponFormulaItems;
         private static List<string> weaponCastSpellItems;
 
 		#endregion Static Fields 
@@ -85,16 +84,6 @@ namespace FFTPatcher.Editors
 
         static ItemEditor()
         {
-            weaponFormulaItems = new List<string>( 256 );
-            weaponFormulaItems.Add( "00" );
-            weaponFormulaItems.AddRange( new string[] {
-                "01 - Normal", "02 - Cast spell at random", "03 - Gun",
-                "04 - Elemental gun", "05", "06 - Drain HP", "07 - Restore HP" } );
-            for( int i = 8; i < 256; i++ )
-            {
-                weaponFormulaItems.Add( string.Format( "{0:X2}", i ) );
-            }
-
             weaponCastSpellItems = new List<string>( 256 );
             for( int i = 0; i < 256; i++ )
             {
@@ -173,7 +162,6 @@ namespace FFTPatcher.Editors
             weaponSpellStatusLabel.TabStop = false;
             itemAttributesLabel.Click += itemAttributesLabel_Click;
             itemAttributesLabel.TabStop = false;
-            weaponFormulaComboBox.DataSource = weaponFormulaItems;
             weaponCastSpellComboBox.DataSource = weaponCastSpellItems;
             chemistItemFormulaComboBox.DataSource = itemFormulaItems;
 
@@ -289,6 +277,19 @@ namespace FFTPatcher.Editors
             chemistItemPanel.Visible = item is ChemistItem;
             chemistItemPanel.Enabled = item is ChemistItem;
 
+            if( FFTPatch.Context == Context.US_PSP && ourContext != Context.US_PSP )
+            {
+                itemTypeComboBox.DataSource = pspItemTypes;
+                weaponFormulaComboBox.DataSource = AbilityFormula.PSPAbilityFormulas;
+                ourContext = Context.US_PSP;
+            }
+            else if( FFTPatch.Context == Context.US_PSX && ourContext != Context.US_PSX )
+            {
+                itemTypeComboBox.DataSource = psxItemTypes;
+                weaponFormulaComboBox.DataSource = AbilityFormula.PSXAbilityFormulas;
+                ourContext = Context.US_PSX;
+            }
+
             if( item is Weapon )
             {
                 Weapon w = item as Weapon;
@@ -302,8 +303,8 @@ namespace FFTPatcher.Editors
                     w.Range,
                     w.WeaponDefault.Range );
                 weaponFormulaComboBox.SetValueAndDefault(
-                    weaponFormulaComboBox.Items[w.Formula],
-                    weaponFormulaComboBox.Items[w.WeaponDefault.Formula] );
+                    weaponFormulaComboBox.Items[w.Formula.Value],
+                    weaponFormulaComboBox.Items[w.WeaponDefault.Formula.Value] );
                 weaponPowerSpinner.SetValueAndDefault( 
                     w.WeaponPower, 
                     w.WeaponDefault.WeaponPower );
@@ -311,7 +312,7 @@ namespace FFTPatcher.Editors
                     w.EvadePercentage,
                     w.WeaponDefault.EvadePercentage );
 
-                if( w.Formula == 2 )
+                if( w.Formula.Value == 2 )
                 {
                     weaponCastSpellComboBox.SetValueAndDefault(
                         weaponCastSpellComboBox.Items[w.InflictStatus],
@@ -380,16 +381,6 @@ namespace FFTPatcher.Editors
             graphicSpinner.SetValueAndDefault( item.Graphic, item.Default.Graphic );
             enemyLevelSpinner.SetValueAndDefault( item.EnemyLevel, item.Default.EnemyLevel );
 
-            if( FFTPatch.Context == Context.US_PSP && ourContext != Context.US_PSP )
-            {
-                itemTypeComboBox.DataSource = pspItemTypes;
-                ourContext = Context.US_PSP;
-            }
-            else if( FFTPatch.Context == Context.US_PSX && ourContext != Context.US_PSX )
-            {
-                itemTypeComboBox.DataSource = psxItemTypes;
-                ourContext = Context.US_PSX;
-            }
             itemTypeComboBox.SetValueAndDefault( item.ItemType, item.Default.ItemType );
 
             itemAttributesSpinner.SetValueAndDefault( item.SIA, item.Default.SIA );
@@ -424,7 +415,7 @@ namespace FFTPatcher.Editors
         {
             if( !ignoreChanges && item is Weapon )
             {
-                (item as Weapon).Formula = (byte)weaponFormulaComboBox.SelectedIndex;
+                (item as Weapon).Formula = weaponFormulaComboBox.SelectedItem as AbilityFormula;
                 if( weaponFormulaComboBox.SelectedIndex == 2 )
                 {
                     weaponSpellStatusLabel.Visible = false;

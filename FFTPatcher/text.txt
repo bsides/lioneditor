@@ -9,7 +9,7 @@ File menu:
 
 PSX menu:
    - ATCHELP.LZW: This file contains help text for the pre-battle 
-     formation setup screen.
+         formation setup screen.
    - ATTACK.OUT:
        - Random names for enemy units
        - Job names used in battle setup screen and in battle
@@ -35,7 +35,7 @@ PSX menu:
    - WORLD.BIN: 
        - Contains job names, skillset names, ability names used in the "Formation"
          screen
-       - Contains text used in the Shosp and Hiring office. Editing this file seems
+       - Contains text used in the Shops and Hiring office. Editing this file seems
          to screw everything up in those places, though. More investigation is
          needed on this
    - WORLD.LZW:
@@ -45,6 +45,9 @@ PSX menu:
        - Tavern text
        - Tutorial menus
        - "Brave Story" menus
+   - Patch ISO...
+       - Patches your ISO with the text currently loaded.
+       - You need Pixel's CD-Tool program, available at http://www.nobis-crew.org/cd-tool/
 
 PSP menu:
    - ATCHELP.LZW: Same as PSX

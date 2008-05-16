@@ -7,7 +7,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21 and BATTLE.BIN.
+        Use the Gameshark codes or patch SCUS_942.21 and BATTLE.BIN. -or-
+          Patch the ISO as a whole.
         Note: Gameshark codes are not generated for changes to the "Effect" option.
         
   Items:
@@ -17,7 +18,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
 
   Item Attributes:
     Each item here is a set of attributes an item can have when it is equipped.
@@ -25,7 +27,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
      
   Jobs:
     All jobs/classes in the game and their properties.
@@ -33,7 +36,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
         
   Job Levels:
     The requirements to unlock certain jobs and the JP required to advance in job level.
@@ -41,7 +45,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
 
   Skill Sets:
     The skills each job can use.
@@ -49,7 +54,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
 
   Monster Skills:
     The skills each monster class can use.
@@ -57,7 +63,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
     
   Action Menus:
     The "menu" that shows up when you select a certain ability in battle. 
@@ -67,7 +74,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
     
   Status Effects:
     The behavior of all status effects a unit can have.    
@@ -75,7 +83,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
         
   Inflict Statuses:
     Certain abilities can inflict statuses on their targets when they are used.
@@ -84,7 +93,8 @@ Some info about each page on the editor:
       PSP:
         Use the CWCheat codes or patch your ISO
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
         
   Poaching:
     Determines what items can be found by poaching monsters.
@@ -93,7 +103,8 @@ Some info about each page on the editor:
         Use the CWCheat codes or patch your ISO
         NOTE: It is not possible to select any of the new multiplayer items.
       PSX:
-        Use the Gameshark codes or patch SCUS_942.21
+        Use the Gameshark codes or patch SCUS_942.21 -or-
+          Patch the ISO as a whole.
 
   Font:
     Determines how characters and symbols appear on the screen.
@@ -104,7 +115,8 @@ Some info about each page on the editor:
         Use the CWCheat codes or patch your ISO
       PSX:
         Use the Gameshark codes -or-
-          Generate FONT.BIN and patch BATTLE.BIN
+          Generate FONT.BIN and patch BATTLE.BIN -or-
+          Patch the ISO as a whole.
 
   ENTD:
     "Events" and "Battles" that take place in the game and the units that appear in them.
@@ -113,4 +125,5 @@ Some info about each page on the editor:
         Patch your ISO
         NOTE: It is not possible to select any of the new multiplayer items for the equipment fields.
       PSX:
-        Generate ENTD files
+        Generate ENTD files -or-
+          Patch the ISO as a whole.

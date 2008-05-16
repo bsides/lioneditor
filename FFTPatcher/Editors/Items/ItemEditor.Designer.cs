@@ -73,6 +73,7 @@ namespace FFTPatcher.Editors
             System.Windows.Forms.Label zLabel;
             System.Windows.Forms.Label itemFormulaLabel;
             System.Windows.Forms.Label label1;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( ItemEditor ) );
             this.hLabel4 = new System.Windows.Forms.Label();
             this.weaponPanel = new System.Windows.Forms.Panel();
             this.weaponFormulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
@@ -115,6 +116,7 @@ namespace FFTPatcher.Editors
             this.itemAttributesSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.graphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.paletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.formulasHelpLabel = new System.Windows.Forms.Label();
             hLabel5 = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
             hLabel2 = new System.Windows.Forms.Label();
@@ -413,6 +415,7 @@ namespace FFTPatcher.Editors
             // 
             this.weaponPanel.AutoSize = true;
             this.weaponPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.weaponPanel.Controls.Add( this.formulasHelpLabel );
             this.weaponPanel.Controls.Add( this.weaponFormulaComboBox );
             this.weaponPanel.Controls.Add( this.weaponCastSpellLabel );
             this.weaponPanel.Controls.Add( this.weaponSpellStatusLabel );
@@ -430,7 +433,7 @@ namespace FFTPatcher.Editors
             this.weaponPanel.Controls.Add( this.weaponCastSpellComboBox );
             this.weaponPanel.Location = new System.Drawing.Point( 4, 159 );
             this.weaponPanel.Name = "weaponPanel";
-            this.weaponPanel.Size = new System.Drawing.Size( 283, 289 );
+            this.weaponPanel.Size = new System.Drawing.Size( 482, 304 );
             this.weaponPanel.TabIndex = 12;
             // 
             // weaponFormulaComboBox
@@ -440,7 +443,7 @@ namespace FFTPatcher.Editors
             this.weaponFormulaComboBox.FormattingEnabled = true;
             this.weaponFormulaComboBox.Location = new System.Drawing.Point( 121, 42 );
             this.weaponFormulaComboBox.Name = "weaponFormulaComboBox";
-            this.weaponFormulaComboBox.Size = new System.Drawing.Size( 159, 21 );
+            this.weaponFormulaComboBox.Size = new System.Drawing.Size( 252, 21 );
             this.weaponFormulaComboBox.TabIndex = 1;
             // 
             // weaponCastSpellLabel
@@ -942,6 +945,15 @@ namespace FFTPatcher.Editors
             this.paletteSpinner.Tag = "Palette";
             this.paletteSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // formulasHelpLabel
+            // 
+            this.formulasHelpLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.formulasHelpLabel.Location = new System.Drawing.Point( 216, 130 );
+            this.formulasHelpLabel.Name = "formulasHelpLabel";
+            this.formulasHelpLabel.Size = new System.Drawing.Size( 263, 174 );
+            this.formulasHelpLabel.TabIndex = 28;
+            this.formulasHelpLabel.Text = resources.GetString( "formulasHelpLabel.Text" );
+            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -974,13 +986,13 @@ namespace FFTPatcher.Editors
             this.Controls.Add( this.graphicSpinner );
             this.Controls.Add( hLabel5 );
             this.Controls.Add( this.paletteSpinner );
+            this.Controls.Add( this.weaponPanel );
             this.Controls.Add( this.chemistItemPanel );
             this.Controls.Add( this.accessoryPanel );
             this.Controls.Add( this.armorPanel );
             this.Controls.Add( this.shieldPanel );
-            this.Controls.Add( this.weaponPanel );
             this.Name = "ItemEditor";
-            this.Size = new System.Drawing.Size( 493, 451 );
+            this.Size = new System.Drawing.Size( 493, 466 );
             this.weaponPanel.ResumeLayout( false );
             this.weaponPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weaponSpellStatusSpinner)).EndInit();
@@ -1058,6 +1070,7 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.Label weaponCastSpellLabel;
         private System.Windows.Forms.Label hLabel4;
         private FFTPatcher.Controls.ComboBoxWithDefault weaponCastSpellComboBox;
+        private System.Windows.Forms.Label formulasHelpLabel;
 
     }
 }

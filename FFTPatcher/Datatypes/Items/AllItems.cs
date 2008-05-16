@@ -248,8 +248,8 @@ namespace FFTPatcher.Datatypes
                         if( i is Weapon )
                         {
                             Weapon w = i as Weapon;
-                            if( w.Formula == 0x02 &&
-                                (w.Formula != w.WeaponDefault.Formula || w.InflictStatus != w.WeaponDefault.InflictStatus) )
+                            if( w.Formula.Value == 0x02 &&
+                                (w.Formula.Value != w.WeaponDefault.Formula.Value || w.InflictStatus != w.WeaponDefault.InflictStatus) )
                             {
                                 writer.WriteStartElement( "CastSpell" );
                                 writer.WriteAttributeString( "default", AllAbilities.Names[w.WeaponDefault.InflictStatus] );

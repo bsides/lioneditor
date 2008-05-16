@@ -1,14 +1,36 @@
-FFTPatcher - v0.236
+FFTPatcher - v0.269
 
+Changes since v0.236:
+  Removed limits on value spinners. You can now enter values up to 255/0xFF, 
+    even if the value is invalid
+  Added direct patching of Playstation ISOs. You'll need the external CD-Tool 
+    program from http://www.nobis-crew.org/cd-tool/. Place CD-Tool.exe in the 
+    same folder as FFTPatcher.
+  Updated Ability and Item formulas with a more correct list provided by Zodiac
+  Added "Second Table ID" value to the Item editors
+  Added some text to the Ability editor giving information about formula 
+    variables
+  Added Team Color, War Trophies, Bonus Money, and "Main target" fields to
+    the ENTD editor
+  Renamed the "Zodiac monster" checkbox to "??? Stats"
+  Added "digest" output. An HTML file is output whenever you save your 
+    .fftpatch file that contains a list of the changes you've made.
+  Added option to sprite manager to "Always use corresponding palette for 
+    portrait"
+  Added option to the sprite manager to show the frames of animation for the 
+    current sprite
+  Thanks to Archael7 and Zodiac for beta testing v0.266.
+  
 Changes since v0.205:
   Fixed bug in sprite viewer when loading a BMP with an invalid palette
   Changed the abilities formula combo box to allow all 256 possible values
   Changed Weapon formula combo box to be more descriptive
   Changed Item formula combo box to be more descriptive
-  Added "Zodiac monster" checkbox to the ENTD editor. THanks to Armorvil for this info
+  Added "Zodiac monster" checkbox to the ENTD editor. Thanks to Armorvil for 
+    this info
   Added beta release of FFTacText text editor
-  Updated the FFTPACK.BIN file extractor with the locations of SPELL.MES, WORLD.LZW,
-    and SNPLMES.BIN
+  Updated the FFTPACK.BIN file extractor with the locations of SPELL.MES, 
+    WORLD.LZW, and SNPLMES.BIN
     
 Changes since v0.200:
   Added detailed formula information to the Ability editor. These are mostly 

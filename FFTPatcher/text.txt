@@ -1,6 +1,11 @@
 FFTacText readme
 ----------------
 
+I do not recommend using the text editor in its current state. You are free
+to edit text, but applying ANY CHANGES AT ALL to a Playstation or PSP ISO
+will probably screw everything up. I am still looking for solutions to these
+problems.
+
 File menu:
    - New PSX/PSP text: Starts a new text editing session, with all strings 
      filled in with their default values

@@ -25,7 +25,7 @@ namespace FFTPatcher.SpriteEditor
     public partial class About : Form
     {
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public About()
         {
@@ -46,7 +46,7 @@ You should have received a copy of the GNU General Public License along with FFT
             versionLabel.Text = string.Format( "v0.{0}", Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString() );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

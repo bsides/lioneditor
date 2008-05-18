@@ -28,13 +28,13 @@ namespace FFTPatcher.SpriteEditor
     public static partial class ExtensionMethods
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static readonly Rectangle portraitRectangle = new Rectangle( 80, 256, 48, 32 );
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Methods (5) 
+        #region Methods (5)
 
 
         /// <summary>
@@ -113,15 +113,15 @@ namespace FFTPatcher.SpriteEditor
             {
                 for( int i = 0; (i < s.Pixels.Length) && (i / 256 < 256); i++ )
                 {
-                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i]] );
+                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
                 }
                 for( int i = 288 * 256; (i < s.Pixels.Length) && (i / 256 < 488); i++ )
                 {
-                    b.SetPixel( i % 256, i / 256 - 32, p.Colors[s.Pixels[i]] );
+                    b.SetPixel( i % 256, i / 256 - 32, p.Colors[s.Pixels[i] % 16] );
                 }
                 for( int i = 256 * 256; (i < s.Pixels.Length) && (i / 256 < 288); i++ )
                 {
-                    b.SetPixel( i % 256, i / 256 + 200, p.Colors[s.Pixels[i]] );
+                    b.SetPixel( i % 256, i / 256 + 200, p.Colors[s.Pixels[i] % 16] );
                 }
 
                 Rectangle pRect = portraitRectangle;
@@ -131,7 +131,7 @@ namespace FFTPatcher.SpriteEditor
                 {
                     for( int y = pRect.Y; y < pRect.Bottom && (x + y * 256 < s.Pixels.Length); y++ )
                     {
-                        b.SetPixel( x, y, portrait.Colors[s.Pixels[x + (y-200) * 256] % 16] );
+                        b.SetPixel( x, y, portrait.Colors[s.Pixels[x + (y - 200) * 256] % 16] );
                     }
                 }
             }
@@ -181,7 +181,7 @@ namespace FFTPatcher.SpriteEditor
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

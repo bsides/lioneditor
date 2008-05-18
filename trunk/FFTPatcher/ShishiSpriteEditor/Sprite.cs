@@ -30,7 +30,7 @@ namespace FFTPatcher.SpriteEditor
     public class Sprite
     {
 
-		#region Properties (6) 
+        #region Properties (6)
 
 
         private bool Compressed { get; set; }
@@ -58,9 +58,9 @@ namespace FFTPatcher.SpriteEditor
         public bool SPR { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public Sprite( IList<byte> bytes )
         {
@@ -75,9 +75,9 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (11) 
+        #region Methods (11)
 
 
         private static Palette BuildGreyscalePalette()
@@ -293,8 +293,10 @@ namespace FFTPatcher.SpriteEditor
         /// <summary>
         /// Imports a bitmap and tries to convert it to a FFT sprite.
         /// </summary>
-        public void ImportBitmap( Bitmap bmp )
+        public void ImportBitmap( Bitmap bmp, out bool foundBadPixels )
         {
+            foundBadPixels = false;
+
             if( bmp.PixelFormat != PixelFormat.Format8bppIndexed )
             {
                 throw new BadImageFormatException();
@@ -314,6 +316,10 @@ namespace FFTPatcher.SpriteEditor
             for( int i = 0; (i < Pixels.Length) && (i / 256 < bmp.Height); i++ )
             {
                 Pixels[i] = (byte)bmd.GetPixel( i % 256, i / 256 );
+                if( Pixels[i] >= 16 )
+                {
+                    foundBadPixels = true;
+                }
             }
 
             bmp.UnlockBits( bmd );
@@ -412,8 +418,8 @@ namespace FFTPatcher.SpriteEditor
 
             return result.ToArray();
         }
-        
-		#endregion Methods 
+
+        #endregion Methods
 
     }
 }

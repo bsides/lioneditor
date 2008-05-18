@@ -29,15 +29,15 @@ namespace FFTPatcher.SpriteEditor
     public partial class MainForm : Form
     {
 
-		#region Fields (3) 
+        #region Fields (3)
 
         string filename = string.Empty;
         IList<Bitmap> frames;
         private List<Shape> shapes;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public MainForm()
         {
@@ -70,9 +70,9 @@ namespace FFTPatcher.SpriteEditor
             shapesComboBox.SelectedIndexChanged += new EventHandler( shapesComboBox_SelectedIndexChanged );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (19) 
+        #region Methods (19)
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
@@ -142,7 +142,13 @@ namespace FFTPatcher.SpriteEditor
             {
                 using( Bitmap b = new Bitmap( openFileDialog.FileName ) )
                 {
-                    spriteViewer1.Sprite.ImportBitmap( b );
+                    bool bad = false;
+                    spriteViewer1.Sprite.ImportBitmap( b, out bad );
+                    spriteViewer1.Invalidate();
+                    if( bad )
+                    {
+                        MessageBox.Show( this, "The imported file had some pixels that weren't in the first 16 palette entries.", "Warning", MessageBoxButtons.OK );
+                    }
                 }
                 if( shapesComboBox.SelectedIndex != -1 )
                 {
@@ -156,7 +162,7 @@ namespace FFTPatcher.SpriteEditor
             openFileDialog.FileName = string.Empty;
             openFileDialog.Filter = "Sprite files (*.SPR)|*.SPR|Secondary sprite files (*.SP2)|*.SP2";
             openFileDialog.FilterIndex = 0;
-            
+
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 byte[] bytes = null;
@@ -340,7 +346,7 @@ namespace FFTPatcher.SpriteEditor
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -88,7 +89,7 @@ namespace FFTPatcher.Datatypes
                     SkillSets = new AllSkillSets( Context, Resources.SkillSetsBin,
                         Resources.SkillSetsBin );
                     MonsterSkills = new AllMonsterSkills( Resources.MonsterSkillsBin );
-                    ActionMenus = new AllActionMenus( Resources.ActionEventsBin );
+                    ActionMenus = new AllActionMenus( Resources.ActionEventsBin, Context );
                     StatusAttributes = new AllStatusAttributes( Resources.StatusAttributesBin );
                     InflictStatuses = new AllInflictStatuses( Resources.InflictStatusesBin );
                     PoachProbabilities = new AllPoachProbabilities( Resources.PoachProbabilitiesBin );
@@ -105,7 +106,7 @@ namespace FFTPatcher.Datatypes
                     SkillSets = new AllSkillSets( Context, PSXResources.SkillSetsBin,
                         PSXResources.SkillSetsBin );
                     MonsterSkills = new AllMonsterSkills( PSXResources.MonsterSkillsBin );
-                    ActionMenus = new AllActionMenus( PSXResources.ActionEventsBin );
+                    ActionMenus = new AllActionMenus( PSXResources.ActionEventsBin, Context );
                     StatusAttributes = new AllStatusAttributes( PSXResources.StatusAttributesBin );
                     InflictStatuses = new AllInflictStatuses( PSXResources.InflictStatusesBin );
                     PoachProbabilities = new AllPoachProbabilities( PSXResources.PoachProbabilitiesBin );
@@ -374,7 +375,7 @@ namespace FFTPatcher.Datatypes
             SkillSets = new AllSkillSets( Context, skillSets,
                 Context == Context.US_PSP ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
             MonsterSkills = new AllMonsterSkills( monsterSkills );
-            ActionMenus = new AllActionMenus( actionMenus );
+            ActionMenus = new AllActionMenus( actionMenus, Context );
             StatusAttributes = new AllStatusAttributes( statusAttributes );
             InflictStatuses = new AllInflictStatuses( inflictStatuses );
             PoachProbabilities = new AllPoachProbabilities( poach );
@@ -439,7 +440,7 @@ namespace FFTPatcher.Datatypes
                     new JobLevels( Context.US_PSX, PSXResources.JobLevelsBin ) );
                 SkillSets = new AllSkillSets( Context, skillSets, PSXResources.SkillSetsBin );
                 MonsterSkills = new AllMonsterSkills( monsterSkills );
-                ActionMenus = new AllActionMenus( actionMenus );
+                ActionMenus = new AllActionMenus( actionMenus, Context.US_PSX );
                 StatusAttributes = new AllStatusAttributes( statusAttributes );
                 InflictStatuses = new AllInflictStatuses( inflictStatuses );
                 PoachProbabilities = new AllPoachProbabilities( poach );
@@ -530,32 +531,192 @@ namespace FFTPatcher.Datatypes
         /// </summary>
         public static void SavePatchToFile( string path )
         {
-            bool psp = Context == Context.US_PSP;
+            SavePatchToFile( path, FFTPatch.Context );
+        }
 
-            StringBuilder abilities = GetBase64StringIfNonDefault( Abilities.ToByteArray( Context ), psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin );
+        public static void ConvertPsxPatchToPsp( XmlNode document )
+        {
+            Action<StringBuilder> sbPrettifier = new Action<StringBuilder>(
+                delegate( StringBuilder sb )
+                {
+                    if( sb != null )
+                    {
+                        sb.Insert( 0, "\r\n" );
+                        sb.Replace( "\r\n", "\r\n    " );
+                        sb.Append( "\r\n  " );
+                    }
+                } );
+
+            XmlNode rootNode = document.SelectSingleNode( "patch" );
+            XmlNode typeNode = rootNode.SelectSingleNode( "@type" );
+
+            if( typeNode.InnerText == Context.US_PSX.ToString() )
+            {
+                typeNode.InnerText = Context.US_PSP.ToString();
+
+                XmlNode actionMenusNode = rootNode.SelectSingleNode( elementNames[ElementName.ActionMenus] );
+                if( actionMenusNode != null )
+                {
+                    // Action Menus 224->227
+                    List<byte> amBytes = new List<byte>( Convert.FromBase64String( actionMenusNode.InnerText ) );
+                    amBytes.AddRange( Resources.ActionEventsBin.Sub( 0xE0, 0xE2 ) );
+                    StringBuilder amBytesString = new StringBuilder( Convert.ToBase64String( amBytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( amBytesString );
+                    actionMenusNode.InnerText = amBytesString.ToString();
+                }
+
+                XmlNode jobsNode = rootNode.SelectSingleNode( elementNames[ElementName.Jobs] );
+                if( jobsNode != null )
+                {
+                    // Jobs 160->169, 48 bytes->49 bytes
+                    AllJobs aj = new AllJobs( Context.US_PSX, Convert.FromBase64String( jobsNode.InnerText ) );
+                    List<Job> jobs = new List<Job>( aj.Jobs );
+                    AllJobs defaultPspJobs = new AllJobs( Context.US_PSP, Resources.JobsBin );
+                    for( int i = 0; i < jobs.Count; i++ )
+                    {
+                        jobs[i].Equipment.Unknown1 = defaultPspJobs.Jobs[i].Equipment.Unknown1;
+                        jobs[i].Equipment.Unknown2 = defaultPspJobs.Jobs[i].Equipment.Unknown2;
+                        jobs[i].Equipment.Unknown3 = defaultPspJobs.Jobs[i].Equipment.Unknown3;
+                        jobs[i].Equipment.FellSword = defaultPspJobs.Jobs[i].Equipment.FellSword;
+                        jobs[i].Equipment.LipRouge = defaultPspJobs.Jobs[i].Equipment.LipRouge;
+                        jobs[i].Equipment.Unknown6 = defaultPspJobs.Jobs[i].Equipment.Unknown6;
+                        jobs[i].Equipment.Unknown7 = defaultPspJobs.Jobs[i].Equipment.Unknown7;
+                        jobs[i].Equipment.Unknown8 = defaultPspJobs.Jobs[i].Equipment.Unknown8;
+                    }
+                    for( int i = 160; i < 169; i++ )
+                    {
+                        jobs.Add( defaultPspJobs.Jobs[i] );
+                    }
+                    ReflectionHelpers.SetFieldOrProperty( aj, "Jobs", jobs.ToArray() );
+                    StringBuilder jobsBytesString = new StringBuilder( Convert.ToBase64String( aj.ToByteArray( Context.US_PSP ), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( jobsBytesString );
+                    jobsNode.InnerText = jobsBytesString.ToString();
+                }
+
+                XmlNode jobLevelsNode = rootNode.SelectSingleNode( elementNames[ElementName.JobLevels] );
+                if( jobLevelsNode != null )
+                {
+                    // JobLevels, 208 bytes->280 bytes (Requirements 10 bytes->12 bytes)
+                    JobLevels jl = new JobLevels( Context.US_PSX, Convert.FromBase64String( jobLevelsNode.InnerText ) );
+                    JobLevels pspJobLevels = new JobLevels( Context.US_PSP, Resources.JobLevelsBin );
+
+                    foreach( string jobName in new string[19] { "Archer", "Arithmetician", "Bard", "BlackMage", "Chemist", "Dancer", "Dragoon", "Geomancer",
+                        "Knight", "Mime", "Monk", "Mystic", "Ninja", "Orator", "Samurai", "Summoner", "Thief", "TimeMage", "WhiteMage" } )
+                    {
+                        Requirements psxR = ReflectionHelpers.GetFieldOrProperty<Requirements>( jl, jobName );
+                        Requirements pspR = ReflectionHelpers.GetFieldOrProperty<Requirements>( pspJobLevels, jobName );
+                        psxR.Unknown1 = pspR.Unknown1;
+                        psxR.Unknown2 = pspR.Unknown2;
+                        psxR.DarkKnight = pspR.DarkKnight;
+                        psxR.OnionKnight = pspR.OnionKnight;
+                    }
+
+                    ReflectionHelpers.SetFieldOrProperty( jl, "OnionKnight", pspJobLevels.OnionKnight );
+                    ReflectionHelpers.SetFieldOrProperty( jl, "DarkKnight", pspJobLevels.DarkKnight );
+                    ReflectionHelpers.SetFieldOrProperty( jl, "Unknown", pspJobLevels.Unknown );
+
+                    StringBuilder levelsBytesString = new StringBuilder( Convert.ToBase64String( jl.ToByteArray( Context.US_PSP ), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( levelsBytesString );
+                    jobLevelsNode.InnerText = levelsBytesString.ToString();
+                }
+
+                XmlNode skillSetsNode = rootNode.SelectSingleNode( elementNames[ElementName.SkillSets] );
+                if( skillSetsNode != null )
+                {
+                    // Skillsets, 176->179
+                    List<byte> ssBytes = new List<byte>( Convert.FromBase64String( skillSetsNode.InnerText ) );
+                    ssBytes.AddRange( Resources.SkillSetsBin.Sub( ssBytes.Count ) );
+                    StringBuilder ssBytesString = new StringBuilder( Convert.ToBase64String( ssBytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( ssBytesString );
+                    skillSetsNode.InnerText = ssBytesString.ToString();
+                }
+            }
+        }
+
+        private static string[] elementNameStrings = new string[] {
+            "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
+            "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
+            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths" };
+
+        private static IDictionary<ElementName, string> elementNames = Utilities.BuildDictionary<ElementName, string>( new object[] {
+            ElementName.Abilities, "abilities",
+            ElementName.AbilityEffects, "abilityEffects", 
+            ElementName.Items, "items", 
+            ElementName.ItemAttributes, "itemAttributes", 
+            ElementName.PSPItems, "pspItems", 
+            ElementName.PSPItemAttributes, "pspItemAttributes", 
+            ElementName.Jobs, "jobs", 
+            ElementName.JobLevels, "jobLevels",
+            ElementName.SkillSets, "skillSets", 
+            ElementName.MonsterSkills, "monsterSkills", 
+            ElementName.ActionMenus, "actionMenus", 
+            ElementName.InflictStatuses, "inflictStatuses", 
+            ElementName.StatusAttributes, "statusAttributes", 
+            ElementName.Poaching, "poaching",
+            ElementName.ENTD1, "entd1", 
+            ElementName.ENTD2, "entd2", 
+            ElementName.ENTD3, "entd3", 
+            ElementName.ENTD4, "entd4", 
+            ElementName.ENTD5, "entd5", 
+            ElementName.Font, "font", 
+            ElementName.FontWidths, "fontWidths" } );
+
+        private enum ElementName
+        {
+            Abilities,
+            AbilityEffects,
+            Items,
+            ItemAttributes,
+            PSPItems,
+            PSPItemAttributes,
+            Jobs,
+            JobLevels,
+            SkillSets,
+            MonsterSkills,
+            ActionMenus,
+            InflictStatuses,
+            StatusAttributes,
+            Poaching,
+            ENTD1,
+            ENTD2,
+            ENTD3,
+            ENTD4,
+            ENTD5,
+            Font,
+            FontWidths
+        }
+
+        /// <summary>
+        /// Saves this patch to an XML document.
+        /// </summary>
+        public static void SavePatchToFile( string path, Context destinationContext )
+        {
+            bool psp = destinationContext == Context.US_PSP;
+
+            StringBuilder abilities = GetBase64StringIfNonDefault( Abilities.ToByteArray( destinationContext ), psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin );
             StringBuilder abilityEffects = GetBase64StringIfNonDefault( Abilities.ToEffectsByteArray(), psp ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin );
             StringBuilder oldItems = GetBase64StringIfNonDefault( Items.ToFirstByteArray(), psp ? Resources.OldItemsBin : PSXResources.OldItemsBin );
             StringBuilder oldItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToFirstByteArray(), psp ? Resources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
             StringBuilder newItems = null;
             StringBuilder newItemAttributes = null;
-            if( psp )
+            if( psp && Context == Context.US_PSP )
             {
                 newItems = GetBase64StringIfNonDefault( Items.ToSecondByteArray(), Resources.NewItemsBin );
                 newItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToSecondByteArray(), Resources.NewItemAttributesBin );
             }
-            StringBuilder jobs = GetBase64StringIfNonDefault( Jobs.ToByteArray( Context ), psp ? Resources.JobsBin : PSXResources.JobsBin );
-            StringBuilder jobLevels = GetBase64StringIfNonDefault( JobLevels.ToByteArray( Context ), psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin );
-            StringBuilder monsterSkills = GetBase64StringIfNonDefault( MonsterSkills.ToByteArray( Context ), psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
-            StringBuilder skillSets = GetBase64StringIfNonDefault( SkillSets.ToByteArray( Context ), psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
-            StringBuilder actionMenus = GetBase64StringIfNonDefault( ActionMenus.ToByteArray( Context ), psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin );
-            StringBuilder statusAttributes = GetBase64StringIfNonDefault( StatusAttributes.ToByteArray( Context ), psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin );
+            StringBuilder jobs = GetBase64StringIfNonDefault( Jobs.ToByteArray( destinationContext ), psp ? Resources.JobsBin : PSXResources.JobsBin );
+            StringBuilder jobLevels = GetBase64StringIfNonDefault( JobLevels.ToByteArray( destinationContext ), psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin );
+            StringBuilder monsterSkills = GetBase64StringIfNonDefault( MonsterSkills.ToByteArray( destinationContext ), psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
+            StringBuilder skillSets = GetBase64StringIfNonDefault( SkillSets.ToByteArray( destinationContext ), psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
+            StringBuilder actionMenus = GetBase64StringIfNonDefault( ActionMenus.ToByteArray( destinationContext ), psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin );
+            StringBuilder statusAttributes = GetBase64StringIfNonDefault( StatusAttributes.ToByteArray( destinationContext ), psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin );
             StringBuilder inflictStatuses = GetBase64StringIfNonDefault( InflictStatuses.ToByteArray(), psp ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin );
-            StringBuilder poach = GetBase64StringIfNonDefault( PoachProbabilities.ToByteArray( Context ), psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
+            StringBuilder poach = GetBase64StringIfNonDefault( PoachProbabilities.ToByteArray( destinationContext ), psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
             StringBuilder entd1 = GetBase64StringIfNonDefault( ENTDs.ENTDs[0].ToByteArray(), Resources.ENTD1 );
             StringBuilder entd2 = GetBase64StringIfNonDefault( ENTDs.ENTDs[1].ToByteArray(), Resources.ENTD2 );
             StringBuilder entd3 = GetBase64StringIfNonDefault( ENTDs.ENTDs[2].ToByteArray(), Resources.ENTD3 );
             StringBuilder entd4 = GetBase64StringIfNonDefault( ENTDs.ENTDs[3].ToByteArray(), Resources.ENTD4 );
-            StringBuilder entd5 = psp ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
+            StringBuilder entd5 = Context == Context.US_PSP ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
             StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
             StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
             XmlTextWriter writer = null;
@@ -567,7 +728,7 @@ namespace FFTPatcher.Datatypes
                 writer.Indentation = 2;
                 writer.WriteStartDocument();
                 writer.WriteStartElement( "patch" );
-                writer.WriteAttributeString( "type", Context.ToString() );
+                writer.WriteAttributeString( "type", destinationContext.ToString() );
 
                 StringBuilder[] builders = new StringBuilder[] { 
                     abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, 
@@ -583,15 +744,11 @@ namespace FFTPatcher.Datatypes
                     }
                 }
 
-                string[] elementNames = new string[] {
-                    "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
-                    "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-                    "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths" };
                 for( int i = 0; i < builders.Length; i++ )
                 {
                     if( builders[i] != null )
                     {
-                        writer.WriteElementString( elementNames[i], builders[i].ToString() );
+                        writer.WriteElementString( elementNameStrings[i], builders[i].ToString() );
                     }
                 }
 

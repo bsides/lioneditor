@@ -1,5 +1,9 @@
 FFTPatcher README
 
+To use the "Patch ISO" feature on Playstation ISOs, you'll need an ISO that 
+was ripped as "Mode 2" and "2352 bytes/sector". You'll also need Pixel's 
+CD-Tool program, available at http://www.nobis-crew.org/cd-tool/
+
 Some info about each page on the editor:
   Abilities:
     All usable abilities, reaction abilities, support abilities, and movement abilities.

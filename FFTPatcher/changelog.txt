@@ -1,4 +1,10 @@
-FFTPatcher - v0.269
+FFTPatcher - v0.271
+
+Changes since v0.269:
+  Fixed bug when loading certain bitmaps in the Sprite Editor (Thanks to Sen
+    and Kourama for reporting the bug)
+  Fixed bug where "Team Color" wasn't being properly persisted to .fftpatch 
+    files (Thanks to Lydyn for reporting the bug)
 
 Changes since v0.236:
   Removed limits on value spinners. You can now enter values up to 255/0xFF, 

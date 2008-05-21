@@ -125,7 +125,7 @@ namespace FFTPatcher.Editors
                 spriteSetComboBox, specialNameComboBox, monthComboBox, jobComboBox, 
                 primarySkillComboBox, secondaryActionComboBox, reactionComboBox, supportComboBox, movementComboBox,
                 rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox,
-                preRequisiteJobComboBox, facingDirectionComboBox, warTrophyComboBox };
+                preRequisiteJobComboBox, facingDirectionComboBox, warTrophyComboBox, teamColorComboBox };
 
             foreach( NumericUpDownWithDefault spinner in spinners )
             {

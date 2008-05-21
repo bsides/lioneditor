@@ -82,6 +82,7 @@ namespace FFTPatcher
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
+            this.saveAsPspMenuItem = new System.Windows.Forms.MenuItem();
             fileMenuItem = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
@@ -103,6 +104,7 @@ namespace FFTPatcher
             separator1,
             this.openMenuItem,
             this.saveMenuItem,
+            this.saveAsPspMenuItem,
             separator2,
             this.exitMenuItem} );
             fileMenuItem.Text = "&File";
@@ -135,12 +137,12 @@ namespace FFTPatcher
             // 
             // separator2
             // 
-            separator2.Index = 5;
+            separator2.Index = 6;
             separator2.Text = "-";
             // 
             // exitMenuItem
             // 
-            this.exitMenuItem.Index = 6;
+            this.exitMenuItem.Index = 7;
             this.exitMenuItem.Text = "E&xit";
             // 
             // psxMenu
@@ -301,6 +303,12 @@ namespace FFTPatcher
             this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 599 );
             this.fftPatchEditor1.TabIndex = 0;
             // 
+            // saveAsPspMenuItem
+            // 
+            this.saveAsPspMenuItem.Enabled = false;
+            this.saveAsPspMenuItem.Index = 5;
+            this.saveAsPspMenuItem.Text = "Save &as PSP patch...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -343,6 +351,7 @@ namespace FFTPatcher
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.MenuItem decryptMenuItem;
         private System.Windows.Forms.MenuItem patchPsxIsoMenuItem;
+        private System.Windows.Forms.MenuItem saveAsPspMenuItem;
 
     }
 }

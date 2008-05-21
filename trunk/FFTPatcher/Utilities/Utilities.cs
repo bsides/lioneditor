@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -60,6 +61,43 @@ namespace FFTPatcher
     {
 
 		#region Methods (13) 
+
+        /// <summary>
+        /// Builds a dictionary given a list of Key/Value pairs.
+        /// </summary>
+        /// <typeparam name="TKey">
+        /// The type of Key. Every other value in <paramref name="keyValuePairs"/> must be of this type.
+        /// </typeparam>
+        /// <typeparam name="TValue">
+        /// The type of Value. Every other value in <paramref name="keyValuePairs"/> must be of this type.
+        /// </typeparam>
+        /// <param name="keyValuePairs">The key/value pairs to put in the dictionary. Must have an even length.</param>
+        /// <returns></returns>
+        public static IDictionary<TKey, TValue> BuildDictionary<TKey, TValue>( IList keyValuePairs )
+        {
+            if( keyValuePairs.Count % 2 != 0 )
+            {
+                throw new ArgumentException( "List must have an even number of elements", "keyValuePairs" );
+            }
+
+            Dictionary<TKey, TValue> result = new Dictionary<TKey, TValue>( keyValuePairs.Count / 2 );
+
+            for( int i = 0; i < keyValuePairs.Count; i += 2 )
+            {
+                if( !(keyValuePairs[i] is TKey) )
+                {
+                    throw new ArgumentException( string.Format( "Element {0} was not of type {1}", i, typeof( TKey ).Name ), "keyValuePairs" );
+                }
+                if( !(keyValuePairs[i + 1] is TValue) )
+                {
+                    throw new ArgumentException( string.Format( "Element {0} was not of type {1}", i + 1, typeof( TValue ).Name ), "keyValuePairs" );
+                }
+
+                result.Add( (TKey)keyValuePairs[i], (TValue)keyValuePairs[i + 1] );
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Determines if the code is currently running on Mono (vs. MS .NET)

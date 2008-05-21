@@ -18,11 +18,12 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml;
 using FFTPatcher.Datatypes;
-using System.Diagnostics;
 
 namespace FFTPatcher
 {
@@ -37,6 +38,7 @@ namespace FFTPatcher
             openMenuItem.Click += openMenuItem_Click;
             applySCUSMenuItem.Click += applyMenuItem_Click;
             saveMenuItem.Click += saveMenuItem_Click;
+            saveAsPspMenuItem.Click += saveAsPspMenuItem_Click;
             newPSPMenuItem.Click += newPSPMenuItem_Click;
             newPSXMenuItem.Click += newPSXMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
@@ -44,6 +46,7 @@ namespace FFTPatcher
             aboutMenuItem.Click += aboutMenuItem_Click;
             applySCUSMenuItem.Enabled = false;
             saveMenuItem.Enabled = false;
+            saveAsPspMenuItem.Enabled = false;
             generateMenuItem.Click += generateMenuItem_Click;
             generateMenuItem.Enabled = false;
             generateFontMenuItem.Click += generateFontMenuItem_Click;
@@ -62,7 +65,7 @@ namespace FFTPatcher
 
         #endregion Constructors
 
-        #region Methods (18)
+        #region Methods (19)
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
@@ -269,11 +272,13 @@ namespace FFTPatcher
         private void newPSPMenuItem_Click( object sender, System.EventArgs e )
         {
             FFTPatch.New( Context.US_PSP );
+            saveAsPspMenuItem.Enabled = true;
         }
 
         private void newPSXMenuItem_Click( object sender, System.EventArgs e )
         {
             FFTPatch.New( Context.US_PSX );
+            saveAsPspMenuItem.Enabled = true;
         }
 
         private void openMenuItem_Click( object sender, System.EventArgs e )
@@ -282,6 +287,7 @@ namespace FFTPatcher
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 FFTPatch.LoadPatch( openFileDialog.FileName );
+                saveAsPspMenuItem.Enabled = true;
             }
         }
 
@@ -293,6 +299,7 @@ namespace FFTPatcher
                 try
                 {
                     FFTPatch.OpenModifiedPSXFile( openFileDialog.FileName );
+                    saveAsPspMenuItem.Enabled = true;
                 }
                 catch( InvalidDataException )
                 {
@@ -415,20 +422,43 @@ namespace FFTPatcher
 
         private void saveMenuItem_Click( object sender, System.EventArgs e )
         {
+            SavePatch();
+        }
+
+        private void saveAsPspMenuItem_Click( object sender, EventArgs e )
+        {
+            string fn = SavePatch();
+            if( !string.IsNullOrEmpty( fn ) )
+            {
+                // HACK
+                if( FFTPatch.Context != Context.US_PSP )
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load( fn );
+                    FFTPatch.ConvertPsxPatchToPsp( doc );
+                    doc.Save( fn );
+                    FFTPatch.LoadPatch( fn );
+                }
+            }
+        }
+
+        private string SavePatch()
+        {
             saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
                     FFTPatch.SavePatchToFile( saveFileDialog.FileName );
+                    return saveFileDialog.FileName;
                 }
                 catch( Exception )
                 {
                     MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
                 }
             }
+            return string.Empty;
         }
-
 
         #endregion Methods
 

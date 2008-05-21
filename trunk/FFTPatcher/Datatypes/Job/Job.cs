@@ -90,10 +90,12 @@ namespace FFTPatcher.Datatypes
                 Resources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xAA );
-            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
+            List<string> psxNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
-                0xA0 );
+                0xA0 ) );
+            psxNames.AddRange( new string[9] { "", "", "", "", "", "", "", "", "" } );
+            PSXNames = psxNames.ToArray();
 
             for( int i = 0; i < 0xAA; i++ )
             {
@@ -345,7 +347,8 @@ namespace FFTPatcher.Datatypes
             Value = value;
             Name = name;
             int equipEnd = context == Context.US_PSP ? 13 : 12;
-            SkillSet = SkillSet.DummySkillSets[bytes[0]];
+
+            SkillSet = context == Context.US_PSP ? SkillSet.PSPSkills[bytes[0]] : SkillSet.PSXSkills[bytes[0]];
             InnateA = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[1], bytes[2] )];
             InnateB = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[3], bytes[4] )];
             InnateC = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[5], bytes[6] )];

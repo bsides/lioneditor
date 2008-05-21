@@ -34,20 +34,20 @@ namespace FFTPatcher.Datatypes
             "Action9", "Action10", "Action11", "Action12", "Action13", "Action14", "Action15", "Action16", 
             "TheRest1", "TheRest2", "TheRest3", "TheRest4", "TheRest5", "TheRest6" };
         private static SortedDictionary<byte, SkillSet> pspEventSkills;
-        private static SkillSet[] pspSkills;
         private static SortedDictionary<byte, SkillSet> psxEventSkills;
-        private static SkillSet[] psxSkills;
 
         #endregion Static Fields
 
         #region Static Properties (4)
 
+        public static SkillSet[] PSXSkills { get; private set; }
+        public static SkillSet[] PSPSkills { get; private set; }
 
         public static SkillSet[] DummySkillSets
         {
             get
             {
-                return FFTPatch.Context == Context.US_PSP ? pspSkills : psxSkills;
+                return FFTPatch.Context == Context.US_PSP ? PSPSkills : PSXSkills;
             }
         }
 
@@ -175,7 +175,7 @@ namespace FFTPatcher.Datatypes
 
         static SkillSet()
         {
-            pspSkills = new SkillSet[0xE3];
+            PSPSkills = new SkillSet[0xE3];
             pspEventSkills = new SortedDictionary<byte, SkillSet>();
 
             PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
@@ -189,8 +189,8 @@ namespace FFTPatcher.Datatypes
             for( int i = 0; i < 0xE3; i++ )
             {
                 string n = PSPNames[i];
-                pspSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
-                pspEventSkills.Add( (byte)i, pspSkills[i] );
+                PSPSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
+                pspEventSkills.Add( (byte)i, PSPSkills[i] );
             }
 
             SkillSet random = new SkillSet( "<Random>", 0xFE );
@@ -198,13 +198,13 @@ namespace FFTPatcher.Datatypes
             pspEventSkills.Add( 0xFE, random );
             pspEventSkills.Add( 0xFF, equal );
 
-            psxSkills = new SkillSet[0xE0];
+            PSXSkills = new SkillSet[0xE0];
             psxEventSkills = new SortedDictionary<byte, SkillSet>();
             for( int i = 0; i < 0xE0; i++ )
             {
                 string n = PSXNames[i];
-                psxSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
-                psxEventSkills.Add( (byte)i, psxSkills[i] );
+                PSXSkills[i] = new SkillSet( n, (byte)(i & 0xFF) );
+                psxEventSkills.Add( (byte)i, PSXSkills[i] );
             }
             psxEventSkills.Add( 0xFE, random );
             psxEventSkills.Add( 0xFF, equal );

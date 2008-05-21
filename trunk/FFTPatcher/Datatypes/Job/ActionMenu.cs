@@ -228,9 +228,9 @@ namespace FFTPatcher.Datatypes
 
         #region Constructors (1)
 
-        public AllActionMenus( IList<byte> bytes )
+        public AllActionMenus( IList<byte> bytes, Context context )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.ActionEventsBin : PSXResources.ActionEventsBin;
+            byte[] defaultBytes = context == Context.US_PSP ? Resources.ActionEventsBin : PSXResources.ActionEventsBin;
 
             List<ActionMenu> tempActions = new List<ActionMenu>();
 
@@ -239,7 +239,7 @@ namespace FFTPatcher.Datatypes
                 tempActions.Add( new ActionMenu( (byte)i, SkillSet.DummySkillSets[i].Name, (MenuAction)bytes[i],
                     new ActionMenu( (byte)i, SkillSet.DummySkillSets[i].Name, (MenuAction)defaultBytes[i] ) ) );
             }
-            if( FFTPatch.Context == Context.US_PSP )
+            if( context == Context.US_PSP )
             {
                 tempActions.Add( new ActionMenu( 0xE0, SkillSet.DummySkillSets[0xE0].Name, (MenuAction)bytes[0xE0],
                     new ActionMenu( (byte)0xE0, SkillSet.DummySkillSets[0xE0].Name, (MenuAction)defaultBytes[0xE0] ) ) );

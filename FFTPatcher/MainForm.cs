@@ -422,12 +422,12 @@ namespace FFTPatcher
 
         private void saveMenuItem_Click( object sender, System.EventArgs e )
         {
-            SavePatch();
+            SavePatch( true );
         }
 
         private void saveAsPspMenuItem_Click( object sender, EventArgs e )
         {
-            string fn = SavePatch();
+            string fn = SavePatch( false );
             if( !string.IsNullOrEmpty( fn ) )
             {
                 // HACK
@@ -442,14 +442,14 @@ namespace FFTPatcher
             }
         }
 
-        private string SavePatch()
+        private string SavePatch( bool digest )
         {
             saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
-                    FFTPatch.SavePatchToFile( saveFileDialog.FileName );
+                    FFTPatch.SavePatchToFile( saveFileDialog.FileName, FFTPatch.Context, digest );
                     return saveFileDialog.FileName;
                 }
                 catch( Exception )

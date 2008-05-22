@@ -531,7 +531,7 @@ namespace FFTPatcher.Datatypes
         /// </summary>
         public static void SavePatchToFile( string path )
         {
-            SavePatchToFile( path, FFTPatch.Context );
+            SavePatchToFile( path, FFTPatch.Context, true );
         }
 
         public static void ConvertPsxPatchToPsp( XmlNode document )
@@ -689,7 +689,7 @@ namespace FFTPatcher.Datatypes
         /// <summary>
         /// Saves this patch to an XML document.
         /// </summary>
-        public static void SavePatchToFile( string path, Context destinationContext )
+        public static void SavePatchToFile( string path, Context destinationContext, bool saveDigest )
         {
             bool psp = destinationContext == Context.US_PSP;
 
@@ -755,7 +755,10 @@ namespace FFTPatcher.Datatypes
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
 
-                GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.html" ) );
+                if( saveDigest )
+                {
+                    GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.html" ) );
+                }
             }
             catch( Exception )
             {

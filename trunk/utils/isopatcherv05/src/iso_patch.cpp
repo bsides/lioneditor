@@ -47,50 +47,70 @@ int WINAPI iso_patch_file(int iso_type, char *iso_file, int need_ecc_edc, int is
 	int sector_length;
 	BYTE sector[2352];
 
-	//**** 初始化＋合法性检查, 不合法返回错误 
-	if (iso_offset <= 0) return PATCH_ERR_OFFSET;
+	// check that the supplied ISO offset is sane
+	if (iso_offset <= 0) 
+	{
+		return PATCH_ERR_OFFSET;
+	}
 	sector_start = iso_offset % 2352;
-	if(sector_start < ISO9660_DATA_START[iso_type] || sector_start >= ISO9660_DATA_START[iso_type]+ISO9660_DATA_SIZE[iso_type]) return PATCH_ERR_OFFSET;
+	if( sector_start < ISO9660_DATA_START[iso_type] ||
+		sector_start >= ISO9660_DATA_START[iso_type] + ISO9660_DATA_SIZE[iso_type] ) 
+	{
+		return PATCH_ERR_OFFSET;
+	}
 
 	fhPatch = _open(patch_file, _O_BINARY | _O_RDONLY);
-	if(fhPatch == -1){ return PATCH_ERR_FILE_PATCH;}
+	if(fhPatch == -1)
+	{ 
+		return PATCH_ERR_FILE_PATCH;
+	}
 
 	fhISO = _open(iso_file, _O_BINARY | _O_RDWR);
-	if(fhISO == -1){ _close(fhPatch); return PATCH_ERR_FILE_ISO;}
+	if(fhISO == -1)
+	{ 
+		_close(fhPatch); 
+		return PATCH_ERR_FILE_ISO;
+	}
 
 	sector_length = ISO9660_DATA_SIZE[iso_type] +  ISO9660_DATA_START[iso_type] - sector_start;
 
 	eccedc_init();
 
-	//**** 写入
 	int total_patched_bytes = 0;
 	int size_read;
 	int nTmp;
+	// nTmp is start of sector
 	nTmp = iso_offset - (iso_offset % 2352);
 
+	// seek to start of sector
 	_lseek(fhISO, nTmp, SEEK_SET);
 
-	
+	// Until done reading bytes...
 	for (;_eof(fhPatch)==0;)
 	{
-		
-		_read(fhISO,sector,2352);								//读入要修改的扇区数据到缓冲
+		// Read the current sector
+		_read(fhISO,sector,2352);
+
+		// Read the data out of the input file and into the sector
 		size_read = _read(fhPatch,
 						&sector[sector_start],
-						sector_length);			//修改缓冲
-		
+						sector_length);
+	
 		if ((sector[0x12] & 8) == 0)
 		{
-			//检测是否是数据扇区，如果是写在leadout等区段，也自动改为数据扇区格式
 			sector[0x12] = 8;
 			sector[0x16] = 8;
 		}
 
-		if (need_ecc_edc != 0)eccedc_generate(sector, iso_type);//重算 EDC/ECC
-
-		_lseek(fhISO, -2352, SEEK_CUR);							//设置 ISO 文件指针返回到扇区开始处
-		_write(fhISO, sector, 2352);							//写入修改后的扇区数据
-		total_patched_bytes += size_read;						//一个 patch 数据文件实际写入字节数计数
+		if (need_ecc_edc != 0)
+		{
+			// Fixup ECC/EDC
+			eccedc_generate(sector, iso_type);
+		}
+		
+		_lseek(fhISO, -2352, SEEK_CUR); // Seek to beginning of sector
+		_write(fhISO, sector, 2352); // Write the crap
+		total_patched_bytes += size_read; // Update byte count
 		sector_start = ISO9660_DATA_START[iso_type];
 		sector_length = ISO9660_DATA_SIZE[iso_type];
 	}

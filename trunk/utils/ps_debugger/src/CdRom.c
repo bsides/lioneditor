@@ -1003,6 +1003,9 @@ void cdrWrite3(unsigned char rt) {
 
 
 extern int agemo_flag_cdrom_read;
+extern unsigned long agemo_sector_addr;
+extern BOOL agemo_sector_break;
+
 void dec_mm_ss_bb(char *mmssbb)
 {
 	char mm, ss, bb;
@@ -1054,11 +1057,14 @@ void psxDma3(u32 madr, u32 bcr, u32 chcr) {
 		dec_mm_ss_bb(mmssbb);
 		loc = loc_to_int(mmssbb);
 
+		if (!agemo_sector_break || loc==agemo_sector_addr)
+		{
 		//if(loc == 0x2a5 || loc == 0x2c6)
 		//{
 			AgemoTrace("cdrom $%X <- %02x:%02x:%02x($%x), %d bytes", madr, mmssbb[0], mmssbb[1], mmssbb[2], loc, 4*(bcr & 0xFFFF));
 			__agemo_pause_cpu(1);
 		//}
+		}
 
 	}
 

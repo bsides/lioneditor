@@ -1258,7 +1258,7 @@ int Open_File_Proc(char *file) {
 
 void CreateMainMenu() {
 	MENUITEMINFO item;
-	HMENU submenu[3];
+	HMENU submenu[4];
 	char *lang;
 	char buf[256];
 	int i;

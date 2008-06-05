@@ -21,6 +21,7 @@ void UI_OnChkBootPause();
 void UI_OnChkPauseW();
 void UI_OnChkAlign();
 void UI_OnChkSpuUpload();
+void UI_OnChkCdReadSector();
 unsigned long agemo_w_ram_1=-1;
 unsigned long agemo_w_ram_2=-1;
 int	agemo_flag_boot_pause = 0;		//default is no pause
@@ -29,6 +30,8 @@ void UI_OnChkPauseR();
 unsigned long agemo_r_ram_1=-1;
 unsigned long agemo_r_ram_2=-1;
 unsigned long agemo_memval_addr = -1;
+unsigned long agemo_sector_addr = -1;
+BOOL agemo_sector_break = FALSE;
 unsigned char agemo_memval_val = -1;
 
 unsigned int agemo_mem_align_check = 0;
@@ -367,6 +370,10 @@ BOOL CALLBACK DbgDlgProc(
 
 			case IDC_CHK_PAUSE_ON_MEMVAL:
 				UI_OnChkPauseOnMemVal();
+				return TRUE;
+
+			case IDC_CHK_CDREAD_SECTOR:
+				UI_OnChkCdReadSector();
 				return TRUE;
 
 			case IDC_CHK_ALIGN:
@@ -721,6 +728,39 @@ void UI_OnChkPauseR()
 	{
 		agemo_r_ram_1 = -1;
 		agemo_r_ram_2 = -1;
+	}
+}
+
+void UI_OnChkCdReadSector()
+{
+	char pIntBuf[20];
+	int n = SendDlgItemMessage(hDbg, IDC_CHK_CDREAD_SECTOR, BM_GETCHECK, 0, 0);
+
+	if (1 == n)
+	{
+		unsigned long v1;
+		memset(pIntBuf, 0, sizeof(pIntBuf));
+		GetDlgItemText(hDbg, IDC_CDREAD_SECTOR, pIntBuf, sizeof(pIntBuf)-1);
+		if (strlen(pIntBuf) > 0)
+		{
+			sscanf(pIntBuf, "%x", &v1);
+		}
+		else
+		{
+			v1 = 0;
+		}
+		sprintf(pIntBuf, "%08X", v1);
+		SetDlgItemText(hDbg, IDC_CDREAD_SECTOR, pIntBuf);
+
+		agemo_sector_addr = v1;
+		agemo_sector_break = TRUE;
+
+		AgemoTrace("wait for read on sector %08X", agemo_sector_addr);
+	}
+	else
+	{
+		agemo_sector_break = FALSE;
+		AgemoTrace("removed sector break");
 	}
 }
 

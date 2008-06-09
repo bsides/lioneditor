@@ -40,6 +40,19 @@ namespace FFTPatcher
 		#region Methods (14) 
 
         /// <summary>
+        /// Sums the items in the list.
+        /// </summary>
+        public static int Sum( this IList<int> items )
+        {
+            int sum = 0;
+            foreach( int i in items )
+            {
+                sum += i;
+            }
+            return sum;
+        }
+
+        /// <summary>
         /// Returns the location of every item in the list that is equal to a given item.
         /// </summary>
         /// <param name="list">The list.</param>

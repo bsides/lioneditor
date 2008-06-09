@@ -123,8 +123,7 @@ namespace FFTPatcher.TextEditor
         {
             if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) )
             {
-                string s = e.FormattedValue.ToString();
-                strings.Sections[sectionComboBox.SelectedIndex][e.RowIndex] = s;
+                strings[sectionComboBox.SelectedIndex, e.RowIndex] = (sender as TextBox).Text;
                 UpdateLengthLabels();
                 e.Cancel = error;
             }

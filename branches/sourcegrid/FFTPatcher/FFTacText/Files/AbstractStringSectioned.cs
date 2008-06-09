@@ -34,6 +34,7 @@ namespace FFTPatcher.TextEditor.Files
 		#region Fields (1) 
 
         protected const int dataStart = 0x80;
+        private int[][] entryLengths = null;
 
 		#endregion Fields 
 
@@ -72,6 +73,33 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public abstract IList<string> SectionNames { get; }
 
+        private int[][] EntryLengths
+        {
+            get
+            {
+                if( entryLengths == null )
+                {
+                    InitializeEntryLengths();
+                }
+
+                return entryLengths;
+            }
+        }
+
+        private void InitializeEntryLengths()
+        {
+            entryLengths = new int[NumberOfSections][];
+
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                IList<string> section = Sections[i];
+                entryLengths[i] = new int[section.Count];
+                for( int j = 0; j < section.Count; j++ )
+                {
+                    entryLengths[i][j] = CharMap.StringToByteArray( this[i, j] ).Length;
+                }
+            }
+        }
 
 		#endregion Abstract Properties 
 
@@ -88,14 +116,37 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public IList<IList<string>> Sections { get; protected set; }
 
-
+        /// <summary>
+        /// Gets or sets a specific entry in a specific section.
+        /// </summary>
+        /// <param name="section">The section in which contains the entry to get or set</param>
+        /// <param name="entry">The specific entry to get or set</param>
+        public string this[int section, int entry]
+        {
+            get { return Sections[section][entry]; }
+            set 
+            {
+                EntryLengths[section][entry] = CharMap.StringToByteArray( value ).Length;
+                Sections[section][entry] = value; 
+            }
+        }
 
         /// <summary>
         /// Gets the estimated length of this file if it were turned into a byte array.
         /// </summary>
-        public virtual int EstimatedLength { get { return ToUncompressedBytes().Count; } }
-
-
+        public virtual int EstimatedLength 
+        { 
+            get 
+            {
+                int sum = 0;
+                foreach( int[] i in EntryLengths )
+                {
+                    sum += i.Sum();
+                }
+                return sum + dataStart;
+            } 
+        }
+        
 		#endregion Properties 
 
 		#region Constructors (2) 
@@ -122,9 +173,9 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (12) 
+        #region Methods (12)
 
 
         private void ReadXmlBase64( XmlReader reader )
@@ -339,6 +390,17 @@ namespace FFTPatcher.TextEditor.Files
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the length in bytes of a specific entry.
+        /// </summary>
+        /// <param name="section">The section which contains the entry whose length is needed.</param>
+        /// <param name="entry">The specific entry whose length is needed.</param>
+        /// <returns>The length of the entry, in bytes.</returns>
+        public int GetEntryLength( int section, int entry )
+        {
+            return EntryLengths[section][entry];
         }
 
 

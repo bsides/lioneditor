@@ -49,13 +49,13 @@ namespace FFTPatcher.TextEditor
         {
             this.sectionComboBox = new System.Windows.Forms.ComboBox();
             this.currentStringListBox = new System.Windows.Forms.ListBox();
-            this.currentString = new System.Windows.Forms.TextBox();
             this.lengthLabel = new System.Windows.Forms.Label();
             this.maxLengthLabel = new System.Windows.Forms.Label();
             this.errorLabel = new System.Windows.Forms.Label();
             this.filesListBox = new System.Windows.Forms.ListBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.stringListEditor1 = new FFTPatcher.TextEditor.StringListEditor();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -81,17 +81,6 @@ namespace FFTPatcher.TextEditor
             this.currentStringListBox.Name = "currentStringListBox";
             this.currentStringListBox.Size = new System.Drawing.Size( 126, 368 );
             this.currentStringListBox.TabIndex = 1;
-            // 
-            // currentString
-            // 
-            this.currentString.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.currentString.Location = new System.Drawing.Point( 3, 3 );
-            this.currentString.Multiline = true;
-            this.currentString.Name = "currentString";
-            this.currentString.Size = new System.Drawing.Size( 334, 275 );
-            this.currentString.TabIndex = 2;
             // 
             // lengthLabel
             // 
@@ -159,15 +148,25 @@ namespace FFTPatcher.TextEditor
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add( this.stringListEditor1 );
             this.splitContainer.Panel2.Controls.Add( this.errorLabel );
             this.splitContainer.Panel2.Controls.Add( this.saveButton );
-            this.splitContainer.Panel2.Controls.Add( this.currentString );
             this.splitContainer.Panel2.Controls.Add( this.filesListBox );
             this.splitContainer.Panel2.Controls.Add( this.lengthLabel );
             this.splitContainer.Panel2.Controls.Add( this.maxLengthLabel );
             this.splitContainer.Size = new System.Drawing.Size( 475, 410 );
             this.splitContainer.SplitterDistance = 131;
             this.splitContainer.TabIndex = 8;
+            // 
+            // stringListEditor1
+            // 
+            this.stringListEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.stringListEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.stringListEditor1.Name = "stringListEditor1";
+            this.stringListEditor1.Size = new System.Drawing.Size( 329, 275 );
+            this.stringListEditor1.TabIndex = 8;
             // 
             // StringSectionedEditor
             // 
@@ -188,12 +187,12 @@ namespace FFTPatcher.TextEditor
 
         private System.Windows.Forms.ComboBox sectionComboBox;
         private System.Windows.Forms.ListBox currentStringListBox;
-        private System.Windows.Forms.TextBox currentString;
         private System.Windows.Forms.Label lengthLabel;
         private System.Windows.Forms.Label maxLengthLabel;
         protected System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.ListBox filesListBox;
         private System.Windows.Forms.Button saveButton;
         protected System.Windows.Forms.SplitContainer splitContainer;
+        private StringListEditor stringListEditor1;
     }
 }

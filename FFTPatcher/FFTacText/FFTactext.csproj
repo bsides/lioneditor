@@ -31,6 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevAge.Core, Version=4.10.2845.21697, Culture=neutral, PublicKeyToken=faad465d84242dbf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\utils\SourceGrid4_11\Bin\DevAge.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevAge.Windows.Forms, Version=4.10.2845.21698, Culture=neutral, PublicKeyToken=faad465d84242dbf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\utils\SourceGrid4_11\Bin\DevAge.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceGrid, Version=4.11.2887.1415, Culture=neutral, PublicKeyToken=df6f5e538749e85d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\utils\SourceGrid4_11\Bin\SourceGrid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -62,6 +74,12 @@
     </Compile>
     <Compile Include="Editors\PartitionEditor.Designer.cs">
       <DependentUpon>PartitionEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\StringListEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\StringListEditor.Designer.cs">
+      <DependentUpon>StringListEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Files\AbstractCompressedFile.cs" />
     <Compile Include="Files\AbstractPartitionedFile.cs" />
@@ -129,6 +147,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\PartitionEditor.resx">
       <DependentUpon>PartitionEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\StringListEditor.resx">
+      <DependentUpon>StringListEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

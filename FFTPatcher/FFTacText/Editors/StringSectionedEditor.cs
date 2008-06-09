@@ -31,15 +31,15 @@ namespace FFTPatcher.TextEditor
     public partial class StringSectionedEditor : UserControl
     {
 
-		#region Fields (3) 
+        #region Fields (3)
 
         protected bool error = false;
         private bool ignoreChanges = false;
         private IStringSectioned strings;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         protected virtual string LengthLabelFormatString
@@ -61,7 +61,7 @@ namespace FFTPatcher.TextEditor
                     AddSections();
                     sectionComboBox.SelectedIndex = 0;
                     UpdateCurrentStringListBox();
-                    currentStringListBox.SelectedIndex = 0;
+                    //currentStringListBox.SelectedIndex = 0;
                     UpdateCurrentString();
                     UpdateFilenames();
                     UpdateLengthLabels();
@@ -70,32 +70,33 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public StringSectionedEditor()
         {
             InitializeComponent();
             sectionComboBox.SelectedIndexChanged += sectionComboBox_SelectedIndexChanged;
             currentStringListBox.SelectedIndexChanged += currentStringListBox_SelectedIndexChanged;
-            currentString.TextChanged += currentString_TextChanged;
-            currentString.Validating += currentString_Validating;
-            currentString.Font = new Font( "Arial Unicode MS", 10 );
+            stringListEditor1.CellTextChanged += stringListEditor1_CellTextChanged;
+            //currentString.TextChanged += currentString_TextChanged;
+            //currentString.Validating += currentString_Validating;
+            //currentString.Font = new Font( "Arial Unicode MS", 10 );
             filesListBox.SelectedIndexChanged += filesListBox_SelectedIndexChanged;
             saveButton.Click += saveButton_Click;
             errorLabel.VisibleChanged += errorLabel_VisibleChanged;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Events (1) 
+        #region Events (1)
 
         public event EventHandler<SavingFileEventArgs> SavingFile;
 
-		#endregion Events 
+        #endregion Events
 
-		#region Methods (13) 
+        #region Methods (13)
 
 
         private void AddSections()
@@ -113,8 +114,19 @@ namespace FFTPatcher.TextEditor
         {
             if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) && (currentStringListBox.SelectedIndex > -1) )
             {
-                strings.Sections[sectionComboBox.SelectedIndex][currentStringListBox.SelectedIndex] = currentString.Text;
+                //strings.Sections[sectionComboBox.SelectedIndex][currentStringListBox.SelectedIndex] = currentString.Text;
                 UpdateLengthLabels();
+            }
+        }
+
+        private void stringListEditor1_CellTextChanged( object sender, StringListEditor.CellValidatingEventArgs e )
+        {
+            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) )
+            {
+                string s = e.FormattedValue.ToString();
+                strings.Sections[sectionComboBox.SelectedIndex][e.RowIndex] = s;
+                UpdateLengthLabels();
+                e.Cancel = error;
             }
         }
 
@@ -162,23 +174,24 @@ namespace FFTPatcher.TextEditor
         private void UpdateCurrentString()
         {
             ignoreChanges = true;
-            currentString.Text = strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )][Math.Max( 0, currentStringListBox.SelectedIndex )];
+            //currentString.Text = strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )][Math.Max( 0, currentStringListBox.SelectedIndex )];
             ignoreChanges = false;
         }
 
         private void UpdateCurrentStringListBox()
         {
-            currentStringListBox.SuspendLayout();
-            currentStringListBox.BeginUpdate();
-            currentStringListBox.Items.Clear();
-            for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
-            {
-                currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[sectionComboBox.SelectedIndex][i] ) );
-            }
-            currentStringListBox.SelectedIndex = 0;
-            UpdateCurrentString();
-            currentStringListBox.EndUpdate();
-            currentStringListBox.ResumeLayout();
+            stringListEditor1.BindTo( strings.EntryNames[Math.Max( 0, sectionComboBox.SelectedIndex )], strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )] );
+            //currentStringListBox.SuspendLayout();
+            //currentStringListBox.BeginUpdate();
+            //currentStringListBox.Items.Clear();
+            //for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
+            //{
+            //    currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[sectionComboBox.SelectedIndex][i] ) );
+            //}
+            //currentStringListBox.SelectedIndex = 0;
+            //UpdateCurrentString();
+            //currentStringListBox.EndUpdate();
+            //currentStringListBox.ResumeLayout();
         }
 
         private void UpdateFilenames()
@@ -212,7 +225,7 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

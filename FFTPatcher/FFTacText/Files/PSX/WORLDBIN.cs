@@ -35,6 +35,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         private static readonly int[] sectionLengths = 
             new int[] { 190, 156, 513, 32, 173, 95, 10, 74 };
         private static string[] sectionNames;
+        private int[][] entryLengths = null;
 
 		#endregion Static Fields 
 
@@ -134,6 +135,20 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public IList<IList<string>> Sections { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a specific entry in a specific section.
+        /// </summary>
+        /// <param name="section">The section in which contains the entry to get or set</param>
+        /// <param name="entry">The specific entry to get or set</param>
+        public string this[int section, int entry]
+        {
+            get { return Sections[section][entry]; }
+            set 
+            {
+                entryLengths[section][entry] = CharMap.StringToByteArray( value ).Length;
+                Sections[section][entry] = value; 
+            }
+        }
 
 		#endregion Properties 
 
@@ -198,6 +213,18 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 }
 
                 Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
+            }
+
+            entryLengths = new int[NumberOfSections][];
+
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                IList<string> section = Sections[i];
+                entryLengths[i] = new int[section.Count];
+                for( int j = 0; j < section.Count; i++ )
+                {
+                    entryLengths[i][j] = CharMap.StringToByteArray( this[i, j] ).Length;
+                }
             }
         }
 
@@ -449,6 +476,16 @@ namespace FFTPatcher.TextEditor.Files.PSX
             WriteXml( writer, false );
         }
 
+        /// <summary>
+        /// Gets the length in bytes of a specific entry.
+        /// </summary>
+        /// <param name="section">The section which contains the entry whose length is needed.</param>
+        /// <param name="entry">The specific entry whose length is needed.</param>
+        /// <returns>The length of the entry, in bytes.</returns>
+        public int GetEntryLength( int section, int entry )
+        {
+            return entryLengths[section][entry];
+        }
 
 		#endregion Methods 
 

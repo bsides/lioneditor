@@ -39,6 +39,13 @@ namespace FFTPatcher.TextEditor.Files
         IList<IList<string>> Sections { get; }
 
         /// <summary>
+        /// Gets or sets a specific entry in a specific section.
+        /// </summary>
+        /// <param name="section">The section which contains the entry to get or set</param>
+        /// <param name="entry">The specific entry to get or set</param>
+        string this[int section, int entry] { get; set; }
+
+        /// <summary>
         /// Gets a collection of strings with a description of each section in this file.
         /// </summary>
         IList<string> SectionNames { get; }
@@ -75,5 +82,13 @@ namespace FFTPatcher.TextEditor.Files
         /// <param name="writer">The writer to use to write the node</param>
         /// <param name="compressed">Whether or not this object's data should be compressed.</param>
         void WriteXml( XmlWriter writer, bool compressed );
+
+        /// <summary>
+        /// Gets the length in bytes of a specific entry.
+        /// </summary>
+        /// <param name="section">The section which contains the entry whose length is needed.</param>
+        /// <param name="entry">The specific entry whose length is needed.</param>
+        /// <returns>The length of the entry, in bytes.</returns>
+        int GetEntryLength( int section, int entry );
     }
 }

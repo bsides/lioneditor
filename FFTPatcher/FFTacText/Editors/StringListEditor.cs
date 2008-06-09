@@ -69,8 +69,7 @@ namespace FFTPatcher.TextEditor
         {
             DevAge.Windows.Forms.DevAgeTextBox tb = sender as DevAge.Windows.Forms.DevAgeTextBox;
 
-            ValidateCell( null, new CellValidatingEventArgs( grid1.Selection.ActivePosition.Column, grid1.Selection.ActivePosition.Row,
-                tb.Text ) );
+            ValidateCell( tb, new CellValidatingEventArgs( grid1.Selection.ActivePosition.Column, grid1.Selection.ActivePosition.Row ) );
         }
 
         TextBoxController textBoxController = new TextBoxController();
@@ -102,11 +101,11 @@ namespace FFTPatcher.TextEditor
             public int RowIndex { get; private set; }
             public object FormattedValue { get; private set; }
 
-            public CellValidatingEventArgs( int columnIndex, int rowIndex, object formattedValue )
+            public CellValidatingEventArgs( int columnIndex, int rowIndex )
             {
                 ColumnIndex = columnIndex;
                 RowIndex = rowIndex;
-                FormattedValue = formattedValue;
+                //FormattedValue = formattedValue;
             }
         }
 
@@ -169,7 +168,7 @@ namespace FFTPatcher.TextEditor
                 editor.EditableMode = SourceGrid.EditableMode.Focus;
                 editor.Control.Multiline = true;
                 editor.Control.WordWrap = true;
-                editor.Control.TextChanged += Control_TextChanged;
+                //editor.Control.TextChanged += Control_TextChanged;
             }
 
             /// <summary>
@@ -185,7 +184,7 @@ namespace FFTPatcher.TextEditor
                 if( editable )
                 {
                     Editor = editor;
-                    editor.Control.TextChanged += Control_TextChanged;
+                    //editor.Control.TextChanged += Control_TextChanged;
                 }
             }
 
@@ -196,19 +195,19 @@ namespace FFTPatcher.TextEditor
                 set { Value = value; }
             }
 
-            protected static void OnTextChanged( EventArgs e )
-            {
-                EventHandler handler = TextChanged;
-                if( handler != null )
-                {
-                    handler( null, e );
-                }
-            }
+            //protected static void OnTextChanged( EventArgs e )
+            //{
+            //    EventHandler handler = TextChanged;
+            //    if( handler != null )
+            //    {
+            //        handler( null, e );
+            //    }
+            //}
 
-            private static void Control_TextChanged( object sender, EventArgs e )
-            {
-                OnTextChanged( e );
-            }
+            //private static void Control_TextChanged( object sender, EventArgs e )
+            //{
+            //    OnTextChanged( e );
+            //}
 
             /// <summary>
             /// Initializes a new instance of the <see cref="TextCell"/> class.
@@ -254,8 +253,8 @@ namespace FFTPatcher.TextEditor
 
         private void TextCell_TextChanged( object sender, EventArgs e )
         {
-            ValidateCell( null, new CellValidatingEventArgs( grid1.Selection.ActivePosition.Column, grid1.Selection.ActivePosition.Row,
-                (grid1.GetCell( grid1.Selection.ActivePosition ).Editor as SourceGrid.Cells.Editors.TextBox).Control.Text ) );
+            //ValidateCell( null, new CellValidatingEventArgs( grid1.Selection.ActivePosition.Column, grid1.Selection.ActivePosition.Row,
+            //    (grid1.GetCell( grid1.Selection.ActivePosition ).Editor as SourceGrid.Cells.Editors.TextBox).Control.Text ) );
         }
 
         private class TextBoxController : SourceGrid.Cells.Controllers.ControllerBase

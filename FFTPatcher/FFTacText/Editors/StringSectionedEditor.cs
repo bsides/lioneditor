@@ -79,7 +79,8 @@ namespace FFTPatcher.TextEditor
             InitializeComponent();
             sectionComboBox.SelectedIndexChanged += sectionComboBox_SelectedIndexChanged;
             currentStringListBox.SelectedIndexChanged += currentStringListBox_SelectedIndexChanged;
-            stringListEditor1.CellTextChanged += stringListEditor1_CellTextChanged;
+            stringListEditor1.TextBoxTextChanged += currentString_TextChanged;
+            stringListEditor1.CellValidating += currentString_Validating;
             //currentString.TextChanged += currentString_TextChanged;
             //currentString.Validating += currentString_Validating;
             //currentString.Font = new Font( "Arial Unicode MS", 10 );
@@ -112,24 +113,22 @@ namespace FFTPatcher.TextEditor
 
         private void currentString_TextChanged( object sender, EventArgs e )
         {
-            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) && (currentStringListBox.SelectedIndex > -1) )
+            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) && stringListEditor1.CurrentRow > -1 )
             {
-                //strings.Sections[sectionComboBox.SelectedIndex][currentStringListBox.SelectedIndex] = currentString.Text;
-                UpdateLengthLabels();
+                try
+                {
+                    strings[sectionComboBox.SelectedIndex, stringListEditor1.CurrentRow] = (sender as Control).Text;
+                    UpdateLengthLabels();
+                }
+                catch( Exception )
+                {
+                    error = true;
+                    errorLabel.Visible = true;
+                }
             }
         }
 
-        private void stringListEditor1_CellTextChanged( object sender, StringListEditor.CellValidatingEventArgs e )
-        {
-            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) )
-            {
-                strings[sectionComboBox.SelectedIndex, e.RowIndex] = (sender as TextBox).Text;
-                UpdateLengthLabels();
-                e.Cancel = error;
-            }
-        }
-
-        private void currentString_Validating( object sender, CancelEventArgs e )
+        private void currentString_Validating( object sender, DataGridViewCellValidatingEventArgs e )
         {
             e.Cancel = error;
         }

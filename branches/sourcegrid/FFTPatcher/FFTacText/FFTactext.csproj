@@ -39,10 +39,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\utils\SourceGrid4_11\Bin\DevAge.Windows.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="SourceGrid, Version=4.11.2887.1415, Culture=neutral, PublicKeyToken=df6f5e538749e85d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\utils\SourceGrid4_11\Bin\SourceGrid.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />

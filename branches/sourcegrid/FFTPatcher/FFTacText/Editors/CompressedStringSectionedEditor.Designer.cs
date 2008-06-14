@@ -49,22 +49,16 @@ namespace FFTPatcher.TextEditor
         {
             this.compressButton = new System.Windows.Forms.Button();
             this.compressionProgressBar = new System.Windows.Forms.ProgressBar();
-            this.splitContainer.Panel2.SuspendLayout();
-            this.splitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer
+            // errorLabel
             // 
-            // 
-            // splitContainer.Panel2
-            // 
-            this.splitContainer.Panel2.Controls.Add( this.compressButton );
-            this.splitContainer.Panel2.Controls.Add( this.compressionProgressBar );
+            this.errorLabel.Location = new System.Drawing.Point( 356, 5 );
             // 
             // compressButton
             // 
             this.compressButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.compressButton.Location = new System.Drawing.Point( 5, 329 );
+            this.compressButton.Location = new System.Drawing.Point( 6, 279 );
             this.compressButton.MaximumSize = new System.Drawing.Size( 95, 47 );
             this.compressButton.MinimumSize = new System.Drawing.Size( 95, 47 );
             this.compressButton.Name = "compressButton";
@@ -76,7 +70,7 @@ namespace FFTPatcher.TextEditor
             // compressionProgressBar
             // 
             this.compressionProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.compressionProgressBar.Location = new System.Drawing.Point( 5, 382 );
+            this.compressionProgressBar.Location = new System.Drawing.Point( 6, 333 );
             this.compressionProgressBar.MaximumSize = new System.Drawing.Size( 95, 23 );
             this.compressionProgressBar.MinimumSize = new System.Drawing.Size( 95, 23 );
             this.compressionProgressBar.Name = "compressionProgressBar";
@@ -89,11 +83,15 @@ namespace FFTPatcher.TextEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add( this.compressButton );
+            this.Controls.Add( this.compressionProgressBar );
             this.Name = "CompressedStringSectionedEditor";
-            this.splitContainer.Panel2.ResumeLayout( false );
-            this.splitContainer.Panel2.PerformLayout();
-            this.splitContainer.ResumeLayout( false );
+            this.Size = new System.Drawing.Size( 405, 359 );
+            this.Controls.SetChildIndex( this.compressionProgressBar, 0 );
+            this.Controls.SetChildIndex( this.compressButton, 0 );
+            this.Controls.SetChildIndex( this.errorLabel, 0 );
             this.ResumeLayout( false );
+            this.PerformLayout();
 
         }
 

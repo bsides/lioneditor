@@ -61,8 +61,6 @@ namespace FFTPatcher.TextEditor
                     AddSections();
                     sectionComboBox.SelectedIndex = 0;
                     UpdateCurrentStringListBox();
-                    //currentStringListBox.SelectedIndex = 0;
-                    UpdateCurrentString();
                     UpdateFilenames();
                     UpdateLengthLabels();
                 }
@@ -78,12 +76,8 @@ namespace FFTPatcher.TextEditor
         {
             InitializeComponent();
             sectionComboBox.SelectedIndexChanged += sectionComboBox_SelectedIndexChanged;
-            currentStringListBox.SelectedIndexChanged += currentStringListBox_SelectedIndexChanged;
             stringListEditor1.TextBoxTextChanged += currentString_TextChanged;
             stringListEditor1.CellValidating += currentString_Validating;
-            //currentString.TextChanged += currentString_TextChanged;
-            //currentString.Validating += currentString_Validating;
-            //currentString.Font = new Font( "Arial Unicode MS", 10 );
             filesListBox.SelectedIndexChanged += filesListBox_SelectedIndexChanged;
             saveButton.Click += saveButton_Click;
             errorLabel.VisibleChanged += errorLabel_VisibleChanged;
@@ -133,11 +127,6 @@ namespace FFTPatcher.TextEditor
             e.Cancel = error;
         }
 
-        private void currentStringListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            UpdateCurrentString();
-        }
-
         private void errorLabel_VisibleChanged( object sender, EventArgs e )
         {
             saveButton.Enabled = filesListBox.SelectedIndex > -1 && !error;
@@ -169,27 +158,9 @@ namespace FFTPatcher.TextEditor
             UpdateCurrentStringListBox();
         }
 
-        private void UpdateCurrentString()
-        {
-            ignoreChanges = true;
-            //currentString.Text = strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )][Math.Max( 0, currentStringListBox.SelectedIndex )];
-            ignoreChanges = false;
-        }
-
         private void UpdateCurrentStringListBox()
         {
             stringListEditor1.BindTo( strings.EntryNames[Math.Max( 0, sectionComboBox.SelectedIndex )], strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )] );
-            //currentStringListBox.SuspendLayout();
-            //currentStringListBox.BeginUpdate();
-            //currentStringListBox.Items.Clear();
-            //for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
-            //{
-            //    currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[sectionComboBox.SelectedIndex][i] ) );
-            //}
-            //currentStringListBox.SelectedIndex = 0;
-            //UpdateCurrentString();
-            //currentStringListBox.EndUpdate();
-            //currentStringListBox.ResumeLayout();
         }
 
         private void UpdateFilenames()

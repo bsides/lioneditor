@@ -23,84 +23,53 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using SourceGrid.Cells;
 
 namespace FFTPatcher.TextEditor
 {
     public partial class StringListEditor : UserControl
     {
 
-
-        #region Fields (2)
-
-        private IList<string> names;
-        private IList<string> values;
-
-        #endregion Fields
-
-
-        #region Constructors (1)
+		#region Constructors (1) 
 
         public StringListEditor()
         {
             InitializeComponent();
             dataGridView.CellEndEdit += dataGridView_CellEndEdit;
-            dataGridView.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler( dataGridView_EditingControlShowing );
-            textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 10 );
+            dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
+            textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
         }
 
-        private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
-        {
-            if( dataGridView.CurrentCell.ColumnIndex == textColumn.Index && dataGridView.EditingControl is TextBox )
-            {
-                TextBox tb = dataGridView.EditingControl as TextBox;
-                tb.Font = new Font( "Arial Unicode MS", 10 );
-                tb.TextChanged += tb_TextChanged;
-            }
-        }
+		#endregion Constructors 
+
+		#region Properties (1) 
 
         public int CurrentRow
         {
-            get { return dataGridView.CurrentRow.Index; }
+            get { return (int)dataGridView.CurrentRow.Cells[numberColumn.Name].Value; }
         }
 
-        private void dataGridView_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
-        {
-            throw new NotImplementedException();
-        }
+		#endregion Properties 
 
-        private void dataGridView_CellEndEdit( object sender, DataGridViewCellEventArgs e )
-        {
-            if( dataGridView.EditingControl is TextBox )
-            {
-                (dataGridView.EditingControl).TextChanged -= tb_TextChanged;
-            }
-        }
-
-        private void tb_TextChanged( object sender, EventArgs e )
-        {
-            if( TextBoxTextChanged != null )
-            {
-                TextBoxTextChanged( sender, e );
-            }
-        }
-
-        #endregion Constructors
+		#region Delegates and Events (2) 
 
 
-        #region Events (1)
+		// Events (2) 
 
-        public event EventHandler TextBoxTextChanged;
         public event DataGridViewCellValidatingEventHandler CellValidating
         {
             add { dataGridView.CellValidating += value; }
             remove { dataGridView.CellValidating -= value; }
         }
 
-        #endregion Events
+        public event EventHandler TextBoxTextChanged;
 
 
-        #region Methods (7)
+		#endregion Delegates and Events 
+
+		#region Methods (4) 
+
+
+		// Public Methods (1) 
 
         public void BindTo( IList<string> names, IList<string> values )
         {
@@ -110,7 +79,6 @@ namespace FFTPatcher.TextEditor
             }
 
             DataGridViewRow[] rows = new DataGridViewRow[values.Count];
-
             dataGridView.SuspendLayout();
             for( int i = 0; i < values.Count; i++ )
             {
@@ -124,8 +92,37 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        #endregion Methods
 
+		// Private Methods (3) 
+
+        private void dataGridView_CellEndEdit( object sender, DataGridViewCellEventArgs e )
+        {
+            if( dataGridView.EditingControl is TextBox )
+            {
+                dataGridView.EditingControl.TextChanged -= tb_TextChanged;
+            }
+        }
+
+        private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
+        {
+            if( dataGridView.CurrentCell.ColumnIndex == textColumn.Index && dataGridView.EditingControl is TextBox )
+            {
+                TextBox tb = dataGridView.EditingControl as TextBox;
+                tb.Font = new Font( "Arial Unicode MS", 9 );
+                tb.TextChanged += tb_TextChanged;
+            }
+        }
+
+        private void tb_TextChanged( object sender, EventArgs e )
+        {
+            if( TextBoxTextChanged != null )
+            {
+                TextBoxTextChanged( sender, e );
+            }
+        }
+
+
+		#endregion Methods 
 
     }
 }

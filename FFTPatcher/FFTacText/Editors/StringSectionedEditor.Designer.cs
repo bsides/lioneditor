@@ -48,151 +48,116 @@ namespace FFTPatcher.TextEditor
         private void InitializeComponent()
         {
             this.sectionComboBox = new System.Windows.Forms.ComboBox();
-            this.currentStringListBox = new System.Windows.Forms.ListBox();
             this.lengthLabel = new System.Windows.Forms.Label();
             this.maxLengthLabel = new System.Windows.Forms.Label();
             this.errorLabel = new System.Windows.Forms.Label();
             this.filesListBox = new System.Windows.Forms.ListBox();
             this.saveButton = new System.Windows.Forms.Button();
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.stringListEditor1 = new FFTPatcher.TextEditor.StringListEditor();
-            this.splitContainer.Panel1.SuspendLayout();
-            this.splitContainer.Panel2.SuspendLayout();
-            this.splitContainer.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // sectionComboBox
-            // 
-            this.sectionComboBox.Dock = System.Windows.Forms.DockStyle.Top;
+            //
+            this.sectionComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.sectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sectionComboBox.FormattingEnabled = true;
             this.sectionComboBox.Location = new System.Drawing.Point( 0, 0 );
             this.sectionComboBox.Name = "sectionComboBox";
-            this.sectionComboBox.Size = new System.Drawing.Size( 131, 21 );
+            this.sectionComboBox.Size = new System.Drawing.Size( 335, 21 );
             this.sectionComboBox.TabIndex = 0;
-            // 
-            // currentStringListBox
-            // 
-            this.currentStringListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.currentStringListBox.FormattingEnabled = true;
-            this.currentStringListBox.Location = new System.Drawing.Point( 3, 27 );
-            this.currentStringListBox.Name = "currentStringListBox";
-            this.currentStringListBox.Size = new System.Drawing.Size( 126, 368 );
-            this.currentStringListBox.TabIndex = 1;
-            // 
+            //
             // lengthLabel
-            // 
+            //
             this.lengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lengthLabel.AutoSize = true;
-            this.lengthLabel.Location = new System.Drawing.Point( 2, 287 );
+            this.lengthLabel.Location = new System.Drawing.Point( 3, 231 );
             this.lengthLabel.Name = "lengthLabel";
             this.lengthLabel.Size = new System.Drawing.Size( 35, 13 );
             this.lengthLabel.TabIndex = 3;
             this.lengthLabel.Text = "label1";
-            // 
+            //
             // maxLengthLabel
-            // 
+            //
             this.maxLengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.maxLengthLabel.AutoSize = true;
-            this.maxLengthLabel.Location = new System.Drawing.Point( 2, 313 );
+            this.maxLengthLabel.Location = new System.Drawing.Point( 3, 261 );
             this.maxLengthLabel.Name = "maxLengthLabel";
             this.maxLengthLabel.Size = new System.Drawing.Size( 35, 13 );
             this.maxLengthLabel.TabIndex = 4;
             this.maxLengthLabel.Text = "label2";
-            // 
+            //
             // errorLabel
-            // 
-            this.errorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            //
+            this.errorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.errorLabel.AutoSize = true;
             this.errorLabel.BackColor = System.Drawing.SystemColors.Window;
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point( 286, 255 );
+            this.errorLabel.Location = new System.Drawing.Point( 341, 5 );
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size( 46, 13 );
             this.errorLabel.TabIndex = 5;
             this.errorLabel.Text = "ERROR";
-            // 
+            //
             // filesListBox
-            // 
+            //
             this.filesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.filesListBox.FormattingEnabled = true;
-            this.filesListBox.Location = new System.Drawing.Point( 149, 284 );
+            this.filesListBox.Location = new System.Drawing.Point( 199, 231 );
             this.filesListBox.MultiColumn = true;
             this.filesListBox.Name = "filesListBox";
             this.filesListBox.Size = new System.Drawing.Size( 188, 82 );
             this.filesListBox.TabIndex = 6;
-            // 
+            //
             // saveButton
-            // 
+            //
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveButton.Enabled = false;
-            this.saveButton.Location = new System.Drawing.Point( 149, 373 );
+            this.saveButton.Location = new System.Drawing.Point( 199, 331 );
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size( 188, 23 );
             this.saveButton.TabIndex = 7;
             this.saveButton.Text = "Save to selected file";
             this.saveButton.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer
-            // 
-            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.Location = new System.Drawing.Point( 0, 0 );
-            this.splitContainer.Name = "splitContainer";
-            // 
-            // splitContainer.Panel1
-            // 
-            this.splitContainer.Panel1.Controls.Add( this.sectionComboBox );
-            this.splitContainer.Panel1.Controls.Add( this.currentStringListBox );
-            // 
-            // splitContainer.Panel2
-            // 
-            this.splitContainer.Panel2.Controls.Add( this.stringListEditor1 );
-            this.splitContainer.Panel2.Controls.Add( this.errorLabel );
-            this.splitContainer.Panel2.Controls.Add( this.saveButton );
-            this.splitContainer.Panel2.Controls.Add( this.filesListBox );
-            this.splitContainer.Panel2.Controls.Add( this.lengthLabel );
-            this.splitContainer.Panel2.Controls.Add( this.maxLengthLabel );
-            this.splitContainer.Size = new System.Drawing.Size( 475, 410 );
-            this.splitContainer.SplitterDistance = 131;
-            this.splitContainer.TabIndex = 8;
-            // 
+            //
             // stringListEditor1
-            // 
+            //
             this.stringListEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.stringListEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.stringListEditor1.Location = new System.Drawing.Point( 3, 27 );
             this.stringListEditor1.Name = "stringListEditor1";
-            this.stringListEditor1.Size = new System.Drawing.Size( 329, 275 );
+            this.stringListEditor1.Size = new System.Drawing.Size( 384, 198 );
             this.stringListEditor1.TabIndex = 8;
-            // 
+            //
             // StringSectionedEditor
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.splitContainer );
+            this.Controls.Add( this.sectionComboBox );
+            this.Controls.Add( this.errorLabel );
+            this.Controls.Add( this.saveButton );
+            this.Controls.Add( this.filesListBox );
+            this.Controls.Add( this.lengthLabel );
+            this.Controls.Add( this.maxLengthLabel );
+            this.Controls.Add( this.stringListEditor1 );
             this.Name = "StringSectionedEditor";
-            this.Size = new System.Drawing.Size( 475, 410 );
-            this.splitContainer.Panel1.ResumeLayout( false );
-            this.splitContainer.Panel2.ResumeLayout( false );
-            this.splitContainer.Panel2.PerformLayout();
-            this.splitContainer.ResumeLayout( false );
+            this.Size = new System.Drawing.Size( 390, 357 );
             this.ResumeLayout( false );
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.ComboBox sectionComboBox;
-        private System.Windows.Forms.ListBox currentStringListBox;
         private System.Windows.Forms.Label lengthLabel;
         private System.Windows.Forms.Label maxLengthLabel;
         protected System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.ListBox filesListBox;
         private System.Windows.Forms.Button saveButton;
-        protected System.Windows.Forms.SplitContainer splitContainer;
         private StringListEditor stringListEditor1;
     }
 }

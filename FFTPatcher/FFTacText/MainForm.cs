@@ -247,19 +247,6 @@ namespace FFTPatcher.TextEditor
 
         private void FillFiles()
         {
-            //BasePSXSectionedFile[] psxFiles1 = new BasePSXSectionedFile[] {
-            //    new ATCHELPLZW(PSXResources.ATCHELP_LZW),
-            //    new ATTACKOUT(PSXResources.ATTACK_OUT_partial),
-            //    new JOINLZW(PSXResources.JOIN_LZW),
-            //    new OPENLZW(PSXResources.OPEN_LZW),
-            //    new SAMPLELZW(PSXResources.SAMPLE_LZW),
-            //    new WORLDLZW(PSXResources.WORLD_LZW)};
-            //BasePSXCompressedFile[] psxFiles2 = new BasePSXCompressedFile[] {
-            //    new WLDHELPLZW(PSXResources.WLDHELP_LZW),
-            //    new HELPMENU(PSXResources.HELPMENU_OUT)};
-            ////BasePSXPartitionedFile[] psxFiles3 = new BasePSXPartitionedFile[] {
-            ////    new SNPLMESBIN(PSXResources.SNPLMES_BIN),
-            ////    new WLDMES(PSXResources.WLDMES_BIN) };
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
 
             FFTText mine = null;

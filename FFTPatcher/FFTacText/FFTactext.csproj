@@ -208,6 +208,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\PSP\FileContents.txt" />
+    <Content Include="Files\PSX\FileContents.txt" />
     <Content Include="notes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

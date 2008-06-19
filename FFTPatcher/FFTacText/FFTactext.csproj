@@ -94,7 +94,10 @@
     <Compile Include="Files\PSP\WORLDLZW.cs" />
     <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
+    <Compile Include="Files\PSX\BUNITOUT.cs" />
+    <Compile Include="Files\PSX\EQUIPOUT.cs" />
     <Compile Include="Files\PSX\HELPMENUOUT.cs" />
+    <Compile Include="Files\PSX\JOBSTTSOUT.cs" />
     <Compile Include="Files\PSX\SNPLMESBIN.cs" />
     <Compile Include="Files\PSX\WLDMESBIN.cs" />
     <Compile Include="Files\PSX\WORLDBIN.cs" />
@@ -179,6 +182,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\PSP\pspText.ffttext" />
+    <None Include="Resources\PSX\BUNIT.OUT" />
+    <None Include="Resources\PSX\EQUIP.OUT" />
+    <None Include="Resources\PSX\JOBSTTS.OUT" />
     <None Include="Resources\PSX\psxText.ffttext" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

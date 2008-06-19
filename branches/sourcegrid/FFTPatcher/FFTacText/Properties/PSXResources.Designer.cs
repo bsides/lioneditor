@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FFTPatcher.TextEditor.Properties
-{
-
-
+namespace FFTPatcher.TextEditor.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -57,6 +57,27 @@ namespace FFTPatcher.TextEditor.Properties
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        internal static byte[] BUNIT {
+            get {
+                object obj = ResourceManager.GetObject("BUNIT", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] EQUIP {
+            get {
+                object obj = ResourceManager.GetObject("EQUIP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] JOBSTTS {
+            get {
+                object obj = ResourceManager.GetObject("JOBSTTS", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

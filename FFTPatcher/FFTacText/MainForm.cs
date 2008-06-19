@@ -19,12 +19,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
-using System.Diagnostics;
 
 namespace FFTPatcher.TextEditor
 {
@@ -427,12 +427,12 @@ namespace FFTPatcher.TextEditor
         private void newPsxMenuItem_Click( object sender, EventArgs e )
         {
             LoadFileFromByteArray( PSXResources.DefaultDocument );
-            File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.JOBSTTSOUT( FFTPatcher.TextEditor.Properties.PSXResources.JOBSTTS ) );
-            File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.EQUIPOUT( FFTPatcher.TextEditor.Properties.PSXResources.EQUIP ) );
-            File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.BUNITOUT( FFTPatcher.TextEditor.Properties.PSXResources.BUNIT ) );
-            var oldFile = File;
-            file = null;
-            File = oldFile;
+            //File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.JOBSTTSOUT( FFTPatcher.TextEditor.Properties.PSXResources.JOBSTTS ) );
+            //File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.EQUIPOUT( FFTPatcher.TextEditor.Properties.PSXResources.EQUIP ) );
+            //File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.BUNITOUT( FFTPatcher.TextEditor.Properties.PSXResources.BUNIT ) );
+            //var oldFile = File;
+            //file = null;
+            //File = oldFile;
         }
 
         private void openMenuItem_Click( object sender, EventArgs e )

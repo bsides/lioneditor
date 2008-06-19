@@ -60,27 +60,6 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
-        internal static byte[] BUNIT {
-            get {
-                object obj = ResourceManager.GetObject("BUNIT", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] EQUIP {
-            get {
-                object obj = ResourceManager.GetObject("EQUIP", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] JOBSTTS {
-            get {
-                object obj = ResourceManager.GetObject("JOBSTTS", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         internal static byte[] psxText_ffttext {
             get {
                 object obj = ResourceManager.GetObject("psxText_ffttext", resourceCulture);

@@ -182,9 +182,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\PSP\pspText.ffttext" />
-    <None Include="Resources\PSX\BUNIT.OUT" />
-    <None Include="Resources\PSX\EQUIP.OUT" />
-    <None Include="Resources\PSX\JOBSTTS.OUT" />
     <None Include="Resources\PSX\psxText.ffttext" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -227,6 +224,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)\$(ConfigurationName)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

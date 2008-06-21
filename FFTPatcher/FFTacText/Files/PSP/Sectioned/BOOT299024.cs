@@ -19,42 +19,45 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSX
+namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class EQUIPOUT : BasePSXCompressedFile
+    public class BOOT299024 : AbstractBootBinFile
     {
-        private const int numberOfSections = 21;
-        private const string filename = "EQUIP.OUT";
+
+		#region Static Fields (1) 
+
         private static Dictionary<string, long> locations;
-        private static readonly string[][] entryNames;
-        private static readonly string[] sectionNames;
-        private const int maxLength = 0x8AB7;
 
-        static EQUIPOUT()
-        {
-            sectionNames = new string[numberOfSections];
-            entryNames = new string[numberOfSections][];
-            for( int i = 0; i < numberOfSections; i++ )
-            {
-                entryNames[i] = new string[1024];
-            }
-        }
+		#endregion Static Fields 
 
+		#region Fields (1) 
+
+        private const string filename = "BOOT.BIN[0x299024]";
+
+		#endregion Fields 
+
+		#region Properties (4) 
+
+
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
         protected override int NumberOfSections
         {
-            get { return numberOfSections; }
+            get { return 5; }
         }
 
-        public override IList<IList<string>> EntryNames
-        {
-            get { return entryNames; }
-        }
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
+        /// <value></value>
+        public override string Filename { get { return filename; } }
 
-        public override string Filename
-        {
-            get { return filename; }
-        }
-
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
+        /// <value></value>
         public override IDictionary<string, long> Locations
         {
             get
@@ -62,30 +65,36 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/EQUIP.OUT", 0x10BD8 );
+                    locations.Add( "BOOT.BIN", 0x299024 );
                 }
-
                 return locations;
             }
         }
 
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        /// <value></value>
         public override int MaxLength
         {
-            get { return maxLength; }
+            get { return 0x38AE; }
         }
 
-        public override IList<string> SectionNames
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        private BOOT299024()
         {
-            get { return sectionNames; }
         }
 
-        private EQUIPOUT()
-        {
-        }
-
-        public EQUIPOUT( IList<byte> bytes )
+        public BOOT299024( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

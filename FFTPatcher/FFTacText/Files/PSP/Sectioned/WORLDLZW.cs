@@ -24,12 +24,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class WORLDLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-		#region Static Fields (4) 
+		#region Static Fields (2) 
 
-        private static string[][] entryNames;
         private static readonly IDictionary<int, IList<int>> exclusions;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames;
 
 		#endregion Static Fields 
 
@@ -40,7 +38,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Fields 
 
-		#region Properties (7) 
+		#region Properties (5) 
 
 
         /// <summary>
@@ -58,12 +56,6 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// </summary>
         /// <value>The number of sections.</value>
         protected override int NumberOfSections { get { return 32; } }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
         /// <summary>
         /// Gets the filename.
@@ -98,47 +90,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x14000; }
         }
 
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
-
 
 		#endregion Properties 
 
-		#region Constructors (3) 
-
-        static WORLDLZW()
-        {
-            sectionNames = new string[32] {
-                "","","","","","","Job names","Item names",
-                "Unit names", "Unit names", "Battle menus","Map help", "Errand names","","Ability names","Feat rewards",
-                "Tutorial menus","","Location names","Empty","Map menu text","Event names","Skillset names","Tavern text",
-                "Tutorial menus","Rumors/Multiplayer text", "Feats names", "Wonders names", "Artefacts names","Events names","Personae names","Feats descriptions" };
-            int[] sectionLengths = new int[32] {
-                1,1,1,1,1,1,169,316,
-                1024,1024,11,2,96,1,512,77,
-                76,1,44,24,1,115,227,374,
-                32,185,96,16,47,78,1024,96 };
-            entryNames = new string[32][];
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[sectionLengths[i]];
-            }
-
-            entryNames[6] = FFTPatcher.Datatypes.AllJobs.PSPNames;
-            entryNames[7] = FFTPatcher.Datatypes.Item.PSPNames.ToArray();
-            entryNames[14] = FFTPatcher.Datatypes.AllAbilities.PSPNames;
-            List<string> temp = new List<string>( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 0, 175 ) );
-            temp.AddRange( new string[48] );
-            temp.AddRange( FFTPatcher.Datatypes.SkillSet.PSPNames.Sub( 224, 226 ) );
-            entryNames[22] = temp.ToArray();
-
-            exclusions = new Dictionary<int, IList<int>>();
-            exclusions.Add( 10, new int[] { 0, 10 } );
-            exclusions.Add( 20, new int[] { 0 } );
-        }
+		#region Constructors (2) 
 
         private WORLDLZW()
         {

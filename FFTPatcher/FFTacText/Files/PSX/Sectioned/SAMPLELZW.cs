@@ -21,37 +21,29 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class JOINLZW : BasePSXSectionedFile
+    public class SAMPLELZW : BasePSXSectionedFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (1) 
 
-        private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[5];
 
 		#endregion Static Fields 
 
 		#region Fields (1) 
 
-        private const string filename = "JOIN.LZW";
+        private const string filename = "SAMPLE.LZW";
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (4) 
 
 
         /// <summary>
         /// Gets the number of sections.
         /// </summary>
         /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 5; } }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+        protected override int NumberOfSections { get { return 24; } }
 
         /// <summary>
         /// Gets the filename.
@@ -70,8 +62,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/JOIN.LZW", 0x00 );
-                    locations.Add( "EVENT/REQUIRE.OUT", 0xCE70 );
+                    locations.Add( "EVENT/SAMPLE.LZW", 0x00 );
+                    locations.Add( "BATTLE.BIN", 0x0FA2DC );
+                    locations.Add( "WORLD/WORLD.BIN", 0x06E5C0 );
                 }
 
                 return locations;
@@ -82,34 +75,18 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
         /// <value></value>
-        public override int MaxLength { get { return 0x41F6; } }
-
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
+        public override int MaxLength { get { return 0x4B88; } }
 
 
 		#endregion Properties 
 
-		#region Constructors (3) 
+		#region Constructors (2) 
 
-        static JOINLZW()
-        {
-            entryNames = new string[5][];
-            entryNames[0] = new string[1];
-            entryNames[1] = new string[172];
-            entryNames[2] = new string[172];
-            entryNames[3] = new string[172];
-            entryNames[4] = new string[155];
-        }
-
-        private JOINLZW()
+        private SAMPLELZW()
         {
         }
 
-        public JOINLZW( IList<byte> bytes )
+        public SAMPLELZW( IList<byte> bytes )
             : base( bytes )
         {
         }

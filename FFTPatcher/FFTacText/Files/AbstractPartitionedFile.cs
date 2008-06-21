@@ -36,7 +36,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the character map used for this file.
         /// </summary>
-        protected abstract GenericCharMap CharMap { get; }
+        public abstract GenericCharMap CharMap { get; }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.
@@ -62,6 +62,11 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets the length of every section in this file.
         /// </summary>
         public abstract int SectionLength { get; }
+
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        public int MaxLength { get { return NumberOfSections * SectionLength; } }
 
         /// <summary>
         /// Gets a collection of strings with a description of each section in this file.

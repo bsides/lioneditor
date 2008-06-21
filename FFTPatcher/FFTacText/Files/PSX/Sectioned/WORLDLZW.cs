@@ -18,18 +18,15 @@
 */
 
 using System.Collections.Generic;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
     public class WORLDLZW : BasePSXSectionedFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (1) 
 
-        public static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames;
 
 		#endregion Static Fields 
 
@@ -39,7 +36,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (4) 
 
 
         /// <summary>
@@ -47,12 +44,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// </summary>
         /// <value>The number of sections.</value>
         protected override int NumberOfSections { get { return 32; } }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
         /// <summary>
         /// Gets the filename.
@@ -84,46 +75,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public override int MaxLength { get { return 0xE2DD; } }
 
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
-
 
 		#endregion Properties 
 
-		#region Constructors (3) 
-
-        static WORLDLZW()
-        {
-            sectionNames = new string[32] {
-                "","","","","","","Job names","Item names",
-                "Character names","Character names","Battle menus","Help text","Errand names","","Ability names","Errand rewards",
-                "??","","Location names","Blank","Map menu","Event names","Skillsets","Tavern menu",
-                "Tutorial","Brave story","Errand names","Unexplored Land","Treasure","Record","Person","Errand objectives"};
-            entryNames = new string[32][];
-
-            int[] sectionLengths = new int[32] {
-                1,1,1,1,1,1,155,257,
-                1024,1024,11,2,96,1,513,77,
-                41,1,44,24,1,115,189,272,
-                24,64,96,16,47,64,1024,96 };
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[sectionLengths[i]];
-            }
-            entryNames[6] = FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ).ToArray();
-            IList<string> temp = new List<string>( FFTPatcher.Datatypes.Item.PSXNames.Sub( 0 ).ToArray() );
-            temp.AddRange( new string[sectionLengths[7] - temp.Count] );
-            entryNames[7] = temp.ToArray();
-            temp = new List<string>( AllAbilities.PSXNames );
-            temp.AddRange( new string[sectionLengths[14] - temp.Count] );
-            entryNames[14] = temp.ToArray();
-            temp = new List<string>( SkillSet.PSXNames.Sub( 0, 175 ) );
-            temp.AddRange( new string[sectionLengths[22] - temp.Count] );
-            entryNames[22] = temp.ToArray();
-        }
+		#region Constructors (2) 
 
         private WORLDLZW()
         {

@@ -32,6 +32,16 @@ namespace FFTPatcher.TextEditor.Files
         IDictionary<string, long> Locations { get; }
 
         /// <summary>
+        /// Gets the charmap to use for this file.
+        /// </summary>
+        GenericCharMap CharMap { get; }
+
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        int MaxLength { get; }
+
+        /// <summary>
         /// Creates a byte array representing this file.
         /// </summary>
         byte[] ToByteArray();

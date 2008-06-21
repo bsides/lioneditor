@@ -22,14 +22,14 @@ namespace FFTPatcher.TextEditor.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class PSXResources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PSXResources() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace FFTPatcher.TextEditor.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FFTPatcher.TextEditor.Properties.PSXResources", typeof(PSXResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FFTPatcher.TextEditor.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,16 +60,9 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
-        internal static byte[] psxText_ffttext {
+        internal static byte[] EntryNames {
             get {
-                object obj = ResourceManager.GetObject("psxText_ffttext", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] SPELLMES {
-            get {
-                object obj = ResourceManager.GetObject("SPELLMES", resourceCulture);
+                object obj = ResourceManager.GetObject("EntryNames", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -18,41 +18,33 @@
 */
 
 using System.Collections.Generic;
-using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class ATTACKOUT : BasePSXSectionedFile
+    public class WLDHELPLZW : BasePSXCompressedFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (1) 
 
-        private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[3] { "", "Unit names", "Job names" };
 
 		#endregion Static Fields 
 
-		#region Fields (1) 
+		#region Fields (2) 
 
-        private const string filename = "ATTACK.OUT";
+        private const string filename = "WLDHELP.LZW";
+        private const int numberOfSections = 21;
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (4) 
 
 
         /// <summary>
         /// Gets the number of sections.
         /// </summary>
         /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 3; } }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+        protected override int NumberOfSections { get { return numberOfSections; } }
 
         /// <summary>
         /// Gets the filename.
@@ -71,8 +63,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/ATTACK.OUT", 0xE2B0 );
-                    locations.Add( "EVENT/SMALL.OUT", 0x6C );
+                    locations.Add( "EVENT/WLDHELP.LZW", 0x00 );
+                    locations.Add( "WORLD/WORLD.BIN", 0x8EE68 );
                 }
 
                 return locations;
@@ -83,32 +75,18 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
         /// <value></value>
-        public override int MaxLength { get { return 0x1E67; } }
-
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
+        public override int MaxLength { get { return 0x01ADE4; } }
 
 
 		#endregion Properties 
 
-		#region Constructors (3) 
+		#region Constructors (2) 
 
-        static ATTACKOUT()
-        {
-            entryNames = new string[3][];
-            entryNames[0] = new string[1];
-            entryNames[1] = new string[1024];
-            entryNames[2] = AllJobs.PSXNames;
-        }
-
-        private ATTACKOUT()
+        private WLDHELPLZW()
         {
         }
 
-        public ATTACKOUT( IList<byte> bytes )
+        public WLDHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
         }

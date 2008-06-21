@@ -16,31 +16,34 @@
     You should have received a copy of the GNU General Public License
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSP
+using System.Collections.Generic;
+using System.Text;
+
+namespace FFTPatcher.TextEditor
 {
-    public abstract class BasePSPPartitionedFile : AbstractPartitionedFile
+    public static class Resources
     {
 
-		#region Properties (1) 
+		#region Static Fields (1) 
+
+        private static Dictionary<string, object> resourceMapping = new Dictionary<string, object>();
+
+		#endregion Static Fields 
+
+		#region Static Properties (1) 
 
 
-        public override GenericCharMap CharMap { get { return TextUtilities.PSPMap; } }
+        public static string EntryNames { get { return resourceMapping["EntryNames"] as string; } }
 
 
-		#endregion Properties 
+		#endregion Static Properties 
 
-		#region Constructors (2) 
+		#region Constructors (1) 
 
-        protected BasePSPPartitionedFile()
-            : base()
+        static Resources()
         {
-        }
-
-        protected BasePSPPartitionedFile( IList<byte> bytes )
-            : base( bytes )
-        {
+            resourceMapping["EntryNames"] = GZip.Decompress( Properties.Resources.EntryNames ).ToUTF8String();
         }
 
 		#endregion Constructors 

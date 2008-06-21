@@ -26,7 +26,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Properties (1) 
 
 
-        protected override GenericCharMap CharMap { get { return TextUtilities.PSXMap; } }
+        public override GenericCharMap CharMap { get { return TextUtilities.PSXMap; } }
 
 
 		#endregion Properties 

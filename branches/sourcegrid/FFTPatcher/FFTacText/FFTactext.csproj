@@ -95,7 +95,9 @@
     <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
     <Compile Include="Files\PSX\BUNITOUT.cs" />
+    <Compile Include="Files\PSX\EntryNames.cs" />
     <Compile Include="Files\PSX\EQUIPOUT.cs" />
+    <Compile Include="Files\PSX\HELPLZW.cs" />
     <Compile Include="Files\PSX\HELPMENUOUT.cs" />
     <Compile Include="Files\PSX\JOBSTTSOUT.cs" />
     <Compile Include="Files\PSX\SNPLMESBIN.cs" />
@@ -182,6 +184,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\PSP\pspText.ffttext" />
+    <None Include="Resources\PSX\HELP.LZW" />
     <None Include="Resources\PSX\psxText.ffttext" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -212,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Files\PSP\FileContents.txt" />
+    <Content Include="Files\PSX\EntryNames.xml" />
     <Content Include="Files\PSX\FileContents.txt" />
     <Content Include="notes.txt" />
   </ItemGroup>
@@ -224,6 +228,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(SolutionDir)\$(ConfigurationName)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

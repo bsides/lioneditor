@@ -24,22 +24,22 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class HELPMENUOUT : BasePSXCompressedFile
     {
 
-		#region Static Fields (3) 
+        #region Static Fields (3)
 
         public static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (2) 
+        #region Fields (2)
 
         private const string filename = "HELPMENU.OUT";
         private const int numberOfSections = 21;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (6) 
+        #region Properties (6)
 
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
         private HELPMENUOUT()
         {
@@ -134,28 +134,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
         public HELPMENUOUT( IList<byte> bytes )
+            : base( bytes )
         {
-            Sections = new List<IList<string>>( NumberOfSections );
-            for( int i = 0; i < NumberOfSections; i++ )
-            {
-                uint start = Utilities.BytesToUInt32( bytes.Sub( i * 4, i * 4 + 3 ) );
-                uint stop = Utilities.BytesToUInt32( bytes.Sub( (i + 1) * 4, (i + 1) * 4 + 3 ) ) - 1;
-                if( i == NumberOfSections - 1 )
-                {
-                    stop = (uint)bytes.Count - 1 - dataStart;
-                }
-
-                IList<byte> thisSection = TextUtilities.Decompress(
-                    bytes,
-                    bytes.Sub( (int)(start + dataStart), (int)(stop + dataStart) ),
-                    (int)(start + dataStart) );
-                Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
-            }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (1) 
+        #region Methods (1)
 
 
         protected override IList<byte> ToFinalBytes()
@@ -164,7 +149,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

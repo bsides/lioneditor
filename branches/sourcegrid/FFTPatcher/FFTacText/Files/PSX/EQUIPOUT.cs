@@ -62,7 +62,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EQUIP.OUT", 0x10BD8 );
+                    locations.Add( "EVENT/EQUIP.OUT", 0x10BD8 );
                 }
 
                 return locations;

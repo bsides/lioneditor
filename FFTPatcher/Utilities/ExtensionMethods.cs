@@ -37,7 +37,7 @@ namespace FFTPatcher
     public static partial class ExtensionMethods
     {
 
-		#region Methods (14) 
+        #region Methods (14)
 
         /// <summary>
         /// Sums the items in the list.
@@ -185,7 +185,16 @@ namespace FFTPatcher
         public static T[] ToArray<T>( this IList<T> list )
         {
             T[] result = new T[list.Count];
-            list.CopyTo( result, 0 );
+            if( list is T[] )
+            {
+                T[] arr = list as T[];
+                arr.CopyTo( result, 0 );
+            }
+            else
+            {
+                list.CopyTo( result, 0 );
+            }
+
             return result;
         }
 
@@ -284,7 +293,7 @@ namespace FFTPatcher
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

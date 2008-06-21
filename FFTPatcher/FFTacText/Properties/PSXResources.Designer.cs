@@ -60,6 +60,32 @@ namespace FFTPatcher.TextEditor.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;EntryNames type=&quot;PSX&quot;&gt;
+        ///  &lt;Files&gt;
+        ///    &lt;File name=&quot;FFTPatcher.TextEditor.Files.PSX.JOBSTTSOUT&quot; sections=&quot;21&quot;&gt;
+        ///      &lt;Section value=&quot;0&quot; entries=&quot;1&quot; empty=&quot;true&quot;/&gt;
+        ///      &lt;Section value=&quot;1&quot; entries=&quot;1&quot; empty=&quot;true&quot;/&gt;
+        ///      &lt;Section value=&quot;2&quot; entries=&quot;1&quot; empty=&quot;true&quot;/&gt;
+        ///      &lt;Section value=&quot;3&quot; entries=&quot;1&quot; empty=&quot;true&quot;/&gt;
+        ///      &lt;Section value=&quot;4&quot; entries=&quot;1&quot; empty=&quot;true&quot;/&gt;
+        ///      &lt;Section value=&quot;5&quot; entries=&quot;1&quot; empty=&quot;true&quot;/&gt;
+        ///      &lt;Section value=&quot;6&quot; entries=&quot;1&quot; empty=&quot;true&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EntryNames {
+            get {
+                return ResourceManager.GetString("EntryNames", resourceCulture);
+            }
+        }
+        
+        internal static byte[] HELPLZW {
+            get {
+                object obj = ResourceManager.GetObject("HELPLZW", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] psxText_ffttext {
             get {
                 object obj = ResourceManager.GetObject("psxText_ffttext", resourceCulture);

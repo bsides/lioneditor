@@ -21,16 +21,16 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class JOBSTTSOUT : BasePSXCompressedFile
+    public class HELPLZW : BasePSXCompressedFile
     {
         private const int numberOfSections = 21;
-        private const string filename = "JOBSTTS.OUT";
+        private const string filename = "HELP.LZW";
         private static Dictionary<string, long> locations;
         private static readonly string[][] entryNames;
         private static readonly string[] sectionNames;
-        private const int maxLength = 0xAA57;
+        private const int maxLength = 0x169C0;
 
-        static JOBSTTSOUT()
+        static HELPLZW()
         {
             sectionNames = new string[numberOfSections];
             entryNames = new string[numberOfSections][];
@@ -62,7 +62,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/JOBSTTS.OUT", 0x6508 );
+                    locations.Add( "EVENT/HELP.LZW", 0x00 );
                 }
 
                 return locations;
@@ -79,11 +79,11 @@ namespace FFTPatcher.TextEditor.Files.PSX
             get { return sectionNames; }
         }
 
-        private JOBSTTSOUT()
+        private HELPLZW()
         {
         }
 
-        public JOBSTTSOUT( IList<byte> bytes )
+        public HELPLZW( IList<byte> bytes )
             : base( bytes )
         {
         }

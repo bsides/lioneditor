@@ -24,9 +24,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class ATCHELPLZW : BasePSXSectionedFile
     {
 
-		#region Static Fields (3) 
+        #region Static Fields (3)
 
-        private static string[][] entryNames;
+        //private static string[][] entryNames;
+        private static readonly IList<IList<string>> entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames = new string[21] {
             "", "", "", "", "", "", 
@@ -34,15 +35,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
             "Job descriptions", "Item descriptions", "", "Ability descriptions", "", "",
             "", "Skillset descriptions", "" };
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (1)
 
         private const string filename = "ATCHELP.LZW";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (6) 
+        #region Properties (6)
 
 
         /// <summary>
@@ -94,40 +95,42 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
         static ATCHELPLZW()
         {
-            entryNames = new string[21][];
-            int[] sectionLengths = new int[] { 
-                1, 1, 1, 1, 1,
-                1, 1, 1, 1, 1,
-                1, 40, 160, 256, 1, 
-                512, 1, 1, 1, 188,
-                1 };
+            entryNames = FFTPatcher.TextEditor.Files.PSX.EntryNames.GetEntryNames( typeof( ATCHELPLZW ) );
 
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[sectionLengths[i]];
-            }
-            entryNames[11] = new string[40] {
-                "Unit #", "Level", "HP", "MP", "CT", "AT", "Exp", "Name",
-                "Brave", "Faith", "", "Move", "Jump", "", "", "",
-                "Speed", "ATK", "Weapon ATK", "", "Eva%", "SEv%", "AEv%", "Phys land effect",
-                "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
-                "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
-            IList<string> temp = new List<string>( FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ) );
-            temp.AddRange( new string[sectionLengths[12] - temp.Count] );
-            entryNames[12] = temp.ToArray();
-            entryNames[13] = FFTPatcher.Datatypes.Item.PSXNames.ToArray();
-            temp = new List<string>( new string[265] );
-            temp.AddRange( FFTPatcher.Datatypes.AllAbilities.PSXNames.Sub( 265 ) );
-            entryNames[15] = temp.ToArray();
-            temp = new List<string>( FFTPatcher.Datatypes.SkillSet.PSXNames.Sub( 0, 0xAF ) );
-            temp.AddRange( new string[12] );
-            entryNames[19] = temp.ToArray();
+            //entryNames = new string[21][];
+            //int[] sectionLengths = new int[] { 
+            //    1, 1, 1, 1, 1,
+            //    1, 1, 1, 1, 1,
+            //    1, 40, 160, 256, 1, 
+            //    512, 1, 1, 1, 188,
+            //    1 };
+
+            //for( int i = 0; i < entryNames.Length; i++ )
+            //{
+            //    entryNames[i] = new string[sectionLengths[i]];
+            //}
+            //entryNames[11] = new string[40] {
+            //    "Unit #", "Level", "HP", "MP", "CT", "AT", "Exp", "Name",
+            //    "Brave", "Faith", "", "Move", "Jump", "", "", "",
+            //    "Speed", "ATK", "Weapon ATK", "", "Eva%", "SEv%", "AEv%", "Phys land effect",
+            //    "Magic land effect", "Estimated", "Hit rate", "Aries", "Taurus", "Gemini", "Cancer", "Leo", 
+            //    "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces", "Serpentarius" };
+            //IList<string> temp = new List<string>( FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 0, 154 ) );
+            //temp.AddRange( new string[sectionLengths[12] - temp.Count] );
+            //entryNames[12] = temp.ToArray();
+            //entryNames[13] = FFTPatcher.Datatypes.Item.PSXNames.ToArray();
+            //temp = new List<string>( new string[265] );
+            //temp.AddRange( FFTPatcher.Datatypes.AllAbilities.PSXNames.Sub( 265 ) );
+            //entryNames[15] = temp.ToArray();
+            //temp = new List<string>( FFTPatcher.Datatypes.SkillSet.PSXNames.Sub( 0, 0xAF ) );
+            //temp.AddRange( new string[12] );
+            //entryNames[19] = temp.ToArray();
         }
 
         private ATCHELPLZW()
@@ -139,7 +142,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

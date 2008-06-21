@@ -19,43 +19,32 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSP
+namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class BOOT299024 : AbstractBootBinFile
+    public class HELPMENUOUT : BasePSXCompressedFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (1) 
 
-        private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[5] {
-            "", "Bravery/Faith too low/high", "Bravery/Faith too low/high", "Leaving quotes", "Job names" };
 
 		#endregion Static Fields 
 
-		#region Fields (1) 
+		#region Fields (2) 
 
-        private const string filename = "BOOT.BIN[0x299024]";
+        private const string filename = "HELPMENU.OUT";
+        private const int numberOfSections = 21;
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (4) 
 
 
         /// <summary>
         /// Gets the number of sections.
         /// </summary>
         /// <value>The number of sections.</value>
-        protected override int NumberOfSections
-        {
-            get { return 5; }
-        }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+        protected override int NumberOfSections { get { return numberOfSections; } }
 
         /// <summary>
         /// Gets the filename.
@@ -74,8 +63,10 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "BOOT.BIN", 0x299024 );
+                    locations.Add( "EVENT/HELPMENU.OUT", 0x1B30 );
+                    locations.Add( "WORLD/WORLD.BIN", 0x777E0 );
                 }
+
                 return locations;
             }
         }
@@ -84,42 +75,34 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
         /// <value></value>
-        public override int MaxLength
-        {
-            get { return 0x38AE; }
-        }
-
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
+        public override int MaxLength { get { return 0x169C0; } }
 
 
 		#endregion Properties 
 
-		#region Constructors (3) 
+		#region Constructors (2) 
 
-        static BOOT299024()
-        {
-            entryNames = new string[5][];
-            entryNames[0] = new string[1];
-            entryNames[1] = new string[176];
-            entryNames[2] = new string[176];
-            entryNames[3] = new string[175];
-            entryNames[4] = FFTPatcher.Datatypes.AllJobs.PSPNames;
-        }
-
-        private BOOT299024()
+        private HELPMENUOUT()
         {
         }
 
-        public BOOT299024( IList<byte> bytes )
+        public HELPMENUOUT( IList<byte> bytes )
             : base( bytes )
         {
         }
 
 		#endregion Constructors 
+
+		#region Methods (1) 
+
+
+        protected override IList<byte> ToFinalBytes()
+        {
+            return Compress();
+        }
+
+
+		#endregion Methods 
 
     }
 }

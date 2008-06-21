@@ -21,33 +21,28 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class JOBSTTSOUT : BasePSXCompressedFile
+    public class SPELLMES : AbstractDelimitedFile
     {
-        private const int numberOfSections = 21;
-        private const string filename = "JOBSTTS.OUT";
+
+		#region Static Fields (1) 
+
         private static Dictionary<string, long> locations;
-        private static readonly string[][] entryNames;
-        private static readonly string[] sectionNames;
-        private const int maxLength = 0xAA57;
 
-        static JOBSTTSOUT()
-        {
-            sectionNames = new string[numberOfSections];
-            entryNames = new string[numberOfSections][];
-            for( int i = 0; i < numberOfSections; i++ )
-            {
-                entryNames[i] = new string[1024];
-            }
-        }
+		#endregion Static Fields 
 
-        protected override int NumberOfSections
-        {
-            get { return numberOfSections; }
-        }
+		#region Fields (2) 
 
-        public override IList<IList<string>> EntryNames
+        private const string filename = "SPELL.MES";
+        private const int maxLength = 0x3705;
+
+		#endregion Fields 
+
+		#region Properties (4) 
+
+
+        public override GenericCharMap CharMap
         {
-            get { return entryNames; }
+            get { return TextUtilities.PSXMap; }
         }
 
         public override string Filename
@@ -57,12 +52,12 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         public override IDictionary<string, long> Locations
         {
-            get
+            get 
             {
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/JOBSTTS.OUT", 0x6508 );
+                    locations.Add( "EVENT/SPELL.MES", 0x00 );
                 }
 
                 return locations;
@@ -74,18 +69,17 @@ namespace FFTPatcher.TextEditor.Files.PSX
             get { return maxLength; }
         }
 
-        public override IList<string> SectionNames
-        {
-            get { return sectionNames; }
-        }
 
-        private JOBSTTSOUT()
-        {
-        }
+		#endregion Properties 
 
-        public JOBSTTSOUT( IList<byte> bytes )
+		#region Constructors (1) 
+
+        public SPELLMES( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

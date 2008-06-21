@@ -19,43 +19,34 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSX
+namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class OPENLZW : BasePSXSectionedFile
+    public class BOOT2EB4C0 : AbstractBootBinFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (1) 
 
-        private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[32] {
-            "", "", "", "", "", "", "", "", 
-            "Unit names", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "Birthday",
-            "Track names", "Composers comments", "", "", "", "", "", "" };
 
 		#endregion Static Fields 
 
 		#region Fields (1) 
 
-        private const string filename = "OPEN.LZW";
+        private const string filename = "BOOT.BIN[0x2EB4C0]";
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (4) 
 
 
         /// <summary>
         /// Gets the number of sections.
         /// </summary>
         /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 32; } }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+        protected override int NumberOfSections
+        {
+            get { return 31; }
+        }
 
         /// <summary>
         /// Gets the filename.
@@ -74,9 +65,8 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/OPEN.LZW", 0x00 );
+                    locations.Add( "BOOT.BIN", 0x2EB4C0 );
                 }
-
                 return locations;
             }
         }
@@ -85,38 +75,21 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
         /// <value></value>
-        public override int MaxLength { get { return 0x5579; } }
-
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
+        public override int MaxLength
+        {
+            get { return 0x286F; }
+        }
 
 
 		#endregion Properties 
 
-		#region Constructors (3) 
+		#region Constructors (2) 
 
-        static OPENLZW()
-        {
-            entryNames = new string[32][];
-            int[] sectionLengths = new int[32] {
-                1, 1, 1, 1, 1, 1, 1, 1,
-                1024, 1, 1, 1, 1, 1, 1, 1, 
-                1, 1, 1, 1, 1, 1, 1, 16,
-                97, 96, 1, 1, 1, 1, 1, 1 };
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[sectionLengths[i]];
-            }
-        }
-
-        private OPENLZW()
+        private BOOT2EB4C0()
         {
         }
 
-        public OPENLZW( IList<byte> bytes )
+        public BOOT2EB4C0( IList<byte> bytes )
             : base( bytes )
         {
         }

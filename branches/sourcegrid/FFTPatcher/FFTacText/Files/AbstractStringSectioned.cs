@@ -31,14 +31,16 @@ namespace FFTPatcher.TextEditor.Files
     public abstract class AbstractStringSectioned : IStringSectioned
     {
 
-		#region Fields (1) 
+		#region Fields (4) 
 
         protected const int dataStart = 0x80;
         private int[][] entryLengths = null;
+        private IList<IList<string>> entryNames;
+        private IList<string> sectionNames;
 
 		#endregion Fields 
 
-		#region Abstract Properties (7) 
+		#region Abstract Properties (5) 
 
 
         protected abstract int NumberOfSections { get; }
@@ -47,11 +49,6 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets the character map that is used for this file.
         /// </summary>
         public abstract GenericCharMap CharMap { get; }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        public abstract IList<IList<string>> EntryNames { get; }
 
         /// <summary>
         /// Gets the filename.
@@ -68,10 +65,11 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public abstract int MaxLength { get; }
 
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        public abstract IList<string> SectionNames { get; }
+
+		#endregion Abstract Properties 
+
+		#region Properties (7) 
+
 
         private int[][] EntryLengths
         {
@@ -86,30 +84,41 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-        private void InitializeEntryLengths()
-        {
-            entryLengths = new int[NumberOfSections][];
-
-            for( int i = 0; i < NumberOfSections; i++ )
-            {
-                IList<string> section = Sections[i];
-                entryLengths[i] = new int[section.Count];
-                for( int j = 0; j < section.Count; j++ )
-                {
-                    entryLengths[i][j] = CharMap.StringToByteArray( this[i, j] ).Length;
-                }
-            }
-        }
-
-		#endregion Abstract Properties 
-
-		#region Properties (3) 
-
-
         /// <summary>
         /// Gets the actual length of this file if it were turned into a byte array.
         /// </summary>
         public int ActualLength { get { return ToFinalBytes().Count; } }
+
+        /// <summary>
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
+        /// </summary>
+        public IList<IList<string>> EntryNames
+        {
+            get
+            {
+                if( entryNames == null )
+                {
+                    entryNames = Files.EntryNames.GetEntryNames( GetType() );
+                }
+
+                return entryNames;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
+        public IList<string> SectionNames
+        {
+            get
+            {
+                if( sectionNames == null )
+                {
+                    sectionNames = Files.EntryNames.GetSectionNames( GetType() );
+                }
+                return sectionNames;
+            }
+        }
 
         /// <summary>
         /// Gets a collection of lists of strings, representing the entries in this file..
@@ -131,6 +140,8 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
+
+
         /// <summary>
         /// Gets the estimated length of this file if it were turned into a byte array.
         /// </summary>
@@ -146,7 +157,8 @@ namespace FFTPatcher.TextEditor.Files
                 return sum + dataStart;
             } 
         }
-        
+
+
 		#endregion Properties 
 
 		#region Constructors (2) 
@@ -173,10 +185,25 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (12)
+		#region Methods (14) 
 
+
+        private void InitializeEntryLengths()
+        {
+            entryLengths = new int[NumberOfSections][];
+
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                IList<string> section = Sections[i];
+                entryLengths[i] = new int[section.Count];
+                for( int j = 0; j < section.Count; j++ )
+                {
+                    entryLengths[i][j] = CharMap.StringToByteArray( this[i, j] ).Length;
+                }
+            }
+        }
 
         private void ReadXmlBase64( XmlReader reader )
         {
@@ -270,6 +297,17 @@ namespace FFTPatcher.TextEditor.Files
 
                 writer.WriteEndElement();
             }
+        }
+
+        /// <summary>
+        /// Gets the length in bytes of a specific entry.
+        /// </summary>
+        /// <param name="section">The section which contains the entry whose length is needed.</param>
+        /// <param name="entry">The specific entry whose length is needed.</param>
+        /// <returns>The length of the entry, in bytes.</returns>
+        public int GetEntryLength( int section, int entry )
+        {
+            return EntryLengths[section][entry];
         }
 
         /// <summary>
@@ -390,17 +428,6 @@ namespace FFTPatcher.TextEditor.Files
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Gets the length in bytes of a specific entry.
-        /// </summary>
-        /// <param name="section">The section which contains the entry whose length is needed.</param>
-        /// <param name="entry">The specific entry whose length is needed.</param>
-        /// <returns>The length of the entry, in bytes.</returns>
-        public int GetEntryLength( int section, int entry )
-        {
-            return EntryLengths[section][entry];
         }
 
 

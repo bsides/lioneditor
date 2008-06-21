@@ -21,25 +21,23 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class OPENLZW : BasePSPSectionedFile, IFFTPackFile
+    public class ATCHELPLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (1) 
 
-        private static string[][] entryNames;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames;
 
 		#endregion Static Fields 
 
 		#region Fields (2) 
 
-        private const int fftpackIndex = 45;
-        private const string filename = "OPEN.LZW";
+        private const int fftpackIndex = 41;
+        private const string filename = "ATCHELP.LZW";
 
 		#endregion Fields 
 
-		#region Properties (7) 
+		#region Properties (5) 
 
 
         /// <summary>
@@ -56,24 +54,19 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// Gets the number of sections.
         /// </summary>
         /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 32; } }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
+        protected override int NumberOfSections
+        {
+            get { return 21; }
+        }
 
         /// <summary>
         /// Gets the filename.
         /// </summary>
-        /// <value></value>
         public override string Filename { get { return filename; } }
 
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        /// <value></value>
         public override IDictionary<string, long> Locations
         {
             get
@@ -81,9 +74,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/OPEN.LZW", 0x00 );
+                    locations.Add( "EVENT/ATCHELP.LZW", 0x00 );
                 }
-
                 return locations;
             }
         }
@@ -91,48 +83,21 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
-        /// <value></value>
         public override int MaxLength
         {
-            get { return 0x608D; }
+            get { return 0x1F834; }
         }
-
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
 
 
 		#endregion Properties 
 
-		#region Constructors (3) 
+		#region Constructors (2) 
 
-        static OPENLZW()
-        {
-            sectionNames = new string[32] {
-                "", "", "", "", "", "", "", "", 
-                "Unit names", "", "", "", "", "", "", "",
-                "", "", "", "", "", "", "", "Birthday",
-                "Track names", "Composers comments", "", "", "", "", "", "" };            
-            entryNames = new string[32][];
-
-            int[] sectionLengths = new int[32] {
-                1,1,1,1,1,1,1,1,
-                1024,1,1,1,1,1,1,1,
-                1,1,1,1,1,1,1,16,
-                97,96,1,1,1,1,1,12};
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[sectionLengths[i]];
-            }
-        }
-
-        private OPENLZW()
+        private ATCHELPLZW()
         {
         }
 
-        public OPENLZW( IList<byte> bytes )
+        public ATCHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
         }

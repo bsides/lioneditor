@@ -67,16 +67,6 @@ namespace FFTPatcher.TextEditor.Files
         int ActualLength { get; }
 
         /// <summary>
-        /// Gets the maximum length of this file as a byte array.
-        /// </summary>
-        int MaxLength { get; }
-
-        /// <summary>
-        /// Gets the character map for this file.
-        /// </summary>
-        GenericCharMap CharMap { get; }
-
-        /// <summary>
         /// Serializes this file to an XML node.
         /// </summary>
         /// <param name="writer">The writer to use to write the node</param>

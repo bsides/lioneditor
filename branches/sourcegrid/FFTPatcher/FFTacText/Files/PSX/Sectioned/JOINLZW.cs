@@ -21,40 +21,40 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class BUNITOUT : BasePSXCompressedFile
+    public class JOINLZW : BasePSXSectionedFile
     {
-        private const int numberOfSections = 21;
-        private const string filename = "BUNIT.OUT";
+
+		#region Static Fields (1) 
+
         private static Dictionary<string, long> locations;
-        private static readonly string[][] entryNames;
-        private static readonly string[] sectionNames;
-        private const int maxLength = 0x13663;
 
-        static BUNITOUT()
-        {
-            sectionNames = new string[numberOfSections];
-            entryNames = new string[numberOfSections][];
-            for( int i = 0; i < numberOfSections; i++ )
-            {
-                entryNames[i] = new string[1024];
-            }
-        }
+		#endregion Static Fields 
 
-        protected override int NumberOfSections
-        {
-            get { return numberOfSections; }
-        }
+		#region Fields (1) 
 
-        public override IList<IList<string>> EntryNames
-        {
-            get { return entryNames; }
-        }
+        private const string filename = "JOIN.LZW";
 
-        public override string Filename
-        {
-            get { return filename; }
-        }
+		#endregion Fields 
 
+		#region Properties (4) 
+
+
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections { get { return 5; } }
+
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
+        /// <value></value>
+        public override string Filename { get { return filename; } }
+
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
+        /// <value></value>
         public override IDictionary<string, long> Locations
         {
             get
@@ -62,30 +62,35 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/BUNIT.OUT", 0x10DF8 );
+                    locations.Add( "EVENT/JOIN.LZW", 0x00 );
+                    locations.Add( "EVENT/REQUIRE.OUT", 0xCE70 );
                 }
 
                 return locations;
             }
         }
 
-        public override int MaxLength
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        /// <value></value>
+        public override int MaxLength { get { return 0x41F6; } }
+
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        private JOINLZW()
         {
-            get { return maxLength; }
         }
 
-        public override IList<string> SectionNames
-        {
-            get { return sectionNames; }
-        }
-
-        private BUNITOUT()
-        {
-        }
-
-        public BUNITOUT( IList<byte> bytes )
+        public JOINLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
+
+		#endregion Constructors 
+
     }
 }

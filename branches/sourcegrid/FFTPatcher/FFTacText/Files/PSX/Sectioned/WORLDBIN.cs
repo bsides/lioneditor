@@ -28,25 +28,23 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class WORLDBIN : IStringSectioned
     {
 
-		#region Static Fields (4) 
+		#region Static Fields (1) 
 
-        private static string[][] entryNames;
         private static IDictionary<string, long> locations;
-        private static readonly int[] sectionLengths = 
-            new int[] { 190, 156, 513, 32, 173, 95, 10, 74 };
-        private static string[] sectionNames;
-        private int[][] entryLengths = null;
 
 		#endregion Static Fields 
 
-		#region Fields (2) 
+		#region Fields (5) 
 
         private const UInt32 baseAddress = 0x8018E4E8;
+        private int[][] entryLengths = null;
+        private IList<IList<string>> entryNames;
         private const string filename = "WORLD.BIN";
+        private IList<string> sectionNames;
 
 		#endregion Fields 
 
-		#region Properties (10) 
+		#region Properties (11) 
 
 
         /// <summary>
@@ -66,7 +64,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public IList<IList<string>> EntryNames
         {
-            get { return entryNames; }
+            get 
+            {
+                if( entryNames == null )
+                {
+                    entryNames = Files.EntryNames.GetEntryNames( GetType() );
+                }
+                return entryNames; 
+            }
         }
 
         /// <summary>
@@ -81,7 +86,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public string Filename
         {
-            get { return "WORLD.BIN"; }
+            get { return filename; }
         }
 
         /// <summary>
@@ -126,7 +131,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public IList<string> SectionNames
         {
-            get { return sectionNames; }
+            get 
+            {
+                if( sectionNames == null )
+                {
+                    sectionNames = Files.EntryNames.GetSectionNames( GetType() );
+                }
+                return sectionNames; 
+            }
         }
 
         /// <summary>
@@ -150,45 +162,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
+
 		#endregion Properties 
 
-		#region Constructors (3) 
-
-        static WORLDBIN()
-        {
-            entryNames = new string[8][];
-            for( int i = 0; i < 8; i++ )
-            {
-                entryNames[i] = new string[sectionLengths[i]];
-            }
-
-            List<string> temp = new List<string>();
-            temp.AddRange( FFTPatcher.Datatypes.SkillSet.PSXNames.Sub( 0, 0xAF ) );
-            temp.AddRange( new string[13] );
-            temp.Add( "DO NOT EDIT" );
-            entryNames[0] = temp.ToArray();
-
-            temp = new List<string>();
-            temp.AddRange( FFTPatcher.Datatypes.AllJobs.PSXNames );
-            temp.Add( "DO NOT EDIT" );
-            entryNames[1] = temp.ToArray();
-
-            temp = new List<string>( FFTPatcher.Datatypes.AllAbilities.PSXNames );
-            temp.Add( "DO NOT EDIT" );
-            entryNames[2] = temp.ToArray();
-
-            temp = new List<string>();
-            temp.AddRange( new string[] {
-                "Squire", "Chemist", "Knight", "Archer", "Monk", "Priest", "Wizard", "Time Mage",
-                "Summoner", "Thief", "Mediator", "Oracle", "Geomancer", "Lancer", "Samurai",
-                "Ninja", "Calculator", "Bard", "Dancer", "Mime" } );
-            temp.AddRange( FFTPatcher.Datatypes.AllJobs.PSXNames.Sub( 1, 74 ) );
-            temp.Add( "DO NOT EDIT" );
-            entryNames[5] = temp.ToArray();
-            sectionNames = new string[8] {
-                "Skillset names", "Job names", "Ability names", "Shop/Save text",
-                "Unit leaving messages", "Class descriptions", "Name entry", "Shop text" };
-        }
+		#region Constructors (2) 
 
         private WORLDBIN()
         {
@@ -230,7 +207,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#endregion Constructors 
 
-		#region Methods (13) 
+		#region Methods (14) 
 
 
         private IList<byte> BuildAddresses( int[] lengths )
@@ -370,6 +347,17 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
         /// <summary>
+        /// Gets the length in bytes of a specific entry.
+        /// </summary>
+        /// <param name="section">The section which contains the entry whose length is needed.</param>
+        /// <param name="entry">The specific entry whose length is needed.</param>
+        /// <returns>The length of the entry, in bytes.</returns>
+        public int GetEntryLength( int section, int entry )
+        {
+            return entryLengths[section][entry];
+        }
+
+        /// <summary>
         /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
         /// </summary>
         /// <returns>
@@ -476,16 +464,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
             WriteXml( writer, false );
         }
 
-        /// <summary>
-        /// Gets the length in bytes of a specific entry.
-        /// </summary>
-        /// <param name="section">The section which contains the entry whose length is needed.</param>
-        /// <param name="entry">The specific entry whose length is needed.</param>
-        /// <returns>The length of the entry, in bytes.</returns>
-        public int GetEntryLength( int section, int entry )
-        {
-            return entryLengths[section][entry];
-        }
 
 		#endregion Methods 
 

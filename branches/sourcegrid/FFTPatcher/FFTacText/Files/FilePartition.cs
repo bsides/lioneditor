@@ -36,6 +36,7 @@ namespace FFTPatcher.TextEditor.Files
 
 		#region Properties (5) 
 
+
         /// <summary>
         /// Gets the entries.
         /// </summary>

@@ -78,6 +78,7 @@
       <DependentUpon>StringListEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Files\AbstractCompressedFile.cs" />
+    <Compile Include="Files\AbstractDelimitedFile.cs" />
     <Compile Include="Files\AbstractPartitionedFile.cs" />
     <Compile Include="Files\FilePartition.cs" />
     <Compile Include="Files\IFile.cs" />
@@ -86,46 +87,52 @@
     <Compile Include="Files\PSP\AbstractBootBinFile.cs" />
     <Compile Include="Files\PSP\BasePSPCompressedFile.cs" />
     <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
-    <Compile Include="Files\PSP\BOOT28E5EC.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT28E5EC.cs" />
     <Compile Include="Files\PSP\IBootBin.cs" />
     <Compile Include="Files\PSP\IFFTPackFile.cs" />
-    <Compile Include="Files\PSP\SNPLMESBIN.cs" />
-    <Compile Include="Files\PSP\WLDMESBIN.cs" />
-    <Compile Include="Files\PSP\WORLDLZW.cs" />
+    <Compile Include="Files\PSP\Partitioned\SNPLMESBIN.cs" />
+    <Compile Include="Files\PSP\Partitioned\WLDMESBIN.cs" />
+    <Compile Include="Files\PSP\Sectioned\WORLDLZW.cs" />
     <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
-    <Compile Include="Files\PSX\BUNITOUT.cs" />
-    <Compile Include="Files\PSX\EntryNames.cs" />
-    <Compile Include="Files\PSX\EQUIPOUT.cs" />
-    <Compile Include="Files\PSX\HELPLZW.cs" />
-    <Compile Include="Files\PSX\HELPMENUOUT.cs" />
-    <Compile Include="Files\PSX\JOBSTTSOUT.cs" />
-    <Compile Include="Files\PSX\SNPLMESBIN.cs" />
-    <Compile Include="Files\PSX\WLDMESBIN.cs" />
-    <Compile Include="Files\PSX\WORLDBIN.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\BUNITOUT.cs" />
+    <Compile Include="Files\EntryNames.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\EQUIPOUT.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\HELPLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\HELPMENUOUT.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\JOBSTTSOUT.cs" />
+    <Compile Include="Files\PSX\Partiitoned\SNPLMESBIN.cs" />
+    <Compile Include="Files\PSX\Partiitoned\WLDMESBIN.cs" />
+    <Compile Include="Files\PSX\Sectioned\WORLDBIN.cs" />
+    <Compile Include="Files\PSX\SPELLMES.cs" />
     <Compile Include="Files\SavingFileEventArgs.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="PSXText.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utilities\CompressionEventArgs.cs" />
     <Compile Include="Files\AbstractStringSectioned.cs" />
     <Compile Include="Files\ICompressed.cs" />
     <Compile Include="Files\IStringSectioned.cs" />
-    <Compile Include="Files\PSP\ATCHELPLZW.cs" />
+    <Compile Include="Files\PSP\Sectioned\ATCHELPLZW.cs" />
     <Compile Include="Files\PSP\BasePSPSectionedFile.cs" />
-    <Compile Include="Files\PSP\BOOT299024.cs" />
-    <Compile Include="Files\PSP\BOOT29E334.cs" />
-    <Compile Include="Files\PSP\BOOT2A1630.cs" />
-    <Compile Include="Files\PSP\BOOT2EB4C0.cs" />
-    <Compile Include="Files\PSP\BOOT32D368.cs" />
-    <Compile Include="Files\PSP\OPENLZW.cs" />
-    <Compile Include="Files\PSX\ATCHELPLZW.cs" />
-    <Compile Include="Files\PSX\ATTACKOUT.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT299024.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT29E334.cs" />
+    <Compile Include="Files\PSP\Sectioned\Compressed\BOOT2A1630.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT2EB4C0.cs" />
+    <Compile Include="Files\PSP\Sectioned\Compressed\BOOT32D368.cs" />
+    <Compile Include="Files\PSP\Sectioned\OPENLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\ATCHELPLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\ATTACKOUT.cs" />
     <Compile Include="Files\PSX\BasePSXSectionedFile.cs" />
-    <Compile Include="Files\PSX\JOINLZW.cs" />
-    <Compile Include="Files\PSX\OPENLZW.cs" />
-    <Compile Include="Files\PSX\SAMPLELZW.cs" />
-    <Compile Include="Files\PSX\WLDHELPLZW.cs" />
-    <Compile Include="Files\PSX\WORLDLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\JOINLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\OPENLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\SAMPLELZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\WLDHELPLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\WORLDLZW.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +179,11 @@
       <DependentUpon>StringSectionedEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <Compile Include="Properties\PSXResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>PSXResources.resx</DependentUpon>
@@ -184,8 +196,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\PSP\pspText.ffttext" />
-    <None Include="Resources\PSX\HELP.LZW" />
     <None Include="Resources\PSX\psxText.ffttext" />
+    <None Include="Resources\SPELL.MES" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -205,6 +217,7 @@
     <Compile Include="Utilities\CharMap.cs" />
     <Compile Include="Utilities\PSPResources.cs" />
     <Compile Include="Utilities\PSXResources.cs" />
+    <Compile Include="Utilities\Resources.cs" />
     <Compile Include="Utilities\TextUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -215,7 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Files\PSP\FileContents.txt" />
-    <Content Include="Files\PSX\EntryNames.xml" />
+    <Content Include="Resources\EntryNames.xml" />
     <Content Include="Files\PSX\FileContents.txt" />
     <Content Include="notes.txt" />
   </ItemGroup>
@@ -228,6 +241,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)\$(ConfigurationName)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>rem copy "$(SolutionDir)\$(ConfigurationName)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

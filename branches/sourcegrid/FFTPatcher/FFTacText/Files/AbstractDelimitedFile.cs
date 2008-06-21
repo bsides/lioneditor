@@ -16,34 +16,53 @@
     You should have received a copy of the GNU General Public License
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSP
+namespace FFTPatcher.TextEditor.Files
 {
-    public abstract class BasePSPPartitionedFile : AbstractPartitionedFile
+    public abstract class AbstractDelimitedFile : AbstractStringSectioned
     {
 
 		#region Properties (1) 
 
 
-        public override GenericCharMap CharMap { get { return TextUtilities.PSPMap; } }
+        protected override int NumberOfSections 
+        { 
+            get { return 1; }
+        }
 
 
 		#endregion Properties 
 
 		#region Constructors (2) 
 
-        protected BasePSPPartitionedFile()
-            : base()
+        protected AbstractDelimitedFile():base()
         {
         }
 
-        protected BasePSPPartitionedFile( IList<byte> bytes )
-            : base( bytes )
+        protected AbstractDelimitedFile( IList<byte> bytes ):this()
         {
+            Sections.Add( TextUtilities.ProcessList( bytes, CharMap ) );
         }
 
 		#endregion Constructors 
+
+		#region Methods (2) 
+
+
+        protected override IList<byte> ToFinalBytes()
+        {
+            return CharMap.StringsToByteArray( Sections[0] );
+        }
+
+        public override IList<byte> ToUncompressedBytes()
+        {
+            return ToFinalBytes();
+        }
+
+
+		#endregion Methods 
 
     }
 }

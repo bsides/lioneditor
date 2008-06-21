@@ -98,7 +98,7 @@ namespace FFTPatcher.TextEditor
 
         public MainForm()
         {
-#if DEBUG
+#if DONGS
             FillPSPFiles();
             FillPSXFiles();
 #endif
@@ -133,7 +133,7 @@ namespace FFTPatcher.TextEditor
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
-            new About().ShowDialog( this );
+            using( About a = new About() ) a.ShowDialog();
         }
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -187,7 +187,7 @@ namespace FFTPatcher.TextEditor
             Application.Exit();
         }
 
-#if DEBUG
+#if DONGS
         private void FillFile( IPartitionedFile file, string filename )
         {
             string format = "{0}/{1}/{2:X}";
@@ -427,12 +427,29 @@ namespace FFTPatcher.TextEditor
         private void newPsxMenuItem_Click( object sender, EventArgs e )
         {
             LoadFileFromByteArray( PSXResources.DefaultDocument );
-            File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.HELPLZW( FFTPatcher.TextEditor.Properties.PSXResources.HELPLZW ) );
-            //File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.EQUIPOUT( FFTPatcher.TextEditor.Properties.PSXResources.EQUIP ) );
-            //File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.BUNITOUT( FFTPatcher.TextEditor.Properties.PSXResources.BUNIT ) );
-            var oldFile = File;
-            file = null;
-            File = oldFile;
+            using( XmlTextWriter writer = new XmlTextWriter( "ffffff", System.Text.Encoding.UTF8 ) )
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement( "fff" );
+
+                new FFTPatcher.TextEditor.Files.PSX.SPELLMES( FFTPatcher.TextEditor.Properties.PSXResources.SPELLMES ).WriteXml( writer, true );
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
+            ////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.HELPLZW( FFTPatcher.TextEditor.Properties.PSXResources.HELPLZW ) );
+            ////using (XmlTextWriter writer = new XmlTextWriter("fff", System.Text.Encoding.UTF8))
+            ////{
+            ////    writer.WriteStartDocument();
+            ////    writer.WriteStartElement( "ffF" );
+            ////    new FFTPatcher.TextEditor.Files.PSX.HELPLZW( FFTPatcher.TextEditor.Properties.PSXResources.HELPLZW ).WriteXml( writer, true );
+            ////    writer.WriteEndElement();
+            ////    writer.WriteEndDocument();
+            ////}
+            //////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.EQUIPOUT( FFTPatcher.TextEditor.Properties.PSXResources.EQUIP ) );
+            //////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.BUNITOUT( FFTPatcher.TextEditor.Properties.PSXResources.BUNIT ) );
+            //var oldFile = File;
+            //file = null;
+            //File = oldFile;
         }
 
         private void openMenuItem_Click( object sender, EventArgs e )

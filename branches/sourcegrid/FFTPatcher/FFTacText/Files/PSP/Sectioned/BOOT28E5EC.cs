@@ -21,24 +21,23 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
-    public class BOOT29E334 : AbstractBootBinFile
+    public class BOOT28E5EC : AbstractBootBinFile
     {
 
-		#region Static Fields (3) 
+		#region Static Fields (2) 
 
-        private static string[][] entryNames;
+        private static readonly IDictionary<int, IList<int>> exclusions;
         private static Dictionary<string, long> locations;
-        private static string[] sectionNames = new string[31];
 
 		#endregion Static Fields 
 
 		#region Fields (1) 
 
-        private const string filename = "BOOT.BIN[0x29E334]";
+        private const string filename = "BOOT.BIN[0x28E5EC]";
 
 		#endregion Fields 
 
-		#region Properties (6) 
+		#region Properties (4) 
 
 
         /// <summary>
@@ -47,14 +46,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <value>The number of sections.</value>
         protected override int NumberOfSections
         {
-            get { return 31; }
+            get { return 24; }
         }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<IList<string>> EntryNames { get { return entryNames; } }
 
         /// <summary>
         /// Gets the filename.
@@ -73,7 +66,8 @@ namespace FFTPatcher.TextEditor.Files.PSP
                 if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
-                    locations.Add( "BOOT.BIN", 0x29E334 );
+                    locations.Add( "BOOT.BIN", 0x28E5EC );
+                    locations.Add( "BOOT.BIN ", 0x30A198 );
                 }
                 return locations;
             }
@@ -85,47 +79,19 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <value></value>
         public override int MaxLength
         {
-            get { return 0x286F; }
+            get { return 0x580A; }
         }
-
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        /// <value></value>
-        public override IList<string> SectionNames { get { return sectionNames; } }
 
 
 		#endregion Properties 
 
-		#region Constructors (3) 
+		#region Constructors (2) 
 
-        static BOOT29E334()
-        {
-            sectionNames[1] = "Unit names";
-            sectionNames[2] = "Job names";
-
-            entryNames = new string[31][];
-
-            int[] sectionLengths = new int[31] {
-                1,1024,170,1,1,1,1,1,
-                1,1,1,1,1,1,1,1,
-                1,1,1,1,1,1,1,1,
-                1,1,1,1,1,1,1};
-            for( int i = 0; i < entryNames.Length; i++ )
-            {
-                entryNames[i] = new string[sectionLengths[i]];
-            }
-
-            List<string> jobNames = new List<string>( FFTPatcher.Datatypes.AllJobs.PSPNames );
-            jobNames.Add( string.Empty );
-            entryNames[2] = jobNames.ToArray();
-        }
-
-        private BOOT29E334()
+        private BOOT28E5EC()
         {
         }
 
-        public BOOT29E334( IList<byte> bytes )
+        public BOOT28E5EC( IList<byte> bytes )
             : base( bytes )
         {
         }

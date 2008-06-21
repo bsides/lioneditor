@@ -29,6 +29,11 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
         public override GenericCharMap CharMap { get { return TextUtilities.PSXMap; } }
 
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
         protected BasePSXCompressedFile()
             : base()
         {
@@ -55,7 +60,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-		#endregion Properties 
+		#endregion Constructors 
 
     }
 }

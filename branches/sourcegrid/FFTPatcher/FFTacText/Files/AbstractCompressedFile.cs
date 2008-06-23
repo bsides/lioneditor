@@ -28,7 +28,7 @@ namespace FFTPatcher.TextEditor.Files
     public abstract class AbstractCompressedFile : AbstractStringSectioned, ICompressed
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -50,23 +50,30 @@ namespace FFTPatcher.TextEditor.Files
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractCompressedFile"/> class.
+        /// </summary>
         protected AbstractCompressedFile()
             : base()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractCompressedFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected AbstractCompressedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Events (2) 
+        #region Events (2)
 
         /// <summary>
         /// Occurs when a compression operation has finished.
@@ -78,9 +85,9 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public event EventHandler<CompressionEventArgs> ProgressChanged;
 
-		#endregion Events 
+        #endregion Events
 
-		#region Methods (5) 
+        #region Methods (5)
 
 
         private IList<byte> BuildHeaderFromSectionOffsets( IList<UInt32> offsets )
@@ -120,11 +127,11 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public IList<byte> Compress()
         {
-           TextUtilities.ProgressCallback p = new TextUtilities.ProgressCallback(
-                delegate( int progress )
-                {
-                    FireProgressChangedEvent( progress );
-                } );
+            TextUtilities.ProgressCallback p = new TextUtilities.ProgressCallback(
+                 delegate( int progress )
+                 {
+                     FireProgressChangedEvent( progress );
+                 } );
 
 
             TextUtilities.CompressionResult r = TextUtilities.Compress( this, ExcludedEntries, p );
@@ -137,7 +144,7 @@ namespace FFTPatcher.TextEditor.Files
                 pos += r.SectionLengths[i];
                 offsets.Add( (UInt32)pos );
             }
-            
+
             List<byte> result = new List<byte>( 0x80 + r.Bytes.Count );
             result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
             result.AddRange( r.Bytes );
@@ -149,13 +156,17 @@ namespace FFTPatcher.TextEditor.Files
 
 
 
+        /// <summary>
+        /// Gets a list of bytes that represent this file in its on-disc form.
+        /// </summary>
+        /// <returns></returns>
         protected override IList<byte> ToFinalBytes()
         {
             return Compress();
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

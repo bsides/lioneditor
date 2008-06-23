@@ -21,22 +21,25 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Text for the BOOT.BIN file at location 0x2EB4C0.
+    /// </summary>
     public class BOOT2EB4C0 : AbstractBootBinFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (1)
 
         private const string filename = "BOOT.BIN[0x2EB4C0]";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -81,20 +84,24 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private BOOT2EB4C0()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BOOT2EB4C0"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public BOOT2EB4C0( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

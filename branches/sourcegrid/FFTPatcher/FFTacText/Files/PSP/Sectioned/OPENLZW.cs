@@ -21,23 +21,26 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Represents the text in the OPEN.LZW file.
+    /// </summary>
     public class OPENLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (2) 
+        #region Fields (2)
 
         private const int fftpackIndex = 45;
         private const string filename = "OPEN.LZW";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (5) 
+        #region Properties (5)
 
 
         /// <summary>
@@ -90,20 +93,24 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private OPENLZW()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OPENLZW"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public OPENLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

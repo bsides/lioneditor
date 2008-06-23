@@ -76,7 +76,6 @@ namespace FFTPatcher.TextEditor
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.Location = new System.Drawing.Point( 0, 0 );
-            this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size( 563, 467 );
             this.dataGridView.TabIndex = 0;

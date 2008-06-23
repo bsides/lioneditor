@@ -33,6 +33,9 @@ namespace FFTPatcher.TextEditor
 
         #region Fields (3)
 
+        /// <summary>
+        /// Whether or not there is an error with the current input.
+        /// </summary>
         protected bool error = false;
         private bool ignoreChanges = false;
         private IStringSectioned strings;
@@ -42,6 +45,10 @@ namespace FFTPatcher.TextEditor
         #region Properties (2)
 
 
+        /// <summary>
+        /// Gets the length label format string.
+        /// </summary>
+        /// <value>The length label format string.</value>
         protected virtual string LengthLabelFormatString
         {
             get { return "Length: {0} bytes"; }
@@ -72,6 +79,9 @@ namespace FFTPatcher.TextEditor
 
         #region Constructors (1)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringSectionedEditor"/> class.
+        /// </summary>
         public StringSectionedEditor()
         {
             InitializeComponent();
@@ -87,6 +97,9 @@ namespace FFTPatcher.TextEditor
 
         #region Events (1)
 
+        /// <summary>
+        /// Occurs when the user has requested that a file be saved.
+        /// </summary>
         public event EventHandler<SavingFileEventArgs> SavingFile;
 
         #endregion Events

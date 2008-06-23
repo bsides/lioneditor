@@ -21,26 +21,29 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Text for the SNPLEMES.BIN file.
+    /// </summary>
     public class SNPLMESBIN : BasePSXPartitionedFile
     {
 
-		#region Static Fields (3) 
+        #region Static Fields (3)
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (3) 
+        #region Fields (3)
 
         private const string filename = "SNPLMES.BIN";
         private const int numberOfSections = 6;
         private const int sectionLength = 0xA000;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (6) 
+        #region Properties (6)
 
 
         /// <summary>
@@ -92,9 +95,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
         static SNPLMESBIN()
         {
@@ -112,12 +115,16 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SNPLMESBIN"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public SNPLMESBIN( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

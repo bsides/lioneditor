@@ -30,9 +30,13 @@ namespace FFTPatcher.TextEditor
     public partial class CompressedStringSectionedEditor : StringSectionedEditor
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
+        /// <summary>
+        /// Gets the length label format string.
+        /// </summary>
+        /// <value>The length label format string.</value>
         protected override string LengthLabelFormatString
         {
             get { return "Estimated length: {0} bytes"; }
@@ -66,10 +70,13 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompressedStringSectionedEditor"/> class.
+        /// </summary>
         public CompressedStringSectionedEditor()
         {
             InitializeComponent();
@@ -77,16 +84,16 @@ namespace FFTPatcher.TextEditor
             errorLabel.VisibleChanged += errorLabel_VisibleChanged;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Delegates (2) 
+        #region Delegates (2)
 
         private delegate void FinishedCallback( ICompressed compressed, IList<byte> result );
         private delegate void ProgressCallback( int progress );
 
-		#endregion Delegates 
+        #endregion Delegates
 
-		#region Methods (4) 
+        #region Methods (4)
 
 
         private void compressButton_Click( object sender, EventArgs e )
@@ -102,7 +109,7 @@ namespace FFTPatcher.TextEditor
                 {
                     compressed.Compress();
                 } ) );
-            
+
             this.Enabled = false;
             t.Start();
         }
@@ -137,7 +144,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

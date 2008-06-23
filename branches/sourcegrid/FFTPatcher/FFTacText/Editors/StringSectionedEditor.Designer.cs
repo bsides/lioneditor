@@ -155,6 +155,9 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.ComboBox sectionComboBox;
         private System.Windows.Forms.Label lengthLabel;
         private System.Windows.Forms.Label maxLengthLabel;
+        /// <summary>
+        /// Label for showing &quot;ERROR&quot;
+        /// </summary>
         protected System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.ListBox filesListBox;
         private System.Windows.Forms.Button saveButton;

@@ -19,6 +19,9 @@
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// The main form for FFTacText.
+    /// </summary>
     partial class MainForm
     {
         /// <summary>

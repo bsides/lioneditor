@@ -25,16 +25,19 @@ using System.Xml.Schema;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Represents the text in the WORLD.BIN file.
+    /// </summary>
     public class WORLDBIN : IStringSectioned
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static IDictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (5) 
+        #region Fields (5)
 
         private const UInt32 baseAddress = 0x8018E4E8;
         private int[][] entryLengths = null;
@@ -42,10 +45,23 @@ namespace FFTPatcher.TextEditor.Files.PSX
         private const string filename = "WORLD.BIN";
         private IList<string> sectionNames;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (11) 
+        #region Properties (12)
 
+
+        private int[][] EntryLengths
+        {
+            get
+            {
+                if( entryLengths == null )
+                {
+                    InitializeEntryLengths();
+                }
+
+                return entryLengths;
+            }
+        }
 
         /// <summary>
         /// Gets the actual length of this file if it were turned into a byte array.
@@ -64,13 +80,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public IList<IList<string>> EntryNames
         {
-            get 
+            get
             {
                 if( entryNames == null )
                 {
                     entryNames = Files.EntryNames.GetEntryNames( GetType() );
                 }
-                return entryNames; 
+                return entryNames;
             }
         }
 
@@ -131,13 +147,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public IList<string> SectionNames
         {
-            get 
+            get
             {
                 if( sectionNames == null )
                 {
                     sectionNames = Files.EntryNames.GetSectionNames( GetType() );
                 }
-                return sectionNames; 
+                return sectionNames;
             }
         }
 
@@ -155,23 +171,27 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public string this[int section, int entry]
         {
             get { return Sections[section][entry]; }
-            set 
+            set
             {
-                entryLengths[section][entry] = CharMap.StringToByteArray( value ).Length;
-                Sections[section][entry] = value; 
+                EntryLengths[section][entry] = CharMap.StringToByteArray( value ).Length;
+                Sections[section][entry] = value;
             }
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private WORLDBIN()
         {
             Sections = new List<IList<string>>( NumberOfSections );
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WORLDBIN"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public WORLDBIN( IList<byte> bytes )
             : this()
         {
@@ -205,9 +225,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (14) 
+        #region Methods (16)
 
 
         private IList<byte> BuildAddresses( int[] lengths )
@@ -245,6 +265,21 @@ namespace FFTPatcher.TextEditor.Files.PSX
             result[7] = bytes.Sub( 32, 35 ).ToUInt32() - baseAddress;
 
             return result;
+        }
+
+        private void InitializeEntryLengths()
+        {
+            entryLengths = new int[NumberOfSections][];
+
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                IList<string> section = Sections[i];
+                entryLengths[i] = new int[section.Count];
+                for( int j = 0; j < section.Count; j++ )
+                {
+                    entryLengths[i][j] = CharMap.StringToByteArray( this[i, j] ).Length;
+                }
+            }
         }
 
         private void ReadXmlBase64( XmlReader reader )
@@ -358,6 +393,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
         /// <summary>
+        /// Gets other patches necessary to make modifications to this file functional.
+        /// </summary>
+        /// <returns></returns>
+        public IList<PatchedByteArray> GetOtherPatches()
+        {
+            return new PatchedByteArray[0];
+        }
+
+        /// <summary>
         /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
         /// </summary>
         /// <returns>
@@ -465,7 +509,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

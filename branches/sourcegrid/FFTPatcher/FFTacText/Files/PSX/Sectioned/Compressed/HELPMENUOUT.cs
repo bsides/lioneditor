@@ -21,23 +21,26 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Represents the text in the HELPMENU.OUT file.
+    /// </summary>
     public class HELPMENUOUT : BasePSXCompressedFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (2) 
+        #region Fields (2)
 
         private const string filename = "HELPMENU.OUT";
         private const int numberOfSections = 21;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -78,31 +81,39 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override int MaxLength { get { return 0x169C0; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private HELPMENUOUT()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HELPMENUOUT"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public HELPMENUOUT( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (1) 
+        #region Methods (1)
 
 
+        /// <summary>
+        /// Gets a list of bytes that represent this file in its on-disc form.
+        /// </summary>
+        /// <returns></returns>
         protected override IList<byte> ToFinalBytes()
         {
             return Compress();
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

@@ -21,23 +21,26 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Represents the text for the ATCHELP.LZW file.
+    /// </summary>
     public class ATCHELPLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (2) 
+        #region Fields (2)
 
         private const int fftpackIndex = 41;
         private const string filename = "ATCHELP.LZW";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (5) 
+        #region Properties (5)
 
 
         /// <summary>
@@ -89,20 +92,24 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private ATCHELPLZW()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ATCHELPLZW"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public ATCHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

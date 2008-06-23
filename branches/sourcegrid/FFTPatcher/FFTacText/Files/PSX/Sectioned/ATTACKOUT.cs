@@ -21,22 +21,25 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Represents the text for the ATTACK.OUT file.
+    /// </summary>
     public class ATTACKOUT : BasePSXSectionedFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (1)
 
         private const string filename = "ATTACK.OUT";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -77,20 +80,24 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override int MaxLength { get { return 0x1E67; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private ATTACKOUT()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ATTACKOUT"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public ATTACKOUT( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

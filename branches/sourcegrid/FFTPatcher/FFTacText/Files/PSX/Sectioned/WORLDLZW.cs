@@ -21,22 +21,25 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Represents the text in the WORLD.LZW file.
+    /// </summary>
     public class WORLDLZW : BasePSXSectionedFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (1)
 
         private const string filename = "WORLD.LZW";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -76,20 +79,24 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override int MaxLength { get { return 0xE2DD; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private WORLDLZW()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WORLDLZW"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public WORLDLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

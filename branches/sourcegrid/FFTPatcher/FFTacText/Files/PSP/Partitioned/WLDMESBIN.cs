@@ -21,27 +21,30 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Represents the text in the WLDMES.BIN file.
+    /// </summary>
     public class WLDMESBIN : BasePSPPartitionedFile, IFFTPackFile
     {
 
-		#region Static Fields (3) 
+        #region Static Fields (3)
 
         private static string[][] entryNames;
         private static Dictionary<string, long> locations;
         private static string[] sectionNames;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (4) 
+        #region Fields (4)
 
         private const int fftpackIndex = 772;
         private const string filename = "WLDMES.BIN";
         private const int numberOfSections = 121;
         private const int sectionLength = 0x8000;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (7) 
+        #region Properties (7)
 
 
         /// <summary>
@@ -103,9 +106,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override IList<string> SectionNames { get { return sectionNames; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
         static WLDMESBIN()
         {
@@ -140,12 +143,16 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WLDMESBIN"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public WLDMESBIN( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

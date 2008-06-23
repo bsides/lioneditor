@@ -26,11 +26,17 @@ using System.Drawing.Drawing2D;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// An editor that edits lists of strings.
+    /// </summary>
     public partial class StringListEditor : UserControl
     {
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringListEditor"/> class.
+        /// </summary>
         public StringListEditor()
         {
             InitializeComponent();
@@ -39,38 +45,53 @@ namespace FFTPatcher.TextEditor
             textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (1) 
+        #region Properties (1)
 
+        /// <summary>
+        /// Gets the current row.
+        /// </summary>
+        /// <value>The current row.</value>
         public int CurrentRow
         {
             get { return (int)dataGridView.CurrentRow.Cells[numberColumn.Name].Value; }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Delegates and Events (2) 
+        #region Delegates and Events (2)
 
 
-		// Events (2) 
+        // Events (2) 
 
+        /// <summary>
+        /// Occurs when a cell is validating.
+        /// </summary>
         public event DataGridViewCellValidatingEventHandler CellValidating
         {
             add { dataGridView.CellValidating += value; }
             remove { dataGridView.CellValidating -= value; }
         }
 
+        /// <summary>
+        /// Occurs when text in a textbox has changed.
+        /// </summary>
         public event EventHandler TextBoxTextChanged;
 
 
-		#endregion Delegates and Events 
+        #endregion Delegates and Events
 
-		#region Methods (4) 
+        #region Methods (4)
 
 
-		// Public Methods (1) 
+        // Public Methods (1) 
 
+        /// <summary>
+        /// Binds this editor to a list of strings.
+        /// </summary>
+        /// <param name="names">The names.</param>
+        /// <param name="values">The values.</param>
         public void BindTo( IList<string> names, IList<string> values )
         {
             if( names.Count < values.Count )
@@ -93,7 +114,7 @@ namespace FFTPatcher.TextEditor
 
 
 
-		// Private Methods (3) 
+        // Private Methods (3) 
 
         private void dataGridView_CellEndEdit( object sender, DataGridViewCellEventArgs e )
         {
@@ -122,7 +143,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

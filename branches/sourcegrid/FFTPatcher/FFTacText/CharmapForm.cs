@@ -23,17 +23,20 @@ using System.Windows.Forms;
 
 namespace FFTPatcher.TextEditor
 {
-    public partial class CharmapForm : Form
+    /// <summary>
+    /// The character map form.
+    /// </summary>
+    internal partial class CharmapForm : Form
     {
 
-		#region Static Fields (2) 
+        #region Static Fields (2)
 
         private static GenericCharMap currentCharMap = null;
         private static CharmapForm instance = null;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Static Properties (1) 
+        #region Static Properties (1)
 
 
         private static CharmapForm Instance
@@ -50,9 +53,9 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         private CharmapForm()
         {
@@ -61,9 +64,9 @@ namespace FFTPatcher.TextEditor
             textBox.Enter += textBox_Enter;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (3)
 
 
         private static void SetCharMap( GenericCharMap map )
@@ -95,7 +98,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

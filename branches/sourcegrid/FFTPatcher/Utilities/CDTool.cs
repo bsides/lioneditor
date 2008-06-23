@@ -22,29 +22,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 using FFTPatcher.Properties;
-using System.Threading;
 
 namespace FFTPatcher
 {
     public static class CDTool
     {
-        public class PatchedByteArray
-        {
-            public string Filename { get; private set; }
-            public long Offset { get; private set; }
-            public byte[] Bytes { get; private set; }
-
-            public PatchedByteArray( string filename, long offset, byte[] bytes )
-            {
-                Filename = filename;
-                Offset = offset;
-                Bytes = bytes;
-            }
-        }
-
         private const string patchFunction =
 @"function patchFile(filename, p)
 	f=cdutil:findpath(filename)

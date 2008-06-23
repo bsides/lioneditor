@@ -31,15 +31,15 @@ namespace FFTPatcher.TextEditor.Editors
     public partial class PartitionEditor : UserControl
     {
 
-		#region Fields (3) 
+        #region Fields (3)
 
         private bool error = false;
         private bool ignoreChanges = false;
         private IPartition strings;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -64,16 +64,23 @@ namespace FFTPatcher.TextEditor.Editors
 
 
 
+        /// <summary>
+        /// Gets the length label format string.
+        /// </summary>
+        /// <value>The length label format string.</value>
         protected virtual string LengthLabelFormatString
         {
             get { return "Length: {0} bytes"; }
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PartitionEditor"/> class.
+        /// </summary>
         public PartitionEditor()
         {
             InitializeComponent();
@@ -86,15 +93,18 @@ namespace FFTPatcher.TextEditor.Editors
             saveThisButton.Click += saveThisButton_Click;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Events (1) 
+        #region Events (1)
 
+        /// <summary>
+        /// Occurs when the user has requested that a file be saved.
+        /// </summary>
         public event EventHandler<SavingFileEventArgs> SavingFile;
 
-		#endregion Events 
+        #endregion Events
 
-		#region Methods (11) 
+        #region Methods (11)
 
 
         private void currentString_TextChanged( object sender, EventArgs e )
@@ -211,7 +221,7 @@ namespace FFTPatcher.TextEditor.Editors
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

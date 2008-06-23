@@ -25,12 +25,12 @@ using System.Xml;
 namespace FFTPatcher.TextEditor.Files
 {
     /// <summary>
-    /// A file with many partitions of equal lenght.
+    /// A file with many partitions of equal length.
     /// </summary>
     public abstract class AbstractPartitionedFile : IPartitionedFile
     {
 
-		#region Abstract Properties (7) 
+        #region Abstract Properties (7)
 
 
         /// <summary>
@@ -64,19 +64,14 @@ namespace FFTPatcher.TextEditor.Files
         public abstract int SectionLength { get; }
 
         /// <summary>
-        /// Gets the maximum length of this file as a byte array.
-        /// </summary>
-        public int MaxLength { get { return NumberOfSections * SectionLength; } }
-
-        /// <summary>
         /// Gets a collection of strings with a description of each section in this file.
         /// </summary>
         public abstract IList<string> SectionNames { get; }
 
 
-		#endregion Abstract Properties 
+        #endregion Abstract Properties
 
-		#region Properties (3) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -96,19 +91,31 @@ namespace FFTPatcher.TextEditor.Files
         }
 
         /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        public int MaxLength { get { return NumberOfSections * SectionLength; } }
+
+        /// <summary>
         /// Gets a collection of <see cref="IPartition"/>, representing the entries in this file.
         /// </summary>
         public IList<IPartition> Sections { get; protected set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
+        /// </summary>
         protected AbstractPartitionedFile()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected AbstractPartitionedFile( IList<byte> bytes )
         {
             Sections = new List<IPartition>( NumberOfSections );
@@ -118,9 +125,9 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (10) 
+        #region Methods (11)
 
 
         private void ReadXmlBase64( XmlReader reader )
@@ -171,7 +178,7 @@ namespace FFTPatcher.TextEditor.Files
                 }
 
                 Sections[currentSection] = new FilePartition( this, currentStrings, SectionLength, EntryNames[currentSection], CharMap );
-                
+
                 reader.ReadEndElement();
             }
 
@@ -222,6 +229,9 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
+        /// <summary>
+        /// Gets a list of bytes that represent this file in its on-disc form.
+        /// </summary>
         protected IList<byte> ToFinalBytes()
         {
             List<byte> result = new List<byte>();
@@ -231,6 +241,14 @@ namespace FFTPatcher.TextEditor.Files
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets other patches necessary to make modifications to this file functional.
+        /// </summary>
+        public IList<PatchedByteArray> GetOtherPatches()
+        {
+            return new PatchedByteArray[0];
         }
 
         /// <summary>
@@ -299,7 +317,7 @@ namespace FFTPatcher.TextEditor.Files
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

@@ -21,38 +21,53 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Represents the text for the SPELL.MES file.
+    /// </summary>
     public class SPELLMES : AbstractDelimitedFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (2) 
+        #region Fields (2)
 
         private const string filename = "SPELL.MES";
         private const int maxLength = 0x3705;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
+        /// <summary>
+        /// Gets the character map that is used for this file.
+        /// </summary>
+        /// <value></value>
         public override GenericCharMap CharMap
         {
             get { return TextUtilities.PSXMap; }
         }
 
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
+        /// <value></value>
         public override string Filename
         {
             get { return filename; }
         }
 
+        /// <summary>
+        /// Gets the filenames and locations for this file.
+        /// </summary>
+        /// <value></value>
         public override IDictionary<string, long> Locations
         {
-            get 
+            get
             {
                 if( locations == null )
                 {
@@ -64,22 +79,34 @@ namespace FFTPatcher.TextEditor.Files.PSX
             }
         }
 
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        /// <value></value>
         public override int MaxLength
         {
             get { return maxLength; }
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
+        private SPELLMES()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SPELLMES"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public SPELLMES( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

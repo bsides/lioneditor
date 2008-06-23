@@ -96,6 +96,9 @@ namespace FFTPatcher.TextEditor
 
         #region Constructors (1)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
         public MainForm()
         {
 #if DONGS
@@ -133,7 +136,8 @@ namespace FFTPatcher.TextEditor
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
-            using( About a = new About() ) a.ShowDialog();
+            using( About a = new About() )
+                a.ShowDialog();
         }
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -383,8 +387,10 @@ namespace FFTPatcher.TextEditor
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
             using( MemoryStream ms = new MemoryStream( bytes ) )
+            using( XmlTextReader reader = new XmlTextReader( ms ) )
             {
-                File = xs.Deserialize( ms ) as FFTText;
+                reader.WhitespaceHandling = WhitespaceHandling.None;
+                File = xs.Deserialize( reader ) as FFTText;
             }
         }
 
@@ -427,15 +433,15 @@ namespace FFTPatcher.TextEditor
         private void newPsxMenuItem_Click( object sender, EventArgs e )
         {
             LoadFileFromByteArray( PSXResources.DefaultDocument );
-            using( XmlTextWriter writer = new XmlTextWriter( "ffffff", System.Text.Encoding.UTF8 ) )
-            {
-                writer.WriteStartDocument();
-                writer.WriteStartElement( "fff" );
+            //using( XmlTextWriter writer = new XmlTextWriter( "ffffff", System.Text.Encoding.UTF8 ) )
+            //{
+            //    writer.WriteStartDocument();
+            //    writer.WriteStartElement( "fff" );
 
-                new FFTPatcher.TextEditor.Files.PSX.SPELLMES( FFTPatcher.TextEditor.Properties.PSXResources.SPELLMES ).WriteXml( writer, true );
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-            }
+            //    new FFTPatcher.TextEditor.Files.PSX.SPELLMES( FFTPatcher.TextEditor.Properties.PSXResources.SPELLMES ).WriteXml( writer, true );
+            //    writer.WriteEndElement();
+            //    writer.WriteEndDocument();
+            //}
             ////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.HELPLZW( FFTPatcher.TextEditor.Properties.PSXResources.HELPLZW ) );
             ////using (XmlTextWriter writer = new XmlTextWriter("fff", System.Text.Encoding.UTF8))
             ////{

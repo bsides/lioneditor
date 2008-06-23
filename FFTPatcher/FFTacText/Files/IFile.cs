@@ -45,5 +45,10 @@ namespace FFTPatcher.TextEditor.Files
         /// Creates a byte array representing this file.
         /// </summary>
         byte[] ToByteArray();
+
+        /// <summary>
+        /// Gets other patches necessary to make modifications to this file functional.
+        /// </summary>
+        IList<PatchedByteArray> GetOtherPatches();
     }
 }

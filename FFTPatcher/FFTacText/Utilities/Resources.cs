@@ -22,31 +22,38 @@ using System.Text;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// Resources for the application.
+    /// </summary>
     public static class Resources
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, object> resourceMapping = new Dictionary<string, object>();
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Static Properties (1) 
+        #region Static Properties (1)
 
 
+        /// <summary>
+        /// Gets the entry names XML document.
+        /// </summary>
+        /// <value>The entry names.</value>
         public static string EntryNames { get { return resourceMapping["EntryNames"] as string; } }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         static Resources()
         {
             resourceMapping["EntryNames"] = GZip.Decompress( Properties.Resources.EntryNames ).ToUTF8String();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

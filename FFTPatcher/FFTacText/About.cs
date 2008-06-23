@@ -22,12 +22,18 @@ using System.Windows.Forms;
 
 namespace FFTPatcher.TextEditor
 {
-    public partial class About : Form
+    /// <summary>
+    /// The about form.
+    /// </summary>
+    internal partial class About : Form
     {
 
 		#region Constructors (1) 
 
-        public About()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="About"/> class.
+        /// </summary>
+        internal About()
         {
             InitializeComponent();
             textBox.Text =

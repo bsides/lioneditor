@@ -21,23 +21,26 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// REpresents the text in the WLDHELP.LZW file.
+    /// </summary>
     public class WLDHELPLZW : BasePSXCompressedFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (2) 
+        #region Fields (2)
 
         private const string filename = "WLDHELP.LZW";
         private const int numberOfSections = 21;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -78,20 +81,24 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override int MaxLength { get { return 0x01ADE4; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private WLDHELPLZW()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WLDHELPLZW"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public WLDHELPLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

@@ -19,7 +19,7 @@
 
 namespace FFTPatcher.TextEditor
 {
-    partial class About
+    internal partial class About
     {
         /// <summary>
         /// Required designer variable.

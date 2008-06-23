@@ -31,9 +31,18 @@ using System.Diagnostics;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// Filetypes
+    /// </summary>
     public enum Filetype
     {
+        /// <summary>
+        /// Playstation
+        /// </summary>
         PSX,
+        /// <summary>
+        /// PSP
+        /// </summary>
         PSP
     }
 
@@ -45,6 +54,9 @@ namespace FFTPatcher.TextEditor
 
         #region Fields (1)
 
+        /// <summary>
+        /// Gets the current version of FFTText files.
+        /// </summary>
         public const int CurrentVersion = 2;
 
         #endregion Fields
@@ -170,6 +182,7 @@ namespace FFTPatcher.TextEditor
 
             for( int i = 0; i < numberOfFiles; i++ )
             {
+                reader.MoveToElement();
                 reader.MoveToAttribute( "type" );
                 string type = reader.ReadContentAsString();
                 reader.MoveToElement();
@@ -280,14 +293,14 @@ namespace FFTPatcher.TextEditor
                         throw new InvalidOperationException();
                     }
 
-                    List<CDTool.PatchedByteArray> patches = new List<CDTool.PatchedByteArray>();
+                    List<PatchedByteArray> patches = new List<PatchedByteArray>();
                     foreach( IStringSectioned sectioned in SectionedFiles )
                     {
                         byte[] bytes = sectioned.ToByteArray();
                         foreach( KeyValuePair<string, long> kvp in sectioned.Locations )
                         {
 
-                            patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                            patches.Add( new PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
                         }
                     }
 
@@ -296,7 +309,7 @@ namespace FFTPatcher.TextEditor
                         byte[] bytes = partitioned.ToByteArray();
                         foreach( KeyValuePair<string, long> kvp in partitioned.Locations )
                         {
-                            patches.Add( new CDTool.PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                            patches.Add( new PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
                         }
                     }
 

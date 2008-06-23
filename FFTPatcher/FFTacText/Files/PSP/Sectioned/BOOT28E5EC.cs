@@ -21,33 +21,37 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Text for the BOOT.BIN file at location 0x28E5EC.
+    /// </summary>
     public class BOOT28E5EC : AbstractBootBinFile
     {
 
-		#region Static Fields (2) 
-
-        private static readonly IDictionary<int, IList<int>> exclusions;
-        private static Dictionary<string, long> locations;
-
-		#endregion Static Fields 
-
-		#region Fields (1) 
+		#region Fields (2) 
 
         private const string filename = "BOOT.BIN[0x28E5EC]";
+        private static Dictionary<string, long> locations;
 
 		#endregion Fields 
 
-		#region Properties (4) 
-
+		#region Constructors (2) 
 
         /// <summary>
-        /// Gets the number of sections.
+        /// Initializes a new instance of the <see cref="BOOT28E5EC"/> class.
         /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections
+        /// <param name="bytes">The bytes.</param>
+        public BOOT28E5EC( IList<byte> bytes )
+            : base( bytes )
         {
-            get { return 24; }
         }
+
+        private BOOT28E5EC()
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (4) 
 
         /// <summary>
         /// Gets the filename.
@@ -82,21 +86,16 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x580A; }
         }
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections
+        {
+            get { return 24; }
+        }
 
 		#endregion Properties 
-
-		#region Constructors (2) 
-
-        private BOOT28E5EC()
-        {
-        }
-
-        public BOOT28E5EC( IList<byte> bytes )
-            : base( bytes )
-        {
-        }
-
-		#endregion Constructors 
 
     }
 }

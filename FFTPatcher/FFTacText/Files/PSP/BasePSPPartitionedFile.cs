@@ -20,30 +20,44 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Represents a file in the PSP version that is partitioned.
+    /// </summary>
     public abstract class BasePSPPartitionedFile : AbstractPartitionedFile
     {
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
+        /// <summary>
+        /// Gets the character map used for this file.
+        /// </summary>
+        /// <value></value>
         public override GenericCharMap CharMap { get { return TextUtilities.PSPMap; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSPPartitionedFile"/> class.
+        /// </summary>
         protected BasePSPPartitionedFile()
             : base()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSPPartitionedFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected BasePSPPartitionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

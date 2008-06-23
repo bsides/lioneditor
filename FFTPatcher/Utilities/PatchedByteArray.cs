@@ -17,28 +17,19 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace FFTPatcher.TextEditor.Files.PSP
+namespace FFTPatcher
 {
-    /// <summary>
-    /// Represents a file on the PSP that is compressed.
-    /// </summary>
-    public abstract class BasePSPCompressedFile : AbstractCompressedFile
+    public class PatchedByteArray
     {
+        public string Filename { get; private set; }
+        public long Offset { get; private set; }
+        public byte[] Bytes { get; private set; }
 
-        #region Properties (1)
-
-
-        /// <summary>
-        /// Gets the character map that is used for this file.
-        /// </summary>
-        /// <value></value>
-        public override GenericCharMap CharMap
+        public PatchedByteArray( string filename, long offset, byte[] bytes )
         {
-            get { return TextUtilities.PSPMap; }
+            Filename = filename;
+            Offset = offset;
+            Bytes = bytes;
         }
-
-
-        #endregion Properties
-
     }
 }

@@ -21,22 +21,25 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Text for the JOIN.LZW file.
+    /// </summary>
     public class JOINLZW : BasePSXSectionedFile
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, long> locations;
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (1)
 
         private const string filename = "JOIN.LZW";
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (4) 
+        #region Properties (4)
 
 
         /// <summary>
@@ -77,20 +80,24 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public override int MaxLength { get { return 0x41F6; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         private JOINLZW()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JOINLZW"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         public JOINLZW( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

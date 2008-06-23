@@ -28,7 +28,7 @@ namespace FFTPatcher.TextEditor
     public class CompressionEventArgs : EventArgs
     {
 
-		#region Properties (2) 
+        #region Properties (2)
 
 
         /// <summary>
@@ -42,23 +42,32 @@ namespace FFTPatcher.TextEditor
         public IList<byte> Result { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompressionEventArgs"/> class.
+        /// </summary>
+        /// <param name="progress">The progress so far.</param>
         public CompressionEventArgs( int progress )
         {
             Progress = progress;
             Result = null;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompressionEventArgs"/> class.
+        /// </summary>
+        /// <param name="progress">The progress so far.</param>
+        /// <param name="result">The result if the progress is finished.</param>
         public CompressionEventArgs( int progress, IList<byte> result )
             : this( progress )
         {
             Result = result;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

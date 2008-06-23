@@ -31,18 +31,25 @@ namespace FFTPatcher.TextEditor.Files
     public abstract class AbstractStringSectioned : IStringSectioned
     {
 
-		#region Fields (4) 
+        #region Fields (4)
 
+        /// <summary>
+        /// The location where the data starts in normal sectioned files.
+        /// </summary>
         protected const int dataStart = 0x80;
         private int[][] entryLengths = null;
         private IList<IList<string>> entryNames;
         private IList<string> sectionNames;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Abstract Properties (5) 
+        #region Abstract Properties (5)
 
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
         protected abstract int NumberOfSections { get; }
 
         /// <summary>
@@ -66,9 +73,9 @@ namespace FFTPatcher.TextEditor.Files
         public abstract int MaxLength { get; }
 
 
-		#endregion Abstract Properties 
+        #endregion Abstract Properties
 
-		#region Properties (7) 
+        #region Properties (7)
 
 
         private int[][] EntryLengths
@@ -133,10 +140,10 @@ namespace FFTPatcher.TextEditor.Files
         public string this[int section, int entry]
         {
             get { return Sections[section][entry]; }
-            set 
+            set
             {
                 EntryLengths[section][entry] = CharMap.StringToByteArray( value ).Length;
-                Sections[section][entry] = value; 
+                Sections[section][entry] = value;
             }
         }
 
@@ -145,9 +152,9 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the estimated length of this file if it were turned into a byte array.
         /// </summary>
-        public virtual int EstimatedLength 
-        { 
-            get 
+        public virtual int EstimatedLength
+        {
+            get
             {
                 int sum = 0;
                 foreach( int[] i in EntryLengths )
@@ -155,19 +162,26 @@ namespace FFTPatcher.TextEditor.Files
                     sum += i.Sum();
                 }
                 return sum + dataStart;
-            } 
+            }
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractStringSectioned"/> class.
+        /// </summary>
         protected AbstractStringSectioned()
         {
             Sections = new List<IList<string>>( NumberOfSections );
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractStringSectioned"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected AbstractStringSectioned( IList<byte> bytes )
             : this()
         {
@@ -185,9 +199,9 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (14) 
+        #region Methods (15)
 
 
         private void InitializeEntryLengths()
@@ -311,6 +325,14 @@ namespace FFTPatcher.TextEditor.Files
         }
 
         /// <summary>
+        /// Gets other patches necessary to make modifications to this file functional.
+        /// </summary>
+        public IList<PatchedByteArray> GetOtherPatches()
+        {
+            return new PatchedByteArray[0];
+        }
+
+        /// <summary>
         /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
         /// </summary>
         /// <returns>
@@ -321,6 +343,9 @@ namespace FFTPatcher.TextEditor.Files
             return null;
         }
 
+        /// <summary>
+        /// Gets the byte arrays for each section.
+        /// </summary>
         public IList<IList<byte>> GetSectionByteArrays()
         {
             IList<IList<byte>> result = new List<IList<byte>>( NumberOfSections );
@@ -400,6 +425,9 @@ namespace FFTPatcher.TextEditor.Files
 
 
 
+        /// <summary>
+        /// Gets a list of bytes that represent this file in its on-disc form.
+        /// </summary>
         protected virtual IList<byte> ToFinalBytes()
         {
             return ToUncompressedBytes();
@@ -431,7 +459,7 @@ namespace FFTPatcher.TextEditor.Files
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

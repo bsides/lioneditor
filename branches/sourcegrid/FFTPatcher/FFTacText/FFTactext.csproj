@@ -96,6 +96,7 @@
     <Compile Include="Files\PSP\Sectioned\WORLDLZW.cs" />
     <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
+    <Compile Include="Files\PSX\QuickEdit.cs" />
     <Compile Include="Files\PSX\Sectioned\Compressed\BUNITOUT.cs" />
     <Compile Include="Files\EntryNames.cs" />
     <Compile Include="Files\PSX\Sectioned\Compressed\EQUIPOUT.cs" />

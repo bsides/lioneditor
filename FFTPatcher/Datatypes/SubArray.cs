@@ -278,17 +278,20 @@ namespace FFTPatcher.Datatypes
         void ICollection<T>.Add( T item )
         {
         }
+
         void ICollection<T>.Clear()
         {
         }
+
         void IList<T>.Insert( int index, T item )
         {
-            throw new NotImplementedException();
         }
+
         bool ICollection<T>.Remove( T item )
         {
             return false;
         }
+
         void IList<T>.RemoveAt( int index )
         {
             throw new NotImplementedException();

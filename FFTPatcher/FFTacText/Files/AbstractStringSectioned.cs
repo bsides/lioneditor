@@ -130,14 +130,14 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets a collection of lists of strings, representing the entries in this file..
         /// </summary>
-        public IList<IList<string>> Sections { get; protected set; }
+        public virtual IList<IList<string>> Sections { get; protected set; }
 
         /// <summary>
         /// Gets or sets a specific entry in a specific section.
         /// </summary>
         /// <param name="section">The section in which contains the entry to get or set</param>
         /// <param name="entry">The specific entry to get or set</param>
-        public string this[int section, int entry]
+        public virtual string this[int section, int entry]
         {
             get { return Sections[section][entry]; }
             set

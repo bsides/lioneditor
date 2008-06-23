@@ -19,53 +19,6 @@
 -->
 <EntryNames>
   <Files>
-    <File name="FFTPatcher.TextEditor.Files.PSX.SPELLMES" sections="1">
-      <Section value="0" entries="512" empty="false" name="Spell quotes">
-        <include name="PSX/AbilityNames" start="0" end="511" offset="0"/>
-      </Section>
-    </File>
-    <File name="FFTPatcher.TextEditor.Files.PSP.WORLDLZW" sections="32">
-      <Section value="0" entries="1" empty="true"/>
-      <Section value="1" entries="1" empty="true"/>
-      <Section value="2" entries="1" empty="true"/>
-      <Section value="3" entries="1" empty="true"/>
-      <Section value="4" entries="1" empty="true"/>
-      <Section value="5" entries="1" empty="true"/>
-      <Section value="6" entries="169" empty="false" name="Job names">
-        <include name="PSP/JobNames" start="0" end="168" offset="0"/>
-      </Section>
-      <Section value="7" entries="316" empty="false" name="Item names">
-        <include name="PSP/ItemNames" start="0" end="315" offset="0"/>
-      </Section>
-      <Section value="8" entries="1024" empty="true" name="Unit names"/>
-      <Section value="9" entries="1024" empty="true" name="Unit names"/>
-      <Section value="10" entries="11" empty="true" name="Battle menus"/>
-      <Section value="11" entries="2" empty="true" name="Map help"/>
-      <Section value="12" entries="96" empty="true" name="Errand names"/>
-      <Section value="13" entries="1" empty="true"/>
-      <Section value="14" entries="512" empty="false" name="Ability names">
-        <include name="PSP/AbilityNames" start="0" end="511" offset="0"/>
-      </Section>
-      <Section value="15" entries="77" empty="true" name="Feat rewards"/>
-      <Section value="16" entries="76" empty="true" name="Tutorial menus"/>
-      <Section value="17" entries="1" empty="true"/>
-      <Section value="18" entries="44" empty="true" name="Location names"/>
-      <Section value="19" entries="24" empty="true" name="Empty"/>
-      <Section value="20" entries="1" empty="true" name="Map menu text"/>
-      <Section value="21" entries="115" empty="true" name="Event names"/>
-      <Section value="22" entries="227" empty="false" name="Skillset names">
-        <include name="PSP/SkillsetNames" start="0" end="226" offset="0"/>
-      </Section>
-      <Section value="23" entries="374" empty="true" name="Tavern text"/>
-      <Section value="24" entries="32" empty="true" name="Tutorial menus"/>
-      <Section value="25" entries="185" empty="true" name="Rumors/Multiplayer text"/>
-      <Section value="26" entries="96" empty="true" name="Feats names"/>
-      <Section value="27" entries="16" empty="true" name="Wonders names"/>
-      <Section value="28" entries="47" empty="true" name="Artefacts names"/>
-      <Section value="29" entries="78" empty="true" name="Events names"/>
-      <Section value="30" entries="1024" empty="true" name="Personae names"/>
-      <Section value="31" entries="96" empty="true" name="Feats descriptions"/>
-    </File>
     <File name="FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW" sections="21">
       <Section value="0" entries="1" empty="true"/>
       <Section value="1" entries="1" empty="true"/>
@@ -505,6 +458,86 @@
       <Section value="29" entries="1" empty="true"/>
       <Section value="30" entries="1" empty="true"/>
       <Section value="31" entries="12" empty="true" name="Months"/>
+    </File>
+    <File name="FFTPatcher.TextEditor.Files.PSP.WORLDLZW" sections="32">
+      <Section value="0" entries="1" empty="true"/>
+      <Section value="1" entries="1" empty="true"/>
+      <Section value="2" entries="1" empty="true"/>
+      <Section value="3" entries="1" empty="true"/>
+      <Section value="4" entries="1" empty="true"/>
+      <Section value="5" entries="1" empty="true"/>
+      <Section value="6" entries="169" empty="false" name="Job names">
+        <include name="PSP/JobNames" start="0" end="168" offset="0"/>
+      </Section>
+      <Section value="7" entries="316" empty="false" name="Item names">
+        <include name="PSP/ItemNames" start="0" end="315" offset="0"/>
+      </Section>
+      <Section value="8" entries="1024" empty="true" name="Unit names"/>
+      <Section value="9" entries="1024" empty="true" name="Unit names"/>
+      <Section value="10" entries="11" empty="true" name="Battle menus"/>
+      <Section value="11" entries="2" empty="true" name="Map help"/>
+      <Section value="12" entries="96" empty="true" name="Errand names"/>
+      <Section value="13" entries="1" empty="true"/>
+      <Section value="14" entries="512" empty="false" name="Ability names">
+        <include name="PSP/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
+      <Section value="15" entries="77" empty="true" name="Feat rewards"/>
+      <Section value="16" entries="76" empty="true" name="Tutorial menus"/>
+      <Section value="17" entries="1" empty="true"/>
+      <Section value="18" entries="44" empty="true" name="Location names"/>
+      <Section value="19" entries="24" empty="true" name="Empty"/>
+      <Section value="20" entries="1" empty="true" name="Map menu text"/>
+      <Section value="21" entries="115" empty="true" name="Event names"/>
+      <Section value="22" entries="227" empty="false" name="Skillset names">
+        <include name="PSP/SkillsetNames" start="0" end="226" offset="0"/>
+      </Section>
+      <Section value="23" entries="374" empty="true" name="Tavern text"/>
+      <Section value="24" entries="32" empty="true" name="Tutorial menus"/>
+      <Section value="25" entries="185" empty="true" name="Rumors/Multiplayer text"/>
+      <Section value="26" entries="96" empty="true" name="Feats names"/>
+      <Section value="27" entries="16" empty="true" name="Wonders names"/>
+      <Section value="28" entries="47" empty="true" name="Artefacts names"/>
+      <Section value="29" entries="78" empty="true" name="Events names"/>
+      <Section value="30" entries="1024" empty="true" name="Personae names"/>
+      <Section value="31" entries="96" empty="true" name="Feats descriptions"/>
+    </File>
+    <File name="FFTPatcher.TextEditor.Files.PSX.QuickEdit" sections="10">
+      <Section value="0" entries="512" empty="false" name="Ability names">
+        <include name="PSX/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
+      <Section value="1" entries="512" empty="false" name="Ability descriptions">
+        <include name="PSX/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
+      <Section value="2" entries="512" empty="false" name="Ability quotes">
+        <include name="PSX/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
+      <Section value="3" entries="256" empty="false" name="Item names">
+        <include name="PSX/ItemNames" start="0" end="255" offset="0"/>
+      </Section>
+      <Section value="4" entries="256" empty="false" name="Item descriptions">
+        <include name="PSX/ItemNames" start="0" end="255" offset="0"/>
+      </Section>
+      <Section value="5" entries="155" empty="false" name="Job names">
+        <include name="PSX/JobNames" start="0" end="154" offset="0"/>
+      </Section>
+      <Section value="6" entries="160" empty="false" name="Job descriptions">
+        <include name="PSX/JobNames" start="0" end="159" offset="0"/>
+      </Section>
+      <Section value="7" entries="94" empty="false" name="Job requirements">
+        <include name="PSX/JobNames" start="74" end="93" offset="-74"/>
+        <include name="PSX/JobNames" start="1" end="74" offset="19"/>
+      </Section>
+      <Section value="8" entries="256" empty="false" name="Skillset names">
+        <include name="PSX/SkillsetNames" start="0" end="255" offset="0"/>
+      </Section>
+      <Section value="9" entries="256" empty="false" name="Skillset descriptions">
+        <include name="PSX/SkillsetNames" start="0" end="255" offset="0"/>
+      </Section>
+    </File>
+    <File name="FFTPatcher.TextEditor.Files.PSX.SPELLMES" sections="1">
+      <Section value="0" entries="512" empty="false" name="Spell quotes">
+        <include name="PSX/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
     </File>
     <File name="FFTPatcher.TextEditor.Files.PSX.JOBSTTSOUT" sections="21">
       <Section value="0" entries="1" empty="true"/>
@@ -1127,8 +1160,9 @@
       </Section>
       <Section value="3" entries="32" empty="true" name="Shop/Save text"/>
       <Section value="4" entries="173" empty="true" name="Dismiss quotes"/>
-      <Section value="5" entries="95" empty="false" name="Job descriptions">
-        <include name="PSX/JobNames" start="0" end="93" offset="0"/>
+      <Section value="5" entries="95" empty="false" name="Job requirements">
+        <include name="PSX/JobNames" start="74" end="93" offset="-74"/>
+        <include name="PSX/JobNames" start="1" end="74" offset="19"/>
         <entry value="94" name=""/>
       </Section>
       <Section value="6" entries="10" empty="true" name="Name entry"/>

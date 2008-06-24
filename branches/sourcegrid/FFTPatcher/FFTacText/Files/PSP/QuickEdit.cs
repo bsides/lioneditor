@@ -20,15 +20,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace FFTPatcher.TextEditor.Files.PSX
+namespace FFTPatcher.TextEditor.Files.PSP
 {
     /// <summary>
     /// A special StringSectioned that edits multiple sections in multiple other files at the same time.
     /// </summary>
-    public class QuickEdit : BasePSXSectionedFile, IQuickEdit
+    public class QuickEdit : BasePSPSectionedFile, IQuickEdit
     {
 
-		#region Fields (13) 
+        #region Fields (13)
 
         private Dictionary<IStringSectioned, int> abilityDescriptions = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> abilityNames = new Dictionary<IStringSectioned, int>();
@@ -45,9 +45,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
         private Dictionary<SectionType, Dictionary<IStringSectioned, int>> types =
             new Dictionary<SectionType, Dictionary<IStringSectioned, int>>();
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public QuickEdit( FFTText text )
         {
@@ -64,25 +64,25 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
             Sections = new IList<string>[NumberOfSections];
 
-            foreach ( IStringSectioned sectioned in text.SectionedFiles )
+            foreach( IStringSectioned sectioned in text.SectionedFiles )
             {
                 var namedSections = sectioned.GetNamedSections();
-                foreach ( NamedSection namedSection in namedSections )
+                foreach( NamedSection namedSection in namedSections )
                 {
                     types[namedSection.SectionType].Add( namedSection.Owner, namedSection.SectionIndex );
-                    if ( namedSection.IsRepresentativeSample )
+                    if( namedSection.IsRepresentativeSample )
                     {
-                        AddSection( 
-                            namedSection.SectionType, 
+                        AddSection(
+                            namedSection.SectionType,
                             namedSection.Owner.Sections[(int)namedSection.SectionIndex].Sub( 0, namedSection.SampleLength - 1 ) );
                     }
                 }
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (4) 
+        #region Properties (4)
 
         /// <summary>
         /// Gets the filename.
@@ -99,7 +99,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
             get
             {
-                if ( locations == null )
+                if( locations == null )
                 {
                     locations = new Dictionary<string, long>();
                 }
@@ -125,12 +125,12 @@ namespace FFTPatcher.TextEditor.Files.PSX
             get { return Enum.GetValues( typeof( SectionType ) ).Length; }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (2) 
+        #region Methods (2)
 
 
-		// Private Methods (2) 
+        // Private Methods (2) 
 
         private void AddSection( SectionType type, IList<string> list )
         {
@@ -143,13 +143,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
             NotifyStringList list = sender as NotifyStringList;
 
-            foreach ( KeyValuePair<IStringSectioned, int> kvp in types[list.Type] )
+            foreach( KeyValuePair<IStringSectioned, int> kvp in types[list.Type] )
             {
                 kvp.Key[kvp.Value, e.Index] = list[e.Index];
             }
         }
 
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

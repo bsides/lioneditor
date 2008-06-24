@@ -27,20 +27,20 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class ATCHELPLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-        #region Static Fields (1)
+		#region Static Fields (1) 
 
         private static Dictionary<string, long> locations;
 
-        #endregion Static Fields
+		#endregion Static Fields 
 
-        #region Fields (2)
+		#region Fields (2) 
 
         private const int fftpackIndex = 41;
         private const string filename = "ATCHELP.LZW";
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (5)
+		#region Properties (5) 
 
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (2)
+		#region Constructors (2) 
 
         private ATCHELPLZW()
         {
@@ -109,7 +109,26 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
         }
 
-        #endregion Constructors
+		#endregion Constructors 
+
+		#region Methods (1) 
+
+
+        /// <summary>
+        /// Gets a list of indices for named sections.
+        /// </summary>
+        public override IList<NamedSection> GetNamedSections()
+        {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobDescriptions, 12 ) );
+            result.Add( new NamedSection( this, SectionType.ItemDescriptions, 13 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityDescriptions, 15 ) );
+            result.Add( new NamedSection( this, SectionType.SkillsetDescriptions, 19 ) );
+            return result;
+        }
+
+
+		#endregion Methods 
 
     }
 }

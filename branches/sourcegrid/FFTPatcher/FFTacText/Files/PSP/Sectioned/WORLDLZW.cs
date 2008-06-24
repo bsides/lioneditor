@@ -27,38 +27,21 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class WORLDLZW : BasePSPSectionedFile, IFFTPackFile
     {
 
-		#region Fields (3) 
+		#region Static Fields (1) 
+
+        private static Dictionary<string, long> locations;
+
+		#endregion Static Fields 
+
+		#region Fields (2) 
 
         private const int fftpackIndex = 44;
         private const string filename = "WORLD.LZW";
-        private static Dictionary<string, long> locations;
 
 		#endregion Fields 
 
-		#region Constructors (2) 
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WORLDLZW"/> class.
-        /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public WORLDLZW( IList<byte> bytes )
-            : base( bytes )
-        {
-        }
-
-        private WORLDLZW()
-        {
-        }
-
-		#endregion Constructors 
-
 		#region Properties (5) 
 
-        /// <summary>
-        /// Gets the filename.
-        /// </summary>
-        /// <value></value>
-        public override string Filename { get { return filename; } }
 
         /// <summary>
         /// Gets the index of this file in fftpack.bin
@@ -67,6 +50,20 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
             get { return fftpackIndex; }
         }
+
+
+
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections { get { return 32; } }
+
+        /// <summary>
+        /// Gets the filename.
+        /// </summary>
+        /// <value></value>
+        public override string Filename { get { return filename; } }
 
         /// <summary>
         /// Gets the filenames and locations for this file.
@@ -95,13 +92,44 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x14000; }
         }
 
-        /// <summary>
-        /// Gets the number of sections.
-        /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 32; } }
 
 		#endregion Properties 
+
+		#region Constructors (2) 
+
+        private WORLDLZW()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WORLDLZW"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        public WORLDLZW( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Methods (1) 
+
+
+        /// <summary>
+        /// Gets a list of indices for named sections.
+        /// </summary>
+        public override IList<NamedSection> GetNamedSections()
+        {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobNames, 6 ) );
+            result.Add( new NamedSection( this, SectionType.ItemNames, 7 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityNames, 14 ) );
+            result.Add( new NamedSection( this, SectionType.SkillsetNames, 22 ) );
+            return result;
+        }
+
+
+		#endregion Methods 
 
     }
 }

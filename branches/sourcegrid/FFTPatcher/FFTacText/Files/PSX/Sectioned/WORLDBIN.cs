@@ -124,7 +124,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
             {
                 if( entryNames == null )
                 {
-                    entryNames = Files.EntryNames.GetEntryNames( GetType() );
+                    entryNames = TextEditor.EntryNames.GetEntryNames( GetType() );
                 }
                 return entryNames;
             }
@@ -191,7 +191,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
             {
                 if( sectionNames == null )
                 {
-                    sectionNames = Files.EntryNames.GetSectionNames( GetType() );
+                    sectionNames = TextEditor.EntryNames.GetSectionNames( GetType() );
                 }
                 return sectionNames;
             }

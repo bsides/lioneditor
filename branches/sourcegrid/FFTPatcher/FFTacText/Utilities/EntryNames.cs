@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml;
 
-namespace FFTPatcher.TextEditor.Files
+namespace FFTPatcher.TextEditor
 {
     internal static class EntryNames
     {

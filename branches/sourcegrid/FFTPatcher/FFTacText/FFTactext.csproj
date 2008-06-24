@@ -90,6 +90,7 @@
     <Compile Include="Files\PSP\AbstractBootBinFile.cs" />
     <Compile Include="Files\PSP\BasePSPCompressedFile.cs" />
     <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
+    <Compile Include="Files\PSP\QuickEdit.cs" />
     <Compile Include="Files\PSP\Sectioned\BOOT28E5EC.cs" />
     <Compile Include="Files\PSP\IBootBin.cs" />
     <Compile Include="Files\PSP\IFFTPackFile.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
     <Compile Include="Files\PSX\QuickEdit.cs" />
     <Compile Include="Files\PSX\Sectioned\Compressed\BUNITOUT.cs" />
-    <Compile Include="Files\EntryNames.cs" />
+    <Compile Include="Utilities\EntryNames.cs" />
     <Compile Include="Files\PSX\Sectioned\Compressed\EQUIPOUT.cs" />
     <Compile Include="Files\PSX\Sectioned\Compressed\HELPLZW.cs" />
     <Compile Include="Files\PSX\Sectioned\Compressed\HELPMENUOUT.cs" />
@@ -110,7 +111,8 @@
     <Compile Include="Files\PSX\Sectioned\WORLDBIN.cs" />
     <Compile Include="Files\PSX\SPELLMES.cs" />
     <Compile Include="Files\SavingFileEventArgs.cs" />
-    <Compile Include="Files\SectionType.cs" />
+    <Compile Include="Utilities\NotifyStringList.cs" />
+    <Compile Include="Utilities\SectionType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

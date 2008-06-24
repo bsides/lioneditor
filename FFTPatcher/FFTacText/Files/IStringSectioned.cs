@@ -80,5 +80,79 @@ namespace FFTPatcher.TextEditor.Files
         /// <param name="entry">The specific entry whose length is needed.</param>
         /// <returns>The length of the entry, in bytes.</returns>
         int GetEntryLength( int section, int entry );
+
+        /// <summary>
+        /// Gets a list of indices for named sections.
+        /// </summary>
+        IList<NamedSection> GetNamedSections();
     }
+
+    /// <summary>
+    /// A datatype representing a named section in a <see cref="IStringSectioned"/> file.
+    /// </summary>
+    public class NamedSection
+    {
+
+		#region Constructors (2) 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NamedSection"/> class.
+        /// </summary>
+        /// <param name="owner">The owner of this named section.</param>
+        /// <param name="type">The type of section this is.</param>
+        /// <param name="index">The index of this section in <paramref name="owner"/>.</param>
+        /// <param name="representative">If this instance is a representative sample of <paramref name="type"/></param>
+        internal NamedSection( IStringSectioned owner, SectionType type, int index, bool representative, int sampleLength )
+        {
+            Owner = owner;
+            SectionType = type;
+            SectionIndex = index;
+            IsRepresentativeSample = representative;
+            SampleLength = sampleLength;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NamedSection"/> class.
+        /// </summary>
+        /// <param name="owner">The owner of this named section.</param>
+        /// <param name="type">The type of section this is.</param>
+        /// <param name="index">The index of this section in <paramref name="owner"/>.</param>
+        internal NamedSection( IStringSectioned owner, SectionType type, int index )
+            : this( owner, type, index, false, -1 )
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (5) 
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is a representative sample of <see cref="SectionType"/>.
+        /// </summary>
+        public bool IsRepresentativeSample { get; private set; }
+
+        /// <summary>
+        /// Gets the owner of this named section.
+        /// </summary>
+        public IStringSectioned Owner { get; private set; }
+
+        /// <summary>
+        /// Gets the number of elements in this named section to use as the sample set.
+        /// </summary>
+        public int SampleLength { get; private set; }
+
+        /// <summary>
+        /// Gets the index of this section in <see cref="Owner"/>.
+        /// </summary>
+        public int SectionIndex { get; private set; }
+
+        /// <summary>
+        /// Gets what type of section this is.
+        /// </summary>
+        public SectionType SectionType { get; private set; }
+
+		#endregion Properties 
+
+    }
+
 }

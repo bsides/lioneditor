@@ -59,6 +59,8 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public const int CurrentVersion = 2;
 
+        private IQuickEdit quickEdit;
+
         #endregion Fields
 
         #region Properties (4)
@@ -84,6 +86,13 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public IList<IStringSectioned> SectionedFiles { get; private set; }
 
+        /// <summary>
+        /// Gets the quick edit structure.
+        /// </summary>
+        public IQuickEdit QuickEdit 
+        {
+            get { return QuickEditFactory.GetQuickEdit( this ); }
+        }
 
         #endregion Properties
 

@@ -27,26 +27,31 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class SAMPLELZW : BasePSXSectionedFile
     {
 
-        #region Static Fields (1)
-
-        private static Dictionary<string, long> locations;
-
-        #endregion Static Fields
-
-        #region Fields (1)
+		#region Fields (2) 
 
         private const string filename = "SAMPLE.LZW";
+        private static Dictionary<string, long> locations;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (4)
-
+		#region Constructors (2) 
 
         /// <summary>
-        /// Gets the number of sections.
+        /// Initializes a new instance of the <see cref="SAMPLELZW"/> class.
         /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 24; } }
+        /// <param name="bytes">The bytes.</param>
+        public SAMPLELZW( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
+
+        private SAMPLELZW()
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (4) 
 
         /// <summary>
         /// Gets the filename.
@@ -80,25 +85,34 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public override int MaxLength { get { return 0x4B88; } }
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections { get { return 24; } }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (2)
+		#region Methods (1) 
 
-        private SAMPLELZW()
-        {
-        }
+
+		// Public Methods (1) 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SAMPLELZW"/> class.
+        /// Gets a list of indices for named sections.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public SAMPLELZW( IList<byte> bytes )
-            : base( bytes )
+        public override IList<NamedSection> GetNamedSections()
         {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobNames, 6 ) );
+            result.Add( new NamedSection( this, SectionType.ItemNames, 7 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityNames, 14 ) );
+            result.Add( new NamedSection( this, SectionType.SkillsetNames, 22, true, 189 ) );
+            return result;
         }
 
-        #endregion Constructors
+
+		#endregion Methods 
 
     }
 }

@@ -22,93 +22,35 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
-    public class QuickEdit : BasePSXSectionedFile
+    /// <summary>
+    /// A special StringSectioned that edits multiple sections in multiple other files at the same time.
+    /// </summary>
+    public class QuickEdit : BasePSXSectionedFile, IQuickEdit
     {
 
 		#region Fields (13) 
 
-        private IList<IList<string>> abilityDescriptions = new List<IList<string>>();
-        private IList<IList<string>> abilityNames = new List<IList<string>>();
-        private IList<IList<string>> abilityQuotes = new List<IList<string>>();
+        private Dictionary<IStringSectioned, int> abilityDescriptions = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, int> abilityNames = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, int> abilityQuotes = new Dictionary<IStringSectioned, int>();
         private const string filename = "Quick Edit";
-        private IList<IList<string>> itemDescriptions = new List<IList<string>>();
-        private IList<IList<string>> itemNames = new List<IList<string>>();
-        private IList<IList<string>> jobDescriptions = new List<IList<string>>();
-        private IList<IList<string>> jobNames = new List<IList<string>>();
-        private IList<IList<string>> jobRequirements = new List<IList<string>>();
+        private Dictionary<IStringSectioned, int> itemDescriptions = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, int> itemNames = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, int> jobDescriptions = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, int> jobNames = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, int> jobRequirements = new Dictionary<IStringSectioned, int>();
         private static Dictionary<string, long> locations;
-        private IList<IList<string>> skillsetDescriptions = new List<IList<string>>();
-        private IList<IList<string>> skillsetNames = new List<IList<string>>();
-        private Dictionary<SectionType, IList<IList<string>>> types = 
-            new Dictionary<SectionType, IList<IList<string>>>();
+        private Dictionary<IStringSectioned, int> skillsetDescriptions = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, int> skillsetNames = new Dictionary<IStringSectioned, int>();
+        private Dictionary<SectionType, Dictionary<IStringSectioned, int>> types =
+            new Dictionary<SectionType, Dictionary<IStringSectioned, int>>();
 
 		#endregion Fields 
 
-		#region Enums (1) 
-
-        private enum SectionType
-        {
-            AbilityNames = 0,
-            AbilityDescriptions = 1,
-            AbilityQuotes = 2,
-            ItemNames = 3,
-            ItemDescriptions = 4,
-            JobNames = 5,
-            JobDescriptions = 6,
-            JobRequirements = 7,
-            SkillsetNames = 8,
-            SkillsetDescriptions = 9
-        }
-
-		#endregion Enums 
-
 		#region Constructors (1) 
 
-        public QuickEdit(FFTText text)
+        public QuickEdit( FFTText text )
         {
-            ProcessSPELLMES(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is SPELLMES; }) as SPELLMES);
-            ProcessJOBSTTSOUT(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is JOBSTTSOUT; }) as JOBSTTSOUT);
-            ProcessJOINLZW(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is JOINLZW; }) as JOINLZW);
-            ProcessSAMPLELZW(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is SAMPLELZW; }) as SAMPLELZW);
-            ProcessBUNITOUT(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is BUNITOUT; }) as BUNITOUT);
-            ProcessHELPLZW(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is HELPLZW; }) as HELPLZW);
-            ProcessHELPMENUOUT(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is HELPMENUOUT; }) as HELPMENUOUT);
-            ProcessATCHELPLZW(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is ATCHELPLZW; }) as ATCHELPLZW);
-            ProcessATTACKOUT(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is ATTACKOUT; }) as ATTACKOUT);
-            ProcessEQUIPOUT(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is EQUIPOUT; }) as EQUIPOUT);
-            ProcessWLDHELPLZW(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is WLDHELPLZW; }) as WLDHELPLZW);
-            ProcessWORLDBIN(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is WORLDBIN; }) as WORLDBIN);
-            ProcessWORLDLZW(
-                text.SectionedFiles.Find(delegate(IStringSectioned file) { return file is WORLDLZW; }) as WORLDLZW);
-
-            Sections = new List<IList<string>>(10);
-
-            AddSection(SectionType.AbilityNames, abilityNames[1].Sub(0, 511));
-            AddSection(SectionType.AbilityDescriptions, abilityDescriptions[0].Sub(0, 511));
-            AddSection(SectionType.AbilityQuotes, abilityQuotes[0].Sub(0, 511));
-
-            AddSection(SectionType.ItemNames, itemNames[0].Sub(0, 255));
-            AddSection(SectionType.ItemDescriptions, itemDescriptions[0].Sub(0, 255));
-
-            AddSection(SectionType.JobNames, jobNames[0].Sub(0, 154));
-            AddSection(SectionType.JobDescriptions, jobDescriptions[0].Sub(0, 159));
-            AddSection(SectionType.JobRequirements, jobRequirements[0].Sub(0, 93));
-
-            AddSection(SectionType.SkillsetNames, skillsetNames[0].Sub(0, 188));
-            AddSection(SectionType.SkillsetDescriptions, skillsetDescriptions[0].Sub(0, 187));
-
             types[SectionType.AbilityDescriptions] = abilityDescriptions;
             types[SectionType.AbilityNames] = abilityNames;
             types[SectionType.AbilityQuotes] = abilityQuotes;
@@ -119,6 +61,23 @@ namespace FFTPatcher.TextEditor.Files.PSX
             types[SectionType.JobRequirements] = jobRequirements;
             types[SectionType.SkillsetDescriptions] = skillsetDescriptions;
             types[SectionType.SkillsetNames] = skillsetNames;
+
+            Sections = new IList<string>[NumberOfSections];
+
+            foreach ( IStringSectioned sectioned in text.SectionedFiles )
+            {
+                var namedSections = sectioned.GetNamedSections();
+                foreach ( NamedSection namedSection in namedSections )
+                {
+                    types[namedSection.SectionType].Add( namedSection.Owner, namedSection.SectionIndex );
+                    if ( namedSection.IsRepresentativeSample )
+                    {
+                        AddSection( 
+                            namedSection.SectionType, 
+                            namedSection.Owner.Sections[(int)namedSection.SectionIndex].Sub( 0, namedSection.SampleLength - 1 ) );
+                    }
+                }
+            }
         }
 
 		#endregion Constructors 
@@ -138,9 +97,9 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// </summary>
         public override IDictionary<string, long> Locations
         {
-            get 
+            get
             {
-                if (locations == null)
+                if ( locations == null )
                 {
                     locations = new Dictionary<string, long>();
                 }
@@ -163,120 +122,30 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value>The number of sections.</value>
         protected override int NumberOfSections
         {
-            get { return 10; }
+            get { return Enum.GetValues( typeof( SectionType ) ).Length; }
         }
 
 		#endregion Properties 
 
-		#region Methods (18) 
+		#region Methods (2) 
 
 
-		// Private Methods (18) 
+		// Private Methods (2) 
 
-        private void AddSection(SectionType type, IList<string> list)
+        private void AddSection( SectionType type, IList<string> list )
         {
-            MyList theList = new MyList(type, list);
-            theList.ListMemberChanged += new EventHandler<MyList.ListMemberChangedEventArgs>(theList_ListMemberChanged);
-            Sections.Add(theList);
+            NotifyList theList = new NotifyList( type, list );
+            theList.ListMemberChanged += theList_ListMemberChanged;
+            Sections[(int)type] = theList;
         }
 
-        private void ProcessATCHELPLZW(ATCHELPLZW atc)
+        private void theList_ListMemberChanged( object sender, NotifyList.ListMemberChangedEventArgs e )
         {
-            ProcessBUNITOUTorHELPLZWorHELPMENUOUTorATCHELPLZWorWLDHELPLZW(atc);
-        }
+            NotifyList list = sender as NotifyList;
 
-        private void ProcessATTACKOUT(ATTACKOUT attack)
-        {
-            jobNames.Add(attack.Sections[2]);
-        }
-
-        private void ProcessBUNITOUT(BUNITOUT bunit)
-        {
-            ProcessBUNITOUTorHELPLZWorHELPMENUOUTorATCHELPLZWorWLDHELPLZW(bunit);
-        }
-
-        private void ProcessBUNITOUTorHELPLZWorHELPMENUOUTorATCHELPLZWorWLDHELPLZW(IStringSectioned file)
-        {
-            jobDescriptions.Add(file.Sections[12]);
-            itemDescriptions.Add(file.Sections[13]);
-            abilityDescriptions.Add(file.Sections[15]);
-            skillsetDescriptions.Add(file.Sections[19]);
-        }
-
-        private void ProcessEQUIPOUT(EQUIPOUT equip)
-        {
-            itemDescriptions.Add(equip.Sections[13]);
-        }
-
-        private void ProcessHELPLZW(HELPLZW help)
-        {
-            ProcessBUNITOUTorHELPLZWorHELPMENUOUTorATCHELPLZWorWLDHELPLZW(help);
-        }
-
-        private void ProcessHELPMENUOUT(HELPMENUOUT help)
-        {
-            ProcessBUNITOUTorHELPLZWorHELPMENUOUTorATCHELPLZWorWLDHELPLZW(help);
-        }
-
-        private void ProcessHELPMENUOUT(ATCHELPLZW help)
-        {
-            ProcessBUNITOUTorHELPLZWorHELPMENUOUTorATCHELPLZWorWLDHELPLZW(help);
-        }
-
-        private void ProcessJOBSTTSOUT(JOBSTTSOUT jobstts)
-        {
-            jobDescriptions.Add(jobstts.Sections[12]);
-            abilityDescriptions.Add(jobstts.Sections[15]);
-        }
-
-        private void ProcessJOINLZW(JOINLZW join)
-        {
-            jobNames.Add(join.Sections[4]);
-        }
-
-        private void ProcessSAMPLELZW(SAMPLELZW sample)
-        {
-            ProcessWORLDLZWorSAMPLELZW(sample);
-        }
-
-        private void ProcessSPELLMES(SPELLMES spellmes)
-        {
-            abilityQuotes.Add(spellmes.Sections[0]);
-        }
-
-        private void ProcessWLDHELPLZW(WLDHELPLZW help)
-        {
-            ProcessBUNITOUTorHELPLZWorHELPMENUOUTorATCHELPLZWorWLDHELPLZW(help);
-        }
-
-        private void ProcessWORLDBIN(WORLDBIN world)
-        {
-            skillsetNames.Add(world.Sections[0]);
-            jobNames.Add(world.Sections[1]);
-            abilityNames.Add(world.Sections[2]);
-            jobRequirements.Add(world.Sections[5]);
-        }
-
-        private void ProcessWORLDLZW(WORLDLZW worldLzw)
-        {
-            ProcessWORLDLZWorSAMPLELZW(worldLzw);
-        }
-
-        private void ProcessWORLDLZWorSAMPLELZW(IStringSectioned file)
-        {
-            jobNames.Add(file.Sections[6]);
-            itemNames.Add(file.Sections[7]);
-            abilityNames.Add(file.Sections[14]);
-            skillsetNames.Add(file.Sections[22]);
-        }
-
-        private void theList_ListMemberChanged(object sender, MyList.ListMemberChangedEventArgs e)
-        {
-            MyList list = sender as MyList;
-
-            foreach (IList<string> siblingList in types[list.Type])
+            foreach ( KeyValuePair<IStringSectioned, int> kvp in types[list.Type] )
             {
-                siblingList[e.Index] = list[e.Index];
+                kvp.Key[kvp.Value, e.Index] = list[e.Index];
             }
         }
 
@@ -286,123 +155,64 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Nested Classes (1) 
 
 
-        private class MyList : IList<string>
+        private class NotifyList : IList<string>
         {
 
-		    #region Fields (1) 
+		
+            #region Fields (1) 
 
             private List<string> innerList;
 
 		    #endregion Fields 
+            		
+            #region Constructors (3) 
 
-		    #region Constructors (3) 
-
-            public MyList(SectionType type, IEnumerable<string> collection)
+            public NotifyList( SectionType type, IEnumerable<string> collection )
             {
                 Type = type;
-                innerList = new List<string>(collection);
+                innerList = new List<string>( collection );
             }
 
-            public MyList(SectionType type, int capacity)
+            public NotifyList( SectionType type, int capacity )
             {
                 Type = type;
-                innerList = new List<string>(capacity);
+                innerList = new List<string>( capacity );
             }
 
-            public MyList(SectionType type)
+            public NotifyList( SectionType type )
             {
                 Type = type;
                 innerList = new List<string>();
             }
 
 		    #endregion Constructors 
+            		
+            #region Properties (4) 
 
-		    #region Properties (1) 
-
-            public SectionType Type { get; private set; }
-
-		    #endregion Properties 
-
-
-            #region IList<string> Members
-
-            public int IndexOf(string item)
-            {
-                return innerList.IndexOf(item);
-            }
-
-            public void Insert(int index, string item)
-            {
-                innerList.Insert(index, item);
-            }
-
-            public void RemoveAt(int index)
-            {
-                innerList.RemoveAt(index);
-            }
-
-            #endregion
-
-            #region ICollection<string> Members
-
-            public void Add(string item)
-            {
-                innerList.Add(item);
-            }
-
-            public void Clear()
-            {
-                innerList.Clear();
-            }
-
-            public bool Contains(string item)
-            {
-                return innerList.Contains(item);
-            }
-
-            public void CopyTo(string[] array, int arrayIndex)
-            {
-                innerList.CopyTo(array, arrayIndex);
-            }
-
+            /// <summary>
+            /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// </summary>
+            /// <value></value>
+            /// <returns>The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</returns>
             public int Count
             {
                 get { return innerList.Count; }
             }
 
+            /// <summary>
+            /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            /// </summary>
+            /// <value></value>
+            /// <returns>true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.</returns>
             public bool IsReadOnly
             {
-                get { return (innerList as IList<string>).IsReadOnly; }
+                get { return ( innerList as IList<string> ).IsReadOnly; }
             }
 
-            public bool Remove(string item)
-            {
-                return innerList.Remove(item);
-            }
-
-            #endregion
-
-            #region IEnumerable<string> Members
-
-            public IEnumerator<string> GetEnumerator()
-            {
-                return innerList.GetEnumerator();
-            }
-
-            #endregion
-
-            #region IEnumerable Members
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return innerList.GetEnumerator();
-            }
-
-            #endregion
-
-            #region IList<string> Members
-
-
+            /// <summary>
+            /// Gets or sets the <see cref="System.String"/> at the specified index.
+            /// </summary>
+            /// <value></value>
             public string this[int index]
             {
                 get
@@ -412,30 +222,200 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 set
                 {
                     innerList[index] = value;
-                    OnListMemberChanged(index);
+                    OnListMemberChanged( index );
                 }
             }
 
-            private void OnListMemberChanged(int index)
-            {
-                if (ListMemberChanged != null)
-                {
-                    ListMemberChanged(this, new ListMemberChangedEventArgs(index));
-                }
-            }
+            public SectionType Type { get; private set; }
 
+		    #endregion Properties 
+            		
+            #region Delegates and Events (1) 
+
+
+		    // Events (1) 
+
+            /// <summary>
+            /// Occurs when a list member changs.
+            /// </summary>
             public event EventHandler<ListMemberChangedEventArgs> ListMemberChanged;
 
+
+		    #endregion Delegates and Events 
+            	
+            #region Methods (11) 
+
+
+    		// Public Methods (9) 
+
+            /// <summary>
+            /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// </summary>
+            /// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
+            public void Add( string item )
+            {
+                innerList.Add( item );
+            }
+
+            /// <summary>
+            /// Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// </summary>
+            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only. </exception>
+            public void Clear()
+            {
+                innerList.Clear();
+            }
+
+            /// <summary>
+            /// Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            /// </summary>
+            /// <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            /// <returns>
+            /// true if <paramref name="item"/> is found in the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false.
+            /// </returns>
+            public bool Contains( string item )
+            {
+                return innerList.Contains( item );
+            }
+
+            /// <summary>
+            /// Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
+            /// </summary>
+            /// <param name="array">The one-dimensional <see cref="T:System.Array"/> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1"/>. The <see cref="T:System.Array"/> must have zero-based indexing.</param>
+            /// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
+            /// <exception cref="T:System.ArgumentNullException">
+            /// 	<paramref name="array"/> is null.</exception>
+            /// <exception cref="T:System.ArgumentOutOfRangeException">
+            /// 	<paramref name="arrayIndex"/> is less than 0.</exception>
+            /// <exception cref="T:System.ArgumentException">
+            /// 	<paramref name="array"/> is multidimensional.-or-<paramref name="arrayIndex"/> is equal to or greater than the length of <paramref name="array"/>.-or-The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1"/> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination <paramref name="array"/>.-or-Type <paramref name="T"/> cannot be cast automatically to the type of the destination <paramref name="array"/>.</exception>
+            public void CopyTo( string[] array, int arrayIndex )
+            {
+                innerList.CopyTo( array, arrayIndex );
+            }
+
+            /// <summary>
+            /// Returns an enumerator that iterates through the collection.
+            /// </summary>
+            /// <returns>
+            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            /// </returns>
+            public IEnumerator<string> GetEnumerator()
+            {
+                return innerList.GetEnumerator();
+            }
+
+            /// <summary>
+            /// Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
+            /// </summary>
+            /// <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.IList`1"/>.</param>
+            /// <returns>
+            /// The index of <paramref name="item"/> if found in the list; otherwise, -1.
+            /// </returns>
+            public int IndexOf( string item )
+            {
+                return innerList.IndexOf( item );
+            }
+
+            /// <summary>
+            /// Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
+            /// </summary>
+            /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
+            /// <param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1"/>.</param>
+            /// <exception cref="T:System.ArgumentOutOfRangeException">
+            /// 	<paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.</exception>
+            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.IList`1"/> is read-only.</exception>
+            public void Insert( int index, string item )
+            {
+                innerList.Insert( index, item );
+            }
+
+            /// <summary>
+            /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// </summary>
+            /// <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            /// <returns>
+            /// true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// </returns>
+            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
+            public bool Remove( string item )
+            {
+                return innerList.Remove( item );
+            }
+
+            /// <summary>
+            /// Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
+            /// </summary>
+            /// <param name="index">The zero-based index of the item to remove.</param>
+            /// <exception cref="T:System.ArgumentOutOfRangeException">
+            /// 	<paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.</exception>
+            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.IList`1"/> is read-only.</exception>
+            public void RemoveAt( int index )
+            {
+                innerList.RemoveAt( index );
+            }
+
+
+
+		    // Private Methods (2) 
+
+            /// <summary>
+            /// Called when a list member changes.
+            /// </summary>
+            /// <param name="index">The index.</param>
+            private void OnListMemberChanged( int index )
+            {
+                if ( ListMemberChanged != null )
+                {
+                    ListMemberChanged( this, new ListMemberChangedEventArgs( index ) );
+                }
+            }
+
+            /// <summary>
+            /// Returns an enumerator that iterates through a collection.
+            /// </summary>
+            /// <returns>
+            /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            /// </returns>
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return innerList.GetEnumerator();
+            }
+
+
+		    #endregion Methods 
+            		
+            #region Nested Classes (1) 
+            
             public class ListMemberChangedEventArgs : EventArgs
             {
-                public int Index { get; private set; }
-                public ListMemberChangedEventArgs(int index)
+
+		        #region Constructors (1) 
+
+                /// <summary>
+                /// Initializes a new instance of the <see cref="ListMemberChangedEventArgs"/> class.
+                /// </summary>
+                /// <param name="index">The index.</param>
+                internal ListMemberChangedEventArgs( int index )
                 {
                     Index = index;
                 }
-            }
 
-            #endregion
+		        #endregion Constructors 
+
+		        #region Properties (1) 
+
+                /// <summary>
+                /// Gets the index of the item that changed.
+                /// </summary>
+                public int Index { get; private set; }
+
+		        #endregion Properties 
+                
+            }
+		    #endregion Nested Classes 
+            
         }
 
 		#endregion Nested Classes 

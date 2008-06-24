@@ -458,6 +458,13 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
+        /// <summary>
+        /// Gets a list of indices for named sections.
+        /// </summary>
+        public virtual IList<NamedSection> GetNamedSections()
+        {
+            return new List<NamedSection>();
+        }
 
         #endregion Methods
 

@@ -27,26 +27,31 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class WORLDLZW : BasePSXSectionedFile
     {
 
-        #region Static Fields (1)
-
-        private static Dictionary<string, long> locations;
-
-        #endregion Static Fields
-
-        #region Fields (1)
+		#region Fields (2) 
 
         private const string filename = "WORLD.LZW";
+        private static Dictionary<string, long> locations;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (4)
-
+		#region Constructors (2) 
 
         /// <summary>
-        /// Gets the number of sections.
+        /// Initializes a new instance of the <see cref="WORLDLZW"/> class.
         /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 32; } }
+        /// <param name="bytes">The bytes.</param>
+        public WORLDLZW( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
+
+        private WORLDLZW()
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (4) 
 
         /// <summary>
         /// Gets the filename.
@@ -78,25 +83,34 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public override int MaxLength { get { return 0xE2DD; } }
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections { get { return 32; } }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (2)
+		#region Methods (1) 
 
-        private WORLDLZW()
-        {
-        }
+
+		// Public Methods (1) 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WORLDLZW"/> class.
+        /// Gets a list of indices for named sections.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public WORLDLZW( IList<byte> bytes )
-            : base( bytes )
+        public override IList<NamedSection> GetNamedSections()
         {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobNames, 6 ) );
+            result.Add( new NamedSection( this, SectionType.ItemNames, 7, true, 256 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityNames, 14 ) );
+            result.Add( new NamedSection( this, SectionType.SkillsetNames, 22 ) );
+            return result;
         }
 
-        #endregion Constructors
+
+		#endregion Methods 
 
     }
 }

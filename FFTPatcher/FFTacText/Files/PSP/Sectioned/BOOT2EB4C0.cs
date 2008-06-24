@@ -27,19 +27,19 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class BOOT2EB4C0 : AbstractBootBinFile
     {
 
-        #region Static Fields (1)
+		#region Static Fields (1) 
 
         private static Dictionary<string, long> locations;
 
-        #endregion Static Fields
+		#endregion Static Fields 
 
-        #region Fields (1)
+		#region Fields (1) 
 
         private const string filename = "BOOT.BIN[0x2EB4C0]";
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (4)
+		#region Properties (4) 
 
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (2)
+		#region Constructors (2) 
 
         private BOOT2EB4C0()
         {
@@ -101,7 +101,23 @@ namespace FFTPatcher.TextEditor.Files.PSP
         {
         }
 
-        #endregion Constructors
+		#endregion Constructors 
+
+		#region Methods (1) 
+
+
+        /// <summary>
+        /// Gets a list of indices for named sections.
+        /// </summary>
+        public override IList<NamedSection> GetNamedSections()
+        {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobNames, 2 ) );
+            return result;
+        }
+
+
+		#endregion Methods 
 
     }
 }

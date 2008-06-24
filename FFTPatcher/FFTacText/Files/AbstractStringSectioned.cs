@@ -105,7 +105,7 @@ namespace FFTPatcher.TextEditor.Files
             {
                 if( entryNames == null )
                 {
-                    entryNames = Files.EntryNames.GetEntryNames( GetType() );
+                    entryNames = TextEditor.EntryNames.GetEntryNames( GetType() );
                 }
 
                 return entryNames;
@@ -121,7 +121,7 @@ namespace FFTPatcher.TextEditor.Files
             {
                 if( sectionNames == null )
                 {
-                    sectionNames = Files.EntryNames.GetSectionNames( GetType() );
+                    sectionNames = TextEditor.EntryNames.GetSectionNames( GetType() );
                 }
                 return sectionNames;
             }

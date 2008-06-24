@@ -17,7 +17,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace FFTPatcher.TextEditor.Files
+namespace FFTPatcher.TextEditor
 {
     public enum SectionType
     {

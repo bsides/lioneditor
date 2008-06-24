@@ -31,18 +31,57 @@ namespace FFTPatcher.TextEditor
     public partial class MainForm : Form
     {
 
-        #region Fields (3)
+		#region Fields (4) 
 
         private readonly MenuItem[] defaultPspMenuItems;
         private readonly MenuItem[] defaultPsxMenuItems;
-
         private FFTText file;
         private MenuItem[] menuItems;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (1)
+		#region Constructors (1) 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
+        public MainForm()
+        {
+#if DONGS
+            FillPSPFiles();
+            FillPSXFiles();
+#endif
+            InitializeComponent();
+
+            stringSectionedEditor.Visible = false;
+            compressedStringSectionedEditor.Visible = false;
+            partitionEditor.Visible = false;
+            stringSectionedEditor.SavingFile += editor_SavingFile;
+            compressedStringSectionedEditor.SavingFile += editor_SavingFile;
+            compressedStringSectionedEditor.CompressionStarted += compressedStringSectionedEditor_CompressionStarted;
+            compressedStringSectionedEditor.CompressionFinished += compressedStringSectionedEditor_CompressionFinished;
+            partitionEditor.SavingFile += partitionEditor_SavingFile;
+
+            newPspMenuItem.Click += newPspMenuItem_Click;
+            newPsxMenuItem.Click += newPsxMenuItem_Click;
+            saveMenuItem.Click += saveMenuItem_Click;
+            openMenuItem.Click += openMenuItem_Click;
+            exitMenuItem.Click += exitMenuItem_Click;
+            aboutMenuItem.Click += aboutMenuItem_Click;
+            allowedSymbolsMenuItem.Click += allowedSymbolsMenuItem_Click;
+            defaultPspMenuItems = new MenuItem[2] { 
+                new MenuItem( "-" ), 
+                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
+            defaultPsxMenuItems = new MenuItem[4] {
+                new MenuItem( "-" ),
+                new MenuItem( "Quick Edit", quickEditMenuItem_Click ),
+                new MenuItem( "-" ),
+                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
+        }
+
+		#endregion Constructors 
+
+		#region Properties (1) 
 
         /// <summary>
         /// Gets or sets the file being edited.
@@ -91,48 +130,12 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+		#endregion Properties 
 
-        #endregion Properties
+		#region Methods (20) 
 
-        #region Constructors (1)
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainForm"/> class.
-        /// </summary>
-        public MainForm()
-        {
-#if DONGS
-            FillPSPFiles();
-            FillPSXFiles();
-#endif
-            InitializeComponent();
-
-            stringSectionedEditor.Visible = false;
-            compressedStringSectionedEditor.Visible = false;
-            partitionEditor.Visible = false;
-            stringSectionedEditor.SavingFile += editor_SavingFile;
-            compressedStringSectionedEditor.SavingFile += editor_SavingFile;
-            partitionEditor.SavingFile += partitionEditor_SavingFile;
-
-            newPspMenuItem.Click += newPspMenuItem_Click;
-            newPsxMenuItem.Click += newPsxMenuItem_Click;
-            saveMenuItem.Click += saveMenuItem_Click;
-            openMenuItem.Click += openMenuItem_Click;
-            exitMenuItem.Click += exitMenuItem_Click;
-            aboutMenuItem.Click += aboutMenuItem_Click;
-            allowedSymbolsMenuItem.Click += allowedSymbolsMenuItem_Click;
-            defaultPspMenuItems = new MenuItem[2] { 
-                new MenuItem( "-" ), 
-                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
-            defaultPsxMenuItems = new MenuItem[2] {
-                new MenuItem("-"),
-                new MenuItem("Patch ISO...", patchMenuItem_Click ) };
-        }
-
-        #endregion Constructors
-
-        #region Methods (22)
-
+		// Private Methods (20) 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
@@ -176,6 +179,27 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        private void compressedStringSectionedEditor_CompressionFinished( object sender, EventArgs e )
+        {
+            Cursor = Cursors.Default;
+
+            compressedStringSectionedEditor.Enabled = true;
+            foreach ( MenuItem item in mainMenu.MenuItems )
+            {
+                item.Enabled = true;
+            }
+        }
+
+        private void compressedStringSectionedEditor_CompressionStarted( object sender, EventArgs e )
+        {
+            Cursor = Cursors.WaitCursor;
+            compressedStringSectionedEditor.Enabled = false;
+            foreach ( MenuItem item in mainMenu.MenuItems )
+            {
+                item.Enabled = false;
+            }
+        }
+
         private void editor_SavingFile( object sender, SavingFileEventArgs e )
         {
             string name = Path.GetFileName( e.SuggestedFilename );
@@ -191,198 +215,6 @@ namespace FFTPatcher.TextEditor
             Application.Exit();
         }
 
-#if DONGS
-        private void FillFile( IPartitionedFile file, string filename )
-        {
-            string format = "{0}/{1}/{2:X}";
-            for( int section = 0; section < file.Sections.Count; section++ )
-            {
-                for( int i = 0; i < file.Sections[section].Entries.Count; i++ )
-                {
-                    string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section].Entries[i] );
-
-                    string newString = string.Format( format, filename, section + 1, i + 1 );
-                    int sub = 2;
-                    foreach( string divider in layout )
-                    {
-                        newString += divider;
-                        newString += sub.ToString();
-                        sub++;
-                    }
-
-                    if( file.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
-                    {
-                        newString += @"{END}";
-                    }
-                    file.Sections[section].Entries[i] = newString;
-                }
-            }
-        }
-
-        private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
-        {
-            string format = "{0}/{1}/{2:X}";
-            for( int section = 0; section < file.Sections.Count; section++ )
-            {
-                if( !badSections.Contains( section ) )
-                {
-                    for( int i = 0; i < file.Sections[section].Count; i++ )
-                    {
-                        string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section][i] );
-
-                        string newString = string.Format( format, filename, section + 1, i + 1 );
-                        int sub = 2;
-                        foreach( string divider in layout )
-                        {
-                            newString += divider;
-                            newString += sub.ToString();
-                            sub++;
-                        }
-
-                        if( file.Sections[section][i].IndexOf( @"{END}" ) != -1 )
-                        {
-                            newString += @"{END}";
-                        }
-                        file.Sections[section][i] = newString;
-                    }
-                }
-            }
-        }
-
-        private void FillFiles()
-        {
-            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
-
-            FFTText mine = null;
-            using( MemoryStream ms = new MemoryStream( PSXResources.DefaultDocument ) )
-            {
-                mine = xs.Deserialize( ms ) as FFTText;
-            }
-
-
-            foreach( IStringSectioned sectionFile in mine.SectionedFiles )
-            {
-                foreach( KeyValuePair<string, long> kvp in sectionFile.Locations )
-                {
-                    var filename = kvp.Key;
-                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
-                    int dotIndex = realFilename.LastIndexOf( '.' );
-                    if( dotIndex < 0 )
-                        dotIndex = realFilename.Length - 1;
-                    realFilename = realFilename.Substring( 0, dotIndex );
-                    string format = "{0}/{1}/{2:X}";
-                    if( realFilename == "ATTACK" )
-                    {
-                        realFilename = "A";
-                        format = "{0}{1}{2:X}";
-                    }
-                    else if( realFilename == "SMALL" )
-                    {
-                        realFilename = "S";
-                        format = "{0}{1}{2:X}";
-                    }
-                    else if( filename.Contains( "WORLD.LZW" ) )
-                    {
-                        realFilename = "WLD";
-                    }
-                    for( int section = 0; section < sectionFile.Sections.Count; section++ )
-                    {
-                        for( int i = 0; i < sectionFile.Sections[section].Count; i++ )
-                        {
-                            string newString = string.Format( format, realFilename, section, i );
-                            if( sectionFile.Sections[section][i].IndexOf( @"{END}" ) != -1 )
-                            {
-                                newString += @"{END}";
-                            }
-                            sectionFile.Sections[section][i] = newString;
-                        }
-                    }
-                }
-            }
-
-            foreach( IPartitionedFile partitionedFile in mine.PartitionedFiles )
-            {
-                foreach( var kvp in partitionedFile.Locations )
-                {
-                    var filename = kvp.Key;
-                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
-                    int dotIndex = realFilename.LastIndexOf( '.' );
-                    if( dotIndex < 0 )
-                        dotIndex = realFilename.Length - 1;
-                    realFilename = realFilename.Substring( 0, dotIndex );
-                    string format = "{0}/{1}/{2:X}";
-
-                    for( int section = 0; section < partitionedFile.Sections.Count; section++ )
-                    {
-                        for( int i = 0; i < partitionedFile.Sections[section].Entries.Count; i++ )
-                        {
-                            string newString = string.Format( format, realFilename, section, i );
-                            if( partitionedFile.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
-                            {
-                                newString += @"{END}";
-                            }
-                            partitionedFile.Sections[section].Entries[i] = newString;
-                        }
-                    }
-                }
-            }
-
-            File = mine;
-        }
-
-        private void FillPSPFiles()
-        {
-            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
-
-            FFTText mine = null;
-            using( MemoryStream ms = new MemoryStream( PSPResources.DefaultDocument ) )
-            {
-                mine = xs.Deserialize( ms ) as FFTText;
-            }
-
-            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES" );
-            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES" );
-
-            foreach( IStringSectioned sectioned in mine.SectionedFiles )
-            {
-                FillFileExcept(
-                    sectioned,
-                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ),
-                    new int[0] );
-            }
-
-            using( FileStream fs = new FileStream( "Filled.xml", FileMode.Create ) )
-            {
-                xs.Serialize( fs, mine );
-            }
-        }
-
-        private void FillPSXFiles()
-        {
-            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
-            FFTText mine = null;
-            using( MemoryStream ms = new MemoryStream( PSXResources.DefaultDocument ) )
-            {
-                mine = xs.Deserialize( ms ) as FFTText;
-            }
-            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES" );
-            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES" );
-
-            foreach( IStringSectioned sectioned in mine.SectionedFiles )
-            {
-                FillFileExcept(
-                    sectioned,
-                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ),
-                    new int[0] );
-            }
-
-            using( FileStream fs = new FileStream( "FilledPSX.xml", FileMode.Create ) )
-            {
-                xs.Serialize( fs, mine );
-            }
-        }
-#endif
-
         private void LoadFileFromByteArray( byte[] bytes )
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
@@ -396,6 +228,7 @@ namespace FFTPatcher.TextEditor
 
         private void menuItem_Click( object sender, EventArgs e )
         {
+            Cursor = Cursors.WaitCursor;
             UncheckAllMenuItems( menuItems );
             MenuItem thisItem = sender as MenuItem;
             thisItem.Checked = true;
@@ -423,6 +256,7 @@ namespace FFTPatcher.TextEditor
                 compressedStringSectionedEditor.Visible = false;
                 stringSectionedEditor.Visible = false;
             }
+            Cursor = Cursors.Default;
         }
 
         private void newPspMenuItem_Click( object sender, EventArgs e )
@@ -433,7 +267,7 @@ namespace FFTPatcher.TextEditor
         private void newPsxMenuItem_Click( object sender, EventArgs e )
         {
             LoadFileFromByteArray( PSXResources.DefaultDocument );
-            File.SectionedFiles.Add(new FFTPatcher.TextEditor.Files.PSX.QuickEdit(File));
+            //File.SectionedFiles.Add(new FFTPatcher.TextEditor.Files.PSX.QuickEdit(File));
             //using( XmlTextWriter writer = new XmlTextWriter( "ffffff", System.Text.Encoding.UTF8 ) )
             //{
             //    writer.WriteStartDocument();
@@ -454,9 +288,9 @@ namespace FFTPatcher.TextEditor
             ////}
             //////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.EQUIPOUT( FFTPatcher.TextEditor.Properties.PSXResources.EQUIP ) );
             //////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.BUNITOUT( FFTPatcher.TextEditor.Properties.PSXResources.BUNIT ) );
-            var oldFile = File;
-            file = null;
-            File = oldFile;
+            //var oldFile = File;
+            //file = null;
+            //File = oldFile;
         }
 
         private void openMenuItem_Click( object sender, EventArgs e )
@@ -543,6 +377,14 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+        private void quickEditMenuItem_Click( object sender, EventArgs e )
+        {
+            MenuItem mi = sender as MenuItem;
+            mi.Tag = File.QuickEdit;
+            menuItem_Click( sender, e );
+            mi.Tag = null;
+        }
+
         private void RemoveAllDescendants( MenuItem item )
         {
             foreach( MenuItem subitem in item.MenuItems )
@@ -599,7 +441,194 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        #endregion Methods
+		#endregion Methods 
+#if DONGS
+        private void FillFile( IPartitionedFile file, string filename )
+        {
+            string format = "{0}/{1}/{2:X}";
+            for( int section = 0; section < file.Sections.Count; section++ )
+            {
+                for( int i = 0; i < file.Sections[section].Entries.Count; i++ )
+                {
+                    string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section].Entries[i] );
+
+                    string newString = string.Format( format, filename, section + 1, i + 1 );
+                    int sub = 2;
+                    foreach( string divider in layout )
+                    {
+                        newString += divider;
+                        newString += sub.ToString();
+                        sub++;
+                    }
+
+                    if( file.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
+                    {
+                        newString += @"{END}";
+                    }
+                    file.Sections[section].Entries[i] = newString;
+                }
+            }
+        }
+        private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
+        {
+            string format = "{0}/{1}/{2:X}";
+            for( int section = 0; section < file.Sections.Count; section++ )
+            {
+                if( !badSections.Contains( section ) )
+                {
+                    for( int i = 0; i < file.Sections[section].Count; i++ )
+                    {
+                        string[] layout = GetLayoutOfCloseAndNewLines( file.Sections[section][i] );
+
+                        string newString = string.Format( format, filename, section + 1, i + 1 );
+                        int sub = 2;
+                        foreach( string divider in layout )
+                        {
+                            newString += divider;
+                            newString += sub.ToString();
+                            sub++;
+                        }
+
+                        if( file.Sections[section][i].IndexOf( @"{END}" ) != -1 )
+                        {
+                            newString += @"{END}";
+                        }
+                        file.Sections[section][i] = newString;
+                    }
+                }
+            }
+        }
+        private void FillFiles()
+        {
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+
+            FFTText mine = null;
+            using( MemoryStream ms = new MemoryStream( PSXResources.DefaultDocument ) )
+            {
+                mine = xs.Deserialize( ms ) as FFTText;
+            }
+
+
+            foreach( IStringSectioned sectionFile in mine.SectionedFiles )
+            {
+                foreach( KeyValuePair<string, long> kvp in sectionFile.Locations )
+                {
+                    var filename = kvp.Key;
+                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    int dotIndex = realFilename.LastIndexOf( '.' );
+                    if( dotIndex < 0 )
+                        dotIndex = realFilename.Length - 1;
+                    realFilename = realFilename.Substring( 0, dotIndex );
+                    string format = "{0}/{1}/{2:X}";
+                    if( realFilename == "ATTACK" )
+                    {
+                        realFilename = "A";
+                        format = "{0}{1}{2:X}";
+                    }
+                    else if( realFilename == "SMALL" )
+                    {
+                        realFilename = "S";
+                        format = "{0}{1}{2:X}";
+                    }
+                    else if( filename.Contains( "WORLD.LZW" ) )
+                    {
+                        realFilename = "WLD";
+                    }
+                    for( int section = 0; section < sectionFile.Sections.Count; section++ )
+                    {
+                        for( int i = 0; i < sectionFile.Sections[section].Count; i++ )
+                        {
+                            string newString = string.Format( format, realFilename, section, i );
+                            if( sectionFile.Sections[section][i].IndexOf( @"{END}" ) != -1 )
+                            {
+                                newString += @"{END}";
+                            }
+                            sectionFile.Sections[section][i] = newString;
+                        }
+                    }
+                }
+            }
+
+            foreach( IPartitionedFile partitionedFile in mine.PartitionedFiles )
+            {
+                foreach( var kvp in partitionedFile.Locations )
+                {
+                    var filename = kvp.Key;
+                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    int dotIndex = realFilename.LastIndexOf( '.' );
+                    if( dotIndex < 0 )
+                        dotIndex = realFilename.Length - 1;
+                    realFilename = realFilename.Substring( 0, dotIndex );
+                    string format = "{0}/{1}/{2:X}";
+
+                    for( int section = 0; section < partitionedFile.Sections.Count; section++ )
+                    {
+                        for( int i = 0; i < partitionedFile.Sections[section].Entries.Count; i++ )
+                        {
+                            string newString = string.Format( format, realFilename, section, i );
+                            if( partitionedFile.Sections[section].Entries[i].IndexOf( @"{END}" ) != -1 )
+                            {
+                                newString += @"{END}";
+                            }
+                            partitionedFile.Sections[section].Entries[i] = newString;
+                        }
+                    }
+                }
+            }
+
+            File = mine;
+        }
+        private void FillPSPFiles()
+        {
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+
+            FFTText mine = null;
+            using( MemoryStream ms = new MemoryStream( PSPResources.DefaultDocument ) )
+            {
+                mine = xs.Deserialize( ms ) as FFTText;
+            }
+
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES" );
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES" );
+
+            foreach( IStringSectioned sectioned in mine.SectionedFiles )
+            {
+                FillFileExcept(
+                    sectioned,
+                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ),
+                    new int[0] );
+            }
+
+            using( FileStream fs = new FileStream( "Filled.xml", FileMode.Create ) )
+            {
+                xs.Serialize( fs, mine );
+            }
+        }
+        private void FillPSXFiles()
+        {
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+            FFTText mine = null;
+            using( MemoryStream ms = new MemoryStream( PSXResources.DefaultDocument ) )
+            {
+                mine = xs.Deserialize( ms ) as FFTText;
+            }
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES" );
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES" );
+
+            foreach( IStringSectioned sectioned in mine.SectionedFiles )
+            {
+                FillFileExcept(
+                    sectioned,
+                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ),
+                    new int[0] );
+            }
+
+            using( FileStream fs = new FileStream( "FilledPSX.xml", FileMode.Create ) )
+            {
+                xs.Serialize( fs, mine );
+            }
+        }
+#endif
 #if DEBUG
         private string[] GetLayoutOfCloseAndNewLines( string s )
         {

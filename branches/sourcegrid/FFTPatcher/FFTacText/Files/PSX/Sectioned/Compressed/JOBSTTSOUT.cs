@@ -27,31 +27,33 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class JOBSTTSOUT : BasePSXCompressedFile
     {
 
-        #region Static Fields (1)
-
-        private static Dictionary<string, long> locations;
-
-        #endregion Static Fields
-
-        #region Fields (3)
+		#region Fields (4) 
 
         private const string filename = "JOBSTTS.OUT";
+        private static Dictionary<string, long> locations;
         private const int maxLength = 0xAA57;
         private const int numberOfSections = 21;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (4)
-
+		#region Constructors (2) 
 
         /// <summary>
-        /// Gets the number of sections.
+        /// Initializes a new instance of the <see cref="JOBSTTSOUT"/> class.
         /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections
+        /// <param name="bytes">The bytes.</param>
+        public JOBSTTSOUT( IList<byte> bytes )
+            : base( bytes )
         {
-            get { return numberOfSections; }
         }
+
+        private JOBSTTSOUT()
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (4) 
 
         /// <summary>
         /// Gets the filename.
@@ -89,25 +91,35 @@ namespace FFTPatcher.TextEditor.Files.PSX
             get { return maxLength; }
         }
 
-
-        #endregion Properties
-
-        #region Constructors (2)
-
-        private JOBSTTSOUT()
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections
         {
+            get { return numberOfSections; }
         }
+
+		#endregion Properties 
+
+		#region Methods (1) 
+
+
+		// Public Methods (1) 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JOBSTTSOUT"/> class.
+        /// Gets a list of indices for named sections.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public JOBSTTSOUT( IList<byte> bytes )
-            : base( bytes )
+        public override IList<NamedSection> GetNamedSections()
         {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobDescriptions, 12, true, 160 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityDescriptions, 15, true, 512 ) );
+            return result;
         }
 
-        #endregion Constructors
+
+		#endregion Methods 
 
     }
 }

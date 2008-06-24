@@ -27,26 +27,31 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class JOINLZW : BasePSXSectionedFile
     {
 
-        #region Static Fields (1)
-
-        private static Dictionary<string, long> locations;
-
-        #endregion Static Fields
-
-        #region Fields (1)
+		#region Fields (2) 
 
         private const string filename = "JOIN.LZW";
+        private static Dictionary<string, long> locations;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (4)
-
+		#region Constructors (2) 
 
         /// <summary>
-        /// Gets the number of sections.
+        /// Initializes a new instance of the <see cref="JOINLZW"/> class.
         /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 5; } }
+        /// <param name="bytes">The bytes.</param>
+        public JOINLZW( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
+
+        private JOINLZW()
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (4) 
 
         /// <summary>
         /// Gets the filename.
@@ -79,25 +84,31 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public override int MaxLength { get { return 0x41F6; } }
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections { get { return 5; } }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (2)
+		#region Methods (1) 
 
-        private JOINLZW()
-        {
-        }
+
+		// Public Methods (1) 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JOINLZW"/> class.
+        /// Gets a list of indices for named sections.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public JOINLZW( IList<byte> bytes )
-            : base( bytes )
+        public override IList<NamedSection> GetNamedSections()
         {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobNames, 4, true, 155 ) );
+            return result;
         }
 
-        #endregion Constructors
+
+		#endregion Methods 
 
     }
 }

@@ -168,7 +168,9 @@ namespace FFTPatcher.TextEditor
 
         private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
+            Cursor = Cursors.WaitCursor;
             UpdateCurrentStringListBox();
+            Cursor = Cursors.Default;
         }
 
         private void UpdateCurrentStringListBox()
@@ -205,6 +207,12 @@ namespace FFTPatcher.TextEditor
                 error = true;
                 errorLabel.Visible = true;
             }
+
+            bool quickedit = Strings is IQuickEdit;
+            maxLengthLabel.Visible = !quickedit;
+            lengthLabel.Visible = !quickedit;
+            filesListBox.Visible = !quickedit;
+            saveButton.Visible = !quickedit;
         }
 
         #endregion Methods

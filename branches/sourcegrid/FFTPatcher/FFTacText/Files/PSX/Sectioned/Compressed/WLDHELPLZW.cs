@@ -27,27 +27,32 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class WLDHELPLZW : BasePSXCompressedFile
     {
 
-        #region Static Fields (1)
-
-        private static Dictionary<string, long> locations;
-
-        #endregion Static Fields
-
-        #region Fields (2)
+		#region Fields (3) 
 
         private const string filename = "WLDHELP.LZW";
+        private static Dictionary<string, long> locations;
         private const int numberOfSections = 21;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (4)
-
+		#region Constructors (2) 
 
         /// <summary>
-        /// Gets the number of sections.
+        /// Initializes a new instance of the <see cref="WLDHELPLZW"/> class.
         /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return numberOfSections; } }
+        /// <param name="bytes">The bytes.</param>
+        public WLDHELPLZW( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
+
+        private WLDHELPLZW()
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Properties (4) 
 
         /// <summary>
         /// Gets the filename.
@@ -80,25 +85,34 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public override int MaxLength { get { return 0x01ADE4; } }
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections { get { return numberOfSections; } }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Constructors (2)
+		#region Methods (1) 
 
-        private WLDHELPLZW()
-        {
-        }
+
+		// Public Methods (1) 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WLDHELPLZW"/> class.
+        /// Gets a list of indices for named sections.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public WLDHELPLZW( IList<byte> bytes )
-            : base( bytes )
+        public override IList<NamedSection> GetNamedSections()
         {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.JobDescriptions, 12 ) );
+            result.Add( new NamedSection( this, SectionType.ItemDescriptions, 13 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityDescriptions, 15 ) );
+            result.Add( new NamedSection( this, SectionType.SkillsetDescriptions, 19 ) );
+            return result;
         }
 
-        #endregion Constructors
+
+		#endregion Methods 
 
     }
 }

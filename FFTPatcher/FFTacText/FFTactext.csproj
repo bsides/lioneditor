@@ -90,6 +90,7 @@
     <Compile Include="Files\PSP\AbstractBootBinFile.cs" />
     <Compile Include="Files\PSP\BasePSPCompressedFile.cs" />
     <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
+    <Compile Include="Files\PSP\BOOT326F24.cs" />
     <Compile Include="Files\PSP\QuickEdit.cs" />
     <Compile Include="Files\PSP\Sectioned\BOOT28E5EC.cs" />
     <Compile Include="Files\PSP\IBootBin.cs" />
@@ -203,6 +204,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\PSP\boot.bin" />
     <None Include="Resources\PSP\pspText.ffttext" />
     <None Include="Resources\PSX\psxText.ffttext" />
     <Compile Include="Properties\Settings.Designer.cs">

@@ -19,6 +19,9 @@
 -->
 <EntryNames>
   <Files>
+    <File name="FFTPatcher.TextEditor.Files.PSP.BOOT326F24" sections="1">
+      <Section value="0" entries="3820" empty="true"/>
+    </File>
     <File name="FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW" sections="21">
       <Section value="0" entries="1" empty="true"/>
       <Section value="1" entries="1" empty="true"/>

@@ -262,6 +262,10 @@ namespace FFTPatcher.TextEditor
         private void newPspMenuItem_Click( object sender, EventArgs e )
         {
             LoadFileFromByteArray( PSPResources.DefaultDocument );
+            File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSP.BOOT326F24( Properties.PSPResources.boot ) );
+            var oldFile = File;
+            file = null;
+            File = oldFile;
         }
 
         private void newPsxMenuItem_Click( object sender, EventArgs e )

@@ -127,12 +127,7 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public IList<byte> Compress()
         {
-            TextUtilities.ProgressCallback p = new TextUtilities.ProgressCallback(
-                 delegate( int progress )
-                 {
-                     FireProgressChangedEvent( progress );
-                 } );
-
+            TextUtilities.ProgressCallback p = progress => FireProgressChangedEvent( progress );
 
             TextUtilities.CompressionResult r = TextUtilities.Compress( this, ExcludedEntries, p );
 

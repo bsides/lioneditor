@@ -59,8 +59,6 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public const int CurrentVersion = 2;
 
-        private IQuickEdit quickEdit;
-
         #endregion Fields
 
         #region Properties (4)
@@ -151,11 +149,7 @@ namespace FFTPatcher.TextEditor
                 result.Add( mi );
             }
 
-            result.Sort(
-                delegate( MenuItem one, MenuItem two )
-                {
-                    return one.Text.CompareTo( two.Text );
-                } );
+            result.Sort( ( left, right ) => left.Text.CompareTo( right.Text ) );
 
             return result;
         }

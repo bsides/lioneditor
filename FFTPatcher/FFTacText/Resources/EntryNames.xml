@@ -19,8 +19,22 @@
 -->
 <EntryNames>
   <Files>
-    <File name="FFTPatcher.TextEditor.Files.PSP.BOOT326F24" sections="1">
-      <Section value="0" entries="3820" empty="true"/>
+    <File name="FFTPatcher.TextEditor.Files.PSP.BOOT326F24" sections="9">
+      <Section value="0" entries="227" empty="false" name="Skillset names">
+        <include name="PSP/SkillsetNames" start="0" end="226" offset="0" />
+      </Section>
+      <Section value="1" entries="169" empty="false" name="Job names">
+        <include name="PSP/JobNames" start="0" end="168" offset="0"/>
+      </Section>
+      <Section value="2" entries="512" empty="false" name="Ability names">
+        <include name="PSP/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
+      <Section value="3" entries="31" empty="true" name="Error"/>
+      <Section value="4" entries="175" empty="true" name="Dismiss quotes"/>
+      <Section value="5" entries="97" empty="true" name="Job requirements"/>
+      <Section value="6" entries="6" empty="true"/>
+      <Section value="7" entries="604" empty="true" name="Name entry"/>
+      <Section value="8" entries="74" empty="true" name="Shop text"/>
     </File>
     <File name="FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW" sections="21">
       <Section value="0" entries="1" empty="true"/>

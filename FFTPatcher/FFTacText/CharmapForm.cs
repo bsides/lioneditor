@@ -73,11 +73,8 @@ namespace FFTPatcher.TextEditor
         {
             List<string> keys = new List<string>( map.Reverse.Keys );
             keys.Sort();
-            keys.RemoveAll(
-                delegate( string s )
-                {
-                    return s.Contains( @"{Delay " ) || s.Contains( @"{Tab " ) || s.Contains( @"{Color " );
-                } );
+            keys.RemoveAll( s => s.Contains( @"{Delay " ) || s.Contains( @"{Tab " ) || s.Contains( @"{Color " ) );
+
             Instance.textBox.Text = string.Join( "\r\n", keys.ToArray() );
             currentCharMap = map;
         }

@@ -102,6 +102,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <param name="type">The type of section this is.</param>
         /// <param name="index">The index of this section in <paramref name="owner"/>.</param>
         /// <param name="representative">If this instance is a representative sample of <paramref name="type"/></param>
+        /// <param name="sampleLength">Length of the sample if it is</param>
         internal NamedSection( IStringSectioned owner, SectionType type, int index, bool representative, int sampleLength )
         {
             Owner = owner;

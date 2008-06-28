@@ -37,7 +37,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <value>The number of sections.</value>
         protected override int NumberOfSections
         {
-            get { return 1; }
+            get { return EntryNames.Count; }
         }
 
 
@@ -60,7 +60,18 @@ namespace FFTPatcher.TextEditor.Files
         protected AbstractDelimitedFile( IList<byte> bytes )
             : this()
         {
-            Sections.Add( TextUtilities.ProcessList( bytes, CharMap ) );
+            IList<int> feBytes = bytes.IndexOfEvery( (byte)0xFE );
+            int lastStart = 0;
+
+            IList<int> sectionLengths = new List<int>( SectionNames.Count );
+            EntryNames.ForEach( member => sectionLengths.Add( member.Count ) );
+
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                int sectionStart = feBytes[sectionLengths.Sub( 0, i ).Sum()];
+                int sectionEnd = feBytes[sectionLengths.Sub( 0, i + 1 ).Sum() - 1];
+                Sections.Add( TextUtilities.ProcessList( bytes.Sub( sectionStart, sectionEnd ), CharMap ) );
+            }
         }
 
         #endregion Constructors

@@ -103,11 +103,7 @@ namespace FFTPatcher
                 }
             }
 
-            codes.Sort( new Comparison<string>(
-                delegate( string s, string t )
-                {
-                    return s.Substring( 6 ).CompareTo( t.Substring( 6 ) );
-                } ) );
+            codes.Sort( ( s, t ) => s.Substring( 6 ).CompareTo( t.Substring( 6 ) ) );
 
             return codes;
         }
@@ -143,11 +139,7 @@ namespace FFTPatcher
                 }
             }
 
-            codes.Sort( new Comparison<string>(
-                delegate( string s, string t )
-                {
-                    return s.Substring( 2 ).CompareTo( t.Substring( 2 ) );
-                } ) );
+            codes.Sort( ( s, t ) => s.Substring( 2 ).CompareTo( t.Substring( 2 ) ) );
 
             return codes;
         }

@@ -72,8 +72,29 @@ namespace FFTPatcher
         }
 
         /// <summary>
+        /// Performs the specified action on each element of the <see cref="System.Collections.Generic.IList&lt;T&gt;"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="action">
+        /// The <see cref="System.Action&lt;T&gt;"/> delegate to perform on each element of the <see cref="System.Collections.Generic.List&lt;T&gt;"/>.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException"><paramref name="action"/> is null</exception>
+        public static void ForEach<T>( this IList<T> list, Action<T> action )
+        {
+            if( action == null )
+            {
+                throw new ArgumentNullException( "action" );
+            }
+
+            int count = list.Count;
+            for( int i = 0; i < count; i++ ) action( list[i] );
+        }
+
+        /// <summary>
         /// Finds the specified item in the list.
         /// </summary>
+        /// <param name="match">The <see cref="System.Predicate&lt;T&gt;"/> delegate that defines the conditions of the element to search for.</param>
+        /// <exception cref="System.ArgumentNullException"/><paramref name="match"/> is null</exception>.
         public static T Find<T>( this IList<T> list, Predicate<T> match ) where T : class
         {
             foreach( T item in list )

@@ -423,10 +423,9 @@ namespace FFTPatcher.TextEditor
 
         private void UncheckAllMenuItems( MenuItem[] menuItems )
         {
-            foreach( MenuItem item in menuItems )
-            {
-                item.Checked = false;
-            }
+            menuItems.ForEach( item => item.Checked = false );
+            defaultPsxMenuItems.ForEach( item => item.Checked = false );
+            defaultPspMenuItems.ForEach( item => item.Checked = false );
         }
 
         private void WriteBytesToFile( byte[] bytes, string filename, long position )

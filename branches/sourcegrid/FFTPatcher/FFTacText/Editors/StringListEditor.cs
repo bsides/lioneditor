@@ -94,9 +94,10 @@ namespace FFTPatcher.TextEditor
         /// <param name="values">The values.</param>
         public void BindTo( IList<string> names, IList<string> values )
         {
-            if( names.Count < values.Count )
+            List<string> ourNames = new List<string>( names );
+            for ( int i = names.Count; i < values.Count; i++ )
             {
-                throw new ArgumentException( "names and values must have same count" );
+                ourNames.Add( string.Empty );
             }
 
             DataGridViewRow[] rows = new DataGridViewRow[values.Count];
@@ -104,7 +105,7 @@ namespace FFTPatcher.TextEditor
             for( int i = 0; i < values.Count; i++ )
             {
                 DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells( dataGridView, i, names[i], values[i] );
+                row.CreateCells( dataGridView, i, ourNames[i], values[i] );
                 rows[i] = row;
             }
             dataGridView.Rows.Clear();

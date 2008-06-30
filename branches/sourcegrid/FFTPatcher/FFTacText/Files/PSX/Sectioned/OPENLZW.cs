@@ -76,7 +76,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
         /// <value></value>
-        public override int MaxLength { get { return 0x5579; } }
+        public override int MaxLength { get { return 0x5800; } }
 
 
         #endregion Properties

@@ -42,7 +42,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// </summary>
         /// <param name="bytes">The bytes.</param>
         public SPELLMES( IList<byte> bytes )
-            : base( bytes )
+            : base( bytes, 0 )
         {
         }
 

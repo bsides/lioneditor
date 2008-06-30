@@ -348,6 +348,7 @@ end
             AllENTDs entds,
             DataReceivedEventHandler dataReceived, EventHandler finished )
         {
+            bool patchSCEAP = true;
             PatchedByteArrayListGenerator generator = new PatchedByteArrayListGenerator(
                 delegate()
                 {
@@ -425,6 +426,11 @@ end
                     FireProgressChangedEvent( 17, 18 );
                     patches.Add( new PatchedByteArray( battle, 0xFF0FC, font.ToWidthsByteArray() ) );
                     FireProgressChangedEvent( 18, 18 );
+
+                    if ( patchSCEAP )
+                    {
+                        patches.Add( new PatchedByteArray( "/SCEAP.DAT;1", 0, PSXResources.SCEAPDAT ) );
+                    }
 
                     return patches;
                 } );

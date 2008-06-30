@@ -54,6 +54,7 @@
     <Compile Include="Controls\ComboBoxWithDefault.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\FFTPatcherSaveFileDialog.cs" />
     <Compile Include="Controls\NumericUpDownWithDefault.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -475,6 +476,7 @@
     <None Include="Resources\PSX-US\bin\OldItemAttributes.bin" />
     <None Include="Resources\PSX-US\bin\OldItems.bin" />
     <None Include="Resources\PSX-US\bin\PoachProbabilities.bin" />
+    <None Include="Resources\PSX-US\bin\SCEAP.DAT.patched.bin" />
     <None Include="Resources\PSX-US\bin\SkillSetsBin.bin" />
     <None Include="Resources\PSX-US\bin\StatusAttributes.bin" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -492,14 +494,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PSXResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\CDTool.cs" />
+    <Compile Include="Utilities\ISOPatching\CDTool.cs" />
     <Compile Include="Utilities\Codes.cs" />
     <Compile Include="Utilities\DigestGenerator.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />
     <Compile Include="Utilities\GZip.cs" />
     <Compile Include="Utilities\ISOPatching\IsoPatch.cs" />
+    <Compile Include="Utilities\ISOPatching\PsxIso.cs" />
     <Compile Include="Utilities\PatchedByteArray.cs" />
-    <Compile Include="Utilities\PspIso.cs" />
+    <Compile Include="Utilities\ISOPatching\PspIso.cs" />
     <Compile Include="Utilities\PSXResources.cs" />
     <Compile Include="Utilities\ReflectionHelpers.cs" />
     <Compile Include="Utilities\Resources.cs" />
@@ -526,6 +529,7 @@
     <Content Include="Resources\PSX-US\Abilities\Effects.xml" />
     <Content Include="Resources\PSX-US\Abilities\Strings.xml" />
     <Content Include="Resources\PSX-US\EventNames.xml" />
+    <Content Include="Resources\PSX-US\FileList.txt" />
     <Content Include="Resources\PSX-US\Items\ItemAttributes.xml" />
     <Content Include="Resources\PSX-US\Items\Items.xml" />
     <Content Include="Resources\PSX-US\Items\Strings.xml" />

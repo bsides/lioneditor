@@ -17,6 +17,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
@@ -29,7 +30,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#region Static Fields (1) 
 
-        private static Dictionary<string, long> locations;
+        private static Dictionary<Enum, long> locations;
 
 		#endregion Static Fields 
 
@@ -61,14 +62,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<string, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<string, long>();
-                    locations.Add( "BOOT.BIN", 0x299024 );
+                    locations = new Dictionary<Enum, long>();
+                    //locations.Add( "BOOT.BIN", 0x299024 );
                 }
                 return locations;
             }

@@ -17,6 +17,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
@@ -30,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Fields (2) 
 
         private const string filename = "ATTACK.OUT";
-        private static Dictionary<string, long> locations;
+        private static Dictionary<Enum, long> locations;
 
 		#endregion Fields 
 
@@ -63,15 +64,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<string, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/ATTACK.OUT", 0xE2B0 );
-                    locations.Add( "EVENT/SMALL.OUT", 0x6C );
+                    locations = new Dictionary<Enum, long>();
+                    locations.Add( PsxIso.EVENT.ATTACK_OUT, 0xE2B0 );
+                    locations.Add( PsxIso.EVENT.SMALL_OUT, 0x6C );
                 }
 
                 return locations;

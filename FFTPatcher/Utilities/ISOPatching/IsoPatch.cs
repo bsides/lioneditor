@@ -27,19 +27,22 @@ namespace FFTPatcher
     static class IsoPatch
     {
 
-		#region Fields (7) 
+		#region Static Fields (6) 
 
         private static readonly int[] dataSizes = new int[3] { 2048, 2048, 2324 };
-        private static readonly int[] dataStarts = new int[3] { 0x10, 0x18, 0x18 };
+        private static readonly int[] dataStarts = new int[3] { 0, 0x18, 0x18 };
         private static byte[] eccBLUT = new byte[256];
         private static byte[] eccFLUT = new byte[256];
         private static ulong[] edcLUT = new ulong[256];
-        private const int fullSectorSize = 2352;
         private static readonly int[] sectorSizes = new int[3] { 2048, fullSectorSize, fullSectorSize };
 
-		#endregion Fields 
+		#endregion Static Fields 
 
-		#region Enums (1) 
+		#region Fields (1) 
+
+        private const int fullSectorSize = 2352;
+
+		#endregion Fields 
 
         public enum IsoType
         {
@@ -48,7 +51,6 @@ namespace FFTPatcher
             Mode2Form2 = 2
         }
 
-		#endregion Enums 
 
 		#region Constructors (1) 
 
@@ -72,149 +74,8 @@ namespace FFTPatcher
 
 		#endregion Constructors 
 
-		#region Methods (10) 
+		#region Methods (11) 
 
-
-		// Public Methods (6) 
-
-        /// <summary>
-        /// Patches the bytes at a given offset.
-        /// </summary>
-        /// <param name="isoType">The type of ISO</param>
-        /// <param name="isoFile">Path to the ISO image</param>
-        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
-        /// <param name="offset">Where in the ISO to start writing</param>
-        /// <param name="input">Bytes to write</param>
-        public static void PatchFile( IsoType isoType, string isoFile, bool patchEccEdc, int offset, IList<byte> input )
-        {
-            using( FileStream stream = new FileStream( isoFile, FileMode.Open ) )
-            {
-                PatchFile( isoType, stream, patchEccEdc, offset, input );
-            }
-        }
-
-        /// <summary>
-        /// Patches the bytes at a given offset.
-        /// </summary>
-        /// <param name="isoType">The type of ISO</param>
-        /// <param name="iso">Stream that contains the ISO</param>
-        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
-        /// <param name="offset">Where in the ISO to start writing</param>
-        /// <param name="input">Bytes to write</param>
-        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, int offset, IList<byte> input )
-        {
-            using ( MemoryStream inputStream = new MemoryStream( input.ToArray() ) )
-            {
-                PatchFile( isoType, iso, patchEccEdc, offset, inputStream );
-            }
-        }
-
-        /// <summary>
-        /// Patches the bytes at a given offset.
-        /// </summary>
-        /// <param name="isoType">The type of ISO</param>
-        /// <param name="iso">Stream that contains the ISO</param>
-        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
-        /// <param name="offset">Where in the ISO to start writing</param>
-        /// <param name="input">Stream that contains the bytes to write</param>
-        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, int offset, Stream input )
-        {
-            byte[] sector = new byte[fullSectorSize];
-            int type = (int)isoType;
-
-            int sectorStart = offset % fullSectorSize;
-            if( sectorStart < dataStarts[type] ||
-                sectorStart >= (dataStarts[type] + dataSizes[type]) )
-            {
-                throw new ArgumentException( "start offset is incorrect", "offset" );
-            }
-
-            int sectorLength = dataSizes[type] + dataStarts[type] - sectorStart;
-            int totalPatchedBytes = 0;
-            int sizeRead = 0;
-            int temp = offset - ( offset % fullSectorSize );
-            iso.Seek( temp, SeekOrigin.Begin );
-            
-            input.Seek( 0, SeekOrigin.Begin );
-            while( input.Position < input.Length )
-            {
-                iso.Read( sector, 0, fullSectorSize );
-                sizeRead = input.Read( sector, sectorStart, sectorLength );
-                if( (sector[0x12] & 8) == 0 )
-                {
-                    sector[0x12] = 8;
-                    sector[0x16] = 8;
-                }
-
-                if( patchEccEdc )
-                {
-                    GenerateEccEdc( sector, isoType );
-                }
-
-                iso.Seek( -fullSectorSize, SeekOrigin.Current );
-                iso.Write( sector, 0, fullSectorSize );
-                totalPatchedBytes += sizeRead;
-                sectorStart = dataStarts[type];
-                sectorLength = dataSizes[type];
-            }
-        }
-
-        /// <summary>
-        /// Patches the file at a given sector in an ISO.
-        /// </summary>
-        /// <param name="isoType">The type of ISO</param>
-        /// <param name="isoFile">Path to the ISO image</param>
-        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
-        /// <param name="sectorNumber">The sector number where the file begins</param>
-        /// <param name="input">Bytes to write</param>
-        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, IList<byte> input )
-        {
-            PatchFileAtSector( isoType, isoFile, patchEccEdc, sectorNumber, 0, input );
-        }
-
-        /// <summary>
-        /// Patches the file at a given sector in an ISO.
-        /// </summary>
-        /// <param name="isoType">The type of ISO</param>
-        /// <param name="isoFile">Path to the ISO image</param>
-        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
-        /// <param name="sectorNumber">The sector number where the file begins</param>
-        /// <param name="offset">Where in the file to start writing</param>
-        /// <param name="input">Bytes to write</param>
-        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, int offset, IList<byte> input )
-        {
-            using ( FileStream stream = new FileStream( isoFile, FileMode.Open ) )
-            {
-                PatchFileAtSector( isoType, stream, patchEccEdc, sectorNumber, offset, input );
-            }
-        }
-
-        /// <summary>
-        /// Patches the file at a given sector in an ISO.
-        /// </summary>
-        /// <param name="isoType">The type of ISO</param>
-        /// <param name="iso">Stream that contains the ISO</param>
-        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
-        /// <param name="sectorNumber">The sector number where the file begins</param>
-        /// <param name="offset">Where in the file to start writing</param>
-        /// <param name="input">Bytes to write</param>
-        public static void PatchFileAtSector( IsoType isoType, Stream iso, bool patchEccEdc, int sectorNumber, int offset, IList<byte> input )
-        {
-            int dataSize = dataSizes[(int)isoType];
-            int dataStart = dataStarts[(int)isoType];
-            int sectorSize = sectorSizes[(int)isoType];
-
-            int sectorsToAdvance = offset / dataSize;
-            int newOffset = offset % dataSize;
-
-            int realOffset = ( sectorNumber + sectorsToAdvance ) * sectorSize + dataStart + newOffset;
-
-            PatchFile( isoType, iso, patchEccEdc, realOffset, input );
-        }
-
-
-
-		// Private Methods (4) 
 
         private static void ComputeEccBlock( IList<byte> source, uint majorCount, uint minorCount, uint majorMult, uint minorIncrement, IList<byte> destination )
         {
@@ -283,14 +144,6 @@ namespace FFTPatcher
         {
             switch( isoType )
             {
-                case IsoType.Mode1:
-                    ComputeEdcBlock( sector, 0x810, sector.Sub( 0x810 ) );
-                    for( int i = 0; i < 8; i++ )
-                    {
-                        sector[0x814 + i] = 0;
-                    }
-                    GenerateEcc( sector, false );
-                    break;
                 case IsoType.Mode2Form1:
                     ComputeEdcBlock( sector.Sub( 0x10 ), 0x808, sector.Sub( 0x818 ) );
                     GenerateEcc( sector, true );
@@ -298,9 +151,188 @@ namespace FFTPatcher
                 case IsoType.Mode2Form2:
                     ComputeEdcBlock( sector.Sub( 0x10 ), 0x91C, sector.Sub( 0x92C ) );
                     break;
+                case IsoType.Mode1:
                 default:
                     throw new ArgumentException( "isotype" );
             }
+        }
+
+        private static void GeneratePpf( byte[] originalSector, byte[] sector, long offset, IList<byte> patch )
+        {
+            int sectorLength = sector.Length;
+            for( int i = 0; i < sectorLength; i++ )
+            {
+                int start = i;
+
+                while( originalSector[i] != sector[i] && (i - start < 255)) i++;
+
+                if( start != i )
+                {
+                    int count = i - start;
+                    System.Diagnostics.Debug.Assert( count <= 255 );
+                    patch.AddRange( (offset + start).ToBytes() );
+                    patch.Add( (byte)count );
+                    patch.AddRange( sector.Sub( start, start + count - 1 ) );
+                    patch.AddRange( originalSector.Sub( start, start + count - 1 ) );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Patches the bytes at a given offset.
+        /// </summary>
+        /// <param name="isoType">The type of ISO</param>
+        /// <param name="isoFile">Path to the ISO image</param>
+        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
+        /// <param name="offset">Where in the ISO to start writing</param>
+        /// <param name="input">Bytes to write</param>
+        public static void PatchFile( IsoType isoType, string isoFile, bool patchEccEdc, long offset, IList<byte> input, bool patchIso, bool generatePpf, IList<byte> patch )
+        {
+            using( FileStream stream = new FileStream( isoFile, FileMode.Open ) )
+            {
+                PatchFile( isoType, stream, patchEccEdc, offset, input, patchIso, generatePpf, patch );
+            }
+        }
+
+        /// <summary>
+        /// Patches the bytes at a given offset.
+        /// </summary>
+        /// <param name="isoType">The type of ISO</param>
+        /// <param name="iso">Stream that contains the ISO</param>
+        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
+        /// <param name="offset">Where in the ISO to start writing</param>
+        /// <param name="input">Bytes to write</param>
+        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, long offset, IList<byte> input, bool patchIso, bool generatePpf, IList<byte> patch )
+        {
+            using ( MemoryStream inputStream = new MemoryStream( input.ToArray() ) )
+            {
+                PatchFile( isoType, iso, patchEccEdc, offset, inputStream, patchIso, generatePpf, patch );
+            }
+        }
+
+        /// <summary>
+        /// Patches the bytes at a given offset.
+        /// </summary>
+        /// <param name="isoType">The type of ISO</param>
+        /// <param name="iso">Stream that contains the ISO</param>
+        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
+        /// <param name="offset">Where in the ISO to start writing</param>
+        /// <param name="input">Stream that contains the bytes to write</param>
+        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, long offset, Stream input, bool patchIso, bool generatePpf, IList<byte> patch )
+        {
+            int type = (int)isoType;
+            int sectorSize = sectorSizes[type];
+            byte[] sector = new byte[sectorSize];
+
+            long sectorStart = offset % sectorSize;
+            if( sectorStart < dataStarts[type] ||
+                sectorStart >= (dataStarts[type] + dataSizes[type]) )
+            {
+                throw new ArgumentException( "start offset is incorrect", "offset" );
+            }
+            if( patchEccEdc && isoType == IsoType.Mode1 )
+            {
+                throw new ArgumentException( "Mode1 does not support ECC/EDC", "patchEccEdc" );
+            }
+
+            long sectorLength = dataSizes[type] + dataStarts[type] - sectorStart;
+            int totalPatchedBytes = 0;
+            int sizeRead = 0;
+            long temp = offset - (offset % sectorSize);
+            iso.Seek( temp, SeekOrigin.Begin );
+
+            input.Seek( 0, SeekOrigin.Begin );
+            while( input.Position < input.Length )
+            {
+                iso.Read( sector, 0, sectorSize );
+                byte[] originalSector = sector.ToArray();
+
+                sizeRead = input.Read( sector, (int)sectorStart, (int)sectorLength );
+
+                if( isoType != IsoType.Mode1 && (sector[0x12] & 8) == 0 )
+                {
+                    sector[0x12] = 8;
+                    sector[0x16] = 8;
+                }
+
+                if( patchEccEdc )
+                {
+                    GenerateEccEdc( sector, isoType );
+                }
+
+                iso.Seek( -sectorSize, SeekOrigin.Current );
+
+                if( generatePpf )
+                {
+                    GeneratePpf( originalSector, sector, iso.Position, patch );
+                }
+
+                if( patchIso )
+                {
+                    iso.Write( sector, 0, sectorSize );
+                }
+                else
+                {
+                    iso.Seek( sectorSize, SeekOrigin.Current );
+                }
+
+                totalPatchedBytes += sizeRead;
+                sectorStart = dataStarts[type];
+                sectorLength = dataSizes[type];
+            }
+        }
+
+        /// <summary>
+        /// Patches the file at a given sector in an ISO.
+        /// </summary>
+        /// <param name="isoType">The type of ISO</param>
+        /// <param name="isoFile">Path to the ISO image</param>
+        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
+        /// <param name="sectorNumber">The sector number where the file begins</param>
+        /// <param name="input">Bytes to write</param>
+        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, IList<byte> input, bool patchIso, bool generatePpf, IList<byte> patch )
+        {
+            PatchFileAtSector( isoType, isoFile, patchEccEdc, sectorNumber, 0, input, patchIso, generatePpf, patch );
+        }
+
+        /// <summary>
+        /// Patches the file at a given sector in an ISO.
+        /// </summary>
+        /// <param name="isoType">The type of ISO</param>
+        /// <param name="isoFile">Path to the ISO image</param>
+        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
+        /// <param name="sectorNumber">The sector number where the file begins</param>
+        /// <param name="offset">Where in the file to start writing</param>
+        /// <param name="input">Bytes to write</param>
+        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, long offset, IList<byte> input, bool patchIso, bool generatePpf, IList<byte> patch )
+        {
+            using ( FileStream stream = new FileStream( isoFile, FileMode.Open ) )
+            {
+                PatchFileAtSector( isoType, stream, patchEccEdc, sectorNumber, offset, input, patchIso, generatePpf, patch );
+            }
+        }
+
+        /// <summary>
+        /// Patches the file at a given sector in an ISO.
+        /// </summary>
+        /// <param name="isoType">The type of ISO</param>
+        /// <param name="iso">Stream that contains the ISO</param>
+        /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
+        /// <param name="sectorNumber">The sector number where the file begins</param>
+        /// <param name="offset">Where in the file to start writing</param>
+        /// <param name="input">Bytes to write</param>
+        public static void PatchFileAtSector( IsoType isoType, Stream iso, bool patchEccEdc, int sectorNumber, long offset, IList<byte> input, bool patchIso, bool generatePpf, IList<byte> patch )
+        {
+            int dataSize = dataSizes[(int)isoType];
+            int dataStart = dataStarts[(int)isoType];
+            int sectorSize = sectorSizes[(int)isoType];
+
+            long sectorsToAdvance = offset / dataSize;
+            long newOffset = offset % dataSize;
+
+            long realOffset = (sectorNumber + sectorsToAdvance) * sectorSize + dataStart + newOffset;
+
+            PatchFile( isoType, iso, patchEccEdc, realOffset, input, patchIso, generatePpf, patch );
         }
 
 

@@ -300,19 +300,19 @@ namespace FFTPatcher.TextEditor
                     foreach( IStringSectioned sectioned in SectionedFiles )
                     {
                         byte[] bytes = sectioned.ToByteArray();
-                        foreach( KeyValuePair<string, long> kvp in sectioned.Locations )
+                        foreach( KeyValuePair<Enum, long> kvp in sectioned.Locations )
                         {
 
-                            patches.Add( new PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                            patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
                         }
                     }
 
                     foreach( IPartitionedFile partitioned in PartitionedFiles )
                     {
                         byte[] bytes = partitioned.ToByteArray();
-                        foreach( KeyValuePair<string, long> kvp in partitioned.Locations )
+                        foreach( KeyValuePair<Enum, long> kvp in partitioned.Locations )
                         {
-                            patches.Add( new PatchedByteArray( GetISOFilename( kvp.Key ), kvp.Value, bytes ) );
+                            patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
                         }
                     }
 

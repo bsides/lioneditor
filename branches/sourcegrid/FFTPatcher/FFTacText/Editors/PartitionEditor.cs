@@ -138,9 +138,9 @@ namespace FFTPatcher.TextEditor.Editors
             filesListBox.ClearSelected();
             filesListBox.Items.Clear();
 
-            foreach( string s in strings.Owner.Locations.Keys )
+            foreach( Enum s in strings.Owner.Locations.Keys )
             {
-                filesListBox.Items.Add( s );
+                filesListBox.Items.Add( s.ToString() );
             }
 
             filesListBox.ResumeLayout();

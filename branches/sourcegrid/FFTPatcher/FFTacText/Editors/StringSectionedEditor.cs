@@ -184,9 +184,9 @@ namespace FFTPatcher.TextEditor
             filesListBox.BeginUpdate();
             filesListBox.ClearSelected();
             filesListBox.Items.Clear();
-            foreach( string s in strings.Locations.Keys )
+            foreach( Enum s in strings.Locations.Keys )
             {
-                filesListBox.Items.Add( s );
+                filesListBox.Items.Add( s.ToString() );
             }
             filesListBox.EndUpdate();
             filesListBox.ResumeLayout();

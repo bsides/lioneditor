@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http:,www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#region Fields (1) 
 
-        private static Dictionary<string, long> locations;
+        private static Dictionary<Enum, long> locations;
 
 		#endregion Fields 
 
@@ -62,14 +81,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        public override IDictionary<string, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if ( locations == null )
                 {
-                    locations = new Dictionary<string, long>();
-                    locations.Add( "BOOT.BIN", 0x326F24 );
+                    locations = new Dictionary<Enum, long>();
+                    //locations.Add( "BOOT.BIN", 0x326F24 );
                 }
                 return locations;
             }

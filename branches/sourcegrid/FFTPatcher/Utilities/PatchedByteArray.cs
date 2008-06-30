@@ -21,13 +21,13 @@ namespace FFTPatcher
 {
     public class PatchedByteArray
     {
-        public string Filename { get; private set; }
+        public int Sector { get; private set; }
         public long Offset { get; private set; }
         public byte[] Bytes { get; private set; }
 
-        public PatchedByteArray( string filename, long offset, byte[] bytes )
+        public PatchedByteArray( PsxIso.Sectors sector, long offset, byte[] bytes )
         {
-            Filename = filename;
+            Sector = (int)sector;
             Offset = offset;
             Bytes = bytes;
         }

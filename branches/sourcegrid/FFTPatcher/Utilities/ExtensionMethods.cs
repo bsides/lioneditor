@@ -259,6 +259,19 @@ namespace FFTPatcher
         }
 
         /// <summary>
+        /// Converts this into a set of eight big endian bytes.
+        /// </summary>
+        public static byte[] ToBytes( this long value )
+        {
+            byte[] result = new byte[8];
+            for( int i = 0; i < 8; i++ )
+            {
+                result[i] = (byte)((value >> i) & 0xFF);
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Converts this array of bytes into a UInt32.
         /// </summary>
         public static UInt32 ToUInt32( this IList<byte> bytes )

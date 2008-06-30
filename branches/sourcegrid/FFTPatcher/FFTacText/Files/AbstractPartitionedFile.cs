@@ -91,7 +91,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        public abstract IDictionary<string, long> Locations { get; }
+        public abstract IDictionary<Enum, long> Locations { get; }
 
         /// <summary>
         /// Gets the maximum length of this file as a byte array.

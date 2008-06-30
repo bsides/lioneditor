@@ -258,13 +258,6 @@ end
 
         public static void PatchISO( string filename, DataReceivedEventHandler dataReceived, EventHandler finished, PatchedByteArrayListGenerator generator )
         {
-            string cdToolPath = GetPathOfCdTool();
-            if( cdToolPath == null )
-            {
-                finished( null, EventArgs.Empty );
-                return;
-            }
-
             ThreadStart mi = new ThreadStart(
                 delegate()
                 {
@@ -272,59 +265,15 @@ end
 
                     string isoFilename = filename;
 
-                    Dictionary<string, IList<string>> patchDictionary = new Dictionary<string, IList<string>>( patches.Count );
-                    foreach( PatchedByteArray p in patches )
+                    using( FileStream stream = new FileStream( isoFilename, FileMode.Open ) )
                     {
-                        string s = string.Format( "[{0}]=\"{1}\"", p.Offset, Convert.ToBase64String( p.Bytes ) );
-                        if( !patchDictionary.ContainsKey( p.Filename ) )
+                        foreach( PatchedByteArray patch in patches )
                         {
-                            patchDictionary.Add( p.Filename, new List<string>() );
+                            IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true, false, null );
                         }
-
-                        patchDictionary[p.Filename].Add( s );
                     }
 
-                    StringBuilder output = new StringBuilder();
-                    output.AppendLine( binModule );
-                    output.AppendLine( b64Module );
-                    output.AppendLine( patchFunction );
-                    output.AppendLine( @"patches = {" );
-                    string[] patchStrings = new string[patchDictionary.Count];
-
-                    int i = 0;
-                    foreach( KeyValuePair<string, IList<string>> kvp in patchDictionary )
-                    {
-                        patchStrings[i++] = string.Format( "[\"{0}\"]={{ {1} }}", kvp.Key, string.Join( ", " + Environment.NewLine, kvp.Value.ToArray() ) );
-                    }
-
-                    output.AppendLine( string.Join( ", \n", patchStrings ) );
-                    output.AppendLine( "}" );
-
-                    using( StreamWriter sw = new StreamWriter( "fftpatcher.lua", false, Encoding.ASCII ) )
-                    {
-                        sw.WriteLine( output.ToString() );
-                    }
-
-                    currentProcess = new Process();
-                    currentProcess.StartInfo = new ProcessStartInfo(
-                            cdToolPath,
-                            string.Format( "-f \"{0}\" -w -e \"doPatch()\" fftpatcher.lua", isoFilename ) );
-                    currentProcess.StartInfo.RedirectStandardOutput = false;
-                    currentProcess.StartInfo.RedirectStandardError = false;
-                    currentProcess.StartInfo.UseShellExecute = false;
-                    currentProcess.EnableRaisingEvents = true;
-
-                    if( dataReceived != null )
-                    {
-                        currentProcess.OutputDataReceived += dataReceived;
-                        currentProcess.ErrorDataReceived += dataReceived;
-                    }
-                    if( finished != null )
-                    {
-                        currentProcess.Exited += finished;
-                    }
-
-                    currentProcess.Start();
+                    finished( null, EventArgs.Empty );
                 } );
             Thread t = new Thread( mi );
             t.Start();
@@ -357,59 +306,59 @@ end
                     List<PatchedByteArray> patches = new List<PatchedByteArray>();
                     if( abilities.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x4F3F0, abilities.ToByteArray() ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x4F3F0, abilities.ToByteArray() ) );
                         FireProgressChangedEvent( 1, 18 );
-                        patches.Add( new PatchedByteArray( battle, 0x14F3F0, abilities.ToEffectsByteArray() ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0x14F3F0, abilities.ToEffectsByteArray() ) );
                         FireProgressChangedEvent( 2, 18 );
                     }
                     if( items.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x536B8, items.ToFirstByteArray() ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x536B8, items.ToFirstByteArray() ) );
                         FireProgressChangedEvent( 3, 18 );
                     }
                     if( itemAttributes.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x54AC4, itemAttributes.ToFirstByteArray() ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x54AC4, itemAttributes.ToFirstByteArray() ) );
                         FireProgressChangedEvent( 4, 18 );
                     }
                     if( jobs.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x518B8, jobs.ToByteArray( Context.US_PSX ) ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x518B8, jobs.ToByteArray( Context.US_PSX ) ) );
                         FireProgressChangedEvent( 5, 18 );
                     }
                     if( jobLevels.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x568C4, jobLevels.ToByteArray( Context.US_PSX ) ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x568C4, jobLevels.ToByteArray( Context.US_PSX ) ) );
                         FireProgressChangedEvent( 6, 18 );
                     }
                     if( skillsets.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x55294, skillsets.ToByteArray( Context.US_PSX ) ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x55294, skillsets.ToByteArray( Context.US_PSX ) ) );
                         FireProgressChangedEvent( 7, 18 );
                     }
                     if( monsters.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x563C4, monsters.ToByteArray( Context.US_PSX ) ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x563C4, monsters.ToByteArray( Context.US_PSX ) ) );
                         FireProgressChangedEvent( 8, 18 );
                     }
                     if( actionMenus.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x564B4, actionMenus.ToByteArray( Context.US_PSX ) ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x564B4, actionMenus.ToByteArray( Context.US_PSX ) ) );
                         FireProgressChangedEvent( 9, 18 );
                     }
                     if( statuses.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x565E4, statuses.ToByteArray( Context.US_PSX ) ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x565E4, statuses.ToByteArray( Context.US_PSX ) ) );
                         FireProgressChangedEvent( 10, 18 );
                     }
                     if( inflictStatuses.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x547C4, inflictStatuses.ToByteArray() ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x547C4, inflictStatuses.ToByteArray() ) );
                         FireProgressChangedEvent( 11, 18 );
                     }
                     if( poach.HasChanged )
                     {
-                        patches.Add( new PatchedByteArray( scus, 0x56864, poach.ToByteArray( Context.US_PSX ) ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x56864, poach.ToByteArray( Context.US_PSX ) ) );
                         FireProgressChangedEvent( 12, 18 );
                     }
 
@@ -417,19 +366,19 @@ end
                     {
                         if( entds.ENTDs[i].HasChanged )
                         {
-                            patches.Add( new PatchedByteArray( string.Format( "/BATTLE/ENTD{0}.ENT;1", i + 1 ), 0, entds.ENTDs[i].ToByteArray() ) );
+                            patches.Add( new PatchedByteArray( (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), string.Format( "BATTLE_ENTD{0}_ENT", i + 1 ), false ), 0, entds.ENTDs[i].ToByteArray() ) );
                         }
                         FireProgressChangedEvent( 13 + i, 18 );
                     }
 
-                    patches.Add( new PatchedByteArray( "/EVENT/FONT.BIN;1", 0, font.ToByteArray() ) );
+                    patches.Add( new PatchedByteArray( PsxIso.Sectors.EVENT_FONT_BIN, 0, font.ToByteArray() ) );
                     FireProgressChangedEvent( 17, 18 );
-                    patches.Add( new PatchedByteArray( battle, 0xFF0FC, font.ToWidthsByteArray() ) );
+                    patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, font.ToWidthsByteArray() ) );
                     FireProgressChangedEvent( 18, 18 );
 
                     if ( patchSCEAP )
                     {
-                        patches.Add( new PatchedByteArray( "/SCEAP.DAT;1", 0, PSXResources.SCEAPDAT ) );
+                        patches.Add( new PatchedByteArray( PsxIso.Sectors.SCEAP_DAT, 0, PSXResources.SCEAPDAT ) );
                     }
 
                     return patches;

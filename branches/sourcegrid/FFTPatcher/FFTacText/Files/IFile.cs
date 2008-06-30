@@ -17,6 +17,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files
@@ -29,7 +30,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        IDictionary<string, long> Locations { get; }
+        IDictionary<Enum, long> Locations { get; }
 
         /// <summary>
         /// Gets the charmap to use for this file.

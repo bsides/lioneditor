@@ -17,6 +17,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
@@ -30,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         #region Static Fields (3)
 
         private static string[][] entryNames;
-        private static Dictionary<string, long> locations;
+        private static Dictionary<Enum, long> locations;
         private static string[] sectionNames;
 
         #endregion Static Fields
@@ -62,14 +63,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<string, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<string, long>();
-                    locations.Add( "WORLD/SNPLMES.BIN", 0x00 );
+                    locations = new Dictionary<Enum, long>();
+                    locations.Add( PsxIso.WORLD.SNPLMES_BIN, 0x00 );
                 }
 
                 return locations;

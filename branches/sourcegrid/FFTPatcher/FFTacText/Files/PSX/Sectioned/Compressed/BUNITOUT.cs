@@ -17,6 +17,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
@@ -30,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Fields (4) 
 
         private const string filename = "BUNIT.OUT";
-        private static Dictionary<string, long> locations;
+        private static Dictionary<Enum, long> locations;
         private const int maxLength = 0x13663;
         private const int numberOfSections = 21;
 
@@ -68,14 +69,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<string, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<string, long>();
-                    locations.Add( "EVENT/BUNIT.OUT", 0x10DF8 );
+                    locations = new Dictionary<Enum, long>();
+                    locations.Add( PsxIso.Sectors.EVENT_BUNIT_OUT, 0x10DF8 );
                 }
 
                 return locations;

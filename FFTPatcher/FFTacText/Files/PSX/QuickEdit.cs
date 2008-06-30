@@ -30,20 +30,20 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#region Fields (13) 
 
-        private Dictionary<IStringSectioned, int> abilityDescriptions = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> abilityNames = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> abilityQuotes = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, NamedSection> abilityDescriptions = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<IStringSectioned, NamedSection> abilityNames = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<IStringSectioned, NamedSection> abilityQuotes = new Dictionary<IStringSectioned, NamedSection>();
         private const string filename = "Quick Edit";
-        private Dictionary<IStringSectioned, int> itemDescriptions = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> itemNames = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> jobDescriptions = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> jobNames = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> jobRequirements = new Dictionary<IStringSectioned, int>();
+        private Dictionary<IStringSectioned, NamedSection> itemDescriptions = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<IStringSectioned, NamedSection> itemNames = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<IStringSectioned, NamedSection> jobDescriptions = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<IStringSectioned, NamedSection> jobNames = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<IStringSectioned, NamedSection> jobRequirements = new Dictionary<IStringSectioned, NamedSection>();
         private static Dictionary<string, long> locations;
-        private Dictionary<IStringSectioned, int> skillsetDescriptions = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> skillsetNames = new Dictionary<IStringSectioned, int>();
-        private Dictionary<SectionType, Dictionary<IStringSectioned, int>> types =
-            new Dictionary<SectionType, Dictionary<IStringSectioned, int>>();
+        private Dictionary<IStringSectioned, NamedSection> skillsetDescriptions = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<IStringSectioned, NamedSection> skillsetNames = new Dictionary<IStringSectioned, NamedSection>();
+        private Dictionary<SectionType, Dictionary<IStringSectioned, NamedSection>> types =
+            new Dictionary<SectionType, Dictionary<IStringSectioned, NamedSection>>();
 
 		#endregion Fields 
 
@@ -69,7 +69,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
                 var namedSections = sectioned.GetNamedSections();
                 foreach ( NamedSection namedSection in namedSections )
                 {
-                    types[namedSection.SectionType].Add( namedSection.Owner, namedSection.SectionIndex );
+                    types[namedSection.SectionType].Add( namedSection.Owner, namedSection );
                     if ( namedSection.IsRepresentativeSample )
                     {
                         AddSection( 
@@ -143,13 +143,17 @@ namespace FFTPatcher.TextEditor.Files.PSX
         {
             NotifyStringList list = sender as NotifyStringList;
 
-            foreach ( KeyValuePair<IStringSectioned, int> kvp in types[list.Type] )
+            foreach ( KeyValuePair<IStringSectioned, NamedSection> kvp in types[list.Type] )
             {
-                kvp.Key[kvp.Value, e.Index] = list[e.Index];
+                if ( kvp.Value.Offset == -1 || kvp.Value.Offset <= e.Index )
+                {
+                    kvp.Key[kvp.Value.SectionIndex, e.Index] = list[e.Index];
+                }
             }
         }
 
 
 		#endregion Methods 
+
     }
 }

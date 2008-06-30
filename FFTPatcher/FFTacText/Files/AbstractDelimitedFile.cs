@@ -18,6 +18,7 @@
 */
 
 using System.Collections.Generic;
+using System;
 
 namespace FFTPatcher.TextEditor.Files
 {
@@ -57,19 +58,21 @@ namespace FFTPatcher.TextEditor.Files
         /// Initializes a new instance of the <see cref="AbstractDelimitedFile"/> class.
         /// </summary>
         /// <param name="bytes">The bytes.</param>
-        protected AbstractDelimitedFile( IList<byte> bytes )
+        /// <param name="sectionOffsets">The start position of each section.</param>
+        protected AbstractDelimitedFile( IList<byte> bytes, params int[] sectionOffsets )
             : this()
         {
-            IList<int> feBytes = bytes.IndexOfEvery( (byte)0xFE );
-            int lastStart = 0;
+            if ( sectionOffsets.Length != NumberOfSections )
+            {
+                throw new ArgumentException( "incorrect number of section offsets", "sectionOffsets" );
+            }
 
-            IList<int> sectionLengths = new List<int>( SectionNames.Count );
-            EntryNames.ForEach( member => sectionLengths.Add( member.Count ) );
-
+            List<int> offsets = new List<int>( sectionOffsets );
+            offsets.Add( bytes.Count );
             for( int i = 0; i < NumberOfSections; i++ )
             {
-                int sectionStart = feBytes[sectionLengths.Sub( 0, i ).Sum()];
-                int sectionEnd = feBytes[sectionLengths.Sub( 0, i + 1 ).Sum() - 1];
+                int sectionStart = offsets[i];
+                int sectionEnd = offsets[i + 1] - 1;
                 Sections.Add( TextUtilities.ProcessList( bytes.Sub( sectionStart, sectionEnd ), CharMap ) );
             }
         }
@@ -85,7 +88,13 @@ namespace FFTPatcher.TextEditor.Files
         /// <returns></returns>
         protected override IList<byte> ToFinalBytes()
         {
-            return CharMap.StringsToByteArray( Sections[0] );
+            List<byte> result = new List<byte>();
+            foreach ( IList<string> section in Sections )
+            {
+                result.AddRange( CharMap.StringsToByteArray( section ) );
+            }
+
+            return result;
         }
 
         /// <summary>

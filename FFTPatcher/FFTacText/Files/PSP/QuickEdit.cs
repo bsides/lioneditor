@@ -28,7 +28,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class QuickEdit : BasePSPSectionedFile, IQuickEdit
     {
 
-        #region Fields (13)
+		#region Fields (13) 
 
         private Dictionary<IStringSectioned, int> abilityDescriptions = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> abilityNames = new Dictionary<IStringSectioned, int>();
@@ -45,9 +45,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
         private Dictionary<SectionType, Dictionary<IStringSectioned, int>> types =
             new Dictionary<SectionType, Dictionary<IStringSectioned, int>>();
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         public QuickEdit( FFTText text )
         {
@@ -80,9 +80,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
             }
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (4)
+		#region Properties (4) 
 
         /// <summary>
         /// Gets the filename.
@@ -125,12 +125,12 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return Enum.GetValues( typeof( SectionType ) ).Length; }
         }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Methods (2)
+		#region Methods (2) 
 
 
-        // Private Methods (2) 
+		// Private Methods (2) 
 
         private void AddSection( SectionType type, IList<string> list )
         {
@@ -150,6 +150,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-        #endregion Methods
+		#endregion Methods 
+
     }
 }

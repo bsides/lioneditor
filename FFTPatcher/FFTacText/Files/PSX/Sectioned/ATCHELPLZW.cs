@@ -81,7 +81,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
         /// <value></value>
-        public override int MaxLength { get { return 0x0160D5; } }
+        public override int MaxLength { get { return 0x16800; } }
 
         /// <summary>
         /// Gets the number of sections.
@@ -104,7 +104,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
             var result = base.GetNamedSections();
             result.Add( new NamedSection( this, SectionType.JobDescriptions, 12 ) );
             result.Add( new NamedSection( this, SectionType.ItemDescriptions, 13 ) );
-            result.Add( new NamedSection( this, SectionType.AbilityDescriptions, 15 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityDescriptions, 15, 265 ) );
             result.Add( new NamedSection( this, SectionType.SkillsetDescriptions, 19 ) );
             return result;
         }

@@ -83,7 +83,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
         /// <value></value>
-        public override int MaxLength { get { return 0x4B88; } }
+        public override int MaxLength { get { return 0x5000; } }
 
         /// <summary>
         /// Gets the number of sections.

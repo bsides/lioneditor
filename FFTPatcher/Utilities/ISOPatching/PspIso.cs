@@ -25,6 +25,79 @@ namespace FFTPatcher
 {
     public static class PspIso
     {
+        public enum Sectors
+        {
+            PSP_GAME_ICON0_PNG = 22560,
+            PSP_GAME_PARAM_SFO = 22576,
+            PSP_GAME_PIC0_PNG = 22416,
+            PSP_GAME_PIC1_PNG = 22432,
+            PSP_GAME_SYSDIR_BOOT_BIN = 130480,
+            PSP_GAME_SYSDIR_EBOOT_BIN = 32,
+            PSP_GAME_SYSDIR_UPDATE_DATA_BIN = 6032,
+            PSP_GAME_SYSDIR_UPDATE_EBOOT_BIN = 1936,
+            PSP_GAME_SYSDIR_UPDATE_PARAM_SFO = 1920,
+            PSP_GAME_USRDIR_fftpack_bin = 22592,
+            PSP_GAME_USRDIR_movie_001_HolyStone_pmf = 132368,
+            PSP_GAME_USRDIR_movie_002_Opening_pmf = 190832,
+            PSP_GAME_USRDIR_movie_003_Abduction_pmf = 198112,
+            PSP_GAME_USRDIR_movie_004_Kusabue_pmf = 135360,
+            PSP_GAME_USRDIR_movie_005_Get_away_pmf = 140288,
+            PSP_GAME_USRDIR_movie_006_Reassume_Dilita_pmf = 144352,
+            PSP_GAME_USRDIR_movie_007_Dilita_Advice_pmf = 150224,
+            PSP_GAME_USRDIR_movie_008_Ovelia_and_Dilita_pmf = 156000,
+            PSP_GAME_USRDIR_movie_009_Dilita_Musing_pmf = 166192,
+            PSP_GAME_USRDIR_movie_010_Ending_pmf = 179264,
+            PSP_GAME_USRDIR_movie_011_Russo_pmf = 183360,
+            PSP_GAME_USRDIR_movie_012_Valuhurea_pmf = 186304,
+            PSP_GAME_USRDIR_movie_013_StaffRoll_pmf = 202128,
+            UMD_DATA_BIN = 28,
+        }
+
+        public static class Files
+        {
+            public static class PSP_GAME
+            {
+                public const Sectors ICON0_PNG = Sectors.PSP_GAME_ICON0_PNG;
+                public const Sectors PARAM_SFO = Sectors.PSP_GAME_PARAM_SFO;
+                public const Sectors PIC0_PNG = Sectors.PSP_GAME_PIC0_PNG;
+                public const Sectors PIC1_PNG = Sectors.PSP_GAME_PIC1_PNG;
+
+                public static class SYSDIR
+                {
+                    public const Sectors BOOT_BIN = Sectors.PSP_GAME_SYSDIR_BOOT_BIN;
+                    public const Sectors EBOOT_BIN = Sectors.PSP_GAME_SYSDIR_EBOOT_BIN;
+
+                    public static class UPDATE
+                    {
+                        public const Sectors DATA_BIN = Sectors.PSP_GAME_SYSDIR_UPDATE_DATA_BIN;
+                        public const Sectors EBOOT_BIN = Sectors.PSP_GAME_SYSDIR_UPDATE_EBOOT_BIN;
+                        public const Sectors PARAM_SFO = Sectors.PSP_GAME_SYSDIR_UPDATE_PARAM_SFO;
+                    }
+                }
+                public static class USRDIR
+                {
+                    public const Sectors fftpack_bin = Sectors.PSP_GAME_USRDIR_fftpack_bin;
+                    public static class movie
+                    {
+                        public const Sectors _001_HolyStone_pmf = Sectors.PSP_GAME_USRDIR_movie_001_HolyStone_pmf;
+                        public const Sectors _002_Opening_pmf = Sectors.PSP_GAME_USRDIR_movie_002_Opening_pmf;
+                        public const Sectors _003_Abduction_pmf = Sectors.PSP_GAME_USRDIR_movie_003_Abduction_pmf;
+                        public const Sectors _004_Kusabue_pmf = Sectors.PSP_GAME_USRDIR_movie_004_Kusabue_pmf;
+                        public const Sectors _005_Get_away_pmf = Sectors.PSP_GAME_USRDIR_movie_005_Get_away_pmf;
+                        public const Sectors _006_Reassume_Dilita_pmf = Sectors.PSP_GAME_USRDIR_movie_006_Reassume_Dilita_pmf;
+                        public const Sectors _007_Dilita_Advice_pmf = Sectors.PSP_GAME_USRDIR_movie_007_Dilita_Advice_pmf;
+                        public const Sectors _008_Ovelia_and_Dilita_pmf = Sectors.PSP_GAME_USRDIR_movie_008_Ovelia_and_Dilita_pmf;
+                        public const Sectors _009_Dilita_Musing_pmf = Sectors.PSP_GAME_USRDIR_movie_009_Dilita_Musing_pmf;
+                        public const Sectors _010_Ending_pmf = Sectors.PSP_GAME_USRDIR_movie_010_Ending_pmf;
+                        public const Sectors _011_Russo_pmf = Sectors.PSP_GAME_USRDIR_movie_011_Russo_pmf;
+                        public const Sectors _012_Valuhurea_pmf = Sectors.PSP_GAME_USRDIR_movie_012_Valuhurea_pmf;
+                        public const Sectors _013_StaffRoll_pmf = Sectors.PSP_GAME_USRDIR_movie_013_StaffRoll_pmf;
+                    }
+                }
+            }
+
+            public const Sectors UMD_DATA_BIN = Sectors.UMD_DATA_BIN;
+        }
 
 		#region Static Fields (4) 
 
@@ -280,7 +353,7 @@ namespace FFTPatcher
         /// <param name="bytes">The bytes to update the file with.</param>
         public static void UpdateFFTPack( FileStream stream, int index, byte[] bytes )
         {
-            FFTPack.PatchFile( stream, fftpackLocation, index, bytes );
+            FFTPack.PatchFile( stream, fftpackLocation, index, bytes, false, null );
         }
 
 

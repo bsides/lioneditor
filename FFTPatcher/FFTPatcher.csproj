@@ -494,7 +494,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PSXResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\ISOPatching\CDTool.cs" />
     <Compile Include="Utilities\Codes.cs" />
     <Compile Include="Utilities\DigestGenerator.cs" />
     <Compile Include="Utilities\ExtensionMethods.cs" />

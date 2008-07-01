@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
+using System.ComponentModel;
 
 namespace FFTPatcher.TextEditor
 {
@@ -207,7 +208,7 @@ namespace FFTPatcher.TextEditor
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), e.SuggestedFilename, false );
-                WriteBytesToFile( e.File.ToByteArray(), openFileDialog.FileName, e.File.Locations[sector] );
+                WriteBytesToFile( e.File.ToByteArray(), openFileDialog.FileName, e.File.Locations[(int)sector] );
             }
         }
 
@@ -331,12 +332,12 @@ namespace FFTPatcher.TextEditor
                     PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), e.SuggestedFilename, false );
                     if( e.PartitionNumber == -1 )
                     {
-                        WriteBytesToFile( file.ToByteArray(), openFileDialog.FileName, e.File.Locations[sector] );
+                        WriteBytesToFile( file.ToByteArray(), openFileDialog.FileName, e.File.Locations[(int)sector] );
                     }
                     else
                     {
                         WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), openFileDialog.FileName,
-                            e.File.Locations[sector] + file.SectionLength * e.PartitionNumber );
+                            e.File.Locations[(int)sector] + file.SectionLength * e.PartitionNumber );
                     }
                 }
             }
@@ -344,42 +345,65 @@ namespace FFTPatcher.TextEditor
 
         private void patchMenuItem_Click( object sender, EventArgs e )
         {
-            if( File.Filetype == Filetype.PSP )
-            {
-                openFileDialog.Filter = "ISO images (*.iso)|*.iso";
-                if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            bool oldStringSectionedEditorEnabled = stringSectionedEditor.Enabled;
+            bool oldCompressedEditorEnabled = compressedStringSectionedEditor.Enabled;
+            bool oldPartitionEditorEnabled = partitionEditor.Enabled;
+
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
                 {
-                    try
+                    File.UpdateIso( sender1 as BackgroundWorker, args );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Value = args.ProgressPercentage;
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    fileMenuItem.Enabled = true;
+
+                    ( File.Filetype == Filetype.PSX ? psxMenuItem : pspMenuItem ).Enabled = true;
+
+                    helpMenuItem.Enabled = true;
+                    stringSectionedEditor.Enabled = oldStringSectionedEditorEnabled;
+                    compressedStringSectionedEditor.Enabled = oldCompressedEditorEnabled;
+                    partitionEditor.Enabled = oldPartitionEditorEnabled;
+                    UseWaitCursor = false;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if ( args.Error != null )
                     {
-                        using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
-                        {
-                            File.UpdatePspIso( stream );
-                        }
+                        MessageBox.Show( this, "There was an error patching the ISO", "Error" );
                     }
-                    catch( Exception )
-                    {
-                        MessageBox.Show( this, "Error patching file.", "Error", MessageBoxButtons.OK );
-                    }
-                }
-            }
-            else if( File.Filetype == Filetype.PSX )
+                };
+
+
+            openFileDialog.Filter = File.Filetype == Filetype.PSX ? "ISO images (*.bin)|*.bin" : "ISO images (*.iso)|*.iso";
+            saveFileDialog.OverwritePrompt = false;
+            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                Enabled = false;
-                DataReceivedEventHandler dataReceived = new DataReceivedEventHandler( delegate( object o, DataReceivedEventArgs drea ) { } );
-                EventHandler finished = new EventHandler(
-                    delegate( object o2, EventArgs ea )
-                    {
-                        MethodInvoker mi = new MethodInvoker( delegate() { Enabled = true; } );
-                        if( InvokeRequired )
-                        {
-                            Invoke( mi );
-                        }
-                        else
-                        {
-                            mi();
-                        }
-                    } );
-                File.UpdatePsxIso( dataReceived, finished );
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
+
+                fileMenuItem.Enabled = false;
+
+                ( File.Filetype == Filetype.PSX ? psxMenuItem : pspMenuItem ).Enabled = false;
+
+                helpMenuItem.Enabled = false;
+                stringSectionedEditor.Enabled = false;
+                compressedStringSectionedEditor.Enabled = false;
+                partitionEditor.Enabled = false;
+                UseWaitCursor = true;
+
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+                patchPsxBackgroundWorker.RunWorkerAsync( saveFileDialog.FileName );
             }
         }
 
@@ -403,6 +427,7 @@ namespace FFTPatcher.TextEditor
 
         private void saveMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {

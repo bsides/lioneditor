@@ -19,6 +19,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
@@ -252,7 +253,7 @@ namespace FFTPatcher.Datatypes
             try
             {
                 stream = new FileStream( filename, FileMode.Open );
-                PatchFile( stream, index, bytes );
+                PatchFile( stream, index, bytes, false, null );
             }
             catch( Exception )
             {
@@ -269,12 +270,12 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static void PatchFile( FileStream stream, int index, byte[] bytes )
+        public static void PatchFile( FileStream stream, int index, byte[] bytes, bool generatePpf, IList<byte> ppfBytes )
         {
-            PatchFile( stream, 0, index, bytes );
+            PatchFile( stream, 0, index, bytes, generatePpf, ppfBytes );
         }
 
-        public static void PatchFile( FileStream stream, long streamPosition, int index, byte[] bytes )
+        public static void PatchFile( FileStream stream, long streamPosition, int index, byte[] bytes, bool generatePpf, IList<byte> ppfBytes )
         {
             try
             {
@@ -283,6 +284,13 @@ namespace FFTPatcher.Datatypes
                 stream.Read( pointer, 0, 4 );
 
                 stream.Seek( streamPosition + pointer.ToUInt32(), SeekOrigin.Begin );
+                if ( generatePpf )
+                {
+                    byte[] oldBytes = new byte[bytes.Length];
+                    stream.Read( oldBytes, 0, bytes.Length );
+                    stream.Seek( -( streamPosition + pointer.ToUInt32() ), SeekOrigin.Current );
+                    IsoPatch.GeneratePpf( oldBytes, bytes, streamPosition + pointer.ToUInt32(), ppfBytes );
+                }
 
                 stream.Write( bytes, 0, bytes.Length );
             }

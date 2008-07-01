@@ -31,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Fields (3) 
 
         private const string filename = "HELPMENU.OUT";
-        private static Dictionary<Enum, long> locations;
+        private static Dictionary<int, long> locations;
         private const int numberOfSections = 21;
 
 		#endregion Fields 
@@ -65,15 +65,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<Enum, long> Locations
+        public override IDictionary<int, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<Enum, long>();
-                    locations.Add( PsxIso.Sectors.EVENT_HELPMENU_OUT, 0x1B30 );
-                    locations.Add( PsxIso.Sectors.WORLD_WORLD_BIN, 0x777E0 );
+                    locations = new Dictionary<int, long>();
+                    locations.Add( (int)PsxIso.Sectors.EVENT_HELPMENU_OUT, 0x1B30 );
+                    locations.Add( (int)PsxIso.Sectors.WORLD_WORLD_BIN, 0x777E0 );
                 }
 
                 return locations;

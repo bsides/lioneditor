@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace FFTPatcher.Datatypes
 {
@@ -534,6 +536,117 @@ namespace FFTPatcher.Datatypes
             SavePatchToFile( path, FFTPatch.Context, true );
         }
 
+        public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e )
+        {
+            string filename = e.Argument as string;
+            const int defaultNumberOfTasks = 19;
+            const bool patchSCEAP = true;
+            int numberOfTasks = defaultNumberOfTasks;
+            int tasksComplete = 1;
+            List<PatchedByteArray> patches = new List<PatchedByteArray>();
+
+            MethodInvoker progress =
+                delegate()
+                {
+                    numberOfTasks = defaultNumberOfTasks + patches.Count * 2;
+                    backgroundWorker.ReportProgress( tasksComplete++ * 100 / numberOfTasks );
+                };
+
+            if ( Abilities.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x4F3F0, Abilities.ToByteArray() ) );
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0x14F3F0, Abilities.ToEffectsByteArray() ) );
+            }
+            progress();
+            progress();
+
+            if ( Items.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x536B8, Items.ToFirstByteArray() ) );
+            }
+            progress();
+            if ( ItemAttributes.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x54AC4, ItemAttributes.ToFirstByteArray() ) );
+            }
+            progress();
+            if ( Jobs.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x518B8, Jobs.ToByteArray( Context.US_PSX ) ) );
+            }
+            progress();
+            if ( JobLevels.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x568C4, JobLevels.ToByteArray( Context.US_PSX ) ) );
+            }
+            progress();
+            if ( SkillSets.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x55294, SkillSets.ToByteArray( Context.US_PSX ) ) );
+            }
+            progress();
+            if ( MonsterSkills.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x563C4, MonsterSkills.ToByteArray( Context.US_PSX ) ) );
+            }
+            progress();
+            if ( ActionMenus.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x564B4, ActionMenus.ToByteArray( Context.US_PSX ) ) );
+            }
+            progress();
+            if ( StatusAttributes.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x565E4, StatusAttributes.ToByteArray( Context.US_PSX ) ) );
+            }
+            progress();
+            if ( InflictStatuses.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x547C4, InflictStatuses.ToByteArray() ) );
+            }
+            progress();
+            if ( PoachProbabilities.HasChanged )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x56864, PoachProbabilities.ToByteArray( Context.US_PSX ) ) );
+            }
+            progress();
+
+            for ( int i = 0; i < 4; i++ )
+            {
+                if ( ENTDs.ENTDs[i].HasChanged )
+                {
+                    patches.Add( new PatchedByteArray( (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), string.Format( "BATTLE_ENTD{0}_ENT", i + 1 ), false ), 0, ENTDs.ENTDs[i].ToByteArray() ) );
+                }
+                progress();
+            }
+
+            patches.Add( new PatchedByteArray( PsxIso.Sectors.EVENT_FONT_BIN, 0, Font.ToByteArray() ) );
+            progress();
+            patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, Font.ToWidthsByteArray() ) );
+            progress();
+
+            if ( patchSCEAP )
+            {
+                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCEAP_DAT, 0, PSXResources.SCEAPDAT ) );
+            }
+            progress();
+
+            string fullpath = Path.GetFullPath( filename );
+            string ppfFilename = 
+                fullpath.Remove( fullpath.LastIndexOf( Path.GetExtension( fullpath ) ) ) + ".fftpatcher.ppf";
+            using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
+            using ( FileStream ppfStream = new FileStream( ppfFilename, FileMode.Create ) )
+            {
+                IList<byte> ppf = IsoPatch.InitializePpf();
+                foreach ( PatchedByteArray patch in patches )
+                {
+                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true, true, ppf );
+                    progress();
+                }
+                ppfStream.Write( ppf.ToArray(), 0, ppf.Count );
+            }
+        }
+
         public static void ConvertPsxPatchToPsp( XmlNode document )
         {
             Action<StringBuilder> sbPrettifier = new Action<StringBuilder>(
@@ -816,6 +929,5 @@ namespace FFTPatcher.Datatypes
         }
 
         #endregion Methods
-
     }
 }

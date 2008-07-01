@@ -21,10 +21,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 namespace FFTPatcher
 {
-    static class IsoPatch
+    public static class IsoPatch
     {
 
 		#region Static Fields (6) 
@@ -50,7 +51,6 @@ namespace FFTPatcher
             Mode2Form1 = 1,
             Mode2Form2 = 2
         }
-
 
 		#region Constructors (1) 
 
@@ -116,6 +116,21 @@ namespace FFTPatcher
             destination[3] = (byte)((edc >> 24) & 0xFF);
         }
 
+        public static IList<byte> InitializePpf()
+        {
+            const string description = "FFTPatch generated file                           ";
+            const string magicString = "PPF30";
+            List<byte> result = new List<byte>();
+            result.AddRange( magicString.ToByteArray() );
+            result.Add( 0x02 ); // PPF 3.0
+            result.AddRange( description.ToByteArray() );
+            result.Add( 0x00 ); // binary file
+            result.Add( 0x00 ); // disable blockcheck
+            result.Add( 0x01 ); // enable undo data
+            result.Add( 0x01 ); // dummy
+            return result;
+        }
+
         private static void GenerateEcc( IList<byte> sector, bool zeroAddress )
         {
             byte[] address = new byte[4];
@@ -157,20 +172,21 @@ namespace FFTPatcher
             }
         }
 
-        private static void GeneratePpf( byte[] originalSector, byte[] sector, long offset, IList<byte> patch )
+        public static void GeneratePpf( byte[] originalSector, byte[] sector, long offset, IList<byte> patch )
         {
             int sectorLength = sector.Length;
-            for( int i = 0; i < sectorLength; i++ )
+            for ( int i = 0; i < sectorLength; i++ )
             {
                 int start = i;
 
-                while( originalSector[i] != sector[i] && (i - start < 255)) i++;
+                while ( i < sectorLength && originalSector[i] != sector[i] && ( i - start < 255 ) )
+                    i++;
 
-                if( start != i )
+                if ( start != i )
                 {
                     int count = i - start;
                     System.Diagnostics.Debug.Assert( count <= 255 );
-                    patch.AddRange( (offset + start).ToBytes() );
+                    patch.AddRange( ( offset + start ).ToBytes() );
                     patch.Add( (byte)count );
                     patch.AddRange( sector.Sub( start, start + count - 1 ) );
                     patch.AddRange( originalSector.Sub( start, start + count - 1 ) );

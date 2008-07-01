@@ -31,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         #region Static Fields (3)
 
         private static string[][] entryNames;
-        private static Dictionary<Enum, long> locations;
+        private static Dictionary<int, long> locations;
         private static string[] sectionNames;
 
         #endregion Static Fields
@@ -74,13 +74,13 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<Enum, long> Locations
+        public override IDictionary<int, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<Enum, long>();
+                    locations = new Dictionary<int, long>();
                     //locations.Add( "WORLD/WLDMES.BIN", 0x00 );
                 }
 

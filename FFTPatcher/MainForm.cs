@@ -24,6 +24,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using FFTPatcher.Datatypes;
+using System.ComponentModel;
 
 namespace FFTPatcher
 {
@@ -133,6 +134,7 @@ namespace FFTPatcher
 
         private void cheatdbMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "CWCheat DB files|cheat.db";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
@@ -237,6 +239,7 @@ namespace FFTPatcher
 
         private void generateFontMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "FONT.BIN|FONT.BIN";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
@@ -341,10 +344,52 @@ namespace FFTPatcher
 
         private void patchPsxIsoMenuItem_Click( object sender, EventArgs e )
         {
-            Enabled = false;
-            CDTool.PatchISOWithFFTPatchAsync( FFTPatch.Abilities, FFTPatch.Items, FFTPatch.ItemAttributes, FFTPatch.Jobs, FFTPatch.JobLevels,
-                FFTPatch.SkillSets, FFTPatch.MonsterSkills, FFTPatch.ActionMenus, FFTPatch.StatusAttributes, FFTPatch.InflictStatuses,
-                FFTPatch.PoachProbabilities, FFTPatch.Font, FFTPatch.ENTDs, PatchDataReceived, PatchFinished );
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
+                {
+                    FFTPatch.PatchPsxIso( sender1 as BackgroundWorker, args );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Visible = true;
+                    progressBar.Value = args.ProgressPercentage;
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    Enabled = true;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if ( args.Error != null )
+                    {
+                        MessageBox.Show( this, "There was an error patching the file", "Error" );
+                    }
+                };
+
+            saveFileDialog.OverwritePrompt = false;
+            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
+                
+                Enabled = false;
+
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+
+                patchPsxBackgroundWorker.RunWorkerAsync( saveFileDialog.FileName );
+            }
+        }
+
+
+        private void patchPsxBackgroundWorker_DoWork( object sender, DoWorkEventArgs e )
+        {
+            FFTPatch.PatchPsxIso( sender as BackgroundWorker, e );
         }
 
         private void PatchDataReceived( object sender, DataReceivedEventArgs e )
@@ -388,6 +433,7 @@ namespace FFTPatcher
 
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
             saveFileDialog.FilterIndex = 0;
             folderBrowserDialog.Description = "Where are the extracted files?";
@@ -444,6 +490,7 @@ namespace FFTPatcher
 
         private string SavePatch( bool digest )
         {
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {

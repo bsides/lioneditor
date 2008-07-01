@@ -39,7 +39,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         private Dictionary<IStringSectioned, NamedSection> jobDescriptions = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<IStringSectioned, NamedSection> jobNames = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<IStringSectioned, NamedSection> jobRequirements = new Dictionary<IStringSectioned, NamedSection>();
-        private static Dictionary<Enum, long> locations;
+        private static Dictionary<int, long> locations;
         private Dictionary<IStringSectioned, NamedSection> skillsetDescriptions = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<IStringSectioned, NamedSection> skillsetNames = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<SectionType, Dictionary<IStringSectioned, NamedSection>> types =
@@ -95,13 +95,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        public override IDictionary<Enum, long> Locations
+        public override IDictionary<int, long> Locations
         {
             get
             {
                 if ( locations == null )
                 {
-                    locations = new Dictionary<Enum, long>();
+                    locations = new Dictionary<int, long>();
                 }
 
                 return locations;

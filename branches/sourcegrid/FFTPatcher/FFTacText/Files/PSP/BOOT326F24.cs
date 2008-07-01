@@ -31,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#region Fields (1) 
 
-        private static Dictionary<Enum, long> locations;
+        private static Dictionary<int, long> locations;
 
 		#endregion Fields 
 
@@ -81,14 +81,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        public override IDictionary<Enum, long> Locations
+        public override IDictionary<int, long> Locations
         {
             get
             {
                 if ( locations == null )
                 {
-                    locations = new Dictionary<Enum, long>();
-                    //locations.Add( "BOOT.BIN", 0x326F24 );
+                    locations = new Dictionary<int, long>();
+                    locations.Add( 0, 0x326F24 );
                 }
                 return locations;
             }

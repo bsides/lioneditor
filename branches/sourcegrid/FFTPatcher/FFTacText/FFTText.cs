@@ -28,6 +28,7 @@ using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
 using FFTPatcher.TextEditor.Files.PSP;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace FFTPatcher.TextEditor
 {
@@ -216,54 +217,85 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+        public void UpdateIso( BackgroundWorker worker, DoWorkEventArgs doWork )
+        {
+            if ( Filetype == Filetype.PSP )
+            {
+                UpdatePspIso( worker, doWork );
+            }
+            else if ( Filetype == Filetype.PSX )
+            {
+                UpdatePsxIso( worker, doWork );
+            }
+        }
+
         /// <summary>
         /// Updates a PSP War of the Lions ISO with the text files in this instance..
         /// </summary>
         /// <param name="stream">The stream that represents a War of the Lions image.</param>
-        public void UpdatePspIso( FileStream stream )
+        public void UpdatePspIso( BackgroundWorker worker, DoWorkEventArgs doWork )
         {
-            if( Filetype != Filetype.PSP )
+            if ( Filetype != Filetype.PSP )
             {
                 throw new InvalidOperationException();
             }
 
             List<IFFTPackFile> fftpackFiles = new List<IFFTPackFile>();
             List<IBootBin> bootBinFiles = new List<IBootBin>();
-            foreach( IStringSectioned sectioned in SectionedFiles )
+            foreach ( IStringSectioned sectioned in SectionedFiles )
             {
-                if( sectioned is IFFTPackFile )
+                if ( sectioned is IFFTPackFile )
                 {
                     fftpackFiles.Add( sectioned as IFFTPackFile );
                 }
-                else if( sectioned is IBootBin )
+                else if ( sectioned is IBootBin )
                 {
                     bootBinFiles.Add( sectioned as IBootBin );
                 }
             }
 
-            foreach( IPartitionedFile part in PartitionedFiles )
+            foreach ( IPartitionedFile part in PartitionedFiles )
             {
-                if( part is IFFTPackFile )
+                if ( part is IFFTPackFile )
                 {
                     fftpackFiles.Add( part as IFFTPackFile );
                 }
-                else if( part is IBootBin )
+                else if ( part is IBootBin )
                 {
                     bootBinFiles.Add( part as IBootBin );
                 }
             }
 
-            foreach( IFFTPackFile packFile in fftpackFiles )
-            {
-                PspIso.UpdateFFTPack( stream, packFile.Index, packFile.ToByteArray() );
-            }
+            int bootBinCount = 0;
+            bootBinFiles.ForEach( file => bootBinCount += file.Locations.Count );
 
-            foreach( IBootBin bootFile in bootBinFiles )
-            {
-                byte[] bytes = bootFile.ToByteArray();
-                foreach( long location in bootFile.Locations )
+            int defaultNumberOfTasks = fftpackFiles.Count * 2 + bootBinFiles.Count + bootBinCount;
+            int tasksCompleted = 0;
+            MethodInvoker progress =
+                delegate()
                 {
-                    PspIso.UpdateBootBin( stream, location, bytes );
+                    worker.ReportProgress( ++tasksCompleted * 100 / defaultNumberOfTasks );
+                };
+
+            using ( FileStream stream = new FileStream( doWork.Argument as string, FileMode.Open ) )
+            {
+                foreach ( IFFTPackFile packFile in fftpackFiles )
+                {
+                    byte[] bytes = packFile.ToByteArray();
+                    progress();
+                    PspIso.UpdateFFTPack( stream, packFile.Index, bytes );
+                    progress();
+                }
+
+                foreach ( IBootBin bootFile in bootBinFiles )
+                {
+                    byte[] bytes = bootFile.ToByteArray();
+                    progress();
+                    foreach ( long location in bootFile.Locations )
+                    {
+                        PspIso.UpdateBootBin( stream, location, bytes );
+                        progress();
+                    }
                 }
             }
         }
@@ -286,50 +318,69 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Updates a PSX FFT ISO with the text files in this instance.
         /// </summary>
-        public void UpdatePsxIso( DataReceivedEventHandler dataReceived, EventHandler finished )
+        public void UpdatePsxIso( BackgroundWorker worker, DoWorkEventArgs doWork )
         {
-            CDTool.PatchedByteArrayListGenerator generator = new CDTool.PatchedByteArrayListGenerator(
+            string filename = doWork.Argument as string;
+            int defaultNumberOfTasks = SectionedFiles.Count + PartitionedFiles.Count;
+            List<PatchedByteArray> patches = new List<PatchedByteArray>();
+
+            int tasksCompleted = 0;
+            MethodInvoker progress =
                 delegate()
                 {
-                    if( Filetype != Filetype.PSX )
-                    {
-                        throw new InvalidOperationException();
-                    }
-
-                    List<PatchedByteArray> patches = new List<PatchedByteArray>();
-                    foreach( IStringSectioned sectioned in SectionedFiles )
-                    {
-                        byte[] bytes = sectioned.ToByteArray();
-                        foreach( KeyValuePair<Enum, long> kvp in sectioned.Locations )
-                        {
-
-                            patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
-                        }
-                    }
-
-                    foreach( IPartitionedFile partitioned in PartitionedFiles )
-                    {
-                        byte[] bytes = partitioned.ToByteArray();
-                        foreach( KeyValuePair<Enum, long> kvp in partitioned.Locations )
-                        {
-                            patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
-                        }
-                    }
-
-                    return patches;
-                } );
-
-            using( SaveFileDialog sfd = new SaveFileDialog() )
+                    int numberOfTasks = defaultNumberOfTasks + patches.Count * 2;
+                    worker.ReportProgress( ++tasksCompleted * 100 / numberOfTasks );
+                };
+            if ( Filetype != Filetype.PSX )
             {
-                sfd.Filter = "Final Fantasy Tactics images|*.bin;*.img;*.iso";
-                if( sfd.ShowDialog() == DialogResult.OK )
+                throw new InvalidOperationException();
+            }
+
+            foreach ( IStringSectioned sectioned in SectionedFiles )
+            {
+                byte[] bytes = sectioned.ToByteArray();
+                progress();
+                foreach ( KeyValuePair<int, long> kvp in sectioned.Locations )
                 {
-                    CDTool.PatchISO( sfd.FileName, dataReceived, finished, generator );
+                    patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
+                    progress();
+                    foreach ( PatchedByteArray otherPatch in sectioned.GetOtherPatches() )
+                    {
+                        patches.Add( otherPatch );
+                        progress();
+                    }
                 }
-                else
+            }
+
+            foreach ( IPartitionedFile partitioned in PartitionedFiles )
+            {
+                byte[] bytes = partitioned.ToByteArray();
+                progress();
+                foreach ( KeyValuePair<int, long> kvp in partitioned.Locations )
                 {
-                    finished( null, EventArgs.Empty );
+                    patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
+                    progress();
+                    foreach ( PatchedByteArray otherPatch in partitioned.GetOtherPatches() )
+                    {
+                        patches.Add( otherPatch );
+                        progress();
+                    }
                 }
+            }
+
+            string fullpath = Path.GetFullPath( filename );
+            string ppfFilename =
+                fullpath.Remove( fullpath.LastIndexOf( Path.GetExtension( fullpath ) ) ) + ".fftactext.ppf";
+            using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
+            using ( FileStream ppfStream = new FileStream( ppfFilename, FileMode.Create ) )
+            {
+                IList<byte> ppf = IsoPatch.InitializePpf();
+                foreach ( PatchedByteArray patch in patches )
+                {
+                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true, true, ppf );
+                    progress();
+                }
+                ppfStream.Write( ppf.ToArray(), 0, ppf.Count );
             }
         }
 

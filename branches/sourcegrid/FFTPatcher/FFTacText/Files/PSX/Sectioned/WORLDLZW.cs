@@ -31,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Fields (2) 
 
         private const string filename = "WORLD.LZW";
-        private static Dictionary<Enum, long> locations;
+        private static Dictionary<int, long> locations;
 
 		#endregion Fields 
 
@@ -64,14 +64,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<Enum, long> Locations
+        public override IDictionary<int, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<Enum, long>();
-                    locations.Add( PsxIso.EVENT.WORLD_LZW, 0x00 );
+                    locations = new Dictionary<int, long>();
+                    locations.Add( (int)PsxIso.EVENT.WORLD_LZW, 0x00 );
                 }
 
                 return locations;

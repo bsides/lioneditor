@@ -62,6 +62,7 @@ namespace FFTPatcher
             this.newPSPMenuItem = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
+            this.saveAsPspMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.applySCUSMenuItem = new System.Windows.Forms.MenuItem();
@@ -82,7 +83,7 @@ namespace FFTPatcher
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
-            this.saveAsPspMenuItem = new System.Windows.Forms.MenuItem();
+            this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             fileMenuItem = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
@@ -134,6 +135,12 @@ namespace FFTPatcher
             this.saveMenuItem.Enabled = false;
             this.saveMenuItem.Index = 4;
             this.saveMenuItem.Text = "&Save patch...";
+            // 
+            // saveAsPspMenuItem
+            // 
+            this.saveAsPspMenuItem.Enabled = false;
+            this.saveAsPspMenuItem.Index = 5;
+            this.saveAsPspMenuItem.Text = "Save &as PSP patch...";
             // 
             // separator2
             // 
@@ -303,11 +310,10 @@ namespace FFTPatcher
             this.fftPatchEditor1.Size = new System.Drawing.Size( 815, 599 );
             this.fftPatchEditor1.TabIndex = 0;
             // 
-            // saveAsPspMenuItem
+            // patchPsxBackgroundWorker
             // 
-            this.saveAsPspMenuItem.Enabled = false;
-            this.saveAsPspMenuItem.Index = 5;
-            this.saveAsPspMenuItem.Text = "Save &as PSP patch...";
+            this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
+            this.patchPsxBackgroundWorker.WorkerSupportsCancellation = true;
             // 
             // MainForm
             // 
@@ -352,6 +358,7 @@ namespace FFTPatcher
         private System.Windows.Forms.MenuItem decryptMenuItem;
         private System.Windows.Forms.MenuItem patchPsxIsoMenuItem;
         private System.Windows.Forms.MenuItem saveAsPspMenuItem;
+        private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
 
     }
 }

@@ -31,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#region Fields (2) 
 
         private const string filename = "ATTACK.OUT";
-        private static Dictionary<Enum, long> locations;
+        private static Dictionary<int, long> locations;
 
 		#endregion Fields 
 
@@ -64,15 +64,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<Enum, long> Locations
+        public override IDictionary<int, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<Enum, long>();
-                    locations.Add( PsxIso.EVENT.ATTACK_OUT, 0xE2B0 );
-                    locations.Add( PsxIso.EVENT.SMALL_OUT, 0x6C );
+                    locations = new Dictionary<int, long>();
+                    locations.Add( (int)PsxIso.EVENT.ATTACK_OUT, 0xE2B0 );
+                    locations.Add( (int)PsxIso.EVENT.SMALL_OUT, 0x6C );
                 }
 
                 return locations;

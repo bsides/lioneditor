@@ -266,7 +266,7 @@ namespace FFTPatcher
             byte[] result = new byte[8];
             for( int i = 0; i < 8; i++ )
             {
-                result[i] = (byte)((value >> i) & 0xFF);
+                result[i] = (byte)( ( value >> ( i * 8 ) ) & 0xFF );
             }
             return result;
         }

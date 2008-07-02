@@ -102,7 +102,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSP.ATCHELPLZW" Collapsed="true">
     <Position X="9" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAACAAQAAAAAIAAAQCEAAAAAAAAAEQAAAAAAA=</HashCode>
+      <HashCode>AAAAAIBAACAAQAAACAIAAAQSEAAAAAAAAAEQAAAAAAA=</HashCode>
       <FileName>Files\PSP\Sectioned\ATCHELPLZW.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -110,7 +110,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT299024" Collapsed="true">
     <Position X="12.25" Y="10.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAACAAQAAAAAIAAAACEAAAAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAABAACAAQAAACAIAAAACEAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Files\PSP\Sectioned\BOOT299024.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -253,10 +253,9 @@
       <Method Name="AddToAppropriateCollection" Hidden="true" />
       <Method Name="FFTText" Hidden="true" />
       <Method Name="GetSchema" Hidden="true" />
-      <Field Name="quickEdit" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ICAAFAAAABAAAAAAACAAAAAiAABAAAgiAAIAgAAAAAA=</HashCode>
+      <HashCode>ICAAFAAAABAAAAAAAAAAAAAiAABAQAgiAAIAgAAAAAA=</HashCode>
       <FileName>FFTText.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -332,6 +331,22 @@
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Files\PSP\BasePSPCompressedFile.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT326F24" Collapsed="true">
+    <Position X="16.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAADAAQAAAAAIBAAACAAAAAAAAAAAQAAAQAAA=</HashCode>
+      <FileName>Files\PSP\BOOT326F24.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.PSP.QuickEdit" Collapsed="true">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAAAAJABAAAQAAAAQIAAAACEAAAQAAAAAiQAEIAEEA=</HashCode>
+      <FileName>Files\PSP\QuickEdit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="FFTPatcher.TextEditor.Files.ICompressed" Collapsed="true">
     <Position X="14.5" Y="2" Width="1.5" />

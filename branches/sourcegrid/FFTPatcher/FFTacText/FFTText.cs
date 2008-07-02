@@ -230,6 +230,43 @@ namespace FFTPatcher.TextEditor
                         }
                     }
                 }
+
+                switch( version )
+                {
+                    case 1:
+                        AddMisingFiles( Filetype, version );
+                        break;
+                    default:
+                        throw new InvalidOperationException( string.Format( "Can't upgrade from version {0} file", version ) );
+                }
+            }
+        }
+
+        private void AddMisingFiles( Filetype Filetype, int version )
+        {
+            FFTText newVersion = null;
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+            using( MemoryStream ms = new MemoryStream( Filetype == Filetype.PSP ? PSPResources.DefaultDocument : PSXResources.DefaultDocument ) )
+            using( XmlTextReader reader = new XmlTextReader( ms ) )
+            {
+                reader.WhitespaceHandling = WhitespaceHandling.None;
+                newVersion = xs.Deserialize( reader ) as FFTText;
+            }
+
+            foreach( IStringSectioned sectioned in newVersion.SectionedFiles )
+            {
+                if( SectionedFiles.Find( found => sectioned.GetType().Equals( found.GetType() ) ) == null )
+                {
+                    SectionedFiles.Add( sectioned );
+                }
+            }
+
+            foreach( IPartitionedFile partitioned in newVersion.PartitionedFiles )
+            {
+                if( PartitionedFiles.Find( found => partitioned.GetType().Equals( found.GetType() ) ) == null )
+                {
+                    PartitionedFiles.Add( partitioned );
+                }
             }
         }
 
@@ -392,7 +429,7 @@ namespace FFTPatcher.TextEditor
         public void WriteXml( XmlWriter writer )
         {
             writer.WriteAttributeString( "type", this.Filetype.ToString() );
-            writer.WriteAttributeString( "version", "1" );
+            writer.WriteAttributeString( "version", CurrentVersion.ToString( System.Globalization.CultureInfo.InvariantCulture ) );
             writer.WriteAttributeString( "files", string.Format( "{0}", PartitionedFiles.Count + SectionedFiles.Count ) );
 
             foreach( IPartitionedFile file in PartitionedFiles )

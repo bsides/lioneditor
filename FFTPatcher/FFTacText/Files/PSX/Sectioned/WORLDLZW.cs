@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -28,31 +28,26 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class WORLDLZW : BasePSXSectionedFile
     {
 
-		#regionÂ FieldsÂ (2)Â 
+		#region Static Fields (1) 
 
-        private const string filename = "WORLD.LZW";
         private static Dictionary<int, long> locations;
 
-		#endregionÂ FieldsÂ 
+		#endregion Static Fields 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Fields (1) 
+
+        private const string filename = "WORLD.LZW";
+
+		#endregion Fields 
+
+		#region Properties (4) 
+
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WORLDLZW"/> class.
+        /// Gets the number of sections.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public WORLDLZW( IList<byte> bytes )
-            : base( bytes )
-        {
-        }
-
-        private WORLDLZW()
-        {
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (4)Â 
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections { get { return 32; } }
 
         /// <summary>
         /// Gets the filename.
@@ -84,18 +79,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public override int MaxLength { get { return 0xE2DD; } }
 
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        private WORLDLZW()
+        {
+        }
+
         /// <summary>
-        /// Gets the number of sections.
+        /// Initializes a new instance of the <see cref="WORLDLZW"/> class.
         /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections { get { return 32; } }
+        /// <param name="bytes">The bytes.</param>
+        public WORLDLZW( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
 
-		#endregionÂ PropertiesÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (1)Â 
+		#region Methods (1) 
 
-
-		//Â PublicÂ MethodsÂ (1)Â 
 
         /// <summary>
         /// Gets a list of indices for named sections.
@@ -111,7 +116,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

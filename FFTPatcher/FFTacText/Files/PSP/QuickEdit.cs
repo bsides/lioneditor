@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -28,61 +28,41 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class QuickEdit : BasePSPSectionedFile, IQuickEdit
     {
 
-		#regionÂ FieldsÂ (13)Â 
+		#region Static Fields (2) 
+
+        private static Dictionary<int, long> locations;
+        private static List<SectionType> ourSectionTypes;
+
+		#endregion Static Fields 
+
+		#region Fields (11) 
 
         private Dictionary<IStringSectioned, int> abilityDescriptions = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> abilityNames = new Dictionary<IStringSectioned, int>();
-        private Dictionary<IStringSectioned, int> abilityQuotes = new Dictionary<IStringSectioned, int>();
         private const string filename = "Quick Edit";
         private Dictionary<IStringSectioned, int> itemDescriptions = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> itemNames = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> jobDescriptions = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> jobNames = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> jobRequirements = new Dictionary<IStringSectioned, int>();
-        private static Dictionary<int, long> locations;
         private Dictionary<IStringSectioned, int> skillsetDescriptions = new Dictionary<IStringSectioned, int>();
         private Dictionary<IStringSectioned, int> skillsetNames = new Dictionary<IStringSectioned, int>();
         private Dictionary<SectionType, Dictionary<IStringSectioned, int>> types =
             new Dictionary<SectionType, Dictionary<IStringSectioned, int>>();
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Properties (4) 
 
-        public QuickEdit( FFTText text )
+
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections
         {
-            types[SectionType.AbilityDescriptions] = abilityDescriptions;
-            types[SectionType.AbilityNames] = abilityNames;
-            types[SectionType.AbilityQuotes] = abilityQuotes;
-            types[SectionType.ItemDescriptions] = itemDescriptions;
-            types[SectionType.ItemNames] = itemNames;
-            types[SectionType.JobDescriptions] = jobDescriptions;
-            types[SectionType.JobNames] = jobNames;
-            types[SectionType.JobRequirements] = jobRequirements;
-            types[SectionType.SkillsetDescriptions] = skillsetDescriptions;
-            types[SectionType.SkillsetNames] = skillsetNames;
-
-            Sections = new IList<string>[NumberOfSections];
-
-            foreach( IStringSectioned sectioned in text.SectionedFiles )
-            {
-                var namedSections = sectioned.GetNamedSections();
-                foreach( NamedSection namedSection in namedSections )
-                {
-                    types[namedSection.SectionType].Add( namedSection.Owner, namedSection.SectionIndex );
-                    if( namedSection.IsRepresentativeSample )
-                    {
-                        AddSection(
-                            namedSection.SectionType,
-                            namedSection.Owner.Sections[(int)namedSection.SectionIndex].Sub( 0, namedSection.SampleLength - 1 ) );
-                    }
-                }
-            }
+            get { return ourSectionTypes.Count; }
         }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (4)Â 
 
         /// <summary>
         /// Gets the filename.
@@ -116,27 +96,57 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return Int32.MaxValue; }
         }
 
-        /// <summary>
-        /// Gets the number of sections.
-        /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        static QuickEdit()
         {
-            get { return Enum.GetValues( typeof( SectionType ) ).Length; }
+            ourSectionTypes = new List<SectionType>( Enum.GetValues( typeof( SectionType ) ) as SectionType[] );
+            ourSectionTypes.Remove( SectionType.AbilityQuotes );
         }
 
-		#endregionÂ PropertiesÂ 
+        public QuickEdit( FFTText text )
+        {
+            types[SectionType.AbilityDescriptions] = abilityDescriptions;
+            types[SectionType.AbilityNames] = abilityNames;
+            types[SectionType.ItemDescriptions] = itemDescriptions;
+            types[SectionType.ItemNames] = itemNames;
+            types[SectionType.JobDescriptions] = jobDescriptions;
+            types[SectionType.JobNames] = jobNames;
+            types[SectionType.JobRequirements] = jobRequirements;
+            types[SectionType.SkillsetDescriptions] = skillsetDescriptions;
+            types[SectionType.SkillsetNames] = skillsetNames;
 
-		#regionÂ MethodsÂ (2)Â 
+            Sections = new IList<string>[NumberOfSections];
 
+            foreach( IStringSectioned sectioned in text.SectionedFiles )
+            {
+                var namedSections = sectioned.GetNamedSections();
+                foreach( NamedSection namedSection in namedSections )
+                {
+                    types[namedSection.SectionType].Add( namedSection.Owner, namedSection.SectionIndex );
+                    if( namedSection.IsRepresentativeSample )
+                    {
+                        AddSection(
+                            namedSection.SectionType,
+                            namedSection.Owner.Sections[(int)namedSection.SectionIndex].Sub( 0, namedSection.SampleLength - 1 ) );
+                    }
+                }
+            }
+        }
 
-		//Â PrivateÂ MethodsÂ (2)Â 
+		#endregion Constructors 
+
+		#region Methods (2) 
+
 
         private void AddSection( SectionType type, IList<string> list )
         {
             NotifyStringList theList = new NotifyStringList( type, list );
             theList.ListMemberChanged += theList_ListMemberChanged;
-            Sections[(int)type] = theList;
+            Sections[ourSectionTypes.IndexOf( type )] = theList;
         }
 
         private void theList_ListMemberChanged( object sender, NotifyStringList.ListMemberChangedEventArgs e )
@@ -150,7 +160,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

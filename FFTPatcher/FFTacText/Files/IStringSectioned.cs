@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -93,7 +93,44 @@ namespace FFTPatcher.TextEditor.Files
     public class NamedSection
     {
 
-		#regionÂ ConstructorsÂ (3)Â 
+		#region Properties (6) 
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is a representative sample of <see cref="SectionType"/>.
+        /// </summary>
+        public bool IsRepresentativeSample { get; private set; }
+
+        /// <summary>
+        /// Gets the start index at which entries should be copied to this section.
+        /// </summary>
+        public int Offset { get; private set; }
+
+        /// <summary>
+        /// Gets the owner of this named section.
+        /// </summary>
+        public IStringSectioned Owner { get; private set; }
+
+        /// <summary>
+        /// Gets the number of elements in this named section to use as the sample set.
+        /// </summary>
+        public int SampleLength { get; private set; }
+
+        /// <summary>
+        /// Gets the index of this section in <see cref="Owner"/>.
+        /// </summary>
+        public int SectionIndex { get; private set; }
+
+        /// <summary>
+        /// Gets what type of section this is.
+        /// </summary>
+        public SectionType SectionType { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Methods (3) 
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedSection"/> class.
@@ -137,41 +174,8 @@ namespace FFTPatcher.TextEditor.Files
         {
         }
 
-		#endregionÂ ConstructorsÂ 
 
-		#regionÂ PropertiesÂ (6)Â 
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is a representative sample of <see cref="SectionType"/>.
-        /// </summary>
-        public bool IsRepresentativeSample { get; private set; }
-
-        /// <summary>
-        /// Gets the start index at which entries should be copied to this section.
-        /// </summary>
-        public int Offset { get; private set; }
-
-        /// <summary>
-        /// Gets the owner of this named section.
-        /// </summary>
-        public IStringSectioned Owner { get; private set; }
-
-        /// <summary>
-        /// Gets the number of elements in this named section to use as the sample set.
-        /// </summary>
-        public int SampleLength { get; private set; }
-
-        /// <summary>
-        /// Gets the index of this section in <see cref="Owner"/>.
-        /// </summary>
-        public int SectionIndex { get; private set; }
-
-        /// <summary>
-        /// Gets what type of section this is.
-        /// </summary>
-        public SectionType SectionType { get; private set; }
-
-		#endregionÂ PropertiesÂ 
+		#endregion Methods 
 
     }
 

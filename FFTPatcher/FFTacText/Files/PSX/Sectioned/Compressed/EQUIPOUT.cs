@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -28,33 +28,31 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class EQUIPOUT : BasePSXCompressedFile
     {
 
-		#regionÂ FieldsÂ (4)Â 
+		#region Static Fields (1) 
+
+        private static Dictionary<int, long> locations;
+
+		#endregion Static Fields 
+
+		#region Fields (3) 
 
         private const string filename = "EQUIP.OUT";
-        private static Dictionary<int, long> locations;
         private const int maxLength = 0x8AB7;
         private const int numberOfSections = 21;
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Properties (4) 
+
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EQUIPOUT"/> class.
+        /// Gets the number of sections.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public EQUIPOUT( IList<byte> bytes )
-            : base( bytes )
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections
         {
+            get { return numberOfSections; }
         }
-
-        private EQUIPOUT()
-        {
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (4)Â 
 
         /// <summary>
         /// Gets the filename.
@@ -92,21 +90,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
             get { return maxLength; }
         }
 
-        /// <summary>
-        /// Gets the number of sections.
-        /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections
+
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        private EQUIPOUT()
         {
-            get { return numberOfSections; }
         }
 
-		#endregionÂ PropertiesÂ 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EQUIPOUT"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        public EQUIPOUT( IList<byte> bytes )
+            : base( bytes )
+        {
+        }
 
-		#regionÂ MethodsÂ (1)Â 
+		#endregion Constructors 
 
+		#region Methods (1) 
 
-		//Â PublicÂ MethodsÂ (1)Â 
 
         /// <summary>
         /// Gets a list of indices for named sections.
@@ -119,7 +124,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

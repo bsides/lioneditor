@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -31,39 +31,8 @@ namespace FFTPatcher.TextEditor.Files
     public abstract class AbstractPartitionedFile : IPartitionedFile
     {
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Abstract Properties (7) 
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
-        /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        protected AbstractPartitionedFile( IList<byte> bytes )
-        {
-            Sections = new List<IPartition>( NumberOfSections );
-            for( int i = 0; i < NumberOfSections; i++ )
-            {
-                Sections.Add( new FilePartition( this, bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], SectionLength, CharMap ) );
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
-        /// </summary>
-        protected AbstractPartitionedFile()
-        {
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (11)Â 
-
-        /// <summary>
-        /// Gets the actual length.
-        /// </summary>
-        public int ActualLength
-        {
-            get { return ToFinalBytes().Count; }
-        }
 
         /// <summary>
         /// Gets the character map used for this file.
@@ -76,14 +45,6 @@ namespace FFTPatcher.TextEditor.Files
         public abstract IList<IList<string>> EntryNames { get; }
 
         /// <summary>
-        /// Gets the estimated length of this file.
-        /// </summary>
-        public int EstimatedLength
-        {
-            get { return ToFinalBytes().Count; }
-        }
-
-        /// <summary>
         /// Gets the filename.
         /// </summary>
         public abstract string Filename { get; }
@@ -92,11 +53,6 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets the filenames and locations for this file.
         /// </summary>
         public abstract IDictionary<int, long> Locations { get; }
-
-        /// <summary>
-        /// Gets the maximum length of this file as a byte array.
-        /// </summary>
-        public int MaxLength { get { return NumberOfSections * SectionLength; } }
 
         /// <summary>
         /// Gets the number of sections in this file.
@@ -113,112 +69,67 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public abstract IList<string> SectionNames { get; }
 
+
+		#endregion Abstract Properties 
+
+		#region Properties (4) 
+
+
+        /// <summary>
+        /// Gets the actual length.
+        /// </summary>
+        public int ActualLength
+        {
+            get { return ToFinalBytes().Count; }
+        }
+
+        /// <summary>
+        /// Gets the estimated length of this file.
+        /// </summary>
+        public int EstimatedLength
+        {
+            get { return ToFinalBytes().Count; }
+        }
+
+        /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        public int MaxLength { get { return NumberOfSections * SectionLength; } }
+
         /// <summary>
         /// Gets a collection of <see cref="IPartition"/>, representing the entries in this file.
         /// </summary>
         public IList<IPartition> Sections { get; protected set; }
 
-		#endregionÂ PropertiesÂ 
 
-		#regionÂ MethodsÂ (11)Â 
+		#endregion Properties 
 
-
-		//Â PublicÂ MethodsÂ (6)Â 
+		#region Constructors (2) 
 
         /// <summary>
-        /// Gets other patches necessary to make modifications to this file functional.
+        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
         /// </summary>
-        public IList<PatchedByteArray> GetOtherPatches()
+        protected AbstractPartitionedFile()
         {
-            return new PatchedByteArray[0];
         }
 
         /// <summary>
-        /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
         /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
-        /// </returns>
-        public System.Xml.Schema.XmlSchema GetSchema()
+        /// <param name="bytes">The bytes.</param>
+        protected AbstractPartitionedFile( IList<byte> bytes )
         {
-            return null;
-        }
-
-        /// <summary>
-        /// Generates an object from its XML representation.
-        /// </summary>
-        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
-        public void ReadXml( XmlReader reader )
-        {
-            bool b = reader.MoveToAttribute( "compressed" );
-            bool compressed = reader.ReadContentAsBoolean();
-            reader.MoveToElement();
-            if( compressed )
+            Sections = new List<IPartition>( NumberOfSections );
+            for( int i = 0; i < NumberOfSections; i++ )
             {
-                ReadXmlBase64( reader );
-            }
-            else
-            {
-                ReadXmlUncompressed( reader );
+                Sections.Add( new FilePartition( this, bytes.Sub( i * SectionLength, (i + 1) * SectionLength - 1 ), EntryNames[i], SectionLength, CharMap ) );
             }
         }
 
-        /// <summary>
-        /// Creates a byte array representing this file.
-        /// </summary>
-        /// <returns></returns>
-        public byte[] ToByteArray()
-        {
-            return ToFinalBytes().ToArray();
-        }
+		#endregion Constructors 
 
-        /// <summary>
-        /// Converts an object into its XML representation.
-        /// </summary>
-        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
-        public void WriteXml( XmlWriter writer )
-        {
-            WriteXmlUncompressed( writer );
-        }
+		#region Methods (11) 
 
-        /// <summary>
-        /// Serializes this file to an XML node.
-        /// </summary>
-        /// <param name="writer">The writer to use to write the node</param>
-        /// <param name="compressed">Whether or not this object's data should be compressed.</param>
-        public void WriteXml( XmlWriter writer, bool compressed )
-        {
-            if( compressed )
-            {
-                WriteXmlBase64( writer );
-            }
-            else
-            {
-                WriteXmlUncompressed( writer );
-            }
-        }
-
-
-
-		//Â ProtectedÂ MethodsÂ (1)Â 
-
-        /// <summary>
-        /// Gets a list of bytes that represent this file in its on-disc form.
-        /// </summary>
-        protected IList<byte> ToFinalBytes()
-        {
-            List<byte> result = new List<byte>();
-            foreach( IPartition section in Sections )
-            {
-                result.AddRange( section.ToByteArray() );
-            }
-
-            return result;
-        }
-
-
-
-		//Â PrivateÂ MethodsÂ (4)Â 
 
         private void ReadXmlBase64( XmlReader reader )
         {
@@ -319,8 +230,95 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
+        /// <summary>
+        /// Gets a list of bytes that represent this file in its on-disc form.
+        /// </summary>
+        protected IList<byte> ToFinalBytes()
+        {
+            List<byte> result = new List<byte>();
+            foreach( IPartition section in Sections )
+            {
+                result.AddRange( section.ToByteArray() );
+            }
 
-		#endregionÂ MethodsÂ 
+            return result;
+        }
+
+        /// <summary>
+        /// Gets other patches necessary to make modifications to this file functional.
+        /// </summary>
+        public IList<PatchedByteArray> GetOtherPatches()
+        {
+            return new PatchedByteArray[0];
+        }
+
+        /// <summary>
+        /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
+        /// </returns>
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Generates an object from its XML representation.
+        /// </summary>
+        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized.</param>
+        public void ReadXml( XmlReader reader )
+        {
+            bool b = reader.MoveToAttribute( "compressed" );
+            bool compressed = reader.ReadContentAsBoolean();
+            reader.MoveToElement();
+            if( compressed )
+            {
+                ReadXmlBase64( reader );
+            }
+            else
+            {
+                ReadXmlUncompressed( reader );
+            }
+        }
+
+        /// <summary>
+        /// Creates a byte array representing this file.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] ToByteArray()
+        {
+            return ToFinalBytes().ToArray();
+        }
+
+        /// <summary>
+        /// Converts an object into its XML representation.
+        /// </summary>
+        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized.</param>
+        public void WriteXml( XmlWriter writer )
+        {
+            WriteXmlUncompressed( writer );
+        }
+
+        /// <summary>
+        /// Serializes this file to an XML node.
+        /// </summary>
+        /// <param name="writer">The writer to use to write the node</param>
+        /// <param name="compressed">Whether or not this object's data should be compressed.</param>
+        public void WriteXml( XmlWriter writer, bool compressed )
+        {
+            if( compressed )
+            {
+                WriteXmlBase64( writer );
+            }
+            else
+            {
+                WriteXmlUncompressed( writer );
+            }
+        }
+
+
+		#endregion Methods 
 
     }
 }

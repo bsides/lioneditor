@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -31,7 +31,7 @@ namespace FFTPatcher
     public partial class MainForm : Form
     {
 
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public MainForm()
         {
@@ -64,9 +64,9 @@ namespace FFTPatcher
             FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (19)
+		#region Methods (24) 
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
@@ -342,6 +342,11 @@ namespace FFTPatcher
             }
         }
 
+        private void patchPsxBackgroundWorker_DoWork( object sender, DoWorkEventArgs e )
+        {
+            FFTPatch.PatchPsxIso( sender as BackgroundWorker, e );
+        }
+
         private void patchPsxIsoMenuItem_Click( object sender, EventArgs e )
         {
             DoWorkEventHandler doWork =
@@ -386,51 +391,6 @@ namespace FFTPatcher
             }
         }
 
-
-        private void patchPsxBackgroundWorker_DoWork( object sender, DoWorkEventArgs e )
-        {
-            FFTPatch.PatchPsxIso( sender as BackgroundWorker, e );
-        }
-
-        private void PatchDataReceived( object sender, DataReceivedEventArgs e )
-        {
-        }
-
-        private void PatchFinished( object sender, EventArgs e )
-        {
-            Process p = sender as Process;
-            if( p != null && p.ExitCode != 0 )
-            {
-                MethodInvoker mii = new MethodInvoker(
-                    delegate()
-                    {
-                        MessageBox.Show( "Error while patching", "Error", MessageBoxButtons.OK );
-                    } );
-                if( InvokeRequired )
-                {
-                    Invoke( mii );
-                }
-                else
-                {
-                    mii();
-                }
-            }
-
-            MethodInvoker mi = new MethodInvoker(
-                delegate()
-                {
-                    Enabled = true;
-                } );
-            if( fftPatchEditor1.InvokeRequired )
-            {
-                Invoke( mi );
-            }
-            else
-            {
-                mi();
-            }
-        }
-
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
         {
             saveFileDialog.OverwritePrompt = true;
@@ -466,11 +426,6 @@ namespace FFTPatcher
             }
         }
 
-        private void saveMenuItem_Click( object sender, System.EventArgs e )
-        {
-            SavePatch( true );
-        }
-
         private void saveAsPspMenuItem_Click( object sender, EventArgs e )
         {
             string fn = SavePatch( false );
@@ -486,6 +441,11 @@ namespace FFTPatcher
                     FFTPatch.LoadPatch( fn );
                 }
             }
+        }
+
+        private void saveMenuItem_Click( object sender, System.EventArgs e )
+        {
+            SavePatch( true );
         }
 
         private string SavePatch( bool digest )
@@ -507,7 +467,8 @@ namespace FFTPatcher
             return string.Empty;
         }
 
-        #endregionÂ Methods
+
+		#endregion Methods 
 
     }
 }

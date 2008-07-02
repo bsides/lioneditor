@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -29,30 +29,24 @@ namespace FFTPatcher.TextEditor.Files.PSP
     public class BOOT326F24 : AbstractDelimitedFile, IBootBin
     {
 
-		#regionÂ FieldsÂ (1)Â 
+		#region Static Fields (1) 
 
         private static Dictionary<int, long> locations;
 
-		#endregionÂ FieldsÂ 
+		#endregion Static Fields 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Properties (5) 
+
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BOOT326F24"/> class.
+        /// Gets the filenames and locations for this file.
         /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public BOOT326F24( IList<byte> bytes )
-            : base( bytes, 0x0000, 0x04C4, 0x0AD0, 0x1EB4, 0x2504, 0x359C, 0x5194, 0x51F8, 0x5540 )
+        ICollection<long> IBootBin.Locations
         {
+            get { return ( this as AbstractStringSectioned ).Locations.Values; }
         }
 
-        private BOOT326F24()
-        {
-        }
 
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (5)Â 
 
         /// <summary>
         /// Gets the character map that is used for this file.
@@ -68,14 +62,6 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override string Filename
         {
             get { return "BOOT.BIN[0x326F24]"; }
-        }
-
-        /// <summary>
-        /// Gets the filenames and locations for this file.
-        /// </summary>
-        ICollection<long> IBootBin.Locations
-        {
-            get { return ( this as AbstractStringSectioned ).Locations.Values; }
         }
 
         /// <summary>
@@ -102,12 +88,41 @@ namespace FFTPatcher.TextEditor.Files.PSP
             get { return 0x6441; }
         }
 
-		#endregionÂ PropertiesÂ 
 
-		#regionÂ MethodsÂ (1)Â 
+		#endregion Properties 
+
+		#region Constructors (2) 
+
+        private BOOT326F24()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BOOT326F24"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        public BOOT326F24( IList<byte> bytes )
+            : base( bytes, 0x0000, 0x04C4, 0x0AD0, 0x1EB4, 0x2504, 0x359C, 0x5194, 0x51F8, 0x5540 )
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Methods (2) 
 
 
-		//Â PublicÂ MethodsÂ (1)Â 
+        /// <summary>
+        /// Gets a list of indices for named sections.
+        /// </summary>
+        public override IList<NamedSection> GetNamedSections()
+        {
+            var result = base.GetNamedSections();
+            result.Add( new NamedSection( this, SectionType.SkillsetNames, 0, true, 227 ) );
+            result.Add( new NamedSection( this, SectionType.JobNames, 1, true, 169 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityNames, 2, true, 512 ) );
+            result.Add( new NamedSection( this, SectionType.JobRequirements, 5, true, 99 ) );
+            return result;
+        }
 
         /// <summary>
         /// Gets other patches necessary to make modifications to this file functional.
@@ -119,7 +134,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 

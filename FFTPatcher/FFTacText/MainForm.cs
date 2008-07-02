@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -32,57 +32,17 @@ namespace FFTPatcher.TextEditor
     public partial class MainForm : Form
     {
 
-		#regionÂ FieldsÂ (4)Â 
+		#region Fields (4) 
 
         private readonly MenuItem[] defaultPspMenuItems;
         private readonly MenuItem[] defaultPsxMenuItems;
         private FFTText file;
         private MenuItem[] menuItems;
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Properties (1) 
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainForm"/> class.
-        /// </summary>
-        public MainForm()
-        {
-#if DONGS
-            FillPSPFiles();
-            FillPSXFiles();
-#endif
-            InitializeComponent();
-
-            stringSectionedEditor.Visible = false;
-            compressedStringSectionedEditor.Visible = false;
-            partitionEditor.Visible = false;
-            stringSectionedEditor.SavingFile += editor_SavingFile;
-            compressedStringSectionedEditor.SavingFile += editor_SavingFile;
-            compressedStringSectionedEditor.CompressionStarted += compressedStringSectionedEditor_CompressionStarted;
-            compressedStringSectionedEditor.CompressionFinished += compressedStringSectionedEditor_CompressionFinished;
-            partitionEditor.SavingFile += partitionEditor_SavingFile;
-
-            newPspMenuItem.Click += newPspMenuItem_Click;
-            newPsxMenuItem.Click += newPsxMenuItem_Click;
-            saveMenuItem.Click += saveMenuItem_Click;
-            openMenuItem.Click += openMenuItem_Click;
-            exitMenuItem.Click += exitMenuItem_Click;
-            aboutMenuItem.Click += aboutMenuItem_Click;
-            allowedSymbolsMenuItem.Click += allowedSymbolsMenuItem_Click;
-            defaultPspMenuItems = new MenuItem[2] { 
-                new MenuItem( "-" ), 
-                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
-            defaultPsxMenuItems = new MenuItem[4] {
-                new MenuItem( "-" ),
-                new MenuItem( "Quick Edit", quickEditMenuItem_Click ),
-                new MenuItem( "-" ),
-                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (1)Â 
 
         /// <summary>
         /// Gets or sets the file being edited.
@@ -131,12 +91,54 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-		#endregionÂ PropertiesÂ 
 
-		#regionÂ MethodsÂ (20)Â 
+		#endregion Properties 
 
+		#region Constructors (1) 
 
-		//Â PrivateÂ MethodsÂ (20)Â 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
+        public MainForm()
+        {
+#if DONGS
+            FillPSPFiles();
+            FillPSXFiles();
+#endif
+            InitializeComponent();
+
+            stringSectionedEditor.Visible = false;
+            compressedStringSectionedEditor.Visible = false;
+            partitionEditor.Visible = false;
+            stringSectionedEditor.SavingFile += editor_SavingFile;
+            compressedStringSectionedEditor.SavingFile += editor_SavingFile;
+            compressedStringSectionedEditor.CompressionStarted += compressedStringSectionedEditor_CompressionStarted;
+            compressedStringSectionedEditor.CompressionFinished += compressedStringSectionedEditor_CompressionFinished;
+            partitionEditor.SavingFile += partitionEditor_SavingFile;
+
+            newPspMenuItem.Click += newPspMenuItem_Click;
+            newPsxMenuItem.Click += newPsxMenuItem_Click;
+            saveMenuItem.Click += saveMenuItem_Click;
+            openMenuItem.Click += openMenuItem_Click;
+            exitMenuItem.Click += exitMenuItem_Click;
+            aboutMenuItem.Click += aboutMenuItem_Click;
+            allowedSymbolsMenuItem.Click += allowedSymbolsMenuItem_Click;
+            defaultPspMenuItems = new MenuItem[4] { 
+                new MenuItem( "-" ),
+                new MenuItem( "Quick Edit", quickEditMenuItem_Click ),
+                new MenuItem( "-" ), 
+                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
+            defaultPsxMenuItems = new MenuItem[4] {
+                new MenuItem( "-" ),
+                new MenuItem( "Quick Edit", quickEditMenuItem_Click ),
+                new MenuItem( "-" ),
+                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
+        }
+
+		#endregion Constructors 
+
+		#region Methods (20) 
+
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
@@ -471,7 +473,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 #if DONGS
         private void FillFile( IPartitionedFile file, string filename )
         {

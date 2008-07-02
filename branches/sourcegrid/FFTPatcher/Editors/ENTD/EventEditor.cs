@@ -24,7 +24,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class EventEditor : UserControl
+    public partial class EventEditor : BaseEditor
     {
 
 		#region Fields (2) 
@@ -83,7 +83,7 @@ namespace FFTPatcher.Editors
 
             foreach( EventUnit unit in evt.Units )
             {
-                string sprite = unit.SpriteSet.Name;
+                string sprite = "*" + unit.SpriteSet.Name;
                 string name = unit.SpecialName.Name;
                 string job = unit.Job.Name;
                 maxSpriteWidth = Math.Max( maxSpriteWidth, TextRenderer.MeasureText( sprite, unitSelectorListBox.Font ).Width );
@@ -100,6 +100,7 @@ namespace FFTPatcher.Editors
         {
             CurrencyManager cm = (CurrencyManager)BindingContext[evt.Units];
             cm.Refresh();
+            OnDataChanged( this, EventArgs.Empty );
         }
 
         private void unitSelectorComboBox_SelectedIndexChanged( object sender, System.EventArgs e )
@@ -116,7 +117,7 @@ namespace FFTPatcher.Editors
                 using( Brush backBrush = new SolidBrush( e.BackColor ) )
                 {
                     e.Graphics.FillRectangle( backBrush, e.Bounds );
-                    e.Graphics.DrawString( unit.SpriteSet.Name, e.Font, textBrush, e.Bounds.X + 0, e.Bounds.Y + 0 );
+                    e.Graphics.DrawString( (unit.HasChanged ? "*" : "") + unit.SpriteSet.Name, e.Font, textBrush, e.Bounds.X + 0, e.Bounds.Y + 0 );
                     e.Graphics.DrawString( unit.SpecialName.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0], e.Bounds.Y + 0 );
                     e.Graphics.DrawString( unit.Job.Name, e.Font, textBrush, e.Bounds.X + columnWidths[0] + columnWidths[1], e.Bounds.Y + 0 );
                     if( (e.State & DrawItemState.Focus) == DrawItemState.Focus )

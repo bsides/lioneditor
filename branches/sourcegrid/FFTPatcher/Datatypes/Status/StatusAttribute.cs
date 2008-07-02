@@ -175,7 +175,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Name;
+            return (HasChanged ? "*" : "") + Name;
         }
 
 

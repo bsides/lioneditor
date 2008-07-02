@@ -25,7 +25,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class EventUnitEditor : UserControl
+    public partial class EventUnitEditor : BaseEditor
     {
 
         #region Static Fields (3)
@@ -146,12 +146,6 @@ namespace FFTPatcher.Editors
 
         #endregion Constructors
 
-        #region Events (1)
-
-        public event EventHandler DataChanged;
-
-        #endregion Events
-
         #region Methods (9)
 
 
@@ -161,18 +155,7 @@ namespace FFTPatcher.Editors
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), c.SelectedItem );
-                if( (c == spriteSetComboBox) || (c == specialNameComboBox) || (c == jobComboBox) )
-                {
-                    FireDataChangedEvent();
-                }
-            }
-        }
-
-        private void FireDataChangedEvent()
-        {
-            if( DataChanged != null )
-            {
-                DataChanged( this, EventArgs.Empty );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -193,6 +176,7 @@ namespace FFTPatcher.Editors
                     eventUnit,
                     combo.Tag.ToString(),
                     (byte)(combo.SelectedIndex > 199 ? 254 : combo.SelectedIndex) );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -202,6 +186,7 @@ namespace FFTPatcher.Editors
             {
                 NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), (byte)c.Value );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -302,6 +287,7 @@ namespace FFTPatcher.Editors
                     eventUnit,
                     combo.Tag.ToString(),
                     (byte)(combo.SelectedIndex > 31 ? 254 : combo.SelectedIndex) );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -314,6 +300,7 @@ namespace FFTPatcher.Editors
                     eventUnit,
                     combo.Tag.ToString(),
                     (byte)(combo.SelectedIndex > 100 ? 254 : combo.SelectedIndex) );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 

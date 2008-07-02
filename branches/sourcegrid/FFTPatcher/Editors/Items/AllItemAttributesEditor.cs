@@ -39,12 +39,19 @@ namespace FFTPatcher.Editors
         public AllItemAttributesEditor()
         {
             InitializeComponent();
+            itemAttributeEditor.DataChanged += new EventHandler( itemAttributeEditor_DataChanged );
         }
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
+
+        private void itemAttributeEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -54,8 +61,7 @@ namespace FFTPatcher.Editors
         public void UpdateView( AllItemAttributes attributes )
         {
             offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
-            offsetListBox.Items.Clear();
-            offsetListBox.Items.AddRange( attributes.ItemAttributes );
+            offsetListBox.DataSource = attributes.ItemAttributes;
             offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
             offsetListBox.SelectedIndex = 0;
             itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;

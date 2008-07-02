@@ -171,7 +171,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Value.ToString( "X2" );
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" );
         }
 
 

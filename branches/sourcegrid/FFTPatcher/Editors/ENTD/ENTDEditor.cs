@@ -30,12 +30,19 @@ namespace FFTPatcher.Editors
         public ENTDEditor()
         {
             InitializeComponent();
+            eventEditor1.DataChanged += new System.EventHandler( eventEditor1_DataChanged );
         }
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
+
+        private void eventEditor1_DataChanged( object sender, System.EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[eventListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void eventListBox_SelectedIndexChanged( object sender, System.EventArgs e )
         {

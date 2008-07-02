@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class EquipmentEditor : UserControl
+    public partial class EquipmentEditor : BaseEditor
     {
 
 		#region Static Fields (2) 
@@ -104,6 +104,7 @@ namespace FFTPatcher.Editors
             if (!ignoreChanges)
             {
                 ReflectionHelpers.SetFlag(equipment, FieldNames[e.Index], e.NewValue == CheckState.Checked);
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 

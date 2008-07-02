@@ -154,7 +154,8 @@ namespace FFTPatcher.Datatypes
             get
             {
                 return (Default != null) &&
-                    (Accessory != Default.Accessory ||
+                    (ItemType != Default.ItemType ||
+                    Accessory != Default.Accessory ||
                     Blank1 != Default.Blank1 ||
                     Blank2 != Default.Blank2 ||
                     Body != Default.Body ||
@@ -297,7 +298,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Name;
+            return (HasChanged ? "*" : "") + Name;
         }
 
 

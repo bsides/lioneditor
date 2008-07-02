@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class StatusesEditor : UserControl
+    public partial class StatusesEditor : BaseEditor
     {
 
 		#region Fields (3) 
@@ -78,6 +78,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFlag( statuses, Statuses.FieldNames[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 

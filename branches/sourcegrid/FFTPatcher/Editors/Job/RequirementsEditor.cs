@@ -25,7 +25,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class RequirementsEditor : UserControl
+    public partial class RequirementsEditor : BaseEditor
     {
 
 		#region Fields (1) 
@@ -75,6 +75,7 @@ namespace FFTPatcher.Editors
             dataGridView1.CellToolTipTextNeeded += dataGridView1_CellToolTipTextNeeded;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
+            dataGridView1.CellValidated += OnDataChanged;
         }
 
 		#endregion Constructors 

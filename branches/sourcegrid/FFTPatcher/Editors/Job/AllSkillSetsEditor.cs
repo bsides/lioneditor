@@ -39,12 +39,19 @@ namespace FFTPatcher.Editors
         public AllSkillSetsEditor()
         {
             InitializeComponent();
+            skillSetEditor.DataChanged += new EventHandler( skillSetEditor_DataChanged );
         }
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
+
+        private void skillSetEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[skillSetListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void skillSetListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -55,8 +62,7 @@ namespace FFTPatcher.Editors
         public void UpdateView( AllSkillSets skills )
         {
             skillSetListBox.SelectedIndexChanged -= skillSetListBox_SelectedIndexChanged;
-            skillSetListBox.Items.Clear();
-            skillSetListBox.Items.AddRange( skills.SkillSets );
+            skillSetListBox.DataSource = skills.SkillSets;
             skillSetListBox.SelectedIndexChanged += skillSetListBox_SelectedIndexChanged;
             skillSetListBox.SelectedIndex = 0;
             skillSetEditor.SkillSet = skillSetListBox.SelectedItem as SkillSet;

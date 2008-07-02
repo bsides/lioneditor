@@ -148,7 +148,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return string.Format( "{0:X3} {1}", Value, Name );
+            return (HasChanged ? "*" : "") + string.Format( "{0:X3} {1}", Value, Name );
         }
 
 

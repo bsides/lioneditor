@@ -32,6 +32,7 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
             jobEditor.SkillSetClicked += jobEditor_SkillSetClicked;
+            jobEditor.DataChanged += jobEditor_DataChanged;
         }
 
 		#endregion Constructors 
@@ -42,8 +43,14 @@ namespace FFTPatcher.Editors
 
 		#endregion Events 
 
-		#region Methods (3) 
+		#region Methods (4) 
 
+
+        private void jobEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[jobsListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void jobEditor_SkillSetClicked( object sender, LabelClickedEventArgs e )
         {
@@ -62,8 +69,7 @@ namespace FFTPatcher.Editors
         public void UpdateView( AllJobs jobs )
         {
             jobsListBox.SelectedIndexChanged -= jobsListBox_SelectedIndexChanged;
-            jobsListBox.Items.Clear();
-            jobsListBox.Items.AddRange( jobs.Jobs );
+            jobsListBox.DataSource = jobs.Jobs;
             jobsListBox.SelectedIndexChanged += jobsListBox_SelectedIndexChanged;
             jobsListBox.SelectedIndex = 0;
             jobEditor.Job = jobsListBox.SelectedItem as Job;

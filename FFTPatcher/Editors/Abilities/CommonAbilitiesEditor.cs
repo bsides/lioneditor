@@ -23,7 +23,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class CommonAbilitiesEditor : UserControl
+    public partial class CommonAbilitiesEditor : BaseEditor
     {
 
 		#region Static Fields (2) 
@@ -76,19 +76,28 @@ namespace FFTPatcher.Editors
                 delegate( object sender, EventArgs e )
                 {
                     if( !ignoreChanges )
+                    {
                         ability.JPCost = (UInt16)jpCostSpinner.Value;
+                        OnDataChanged( this, EventArgs.Empty );
+                    }
                 };
             chanceSpinner.ValueChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     if( !ignoreChanges )
+                    {
                         ability.LearnRate = (byte)chanceSpinner.Value;
+                        OnDataChanged( this, EventArgs.Empty );
+                    }
                 };
             abilityTypeComboBox.SelectedIndexChanged +=
                 delegate( object sender, EventArgs e )
                 {
                     if( !ignoreChanges )
+                    {
                         ability.AbilityType = (AbilityType)abilityTypeComboBox.SelectedIndex;
+                        OnDataChanged( this, EventArgs.Empty );
+                    }
                 };
             propertiesCheckedListBox.ItemCheck += CheckedListBox_ItemCheck;
             aiCheckedListBox.ItemCheck += CheckedListBox_ItemCheck;
@@ -112,6 +121,7 @@ namespace FFTPatcher.Editors
                 {
                     SetAbilityFlag( AIPropertyNames[e.Index], e.NewValue == CheckState.Checked );
                 }
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 

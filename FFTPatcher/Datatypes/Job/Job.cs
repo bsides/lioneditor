@@ -246,6 +246,7 @@ namespace FFTPatcher.Datatypes
                     MPMultiplier != Default.MPMultiplier ||
                     MPortrait != Default.MPortrait ||
                     PAConstant != Default.PAConstant ||
+                    PAMultiplier != Default.PAMultiplier ||
                     SkillSet.Value != Default.SkillSet.Value ||
                     SpeedConstant != Default.SpeedConstant ||
                     SpeedMultiplier != Default.SpeedMultiplier ||
@@ -439,7 +440,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Value.ToString( "X2" ) + " " + Name;
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" ) + " " + Name;
         }
 
 

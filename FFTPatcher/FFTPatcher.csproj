@@ -119,6 +119,10 @@
     <Compile Include="Editors\Abilities\AllAbilitiesEditor.Designer.cs">
       <DependentUpon>AllAbilitiesEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\BaseEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\INotifyDataChanged.cs" />
     <Compile Include="Editors\Job\AllActionMenusEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>

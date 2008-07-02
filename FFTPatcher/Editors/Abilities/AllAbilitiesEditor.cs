@@ -32,6 +32,7 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
             abilityEditor.InflictStatusLabelClicked += abilityEditor_InflictStatusLabelClicked;
+            abilityEditor.DataChanged += new EventHandler( abilityEditor_DataChanged );
         }
 
 		#endregion Constructors 
@@ -42,13 +43,19 @@ namespace FFTPatcher.Editors
 
 		#endregion Events 
 
-		#region Methods (3) 
+		#region Methods (4) 
 
 
         private void abilitiesListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             Ability a = abilitiesListBox.SelectedItem as Ability;
             abilityEditor.Ability = a;
+        }
+
+        private void abilityEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[abilitiesListBox.DataSource];
+            cm.Refresh();
         }
 
         private void abilityEditor_InflictStatusLabelClicked( object sender, LabelClickedEventArgs e )
@@ -62,8 +69,7 @@ namespace FFTPatcher.Editors
         public void UpdateView( AllAbilities allAbilities )
         {
             abilitiesListBox.SelectedIndexChanged -= abilitiesListBox_SelectedIndexChanged;
-            abilitiesListBox.Items.Clear();
-            abilitiesListBox.Items.AddRange( allAbilities.Abilities );
+            abilitiesListBox.DataSource = allAbilities.Abilities;
             abilitiesListBox.SelectedIndexChanged += abilitiesListBox_SelectedIndexChanged;
             abilitiesListBox.SelectedIndex = 0;
             abilityEditor.Ability = abilitiesListBox.SelectedItem as Ability;

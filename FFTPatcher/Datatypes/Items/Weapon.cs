@@ -85,6 +85,7 @@ namespace FFTPatcher.Datatypes
                 return base.HasChanged ||
                     (WeaponDefault != null &&
                     (Elements.ToByte() != WeaponDefault.Elements.ToByte() ||
+                    ToWeaponBoolArray() != WeaponDefault.ToWeaponBoolArray() ||
                     EvadePercentage != WeaponDefault.EvadePercentage ||
                     Formula.Value != WeaponDefault.Formula.Value ||
                     InflictStatus != WeaponDefault.InflictStatus ||

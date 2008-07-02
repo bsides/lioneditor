@@ -25,7 +25,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class AbilityEditor : UserControl
+    public partial class AbilityEditor : BaseEditor
     {
 
 		#region Fields (9) 
@@ -106,6 +106,8 @@ namespace FFTPatcher.Editors
             psxItemTypes.Remove( ItemSubType.FellSword );
 
             abilityAttributesEditor.LinkClicked += abilityAttributesEditor_LinkClicked;
+            commonAbilitiesEditor.DataChanged += OnDataChanged;
+            abilityAttributesEditor.DataChanged += OnDataChanged;
         }
 
 		#endregion Constructors 
@@ -133,6 +135,7 @@ namespace FFTPatcher.Editors
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -142,6 +145,7 @@ namespace FFTPatcher.Editors
             {
                 NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 

@@ -26,7 +26,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class ItemEditor : UserControl
+    public partial class ItemEditor : BaseEditor
     {
 
 		#region Static Fields (2) 
@@ -164,6 +164,7 @@ namespace FFTPatcher.Editors
             itemAttributesLabel.TabStop = false;
             weaponCastSpellComboBox.DataSource = weaponCastSpellItems;
             chemistItemFormulaComboBox.DataSource = itemFormulaItems;
+            weaponElementsEditor.DataChanged += OnDataChanged;
 
             ignoreChanges = false;
         }
@@ -188,6 +189,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges && item is ChemistItem )
             {
                 (item as ChemistItem).Formula = (byte)chemistItemFormulaComboBox.SelectedIndex;
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -205,6 +207,7 @@ namespace FFTPatcher.Editors
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( item, c.Tag.ToString(), c.SelectedItem );
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -213,6 +216,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFieldOrProperty( item, itemBools[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -249,6 +253,7 @@ namespace FFTPatcher.Editors
                 {
                     ReflectionHelpers.SetFieldOrProperty( item, spinner.Tag.ToString(), (byte)spinner.Value );
                 }
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -408,6 +413,7 @@ namespace FFTPatcher.Editors
             {
                 Weapon w = item as Weapon;
                 ReflectionHelpers.SetFieldOrProperty( w, weaponBools[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -416,6 +422,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges && item is Weapon && weaponFormulaComboBox.SelectedIndex == 2 )
             {
                 (item as Weapon).InflictStatus = (byte)weaponCastSpellComboBox.SelectedIndex;
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -454,6 +461,7 @@ namespace FFTPatcher.Editors
                         (item as Weapon).WeaponDefault.InflictStatus );
                     ignoreChanges = old;
                 }
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 

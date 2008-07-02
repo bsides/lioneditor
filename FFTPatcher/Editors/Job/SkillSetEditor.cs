@@ -25,7 +25,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class SkillSetEditor : UserControl
+    public partial class SkillSetEditor : BaseEditor
     {
 
 		#region Fields (5) 
@@ -90,6 +90,7 @@ namespace FFTPatcher.Editors
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 int i = actionComboBoxes.IndexOf( c );
                 skillSet.Actions[i] = c.SelectedItem as Ability;
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 
@@ -100,6 +101,7 @@ namespace FFTPatcher.Editors
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 int i = theRestComboBoxes.IndexOf( c );
                 skillSet.TheRest[i] = c.SelectedItem as Ability;
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 

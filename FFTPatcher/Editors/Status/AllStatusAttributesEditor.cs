@@ -31,11 +31,12 @@ namespace FFTPatcher.Editors
         public AllStatusAttributesEditor()
         {
             InitializeComponent();
+            statusAttributeEditor.DataChanged += new EventHandler( statusAttributeEditor_DataChanged );
         }
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
 
         private void listBox_SelectedIndexChanged( object sender, EventArgs e )
@@ -44,11 +45,16 @@ namespace FFTPatcher.Editors
             statusAttributeEditor.StatusAttribute = a;
         }
 
+        private void statusAttributeEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[listBox.DataSource];
+            cm.Refresh();
+        }
+
         public void UpdateView( AllStatusAttributes attributes )
         {
             listBox.SelectedIndexChanged -= listBox_SelectedIndexChanged;
-            listBox.Items.Clear();
-            listBox.Items.AddRange( attributes.StatusAttributes );
+            listBox.DataSource = attributes.StatusAttributes;
             listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
             listBox.SelectedIndex = 0;
             statusAttributeEditor.StatusAttribute = listBox.SelectedItem as StatusAttribute;

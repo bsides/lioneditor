@@ -24,7 +24,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class ItemAttributeEditor : UserControl
+    public partial class ItemAttributeEditor : BaseEditor
     {
 
 		#region Fields (3) 
@@ -70,6 +70,16 @@ namespace FFTPatcher.Editors
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
+
+            statusImmunityEditor.DataChanged += OnDataChanged;
+            startingStatusesEditor.DataChanged += OnDataChanged;
+            permanentStatusesEditor.DataChanged += OnDataChanged;
+
+            strongElementsEditor.DataChanged += OnDataChanged;
+            weakElementsEditor.DataChanged += OnDataChanged;
+            halfElementsEditor.DataChanged += OnDataChanged;
+            absorbElementsEditor.DataChanged += OnDataChanged;
+            cancelElementsEditor.DataChanged += OnDataChanged;
         }
 
 		#endregion Constructors 
@@ -83,6 +93,7 @@ namespace FFTPatcher.Editors
             {
                 NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -105,6 +116,7 @@ namespace FFTPatcher.Editors
                     ReflectionHelpers.GetFieldOrProperty<byte>( attributes, spinner.Tag.ToString() ),
                     ReflectionHelpers.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
             }
+            
             statusImmunityEditor.Statuses = attributes.StatusImmunity;
             startingStatusesEditor.Statuses = attributes.StartingStatuses;
             permanentStatusesEditor.Statuses = attributes.PermanentStatuses;

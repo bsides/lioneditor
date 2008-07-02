@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -21,9 +21,20 @@ namespace FFTPatcher
 {
     public class PatchedByteArray
     {
-        public int Sector { get; private set; }
-        public long Offset { get; private set; }
+
+		#region Properties (3) 
+
+
         public byte[] Bytes { get; private set; }
+
+        public long Offset { get; private set; }
+
+        public int Sector { get; private set; }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         public PatchedByteArray( PsxIso.Sectors sector, long offset, byte[] bytes )
         {
@@ -31,5 +42,8 @@ namespace FFTPatcher
             Offset = offset;
             Bytes = bytes;
         }
+
+		#endregion Constructors 
+
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -30,21 +30,8 @@ namespace FFTPatcher.TextEditor
     public partial class CompressedStringSectionedEditor : StringSectionedEditor
     {
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Properties (2) 
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CompressedStringSectionedEditor"/> class.
-        /// </summary>
-        public CompressedStringSectionedEditor()
-        {
-            InitializeComponent();
-            compressButton.Click += compressButton_Click;
-            errorLabel.VisibleChanged += errorLabel_VisibleChanged;
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (2)Â 
 
         /// <summary>
         /// Gets the length label format string.
@@ -82,18 +69,24 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-		#endregionÂ PropertiesÂ 
 
-		#regionÂ DelegatesÂ andÂ EventsÂ (4)Â 
+		#endregion Properties 
 
+		#region Constructors (1) 
 
-		//Â DelegatesÂ (2)Â 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompressedStringSectionedEditor"/> class.
+        /// </summary>
+        public CompressedStringSectionedEditor()
+        {
+            InitializeComponent();
+            compressButton.Click += compressButton_Click;
+            errorLabel.VisibleChanged += errorLabel_VisibleChanged;
+        }
 
-        private delegate void FinishedCallback( ICompressed compressed, IList<byte> result );
-        private delegate void ProgressCallback( int progress );
+		#endregion Constructors 
 
-
-		//Â EventsÂ (2)Â 
+		#region Events (2) 
 
         /// <summary>
         /// Occurs when [compression finished].
@@ -105,13 +98,17 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public event EventHandler CompressionStarted;
 
+		#endregion Events 
 
-		#endregionÂ DelegatesÂ andÂ EventsÂ 
+		#region Delegates (2) 
 
-		#regionÂ MethodsÂ (6)Â 
+        private delegate void FinishedCallback( ICompressed compressed, IList<byte> result );
+        private delegate void ProgressCallback( int progress );
 
+		#endregion Delegates 
 
-		//Â PrivateÂ MethodsÂ (6)Â 
+		#region Methods (6) 
+
 
         private void compressButton_Click( object sender, EventArgs e )
         {
@@ -179,7 +176,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -29,8 +29,30 @@ namespace FFTPatcher
     public static class GZip
     {
 
-		#regionÂ MethodsÂ (1)Â 
+		#region Methods (2) 
 
+
+        /// <summary>
+        /// Compresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns></returns>
+        public static IList<byte> Compress( byte[] bytes )
+        {
+            MemoryStream ms = new MemoryStream();
+            using( GZipStream stream = new GZipStream( ms, CompressionMode.Compress, true ) )
+            {
+                stream.Write( bytes, 0, bytes.Length );
+            }
+
+            byte[] result = new byte[ms.Length];
+            ms.Seek( 0, SeekOrigin.Begin );
+            ms.Read( result, 0, result.Length );
+            ms.Close();
+            ms.Dispose();
+
+            return result;
+        }
 
         /// <summary>
         /// Decompresses a file.
@@ -61,30 +83,8 @@ namespace FFTPatcher
             return result.ToArray();
         }
 
-        /// <summary>
-        /// Compresses the specified bytes.
-        /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        /// <returns></returns>
-        public static IList<byte> Compress( byte[] bytes )
-        {
-            MemoryStream ms = new MemoryStream();
-            using( GZipStream stream = new GZipStream( ms, CompressionMode.Compress, true ) )
-            {
-                stream.Write( bytes, 0, bytes.Length );
-            }
 
-            byte[] result = new byte[ms.Length];
-            ms.Seek( 0, SeekOrigin.Begin );
-            ms.Read( result, 0, result.Length );
-            ms.Close();
-            ms.Dispose();
-
-            return result;
-        }
-
-
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

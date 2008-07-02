@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -29,14 +29,14 @@ namespace FFTPatcher.Editors
     public partial class ItemEditor : UserControl
     {
 
-		#regionÂ StaticÂ FieldsÂ (2)Â 
+		#region Static Fields (2) 
 
         private static List<string> itemFormulaItems;
         private static List<string> weaponCastSpellItems;
 
-		#endregionÂ StaticÂ FieldsÂ 
+		#endregion Static Fields 
 
-		#regionÂ FieldsÂ (10)Â 
+		#region Fields (10) 
 
         private List<ComboBoxWithDefault> comboBoxes = new List<ComboBoxWithDefault>();
         private bool ignoreChanges = false;
@@ -53,9 +53,9 @@ namespace FFTPatcher.Editors
             "Striking", "Lunging", "Direct", "Arc",
             "TwoSwords", "TwoHands", "Blank", "Force2Hands" };
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ PropertiesÂ (1)Â 
+		#region Properties (1) 
 
 
         public Item Item
@@ -78,9 +78,9 @@ namespace FFTPatcher.Editors
         }
 
 
-		#endregionÂ PropertiesÂ 
+		#endregion Properties 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
         static ItemEditor()
         {
@@ -168,9 +168,9 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (3)Â 
+		#region Events (3) 
 
         public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
 
@@ -178,9 +178,9 @@ namespace FFTPatcher.Editors
 
         public event EventHandler<LabelClickedEventArgs> SecondTableLinkClicked;
 
-		#endregionÂ EventsÂ 
+		#endregion Events 
 
-		#regionÂ MethodsÂ (11)Â 
+		#region Methods (12) 
 
 
         private void chemistItemFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
@@ -411,6 +411,14 @@ namespace FFTPatcher.Editors
             }
         }
 
+        private void weaponCastSpellComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges && item is Weapon && weaponFormulaComboBox.SelectedIndex == 2 )
+            {
+                (item as Weapon).InflictStatus = (byte)weaponCastSpellComboBox.SelectedIndex;
+            }
+        }
+
         private void weaponFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             if( !ignoreChanges && item is Weapon )
@@ -449,14 +457,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void weaponCastSpellComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges && item is Weapon && weaponFormulaComboBox.SelectedIndex == 2 )
-            {
-                (item as Weapon).InflictStatus = (byte)weaponCastSpellComboBox.SelectedIndex;
-            }
-        }
-
         private void weaponSpellStatusLabel_Click( object sender, EventArgs e )
         {
             if( InflictStatusClicked != null && weaponSpellStatusSpinner.Value <= 127 )
@@ -466,7 +466,7 @@ namespace FFTPatcher.Editors
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

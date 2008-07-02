@@ -19,6 +19,37 @@
 -->
 <EntryNames>
   <Files>
+    <File name="FFTPatcher.TextEditor.Files.PSP.QuickEdit" sections="9">
+      <Section value="0" entries="512" empty="false" name="Ability names">
+        <include name="PSP/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
+      <Section value="1" entries="512" empty="false" name="Ability descriptions">
+        <include name="PSP/AbilityNames" start="0" end="511" offset="0"/>
+      </Section>
+      <Section value="2" entries="316" empty="false" name="Item names">
+        <include name="PSP/ItemNames" start="0" end="315" offset="0"/>
+      </Section>
+      <Section value="3" entries="316" empty="false" name="Item descriptions">
+        <include name="PSP/ItemNames" start="0" end="315" offset="0"/>
+      </Section>
+      <Section value="4" entries="169" empty="false" name="Job names">
+        <include name="PSP/JobNames" start="0" end="168" offset="0"/>
+      </Section>
+      <Section value="5" entries="169" empty="false" name="Job descriptions">
+        <include name="PSP/JobNames" start="0" end="168" offset="0"/>
+      </Section>
+      <Section value="6" entries="99" empty="false" name="Job requirements">
+        <include name="PSP/JobNames" start="74" end="93" offset="-74"/>
+        <include name="PSP/JobNames" start="1" end="74" offset="19"/>
+        <include name="PSP/JobNames" start="160" end="164" offset="-66"/>
+      </Section>
+      <Section value="7" entries="227" empty="false" name="Skillset names">
+        <include name="PSP/SkillsetNames" start="0" end="226" offset="0"/>
+      </Section>
+      <Section value="8" entries="227" empty="false" name="Skillset descriptions">
+        <include name="PSP/SkillsetNames" start="0" end="226" offset="0"/>
+      </Section>
+    </File>
     <File name="FFTPatcher.TextEditor.Files.PSP.BOOT326F24" sections="9">
       <Section value="0" entries="227" empty="false" name="Skillset names">
         <include name="PSP/SkillsetNames" start="0" end="226" offset="0" />
@@ -31,7 +62,7 @@
       </Section>
       <Section value="3" entries="31" empty="true" name="Error"/>
       <Section value="4" entries="175" empty="true" name="Dismiss quotes"/>
-      <Section value="5" entries="97" empty="true" name="Job requirements"/>
+      <Section value="5" entries="99" empty="true" name="Job requirements"/>
       <Section value="6" entries="6" empty="true"/>
       <Section value="7" entries="604" empty="true" name="Name entry"/>
       <Section value="8" entries="74" empty="true" name="Shop text"/>

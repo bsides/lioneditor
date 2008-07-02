@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -31,7 +31,7 @@ namespace FFTPatcher.TextEditor
     public partial class StringSectionedEditor : UserControl
     {
 
-        #regionÂ FieldsÂ (3)
+		#region Fields (3) 
 
         /// <summary>
         /// Whether or not there is an error with the current input.
@@ -40,9 +40,9 @@ namespace FFTPatcher.TextEditor
         private bool ignoreChanges = false;
         private IStringSectioned strings;
 
-        #endregionÂ Fields
+		#endregion Fields 
 
-        #regionÂ PropertiesÂ (2)
+		#region Properties (2) 
 
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        #endregionÂ Properties
+		#endregion Properties 
 
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringSectionedEditor"/> class.
@@ -93,18 +93,18 @@ namespace FFTPatcher.TextEditor
             errorLabel.VisibleChanged += errorLabel_VisibleChanged;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ EventsÂ (1)
+		#region Events (1) 
 
         /// <summary>
         /// Occurs when the user has requested that a file be saved.
         /// </summary>
         public event EventHandler<SavingFileEventArgs> SavingFile;
 
-        #endregionÂ Events
+		#endregion Events 
 
-        #regionÂ MethodsÂ (13)
+		#region Methods (11) 
 
 
         private void AddSections()
@@ -215,7 +215,8 @@ namespace FFTPatcher.TextEditor
             saveButton.Visible = !quickedit;
         }
 
-        #endregionÂ Methods
+
+		#endregion Methods 
 
     }
 }

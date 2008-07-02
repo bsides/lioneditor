@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -31,15 +31,15 @@ namespace FFTPatcher.TextEditor.Editors
     public partial class PartitionEditor : UserControl
     {
 
-        #regionÂ FieldsÂ (3)
+		#region Fields (3) 
 
         private bool error = false;
         private bool ignoreChanges = false;
         private IPartition strings;
 
-        #endregionÂ Fields
+		#endregion Fields 
 
-        #regionÂ PropertiesÂ (2)
+		#region Properties (2) 
 
 
         /// <summary>
@@ -74,9 +74,9 @@ namespace FFTPatcher.TextEditor.Editors
         }
 
 
-        #endregionÂ Properties
+		#endregion Properties 
 
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PartitionEditor"/> class.
@@ -93,18 +93,18 @@ namespace FFTPatcher.TextEditor.Editors
             saveThisButton.Click += saveThisButton_Click;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ EventsÂ (1)
+		#region Events (1) 
 
         /// <summary>
         /// Occurs when the user has requested that a file be saved.
         /// </summary>
         public event EventHandler<SavingFileEventArgs> SavingFile;
 
-        #endregionÂ Events
+		#endregion Events 
 
-        #regionÂ MethodsÂ (11)
+		#region Methods (12) 
 
 
         private void currentString_TextChanged( object sender, EventArgs e )
@@ -130,20 +130,6 @@ namespace FFTPatcher.TextEditor.Editors
         {
             saveThisButton.Enabled = filesListBox.SelectedIndex > -1;
             saveAllButton.Enabled = filesListBox.SelectedIndex > -1;
-        }
-
-        private void UpdateFilenames()
-        {
-            filesListBox.SuspendLayout();
-            filesListBox.ClearSelected();
-            filesListBox.Items.Clear();
-
-            foreach( int s in strings.Owner.Locations.Keys )
-            {
-                filesListBox.Items.Add( s.ToString() );
-            }
-
-            filesListBox.ResumeLayout();
         }
 
         private void FireSavingFileEvent( string suggested, int partition )
@@ -204,6 +190,20 @@ namespace FFTPatcher.TextEditor.Editors
             currentStringListBox.ResumeLayout();
         }
 
+        private void UpdateFilenames()
+        {
+            filesListBox.SuspendLayout();
+            filesListBox.ClearSelected();
+            filesListBox.Items.Clear();
+
+            foreach( int s in strings.Owner.Locations.Keys )
+            {
+                filesListBox.Items.Add( s.ToString() );
+            }
+
+            filesListBox.ResumeLayout();
+        }
+
         private void UpdateLengthLabels()
         {
             try
@@ -221,7 +221,7 @@ namespace FFTPatcher.TextEditor.Editors
         }
 
 
-        #endregionÂ Methods
+		#endregion Methods 
 
     }
 }

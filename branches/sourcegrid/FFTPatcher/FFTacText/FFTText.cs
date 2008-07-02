@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -53,16 +53,16 @@ namespace FFTPatcher.TextEditor
     public class FFTText : IXmlSerializable
     {
 
-        #regionÂ FieldsÂ (1)
+		#region Fields (1) 
 
         /// <summary>
         /// Gets the current version of FFTText files.
         /// </summary>
         public const int CurrentVersion = 2;
 
-        #endregionÂ Fields
+		#endregion Fields 
 
-        #regionÂ PropertiesÂ (4)
+		#region Properties (5) 
 
 
         /// <summary>
@@ -81,11 +81,6 @@ namespace FFTPatcher.TextEditor
         public IList<IPartitionedFile> PartitionedFiles { get; private set; }
 
         /// <summary>
-        /// Gets a collection of the <see cref="IStringSectioned"/>s in this object.
-        /// </summary>
-        public IList<IStringSectioned> SectionedFiles { get; private set; }
-
-        /// <summary>
         /// Gets the quick edit structure.
         /// </summary>
         public IQuickEdit QuickEdit 
@@ -93,9 +88,15 @@ namespace FFTPatcher.TextEditor
             get { return QuickEditFactory.GetQuickEdit( this ); }
         }
 
-        #endregionÂ Properties
+        /// <summary>
+        /// Gets a collection of the <see cref="IStringSectioned"/>s in this object.
+        /// </summary>
+        public IList<IStringSectioned> SectionedFiles { get; private set; }
 
-        #regionÂ ConstructorsÂ (1)
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         private FFTText()
         {
@@ -103,9 +104,9 @@ namespace FFTPatcher.TextEditor
             SectionedFiles = new List<IStringSectioned>();
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (6)
+		#region Methods (9) 
 
 
         private void AddToAppropriateCollection( object o )
@@ -118,6 +119,21 @@ namespace FFTPatcher.TextEditor
             {
                 SectionedFiles.Add( o as IStringSectioned );
             }
+        }
+
+        private string GetISOFilename( string filename )
+        {
+            string result = filename;
+            if( !result.StartsWith( "/" ) )
+            {
+                result = "/" + result;
+            }
+            if( !result.EndsWith( ";1" ) )
+            {
+                result += ";1";
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -300,21 +316,6 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private string GetISOFilename( string filename )
-        {
-            string result = filename;
-            if( !result.StartsWith( "/" ) )
-            {
-                result = "/" + result;
-            }
-            if( !result.EndsWith( ";1" ) )
-            {
-                result += ";1";
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Updates a PSX FFT ISO with the text files in this instance.
         /// </summary>
@@ -412,7 +413,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        #endregionÂ Methods
+		#endregion Methods 
 
     }
 }

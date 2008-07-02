@@ -137,7 +137,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
             var result = base.GetNamedSections();
             result.Add( new NamedSection( this, SectionType.JobDescriptions, 12 ) );
             result.Add( new NamedSection( this, SectionType.ItemDescriptions, 13 ) );
-            result.Add( new NamedSection( this, SectionType.AbilityDescriptions, 15 ) );
+            result.Add( new NamedSection( this, SectionType.AbilityDescriptions, 15, true, 512 ) );
             result.Add( new NamedSection( this, SectionType.SkillsetDescriptions, 19 ) );
             return result;
         }

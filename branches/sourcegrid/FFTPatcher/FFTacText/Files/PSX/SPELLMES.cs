@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -28,32 +28,21 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class SPELLMES : AbstractDelimitedFile
     {
 
-		#regionÂ FieldsÂ (3)Â 
+		#region Static Fields (1) 
+
+        private static Dictionary<int, long> locations;
+
+		#endregion Static Fields 
+
+		#region Fields (2) 
 
         private const string filename = "SPELL.MES";
-        private static Dictionary<int, long> locations;
         private const int maxLength = 0x3705;
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Properties (4) 
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SPELLMES"/> class.
-        /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        public SPELLMES( IList<byte> bytes )
-            : base( bytes, 0 )
-        {
-        }
-
-        private SPELLMES()
-        {
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (4)Â 
 
         /// <summary>
         /// Gets the character map that is used for this file.
@@ -100,12 +89,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
             get { return maxLength; }
         }
 
-		#endregionÂ PropertiesÂ 
 
-		#regionÂ MethodsÂ (1)Â 
+		#endregion Properties 
 
+		#region Constructors (2) 
 
-		//Â PublicÂ MethodsÂ (1)Â 
+        private SPELLMES()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SPELLMES"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        public SPELLMES( IList<byte> bytes )
+            : base( bytes, 0 )
+        {
+        }
+
+		#endregion Constructors 
+
+		#region Methods (1) 
+
 
         /// <summary>
         /// Gets a list of indices for named sections.
@@ -118,7 +123,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

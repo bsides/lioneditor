@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -23,6 +23,10 @@ namespace FFTPatcher.TextEditor.Files
 {
     internal static class QuickEditFactory
     {
+
+		#region Methods (1) 
+
+
         internal static IQuickEdit GetQuickEdit( FFTText fftText )
         {
             switch ( fftText.Filetype )
@@ -30,9 +34,14 @@ namespace FFTPatcher.TextEditor.Files
                 case Filetype.PSX:
                     return new PSX.QuickEdit( fftText );
                 case Filetype.PSP:
+                    return new PSP.QuickEdit( fftText );
                 default:
                     throw new ArgumentException( "fftText" );
             }
         }
+
+
+		#endregion Methods 
+
     }
 }

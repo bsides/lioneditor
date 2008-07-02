@@ -40,7 +40,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#endregion Fields 
 
-		#region Properties (4) 
+		#region Properties (5) 
 
 
         /// <summary>
@@ -82,6 +82,21 @@ namespace FFTPatcher.TextEditor.Files.PSP
         public override int MaxLength
         {
             get { return 0x38AE; }
+        }
+
+        public override string this[int section, int entry]
+        {
+            get
+            {
+                return base[section, entry];
+            }
+            set
+            {
+                if( section != 4 || entry < 155 )
+                {
+                    base[section, entry] = value;
+                }
+            }
         }
 
 

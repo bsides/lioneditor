@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -32,7 +32,22 @@ namespace FFTPatcher.TextEditor
     public partial class StringListEditor : UserControl
     {
 
-        #regionÂ ConstructorsÂ (1)
+		#region Properties (1) 
+
+
+        /// <summary>
+        /// Gets the current row.
+        /// </summary>
+        /// <value>The current row.</value>
+        public int CurrentRow
+        {
+            get { return (int)dataGridView.CurrentRow.Cells[numberColumn.Name].Value; }
+        }
+
+
+		#endregion Properties 
+
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringListEditor"/> class.
@@ -45,25 +60,9 @@ namespace FFTPatcher.TextEditor
             textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ PropertiesÂ (1)
-
-        /// <summary>
-        /// Gets the current row.
-        /// </summary>
-        /// <value>The current row.</value>
-        public int CurrentRow
-        {
-            get { return (int)dataGridView.CurrentRow.Cells[numberColumn.Name].Value; }
-        }
-
-        #endregionÂ Properties
-
-        #regionÂ DelegatesÂ andÂ EventsÂ (2)
-
-
-        //Â EventsÂ (2)Â 
+		#region Events (2) 
 
         /// <summary>
         /// Occurs when a cell is validating.
@@ -79,13 +78,36 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public event EventHandler TextBoxTextChanged;
 
+		#endregion Events 
 
-        #endregionÂ DelegatesÂ andÂ Events
-
-        #regionÂ MethodsÂ (4)
+		#region Methods (4) 
 
 
-        //Â PublicÂ MethodsÂ (1)Â 
+        private void dataGridView_CellEndEdit( object sender, DataGridViewCellEventArgs e )
+        {
+            if( dataGridView.EditingControl is TextBox )
+            {
+                dataGridView.EditingControl.TextChanged -= tb_TextChanged;
+            }
+        }
+
+        private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
+        {
+            if( dataGridView.CurrentCell.ColumnIndex == textColumn.Index && dataGridView.EditingControl is TextBox )
+            {
+                TextBox tb = dataGridView.EditingControl as TextBox;
+                tb.Font = new Font( "Arial Unicode MS", 9 );
+                tb.TextChanged += tb_TextChanged;
+            }
+        }
+
+        private void tb_TextChanged( object sender, EventArgs e )
+        {
+            if( TextBoxTextChanged != null )
+            {
+                TextBoxTextChanged( sender, e );
+            }
+        }
 
         /// <summary>
         /// Binds this editor to a list of strings.
@@ -114,37 +136,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-
-        //Â PrivateÂ MethodsÂ (3)Â 
-
-        private void dataGridView_CellEndEdit( object sender, DataGridViewCellEventArgs e )
-        {
-            if( dataGridView.EditingControl is TextBox )
-            {
-                dataGridView.EditingControl.TextChanged -= tb_TextChanged;
-            }
-        }
-
-        private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
-        {
-            if( dataGridView.CurrentCell.ColumnIndex == textColumn.Index && dataGridView.EditingControl is TextBox )
-            {
-                TextBox tb = dataGridView.EditingControl as TextBox;
-                tb.Font = new Font( "Arial Unicode MS", 9 );
-                tb.TextChanged += tb_TextChanged;
-            }
-        }
-
-        private void tb_TextChanged( object sender, EventArgs e )
-        {
-            if( TextBoxTextChanged != null )
-            {
-                TextBoxTextChanged( sender, e );
-            }
-        }
-
-
-        #endregionÂ Methods
+		#endregion Methods 
 
     }
 }

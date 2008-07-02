@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,13 +26,13 @@ namespace FFTPatcher.Datatypes
     public static class FFTPack
     {
 
-		#regionÂ EventsÂ (1)Â 
+		#region Events (1) 
 
         public static event EventHandler<ProgressEventArgs> FileProgress;
 
-		#endregionÂ EventsÂ 
+		#endregion Events 
 
-		#regionÂ MethodsÂ (9)Â 
+		#region Methods (11) 
 
 
         private static void FireFileProgressEvent( int done, int total )
@@ -300,14 +300,14 @@ namespace FFTPatcher.Datatypes
             }
         }
         
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 
     public class ProgressEventArgs : EventArgs
     {
 
-		#regionÂ PropertiesÂ (3)Â 
+		#region Properties (3) 
 
 
         public int Percentage { get { return TasksComplete * 100 / TotalTasks; } }
@@ -317,9 +317,9 @@ namespace FFTPatcher.Datatypes
         public int TotalTasks { get; private set; }
 
 
-		#endregionÂ PropertiesÂ 
+		#endregion Properties 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
         public ProgressEventArgs( int percentage )
         {
@@ -333,7 +333,7 @@ namespace FFTPatcher.Datatypes
             TasksComplete = done;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
     }
 }

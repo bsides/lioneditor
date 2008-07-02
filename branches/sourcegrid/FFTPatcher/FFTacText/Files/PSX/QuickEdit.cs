@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -28,7 +28,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
     public class QuickEdit : BasePSXSectionedFile, IQuickEdit
     {
 
-		#regionÂ FieldsÂ (13)Â 
+		#region Static Fields (1) 
+
+        private static Dictionary<int, long> locations;
+
+		#endregion Static Fields 
+
+		#region Fields (12) 
 
         private Dictionary<IStringSectioned, NamedSection> abilityDescriptions = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<IStringSectioned, NamedSection> abilityNames = new Dictionary<IStringSectioned, NamedSection>();
@@ -39,50 +45,24 @@ namespace FFTPatcher.TextEditor.Files.PSX
         private Dictionary<IStringSectioned, NamedSection> jobDescriptions = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<IStringSectioned, NamedSection> jobNames = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<IStringSectioned, NamedSection> jobRequirements = new Dictionary<IStringSectioned, NamedSection>();
-        private static Dictionary<int, long> locations;
         private Dictionary<IStringSectioned, NamedSection> skillsetDescriptions = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<IStringSectioned, NamedSection> skillsetNames = new Dictionary<IStringSectioned, NamedSection>();
         private Dictionary<SectionType, Dictionary<IStringSectioned, NamedSection>> types =
             new Dictionary<SectionType, Dictionary<IStringSectioned, NamedSection>>();
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Properties (4) 
 
-        public QuickEdit( FFTText text )
+
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
+        protected override int NumberOfSections
         {
-            types[SectionType.AbilityDescriptions] = abilityDescriptions;
-            types[SectionType.AbilityNames] = abilityNames;
-            types[SectionType.AbilityQuotes] = abilityQuotes;
-            types[SectionType.ItemDescriptions] = itemDescriptions;
-            types[SectionType.ItemNames] = itemNames;
-            types[SectionType.JobDescriptions] = jobDescriptions;
-            types[SectionType.JobNames] = jobNames;
-            types[SectionType.JobRequirements] = jobRequirements;
-            types[SectionType.SkillsetDescriptions] = skillsetDescriptions;
-            types[SectionType.SkillsetNames] = skillsetNames;
-
-            Sections = new IList<string>[NumberOfSections];
-
-            foreach ( IStringSectioned sectioned in text.SectionedFiles )
-            {
-                var namedSections = sectioned.GetNamedSections();
-                foreach ( NamedSection namedSection in namedSections )
-                {
-                    types[namedSection.SectionType].Add( namedSection.Owner, namedSection );
-                    if ( namedSection.IsRepresentativeSample )
-                    {
-                        AddSection( 
-                            namedSection.SectionType, 
-                            namedSection.Owner.Sections[(int)namedSection.SectionIndex].Sub( 0, namedSection.SampleLength - 1 ) );
-                    }
-                }
-            }
+            get { return Enum.GetValues( typeof( SectionType ) ).Length; }
         }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (4)Â 
 
         /// <summary>
         /// Gets the filename.
@@ -116,21 +96,46 @@ namespace FFTPatcher.TextEditor.Files.PSX
             get { return Int32.MaxValue; }
         }
 
-        /// <summary>
-        /// Gets the number of sections.
-        /// </summary>
-        /// <value>The number of sections.</value>
-        protected override int NumberOfSections
+
+		#endregion Properties 
+
+		#region Constructors (1) 
+
+        public QuickEdit( FFTText text )
         {
-            get { return Enum.GetValues( typeof( SectionType ) ).Length; }
+            types[SectionType.AbilityDescriptions] = abilityDescriptions;
+            types[SectionType.AbilityNames] = abilityNames;
+            types[SectionType.AbilityQuotes] = abilityQuotes;
+            types[SectionType.ItemDescriptions] = itemDescriptions;
+            types[SectionType.ItemNames] = itemNames;
+            types[SectionType.JobDescriptions] = jobDescriptions;
+            types[SectionType.JobNames] = jobNames;
+            types[SectionType.JobRequirements] = jobRequirements;
+            types[SectionType.SkillsetDescriptions] = skillsetDescriptions;
+            types[SectionType.SkillsetNames] = skillsetNames;
+
+            Sections = new IList<string>[NumberOfSections];
+
+            foreach ( IStringSectioned sectioned in text.SectionedFiles )
+            {
+                var namedSections = sectioned.GetNamedSections();
+                foreach ( NamedSection namedSection in namedSections )
+                {
+                    types[namedSection.SectionType].Add( namedSection.Owner, namedSection );
+                    if ( namedSection.IsRepresentativeSample )
+                    {
+                        AddSection( 
+                            namedSection.SectionType, 
+                            namedSection.Owner.Sections[(int)namedSection.SectionIndex].Sub( 0, namedSection.SampleLength - 1 ) );
+                    }
+                }
+            }
         }
 
-		#endregionÂ PropertiesÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
+		#region Methods (2) 
 
-
-		//Â PrivateÂ MethodsÂ (2)Â 
 
         private void AddSection( SectionType type, IList<string> list )
         {
@@ -153,7 +158,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

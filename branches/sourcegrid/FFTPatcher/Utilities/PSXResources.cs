@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,7 +24,7 @@ namespace FFTPatcher
     public static class PSXResources
     {
 
-		#regionÂ FieldsÂ (7)Â 
+		#region Static Fields (7) 
 
         private static string[] abilityAI;
         private static string[] abilityAttributes;
@@ -34,46 +34,10 @@ namespace FFTPatcher
         private static string[] shopAvailabilities;
         private static string[] statuses;
 
-		#endregionÂ FieldsÂ 
+		#endregion Static Fields 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Static Properties (31) 
 
-        static PSXResources()
-        {
-            dict["AbilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesBin );
-            dict["ActionEventsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.ActionEventsBin );
-            dict["FontBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.FontBin );
-            dict["FontWidthsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.FontWidthsBin );
-            dict["InflictStatusesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.InflictStatusesBin );
-            dict["JobLevelsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.JobLevelsBin );
-            dict["JobsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.JobsBin );
-            dict["MonsterSkillsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.MonsterSkillsBin );
-            dict["StatusAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.StatusAttributesBin );
-            dict["OldItemAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.OldItemAttributesBin );
-            dict["OldItemsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.OldItemsBin );
-            dict["SkillSetsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SkillSetsBin );
-            dict["PoachProbabilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.PoachProbabilitiesBin );
-
-            dict["SkillSets"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SkillSets ).ToUTF8String();
-            dict["Abilities"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Abilities ).ToUTF8String();
-            dict["AbilitiesStrings"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesStrings ).ToUTF8String();
-            dict["EventNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.EventNames ).ToUTF8String();
-            dict["Items"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Items ).ToUTF8String();
-            dict["ItemsStrings"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.ItemsStrings ).ToUTF8String();
-            dict["Jobs"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Jobs ).ToUTF8String();
-            dict["SpecialNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpecialNames ).ToUTF8String();
-            dict["SpriteSets"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpriteSets ).ToUTF8String();
-            dict["StatusNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.StatusNames ).ToUTF8String();
-
-            dict["AbilitiesEffects"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesEffects ).ToUTF8String();
-            dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilityEffectsBin );
-
-            dict["SCEAP"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SCEAP );
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ PropertiesÂ (31)Â 
 
         public static string Abilities { get { return dict["Abilities"] as string; } }
 
@@ -222,7 +186,45 @@ namespace FFTPatcher
 
         public static string StatusNames { get { return dict["StatusNames"] as string; } }
 
-		#endregionÂ PropertiesÂ 
+
+		#endregion Static Properties 
+
+		#region Constructors (1) 
+
+        static PSXResources()
+        {
+            dict["AbilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesBin );
+            dict["ActionEventsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.ActionEventsBin );
+            dict["FontBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.FontBin );
+            dict["FontWidthsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.FontWidthsBin );
+            dict["InflictStatusesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.InflictStatusesBin );
+            dict["JobLevelsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.JobLevelsBin );
+            dict["JobsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.JobsBin );
+            dict["MonsterSkillsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.MonsterSkillsBin );
+            dict["StatusAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.StatusAttributesBin );
+            dict["OldItemAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.OldItemAttributesBin );
+            dict["OldItemsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.OldItemsBin );
+            dict["SkillSetsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SkillSetsBin );
+            dict["PoachProbabilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.PoachProbabilitiesBin );
+
+            dict["SkillSets"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SkillSets ).ToUTF8String();
+            dict["Abilities"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Abilities ).ToUTF8String();
+            dict["AbilitiesStrings"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesStrings ).ToUTF8String();
+            dict["EventNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.EventNames ).ToUTF8String();
+            dict["Items"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Items ).ToUTF8String();
+            dict["ItemsStrings"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.ItemsStrings ).ToUTF8String();
+            dict["Jobs"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Jobs ).ToUTF8String();
+            dict["SpecialNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpecialNames ).ToUTF8String();
+            dict["SpriteSets"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpriteSets ).ToUTF8String();
+            dict["StatusNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.StatusNames ).ToUTF8String();
+
+            dict["AbilitiesEffects"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesEffects ).ToUTF8String();
+            dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilityEffectsBin );
+
+            dict["SCEAP"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SCEAP );
+        }
+
+		#endregion Constructors 
 
     }
 }

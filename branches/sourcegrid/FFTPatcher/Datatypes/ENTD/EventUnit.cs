@@ -78,16 +78,16 @@ namespace FFTPatcher.Datatypes
 
     public enum Facing
     {
-        Southeast,
-        Southwest,
-        Northwest,
-        Northeast,
-        Unknown0x82 = 130,
-        Unknown0x80 = 128,
-        Unknown0x83 = 131,
+        Southeast = 0,
+        Southwest = 1,
+        Northwest = 2,
+        Northeast = 3,
+        //Unknown0x80 = 128,
+        //Unknown0x81 = 129,
+        //Unknown0x82 = 130,
+        //Unknown0x83 = 131,
         Unknown0x30 = 48,
         Unknown0x33 = 51,
-        Unknown0x81 = 129,
     }
 
     public enum TeamColor
@@ -108,7 +108,7 @@ namespace FFTPatcher.Datatypes
 
         private static readonly string[] digestableProperties = new string[] {
             "SpriteSet", "SpecialName", "Month", "Day", "Job", "Level", "Faith", "Bravery", "Palette", "UnitID",
-            "X", "Y", "PrerequisiteJob", "PrerequisiteJobLevel", "FacingDirection", "TeamColor", "Target", 
+            "X", "Y", "PrerequisiteJob", "PrerequisiteJobLevel", "FacingDirection", "UpperLevel", "TeamColor", "Target", 
             "SkillSet", "SecondaryAction", "Reaction", "Support", "Movement", "RightHand", "LeftHand", "Head",
             "Body", "Accessory", "BonusMoney", "WarTrophy", "Male", "Female", "Monster", "JoinAfterEvent",
             "LoadFormation", "ZodiacMonster", "Blank2", "SaveFormation", "AlwaysPresent", "RandomlyPresent",
@@ -166,6 +166,8 @@ namespace FFTPatcher.Datatypes
         }
 
         public Facing FacingDirection { get; set; }
+
+        public bool UpperLevel { get; set; }
 
         public byte Faith { get; set; }
 
@@ -285,7 +287,8 @@ namespace FFTPatcher.Datatypes
             TeamColor = (TeamColor)((bytes[24] & 0x30) >> 4);
             X = bytes[25];
             Y = bytes[26];
-            FacingDirection = (Facing)bytes[27];
+            FacingDirection = (Facing)(bytes[27] & 0x7F);
+            UpperLevel = (bytes[27] & 0x80) == 0x80;
             Unknown2 = bytes[28];
             SkillSet = SkillSet.EventSkillSets[bytes[29]];
             WarTrophy = Item.EventItems[bytes[30]];
@@ -337,7 +340,7 @@ namespace FFTPatcher.Datatypes
             result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, (((int)TeamColor) & 0x02) == 2, (((int)TeamColor) & 0x01) == 1, Control, Immortal, Blank6, Blank7 ) );
             result.Add( X );
             result.Add( Y );
-            result.Add( (byte)FacingDirection );
+            result.Add( (byte)(((byte)FacingDirection & 0x7F) | (UpperLevel ? 0x80 : 0x00)) );
             result.Add( Unknown2 );
             result.Add( SkillSet.Value );
             result.Add( (byte)(WarTrophy.Offset & 0xFF) );

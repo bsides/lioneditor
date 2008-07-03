@@ -142,12 +142,21 @@ namespace FFTPatcher.Editors
             levelComboBox.SelectedIndexChanged += levelComboBox_SelectedIndexChanged;
             flags1CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
             flags2CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
+            upperLevelCheckBox.CheckedChanged += upperLevelCheckBox_CheckedChanged;
         }
 
         #endregion Constructors
 
         #region Methods (9)
 
+        private void upperLevelCheckBox_CheckedChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                eventUnit.UpperLevel = upperLevelCheckBox.Checked;
+                OnDataChanged( this, EventArgs.Empty );
+            }
+        }
 
         private void comboBox_SelectedIndexChanged( object sender, System.EventArgs e )
         {

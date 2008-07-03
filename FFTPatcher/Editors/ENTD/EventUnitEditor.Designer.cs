@@ -119,6 +119,7 @@ namespace FFTPatcher.Editors
             this.xSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.teamColorComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.targetLabel = new System.Windows.Forms.Label();
+            this.upperLevelCheckBox = new System.Windows.Forms.CheckBox();
             skillsGroupBox = new System.Windows.Forms.GroupBox();
             movementSkillLabel = new System.Windows.Forms.Label();
             supportSkillLabel = new System.Windows.Forms.Label();
@@ -954,12 +955,23 @@ namespace FFTPatcher.Editors
             this.targetLabel.TabIndex = 43;
             this.targetLabel.Text = "Target Unit ID";
             // 
+            // upperLevelCheckBox
+            // 
+            this.upperLevelCheckBox.AutoSize = true;
+            this.upperLevelCheckBox.Location = new System.Drawing.Point( 209, 201 );
+            this.upperLevelCheckBox.Name = "upperLevelCheckBox";
+            this.upperLevelCheckBox.Size = new System.Drawing.Size( 80, 17 );
+            this.upperLevelCheckBox.TabIndex = 44;
+            this.upperLevelCheckBox.Text = "Upper level";
+            this.upperLevelCheckBox.UseVisualStyleBackColor = true;
+            // 
             // EventUnitEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.upperLevelCheckBox );
             this.Controls.Add( this.targetLabel );
             this.Controls.Add( spoilsGroupBox );
             this.Controls.Add( teamColorLabel );
@@ -1069,5 +1081,6 @@ namespace FFTPatcher.Editors
         private FFTPatcher.Controls.ComboBoxWithDefault teamColorComboBox;
         private FFTPatcher.Controls.ComboBoxWithDefault warTrophyComboBox;
         private System.Windows.Forms.Label targetLabel;
+        private System.Windows.Forms.CheckBox upperLevelCheckBox;
     }
 }

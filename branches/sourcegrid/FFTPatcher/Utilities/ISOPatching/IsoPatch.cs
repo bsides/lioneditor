@@ -127,6 +127,7 @@ namespace FFTPatcher
             result.Add( 0x00 ); // binary file
             result.Add( 0x00 ); // disable blockcheck
             result.Add( 0x01 ); // enable undo data
+            //result.Add( 0x00 ); // disable undo data
             result.Add( 0x01 ); // dummy
             return result;
         }

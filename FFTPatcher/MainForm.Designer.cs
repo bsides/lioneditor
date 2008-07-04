@@ -322,8 +322,8 @@ namespace FFTPatcher
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size( 815, 599 );
-            this.Controls.Add( this.fftPatchEditor1 );
             this.Controls.Add( this.progressBar );
+            this.Controls.Add( this.fftPatchEditor1 );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTPatcher";

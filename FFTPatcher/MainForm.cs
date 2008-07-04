@@ -375,6 +375,7 @@ namespace FFTPatcher
                     }
                 };
 
+            saveFileDialog.Filter = "ISO files (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
             saveFileDialog.OverwritePrompt = false;
             if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {

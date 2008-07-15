@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Files\AbstractCompressedFile.cs" />
     <Compile Include="Files\AbstractDelimitedFile.cs" />
+    <Compile Include="Files\AbstractFile.cs" />
     <Compile Include="Files\AbstractPartitionedFile.cs" />
     <Compile Include="Files\FilePartition.cs" />
     <Compile Include="Files\IFile.cs" />

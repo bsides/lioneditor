@@ -382,7 +382,7 @@ namespace FFTPatcher.TextEditor
                 {
                     patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
                     progress();
-                    foreach ( PatchedByteArray otherPatch in sectioned.GetOtherPatches() )
+                    foreach ( PatchedByteArray otherPatch in sectioned.GetAllPatches() )
                     {
                         patches.Add( otherPatch );
                         progress();
@@ -398,7 +398,7 @@ namespace FFTPatcher.TextEditor
                 {
                     patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
                     progress();
-                    foreach ( PatchedByteArray otherPatch in partitioned.GetOtherPatches() )
+                    foreach ( PatchedByteArray otherPatch in partitioned.GetAllPatches() )
                     {
                         patches.Add( otherPatch );
                         progress();
@@ -412,12 +412,13 @@ namespace FFTPatcher.TextEditor
             using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
             using ( FileStream ppfStream = new FileStream( ppfFilename, FileMode.Create ) )
             {
-                IList<byte> ppf = IsoPatch.InitializePpf();
+                var ppfDict = new Dictionary<long, IsoPatch.NewOldValue>();
                 foreach ( PatchedByteArray patch in patches )
                 {
-                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true, true, ppf );
+                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true, true, ppfDict );
                     progress();
                 }
+                var ppf = IsoPatch.GeneratePpf( ppfDict );
                 ppfStream.Write( ppf.ToArray(), 0, ppf.Count );
             }
         }

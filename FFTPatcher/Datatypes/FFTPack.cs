@@ -270,16 +270,16 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static void PatchFile( FileStream stream, int index, byte[] bytes, bool generatePpf, IList<byte> ppfBytes )
+        public static void PatchFile( FileStream stream, int index, byte[] bytes, bool generatePpf, IDictionary<long,IsoPatch.NewOldValue> ppfBytes )
         {
             PatchFile( stream, 0, index, bytes, generatePpf, ppfBytes );
         }
 
-        public static void PatchFile( FileStream stream, long streamPosition, int index, byte[] bytes, bool generatePpf, IList<byte> ppfBytes )
+        public static void PatchFile( FileStream stream, long streamPosition, int index, byte[] bytes, bool generatePpf, IDictionary<long, IsoPatch.NewOldValue> ppfBytes )
         {
             try
             {
-                stream.Seek( streamPosition + (index - 1) * 4 + 8, SeekOrigin.Begin );
+                stream.Seek( streamPosition + ( index - 1 ) * 4 + 8, SeekOrigin.Begin );
                 byte[] pointer = new byte[4];
                 stream.Read( pointer, 0, 4 );
 
@@ -294,7 +294,7 @@ namespace FFTPatcher.Datatypes
 
                 stream.Write( bytes, 0, bytes.Length );
             }
-            catch( Exception )
+            catch ( Exception )
             {
                 throw;
             }

@@ -26,7 +26,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
-    public class AllAbilities : IChangeable, IXmlDigest
+    public class AllAbilities : PatchableFile, IChangeable, IXmlDigest
     {
 
         #region Static Fields (2)
@@ -272,5 +272,27 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 4 );
+            byte[] bytes = ToByteArray( context );
+            byte[] effects = ToEffectsByteArray();
+
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x4F3F0, bytes ) );
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x14F3F0, effects ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x26F0A4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x26F0A4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2FCE08, effects ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2FCE08, effects ) );
+            }
+
+            return result;
+        }
     }
 }

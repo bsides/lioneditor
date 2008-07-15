@@ -28,16 +28,11 @@ namespace FFTPatcher.TextEditor.Files
     /// <summary>
     /// A file with many partitions of equal length.
     /// </summary>
-    public abstract class AbstractPartitionedFile : IPartitionedFile
+    public abstract class AbstractPartitionedFile : AbstractFile, IPartitionedFile
     {
 
 		#region Abstract Properties (7) 
 
-
-        /// <summary>
-        /// Gets the character map used for this file.
-        /// </summary>
-        public abstract GenericCharMap CharMap { get; }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.
@@ -48,11 +43,6 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets the filename.
         /// </summary>
         public abstract string Filename { get; }
-
-        /// <summary>
-        /// Gets the filenames and locations for this file.
-        /// </summary>
-        public abstract IDictionary<int, long> Locations { get; }
 
         /// <summary>
         /// Gets the number of sections in this file.
@@ -94,7 +84,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the maximum length of this file as a byte array.
         /// </summary>
-        public int MaxLength { get { return NumberOfSections * SectionLength; } }
+        public override int MaxLength { get { return NumberOfSections * SectionLength; } }
 
         /// <summary>
         /// Gets a collection of <see cref="IPartition"/>, representing the entries in this file.
@@ -245,14 +235,6 @@ namespace FFTPatcher.TextEditor.Files
         }
 
         /// <summary>
-        /// Gets other patches necessary to make modifications to this file functional.
-        /// </summary>
-        public IList<PatchedByteArray> GetOtherPatches()
-        {
-            return new PatchedByteArray[0];
-        }
-
-        /// <summary>
         /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
         /// </summary>
         /// <returns>
@@ -286,7 +268,7 @@ namespace FFTPatcher.TextEditor.Files
         /// Creates a byte array representing this file.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToByteArray()
+        public override byte[] ToByteArray()
         {
             return ToFinalBytes().ToArray();
         }

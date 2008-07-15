@@ -19,6 +19,7 @@
 
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Collections.Generic;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -180,6 +181,20 @@ namespace FFTPatcher.SpriteEditor
             return p[offset];
         }
 
+
+        public static Image ToImage( this IList<IList<Color>> colors )
+        {
+            Bitmap b = new Bitmap( colors.Count, colors[0].Count );
+            for ( int x = 0; x < b.Width; x++ )
+            {
+                for ( int y = 0; y < b.Height; y++ )
+                {
+                    b.SetPixel( x, y, colors[x][y] );
+                }
+            }
+
+            return b;
+        }
 
         #endregion Methods
 

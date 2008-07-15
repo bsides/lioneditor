@@ -410,7 +410,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets other patches necessary to make modifications to this file functional.
         /// </summary>
         /// <returns></returns>
-        public IList<PatchedByteArray> GetOtherPatches()
+        public IList<PatchedByteArray> GetAllPatches()
         {
             return new PatchedByteArray[0];
         }

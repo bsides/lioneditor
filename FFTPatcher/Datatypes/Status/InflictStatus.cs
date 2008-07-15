@@ -179,7 +179,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllInflictStatuses : IChangeable, IXmlDigest
+    public class AllInflictStatuses : PatchableFile, IChangeable, IXmlDigest
     {
 
         #region Properties (2)
@@ -275,5 +275,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray();
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x547C4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x30B940, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x30B940, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

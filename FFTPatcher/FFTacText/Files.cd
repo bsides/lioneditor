@@ -26,7 +26,7 @@
       <Method Name="WriteXml" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAADgAAADIASECACIoAAIACEARAAQhAgEAQgAAUAgg=</HashCode>
+      <HashCode>AAAADgAAACIASECACIgAAIACEARAAQhAgEAAgAAEAgg=</HashCode>
       <FileName>Files\AbstractStringSectioned.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -40,7 +40,7 @@
       <Method Name="WriteXml" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAASECAAIIAAIACEABAARgAAEAQgAAUAgg=</HashCode>
+      <HashCode>AAAAAAAAAAAASECAAIAAAIACEABAARgAAEAQgAAEAgg=</HashCode>
       <FileName>Files\AbstractPartitionedFile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -234,7 +234,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSX.WORLDBIN" Collapsed="true">
     <Position X="16.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAADgBAADICSECACIoAEIACEABAAwhAgEAQgAAUAgg=</HashCode>
+      <HashCode>AAAADgBAADICSECQCIoAEIACEABAAwhAgEAQgAAEAgg=</HashCode>
       <FileName>Files\PSX\Sectioned\WORLDBIN.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -255,7 +255,7 @@
       <Method Name="GetSchema" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ICAAFAAAABAAAAAAAAAAAAAiAABAQAgiAAIAgAAAAAA=</HashCode>
+      <HashCode>IKAAFAAAABAAAAAAAAAAAAAiAABAQAgiAAIAgAAAAAA=</HashCode>
       <FileName>FFTText.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -335,7 +335,7 @@
   <Class Name="FFTPatcher.TextEditor.Files.PSP.BOOT326F24" Collapsed="true">
     <Position X="16.25" Y="10.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAADAAQAAAAAIBAAACAAAAAAAAAAAQAAAQAAA=</HashCode>
+      <HashCode>AAAAAAAAADAAQAAQAAIBAAACAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Files\PSP\BOOT326F24.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -379,7 +379,7 @@
   <Interface Name="FFTPatcher.TextEditor.Files.IFile" Collapsed="true">
     <Position X="18.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAIIAAAAAAAAAAAAAAAAQAAAQAAA=</HashCode>
+      <HashCode>AAAAAAAAABAAAAAQAIIAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Files\IFile.cs</FileName>
     </TypeIdentifier>
   </Interface>

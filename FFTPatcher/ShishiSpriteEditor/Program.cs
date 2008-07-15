@@ -34,6 +34,7 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
+            new OPNBK( Properties.Resources.OPNBK );
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
             Application.Run( new MainForm() );

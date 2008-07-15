@@ -37,8 +37,13 @@ namespace FFTPatcher
 		#region Constructors (1) 
 
         public PatchedByteArray( PsxIso.Sectors sector, long offset, byte[] bytes )
+            : this( (int)sector, offset, bytes )
         {
-            Sector = (int)sector;
+        }
+
+        public PatchedByteArray( int sector, long offset, byte[] bytes )
+        {
+            Sector = sector;
             Offset = offset;
             Bytes = bytes;
         }

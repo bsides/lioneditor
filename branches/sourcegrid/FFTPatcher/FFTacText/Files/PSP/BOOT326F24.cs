@@ -127,9 +127,9 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets other patches necessary to make modifications to this file functional.
         /// </summary>
-        public override IList<PatchedByteArray> GetOtherPatches()
+        public override IList<PatchedByteArray> GetAllPatches()
         {
-            List<PatchedByteArray> result = new List<PatchedByteArray>( base.GetOtherPatches() );
+            List<PatchedByteArray> result = new List<PatchedByteArray>( base.GetAllPatches() );
             return result;
         }
 

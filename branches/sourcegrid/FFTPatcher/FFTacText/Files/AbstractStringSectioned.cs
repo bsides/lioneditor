@@ -29,7 +29,7 @@ namespace FFTPatcher.TextEditor.Files
     /// <summary>
     /// A file that is divided into sections of variable length.
     /// </summary>
-    public abstract class AbstractStringSectioned : IStringSectioned
+    public abstract class AbstractStringSectioned : AbstractFile, IStringSectioned
     {
 
 		#region Fields (4) 
@@ -54,24 +54,9 @@ namespace FFTPatcher.TextEditor.Files
         protected abstract int NumberOfSections { get; }
 
         /// <summary>
-        /// Gets the character map that is used for this file.
-        /// </summary>
-        public abstract GenericCharMap CharMap { get; }
-
-        /// <summary>
         /// Gets the filename.
         /// </summary>
         public abstract string Filename { get; }
-
-        /// <summary>
-        /// Gets the filenames and locations for this file.
-        /// </summary>
-        public abstract IDictionary<int, long> Locations { get; }
-
-        /// <summary>
-        /// Gets the maximum length of this file as a byte array.
-        /// </summary>
-        public abstract int MaxLength { get; }
 
 
 		#endregion Abstract Properties 
@@ -379,7 +364,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Creates a byte array representing this file.
         /// </summary>
-        public byte[] ToByteArray()
+        public override byte[] ToByteArray()
         {
             IList<byte> result = ToFinalBytes();
 
@@ -432,14 +417,6 @@ namespace FFTPatcher.TextEditor.Files
         public virtual IList<NamedSection> GetNamedSections()
         {
             return new List<NamedSection>();
-        }
-
-        /// <summary>
-        /// Gets other patches necessary to make modifications to this file functional.
-        /// </summary>
-        public virtual IList<PatchedByteArray> GetOtherPatches()
-        {
-            return new PatchedByteArray[0];
         }
 
         /// <summary>

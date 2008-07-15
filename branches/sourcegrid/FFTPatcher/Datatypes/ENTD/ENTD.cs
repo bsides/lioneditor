@@ -93,7 +93,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllENTDs : IChangeable, IXmlDigest
+    public class AllENTDs : PatchableFile, IChangeable, IXmlDigest
     {
 
         #region Properties (4)
@@ -221,5 +221,29 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 5 );
+
+            var bytes1 = ENTDs[0].ToByteArray();
+            var bytes2 = ENTDs[1].ToByteArray();
+            var bytes3 = ENTDs[2].ToByteArray();
+            var bytes4 = ENTDs[3].ToByteArray();
+
+            if ( context == Context.US_PSX )
+            {
+                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
+                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
+                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
+                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                throw new System.ArgumentException( "TODO: Implement ENTD patching for PSP" );
+            }
+
+            return result;
+        }
     }
 }

@@ -58,6 +58,5 @@ namespace FFTPatcher.TextEditor.Files.PSX
         }
 
         #endregion Constructors
-
     }
 }

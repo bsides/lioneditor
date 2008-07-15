@@ -48,8 +48,8 @@ namespace FFTPatcher.TextEditor.Files
         byte[] ToByteArray();
 
         /// <summary>
-        /// Gets other patches necessary to make modifications to this file functional.
+        /// Gets all patches that this file needs to apply to the ISO for full functionality.
         /// </summary>
-        IList<PatchedByteArray> GetOtherPatches();
+        IList<PatchedByteArray> GetAllPatches();
     }
 }

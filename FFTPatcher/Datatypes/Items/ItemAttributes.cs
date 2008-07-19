@@ -179,7 +179,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllItemAttributes : PatchableFile, IChangeable, IXmlDigest
+    public class AllItemAttributes : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -189,7 +189,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {

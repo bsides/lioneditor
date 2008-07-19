@@ -320,31 +320,56 @@ namespace FFTPatcher
 
         private void patchPspIsoMenuItem_Click( object sender, EventArgs e )
         {
-            applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
-            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
                 {
-                    PspIso.PatchISO( applyPatchOpenFileDialog.FileName );
-                }
-                catch( NotSupportedException )
+                    PspIso.PatchISO( sender1 as BackgroundWorker, args );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
                 {
-                    MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
+                    progressBar.Visible = true;
+                    progressBar.Value = args.ProgressPercentage;
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
                 {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
-                }
-            }
-        }
+                    progressBar.Visible = false;
+                    Enabled = true;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if( args.Error is NotSupportedException)
+                    {
+                        MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
+                    }
+                    else if( args.Error is FileNotFoundException )
+                    {
+                        MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                    }
+                    else if( args.Error is Exception )
+                    {
+                        MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
+                    }
+                };
 
-        private void patchPsxBackgroundWorker_DoWork( object sender, DoWorkEventArgs e )
-        {
-            FFTPatch.PatchPsxIso( sender as BackgroundWorker, e );
+            saveFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
+            saveFileDialog.OverwritePrompt = false;
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
+
+                Enabled = false;
+
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+
+                patchPsxBackgroundWorker.RunWorkerAsync( saveFileDialog.FileName );
+            }
+
         }
 
         private void patchPsxIsoMenuItem_Click( object sender, EventArgs e )

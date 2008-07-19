@@ -17,6 +17,10 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System.Collections.Generic;
+
+using FFTPatcher.Datatypes;
+
 namespace FFTPatcher.TextEditor.Files.PSP
 {
     /// <summary>
@@ -40,5 +44,15 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
         #endregion Properties
 
+        public override IList<PatchedByteArray> GetAllPatches()
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            foreach( var kvp in Locations )
+            {
+                result.Add( new PatchedByteArray( (FFTPack.Files)kvp.Key, kvp.Value, bytes ) );
+            }
+            return result;
+        }
     }
 }

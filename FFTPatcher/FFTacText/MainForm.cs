@@ -210,7 +210,7 @@ namespace FFTPatcher.TextEditor
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), e.SuggestedFilename, false );
-                WriteBytesToFile( e.File.ToByteArray(), openFileDialog.FileName, e.File.Locations[(int)sector] );
+                WriteBytesToFile( e.File.ToByteArray(), openFileDialog.FileName, e.File.Locations[sector] );
             }
         }
 
@@ -334,12 +334,12 @@ namespace FFTPatcher.TextEditor
                     PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), e.SuggestedFilename, false );
                     if( e.PartitionNumber == -1 )
                     {
-                        WriteBytesToFile( file.ToByteArray(), openFileDialog.FileName, e.File.Locations[(int)sector] );
+                        WriteBytesToFile( file.ToByteArray(), openFileDialog.FileName, e.File.Locations[sector] );
                     }
                     else
                     {
                         WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), openFileDialog.FileName,
-                            e.File.Locations[(int)sector] + file.SectionLength * e.PartitionNumber );
+                            e.File.Locations[sector] + file.SectionLength * e.PartitionNumber );
                     }
                 }
             }

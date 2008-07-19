@@ -9,7 +9,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        public abstract IDictionary<int, long> Locations { get; }
+        public abstract IDictionary<Enum, long> Locations { get; }
 
         /// <summary>
         /// Gets the charmap to use for this file.
@@ -29,16 +29,6 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets all patches that this file needs to apply to the ISO for full functionality.
         /// </summary>
-        public virtual IList<PatchedByteArray> GetAllPatches()
-        {
-            List<PatchedByteArray> result = new List<PatchedByteArray>( Locations.Count );
-            byte[] bytes = ToByteArray();
-            foreach ( var kvp in Locations )
-            {
-                result.Add( new PatchedByteArray( kvp.Key, kvp.Value, bytes ) );
-            }
-
-            return result;
-        }
+        public abstract IList<PatchedByteArray> GetAllPatches();
     }
 }

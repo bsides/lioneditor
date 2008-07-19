@@ -30,7 +30,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        IDictionary<int, long> Locations { get; }
+        IDictionary<Enum, long> Locations { get; }
 
         /// <summary>
         /// Gets the charmap to use for this file.

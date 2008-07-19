@@ -25,7 +25,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all items in memory.
     /// </summary>
-    public class AllItems : PatchableFile, IChangeable, IXmlDigest
+    public class AllItems : PatchableFile, IXmlDigest
     {
 
         #region Fields (1)
@@ -41,7 +41,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {

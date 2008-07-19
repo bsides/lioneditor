@@ -31,7 +31,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
 		#region Static Fields (1) 
 
-        private static Dictionary<int, long> locations;
+        private static Dictionary<Enum, long> locations;
 
 		#endregion Static Fields 
 
@@ -67,14 +67,15 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the filenames and locations for this file.
         /// </summary>
-        public override IDictionary<int, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if ( locations == null )
                 {
-                    locations = new Dictionary<int, long>();
-                    locations.Add( 0, 0x326F24 );
+                    locations = new Dictionary<Enum, long>();
+                    locations.Add( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x326F24 );
+                    locations.Add( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x326F24 );
                 }
                 return locations;
             }
@@ -124,15 +125,16 @@ namespace FFTPatcher.TextEditor.Files.PSP
             return result;
         }
 
-        /// <summary>
-        /// Gets other patches necessary to make modifications to this file functional.
-        /// </summary>
         public override IList<PatchedByteArray> GetAllPatches()
         {
-            List<PatchedByteArray> result = new List<PatchedByteArray>( base.GetAllPatches() );
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            foreach( var kvp in Locations )
+            {
+                result.Add( new PatchedByteArray( (PspIso.Sectors)kvp.Key, kvp.Value, bytes ) );
+            }
             return result;
         }
-
 
 		#endregion Methods 
 

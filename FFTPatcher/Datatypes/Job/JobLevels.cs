@@ -26,7 +26,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
     /// </summary>
-    public class JobLevels : PatchableFile, IChangeable, IXmlDigest
+    public class JobLevels : PatchableFile, IXmlDigest
     {
 
         #region Static Fields (1)
@@ -76,7 +76,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {

@@ -336,7 +336,7 @@ namespace FFTPatcher.TextEditor
                 {
                     byte[] bytes = packFile.ToByteArray();
                     progress();
-                    PspIso.UpdateFFTPack( stream, packFile.Index, bytes );
+                    PspIso.UpdateFFTPack( stream, (int)packFile.Index, bytes );
                     progress();
                 }
 
@@ -378,7 +378,7 @@ namespace FFTPatcher.TextEditor
             {
                 byte[] bytes = sectioned.ToByteArray();
                 progress();
-                foreach ( KeyValuePair<int, long> kvp in sectioned.Locations )
+                foreach( KeyValuePair<Enum, long> kvp in sectioned.Locations )
                 {
                     patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
                     progress();
@@ -394,7 +394,7 @@ namespace FFTPatcher.TextEditor
             {
                 byte[] bytes = partitioned.ToByteArray();
                 progress();
-                foreach ( KeyValuePair<int, long> kvp in partitioned.Locations )
+                foreach ( KeyValuePair<Enum, long> kvp in partitioned.Locations )
                 {
                     patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
                     progress();

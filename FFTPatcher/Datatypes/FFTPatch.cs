@@ -771,9 +771,9 @@ namespace FFTPatcher.Datatypes
             }
             progress();
 
-            for ( int i = 0; i < 4; i++ )
+            var entdPatches = ENTDs.GetPatches( context );
+            for( int i = 0; i < 4; i++ )
             {
-                var entdPatches = ENTDs.GetPatches( context );
                 if ( ENTDs.ENTDs[i].HasChanged )
                 {
                     patches.Add( entdPatches[i] );
@@ -848,7 +848,7 @@ namespace FFTPatcher.Datatypes
             SavePatchToFile( path, FFTPatch.Context, true );
         }
 
-/// <summary>
+        /// <summary>
         /// Saves this patch to an XML document.
         /// </summary>
         public static void SavePatchToFile( string path, Context destinationContext, bool saveDigest )

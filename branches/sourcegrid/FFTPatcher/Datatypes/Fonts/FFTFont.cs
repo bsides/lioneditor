@@ -24,7 +24,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a font used in FFT, which is an array of 2200 bitmaps.
     /// </summary>
-    public class FFTFont : PatchableFile, IChangeable
+    public class FFTFont : PatchableFile
     {
 
 		#region Properties (2) 
@@ -36,7 +36,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get { return true; }
         }
@@ -117,7 +117,10 @@ namespace FFTPatcher.Datatypes
             }
             else if ( context == Context.US_PSP )
             {
-                throw new System.ArgumentException( "TODO: Implement ENTD patching for PSP" );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27B80C, font ) );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, width ) );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27B80C, font ) );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293F40, width ) );
             }
 
             return result;

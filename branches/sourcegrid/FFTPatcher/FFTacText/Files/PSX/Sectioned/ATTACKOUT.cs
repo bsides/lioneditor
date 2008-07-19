@@ -30,7 +30,7 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 		#region Static Fields (1) 
 
-        private static Dictionary<int, long> locations;
+        private static Dictionary<Enum, long> locations;
 
 		#endregion Static Fields 
 
@@ -59,15 +59,15 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<int, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<int, long>();
-                    locations.Add( (int)PsxIso.EVENT.ATTACK_OUT, 0xE2B0 );
-                    locations.Add( (int)PsxIso.EVENT.SMALL_OUT, 0x6C );
+                    locations = new Dictionary<Enum, long>();
+                    locations.Add( PsxIso.EVENT.ATTACK_OUT, 0xE2B0 );
+                    locations.Add( PsxIso.EVENT.SMALL_OUT, 0x6C );
                 }
 
                 return locations;

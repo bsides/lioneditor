@@ -18,7 +18,11 @@
 */
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Windows.Forms;
+
 using FFTPatcher.Datatypes;
 
 namespace FFTPatcher
@@ -111,7 +115,7 @@ namespace FFTPatcher
 		#region Fields (2) 
 
         private const int bufferSize = 1024;
-        private const long fftpackLocation = 0x02C20000;
+        public const long FFTPackLocation = 0x02C20000;
 
 		#endregion Fields 
 
@@ -259,17 +263,23 @@ namespace FFTPatcher
             return CheckFile( stream, "ULUS-10297", "ULUS10297", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
         }
 
+        public static void PatchISO( BackgroundWorker worker, DoWorkEventArgs args )
+        {
+            Action<int> progress = new Action<int>( worker.ReportProgress );
+            PatchISO( args.Argument as string, progress );
+        }
+
         /// <summary>
         /// Patches the ISO.
         /// </summary>
         /// <param name="filename">The filename of the ISO to patch.</param>
-        public static void PatchISO( string filename )
+        public static void PatchISO( string filename, Action<int> progress )
         {
             FileStream stream = null;
             try
             {
                 stream = new FileStream( filename, FileMode.Open );
-                PatchISO( stream );
+                PatchISO( stream, progress );
             }
             catch( NotSupportedException )
             {
@@ -290,43 +300,69 @@ namespace FFTPatcher
         /// Patches the ISO.
         /// </summary>
         /// <param name="stream">The stream of the ISO to patch.</param>
-        public static void PatchISO( FileStream stream )
+        public static void PatchISO( FileStream stream, Action<int> progress )
         {
             if( IsJP( stream ) )
             {
                 throw new NotSupportedException( "Unrecognized image." );
             }
 
+            const int defaultNumberOfTasks = 13;
+            const bool patchSCEAP = false;
+            int numberOfTasks = defaultNumberOfTasks;
+            int tasksComplete = 1;
+
+            List<PatchedByteArray> patches = new List<PatchedByteArray>();
+
+            MethodInvoker sendProgress =
+                delegate()
+                {
+                    numberOfTasks = defaultNumberOfTasks + patches.Count * 2;
+                    if( progress != null )
+                    {
+                        progress( tasksComplete++ * 100 / numberOfTasks );
+                    }
+                };
             DecryptISO( stream );
 
-            stream.WriteArrayToPositions( FFTPatch.SkillSets.ToByteArray( Context.US_PSP ), 0x285A38, 0x1014DA38 );
-            stream.WriteArrayToPositions( FFTPatch.MonsterSkills.ToByteArray( Context.US_PSP ), 0x286BB4, 0x2C7BC04, 0x1014EBB4 );
+            PatchableFile[] files = new PatchableFile[] {
+                FFTPatch.SkillSets, FFTPatch.MonsterSkills, FFTPatch.PoachProbabilities, FFTPatch.Items,
+                FFTPatch.ItemAttributes, FFTPatch.Abilities, FFTPatch.ActionMenus, FFTPatch.Jobs,
+                FFTPatch.JobLevels, FFTPatch.InflictStatuses, FFTPatch.StatusAttributes, FFTPatch.Font,
+                FFTPatch.ENTDs };
 
-            stream.WriteArrayToPositions( FFTPatch.PoachProbabilities.ToByteArray( Context.US_PSP ), 0x287024, 0x2C7C0A4, 0x1014F024 );
-            stream.WriteArrayToPositions( FFTPatch.Items.ToFirstByteArray(), 0x3352DC, 0x2C78EF8, 0x101FD2DC );
-            stream.WriteArrayToPositions( FFTPatch.Items.ToSecondByteArray(), 0x266E00, 0x1012EE00 );
-            stream.WriteArrayToPositions( FFTPatch.ItemAttributes.ToFirstByteArray(), 0x3366E8, 0x2C7A304, 0x101FE6E8 );
-            stream.WriteArrayToPositions( FFTPatch.ItemAttributes.ToSecondByteArray(), 0x26720C, 0x1012F20C );
+            foreach( PatchableFile file in files )
+            {
+                if( file.HasChanged )
+                {
+                    patches.AddRange( file.GetPatches( Context.US_PSP ) );
+                }
+                sendProgress();
+            }
 
-            stream.WriteArrayToPositions( FFTPatch.Abilities.ToByteArray( Context.US_PSP ), 0x281514, 0x10149514 );
-            stream.WriteArrayToPositions( FFTPatch.Abilities.ToEffectsByteArray(), 0x3277B4, 0x101EF7B4 );
+            foreach( PatchedByteArray patch in patches )
+            {
+                ApplyPatch( stream, patch, sendProgress );
+            }
+        }
 
-            stream.WriteArrayToPositions( FFTPatch.ActionMenus.ToByteArray( Context.US_PSP ), 0x286CA4, 0x2C7BCF4, 0x1014ECA4 );
-
-            stream.WriteArrayToPositions( FFTPatch.Jobs.ToByteArray( Context.US_PSP ), 0x2839DC, 0x1014B9DC );
-            stream.WriteArrayToPositions( FFTPatch.JobLevels.ToByteArray( Context.US_PSP ), 0x287084, 0x1014F084 );
-
-            stream.WriteArrayToPositions( FFTPatch.InflictStatuses.ToByteArray(), 0x3363E8, 0x2C7A004, 0x101FE3E8 );
-            stream.WriteArrayToPositions( FFTPatch.StatusAttributes.ToByteArray( Context.US_PSP ), 0x286DA4, 0x2C7BE24 );
-
-            stream.WriteArrayToPositions( FFTPatch.Font.ToByteArray(), 0x28B80C, 0x3073B8, 0x1015380C, 0x101CF3B8 );
-            stream.WriteArrayToPositions( FFTPatch.Font.ToWidthsByteArray(), 0x2A3F40, 0x31FAC0, 0x1016BF40, 0x101E7AC0 );
-
-            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[0].ToByteArray(), 0x44CA800 );
-            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[1].ToByteArray(), 0x44DE800 );
-            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[2].ToByteArray(), 0x44F2800 );
-            stream.WriteArrayToPositions( FFTPatch.ENTDs.ENTDs[3].ToByteArray(), 0x4506800 );
-            stream.WriteArrayToPositions( FFTPatch.ENTDs.PSPEventsToByteArray(), 0x7500800 );
+        private static void ApplyPatch( FileStream stream, PatchedByteArray patch, MethodInvoker progress )
+        {
+            if( patch.SectorEnum != null )
+            {
+                if( patch.SectorEnum.GetType() == typeof( PspIso.Sectors ) )
+                {
+                    stream.WriteArrayToPosition( patch.Bytes, (int)((PspIso.Sectors)patch.SectorEnum) * 2048 + patch.Offset );
+                }
+                else if( patch.SectorEnum.GetType() == typeof( FFTPack.Files ) )
+                {
+                    FFTPack.PatchFile( stream, (int)((FFTPack.Files)patch.SectorEnum), (int)patch.Offset, patch.Bytes, false, null );
+                }
+                else
+                {
+                    throw new ArgumentException( "invalid type" );
+                }
+            }
         }
 
         /// <summary>
@@ -353,7 +389,7 @@ namespace FFTPatcher
         /// <param name="bytes">The bytes to update the file with.</param>
         public static void UpdateFFTPack( FileStream stream, int index, byte[] bytes )
         {
-            FFTPack.PatchFile( stream, fftpackLocation, index, bytes, false, null );
+            FFTPack.PatchFile( stream, index, 0, bytes, false, null );
         }
 
 

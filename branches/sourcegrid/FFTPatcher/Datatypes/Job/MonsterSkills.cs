@@ -131,7 +131,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllMonsterSkills : PatchableFile, IChangeable, IXmlDigest
+    public class AllMonsterSkills : PatchableFile, IXmlDigest
     {
 
         #region Static Properties (3)
@@ -156,7 +156,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {

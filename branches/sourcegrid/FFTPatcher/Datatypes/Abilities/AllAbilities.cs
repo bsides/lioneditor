@@ -26,7 +26,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
-    public class AllAbilities : PatchableFile, IChangeable, IXmlDigest
+    public class AllAbilities : PatchableFile, IXmlDigest
     {
 
         #region Static Fields (2)
@@ -85,7 +85,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {

@@ -197,7 +197,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllActionMenus : PatchableFile, IChangeable, IXmlDigest
+    public class AllActionMenus : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -209,7 +209,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {

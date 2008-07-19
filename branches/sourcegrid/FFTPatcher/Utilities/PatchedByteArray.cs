@@ -17,6 +17,9 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
+using FFTPatcher.Datatypes;
+
 namespace FFTPatcher
 {
     public class PatchedByteArray
@@ -29,6 +32,7 @@ namespace FFTPatcher
 
         public long Offset { get; private set; }
 
+        public Enum SectorEnum { get; private set; }
         public int Sector { get; private set; }
 
 
@@ -39,7 +43,21 @@ namespace FFTPatcher
         public PatchedByteArray( PsxIso.Sectors sector, long offset, byte[] bytes )
             : this( (int)sector, offset, bytes )
         {
+            SectorEnum = sector;
         }
+
+        public PatchedByteArray( PspIso.Sectors sector, long offset, byte[] bytes )
+            : this( (int)sector, offset, bytes )
+        {
+            SectorEnum = sector;
+        }
+
+        public PatchedByteArray( FFTPack.Files file, long offset, byte[] bytes )
+            : this( (int)file, offset, bytes )
+        {
+            SectorEnum = file;
+        }
+
 
         public PatchedByteArray( int sector, long offset, byte[] bytes )
         {

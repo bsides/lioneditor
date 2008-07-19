@@ -302,7 +302,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllSkillSets : PatchableFile, IChangeable, IXmlDigest
+    public class AllSkillSets : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -312,7 +312,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {

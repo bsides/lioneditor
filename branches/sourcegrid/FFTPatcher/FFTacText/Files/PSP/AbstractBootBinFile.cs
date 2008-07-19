@@ -59,5 +59,15 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
         #endregion Constructors
 
+        public override IList<PatchedByteArray> GetAllPatches()
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            foreach( var kvp in Locations )
+            {
+                result.Add( new PatchedByteArray( (PspIso.Sectors)kvp.Key, kvp.Value, bytes ) );
+            }
+            return result;
+        }
     }
 }

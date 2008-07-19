@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
@@ -30,13 +31,13 @@ namespace FFTPatcher.TextEditor.Files.PSP
 
         #region Static Fields (1)
 
-        private static Dictionary<int, long> locations;
+        private static Dictionary<Enum, long> locations;
 
         #endregion Static Fields
 
         #region Fields (2)
 
-        private const int fftpackIndex = 45;
+        private const FFTPack.Files fftpackIndex = FFTPack.EVENT.OPEN_LZW;
         private const string filename = "OPEN.LZW";
 
         #endregion Fields
@@ -47,7 +48,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the index of this file in fftpack.bin
         /// </summary>
-        public int Index
+        public FFTPack.Files Index
         {
             get { return fftpackIndex; }
         }
@@ -70,14 +71,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<int, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<int, long>();
-                    locations.Add( fftpackIndex, 0x00 );
+                    locations = new Dictionary<Enum, long>();
+                    locations.Add( Index, 0x00 );
                 }
 
                 return locations;

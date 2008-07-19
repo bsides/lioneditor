@@ -20,6 +20,8 @@
 using System;
 using System.Collections.Generic;
 
+using FFTPatcher.Datatypes;
+
 namespace FFTPatcher.TextEditor.Files.PSP
 {
     /// <summary>
@@ -31,14 +33,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
         #region Static Fields (3)
 
         private static string[][] entryNames;
-        private static Dictionary<int, long> locations;
+        private static Dictionary<Enum, long> locations;
         private static string[] sectionNames;
 
         #endregion Static Fields
 
         #region Fields (4)
 
-        private const int fftpackIndex = 774;
+        private const FFTPack.Files fftpackIndex = FFTPack.WORLD.SNPLMES_BIN;
         private const string filename = "SNPLMES.BIN";
         private const int numberOfSections = 6;
         private const int sectionLength = 0xA000;
@@ -51,7 +53,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the index of this file in fftpack.bin
         /// </summary>
-        public int Index
+        public FFTPack.Files Index
         {
             get { return fftpackIndex; }
         }
@@ -74,14 +76,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// Gets the filenames and locations for this file.
         /// </summary>
         /// <value></value>
-        public override IDictionary<int, long> Locations
+        public override IDictionary<Enum, long> Locations
         {
             get
             {
                 if( locations == null )
                 {
-                    locations = new Dictionary<int, long>();
-                    //locations.Add( "WORLD/SNPLMES.BIN", 0x00 );
+                    locations = new Dictionary<Enum, long>();
+                    locations.Add( Index, 0x00 );
                 }
 
                 return locations;

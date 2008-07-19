@@ -93,7 +93,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllENTDs : PatchableFile, IChangeable, IXmlDigest
+    public class AllENTDs : PatchableFile, IXmlDigest
     {
 
         #region Properties (4)
@@ -107,7 +107,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -233,14 +233,18 @@ namespace FFTPatcher.Datatypes
 
             if ( context == Context.US_PSX )
             {
-                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
-                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
-                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
-                result.AddRange( new PatchedByteArray( PsxIso.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
             }
             else if ( context == Context.US_PSP )
             {
-                throw new System.ArgumentException( "TODO: Implement ENTD patching for PSP" );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD5_ENT, 0x00, PSPEventsToByteArray() ) );
             }
 
             return result;

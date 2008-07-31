@@ -28,7 +28,7 @@ namespace FFTPatcher.SpriteEditor
 		#region Methods (1) 
 
 
-        public static byte[] ToPALFile( this Palette[] palettes )
+        public static byte[] ToPALFile( this IList<Palette> palettes )
         {
             List<byte> result = new List<byte>( 0x418 );
             result.AddRange( new byte[] { 
@@ -110,6 +110,7 @@ namespace FFTPatcher.SpriteEditor
             int b = (second & 0x7C) << 1;
             int g = (second & 0x03) << 6 | (first & 0xE0) >> 2;
             int r = (first & 0x1F) << 3;
+            int a = (second & 0x80) >> 7;
 
             return Color.FromArgb( r, g, b );
         }

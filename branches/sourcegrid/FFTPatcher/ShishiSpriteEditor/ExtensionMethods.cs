@@ -112,17 +112,17 @@ namespace FFTPatcher.SpriteEditor
         {
             if( proper )
             {
-                for( int i = 0; (i < s.Pixels.Length) && (i / 256 < 256); i++ )
+                for( int i = 0; (i < s.BytPixels.Length) && (i / 256 < 256); i++ )
                 {
-                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
+                    b.SetPixel( i % 256, i / 256, p.Colors[s.BytPixels[i] % 16] );
                 }
-                for( int i = 288 * 256; (i < s.Pixels.Length) && (i / 256 < 488); i++ )
+                for( int i = 288 * 256; (i < s.BytPixels.Length) && (i / 256 < 488); i++ )
                 {
-                    b.SetPixel( i % 256, i / 256 - 32, p.Colors[s.Pixels[i] % 16] );
+                    b.SetPixel( i % 256, i / 256 - 32, p.Colors[s.BytPixels[i] % 16] );
                 }
-                for( int i = 256 * 256; (i < s.Pixels.Length) && (i / 256 < 288); i++ )
+                for( int i = 256 * 256; (i < s.BytPixels.Length) && (i / 256 < 288); i++ )
                 {
-                    b.SetPixel( i % 256, i / 256 + 200, p.Colors[s.Pixels[i] % 16] );
+                    b.SetPixel( i % 256, i / 256 + 200, p.Colors[s.BytPixels[i] % 16] );
                 }
 
                 Rectangle pRect = portraitRectangle;
@@ -130,24 +130,24 @@ namespace FFTPatcher.SpriteEditor
 
                 for( int x = pRect.X; x < pRect.Right; x++ )
                 {
-                    for( int y = pRect.Y; y < pRect.Bottom && (x + y * 256 < s.Pixels.Length); y++ )
+                    for( int y = pRect.Y; y < pRect.Bottom && (x + y * 256 < s.BytPixels.Length); y++ )
                     {
-                        b.SetPixel( x, y, portrait.Colors[s.Pixels[x + (y - 200) * 256] % 16] );
+                        b.SetPixel( x, y, portrait.Colors[s.BytPixels[x + (y - 200) * 256] % 16] );
                     }
                 }
             }
             else
             {
-                for( int i = 0; (i < s.Pixels.Length) && (i / 256 < b.Height); i++ )
+                for( int i = 0; (i < s.BytPixels.Length) && (i / 256 < b.Height); i++ )
                 {
-                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
+                    b.SetPixel( i % 256, i / 256, p.Colors[s.BytPixels[i] % 16] );
                 }
 
                 for( int x = portraitRectangle.X; x < portraitRectangle.Right; x++ )
                 {
-                    for( int y = portraitRectangle.Y; y < portraitRectangle.Bottom && (x + y * 256 < s.Pixels.Length); y++ )
+                    for( int y = portraitRectangle.Y; y < portraitRectangle.Bottom && (x + y * 256 < s.BytPixels.Length); y++ )
                     {
-                        b.SetPixel( x, y, portrait.Colors[s.Pixels[x + y * 256] % 16] );
+                        b.SetPixel( x, y, portrait.Colors[s.BytPixels[x + y * 256] % 16] );
                     }
                 }
             }

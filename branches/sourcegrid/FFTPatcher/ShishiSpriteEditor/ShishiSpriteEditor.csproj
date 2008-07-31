@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Frame.cs" />
+    <Compile Include="GraphicsFile.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +58,7 @@
     </Compile>
     <Compile Include="OPNBK.cs" />
     <Compile Include="Palette.cs" />
+    <Compile Include="PalettedImage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
@@ -77,6 +79,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -795,6 +798,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RawImage.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SpriteViewer.cs">

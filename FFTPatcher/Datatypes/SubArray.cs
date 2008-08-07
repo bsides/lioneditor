@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace FFTPatcher
 {
@@ -91,6 +92,28 @@ namespace FFTPatcher
 
 namespace FFTPatcher.Datatypes
 {
+    internal class CollectionDebugView<T>
+    {
+        private IList<T> collection;
+        public CollectionDebugView( IList<T> collection )
+        {
+            if( collection == null )
+            {
+                throw new ArgumentNullException( "collection" );
+            }
+
+            this.collection = collection;
+        }
+
+        [DebuggerBrowsable( DebuggerBrowsableState.RootHidden )]
+        public T[] Items
+        {
+            get { return collection.ToArray(); }
+        }
+    }
+
+    [DebuggerTypeProxy( typeof( CollectionDebugView<> ) )]
+    [DebuggerDisplay( "Count = {Count}" )]
     public class SubArray<T> : ICollection<T>, IList<T>, IDisposable
     {
 

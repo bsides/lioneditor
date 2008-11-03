@@ -406,20 +406,13 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
-            string fullpath = Path.GetFullPath( filename );
-            string ppfFilename =
-                fullpath.Remove( fullpath.LastIndexOf( Path.GetExtension( fullpath ) ) ) + ".fftactext.ppf";
             using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
-            using ( FileStream ppfStream = new FileStream( ppfFilename, FileMode.Create ) )
             {
-                var ppfDict = new Dictionary<long, IsoPatch.NewOldValue>();
                 foreach ( PatchedByteArray patch in patches )
                 {
-                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true, true, ppfDict );
+                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true );
                     progress();
                 }
-                var ppf = IsoPatch.GeneratePpf( ppfDict );
-                ppfStream.Write( ppf.ToArray(), 0, ppf.Count );
             }
         }
 

@@ -21,6 +21,41 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
+    public class FFTFontWidths : PatchableFile
+    {
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var width = owner.ToWidthsByteArray();
+
+            if( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, width ) );
+            }
+            else if( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, width ) );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293F40, width ) );
+            }
+
+            return result;
+        }
+
+        public override bool HasChanged
+        {
+            get { return true; }
+        }
+
+        private FFTFont owner;
+
+        public FFTFontWidths( FFTFont owner )
+        {
+            this.owner = owner;
+        }
+    }
+
+
     /// <summary>
     /// Represents a font used in FFT, which is an array of 2200 bitmaps.
     /// </summary>
@@ -31,6 +66,7 @@ namespace FFTPatcher.Datatypes
 
 
         public Glyph[] Glyphs { get; private set; }
+        public FFTFontWidths GlyphWidths { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -48,6 +84,7 @@ namespace FFTPatcher.Datatypes
 
         public FFTFont( IList<byte> bytes, IList<byte> widthBytes )
         {
+            GlyphWidths = new FFTFontWidths( this );
             Glyphs = new Glyph[2200];
             for( int i = 0; i < 2200; i++ )
             {
@@ -113,14 +150,11 @@ namespace FFTPatcher.Datatypes
             if ( context == Context.US_PSX )
             {
                 result.Add( new PatchedByteArray( PsxIso.Sectors.EVENT_FONT_BIN, 0, font ) );
-                result.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, width ) );
             }
             else if ( context == Context.US_PSP )
             {
                 result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27B80C, font ) );
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, width ) );
                 result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27B80C, font ) );
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293F40, width ) );
             }
 
             return result;

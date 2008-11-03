@@ -130,7 +130,7 @@ namespace FFTPatcher.Datatypes
         }
     }
 
-    public class AllMoveFindItems : IChangeable
+    public class AllMoveFindItems : PatchableFile, IChangeable
     {
         public MapMoveFindItems[] MoveFindItems { get; private set; }
 
@@ -164,12 +164,12 @@ namespace FFTPatcher.Datatypes
         }
 
 
-        public bool HasChanged
+        public override bool HasChanged
         {
             get { return Default != null && MoveFindItems.Exists( item => item.HasChanged ); }
         }
 
-        public IList<byte> ToByteArray()
+        public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 4 * 4 * 128 );
             foreach ( MapMoveFindItems items in MoveFindItems )
@@ -177,8 +177,27 @@ namespace FFTPatcher.Datatypes
                 result.AddRange( items.ToByteArray() );
             }
 
+            return result.ToArray();
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            List<PatchedByteArray> result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+
+            if( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0x08EE74, bytes ) );
+            }
+            else if( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2707A8, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2707A8, bytes ) );
+            }
+
             return result;
         }
+
 
         string[] names = new string[128] {
 "(No name)",
@@ -304,5 +323,6 @@ namespace FFTPatcher.Datatypes
 "(Garbled name) -- Sloped Checkerboard",
 "","","","","","",""
 };
+
     }
 }

@@ -713,15 +713,17 @@ namespace FFTPatcher.Datatypes
                     backgroundWorker.ReportProgress( tasksComplete++ * 100 / numberOfTasks );
                 };
 
+            const Context context = Context.US_PSX;
+
             if ( patchList.Abilities )
             {
-                patches.Add( new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x4F3F0, Abilities.ToByteArray() ) );
+                patches.AddRange( Abilities.GetPatches( context ) );
             }
             progress();
 
             if ( patchList.AbilityEffects )
             {
-                patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0x14F3F0, Abilities.ToEffectsByteArray() ) );
+                patches.AddRange( Abilities.AllEffects.GetPatches( context ) );
             }
             progress();
 
@@ -778,6 +780,7 @@ namespace FFTPatcher.Datatypes
                 patches.AddRange( InflictStatuses.GetPatches( context ) );
             }
             progress();
+
             if ( patchList.Poach )
             {
                 patches.AddRange( PoachProbabilities.GetPatches( context ) );
@@ -796,13 +799,19 @@ namespace FFTPatcher.Datatypes
 
             if ( patchList.FONT )
             {
-                patches.Add( new PatchedByteArray( PsxIso.Sectors.EVENT_FONT_BIN, 0, Font.ToByteArray() ) );
+                patches.AddRange( Font.GetPatches( context ) );
                 progress();
             }
+
             if ( patchList.FontWidths )
             {
-                patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, Font.ToWidthsByteArray() ) );
+                patches.AddRange( Font.GlyphWidths.GetPatches( context ) );
                 progress();
+            }
+
+            if( patchList.MoveFindItems )
+            {
+                patches.AddRange( MoveFind.GetPatches( context ) );
             }
 
             IList<PatchedByteArray> otherPatches = patchList.OtherPatches;
@@ -810,32 +819,6 @@ namespace FFTPatcher.Datatypes
             {
                 patches.Add( patch );
                 progress();
-            }
-
-            IList<byte> ppf = patchList.GeneratePPF ? IsoPatch.InitializePpf() : null;
-            using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
-            {
-                foreach ( PatchedByteArray patch in patches )
-                {
-                    IsoPatch.PatchFileAtSector( 
-                        IsoPatch.IsoType.Mode2Form1, 
-                        stream, 
-                        patchList.RegenECC, 
-                        patch.Sector, patch.Offset, patch.Bytes, true, 
-                        patchList.GeneratePPF, ppf );
-                    progress();
-                }
-            }
-
-            if ( patchList.GeneratePPF )
-            {
-                string fullpath = Path.GetFullPath( patchList.FileName );
-                string ppfFilename =
-                    fullpath.Remove( fullpath.LastIndexOf( Path.GetExtension( fullpath ) ) ) + ".fftpatcher.ppf";
-                using ( FileStream ppfStream = new FileStream( ppfFilename, FileMode.Create ) )
-                {
-                    ppfStream.Write( ppf.ToArray(), 0, ppf.Count );
-                }
             }
         }
 

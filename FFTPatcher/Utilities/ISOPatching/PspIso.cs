@@ -308,7 +308,6 @@ namespace FFTPatcher
             }
 
             const int defaultNumberOfTasks = 13;
-            const bool patchSCEAP = false;
             int numberOfTasks = defaultNumberOfTasks;
             int tasksComplete = 1;
 
@@ -356,7 +355,7 @@ namespace FFTPatcher
                 }
                 else if( patch.SectorEnum.GetType() == typeof( FFTPack.Files ) )
                 {
-                    FFTPack.PatchFile( stream, (int)((FFTPack.Files)patch.SectorEnum), (int)patch.Offset, patch.Bytes, false, null );
+                    FFTPack.PatchFile( stream, (int)((FFTPack.Files)patch.SectorEnum), (int)patch.Offset, patch.Bytes );
                 }
                 else
                 {
@@ -389,7 +388,7 @@ namespace FFTPatcher
         /// <param name="bytes">The bytes to update the file with.</param>
         public static void UpdateFFTPack( FileStream stream, int index, byte[] bytes )
         {
-            FFTPack.PatchFile( stream, index, 0, bytes, false, null );
+            FFTPack.PatchFile( stream, index, 0, bytes );
         }
 
 

@@ -23,6 +23,39 @@ using System.Xml;
 
 namespace FFTPatcher.Datatypes
 {
+    public class AllAbilityEffects : PatchableFile
+    {
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            byte[] effects = owner.ToEffectsByteArray();
+            List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
+            if( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x14F3F0, effects ) );
+            }
+            else if( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2FCE08, effects ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2FCE08, effects ) );
+            }
+
+            return result;
+        }
+
+        public override bool HasChanged
+        {
+            get { return owner.Abilities.Exists( ability => ability.Effect.Value != ability.Default.Effect.Value ); }
+        }
+
+        private AllAbilities owner;
+
+        public AllAbilityEffects( AllAbilities owner )
+        {
+            this.owner = owner;
+        }
+    }
+
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
@@ -81,6 +114,8 @@ namespace FFTPatcher.Datatypes
 
         public Ability[] DefaultAbilities { get; private set; }
 
+        public AllAbilityEffects AllEffects { get; private set;}
+
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
@@ -137,6 +172,7 @@ namespace FFTPatcher.Datatypes
 
         public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
         {
+            AllEffects = new AllAbilityEffects( this );
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : PSXResources.AbilitiesBin;
             Dictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
             byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
@@ -282,14 +318,11 @@ namespace FFTPatcher.Datatypes
             if ( context == Context.US_PSX )
             {
                 result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x4F3F0, bytes ) );
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x14F3F0, effects ) );
             }
             else if ( context == Context.US_PSP )
             {
                 result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x26F0A4, bytes ) );
                 result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x26F0A4, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2FCE08, effects ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2FCE08, effects ) );
             }
 
             return result;

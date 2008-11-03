@@ -5615,7 +5615,7 @@ namespace FFTPatcher.Datatypes
             try
             {
                 stream = new FileStream( filename, FileMode.Open );
-                PatchFile( stream, index, bytes, false, null );
+                PatchFile( stream, index, bytes );
             }
             catch( Exception )
             {
@@ -5632,12 +5632,12 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static void PatchFile( FileStream stream, int index, byte[] bytes, bool generatePpf, IDictionary<long,IsoPatch.NewOldValue> ppfBytes )
+        public static void PatchFile( FileStream stream, int index, byte[] bytes )
         {
-            PatchFile( stream, index, 0, bytes, generatePpf, ppfBytes );
+            PatchFile( stream, index, 0, bytes );
         }
 
-        public static void PatchFile( FileStream stream, int index, int offset, byte[] bytes, bool generatePpf, IDictionary<long, IsoPatch.NewOldValue> ppfBytes )
+        public static void PatchFile( FileStream stream, int index, int offset, byte[] bytes )
         {
             try
             {
@@ -5647,13 +5647,6 @@ namespace FFTPatcher.Datatypes
                 stream.Read( pointer, 0, 4 );
 
                 stream.Seek( fftpackLocation + pointer.ToUInt32() + offset, SeekOrigin.Begin );
-                if ( generatePpf )
-                {
-                    byte[] oldBytes = new byte[bytes.Length];
-                    stream.Read( oldBytes, 0, bytes.Length );
-                    stream.Seek( -bytes.Length, SeekOrigin.Current );
-                    IsoPatch.GeneratePpf( oldBytes, bytes, pointer.ToUInt32() + offset, ppfBytes );
-                }
 
                 stream.Write( bytes, 0, bytes.Length );
             }

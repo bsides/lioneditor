@@ -34,6 +34,7 @@
             System.Windows.Forms.Button cancelButton;
             System.Windows.Forms.Button isoBrowseButton;
             System.Windows.Forms.Label isoLabel;
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.sceapBrowseButton = new System.Windows.Forms.Button();
             this.sceapFileNameTextBox = new System.Windows.Forms.TextBox();
             this.useCustomSceapRadioButton = new System.Windows.Forms.RadioButton();
@@ -42,7 +43,6 @@
             this.scusCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.battleCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.sceapOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.generatePpfCheckBox = new System.Windows.Forms.CheckBox();
             this.fontCheckBox = new System.Windows.Forms.CheckBox();
             this.entd1CheckBox = new System.Windows.Forms.CheckBox();
             this.entd2CheckBox = new System.Windows.Forms.CheckBox();
@@ -52,7 +52,6 @@
             this.okButton = new System.Windows.Forms.Button();
             this.patchIsoDialog = new System.Windows.Forms.SaveFileDialog();
             this.isoPathTextBox = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             sceapGroupBox = new System.Windows.Forms.GroupBox();
             scusGroupBox = new System.Windows.Forms.GroupBox();
             battleBinGroupBox = new System.Windows.Forms.GroupBox();
@@ -60,9 +59,9 @@
             isoBrowseButton = new System.Windows.Forms.Button();
             isoLabel = new System.Windows.Forms.Label();
             sceapGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             scusGroupBox.SuspendLayout();
             battleBinGroupBox.SuspendLayout();
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.SuspendLayout();
             // 
             // sceapGroupBox
@@ -75,12 +74,22 @@
             sceapGroupBox.Controls.Add( this.useCustomSceapRadioButton );
             sceapGroupBox.Controls.Add( this.useDefaultSceapRadioButton );
             sceapGroupBox.Controls.Add( this.dontChangeSceapRadioButton );
-            sceapGroupBox.Location = new System.Drawing.Point( 172, 90 );
+            sceapGroupBox.Location = new System.Drawing.Point( 172, 106 );
             sceapGroupBox.Name = "sceapGroupBox";
             sceapGroupBox.Size = new System.Drawing.Size( 333, 171 );
             sceapGroupBox.TabIndex = 3;
             sceapGroupBox.TabStop = false;
             sceapGroupBox.Text = "SCEAP.DAT";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Location = new System.Drawing.Point( 7, 120 );
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size( 320, 32 );
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
             // 
             // sceapBrowseButton
             // 
@@ -179,7 +188,7 @@
             battleBinGroupBox.Controls.Add( this.battleCheckedListBox );
             battleBinGroupBox.Location = new System.Drawing.Point( 172, 12 );
             battleBinGroupBox.Name = "battleBinGroupBox";
-            battleBinGroupBox.Size = new System.Drawing.Size( 132, 72 );
+            battleBinGroupBox.Size = new System.Drawing.Size( 132, 87 );
             battleBinGroupBox.TabIndex = 1;
             battleBinGroupBox.TabStop = false;
             battleBinGroupBox.Text = "BATTLE.BIN";
@@ -189,10 +198,11 @@
             this.battleCheckedListBox.FormattingEnabled = true;
             this.battleCheckedListBox.Items.AddRange( new object[] {
             "Ability Effects",
-            "Font Widths"} );
+            "Font Widths",
+            "Move-Find Items"} );
             this.battleCheckedListBox.Location = new System.Drawing.Point( 6, 19 );
             this.battleCheckedListBox.Name = "battleCheckedListBox";
-            this.battleCheckedListBox.Size = new System.Drawing.Size( 120, 34 );
+            this.battleCheckedListBox.Size = new System.Drawing.Size( 120, 49 );
             this.battleCheckedListBox.TabIndex = 0;
             this.battleCheckedListBox.Tag = "BATTLE.BIN";
             this.battleCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler( this.checkedListBox1_ItemCheck );
@@ -207,24 +217,32 @@
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
             // 
+            // isoBrowseButton
+            // 
+            isoBrowseButton.AutoSize = true;
+            isoBrowseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            isoBrowseButton.Location = new System.Drawing.Point( 291, 338 );
+            isoBrowseButton.Name = "isoBrowseButton";
+            isoBrowseButton.Size = new System.Drawing.Size( 26, 23 );
+            isoBrowseButton.TabIndex = 11;
+            isoBrowseButton.Text = "...";
+            isoBrowseButton.UseVisualStyleBackColor = true;
+            isoBrowseButton.Click += new System.EventHandler( this.isoBrowseButton_Click );
+            // 
+            // isoLabel
+            // 
+            isoLabel.AutoSize = true;
+            isoLabel.Location = new System.Drawing.Point( 12, 324 );
+            isoLabel.Name = "isoLabel";
+            isoLabel.Size = new System.Drawing.Size( 25, 13 );
+            isoLabel.TabIndex = 13;
+            isoLabel.Text = "ISO";
+            // 
             // sceapOpenFileDialog
             // 
             this.sceapOpenFileDialog.FileName = "SCEAP.DAT";
             this.sceapOpenFileDialog.Filter = "SCEAP.DAT|SCEAP.DAT";
             this.sceapOpenFileDialog.ShowReadOnly = true;
-            // 
-            // generatePpfCheckBox
-            // 
-            this.generatePpfCheckBox.AutoSize = true;
-            this.generatePpfCheckBox.Enabled = false;
-            this.generatePpfCheckBox.Location = new System.Drawing.Point( 172, 294 );
-            this.generatePpfCheckBox.Name = "generatePpfCheckBox";
-            this.generatePpfCheckBox.Size = new System.Drawing.Size( 112, 17 );
-            this.generatePpfCheckBox.TabIndex = 9;
-            this.generatePpfCheckBox.Tag = "GeneratePPF";
-            this.generatePpfCheckBox.Text = "Generate PPF File";
-            this.generatePpfCheckBox.UseVisualStyleBackColor = true;
-            this.generatePpfCheckBox.CheckedChanged += new System.EventHandler( this.entd2CheckBox_CheckedChanged );
             // 
             // fontCheckBox
             // 
@@ -289,7 +307,7 @@
             // eccCheckBox
             // 
             this.eccCheckBox.AutoSize = true;
-            this.eccCheckBox.Location = new System.Drawing.Point( 172, 271 );
+            this.eccCheckBox.Location = new System.Drawing.Point( 172, 287 );
             this.eccCheckBox.Name = "eccCheckBox";
             this.eccCheckBox.Size = new System.Drawing.Size( 103, 17 );
             this.eccCheckBox.TabIndex = 8;
@@ -314,18 +332,6 @@
             this.patchIsoDialog.Filter = "ISO images|*.iso;*.bin;*.img|All files|*.*";
             this.patchIsoDialog.OverwritePrompt = false;
             // 
-            // isoBrowseButton
-            // 
-            isoBrowseButton.AutoSize = true;
-            isoBrowseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            isoBrowseButton.Location = new System.Drawing.Point( 291, 338 );
-            isoBrowseButton.Name = "isoBrowseButton";
-            isoBrowseButton.Size = new System.Drawing.Size( 26, 23 );
-            isoBrowseButton.TabIndex = 11;
-            isoBrowseButton.Text = "...";
-            isoBrowseButton.UseVisualStyleBackColor = true;
-            isoBrowseButton.Click += new System.EventHandler( this.isoBrowseButton_Click );
-            // 
             // isoPathTextBox
             // 
             this.isoPathTextBox.Location = new System.Drawing.Point( 12, 340 );
@@ -333,25 +339,6 @@
             this.isoPathTextBox.ReadOnly = true;
             this.isoPathTextBox.Size = new System.Drawing.Size( 273, 20 );
             this.isoPathTextBox.TabIndex = 10;
-            // 
-            // isoLabel
-            // 
-            isoLabel.AutoSize = true;
-            isoLabel.Location = new System.Drawing.Point( 12, 324 );
-            isoLabel.Name = "isoLabel";
-            isoLabel.Size = new System.Drawing.Size( 25, 13 );
-            isoLabel.TabIndex = 13;
-            isoLabel.Text = "ISO";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point( 7, 120 );
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size( 320, 32 );
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
             // 
             // PatchPSXForm
             // 
@@ -374,7 +361,6 @@
             this.Controls.Add( this.fontCheckBox );
             this.Controls.Add( battleBinGroupBox );
             this.Controls.Add( scusGroupBox );
-            this.Controls.Add( this.generatePpfCheckBox );
             this.Controls.Add( sceapGroupBox );
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "PatchPSXForm";
@@ -383,9 +369,9 @@
             this.Text = "Patch PSX ISO";
             sceapGroupBox.ResumeLayout( false );
             sceapGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             scusGroupBox.ResumeLayout( false );
             battleBinGroupBox.ResumeLayout( false );
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).EndInit();
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -397,7 +383,6 @@
         private System.Windows.Forms.Button sceapBrowseButton;
         private System.Windows.Forms.TextBox sceapFileNameTextBox;
         private System.Windows.Forms.OpenFileDialog sceapOpenFileDialog;
-        private System.Windows.Forms.CheckBox generatePpfCheckBox;
         private System.Windows.Forms.CheckedListBox scusCheckedListBox;
         private System.Windows.Forms.CheckedListBox battleCheckedListBox;
         private System.Windows.Forms.CheckBox fontCheckBox;

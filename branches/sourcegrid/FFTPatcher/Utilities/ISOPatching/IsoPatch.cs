@@ -127,51 +127,6 @@ namespace FFTPatcher
             destination[3] = (byte)((edc >> 24) & 0xFF);
         }
 
-        public static IList<byte> GeneratePpf( IDictionary<long, NewOldValue> dict )
-        {
-            IList<byte> result = InitializePpf();
-            List<long> offsets = new List<long>( dict.Keys );
-            offsets.Sort();
-
-            List<IList<long>> offsetGroups = new List<IList<long>>();
-            int start = 0;
-            for ( int i = 0; i < offsets.Count - 1; i++ )
-            {
-                if ( ( offsets[i] != offsets[i + 1] + 1 ) || ( offsets[i] - start >= 255 ) )
-                {
-                    offsetGroups.Add( offsets.Sub( start, i ) );
-                    start = i + 1;
-                }
-            }
-            offsetGroups.Add( offsets.Sub( start, offsets.Count - 1 ) );
-            foreach ( IList<long> group in offsetGroups )
-            {
-                Debug.Assert( group.Count <= 255 );
-                result.AddRange( group[0].ToBytes() );
-                result.Add( (byte)group.Count );
-                group.ForEach( l => result.Add( dict[l].NewValue ) );
-                group.ForEach( l => result.Add( dict[l].OldValue ) );
-            }
-
-            return result;
-        }
-
-        private static IList<byte> InitializePpf()
-        {
-            const string description = "FFTPatch generated file                           ";
-            const string magicString = "PPF30";
-            List<byte> result = new List<byte>();
-            result.AddRange( magicString.ToByteArray() );
-            result.Add( 0x02 ); // PPF 3.0
-            result.AddRange( description.ToByteArray() );
-            result.Add( 0x00 ); // binary file
-            result.Add( 0x00 ); // disable blockcheck
-            result.Add( 0x01 ); // enable undo data
-            //result.Add( 0x00 ); // disable undo data
-            result.Add( 0x01 ); // dummy
-            return result;
-        }
-
         private static void GenerateEcc( IList<byte> sector, bool zeroAddress )
         {
             byte[] address = new byte[4];
@@ -213,31 +168,6 @@ namespace FFTPatcher
             }
         }
 
-        public static void GeneratePpf( byte[] originalSector, byte[] sector, long offset, IDictionary<long, NewOldValue> ppfDictionary )
-        {
-            int sectorLength = sector.Length;
-            for ( int i = 0; i < sectorLength; i++ )
-            {
-                if ( ppfDictionary.ContainsKey( offset + i ) )
-                {
-                    if ( sector[i] != ppfDictionary[offset + i].OldValue )
-                    {
-                        NewOldValue nov = ppfDictionary[offset + i];
-                        nov.NewValue = sector[i];
-                        ppfDictionary[offset + i] = nov;
-                    }
-                    else
-                    {
-                        ppfDictionary.Remove( offset + i );
-                    }
-                }
-                else if ( sector[i] != originalSector[i] )
-                {
-                    ppfDictionary[offset + i] = new NewOldValue( sector[i], originalSector[i] );
-                }
-            }
-        }
-
         /// <summary>
         /// Patches the bytes at a given offset.
         /// </summary>
@@ -246,11 +176,11 @@ namespace FFTPatcher
         /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
         /// <param name="offset">Where in the ISO to start writing</param>
         /// <param name="input">Bytes to write</param>
-        public static void PatchFile( IsoType isoType, string isoFile, bool patchEccEdc, long offset, IList<byte> input, bool patchIso, bool generatePpf, IDictionary<long,NewOldValue> patch )
+        public static void PatchFile( IsoType isoType, string isoFile, bool patchEccEdc, long offset, IList<byte> input, bool patchIso )
         {
             using( FileStream stream = new FileStream( isoFile, FileMode.Open ) )
             {
-                PatchFile( isoType, stream, patchEccEdc, offset, input, patchIso, generatePpf, patch );
+                PatchFile( isoType, stream, patchEccEdc, offset, input, patchIso );
             }
         }
 
@@ -262,11 +192,11 @@ namespace FFTPatcher
         /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
         /// <param name="offset">Where in the ISO to start writing</param>
         /// <param name="input">Bytes to write</param>
-        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, long offset, IList<byte> input, bool patchIso, bool generatePpf, IDictionary<long,NewOldValue> patch )
+        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, long offset, IList<byte> input, bool patchIso )
         {
             using ( MemoryStream inputStream = new MemoryStream( input.ToArray() ) )
             {
-                PatchFile( isoType, iso, patchEccEdc, offset, inputStream, patchIso, generatePpf, patch );
+                PatchFile( isoType, iso, patchEccEdc, offset, inputStream, patchIso );
             }
         }
 
@@ -278,7 +208,7 @@ namespace FFTPatcher
         /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
         /// <param name="offset">Where in the ISO to start writing</param>
         /// <param name="input">Stream that contains the bytes to write</param>
-        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, long offset, Stream input, bool patchIso, bool generatePpf, IDictionary<long, NewOldValue> ppfDictionary )
+        public static void PatchFile( IsoType isoType, Stream iso, bool patchEccEdc, long offset, Stream input, bool patchIso )
         {
             int type = (int)isoType;
             int sectorSize = sectorSizes[type];
@@ -322,11 +252,6 @@ namespace FFTPatcher
 
                 iso.Seek( -sectorSize, SeekOrigin.Current );
 
-                if( generatePpf )
-                {
-                    GeneratePpf( originalSector, sector, iso.Position, ppfDictionary );
-                }
-
                 if( patchIso )
                 {
                     iso.Write( sector, 0, sectorSize );
@@ -350,9 +275,9 @@ namespace FFTPatcher
         /// <param name="patchEccEdc">Whether or not ECC/EDC blocks should be updated</param>
         /// <param name="sectorNumber">The sector number where the file begins</param>
         /// <param name="input">Bytes to write</param>
-        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, IList<byte> input, bool patchIso, bool generatePpf, IDictionary<long, NewOldValue> ppfDictionary )
+        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, IList<byte> input, bool patchIso )
         {
-            PatchFileAtSector( isoType, isoFile, patchEccEdc, sectorNumber, 0, input, patchIso, generatePpf, ppfDictionary );
+            PatchFileAtSector( isoType, isoFile, patchEccEdc, sectorNumber, 0, input, patchIso );
         }
 
         /// <summary>
@@ -364,11 +289,11 @@ namespace FFTPatcher
         /// <param name="sectorNumber">The sector number where the file begins</param>
         /// <param name="offset">Where in the file to start writing</param>
         /// <param name="input">Bytes to write</param>
-        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, long offset, IList<byte> input, bool patchIso, bool generatePpf, IDictionary<long, NewOldValue> ppfDictionary )
+        public static void PatchFileAtSector( IsoType isoType, string isoFile, bool patchEccEdc, int sectorNumber, long offset, IList<byte> input, bool patchIso )
         {
             using ( FileStream stream = new FileStream( isoFile, FileMode.Open ) )
             {
-                PatchFileAtSector( isoType, stream, patchEccEdc, sectorNumber, offset, input, patchIso, generatePpf, ppfDictionary );
+                PatchFileAtSector( isoType, stream, patchEccEdc, sectorNumber, offset, input, patchIso );
             }
         }
 
@@ -381,7 +306,7 @@ namespace FFTPatcher
         /// <param name="sectorNumber">The sector number where the file begins</param>
         /// <param name="offset">Where in the file to start writing</param>
         /// <param name="input">Bytes to write</param>
-        public static void PatchFileAtSector( IsoType isoType, Stream iso, bool patchEccEdc, int sectorNumber, long offset, IList<byte> input, bool patchIso, bool generatePpf, IDictionary<long, NewOldValue> ppfDictionary )
+        public static void PatchFileAtSector( IsoType isoType, Stream iso, bool patchEccEdc, int sectorNumber, long offset, IList<byte> input, bool patchIso )
         {
             int dataSize = dataSizes[(int)isoType];
             int dataStart = dataStarts[(int)isoType];
@@ -392,7 +317,7 @@ namespace FFTPatcher
 
             long realOffset = (sectorNumber + sectorsToAdvance) * sectorSize + dataStart + newOffset;
 
-            PatchFile( isoType, iso, patchEccEdc, realOffset, input, patchIso, generatePpf, ppfDictionary );
+            PatchFile( isoType, iso, patchEccEdc, realOffset, input, patchIso );
         }
 
 

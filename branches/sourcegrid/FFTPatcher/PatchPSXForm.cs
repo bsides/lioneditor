@@ -14,12 +14,12 @@ namespace FFTPatcher
     {
         bool[] ENTD { get; }
         bool FONT { get; }
-        bool GeneratePPF { get; }
         bool RegenECC { get; }
         string FileName { get; }
         bool Abilities { get; }
         bool AbilityEffects { get; }
         bool FontWidths { get; }
+        bool MoveFindItems { get; }
 
         bool Items { get; }
         bool ItemAttributes { get; }
@@ -44,7 +44,6 @@ namespace FFTPatcher
         public bool ENTD3 { get; private set; }
         public bool ENTD4 { get; private set; }
         public bool FONT { get; private set; }
-        public bool GeneratePPF { get; private set; }
         public bool RegenECC { get; private set; }
         public string FileName { get { return isoPathTextBox.Text; } }
         public bool[] ENTD { get { return new bool[] { ENTD1, ENTD2, ENTD3, ENTD4 }; } }
@@ -54,17 +53,23 @@ namespace FFTPatcher
             get { return scusPatchable[(int)SCUSPatchable.Abilities]; }
             set { scusPatchable[(int)SCUSPatchable.Abilities] = value; }
         }
-        
+
         public bool AbilityEffects
         {
-            get { return scusPatchable[(int)BATTLEPatchable.AbilityEffects]; }
-            set { scusPatchable[(int)BATTLEPatchable.AbilityEffects] = value; }
+            get { return battlePatchable[(int)BATTLEPatchable.AbilityEffects]; }
+            set { battlePatchable[(int)BATTLEPatchable.AbilityEffects] = value; }
+        }
+
+        public bool MoveFindItems
+        {
+            get { return battlePatchable[(int)BATTLEPatchable.MoveFindItems]; }
+            set { battlePatchable[(int)BATTLEPatchable.MoveFindItems] = value; }
         }
 
         public bool FontWidths
         {
-            get { return scusPatchable[(int)BATTLEPatchable.FontWidths]; }
-            set { scusPatchable[(int)BATTLEPatchable.FontWidths] = value; }
+            get { return battlePatchable[(int)BATTLEPatchable.FontWidths]; }
+            set { battlePatchable[(int)BATTLEPatchable.FontWidths] = value; }
         }
         public enum CustomSCEAP
         {
@@ -168,7 +173,6 @@ namespace FFTPatcher
             entd4CheckBox.Checked = FFTPatch.ENTDs.ENTDs[3].HasChanged;
             fontCheckBox.Checked = false;
             eccCheckBox.Checked = true;
-            generatePpfCheckBox.Checked = false;
 
             UpdateNextEnabled();
 
@@ -259,7 +263,6 @@ namespace FFTPatcher
             ENTD4,
             FONT,
             RegenECC,
-            GeneratePPF
         }
 
         private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
@@ -282,9 +285,6 @@ namespace FFTPatcher
                     break;
                 case Checkboxes.FONT:
                     FONT = box.Checked;
-                    break;
-                case Checkboxes.GeneratePPF:
-                    GeneratePPF = box.Checked;
                     break;
                 case Checkboxes.RegenECC:
                     RegenECC = box.Checked;
@@ -336,7 +336,7 @@ namespace FFTPatcher
                 ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || FONT || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
                   StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
-                  AbilityEffects || FontWidths );
+                  AbilityEffects || FontWidths || MoveFindItems );
 
             okButton.Enabled = enabled;
         }
@@ -344,7 +344,8 @@ namespace FFTPatcher
         private enum BATTLEPatchable
         {
             AbilityEffects,
-            FontWidths
+            FontWidths,
+            MoveFindItems
         }
 
         private byte[] SCEAP_DAT = new byte[20480];

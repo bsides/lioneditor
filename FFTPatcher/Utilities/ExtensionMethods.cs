@@ -52,6 +52,19 @@ namespace FFTPatcher
             return sum;
         }
 
+        public static bool Exists<T>( this IList<T> list, Predicate<T> match )
+        {
+            foreach ( T t in list )
+            {
+                if ( match( t ) )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Returns the location of every item in the list that is equal to a given item.
         /// </summary>

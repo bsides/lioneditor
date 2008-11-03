@@ -81,6 +81,7 @@
     <Compile Include="Datatypes\HexAttribute.cs" />
     <Compile Include="Datatypes\IChangeable.cs" />
     <Compile Include="Datatypes\ISupportDigest.cs" />
+    <Compile Include="Datatypes\Items\MoveFindItem.cs" />
     <Compile Include="Datatypes\IXmlDigest.cs" />
     <Compile Include="Datatypes\Items\Accessory.cs" />
     <Compile Include="Datatypes\Items\AllItems.cs" />
@@ -124,6 +125,24 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Editors\INotifyDataChanged.cs" />
+    <Compile Include="Editors\Items\AllMoveFindItemsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Items\AllMoveFindItemsEditor.Designer.cs">
+      <DependentUpon>AllMoveFindItemsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Items\MapMoveFindItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Items\MapMoveFindItemEditor.Designer.cs">
+      <DependentUpon>MapMoveFindItemEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Items\MoveFindItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Items\MoveFindItemEditor.Designer.cs">
+      <DependentUpon>MoveFindItemEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\Job\AllActionMenusEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -298,6 +317,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PatchPSXForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatchPSXForm.Designer.cs">
+      <DependentUpon>PatchPSXForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
@@ -314,6 +339,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\Abilities\AllAbilitiesEditor.resx">
       <DependentUpon>AllAbilitiesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Items\AllMoveFindItemsEditor.resx">
+      <DependentUpon>AllMoveFindItemsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Items\MapMoveFindItemEditor.resx">
+      <DependentUpon>MapMoveFindItemEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Items\MoveFindItemEditor.resx">
+      <DependentUpon>MoveFindItemEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\Job\AllActionMenusEditor.resx">
@@ -432,6 +469,10 @@
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PatchPSXForm.resx">
+      <DependentUpon>PatchPSXForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -452,6 +493,7 @@
     <None Include="Resources\ENTD3.ENT" />
     <None Include="Resources\ENTD4.ENT" />
     <Compile Include="Resources\PSP\bin\Abilities.bin" />
+    <None Include="Resources\movefind" />
     <None Include="Resources\PSP\bin\AbilityEffects.bin" />
     <None Include="Resources\PSP\bin\ActionEvents.bin" />
     <None Include="Resources\PSP\bin\ENTD5.bin" />

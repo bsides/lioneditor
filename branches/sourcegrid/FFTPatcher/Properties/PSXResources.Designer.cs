@@ -179,6 +179,13 @@ namespace FFTPatcher.Properties {
             }
         }
         
+        internal static byte[] movefind {
+            get {
+                object obj = ResourceManager.GetObject("movefind", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] OldItemAttributesBin {
             get {
                 object obj = ResourceManager.GetObject("OldItemAttributesBin", resourceCulture);

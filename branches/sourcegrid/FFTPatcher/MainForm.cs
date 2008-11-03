@@ -30,6 +30,19 @@ namespace FFTPatcher
 {
     public partial class MainForm : Form
     {
+        private PatchPSXForm patchPsxForm = null;
+
+        private PatchPSXForm PatchPSXForm
+        {
+            get
+            {
+                if ( patchPsxForm == null )
+                {
+                    patchPsxForm = new PatchPSXForm();
+                }
+                return patchPsxForm;
+            }
+        }
 
 		#region Constructors (1) 
 
@@ -377,7 +390,7 @@ namespace FFTPatcher
             DoWorkEventHandler doWork =
                 delegate( object sender1, DoWorkEventArgs args )
                 {
-                    FFTPatch.PatchPsxIso( sender1 as BackgroundWorker, args );
+                    FFTPatch.PatchPsxIso( sender1 as BackgroundWorker, args, PatchPSXForm );
                 };
             ProgressChangedEventHandler progress =
                 delegate( object sender2, ProgressChangedEventArgs args )
@@ -400,9 +413,8 @@ namespace FFTPatcher
                     }
                 };
 
-            saveFileDialog.Filter = "ISO files (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
-            saveFileDialog.OverwritePrompt = false;
-            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            
+            if ( PatchPSXForm.CustomShowDialog( this ) == DialogResult.OK )
             {
                 patchPsxBackgroundWorker.ProgressChanged += progress;
                 patchPsxBackgroundWorker.RunWorkerCompleted += completed;
@@ -413,7 +425,7 @@ namespace FFTPatcher
                 progressBar.Value = 0;
                 progressBar.Visible = true;
 
-                patchPsxBackgroundWorker.RunWorkerAsync( saveFileDialog.FileName );
+                patchPsxBackgroundWorker.RunWorkerAsync();
             }
         }
 

@@ -192,6 +192,18 @@ namespace FFTPatcher.Datatypes
         {
         }
 
+        public List<string> GenerateCodes()
+        {
+            if( FFTPatch.Context == Context.US_PSP )
+            {
+                return Codes.GenerateCodes( Context.US_PSP, Properties.PSXResources.movefind, this.ToByteArray(), 0x274754 );
+            }
+            else
+            {
+                return new List<string>();
+            }
+        }
+
 
         public override bool HasChanged
         {

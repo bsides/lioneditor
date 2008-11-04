@@ -706,15 +706,13 @@ namespace FFTPatcher.Datatypes
         public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e, IGeneratePatchList patchList )
         {
             string filename = patchList.FileName;
-            const int defaultNumberOfTasks = 18;
-            int numberOfTasks = defaultNumberOfTasks;
-            int tasksComplete = 1;
+            int numberOfTasks = patchList.PatchCount * 2;
+            int tasksComplete = 0;
             List<PatchedByteArray> patches = new List<PatchedByteArray>();
 
             MethodInvoker progress =
                 delegate()
                 {
-                    numberOfTasks = defaultNumberOfTasks + patches.Count * 2;
                     backgroundWorker.ReportProgress( tasksComplete++ * 100 / numberOfTasks );
                 };
 
@@ -723,74 +721,74 @@ namespace FFTPatcher.Datatypes
             if ( patchList.Abilities )
             {
                 patches.AddRange( Abilities.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.AbilityEffects )
             {
                 patches.AddRange( Abilities.AllEffects.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.Items )
             {
                 patches.AddRange( Items.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.ItemAttributes )
             {
                 patches.AddRange( ItemAttributes.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.Jobs )
             {
                 patches.AddRange( Jobs.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.JobLevels )
             {
                 patches.AddRange( JobLevels.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.Skillsets )
             {
                 patches.AddRange( SkillSets.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.MonsterSkills )
             {
                 patches.AddRange( MonsterSkills.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.ActionMenus )
             {
                 patches.AddRange( ActionMenus.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.StatusAttributes )
             {
                 patches.AddRange( StatusAttributes.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.InflictStatus )
             {
                 patches.AddRange( InflictStatuses.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             if ( patchList.Poach )
             {
                 patches.AddRange( PoachProbabilities.GetPatches( context ) );
+                progress();
             }
-            progress();
 
             var entdPatches = ENTDs.GetPatches( context );
             for( int i = 0; i < 4; i++ )
@@ -798,8 +796,8 @@ namespace FFTPatcher.Datatypes
                 if ( patchList.ENTD[i] )
                 {
                     patches.Add( entdPatches[i] );
+                    progress();
                 }
-                progress();
             }
 
             if ( patchList.FONT )
@@ -817,6 +815,7 @@ namespace FFTPatcher.Datatypes
             if( patchList.MoveFindItems )
             {
                 patches.AddRange( MoveFind.GetPatches( context ) );
+                progress();
             }
 
             IList<PatchedByteArray> otherPatches = patchList.OtherPatches;
@@ -824,6 +823,18 @@ namespace FFTPatcher.Datatypes
             {
                 patches.Add( patch );
                 progress();
+            }
+
+            foreach ( PatchedByteArray patch in patches )
+            {
+                IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, patchList.FileName, false, patch.Sector,
+                    patch.Offset, patch.Bytes, true );
+                progress();
+            }
+
+            if ( patchList.RegenECC )
+            {
+                // TODO: RegenECC
             }
         }
 

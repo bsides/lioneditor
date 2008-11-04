@@ -146,6 +146,27 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (2)
 
+        public static void Copy( ItemAttributes source, ItemAttributes destination )
+        {
+            destination.PA = source.PA;
+            destination.MA = source.MA;
+            destination.Speed = source.Speed;
+            destination.Move = source.Move;
+            destination.Jump = source.Jump;
+            source.PermanentStatuses.CopyTo( destination.PermanentStatuses );
+            source.StatusImmunity.CopyTo( destination.StatusImmunity );
+            source.StartingStatuses.CopyTo( destination.StartingStatuses );
+            source.Absorb.CopyTo( destination.Absorb );
+            source.Cancel.CopyTo( destination.Cancel );
+            source.Half.CopyTo( destination.Half );
+            source.Weak.CopyTo( destination.Weak );
+            source.Strong.CopyTo( destination.Strong );
+        }
+
+        public void CopyTo( ItemAttributes destination )
+        {
+            Copy( this, destination );
+        }
 
         public byte[] ToByteArray()
         {

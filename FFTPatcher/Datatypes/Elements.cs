@@ -85,6 +85,22 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (6)
 
+        public static void Copy( Elements source, Elements destination )
+        {
+            destination.Fire = source.Fire;
+            destination.Lightning = source.Lightning;
+            destination.Ice = source.Ice;
+            destination.Wind = source.Wind;
+            destination.Earth = source.Earth;
+            destination.Water = source.Water;
+            destination.Holy = source.Holy;
+            destination.Dark = source.Dark;
+        }
+
+        public void CopyTo( Elements destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool Equals( Elements other )
         {

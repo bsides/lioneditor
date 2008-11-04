@@ -40,11 +40,35 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
             itemAttributeEditor.DataChanged += new EventHandler( itemAttributeEditor_DataChanged );
+            offsetListBox.ContextMenu = new ContextMenu(
+                new MenuItem[] { new MenuItem( "Clone", CopyClickEventHandler ), new MenuItem( "Paste clone", PasteClickEventHandler ) } );
+            offsetListBox.ContextMenu.MenuItems[1].Enabled = false;
         }
+
+        private ItemAttributes ClipBoardAttributes;
 
 		#endregion Constructors 
 
 		#region Methods (3) 
+
+        private void CopyClickEventHandler( object sender, System.EventArgs args )
+        {
+            offsetListBox.ContextMenu.MenuItems[1].Enabled = true;
+            ClipBoardAttributes = offsetListBox.SelectedItem as ItemAttributes;
+        }
+
+        private void PasteClickEventHandler( object sender, System.EventArgs args )
+        {
+            if ( ClipBoardAttributes != null )
+            {
+                ClipBoardAttributes.CopyTo( offsetListBox.SelectedItem as ItemAttributes );
+                itemAttributeEditor.ItemAttributes = null;
+                itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
+                itemAttributeEditor.UpdateView();
+                itemAttributeEditor_DataChanged( itemAttributeEditor, System.EventArgs.Empty );
+                itemAttributeEditor.PerformLayout();
+            }
+        }
 
 
         private void itemAttributeEditor_DataChanged( object sender, EventArgs e )
@@ -58,8 +82,16 @@ namespace FFTPatcher.Editors
             itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
         }
 
+        private Context ourContext = Context.Default;
         public void UpdateView( AllItemAttributes attributes )
         {
+            if ( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                ClipBoardAttributes = null;
+                offsetListBox.ContextMenu.MenuItems[1].Enabled = false;
+            }
+
             offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
             offsetListBox.DataSource = attributes.ItemAttributes;
             offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;

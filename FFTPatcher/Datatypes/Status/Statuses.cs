@@ -119,6 +119,54 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (5)
 
+        public static void Copy( Statuses source, Statuses destination )
+        {
+            destination.NoEffect = source.NoEffect;
+            destination.Crystal = source.Crystal;
+            destination.Dead = source.Dead;
+            destination.Undead = source.Undead;
+            destination.Charging = source.Charging;
+            destination.Jump = source.Jump;
+            destination.Defending = source.Defending;
+            destination.Performing = source.Performing;
+            destination.Petrify = source.Petrify;
+            destination.Invite = source.Invite;
+            destination.Darkness = source.Darkness;
+            destination.Confusion = source.Confusion;
+            destination.Silence = source.Silence;
+            destination.BloodSuck = source.BloodSuck;
+            destination.DarkEvilLooking = source.DarkEvilLooking;
+            destination.Treasure = source.Treasure;
+            destination.Oil = source.Oil;
+            destination.Float = source.Float;
+            destination.Reraise = source.Reraise;
+            destination.Transparent = source.Transparent;
+            destination.Berserk = source.Berserk;
+            destination.Chicken = source.Chicken;
+            destination.Frog = source.Frog;
+            destination.Critical = source.Critical;
+            destination.Poison = source.Poison;
+            destination.Regen = source.Regen;
+            destination.Protect = source.Protect;
+            destination.Shell = source.Shell;
+            destination.Haste = source.Haste;
+            destination.Slow = source.Slow;
+            destination.Stop = source.Stop;
+            destination.Wall = source.Wall;
+            destination.Faith = source.Faith;
+            destination.Innocent = source.Innocent;
+            destination.Charm = source.Charm;
+            destination.Sleep = source.Sleep;
+            destination.DontMove = source.DontMove;
+            destination.DontAct = source.DontAct;
+            destination.Reflect = source.Reflect;
+            destination.DeathSentence = source.DeathSentence;
+       }
+
+        public void CopyTo( Statuses destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool[] ToBoolArray()
         {

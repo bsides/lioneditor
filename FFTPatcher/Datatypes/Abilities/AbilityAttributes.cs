@@ -212,6 +212,59 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+        public static void Copy( AbilityAttributes source, AbilityAttributes destination )
+        {
+            destination.Range = source.Range;
+            destination.Effect = source.Effect;
+            destination.Vertical = source.Vertical;
+            source.Elements.CopyTo( destination.Elements );
+            destination.Formula = source.Formula;
+            destination.X = source.X;
+            destination.Y = source.Y;
+            destination.InflictStatus = source.InflictStatus;
+            destination.CT = source.CT;
+            destination.MPCost = source.MPCost;
+            destination.Blank6 = source.Blank6;
+            destination.Blank7 = source.Blank7;
+            destination.WeaponRange = source.WeaponRange;
+            destination.VerticalFixed = source.VerticalFixed;
+            destination.VerticalTolerance = source.VerticalTolerance;
+            destination.WeaponStrike = source.WeaponStrike;
+            destination.Auto = source.Auto;
+            destination.TargetSelf = source.TargetSelf;
+
+            destination.HitEnemies = source.HitEnemies;
+            destination.HitAllies = source.HitAllies;
+            destination.Blank8 = source.Blank8;
+            destination.FollowTarget = source.FollowTarget;
+            destination.RandomFire = source.RandomFire;
+            destination.LinearAttack = source.LinearAttack;
+            destination.ThreeDirections = source.ThreeDirections;
+            destination.HitCaster = source.HitCaster;
+
+            destination.Reflect = source.Reflect;
+            destination.Arithmetick = source.Arithmetick;
+            destination.Silence = source.Silence;
+            destination.Mimic = source.Mimic;
+            destination.NormalAttack = source.NormalAttack;
+            destination.Perservere = source.Perservere;
+            destination.ShowQuote = source.ShowQuote;
+            destination.AnimateMiss = source.AnimateMiss;
+
+            destination.CounterFlood = source.CounterFlood;
+            destination.CounterMagic = source.CounterMagic;
+            destination.Direct = source.Direct;
+            destination.Shirahadori = source.Shirahadori;
+            destination.RequiresSword = source.RequiresSword;
+            destination.RequiresMateriaBlade = source.RequiresMateriaBlade;
+            destination.Evadeable = source.Evadeable;
+            destination.Targeting = source.Targeting;
+        }
+
+        public void CopyTo( AbilityAttributes destination )
+        {
+            Copy( this, destination );
+        }
 
         #endregion Methods
 

@@ -171,6 +171,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Properties
 
+        public static void Copy( SkillSet source, SkillSet destination )
+        {
+            for( int i = 0; i < 16; i++ )
+            {
+                destination.Actions[i] = source.Actions[i];
+            }
+            for( int i = 0; i < 6; i++ )
+            {
+                destination.TheRest[i] = source.TheRest[i];
+            }
+        }
+
+        public void CopyTo( SkillSet destination )
+        {
+            Copy( this, destination );
+        }
+
         #region Constructors (4)
 
         static SkillSet()

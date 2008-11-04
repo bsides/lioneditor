@@ -300,6 +300,83 @@ namespace FFTPatcher.Datatypes
                 ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
         }
 
+        public static void CopyCommon( Ability source, Ability destination )
+        {
+            destination.JPCost = source.JPCost;
+            destination.LearnRate = source.LearnRate;
+            destination.LearnWithJP = source.LearnWithJP;
+            destination.Action = source.Action;
+            destination.LearnOnHit = source.LearnOnHit;
+            destination.Blank1 = source.Blank1;
+            destination.AbilityType = source.AbilityType;
+            destination.Unknown1 = source.Unknown1;
+            destination.Unknown2 = source.Unknown2;
+            destination.Unknown3 = source.Unknown3;
+            destination.Unknown4 = source.Unknown4;
+            destination.Blank2 = source.Blank2;
+            destination.Blank3 = source.Blank3;
+            destination.Blank4 = source.Blank4;
+            destination.Blank5 = source.Blank5;
+            source.AIFlags.CopyTo( destination.AIFlags );
+        }
+
+        public void CopyCommonTo( Ability destination )
+        {
+            CopyCommon( this, destination );
+        }
+
+        public void CopyTo( Ability destination )
+        {
+            Copy( this, destination );
+        }
+
+        public static void Copy( Ability source, Ability destination )
+        {
+            if( (source.IsNormal ^ destination.IsNormal) ||
+                (source.IsItem ^ destination.IsItem) ||
+                (source.IsThrowing ^ destination.IsThrowing) ||
+                (source.IsJumping ^ destination.IsJumping) ||
+                (source.IsCharging ^ destination.IsCharging) ||
+                (source.IsArithmetick ^ destination.IsArithmetick) ||
+                (source.IsOther ^ destination.IsOther) )
+            {
+                throw new InvalidOperationException( "Cannot convert between ability types" );
+            }
+
+            CopyCommon( source, destination );
+
+            if( destination.IsNormal )
+            {
+                source.Attributes.CopyTo( destination.Attributes );
+            }
+            if( destination.IsItem )
+            {
+                destination.ItemOffset = source.ItemOffset;
+            }
+            if( destination.IsThrowing )
+            {
+                destination.Throwing = source.Throwing;
+            }
+            if( destination.IsJumping )
+            {
+                destination.JumpHorizontal = source.JumpHorizontal;
+                destination.JumpVertical = source.JumpVertical;
+            }
+            if( destination.IsCharging )
+            {
+                destination.ChargeCT = source.ChargeCT;
+                destination.ChargeBonus = source.ChargeBonus;
+            }
+            if( destination.IsArithmetick )
+            {
+                destination.ArithmetickSkill = source.ArithmetickSkill;
+            }
+            if( destination.IsOther )
+            {
+                destination.OtherID = source.OtherID;
+            }
+        }
+
         public Ability( string name, UInt16 offset )
         {
             Name = name;

@@ -152,6 +152,23 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (3)
 
+        public static void Copy( InflictStatus source, InflictStatus destination )
+        {
+            source.Statuses.CopyTo( destination.Statuses );
+            destination.AllOrNothing = source.AllOrNothing;
+            destination.Random = source.Random;
+            destination.Separate = source.Separate;
+            destination.Cancel = source.Cancel;
+            destination.Blank1 = source.Blank1;
+            destination.Blank2 = source.Blank2;
+            destination.Blank3 = source.Blank3;
+            destination.Blank4 = source.Blank4;
+        }
+
+        public void CopyTo( InflictStatus destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool[] ToBoolArray()
         {

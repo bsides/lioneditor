@@ -94,6 +94,28 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (4)
 
+        public static void CopyAccessory( Accessory source, Accessory destination )
+        {
+            destination.PhysicalEvade = source.PhysicalEvade;
+            destination.MagicEvade = source.MagicEvade;
+        }
+
+        public void CopyAccessoryTo( Accessory destination )
+        {
+            CopyAccessory( this, destination );
+        }
+
+        public static void CopyAll( Accessory source, Accessory destination )
+        {
+            CopyAccessory( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Accessory destination )
+        {
+            CopyAll( this, destination );
+        }
+
 
         public byte[] ToAccessoryByteArray()
         {

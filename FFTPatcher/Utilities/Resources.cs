@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using System.Collections.ObjectModel;
 
 namespace FFTPatcher
 {
@@ -38,9 +39,154 @@ namespace FFTPatcher
         private static string[] shopAvailabilities;
         private static string[] statuses;
 
+        private static ReadOnlyCollection<string> mapNamesReadOnly;
+        private static string[] mapNames = new string[128] {
+            "",
+            "Eagrose Castle Gate",
+            "Lesalia Castle Postern",
+            "Mullonde Cathedral Nave",
+            "Office of Lesalia Castle",
+            "Riovanes Castle Roof",
+            "Riovanes Castle Gate",
+            "Riovanes Castle Keep",
+            "Riovanes Castle",
+            "Citadel of Igros Castle",
+            "Eagrose Castle Keep",
+            "Eagrose Castle Solar",
+            "Lionel Castle Gate",
+            "Lionel Castle Oratory",
+            "Lionel Castle Parlor",
+            "Limberry Castle Gate",
+            "Limberry Castle Keep",
+            "Limberry Castle Undercroft",
+            "Limberry Castle Parlor",
+            "Limberry Castle Gate",
+            "Zeltennia Castle Keep",
+            "Zeltennia Castle",
+            "Gariland",
+            "The Beoulve Manse",
+            "The Royal Military Akademy At Gariland",
+            "Yardrow",
+            "Yardrow Armory",
+            "Gollund",
+            "Gollund Colliery Ridge",
+            "Gollund Colliery Slope",
+            "Gollund Colliery Floor",
+            "Dorter",
+            "Dorter Slums",
+            "Hospital in Slums",
+            "The Sand Rat's Sietch",
+            "Zaland",
+            "Outlying Church",
+            "Ruins outside Zaland",
+            "Goug",
+            "Golland Coal Shaft",
+            "Goug Lowtown",
+            "Bunansa Residence",
+            "Warjilis",
+            "Warjilis Harbor",
+            "Bervenia",
+            "Zeltennia Castle Chapel Ruins",
+            "The Tomb of Barbaneth Beoulve",
+            "Sal Ghidos",
+            "Sal Ghidos Slumtown",
+            "Ziekden Fortress",
+            "Mullonde Cathedral",
+            "Mullonde Cathedral",
+            "Mullonde Cathedral Sanctuary",
+            "The Necrohol Gate",
+            "Lost Halidom",
+            "Airship Graveyard",
+            "Orbonne Monastery",
+            "Monastery Vaults: First Level",
+            "Monastery Vaults: Second Level",
+            "Monastery Vaults: Third Level",
+            "Monastery Vaults: Fourth Level",
+            "Monastery Vaults: Fifth Level",
+            "Orbonne Monastery",
+            "Golgollada Gallows",
+            "Fort Besselat Sluice",
+            "Fort Besselat Granary",
+            "Fort Besselat: South Wall",
+            "Fort Besselat: North Wall",
+            "Fort Besselat",
+            "The Necrohol of Mullonde",
+            "Nelveska Temple",
+            "Dorvauldar Marsh",
+            "Fovoham Windflats",
+            "Mill Interior",
+            "The Siedge Weald",
+            "Mount Bervenia",
+            "Zeklaus Desert",
+            "Lenalian Plateau",
+            "Tchigolith Fenlands",
+            "The Yuguewood",
+            "Araguay Woods",
+            "Grogh Heights",
+            "Beddha Sandwaste",
+            "Zeirchele Falls",
+            "Balias Tor",
+            "Mandalia Plain",
+            "Dugeura Pass",
+            "Balias Swale",
+            "Finnath Creek",
+            "Lake Poeskas",
+            "Mount Germinas",
+            "Brigands' Den",
+            "Igros·Beoulve residence",
+            "Broke down shed·Wooden building",
+            "Broke down shed·Stone building",
+            "Church",
+            "Pub",
+            "Inside castle gate in Lesalia",
+            "Outside castle gate in Lesalia",
+            "Main street of Lesalia",
+            "Public cemetary",
+            "For tutorial 1",
+            "For tutorial 2",
+            "Windflat Mill",
+            "The Beoulve Manse: In the waning days of the Fifty Years' War",
+            "The Stair",
+            "The Hollow",
+            "The Cravasse",
+            "The Switchback",
+            "The Crossing",
+            "The Catacombs",
+            "The Oubliette",
+            "The Palings",
+            "The Interstice",
+            "Terminus",
+            "Abandoned Watchtower",
+            "(No name) -- Battle Arena",
+            "(No name) -- Checkerboard Wall",
+            "(No name) -- Checkerboard Wall ???",
+            "(No name) -- Checkerboard Wall Waterland",
+            "(Garbled name) -- Sloped Checkerboard",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Zeltennia Castle Postern",
+            "Limberry Castle: Inner Court"
+            };
+
 		#endregion Static Fields 
 
 		#region Static Properties (39) 
+
+        public static ReadOnlyCollection<string> MapNames
+        {
+            get
+            {
+                if ( mapNamesReadOnly == null )
+                {
+                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
+                }
+
+                return mapNamesReadOnly;
+            }
+        }
 
 
         public static string Abilities { get { return dict["Abilities"] as string; } }
@@ -160,6 +306,8 @@ namespace FFTPatcher
                 }
             }
         }
+
+        public static byte[] MoveFind { get { return Properties.Resources.MoveFind; } }
 
         public static string EventNames { get { return dict["EventNames"] as string; } }
 

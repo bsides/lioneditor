@@ -84,8 +84,8 @@ namespace FFTPatcher.Editors
             eventListBox.SelectedIndexChanged -= eventListBox_SelectedIndexChanged;
             eventListBox.DataSource = entds.Events;
             eventListBox.SelectedIndex = 0;
-            eventListBox.SelectedIndexChanged += eventListBox_SelectedIndexChanged;
             eventEditor1.Event = eventListBox.SelectedItem as Event;
+            eventListBox.SelectedIndexChanged += eventListBox_SelectedIndexChanged;
         }
 
 

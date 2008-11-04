@@ -156,7 +156,7 @@ namespace FFTPatcher.Datatypes
                     PoachProbabilities = new AllPoachProbabilities( Resources.PoachProbabilitiesBin );
                     Font = new FFTFont( Resources.FontBin, Resources.FontWidthsBin );
                     ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4, Resources.ENTD5 );
-                    MoveFind = new AllMoveFindItems( Properties.PSXResources.movefind, new AllMoveFindItems( Properties.PSXResources.movefind ) );
+                    MoveFind = new AllMoveFindItems( Context, Resources.MoveFind, new AllMoveFindItems( Context, Resources.MoveFind ) );
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
@@ -174,7 +174,7 @@ namespace FFTPatcher.Datatypes
                     PoachProbabilities = new AllPoachProbabilities( PSXResources.PoachProbabilitiesBin );
                     Font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
                     ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
-                    MoveFind = new AllMoveFindItems( Properties.PSXResources.movefind, new AllMoveFindItems( Properties.PSXResources.movefind ) );
+                    MoveFind = new AllMoveFindItems( Context, PSXResources.MoveFind, new AllMoveFindItems( Context, PSXResources.MoveFind ) );
                     break;
                 default:
                     throw new ArgumentException();
@@ -569,7 +569,7 @@ namespace FFTPatcher.Datatypes
             byte[] entd5 = GetFromNodeOrReturnDefault( rootNode, "entd5", Resources.ENTD5 );
             byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? Resources.FontBin : PSXResources.FontBin );
             byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
-            byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", Properties.PSXResources.movefind );
+            byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? Resources.MoveFind : PSXResources.MoveFind );
 
             Abilities = new AllAbilities( abilities, abilityEffects );
             Items = new AllItems( oldItems, newItems != null ? newItems : null );
@@ -586,7 +586,7 @@ namespace FFTPatcher.Datatypes
             PoachProbabilities = new AllPoachProbabilities( poach );
             ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
             Font = new FFTFont( font, fontWidths );
-            MoveFind = new AllMoveFindItems( moveFind, new AllMoveFindItems( Properties.PSXResources.movefind ) );
+            MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? Resources.MoveFind : PSXResources.MoveFind ) );
             FireDataChangedEvent();
         }
 
@@ -897,7 +897,7 @@ namespace FFTPatcher.Datatypes
             StringBuilder entd5 = Context == Context.US_PSP ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
             StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
             StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
-            StringBuilder moveFind = GetBase64StringIfNonDefault( MoveFind.ToByteArray(), Properties.PSXResources.movefind );
+            StringBuilder moveFind = GetBase64StringIfNonDefault( MoveFind.ToByteArray(), psp ? Resources.MoveFind : PSXResources.MoveFind );
 
             XmlTextWriter writer = null;
             try

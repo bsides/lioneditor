@@ -33,6 +33,8 @@ namespace FFTPatcher
         bool Poach { get; }
 
         IList<PatchedByteArray> OtherPatches { get; }
+
+        int PatchCount { get; }
     }
 
     public partial class PatchPSXForm : Form, IGeneratePatchList
@@ -47,7 +49,19 @@ namespace FFTPatcher
         public bool RegenECC { get; private set; }
         public string FileName { get { return isoPathTextBox.Text; } }
         public bool[] ENTD { get { return new bool[] { ENTD1, ENTD2, ENTD3, ENTD4 }; } }
-
+        public int PatchCount
+        {
+            get
+            {
+                int result = 0;
+                ENTD.ForEach( b => result += b ? 1 : 0 );
+                bool[] bb = new bool[] { FONT, RegenECC, Abilities, AbilityEffects, FontWidths, MoveFindItems,
+                    Items, ItemAttributes, Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
+                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange};
+                bb.ForEach( b => result += b ? 1 : 0 );
+                return result;
+            }
+        }
         public bool Abilities
         {
             get { return scusPatchable[(int)SCUSPatchable.Abilities]; }

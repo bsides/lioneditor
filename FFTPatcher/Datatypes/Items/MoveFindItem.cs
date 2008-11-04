@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FFTPatcher.Datatypes
 {
-    public class MoveFindItem : IChangeable
+    public class MoveFindItem : IChangeable, ISupportDigest
     {
         public MoveFindItem Default { get; private set; }
 
@@ -21,6 +21,15 @@ namespace FFTPatcher.Datatypes
         public bool SleepingGas { get; set; }
         public bool Deathtrap { get; set; }
         public bool Degenerator { get; set; }
+        private static string[] digestableProperties = new string[] {
+            "X", "Y", "CommonItem", "RareItem",
+            "Unknown1", "Unknown2", "Unknown3", "Unknown4", 
+            "SteelNeedle", "SleepingGas", "Deathtrap", "Degenerator" };
+
+        public IList<string> DigestableProperties
+        {
+            get { return digestableProperties; }
+        }
 
         public MoveFindItem( IList<byte> bytes, MoveFindItem def )
             : this( bytes )
@@ -76,7 +85,7 @@ namespace FFTPatcher.Datatypes
         }
     }
 
-    public class MapMoveFindItems : IChangeable
+    public class MapMoveFindItems : IChangeable, IXmlDigest
     {
         public IList<MoveFindItem> Items { get; private set; }
         public MapMoveFindItems Default { get; private set; }
@@ -128,9 +137,29 @@ namespace FFTPatcher.Datatypes
         {
             return ( HasChanged ? "*" : "" ) + Name;
         }
+
+        #region IXmlDigest Members
+
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( GetType().Name );
+                writer.WriteAttributeString( "name", Name );
+
+                DigestGenerator.WriteDigestEntry( writer, "Tile1", Default.Items[0], Items[0] );
+                DigestGenerator.WriteDigestEntry( writer, "Tile2", Default.Items[1], Items[1] );
+                DigestGenerator.WriteDigestEntry( writer, "Tile3", Default.Items[2], Items[2] );
+                DigestGenerator.WriteDigestEntry( writer, "Tile4", Default.Items[3], Items[3] );
+
+                writer.WriteEndElement();
+            }
+        }
+
+        #endregion
     }
 
-    public class AllMoveFindItems : PatchableFile, IChangeable
+    public class AllMoveFindItems : PatchableFile, IChangeable, IXmlDigest
     {
         public MapMoveFindItems[] MoveFindItems { get; private set; }
 
@@ -178,6 +207,21 @@ namespace FFTPatcher.Datatypes
             }
 
             return result.ToArray();
+        }
+
+
+        public void WriteXml( System.Xml.XmlWriter writer )
+        {
+            if( HasChanged )
+            {
+                writer.WriteStartElement( this.GetType().Name );
+                writer.WriteAttributeString( "changed", HasChanged.ToString() );
+                foreach( MapMoveFindItems m in MoveFindItems )
+                {
+                    m.WriteXml( writer );
+                }
+                writer.WriteEndElement();
+            }
         }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
@@ -323,6 +367,5 @@ namespace FFTPatcher.Datatypes
 "(Garbled name) -- Sloped Checkerboard",
 "","","","","","",""
 };
-
     }
 }

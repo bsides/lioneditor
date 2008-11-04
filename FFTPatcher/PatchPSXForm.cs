@@ -162,8 +162,9 @@ namespace FFTPatcher
             scusCheckedListBox.SetItemChecked( (int)SCUSPatchable.Skillsets, FFTPatch.SkillSets.HasChanged );
             scusCheckedListBox.SetItemChecked( (int)SCUSPatchable.StatusAttributes, FFTPatch.StatusAttributes.HasChanged );
 
-            battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.AbilityEffects, FFTPatch.Abilities.HasChanged );
+            battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged );
             battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.FontWidths, false );
+            battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged );
 
             dontChangeSceapRadioButton.Checked = true;
 

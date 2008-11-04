@@ -5483,7 +5483,7 @@ namespace FFTPatcher.Datatypes
 
             try
             {
-                stream = new FileStream( filename, FileMode.Open );
+                stream = new FileStream( filename, FileMode.Open, FileAccess.Read );
                 DumpToDirectory( stream, path );
             }
             catch( Exception )
@@ -5501,7 +5501,7 @@ namespace FFTPatcher.Datatypes
 
         public static void DumpToDirectory( FileStream stream, string path )
         {
-            MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown" );
+            MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown", "OPEN" );
             for( int i = 1; i <= 3970; i++ )
             {
                 byte[] bytes = GetFile( stream, i );

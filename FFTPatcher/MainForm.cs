@@ -207,46 +207,52 @@ namespace FFTPatcher
 
         private void extractFFTPackMenuItem_Click( object sender, EventArgs e )
         {
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
+                {
+                    FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath, sender1 as BackgroundWorker );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Visible = true;
+                    progressBar.Value = args.ProgressPercentage;
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    Enabled = true;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if( args.Error is Exception )
+                    {
+                        MessageBox.Show(
+                            "Could not extract file.\n" +
+                            "Make sure you chose the correct file and that there \n" +
+                            "enough room in the destination directory.",
+                            "Error", MessageBoxButtons.OK );
+                    }
+                };
+
             openFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
             openFileDialog.FilterIndex = 0;
             folderBrowserDialog.Description = "Where should the files be extracted?";
 
-            bool oldEnabled = fftPatchEditor1.Enabled;
-
             if( (openFileDialog.ShowDialog( this ) == DialogResult.OK) && (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) )
             {
-                try
-                {
-                    FFTPack.FileProgress += FFTPack_FileProgress;
-                    progressBar.Visible = true;
-                    progressBar.BringToFront();
-                    fftPatchEditor1.Enabled = false;
-                    FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show(
-                        "Could not extract file.\n" +
-                        "Make sure you chose the correct file and that there \n" +
-                        "enough room in the destination directory.",
-                        "Error", MessageBoxButtons.OK );
-                }
-                finally
-                {
-                    FFTPack.FileProgress -= FFTPack_FileProgress;
-                    progressBar.SendToBack();
-                    progressBar.Visible = false;
-                    fftPatchEditor1.Enabled = oldEnabled;
-                }
-            }
-        }
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
 
-        private void FFTPack_FileProgress( object sender, ProgressEventArgs e )
-        {
-            progressBar.Location = new Point( (Width - progressBar.Width) / 2, (Height - progressBar.Height) / 2 );
-            progressBar.Maximum = e.TotalTasks;
-            progressBar.Minimum = 0;
-            progressBar.Value = e.TasksComplete;
+                Enabled = false;
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+                progressBar.BringToFront();
+                patchPsxBackgroundWorker.RunWorkerAsync();
+            }
         }
 
         private void FFTPatch_DataChanged( object sender, EventArgs e )
@@ -367,7 +373,7 @@ namespace FFTPatcher
                     patchPsxBackgroundWorker.ProgressChanged -= progress;
                     patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
                     patchPsxBackgroundWorker.DoWork -= doWork;
-                    if( args.Error is NotSupportedException)
+                    if( args.Error is NotSupportedException )
                     {
                         MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
                     }
@@ -442,37 +448,54 @@ namespace FFTPatcher
 
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
         {
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
+                {
+                    FFTPack.MergeDumpedFiles( folderBrowserDialog.SelectedPath, saveFileDialog.FileName, sender1 as BackgroundWorker );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Visible = true;
+                    progressBar.Value = args.ProgressPercentage;
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    Enabled = true;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if( args.Error is Exception )
+                    {
+                        MessageBox.Show(
+                            "Could not merge files.\n" +
+                            "Make sure you chose the correct file and that there is\n" +
+                            "enough room in the destination directory.",
+                            "Error", MessageBoxButtons.OK );
+                    }
+                };
+
             saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
             saveFileDialog.FilterIndex = 0;
             folderBrowserDialog.Description = "Where are the extracted files?";
-            bool oldEnabled = fftPatchEditor1.Enabled;
 
             if( (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) && (saveFileDialog.ShowDialog( this ) == DialogResult.OK) )
             {
-                try
-                {
-                    FFTPack.FileProgress += FFTPack_FileProgress;
-                    progressBar.Visible = true;
-                    fftPatchEditor1.Enabled = false;
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
 
-                    FFTPack.MergeDumpedFiles( folderBrowserDialog.SelectedPath, saveFileDialog.FileName );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show(
-                        "Could not merge files.\n" +
-                        "Make sure you chose the correct path and that there \n" +
-                        "enough room in the destination location.",
-                        "Error", MessageBoxButtons.OK );
-                }
-                finally
-                {
-                    FFTPack.FileProgress -= FFTPack_FileProgress;
-                    progressBar.Visible = false;
-                    fftPatchEditor1.Enabled = oldEnabled;
-                }
+                Enabled = false;
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+                progressBar.BringToFront();
+                patchPsxBackgroundWorker.RunWorkerAsync();
             }
+
         }
 
         private void saveAsPspMenuItem_Click( object sender, EventArgs e )

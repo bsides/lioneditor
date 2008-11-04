@@ -175,6 +175,41 @@ namespace FFTPatcher.Datatypes
             return ToWeaponByteArray();
         }
 
+        public static void CopyWeapon( Weapon source, Weapon destination )
+        {
+            destination.Range = source.Range;
+            destination.Striking = source.Striking;
+            destination.Lunging = source.Lunging;
+            destination.Direct = source.Direct;
+            destination.Arc = source.Arc;
+            destination.TwoSwords = source.TwoSwords;
+            destination.TwoHands = source.TwoHands;
+            destination.Blank = source.Blank;
+            destination.Force2Hands = source.Force2Hands;
+            destination.Formula = source.Formula;
+            destination.Unknown = source.Unknown;
+            destination.WeaponPower = source.WeaponPower;
+            destination.EvadePercentage = source.EvadePercentage;
+            destination.InflictStatus = source.InflictStatus;
+
+            source.Elements.CopyTo( destination.Elements );
+        }
+
+        public void CopyWeaponTo( Weapon destination )
+        {
+            CopyWeapon( this, destination );
+        }
+
+        public static void CopyAll( Weapon source, Weapon destination )
+        {
+            CopyWeapon( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Weapon destination )
+        {
+            CopyAll( this, destination );
+        }
 
         #endregion Methods
 

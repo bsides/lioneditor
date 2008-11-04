@@ -29,10 +29,14 @@ namespace FFTPatcher
             {
                 int result = 0;
                 ENTD.ForEach( b => result += b ? 1 : 0 );
-                bool[] bb = new bool[] { FONT, RegenECC, Abilities, AbilityEffects, FontWidths, MoveFindItems,
-                    Items, ItemAttributes, Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
-                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomICON0.NoChange};
-                bb.ForEach( b => result += b ? 1 : 0 );
+                new bool[] { FONT, Abilities, AbilityEffects, FontWidths, MoveFindItems,
+                    Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
+                    StatusAttributes, InflictStatus, Poach }.ForEach( b => result += b ? 2 : 0 );
+                if( RegenECC ) result++;
+                if( ICON0 != CustomICON0.NoChange ) result++;
+                if( ItemAttributes ) result += 4;
+                if( Items ) result += 4;
+
                 return result;
             }
         }

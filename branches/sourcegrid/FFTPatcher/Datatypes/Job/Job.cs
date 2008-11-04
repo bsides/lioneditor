@@ -408,6 +408,44 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void Copy( Job source, Job destination )
+        {
+            source.PermanentStatus.CopyTo( destination.PermanentStatus );
+            source.StatusImmunity.CopyTo( destination.StatusImmunity );
+            source.StartingStatus.CopyTo( destination.StartingStatus );
+            source.AbsorbElement.CopyTo( destination.AbsorbElement );
+            source.CancelElement.CopyTo( destination.CancelElement );
+            source.HalfElement.CopyTo( destination.HalfElement );
+            source.WeakElement.CopyTo( destination.WeakElement );
+            source.Equipment.CopyTo( destination.Equipment );
+            destination.SkillSet = source.SkillSet;
+            destination.InnateA = source.InnateA;
+            destination.InnateB = source.InnateB;
+            destination.InnateC = source.InnateC;
+            destination.InnateD = source.InnateD;
+            destination.HPConstant = source.HPConstant;
+            destination.HPMultiplier = source.HPMultiplier;
+            destination.MPConstant = source.MPConstant;
+            destination.MPMultiplier = source.MPMultiplier;
+            destination.PAConstant = source.PAConstant;
+            destination.PAMultiplier = source.PAMultiplier;
+            destination.MAConstant = source.MAConstant;
+            destination.MAMultiplier = source.MAMultiplier;
+            destination.SpeedConstant = source.SpeedConstant;
+            destination.SpeedMultiplier = source.SpeedMultiplier;
+            destination.Move = source.Move;
+            destination.Jump = source.Jump;
+            destination.CEvade = source.CEvade;
+            destination.MPortrait = source.MPortrait;
+            destination.MPalette = source.MPalette;
+            destination.MGraphic = source.MGraphic;
+        }
+
+        public void CopyTo( Job destination )
+        {
+            Copy( this, destination );
+        }
+
         #endregion Constructors
 
         #region Methods (3)

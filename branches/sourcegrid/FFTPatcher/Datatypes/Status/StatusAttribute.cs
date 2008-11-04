@@ -144,6 +144,37 @@ namespace FFTPatcher.Datatypes
             CantStackOn = new Statuses( bytes.Sub( 11, 15 ), defaults == null ? null : defaults.CantStackOn );
         }
 
+        public static void Copy( StatusAttribute source, StatusAttribute destination )
+        {
+            source.Cancels.CopyTo( destination.Cancels );
+            source.CantStackOn.CopyTo( destination.CantStackOn );
+            destination.Blank1 = source.Blank1;
+            destination.Blank2 = source.Blank2;
+            destination.Order = source.Order;
+            destination.CT = source.CT;
+            destination.FreezeCT = source.FreezeCT;
+            destination.KO = source.KO;
+            destination.CanReact = source.CanReact;
+            destination.Blank2 = source.Blank2;
+            destination.IgnoreAttack = source.IgnoreAttack;
+            destination.Unknown1 = source.Unknown1;
+            destination.Unknown2 = source.Unknown2;
+            destination.Unknown3 = source.Unknown3;
+            destination.Unknown4 = source.Unknown4;
+            destination.Unknown5 = source.Unknown5;
+            destination.Unknown6 = source.Unknown6;
+            destination.Unknown7 = source.Unknown7;
+            destination.Unknown8 = source.Unknown8;
+            destination.Unknown9 = source.Unknown9;
+            destination.Unknown10 = source.Unknown10;
+            destination.Unknown11 = source.Unknown11;
+        }
+
+        public void CopyTo( StatusAttribute destination )
+        {
+            Copy( this, destination );
+        }
+
         #endregion Constructors
 
         #region Methods (3)

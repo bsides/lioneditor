@@ -503,7 +503,6 @@
     <None Include="Resources\ENTD3.ENT" />
     <None Include="Resources\ENTD4.ENT" />
     <Compile Include="Resources\PSP\bin\Abilities.bin" />
-    <None Include="Resources\movefind" />
     <None Include="Resources\PSP\bin\AbilityEffects.bin" />
     <None Include="Resources\PSP\bin\ActionEvents.bin" />
     <None Include="Resources\PSP\bin\ENTD5.bin" />
@@ -571,6 +570,7 @@
     <Content Include="Resources\PSP\Abilities\Effects.xml" />
     <Content Include="Resources\PSP\Abilities\Strings.xml" />
     <None Include="Resources\PSP\bin\ICON0" />
+    <None Include="Resources\MoveFind.bin" />
     <Content Include="Resources\PSP\EventNames.xml" />
     <Content Include="Resources\PSP\FFTPackFiles.xml" />
     <Content Include="Resources\PSP\Items\ItemAttributes.xml" />

@@ -64,7 +64,7 @@ namespace FFTPatcher
         {
             InitializeComponent();
             openMenuItem.Click += openMenuItem_Click;
-            applySCUSMenuItem.Click += applyMenuItem_Click;
+            //applySCUSMenuItem.Click += applyMenuItem_Click;
             saveMenuItem.Click += saveMenuItem_Click;
             saveAsPspMenuItem.Click += saveAsPspMenuItem_Click;
             newPSPMenuItem.Click += newPSPMenuItem_Click;
@@ -72,13 +72,13 @@ namespace FFTPatcher
             exitMenuItem.Click += exitMenuItem_Click;
             openModifiedMenuItem.Click += openModifiedMenuItem_Click;
             aboutMenuItem.Click += aboutMenuItem_Click;
-            applySCUSMenuItem.Enabled = false;
+            //applySCUSMenuItem.Enabled = false;
             saveMenuItem.Enabled = false;
             saveAsPspMenuItem.Enabled = false;
-            generateMenuItem.Click += generateMenuItem_Click;
-            generateMenuItem.Enabled = false;
-            generateFontMenuItem.Click += generateFontMenuItem_Click;
-            applyBattleBinMenuItem.Click += applyBattleBinMenuItem_Click;
+            //generateMenuItem.Click += generateMenuItem_Click;
+            //generateMenuItem.Enabled = false;
+            //generateFontMenuItem.Click += generateFontMenuItem_Click;
+            //applyBattleBinMenuItem.Click += applyBattleBinMenuItem_Click;
 
             extractFFTPackMenuItem.Click += extractFFTPackMenuItem_Click;
             rebuildFFTPackMenuItem.Click += rebuildFFTPackMenuItem_Click;
@@ -257,13 +257,13 @@ namespace FFTPatcher
 
         private void FFTPatch_DataChanged( object sender, EventArgs e )
         {
-            applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            //applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
             patchPsxIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
             saveMenuItem.Enabled = true;
-            generateMenuItem.Enabled = true;
-            generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            //generateMenuItem.Enabled = true;
+            //generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            //applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
+            //generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
 
             patchPspIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
             cheatdbMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;

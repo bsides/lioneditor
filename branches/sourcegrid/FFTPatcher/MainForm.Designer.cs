@@ -53,7 +53,6 @@ namespace FFTPatcher
             System.Windows.Forms.MenuItem separator2;
             System.Windows.Forms.MenuItem psxMenu;
             System.Windows.Forms.MenuItem separator3;
-            System.Windows.Forms.MenuItem separator4;
             System.Windows.Forms.MenuItem pspMenu;
             System.Windows.Forms.MenuItem separator5;
             System.Windows.Forms.MenuItem utilitiesMenuItem;
@@ -65,11 +64,7 @@ namespace FFTPatcher
             this.saveAsPspMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
-            this.applySCUSMenuItem = new System.Windows.Forms.MenuItem();
-            this.applyBattleBinMenuItem = new System.Windows.Forms.MenuItem();
             this.patchPsxIsoMenuItem = new System.Windows.Forms.MenuItem();
-            this.generateFontMenuItem = new System.Windows.Forms.MenuItem();
-            this.generateMenuItem = new System.Windows.Forms.MenuItem();
             this.patchPspIsoMenuItem = new System.Windows.Forms.MenuItem();
             this.cheatdbMenuItem = new System.Windows.Forms.MenuItem();
             this.extractFFTPackMenuItem = new System.Windows.Forms.MenuItem();
@@ -89,7 +84,6 @@ namespace FFTPatcher
             separator2 = new System.Windows.Forms.MenuItem();
             psxMenu = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
-            separator4 = new System.Windows.Forms.MenuItem();
             pspMenu = new System.Windows.Forms.MenuItem();
             separator5 = new System.Windows.Forms.MenuItem();
             utilitiesMenuItem = new System.Windows.Forms.MenuItem();
@@ -158,12 +152,7 @@ namespace FFTPatcher
             psxMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.openModifiedMenuItem,
             separator3,
-            this.applySCUSMenuItem,
-            this.applyBattleBinMenuItem,
-            this.patchPsxIsoMenuItem,
-            separator4,
-            this.generateFontMenuItem,
-            this.generateMenuItem} );
+            this.patchPsxIsoMenuItem} );
             psxMenu.Text = "PS&X";
             // 
             // openModifiedMenuItem
@@ -176,40 +165,11 @@ namespace FFTPatcher
             separator3.Index = 1;
             separator3.Text = "-";
             // 
-            // applySCUSMenuItem
-            // 
-            this.applySCUSMenuItem.Enabled = false;
-            this.applySCUSMenuItem.Index = 2;
-            this.applySCUSMenuItem.Text = "Patch &SCUS_942.21...";
-            // 
-            // applyBattleBinMenuItem
-            // 
-            this.applyBattleBinMenuItem.Enabled = false;
-            this.applyBattleBinMenuItem.Index = 3;
-            this.applyBattleBinMenuItem.Text = "Patch &BATTLE.BIN...";
-            // 
             // patchPsxIsoMenuItem
             // 
             this.patchPsxIsoMenuItem.Enabled = false;
-            this.patchPsxIsoMenuItem.Index = 4;
+            this.patchPsxIsoMenuItem.Index = 2;
             this.patchPsxIsoMenuItem.Text = "Patch &ISO...";
-            // 
-            // separator4
-            // 
-            separator4.Index = 5;
-            separator4.Text = "-";
-            // 
-            // generateFontMenuItem
-            // 
-            this.generateFontMenuItem.Enabled = false;
-            this.generateFontMenuItem.Index = 6;
-            this.generateFontMenuItem.Text = "Generate &FONT.BIN...";
-            // 
-            // generateMenuItem
-            // 
-            this.generateMenuItem.Enabled = false;
-            this.generateMenuItem.Index = 7;
-            this.generateMenuItem.Text = "&Generate ENTD files...";
             // 
             // pspMenu
             // 
@@ -339,17 +299,13 @@ namespace FFTPatcher
         private System.Windows.Forms.MenuItem newPSPMenuItem;
         private System.Windows.Forms.MenuItem openMenuItem;
         private System.Windows.Forms.MenuItem saveMenuItem;
-        private System.Windows.Forms.MenuItem applySCUSMenuItem;
         private System.Windows.Forms.MenuItem exitMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog applyPatchOpenFileDialog;
         private System.Windows.Forms.MenuItem openModifiedMenuItem;
         private System.Windows.Forms.MenuItem aboutMenuItem;
-        private System.Windows.Forms.MenuItem generateMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.MenuItem generateFontMenuItem;
-        private System.Windows.Forms.MenuItem applyBattleBinMenuItem;
         private System.Windows.Forms.MenuItem patchPspIsoMenuItem;
         private System.Windows.Forms.MenuItem cheatdbMenuItem;
         private System.Windows.Forms.MenuItem extractFFTPackMenuItem;

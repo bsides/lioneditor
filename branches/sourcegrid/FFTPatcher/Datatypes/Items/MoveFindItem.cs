@@ -165,21 +165,23 @@ namespace FFTPatcher.Datatypes
 
         public AllMoveFindItems Default { get; private set; }
 
-        public AllMoveFindItems( IList<byte> bytes, AllMoveFindItems def )
+        public AllMoveFindItems( Context context, IList<byte> bytes, AllMoveFindItems def )
         {
             Default = def;
+            const int numMaps = 128;
+            IList<string> names = context == Context.US_PSP ? Resources.MapNames : PSXResources.MapNames;
 
-            List<MapMoveFindItems> moveFindItems = new List<MapMoveFindItems>( 128 * 4 );
+            List<MapMoveFindItems> moveFindItems = new List<MapMoveFindItems>( numMaps * 4 );
             if ( Default == null )
             {
-                for ( int i = 0; i < 128; i++ )
+                for ( int i = 0; i < numMaps; i++ )
                 {
                     moveFindItems.Add( new MapMoveFindItems( bytes.Sub( i * 4 * 4, ( i + 1 ) * 4 * 4 - 1 ), names[i] ) );
                 }
             }
             else
             {
-                for ( int i = 0; i < 128; i++ )
+                for ( int i = 0; i < numMaps; i++ )
                 {
                     moveFindItems.Add( new MapMoveFindItems( bytes.Sub( i * 4 * 4, ( i + 1 ) * 4 * 4 - 1 ), names[i], def.MoveFindItems[i] ) );
                 }
@@ -187,8 +189,8 @@ namespace FFTPatcher.Datatypes
             MoveFindItems = moveFindItems.ToArray();
         }
 
-        public AllMoveFindItems( IList<byte> bytes )
-            : this( bytes, null )
+        public AllMoveFindItems( Context context, IList<byte> bytes )
+            : this( context, bytes, null )
         {
         }
 
@@ -196,7 +198,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Properties.PSXResources.movefind, this.ToByteArray(), 0x274754 );
+                return Codes.GenerateCodes( Context.US_PSP, Resources.MoveFind, this.ToByteArray(), 0x274754 );
             }
             else
             {
@@ -212,7 +214,8 @@ namespace FFTPatcher.Datatypes
 
         public byte[] ToByteArray()
         {
-            List<byte> result = new List<byte>( 4 * 4 * 128 );
+            int numMaps = FFTPatch.Context == Context.US_PSP ? 134 : 128;
+            List<byte> result = new List<byte>( 4 * 4 * numMaps );
             foreach ( MapMoveFindItems items in MoveFindItems )
             {
                 result.AddRange( items.ToByteArray() );
@@ -255,129 +258,6 @@ namespace FFTPatcher.Datatypes
         }
 
 
-        string[] names = new string[128] {
-"(No name)",
-"At main gate of Igros Castle",
-"Back gate of Lesalia Castle",
-"Hall of St. Murond Temple",
-"Office of Lesalia Castle",
-"Roof of Riovanes Castle",
-"At the gate of Riovanes Castle",
-"Inside of Riovanes Castle",
-"Riovanes Castle",
-"Citadel of Igros Castle",
-"Inside of Igros Castle",
-"Office of Igros Castle",
-"At the gate of Lionel Castle",
-"Inside of Lionel Castle",
-"Office of Lionel Castle",
-"At the gate of Limberry Castle",
-"Inside of Limberry Castle",
-"Underground cemetery of Limberry Castle",
-"Office of Limberry Castle",
-"At the gate of Limberry Castle",
-"Inside of Zeltennia Castle",
-"Zeltennia Castle",
-"Magic City Gariland",
-"Beoulve residence",
-"Military Academy's Auditorium",
-"Yardow Fort City",
-"Weapon storage of Yardow",
-"Goland Coal City",
-"Colliery underground First floor",
-"Colliery underground Second floor",
-"Colliery underground Third floor",
-"Dorter Trade City",
-"Slums in Dorter",
-"Hospital in slums",
-"Cellar of Sand Mouse",
-"Zaland Fort City",
-"Church outside the town",
-"Ruins outside Zaland",
-"Goug Machine City",
-"Underground passage in Goland",
-"Slums in Goug",
-"Besrodio's house",
-"Warjilis Trade City",
-"Port of Warjilis",
-"Bervenia Free City",
-"Ruins of Zeltennia Castle's church",
-"Cemetery of Heavenly Knight, Balbanes",
-"Zarghidas Trade City",
-"Slums of Zarghidas",
-"Fort Zeakden",
-"St. Murond Temple",
-"St. Murond Temple",
-"Chapel of St. Murond Temple",
-"Entrance to Death City",
-"Lost Sacred Precincts",
-"Graveyard of Airships",
-"Orbonne Monastery",
-"Underground Book Storage First Floor",
-"Underground Book Storage Second Floor",
-"Underground Book Storage Third Floor",
-"Underground Book Storage Fourth Floor",
-"Underground Book Storage Fifth Floor",
-"Chapel of Orbonne Monastery",
-"Golgorand Execution Site",
-"In front of Bethla Garrison's Sluice",
-"Granary of Bethla Garrison",
-"South Wall of Bethla Garrison",
-"North Wall of Bethla Garrison",
-"Bethla Garrison",
-"Murond Death City",
-"Nelveska Temple",
-"Dolbodar Swamp",
-"Fovoham Plains",
-"Inside of windmill Shed",
-"Sweegy Woods",
-"Bervenia Volcano",
-"Zeklaus Desert",
-"Lenalia Plateau",
-"Zigolis Swamp",
-"Yuguo Woods",
-"Araguay Woods",
-"Grog Hill",
-"Bed Desert",
-"Zirekile Falls",
-"Bariaus Hill",
-"Mandalia Plains",
-"Doguola Pass",
-"Bariaus Valley",
-"Finath River",
-"Poeskas Lake",
-"Germinas Peak",
-"Thieves Fort",
-"Igros·Beoulve residence",
-"Broke down shed·Wooden building",
-"Broke down shed·Stone building",
-"Church",
-"Pub",
-"Inside castle gate in Lesalia",
-"Outside castle gate in Lesalia",
-"Main street of Lesalia",
-"Public cemetary",
-"For tutorial 1",
-"For tutorial 2",
-"Windmill shed",
-"A room of Beoulve residence",
-"terminate",
-"delta",
-"nogias",
-"voyage",
-"bridge",
-"valkyries",
-"mlapan",
-"tiger",
-"horror",
-"end",
-"Banished fort",
-"(No name) -- Battle Arena",
-"(No name) -- Checkerboard Wall",
-"(No name) -- Checkerboard Wall ???",
-"(No name) -- Checkerboard Wall Waterland",
-"(Garbled name) -- Sloped Checkerboard",
-"","","","","","",""
-};
+
     }
 }

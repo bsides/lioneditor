@@ -36,7 +36,7 @@ namespace FFTPatcher
         {
             get
             {
-                if ( patchPsxForm == null )
+                if( patchPsxForm == null )
                 {
                     patchPsxForm = new PatchPSXForm();
                 }
@@ -44,7 +44,21 @@ namespace FFTPatcher
             }
         }
 
-		#region Constructors (1) 
+        private PatchPSPForm patchPspForm = null;
+
+        private PatchPSPForm PatchPSPForm
+        {
+            get
+            {
+                if( patchPspForm == null )
+                {
+                    patchPspForm = new PatchPSPForm();
+                }
+                return patchPspForm;
+            }
+        }
+
+        #region Constructors (1) 
 
         public MainForm()
         {
@@ -336,7 +350,7 @@ namespace FFTPatcher
             DoWorkEventHandler doWork =
                 delegate( object sender1, DoWorkEventArgs args )
                 {
-                    PspIso.PatchISO( sender1 as BackgroundWorker, args );
+                    PspIso.PatchISO( sender1 as BackgroundWorker, args, PatchPSPForm );
                 };
             ProgressChangedEventHandler progress =
                 delegate( object sender2, ProgressChangedEventArgs args )
@@ -367,9 +381,7 @@ namespace FFTPatcher
                     }
                 };
 
-            saveFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
-            saveFileDialog.OverwritePrompt = false;
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if( PatchPSPForm.CustomShowDialog( this ) == DialogResult.OK )
             {
                 patchPsxBackgroundWorker.ProgressChanged += progress;
                 patchPsxBackgroundWorker.RunWorkerCompleted += completed;
@@ -380,9 +392,8 @@ namespace FFTPatcher
                 progressBar.Value = 0;
                 progressBar.Visible = true;
 
-                patchPsxBackgroundWorker.RunWorkerAsync( saveFileDialog.FileName );
+                patchPsxBackgroundWorker.RunWorkerAsync();
             }
-
         }
 
         private void patchPsxIsoMenuItem_Click( object sender, EventArgs e )

@@ -148,6 +148,19 @@ namespace FFTPatcher
 
         public static byte[] ENTD5 { get { return dict["ENTD5"] as byte[]; } }
 
+        public static byte[] ICON0 { get { return Properties.Resources.ICON0; } }
+
+        public static System.Drawing.Image ICON0_PNG 
+        { 
+            get 
+            {
+                using( System.IO.MemoryStream stream = new System.IO.MemoryStream( ICON0, false ) )
+                {
+                    return System.Drawing.Image.FromStream( stream );
+                }
+            }
+        }
+
         public static string EventNames { get { return dict["EventNames"] as string; } }
 
         public static Dictionary<int, string> FFTPackFiles

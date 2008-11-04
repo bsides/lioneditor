@@ -263,23 +263,23 @@ namespace FFTPatcher
             return CheckFile( stream, "ULUS-10297", "ULUS10297", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
         }
 
-        public static void PatchISO( BackgroundWorker worker, DoWorkEventArgs args )
+        public static void PatchISO( BackgroundWorker worker, DoWorkEventArgs args, IGeneratePatchList patches )
         {
             Action<int> progress = new Action<int>( worker.ReportProgress );
-            PatchISO( args.Argument as string, progress );
+            PatchISO( patches.FileName, progress, patches );
         }
 
         /// <summary>
         /// Patches the ISO.
         /// </summary>
         /// <param name="filename">The filename of the ISO to patch.</param>
-        public static void PatchISO( string filename, Action<int> progress )
+        public static void PatchISO( string filename, Action<int> progress, IGeneratePatchList patches )
         {
             FileStream stream = null;
             try
             {
                 stream = new FileStream( filename, FileMode.Open );
-                PatchISO( stream, progress );
+                PatchISO( stream, progress, patches );
             }
             catch( NotSupportedException )
             {
@@ -300,7 +300,7 @@ namespace FFTPatcher
         /// Patches the ISO.
         /// </summary>
         /// <param name="stream">The stream of the ISO to patch.</param>
-        public static void PatchISO( FileStream stream, Action<int> progress )
+        public static void PatchISO( FileStream stream, Action<int> progress, IGeneratePatchList patchList )
         {
             if( IsJP( stream ) )
             {
@@ -322,22 +322,37 @@ namespace FFTPatcher
                         progress( tasksComplete++ * 100 / numberOfTasks );
                     }
                 };
-            DecryptISO( stream );
 
-            PatchableFile[] files = new PatchableFile[] {
-                FFTPatch.SkillSets, FFTPatch.MonsterSkills, FFTPatch.PoachProbabilities, FFTPatch.Items,
-                FFTPatch.ItemAttributes, FFTPatch.Abilities, FFTPatch.ActionMenus, FFTPatch.Jobs,
-                FFTPatch.JobLevels, FFTPatch.InflictStatuses, FFTPatch.StatusAttributes, FFTPatch.Font,
-                FFTPatch.ENTDs };
+            if( patchList.RegenECC ) DecryptISO( stream );
 
-            foreach( PatchableFile file in files )
+            const Context context = Context.US_PSP;
+            if( patchList.Abilities ) patches.AddRange( FFTPatch.Abilities.GetPatches( context ) );
+
+            if( patchList.AbilityEffects ) patches.AddRange( FFTPatch.Abilities.AllEffects.GetPatches( context ) );
+            if( patchList.ActionMenus ) patches.AddRange( FFTPatch.ActionMenus.GetPatches( context ) );
+
+            if( patchList.ENTD.Exists( b => b == true ) )
             {
-                if( file.HasChanged )
+                IList<PatchedByteArray> entdPatches = FFTPatch.ENTDs.GetPatches( context );
+                for( int i = 0; i < 5; i++ )
                 {
-                    patches.AddRange( file.GetPatches( Context.US_PSP ) );
+                    if( patchList.ENTD[i] ) patches.Add( entdPatches[i] );
                 }
-                sendProgress();
             }
+
+            if( patchList.FONT ) patches.AddRange( FFTPatch.Font.GetPatches( context ) );
+            if( patchList.FontWidths ) patches.AddRange( FFTPatch.Font.GlyphWidths.GetPatches( context ) );
+            if( patchList.InflictStatus ) patches.AddRange( FFTPatch.InflictStatuses.GetPatches( context ) );
+            if( patchList.ItemAttributes ) patches.AddRange( FFTPatch.ItemAttributes.GetPatches( context ) );
+            if( patchList.Items ) patches.AddRange( FFTPatch.Items.GetPatches( context ) );
+            if( patchList.JobLevels ) patches.AddRange( FFTPatch.JobLevels.GetPatches( context ) );
+            if( patchList.Jobs ) patches.AddRange( FFTPatch.Jobs.GetPatches( context ) );
+            if( patchList.MonsterSkills ) patches.AddRange( FFTPatch.MonsterSkills.GetPatches( context ) );
+            if( patchList.MoveFindItems ) patches.AddRange( FFTPatch.MoveFind.GetPatches( context ) );
+            patches.AddRange( patchList.OtherPatches );
+            if( patchList.Poach ) patches.AddRange( FFTPatch.PoachProbabilities.GetPatches( context ) );
+            if( patchList.Skillsets ) patches.AddRange( FFTPatch.SkillSets.GetPatches( context ) );
+            if( patchList.StatusAttributes ) patches.AddRange( FFTPatch.StatusAttributes.GetPatches( context ) );
 
             foreach( PatchedByteArray patch in patches )
             {

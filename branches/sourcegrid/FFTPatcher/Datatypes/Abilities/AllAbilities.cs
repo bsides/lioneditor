@@ -36,8 +36,8 @@ namespace FFTPatcher.Datatypes
             }
             else if( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2FCE08, effects ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2FCE08, effects ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3177B4, effects ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3177B4, effects ) );
             }
 
             return result;
@@ -45,7 +45,7 @@ namespace FFTPatcher.Datatypes
 
         public override bool HasChanged
         {
-            get { return owner.Abilities.Exists( ability => ability.Effect.Value != ability.Default.Effect.Value ); }
+            get { return owner.Abilities.Exists( ability => ability.Effect != null && ability.Default != null && ability.Default.Effect != null && ability.Effect.Value != ability.Default.Effect.Value ); }
         }
 
         private AllAbilities owner;
@@ -313,7 +313,6 @@ namespace FFTPatcher.Datatypes
         {
             var result = new List<PatchedByteArray>( 4 );
             byte[] bytes = ToByteArray( context );
-            byte[] effects = ToEffectsByteArray();
 
             if ( context == Context.US_PSX )
             {
@@ -321,8 +320,8 @@ namespace FFTPatcher.Datatypes
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x26F0A4, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x26F0A4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x271514, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x271514, bytes ) );
             }
 
             return result;

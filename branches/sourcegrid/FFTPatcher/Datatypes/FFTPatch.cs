@@ -53,11 +53,12 @@ namespace FFTPatcher.Datatypes
             ElementName.ENTD4, "entd4", 
             ElementName.ENTD5, "entd5", 
             ElementName.Font, "font", 
-            ElementName.FontWidths, "fontWidths" } );
+            ElementName.FontWidths, "fontWidths",
+            ElementName.MoveFindItems, "moveFindItems" } );
         private static string[] elementNameStrings = new string[] {
             "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
             "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths" };
+            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths", "moveFindItems" };
 
 		#endregion Static Fields 
 
@@ -83,7 +84,8 @@ namespace FFTPatcher.Datatypes
             ENTD4,
             ENTD5,
             Font,
-            FontWidths
+            FontWidths,
+            MoveFindItems
         }
 
 
@@ -154,6 +156,7 @@ namespace FFTPatcher.Datatypes
                     PoachProbabilities = new AllPoachProbabilities( Resources.PoachProbabilitiesBin );
                     Font = new FFTFont( Resources.FontBin, Resources.FontWidthsBin );
                     ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4, Resources.ENTD5 );
+                    MoveFind = new AllMoveFindItems( Properties.PSXResources.movefind, new AllMoveFindItems( Properties.PSXResources.movefind ) );
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
@@ -502,7 +505,7 @@ namespace FFTPatcher.Datatypes
                 writer.WriteStartElement( "digest" );
                 IXmlDigest[] digestable = new IXmlDigest[] {
                     Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
-                    InflictStatuses, PoachProbabilities, ENTDs };
+                    InflictStatuses, PoachProbabilities, ENTDs, MoveFind };
                 foreach( IXmlDigest digest in digestable )
                 {
                     digest.WriteXml( writer );
@@ -566,6 +569,7 @@ namespace FFTPatcher.Datatypes
             byte[] entd5 = GetFromNodeOrReturnDefault( rootNode, "entd5", Resources.ENTD5 );
             byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? Resources.FontBin : PSXResources.FontBin );
             byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
+            byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", Properties.PSXResources.movefind );
 
             Abilities = new AllAbilities( abilities, abilityEffects );
             Items = new AllItems( oldItems, newItems != null ? newItems : null );
@@ -582,6 +586,7 @@ namespace FFTPatcher.Datatypes
             PoachProbabilities = new AllPoachProbabilities( poach );
             ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
             Font = new FFTFont( font, fontWidths );
+            MoveFind = new AllMoveFindItems( moveFind, new AllMoveFindItems( Properties.PSXResources.movefind ) );
             FireDataChangedEvent();
         }
 
@@ -892,6 +897,8 @@ namespace FFTPatcher.Datatypes
             StringBuilder entd5 = Context == Context.US_PSP ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
             StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
             StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
+            StringBuilder moveFind = GetBase64StringIfNonDefault( MoveFind.ToByteArray(), Properties.PSXResources.movefind );
+
             XmlTextWriter writer = null;
             try
             {
@@ -906,7 +913,7 @@ namespace FFTPatcher.Datatypes
                 StringBuilder[] builders = new StringBuilder[] { 
                     abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, 
                     skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach,
-                    entd1, entd2, entd3, entd4, entd5, font, fontWidths };
+                    entd1, entd2, entd3, entd4, entd5, font, fontWidths, moveFind };
                 foreach( StringBuilder s in builders )
                 {
                     if( s != null )

@@ -60,6 +60,12 @@
     <Compile Include="Controls\VerticalLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PatchPSPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatchPSPForm.Designer.cs">
+      <DependentUpon>PatchPSPForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Datatypes\Abilities\AbilityAttributes.cs" />
     <Compile Include="Datatypes\Abilities\AbilityFormula.cs" />
     <Compile Include="Datatypes\Abilities\AllAbilities.cs" />
@@ -329,6 +335,10 @@
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PatchPSPForm.resx">
+      <DependentUpon>PatchPSPForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\Abilities\AbilityAttributesEditor.resx">
       <DependentUpon>AbilityAttributesEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -560,6 +570,7 @@
     <Content Include="Resources\PSP\Abilities\Abilities.xml" />
     <Content Include="Resources\PSP\Abilities\Effects.xml" />
     <Content Include="Resources\PSP\Abilities\Strings.xml" />
+    <None Include="Resources\PSP\bin\ICON0" />
     <Content Include="Resources\PSP\EventNames.xml" />
     <Content Include="Resources\PSP\FFTPackFiles.xml" />
     <Content Include="Resources\PSP\Items\ItemAttributes.xml" />

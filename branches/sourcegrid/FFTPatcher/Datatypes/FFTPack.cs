@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace FFTPatcher.Datatypes
 {
@@ -5388,22 +5389,9 @@ namespace FFTPatcher.Datatypes
             public const Files WORLD_BIN = Files.WORLD_WORLD_BIN;
         }
 
-		#region Events (1) 
-
-        public static event EventHandler<ProgressEventArgs> FileProgress;
-
-		#endregion Events 
 
 		#region Methods (11) 
 
-
-        private static void FireFileProgressEvent( int done, int total )
-        {
-            if( FileProgress != null )
-            {
-                FileProgress( null, new ProgressEventArgs( done, total ) );
-            }
-        }
 
         private static void MakeDirectories( string path, params string[] dirs )
         {
@@ -5477,14 +5465,14 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static void DumpToDirectory( string filename, string path )
+        public static void DumpToDirectory( string filename, string path, BackgroundWorker worker )
         {
             FileStream stream = null;
 
             try
             {
                 stream = new FileStream( filename, FileMode.Open, FileAccess.Read );
-                DumpToDirectory( stream, path );
+                DumpToDirectory( stream, path, worker );
             }
             catch( Exception )
             {
@@ -5499,7 +5487,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static void DumpToDirectory( FileStream stream, string path )
+        public static void DumpToDirectory( FileStream stream, string path, BackgroundWorker worker )
         {
             MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown", "OPEN" );
             for( int i = 1; i <= 3970; i++ )
@@ -5524,7 +5512,7 @@ namespace FFTPatcher.Datatypes
 
                 SaveToFile( bytes, filename );
 
-                FireFileProgressEvent( i, 3970 );
+                worker.ReportProgress( (i * 100) / 3790 );
             }
         }
 
@@ -5556,7 +5544,7 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public static void MergeDumpedFiles( string path, string filename )
+        public static void MergeDumpedFiles( string path, string filename, BackgroundWorker worker )
         {
             FileStream stream = null;
             try
@@ -5591,7 +5579,7 @@ namespace FFTPatcher.Datatypes
 
                     end = (UInt32)stream.Position;
 
-                    FireFileProgressEvent( i, 3970 );
+                    worker.ReportProgress( (i * 100) / 3790 );
                 }
             }
             catch( Exception )
@@ -5657,39 +5645,6 @@ namespace FFTPatcher.Datatypes
         }
         
 		#endregion Methods 
-
-    }
-
-    public class ProgressEventArgs : EventArgs
-    {
-
-		#region Properties (3) 
-
-
-        public int Percentage { get { return TasksComplete * 100 / TotalTasks; } }
-
-        public int TasksComplete { get; private set; }
-
-        public int TotalTasks { get; private set; }
-
-
-		#endregion Properties 
-
-		#region Constructors (2) 
-
-        public ProgressEventArgs( int percentage )
-        {
-            TotalTasks = 100;
-            TasksComplete = percentage;
-        }
-
-        public ProgressEventArgs( int done, int total )
-        {
-            TotalTasks = total;
-            TasksComplete = done;
-        }
-
-		#endregion Constructors 
 
     }
 }

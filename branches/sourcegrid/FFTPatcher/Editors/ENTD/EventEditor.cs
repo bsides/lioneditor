@@ -68,6 +68,28 @@ namespace FFTPatcher.Editors
             eventUnitEditor.DataChanged += eventUnitEditor_DataChanged;
             unitSelectorListBox.DrawItem += unitSelectorListBox_DrawItem;
             unitSelectorListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            unitSelectorListBox.ContextMenu = new ContextMenu( 
+                new MenuItem[] { new MenuItem( "Clone", CopyClickEventHandler ), new MenuItem( "Paste clone", PasteClickEventHandler ) } );
+            unitSelectorListBox.ContextMenu.MenuItems[1].Enabled = false;
+        }
+
+        public EventUnit ClipBoardUnit { get; private set; }
+
+        private void CopyClickEventHandler( object sender, EventArgs args )
+        {
+            unitSelectorListBox.ContextMenu.MenuItems[1].Enabled = true;
+            ClipBoardUnit = unitSelectorListBox.SelectedItem as EventUnit;
+        }
+
+        private void PasteClickEventHandler( object sender, EventArgs args )
+        {
+            if( ClipBoardUnit != null )
+            {
+                ClipBoardUnit.CopyTo( unitSelectorListBox.SelectedItem as EventUnit );
+                eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
+                eventUnitEditor.UpdateView();
+                eventUnitEditor_DataChanged( eventUnitEditor, EventArgs.Empty );
+            }
         }
 
 		#endregion Constructors 
@@ -128,14 +150,25 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void UpdateView()
+        private Context ourContext = Context.Default;
+
+        public void UpdateView()
         {
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                ClipBoardUnit = null;
+                unitSelectorListBox.ContextMenu.MenuItems[1].Enabled = false;
+            }
+
             eventUnitEditor.SuspendLayout();
             DetermineColumnWidths();
             unitSelectorListBox.DataSource = evt.Units;
             unitSelectorListBox.SelectedIndex = 0;
             eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
+            eventUnitEditor.UpdateView();
             eventUnitEditor.ResumeLayout();
+            eventUnitEditor_DataChanged( eventUnitEditor, EventArgs.Empty );
         }
 
 

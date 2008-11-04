@@ -364,7 +364,6 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (7)
 
-
         public bool[] PropertiesToBoolArray()
         {
             return new bool[12] {

@@ -235,7 +235,7 @@ namespace FFTPatcher.Editors
             preRequisiteJobComboBox.DataSource = Enum.GetValues( typeof( PreRequisiteJob ) );
         }
 
-        private void UpdateView()
+        public void UpdateView()
         {
             ignoreChanges = true;
 

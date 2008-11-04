@@ -364,6 +364,65 @@ namespace FFTPatcher.Datatypes
             return Description;
         }
 
+        public static void Copy( EventUnit source, EventUnit destination )
+        {
+            destination.SpriteSet = source.SpriteSet;
+            destination.Male = source.Male;
+            destination.Female = source.Female;
+            destination.Monster = source.Monster;
+            destination.JoinAfterEvent = source.JoinAfterEvent;
+            destination.LoadFormation = source.LoadFormation;
+            destination.ZodiacMonster = source.ZodiacMonster;
+            destination.Blank2 = source.Blank2;
+            destination.SaveFormation = source.SaveFormation;
+            destination.SpecialName = source.SpecialName;
+            destination.Level = source.Level;
+            destination.Month = source.Month;
+            destination.Day = source.Day;
+            destination.Bravery = source.Bravery;
+            destination.Faith = source.Faith;
+            destination.PrerequisiteJob = source.PrerequisiteJob;
+            destination.PrerequisiteJobLevel = source.PrerequisiteJobLevel;
+            destination.Job = source.Job;
+            destination.SecondaryAction = source.SecondaryAction;
+            destination.Reaction = source.Reaction;
+            destination.Support = source.Support;
+            destination.Movement = source.Movement;
+            destination.Head = source.Head;
+            destination.Body = source.Body;
+            destination.Accessory = source.Accessory;
+            destination.RightHand = source.RightHand;
+            destination.LeftHand = source.LeftHand;
+            destination.Palette = source.Palette;
+            destination.AlwaysPresent = source.AlwaysPresent;
+            destination.RandomlyPresent = source.RandomlyPresent;
+            destination.Control = source.Control;
+            destination.Immortal = source.Immortal;
+            destination.Blank6 = source.Blank6;
+            destination.Blank7 = source.Blank7;
+            destination.TeamColor = source.TeamColor;
+            destination.X = source.X;
+            destination.Y = source.Y;
+            destination.FacingDirection = source.FacingDirection;
+            destination.UpperLevel = source.UpperLevel;
+            destination.Unknown2 = source.Unknown2;
+            destination.SkillSet = source.SkillSet;
+            destination.WarTrophy = source.WarTrophy;
+            destination.BonusMoney = source.BonusMoney;
+            destination.UnitID = source.UnitID;
+            destination.Unknown6 = source.Unknown6;
+            destination.Unknown7 = source.Unknown7;
+            destination.Unknown8 = source.Unknown8;
+            destination.Target = source.Target;
+            destination.Unknown10 = source.Unknown10;
+            destination.Unknown11 = source.Unknown11;
+            destination.Unknown12 = source.Unknown12;
+        }
+
+        public void CopyTo( EventUnit destination )
+        {
+            Copy( this, destination );
+        }
 
         #endregion Methods
 

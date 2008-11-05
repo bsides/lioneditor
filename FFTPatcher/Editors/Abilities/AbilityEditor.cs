@@ -149,7 +149,7 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void UpdateView()
+        public void UpdateView()
         {
             ignoreChanges = true;
 

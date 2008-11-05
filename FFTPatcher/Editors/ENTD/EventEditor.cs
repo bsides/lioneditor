@@ -71,6 +71,15 @@ namespace FFTPatcher.Editors
             unitSelectorListBox.ContextMenu = new ContextMenu( 
                 new MenuItem[] { new MenuItem( "Clone", CopyClickEventHandler ), new MenuItem( "Paste clone", PasteClickEventHandler ) } );
             unitSelectorListBox.ContextMenu.MenuItems[1].Enabled = false;
+            unitSelectorListBox.MouseDown += new MouseEventHandler( unitSelectorListBox_MouseDown );
+        }
+
+        void unitSelectorListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                unitSelectorListBox.SelectedIndex = unitSelectorListBox.IndexFromPoint( e.Location );
+            }
         }
 
         public EventUnit ClipBoardUnit { get; private set; }

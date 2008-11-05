@@ -33,6 +33,40 @@ namespace FFTPatcher.Editors
             InitializeComponent();
             jobEditor.SkillSetClicked += jobEditor_SkillSetClicked;
             jobEditor.DataChanged += jobEditor_DataChanged;
+            jobsListBox.ContextMenu = new ContextMenu( new MenuItem[] {
+                new MenuItem("Clone", CloneClick),
+                new MenuItem("Paste", PasteClick) } );
+            jobsListBox.ContextMenu.Popup += new EventHandler( ContextMenu_Popup );
+            jobsListBox.MouseDown += new MouseEventHandler( jobsListBox_MouseDown );
+        }
+
+        void jobsListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                jobsListBox.SelectedIndex = jobsListBox.IndexFromPoint( e.Location );
+            }
+        }
+
+        private Job cbJob = null;
+        void ContextMenu_Popup( object sender, EventArgs e )
+        {
+            jobsListBox.ContextMenu.MenuItems[1].Enabled = cbJob != null;
+        }
+
+        private void CloneClick( object sender, EventArgs args )
+        {
+            cbJob = jobsListBox.SelectedItem as Job;
+        }
+
+        private void PasteClick( object sender, EventArgs args )
+        {
+            if( cbJob != null )
+            {
+                cbJob.CopyTo( jobsListBox.SelectedItem as Job );
+                jobEditor.UpdateView();
+                jobEditor_DataChanged( jobEditor, EventArgs.Empty );
+            }
         }
 
 		#endregion Constructors 
@@ -66,8 +100,14 @@ namespace FFTPatcher.Editors
             jobEditor.Job = j;
         }
 
+        private Context ourContext = Context.Default;
         public void UpdateView( AllJobs jobs )
         {
+            if( FFTPatch.Context != ourContext )
+            {
+                ourContext = FFTPatch.Context;
+                cbJob = null;
+            }
             jobsListBox.SelectedIndexChanged -= jobsListBox_SelectedIndexChanged;
             jobsListBox.DataSource = jobs.Jobs;
             jobsListBox.SelectedIndexChanged += jobsListBox_SelectedIndexChanged;

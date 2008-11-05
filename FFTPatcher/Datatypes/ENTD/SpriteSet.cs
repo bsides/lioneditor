@@ -58,7 +58,7 @@ namespace FFTPatcher.Datatypes
         static SpriteSet()
         {
             string[] pspSpriteNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.SpriteSets,
+                PSPResources.SpriteSets,
                 "/Sprites/Sprite[@byte='{0:X2}']/@name",
                 256 );
             string[] psxSpriteNames = Utilities.GetStringsFromNumberedXmlNodes(

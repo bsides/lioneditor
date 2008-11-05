@@ -169,7 +169,7 @@ namespace FFTPatcher.Datatypes
         {
             Default = def;
             const int numMaps = 128;
-            IList<string> names = context == Context.US_PSP ? Resources.MapNames : PSXResources.MapNames;
+            IList<string> names = context == Context.US_PSP ? PSPResources.MapNames : PSXResources.MapNames;
 
             List<MapMoveFindItems> moveFindItems = new List<MapMoveFindItems>( numMaps * 4 );
             if ( Default == null )
@@ -198,7 +198,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.MoveFind, this.ToByteArray(), 0x274754 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.MoveFind, this.ToByteArray(), 0x274754 );
             }
             else
             {

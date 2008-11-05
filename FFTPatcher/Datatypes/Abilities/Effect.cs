@@ -54,7 +54,7 @@ namespace FFTPatcher.Datatypes
 
             for( UInt16 i = 0; i < 512; i++ )
             {
-                PSPEffects[i] = new Effect( i, Resources.AbilityEffects[i] );
+                PSPEffects[i] = new Effect( i, PSPResources.AbilityEffects[i] );
                 PSXEffects[i] = new Effect( i, PSXResources.AbilityEffects[i] );
             }
 

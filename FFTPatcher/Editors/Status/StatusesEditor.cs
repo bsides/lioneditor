@@ -93,7 +93,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 statusesCheckedListBox.Items.Clear();
-                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.Statuses : PSXResources.Statuses );
+                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.Statuses : PSXResources.Statuses );
             }
         
             if( statuses.Default != null )

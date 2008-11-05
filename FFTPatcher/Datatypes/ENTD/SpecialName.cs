@@ -58,7 +58,7 @@ namespace FFTPatcher.Datatypes
         static SpecialName()
         {
             string[] pspStrings = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.SpecialNames,
+                PSPResources.SpecialNames,
                 "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
                 256 );
             string[] psxStrings = Utilities.GetStringsFromNumberedXmlNodes(

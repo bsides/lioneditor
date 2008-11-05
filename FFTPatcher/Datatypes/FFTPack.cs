@@ -5407,9 +5407,9 @@ namespace FFTPatcher.Datatypes
 
             try
             {
-                if( Resources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, Resources.FFTPackFiles[index] ) ) )
+                if( PSPResources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, PSPResources.FFTPackFiles[index] ) ) )
                 {
-                    stream = new FileStream( Path.Combine( path, Resources.FFTPackFiles[index] ), FileMode.Open );
+                    stream = new FileStream( Path.Combine( path, PSPResources.FFTPackFiles[index] ), FileMode.Open );
                 }
                 else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ) ) )
                 {
@@ -5495,9 +5495,9 @@ namespace FFTPatcher.Datatypes
                 byte[] bytes = GetFile( stream, i );
                 string filename = string.Empty;
 
-                if( Resources.FFTPackFiles.ContainsKey( i ) )
+                if( PSPResources.FFTPackFiles.ContainsKey( i ) )
                 {
-                    filename = Resources.FFTPackFiles[i];
+                    filename = PSPResources.FFTPackFiles[i];
                 }
                 else if( bytes.Length == 0 )
                 {

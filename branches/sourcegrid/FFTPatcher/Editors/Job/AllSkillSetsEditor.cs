@@ -26,6 +26,8 @@ namespace FFTPatcher.Editors
     public partial class AllSkillSetsEditor : UserControl
     {
 
+        private Context ourContext = Context.Default;
+
 		#region Properties (1) 
 
 
@@ -40,6 +42,40 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
             skillSetEditor.DataChanged += new EventHandler( skillSetEditor_DataChanged );
+            skillSetListBox.ContextMenu = new ContextMenu( new MenuItem[] {
+                new MenuItem("Clone", CloneClick),
+                new MenuItem("Paste", PasteClick) } );
+            skillSetListBox.ContextMenu.Popup += new EventHandler( ContextMenu_Popup );
+            skillSetListBox.MouseDown += new MouseEventHandler( skillSetListBox_MouseDown );
+        }
+
+        void skillSetListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                skillSetListBox.SelectedIndex = skillSetListBox.IndexFromPoint( e.Location );
+            }
+        }
+
+        private SkillSet cbSkillSet = null;
+        void ContextMenu_Popup( object sender, EventArgs e )
+        {
+            skillSetListBox.ContextMenu.MenuItems[1].Enabled = cbSkillSet != null;
+        }
+
+        private void CloneClick( object sender, EventArgs args )
+        {
+            cbSkillSet = skillSetListBox.SelectedItem as SkillSet;
+        }
+
+        private void PasteClick( object sender, EventArgs args )
+        {
+            if( cbSkillSet != null )
+            {
+                cbSkillSet.CopyTo( skillSetListBox.SelectedItem as SkillSet );
+                skillSetEditor.UpdateView();
+                skillSetEditor_DataChanged( skillSetEditor, EventArgs.Empty );
+            }
         }
 
 		#endregion Constructors 
@@ -61,6 +97,11 @@ namespace FFTPatcher.Editors
 
         public void UpdateView( AllSkillSets skills )
         {
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                cbSkillSet = null;
+            }
             skillSetListBox.SelectedIndexChanged -= skillSetListBox_SelectedIndexChanged;
             skillSetListBox.DataSource = skills.SkillSets;
             skillSetListBox.SelectedIndexChanged += skillSetListBox_SelectedIndexChanged;

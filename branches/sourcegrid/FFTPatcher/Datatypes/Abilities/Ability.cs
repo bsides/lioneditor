@@ -325,12 +325,23 @@ namespace FFTPatcher.Datatypes
             CopyCommon( this, destination );
         }
 
-        public void CopyTo( Ability destination )
+        public void CopyAllTo( Ability destination )
         {
-            Copy( this, destination );
+            CopyAll( this, destination );
         }
 
-        public static void Copy( Ability source, Ability destination )
+        public void CopySpecificTo( Ability destination )
+        {
+            CopySpecific( this, destination );
+        }
+
+        public static void CopyAll( Ability source, Ability destination )
+        {
+            CopySpecific( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public static void CopySpecific( Ability source, Ability destination )
         {
             if( (source.IsNormal ^ destination.IsNormal) ||
                 (source.IsItem ^ destination.IsItem) ||
@@ -342,12 +353,10 @@ namespace FFTPatcher.Datatypes
             {
                 throw new InvalidOperationException( "Cannot convert between ability types" );
             }
-
-            CopyCommon( source, destination );
-
             if( destination.IsNormal )
             {
                 source.Attributes.CopyTo( destination.Attributes );
+                destination.Effect = source.Effect;
             }
             if( destination.IsItem )
             {

@@ -34,6 +34,15 @@ namespace FFTPatcher.Editors
             eventListBox.ContextMenu = new ContextMenu(
                 new MenuItem[] { new MenuItem( "Clone", CopyClickEventHandler ), new MenuItem( "Paste clone", PasteClickEventHandler ) } );
             eventListBox.ContextMenu.MenuItems[1].Enabled = false;
+            eventListBox.MouseDown += new MouseEventHandler( eventListBox_MouseDown );
+        }
+
+        private void eventListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                eventListBox.SelectedIndex = eventListBox.IndexFromPoint( e.Location );
+            }
         }
 
 		#endregion Constructors 

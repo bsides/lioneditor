@@ -43,6 +43,15 @@ namespace FFTPatcher.Editors
             offsetListBox.ContextMenu = new ContextMenu(
                 new MenuItem[] { new MenuItem( "Clone", CopyClickEventHandler ), new MenuItem( "Paste clone", PasteClickEventHandler ) } );
             offsetListBox.ContextMenu.MenuItems[1].Enabled = false;
+            offsetListBox.MouseDown += new MouseEventHandler( offsetListBox_MouseDown );
+        }
+
+        void offsetListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                offsetListBox.SelectedIndex = offsetListBox.IndexFromPoint( e.Location );
+            }
         }
 
         private ItemAttributes ClipBoardAttributes;

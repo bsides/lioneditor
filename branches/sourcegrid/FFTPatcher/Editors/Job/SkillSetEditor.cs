@@ -105,7 +105,7 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void UpdateView()
+        public void UpdateView()
         {
             this.ignoreChanges = true;
             this.SuspendLayout();

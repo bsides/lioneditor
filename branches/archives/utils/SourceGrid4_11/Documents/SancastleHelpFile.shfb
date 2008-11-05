@@ -1,0 +1,58 @@
+﻿<project schemaVersion="1.4.0.0">
+    <assemblies>
+        <assembly assemblyPath="..\SourceGrid\bin\Release\SourceGrid.dll" xmlCommentsPath="..\SourceGrid\bin\Release\SourceGrid.xml" commentsOnly="False" />
+        <assembly assemblyPath="..\SourceGrid.Extensions\bin\Release\SourceGrid.Extensions.dll" xmlCommentsPath="..\SourceGrid.Extensions\bin\Release\SourceGrid.Extensions.xml" commentsOnly="False" />
+    </assemblies>
+    <namespaceSummaries>
+        <namespaceSummaryItem name="" isDocumented="False" />
+        <namespaceSummaryItem name="SourceGrid" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Cells" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Cells.Controllers" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Cells.DataGrid" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Cells.Editors" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Cells.Models" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Cells.Views" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Cells.Virtual" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Conditions" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Decorators" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Exporter" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Planning" isDocumented="True" />
+        <namespaceSummaryItem name="SourceGrid.Selection" isDocumented="True" />
+    </namespaceSummaries>
+    <dependencies>
+        <dependencyItem depPath="GAC:System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+        <dependencyItem depPath="..\References\*.*" />
+    </dependencies>
+    <ProjectSummary />
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors</MissingTags>
+    <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
+    <HtmlHelp1xCompilerPath path="" />
+    <HtmlHelp2xCompilerPath path="" />
+    <OutputPath>.\</OutputPath>
+    <SandcastlePath path="" />
+    <WorkingPath path="" />
+    <CleanIntermediates>True</CleanIntermediates>
+    <HelpFileFormat>HtmlHelp1x</HelpFileFormat>
+    <PurgeDuplicateTopics>True</PurgeDuplicateTopics>
+    <CppCommentsFixup>False</CppCommentsFixup>
+    <FrameworkVersion>2.0.50727</FrameworkVersion>
+    <BinaryTOC>True</BinaryTOC>
+    <IncludeFavorites>False</IncludeFavorites>
+    <Preliminary>False</Preliminary>
+    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <RootNamespaceTitle />
+    <HelpTitle>SourceGrid API</HelpTitle>
+    <HtmlHelpName>APIReference</HtmlHelpName>
+    <Language>en-US</Language>
+    <CopyrightHref>http://www.devage.com</CopyrightHref>
+    <CopyrightText>Copyright www.devage.com 2007</CopyrightText>
+    <FeedbackEMailAddress />
+    <HeaderText />
+    <FooterText />
+    <ProjectLinkType>Local</ProjectLinkType>
+    <SdkLinkType>Msdn</SdkLinkType>
+    <PresentationStyle>Prototype</PresentationStyle>
+    <NamingMethod>Guid</NamingMethod>
+    <SyntaxFilters>Standard</SyntaxFilters>
+    <ContentPlacement>AboveNamespaces</ContentPlacement>
+</project>

@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A89E9663-714F-4E42-9A53-443D1D9F342B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PatcherTests</RootNamespace>
+    <AssemblyName>PatcherTests</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'asd|AnyCPU' ">
+    <OutputPath>bin\asd\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.4.5.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\TestDriven.NET 2.0\NUnit\2.4\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FFTPatcherTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SpriteTests.cs" />
+    <Compile Include="TextTests.cs" />
+    <Compile Include="WLDFACETests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FFTactext\FFTactext.csproj">
+      <Project>{210DDF20-2CEA-4A2C-B2C6-D2EB7938BEB2}</Project>
+      <Name>FFTactext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FFTPatcher.csproj">
+      <Project>{48BE23D0-2943-44EF-A3A6-8537D7695B37}</Project>
+      <Name>FFTPatcher</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShishiSpriteEditor\ShishiSpriteEditor.csproj">
+      <Project>{4017D65D-C72B-491E-B263-E12DB6537382}</Project>
+      <Name>ShishiSpriteEditor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\ENTD3.ENT">
+      <Link>ENTD3.ENT</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\Abilities.bin">
+      <Link>Abilities.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\ActionEvents.bin">
+      <Link>ActionEvents.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\font.bin">
+      <Link>font.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\JobLevels.bin">
+      <Link>JobLevels.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\Jobs.bin">
+      <Link>Jobs.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\MonsterSkills.bin">
+      <Link>MonsterSkills.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\NewItems.bin">
+      <Link>NewItems.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\OldItems.bin">
+      <Link>OldItems.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\PoachProbabilities.bin">
+      <Link>PoachProbabilities.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\SkillSetsBin.bin">
+      <Link>SkillSetsBin.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Resources\PSP\bin\StatusAttributes.bin">
+      <Link>StatusAttributes.bin</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\abilityeffects.bin" />
+    <None Include="Resources\entd1.ent" />
+    <None Include="Resources\entd2.ent" />
+    <None Include="Resources\entd4.ent" />
+    <None Include="Resources\entd5.bin" />
+    <None Include="Sprites\10M.SPR" />
+    <None Include="Sprites\10W.SPR" />
+    <None Include="Sprites\20M.SPR" />
+    <None Include="Sprites\20W.SPR" />
+    <None Include="Sprites\40M.SPR" />
+    <None Include="Sprites\40W.SPR" />
+    <None Include="Sprites\60M.SPR" />
+    <None Include="Sprites\60W.SPR" />
+    <None Include="Sprites\ADORA.SPR" />
+    <None Include="Sprites\AGURI.SPR" />
+    <None Include="Sprites\AJORA.SPR" />
+    <None Include="Sprites\Aliste.SPR" />
+    <None Include="Sprites\ARLI.SPR" />
+    <None Include="Sprites\ARU.SPR" />
+    <None Include="Sprites\ARUFU.SPR" />
+    <None Include="Sprites\ARUMA.SPR" />
+    <None Include="Sprites\ARUTE.SPR" />
+    <None Include="Sprites\Balthier.SPR" />
+    <None Include="Sprites\BARITEN.SPR" />
+    <None Include="Sprites\BARU.SPR" />
+    <None Include="Sprites\BARUNA.SPR" />
+    <None Include="Sprites\BEHI.SPR" />
+    <None Include="Sprites\BEIO.SPR" />
+    <None Include="Sprites\BIBUROS.SPR" />
+    <None Include="Sprites\BOM.SPR" />
+    <None Include="Sprites\BremondtDarkDragon.SPR" />
+    <None Include="Sprites\BremondtHuman.SPR" />
+    <None Include="Sprites\CLOUD.SPR" />
+    <None Include="Sprites\CYOKO.SPR" />
+    <None Include="Sprites\CYOMON1.SPR" />
+    <None Include="Sprites\CYOMON2.SPR" />
+    <None Include="Sprites\CYOMON3.SPR" />
+    <None Include="Sprites\CYOMON4.SPR" />
+    <None Include="Sprites\DAISU.SPR" />
+    <None Include="Sprites\DAMI.SPR" />
+    <None Include="Sprites\DeathKnightArgath.SPR" />
+    <None Include="Sprites\DEMON.SPR" />
+    <None Include="Sprites\DILY.SPR" />
+    <None Include="Sprites\DILY2.SPR" />
+    <None Include="Sprites\DILY3.SPR" />
+    <None Include="Sprites\DORA.SPR" />
+    <None Include="Sprites\DORA1.SPR" />
+    <None Include="Sprites\DORA2.SPR" />
+    <None Include="Sprites\ERU.SPR" />
+    <None Include="Sprites\FemaleDarkKnight.SPR" />
+    <None Include="Sprites\FemaleOnionKnight.SPR" />
+    <None Include="Sprites\FURAIA.SPR" />
+    <None Include="Sprites\FUSUI_M.SPR" />
+    <None Include="Sprites\FUSUI_W.SPR" />
+    <None Include="Sprites\FYUNE.SPR" />
+    <None Include="Sprites\GANDO.SPR" />
+    <None Include="Sprites\GARU.SPR" />
+    <None Include="Sprites\GIN_M.SPR" />
+    <None Include="Sprites\GOB.SPR" />
+    <None Include="Sprites\GORU.SPR" />
+    <None Include="Sprites\GYUMU.SPR" />
+    <None Include="Sprites\H61.SPR" />
+    <None Include="Sprites\H75.SPR" />
+    <None Include="Sprites\H76.SPR" />
+    <None Include="Sprites\H77.SPR" />
+    <None Include="Sprites\H78.SPR" />
+    <None Include="Sprites\H79.SPR" />
+    <None Include="Sprites\H80.SPR" />
+    <None Include="Sprites\H81.SPR" />
+    <None Include="Sprites\H82.SPR" />
+    <None Include="Sprites\H83.SPR" />
+    <None Include="Sprites\H85.SPR" />
+    <None Include="Sprites\HASYU.SPR" />
+    <None Include="Sprites\HEBI.SPR" />
+    <None Include="Sprites\HIME.SPR" />
+    <None Include="Sprites\HYOU.SPR" />
+    <None Include="Sprites\IKA.SPR" />
+    <None Include="Sprites\ITEM_M.SPR" />
+    <None Include="Sprites\ITEM_W.SPR" />
+    <None Include="Sprites\KANBA.SPR" />
+    <None Include="Sprites\KANZEN.SHP" />
+    <None Include="Sprites\KANZEN.SPR" />
+    <None Include="Sprites\KI.SPR" />
+    <None Include="Sprites\KNIGHT_M.SPR" />
+    <None Include="Sprites\KNIGHT_W.SPR" />
+    <None Include="Sprites\KURO_M.SPR" />
+    <None Include="Sprites\KURO_W.SPR" />
+    <None Include="Sprites\KYUKU.SPR" />
+    <None Include="Sprites\LEDY.SPR" />
+    <None Include="Sprites\Luso.SPR" />
+    <None Include="Sprites\MaleDarkKnight.SPR" />
+    <None Include="Sprites\MaleOnionKnight.SPR" />
+    <None Include="Sprites\MARA.SPR" />
+    <None Include="Sprites\MINA_M.SPR" />
+    <None Include="Sprites\MINA_W.SPR" />
+    <None Include="Sprites\MINOTA.SPR" />
+    <None Include="Sprites\MOL.SPR" />
+    <None Include="Sprites\MONK_M.SPR" />
+    <None Include="Sprites\MONK_W.SPR" />
+    <None Include="Sprites\MONO_M.SPR" />
+    <None Include="Sprites\MONO_W.SPR" />
+    <None Include="Sprites\MUSU.SPR" />
+    <None Include="Sprites\NINJA_M.SPR" />
+    <None Include="Sprites\NINJA_W.SPR" />
+    <None Include="Sprites\ODORI_W.SPR" />
+    <None Include="Sprites\ONMYO_M.SPR" />
+    <None Include="Sprites\ONMYO_W.SPR" />
+    <None Include="Sprites\ORAN.SPR" />
+    <None Include="Sprites\ORU.SPR" />
+    <None Include="Sprites\OTHER.SPR" />
+    <None Include="Sprites\RAFA.SPR" />
+    <None Include="Sprites\RAGU.SPR" />
+    <None Include="Sprites\RAMUZA.SPR" />
+    <None Include="Sprites\RAMUZA2.SPR" />
+    <None Include="Sprites\RAMUZA3.SPR" />
+    <None Include="Sprites\REZE.SPR" />
+    <None Include="Sprites\REZE_D.SPR" />
+    <None Include="Sprites\RUDO.SPR" />
+    <None Include="Sprites\RYU_M.SPR" />
+    <None Include="Sprites\RYU_W.SPR" />
+    <None Include="Sprites\SAMU_M.SPR" />
+    <None Include="Sprites\SAMU_W.SPR" />
+    <None Include="Sprites\SAN_M.SPR" />
+    <None Include="Sprites\SAN_W.SPR" />
+    <None Include="Sprites\SERIA.SPR" />
+    <None Include="Sprites\SIMON.SPR" />
+    <None Include="Sprites\SIRO_M.SPR" />
+    <None Include="Sprites\SIRO_W.SPR" />
+    <None Include="Sprites\SOURYO.SPR" />
+    <None Include="Sprites\SUKERU.SPR" />
+    <None Include="Sprites\SwordInStone.SPR" />
+    <None Include="Sprites\SYOU_M.SPR" />
+    <None Include="Sprites\SYOU_W.SPR" />
+    <None Include="Sprites\TETSU.SPR" />
+    <None Include="Sprites\THIEF_M.SPR" />
+    <None Include="Sprites\THIEF_W.SPR" />
+    <None Include="Sprites\TOKI_M.SPR" />
+    <None Include="Sprites\TOKI_W.SPR" />
+    <None Include="Sprites\TORI.SPR" />
+    <None Include="Sprites\URI.SPR" />
+    <None Include="Sprites\VERI.SPR" />
+    <None Include="Sprites\VORU.SPR" />
+    <None Include="Sprites\WAJU_M.SPR" />
+    <None Include="Sprites\WAJU_W.SPR" />
+    <None Include="Sprites\WEP.SPR" />
+    <None Include="Sprites\WIGU.SPR" />
+    <None Include="Sprites\YUMI_M.SPR" />
+    <None Include="Sprites\YUMI_W.SPR" />
+    <None Include="Sprites\YUREI.SPR" />
+    <None Include="Sprites\ZARU.SPR" />
+    <None Include="Sprites\ZARU2.SPR" />
+    <None Include="Sprites\ZARUE.SPR" />
+    <None Include="Sprites\ZARUMOU.SPR" />
+    <None Include="WLDFACE.BIN" />
+    <None Include="WLDFACE4.BIN" />
+    <None Include="WORLD.LZW" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

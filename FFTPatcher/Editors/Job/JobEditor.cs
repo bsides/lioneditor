@@ -24,7 +24,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class JobEditor : UserControl
+    public partial class JobEditor : BaseEditor
     {
 
 		#region Fields (5) 
@@ -84,6 +84,15 @@ namespace FFTPatcher.Editors
                 comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
             }
 
+            absorbElementsEditor.DataChanged += OnDataChanged;
+            halfElementsEditor.DataChanged += OnDataChanged;
+            cancelElementsEditor.DataChanged += OnDataChanged;
+            weakElementsEditor.DataChanged += OnDataChanged;
+            equipmentEditor.DataChanged += OnDataChanged;
+            innateStatusesEditor.DataChanged += OnDataChanged;
+            statusImmunityEditor.DataChanged += OnDataChanged;
+            startingStatusesEditor.DataChanged += OnDataChanged;
+
             skillSetLabel.TabStop = false;
             skillSetLabel.Click += skillSetLabel_Click;
         }
@@ -105,6 +114,7 @@ namespace FFTPatcher.Editors
             {
                 ComboBoxWithDefault c = sender as ComboBoxWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 
@@ -122,10 +132,11 @@ namespace FFTPatcher.Editors
             {
                 NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 
-        private void UpdateView()
+        public void UpdateView()
         {
             ignoreChanges = true;
             this.SuspendLayout();

@@ -78,16 +78,16 @@ namespace FFTPatcher.Datatypes
 
     public enum Facing
     {
-        Southeast,
-        Southwest,
-        Northwest,
-        Northeast,
-        Unknown0x82 = 130,
-        Unknown0x80 = 128,
-        Unknown0x83 = 131,
+        Southeast = 0,
+        Southwest = 1,
+        Northwest = 2,
+        Northeast = 3,
+        //Unknown0x80 = 128,
+        //Unknown0x81 = 129,
+        //Unknown0x82 = 130,
+        //Unknown0x83 = 131,
         Unknown0x30 = 48,
         Unknown0x33 = 51,
-        Unknown0x81 = 129,
     }
 
     public enum TeamColor
@@ -108,7 +108,7 @@ namespace FFTPatcher.Datatypes
 
         private static readonly string[] digestableProperties = new string[] {
             "SpriteSet", "SpecialName", "Month", "Day", "Job", "Level", "Faith", "Bravery", "Palette", "UnitID",
-            "X", "Y", "PrerequisiteJob", "PrerequisiteJobLevel", "FacingDirection", "TeamColor", "Target", 
+            "X", "Y", "PrerequisiteJob", "PrerequisiteJobLevel", "FacingDirection", "UpperLevel", "TeamColor", "Target", 
             "SkillSet", "SecondaryAction", "Reaction", "Support", "Movement", "RightHand", "LeftHand", "Head",
             "Body", "Accessory", "BonusMoney", "WarTrophy", "Male", "Female", "Monster", "JoinAfterEvent",
             "LoadFormation", "ZodiacMonster", "Blank2", "SaveFormation", "AlwaysPresent", "RandomlyPresent",
@@ -166,6 +166,8 @@ namespace FFTPatcher.Datatypes
         }
 
         public Facing FacingDirection { get; set; }
+
+        public bool UpperLevel { get; set; }
 
         public byte Faith { get; set; }
 
@@ -285,7 +287,8 @@ namespace FFTPatcher.Datatypes
             TeamColor = (TeamColor)((bytes[24] & 0x30) >> 4);
             X = bytes[25];
             Y = bytes[26];
-            FacingDirection = (Facing)bytes[27];
+            FacingDirection = (Facing)(bytes[27] & 0x7F);
+            UpperLevel = (bytes[27] & 0x80) == 0x80;
             Unknown2 = bytes[28];
             SkillSet = SkillSet.EventSkillSets[bytes[29]];
             WarTrophy = Item.EventItems[bytes[30]];
@@ -337,7 +340,7 @@ namespace FFTPatcher.Datatypes
             result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, (((int)TeamColor) & 0x02) == 2, (((int)TeamColor) & 0x01) == 1, Control, Immortal, Blank6, Blank7 ) );
             result.Add( X );
             result.Add( Y );
-            result.Add( (byte)FacingDirection );
+            result.Add( (byte)(((byte)FacingDirection & 0x7F) | (UpperLevel ? 0x80 : 0x00)) );
             result.Add( Unknown2 );
             result.Add( SkillSet.Value );
             result.Add( (byte)(WarTrophy.Offset & 0xFF) );
@@ -361,6 +364,65 @@ namespace FFTPatcher.Datatypes
             return Description;
         }
 
+        public static void Copy( EventUnit source, EventUnit destination )
+        {
+            destination.SpriteSet = source.SpriteSet;
+            destination.Male = source.Male;
+            destination.Female = source.Female;
+            destination.Monster = source.Monster;
+            destination.JoinAfterEvent = source.JoinAfterEvent;
+            destination.LoadFormation = source.LoadFormation;
+            destination.ZodiacMonster = source.ZodiacMonster;
+            destination.Blank2 = source.Blank2;
+            destination.SaveFormation = source.SaveFormation;
+            destination.SpecialName = source.SpecialName;
+            destination.Level = source.Level;
+            destination.Month = source.Month;
+            destination.Day = source.Day;
+            destination.Bravery = source.Bravery;
+            destination.Faith = source.Faith;
+            destination.PrerequisiteJob = source.PrerequisiteJob;
+            destination.PrerequisiteJobLevel = source.PrerequisiteJobLevel;
+            destination.Job = source.Job;
+            destination.SecondaryAction = source.SecondaryAction;
+            destination.Reaction = source.Reaction;
+            destination.Support = source.Support;
+            destination.Movement = source.Movement;
+            destination.Head = source.Head;
+            destination.Body = source.Body;
+            destination.Accessory = source.Accessory;
+            destination.RightHand = source.RightHand;
+            destination.LeftHand = source.LeftHand;
+            destination.Palette = source.Palette;
+            destination.AlwaysPresent = source.AlwaysPresent;
+            destination.RandomlyPresent = source.RandomlyPresent;
+            destination.Control = source.Control;
+            destination.Immortal = source.Immortal;
+            destination.Blank6 = source.Blank6;
+            destination.Blank7 = source.Blank7;
+            destination.TeamColor = source.TeamColor;
+            destination.X = source.X;
+            destination.Y = source.Y;
+            destination.FacingDirection = source.FacingDirection;
+            destination.UpperLevel = source.UpperLevel;
+            destination.Unknown2 = source.Unknown2;
+            destination.SkillSet = source.SkillSet;
+            destination.WarTrophy = source.WarTrophy;
+            destination.BonusMoney = source.BonusMoney;
+            destination.UnitID = source.UnitID;
+            destination.Unknown6 = source.Unknown6;
+            destination.Unknown7 = source.Unknown7;
+            destination.Unknown8 = source.Unknown8;
+            destination.Target = source.Target;
+            destination.Unknown10 = source.Unknown10;
+            destination.Unknown11 = source.Unknown11;
+            destination.Unknown12 = source.Unknown12;
+        }
+
+        public void CopyTo( EventUnit destination )
+        {
+            Copy( this, destination );
+        }
 
         #endregion Methods
 

@@ -171,6 +171,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Properties
 
+        public static void Copy( SkillSet source, SkillSet destination )
+        {
+            for( int i = 0; i < 16; i++ )
+            {
+                destination.Actions[i] = source.Actions[i];
+            }
+            for( int i = 0; i < 6; i++ )
+            {
+                destination.TheRest[i] = source.TheRest[i];
+            }
+        }
+
+        public void CopyTo( SkillSet destination )
+        {
+            Copy( this, destination );
+        }
+
         #region Constructors (4)
 
         static SkillSet()
@@ -294,7 +311,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Value.ToString( "X2" ) + " " + Name;
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" ) + " " + Name;
         }
 
 
@@ -302,7 +319,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllSkillSets : IChangeable, IXmlDigest
+    public class AllSkillSets : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -312,7 +329,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -427,5 +444,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x55294, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x275A38, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x275A38, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

@@ -154,7 +154,8 @@ namespace FFTPatcher.Datatypes
             get
             {
                 return (Default != null) &&
-                    (Accessory != Default.Accessory ||
+                    (ItemType != Default.ItemType ||
+                    Accessory != Default.Accessory ||
                     Blank1 != Default.Blank1 ||
                     Blank2 != Default.Blank2 ||
                     Body != Default.Body ||
@@ -256,6 +257,71 @@ namespace FFTPatcher.Datatypes
             Default = defaults;
         }
 
+        public static void CopyCommon( Item source, Item destination )
+        {
+            destination.Palette = source.Palette;
+            destination.Graphic = source.Graphic;
+            destination.EnemyLevel = source.EnemyLevel;
+            destination.Weapon = source.Weapon;
+            destination.Shield = source.Shield;
+            destination.Head = source.Head;
+            destination.Body = source.Body;
+            destination.Accessory = source.Accessory;
+            destination.Blank1 = source.Blank1;
+            destination.Rare = source.Rare;
+            destination.Blank2 = source.Blank2;
+            destination.SecondTableId = source.SecondTableId;
+            destination.ItemType = source.ItemType;
+            destination.Unknown1 = source.Unknown1;
+            destination.SIA = source.SIA;
+            destination.Price = source.Price;
+            destination.ShopAvailability = source.ShopAvailability;
+            destination.Unknown2 = source.Unknown2;
+        }
+
+        public void CopyCommonTo( Item destination )
+        {
+            CopyCommon( this, destination );
+        }
+
+        public static void CopyAll( Item source, Item destination )
+        {
+            if( source.GetType() != destination.GetType() )
+            {
+                throw new ArgumentException( "Can't copy between different item types" );
+            }
+
+            if( source is Accessory )
+            {
+                FFTPatcher.Datatypes.Accessory.CopyAccessory( source as Accessory, destination as Accessory );
+            }
+            else if( source is Armor )
+            {
+                FFTPatcher.Datatypes.Armor.CopyArmor( source as Armor, destination as Armor );
+            }
+            else if( source is ChemistItem )
+            {
+                FFTPatcher.Datatypes.ChemistItem.CopyChemistItem( source as ChemistItem, destination as ChemistItem );
+            }
+            else if( source is Shield )
+            {
+                FFTPatcher.Datatypes.Shield.CopyShield( source as Shield, destination as Shield );
+            }
+            else if( source is Weapon )
+            {
+                FFTPatcher.Datatypes.Weapon.CopyWeapon( source as Weapon, destination as Weapon );
+            }
+            else
+            {
+                throw new Exception( "Something terrible happened" );
+            }
+        }
+
+        public void CopyAllTo( Item destination )
+        {
+            CopyAll( this, destination );
+        }
+
         #endregion Constructors
 
         #region Methods (6)
@@ -297,7 +363,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Name;
+            return (HasChanged ? "*" : "") + Name;
         }
 
 

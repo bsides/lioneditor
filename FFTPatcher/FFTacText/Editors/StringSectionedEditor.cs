@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -31,17 +31,24 @@ namespace FFTPatcher.TextEditor
     public partial class StringSectionedEditor : UserControl
     {
 
-		#regionÂ FieldsÂ (3)Â 
+		#region Fields (3) 
 
+        /// <summary>
+        /// Whether or not there is an error with the current input.
+        /// </summary>
         protected bool error = false;
         private bool ignoreChanges = false;
         private IStringSectioned strings;
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ PropertiesÂ (2)Â 
+		#region Properties (2) 
 
 
+        /// <summary>
+        /// Gets the length label format string.
+        /// </summary>
+        /// <value>The length label format string.</value>
         protected virtual string LengthLabelFormatString
         {
             get { return "Length: {0} bytes"; }
@@ -61,8 +68,6 @@ namespace FFTPatcher.TextEditor
                     AddSections();
                     sectionComboBox.SelectedIndex = 0;
                     UpdateCurrentStringListBox();
-                    currentStringListBox.SelectedIndex = 0;
-                    UpdateCurrentString();
                     UpdateFilenames();
                     UpdateLengthLabels();
                 }
@@ -70,32 +75,36 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregionÂ PropertiesÂ 
+		#endregion Properties 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringSectionedEditor"/> class.
+        /// </summary>
         public StringSectionedEditor()
         {
             InitializeComponent();
             sectionComboBox.SelectedIndexChanged += sectionComboBox_SelectedIndexChanged;
-            currentStringListBox.SelectedIndexChanged += currentStringListBox_SelectedIndexChanged;
-            currentString.TextChanged += currentString_TextChanged;
-            currentString.Validating += currentString_Validating;
-            currentString.Font = new Font( "Arial Unicode MS", 10 );
+            stringListEditor1.TextBoxTextChanged += currentString_TextChanged;
+            stringListEditor1.CellValidating += currentString_Validating;
             filesListBox.SelectedIndexChanged += filesListBox_SelectedIndexChanged;
             saveButton.Click += saveButton_Click;
             errorLabel.VisibleChanged += errorLabel_VisibleChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (1)Â 
+		#region Events (1) 
 
+        /// <summary>
+        /// Occurs when the user has requested that a file be saved.
+        /// </summary>
         public event EventHandler<SavingFileEventArgs> SavingFile;
 
-		#endregionÂ EventsÂ 
+		#endregion Events 
 
-		#regionÂ MethodsÂ (13)Â 
+		#region Methods (11) 
 
 
         private void AddSections()
@@ -111,21 +120,24 @@ namespace FFTPatcher.TextEditor
 
         private void currentString_TextChanged( object sender, EventArgs e )
         {
-            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) && (currentStringListBox.SelectedIndex > -1) )
+            if( !ignoreChanges && (sectionComboBox.SelectedIndex > -1) && stringListEditor1.CurrentRow > -1 )
             {
-                strings.Sections[sectionComboBox.SelectedIndex][currentStringListBox.SelectedIndex] = currentString.Text;
-                UpdateLengthLabels();
+                try
+                {
+                    strings[sectionComboBox.SelectedIndex, stringListEditor1.CurrentRow] = (sender as Control).Text;
+                    UpdateLengthLabels();
+                }
+                catch( Exception )
+                {
+                    error = true;
+                    errorLabel.Visible = true;
+                }
             }
         }
 
-        private void currentString_Validating( object sender, CancelEventArgs e )
+        private void currentString_Validating( object sender, DataGridViewCellValidatingEventArgs e )
         {
             e.Cancel = error;
-        }
-
-        private void currentStringListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            UpdateCurrentString();
         }
 
         private void errorLabel_VisibleChanged( object sender, EventArgs e )
@@ -156,29 +168,14 @@ namespace FFTPatcher.TextEditor
 
         private void sectionComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
+            Cursor = Cursors.WaitCursor;
             UpdateCurrentStringListBox();
-        }
-
-        private void UpdateCurrentString()
-        {
-            ignoreChanges = true;
-            currentString.Text = strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )][Math.Max( 0, currentStringListBox.SelectedIndex )];
-            ignoreChanges = false;
+            Cursor = Cursors.Default;
         }
 
         private void UpdateCurrentStringListBox()
         {
-            currentStringListBox.SuspendLayout();
-            currentStringListBox.BeginUpdate();
-            currentStringListBox.Items.Clear();
-            for( int i = 0; i < strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )].Count; i++ )
-            {
-                currentStringListBox.Items.Add( string.Format( "{0} {1}", i + 1, strings.EntryNames[sectionComboBox.SelectedIndex][i] ) );
-            }
-            currentStringListBox.SelectedIndex = 0;
-            UpdateCurrentString();
-            currentStringListBox.EndUpdate();
-            currentStringListBox.ResumeLayout();
+            stringListEditor1.BindTo( strings.EntryNames[Math.Max( 0, sectionComboBox.SelectedIndex )], strings.Sections[Math.Max( 0, sectionComboBox.SelectedIndex )] );
         }
 
         private void UpdateFilenames()
@@ -187,9 +184,9 @@ namespace FFTPatcher.TextEditor
             filesListBox.BeginUpdate();
             filesListBox.ClearSelected();
             filesListBox.Items.Clear();
-            foreach( string s in strings.Locations.Keys )
+            foreach( Enum s in strings.Locations.Keys )
             {
-                filesListBox.Items.Add( s );
+                filesListBox.Items.Add( s.ToString() );
             }
             filesListBox.EndUpdate();
             filesListBox.ResumeLayout();
@@ -210,9 +207,16 @@ namespace FFTPatcher.TextEditor
                 error = true;
                 errorLabel.Visible = true;
             }
+
+            bool quickedit = Strings is IQuickEdit;
+            maxLengthLabel.Visible = !quickedit;
+            lengthLabel.Visible = !quickedit;
+            filesListBox.Visible = !quickedit;
+            saveButton.Visible = !quickedit;
         }
 
-		#endregionÂ MethodsÂ 
+
+		#endregion Methods 
 
     }
 }

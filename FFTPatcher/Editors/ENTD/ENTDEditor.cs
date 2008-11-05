@@ -30,25 +30,71 @@ namespace FFTPatcher.Editors
         public ENTDEditor()
         {
             InitializeComponent();
+            eventEditor1.DataChanged += new System.EventHandler( eventEditor1_DataChanged );
+            eventListBox.ContextMenu = new ContextMenu(
+                new MenuItem[] { new MenuItem( "Clone", CopyClickEventHandler ), new MenuItem( "Paste clone", PasteClickEventHandler ) } );
+            eventListBox.ContextMenu.MenuItems[1].Enabled = false;
+            eventListBox.MouseDown += new MouseEventHandler( eventListBox_MouseDown );
+        }
+
+        private void eventListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                eventListBox.SelectedIndex = eventListBox.IndexFromPoint( e.Location );
+            }
         }
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
+        public Event ClipBoardEvent { get; private set; }
+
+        private void CopyClickEventHandler( object sender, System.EventArgs args )
+        {
+            eventListBox.ContextMenu.MenuItems[1].Enabled = true;
+            ClipBoardEvent = eventListBox.SelectedItem as Event;
+        }
+
+        private void PasteClickEventHandler( object sender, System.EventArgs args )
+        {
+            if( ClipBoardEvent != null )
+            {
+                ClipBoardEvent.CopyTo( eventListBox.SelectedItem as Event );
+                eventEditor1.Event = eventListBox.SelectedItem as Event;
+                eventEditor1.UpdateView();
+                eventEditor1_DataChanged( eventEditor1, System.EventArgs.Empty );
+            }
+        }
+
+
+        private void eventEditor1_DataChanged( object sender, System.EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[eventListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void eventListBox_SelectedIndexChanged( object sender, System.EventArgs e )
         {
             eventEditor1.Event = eventListBox.SelectedItem as Event;
         }
 
+        private Context ourContext = Context.Default;
         public void UpdateView( AllENTDs entds )
         {
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                ClipBoardEvent = null;
+                eventListBox.ContextMenu.MenuItems[1].Enabled = false;
+            }
+
             eventListBox.SelectedIndexChanged -= eventListBox_SelectedIndexChanged;
             eventListBox.DataSource = entds.Events;
             eventListBox.SelectedIndex = 0;
-            eventListBox.SelectedIndexChanged += eventListBox_SelectedIndexChanged;
             eventEditor1.Event = eventListBox.SelectedItem as Event;
+            eventListBox.SelectedIndexChanged += eventListBox_SelectedIndexChanged;
         }
 
 

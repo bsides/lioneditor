@@ -24,7 +24,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all <see cref="Job"/>s in memory.
     /// </summary>
-    public class AllJobs : IChangeable, IXmlDigest
+    public class AllJobs : PatchableFile, IXmlDigest
     {
 
         #region Static Fields (2)
@@ -61,7 +61,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -182,6 +182,24 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x518B8, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2739DC, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2739DC, bytes ) );
+            }
+
+            return result;
+        }
     }
 
     /// <summary>
@@ -246,6 +264,7 @@ namespace FFTPatcher.Datatypes
                     MPMultiplier != Default.MPMultiplier ||
                     MPortrait != Default.MPortrait ||
                     PAConstant != Default.PAConstant ||
+                    PAMultiplier != Default.PAMultiplier ||
                     SkillSet.Value != Default.SkillSet.Value ||
                     SpeedConstant != Default.SpeedConstant ||
                     SpeedMultiplier != Default.SpeedMultiplier ||
@@ -389,6 +408,44 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void Copy( Job source, Job destination )
+        {
+            source.PermanentStatus.CopyTo( destination.PermanentStatus );
+            source.StatusImmunity.CopyTo( destination.StatusImmunity );
+            source.StartingStatus.CopyTo( destination.StartingStatus );
+            source.AbsorbElement.CopyTo( destination.AbsorbElement );
+            source.CancelElement.CopyTo( destination.CancelElement );
+            source.HalfElement.CopyTo( destination.HalfElement );
+            source.WeakElement.CopyTo( destination.WeakElement );
+            source.Equipment.CopyTo( destination.Equipment );
+            destination.SkillSet = source.SkillSet;
+            destination.InnateA = source.InnateA;
+            destination.InnateB = source.InnateB;
+            destination.InnateC = source.InnateC;
+            destination.InnateD = source.InnateD;
+            destination.HPConstant = source.HPConstant;
+            destination.HPMultiplier = source.HPMultiplier;
+            destination.MPConstant = source.MPConstant;
+            destination.MPMultiplier = source.MPMultiplier;
+            destination.PAConstant = source.PAConstant;
+            destination.PAMultiplier = source.PAMultiplier;
+            destination.MAConstant = source.MAConstant;
+            destination.MAMultiplier = source.MAMultiplier;
+            destination.SpeedConstant = source.SpeedConstant;
+            destination.SpeedMultiplier = source.SpeedMultiplier;
+            destination.Move = source.Move;
+            destination.Jump = source.Jump;
+            destination.CEvade = source.CEvade;
+            destination.MPortrait = source.MPortrait;
+            destination.MPalette = source.MPalette;
+            destination.MGraphic = source.MGraphic;
+        }
+
+        public void CopyTo( Job destination )
+        {
+            Copy( this, destination );
+        }
+
         #endregion Constructors
 
         #region Methods (3)
@@ -439,7 +496,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Value.ToString( "X2" ) + " " + Name;
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" ) + " " + Name;
         }
 
 

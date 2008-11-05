@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class InflictStatusEditor : UserControl
+    public partial class InflictStatusEditor : BaseEditor
     {
 
 		#region Fields (3) 
@@ -66,6 +66,7 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
             flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
+            inflictStatusesEditor.DataChanged += OnDataChanged;
         }
 
 		#endregion Constructors 
@@ -78,6 +79,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFlag( status, flags[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 

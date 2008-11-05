@@ -129,6 +129,38 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+        public static void Copy( AIFlags source, AIFlags destination )
+        {
+            destination.AddStatus = source.AddStatus;
+            destination.Blank = source.Blank;
+            destination.CancelStatus = source.CancelStatus;
+            destination.DefenseUp = source.DefenseUp;
+            destination.DirectAttack = source.DirectAttack;
+            destination.HP = source.HP;
+            destination.IgnoreRange = source.IgnoreRange;
+            destination.LineAttack = source.LineAttack;
+            destination.MagicDefenseUp = source.MagicDefenseUp;
+            destination.MP = source.MP;
+            destination.RandomHits = source.RandomHits;
+            destination.Reflectable = source.Reflectable;
+            destination.Silence = source.Silence;
+            destination.Stats = source.Stats;
+            destination.TargetAllies = source.TargetAllies;
+            destination.TargetEnemies = source.TargetEnemies;
+            destination.TripleAttack = source.TripleAttack;
+            destination.TripleBracelet = source.TripleBracelet;
+            destination.UndeadReverse = source.UndeadReverse;
+            destination.Unequip = source.Unequip;
+            destination.Unknown1 = source.Unknown1;
+            destination.Unknown2 = source.Unknown2;
+            destination.Unknown3 = source.Unknown3;
+            destination.VerticalIncrease = source.VerticalIncrease;
+        }
+
+        public void CopyTo( AIFlags destination )
+        {
+            Copy( this, destination );
+        }
 
         #endregion Methods
 

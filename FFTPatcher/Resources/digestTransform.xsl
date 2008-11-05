@@ -90,6 +90,7 @@
         <xsl:apply-templates select="AllInflictStatuses"/>
         <xsl:apply-templates select="AllPoachProbabilities"/>
         <xsl:apply-templates select="AllENTDs"/>
+        <xsl:apply-templates select="AllMoveFindItems"/>
       </body>
     </html>
   </xsl:template>
@@ -660,6 +661,34 @@
           <th>New value</th>
         </tr>
         <xsl:for-each select="Common|Uncommon">
+          <tr>
+            <td>
+              <xsl:value-of select="name(.)"/>
+            </td>
+            <td>
+              <xsl:value-of select="@default"/>
+            </td>
+            <td>
+              <xsl:value-of select="@value"/>
+            </td>
+          </tr>
+        </xsl:for-each>
+      </table>
+    </xsl:for-each>
+  </xsl:template>
+  <xsl:template match="/digest/AllMoveFindItems">
+    <h1>Poaching</h1>
+    <xsl:for-each select="MapMoveFindItems">
+      <h2>
+        <xsl:value-of select="@name"/>
+      </h2>
+      <table class="differencesTable">
+        <tr>
+          <th>Setting</th>
+          <th>Default</th>
+          <th>New value</th>
+        </tr>
+        <xsl:for-each select="X|Y|CommonItem|RareItem|Unknown1|Unknown2|Unknown3|Unknown4|SteelNeedle|SleepingGas|Deathtrap|Degenerator">
           <tr>
             <td>
               <xsl:value-of select="name(.)"/>

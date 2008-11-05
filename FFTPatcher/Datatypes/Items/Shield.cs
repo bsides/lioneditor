@@ -94,6 +94,28 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (4)
 
+        public static void CopyShield( Shield source, Shield destination )
+        {
+            destination.PhysicalBlockRate = source.PhysicalBlockRate;
+            destination.MagicBlockRate = source.MagicBlockRate;
+        }
+
+        public void CopyShieldTo( Shield destination )
+        {
+            CopyShield( this, destination );
+        }
+
+        public static void CopyAll( Shield source, Shield destination )
+        {
+            CopyShield( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Shield destination )
+        {
+            CopyAll( this, destination );
+        }
+
 
         public byte[] ToItemByteArray()
         {

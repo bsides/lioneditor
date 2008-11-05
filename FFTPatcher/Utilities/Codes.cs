@@ -103,11 +103,7 @@ namespace FFTPatcher
                 }
             }
 
-            codes.Sort( new Comparison<string>(
-                delegate( string s, string t )
-                {
-                    return s.Substring( 6 ).CompareTo( t.Substring( 6 ) );
-                } ) );
+            codes.Sort( ( s, t ) => s.Substring( 6 ).CompareTo( t.Substring( 6 ) ) );
 
             return codes;
         }
@@ -143,11 +139,7 @@ namespace FFTPatcher
                 }
             }
 
-            codes.Sort( new Comparison<string>(
-                delegate( string s, string t )
-                {
-                    return s.Substring( 2 ).CompareTo( t.Substring( 2 ) );
-                } ) );
+            codes.Sort( ( s, t ) => s.Substring( 2 ).CompareTo( t.Substring( 2 ) ) );
 
             return codes;
         }
@@ -222,6 +214,10 @@ namespace FFTPatcher
             if( FFTPatch.Font != null )
             {
                 sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Font" : "", FFTPatch.Font.GenerateCodes() );
+            }
+            if( FFTPatch.MoveFind != null )
+            {
+                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Move/Find Items" : "", FFTPatch.MoveFind.GenerateCodes() );
             }
 
             return sb.ToString();

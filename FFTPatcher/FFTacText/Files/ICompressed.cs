@@ -22,6 +22,9 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files
 {
+    /// <summary>
+    /// Represents a file that is compressed on disc.
+    /// </summary>
     public interface ICompressed
     {
         /// <summary>

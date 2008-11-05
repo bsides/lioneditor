@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -22,13 +22,74 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace FFTPatcher.Datatypes
 {
     public static class FFTPatch
     {
 
-        #regionÂ PropertiesÂ (14)
+		#region Static Fields (2) 
+
+        private static IDictionary<ElementName, string> elementNames = Utilities.BuildDictionary<ElementName, string>( new object[] {
+            ElementName.Abilities, "abilities",
+            ElementName.AbilityEffects, "abilityEffects", 
+            ElementName.Items, "items", 
+            ElementName.ItemAttributes, "itemAttributes", 
+            ElementName.PSPItems, "pspItems", 
+            ElementName.PSPItemAttributes, "pspItemAttributes", 
+            ElementName.Jobs, "jobs", 
+            ElementName.JobLevels, "jobLevels",
+            ElementName.SkillSets, "skillSets", 
+            ElementName.MonsterSkills, "monsterSkills", 
+            ElementName.ActionMenus, "actionMenus", 
+            ElementName.InflictStatuses, "inflictStatuses", 
+            ElementName.StatusAttributes, "statusAttributes", 
+            ElementName.Poaching, "poaching",
+            ElementName.ENTD1, "entd1", 
+            ElementName.ENTD2, "entd2", 
+            ElementName.ENTD3, "entd3", 
+            ElementName.ENTD4, "entd4", 
+            ElementName.ENTD5, "entd5", 
+            ElementName.Font, "font", 
+            ElementName.FontWidths, "fontWidths",
+            ElementName.MoveFindItems, "moveFindItems" } );
+        private static string[] elementNameStrings = new string[] {
+            "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
+            "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
+            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths", "moveFindItems" };
+
+		#endregion Static Fields 
+
+        private enum ElementName
+        {
+            Abilities,
+            AbilityEffects,
+            Items,
+            ItemAttributes,
+            PSPItems,
+            PSPItemAttributes,
+            Jobs,
+            JobLevels,
+            SkillSets,
+            MonsterSkills,
+            ActionMenus,
+            InflictStatuses,
+            StatusAttributes,
+            Poaching,
+            ENTD1,
+            ENTD2,
+            ENTD3,
+            ENTD4,
+            ENTD5,
+            Font,
+            FontWidths,
+            MoveFindItems
+        }
+
+
+		#region Static Properties (14) 
 
 
         public static AllAbilities Abilities { get; private set; }
@@ -60,15 +121,15 @@ namespace FFTPatcher.Datatypes
         public static AllStatusAttributes StatusAttributes { get; private set; }
 
 
-        #endregionÂ Properties
+		#endregion Static Properties 
 
-        #regionÂ EventsÂ (1)
+		#region Events (1) 
 
         public static event EventHandler DataChanged;
 
-        #endregionÂ Events
+		#endregion Events 
 
-        #regionÂ MethodsÂ (15)
+		#region Methods (19) 
 
 
         private static void BuildFromContext()
@@ -95,6 +156,7 @@ namespace FFTPatcher.Datatypes
                     PoachProbabilities = new AllPoachProbabilities( Resources.PoachProbabilitiesBin );
                     Font = new FFTFont( Resources.FontBin, Resources.FontWidthsBin );
                     ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4, Resources.ENTD5 );
+                    MoveFind = new AllMoveFindItems( Context, Resources.MoveFind, new AllMoveFindItems( Context, Resources.MoveFind ) );
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
@@ -112,11 +174,13 @@ namespace FFTPatcher.Datatypes
                     PoachProbabilities = new AllPoachProbabilities( PSXResources.PoachProbabilitiesBin );
                     Font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
                     ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
+                    MoveFind = new AllMoveFindItems( Context, PSXResources.MoveFind, new AllMoveFindItems( Context, PSXResources.MoveFind ) );
                     break;
                 default:
                     throw new ArgumentException();
             }
         }
+        public static AllMoveFindItems MoveFind { get; private set; }
 
         private static long FindArrayInStream( byte[] array, FileStream stream )
         {
@@ -272,6 +336,105 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void ConvertPsxPatchToPsp( XmlNode document )
+        {
+            Action<StringBuilder> sbPrettifier = new Action<StringBuilder>(
+                delegate( StringBuilder sb )
+                {
+                    if( sb != null )
+                    {
+                        sb.Insert( 0, "\r\n" );
+                        sb.Replace( "\r\n", "\r\n    " );
+                        sb.Append( "\r\n  " );
+                    }
+                } );
+
+            XmlNode rootNode = document.SelectSingleNode( "patch" );
+            XmlNode typeNode = rootNode.SelectSingleNode( "@type" );
+
+            if( typeNode.InnerText == Context.US_PSX.ToString() )
+            {
+                typeNode.InnerText = Context.US_PSP.ToString();
+
+                XmlNode actionMenusNode = rootNode.SelectSingleNode( elementNames[ElementName.ActionMenus] );
+                if( actionMenusNode != null )
+                {
+                    // Action Menus 224->227
+                    List<byte> amBytes = new List<byte>( Convert.FromBase64String( actionMenusNode.InnerText ) );
+                    amBytes.AddRange( Resources.ActionEventsBin.Sub( 0xE0, 0xE2 ) );
+                    StringBuilder amBytesString = new StringBuilder( Convert.ToBase64String( amBytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( amBytesString );
+                    actionMenusNode.InnerText = amBytesString.ToString();
+                }
+
+                XmlNode jobsNode = rootNode.SelectSingleNode( elementNames[ElementName.Jobs] );
+                if( jobsNode != null )
+                {
+                    // Jobs 160->169, 48 bytes->49 bytes
+                    AllJobs aj = new AllJobs( Context.US_PSX, Convert.FromBase64String( jobsNode.InnerText ) );
+                    List<Job> jobs = new List<Job>( aj.Jobs );
+                    AllJobs defaultPspJobs = new AllJobs( Context.US_PSP, Resources.JobsBin );
+                    for( int i = 0; i < jobs.Count; i++ )
+                    {
+                        jobs[i].Equipment.Unknown1 = defaultPspJobs.Jobs[i].Equipment.Unknown1;
+                        jobs[i].Equipment.Unknown2 = defaultPspJobs.Jobs[i].Equipment.Unknown2;
+                        jobs[i].Equipment.Unknown3 = defaultPspJobs.Jobs[i].Equipment.Unknown3;
+                        jobs[i].Equipment.FellSword = defaultPspJobs.Jobs[i].Equipment.FellSword;
+                        jobs[i].Equipment.LipRouge = defaultPspJobs.Jobs[i].Equipment.LipRouge;
+                        jobs[i].Equipment.Unknown6 = defaultPspJobs.Jobs[i].Equipment.Unknown6;
+                        jobs[i].Equipment.Unknown7 = defaultPspJobs.Jobs[i].Equipment.Unknown7;
+                        jobs[i].Equipment.Unknown8 = defaultPspJobs.Jobs[i].Equipment.Unknown8;
+                    }
+                    for( int i = 160; i < 169; i++ )
+                    {
+                        jobs.Add( defaultPspJobs.Jobs[i] );
+                    }
+                    ReflectionHelpers.SetFieldOrProperty( aj, "Jobs", jobs.ToArray() );
+                    StringBuilder jobsBytesString = new StringBuilder( Convert.ToBase64String( aj.ToByteArray( Context.US_PSP ), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( jobsBytesString );
+                    jobsNode.InnerText = jobsBytesString.ToString();
+                }
+
+                XmlNode jobLevelsNode = rootNode.SelectSingleNode( elementNames[ElementName.JobLevels] );
+                if( jobLevelsNode != null )
+                {
+                    // JobLevels, 208 bytes->280 bytes (Requirements 10 bytes->12 bytes)
+                    JobLevels jl = new JobLevels( Context.US_PSX, Convert.FromBase64String( jobLevelsNode.InnerText ) );
+                    JobLevels pspJobLevels = new JobLevels( Context.US_PSP, Resources.JobLevelsBin );
+
+                    foreach( string jobName in new string[19] { "Archer", "Arithmetician", "Bard", "BlackMage", "Chemist", "Dancer", "Dragoon", "Geomancer",
+                        "Knight", "Mime", "Monk", "Mystic", "Ninja", "Orator", "Samurai", "Summoner", "Thief", "TimeMage", "WhiteMage" } )
+                    {
+                        Requirements psxR = ReflectionHelpers.GetFieldOrProperty<Requirements>( jl, jobName );
+                        Requirements pspR = ReflectionHelpers.GetFieldOrProperty<Requirements>( pspJobLevels, jobName );
+                        psxR.Unknown1 = pspR.Unknown1;
+                        psxR.Unknown2 = pspR.Unknown2;
+                        psxR.DarkKnight = pspR.DarkKnight;
+                        psxR.OnionKnight = pspR.OnionKnight;
+                    }
+
+                    ReflectionHelpers.SetFieldOrProperty( jl, "OnionKnight", pspJobLevels.OnionKnight );
+                    ReflectionHelpers.SetFieldOrProperty( jl, "DarkKnight", pspJobLevels.DarkKnight );
+                    ReflectionHelpers.SetFieldOrProperty( jl, "Unknown", pspJobLevels.Unknown );
+
+                    StringBuilder levelsBytesString = new StringBuilder( Convert.ToBase64String( jl.ToByteArray( Context.US_PSP ), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( levelsBytesString );
+                    jobLevelsNode.InnerText = levelsBytesString.ToString();
+                }
+
+                XmlNode skillSetsNode = rootNode.SelectSingleNode( elementNames[ElementName.SkillSets] );
+                if( skillSetsNode != null )
+                {
+                    // Skillsets, 176->179
+                    List<byte> ssBytes = new List<byte>( Convert.FromBase64String( skillSetsNode.InnerText ) );
+                    ssBytes.AddRange( Resources.SkillSetsBin.Sub( ssBytes.Count ) );
+                    StringBuilder ssBytesString = new StringBuilder( Convert.ToBase64String( ssBytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );
+                    sbPrettifier( ssBytesString );
+                    skillSetsNode.InnerText = ssBytesString.ToString();
+                }
+            }
+        }
+
         /// <summary>
         /// Saves the ENTD files to a path.
         /// </summary>
@@ -331,6 +494,47 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void GenerateDigest( string filename )
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            StringBuilder sb = new StringBuilder();
+
+            using( XmlWriter writer = XmlWriter.Create( sb, settings ) )
+            {
+                writer.WriteStartElement( "digest" );
+                IXmlDigest[] digestable = new IXmlDigest[] {
+                    Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
+                    InflictStatuses, PoachProbabilities, ENTDs, MoveFind };
+                foreach( IXmlDigest digest in digestable )
+                {
+                    digest.WriteXml( writer );
+                }
+                writer.WriteEndElement();
+            }
+
+
+#if DEBUG
+            using( FileStream stream = new FileStream( filename + ".xml", FileMode.Create ) )
+            {
+                byte[] bytes = sb.ToString().ToByteArray();
+                stream.Write( bytes, 0, bytes.Length );
+            }
+#endif
+
+            settings.ConformanceLevel = ConformanceLevel.Fragment;
+            using( StringReader transformStringReader = new StringReader( FFTPatcher.Properties.Resources.digestTransform ) )
+            using( XmlReader transformXmlReader = XmlReader.Create( transformStringReader ) )
+            using( StringReader inputReader = new StringReader( sb.ToString() ) )
+            using( XmlReader inputXmlReader = XmlReader.Create( inputReader ) )
+            using( XmlWriter outputWriter = XmlWriter.Create( filename, settings ) )
+            {
+                System.Xml.Xsl.XslCompiledTransform t = new System.Xml.Xsl.XslCompiledTransform();
+                t.Load( transformXmlReader );
+                t.Transform( inputXmlReader, outputWriter );
+            }
+        }
+
         /// <summary>
         /// Reads an XML fftpatch file.
         /// </summary>
@@ -365,6 +569,7 @@ namespace FFTPatcher.Datatypes
             byte[] entd5 = GetFromNodeOrReturnDefault( rootNode, "entd5", Resources.ENTD5 );
             byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? Resources.FontBin : PSXResources.FontBin );
             byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
+            byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? Resources.MoveFind : PSXResources.MoveFind );
 
             Abilities = new AllAbilities( abilities, abilityEffects );
             Items = new AllItems( oldItems, newItems != null ? newItems : null );
@@ -381,6 +586,7 @@ namespace FFTPatcher.Datatypes
             PoachProbabilities = new AllPoachProbabilities( poach );
             ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
             Font = new FFTFont( font, fontWidths );
+            MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? Resources.MoveFind : PSXResources.MoveFind ) );
             FireDataChangedEvent();
         }
 
@@ -497,6 +703,141 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e, IGeneratePatchList patchList )
+        {
+            string filename = patchList.FileName;
+            int numberOfTasks = patchList.PatchCount * 2;
+            int tasksComplete = 0;
+            List<PatchedByteArray> patches = new List<PatchedByteArray>();
+
+            MethodInvoker progress =
+                delegate()
+                {
+                    backgroundWorker.ReportProgress( tasksComplete++ * 100 / numberOfTasks );
+                };
+
+            const Context context = Context.US_PSX;
+
+            if ( patchList.Abilities )
+            {
+                patches.AddRange( Abilities.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.AbilityEffects )
+            {
+                patches.AddRange( Abilities.AllEffects.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.Items )
+            {
+                patches.AddRange( Items.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.ItemAttributes )
+            {
+                patches.AddRange( ItemAttributes.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.Jobs )
+            {
+                patches.AddRange( Jobs.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.JobLevels )
+            {
+                patches.AddRange( JobLevels.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.Skillsets )
+            {
+                patches.AddRange( SkillSets.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.MonsterSkills )
+            {
+                patches.AddRange( MonsterSkills.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.ActionMenus )
+            {
+                patches.AddRange( ActionMenus.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.StatusAttributes )
+            {
+                patches.AddRange( StatusAttributes.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.InflictStatus )
+            {
+                patches.AddRange( InflictStatuses.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.Poach )
+            {
+                patches.AddRange( PoachProbabilities.GetPatches( context ) );
+                progress();
+            }
+
+            var entdPatches = ENTDs.GetPatches( context );
+            for( int i = 0; i < 4; i++ )
+            {
+                if ( patchList.ENTD[i] )
+                {
+                    patches.Add( entdPatches[i] );
+                    progress();
+                }
+            }
+
+            if ( patchList.FONT )
+            {
+                patches.AddRange( Font.GetPatches( context ) );
+                progress();
+            }
+
+            if ( patchList.FontWidths )
+            {
+                patches.AddRange( Font.GlyphWidths.GetPatches( context ) );
+                progress();
+            }
+
+            if( patchList.MoveFindItems )
+            {
+                patches.AddRange( MoveFind.GetPatches( context ) );
+                progress();
+            }
+
+            IList<PatchedByteArray> otherPatches = patchList.OtherPatches;
+            foreach ( var patch in otherPatches )
+            {
+                patches.Add( patch );
+                progress();
+            }
+
+            foreach ( PatchedByteArray patch in patches )
+            {
+                IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, patchList.FileName, false, patch.Sector,
+                    patch.Offset, patch.Bytes, true );
+                progress();
+            }
+
+            if ( patchList.RegenECC )
+            {
+                // TODO: RegenECC
+            }
+        }
+
         /// <summary>
         /// Saves the fonts to the path.
         /// </summary>
@@ -534,158 +875,6 @@ namespace FFTPatcher.Datatypes
             SavePatchToFile( path, FFTPatch.Context, true );
         }
 
-        public static void ConvertPsxPatchToPsp( XmlNode document )
-        {
-            Action<StringBuilder> sbPrettifier = new Action<StringBuilder>(
-                delegate( StringBuilder sb )
-                {
-                    if( sb != null )
-                    {
-                        sb.Insert( 0, "\r\n" );
-                        sb.Replace( "\r\n", "\r\n    " );
-                        sb.Append( "\r\n  " );
-                    }
-                } );
-
-            XmlNode rootNode = document.SelectSingleNode( "patch" );
-            XmlNode typeNode = rootNode.SelectSingleNode( "@type" );
-
-            if( typeNode.InnerText == Context.US_PSX.ToString() )
-            {
-                typeNode.InnerText = Context.US_PSP.ToString();
-
-                XmlNode actionMenusNode = rootNode.SelectSingleNode( elementNames[ElementName.ActionMenus] );
-                if( actionMenusNode != null )
-                {
-                    // Action Menus 224->227
-                    List<byte> amBytes = new List<byte>( Convert.FromBase64String( actionMenusNode.InnerText ) );
-                    amBytes.AddRange( Resources.ActionEventsBin.Sub( 0xE0, 0xE2 ) );
-                    StringBuilder amBytesString = new StringBuilder( Convert.ToBase64String( amBytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );
-                    sbPrettifier( amBytesString );
-                    actionMenusNode.InnerText = amBytesString.ToString();
-                }
-
-                XmlNode jobsNode = rootNode.SelectSingleNode( elementNames[ElementName.Jobs] );
-                if( jobsNode != null )
-                {
-                    // Jobs 160->169, 48 bytes->49 bytes
-                    AllJobs aj = new AllJobs( Context.US_PSX, Convert.FromBase64String( jobsNode.InnerText ) );
-                    List<Job> jobs = new List<Job>( aj.Jobs );
-                    AllJobs defaultPspJobs = new AllJobs( Context.US_PSP, Resources.JobsBin );
-                    for( int i = 0; i < jobs.Count; i++ )
-                    {
-                        jobs[i].Equipment.Unknown1 = defaultPspJobs.Jobs[i].Equipment.Unknown1;
-                        jobs[i].Equipment.Unknown2 = defaultPspJobs.Jobs[i].Equipment.Unknown2;
-                        jobs[i].Equipment.Unknown3 = defaultPspJobs.Jobs[i].Equipment.Unknown3;
-                        jobs[i].Equipment.FellSword = defaultPspJobs.Jobs[i].Equipment.FellSword;
-                        jobs[i].Equipment.LipRouge = defaultPspJobs.Jobs[i].Equipment.LipRouge;
-                        jobs[i].Equipment.Unknown6 = defaultPspJobs.Jobs[i].Equipment.Unknown6;
-                        jobs[i].Equipment.Unknown7 = defaultPspJobs.Jobs[i].Equipment.Unknown7;
-                        jobs[i].Equipment.Unknown8 = defaultPspJobs.Jobs[i].Equipment.Unknown8;
-                    }
-                    for( int i = 160; i < 169; i++ )
-                    {
-                        jobs.Add( defaultPspJobs.Jobs[i] );
-                    }
-                    ReflectionHelpers.SetFieldOrProperty( aj, "Jobs", jobs.ToArray() );
-                    StringBuilder jobsBytesString = new StringBuilder( Convert.ToBase64String( aj.ToByteArray( Context.US_PSP ), Base64FormattingOptions.InsertLineBreaks ) );
-                    sbPrettifier( jobsBytesString );
-                    jobsNode.InnerText = jobsBytesString.ToString();
-                }
-
-                XmlNode jobLevelsNode = rootNode.SelectSingleNode( elementNames[ElementName.JobLevels] );
-                if( jobLevelsNode != null )
-                {
-                    // JobLevels, 208 bytes->280 bytes (Requirements 10 bytes->12 bytes)
-                    JobLevels jl = new JobLevels( Context.US_PSX, Convert.FromBase64String( jobLevelsNode.InnerText ) );
-                    JobLevels pspJobLevels = new JobLevels( Context.US_PSP, Resources.JobLevelsBin );
-
-                    foreach( string jobName in new string[19] { "Archer", "Arithmetician", "Bard", "BlackMage", "Chemist", "Dancer", "Dragoon", "Geomancer",
-                        "Knight", "Mime", "Monk", "Mystic", "Ninja", "Orator", "Samurai", "Summoner", "Thief", "TimeMage", "WhiteMage" } )
-                    {
-                        Requirements psxR = ReflectionHelpers.GetFieldOrProperty<Requirements>( jl, jobName );
-                        Requirements pspR = ReflectionHelpers.GetFieldOrProperty<Requirements>( pspJobLevels, jobName );
-                        psxR.Unknown1 = pspR.Unknown1;
-                        psxR.Unknown2 = pspR.Unknown2;
-                        psxR.DarkKnight = pspR.DarkKnight;
-                        psxR.OnionKnight = pspR.OnionKnight;
-                    }
-
-                    ReflectionHelpers.SetFieldOrProperty( jl, "OnionKnight", pspJobLevels.OnionKnight );
-                    ReflectionHelpers.SetFieldOrProperty( jl, "DarkKnight", pspJobLevels.DarkKnight );
-                    ReflectionHelpers.SetFieldOrProperty( jl, "Unknown", pspJobLevels.Unknown );
-
-                    StringBuilder levelsBytesString = new StringBuilder( Convert.ToBase64String( jl.ToByteArray( Context.US_PSP ), Base64FormattingOptions.InsertLineBreaks ) );
-                    sbPrettifier( levelsBytesString );
-                    jobLevelsNode.InnerText = levelsBytesString.ToString();
-                }
-
-                XmlNode skillSetsNode = rootNode.SelectSingleNode( elementNames[ElementName.SkillSets] );
-                if( skillSetsNode != null )
-                {
-                    // Skillsets, 176->179
-                    List<byte> ssBytes = new List<byte>( Convert.FromBase64String( skillSetsNode.InnerText ) );
-                    ssBytes.AddRange( Resources.SkillSetsBin.Sub( ssBytes.Count ) );
-                    StringBuilder ssBytesString = new StringBuilder( Convert.ToBase64String( ssBytes.ToArray(), Base64FormattingOptions.InsertLineBreaks ) );
-                    sbPrettifier( ssBytesString );
-                    skillSetsNode.InnerText = ssBytesString.ToString();
-                }
-            }
-        }
-
-        private static string[] elementNameStrings = new string[] {
-            "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
-            "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths" };
-
-        private static IDictionary<ElementName, string> elementNames = Utilities.BuildDictionary<ElementName, string>( new object[] {
-            ElementName.Abilities, "abilities",
-            ElementName.AbilityEffects, "abilityEffects", 
-            ElementName.Items, "items", 
-            ElementName.ItemAttributes, "itemAttributes", 
-            ElementName.PSPItems, "pspItems", 
-            ElementName.PSPItemAttributes, "pspItemAttributes", 
-            ElementName.Jobs, "jobs", 
-            ElementName.JobLevels, "jobLevels",
-            ElementName.SkillSets, "skillSets", 
-            ElementName.MonsterSkills, "monsterSkills", 
-            ElementName.ActionMenus, "actionMenus", 
-            ElementName.InflictStatuses, "inflictStatuses", 
-            ElementName.StatusAttributes, "statusAttributes", 
-            ElementName.Poaching, "poaching",
-            ElementName.ENTD1, "entd1", 
-            ElementName.ENTD2, "entd2", 
-            ElementName.ENTD3, "entd3", 
-            ElementName.ENTD4, "entd4", 
-            ElementName.ENTD5, "entd5", 
-            ElementName.Font, "font", 
-            ElementName.FontWidths, "fontWidths" } );
-
-        private enum ElementName
-        {
-            Abilities,
-            AbilityEffects,
-            Items,
-            ItemAttributes,
-            PSPItems,
-            PSPItemAttributes,
-            Jobs,
-            JobLevels,
-            SkillSets,
-            MonsterSkills,
-            ActionMenus,
-            InflictStatuses,
-            StatusAttributes,
-            Poaching,
-            ENTD1,
-            ENTD2,
-            ENTD3,
-            ENTD4,
-            ENTD5,
-            Font,
-            FontWidths
-        }
-
         /// <summary>
         /// Saves this patch to an XML document.
         /// </summary>
@@ -719,6 +908,8 @@ namespace FFTPatcher.Datatypes
             StringBuilder entd5 = Context == Context.US_PSP ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
             StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
             StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
+            StringBuilder moveFind = GetBase64StringIfNonDefault( MoveFind.ToByteArray(), psp ? Resources.MoveFind : PSXResources.MoveFind );
+
             XmlTextWriter writer = null;
             try
             {
@@ -733,7 +924,7 @@ namespace FFTPatcher.Datatypes
                 StringBuilder[] builders = new StringBuilder[] { 
                     abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, 
                     skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach,
-                    entd1, entd2, entd3, entd4, entd5, font, fontWidths };
+                    entd1, entd2, entd3, entd4, entd5, font, fontWidths, moveFind };
                 foreach( StringBuilder s in builders )
                 {
                     if( s != null )
@@ -774,48 +965,8 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static void GenerateDigest( string filename )
-        {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            StringBuilder sb = new StringBuilder();
 
-            using( XmlWriter writer = XmlWriter.Create( sb, settings ) )
-            {
-                writer.WriteStartElement( "digest" );
-                IXmlDigest[] digestable = new IXmlDigest[] {
-                    Abilities, Items, ItemAttributes, Jobs, JobLevels, SkillSets, MonsterSkills, ActionMenus, StatusAttributes,
-                    InflictStatuses, PoachProbabilities, ENTDs };
-                foreach( IXmlDigest digest in digestable )
-                {
-                    digest.WriteXml( writer );
-                }
-                writer.WriteEndElement();
-            }
-
-
-#if DEBUG
-            using( FileStream stream = new FileStream( filename + ".xml", FileMode.Create ) )
-            {
-                byte[] bytes = sb.ToString().ToByteArray();
-                stream.Write( bytes, 0, bytes.Length );
-            }
-#endif
-
-            settings.ConformanceLevel = ConformanceLevel.Fragment;
-            using( StringReader transformStringReader = new StringReader( FFTPatcher.Properties.Resources.digestTransform ) )
-            using( XmlReader transformXmlReader = XmlReader.Create( transformStringReader ) )
-            using( StringReader inputReader = new StringReader( sb.ToString() ) )
-            using( XmlReader inputXmlReader = XmlReader.Create( inputReader ) )
-            using( XmlWriter outputWriter = XmlWriter.Create( filename, settings ) )
-            {
-                System.Xml.Xsl.XslCompiledTransform t = new System.Xml.Xsl.XslCompiledTransform();
-                t.Load( transformXmlReader );
-                t.Transform( inputXmlReader, outputWriter );
-            }
-        }
-
-        #endregionÂ Methods
+		#endregion Methods 
 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -18,13 +18,14 @@
 */
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FFTPatcher
 {
     public static class PSXResources
     {
 
-		#regionÂ StaticÂ FieldsÂ (7)Â 
+		#region Static Fields (7) 
 
         private static string[] abilityAI;
         private static string[] abilityAttributes;
@@ -34,10 +35,147 @@ namespace FFTPatcher
         private static string[] shopAvailabilities;
         private static string[] statuses;
 
-		#endregionÂ StaticÂ FieldsÂ 
+        private static ReadOnlyCollection<string> mapNamesReadOnly;
+        private static string[] mapNames = new string[128] {
+            "(No name)",
+            "At main gate of Igros Castle",
+            "Back gate of Lesalia Castle",
+            "Hall of St. Murond Temple",
+            "Office of Lesalia Castle",
+            "Roof of Riovanes Castle",
+            "At the gate of Riovanes Castle",
+            "Inside of Riovanes Castle",
+            "Riovanes Castle",
+            "Citadel of Igros Castle",
+            "Inside of Igros Castle",
+            "Office of Igros Castle",
+            "At the gate of Lionel Castle",
+            "Inside of Lionel Castle",
+            "Office of Lionel Castle",
+            "At the gate of Limberry Castle",
+            "Inside of Limberry Castle",
+            "Underground cemetery of Limberry Castle",
+            "Office of Limberry Castle",
+            "At the gate of Limberry Castle",
+            "Inside of Zeltennia Castle",
+            "Zeltennia Castle",
+            "Magic City Gariland",
+            "Beoulve residence",
+            "Military Academy's Auditorium",
+            "Yardow Fort City",
+            "Weapon storage of Yardow",
+            "Goland Coal City",
+            "Colliery underground First floor",
+            "Colliery underground Second floor",
+            "Colliery underground Third floor",
+            "Dorter Trade City",
+            "Slums in Dorter",
+            "Hospital in slums",
+            "Cellar of Sand Mouse",
+            "Zaland Fort City",
+            "Church outside the town",
+            "Ruins outside Zaland",
+            "Goug Machine City",
+            "Underground passage in Goland",
+            "Slums in Goug",
+            "Besrodio's house",
+            "Warjilis Trade City",
+            "Port of Warjilis",
+            "Bervenia Free City",
+            "Ruins of Zeltennia Castle's church",
+            "Cemetery of Heavenly Knight, Balbanes",
+            "Zarghidas Trade City",
+            "Slums of Zarghidas",
+            "Fort Zeakden",
+            "St. Murond Temple",
+            "St. Murond Temple",
+            "Chapel of St. Murond Temple",
+            "Entrance to Death City",
+            "Lost Sacred Precincts",
+            "Graveyard of Airships",
+            "Orbonne Monastery",
+            "Underground Book Storage First Floor",
+            "Underground Book Storage Second Floor",
+            "Underground Book Storage Third Floor",
+            "Underground Book Storage Fourth Floor",
+            "Underground Book Storage Fifth Floor",
+            "Chapel of Orbonne Monastery",
+            "Golgorand Execution Site",
+            "In front of Bethla Garrison's Sluice",
+            "Granary of Bethla Garrison",
+            "South Wall of Bethla Garrison",
+            "North Wall of Bethla Garrison",
+            "Bethla Garrison",
+            "Murond Death City",
+            "Nelveska Temple",
+            "Dolbodar Swamp",
+            "Fovoham Plains",
+            "Inside of windmill Shed",
+            "Sweegy Woods",
+            "Bervenia Volcano",
+            "Zeklaus Desert",
+            "Lenalia Plateau",
+            "Zigolis Swamp",
+            "Yuguo Woods",
+            "Araguay Woods",
+            "Grog Hill",
+            "Bed Desert",
+            "Zirekile Falls",
+            "Bariaus Hill",
+            "Mandalia Plains",
+            "Doguola Pass",
+            "Bariaus Valley",
+            "Finath River",
+            "Poeskas Lake",
+            "Germinas Peak",
+            "Thieves Fort",
+            "Igros·Beoulve residence",
+            "Broke down shed·Wooden building",
+            "Broke down shed·Stone building",
+            "Church",
+            "Pub",
+            "Inside castle gate in Lesalia",
+            "Outside castle gate in Lesalia",
+            "Main street of Lesalia",
+            "Public cemetary",
+            "For tutorial 1",
+            "For tutorial 2",
+            "Windmill shed",
+            "A room of Beoulve residence",
+            "terminate",
+            "delta",
+            "nogias",
+            "voyage",
+            "bridge",
+            "valkyries",
+            "mlapan",
+            "tiger",
+            "horror",
+            "end",
+            "Banished fort",
+            "(No name) -- Battle Arena",
+            "(No name) -- Checkerboard Wall",
+            "(No name) -- Checkerboard Wall ???",
+            "(No name) -- Checkerboard Wall Waterland",
+            "(Garbled name) -- Sloped Checkerboard",
+            "","","","","","",""
+            };
+		#endregion Static Fields 
 
-		#regionÂ StaticÂ PropertiesÂ (30)Â 
+		#region Static Properties (31) 
 
+        public static ReadOnlyCollection<string> MapNames
+        {
+            get
+            {
+                if ( mapNamesReadOnly == null )
+                {
+                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
+                }
+
+                return mapNamesReadOnly;
+            }
+        }
 
         public static string Abilities { get { return dict["Abilities"] as string; } }
 
@@ -139,6 +277,8 @@ namespace FFTPatcher
 
         public static byte[] PoachProbabilitiesBin { get { return dict["PoachProbabilitiesBin"] as byte[]; } }
 
+        public static byte[] SCEAPDAT { get { return dict["SCEAP"] as byte[]; } }
+
         public static string[] ShopAvailabilities
         {
             get
@@ -184,10 +324,11 @@ namespace FFTPatcher
 
         public static string StatusNames { get { return dict["StatusNames"] as string; } }
 
+        public static byte[] MoveFind { get { return Properties.Resources.MoveFind; } }
 
-		#endregionÂ StaticÂ PropertiesÂ 
+		#endregion Static Properties 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         static PSXResources()
         {
@@ -218,9 +359,11 @@ namespace FFTPatcher
 
             dict["AbilitiesEffects"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesEffects ).ToUTF8String();
             dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilityEffectsBin );
+
+            dict["SCEAP"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SCEAP );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
     }
 }

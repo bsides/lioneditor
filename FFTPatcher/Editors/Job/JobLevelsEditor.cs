@@ -25,7 +25,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class JobLevelsEditor : UserControl
+    public partial class JobLevelsEditor : BaseEditor
     {
 
 		#region Fields (1) 
@@ -39,6 +39,7 @@ namespace FFTPatcher.Editors
         public JobLevelsEditor()
         {
             InitializeComponent();
+            requirementsEditor1.DataChanged += OnDataChanged;
         }
 
 		#endregion Constructors 
@@ -50,6 +51,7 @@ namespace FFTPatcher.Editors
         {
             NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
             ReflectionHelpers.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
+            OnDataChanged( this, System.EventArgs.Empty );
         }
 
         public void UpdateView( JobLevels levels )

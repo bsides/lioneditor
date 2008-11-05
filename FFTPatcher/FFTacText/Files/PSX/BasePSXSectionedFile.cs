@@ -21,29 +21,53 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSX
 {
+    /// <summary>
+    /// Represents files in the Playstation version that are sectioned.
+    /// </summary>
     public abstract class BasePSXSectionedFile : AbstractStringSectioned
     {
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
+        /// <summary>
+        /// Gets the character map that is used for this file.
+        /// </summary>
+        /// <value></value>
         public override GenericCharMap CharMap { get { return TextUtilities.PSXMap; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSXSectionedFile"/> class.
+        /// </summary>
         protected BasePSXSectionedFile()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSXSectionedFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected BasePSXSectionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
+        public override IList<PatchedByteArray> GetAllPatches()
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            foreach( var kvp in Locations )
+            {
+                result.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
+            }
+            return result;
+        }
     }
 }

@@ -29,19 +29,19 @@ namespace FFTPatcher.TextEditor
     public abstract class GenericCharMap : Dictionary<int, string>
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Regex regex = new Regex( @"{0x([0-9A-Fa-f]+)}" );
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Fields (1) 
+        #region Fields (1)
 
         private Dictionary<string, int> reverse = null;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (5) 
+        #region Methods (6)
 
 
         private Dictionary<string, int> BuildValueToKeyMapping()
@@ -111,14 +111,14 @@ namespace FFTPatcher.TextEditor
             int resultPos = pos + 1;
             byte val = bytes[pos];
             int key = val;
-            if( (val >= 0xD0 && val <= 0xDA) || 
-                (val == 0xE2) || 
-                (val == 0xE3) || 
+            if( (val >= 0xD0 && val <= 0xDA) ||
+                (val == 0xE2) ||
+                (val == 0xE3) ||
                 (val == 0xE7) ||
                 (val == 0xE8) ||
                 (val == 0xEC) ||
-                (val == 0xEE) || 
-                (val == 0xF5) || 
+                (val == 0xEE) ||
+                (val == 0xF5) ||
                 (val == 0xF6) )
             {
                 byte nextVal = bytes[pos + 1];
@@ -206,8 +206,25 @@ namespace FFTPatcher.TextEditor
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Validates the string with this charmap;
+        /// </summary>
+        public bool ValidateString( string s )
+        {
+            try
+            {
+                StringToByteArray( s );
+            }
+            catch
+            {
+                return false;
+            }
 
-		#endregion Methods 
+            return true;
+        }
+
+
+        #endregion Methods
 
     }
 
@@ -224,5 +241,5 @@ namespace FFTPatcher.TextEditor
     public class PSXCharMap : GenericCharMap
     {
     }
-   
+
 }

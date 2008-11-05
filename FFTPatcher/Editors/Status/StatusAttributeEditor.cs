@@ -24,7 +24,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class StatusAttributeEditor : UserControl
+    public partial class StatusAttributeEditor : BaseEditor
     {
 
 		#region Static Fields (1) 
@@ -79,6 +79,9 @@ namespace FFTPatcher.Editors
                 spinner.ValueChanged += spinner_ValueChanged;
             }
             checkedListBox.ItemCheck += checkedListBox_ItemCheck;
+            checkedListBox.ItemCheck += OnDataChanged;
+            cantStackStatusesEditor.DataChanged += OnDataChanged;
+            cancelStatusesEditor.DataChanged += OnDataChanged;
         }
 
 		#endregion Constructors 
@@ -91,6 +94,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFieldOrProperty( statusAttribute, PropertyNames[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 
@@ -100,6 +104,7 @@ namespace FFTPatcher.Editors
             {
                 NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
                 ReflectionHelpers.SetFieldOrProperty( statusAttribute, spinner.Tag.ToString(), (byte)spinner.Value );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 

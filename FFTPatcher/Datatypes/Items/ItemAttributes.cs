@@ -146,6 +146,27 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (2)
 
+        public static void Copy( ItemAttributes source, ItemAttributes destination )
+        {
+            destination.PA = source.PA;
+            destination.MA = source.MA;
+            destination.Speed = source.Speed;
+            destination.Move = source.Move;
+            destination.Jump = source.Jump;
+            source.PermanentStatuses.CopyTo( destination.PermanentStatuses );
+            source.StatusImmunity.CopyTo( destination.StatusImmunity );
+            source.StartingStatuses.CopyTo( destination.StartingStatuses );
+            source.Absorb.CopyTo( destination.Absorb );
+            source.Cancel.CopyTo( destination.Cancel );
+            source.Half.CopyTo( destination.Half );
+            source.Weak.CopyTo( destination.Weak );
+            source.Strong.CopyTo( destination.Strong );
+        }
+
+        public void CopyTo( ItemAttributes destination )
+        {
+            Copy( this, destination );
+        }
 
         public byte[] ToByteArray()
         {
@@ -171,7 +192,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Value.ToString( "X2" );
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" );
         }
 
 
@@ -179,7 +200,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllItemAttributes : IChangeable, IXmlDigest
+    public class AllItemAttributes : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -189,7 +210,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -296,5 +317,26 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 4 );
+
+            var first = ToFirstByteArray();
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x54AC4, first ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                var second = ToSecondByteArray();
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3266E8, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x25720C, second ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3266E8, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x25720C, second ) );
+            }
+
+            return result;
+        }
     }
 }

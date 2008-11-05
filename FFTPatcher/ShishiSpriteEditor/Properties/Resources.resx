@@ -151,4 +151,7 @@
   <data name="WEP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WEP2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="OPNBK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\psxresources\open\opnbk.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

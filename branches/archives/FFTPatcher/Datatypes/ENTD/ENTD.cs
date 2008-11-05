@@ -147,19 +147,19 @@ namespace FFTPatcher.Datatypes
             ENTDs[0] = new ENTD(
                 0,
                 entd1,
-                new ENTD( 0, Resources.ENTD1, null ) );
+                new ENTD( 0, PSPResources.ENTD1, null ) );
             ENTDs[1] = new ENTD(
                 0x80,
                 entd2,
-                new ENTD( 0x80, Resources.ENTD2, null ) );
+                new ENTD( 0x80, PSPResources.ENTD2, null ) );
             ENTDs[2] = new ENTD(
                 0x100,
                 entd3,
-                new ENTD( 0x100, Resources.ENTD3, null ) );
+                new ENTD( 0x100, PSPResources.ENTD3, null ) );
             ENTDs[3] = new ENTD(
                 0x180,
                 entd4,
-                new ENTD( 0x180, Resources.ENTD4, null ) );
+                new ENTD( 0x180, PSPResources.ENTD4, null ) );
 
             Events = new List<Event>( 0x200 );
             foreach( ENTD e in ENTDs )
@@ -177,7 +177,7 @@ namespace FFTPatcher.Datatypes
                 for( int i = 0; i < 77; i++ )
                 {
                     PSPEvent.Add( new Event( 0x200 + i, entd5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
-                                  new Event( 0x200 + i, Resources.ENTD5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
+                                  new Event( 0x200 + i, PSPResources.ENTD5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
                 }
 
                 Events.AddRange( PSPEvent );

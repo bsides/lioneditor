@@ -187,7 +187,7 @@ namespace FFTPatcher.Datatypes
             psxEventItems = new List<Item>( 256 );
 
             PSPNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.Items,
+                PSPResources.Items,
                 "/Items/Item[@offset='{0}']/@name",
                 316 ) );
             PSXNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
@@ -410,15 +410,15 @@ namespace FFTPatcher.Datatypes
                 if( all == null )
                 {
                     all = new List<ShopAvailability>( 256 );
-                    for( byte i = 0; i < Resources.ShopAvailabilities.Length; i++ )
+                    for( byte i = 0; i < PSPResources.ShopAvailabilities.Length; i++ )
                     {
                         ShopAvailability a = new ShopAvailability();
                         a.b = i;
-                        a.name = Resources.ShopAvailabilities[i];
+                        a.name = PSPResources.ShopAvailabilities[i];
                         a.psxName = PSXResources.ShopAvailabilities[i];
                         all.Add( a );
                     }
-                    for( int i = Resources.ShopAvailabilities.Length; i <= 0xFF; i++ )
+                    for( int i = PSPResources.ShopAvailabilities.Length; i <= 0xFF; i++ )
                     {
                         ShopAvailability a = new ShopAvailability();
                         a.b = (byte)i;

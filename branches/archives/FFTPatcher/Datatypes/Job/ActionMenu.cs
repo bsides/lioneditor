@@ -230,7 +230,7 @@ namespace FFTPatcher.Datatypes
 
         public AllActionMenus( IList<byte> bytes, Context context )
         {
-            byte[] defaultBytes = context == Context.US_PSP ? Resources.ActionEventsBin : PSXResources.ActionEventsBin;
+            byte[] defaultBytes = context == Context.US_PSP ? PSPResources.ActionEventsBin : PSXResources.ActionEventsBin;
 
             List<ActionMenu> tempActions = new List<ActionMenu>();
 
@@ -261,7 +261,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
             }
             else
             {

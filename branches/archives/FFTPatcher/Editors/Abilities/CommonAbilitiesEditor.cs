@@ -144,8 +144,8 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 aiCheckedListBox.Items.Clear();
-                aiCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.AbilityAI : PSXResources.AbilityAI );
-                abilityTypeComboBox.DataSource = ourContext == Context.US_PSP ? Resources.AbilityTypes : PSXResources.AbilityTypes;
+                aiCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.AbilityAI : PSXResources.AbilityAI );
+                abilityTypeComboBox.DataSource = ourContext == Context.US_PSP ? PSPResources.AbilityTypes : PSXResources.AbilityTypes;
             }
 
             jpCostSpinner.SetValueAndDefault( ability.JPCost, ability.Default.JPCost );

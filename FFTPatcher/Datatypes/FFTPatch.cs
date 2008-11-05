@@ -24,6 +24,7 @@ using System.Text;
 using System.Xml;
 using System.ComponentModel;
 using System.Windows.Forms;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace FFTPatcher.Datatypes
 {
@@ -182,24 +183,6 @@ namespace FFTPatcher.Datatypes
         }
         public static AllMoveFindItems MoveFind { get; private set; }
 
-        private static long FindArrayInStream( byte[] array, FileStream stream )
-        {
-            byte[] read = new byte[4];
-
-            stream.Seek( 0, SeekOrigin.Begin );
-            while( stream.Position + read.Length <= stream.Length )
-            {
-                stream.Read( read, 0, array.Length );
-                if( Utilities.CompareArrays( array, read ) )
-                {
-                    return stream.Position - array.Length;
-                }
-                stream.Seek( 2044, SeekOrigin.Current );
-            }
-
-            throw new InvalidDataException();
-        }
-
         private static void FireDataChangedEvent()
         {
             if( DataChanged != null )
@@ -246,94 +229,6 @@ namespace FFTPatcher.Datatypes
             }
 
             return result.ToString();
-        }
-
-        private static void VerifyFileIsSCUS94221( FileStream stream )
-        {
-            stream.Seek( 0, SeekOrigin.Begin );
-            string header = ReadString( stream, 8 );
-
-            stream.Seek( 0x4C, SeekOrigin.Begin );
-            string scea = ReadString( stream, 0x37 );
-
-            stream.Seek( 0x1C, SeekOrigin.Begin );
-            byte[] length = new byte[4];
-            stream.Read( length, 0, 4 );
-            UInt32 l = Utilities.BytesToUInt32( length ) + 0x800;
-
-            if( (header != "PS-X EXE") ||
-                (scea != "Sony Computer Entertainment Inc. for North America area") ||
-                (l != stream.Length) )
-            {
-                throw new InvalidDataException();
-            }
-        }
-
-        /// <summary>
-        /// Applies patches to a SCUS_942.21 file.
-        /// </summary>
-        public static void ApplyPatchesToExecutable( string filename )
-        {
-            FileStream stream = null;
-            try
-            {
-                bool psp = Context == Context.US_PSP;
-                stream = new FileStream( filename, FileMode.Open );
-                long abilities = -1;
-                long jobs = -1;
-                long skillSets = -1;
-                long monsterSkills = -1;
-                long actionEvents = -1;
-                long statusAttributes = -1;
-                long poach = -1;
-                long jobLevels = -1;
-                long oldItems = -1;
-                long inflictStatuses = -1;
-                long oldItemAttributes = -1;
-
-                VerifyFileIsSCUS94221( stream );
-
-                oldItemAttributes = 0x54AC4;
-                oldItems = 0x536B8;
-                poach = 0x56864;
-                skillSets = 0x55294;
-                statusAttributes = 0x565E4;
-                abilities = 0x4F3F0;
-                actionEvents = 0x564B4;
-                inflictStatuses = 0x547C4;
-                jobLevels = 0x568C4;
-                jobs = 0x518B8;
-                monsterSkills = 0x563C4;
-
-                stream.WriteArrayToPosition( Abilities.ToByteArray( Context ), abilities );
-                stream.WriteArrayToPosition( Items.ToFirstByteArray(), oldItems );
-                stream.WriteArrayToPosition( ItemAttributes.ToFirstByteArray(), oldItemAttributes );
-                stream.WriteArrayToPosition( Jobs.ToByteArray( Context ), jobs );
-                stream.WriteArrayToPosition( JobLevels.ToByteArray( Context ), jobLevels );
-                stream.WriteArrayToPosition( SkillSets.ToByteArray( Context ), skillSets );
-                stream.WriteArrayToPosition( MonsterSkills.ToByteArray( Context ), monsterSkills );
-                stream.WriteArrayToPosition( ActionMenus.ToByteArray( Context ), actionEvents );
-                stream.WriteArrayToPosition( StatusAttributes.ToByteArray( Context ), statusAttributes );
-                stream.WriteArrayToPosition( InflictStatuses.ToByteArray(), inflictStatuses );
-                stream.WriteArrayToPosition( PoachProbabilities.ToByteArray( Context ), poach );
-            }
-            catch( InvalidDataException )
-            {
-                throw;
-            }
-            catch( FileNotFoundException )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                    stream.Dispose();
-                }
-            }
         }
 
         public static void ConvertPsxPatchToPsp( XmlNode document )
@@ -435,65 +330,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        /// <summary>
-        /// Saves the ENTD files to a path.
-        /// </summary>
-        public static void ExportENTDFiles( string path )
-        {
-            FileStream writer = null;
-            try
-            {
-                byte[] entd1 = ENTDs.ENTDs[0].ToByteArray();
-                byte[] entd2 = ENTDs.ENTDs[1].ToByteArray();
-                byte[] entd3 = ENTDs.ENTDs[2].ToByteArray();
-                byte[] entd4 = ENTDs.ENTDs[3].ToByteArray();
-
-                writer = new FileStream( Path.Combine( path, "ENTD1.ENT" ), FileMode.Create );
-                writer.Write( entd1, 0, entd1.Length );
-                writer.Flush();
-                writer.Close();
-                writer = new FileStream( Path.Combine( path, "ENTD2.ENT" ), FileMode.Create );
-                writer.Write( entd2, 0, entd2.Length );
-                writer.Flush();
-                writer.Close();
-                writer = new FileStream( Path.Combine( path, "ENTD3.ENT" ), FileMode.Create );
-                writer.Write( entd3, 0, entd3.Length );
-                writer.Flush();
-                writer.Close();
-                writer = new FileStream( Path.Combine( path, "ENTD4.ENT" ), FileMode.Create );
-                writer.Write( entd4, 0, entd4.Length );
-                writer.Flush();
-                writer.Close();
-
-                if( Context == Context.US_PSP )
-                {
-                    writer = new FileStream( Path.Combine( path, "ENTD5.ENT" ), FileMode.Create );
-                    foreach( Event e in ENTDs.PSPEvent )
-                    {
-                        byte[] bytes = e.ToByteArray();
-                        writer.Write( bytes, 0, bytes.Length );
-                    }
-                    writer.Write( new byte[0x780], 0, 0x780 );
-                    writer.Flush();
-                    writer.Close();
-                }
-
-                writer = null;
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( writer != null )
-                {
-                    writer.Flush();
-                    writer.Close();
-                }
-            }
-        }
-
         public static void GenerateDigest( string filename )
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -535,13 +371,8 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        /// <summary>
-        /// Reads an XML fftpatch file.
-        /// </summary>
-        public static void LoadPatch( string filename )
+        private static void LoadOldStylePatch( XmlDocument doc )
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load( filename );
             XmlNode rootNode = doc.SelectSingleNode( "/patch" );
             string type = rootNode.Attributes["type"].InnerText;
             Context = (Context)Enum.Parse( typeof( Context ), type );
@@ -571,6 +402,26 @@ namespace FFTPatcher.Datatypes
             byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
             byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? Resources.MoveFind : PSXResources.MoveFind );
 
+            LoadDataFromBytes( abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes,
+                jobs, jobLevels, skillSets, monsterSkills, actionMenus, statusAttributes,
+                inflictStatuses, poach, entd1, entd2, entd3, entd4, entd5, font,
+                fontWidths, moveFind );
+        }
+
+        private static void LoadDataFromBytes(
+            byte[] abilities, byte[] abilityEffects,
+            byte[] oldItems, byte[] oldItemAttributes,
+            byte[] newItems, byte[] newItemAttributes,
+            byte[] jobs, byte[] jobLevels,
+            byte[] skillSets, byte[] monsterSkills,
+            byte[] actionMenus,
+            byte[] statusAttributes, byte[] inflictStatuses,
+            byte[] poach,
+            byte[] entd1, byte[] entd2, byte[] entd3, byte[] entd4, byte[] entd5,
+            byte[] font, byte[] fontWidths,
+            byte[] moveFind )
+        {
+            bool psp = Context == Context.US_PSP;
             Abilities = new AllAbilities( abilities, abilityEffects );
             Items = new AllItems( oldItems, newItems != null ? newItems : null );
             ItemAttributes = new AllItemAttributes( oldItemAttributes, newItemAttributes != null ? newItemAttributes : null );
@@ -587,7 +438,76 @@ namespace FFTPatcher.Datatypes
             ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
             Font = new FFTFont( font, fontWidths );
             MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? Resources.MoveFind : PSXResources.MoveFind ) );
+        }
+
+        /// <summary>
+        /// Reads an XML fftpatch file.
+        /// </summary>
+        public static void LoadPatch( string filename )
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load( filename );
+                LoadOldStylePatch( doc );
+            }
+            catch ( XmlException )
+            {
+                // Is new format file
+                LoadNewStylePatch( filename );
+            }
             FireDataChangedEvent();
+        }
+
+        private static void LoadNewStylePatch( string filename )
+        {
+            using ( ZipFile file = new ZipFile( filename ) )
+            {
+                string fileVersion = Encoding.UTF8.GetString( GetZipEntry( file, "version" ) );
+                Context = (Context)Enum.Parse( typeof( Context ), Encoding.UTF8.GetString( GetZipEntry( file, "type" ) ) );
+                bool psp = Context == Context.US_PSP;
+
+
+                LoadDataFromBytes(
+                    GetZipEntry( file, elementNames[ElementName.Abilities] ),
+                    GetZipEntry( file, elementNames[ElementName.AbilityEffects] ),
+                    GetZipEntry( file, elementNames[ElementName.Items] ),
+                    GetZipEntry( file, elementNames[ElementName.ItemAttributes] ),
+                    psp ? GetZipEntry( file, elementNames[ElementName.PSPItems] ) : null,
+                    psp ? GetZipEntry( file, elementNames[ElementName.PSPItemAttributes] ) : null,
+                    GetZipEntry( file, elementNames[ElementName.Jobs] ),
+                    GetZipEntry( file, elementNames[ElementName.JobLevels] ),
+                    GetZipEntry( file, elementNames[ElementName.SkillSets] ),
+                    GetZipEntry( file, elementNames[ElementName.MonsterSkills] ),
+                    GetZipEntry( file, elementNames[ElementName.ActionMenus] ),
+                    GetZipEntry( file, elementNames[ElementName.StatusAttributes] ),
+                    GetZipEntry( file, elementNames[ElementName.InflictStatuses] ),
+                    GetZipEntry( file, elementNames[ElementName.Poaching] ),
+                    GetZipEntry( file, elementNames[ElementName.ENTD1] ),
+                    GetZipEntry( file, elementNames[ElementName.ENTD2] ),
+                    GetZipEntry( file, elementNames[ElementName.ENTD3] ),
+                    GetZipEntry( file, elementNames[ElementName.ENTD4] ),
+                    psp ? GetZipEntry( file, elementNames[ElementName.ENTD5] ) : null,
+                    GetZipEntry( file, elementNames[ElementName.Font] ),
+                    GetZipEntry( file, elementNames[ElementName.FontWidths] ),
+                    GetZipEntry( file, elementNames[ElementName.MoveFindItems] ) );
+            }
+        }
+
+        private static byte[] GetZipEntry( ZipFile file, string entry )
+        {
+            if ( file.FindEntry( entry, false ) == -1 )
+            {
+                throw new FormatException( "entry not found" );
+            }
+            else
+            {
+                ZipEntry zEntry = file.GetEntry( entry );
+                Stream s = file.GetInputStream( zEntry );
+                byte[] result = new byte[zEntry.Size];
+                s.Read( result, 0, (int)zEntry.Size );
+                return result;
+            }
         }
 
         /// <summary>
@@ -598,273 +518,6 @@ namespace FFTPatcher.Datatypes
             Context = context;
             BuildFromContext();
             FireDataChangedEvent();
-        }
-
-        /// <summary>
-        /// Opens a modified SCUS_942.21 file.
-        /// </summary>
-        public static void OpenModifiedPSXFile( string filename )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( filename, FileMode.Open );
-                VerifyFileIsSCUS94221( stream );
-                Context = Context.US_PSX;
-
-                byte[] abilities = new byte[0x24C6];
-                byte[] oldItems = new byte[0x110A];
-                byte[] oldItemAttributes = new byte[0x7D0];
-                byte[] jobs = new byte[0x1E00];
-                byte[] jobLevels = new byte[0xD0];
-                byte[] skillSets = new byte[0x1130];
-                byte[] monsterSkills = new byte[0xF0];
-                byte[] actionMenus = new byte[0x100];
-                byte[] statusAttributes = new byte[0x280];
-                byte[] inflictStatuses = new byte[0x300];
-                byte[] poach = new byte[0x60];
-                byte[][] buffers = new byte[][] { 
-                    abilities, oldItems, oldItemAttributes, jobs, 
-                    jobLevels, skillSets, monsterSkills, actionMenus, 
-                    statusAttributes, inflictStatuses, poach };
-
-                UInt32[] offsets = new UInt32[] { 
-                    0x4F3F0, 0x536B8, 0x54AC4, 0x518B8,
-                    0x568C4, 0x55294, 0x563C4, 0x564B4,
-                    0x565E4, 0x547C4, 0x56864 };
-                for( int i = 0; i < buffers.Length; i++ )
-                {
-                    stream.Seek( offsets[i], SeekOrigin.Begin );
-                    stream.Read( buffers[i], 0, buffers[i].Length );
-                }
-
-                Abilities = new AllAbilities( abilities, PSXResources.AbilityEffectsBin );
-                Items = new AllItems( oldItems, null );
-                ItemAttributes = new AllItemAttributes( oldItemAttributes, null );
-                Jobs = new AllJobs( Context, jobs );
-                JobLevels = new JobLevels( Context, jobLevels,
-                    new JobLevels( Context.US_PSX, PSXResources.JobLevelsBin ) );
-                SkillSets = new AllSkillSets( Context, skillSets, PSXResources.SkillSetsBin );
-                MonsterSkills = new AllMonsterSkills( monsterSkills );
-                ActionMenus = new AllActionMenus( actionMenus, Context.US_PSX );
-                StatusAttributes = new AllStatusAttributes( statusAttributes );
-                InflictStatuses = new AllInflictStatuses( inflictStatuses );
-                PoachProbabilities = new AllPoachProbabilities( poach );
-                ENTDs = new AllENTDs( Resources.ENTD1, Resources.ENTD2, Resources.ENTD3, Resources.ENTD4 );
-                Font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
-                FireDataChangedEvent();
-            }
-            catch( InvalidDataException )
-            {
-                throw;
-            }
-            catch( FileNotFoundException )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Close();
-                    stream.Dispose();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Applies font widths and ability effects patches to BATTLE.BIN
-        /// </summary>
-        public static void PatchBattleBin( string fileName )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( fileName, FileMode.Open );
-                stream.WriteArrayToPosition( FFTPatch.Font.ToWidthsByteArray(), 0xFF0FC );
-                stream.WriteArrayToPosition( FFTPatch.Abilities.ToEffectsByteArray(), 0x14F3F0 );
-            }
-            catch( InvalidDataException )
-            {
-                throw;
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                    stream.Dispose();
-                }
-            }
-        }
-
-        public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e, IGeneratePatchList patchList )
-        {
-            string filename = patchList.FileName;
-            int numberOfTasks = patchList.PatchCount * 2;
-            int tasksComplete = 0;
-            List<PatchedByteArray> patches = new List<PatchedByteArray>();
-
-            MethodInvoker progress =
-                delegate()
-                {
-                    backgroundWorker.ReportProgress( tasksComplete++ * 100 / numberOfTasks );
-                };
-
-            const Context context = Context.US_PSX;
-
-            if ( patchList.Abilities )
-            {
-                patches.AddRange( Abilities.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.AbilityEffects )
-            {
-                patches.AddRange( Abilities.AllEffects.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.Items )
-            {
-                patches.AddRange( Items.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.ItemAttributes )
-            {
-                patches.AddRange( ItemAttributes.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.Jobs )
-            {
-                patches.AddRange( Jobs.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.JobLevels )
-            {
-                patches.AddRange( JobLevels.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.Skillsets )
-            {
-                patches.AddRange( SkillSets.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.MonsterSkills )
-            {
-                patches.AddRange( MonsterSkills.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.ActionMenus )
-            {
-                patches.AddRange( ActionMenus.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.StatusAttributes )
-            {
-                patches.AddRange( StatusAttributes.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.InflictStatus )
-            {
-                patches.AddRange( InflictStatuses.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.Poach )
-            {
-                patches.AddRange( PoachProbabilities.GetPatches( context ) );
-                progress();
-            }
-
-            var entdPatches = ENTDs.GetPatches( context );
-            for( int i = 0; i < 4; i++ )
-            {
-                if ( patchList.ENTD[i] )
-                {
-                    patches.Add( entdPatches[i] );
-                    progress();
-                }
-            }
-
-            if ( patchList.FONT )
-            {
-                patches.AddRange( Font.GetPatches( context ) );
-                progress();
-            }
-
-            if ( patchList.FontWidths )
-            {
-                patches.AddRange( Font.GlyphWidths.GetPatches( context ) );
-                progress();
-            }
-
-            if( patchList.MoveFindItems )
-            {
-                patches.AddRange( MoveFind.GetPatches( context ) );
-                progress();
-            }
-
-            IList<PatchedByteArray> otherPatches = patchList.OtherPatches;
-            foreach ( var patch in otherPatches )
-            {
-                patches.Add( patch );
-                progress();
-            }
-
-            foreach ( PatchedByteArray patch in patches )
-            {
-                IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, patchList.FileName, false, patch.Sector,
-                    patch.Offset, patch.Bytes, true );
-                progress();
-            }
-
-            if ( patchList.RegenECC )
-            {
-                // TODO: RegenECC
-            }
-        }
-
-        /// <summary>
-        /// Saves the fonts to the path.
-        /// </summary>
-        public static void SaveFontsAs( string path )
-        {
-            FileStream writer = null;
-            try
-            {
-                writer = new FileStream( path, FileMode.Create );
-                byte[] bytes = FFTPatch.Font.ToByteArray();
-                writer.Write( bytes, 0, bytes.Length );
-                writer.Flush();
-                writer.Close();
-                writer = null;
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( writer != null )
-                {
-                    writer.Flush();
-                    writer.Close();
-                }
-            }
         }
 
         /// <summary>
@@ -880,91 +533,56 @@ namespace FFTPatcher.Datatypes
         /// </summary>
         public static void SavePatchToFile( string path, Context destinationContext, bool saveDigest )
         {
-            bool psp = destinationContext == Context.US_PSP;
-
-            StringBuilder abilities = GetBase64StringIfNonDefault( Abilities.ToByteArray( destinationContext ), psp ? Resources.AbilitiesBin : PSXResources.AbilitiesBin );
-            StringBuilder abilityEffects = GetBase64StringIfNonDefault( Abilities.ToEffectsByteArray(), psp ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin );
-            StringBuilder oldItems = GetBase64StringIfNonDefault( Items.ToFirstByteArray(), psp ? Resources.OldItemsBin : PSXResources.OldItemsBin );
-            StringBuilder oldItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToFirstByteArray(), psp ? Resources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
-            StringBuilder newItems = null;
-            StringBuilder newItemAttributes = null;
-            if( psp && Context == Context.US_PSP )
+            SaveZippedPatch( path, destinationContext );
+            if ( saveDigest )
             {
-                newItems = GetBase64StringIfNonDefault( Items.ToSecondByteArray(), Resources.NewItemsBin );
-                newItemAttributes = GetBase64StringIfNonDefault( ItemAttributes.ToSecondByteArray(), Resources.NewItemAttributesBin );
-            }
-            StringBuilder jobs = GetBase64StringIfNonDefault( Jobs.ToByteArray( destinationContext ), psp ? Resources.JobsBin : PSXResources.JobsBin );
-            StringBuilder jobLevels = GetBase64StringIfNonDefault( JobLevels.ToByteArray( destinationContext ), psp ? Resources.JobLevelsBin : PSXResources.JobLevelsBin );
-            StringBuilder monsterSkills = GetBase64StringIfNonDefault( MonsterSkills.ToByteArray( destinationContext ), psp ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
-            StringBuilder skillSets = GetBase64StringIfNonDefault( SkillSets.ToByteArray( destinationContext ), psp ? Resources.SkillSetsBin : PSXResources.SkillSetsBin );
-            StringBuilder actionMenus = GetBase64StringIfNonDefault( ActionMenus.ToByteArray( destinationContext ), psp ? Resources.ActionEventsBin : PSXResources.ActionEventsBin );
-            StringBuilder statusAttributes = GetBase64StringIfNonDefault( StatusAttributes.ToByteArray( destinationContext ), psp ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin );
-            StringBuilder inflictStatuses = GetBase64StringIfNonDefault( InflictStatuses.ToByteArray(), psp ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin );
-            StringBuilder poach = GetBase64StringIfNonDefault( PoachProbabilities.ToByteArray( destinationContext ), psp ? Resources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
-            StringBuilder entd1 = GetBase64StringIfNonDefault( ENTDs.ENTDs[0].ToByteArray(), Resources.ENTD1 );
-            StringBuilder entd2 = GetBase64StringIfNonDefault( ENTDs.ENTDs[1].ToByteArray(), Resources.ENTD2 );
-            StringBuilder entd3 = GetBase64StringIfNonDefault( ENTDs.ENTDs[2].ToByteArray(), Resources.ENTD3 );
-            StringBuilder entd4 = GetBase64StringIfNonDefault( ENTDs.ENTDs[3].ToByteArray(), Resources.ENTD4 );
-            StringBuilder entd5 = Context == Context.US_PSP ? GetBase64StringIfNonDefault( ENTDs.PSPEventsToByteArray(), Resources.ENTD5 ) : null;
-            StringBuilder font = GetBase64StringIfNonDefault( Font.ToByteArray(), psp ? Resources.FontBin : PSXResources.FontBin );
-            StringBuilder fontWidths = GetBase64StringIfNonDefault( Font.ToWidthsByteArray(), psp ? Resources.FontWidthsBin : PSXResources.FontWidthsBin );
-            StringBuilder moveFind = GetBase64StringIfNonDefault( MoveFind.ToByteArray(), psp ? Resources.MoveFind : PSXResources.MoveFind );
-
-            XmlTextWriter writer = null;
-            try
-            {
-                writer = new XmlTextWriter( path, System.Text.Encoding.UTF8 );
-                writer.Formatting = Formatting.Indented;
-                writer.IndentChar = ' ';
-                writer.Indentation = 2;
-                writer.WriteStartDocument();
-                writer.WriteStartElement( "patch" );
-                writer.WriteAttributeString( "type", destinationContext.ToString() );
-
-                StringBuilder[] builders = new StringBuilder[] { 
-                    abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes, jobs, jobLevels, 
-                    skillSets, monsterSkills, actionMenus, inflictStatuses, statusAttributes, poach,
-                    entd1, entd2, entd3, entd4, entd5, font, fontWidths, moveFind };
-                foreach( StringBuilder s in builders )
-                {
-                    if( s != null )
-                    {
-                        s.Insert( 0, "\r\n" );
-                        s.Replace( "\r\n", "\r\n    " );
-                        s.Append( "\r\n  " );
-                    }
-                }
-
-                for( int i = 0; i < builders.Length; i++ )
-                {
-                    if( builders[i] != null )
-                    {
-                        writer.WriteElementString( elementNameStrings[i], builders[i].ToString() );
-                    }
-                }
-
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-
-                if( saveDigest )
-                {
-                    GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.html" ) );
-                }
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( writer != null )
-                {
-                    writer.Flush();
-                    writer.Close();
-                }
+                GenerateDigest( Path.Combine( Path.GetDirectoryName( path ), Path.GetFileNameWithoutExtension( path ) + ".digest.html" ) );
             }
         }
 
+        private static void SaveZippedPatch( string path, Context destinationContext )
+        {
+            using ( ZipOutputStream stream = new ZipOutputStream( File.Open( path, FileMode.Create, FileAccess.ReadWrite ) ) )
+            {
+                const string fileVersion = "1.0";
+
+                bool psp = destinationContext == Context.US_PSP;
+                WriteFileToZip( stream, "version", Encoding.UTF8.GetBytes( fileVersion ) );
+                WriteFileToZip( stream, "type", Encoding.UTF8.GetBytes( destinationContext.ToString() ) );
+
+                WriteFileToZip( stream, elementNames[ElementName.Abilities], Abilities.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.AbilityEffects], Abilities.ToEffectsByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.Items], Items.ToFirstByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.ItemAttributes], ItemAttributes.ToFirstByteArray() );
+                if ( psp && Context == Context.US_PSP )
+                {
+                    WriteFileToZip( stream, elementNames[ElementName.PSPItems], Items.ToSecondByteArray() );
+                    WriteFileToZip( stream, elementNames[ElementName.PSPItemAttributes], ItemAttributes.ToSecondByteArray() );
+                    WriteFileToZip( stream, elementNames[ElementName.ENTD5], ENTDs.PSPEventsToByteArray() );
+                }
+                WriteFileToZip( stream, elementNames[ElementName.Jobs], Jobs.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.JobLevels], JobLevels.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.MonsterSkills], MonsterSkills.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.SkillSets], SkillSets.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.ActionMenus], ActionMenus.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.StatusAttributes], StatusAttributes.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.InflictStatuses], InflictStatuses.ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.Poaching], PoachProbabilities.ToByteArray( destinationContext ) );
+                WriteFileToZip( stream, elementNames[ElementName.ENTD1], ENTDs.ENTDs[0].ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.ENTD2], ENTDs.ENTDs[1].ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.ENTD3], ENTDs.ENTDs[2].ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.ENTD4], ENTDs.ENTDs[3].ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.Font], Font.ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.FontWidths], Font.ToWidthsByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.MoveFindItems], MoveFind.ToByteArray() );
+            }
+        }
+
+        private static void WriteFileToZip( ZipOutputStream stream, string filename, byte[] bytes )
+        {
+            stream.PutNextEntry( new ZipEntry( filename ) );
+            stream.Write( bytes, 0, bytes.Length );
+        }
 
 		#endregion Methods 
 

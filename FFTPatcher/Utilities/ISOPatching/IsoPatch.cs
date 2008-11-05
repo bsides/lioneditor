@@ -267,6 +267,39 @@ namespace FFTPatcher
             }
         }
 
+        public static void FixupECC( IsoType isoType, Stream iso )
+        {
+            int type = (int)isoType;
+            int sectorSize = sectorSizes[type];
+            byte[] sector = new byte[sectorSize];
+
+            if ( iso.Length % sectorSize != 0 )
+            {
+                throw new ArgumentException( "ISO does not have correct length for its type", "isoType" );
+            }
+            if ( isoType == IsoType.Mode1 )
+            {
+                throw new ArgumentException( "Mode1 does not support ECC/EDC", "isoType" );
+            }
+
+            Int64 numberOfSectors = iso.Length / sectorSize;
+            iso.Seek( 0, SeekOrigin.Begin );
+            for ( Int64 i = 0; i < numberOfSectors; i++ )
+            {
+                iso.Read( sector, 0, sectorSize );
+
+                if ( isoType != IsoType.Mode1 && ( sector[0x12] & 8 ) == 0 )
+                {
+                    sector[0x12] = 8;
+                    sector[0x16] = 8;
+                }
+
+                GenerateEccEdc( sector, isoType );
+                iso.Seek( -sectorSize, SeekOrigin.Current );
+                iso.Write( sector, 0, sectorSize );
+            }
+        }
+
         /// <summary>
         /// Patches the file at a given sector in an ISO.
         /// </summary>

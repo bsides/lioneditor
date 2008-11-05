@@ -5508,11 +5508,12 @@ namespace FFTPatcher.Datatypes
                     filename = string.Format( "unknown/fftpack.{0}", i );
                 }
 
+                worker.ReportProgress( ( i * 100 ) / 3790, string.Format( "Extracting {0}", filename ) );
+
                 filename = Path.Combine( path, filename );
 
                 SaveToFile( bytes, filename );
 
-                worker.ReportProgress( (i * 100) / 3790 );
             }
         }
 

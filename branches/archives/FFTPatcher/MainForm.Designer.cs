@@ -63,7 +63,6 @@ namespace FFTPatcher
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.saveAsPspMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
-            this.openModifiedMenuItem = new System.Windows.Forms.MenuItem();
             this.patchPsxIsoMenuItem = new System.Windows.Forms.MenuItem();
             this.patchPspIsoMenuItem = new System.Windows.Forms.MenuItem();
             this.cheatdbMenuItem = new System.Windows.Forms.MenuItem();
@@ -150,25 +149,13 @@ namespace FFTPatcher
             // 
             psxMenu.Index = 1;
             psxMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.openModifiedMenuItem,
-            separator3,
             this.patchPsxIsoMenuItem} );
             psxMenu.Text = "PS&X";
-            // 
-            // openModifiedMenuItem
-            // 
-            this.openModifiedMenuItem.Index = 0;
-            this.openModifiedMenuItem.Text = "&Open modified SCUS_942.21...";
-            // 
-            // separator3
-            // 
-            separator3.Index = 1;
-            separator3.Text = "-";
             // 
             // patchPsxIsoMenuItem
             // 
             this.patchPsxIsoMenuItem.Enabled = false;
-            this.patchPsxIsoMenuItem.Index = 2;
+            this.patchPsxIsoMenuItem.Index = 0;
             this.patchPsxIsoMenuItem.Text = "Patch &ISO...";
             // 
             // pspMenu
@@ -303,7 +290,6 @@ namespace FFTPatcher
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog applyPatchOpenFileDialog;
-        private System.Windows.Forms.MenuItem openModifiedMenuItem;
         private System.Windows.Forms.MenuItem aboutMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.MenuItem patchPspIsoMenuItem;

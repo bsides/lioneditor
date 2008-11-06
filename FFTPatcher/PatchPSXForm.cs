@@ -187,7 +187,8 @@ namespace FFTPatcher
             entd3CheckBox.Checked = FFTPatch.ENTDs.ENTDs[2].HasChanged;
             entd4CheckBox.Checked = FFTPatch.ENTDs.ENTDs[3].HasChanged;
             fontCheckBox.Checked = false;
-            eccCheckBox.Checked = true;
+            eccCheckBox.Enabled = false;
+            eccCheckBox.Checked = false;
 
             UpdateNextEnabled();
 

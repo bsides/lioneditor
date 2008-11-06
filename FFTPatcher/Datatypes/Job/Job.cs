@@ -65,12 +65,7 @@ namespace FFTPatcher.Datatypes
         {
             get
             {
-                foreach( Job j in Jobs )
-                {
-                    if( j.HasChanged )
-                        return true;
-                }
-                return false;
+                return Jobs.Exists( j => j.HasChanged );
             }
         }
 

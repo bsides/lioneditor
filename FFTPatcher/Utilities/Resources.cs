@@ -25,6 +25,7 @@ using ICSharpCode.SharpZipLib.GZip;
 using System.IO;
 using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace FFTPatcher
 {
@@ -163,13 +164,18 @@ namespace FFTPatcher
             get; private set;
         }
 
+        private static Dictionary<string, byte[]> DefaultZipFileContents
+        {
+            get; set;
+        }
+
         static Resources()
         {
             using( MemoryStream memStream = new MemoryStream( Properties.Resources.ZippedResources, false ) )
             using( GZipInputStream gzStream = new GZipInputStream( memStream ) )
             using( TarInputStream tarStream = new TarInputStream( gzStream ) )
             {
-                ZipFileContents = new Dictionary<string, byte[]>();
+                DefaultZipFileContents = new Dictionary<string, byte[]>();
                 TarEntry entry;
                 entry = tarStream.GetNextEntry();
                 while( entry != null )
@@ -178,13 +184,53 @@ namespace FFTPatcher
                     {
                         byte[] bytes = new byte[entry.Size];
                         StreamUtils.ReadFully( tarStream, bytes );
-                        ZipFileContents[entry.Name] = bytes;
+                        DefaultZipFileContents[entry.Name] = bytes;
                     }
                     entry = tarStream.GetNextEntry();
                 }
             }
 
-       }
+            string defaultsFile = Path.Combine( Path.GetDirectoryName( System.Windows.Forms.Application.ExecutablePath ), "Resources.zip" );
+            if( File.Exists( defaultsFile ) )
+            {
+                try
+                {
+                    using( FileStream file = File.Open( defaultsFile, FileMode.Open, FileAccess.Read ) )
+                    using( ZipInputStream zipStream = new ZipInputStream( file ) )
+                    {
+                        ZipFileContents = new Dictionary<string, byte[]>();
+                        ZipEntry entry = zipStream.GetNextEntry();
+                        while( entry != null )
+                        {
+                            if( entry.Size != 0 )
+                            {
+                                byte[] bytes = new byte[entry.Size];
+                                StreamUtils.ReadFully( zipStream, bytes );
+                                ZipFileContents[entry.Name] = bytes;
+                            }
+                            entry = zipStream.GetNextEntry();
+                        }
+
+                        foreach( KeyValuePair<string, byte[]> kvp in DefaultZipFileContents )
+                        {
+                            if( !ZipFileContents.ContainsKey( kvp.Key ) )
+                            {
+                                ZipFileContents[kvp.Key] = kvp.Value;
+                            }
+                        }
+                    }
+                }
+                catch( Exception )
+                {
+                    ZipFileContents = DefaultZipFileContents;
+                }
+            }
+            else
+            {
+                ZipFileContents = DefaultZipFileContents;
+            }
+
+        }
 
         #endregion Constructors
     }

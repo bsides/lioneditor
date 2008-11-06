@@ -102,16 +102,16 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
-        internal static byte[] OPNBK {
+        internal static byte[] OTHER {
             get {
-                object obj = ResourceManager.GetObject("OPNBK", resourceCulture);
+                object obj = ResourceManager.GetObject("OTHER", resourceCulture);
                 return ((byte[])(obj));
             }
         }
         
-        internal static byte[] OTHER {
+        internal static byte[] resources_tar {
             get {
-                object obj = ResourceManager.GetObject("OTHER", resourceCulture);
+                object obj = ResourceManager.GetObject("resources_tar", resourceCulture);
                 return ((byte[])(obj));
             }
         }

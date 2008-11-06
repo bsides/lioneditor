@@ -19,11 +19,14 @@
 
 using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace FFTPatcher.SpriteEditor
 {
     static class Program
     {
+
+        public static IDictionary<string, byte[]> Images = FFTPatcher.GZip.UntarGz( FFTPatcher.SpriteEditor.Properties.Resources.resources_tar );
 
 		#region Methods (1) 
 
@@ -34,7 +37,6 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
-            new OPNBK( Properties.Resources.OPNBK );
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
             Application.Run( new MainForm() );

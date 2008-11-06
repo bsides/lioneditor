@@ -78,6 +78,7 @@ namespace FFTPatcher
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
             this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.openPatchedPsxIso = new System.Windows.Forms.MenuItem();
             fileMenuItem = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
@@ -149,7 +150,8 @@ namespace FFTPatcher
             // 
             psxMenu.Index = 1;
             psxMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.patchPsxIsoMenuItem} );
+            this.patchPsxIsoMenuItem,
+            this.openPatchedPsxIso} );
             psxMenu.Text = "PS&X";
             // 
             // patchPsxIsoMenuItem
@@ -157,6 +159,11 @@ namespace FFTPatcher
             this.patchPsxIsoMenuItem.Enabled = false;
             this.patchPsxIsoMenuItem.Index = 0;
             this.patchPsxIsoMenuItem.Text = "Patch &ISO...";
+            // 
+            // separator3
+            // 
+            separator3.Index = -1;
+            separator3.Text = "";
             // 
             // pspMenu
             // 
@@ -262,6 +269,11 @@ namespace FFTPatcher
             this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
             this.patchPsxBackgroundWorker.WorkerSupportsCancellation = true;
             // 
+            // openPatchedPsxIso
+            // 
+            this.openPatchedPsxIso.Index = 1;
+            this.openPatchedPsxIso.Text = "Open patched ISO...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -301,6 +313,7 @@ namespace FFTPatcher
         private System.Windows.Forms.MenuItem patchPsxIsoMenuItem;
         private System.Windows.Forms.MenuItem saveAsPspMenuItem;
         private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
+        private System.Windows.Forms.MenuItem openPatchedPsxIso;
 
     }
 }

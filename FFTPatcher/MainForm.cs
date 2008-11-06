@@ -86,6 +86,7 @@ namespace FFTPatcher
             patchPspIsoMenuItem.Click += patchPspIsoMenuItem_Click;
             patchPsxIsoMenuItem.Click += patchPsxIsoMenuItem_Click;
             cheatdbMenuItem.Click += cheatdbMenuItem_Click;
+            openPatchedPsxIso.Click += new EventHandler( openPatchedPsxIso_Click );
 
             FFTPatch.DataChanged += FFTPatch_DataChanged;
         }
@@ -231,6 +232,16 @@ namespace FFTPatcher
             {
                 FFTPatch.LoadPatch( openFileDialog.FileName );
                 saveAsPspMenuItem.Enabled = true;
+            }
+        }
+
+
+        private void openPatchedPsxIso_Click( object sender, EventArgs e )
+        {
+            openFileDialog.Filter = "ISO images|*.iso;*.bin;*.img";
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                FFTPatch.OpenPatchedISO( openFileDialog.FileName );
             }
         }
 

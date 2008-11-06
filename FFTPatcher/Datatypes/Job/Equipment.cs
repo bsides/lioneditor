@@ -162,6 +162,59 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+        public static void Copy( Equipment source, Equipment destination )
+        {
+            destination.Unused = source.Unused;
+            destination.Knife = source.Knife;
+            destination.NinjaBlade = source.NinjaBlade;
+            destination.Sword = source.Sword;
+            destination.KnightsSword = source.KnightsSword;
+            destination.Katana = source.Katana;
+            destination.Axe = source.Axe;
+            destination.Rod = source.Rod;
+
+            destination.Staff = source.Staff;
+            destination.Flail = source.Flail;
+            destination.Gun = source.Gun;
+            destination.Crossbow = source.Crossbow;
+            destination.Bow = source.Bow;
+            destination.Instrument = source.Instrument;
+            destination.Book = source.Book;
+            destination.Polearm = source.Polearm;
+
+            destination.Pole = source.Pole;
+            destination.Bag = source.Bag;
+            destination.Cloth = source.Cloth;
+            destination.Shield = source.Shield;
+            destination.Helmet = source.Helmet;
+            destination.Hat = source.Hat;
+            destination.HairAdornment = source.HairAdornment;
+            destination.Armor = source.Armor;
+
+            destination.Clothing = source.Clothing;
+            destination.Robe = source.Robe;
+            destination.Shoes = source.Shoes;
+            destination.Armguard = source.Armguard;
+            destination.Ring = source.Ring;
+            destination.Armlet = source.Armlet;
+            destination.Cloak = source.Cloak;
+            destination.Perfume = source.Perfume;
+
+            destination.Unknown1 = source.Unknown1;
+            destination.Unknown2 = source.Unknown2;
+            destination.Unknown3 = source.Unknown3;
+            destination.FellSword = source.FellSword;
+            destination.LipRouge = source.LipRouge;
+            destination.Unknown6 = source.Unknown6;
+            destination.Unknown7 = source.Unknown7;
+            destination.Unknown8 = source.Unknown8;
+        }
+
+        public void CopyTo( Equipment destination )
+        {
+            Copy( this, destination );
+        }
+
         public byte[] ToByteArray( Context context )
         {
             switch( context )

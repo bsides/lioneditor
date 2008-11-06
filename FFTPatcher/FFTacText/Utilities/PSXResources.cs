@@ -21,24 +21,30 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// Resources for the PSX version.
+    /// </summary>
     public static class PSXResources
     {
 
-		#region Static Fields (1) 
+        #region Static Fields (1)
 
         private static Dictionary<string, object> resourceMapping = new Dictionary<string, object>();
 
-		#endregion Static Fields 
+        #endregion Static Fields
 
-		#region Static Properties (1) 
+        #region Static Properties (1)
 
 
+        /// <summary>
+        /// Gets the default set of text to be deserialized into a <see cref="FFTText"/>
+        /// </summary>
         public static byte[] DefaultDocument { get { return resourceMapping["psxText_ffttext"] as byte[]; } }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         //public static byte[] ATCHELP_LZW { get { return resourceMapping["ATCHELP_LZW"] as byte[]; } }
         //public static byte[] ATTACK_OUT_partial { get { return resourceMapping["ATTACK_OUT_partial"] as byte[]; } }
@@ -66,7 +72,7 @@ namespace FFTPatcher.TextEditor
             //resourceMapping["WLDMES_BIN"] = GZip.Decompress( Properties.PSXResources.WLDMES_BIN );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
     }
 }

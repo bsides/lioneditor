@@ -41,7 +41,7 @@ namespace FFTPatcher
 
             // Access some class members to force the static constructors to run.
             object dummy = AllAbilities.PSPNames;
-            dummy = Resources.AbilityAttributes;
+            dummy = PSPResources.AbilityAttributes;
             dummy = PSXResources.AbilityAttributes;
             dummy = new GlyphEditor();
             dummy = FFTPatchEditor.ToolTip;

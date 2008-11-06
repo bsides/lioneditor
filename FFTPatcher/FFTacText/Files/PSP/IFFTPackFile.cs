@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using FFTPatcher.Datatypes;
+
 namespace FFTPatcher.TextEditor.Files.PSP
 {
     /// <summary>
@@ -27,7 +29,7 @@ namespace FFTPatcher.TextEditor.Files.PSP
         /// <summary>
         /// Gets the index of this file in fftpack.bin
         /// </summary>
-        int Index { get; }
+        FFTPack.Files Index { get; }
 
         /// <summary>
         /// Converts this file into an array of bytes.

@@ -20,85 +20,17 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using System.Collections.ObjectModel;
+using ICSharpCode.SharpZipLib.GZip;
+using System.IO;
+using ICSharpCode.SharpZipLib.Tar;
+using ICSharpCode.SharpZipLib.Core;
 
 namespace FFTPatcher
 {
     public static class Resources
     {
-
-		#region Static Fields (9) 
-
-        private static string[] abilityAI;
-        private static string[] abilityAttributes;
-        private static string[] abilityEffects;
         private static Dictionary<byte, string> abilityFormulas;
-        private static string[] abilityTypes;
-        static Dictionary<string, object> dict = new Dictionary<string, object>();
-        private static Dictionary<int, string> fftPackFiles;
-        private static string[] shopAvailabilities;
-        private static string[] statuses;
-
-		#endregion Static Fields 
-
-		#region Static Properties (39) 
-
-
-        public static string Abilities { get { return dict["Abilities"] as string; } }
-
-        public static byte[] AbilitiesBin { get { return dict["AbilitiesBin"] as byte[]; } }
-
-        public static string AbilitiesStrings { get { return dict["AbilitiesStrings"] as string; } }
-
-        public static string[] AbilityAI
-        {
-            get
-            {
-                if( abilityAI == null )
-                {
-                    abilityAI =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/AI/string[@value='{0}']/@name",
-                            24 );
-                }
-                return abilityAI;
-            }
-        }
-
-        public static string[] AbilityAttributes
-        {
-            get
-            {
-                if( abilityAttributes == null )
-                {
-                    abilityAttributes =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/Attributes/string[@value='{0}']/@name",
-                            32 );
-                }
-                return abilityAttributes;
-            }
-        }
-
-        public static string[] AbilityEffects
-        {
-            get
-            {
-                if( abilityEffects == null )
-                {
-                    abilityEffects = Utilities.GetStringsFromNumberedXmlNodes(
-                        dict["AbilitiesEffects"] as string,
-                        "/Effects/Effect[@value='{0:X3}']/@name",
-                        512 );
-                }
-
-                return abilityEffects;
-            }
-        }
-
-        public static byte[] AbilityEffectsBin { get { return dict["AbilitiesEffectsBin"] as byte[]; } }
-
         public static Dictionary<byte, string> AbilityFormulas
         {
             get
@@ -107,7 +39,7 @@ namespace FFTPatcher
                 {
                     abilityFormulas = new Dictionary<byte, string>();
                     string[] formulaNames = Utilities.GetStringsFromNumberedXmlNodes(
-                        dict["AbilityFormulas"] as string,
+                        ZipFileContents[Paths.AbilityFormulasXML].ToUTF8String(),
                         "/AbilityFormulas/Ability[@value='{0:X2}']",
                         256 );
                     for( int i = 0; i < 256; i++ )
@@ -120,179 +52,140 @@ namespace FFTPatcher
             }
         }
 
-        public static string[] AbilityTypes
+
+
+        #region Static Fields (9)
+
+        public static class Paths
         {
-            get
+            public const string AbilityFormulasXML = "AbilityFormulas.xml";
+            public const string DigestTransform = "digestTransform.xsl";
+            private const string ENTD1 = "ENTD1.ENT";
+            private const string ENTD2 = "ENTD2.ENT";
+            private const string ENTD3 = "ENTD3.ENT";
+            private const string ENTD4 = "ENTD4.ENT";
+            private const string MoveFindBin = "MoveFind.bin";
+
+            public static class PSP
             {
-                if( abilityTypes == null )
+                public static class Binaries
                 {
-                    abilityTypes =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/Types/string[@value='{0}']/@name",
-                            16 );
+                    public const string ENTD1 = Paths.ENTD1;
+                    public const string ENTD2 = Paths.ENTD2;
+                    public const string ENTD3 = Paths.ENTD3;
+                    public const string ENTD4 = Paths.ENTD4;
+                    public const string ENTD5 = "PSP/bin/ENTD5.bin";
+                    public const string MoveFind = Paths.MoveFindBin;
+                    public const string Abilities = "PSP/bin/Abilities.bin";
+                    public const string AbilityEffects = "PSP/bin/AbilityEffects.bin";
+                    public const string ActionEvents = "PSP/bin/ActionEvents.bin";
+                    public const string Font = "PSP/bin/font.bin";
+                    public const string FontWidths = "PSP/bin/FontWidths.bin";
+                    public const string ICON0 = "PSP/bin/ICON0";
+                    public const string InflictStatuses = "PSP/bin/InflictStatuses.bin";
+                    public const string JobLevels = "PSP/bin/JobLevels.bin";
+                    public const string Jobs = "PSP/bin/Jobs.bin";
+                    public const string MonsterSkills = "PSP/bin/MonsterSkills.bin";
+                    public const string NewItemAttributes = "PSP/bin/NewItemAttributes.bin";
+                    public const string NewItems = "PSP/bin/NewItems.bin";
+                    public const string OldItemAttributes = "PSP/bin/OldItemAttributes.bin";
+                    public const string OldItems = "PSP/bin/OldItems.bin";
+                    public const string PoachProbabilities = "PSP/bin/PoachProbabilities.bin";
+                    public const string SkillSets = "PSP/bin/SkillSetsBin.bin";
+                    public const string StatusAttributes = "PSP/bin/StatusAttributes.bin";
                 }
-                return abilityTypes;
+
+                public const string EventNamesXML = "PSP/EventNames.xml";
+                public const string FFTPackFilesXML = "PSP/FFTPackFiles.xml";
+                public const string JobsXML = "PSP/Jobs.xml";
+                public const string SkillSetsXML = "PSP/SkillSets.xml";
+                public const string SpecialNamesXML = "PSP/SpecialNames.xml";
+                public const string SpriteSetsXML = "PSP/SpriteSets.xml";
+                public const string StatusNamesXML = "PSP/StatusNames.xml";
+                public const string AbilitiesNamesXML = "PSP/Abilities/Abilities.xml";
+                public const string AbilitiesStringsXML = "PSP/Abilities/Strings.xml";
+                public const string AbilityEffectsXML = "PSP/Abilities/Effects.xml";
+                public const string ItemAttributesXML = "PSP/Items/ItemAttributes.xml";
+                public const string ItemsXML = "PSP/Items/Items.xml";
+                public const string ItemsStringsXML = "PSP/Items/Strings.xml";
+
+            }
+
+            public static class PSX
+            {
+                public static class Binaries
+                {
+                    public const string ENTD1 = Paths.ENTD1;
+                    public const string ENTD2 = Paths.ENTD2;
+                    public const string ENTD3 = Paths.ENTD3;
+                    public const string ENTD4 = Paths.ENTD4;
+                    public const string MoveFind = Paths.MoveFindBin;
+                    public const string Abilities = "PSX-US/bin/Abilities.bin";
+                    public const string AbilityEffects = "PSX-US/bin/AbilityEffects.bin";
+                    public const string ActionEvents = "PSX-US/bin/ActionEvents.bin";
+                    public const string Font = "PSX-US/bin/font.bin";
+                    public const string FontWidths = "PSX-US/bin/FontWidths.bin";
+                    public const string SCEAP = "PSX-US/bin/SCEAP.DAT.patched.bin";
+                    public const string InflictStatuses = "PSX-US/bin/InflictStatuses.bin";
+                    public const string JobLevels = "PSX-US/bin/JobLevels.bin";
+                    public const string Jobs = "PSX-US/bin/Jobs.bin";
+                    public const string MonsterSkills = "PSX-US/bin/MonsterSkills.bin";
+                    public const string OldItemAttributes = "PSX-US/bin/OldItemAttributes.bin";
+                    public const string OldItems = "PSX-US/bin/OldItems.bin";
+                    public const string PoachProbabilities = "PSX-US/bin/PoachProbabilities.bin";
+                    public const string SkillSets = "PSX-US/bin/SkillSetsBin.bin";
+                    public const string StatusAttributes = "PSX-US/bin/StatusAttributes.bin";
+                }
+
+                public const string EventNamesXML = "PSX-US/EventNames.xml";
+                public const string FileList = "PSX-US/FileList.txt";
+                public const string JobsXML = "PSX-US/Jobs.xml";
+                public const string SkillSetsXML = "PSX-US/SkillSets.xml";
+                public const string SpecialNamesXML = "PSX-US/SpecialNames.xml";
+                public const string SpriteSetsXML = "PSX-US/SpriteSets.xml";
+                public const string StatusNamesXML = "PSX-US/StatusNames.xml";
+                public const string AbilitiesNamesXML = "PSX-US/Abilities/Abilities.xml";
+                public const string AbilitiesStringsXML = "PSX-US/Abilities/Strings.xml";
+                public const string AbilityEffectsXML = "PSX-US/Abilities/Effects.xml";
+                public const string ItemAttributesXML = "PSX-US/Items/ItemAttributes.xml";
+                public const string ItemsXML = "PSX-US/Items/Items.xml";
+                public const string ItemsStringsXML = "PSX-US/Items/Strings.xml";
             }
         }
 
-        public static byte[] ActionEventsBin { get { return dict["ActionEventsBin"] as byte[]; } }
 
-        public static byte[] ENTD1 { get { return dict["ENTD1"] as byte[]; } }
+        #endregion Static Properties
 
-        public static byte[] ENTD2 { get { return dict["ENTD2"] as byte[]; } }
+        #region Constructors (1)
 
-        public static byte[] ENTD3 { get { return dict["ENTD3"] as byte[]; } }
-
-        public static byte[] ENTD4 { get { return dict["ENTD4"] as byte[]; } }
-
-        public static byte[] ENTD5 { get { return dict["ENTD5"] as byte[]; } }
-
-        public static string EventNames { get { return dict["EventNames"] as string; } }
-
-        public static Dictionary<int, string> FFTPackFiles
+        public static Dictionary<string, byte[]> ZipFileContents
         {
-            get
-            {
-                if( fftPackFiles == null )
-                {
-                    fftPackFiles = new Dictionary<int, string>();
-
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml( dict["FFTPackFiles"] as string );
-
-                    XmlNodeList nodes = doc.SelectNodes( "/files/file" );
-                    foreach( XmlNode node in nodes )
-                    {
-                        fftPackFiles.Add( Convert.ToInt32( node.Attributes["entry"].InnerText ), node.Attributes["name"].InnerText );
-                    }
-                }
-
-                return fftPackFiles;
-            }
+            get; private set;
         }
-
-        public static byte[] FontBin { get { return dict["FontBin"] as byte[]; } }
-
-        public static byte[] FontWidthsBin { get { return dict["FontWidthsBin"] as byte[]; } }
-
-        public static byte[] InflictStatusesBin { get { return dict["InflictStatusesBin"] as byte[]; } }
-
-        public static string Items { get { return dict["Items"] as string; } }
-
-        public static string ItemsStrings { get { return dict["ItemsStrings"] as string; } }
-
-        public static byte[] JobLevelsBin { get { return dict["JobLevelsBin"] as byte[]; } }
-
-        public static string Jobs { get { return dict["Jobs"] as string; } }
-
-        public static byte[] JobsBin { get { return dict["JobsBin"] as byte[]; } }
-
-        public static byte[] MonsterSkillsBin { get { return dict["MonsterSkillsBin"] as byte[]; } }
-
-        public static byte[] NewItemAttributesBin { get { return dict["NewItemAttributesBin"] as byte[]; } }
-
-        public static byte[] NewItemsBin { get { return dict["NewItemsBin"] as byte[]; } }
-
-        public static byte[] OldItemAttributesBin { get { return dict["OldItemAttributesBin"] as byte[]; } }
-
-        public static byte[] OldItemsBin { get { return dict["OldItemsBin"] as byte[]; } }
-
-        public static byte[] PoachProbabilitiesBin { get { return dict["PoachProbabilitiesBin"] as byte[]; } }
-
-        public static string[] ShopAvailabilities
-        {
-            get
-            {
-                if( shopAvailabilities == null )
-                {
-                    shopAvailabilities =
-                        Utilities.GetStringsFromNumberedXmlNodes(
-                            ItemsStrings,
-                            "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
-                            21 );
-                }
-
-                return shopAvailabilities;
-            }
-        }
-
-        public static string SkillSets { get { return dict["SkillSets"] as string; } }
-
-        public static byte[] SkillSetsBin { get { return dict["SkillSetsBin"] as byte[]; } }
-
-        public static string SpecialNames { get { return dict["SpecialNames"] as string; } }
-
-        public static string SpriteSets { get { return dict["SpriteSets"] as string; } }
-
-        public static byte[] StatusAttributesBin { get { return dict["StatusAttributesBin"] as byte[]; } }
-
-        public static string[] Statuses
-        {
-            get
-            {
-                if( statuses == null )
-                {
-                    statuses = Utilities.GetStringsFromNumberedXmlNodes(
-                        StatusNames,
-                        "/Statuses/Status[@offset='{0}']/@name",
-                        40 );
-                }
-
-                return statuses;
-            }
-        }
-
-        public static string StatusNames { get { return dict["StatusNames"] as string; } }
-
-
-		#endregion Static Properties 
-
-		#region Constructors (1) 
 
         static Resources()
         {
-            dict["AbilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilitiesBin );
-            dict["ActionEventsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.ActionEventsBin );
-            dict["ENTD1"] = GZip.Decompress( FFTPatcher.Properties.Resources.ENTD1 );
-            dict["ENTD2"] = GZip.Decompress( FFTPatcher.Properties.Resources.ENTD2 );
-            dict["ENTD3"] = GZip.Decompress( FFTPatcher.Properties.Resources.ENTD3 );
-            dict["ENTD4"] = GZip.Decompress( FFTPatcher.Properties.Resources.ENTD4 );
-            dict["ENTD5"] = GZip.Decompress( FFTPatcher.Properties.Resources.ENTD5 );
-            dict["FontBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.FontBin );
-            dict["FontWidthsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.FontWidthsBin );
-            dict["InflictStatusesBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.InflictStatusesBin );
-            dict["JobLevelsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.JobLevelsBin );
-            dict["JobsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.JobsBin );
-            dict["MonsterSkillsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.MonsterSkillsBin );
-            dict["NewItemAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.NewItemAttributesBin );
-            dict["NewItemsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.NewItemsBin );
-            dict["StatusAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.StatusAttributesBin );
-            dict["OldItemAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.OldItemAttributesBin );
-            dict["OldItemsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.OldItemsBin );
-            dict["SkillSetsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.SkillSetsBin );
-            dict["PoachProbabilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.PoachProbabilitiesBin );
+            using( MemoryStream memStream = new MemoryStream( Properties.Resources.ZippedResources, false ) )
+            using( GZipInputStream gzStream = new GZipInputStream( memStream ) )
+            using( TarInputStream tarStream = new TarInputStream( gzStream ) )
+            {
+                ZipFileContents = new Dictionary<string, byte[]>();
+                TarEntry entry;
+                entry = tarStream.GetNextEntry();
+                while( entry != null )
+                {
+                    if( entry.Size != 0 )
+                    {
+                        byte[] bytes = new byte[entry.Size];
+                        StreamUtils.ReadFully( tarStream, bytes );
+                        ZipFileContents[entry.Name] = bytes;
+                    }
+                    entry = tarStream.GetNextEntry();
+                }
+            }
 
-            dict["SkillSets"] = GZip.Decompress( FFTPatcher.Properties.Resources.SkillSets ).ToUTF8String();
-            dict["Abilities"] = GZip.Decompress( FFTPatcher.Properties.Resources.Abilities ).ToUTF8String();
-            dict["AbilitiesStrings"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilitiesStrings ).ToUTF8String();
-            dict["EventNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.EventNames ).ToUTF8String();
-            dict["Items"] = GZip.Decompress( FFTPatcher.Properties.Resources.Items ).ToUTF8String();
-            dict["ItemsStrings"] = GZip.Decompress( FFTPatcher.Properties.Resources.ItemsStrings ).ToUTF8String();
-            dict["Jobs"] = GZip.Decompress( FFTPatcher.Properties.Resources.Jobs ).ToUTF8String();
-            dict["SpecialNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.SpecialNames ).ToUTF8String();
-            dict["SpriteSets"] = GZip.Decompress( FFTPatcher.Properties.Resources.SpriteSets ).ToUTF8String();
-            dict["StatusNames"] = GZip.Decompress( FFTPatcher.Properties.Resources.StatusNames ).ToUTF8String();
+       }
 
-            dict["FFTPackFiles"] = GZip.Decompress( FFTPatcher.Properties.Resources.FFTPackFiles ).ToUTF8String();
-
-            dict["AbilitiesEffects"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilitiesEffects ).ToUTF8String();
-            dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilityEffectsBin );
-
-            dict["AbilityFormulas"] = GZip.Decompress( FFTPatcher.Properties.Resources.AbilityFormulas ).ToUTF8String();
-        }
-
-		#endregion Constructors 
-
+        #endregion Constructors
     }
 }

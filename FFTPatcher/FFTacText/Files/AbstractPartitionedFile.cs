@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -19,24 +19,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml;
 
 namespace FFTPatcher.TextEditor.Files
 {
     /// <summary>
-    /// A file with many partitions of equal lenght.
+    /// A file with many partitions of equal length.
     /// </summary>
-    public abstract class AbstractPartitionedFile : IPartitionedFile
+    public abstract class AbstractPartitionedFile : AbstractFile, IPartitionedFile
     {
 
-		#regionÂ AbstractÂ PropertiesÂ (7)Â 
+		#region Abstract Properties (7) 
 
-
-        /// <summary>
-        /// Gets the character map used for this file.
-        /// </summary>
-        protected abstract GenericCharMap CharMap { get; }
 
         /// <summary>
         /// Gets a collection of lists of strings, each string being a description of an entry in this file.
@@ -47,11 +43,6 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets the filename.
         /// </summary>
         public abstract string Filename { get; }
-
-        /// <summary>
-        /// Gets the filenames and locations for this file.
-        /// </summary>
-        public abstract IDictionary<string, long> Locations { get; }
 
         /// <summary>
         /// Gets the number of sections in this file.
@@ -69,9 +60,9 @@ namespace FFTPatcher.TextEditor.Files
         public abstract IList<string> SectionNames { get; }
 
 
-		#endregionÂ AbstractÂ PropertiesÂ 
+		#endregion Abstract Properties 
 
-		#regionÂ PropertiesÂ (3)Â 
+		#region Properties (4) 
 
 
         /// <summary>
@@ -91,19 +82,31 @@ namespace FFTPatcher.TextEditor.Files
         }
 
         /// <summary>
+        /// Gets the maximum length of this file as a byte array.
+        /// </summary>
+        public override int MaxLength { get { return NumberOfSections * SectionLength; } }
+
+        /// <summary>
         /// Gets a collection of <see cref="IPartition"/>, representing the entries in this file.
         /// </summary>
         public IList<IPartition> Sections { get; protected set; }
 
 
-		#endregionÂ PropertiesÂ 
+		#endregion Properties 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
+        /// </summary>
         protected AbstractPartitionedFile()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractPartitionedFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected AbstractPartitionedFile( IList<byte> bytes )
         {
             Sections = new List<IPartition>( NumberOfSections );
@@ -113,9 +116,9 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (10)Â 
+		#region Methods (11) 
 
 
         private void ReadXmlBase64( XmlReader reader )
@@ -166,7 +169,7 @@ namespace FFTPatcher.TextEditor.Files
                 }
 
                 Sections[currentSection] = new FilePartition( this, currentStrings, SectionLength, EntryNames[currentSection], CharMap );
-                
+
                 reader.ReadEndElement();
             }
 
@@ -217,6 +220,9 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
+        /// <summary>
+        /// Gets a list of bytes that represent this file in its on-disc form.
+        /// </summary>
         protected IList<byte> ToFinalBytes()
         {
             List<byte> result = new List<byte>();
@@ -262,7 +268,7 @@ namespace FFTPatcher.TextEditor.Files
         /// Creates a byte array representing this file.
         /// </summary>
         /// <returns></returns>
-        public byte[] ToByteArray()
+        public override byte[] ToByteArray()
         {
             return ToFinalBytes().ToArray();
         }
@@ -294,7 +300,7 @@ namespace FFTPatcher.TextEditor.Files
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

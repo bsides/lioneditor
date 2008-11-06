@@ -116,6 +116,27 @@ namespace FFTPatcher.Datatypes
         {
             return ToArmorByteArray();
         }
+        public static void CopyArmor( Armor source, Armor destination )
+        {
+            destination.HPBonus = source.HPBonus;
+            destination.MPBonus = source.MPBonus;
+        }
+
+        public void CopyArmorTo( Armor destination )
+        {
+            CopyArmor( this, destination );
+        }
+
+        public static void CopyAll( Armor source, Armor destination )
+        {
+            CopyArmor( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Armor destination )
+        {
+            CopyAll( this, destination );
+        }
 
 
         #endregion Methods

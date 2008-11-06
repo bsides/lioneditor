@@ -260,6 +260,81 @@
   <Event value="0FB" name="Nogias 3"/>
   <Event value="0FC" name="Nogias 4"/>
 
+
+  <Event value="100" name="Beginning of game inside Orbonne?"/>
+  <Event value="101" name="Being praised by Larg"/>
+  <Event value="102" name="Miltary Academy"/>
+  <Event value="103" name="Garden talk with the family"/>
+  <Event value="104" name="Balbanes's Death"/>
+  <Event value="105" name="Miluda's defeat"/>
+  <Event value="106" name="First meeting with Algus"/>
+  <Event value="107" name="?Meeting with the whole family at once?"/>
+  <Event value="108" name="Raid on the Beoulve's."/>
+  <Event value="109" name="Interrogation"/>
+  <Event value="10A" name="Rescuing the Marquis"/>
+  <Event value="10B" name="Meeting with bedridden Dycedarg"/>
+  <Event value="10C" name="Reed Whistle"/>
+  <Event value="10D" name="Wiegraf berating Golagros"/>
+  <Event value="10E" name="Finding Teta gone"/>
+  <Event value="10F" name="Fort Zeakden explosion"/>
+  <Event value="110" name="End of Chapter 1, Orbonne Monastary"/>
+  <Event value="111" name="Receiving the Princess?"/>
+  <Event value="112" name="Heart to heart between Agrias and Ovelia"/>
+  <Event value="113" name="Repeat...?"/>
+  <Event value="114" name="Dycedarg and Gafgarion chatting"/>
+  <Event value="115" name="Mustadio running from Rudvich"/>
+  <Event value="116" name="Draclau Meeting"/>
+  
+  <Event value="118" name="Arriving in Goug"/>
+  
+  <Event value="11A" name="Meeting with Delita in Port City"/>
+  <Event value="11B" name="Draclau meeting with Gafgarion and Rudvich"/>
+  <Event value="11C" name="Delita talking with Ovelia in her cell"/>
+  <Event value="11D" name="Delita killing Gelwan?"/>
+  <Event value="11E" name="Orbonne Monastary scene, beginning of game?"/>
+  <Event value="11F" name="?Goltana?"/>
+  <Event value="120" name="Repeat?"/>
+  <Event value="121" name="Ramza and Olan meeting"/>
+  <Event value="122" name="Enter Worker 8"/>
+  <Event value="123" name="Enter Worker 8?"/>
+  <Event value="124" name="Enter Worker 8??"/>
+  <Event value="125" name="Enter Cloud"/>
+  <Event value="126" name="Ramza meeting with Zalbag"/>
+  <Event value="127" name="?Ramza?"/>
+  <Event value="128" name="???"/>
+  <Event value="129" name="Wiegraf escaping the Monastary?"/>
+  <Event value="12A" name="Meeting with Malak in Dorter Trade City?"/>
+  <Event value="12B" name="Delita comforting Ovelia?"/>
+  <Event value="12C" name="Meeting with Olan after defeating Deserters"/>
+  
+  <Event value="12E" name="Barinten trying to coax the support of the church"/>
+  <Event value="12F" name="Dying Knight telling Alma to leave"/>
+  <Event value="130" name="Alma being kidnapped by Vormav?"/>
+  <Event value="131" name="Rafa reviving Malak"/>
+  <Event value="132" name="Chapter 4 Start"/>
+  <Event value="133" name="Things Obtained"/>
+  <Event value="134" name="Ending Cemetery?"/>
+  <Event value="135" name="Orlandu Musing?"/>
+  <Event value="138" name="Delita's Will"/>
+  
+  <Event value="13A" name="Meeting Balmafula"/>
+  <Event value="13B" name="Goltana throwing Cid in Prison"/>
+  <Event value="13C" name="Dycedarg killing Larg?"/>
+  <Event value="13D" name="Orlandu joining you"/>
+  <Event value="13E" name="Rofel locking Ramza and Co. in Murond"/>
+  <Event value="13F" name="Assassination of Goltana?"/>
+  <Event value="140" name="Rofel and Dycedarg discussing matters?"/>
+  <Event value="141" name="Elmdor speaking with Celia, Lede, and Vormav?"/>
+  <Event value="142" name="After defeating Zalera, Meliadoul speaking with Ramza?"/>
+  <Event value="143" name="Olan captured by Delita"/>
+  <Event value="144" name="Zalbag at his father's grave"/>
+  <Event value="145" name="Ramza about to storm the Beoulve residence"/>
+  <Event value="146" name="Vormav killing Funeral"/>
+  <Event value="147" name="Ramza meeting with the dying Funeral"/>
+  <Event value="148" name="Meeting with Aeris?"/>
+  <Event value="149" name="Bar Rumors of Deep Dungeon?"/>
+  <Event value="14A" name="Meet Beowulf"/>
+  
   <Event value="180" name="Sweegy Woods"/>
   <Event value="181" name="Dorter Trade City"/>
   <Event value="182" name="Sand Rat Cellar"/>

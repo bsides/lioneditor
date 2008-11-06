@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -28,55 +29,53 @@ namespace FFTPatcher.TextEditor.Files
     /// <summary>
     /// A file that is divided into sections of variable length.
     /// </summary>
-    public abstract class AbstractStringSectioned : IStringSectioned
+    public abstract class AbstractStringSectioned : AbstractFile, IStringSectioned
     {
 
-		#regionÂ FieldsÂ (1)Â 
+		#region Fields (4) 
 
+        /// <summary>
+        /// The location where the data starts in normal sectioned files.
+        /// </summary>
         protected const int dataStart = 0x80;
+        private int[][] entryLengths = null;
+        private IList<IList<string>> entryNames;
+        private IList<string> sectionNames;
 
-		#endregionÂ FieldsÂ 
+		#endregion Fields 
 
-		#regionÂ AbstractÂ PropertiesÂ (7)Â 
+		#region Abstract Properties (5) 
 
 
+        /// <summary>
+        /// Gets the number of sections.
+        /// </summary>
+        /// <value>The number of sections.</value>
         protected abstract int NumberOfSections { get; }
-
-        /// <summary>
-        /// Gets the character map that is used for this file.
-        /// </summary>
-        public abstract GenericCharMap CharMap { get; }
-
-        /// <summary>
-        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
-        /// </summary>
-        public abstract IList<IList<string>> EntryNames { get; }
 
         /// <summary>
         /// Gets the filename.
         /// </summary>
         public abstract string Filename { get; }
 
-        /// <summary>
-        /// Gets the filenames and locations for this file.
-        /// </summary>
-        public abstract IDictionary<string, long> Locations { get; }
 
-        /// <summary>
-        /// Gets the maximum length of this file as a byte array.
-        /// </summary>
-        public abstract int MaxLength { get; }
+		#endregion Abstract Properties 
 
-        /// <summary>
-        /// Gets a collection of strings with a description of each section in this file.
-        /// </summary>
-        public abstract IList<string> SectionNames { get; }
+		#region Properties (7) 
 
 
-		#endregionÂ AbstractÂ PropertiesÂ 
+        private int[][] EntryLengths
+        {
+            get
+            {
+                if( entryLengths == null )
+                {
+                    InitializeEntryLengths();
+                }
 
-		#regionÂ PropertiesÂ (3)Â 
-
+                return entryLengths;
+            }
+        }
 
         /// <summary>
         /// Gets the actual length of this file if it were turned into a byte array.
@@ -84,27 +83,91 @@ namespace FFTPatcher.TextEditor.Files
         public int ActualLength { get { return ToFinalBytes().Count; } }
 
         /// <summary>
-        /// Gets a collection of lists of strings, representing the entries in this file..
+        /// Gets a collection of lists of strings, each string being a description of an entry in this file.
         /// </summary>
-        public IList<IList<string>> Sections { get; protected set; }
+        public IList<IList<string>> EntryNames
+        {
+            get
+            {
+                if( entryNames == null )
+                {
+                    entryNames = TextEditor.EntryNames.GetEntryNames( GetType() );
+                }
+
+                return entryNames;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of strings with a description of each section in this file.
+        /// </summary>
+        public IList<string> SectionNames
+        {
+            get
+            {
+                if( sectionNames == null )
+                {
+                    sectionNames = TextEditor.EntryNames.GetSectionNames( GetType() );
+                }
+                return sectionNames;
+            }
+        }
 
 
 
         /// <summary>
         /// Gets the estimated length of this file if it were turned into a byte array.
         /// </summary>
-        public virtual int EstimatedLength { get { return ToUncompressedBytes().Count; } }
+        public virtual int EstimatedLength
+        {
+            get
+            {
+                int sum = 0;
+                foreach( int[] i in EntryLengths )
+                {
+                    sum += i.Sum();
+                }
+                return sum + dataStart;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of lists of strings, representing the entries in this file..
+        /// </summary>
+        public virtual IList<IList<string>> Sections { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets a specific entry in a specific section.
+        /// </summary>
+        /// <param name="section">The section in which contains the entry to get or set</param>
+        /// <param name="entry">The specific entry to get or set</param>
+        public virtual string this[int section, int entry]
+        {
+            get { return Sections[section][entry]; }
+            set
+            {
+                EntryLengths[section][entry] = CharMap.StringToByteArray( value ).Length;
+                Sections[section][entry] = value;
+            }
+        }
 
 
-		#endregionÂ PropertiesÂ 
+		#endregion Properties 
 
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractStringSectioned"/> class.
+        /// </summary>
         protected AbstractStringSectioned()
         {
             Sections = new List<IList<string>>( NumberOfSections );
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractStringSectioned"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected AbstractStringSectioned( IList<byte> bytes )
             : this()
         {
@@ -122,10 +185,25 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (12)Â 
+		#region Methods (16) 
 
+
+        private void InitializeEntryLengths()
+        {
+            entryLengths = new int[NumberOfSections][];
+
+            for( int i = 0; i < NumberOfSections; i++ )
+            {
+                IList<string> section = Sections[i];
+                entryLengths[i] = new int[section.Count];
+                for( int j = 0; j < section.Count; j++ )
+                {
+                    entryLengths[i][j] = CharMap.StringToByteArray( this[i, j] ).Length;
+                }
+            }
+        }
 
         private void ReadXmlBase64( XmlReader reader )
         {
@@ -222,6 +300,17 @@ namespace FFTPatcher.TextEditor.Files
         }
 
         /// <summary>
+        /// Gets the length in bytes of a specific entry.
+        /// </summary>
+        /// <param name="section">The section which contains the entry whose length is needed.</param>
+        /// <param name="entry">The specific entry whose length is needed.</param>
+        /// <returns>The length of the entry, in bytes.</returns>
+        public int GetEntryLength( int section, int entry )
+        {
+            return EntryLengths[section][entry];
+        }
+
+        /// <summary>
         /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
         /// </summary>
         /// <returns>
@@ -232,6 +321,9 @@ namespace FFTPatcher.TextEditor.Files
             return null;
         }
 
+        /// <summary>
+        /// Gets the byte arrays for each section.
+        /// </summary>
         public IList<IList<byte>> GetSectionByteArrays()
         {
             IList<IList<byte>> result = new List<IList<byte>>( NumberOfSections );
@@ -272,7 +364,7 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Creates a byte array representing this file.
         /// </summary>
-        public byte[] ToByteArray()
+        public override byte[] ToByteArray()
         {
             IList<byte> result = ToFinalBytes();
 
@@ -311,9 +403,20 @@ namespace FFTPatcher.TextEditor.Files
 
 
 
+        /// <summary>
+        /// Gets a list of bytes that represent this file in its on-disc form.
+        /// </summary>
         protected virtual IList<byte> ToFinalBytes()
         {
             return ToUncompressedBytes();
+        }
+
+        /// <summary>
+        /// Gets a list of indices for named sections.
+        /// </summary>
+        public virtual IList<NamedSection> GetNamedSections()
+        {
+            return new List<NamedSection>();
         }
 
         /// <summary>
@@ -342,7 +445,7 @@ namespace FFTPatcher.TextEditor.Files
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

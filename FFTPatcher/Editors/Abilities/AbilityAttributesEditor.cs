@@ -25,7 +25,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class AbilityAttributesEditor : UserControl
+    public partial class AbilityAttributesEditor : BaseEditor
     {
 
 		#region Static Fields (2) 
@@ -88,6 +88,7 @@ namespace FFTPatcher.Editors
             formulaComboBox.SelectedIndexChanged += formulaComboBox_SelectedIndexChanged;
             flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
             inflictStatusLabel.Click += inflictStatusLabel_Click;
+            elementsEditor.DataChanged += OnDataChanged;
             inflictStatusLabel.TabStop = false;
         }
 
@@ -115,6 +116,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFlag( attributes, FlagNames[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -125,6 +127,7 @@ namespace FFTPatcher.Editors
                 if( attributes != null )
                 {
                     attributes.Formula = formulaComboBox.SelectedItem as AbilityFormula;
+                    OnDataChanged( this, EventArgs.Empty );
                 }
             }
         }
@@ -141,6 +144,7 @@ namespace FFTPatcher.Editors
                 NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
                 int i = spinners.IndexOf( c );
                 ReflectionHelpers.SetFieldOrProperty( attributes, FieldNames[i], (byte)c.Value );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -155,7 +159,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 flagsCheckedListBox.Items.Clear();
-                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.AbilityAttributes : PSXResources.AbilityAttributes );
+                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.AbilityAttributes : PSXResources.AbilityAttributes );
                 formulaComboBox.DataSource = ourContext == Context.US_PSP ? AbilityFormula.PSPAbilityFormulas : AbilityFormula.PSXAbilityFormulas;
             }
 

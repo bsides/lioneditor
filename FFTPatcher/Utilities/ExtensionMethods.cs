@@ -37,7 +37,33 @@ namespace FFTPatcher
     public static partial class ExtensionMethods
     {
 
-		#region Methods (14) 
+        #region Methods (14)
+
+        /// <summary>
+        /// Sums the items in the list.
+        /// </summary>
+        public static int Sum( this IList<int> items )
+        {
+            int sum = 0;
+            foreach( int i in items )
+            {
+                sum += i;
+            }
+            return sum;
+        }
+
+        public static bool Exists<T>( this IList<T> list, Predicate<T> match )
+        {
+            foreach ( T t in list )
+            {
+                if ( match( t ) )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Returns the location of every item in the list that is equal to a given item.
@@ -59,8 +85,29 @@ namespace FFTPatcher
         }
 
         /// <summary>
+        /// Performs the specified action on each element of the <see cref="System.Collections.Generic.IList&lt;T&gt;"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="action">
+        /// The <see cref="System.Action&lt;T&gt;"/> delegate to perform on each element of the <see cref="System.Collections.Generic.List&lt;T&gt;"/>.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException"><paramref name="action"/> is null</exception>
+        public static void ForEach<T>( this IList<T> list, Action<T> action )
+        {
+            if( action == null )
+            {
+                throw new ArgumentNullException( "action" );
+            }
+
+            int count = list.Count;
+            for( int i = 0; i < count; i++ ) action( list[i] );
+        }
+
+        /// <summary>
         /// Finds the specified item in the list.
         /// </summary>
+        /// <param name="match">The <see cref="System.Predicate&lt;T&gt;"/> delegate that defines the conditions of the element to search for.</param>
+        /// <exception cref="System.ArgumentNullException"/><paramref name="match"/> is null</exception>.
         public static T Find<T>( this IList<T> list, Predicate<T> match ) where T : class
         {
             foreach( T item in list )
@@ -172,7 +219,16 @@ namespace FFTPatcher
         public static T[] ToArray<T>( this IList<T> list )
         {
             T[] result = new T[list.Count];
-            list.CopyTo( result, 0 );
+            if( list is T[] )
+            {
+                T[] arr = list as T[];
+                arr.CopyTo( result, 0 );
+            }
+            else
+            {
+                list.CopyTo( result, 0 );
+            }
+
             return result;
         }
 
@@ -212,6 +268,19 @@ namespace FFTPatcher
             result[1] = (byte)((value >> 8) & 0xFF);
             result[2] = (byte)((value >> 16) & 0xFF);
             result[3] = (byte)((value >> 24) & 0xFF);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts this into a set of eight big endian bytes.
+        /// </summary>
+        public static byte[] ToBytes( this long value )
+        {
+            byte[] result = new byte[8];
+            for( int i = 0; i < 8; i++ )
+            {
+                result[i] = (byte)( ( value >> ( i * 8 ) ) & 0xFF );
+            }
             return result;
         }
 
@@ -271,7 +340,7 @@ namespace FFTPatcher
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

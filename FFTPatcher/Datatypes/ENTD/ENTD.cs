@@ -93,7 +93,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllENTDs : IChangeable, IXmlDigest
+    public class AllENTDs : PatchableFile, IXmlDigest
     {
 
         #region Properties (4)
@@ -107,7 +107,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -147,19 +147,19 @@ namespace FFTPatcher.Datatypes
             ENTDs[0] = new ENTD(
                 0,
                 entd1,
-                new ENTD( 0, Resources.ENTD1, null ) );
+                new ENTD( 0, PSPResources.ENTD1, null ) );
             ENTDs[1] = new ENTD(
                 0x80,
                 entd2,
-                new ENTD( 0x80, Resources.ENTD2, null ) );
+                new ENTD( 0x80, PSPResources.ENTD2, null ) );
             ENTDs[2] = new ENTD(
                 0x100,
                 entd3,
-                new ENTD( 0x100, Resources.ENTD3, null ) );
+                new ENTD( 0x100, PSPResources.ENTD3, null ) );
             ENTDs[3] = new ENTD(
                 0x180,
                 entd4,
-                new ENTD( 0x180, Resources.ENTD4, null ) );
+                new ENTD( 0x180, PSPResources.ENTD4, null ) );
 
             Events = new List<Event>( 0x200 );
             foreach( ENTD e in ENTDs )
@@ -177,7 +177,7 @@ namespace FFTPatcher.Datatypes
                 for( int i = 0; i < 77; i++ )
                 {
                     PSPEvent.Add( new Event( 0x200 + i, entd5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ),
-                                  new Event( 0x200 + i, Resources.ENTD5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
+                                  new Event( 0x200 + i, PSPResources.ENTD5.Sub( i * 16 * 40, (i + 1) * 16 * 40 - 1 ), null ) ) );
                 }
 
                 Events.AddRange( PSPEvent );
@@ -221,5 +221,33 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 5 );
+
+            var bytes1 = ENTDs[0].ToByteArray();
+            var bytes2 = ENTDs[1].ToByteArray();
+            var bytes3 = ENTDs[2].ToByteArray();
+            var bytes4 = ENTDs[3].ToByteArray();
+
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
+                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD5_ENT, 0x00, PSPEventsToByteArray() ) );
+            }
+
+            return result;
+        }
     }
 }

@@ -171,6 +171,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Properties
 
+        public static void Copy( SkillSet source, SkillSet destination )
+        {
+            for( int i = 0; i < 16; i++ )
+            {
+                destination.Actions[i] = source.Actions[i];
+            }
+            for( int i = 0; i < 6; i++ )
+            {
+                destination.TheRest[i] = source.TheRest[i];
+            }
+        }
+
+        public void CopyTo( SkillSet destination )
+        {
+            Copy( this, destination );
+        }
+
         #region Constructors (4)
 
         static SkillSet()
@@ -179,7 +196,7 @@ namespace FFTPatcher.Datatypes
             pspEventSkills = new SortedDictionary<byte, SkillSet>();
 
             PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.SkillSets,
+                PSPResources.SkillSets,
                 "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                 0xE3 );
             PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
@@ -294,7 +311,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Value.ToString( "X2" ) + " " + Name;
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" ) + " " + Name;
         }
 
 
@@ -302,7 +319,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllSkillSets : IChangeable, IXmlDigest
+    public class AllSkillSets : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -312,7 +329,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -334,7 +351,7 @@ namespace FFTPatcher.Datatypes
         #region Constructors (3)
 
         public AllSkillSets( IList<byte> bytes )
-            : this( Context.US_PSP, bytes, Resources.SkillSetsBin )
+            : this( Context.US_PSP, bytes, PSPResources.SkillSetsBin )
         {
         }
 
@@ -373,7 +390,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
             }
             else
             {
@@ -427,5 +444,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x55294, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x275A38, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x275A38, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

@@ -152,6 +152,23 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (3)
 
+        public static void Copy( InflictStatus source, InflictStatus destination )
+        {
+            source.Statuses.CopyTo( destination.Statuses );
+            destination.AllOrNothing = source.AllOrNothing;
+            destination.Random = source.Random;
+            destination.Separate = source.Separate;
+            destination.Cancel = source.Cancel;
+            destination.Blank1 = source.Blank1;
+            destination.Blank2 = source.Blank2;
+            destination.Blank3 = source.Blank3;
+            destination.Blank4 = source.Blank4;
+        }
+
+        public void CopyTo( InflictStatus destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool[] ToBoolArray()
         {
@@ -171,7 +188,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Value.ToString( "X2" );
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" );
         }
 
 
@@ -179,7 +196,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllInflictStatuses : IChangeable, IXmlDigest
+    public class AllInflictStatuses : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -189,7 +206,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -212,7 +229,7 @@ namespace FFTPatcher.Datatypes
 
         public AllInflictStatuses( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.InflictStatusesBin : PSXResources.InflictStatusesBin;
             InflictStatuses = new InflictStatus[0x80];
             for( int i = 0; i < 0x80; i++ )
             {
@@ -230,7 +247,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.InflictStatusesBin, this.ToByteArray(), 0x32A394 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.InflictStatusesBin, this.ToByteArray(), 0x32A394 );
             }
             else
             {
@@ -275,5 +292,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray();
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x547C4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3263E8, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3263E8, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

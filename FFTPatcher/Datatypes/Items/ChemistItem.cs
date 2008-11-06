@@ -124,6 +124,29 @@ namespace FFTPatcher.Datatypes
             return ToChemistItemByteArray();
         }
 
+        public static void CopyChemistItem( ChemistItem source, ChemistItem destination )
+        {
+            destination.Formula = source.Formula;
+            destination.X = source.X;
+            destination.InflictStatus = source.InflictStatus;
+        }
+
+        public void CopyChemistItemTo( ChemistItem destination )
+        {
+            CopyChemistItem( this, destination );
+        }
+
+        public static void CopyAll( ChemistItem source, ChemistItem destination )
+        {
+            CopyChemistItem( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( ChemistItem destination )
+        {
+            CopyAll( this, destination );
+        }
+
 
         #endregion Methods
 

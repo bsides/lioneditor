@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -30,9 +30,13 @@ namespace FFTPatcher.TextEditor
     public partial class CompressedStringSectionedEditor : StringSectionedEditor
     {
 
-		#regionÂ PropertiesÂ (2)Â 
+		#region Properties (2) 
 
 
+        /// <summary>
+        /// Gets the length label format string.
+        /// </summary>
+        /// <value>The length label format string.</value>
         protected override string LengthLabelFormatString
         {
             get { return "Estimated length: {0} bytes"; }
@@ -66,10 +70,13 @@ namespace FFTPatcher.TextEditor
         }
 
 
-		#endregionÂ PropertiesÂ 
+		#endregion Properties 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompressedStringSectionedEditor"/> class.
+        /// </summary>
         public CompressedStringSectionedEditor()
         {
             InitializeComponent();
@@ -77,20 +84,35 @@ namespace FFTPatcher.TextEditor
             errorLabel.VisibleChanged += errorLabel_VisibleChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ DelegatesÂ (2)Â 
+		#region Events (2) 
+
+        /// <summary>
+        /// Occurs when [compression finished].
+        /// </summary>
+        public event EventHandler CompressionFinished;
+
+        /// <summary>
+        /// Occurs when [compression started].
+        /// </summary>
+        public event EventHandler CompressionStarted;
+
+		#endregion Events 
+
+		#region Delegates (2) 
 
         private delegate void FinishedCallback( ICompressed compressed, IList<byte> result );
         private delegate void ProgressCallback( int progress );
 
-		#endregionÂ DelegatesÂ 
+		#endregion Delegates 
 
-		#regionÂ MethodsÂ (4)Â 
+		#region Methods (6) 
 
 
         private void compressButton_Click( object sender, EventArgs e )
         {
+            OnCompressionStarted();
             compressionProgressBar.Value = 0;
             compressionProgressBar.Visible = true;
             ICompressed compressed = Strings as ICompressed;
@@ -102,7 +124,7 @@ namespace FFTPatcher.TextEditor
                 {
                     compressed.Compress();
                 } ) );
-            
+
             this.Enabled = false;
             t.Start();
         }
@@ -118,6 +140,7 @@ namespace FFTPatcher.TextEditor
                         compressed.ProgressChanged -= compressed_ProgressChanged;
                         compressed.CompressionFinished -= compressed_CompressionFinished;
                         this.Enabled = true;
+                        OnCompressionFinished();
                     } ), sender as ICompressed, e.Result );
         }
 
@@ -136,8 +159,24 @@ namespace FFTPatcher.TextEditor
             compressButton.Enabled = !error;
         }
 
+        private void OnCompressionFinished()
+        {
+            if ( CompressionFinished != null )
+            {
+                CompressionFinished( this, EventArgs.Empty );
+            }
+        }
 
-		#endregionÂ MethodsÂ 
+        private void OnCompressionStarted()
+        {
+            if ( CompressionStarted != null )
+            {
+                CompressionStarted( this, EventArgs.Empty );
+            }
+        }
+
+
+		#endregion Methods 
 
     }
 }

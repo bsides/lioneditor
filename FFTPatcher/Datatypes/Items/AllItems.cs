@@ -25,7 +25,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all items in memory.
     /// </summary>
-    public class AllItems : IChangeable, IXmlDigest
+    public class AllItems : PatchableFile, IXmlDigest
     {
 
         #region Fields (1)
@@ -41,7 +41,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -70,8 +70,8 @@ namespace FFTPatcher.Datatypes
         public AllItems( IList<byte> first, IList<byte> second )
         {
             Items = new List<Item>();
-            byte[] defaultFirst = second == null ? PSXResources.OldItemsBin : Resources.OldItemsBin;
-            byte[] defaultSecond = second == null ? null : Resources.NewItemsBin;
+            byte[] defaultFirst = second == null ? PSXResources.OldItemsBin : PSPResources.OldItemsBin;
+            byte[] defaultSecond = second == null ? null : PSPResources.NewItemsBin;
 
             for( UInt16 i = 0; i < 0x80; i++ )
             {
@@ -191,8 +191,8 @@ namespace FFTPatcher.Datatypes
             if( FFTPatch.Context == Context.US_PSP )
             {
                 List<string> strings = new List<string>();
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
                 return strings;
             }
             else
@@ -275,5 +275,27 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 4 );
+
+            var first = ToFirstByteArray();
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x536B8, first ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                var second = ToSecondByteArray();
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3252DC, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x256E00, second ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3252DC, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x256E00, second ) );
+            }
+
+            return result;
+        }
     }
 }

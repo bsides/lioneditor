@@ -32,17 +32,26 @@ namespace FFTPatcher.TextEditor
     public static class TextUtilities
     {
 
+        /// <summary>
+        /// Types of character maps.
+        /// </summary>
         public enum CharMapType
         {
+            /// <summary>
+            /// Playstation
+            /// </summary>
             PSX,
+            /// <summary>
+            /// PSP
+            /// </summary>
             PSP
         }
 
 
-		#region Static Properties (3) 
+        #region Static Properties (3)
 
 
-private static IDictionary<int, int> CompressionJumps { get; set; }
+        private static IDictionary<int, int> CompressionJumps { get; set; }
 
         /// <summary>
         /// Gets the PSP character map.
@@ -55,9 +64,9 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         public static PSXCharMap PSXMap { get; private set; }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         static TextUtilities()
         {
@@ -67,18 +76,18 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             BuildVersion2Charmap( PSXMap, PSPMap );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Delegates (1) 
+        #region Delegates (1)
 
         /// <summary>
         /// A delegate to call when the progress of an operation has changed.
         /// </summary>
         public delegate void ProgressCallback( int progress );
 
-		#endregion Delegates 
+        #endregion Delegates
 
-		#region Methods (12) 
+        #region Methods (12)
 
 
         private static void BuildVersion1Charmap( PSXCharMap psx, PSPCharMap psp )
@@ -530,7 +539,7 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// <summary>
         /// Compresses the specified file.
         /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
         /// <param name="callback">The progress callback.</param>
         public static CompressionResult Compress<T>( T file, ProgressCallback callback ) where T : IStringSectioned, ICompressed
@@ -541,7 +550,7 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// <summary>
         /// Compresses the specified file.
         /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
@@ -597,7 +606,7 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// <summary>
         /// Compresses the specified file.
         /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
         public static CompressionResult Compress<T>( T file ) where T : IStringSectioned, ICompressed
         {
@@ -607,7 +616,7 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// <summary>
         /// Compresses the specified file.
         /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
@@ -657,7 +666,7 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// Processes a list of FFT text bytes into a list of FFTacText strings.
         /// </summary>
         /// <param name="bytes">The bytes to process</param>
-        /// <param name="type">The charmap to use</param>
+        /// <param name="charmap">The charmap to use</param>
         public static IList<string> ProcessList( IList<byte> bytes, GenericCharMap charmap )
         {
             IList<IList<byte>> words = bytes.Split( (byte)0xFE );
@@ -708,13 +717,16 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
 
+        /// <summary>
+        /// The result of a compression operation.
+        /// </summary>
         public class CompressionResult
         {
 
-		#region Properties (2) 
+            #region Properties (2)
 
 
             /// <summary>
@@ -728,21 +740,26 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             public IList<int> SectionLengths { get; private set; }
 
 
-		#endregion Properties 
+            #endregion Properties
 
-		#region Constructors (2) 
+            #region Constructors (2)
 
             private CompressionResult()
             {
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CompressionResult"/> class.
+            /// </summary>
+            /// <param name="bytes">The bytes.</param>
+            /// <param name="sectionLengths">The section lengths.</param>
             public CompressionResult( IList<byte> bytes, IList<int> sectionLengths )
             {
                 Bytes = bytes;
                 SectionLengths = sectionLengths;
             }
 
-		#endregion Constructors 
+            #endregion Constructors
 
         }
 

@@ -74,7 +74,7 @@ namespace FFTPatcher.Datatypes
         static Event()
         {
             pspEventNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.EventNames,
+                PSPResources.EventNames,
                 "/Events/Event[@value='{0:X3}']/@name",
                 0x200 + 77 );
             psxEventNames = Utilities.GetStringsFromNumberedXmlNodes(
@@ -148,9 +148,21 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return string.Format( "{0:X3} {1}", Value, Name );
+            return (HasChanged ? "*" : "") + string.Format( "{0:X3} {1}", Value, Name );
         }
 
+        public static void Copy( Event source, Event destination )
+        {
+            for( int i = 0; i < source.Units.Length; i++ )
+            {
+                source.Units[i].CopyTo( destination.Units[i] );
+            }
+        }
+
+        public void CopyTo( Event destination )
+        {
+            Copy( this, destination );
+        }
 
         #endregion Methods
 

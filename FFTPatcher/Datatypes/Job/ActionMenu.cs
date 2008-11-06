@@ -197,7 +197,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllActionMenus : IChangeable, IXmlDigest
+    public class AllActionMenus : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -209,7 +209,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -230,7 +230,7 @@ namespace FFTPatcher.Datatypes
 
         public AllActionMenus( IList<byte> bytes, Context context )
         {
-            byte[] defaultBytes = context == Context.US_PSP ? Resources.ActionEventsBin : PSXResources.ActionEventsBin;
+            byte[] defaultBytes = context == Context.US_PSP ? PSPResources.ActionEventsBin : PSXResources.ActionEventsBin;
 
             List<ActionMenu> tempActions = new List<ActionMenu>();
 
@@ -261,7 +261,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
             }
             else
             {
@@ -310,5 +310,22 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x564B4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276CA4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276CA4, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

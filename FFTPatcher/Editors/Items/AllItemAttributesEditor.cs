@@ -39,23 +39,70 @@ namespace FFTPatcher.Editors
         public AllItemAttributesEditor()
         {
             InitializeComponent();
+            itemAttributeEditor.DataChanged += new EventHandler( itemAttributeEditor_DataChanged );
+            offsetListBox.ContextMenu = new ContextMenu(
+                new MenuItem[] { new MenuItem( "Clone", CopyClickEventHandler ), new MenuItem( "Paste clone", PasteClickEventHandler ) } );
+            offsetListBox.ContextMenu.MenuItems[1].Enabled = false;
+            offsetListBox.MouseDown += new MouseEventHandler( offsetListBox_MouseDown );
         }
+
+        void offsetListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                offsetListBox.SelectedIndex = offsetListBox.IndexFromPoint( e.Location );
+            }
+        }
+
+        private ItemAttributes ClipBoardAttributes;
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
+        private void CopyClickEventHandler( object sender, System.EventArgs args )
+        {
+            offsetListBox.ContextMenu.MenuItems[1].Enabled = true;
+            ClipBoardAttributes = offsetListBox.SelectedItem as ItemAttributes;
+        }
+
+        private void PasteClickEventHandler( object sender, System.EventArgs args )
+        {
+            if ( ClipBoardAttributes != null )
+            {
+                ClipBoardAttributes.CopyTo( offsetListBox.SelectedItem as ItemAttributes );
+                itemAttributeEditor.ItemAttributes = null;
+                itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
+                itemAttributeEditor.UpdateView();
+                itemAttributeEditor_DataChanged( itemAttributeEditor, System.EventArgs.Empty );
+                itemAttributeEditor.PerformLayout();
+            }
+        }
+
+
+        private void itemAttributeEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
         }
 
+        private Context ourContext = Context.Default;
         public void UpdateView( AllItemAttributes attributes )
         {
+            if ( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                ClipBoardAttributes = null;
+                offsetListBox.ContextMenu.MenuItems[1].Enabled = false;
+            }
+
             offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
-            offsetListBox.Items.Clear();
-            offsetListBox.Items.AddRange( attributes.ItemAttributes );
+            offsetListBox.DataSource = attributes.ItemAttributes;
             offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
             offsetListBox.SelectedIndex = 0;
             itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;

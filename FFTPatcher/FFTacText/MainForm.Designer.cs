@@ -19,6 +19,9 @@
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// The main form for FFTacText.
+    /// </summary>
     partial class MainForm
     {
         /// <summary>
@@ -68,6 +71,8 @@ namespace FFTPatcher.TextEditor
             this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
             this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
             this.compressedStringSectionedEditor = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
+            this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
@@ -194,11 +199,27 @@ namespace FFTPatcher.TextEditor
             this.compressedStringSectionedEditor.Strings = null;
             this.compressedStringSectionedEditor.TabIndex = 1;
             // 
+            // patchPsxBackgroundWorker
+            // 
+            this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
+            this.patchPsxBackgroundWorker.WorkerSupportsCancellation = true;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.progressBar.Location = new System.Drawing.Point( 12, 339 );
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size( 519, 23 );
+            this.progressBar.TabIndex = 3;
+            this.progressBar.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 543, 374 );
+            this.Controls.Add( this.progressBar );
             this.Controls.Add( this.partitionEditor );
             this.Controls.Add( this.stringSectionedEditor );
             this.Controls.Add( this.compressedStringSectionedEditor );
@@ -228,6 +249,8 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.MenuItem helpMenuItem;
         private System.Windows.Forms.MenuItem allowedSymbolsMenuItem;
+        private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
+        private System.Windows.Forms.ProgressBar progressBar;
 
     }
 }

@@ -144,6 +144,37 @@ namespace FFTPatcher.Datatypes
             CantStackOn = new Statuses( bytes.Sub( 11, 15 ), defaults == null ? null : defaults.CantStackOn );
         }
 
+        public static void Copy( StatusAttribute source, StatusAttribute destination )
+        {
+            source.Cancels.CopyTo( destination.Cancels );
+            source.CantStackOn.CopyTo( destination.CantStackOn );
+            destination.Blank1 = source.Blank1;
+            destination.Blank2 = source.Blank2;
+            destination.Order = source.Order;
+            destination.CT = source.CT;
+            destination.FreezeCT = source.FreezeCT;
+            destination.KO = source.KO;
+            destination.CanReact = source.CanReact;
+            destination.Blank2 = source.Blank2;
+            destination.IgnoreAttack = source.IgnoreAttack;
+            destination.Unknown1 = source.Unknown1;
+            destination.Unknown2 = source.Unknown2;
+            destination.Unknown3 = source.Unknown3;
+            destination.Unknown4 = source.Unknown4;
+            destination.Unknown5 = source.Unknown5;
+            destination.Unknown6 = source.Unknown6;
+            destination.Unknown7 = source.Unknown7;
+            destination.Unknown8 = source.Unknown8;
+            destination.Unknown9 = source.Unknown9;
+            destination.Unknown10 = source.Unknown10;
+            destination.Unknown11 = source.Unknown11;
+        }
+
+        public void CopyTo( StatusAttribute destination )
+        {
+            Copy( this, destination );
+        }
+
         #endregion Constructors
 
         #region Methods (3)
@@ -175,7 +206,7 @@ namespace FFTPatcher.Datatypes
 
         public override string ToString()
         {
-            return Name;
+            return (HasChanged ? "*" : "") + Name;
         }
 
 
@@ -183,7 +214,7 @@ namespace FFTPatcher.Datatypes
 
     }
 
-    public class AllStatusAttributes : IChangeable, IXmlDigest
+    public class AllStatusAttributes : PatchableFile, IXmlDigest
     {
 
         #region Properties (2)
@@ -193,7 +224,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -217,9 +248,9 @@ namespace FFTPatcher.Datatypes
         public AllStatusAttributes( IList<byte> bytes )
         {
             StatusAttributes = new StatusAttribute[40];
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.StatusAttributesBin : PSXResources.StatusAttributesBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.StatusAttributesBin : PSXResources.StatusAttributesBin;
 
-            string[] names = FFTPatch.Context == Context.US_PSP ? Resources.Statuses : PSXResources.Statuses;
+            string[] names = FFTPatch.Context == Context.US_PSP ? PSPResources.Statuses : PSXResources.Statuses;
             for( int i = 0; i < 40; i++ )
             {
                 StatusAttributes[i] =
@@ -237,7 +268,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
             }
             else
             {
@@ -285,5 +316,23 @@ namespace FFTPatcher.Datatypes
 
         #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x565E4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276DA4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276DA4, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

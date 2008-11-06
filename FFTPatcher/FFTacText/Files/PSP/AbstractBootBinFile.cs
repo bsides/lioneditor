@@ -21,10 +21,13 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Represents a subfile in the BOOT.BIN file.
+    /// </summary>
     public abstract class AbstractBootBinFile : BasePSPSectionedFile, IBootBin
     {
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
         ICollection<long> IBootBin.Locations
@@ -33,21 +36,38 @@ namespace FFTPatcher.TextEditor.Files.PSP
         }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractBootBinFile"/> class.
+        /// </summary>
         protected AbstractBootBinFile()
             : base()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractBootBinFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected AbstractBootBinFile( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
+        public override IList<PatchedByteArray> GetAllPatches()
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            foreach( var kvp in Locations )
+            {
+                result.Add( new PatchedByteArray( (PspIso.Sectors)kvp.Key, kvp.Value, bytes ) );
+            }
+            return result;
+        }
     }
 }

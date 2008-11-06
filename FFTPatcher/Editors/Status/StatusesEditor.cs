@@ -22,7 +22,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class StatusesEditor : UserControl
+    public partial class StatusesEditor : BaseEditor
     {
 
 		#region Fields (3) 
@@ -78,6 +78,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFlag( statuses, Statuses.FieldNames[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 
@@ -92,7 +93,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 statusesCheckedListBox.Items.Clear();
-                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.Statuses : PSXResources.Statuses );
+                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.Statuses : PSXResources.Statuses );
             }
         
             if( statuses.Default != null )

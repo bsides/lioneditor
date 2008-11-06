@@ -39,12 +39,19 @@ namespace FFTPatcher.Editors
         public AllInflictStatusesEditor()
         {
             InitializeComponent();
+            inflictStatusEditor.DataChanged += new EventHandler( inflictStatusEditor_DataChanged );
         }
 
 		#endregion Constructors 
 
-		#region Methods (2) 
+		#region Methods (3) 
 
+
+        private void inflictStatusEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -54,8 +61,7 @@ namespace FFTPatcher.Editors
         public void UpdateView( AllInflictStatuses statuses )
         {
             offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
-            offsetListBox.Items.Clear();
-            offsetListBox.Items.AddRange( statuses.InflictStatuses );
+            offsetListBox.DataSource = statuses.InflictStatuses;
             offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
             offsetListBox.SelectedIndex = 0;
             inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;

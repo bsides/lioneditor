@@ -34,6 +34,7 @@ namespace FFTPatcher.Editors
             itemEditor.InflictStatusClicked += itemEditor_InflictStatusClicked;
             itemEditor.ItemAttributesClicked += itemEditor_ItemAttributesClicked;
             itemEditor.SecondTableLinkClicked += itemEditor_SecondTableLinkClicked;
+            itemEditor.DataChanged += new EventHandler( itemEditor_DataChanged );
         }
 
 		#endregion Constructors 
@@ -46,8 +47,14 @@ namespace FFTPatcher.Editors
 
 		#endregion Events 
 
-		#region Methods (5) 
+		#region Methods (6) 
 
+
+        private void itemEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[itemListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void itemEditor_InflictStatusClicked( object sender, LabelClickedEventArgs e )
         {
@@ -113,8 +120,7 @@ namespace FFTPatcher.Editors
         public void UpdateView( AllItems items )
         {
             itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;
-            itemListBox.Items.Clear();
-            itemListBox.Items.AddRange( items.Items.ToArray() );
+            itemListBox.DataSource = items.Items;
             itemListBox.SelectedIndexChanged += itemListBox_SelectedIndexChanged;
             itemListBox.SelectedIndex = 0;
             itemEditor.Item = itemListBox.SelectedItem as Item;

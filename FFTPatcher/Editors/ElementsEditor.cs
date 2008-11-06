@@ -26,7 +26,7 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class ElementsEditor : UserControl
+    public partial class ElementsEditor : BaseEditor
     {
 
 		#region Static Fields (1) 
@@ -76,6 +76,7 @@ namespace FFTPatcher.Editors
                 string s = elementsCheckedListBox.Items[e.Index].ToString();
                 PropertyInfo pi = elements.GetType().GetProperty( s );
                 pi.SetValue( elements, e.NewValue == CheckState.Checked, null );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 

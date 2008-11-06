@@ -168,6 +168,34 @@ namespace FFTPatcher
             }
         }
 
+        public static byte[] ReadFile( IsoType isoType, Stream iso, int fileSector, int offset, int length )
+        {
+            int dataSize = dataSizes[(int)isoType];
+            int dataStart = dataStarts[(int)isoType];
+            int sectorSize = sectorSizes[(int)isoType];
+
+            int desiredStartSector = fileSector + offset / dataSize;
+            int startOffset = offset % dataSize;
+
+            int bytesLeftInFirstSector = dataSize - startOffset;
+
+            iso.Seek( desiredStartSector * sectorSize + dataStart + startOffset, SeekOrigin.Begin );
+
+            byte[] result = new byte[length];
+
+            int bytesRead = iso.Read( result, 0, Math.Min( bytesLeftInFirstSector, length ) );
+            desiredStartSector++;
+
+            while ( bytesRead < length )
+            {
+               iso.Seek( desiredStartSector * sectorSize + dataStart, SeekOrigin.Begin );
+               bytesRead += iso.Read( result, bytesRead, Math.Min( length - bytesRead, dataSize) );
+               desiredStartSector++;
+            }
+
+            return result;
+        }
+        
         /// <summary>
         /// Patches the bytes at a given offset.
         /// </summary>
@@ -264,6 +292,39 @@ namespace FFTPatcher
                 totalPatchedBytes += sizeRead;
                 sectorStart = dataStarts[type];
                 sectorLength = dataSizes[type];
+            }
+        }
+
+        public static void FixupECC( IsoType isoType, Stream iso )
+        {
+            int type = (int)isoType;
+            int sectorSize = sectorSizes[type];
+            byte[] sector = new byte[sectorSize];
+
+            if ( iso.Length % sectorSize != 0 )
+            {
+                throw new ArgumentException( "ISO does not have correct length for its type", "isoType" );
+            }
+            if ( isoType == IsoType.Mode1 )
+            {
+                throw new ArgumentException( "Mode1 does not support ECC/EDC", "isoType" );
+            }
+
+            Int64 numberOfSectors = iso.Length / sectorSize;
+            iso.Seek( 0, SeekOrigin.Begin );
+            for ( Int64 i = 0; i < numberOfSectors; i++ )
+            {
+                iso.Read( sector, 0, sectorSize );
+
+                if ( isoType != IsoType.Mode1 && ( sector[0x12] & 8 ) == 0 )
+                {
+                    sector[0x12] = 8;
+                    sector[0x16] = 8;
+                }
+
+                GenerateEccEdc( sector, isoType );
+                iso.Seek( -sectorSize, SeekOrigin.Current );
+                iso.Write( sector, 0, sectorSize );
             }
         }
 

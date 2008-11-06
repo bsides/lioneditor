@@ -177,7 +177,7 @@ namespace FFTPatcher.Datatypes
         static AllMonsterSkills()
         {
             PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.Jobs,
+                PSPResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 48,
                 0x5E );
@@ -190,7 +190,7 @@ namespace FFTPatcher.Datatypes
 
         public AllMonsterSkills( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.MonsterSkillsBin : PSXResources.MonsterSkillsBin;
 
             MonsterSkills = new MonsterSkill[48];
             for ( int i = 0; i < 48; i++ )
@@ -209,7 +209,7 @@ namespace FFTPatcher.Datatypes
         {
             if ( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
             }
             else
             {

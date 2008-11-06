@@ -159,7 +159,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 flagsCheckedListBox.Items.Clear();
-                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.AbilityAttributes : PSXResources.AbilityAttributes );
+                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.AbilityAttributes : PSXResources.AbilityAttributes );
                 formulaComboBox.DataSource = ourContext == Context.US_PSP ? AbilityFormula.PSPAbilityFormulas : AbilityFormula.PSXAbilityFormulas;
             }
 

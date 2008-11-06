@@ -22,8 +22,11 @@ using System.Collections.ObjectModel;
 
 namespace FFTPatcher
 {
+    using Paths = FFTPatcher.Resources.Paths.PSX;
+
     public static class PSXResources
     {
+
 
 		#region Static Fields (7) 
 
@@ -177,11 +180,11 @@ namespace FFTPatcher
             }
         }
 
-        public static string Abilities { get { return dict["Abilities"] as string; } }
+        public static string Abilities { get { return dict[Paths.AbilitiesNamesXML] as string; } }
 
-        public static byte[] AbilitiesBin { get { return dict["AbilitiesBin"] as byte[]; } }
+        public static byte[] AbilitiesBin { get { return dict[Paths.Binaries.Abilities] as byte[]; } }
 
-        public static string AbilitiesStrings { get { return dict["AbilitiesStrings"] as string; } }
+        public static string AbilitiesStrings { get { return dict[Paths.AbilitiesStringsXML] as string; } }
 
         public static string[] AbilityAI
         {
@@ -222,7 +225,7 @@ namespace FFTPatcher
                 if( abilityEffects == null )
                 {
                     abilityEffects = Utilities.GetStringsFromNumberedXmlNodes(
-                        dict["AbilitiesEffects"] as string,
+                        dict[Paths.AbilityEffectsXML] as string,
                         "/Effects/Effect[@value='{0:X3}']/@name",
                         512 );
                 }
@@ -231,7 +234,7 @@ namespace FFTPatcher
             }
         }
 
-        public static byte[] AbilityEffectsBin { get { return dict["AbilitiesEffectsBin"] as byte[]; } }
+        public static byte[] AbilityEffectsBin { get { return dict[Paths.Binaries.AbilityEffects] as byte[]; } }
 
         public static string[] AbilityTypes
         {
@@ -249,35 +252,45 @@ namespace FFTPatcher
             }
         }
 
-        public static byte[] ActionEventsBin { get { return dict["ActionEventsBin"] as byte[]; } }
+        public static byte[] ActionEventsBin { get { return dict[Paths.Binaries.ActionEvents] as byte[]; } }
 
-        public static string EventNames { get { return dict["EventNames"] as string; } }
+        public static byte[] ENTD1 { get { return dict[Paths.Binaries.ENTD1] as byte[]; } }
 
-        public static byte[] FontBin { get { return dict["FontBin"] as byte[]; } }
+        public static byte[] ENTD2 { get { return dict[Paths.Binaries.ENTD2] as byte[]; } }
 
-        public static byte[] FontWidthsBin { get { return dict["FontWidthsBin"] as byte[]; } }
+        public static byte[] ENTD3 { get { return dict[Paths.Binaries.ENTD3] as byte[]; } }
 
-        public static byte[] InflictStatusesBin { get { return dict["InflictStatusesBin"] as byte[]; } }
+        public static byte[] ENTD4 { get { return dict[Paths.Binaries.ENTD4] as byte[]; } }
 
-        public static string Items { get { return dict["Items"] as string; } }
+        public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
 
-        public static string ItemsStrings { get { return dict["ItemsStrings"] as string; } }
+        public static string EventNames { get { return dict[Paths.EventNamesXML] as string; } }
 
-        public static byte[] JobLevelsBin { get { return dict["JobLevelsBin"] as byte[]; } }
+        public static byte[] FontBin { get { return dict[Paths.Binaries.Font] as byte[]; } }
 
-        public static string Jobs { get { return dict["Jobs"] as string; } }
+        public static byte[] FontWidthsBin { get { return dict[Paths.Binaries.FontWidths] as byte[]; } }
 
-        public static byte[] JobsBin { get { return dict["JobsBin"] as byte[]; } }
+        public static byte[] InflictStatusesBin { get { return dict[Paths.Binaries.InflictStatuses] as byte[]; } }
 
-        public static byte[] MonsterSkillsBin { get { return dict["MonsterSkillsBin"] as byte[]; } }
+        public static string Items { get { return dict[Paths.ItemsXML] as string; } }
 
-        public static byte[] OldItemAttributesBin { get { return dict["OldItemAttributesBin"] as byte[]; } }
+        public static string ItemsStrings { get { return dict[Paths.ItemsStringsXML] as string; } }
 
-        public static byte[] OldItemsBin { get { return dict["OldItemsBin"] as byte[]; } }
+        public static byte[] JobLevelsBin { get { return dict[Paths.Binaries.JobLevels] as byte[]; } }
 
-        public static byte[] PoachProbabilitiesBin { get { return dict["PoachProbabilitiesBin"] as byte[]; } }
+        public static string Jobs { get { return dict[Paths.JobsXML] as string; } }
 
-        public static byte[] SCEAPDAT { get { return dict["SCEAP"] as byte[]; } }
+        public static byte[] JobsBin { get { return dict[Paths.Binaries.Jobs] as byte[]; } }
+
+        public static byte[] MonsterSkillsBin { get { return dict[Paths.Binaries.MonsterSkills] as byte[]; } }
+
+        public static byte[] OldItemAttributesBin { get { return dict[Paths.Binaries.OldItemAttributes] as byte[]; } }
+
+        public static byte[] OldItemsBin { get { return dict[Paths.Binaries.OldItems] as byte[]; } }
+
+        public static byte[] PoachProbabilitiesBin { get { return dict[Paths.Binaries.PoachProbabilities] as byte[]; } }
+
+        public static byte[] SCEAPDAT { get { return dict[Paths.Binaries.SCEAP] as byte[]; } }
 
         public static string[] ShopAvailabilities
         {
@@ -296,15 +309,15 @@ namespace FFTPatcher
             }
         }
 
-        public static string SkillSets { get { return dict["SkillSets"] as string; } }
+        public static string SkillSets { get { return dict[Paths.SkillSetsXML] as string; } }
 
-        public static byte[] SkillSetsBin { get { return dict["SkillSetsBin"] as byte[]; } }
+        public static byte[] SkillSetsBin { get { return dict[Paths.Binaries.SkillSets] as byte[]; } }
 
-        public static string SpecialNames { get { return dict["SpecialNames"] as string; } }
+        public static string SpecialNames { get { return dict[Paths.SpecialNamesXML] as string; } }
 
-        public static string SpriteSets { get { return dict["SpriteSets"] as string; } }
+        public static string SpriteSets { get { return dict[Paths.SpriteSetsXML] as string; } }
 
-        public static byte[] StatusAttributesBin { get { return dict["StatusAttributesBin"] as byte[]; } }
+        public static byte[] StatusAttributesBin { get { return dict[Paths.Binaries.StatusAttributes] as byte[]; } }
 
         public static string[] Statuses
         {
@@ -322,9 +335,7 @@ namespace FFTPatcher
             }
         }
 
-        public static string StatusNames { get { return dict["StatusNames"] as string; } }
-
-        public static byte[] MoveFind { get { return Properties.Resources.MoveFind; } }
+        public static string StatusNames { get { return dict[Paths.StatusNamesXML] as string; } }
 
 		#endregion Static Properties 
 
@@ -332,35 +343,38 @@ namespace FFTPatcher
 
         static PSXResources()
         {
-            dict["AbilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesBin );
-            dict["ActionEventsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.ActionEventsBin );
-            dict["FontBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.FontBin );
-            dict["FontWidthsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.FontWidthsBin );
-            dict["InflictStatusesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.InflictStatusesBin );
-            dict["JobLevelsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.JobLevelsBin );
-            dict["JobsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.JobsBin );
-            dict["MonsterSkillsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.MonsterSkillsBin );
-            dict["StatusAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.StatusAttributesBin );
-            dict["OldItemAttributesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.OldItemAttributesBin );
-            dict["OldItemsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.OldItemsBin );
-            dict["SkillSetsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SkillSetsBin );
-            dict["PoachProbabilitiesBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.PoachProbabilitiesBin );
-
-            dict["SkillSets"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SkillSets ).ToUTF8String();
-            dict["Abilities"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Abilities ).ToUTF8String();
-            dict["AbilitiesStrings"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesStrings ).ToUTF8String();
-            dict["EventNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.EventNames ).ToUTF8String();
-            dict["Items"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Items ).ToUTF8String();
-            dict["ItemsStrings"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.ItemsStrings ).ToUTF8String();
-            dict["Jobs"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.Jobs ).ToUTF8String();
-            dict["SpecialNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpecialNames ).ToUTF8String();
-            dict["SpriteSets"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SpriteSets ).ToUTF8String();
-            dict["StatusNames"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.StatusNames ).ToUTF8String();
-
-            dict["AbilitiesEffects"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilitiesEffects ).ToUTF8String();
-            dict["AbilitiesEffectsBin"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.AbilityEffectsBin );
-
-            dict["SCEAP"] = GZip.Decompress( FFTPatcher.Properties.PSXResources.SCEAP );
+            dict[Resources.Paths.PSX.Binaries.ENTD1] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1];
+            dict[Resources.Paths.PSX.Binaries.ENTD2] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD2];
+            dict[Resources.Paths.PSX.Binaries.ENTD3] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD3];
+            dict[Resources.Paths.PSX.Binaries.ENTD4] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD4];
+            dict[Resources.Paths.PSX.Binaries.MoveFind] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MoveFind];
+            dict[Resources.Paths.PSX.Binaries.Abilities] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Abilities];
+            dict[Resources.Paths.PSX.Binaries.AbilityEffects] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityEffects];
+            dict[Resources.Paths.PSX.Binaries.ActionEvents] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ActionEvents];
+            dict[Resources.Paths.PSX.Binaries.Font] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Font];
+            dict[Resources.Paths.PSX.Binaries.FontWidths] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.FontWidths];
+            dict[Resources.Paths.PSX.Binaries.InflictStatuses] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.InflictStatuses];
+            dict[Resources.Paths.PSX.Binaries.JobLevels] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.JobLevels];
+            dict[Resources.Paths.PSX.Binaries.Jobs] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Jobs];
+            dict[Resources.Paths.PSX.Binaries.MonsterSkills] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MonsterSkills];
+            dict[Resources.Paths.PSX.Binaries.OldItemAttributes] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItemAttributes];
+            dict[Resources.Paths.PSX.Binaries.OldItems] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItems];
+            dict[Resources.Paths.PSX.Binaries.PoachProbabilities] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.PoachProbabilities];
+            dict[Resources.Paths.PSX.Binaries.SkillSets] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SkillSets];
+            dict[Resources.Paths.PSX.Binaries.StatusAttributes] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StatusAttributes];
+            dict[Resources.Paths.PSX.EventNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String();
+            dict[Resources.Paths.PSX.JobsXML] = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.SkillSetsXML] = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.SpecialNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.SpecialNamesXML].ToUTF8String();
+            dict[Resources.Paths.PSX.SpriteSetsXML] = Resources.ZipFileContents[Resources.Paths.PSX.SpriteSetsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.StatusNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String();
+            dict[Resources.Paths.PSX.AbilitiesNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String();
+            dict[Resources.Paths.PSX.AbilitiesStringsXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesStringsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.AbilityEffectsXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilityEffectsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemAttributesXML].ToUTF8String();
+            dict[Resources.Paths.PSX.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.Binaries.SCEAP] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
         }
 
 		#endregion Constructors 

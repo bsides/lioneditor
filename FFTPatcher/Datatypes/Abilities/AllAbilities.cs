@@ -148,7 +148,7 @@ namespace FFTPatcher.Datatypes
             pspEventAbilites = new Ability[512];
 
             PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.Abilities,
+                PSPResources.Abilities,
                 "/Abilities/Ability[@value='{0}']/@name",
                 512 );
             PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
@@ -173,9 +173,9 @@ namespace FFTPatcher.Datatypes
         public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
         {
             AllEffects = new AllAbilityEffects( this );
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : PSXResources.AbilitiesBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilitiesBin : PSXResources.AbilitiesBin;
             Dictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
-            byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
+            byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
 
             Abilities = new Ability[512];
             DefaultAbilities = new Ability[512];
@@ -245,8 +245,8 @@ namespace FFTPatcher.Datatypes
             if( FFTPatch.Context == Context.US_PSP )
             {
                 List<string> result = new List<string>();
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
                 return result;
             }
             else

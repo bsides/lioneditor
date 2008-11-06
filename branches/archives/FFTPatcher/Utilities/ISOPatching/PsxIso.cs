@@ -4992,6 +4992,73 @@ namespace FFTPatcher
         public const Sectors SCUS_942_21 = Sectors.SCUS_942_21;
         public const Sectors SYSTEM_CNF = Sectors.SYSTEM_CNF;
 
+        public class KnownPosition
+        {
+            public Sectors Sector { get; private set; }
+            public int StartLocation { get; private set; }
+            public int Length { get; private set; }
+            
+            public KnownPosition( Sectors sector, int startLocation, int length )
+            {
+               Sector = sector;
+               StartLocation = startLocation;
+               Length = length;
+            }
+        }
+        
+        public static KnownPosition Abilities { get; private set; }
+        public static KnownPosition AbilityEffects { get; private set; }
+        public static KnownPosition ActionEvents { get; private set; }
+        public static KnownPosition Font { get; private set; }
+        public static KnownPosition FontWidths { get; private set; }
+        public static KnownPosition InflictStatuses { get; private set; }
+        public static KnownPosition JobLevels { get; private set; }
+        public static KnownPosition Jobs { get; private set; }
+        public static KnownPosition MonsterSkills { get; private set; }
+        public static KnownPosition OldItemAttributes { get; private set; }
+        public static KnownPosition OldItems { get; private set; }
+        public static KnownPosition PoachProbabilities { get; private set; }
+        public static KnownPosition SkillSets { get; private set; }
+        public static KnownPosition StatusAttributes { get; private set; }
+        public static KnownPosition ENTD1 { get; private set; }
+        public static KnownPosition ENTD2 { get; private set; }
+        public static KnownPosition ENTD3 { get; private set; }
+        public static KnownPosition ENTD4 { get; private set; }
+        public static KnownPosition MoveFindItems { get; private set; }
+
+        static PsxIso()
+        {
+            Abilities = new KnownPosition( SCUS_942_21, 0x4F3F0, 9414 );
+            AbilityEffects = new KnownPosition( BATTLE_BIN, 0x14F3F0, 0x2E0 );
+            ActionEvents = new KnownPosition( SCUS_942_21, 0x564B4, 224 );
+            Font = new KnownPosition( EVENT.FONT_BIN, 0, 77000 );
+            FontWidths = new KnownPosition( BATTLE_BIN, 0xFF0FC, 0x898 );
+            InflictStatuses = new KnownPosition( SCUS_942_21, 0x547C4, 0x300 );
+            Jobs = new KnownPosition( SCUS_942_21, 0x518B8, 0x1E00 );
+            JobLevels = new KnownPosition( SCUS_942_21, 0x568C4, 0xD0 );
+            MonsterSkills = new KnownPosition( SCUS_942_21, 0x563C4, 0xF0 );
+            OldItemAttributes = new KnownPosition( SCUS_942_21, 0x54AC4, 0x7D0 );
+            OldItems = new KnownPosition( SCUS_942_21, 0x536B8, 0x110A );
+            PoachProbabilities = new KnownPosition( SCUS_942_21, 0x56864, 0x60 );
+            StatusAttributes = new KnownPosition( SCUS_942_21, 0x565E4, 0x280 );
+            SkillSets = new KnownPosition( SCUS_942_21, 0x55294, 0x1130 );
+            ENTD1 = new KnownPosition( BATTLE.ENTD1_ENT, 0, 81920 );
+            ENTD2 = new KnownPosition( BATTLE.ENTD2_ENT, 0, 81920 );
+            ENTD3 = new KnownPosition( BATTLE.ENTD3_ENT, 0, 81920 );
+            ENTD4 = new KnownPosition( BATTLE.ENTD4_ENT, 0, 81920 );
+            MoveFindItems = new KnownPosition( BATTLE_BIN, 0x8EE74, 0x800 );
+        }
+        
+        public static byte[] GetBlock( Stream iso, KnownPosition knownPositions ) 
+        {
+            return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
+        }
+        
+        public static byte[] ReadFile( Stream iso, Sectors file, int offset, int length )
+        {
+            return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
+        }
+        
         public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e, IGeneratePatchList patchList )
         {
             string filename = patchList.FileName;

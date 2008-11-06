@@ -460,6 +460,38 @@ namespace FFTPatcher.Datatypes
             FireDataChangedEvent();
         }
 
+        public static void OpenPatchedISO( string filename )
+        {
+            using( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.Read ) )
+            {
+                Context = Context.US_PSX;
+                LoadDataFromBytes(
+                    PsxIso.GetBlock( stream, PsxIso.Abilities ),
+                    PsxIso.GetBlock( stream, PsxIso.AbilityEffects ),
+                    PsxIso.GetBlock( stream, PsxIso.OldItems ),
+                    PsxIso.GetBlock( stream, PsxIso.OldItemAttributes ),
+                    null,
+                    null,
+                    PsxIso.GetBlock( stream, PsxIso.Jobs ),
+                    PsxIso.GetBlock( stream, PsxIso.JobLevels ),
+                    PsxIso.GetBlock( stream, PsxIso.SkillSets ),
+                    PsxIso.GetBlock( stream, PsxIso.MonsterSkills ),
+                    PsxIso.GetBlock( stream, PsxIso.ActionEvents ),
+                    PsxIso.GetBlock( stream, PsxIso.StatusAttributes ),
+                    PsxIso.GetBlock( stream, PsxIso.InflictStatuses ),
+                    PsxIso.GetBlock( stream, PsxIso.PoachProbabilities ),
+                    PsxIso.GetBlock( stream, PsxIso.ENTD1 ),
+                    PsxIso.GetBlock( stream, PsxIso.ENTD2 ),
+                    PsxIso.GetBlock( stream, PsxIso.ENTD3 ),
+                    PsxIso.GetBlock( stream, PsxIso.ENTD4 ),
+                    null,
+                    PsxIso.GetBlock( stream, PsxIso.Font ),
+                    PsxIso.GetBlock( stream, PsxIso.FontWidths ),
+                    PsxIso.GetBlock( stream, PsxIso.MoveFindItems ) );
+                FireDataChangedEvent();
+            }
+        }
+
         private static void LoadNewStylePatch( string filename )
         {
             using ( ZipFile file = new ZipFile( filename ) )

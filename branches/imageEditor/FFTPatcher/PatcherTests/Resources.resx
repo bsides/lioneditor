@@ -1,0 +1,601 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ADORA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\adora.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AGURI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\aguri.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AJORA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ajora.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Aliste" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\aliste.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARLI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\arli.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\aru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARUFU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\arufu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARUMA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\aruma.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARUTE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\arute.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Balthier" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\balthier.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BARITEN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\bariten.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BARU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\baru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BARUNA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\baruna.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BEHI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\behi.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BEIO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\beio.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BIBUROS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\biburos.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BOM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\bom.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BremondtDarkDragon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\bremondtdarkdragon.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BremondtHuman" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\bremondthuman.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CLOUD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\cloud.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CYOKO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\cyoko.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CYOMON1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\cyomon1.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CYOMON2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\cyomon2.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CYOMON3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\cyomon3.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CYOMON4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\cyomon4.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DAISU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\daisu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DAMI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\dami.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DeathKnightArgath" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\deathknightargath.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DEMON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\demon.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DILY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\dily.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DILY2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\dily2.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DILY3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\dily3.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DORA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\dora.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DORA1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\dora1.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DORA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\dora2.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ERU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\eru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FemaleDarkKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\femaledarkknight.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FemaleOnionKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\femaleonionknight.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FURAIA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\furaia.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FUSUI_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\fusui_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FUSUI_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\fusui_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FYUNE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\fyune.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GANDO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\gando.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GARU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\garu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GIN_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\gin_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GOB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\gob.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GORU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\goru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GYUMU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\gyumu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H61" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h61.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H75" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h75.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H76" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h76.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H77" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h77.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H78" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h78.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H79" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h79.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H80" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h80.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H81" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h81.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H82" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h82.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H83" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h83.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="H85" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\h85.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HASYU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\hasyu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HEBI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\hebi.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HIME" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\hime.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HYOU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\hyou.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="IKA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ika.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ITEM_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\item_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ITEM_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\item_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KANBA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\kanba.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KANZEN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\kanzen.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ki.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KNIGHT_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\knight_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KNIGHT_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\knight_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KURO_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\kuro_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KURO_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\kuro_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KYUKU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\kyuku.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LEDY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ledy.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Luso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\luso.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MaleDarkKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\maledarkknight.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MaleOnionKnight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\maleonionknight.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MARA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\mara.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MINA_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\mina_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MINA_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\mina_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MINOTA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\minota.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MOL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\mol.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MONK_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\monk_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MONK_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\monk_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MONO_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\mono_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MONO_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\mono_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MUSU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\musu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NINJA_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ninja_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NINJA_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ninja_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ODORI_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\odori_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ONMYO_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\onmyo_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ONMYO_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\onmyo_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ORAN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\oran.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ORU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\oru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="OTHER" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\other.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAFA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\rafa.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAGU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ragu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMUZA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ramuza.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMUZA2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ramuza2.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMUZA3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ramuza3.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="REZE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\reze.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="REZE_D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\reze_d.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RUDO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\rudo.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RYU_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ryu_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RYU_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\ryu_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SAMU_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\samu_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SAMU_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\samu_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SAN_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\san_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SAN_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\san_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SERIA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\seria.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SIMON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\simon.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SIRO_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\siro_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SIRO_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\siro_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SOURYO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\souryo.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SUKERU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\sukeru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SwordInStone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\swordinstone.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SYOU_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\syou_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SYOU_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\syou_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TETSU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\tetsu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="THIEF_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\thief_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="THIEF_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\thief_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TOKI_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\toki_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TOKI_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\toki_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TORI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\tori.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="URI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\uri.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VERI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\veri.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VORU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\voru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WAJU_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\waju_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WAJU_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\waju_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WEP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\wep.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WIGU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\wigu.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="YUMI_M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\yumi_m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="YUMI_W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\yumi_w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="YUREI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\yurei.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ZARU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\zaru.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ZARU2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\zaru2.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ZARUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\zarue.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ZARUMOU" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\zarumou.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_10M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\10m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_10W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\10w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_20M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\20m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_20W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\20w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_40M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\40m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_40W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\40w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_60M" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\60m.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_60W" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\60w.spr;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WLDFACE4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wldface4.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WLDFACE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>wldface.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pspWORLDLZW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>world.lzw;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KANZEN_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sprites\kanzen.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Abilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\bin\abilities.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AbilityEffects" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\abilityeffects.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd1.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd2.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\entd3.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd4.ent;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ENTD5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\entd5.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NewItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\bin\newitems.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="OldItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp\bin\olditems.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -5028,7 +5028,7 @@ namespace FFTPatcher
             if ( patchList.ENTD.Exists( b => b == true ) )
             {
                 IList<PatchedByteArray> entdPatches = FFTPatch.ENTDs.GetPatches( context );
-                for ( int i = 0; i < 5; i++ )
+                for ( int i = 0; i < 4; i++ )
                 {
                     if ( patchList.ENTD[i] )
                     {

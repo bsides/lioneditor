@@ -103,10 +103,10 @@ namespace FFTPatcher.Datatypes
 
             if( FFTPatch.Context == Context.US_PSP )
             {
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x2FB364 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontBin, this.ToByteArray(), 0x2FB364 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
             }
             else
             {

@@ -236,7 +236,7 @@ namespace FFTPatcher.Datatypes
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
             }
             else
             {

@@ -206,7 +206,7 @@ namespace FFTPatcher
             {
                 icon0FileNameTextBox.Enabled = false;
                 icon0BrowseButton.Enabled = false;
-                BuildICON0Preview( Resources.ICON0_PNG );
+                BuildICON0Preview( PSPResources.ICON0_PNG );
             }
 
             UpdateNextEnabled();

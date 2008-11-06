@@ -265,21 +265,20 @@ namespace FFTPatcher
 
         public static void PatchISO( BackgroundWorker worker, DoWorkEventArgs args, IGeneratePatchList patches )
         {
-            Action<int> progress = new Action<int>( worker.ReportProgress );
-            PatchISO( patches.FileName, progress, patches );
+            PatchISO( patches.FileName, worker, patches );
         }
 
         /// <summary>
         /// Patches the ISO.
         /// </summary>
         /// <param name="filename">The filename of the ISO to patch.</param>
-        public static void PatchISO( string filename, Action<int> progress, IGeneratePatchList patches )
+        public static void PatchISO( string filename, BackgroundWorker worker, IGeneratePatchList patches )
         {
             FileStream stream = null;
             try
             {
                 stream = new FileStream( filename, FileMode.Open );
-                PatchISO( stream, progress, patches );
+                PatchISO( stream, worker, patches );
             }
             catch( NotSupportedException )
             {
@@ -300,7 +299,7 @@ namespace FFTPatcher
         /// Patches the ISO.
         /// </summary>
         /// <param name="stream">The stream of the ISO to patch.</param>
-        public static void PatchISO( FileStream stream, Action<int> progress, IGeneratePatchList patchList )
+        public static void PatchISO( FileStream stream, BackgroundWorker worker, IGeneratePatchList patchList )
         {
             if( IsJP( stream ) )
             {
@@ -312,41 +311,38 @@ namespace FFTPatcher
 
             List<PatchedByteArray> patches = new List<PatchedByteArray>();
 
-            MethodInvoker sendProgress =
-                delegate()
+            Action<string> sendProgress =
+                delegate( string message )
                 {
-                    if( progress != null )
-                    {
-                        progress( ++tasksComplete * 100 / numberOfTasks );
-                    }
+                    worker.ReportProgress( ++tasksComplete * 100 / numberOfTasks, message );
                 };
 
             if( patchList.RegenECC )
             {
                 DecryptISO( stream );
-                sendProgress();
+                sendProgress( "Decrypting EBOOT.BIN" );
             }
 
             const Context context = Context.US_PSP;
             if( patchList.Abilities ) 
             { 
                 patches.AddRange( FFTPatch.Abilities.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Abilities patches" );
+                sendProgress( "Getting Abilities patches" );
             }
 
             if( patchList.AbilityEffects )
             {
                 patches.AddRange( FFTPatch.Abilities.AllEffects.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Ability Effects patches" );
+                sendProgress( "Getting Ability Effects patches" );
             }
 
             if( patchList.ActionMenus )
             {
                 patches.AddRange( FFTPatch.ActionMenus.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Action Menus patches" );
+                sendProgress( "Getting Action Menus patches" );
             }
 
             if( patchList.ENTD.Exists( b => b == true ) )
@@ -357,7 +353,7 @@ namespace FFTPatcher
                     if( patchList.ENTD[i] )
                     {
                         patches.Add( entdPatches[i] );
-                        sendProgress();
+                        sendProgress( string.Format( "Getting ENTD {0} patches", i ) );
                     }
                 }
             }
@@ -365,93 +361,93 @@ namespace FFTPatcher
             if( patchList.FONT )
             {
                 patches.AddRange( FFTPatch.Font.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Font patches" );
+                sendProgress( "Getting Font patches" );
             }
             if( patchList.FontWidths )
             {
                 patches.AddRange( FFTPatch.Font.GlyphWidths.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Font width patches" );
+                sendProgress( "Getting Font width patches" );
             }
             if( patchList.InflictStatus )
             {
                 patches.AddRange( FFTPatch.InflictStatuses.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Inflict Status patches" );
+                sendProgress( "Getting Inflict Status patches" );
             }
             if( patchList.ItemAttributes )
             {
                 patches.AddRange( FFTPatch.ItemAttributes.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Item Attributes patches" );
+                sendProgress( "Getting Item Attributes patches" );
+                sendProgress( "Getting Item Attributes patches" );
+                sendProgress( "Getting Item Attributes patches" );
             }
             if( patchList.Items )
             {
                 patches.AddRange( FFTPatch.Items.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Item patches" );
+                sendProgress( "Getting Item patches" );
+                sendProgress( "Getting Item patches" );
+                sendProgress( "Getting Item patches" );
             }
             if( patchList.JobLevels )
             {
                 patches.AddRange( FFTPatch.JobLevels.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Job Levels patches" );
+                sendProgress( "Getting Job Levels patches" );
             }
             if( patchList.Jobs )
             {
                 patches.AddRange( FFTPatch.Jobs.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Jobs patches" );
+                sendProgress( "Getting Jobs patches" );
             }
             if( patchList.MonsterSkills )
             {
                 patches.AddRange( FFTPatch.MonsterSkills.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Monster Skills patches" );
+                sendProgress( "Getting Monster Skills patches" );
             }
             if( patchList.MoveFindItems )
             {
                 patches.AddRange( FFTPatch.MoveFind.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Move/Find Items patches" );
+                sendProgress( "Getting Move/Find Items patches" );
             }
             foreach( PatchedByteArray patch in patchList.OtherPatches )
             {
                 patches.Add( patch );
-                sendProgress();
+                sendProgress( "Getting other patches" );
             }
             if( patchList.Poach )
             {
                 patches.AddRange( FFTPatch.PoachProbabilities.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Poach Probabilities patches" );
+                sendProgress( "Getting Poach Probabilities patches" );
             }
             if( patchList.Skillsets )
             {
                 patches.AddRange( FFTPatch.SkillSets.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Skillsets patches" );
+                sendProgress( "Getting Skillsets patches" );
             }
             if( patchList.StatusAttributes )
             {
                 patches.AddRange( FFTPatch.StatusAttributes.GetPatches( context ) );
-                sendProgress();
-                sendProgress();
+                sendProgress( "Getting Status attributes patches" );
+                sendProgress( "Getting Status attributes patches" );
             }
 
             foreach( PatchedByteArray patch in patches )
             {
-                ApplyPatch( stream, patch, sendProgress );
-                sendProgress();
+                ApplyPatch( stream, patch );
+                sendProgress( "Patching ISO" );
             }
         }
 
-        private static void ApplyPatch( FileStream stream, PatchedByteArray patch, MethodInvoker progress )
+        private static void ApplyPatch( FileStream stream, PatchedByteArray patch )
         {
             if( patch.SectorEnum != null )
             {

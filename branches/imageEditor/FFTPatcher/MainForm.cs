@@ -450,7 +450,7 @@ namespace FFTPatcher
 
         private void saveMenuItem_Click( object sender, System.EventArgs e )
         {
-            SavePatch( true );
+            SavePatch( false );
         }
 
         private string SavePatch( bool digest )

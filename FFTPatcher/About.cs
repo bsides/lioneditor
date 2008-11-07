@@ -26,7 +26,6 @@ namespace FFTPatcher
 {
     public partial class About : Form
     {
-
 		#region Constructors (1) 
 
         public About()
@@ -52,7 +51,6 @@ You should have received a copy of the GNU General Public License along with FFT
         }
 
 		#endregion Constructors 
-
     }
 }
 

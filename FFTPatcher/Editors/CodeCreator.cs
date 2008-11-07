@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,25 +24,25 @@ namespace FFTPatcher.Editors
 {
     public partial class CodeCreator : UserControl
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public CodeCreator()
         {
             InitializeComponent();
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
-
+		#region Public Methods (1) 
 
         public void UpdateView()
         {
             OnVisibleChanged( EventArgs.Empty );
         }
 
+		#endregion Public Methods 
 
+		#region Protected Methods (1) 
 
         protected override void OnVisibleChanged( EventArgs e )
         {
@@ -50,8 +50,6 @@ namespace FFTPatcher.Editors
             base.OnVisibleChanged( e );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Protected Methods 
     }
 }

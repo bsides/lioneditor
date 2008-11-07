@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -28,30 +28,26 @@ namespace FFTPatcher
 {
     public class PSXDescriptionAttribute : DescriptionAttribute
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public PSXDescriptionAttribute( string description )
             : base( description )
         {
         }
 
-		#endregionÂ ConstructorsÂ 
-
+		#endregion Constructors 
     }
 
     public class PSPDescriptionAttribute : DescriptionAttribute
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public PSPDescriptionAttribute( string description )
             : base( description )
         {
         }
 
-		#endregionÂ ConstructorsÂ 
-
+		#endregion Constructors 
     }
     
     /// <summary>
@@ -60,7 +56,7 @@ namespace FFTPatcher
     public static class Utilities
     {
 
-		#regionÂ MethodsÂ (13)Â 
+		#region Methods (13) 
 
         /// <summary>
         /// Builds a dictionary given a list of Key/Value pairs.
@@ -282,7 +278,7 @@ namespace FFTPatcher
         }
 
 
-		#endregionÂ MethodsÂ 
+		#endregion Methods 
 
     }
 }

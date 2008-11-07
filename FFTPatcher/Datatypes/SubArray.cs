@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,9 +27,7 @@ namespace FFTPatcher
 
     public static partial class ExtensionMethods
     {
-
-		#regionÂ MethodsÂ (4)Â 
-
+		#region Public Methods (4) 
 
         public static int IndexOf<T>( this IList<T> list, IList<T> find ) where T : IEquatable<T>
         {
@@ -84,9 +82,7 @@ namespace FFTPatcher
             return new SubArray<T>( list, start, stop );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }
 
@@ -94,7 +90,24 @@ namespace FFTPatcher.Datatypes
 {
     internal class CollectionDebugView<T>
     {
+		#region Instance Variables (1) 
+
         private IList<T> collection;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
+
+        [DebuggerBrowsable( DebuggerBrowsableState.RootHidden )]
+        public T[] Items
+        {
+            get { return collection.ToArray(); }
+        }
+
+		#endregion Public Properties 
+
+		#region Constructors (1) 
+
         public CollectionDebugView( IList<T> collection )
         {
             if( collection == null )
@@ -105,28 +118,22 @@ namespace FFTPatcher.Datatypes
             this.collection = collection;
         }
 
-        [DebuggerBrowsable( DebuggerBrowsableState.RootHidden )]
-        public T[] Items
-        {
-            get { return collection.ToArray(); }
-        }
+		#endregion Constructors 
     }
 
     [DebuggerTypeProxy( typeof( CollectionDebugView<> ) )]
     [DebuggerDisplay( "Count = {Count}" )]
     public class SubArray<T> : ICollection<T>, IList<T>, IDisposable
     {
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (3) 
 
         private IList<T> baseArray;
         private int start;
         private int stop;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (3)Â 
-
+		#region Public Properties (3) 
 
         public int Count
         {
@@ -152,10 +159,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (4)Â 
+		#region Constructors (4) 
 
         public SubArray( IList<T> baseArray )
             : this( baseArray, 0 )
@@ -192,23 +198,9 @@ namespace FFTPatcher.Datatypes
             this.baseArray = baseArray;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (17)Â 
-
-
-        private void CheckIndex( int index )
-        {
-            if( index > (stop - start) )
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new SubArrayEnumerator<T>( this );
-        }
+		#region Public Methods (10) 
 
         public static bool operator !=( SubArray<T> left, SubArray<T> right )
         {
@@ -241,9 +233,36 @@ namespace FFTPatcher.Datatypes
             baseArray = null;
         }
 
+        public override bool Equals( object obj )
+        {
+            IList<T> other = obj as IList<T>;
+
+            if( (other == null) || (other.Count != Count) || !(this[0] is IEquatable<T>) )
+            {
+                return false;
+            }
+
+            for( int i = 0; i < Count; i++ )
+            {
+                IEquatable<T> mine = this[i] as IEquatable<T>;
+                IEquatable<T> theirs = other[i] as IEquatable<T>;
+                if( !mine.Equals( theirs ) )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             return new SubArrayEnumerator<T>( this );
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public int IndexOf( T item )
@@ -269,86 +288,54 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
+		#endregion Public Methods 
 
+		#region Private Methods (2) 
 
-        public override bool Equals( object obj )
+        private void CheckIndex( int index )
         {
-            IList<T> other = obj as IList<T>;
-
-            if( (other == null) || (other.Count != Count) || !(this[0] is IEquatable<T>) )
+            if( index > (stop - start) )
             {
-                return false;
+                throw new ArgumentOutOfRangeException();
             }
-
-            for( int i = 0; i < Count; i++ )
-            {
-                IEquatable<T> mine = this[i] as IEquatable<T>;
-                IEquatable<T> theirs = other[i] as IEquatable<T>;
-                if( !mine.Equals( theirs ) )
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
-        public override int GetHashCode()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return base.GetHashCode();
+            return new SubArrayEnumerator<T>( this );
         }
+
+		#endregion Private Methods 
 
         void ICollection<T>.Add( T item )
         {
         }
-
         void ICollection<T>.Clear()
         {
         }
-
         void IList<T>.Insert( int index, T item )
         {
         }
-
         bool ICollection<T>.Remove( T item )
         {
             return false;
         }
-
         void IList<T>.RemoveAt( int index )
         {
             throw new NotImplementedException();
         }
-
-		#endregionÂ MethodsÂ 
-
     }
 
     public class SubArrayEnumerator<T> : IEnumerator<T>
     {
-
-		#regionÂ FieldsÂ (2)Â 
+		#region Instance Variables (2) 
 
         private SubArray<T> array;
         private int currentIndex = -1;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (2)Â 
-
-
-        object System.Collections.IEnumerator.Current
-        {
-            get
-            {
-                if( (currentIndex != -1) && (currentIndex < array.Count) )
-                {
-                    return array[currentIndex];
-                }
-
-                return null;
-            }
-        }
+		#region Public Properties (1) 
 
         public T Current
         {
@@ -363,20 +350,35 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
+		#region Private Properties (1) 
 
-		#regionÂ ConstructorsÂ (1)Â 
+        object System.Collections.IEnumerator.Current
+        {
+            get
+            {
+                if( (currentIndex != -1) && (currentIndex < array.Count) )
+                {
+                    return array[currentIndex];
+                }
+
+                return null;
+            }
+        }
+
+		#endregion Private Properties 
+
+		#region Constructors (1) 
 
         public SubArrayEnumerator( SubArray<T> array )
         {
             this.array = array;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (3)Â 
-
+		#region Public Methods (3) 
 
         public void Dispose()
         {
@@ -400,8 +402,6 @@ namespace FFTPatcher.Datatypes
             currentIndex = 0;
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }

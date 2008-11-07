@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,9 +25,7 @@ namespace FFTPatcher.Editors
 {
     public partial class AllMonsterSkillsEditor : UserControl
     {
-
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public int SelectedIndex
         {
@@ -39,10 +37,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllMonsterSkillsEditor()
         {
@@ -57,10 +54,25 @@ namespace FFTPatcher.Editors
             dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (6)Â 
+		#region Public Methods (1) 
 
+        public void UpdateView( AllMonsterSkills skills )
+        {
+            dataGridView.DataSource = null;
+            foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
+            {
+                col.Items.Clear();
+                col.Items.AddRange( AllAbilities.DummyAbilities );
+                col.ValueType = typeof( Ability );
+            }
+            dataGridView.DataSource = skills.MonsterSkills;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (5) 
 
         private void Control_KeyDown( object sender, KeyEventArgs e )
         {
@@ -141,20 +153,6 @@ namespace FFTPatcher.Editors
             e.Control.KeyDown += Control_KeyDown;
         }
 
-        public void UpdateView( AllMonsterSkills skills )
-        {
-            dataGridView.DataSource = null;
-            foreach( DataGridViewComboBoxColumn col in new DataGridViewComboBoxColumn[] { Ability1, Ability2, Ability3, Beastmaster } )
-            {
-                col.Items.Clear();
-                col.Items.AddRange( AllAbilities.DummyAbilities );
-                col.ValueType = typeof( Ability );
-            }
-            dataGridView.DataSource = skills.MonsterSkills;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

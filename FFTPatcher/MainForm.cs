@@ -30,21 +30,14 @@ namespace FFTPatcher
 {
     public partial class MainForm : Form
     {
-        private PatchPSXForm patchPsxForm = null;
-
-        private PatchPSXForm PatchPSXForm
-        {
-            get
-            {
-                if( patchPsxForm == null )
-                {
-                    patchPsxForm = new PatchPSXForm();
-                }
-                return patchPsxForm;
-            }
-        }
+		#region Instance Variables (2) 
 
         private PatchPSPForm patchPspForm = null;
+        private PatchPSXForm patchPsxForm = null;
+
+		#endregion Instance Variables 
+
+		#region Private Properties (2) 
 
         private PatchPSPForm PatchPSPForm
         {
@@ -58,7 +51,21 @@ namespace FFTPatcher
             }
         }
 
-        #region Constructors (1) 
+        private PatchPSXForm PatchPSXForm
+        {
+            get
+            {
+                if( patchPsxForm == null )
+                {
+                    patchPsxForm = new PatchPSXForm();
+                }
+                return patchPsxForm;
+            }
+        }
+
+		#endregion Private Properties 
+
+		#region Constructors (1) 
 
         public MainForm()
         {
@@ -87,29 +94,55 @@ namespace FFTPatcher
             pspMenu.Popup += new EventHandler( pspMenu_Popup );
         }
 
-        void pspMenu_Popup( object sender, EventArgs e )
-        {
-            patchPspIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
-            cheatdbMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
-        }
-
-        void psxMenu_Popup( object sender, EventArgs e )
-        {
-            openPatchedPsxIso.Enabled = true;
-            patchPsxIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
-        }
-
-        void fileMenuItem_Popup( object sender, EventArgs e )
-        {
-            openMenuItem.Enabled = true;
-            saveAsPspMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
-            saveMenuItem.Enabled = fftPatchEditor1.Enabled;
-        }
-
 		#endregion Constructors 
 
-		#region Methods (24) 
+		#region Public Methods (1) 
 
+        public void HandleException( Exception e )
+        {
+            string message = string.Empty;
+            if ( e is FFTPatcher.Datatypes.FFTPatch.LoadPatchException )
+            {
+                message = "Could not load patch";
+            }
+            else if( e is ArgumentNullException )
+            {
+                message = "Argument was null";
+            }
+            else if( e is ArgumentException )
+            {
+                message = "Bad argument";
+            }
+            else if( e is FileNotFoundException )
+            {
+            }
+            else if( e is IOException )
+            {
+                message = "IO error occurred";
+            }
+            else if( e is System.Security.SecurityException )
+            {
+                message = "Security access";
+            }
+            else if( e is DirectoryNotFoundException )
+            {
+                message = "Folder not found";
+            }
+            else if( e is UnauthorizedAccessException )
+            {
+                message = "Incorrect permissions";
+            }
+            else
+            {
+                message = e.ToString();
+            }
+
+            MessageBox.Show( string.Format( "An error of type {0} occurred:\n{1}", e.GetType(), message ), "Error", MessageBoxButtons.OK );
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (20) 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
@@ -191,6 +224,13 @@ namespace FFTPatcher
             }
         }
 
+        void fileMenuItem_Popup( object sender, EventArgs e )
+        {
+            openMenuItem.Enabled = true;
+            saveAsPspMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
+            saveMenuItem.Enabled = fftPatchEditor1.Enabled;
+        }
+
         private void newPSPMenuItem_Click( object sender, System.EventArgs e )
         {
             FFTPatch.New( Context.US_PSP );
@@ -210,7 +250,6 @@ namespace FFTPatcher
             }
         }
 
-
         private void openPatchedPsxIso_Click( object sender, EventArgs e )
         {
             openFileDialog.Filter = "ISO images|*.iso;*.bin;*.img";
@@ -218,76 +257,6 @@ namespace FFTPatcher
             {
                 TryAndHandle( delegate() { FFTPatch.OpenPatchedISO( openFileDialog.FileName ); }, true );
             }
-        }
-
-        private void TryAndHandle( MethodInvoker action, bool disableOnFail, bool rethrow )
-        {
-            try
-            {
-                action();
-            }
-            catch( Exception e )
-            {
-                if( disableOnFail )
-                {
-                    fftPatchEditor1.Enabled = false;
-                }
-                if( rethrow )
-                {
-                    throw;
-                }
-                else
-                {
-                    HandleException( e );
-                }
-            }
-        }
-
-        private void TryAndHandle( MethodInvoker action, bool disableOnFail )
-        {
-            TryAndHandle( action, disableOnFail, false );
-        }
-
-        public void HandleException( Exception e )
-        {
-            string message = string.Empty;
-            if ( e is FFTPatcher.Datatypes.FFTPatch.LoadPatchException )
-            {
-                message = "Could not load patch";
-            }
-            else if( e is ArgumentNullException )
-            {
-                message = "Argument was null";
-            }
-            else if( e is ArgumentException )
-            {
-                message = "Bad argument";
-            }
-            else if( e is FileNotFoundException )
-            {
-            }
-            else if( e is IOException )
-            {
-                message = "IO error occurred";
-            }
-            else if( e is System.Security.SecurityException )
-            {
-                message = "Security access";
-            }
-            else if( e is DirectoryNotFoundException )
-            {
-                message = "Folder not found";
-            }
-            else if( e is UnauthorizedAccessException )
-            {
-                message = "Incorrect permissions";
-            }
-            else
-            {
-                message = e.ToString();
-            }
-
-            MessageBox.Show( string.Format( "An error of type {0} occurred:\n{1}", e.GetType(), message ), "Error", MessageBoxButtons.OK );
         }
 
         private void patchPspIsoMenuItem_Click( object sender, EventArgs e )
@@ -382,6 +351,18 @@ namespace FFTPatcher
             }
         }
 
+        void pspMenu_Popup( object sender, EventArgs e )
+        {
+            patchPspIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
+            cheatdbMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
+        }
+
+        void psxMenu_Popup( object sender, EventArgs e )
+        {
+            openPatchedPsxIso.Enabled = true;
+            patchPsxIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
+        }
+
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
         {
             DoWorkEventHandler doWork =
@@ -472,8 +453,34 @@ namespace FFTPatcher
             return string.Empty;
         }
 
+        private void TryAndHandle( MethodInvoker action, bool disableOnFail, bool rethrow )
+        {
+            try
+            {
+                action();
+            }
+            catch( Exception e )
+            {
+                if( disableOnFail )
+                {
+                    fftPatchEditor1.Enabled = false;
+                }
+                if( rethrow )
+                {
+                    throw;
+                }
+                else
+                {
+                    HandleException( e );
+                }
+            }
+        }
 
-		#endregion Methods 
+        private void TryAndHandle( MethodInvoker action, bool disableOnFail )
+        {
+            TryAndHandle( action, disableOnFail, false );
+        }
 
+		#endregion Private Methods 
     }
 }

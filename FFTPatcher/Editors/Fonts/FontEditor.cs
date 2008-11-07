@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,15 +25,13 @@ namespace FFTPatcher.Editors
 {
     public partial class FontEditor : UserControl
     {
-
-		#regionÂ FieldsÂ (1)Â 
+		#region Instance Variables (1) 
 
         private FFTFont font;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public FFTFont FFTFont 
         {
@@ -49,10 +47,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public FontEditor()
         {
@@ -60,10 +57,9 @@ namespace FFTPatcher.Editors
             numericUpDown1.ValueChanged += new EventHandler( numericUpDown1_ValueChanged );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (1)Â 
-
+		#region Private Methods (1) 
 
         private void numericUpDown1_ValueChanged( object sender, EventArgs e )
         {
@@ -73,8 +69,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -11,7 +11,14 @@ namespace FFTPatcher.Editors
 {
     public partial class MapMoveFindItemEditor : BaseEditor
     {
+		#region Instance Variables (1) 
+
         private MapMoveFindItems mapMoveFindItems;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
+
         public MapMoveFindItems MapMoveFindItems
         {
             get { return mapMoveFindItems; }
@@ -31,13 +38,9 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private void UpdateView()
-        {
-            moveFindItemEditor1.MoveFindItem = mapMoveFindItems.Items[0];
-            moveFindItemEditor2.MoveFindItem = mapMoveFindItems.Items[1];
-            moveFindItemEditor3.MoveFindItem = mapMoveFindItems.Items[2];
-            moveFindItemEditor4.MoveFindItem = mapMoveFindItems.Items[3];
-        }
+		#endregion Public Properties 
+
+		#region Constructors (1) 
 
         public MapMoveFindItemEditor()
         {
@@ -47,5 +50,19 @@ namespace FFTPatcher.Editors
             moveFindItemEditor3.DataChanged += OnDataChanged;
             moveFindItemEditor4.DataChanged += OnDataChanged;
         }
+
+		#endregion Constructors 
+
+		#region Private Methods (1) 
+
+        private void UpdateView()
+        {
+            moveFindItemEditor1.MoveFindItem = mapMoveFindItems.Items[0];
+            moveFindItemEditor2.MoveFindItem = mapMoveFindItems.Items[1];
+            moveFindItemEditor3.MoveFindItem = mapMoveFindItems.Items[2];
+            moveFindItemEditor4.MoveFindItem = mapMoveFindItems.Items[3];
+        }
+
+		#endregion Private Methods 
     }
 }

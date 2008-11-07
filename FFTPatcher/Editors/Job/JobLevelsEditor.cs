@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,14 +27,13 @@ namespace FFTPatcher.Editors
 {
     public partial class JobLevelsEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (1)Â 
+		#region Instance Variables (1) 
 
         private JobLevels levels;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public JobLevelsEditor()
         {
@@ -42,17 +41,9 @@ namespace FFTPatcher.Editors
             requirementsEditor1.DataChanged += OnDataChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
-
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-            ReflectionHelpers.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
-            OnDataChanged( this, System.EventArgs.Empty );
-        }
+		#region Public Methods (1) 
 
         public void UpdateView( JobLevels levels )
         {
@@ -93,8 +84,17 @@ namespace FFTPatcher.Editors
             requirementsEditor1.Requirements = reqs;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (1) 
 
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+            ReflectionHelpers.SetFieldOrProperty( levels, spinner.Tag.ToString(), (UInt16)spinner.Value );
+            OnDataChanged( this, System.EventArgs.Empty );
+        }
+
+		#endregion Private Methods 
     }
 }

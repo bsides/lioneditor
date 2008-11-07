@@ -1,4 +1,4 @@
-﻿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -28,7 +28,6 @@ namespace FFTPatcher.Datatypes
         /// </summary>
         /// <param name="writer">The stream to which the object is serialized.</param>
         void WriteXml( XmlWriter writer );
-
         //void WriteXml( XmlWriter writer, bool changesOnly );
     }
 }

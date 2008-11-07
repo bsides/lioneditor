@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -23,9 +23,9 @@ namespace FFTPatcher.Datatypes
 {
     public class AbilityFormula
     {
+		#region Public Properties (6) 
 
-		#regionÂ StaticÂ PropertiesÂ (4)Â 
-
+        public string Formula { get; private set; }
 
         public static Dictionary<byte, AbilityFormula> PSPAbilityFormulaHash { get; private set; }
 
@@ -35,20 +35,11 @@ namespace FFTPatcher.Datatypes
 
         public static List<AbilityFormula> PSXAbilityFormulas { get; private set; }
 
-
-		#endregionÂ StaticÂ PropertiesÂ 
-
-		#regionÂ PropertiesÂ (2)Â 
-
-
-        public string Formula { get; private set; }
-
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
         static AbilityFormula()
         {
@@ -86,18 +77,15 @@ namespace FFTPatcher.Datatypes
         {
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (1)Â 
-
+		#region Public Methods (1) 
 
         public override string ToString()
         {
             return string.Format( "{0:X2} {1}", Value, Formula );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }

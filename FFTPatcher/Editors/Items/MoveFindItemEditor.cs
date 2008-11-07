@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -12,7 +12,15 @@ namespace FFTPatcher.Editors
 {
     public partial class MoveFindItemEditor : BaseEditor
     {
+		#region Instance Variables (3) 
+
+        private  bool ignoreChanges = false;
         private MoveFindItem moveFindItem;
+        private Context ourContext = Context.Default;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (2) 
 
         public string Label
         {
@@ -39,8 +47,10 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-        private  bool ignoreChanges = false;
+		#region Constructors (1) 
+
         public MoveFindItemEditor()
         {
             InitializeComponent();
@@ -51,37 +61,26 @@ namespace FFTPatcher.Editors
             trapsCheckedListBox.ItemCheck += new ItemCheckEventHandler( trapsCheckedListBox_ItemCheck );
         }
 
-        private Context ourContext = Context.Default;
+		#endregion Constructors 
 
-        private void UpdateView()
+		#region Private Methods (6) 
+
+        void commonComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
-            ignoreChanges = true;
-            this.SuspendLayout();
-            trapsCheckedListBox.SuspendLayout();
-
-            if ( ourContext != FFTPatch.Context )
+            if ( !ignoreChanges )
             {
-                ourContext = FFTPatch.Context;
-                foreach ( ComboBoxWithDefault cb in new ComboBoxWithDefault[] { rareComboBox, commonComboBox } )
-                {
-                    cb.Items.Clear();
-                    cb.Items.AddRange( Item.DummyItems.Sub( 0, 0xFF ).ToArray() );
-                }
+                moveFindItem.CommonItem = commonComboBox.SelectedItem as Item;
+                OnDataChanged( this, EventArgs.Empty );
             }
+        }
 
-            rareComboBox.SetValueAndDefault( moveFindItem.RareItem, moveFindItem.Default.RareItem );
-            commonComboBox.SetValueAndDefault( moveFindItem.CommonItem, moveFindItem.Default.CommonItem );
-            xSpinner.SetValueAndDefault( moveFindItem.X, moveFindItem.Default.X );
-            ySpinner.SetValueAndDefault( moveFindItem.Y, moveFindItem.Default.Y );
-            trapsCheckedListBox.SetValuesAndDefaults(
-                new bool[] {moveFindItem.Unknown1, moveFindItem.Unknown2, moveFindItem.Unknown3, moveFindItem.Unknown4,
-                    moveFindItem.SteelNeedle, moveFindItem.SleepingGas, moveFindItem.Deathtrap, moveFindItem.Degenerator},
-                new bool[] {moveFindItem.Default.Unknown1, moveFindItem.Default.Unknown2, moveFindItem.Default.Unknown3, moveFindItem.Default.Unknown4,
-                    moveFindItem.Default.SteelNeedle, moveFindItem.Default.SleepingGas, moveFindItem.Default.Deathtrap, moveFindItem.Default.Degenerator} );
-
-            ignoreChanges = false;
-            trapsCheckedListBox.ResumeLayout();
-            this.ResumeLayout();
+        void rareComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if ( !ignoreChanges )
+            {
+                moveFindItem.RareItem = rareComboBox.SelectedItem as Item;
+                OnDataChanged( this, EventArgs.Empty );
+            }
         }
 
         void trapsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
@@ -119,20 +118,42 @@ namespace FFTPatcher.Editors
             }
         }
 
-        void commonComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        private void UpdateView()
         {
-            if ( !ignoreChanges )
+            ignoreChanges = true;
+            this.SuspendLayout();
+            trapsCheckedListBox.SuspendLayout();
+
+            if ( ourContext != FFTPatch.Context )
             {
-                moveFindItem.CommonItem = commonComboBox.SelectedItem as Item;
-                OnDataChanged( this, EventArgs.Empty );
+                ourContext = FFTPatch.Context;
+                foreach ( ComboBoxWithDefault cb in new ComboBoxWithDefault[] { rareComboBox, commonComboBox } )
+                {
+                    cb.Items.Clear();
+                    cb.Items.AddRange( Item.DummyItems.Sub( 0, 0xFF ).ToArray() );
+                }
             }
+
+            rareComboBox.SetValueAndDefault( moveFindItem.RareItem, moveFindItem.Default.RareItem );
+            commonComboBox.SetValueAndDefault( moveFindItem.CommonItem, moveFindItem.Default.CommonItem );
+            xSpinner.SetValueAndDefault( moveFindItem.X, moveFindItem.Default.X );
+            ySpinner.SetValueAndDefault( moveFindItem.Y, moveFindItem.Default.Y );
+            trapsCheckedListBox.SetValuesAndDefaults(
+                new bool[] {moveFindItem.Unknown1, moveFindItem.Unknown2, moveFindItem.Unknown3, moveFindItem.Unknown4,
+                    moveFindItem.SteelNeedle, moveFindItem.SleepingGas, moveFindItem.Deathtrap, moveFindItem.Degenerator},
+                new bool[] {moveFindItem.Default.Unknown1, moveFindItem.Default.Unknown2, moveFindItem.Default.Unknown3, moveFindItem.Default.Unknown4,
+                    moveFindItem.Default.SteelNeedle, moveFindItem.Default.SleepingGas, moveFindItem.Default.Deathtrap, moveFindItem.Default.Degenerator} );
+
+            ignoreChanges = false;
+            trapsCheckedListBox.ResumeLayout();
+            this.ResumeLayout();
         }
 
-        void rareComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        void xSpinner_ValueChanged( object sender, EventArgs e )
         {
             if ( !ignoreChanges )
             {
-                moveFindItem.RareItem = rareComboBox.SelectedItem as Item;
+                moveFindItem.X = (byte)xSpinner.Value;
                 OnDataChanged( this, EventArgs.Empty );
             }
         }
@@ -146,13 +167,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-        void xSpinner_ValueChanged( object sender, EventArgs e )
-        {
-            if ( !ignoreChanges )
-            {
-                moveFindItem.X = (byte)xSpinner.Value;
-                OnDataChanged( this, EventArgs.Empty );
-            }
-        }
+		#endregion Private Methods 
     }
 }

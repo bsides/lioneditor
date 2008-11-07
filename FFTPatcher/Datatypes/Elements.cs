@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -23,17 +23,15 @@ namespace FFTPatcher.Datatypes
 {
     public class Elements : IEquatable<Elements>, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (2)
+		#region Instance Variables (1) 
 
         private static readonly string[] elementNames = new string[8] {
             "Fire", "Lightning", "Ice", "Wind", 
             "Earth", "Water", "Holy", "Dark" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (11)
-
+		#region Public Properties (11) 
 
         public bool Dark { get; set; }
 
@@ -63,10 +61,9 @@ namespace FFTPatcher.Datatypes
 
         public bool Wind { get; set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public Elements( byte b )
         {
@@ -81,9 +78,9 @@ namespace FFTPatcher.Datatypes
             Dark = flags[0];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (6)
+		#region Public Methods (8) 
 
         public static void Copy( Elements source, Elements destination )
         {
@@ -116,19 +113,6 @@ namespace FFTPatcher.Datatypes
                 other.Dark == Dark;
         }
 
-        public bool[] ToBoolArray()
-        {
-            return new bool[8] {
-                Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark };
-        }
-
-        public byte ToByte()
-        {
-            return Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
-        }
-
-
-
         public override bool Equals( object obj )
         {
             if( obj is Elements )
@@ -146,6 +130,17 @@ namespace FFTPatcher.Datatypes
             return base.GetHashCode();
         }
 
+        public bool[] ToBoolArray()
+        {
+            return new bool[8] {
+                Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark };
+        }
+
+        public byte ToByte()
+        {
+            return Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
+        }
+
         public override string ToString()
         {
             List<string> strings = new List<string>( 8 );
@@ -159,8 +154,6 @@ namespace FFTPatcher.Datatypes
             return string.Join( " | ", strings.ToArray() );
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

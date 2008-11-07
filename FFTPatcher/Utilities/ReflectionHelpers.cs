@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,11 +27,7 @@ namespace FFTPatcher
     /// </summary>
     public static class ReflectionHelpers
     {
-
-		#regionÂ MethodsÂ (7)Â 
-
-
-		//Â PublicÂ MethodsÂ (7)Â 
+		#region Public Methods (7) 
 
         /// <summary>
         /// Determines if a field or property in an object has a particular attribute.
@@ -147,8 +143,6 @@ namespace FFTPatcher
             SetFieldOrProperty( o, name, newValue );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }

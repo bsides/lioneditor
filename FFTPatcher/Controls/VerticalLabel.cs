@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 
@@ -17,8 +17,7 @@ namespace FFTPatcher.Controls
     ///
     public class VerticalLabel : System.Windows.Forms.Control
     {
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (3) 
 
         private System.ComponentModel.Container components = null;
         /// 
@@ -30,26 +29,9 @@ namespace FFTPatcher.Controls
         /// 
         private System.Drawing.ContentAlignment labelTextAlign;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (2)Â 
-
-
-        [Category( "Verticallabel" ), Description( "Text Alignment" )]
-        public System.Drawing.ContentAlignment TextAlign
-        {
-            get
-            {
-                return labelTextAlign;
-            }
-            set
-            {
-                labelTextAlign = value;
-                Invalidate();
-            }
-        }
-
-
+		#region Public Properties (2) 
 
         /// 
         /// Windows designer Text setting
@@ -68,10 +50,23 @@ namespace FFTPatcher.Controls
             }
         }
 
+        [Category( "Verticallabel" ), Description( "Text Alignment" )]
+        public System.Drawing.ContentAlignment TextAlign
+        {
+            get
+            {
+                return labelTextAlign;
+            }
+            set
+            {
+                labelTextAlign = value;
+                Invalidate();
+            }
+        }
 
-		#endregionÂ PropertiesÂ 
+		#endregion Public Properties 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public VerticalLabel()
         {
@@ -79,10 +74,9 @@ namespace FFTPatcher.Controls
             InitializeComponent();
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (4)Â 
-
+		#region Private Methods (1) 
 
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
@@ -90,7 +84,9 @@ namespace FFTPatcher.Controls
             this.Size = new System.Drawing.Size( 24, 100 );
         }
 
+		#endregion Private Methods 
 
+		#region Protected Methods (3) 
 
         protected override void Dispose( bool disposing )
         {
@@ -161,8 +157,6 @@ namespace FFTPatcher.Controls
             base.OnResize( e );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Protected Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,8 +25,7 @@ namespace FFTPatcher.Editors
 {
     public partial class AllPoachProbabilitiesEditor : UserControl
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllPoachProbabilitiesEditor()
         {
@@ -43,10 +42,29 @@ namespace FFTPatcher.Editors
             dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (6)Â 
+		#region Public Methods (1) 
 
+        public void UpdateView( AllPoachProbabilities probs )
+        {
+            dataGridView.DataSource = null;
+            CommonItem.Items.Clear();
+            UncommonItem.Items.Clear();
+            foreach( Item i in Item.DummyItems )
+            {
+                if( i.Offset <= 0xFF )
+                {
+                    CommonItem.Items.Add( i );
+                    UncommonItem.Items.Add( i );
+                }
+            }
+            dataGridView.DataSource = probs.PoachProbabilities;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (5) 
 
         private void Control_KeyDown( object sender, KeyEventArgs e )
         {
@@ -120,24 +138,6 @@ namespace FFTPatcher.Editors
             e.Control.KeyDown += Control_KeyDown;
         }
 
-        public void UpdateView( AllPoachProbabilities probs )
-        {
-            dataGridView.DataSource = null;
-            CommonItem.Items.Clear();
-            UncommonItem.Items.Clear();
-            foreach( Item i in Item.DummyItems )
-            {
-                if( i.Offset <= 0xFF )
-                {
-                    CommonItem.Items.Add( i );
-                    UncommonItem.Items.Add( i );
-                }
-            }
-            dataGridView.DataSource = probs.PoachProbabilities;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

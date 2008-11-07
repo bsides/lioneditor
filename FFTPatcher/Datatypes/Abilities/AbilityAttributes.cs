@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,20 +27,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AbilityAttributes : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        private static readonly string[] valuesToSerialize = new string[] {
-            "AnimateMiss","Arithmetick","Auto","Blank6","Blank7","Blank8","CounterFlood","CounterMagic",
-            "CT","Direct","Effect","Evadeable","FollowTarget","HitAllies","HitCaster","HitEnemies",
-            "InflictStatus","LinearAttack","Mimic","MPCost","NormalAttack","Perservere","RandomFire",
-            "Range","Reflect","RequiresMateriaBlade","RequiresSword","Shirahadori","ShowQuote","Silence",
-            "Targeting","TargetSelf","ThreeDirections","Vertical","VerticalFixed","VerticalTolerance",
-            "WeaponRange","WeaponStrike","X","Y", "Elements", "Formula" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (41)
+		#region Instance Variables (42) 
 
         public bool AnimateMiss;
         public bool Arithmetick;
@@ -77,6 +64,13 @@ namespace FFTPatcher.Datatypes
         public bool Targeting;
         public bool TargetSelf;
         public bool ThreeDirections;
+        private static readonly string[] valuesToSerialize = new string[] {
+            "AnimateMiss","Arithmetick","Auto","Blank6","Blank7","Blank8","CounterFlood","CounterMagic",
+            "CT","Direct","Effect","Evadeable","FollowTarget","HitAllies","HitCaster","HitEnemies",
+            "InflictStatus","LinearAttack","Mimic","MPCost","NormalAttack","Perservere","RandomFire",
+            "Range","Reflect","RequiresMateriaBlade","RequiresSword","Shirahadori","ShowQuote","Silence",
+            "Targeting","TargetSelf","ThreeDirections","Vertical","VerticalFixed","VerticalTolerance",
+            "WeaponRange","WeaponStrike","X","Y", "Elements", "Formula" };
         public byte Vertical;
         public bool VerticalFixed;
         public bool VerticalTolerance;
@@ -85,10 +79,9 @@ namespace FFTPatcher.Datatypes
         public byte X;
         public byte Y;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (7)
-
+		#region Public Properties (7) 
 
         public AbilityAttributes Default
         {
@@ -127,10 +120,9 @@ namespace FFTPatcher.Datatypes
 
         public UInt16 Offset { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public AbilityAttributes( string name, UInt16 offset, IList<byte> second )
         {
@@ -177,40 +169,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (2)
-
-
-        public bool[] ToBoolArray()
-        {
-            return new bool[32] { 
-                Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, TargetSelf,
-                HitEnemies, HitAllies, Blank8, FollowTarget, RandomFire, LinearAttack, ThreeDirections, HitCaster,
-                Reflect, Arithmetick, Silence, Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss,
-                CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade,Evadeable, Targeting };
-        }
-
-        public byte[] ToByteArray()
-        {
-            byte[] result = new byte[14];
-            result[0] = Range;
-            result[1] = Effect;
-            result[2] = Vertical;
-            result[3] = Utilities.ByteFromBooleans( Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, !TargetSelf );
-            result[4] = Utilities.ByteFromBooleans( !HitEnemies, !HitAllies, Blank8, !FollowTarget, RandomFire, LinearAttack, ThreeDirections, !HitCaster );
-            result[5] = Utilities.ByteFromBooleans( Reflect, Arithmetick, !Silence, !Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss );
-            result[6] = Utilities.ByteFromBooleans( CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade, Evadeable, !Targeting );
-            result[7] = Elements.ToByte();
-            result[8] = Formula.Value;
-            result[9] = X;
-            result[10] = Y;
-            result[11] = InflictStatus;
-            result[12] = CT;
-            result[13] = MPCost;
-
-            return result;
-        }
+		#region Public Methods (4) 
 
         public static void Copy( AbilityAttributes source, AbilityAttributes destination )
         {
@@ -266,7 +227,36 @@ namespace FFTPatcher.Datatypes
             Copy( this, destination );
         }
 
-        #endregionÂ Methods
+        public bool[] ToBoolArray()
+        {
+            return new bool[32] { 
+                Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, TargetSelf,
+                HitEnemies, HitAllies, Blank8, FollowTarget, RandomFire, LinearAttack, ThreeDirections, HitCaster,
+                Reflect, Arithmetick, Silence, Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss,
+                CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade,Evadeable, Targeting };
+        }
 
+        public byte[] ToByteArray()
+        {
+            byte[] result = new byte[14];
+            result[0] = Range;
+            result[1] = Effect;
+            result[2] = Vertical;
+            result[3] = Utilities.ByteFromBooleans( Blank6, Blank7, WeaponRange, VerticalFixed, VerticalTolerance, WeaponStrike, Auto, !TargetSelf );
+            result[4] = Utilities.ByteFromBooleans( !HitEnemies, !HitAllies, Blank8, !FollowTarget, RandomFire, LinearAttack, ThreeDirections, !HitCaster );
+            result[5] = Utilities.ByteFromBooleans( Reflect, Arithmetick, !Silence, !Mimic, NormalAttack, Perservere, ShowQuote, AnimateMiss );
+            result[6] = Utilities.ByteFromBooleans( CounterFlood, CounterMagic, Direct, Shirahadori, RequiresSword, RequiresMateriaBlade, Evadeable, !Targeting );
+            result[7] = Elements.ToByte();
+            result[8] = Formula.Value;
+            result[9] = X;
+            result[10] = Y;
+            result[11] = InflictStatus;
+            result[12] = CT;
+            result[13] = MPCost;
+
+            return result;
+        }
+
+		#endregion Public Methods 
     }
 }

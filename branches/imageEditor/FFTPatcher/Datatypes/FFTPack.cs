@@ -26,6 +26,274 @@ namespace FFTPatcher.Datatypes
 {
     public static class FFTPack
     {
+		#region Instance Variables (3) 
+
+        public const Files BATTLE_BIN = Files.BATTLE_BIN;
+        public const Files SLPS_007_70 = Files.SLPS_007_70;
+        public const Files SYSTEM_CNF = Files.SYSTEM_CNF;
+
+		#endregion Instance Variables 
+
+		#region Public Methods (7) 
+
+        public static void DumpToDirectory( string filename, string path, BackgroundWorker worker )
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open, FileAccess.Read );
+                DumpToDirectory( stream, path, worker );
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Close();
+                }
+            }
+        }
+
+        public static void DumpToDirectory( FileStream stream, string path, BackgroundWorker worker )
+        {
+            MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown", "OPEN" );
+            for( int i = 1; i <= 3970; i++ )
+            {
+                byte[] bytes = GetFile( stream, i );
+                string filename = string.Empty;
+
+                if( PSPResources.FFTPackFiles.ContainsKey( i ) )
+                {
+                    filename = PSPResources.FFTPackFiles[i];
+                }
+                else if( bytes.Length == 0 )
+                {
+                    filename = string.Format( "unknown/fftpack.{0}.dummy", i );
+                }
+                else
+                {
+                    filename = string.Format( "unknown/fftpack.{0}", i );
+                }
+
+                worker.ReportProgress( ( i * 100 ) / 3790, string.Format( "Extracting {0}", filename ) );
+
+                filename = Path.Combine( path, filename );
+
+                SaveToFile( bytes, filename );
+
+            }
+        }
+
+        public static byte[] GetFile( FileStream stream, int index )
+        {
+            byte[] bytes = new byte[4];
+            stream.Seek( index * 4 + 4, SeekOrigin.Begin );
+            stream.Read( bytes, 0, 4 );
+            UInt32 start = bytes.ToUInt32();
+
+            UInt32 end;
+            if( index == 3970 )
+            {
+                end = (UInt32)stream.Length;
+            }
+            else
+            {
+                stream.Read( bytes, 0, 4 );
+                end = bytes.ToUInt32();
+            }
+
+            UInt32 length = end - start;
+
+            byte[] result = new byte[length];
+
+            stream.Seek( start, SeekOrigin.Begin );
+            stream.Read( result, 0, (int)length );
+
+            return result;
+        }
+
+        public static void MergeDumpedFiles( string path, string filename, BackgroundWorker worker )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( filename, FileMode.Create );
+                stream.WriteByte( 0x80 );
+                stream.WriteByte( 0x0F );
+                stream.WriteByte( 0x00 );
+                stream.WriteByte( 0x00 );
+                stream.WriteByte( 0x10 );
+                stream.WriteByte( 0x00 );
+                stream.WriteByte( 0x00 );
+                stream.WriteByte( 0x00 );
+
+                stream.Seek( 15888, SeekOrigin.Begin );
+                UInt32 end = (UInt32)stream.Position;
+                UInt32 start = 8;
+
+                for( int i = 1; i <= 3970; i++ )
+                {
+                    stream.Seek( start, SeekOrigin.Begin );
+                    stream.Write( end.ToBytes(), 0, 4 );
+                    start += 4;
+
+                    stream.Seek( end, SeekOrigin.Begin );
+                    
+                    byte[] bytes = ReadFile( path, i );
+                    if( bytes.Length != 0 )
+                    {
+                        stream.Write( bytes, 0, bytes.Length );
+                    }
+
+                    end = (UInt32)stream.Position;
+
+                    worker.ReportProgress( (i * 100) / 3790 );
+                }
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                    stream = null;
+                }
+            }
+        }
+
+        public static void PatchFile( string filename, int index, byte[] bytes )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( filename, FileMode.Open );
+                PatchFile( stream, index, bytes );
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                    stream = null;
+                }
+            }
+        }
+
+        public static void PatchFile( FileStream stream, int index, byte[] bytes )
+        {
+            PatchFile( stream, index, 0, bytes );
+        }
+
+        public static void PatchFile( FileStream stream, int index, int offset, byte[] bytes )
+        {
+            try
+            {
+                const long fftpackLocation = (int)PspIso.Files.PSP_GAME.USRDIR.fftpack_bin * 2048;
+                stream.Seek( fftpackLocation + ( index - 1 ) * 4 + 8, SeekOrigin.Begin );
+                byte[] pointer = new byte[4];
+                stream.Read( pointer, 0, 4 );
+
+                stream.Seek( fftpackLocation + pointer.ToUInt32() + offset, SeekOrigin.Begin );
+
+                stream.Write( bytes, 0, bytes.Length );
+            }
+            catch ( Exception )
+            {
+                throw;
+            }
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (3) 
+
+        private static void MakeDirectories( string path, params string[] dirs )
+        {
+            foreach( string dir in dirs )
+            {
+                Directory.CreateDirectory( Path.Combine( path, dir ) );
+            }
+        }
+
+        private static byte[] ReadFile( string path, int index )
+        {
+            FileStream stream = null;
+
+            try
+            {
+                if( PSPResources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, PSPResources.FFTPackFiles[index] ) ) )
+                {
+                    stream = new FileStream( Path.Combine( path, PSPResources.FFTPackFiles[index] ), FileMode.Open );
+                }
+                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ) ) )
+                {
+                    stream = new FileStream( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ), FileMode.Open );
+                }
+                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}.dummy", index ) ) ) )
+                {
+                    return new byte[0];
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                byte[] result = new byte[stream.Length];
+                stream.Read( result, 0, (int)stream.Length );
+
+                return result;
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Close();
+                    stream = null;
+                }
+            }
+        }
+
+        private static void SaveToFile( byte[] bytes, string path )
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileStream( path, FileMode.Create );
+                stream.Write( bytes, 0, bytes.Length );
+            }
+            catch( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                if( stream != null )
+                {
+                    stream.Flush();
+                    stream.Close();
+                }
+            }
+        }
+
+		#endregion Private Methods 
+
         public enum Files
         {
             SYSTEM_CNF = 3,
@@ -2696,8 +2964,7 @@ namespace FFTPatcher.Datatypes
             MAP_MAP011_28_duplicate = 3822,
             MAP_MAP011_53_duplicate = 3827,
         }
-
-        public static class BATTLE
+public static class BATTLE
         {
             public const Files _10M_SPR = Files.BATTLE_10M_SPR;
             public const Files _10W_SPR = Files.BATTLE_10W_SPR;
@@ -2896,7 +3163,6 @@ namespace FFTPatcher.Datatypes
             public const Files ZARUMOU_SPR = Files.BATTLE_ZARUMOU_SPR;
             public const Files ZODIAC_BIN = Files.BATTLE_ZODIAC_BIN;
         }
-        public const Files BATTLE_BIN = Files.BATTLE_BIN;
         public static class EFFECT
         {
             public const Files E000_BIN = Files.EFFECT_E000_BIN;
@@ -5270,7 +5536,6 @@ namespace FFTPatcher.Datatypes
             public const Files _934_png = Files.SAVEIMAGE_934_png;
             public const Files _935_png = Files.SAVEIMAGE_935_png;
         }
-        public const Files SLPS_007_70 = Files.SLPS_007_70;
         public static class SOUND
         {
             public const Files ENV_SED = Files.SOUND_ENV_SED;
@@ -5377,7 +5642,6 @@ namespace FFTPatcher.Datatypes
             public const Files SYSTEM_SED = Files.SOUND_SYSTEM_SED;
             public const Files WAVESET_WD = Files.SOUND_WAVESET_WD;
         }
-        public const Files SYSTEM_CNF = Files.SYSTEM_CNF;
         public static class WORLD
         {
             public const Files SNPLBIN_BIN = Files.WORLD_SNPLBIN_BIN;
@@ -5388,264 +5652,5 @@ namespace FFTPatcher.Datatypes
             public const Files WLDPIC_BIN = Files.WORLD_WLDPIC_BIN;
             public const Files WORLD_BIN = Files.WORLD_WORLD_BIN;
         }
-
-
-		#region Methods (11) 
-
-
-        private static void MakeDirectories( string path, params string[] dirs )
-        {
-            foreach( string dir in dirs )
-            {
-                Directory.CreateDirectory( Path.Combine( path, dir ) );
-            }
-        }
-
-        private static byte[] ReadFile( string path, int index )
-        {
-            FileStream stream = null;
-
-            try
-            {
-                if( PSPResources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, PSPResources.FFTPackFiles[index] ) ) )
-                {
-                    stream = new FileStream( Path.Combine( path, PSPResources.FFTPackFiles[index] ), FileMode.Open );
-                }
-                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ) ) )
-                {
-                    stream = new FileStream( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ), FileMode.Open );
-                }
-                else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}.dummy", index ) ) ) )
-                {
-                    return new byte[0];
-                }
-                else
-                {
-                    throw new Exception();
-                }
-
-                byte[] result = new byte[stream.Length];
-                stream.Read( result, 0, (int)stream.Length );
-
-                return result;
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Close();
-                    stream = null;
-                }
-            }
-        }
-
-        private static void SaveToFile( byte[] bytes, string path )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( path, FileMode.Create );
-                stream.Write( bytes, 0, bytes.Length );
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                }
-            }
-        }
-
-        public static void DumpToDirectory( string filename, string path, BackgroundWorker worker )
-        {
-            FileStream stream = null;
-
-            try
-            {
-                stream = new FileStream( filename, FileMode.Open, FileAccess.Read );
-                DumpToDirectory( stream, path, worker );
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Close();
-                }
-            }
-        }
-
-        public static void DumpToDirectory( FileStream stream, string path, BackgroundWorker worker )
-        {
-            MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown", "OPEN" );
-            for( int i = 1; i <= 3970; i++ )
-            {
-                byte[] bytes = GetFile( stream, i );
-                string filename = string.Empty;
-
-                if( PSPResources.FFTPackFiles.ContainsKey( i ) )
-                {
-                    filename = PSPResources.FFTPackFiles[i];
-                }
-                else if( bytes.Length == 0 )
-                {
-                    filename = string.Format( "unknown/fftpack.{0}.dummy", i );
-                }
-                else
-                {
-                    filename = string.Format( "unknown/fftpack.{0}", i );
-                }
-
-                worker.ReportProgress( ( i * 100 ) / 3790, string.Format( "Extracting {0}", filename ) );
-
-                filename = Path.Combine( path, filename );
-
-                SaveToFile( bytes, filename );
-
-            }
-        }
-
-        public static byte[] GetFile( FileStream stream, int index )
-        {
-            byte[] bytes = new byte[4];
-            stream.Seek( index * 4 + 4, SeekOrigin.Begin );
-            stream.Read( bytes, 0, 4 );
-            UInt32 start = bytes.ToUInt32();
-
-            UInt32 end;
-            if( index == 3970 )
-            {
-                end = (UInt32)stream.Length;
-            }
-            else
-            {
-                stream.Read( bytes, 0, 4 );
-                end = bytes.ToUInt32();
-            }
-
-            UInt32 length = end - start;
-
-            byte[] result = new byte[length];
-
-            stream.Seek( start, SeekOrigin.Begin );
-            stream.Read( result, 0, (int)length );
-
-            return result;
-        }
-
-        public static void MergeDumpedFiles( string path, string filename, BackgroundWorker worker )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( filename, FileMode.Create );
-                stream.WriteByte( 0x80 );
-                stream.WriteByte( 0x0F );
-                stream.WriteByte( 0x00 );
-                stream.WriteByte( 0x00 );
-                stream.WriteByte( 0x10 );
-                stream.WriteByte( 0x00 );
-                stream.WriteByte( 0x00 );
-                stream.WriteByte( 0x00 );
-
-                stream.Seek( 15888, SeekOrigin.Begin );
-                UInt32 end = (UInt32)stream.Position;
-                UInt32 start = 8;
-
-                for( int i = 1; i <= 3970; i++ )
-                {
-                    stream.Seek( start, SeekOrigin.Begin );
-                    stream.Write( end.ToBytes(), 0, 4 );
-                    start += 4;
-
-                    stream.Seek( end, SeekOrigin.Begin );
-                    
-                    byte[] bytes = ReadFile( path, i );
-                    if( bytes.Length != 0 )
-                    {
-                        stream.Write( bytes, 0, bytes.Length );
-                    }
-
-                    end = (UInt32)stream.Position;
-
-                    worker.ReportProgress( (i * 100) / 3790 );
-                }
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                    stream = null;
-                }
-            }
-        }
-
-        public static void PatchFile( string filename, int index, byte[] bytes )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( filename, FileMode.Open );
-                PatchFile( stream, index, bytes );
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                    stream = null;
-                }
-            }
-        }
-
-        public static void PatchFile( FileStream stream, int index, byte[] bytes )
-        {
-            PatchFile( stream, index, 0, bytes );
-        }
-
-        public static void PatchFile( FileStream stream, int index, int offset, byte[] bytes )
-        {
-            try
-            {
-                const long fftpackLocation = (int)PspIso.Files.PSP_GAME.USRDIR.fftpack_bin * 2048;
-                stream.Seek( fftpackLocation + ( index - 1 ) * 4 + 8, SeekOrigin.Begin );
-                byte[] pointer = new byte[4];
-                stream.Read( pointer, 0, 4 );
-
-                stream.Seek( fftpackLocation + pointer.ToUInt32() + offset, SeekOrigin.Begin );
-
-                stream.Write( bytes, 0, bytes.Length );
-            }
-            catch ( Exception )
-            {
-                throw;
-            }
-        }
-        
-		#endregion Methods 
-
     }
 }

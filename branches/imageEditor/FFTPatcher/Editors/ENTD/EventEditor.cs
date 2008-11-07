@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,16 +26,17 @@ namespace FFTPatcher.Editors
 {
     public partial class EventEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (2)Â 
+		#region Instance Variables (3) 
 
         private int[] columnWidths = new int[3] { 50, 50, 50 };
         private Event evt;
+        private Context ourContext = Context.Default;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
+		#region Public Properties (2) 
 
+        public EventUnit ClipBoardUnit { get; private set; }
 
         public Event Event
         {
@@ -56,10 +57,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public EventEditor()
         {
@@ -74,37 +74,38 @@ namespace FFTPatcher.Editors
             unitSelectorListBox.MouseDown += new MouseEventHandler( unitSelectorListBox_MouseDown );
         }
 
-        void unitSelectorListBox_MouseDown( object sender, MouseEventArgs e )
+		#endregion Constructors 
+
+		#region Public Methods (1) 
+
+        public void UpdateView()
         {
-            if( e.Button == MouseButtons.Right )
+            if( ourContext != FFTPatch.Context )
             {
-                unitSelectorListBox.SelectedIndex = unitSelectorListBox.IndexFromPoint( e.Location );
+                ourContext = FFTPatch.Context;
+                ClipBoardUnit = null;
+                unitSelectorListBox.ContextMenu.MenuItems[1].Enabled = false;
             }
+
+            eventUnitEditor.SuspendLayout();
+            DetermineColumnWidths();
+            unitSelectorListBox.DataSource = evt.Units;
+            unitSelectorListBox.SelectedIndex = 0;
+            eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
+            eventUnitEditor.UpdateView();
+            eventUnitEditor.ResumeLayout();
+            eventUnitEditor_DataChanged( eventUnitEditor, EventArgs.Empty );
         }
 
-        public EventUnit ClipBoardUnit { get; private set; }
+		#endregion Public Methods 
+
+		#region Private Methods (7) 
 
         private void CopyClickEventHandler( object sender, EventArgs args )
         {
             unitSelectorListBox.ContextMenu.MenuItems[1].Enabled = true;
             ClipBoardUnit = unitSelectorListBox.SelectedItem as EventUnit;
         }
-
-        private void PasteClickEventHandler( object sender, EventArgs args )
-        {
-            if( ClipBoardUnit != null )
-            {
-                ClipBoardUnit.CopyTo( unitSelectorListBox.SelectedItem as EventUnit );
-                eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
-                eventUnitEditor.UpdateView();
-                eventUnitEditor_DataChanged( eventUnitEditor, EventArgs.Empty );
-            }
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ MethodsÂ (5)Â 
-
 
         private void DetermineColumnWidths()
         {
@@ -134,6 +135,17 @@ namespace FFTPatcher.Editors
             OnDataChanged( this, EventArgs.Empty );
         }
 
+        private void PasteClickEventHandler( object sender, EventArgs args )
+        {
+            if( ClipBoardUnit != null )
+            {
+                ClipBoardUnit.CopyTo( unitSelectorListBox.SelectedItem as EventUnit );
+                eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
+                eventUnitEditor.UpdateView();
+                eventUnitEditor_DataChanged( eventUnitEditor, EventArgs.Empty );
+            }
+        }
+
         private void unitSelectorComboBox_SelectedIndexChanged( object sender, System.EventArgs e )
         {
             eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
@@ -159,29 +171,14 @@ namespace FFTPatcher.Editors
             }
         }
 
-        private Context ourContext = Context.Default;
-
-        public void UpdateView()
+        void unitSelectorListBox_MouseDown( object sender, MouseEventArgs e )
         {
-            if( ourContext != FFTPatch.Context )
+            if( e.Button == MouseButtons.Right )
             {
-                ourContext = FFTPatch.Context;
-                ClipBoardUnit = null;
-                unitSelectorListBox.ContextMenu.MenuItems[1].Enabled = false;
+                unitSelectorListBox.SelectedIndex = unitSelectorListBox.IndexFromPoint( e.Location );
             }
-
-            eventUnitEditor.SuspendLayout();
-            DetermineColumnWidths();
-            unitSelectorListBox.DataSource = evt.Units;
-            unitSelectorListBox.SelectedIndex = 0;
-            eventUnitEditor.EventUnit = unitSelectorListBox.SelectedItem as EventUnit;
-            eventUnitEditor.UpdateView();
-            eventUnitEditor.ResumeLayout();
-            eventUnitEditor_DataChanged( eventUnitEditor, EventArgs.Empty );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

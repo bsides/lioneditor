@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -30,15 +30,11 @@ namespace FFTPatcher.Controls
     /// </summary>
     public class NumericUpDownWithDefault : NumericUpDown
     {
-
-		#regionÂ PropertiesÂ (3)Â 
-
+		#region Public Properties (3) 
 
         public bool Default { get { return Value == DefaultValue; } }
 
         public decimal DefaultValue { get; private set; }
-
-
 
         /// <summary>
         /// Gets the current value.
@@ -51,11 +47,28 @@ namespace FFTPatcher.Controls
             private set { base.Value = value; }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
+		#region Public Methods (1) 
 
-		#regionÂ MethodsÂ (5)Â 
+        /// <summary>
+        /// Sets the value and its default.
+        /// </summary>
+        public void SetValueAndDefault( decimal value, decimal defaultValue )
+        {
+            if( Hexadecimal )
+                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: 0x{0:X2}", (int)defaultValue ) );
+            else
+                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: {0}", defaultValue ) );
+            
+            DefaultValue = defaultValue;
+            Value = value > Maximum ? Maximum : value;
+            OnValueChanged( EventArgs.Empty );
+        }
 
+		#endregion Public Methods 
+
+		#region Private Methods (1) 
 
         private void SetColors()
         {
@@ -76,22 +89,9 @@ namespace FFTPatcher.Controls
             }
         }
 
-        /// <summary>
-        /// Sets the value and its default.
-        /// </summary>
-        public void SetValueAndDefault( decimal value, decimal defaultValue )
-        {
-            if( Hexadecimal )
-                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: 0x{0:X2}", (int)defaultValue ) );
-            else
-                FFTPatchEditor.ToolTip.SetToolTip( this, string.Format( "Default: {0}", defaultValue ) );
-            
-            DefaultValue = defaultValue;
-            Value = value > Maximum ? Maximum : value;
-            OnValueChanged( EventArgs.Empty );
-        }
+		#endregion Private Methods 
 
-
+		#region Protected Methods (3) 
 
         protected override void OnEnter( EventArgs e )
         {
@@ -114,8 +114,6 @@ namespace FFTPatcher.Controls
             SetColors();
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Protected Methods 
     }
 }

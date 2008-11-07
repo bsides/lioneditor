@@ -28,15 +28,7 @@ namespace FFTPatcher.Editors
 {
     public partial class ItemEditor : BaseEditor
     {
-
-		#region Static Fields (2) 
-
-        private static List<string> itemFormulaItems;
-        private static List<string> weaponCastSpellItems;
-
-		#endregion Static Fields 
-
-		#region Fields (10) 
+		#region Instance Variables (12) 
 
         private List<ComboBoxWithDefault> comboBoxes = new List<ComboBoxWithDefault>();
         private bool ignoreChanges = false;
@@ -44,6 +36,7 @@ namespace FFTPatcher.Editors
         private string[] itemBools = new string[] {
             "Weapon", "Shield", "Head", "Body",
             "Accessory", "Blank1", "Rare", "Blank2" };
+        private static List<string> itemFormulaItems;
         private Context ourContext = Context.Default;
         private List<ItemSubType> pspItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
         private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
@@ -52,11 +45,11 @@ namespace FFTPatcher.Editors
         private string[] weaponBools = new string[] {
             "Striking", "Lunging", "Direct", "Arc",
             "TwoSwords", "TwoHands", "Blank", "Force2Hands" };
+        private static List<string> weaponCastSpellItems;
 
-		#endregion Fields 
+		#endregion Instance Variables 
 
-		#region Properties (1) 
-
+		#region Public Properties (1) 
 
         public Item Item
         {
@@ -77,38 +70,9 @@ namespace FFTPatcher.Editors
             }
         }
 
-
-		#endregion Properties 
+		#endregion Public Properties 
 
 		#region Constructors (2) 
-
-        static ItemEditor()
-        {
-            weaponCastSpellItems = new List<string>( 256 );
-            for( int i = 0; i < 256; i++ )
-            {
-                weaponCastSpellItems.Add( string.Format( "{0:X2} - {1}", i, AllAbilities.Names[i] ) );
-            }
-
-            itemFormulaItems = new List<string>( 256 );
-            Dictionary<int, string> t = new Dictionary<int, string>( 5 );
-            t.Add( 0x38, "Remove status" );
-            t.Add( 0x48, "Restore 10*X HP" );
-            t.Add( 0x49, "Restore 10*X MP" );
-            t.Add( 0x4A, "Restore all HP/MP" );
-            t.Add( 0x4B, "Remove status and restore (1..(X-1)) HP" );
-            for( int i = 0; i < 256; i++ )
-            {
-                if( t.ContainsKey( i ) )
-                {
-                    itemFormulaItems.Add( t[i] );
-                }
-                else
-                {
-                    itemFormulaItems.Add( string.Format( "{0:X2}", i ) );
-                }
-            }
-        }
 
         public ItemEditor()
         {
@@ -169,20 +133,37 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
+        static ItemEditor()
+        {
+            weaponCastSpellItems = new List<string>( 256 );
+            for( int i = 0; i < 256; i++ )
+            {
+                weaponCastSpellItems.Add( string.Format( "{0:X2} - {1}", i, AllAbilities.Names[i] ) );
+            }
+
+            itemFormulaItems = new List<string>( 256 );
+            Dictionary<int, string> t = new Dictionary<int, string>( 5 );
+            t.Add( 0x38, "Remove status" );
+            t.Add( 0x48, "Restore 10*X HP" );
+            t.Add( 0x49, "Restore 10*X MP" );
+            t.Add( 0x4A, "Restore all HP/MP" );
+            t.Add( 0x4B, "Remove status and restore (1..(X-1)) HP" );
+            for( int i = 0; i < 256; i++ )
+            {
+                if( t.ContainsKey( i ) )
+                {
+                    itemFormulaItems.Add( t[i] );
+                }
+                else
+                {
+                    itemFormulaItems.Add( string.Format( "{0:X2}", i ) );
+                }
+            }
+        }
+
 		#endregion Constructors 
 
-		#region Events (3) 
-
-        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
-
-        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
-
-        public event EventHandler<LabelClickedEventArgs> SecondTableLinkClicked;
-
-		#endregion Events 
-
-		#region Methods (12) 
-
+		#region Private Methods (12) 
 
         private void chemistItemFormulaComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -473,8 +454,10 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Private Methods 
 
-		#endregion Methods 
-
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
+        public event EventHandler<LabelClickedEventArgs> SecondTableLinkClicked;
     }
 }

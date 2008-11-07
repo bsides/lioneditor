@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,15 +27,13 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AllItems : PatchableFile, IXmlDigest
     {
-
-        #regionÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private byte[] afterPhoenixDown;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (2)
-
+		#region Public Properties (2) 
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -57,10 +55,9 @@ namespace FFTPatcher.Datatypes
 
         public List<Item> Items { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public AllItems( IList<byte> first )
             : this( first, null )
@@ -181,10 +178,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
@@ -199,6 +195,27 @@ namespace FFTPatcher.Datatypes
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 4 );
+
+            var first = ToFirstByteArray();
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x536B8, first ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                var second = ToSecondByteArray();
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3252DC, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x256E00, second ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3252DC, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x256E00, second ) );
+            }
+
+            return result;
         }
 
         public byte[] ToFirstByteArray()
@@ -272,30 +289,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
-
-
-        public override IList<PatchedByteArray> GetPatches( Context context )
-        {
-            var result = new List<PatchedByteArray>( 4 );
-
-            var first = ToFirstByteArray();
-            if ( context == Context.US_PSX )
-            {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x536B8, first ) );
-            }
-            else if ( context == Context.US_PSP )
-            {
-                var second = ToSecondByteArray();
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3252DC, first ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x256E00, second ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3252DC, first ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x256E00, second ) );
-            }
-
-            return result;
-        }
+		#endregion Public Methods 
     }
 }

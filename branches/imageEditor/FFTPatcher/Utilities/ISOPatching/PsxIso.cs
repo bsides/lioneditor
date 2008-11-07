@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,6 +27,228 @@ namespace FFTPatcher
 {
     public static class PsxIso
     {
+		#region Instance Variables (4) 
+
+        public const Sectors BATTLE_BIN = Sectors.BATTLE_BIN;
+        public const Sectors SCEAP_DAT = Sectors.SCEAP_DAT;
+        public const Sectors SCUS_942_21 = Sectors.SCUS_942_21;
+        public const Sectors SYSTEM_CNF = Sectors.SYSTEM_CNF;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (19) 
+
+        public static KnownPosition Abilities { get; private set; }
+
+        public static KnownPosition AbilityEffects { get; private set; }
+
+        public static KnownPosition ActionEvents { get; private set; }
+
+        public static KnownPosition ENTD1 { get; private set; }
+
+        public static KnownPosition ENTD2 { get; private set; }
+
+        public static KnownPosition ENTD3 { get; private set; }
+
+        public static KnownPosition ENTD4 { get; private set; }
+
+        public static KnownPosition Font { get; private set; }
+
+        public static KnownPosition FontWidths { get; private set; }
+
+        public static KnownPosition InflictStatuses { get; private set; }
+
+        public static KnownPosition JobLevels { get; private set; }
+
+        public static KnownPosition Jobs { get; private set; }
+
+        public static KnownPosition MonsterSkills { get; private set; }
+
+        public static KnownPosition MoveFindItems { get; private set; }
+
+        public static KnownPosition OldItemAttributes { get; private set; }
+
+        public static KnownPosition OldItems { get; private set; }
+
+        public static KnownPosition PoachProbabilities { get; private set; }
+
+        public static KnownPosition SkillSets { get; private set; }
+
+        public static KnownPosition StatusAttributes { get; private set; }
+
+		#endregion Public Properties 
+
+		#region Constructors (1) 
+
+        static PsxIso()
+        {
+            Abilities = new KnownPosition( SCUS_942_21, 0x4F3F0, 9414 );
+            AbilityEffects = new KnownPosition( BATTLE_BIN, 0x14F3F0, 0x2E0 );
+            ActionEvents = new KnownPosition( SCUS_942_21, 0x564B4, 224 );
+            Font = new KnownPosition( EVENT.FONT_BIN, 0, 77000 );
+            FontWidths = new KnownPosition( BATTLE_BIN, 0xFF0FC, 0x898 );
+            InflictStatuses = new KnownPosition( SCUS_942_21, 0x547C4, 0x300 );
+            Jobs = new KnownPosition( SCUS_942_21, 0x518B8, 0x1E00 );
+            JobLevels = new KnownPosition( SCUS_942_21, 0x568C4, 0xD0 );
+            MonsterSkills = new KnownPosition( SCUS_942_21, 0x563C4, 0xF0 );
+            OldItemAttributes = new KnownPosition( SCUS_942_21, 0x54AC4, 0x7D0 );
+            OldItems = new KnownPosition( SCUS_942_21, 0x536B8, 0x110A );
+            PoachProbabilities = new KnownPosition( SCUS_942_21, 0x56864, 0x60 );
+            StatusAttributes = new KnownPosition( SCUS_942_21, 0x565E4, 0x280 );
+            SkillSets = new KnownPosition( SCUS_942_21, 0x55294, 0x1130 );
+            ENTD1 = new KnownPosition( BATTLE.ENTD1_ENT, 0, 81920 );
+            ENTD2 = new KnownPosition( BATTLE.ENTD2_ENT, 0, 81920 );
+            ENTD3 = new KnownPosition( BATTLE.ENTD3_ENT, 0, 81920 );
+            ENTD4 = new KnownPosition( BATTLE.ENTD4_ENT, 0, 81920 );
+            MoveFindItems = new KnownPosition( BATTLE_BIN, 0x8EE74, 0x800 );
+        }
+
+		#endregion Constructors 
+
+		#region Public Methods (3) 
+
+        public static byte[] GetBlock( Stream iso, KnownPosition knownPositions ) 
+        {
+            return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
+        }
+
+        public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e, IGeneratePatchList patchList )
+        {
+            string filename = patchList.FileName;
+            int numberOfTasks = patchList.PatchCount * 2;
+            int tasksComplete = 0;
+            List<PatchedByteArray> patches = new List<PatchedByteArray>();
+
+            Action<string> sendProgress =
+                delegate( string message )
+                {
+                    backgroundWorker.ReportProgress( tasksComplete++ * 100 / numberOfTasks, message );
+                };
+
+            const Context context = Context.US_PSX;
+
+            if ( patchList.Abilities )
+            {
+                patches.AddRange( FFTPatch.Abilities.GetPatches( context ) );
+                sendProgress( "Getting Abilities patches" );
+            }
+
+            if ( patchList.AbilityEffects )
+            {
+                patches.AddRange( FFTPatch.Abilities.AllEffects.GetPatches( context ) );
+                sendProgress( "Getting Ability Effects patches" );
+            }
+
+            if ( patchList.ActionMenus )
+            {
+                patches.AddRange( FFTPatch.ActionMenus.GetPatches( context ) );
+                sendProgress( "Getting Action Menus patches" );
+            }
+
+            if ( patchList.ENTD.Exists( b => b == true ) )
+            {
+                IList<PatchedByteArray> entdPatches = FFTPatch.ENTDs.GetPatches( context );
+                for ( int i = 0; i < 4; i++ )
+                {
+                    if ( patchList.ENTD[i] )
+                    {
+                        patches.Add( entdPatches[i] );
+                        sendProgress( string.Format( "Getting ENTD {0} patches", i ) );
+                    }
+                }
+            }
+
+            if ( patchList.FONT )
+            {
+                patches.AddRange( FFTPatch.Font.GetPatches( context ) );
+                sendProgress( "Getting Font patches" );
+            }
+            if ( patchList.FontWidths )
+            {
+                patches.AddRange( FFTPatch.Font.GlyphWidths.GetPatches( context ) );
+                sendProgress( "Getting Font width patches" );
+            }
+            if ( patchList.InflictStatus )
+            {
+                patches.AddRange( FFTPatch.InflictStatuses.GetPatches( context ) );
+                sendProgress( "Getting Inflict Status patches" );
+            }
+            if ( patchList.ItemAttributes )
+            {
+                patches.AddRange( FFTPatch.ItemAttributes.GetPatches( context ) );
+                sendProgress( "Getting Item Attributes patches" );
+            }
+            if ( patchList.Items )
+            {
+                patches.AddRange( FFTPatch.Items.GetPatches( context ) );
+                sendProgress( "Getting Item patches" );
+            }
+            if ( patchList.JobLevels )
+            {
+                patches.AddRange( FFTPatch.JobLevels.GetPatches( context ) );
+                sendProgress( "Getting Job Levels patches" );
+            }
+            if ( patchList.Jobs )
+            {
+                patches.AddRange( FFTPatch.Jobs.GetPatches( context ) );
+                sendProgress( "Getting Jobs patches" );
+            }
+            if ( patchList.MonsterSkills )
+            {
+                patches.AddRange( FFTPatch.MonsterSkills.GetPatches( context ) );
+                sendProgress( "Getting Monster Skills patches" );
+            }
+            if ( patchList.MoveFindItems )
+            {
+                patches.AddRange( FFTPatch.MoveFind.GetPatches( context ) );
+                sendProgress( "Getting Move/Find Items patches" );
+            }
+            foreach ( PatchedByteArray patch in patchList.OtherPatches )
+            {
+                patches.Add( patch );
+                sendProgress( "Getting other patches" );
+            }
+            if ( patchList.Poach )
+            {
+                patches.AddRange( FFTPatch.PoachProbabilities.GetPatches( context ) );
+                sendProgress( "Getting Poach Probabilities patches" );
+            }
+            if ( patchList.Skillsets )
+            {
+                patches.AddRange( FFTPatch.SkillSets.GetPatches( context ) );
+                sendProgress( "Getting Skillsets patches" );
+            }
+            if ( patchList.StatusAttributes )
+            {
+                patches.AddRange( FFTPatch.StatusAttributes.GetPatches( context ) );
+                sendProgress( "Getting Status attributes patches" );
+            }
+
+            using ( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.ReadWrite ) )
+            {
+                foreach ( PatchedByteArray patch in patches )
+                {
+                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, false, patch.Sector,
+                        patch.Offset, patch.Bytes, true );
+                    sendProgress( "Patching ISO" );
+                }
+
+                if ( patchList.RegenECC )
+                {
+                    IsoPatch.FixupECC( IsoPatch.IsoType.Mode2Form1, stream );
+                    sendProgress( "Fixing ECC/EDC" );
+                }
+            }
+
+        }
+
+        public static byte[] ReadFile( Stream iso, Sectors file, int offset, int length )
+        {
+            return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
+        }
+
+		#endregion Public Methods 
+
         public enum Sectors
         {
             BATTLE_10M_SPR = 59862,
@@ -2494,8 +2716,7 @@ namespace FFTPatcher
             SCUS_942_21 = 24,
             SYSTEM_CNF = 24,
         }
-
-        public static class BATTLE
+public static class BATTLE
         {
             public const Sectors _10M_SPR = Sectors.BATTLE_10M_SPR;
             public const Sectors _10W_SPR = Sectors.BATTLE_10W_SPR;
@@ -2682,7 +2903,6 @@ namespace FFTPatcher
             public const Sectors ZARUMOU_SPR = Sectors.BATTLE_ZARUMOU_SPR;
             public const Sectors ZODIAC_BIN = Sectors.BATTLE_ZODIAC_BIN;
         }
-
         public static class EFFECT
         {
             public const Sectors E000_BIN = Sectors.EFFECT_E000_BIN;
@@ -3198,7 +3418,6 @@ namespace FFTPatcher
             public const Sectors E510_BIN = Sectors.EFFECT_E510_BIN;
             public const Sectors E511_BIN = Sectors.EFFECT_E511_BIN;
         }
-
         public static class EVENT
         {
             public const Sectors ATCHELP_LZW = Sectors.EVENT_ATCHELP_LZW;
@@ -3246,7 +3465,6 @@ namespace FFTPatcher
             public const Sectors WLDHELP_LZW = Sectors.EVENT_WLDHELP_LZW;
             public const Sectors WORLD_LZW = Sectors.EVENT_WORLD_LZW;
         }
-
         public static class MAP
         {
             public const Sectors MAP000_5 = Sectors.MAP_MAP000_5;
@@ -4825,7 +5043,6 @@ namespace FFTPatcher
             public const Sectors MAP125_7 = Sectors.MAP_MAP125_7;
             public const Sectors MAP125_GNS = Sectors.MAP_MAP125_GNS;
         }
-
         public static class MENU
         {
             public const Sectors BK_FITR_TIM = Sectors.MENU_BK_FITR_TIM;
@@ -4853,7 +5070,6 @@ namespace FFTPatcher
             public const Sectors TUTO7_MES = Sectors.MENU_TUTO7_MES;
             public const Sectors TUTO7_SCR = Sectors.MENU_TUTO7_SCR;
         }
-
         public static class OPEN
         {
             public const Sectors ENDING_XA = Sectors.OPEN_ENDING_XA;
@@ -4867,7 +5083,6 @@ namespace FFTPatcher
             public const Sectors OPNBK_BIN = Sectors.OPEN_OPNBK_BIN;
             public const Sectors OPNTEX_BIN = Sectors.OPEN_OPNTEX_BIN;
         }
-
         public static class SOUND
         {
             public const Sectors ENV_SED = Sectors.SOUND_ENV_SED;
@@ -4974,7 +5189,6 @@ namespace FFTPatcher
             public const Sectors SYSTEM_SED = Sectors.SOUND_SYSTEM_SED;
             public const Sectors WAVESET_WD = Sectors.SOUND_WAVESET_WD;
         }
-
         public static class WORLD
         {
             public const Sectors SNPLBIN_BIN = Sectors.WORLD_SNPLBIN_BIN;
@@ -4986,208 +5200,17 @@ namespace FFTPatcher
             public const Sectors WLDTEX_TM2 = Sectors.WORLD_WLDTEX_TM2;
             public const Sectors WORLD_BIN = Sectors.WORLD_WORLD_BIN;
         }
-
-        public const Sectors BATTLE_BIN = Sectors.BATTLE_BIN;
-        public const Sectors SCEAP_DAT = Sectors.SCEAP_DAT;
-        public const Sectors SCUS_942_21 = Sectors.SCUS_942_21;
-        public const Sectors SYSTEM_CNF = Sectors.SYSTEM_CNF;
-
         public class KnownPosition
         {
             public Sectors Sector { get; private set; }
             public int StartLocation { get; private set; }
             public int Length { get; private set; }
-            
-            public KnownPosition( Sectors sector, int startLocation, int length )
+                        public KnownPosition( Sectors sector, int startLocation, int length )
             {
                Sector = sector;
                StartLocation = startLocation;
                Length = length;
             }
         }
-        
-        public static KnownPosition Abilities { get; private set; }
-        public static KnownPosition AbilityEffects { get; private set; }
-        public static KnownPosition ActionEvents { get; private set; }
-        public static KnownPosition Font { get; private set; }
-        public static KnownPosition FontWidths { get; private set; }
-        public static KnownPosition InflictStatuses { get; private set; }
-        public static KnownPosition JobLevels { get; private set; }
-        public static KnownPosition Jobs { get; private set; }
-        public static KnownPosition MonsterSkills { get; private set; }
-        public static KnownPosition OldItemAttributes { get; private set; }
-        public static KnownPosition OldItems { get; private set; }
-        public static KnownPosition PoachProbabilities { get; private set; }
-        public static KnownPosition SkillSets { get; private set; }
-        public static KnownPosition StatusAttributes { get; private set; }
-        public static KnownPosition ENTD1 { get; private set; }
-        public static KnownPosition ENTD2 { get; private set; }
-        public static KnownPosition ENTD3 { get; private set; }
-        public static KnownPosition ENTD4 { get; private set; }
-        public static KnownPosition MoveFindItems { get; private set; }
-
-        static PsxIso()
-        {
-            Abilities = new KnownPosition( SCUS_942_21, 0x4F3F0, 9414 );
-            AbilityEffects = new KnownPosition( BATTLE_BIN, 0x14F3F0, 0x2E0 );
-            ActionEvents = new KnownPosition( SCUS_942_21, 0x564B4, 224 );
-            Font = new KnownPosition( EVENT.FONT_BIN, 0, 77000 );
-            FontWidths = new KnownPosition( BATTLE_BIN, 0xFF0FC, 0x898 );
-            InflictStatuses = new KnownPosition( SCUS_942_21, 0x547C4, 0x300 );
-            Jobs = new KnownPosition( SCUS_942_21, 0x518B8, 0x1E00 );
-            JobLevels = new KnownPosition( SCUS_942_21, 0x568C4, 0xD0 );
-            MonsterSkills = new KnownPosition( SCUS_942_21, 0x563C4, 0xF0 );
-            OldItemAttributes = new KnownPosition( SCUS_942_21, 0x54AC4, 0x7D0 );
-            OldItems = new KnownPosition( SCUS_942_21, 0x536B8, 0x110A );
-            PoachProbabilities = new KnownPosition( SCUS_942_21, 0x56864, 0x60 );
-            StatusAttributes = new KnownPosition( SCUS_942_21, 0x565E4, 0x280 );
-            SkillSets = new KnownPosition( SCUS_942_21, 0x55294, 0x1130 );
-            ENTD1 = new KnownPosition( BATTLE.ENTD1_ENT, 0, 81920 );
-            ENTD2 = new KnownPosition( BATTLE.ENTD2_ENT, 0, 81920 );
-            ENTD3 = new KnownPosition( BATTLE.ENTD3_ENT, 0, 81920 );
-            ENTD4 = new KnownPosition( BATTLE.ENTD4_ENT, 0, 81920 );
-            MoveFindItems = new KnownPosition( BATTLE_BIN, 0x8EE74, 0x800 );
-        }
-        
-        public static byte[] GetBlock( Stream iso, KnownPosition knownPositions ) 
-        {
-            return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
-        }
-        
-        public static byte[] ReadFile( Stream iso, Sectors file, int offset, int length )
-        {
-            return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
-        }
-        
-        public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e, IGeneratePatchList patchList )
-        {
-            string filename = patchList.FileName;
-            int numberOfTasks = patchList.PatchCount * 2;
-            int tasksComplete = 0;
-            List<PatchedByteArray> patches = new List<PatchedByteArray>();
-
-            Action<string> sendProgress =
-                delegate( string message )
-                {
-                    backgroundWorker.ReportProgress( tasksComplete++ * 100 / numberOfTasks, message );
-                };
-
-            const Context context = Context.US_PSX;
-
-            if ( patchList.Abilities )
-            {
-                patches.AddRange( FFTPatch.Abilities.GetPatches( context ) );
-                sendProgress( "Getting Abilities patches" );
-            }
-
-            if ( patchList.AbilityEffects )
-            {
-                patches.AddRange( FFTPatch.Abilities.AllEffects.GetPatches( context ) );
-                sendProgress( "Getting Ability Effects patches" );
-            }
-
-            if ( patchList.ActionMenus )
-            {
-                patches.AddRange( FFTPatch.ActionMenus.GetPatches( context ) );
-                sendProgress( "Getting Action Menus patches" );
-            }
-
-            if ( patchList.ENTD.Exists( b => b == true ) )
-            {
-                IList<PatchedByteArray> entdPatches = FFTPatch.ENTDs.GetPatches( context );
-                for ( int i = 0; i < 4; i++ )
-                {
-                    if ( patchList.ENTD[i] )
-                    {
-                        patches.Add( entdPatches[i] );
-                        sendProgress( string.Format( "Getting ENTD {0} patches", i ) );
-                    }
-                }
-            }
-
-            if ( patchList.FONT )
-            {
-                patches.AddRange( FFTPatch.Font.GetPatches( context ) );
-                sendProgress( "Getting Font patches" );
-            }
-            if ( patchList.FontWidths )
-            {
-                patches.AddRange( FFTPatch.Font.GlyphWidths.GetPatches( context ) );
-                sendProgress( "Getting Font width patches" );
-            }
-            if ( patchList.InflictStatus )
-            {
-                patches.AddRange( FFTPatch.InflictStatuses.GetPatches( context ) );
-                sendProgress( "Getting Inflict Status patches" );
-            }
-            if ( patchList.ItemAttributes )
-            {
-                patches.AddRange( FFTPatch.ItemAttributes.GetPatches( context ) );
-                sendProgress( "Getting Item Attributes patches" );
-            }
-            if ( patchList.Items )
-            {
-                patches.AddRange( FFTPatch.Items.GetPatches( context ) );
-                sendProgress( "Getting Item patches" );
-            }
-            if ( patchList.JobLevels )
-            {
-                patches.AddRange( FFTPatch.JobLevels.GetPatches( context ) );
-                sendProgress( "Getting Job Levels patches" );
-            }
-            if ( patchList.Jobs )
-            {
-                patches.AddRange( FFTPatch.Jobs.GetPatches( context ) );
-                sendProgress( "Getting Jobs patches" );
-            }
-            if ( patchList.MonsterSkills )
-            {
-                patches.AddRange( FFTPatch.MonsterSkills.GetPatches( context ) );
-                sendProgress( "Getting Monster Skills patches" );
-            }
-            if ( patchList.MoveFindItems )
-            {
-                patches.AddRange( FFTPatch.MoveFind.GetPatches( context ) );
-                sendProgress( "Getting Move/Find Items patches" );
-            }
-            foreach ( PatchedByteArray patch in patchList.OtherPatches )
-            {
-                patches.Add( patch );
-                sendProgress( "Getting other patches" );
-            }
-            if ( patchList.Poach )
-            {
-                patches.AddRange( FFTPatch.PoachProbabilities.GetPatches( context ) );
-                sendProgress( "Getting Poach Probabilities patches" );
-            }
-            if ( patchList.Skillsets )
-            {
-                patches.AddRange( FFTPatch.SkillSets.GetPatches( context ) );
-                sendProgress( "Getting Skillsets patches" );
-            }
-            if ( patchList.StatusAttributes )
-            {
-                patches.AddRange( FFTPatch.StatusAttributes.GetPatches( context ) );
-                sendProgress( "Getting Status attributes patches" );
-            }
-
-            using ( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.ReadWrite ) )
-            {
-                foreach ( PatchedByteArray patch in patches )
-                {
-                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, false, patch.Sector,
-                        patch.Offset, patch.Bytes, true );
-                    sendProgress( "Patching ISO" );
-                }
-
-                if ( patchList.RegenECC )
-                {
-                    IsoPatch.FixupECC( IsoPatch.IsoType.Mode2Form1, stream );
-                    sendProgress( "Fixing ECC/EDC" );
-                }
-            }
-
-        }
-
     }
 }

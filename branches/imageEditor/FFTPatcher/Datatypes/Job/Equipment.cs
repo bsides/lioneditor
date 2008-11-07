@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,24 +26,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Equipment : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (2)
-
-        private static readonly string[] pspNames = new string[40] {
-            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
-            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
-            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
-            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume",
-            "Unknown1","Unknown2","Unknown3","FellSword","LipRouge","Unknown6","Unknown7","Unknown8" };
-        private static readonly string[] psxNames = new string[32] {
-            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
-            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
-            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
-            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (40)
+		#region Instance Variables (42) 
 
         public bool Armguard;
         public bool Armlet;
@@ -71,6 +54,17 @@ namespace FFTPatcher.Datatypes
         public bool Perfume;
         public bool Pole;
         public bool Polearm;
+        private static readonly string[] pspNames = new string[40] {
+            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
+            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
+            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume",
+            "Unknown1","Unknown2","Unknown3","FellSword","LipRouge","Unknown6","Unknown7","Unknown8" };
+        private static readonly string[] psxNames = new string[32] {
+            "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
+            "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
+            "Pole","Bag","Cloth","Shield","Helmet","Hat","HairAdornment","Armor",
+            "Clothing","Robe","Shoes","Armguard","Ring","Armlet","Cloak","Perfume" };
         public bool Ring;
         public bool Robe;
         public bool Rod;
@@ -86,10 +80,9 @@ namespace FFTPatcher.Datatypes
         public bool Unknown8;
         public bool Unused;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (3)
-
+		#region Public Properties (3) 
 
         public Equipment Default { get; private set; }
 
@@ -103,10 +96,9 @@ namespace FFTPatcher.Datatypes
             get { return Default != null && !Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) ); }
         }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public Equipment( IList<byte> bytes )
             : this( bytes, null )
@@ -126,41 +118,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (7)
-
-
-        private byte[] ToByteArrayPSX()
-        {
-            byte[] result = new byte[4];
-            result[0] = Utilities.ByteFromBooleans( Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod );
-            result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
-            result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
-            result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
-            return result;
-        }
-
-        public bool[] ToBoolArray()
-        {
-            return new bool[40] {
-                Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod,
-                Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm,
-                Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor,
-                Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume,
-                Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 };
-        }
-
-        public byte[] ToByteArray()
-        {
-            byte[] result = new byte[5];
-            result[0] = Utilities.ByteFromBooleans( Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod );
-            result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
-            result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
-            result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
-            result[4] = Utilities.ByteFromBooleans( Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 );
-            return result;
-        }
+		#region Public Methods (8) 
 
         public static void Copy( Equipment source, Equipment destination )
         {
@@ -215,19 +175,6 @@ namespace FFTPatcher.Datatypes
             Copy( this, destination );
         }
 
-        public byte[] ToByteArray( Context context )
-        {
-            switch( context )
-            {
-                case Context.US_PSX:
-                    return ToByteArrayPSX();
-                default:
-                    return ToByteArray();
-            }
-        }
-
-
-
         public override bool Equals( object obj )
         {
             return (obj is Equipment) &&
@@ -237,6 +184,38 @@ namespace FFTPatcher.Datatypes
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public bool[] ToBoolArray()
+        {
+            return new bool[40] {
+                Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod,
+                Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm,
+                Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor,
+                Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume,
+                Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 };
+        }
+
+        public byte[] ToByteArray()
+        {
+            byte[] result = new byte[5];
+            result[0] = Utilities.ByteFromBooleans( Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod );
+            result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
+            result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
+            result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
+            result[4] = Utilities.ByteFromBooleans( Unknown1, Unknown2, Unknown3, FellSword, LipRouge, Unknown6, Unknown7, Unknown8 );
+            return result;
+        }
+
+        public byte[] ToByteArray( Context context )
+        {
+            switch( context )
+            {
+                case Context.US_PSX:
+                    return ToByteArrayPSX();
+                default:
+                    return ToByteArray();
+            }
         }
 
         public override string ToString()
@@ -253,8 +232,20 @@ namespace FFTPatcher.Datatypes
             return string.Join( " | ", strings.ToArray() );
         }
 
+		#endregion Public Methods 
 
-        #endregionÂ Methods
+		#region Private Methods (1) 
 
+        private byte[] ToByteArrayPSX()
+        {
+            byte[] result = new byte[4];
+            result[0] = Utilities.ByteFromBooleans( Unused, Knife, NinjaBlade, Sword, KnightsSword, Katana, Axe, Rod );
+            result[1] = Utilities.ByteFromBooleans( Staff, Flail, Gun, Crossbow, Bow, Instrument, Book, Polearm );
+            result[2] = Utilities.ByteFromBooleans( Pole, Bag, Cloth, Shield, Helmet, Hat, HairAdornment, Armor );
+            result[3] = Utilities.ByteFromBooleans( Clothing, Robe, Shoes, Armguard, Ring, Armlet, Cloak, Perfume );
+            return result;
+        }
+
+		#endregion Private Methods 
     }
 }

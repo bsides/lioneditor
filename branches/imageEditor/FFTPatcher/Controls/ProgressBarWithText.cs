@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -8,7 +8,13 @@ namespace FFTPatcher.Controls
 {
     public class ProgressBarWithText : ProgressBar
     {
+		#region Instance Variables (1) 
+
         private string currentText = null;
+
+		#endregion Instance Variables 
+
+		#region Public Methods (2) 
 
         public void SetValue( int value )
         {
@@ -21,6 +27,10 @@ namespace FFTPatcher.Controls
             Value = value;
             Invalidate();
         }
+
+		#endregion Public Methods 
+
+		#region Protected Methods (1) 
 
         protected override void OnPaint( PaintEventArgs e )
         {
@@ -38,5 +48,7 @@ namespace FFTPatcher.Controls
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPrefix );
             }
         }
+
+		#endregion Protected Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,7 +26,8 @@ namespace System.Runtime.CompilerServices
 {
     public class ExtensionAttribute : Attribute
     {
-    }
+
+}
 }
 
 namespace FFTPatcher
@@ -37,7 +38,7 @@ namespace FFTPatcher
     public static partial class ExtensionMethods
     {
 
-        #regionÂ MethodsÂ (14)
+        #region Methods (14)
 
         /// <summary>
         /// Sums the items in the list.
@@ -340,7 +341,7 @@ namespace FFTPatcher
         }
 
 
-        #endregionÂ Methods
+        #endregion Methods
 
     }
 }

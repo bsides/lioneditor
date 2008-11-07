@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,21 +24,13 @@ namespace FFTPatcher.Editors
 {
     public partial class FFTPatchEditor : UserControl
     {
-
-		#regionÂ StaticÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public static ToolTip ToolTip { get; private set; }
 
+		#endregion Public Properties 
 
-		#endregionÂ StaticÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (2)Â 
-
-        static FFTPatchEditor()
-        {
-            ToolTip = new ToolTip();
-        }
+		#region Constructors (2) 
 
         public FFTPatchEditor()
         {
@@ -52,10 +44,14 @@ namespace FFTPatcher.Editors
             allJobsEditor1.SkillSetClicked += SkillSetClicked;
         }
 
-		#endregionÂ ConstructorsÂ 
+        static FFTPatchEditor()
+        {
+            ToolTip = new ToolTip();
+        }
 
-		#regionÂ MethodsÂ (4)Â 
+		#endregion Constructors 
 
+		#region Private Methods (4) 
 
         private void FFTPatch_DataChanged( object sender, System.EventArgs e )
         {
@@ -109,8 +105,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

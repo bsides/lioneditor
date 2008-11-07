@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,8 +25,7 @@ namespace FFTPatcher.Editors
 {
     public partial class AllItemsEditor : UserControl
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllItemsEditor()
         {
@@ -37,18 +36,22 @@ namespace FFTPatcher.Editors
             itemEditor.DataChanged += new EventHandler( itemEditor_DataChanged );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (2)Â 
+		#region Public Methods (1) 
 
-        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+        public void UpdateView( AllItems items )
+        {
+            itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;
+            itemListBox.DataSource = items.Items;
+            itemListBox.SelectedIndexChanged += itemListBox_SelectedIndexChanged;
+            itemListBox.SelectedIndex = 0;
+            itemEditor.Item = itemListBox.SelectedItem as Item;
+        }
 
-        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
+		#endregion Public Methods 
 
-		#endregionÂ EventsÂ 
-
-		#regionÂ MethodsÂ (6)Â 
-
+		#region Private Methods (5) 
 
         private void itemEditor_DataChanged( object sender, EventArgs e )
         {
@@ -117,17 +120,9 @@ namespace FFTPatcher.Editors
             itemEditor.Item = itemListBox.SelectedItem as Item;
         }
 
-        public void UpdateView( AllItems items )
-        {
-            itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;
-            itemListBox.DataSource = items.Items;
-            itemListBox.SelectedIndexChanged += itemListBox_SelectedIndexChanged;
-            itemListBox.SelectedIndex = 0;
-            itemEditor.Item = itemListBox.SelectedItem as Item;
-        }
+		#endregion Private Methods 
 
-
-		#endregionÂ MethodsÂ 
-
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
     }
 }

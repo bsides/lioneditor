@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,8 +25,18 @@ namespace FFTPatcher.Editors
 {
     public partial class AllAbilitiesEditor : UserControl
     {
+		#region Instance Variables (6) 
 
-		#regionÂ ConstructorsÂ (1)Â 
+        private Ability cbAbility;
+        const int cloneCommonIndex = 0;
+        private Context ourContext = Context.Default;
+        const int pasteAllIndex = 3;
+        const int pasteCommonIndex = 1;
+        const int pasteSpecificIndex = 2;
+
+		#endregion Instance Variables 
+
+		#region Constructors (1) 
 
         public AllAbilitiesEditor()
         {
@@ -42,25 +52,97 @@ namespace FFTPatcher.Editors
             abilitiesListBox.ContextMenu.Popup += new EventHandler( ContextMenu_Popup );
         }
 
+		#endregion Constructors 
+
+		#region Public Methods (2) 
+
+        public void abilitiesListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                abilitiesListBox.SelectedIndex = abilitiesListBox.IndexFromPoint( e.Location );
+            }
+        }
+
+        public void UpdateView( AllAbilities allAbilities )
+        {
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                cbAbility = null;
+            }
+            abilitiesListBox.SelectedIndexChanged -= abilitiesListBox_SelectedIndexChanged;
+            abilitiesListBox.DataSource = allAbilities.Abilities;
+            abilitiesListBox.SelectedIndexChanged += abilitiesListBox_SelectedIndexChanged;
+            abilitiesListBox.SelectedIndex = 0;
+            abilityEditor.Ability = abilitiesListBox.SelectedItem as Ability;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (9) 
+
+        private void abilitiesListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            Ability a = abilitiesListBox.SelectedItem as Ability;
+            abilityEditor.Ability = a;
+        }
+
+        private void abilityEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[abilitiesListBox.DataSource];
+            cm.Refresh();
+        }
+
+        private void abilityEditor_InflictStatusLabelClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( InflictStatusClicked != null )
+            {
+                InflictStatusClicked( this, e );
+            }
+        }
+
+private void ContextMenu_Popup( object sender, EventArgs e )
+        {
+            AbType cbType =
+                cbAbility == null ? AbType.None :
+                cbAbility.IsArithmetick ? AbType.Arithmetick :
+                cbAbility.IsCharging ? AbType.Charging :
+                cbAbility.IsItem ? AbType.Item :
+                cbAbility.IsJumping ? AbType.Jumping :
+                cbAbility.IsNormal ? AbType.Normal :
+                cbAbility.IsOther ? AbType.Other :
+                                    AbType.Throwing;
+            bool typesMatch = TypesMatch();
+
+            abilitiesListBox.ContextMenu.MenuItems[pasteCommonIndex].Enabled = cbType != AbType.None;
+            abilitiesListBox.ContextMenu.MenuItems[pasteAllIndex].Enabled = typesMatch;
+            abilitiesListBox.ContextMenu.MenuItems[pasteSpecificIndex].Enabled = typesMatch;
+            abilitiesListBox.ContextMenu.MenuItems[pasteSpecificIndex].Text = string.Format( "Paste {0}", cbType );
+
+        }
+
         private void copyAll( object sender, EventArgs args )
         {
             cbAbility = abilitiesListBox.SelectedItem as Ability;
         }
+
+        private void pasteAll( object sender, EventArgs args )
+        {
+            if( TypesMatch() )
+            {
+                cbAbility.CopyAllTo( abilitiesListBox.SelectedItem as Ability );
+                abilityEditor.UpdateView();
+                abilityEditor_DataChanged( abilityEditor, EventArgs.Empty );
+            }
+        }
+
         private void pasteCommon( object sender, EventArgs args )
         {
             if( cbAbility != null )
             {
                 Ability destAbility = abilitiesListBox.SelectedItem as Ability;
                 cbAbility.CopyCommonTo( destAbility );
-                abilityEditor.UpdateView();
-                abilityEditor_DataChanged( abilityEditor, EventArgs.Empty );
-            }
-        }
-        private void pasteAll( object sender, EventArgs args )
-        {
-            if( TypesMatch() )
-            {
-                cbAbility.CopyAllTo( abilitiesListBox.SelectedItem as Ability );
                 abilityEditor.UpdateView();
                 abilityEditor_DataChanged( abilityEditor, EventArgs.Empty );
             }
@@ -100,12 +182,7 @@ namespace FFTPatcher.Editors
             return cbType != AbType.None && destType != AbType.None && cbType == destType;
         }
 
-        const int cloneCommonIndex = 0;
-        const int pasteCommonIndex = 1;
-        const int pasteSpecificIndex = 2;
-        const int pasteAllIndex = 3;
-
-        private Ability cbAbility;
+		#endregion Private Methods 
 
         private enum AbType
         {
@@ -118,83 +195,6 @@ namespace FFTPatcher.Editors
             Other,
             Throwing
         }
-
-        private void ContextMenu_Popup( object sender, EventArgs e )
-        {
-            AbType cbType =
-                cbAbility == null ? AbType.None :
-                cbAbility.IsArithmetick ? AbType.Arithmetick :
-                cbAbility.IsCharging ? AbType.Charging :
-                cbAbility.IsItem ? AbType.Item :
-                cbAbility.IsJumping ? AbType.Jumping :
-                cbAbility.IsNormal ? AbType.Normal :
-                cbAbility.IsOther ? AbType.Other :
-                                    AbType.Throwing;
-            bool typesMatch = TypesMatch();
-
-            abilitiesListBox.ContextMenu.MenuItems[pasteCommonIndex].Enabled = cbType != AbType.None;
-            abilitiesListBox.ContextMenu.MenuItems[pasteAllIndex].Enabled = typesMatch;
-            abilitiesListBox.ContextMenu.MenuItems[pasteSpecificIndex].Enabled = typesMatch;
-            abilitiesListBox.ContextMenu.MenuItems[pasteSpecificIndex].Text = string.Format( "Paste {0}", cbType );
-
-        }
-
-        public void abilitiesListBox_MouseDown( object sender, MouseEventArgs e )
-        {
-            if( e.Button == MouseButtons.Right )
-            {
-                abilitiesListBox.SelectedIndex = abilitiesListBox.IndexFromPoint( e.Location );
-            }
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ EventsÂ (1)Â 
-
-        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
-
-		#endregionÂ EventsÂ 
-
-		#regionÂ MethodsÂ (4)Â 
-
-
-        private void abilitiesListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            Ability a = abilitiesListBox.SelectedItem as Ability;
-            abilityEditor.Ability = a;
-        }
-
-        private void abilityEditor_DataChanged( object sender, EventArgs e )
-        {
-            CurrencyManager cm = (CurrencyManager)BindingContext[abilitiesListBox.DataSource];
-            cm.Refresh();
-        }
-
-        private void abilityEditor_InflictStatusLabelClicked( object sender, LabelClickedEventArgs e )
-        {
-            if( InflictStatusClicked != null )
-            {
-                InflictStatusClicked( this, e );
-            }
-        }
-
-        private Context ourContext = Context.Default;
-        public void UpdateView( AllAbilities allAbilities )
-        {
-            if( ourContext != FFTPatch.Context )
-            {
-                ourContext = FFTPatch.Context;
-                cbAbility = null;
-            }
-            abilitiesListBox.SelectedIndexChanged -= abilitiesListBox_SelectedIndexChanged;
-            abilitiesListBox.DataSource = allAbilities.Abilities;
-            abilitiesListBox.SelectedIndexChanged += abilitiesListBox_SelectedIndexChanged;
-            abilitiesListBox.SelectedIndex = 0;
-            abilityEditor.Ability = abilitiesListBox.SelectedItem as Ability;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
     }
 }

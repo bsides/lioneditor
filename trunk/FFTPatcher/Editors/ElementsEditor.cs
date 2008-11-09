@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,26 +26,19 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class ElementsEditor : UserControl
+    public partial class ElementsEditor : BaseEditor
     {
-
-		#regionÂ StaticÂ FieldsÂ (1)Â 
-
-        private static string[] elementNames = new string[] {
-                "Fire", "Lightning", "Ice", "Wind", "Earth", "Water", "Holy", "Dark" };
-
-		#endregionÂ StaticÂ FieldsÂ 
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (4) 
 
         private Elements defaults;
+        private static string[] elementNames = new string[] {
+                "Fire", "Lightning", "Ice", "Wind", "Earth", "Water", "Holy", "Dark" };
         private Elements elements = new Elements( 0 );
         private bool ignoreChanges = false;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public string GroupBoxText
         {
@@ -53,10 +46,9 @@ namespace FFTPatcher.Editors
             set { elementsGroupBox.Text = value; }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public ElementsEditor()
         {
@@ -64,10 +56,21 @@ namespace FFTPatcher.Editors
             elementsCheckedListBox.ItemCheck += elementsCheckedListBox_ItemCheck;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (3)Â 
+		#region Public Methods (1) 
 
+        public void SetValueAndDefaults( Elements value, Elements defaults )
+        {
+            elements = value;
+            this.defaults = defaults;
+            Enabled = true;
+            UpdateView();
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (2) 
 
         private void elementsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
@@ -76,6 +79,7 @@ namespace FFTPatcher.Editors
                 string s = elementsCheckedListBox.Items[e.Index].ToString();
                 PropertyInfo pi = elements.GetType().GetProperty( s );
                 pi.SetValue( elements, e.NewValue == CheckState.Checked, null );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 
@@ -92,21 +96,11 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
-        public void SetValueAndDefaults( Elements value, Elements defaults )
-        {
-            elements = value;
-            this.defaults = defaults;
-            Enabled = true;
-            UpdateView();
-        }
-
-
-		#endregionÂ MethodsÂ 
+		#endregion Private Methods 
 
 
         private class ElementsCheckedListBox : CheckedListBox
         {
-
             private enum Elements
             {
                 Fire,
@@ -118,29 +112,12 @@ namespace FFTPatcher.Editors
                 Holy,
                 Dark
             }
-
-
-    		#regionÂ PropertiesÂ (1)Â 
-
-
-            public bool[] Defaults { get; private set; }
-
-
-		    #endregionÂ PropertiesÂ 
-
-    		#regionÂ ConstructorsÂ (1)Â 
-
+public bool[] Defaults { get; private set; }
             public ElementsCheckedListBox()
                 : base()
             {
                 CheckOnClick = true;
             }
-
-		    #endregionÂ ConstructorsÂ 
-
-    		#regionÂ MethodsÂ (3)Â 
-
-
             public void SetValuesAndDefaults( bool[] values, bool[] defaults )
             {
                 if( (values != null) && (defaults != null) && (this.Defaults == null) )
@@ -177,9 +154,6 @@ namespace FFTPatcher.Editors
                     }
                 }
             }
-
-
-
             protected override void OnDrawItem( DrawItemEventArgs e )
             {
                 Brush backColorBrush = Brushes.White;
@@ -247,17 +221,11 @@ namespace FFTPatcher.Editors
                     }
                 }
             }
-
             protected override void OnKeyDown( KeyEventArgs e )
             {
                 SetValuesAndDefaults( Defaults, Defaults );
                 base.OnKeyDown( e );
             }
-
-
-		    #endregionÂ MethodsÂ 
-
         }
-
     }
 }

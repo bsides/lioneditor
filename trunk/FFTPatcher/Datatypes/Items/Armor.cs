@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,23 +27,15 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Armor : Item
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly List<string> armorDigestableProperties;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (5)
-
+		#region Public Properties (5) 
 
         public Armor ArmorDefault { get; private set; }
-
-        public byte HPBonus { get; set; }
-
-        public byte MPBonus { get; set; }
-
-
 
         public override IList<string> DigestableProperties
         {
@@ -65,10 +57,13 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public byte HPBonus { get; set; }
 
-        #endregionÂ Properties
+        public byte MPBonus { get; set; }
 
-        #regionÂ ConstructorsÂ (3)
+		#endregion Public Properties 
+
+		#region Constructors (3) 
 
         static Armor()
         {
@@ -90,14 +85,40 @@ namespace FFTPatcher.Datatypes
             MPBonus = armorBytes[1];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
+		#region Public Methods (8) 
 
+        public static void CopyAll( Armor source, Armor destination )
+        {
+            CopyArmor( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Armor destination )
+        {
+            CopyAll( this, destination );
+        }
+
+        public static void CopyArmor( Armor source, Armor destination )
+        {
+            destination.HPBonus = source.HPBonus;
+            destination.MPBonus = source.MPBonus;
+        }
+
+        public void CopyArmorTo( Armor destination )
+        {
+            CopyArmor( this, destination );
+        }
 
         public byte[] ToArmorByteArray()
         {
             return new byte[2] { HPBonus, MPBonus };
+        }
+
+        public override byte[] ToFirstByteArray()
+        {
+            return ToItemByteArray();
         }
 
         public byte[] ToItemByteArray()
@@ -105,20 +126,11 @@ namespace FFTPatcher.Datatypes
             return base.ToByteArray().ToArray();
         }
 
-
-
-        public override byte[] ToFirstByteArray()
-        {
-            return ToItemByteArray();
-        }
-
         public override byte[] ToSecondByteArray()
         {
             return ToArmorByteArray();
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

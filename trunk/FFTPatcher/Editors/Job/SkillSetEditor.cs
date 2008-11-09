@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,10 +25,9 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class SkillSetEditor : UserControl
+    public partial class SkillSetEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (5)Â 
+		#region Instance Variables (5) 
 
         private List<ComboBoxWithDefault> actionComboBoxes;
         private bool ignoreChanges = false;
@@ -36,10 +35,9 @@ namespace FFTPatcher.Editors
         private SkillSet skillSet;
         private List<ComboBoxWithDefault> theRestComboBoxes;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public SkillSet SkillSet
         {
@@ -60,10 +58,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public SkillSetEditor()
         {
@@ -78,32 +75,11 @@ namespace FFTPatcher.Editors
                 theRestComboBox4, theRestComboBox5, theRestComboBox6 } );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (3)Â 
+		#region Public Methods (1) 
 
-
-        private void actionComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                int i = actionComboBoxes.IndexOf( c );
-                skillSet.Actions[i] = c.SelectedItem as Ability;
-            }
-        }
-
-        private void theRestComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                int i = theRestComboBoxes.IndexOf( c );
-                skillSet.TheRest[i] = c.SelectedItem as Ability;
-            }
-        }
-
-        private void UpdateView()
+        public void UpdateView()
         {
             this.ignoreChanges = true;
             this.SuspendLayout();
@@ -141,8 +117,32 @@ namespace FFTPatcher.Editors
             this.ignoreChanges = false;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (2) 
 
+        private void actionComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                int i = actionComboBoxes.IndexOf( c );
+                skillSet.Actions[i] = c.SelectedItem as Ability;
+                OnDataChanged( this, System.EventArgs.Empty );
+            }
+        }
+
+        private void theRestComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                int i = theRestComboBoxes.IndexOf( c );
+                skillSet.TheRest[i] = c.SelectedItem as Ability;
+                OnDataChanged( this, System.EventArgs.Empty );
+            }
+        }
+
+		#endregion Private Methods 
     }
 }

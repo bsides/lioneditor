@@ -26,7 +26,6 @@ namespace FFTPatcher
 {
     public partial class About : Form
     {
-
 		#region Constructors (1) 
 
         public About()
@@ -40,6 +39,8 @@ namespace FFTPatcher
     Raijinili: Figured out what some of the checkboxes in the ENTD editor do
     Weltall: CWCheat
     aerostar: Final Fantasy Tactics Battle Mechanics Guide
+    agemo: Portions of the ISO patching code
+    gomtuu/Zodiac/Armorvil: Discovered traps/move-find items locations and format
 
 Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
@@ -52,7 +53,6 @@ You should have received a copy of the GNU General Public License along with FFT
         }
 
 		#endregion Constructors 
-
     }
 }
 

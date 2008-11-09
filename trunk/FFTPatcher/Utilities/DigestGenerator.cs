@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,9 +24,7 @@ namespace FFTPatcher
 {
     public static class DigestGenerator
     {
-
-        #regionÂ MethodsÂ (3)
-
+		#region Public Methods (3) 
 
         public static void WriteDigestEntry( XmlWriter writer, string name, object def, object cur )
         {
@@ -95,8 +93,6 @@ namespace FFTPatcher
             }
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

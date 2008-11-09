@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,23 +27,13 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Shield : Item
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly List<string> shieldDigestableProperties;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (5)
-
-
-        public byte MagicBlockRate { get; set; }
-
-        public byte PhysicalBlockRate { get; set; }
-
-        public Shield ShieldDefault { get; private set; }
-
-
+		#region Public Properties (5) 
 
         public override IList<string> DigestableProperties
         {
@@ -65,10 +55,15 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public byte MagicBlockRate { get; set; }
 
-        #endregionÂ Properties
+        public byte PhysicalBlockRate { get; set; }
 
-        #regionÂ ConstructorsÂ (3)
+        public Shield ShieldDefault { get; private set; }
+
+		#endregion Public Properties 
+
+		#region Constructors (3) 
 
         static Shield()
         {
@@ -90,26 +85,40 @@ namespace FFTPatcher.Datatypes
             MagicBlockRate = shieldBytes[1];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
+		#region Public Methods (8) 
 
-
-        public byte[] ToItemByteArray()
+        public static void CopyAll( Shield source, Shield destination )
         {
-            return base.ToByteArray().ToArray();
+            CopyShield( source, destination );
+            CopyCommon( source, destination );
         }
 
-        public byte[] ToShieldByteArray()
+        public void CopyAllTo( Shield destination )
         {
-            return new byte[2] { PhysicalBlockRate, MagicBlockRate };
+            CopyAll( this, destination );
         }
 
+        public static void CopyShield( Shield source, Shield destination )
+        {
+            destination.PhysicalBlockRate = source.PhysicalBlockRate;
+            destination.MagicBlockRate = source.MagicBlockRate;
+        }
 
+        public void CopyShieldTo( Shield destination )
+        {
+            CopyShield( this, destination );
+        }
 
         public override byte[] ToFirstByteArray()
         {
             return ToItemByteArray();
+        }
+
+        public byte[] ToItemByteArray()
+        {
+            return base.ToByteArray().ToArray();
         }
 
         public override byte[] ToSecondByteArray()
@@ -117,8 +126,11 @@ namespace FFTPatcher.Datatypes
             return ToShieldByteArray();
         }
 
+        public byte[] ToShieldByteArray()
+        {
+            return new byte[2] { PhysicalBlockRate, MagicBlockRate };
+        }
 
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

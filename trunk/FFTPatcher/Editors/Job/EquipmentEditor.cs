@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -22,36 +22,29 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class EquipmentEditor : UserControl
+    public partial class EquipmentEditor : BaseEditor
     {
+		#region Instance Variables (6) 
 
-		#regionÂ StaticÂ FieldsÂ (2)Â 
-
+        private Equipment equipment;
         private static string[] FieldNames = new string[] {
             "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
             "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
             "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "HairAdornment", "Armor",
             "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume",
             "Unknown1", "Unknown2", "Unknown3", "FellSword", "LipRouge", "Unknown6", "Unknown7", "Unknown8"};
+        private bool ignoreChanges = false;
+        private object[] pspItems;
         private static string[] PSXFieldNames = new string[] {
             "Unused", "Knife", "NinjaBlade", "Sword", "KnightsSword", "Katana", "Axe", "Rod",
             "Staff", "Flail", "Gun", "Crossbow", "Bow", "Instrument", "Book", "Polearm",
             "Pole", "Bag", "Cloth", "Shield", "Helmet", "Hat", "HairAdornment", "Armor",
             "Clothing", "Robe", "Shoes", "Armguard", "Ring", "Armlet", "Cloak", "Perfume" };
-
-		#endregionÂ StaticÂ FieldsÂ 
-
-		#regionÂ FieldsÂ (4)Â 
-
-        private Equipment equipment;
-        private bool ignoreChanges = false;
-        private object[] pspItems;
         private object[] psxItems;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public Equipment Equipment
         {
@@ -72,10 +65,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public EquipmentEditor()
         {
@@ -94,16 +86,16 @@ namespace FFTPatcher.Editors
                 "Unknown1", "Unknown2", "Unknown3", "Fell Sword", "Lip Rouge", "Unknown6", "Unknown7", "Unknown8"};
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
-
+		#region Private Methods (2) 
 
         private void equipmentCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (!ignoreChanges)
             {
                 ReflectionHelpers.SetFlag(equipment, FieldNames[e.Index], e.NewValue == CheckState.Checked);
+                OnDataChanged( sender, System.EventArgs.Empty );
             }
         }
 
@@ -136,8 +128,6 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

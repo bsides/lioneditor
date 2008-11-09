@@ -70,12 +70,14 @@ namespace FFTPatcher.Editors
             this.allInflictStatusesEditor1 = new FFTPatcher.Editors.AllInflictStatusesEditor();
             this.poachingTabPage = new System.Windows.Forms.TabPage();
             this.allPoachProbabilitiesEditor1 = new FFTPatcher.Editors.AllPoachProbabilitiesEditor();
+            this.fontPage = new System.Windows.Forms.TabPage();
+            this.fontEditor1 = new FFTPatcher.Editors.FontEditor();
             this.codesTab = new System.Windows.Forms.TabPage();
             this.codeCreator1 = new FFTPatcher.Editors.CodeCreator();
             this.entdTab = new System.Windows.Forms.TabPage();
             this.entdEditor1 = new FFTPatcher.Editors.ENTDEditor();
-            this.fontPage = new System.Windows.Forms.TabPage();
-            this.fontEditor1 = new FFTPatcher.Editors.FontEditor();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.allMoveFindItemsEditor1 = new FFTPatcher.Editors.AllMoveFindItemsEditor();
             this.tabControl.SuspendLayout();
             this.abilitiesPage.SuspendLayout();
             this.itemsTabPage.SuspendLayout();
@@ -88,9 +90,10 @@ namespace FFTPatcher.Editors
             this.statusEffectsTab.SuspendLayout();
             this.inflictStatusesTabPage.SuspendLayout();
             this.poachingTabPage.SuspendLayout();
+            this.fontPage.SuspendLayout();
             this.codesTab.SuspendLayout();
             this.entdTab.SuspendLayout();
-            this.fontPage.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -109,8 +112,10 @@ namespace FFTPatcher.Editors
             this.tabControl.Controls.Add( this.fontPage );
             this.tabControl.Controls.Add( this.codesTab );
             this.tabControl.Controls.Add( this.entdTab );
+            this.tabControl.Controls.Add( this.tabPage1 );
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point( 0, 0 );
+            this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size( 800, 741 );
@@ -119,10 +124,10 @@ namespace FFTPatcher.Editors
             // abilitiesPage
             // 
             this.abilitiesPage.Controls.Add( this.allAbilitiesEditor1 );
-            this.abilitiesPage.Location = new System.Drawing.Point( 4, 22 );
+            this.abilitiesPage.Location = new System.Drawing.Point( 4, 40 );
             this.abilitiesPage.Name = "abilitiesPage";
             this.abilitiesPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.abilitiesPage.Size = new System.Drawing.Size( 792, 715 );
+            this.abilitiesPage.Size = new System.Drawing.Size( 792, 697 );
             this.abilitiesPage.TabIndex = 0;
             this.abilitiesPage.Text = "Abilities";
             this.abilitiesPage.UseVisualStyleBackColor = true;
@@ -133,7 +138,7 @@ namespace FFTPatcher.Editors
             this.allAbilitiesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allAbilitiesEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allAbilitiesEditor1.Name = "allAbilitiesEditor1";
-            this.allAbilitiesEditor1.Size = new System.Drawing.Size( 786, 709 );
+            this.allAbilitiesEditor1.Size = new System.Drawing.Size( 786, 691 );
             this.allAbilitiesEditor1.TabIndex = 0;
             // 
             // itemsTabPage
@@ -247,6 +252,7 @@ namespace FFTPatcher.Editors
             // 
             // allMonsterSkillsEditor1
             // 
+            this.allMonsterSkillsEditor1.AutoSize = true;
             this.allMonsterSkillsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allMonsterSkillsEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allMonsterSkillsEditor1.Name = "allMonsterSkillsEditor1";
@@ -328,44 +334,6 @@ namespace FFTPatcher.Editors
             this.allPoachProbabilitiesEditor1.Size = new System.Drawing.Size( 350, 715 );
             this.allPoachProbabilitiesEditor1.TabIndex = 0;
             // 
-            // codesTab
-            // 
-            this.codesTab.Controls.Add( this.codeCreator1 );
-            this.codesTab.Location = new System.Drawing.Point( 4, 22 );
-            this.codesTab.Name = "codesTab";
-            this.codesTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.codesTab.Size = new System.Drawing.Size( 792, 715 );
-            this.codesTab.TabIndex = 3;
-            this.codesTab.Text = "CWCheat";
-            this.codesTab.UseVisualStyleBackColor = true;
-            // 
-            // codeCreator1
-            // 
-            this.codeCreator1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.codeCreator1.Location = new System.Drawing.Point( 3, 3 );
-            this.codeCreator1.Name = "codeCreator1";
-            this.codeCreator1.Size = new System.Drawing.Size( 786, 709 );
-            this.codeCreator1.TabIndex = 0;
-            // 
-            // entdTab
-            // 
-            this.entdTab.Controls.Add( this.entdEditor1 );
-            this.entdTab.Location = new System.Drawing.Point( 4, 22 );
-            this.entdTab.Name = "entdTab";
-            this.entdTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.entdTab.Size = new System.Drawing.Size( 792, 715 );
-            this.entdTab.TabIndex = 12;
-            this.entdTab.Text = "ENTD";
-            this.entdTab.UseVisualStyleBackColor = true;
-            // 
-            // entdEditor1
-            // 
-            this.entdEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.entdEditor1.Location = new System.Drawing.Point( 3, 3 );
-            this.entdEditor1.Name = "entdEditor1";
-            this.entdEditor1.Size = new System.Drawing.Size( 786, 709 );
-            this.entdEditor1.TabIndex = 0;
-            // 
             // fontPage
             // 
             this.fontPage.Controls.Add( this.fontEditor1 );
@@ -387,6 +355,64 @@ namespace FFTPatcher.Editors
             this.fontEditor1.Size = new System.Drawing.Size( 240, 313 );
             this.fontEditor1.TabIndex = 0;
             // 
+            // codesTab
+            // 
+            this.codesTab.Controls.Add( this.codeCreator1 );
+            this.codesTab.Location = new System.Drawing.Point( 4, 40 );
+            this.codesTab.Name = "codesTab";
+            this.codesTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.codesTab.Size = new System.Drawing.Size( 792, 697 );
+            this.codesTab.TabIndex = 3;
+            this.codesTab.Text = "CWCheat";
+            this.codesTab.UseVisualStyleBackColor = true;
+            // 
+            // codeCreator1
+            // 
+            this.codeCreator1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.codeCreator1.Location = new System.Drawing.Point( 3, 3 );
+            this.codeCreator1.Name = "codeCreator1";
+            this.codeCreator1.Size = new System.Drawing.Size( 786, 691 );
+            this.codeCreator1.TabIndex = 0;
+            // 
+            // entdTab
+            // 
+            this.entdTab.Controls.Add( this.entdEditor1 );
+            this.entdTab.Location = new System.Drawing.Point( 4, 40 );
+            this.entdTab.Name = "entdTab";
+            this.entdTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.entdTab.Size = new System.Drawing.Size( 792, 697 );
+            this.entdTab.TabIndex = 12;
+            this.entdTab.Text = "ENTD";
+            this.entdTab.UseVisualStyleBackColor = true;
+            // 
+            // entdEditor1
+            // 
+            this.entdEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.entdEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.entdEditor1.Name = "entdEditor1";
+            this.entdEditor1.Size = new System.Drawing.Size( 786, 691 );
+            this.entdEditor1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add( this.allMoveFindItemsEditor1 );
+            this.tabPage1.Location = new System.Drawing.Point( 4, 40 );
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding( 3 );
+            this.tabPage1.Size = new System.Drawing.Size( 792, 697 );
+            this.tabPage1.TabIndex = 14;
+            this.tabPage1.Text = "Move-Find Item";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // allMoveFindItemsEditor1
+            // 
+            this.allMoveFindItemsEditor1.AutoSize = true;
+            this.allMoveFindItemsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allMoveFindItemsEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.allMoveFindItemsEditor1.Name = "allMoveFindItemsEditor1";
+            this.allMoveFindItemsEditor1.Size = new System.Drawing.Size( 786, 691 );
+            this.allMoveFindItemsEditor1.TabIndex = 0;
+            // 
             // FFTPatchEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -404,14 +430,17 @@ namespace FFTPatcher.Editors
             this.jobLevelsTab.PerformLayout();
             this.skillSetsPage.ResumeLayout( false );
             this.monsterSkillsTab.ResumeLayout( false );
+            this.monsterSkillsTab.PerformLayout();
             this.actionMenusTabPage.ResumeLayout( false );
             this.statusEffectsTab.ResumeLayout( false );
             this.inflictStatusesTabPage.ResumeLayout( false );
             this.poachingTabPage.ResumeLayout( false );
-            this.codesTab.ResumeLayout( false );
-            this.entdTab.ResumeLayout( false );
             this.fontPage.ResumeLayout( false );
             this.fontPage.PerformLayout();
+            this.codesTab.ResumeLayout( false );
+            this.entdTab.ResumeLayout( false );
+            this.tabPage1.ResumeLayout( false );
+            this.tabPage1.PerformLayout();
             this.ResumeLayout( false );
 
         }
@@ -447,5 +476,7 @@ namespace FFTPatcher.Editors
         private ENTDEditor entdEditor1;
         private System.Windows.Forms.TabPage fontPage;
         private FontEditor fontEditor1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private AllMoveFindItemsEditor allMoveFindItemsEditor1;
     }
 }

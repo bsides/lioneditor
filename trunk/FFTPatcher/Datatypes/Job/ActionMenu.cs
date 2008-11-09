@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -63,15 +63,13 @@ namespace FFTPatcher.Datatypes
 
     public class ActionMenuEntry
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static List<ActionMenuEntry> allActionMenuEntries;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ StaticÂ PropertiesÂ (1)
-
+		#region Public Properties (2) 
 
         public static List<ActionMenuEntry> AllActionMenuEntries
         {
@@ -90,18 +88,11 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ StaticÂ Properties
-
-        #regionÂ PropertiesÂ (1)
-
-
         public MenuAction MenuAction { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         private ActionMenuEntry( byte b )
         {
@@ -113,10 +104,9 @@ namespace FFTPatcher.Datatypes
             MenuAction = a;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (1)
-
+		#region Public Methods (1) 
 
         public override string ToString()
         {
@@ -133,22 +123,18 @@ namespace FFTPatcher.Datatypes
             return base.ToString();
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
     public class ActionMenu : ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         public static readonly string[] digestableProperties = new string[] { "MenuAction" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (8)
-
+		#region Public Properties (8) 
 
         public string ActionName
         {
@@ -175,10 +161,9 @@ namespace FFTPatcher.Datatypes
 
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public ActionMenu( byte value, string name, MenuAction action )
             : this( value, name, action, null )
@@ -193,15 +178,12 @@ namespace FFTPatcher.Datatypes
             Value = value;
         }
 
-        #endregionÂ Constructors
-
+		#endregion Constructors 
     }
 
-    public class AllActionMenus : IChangeable, IXmlDigest
+    public class AllActionMenus : PatchableFile, IXmlDigest
     {
-
-        #regionÂ PropertiesÂ (2)
-
+		#region Public Properties (2) 
 
         public ActionMenu[] ActionMenus { get; private set; }
 
@@ -209,7 +191,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -223,14 +205,13 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public AllActionMenus( IList<byte> bytes, Context context )
         {
-            byte[] defaultBytes = context == Context.US_PSP ? Resources.ActionEventsBin : PSXResources.ActionEventsBin;
+            byte[] defaultBytes = context == Context.US_PSP ? PSPResources.ActionEventsBin : PSXResources.ActionEventsBin;
 
             List<ActionMenu> tempActions = new List<ActionMenu>();
 
@@ -252,21 +233,38 @@ namespace FFTPatcher.Datatypes
             ActionMenus = tempActions.ToArray();
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
             }
             else
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.ActionEventsBin, this.ToByteArray(), 0x065CB4 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x564B4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276CA4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276CA4, bytes ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -307,8 +305,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

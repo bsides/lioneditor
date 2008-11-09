@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -20,6 +20,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
+using ICSharpCode.SharpZipLib.Core;
 
 namespace FFTPatcher
 {
@@ -28,9 +31,29 @@ namespace FFTPatcher
     /// </summary>
     public static class GZip
     {
+		#region Public Methods (5) 
 
-		#regionÂ MethodsÂ (1)Â 
+        /// <summary>
+        /// Compresses the specified bytes.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns></returns>
+        public static IList<byte> Compress( byte[] bytes )
+        {
+            MemoryStream ms = new MemoryStream();
+            using( GZipStream stream = new GZipStream( ms, CompressionMode.Compress, true ) )
+            {
+                stream.Write( bytes, 0, bytes.Length );
+            }
 
+            byte[] result = new byte[ms.Length];
+            ms.Seek( 0, SeekOrigin.Begin );
+            ms.Read( result, 0, result.Length );
+            ms.Close();
+            ms.Dispose();
+
+            return result;
+        }
 
         /// <summary>
         /// Decompresses a file.
@@ -61,30 +84,45 @@ namespace FFTPatcher
             return result.ToArray();
         }
 
-        /// <summary>
-        /// Compresses the specified bytes.
-        /// </summary>
-        /// <param name="bytes">The bytes.</param>
-        /// <returns></returns>
-        public static IList<byte> Compress( byte[] bytes )
+        public static IDictionary<string, byte[]> UntarGz( string filename )
         {
-            MemoryStream ms = new MemoryStream();
-            using( GZipStream stream = new GZipStream( ms, CompressionMode.Compress, true ) )
+            using ( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.Read ) )
             {
-                stream.Write( bytes, 0, bytes.Length );
+                return UntarGz( stream );
             }
+        }
 
-            byte[] result = new byte[ms.Length];
-            ms.Seek( 0, SeekOrigin.Begin );
-            ms.Read( result, 0, result.Length );
-            ms.Close();
-            ms.Dispose();
+        public static IDictionary<string, byte[]> UntarGz( byte[] file )
+        {
+            using ( MemoryStream stream = new MemoryStream( file, false ) )
+            {
+                return UntarGz( stream );
+            }
+        }
+
+        public static IDictionary<string, byte[]> UntarGz( Stream stream )
+        {
+            var result = new Dictionary<string, byte[]>();
+            using ( GZipInputStream gzStream = new GZipInputStream( stream ) )
+            using ( TarInputStream tarStream = new TarInputStream( gzStream ) )
+            {
+                TarEntry entry;
+                entry = tarStream.GetNextEntry();
+                while ( entry != null )
+                {
+                    if ( entry.Size != 0 )
+                    {
+                        byte[] bytes = new byte[entry.Size];
+                        StreamUtils.ReadFully( tarStream, bytes );
+                        result[entry.Name] = bytes;
+                    }
+                    entry = tarStream.GetNextEntry();
+                }
+            }
 
             return result;
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }

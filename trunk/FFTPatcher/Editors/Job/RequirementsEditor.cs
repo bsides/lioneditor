@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,17 +25,15 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class RequirementsEditor : UserControl
+    public partial class RequirementsEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (1)Â 
+		#region Instance Variables (1) 
 
         private List<Requirements> requirements;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public List<Requirements> Requirements
         {
@@ -61,10 +59,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public RequirementsEditor()
         {
@@ -75,12 +72,12 @@ namespace FFTPatcher.Editors
             dataGridView1.CellToolTipTextNeeded += dataGridView1_CellToolTipTextNeeded;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
+            dataGridView1.CellValidated += OnDataChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (6)Â 
-
+		#region Private Methods (7) 
 
         private void Control_KeyDown( object sender, KeyEventArgs e )
         {
@@ -97,11 +94,6 @@ namespace FFTPatcher.Editors
                     InvalidateCell( dataGridView1.CurrentCell );
                 }
             }
-        }
-
-        private void InvalidateCell( DataGridViewCell cell )
-        {
-            dataGridView1.InvalidateCell( cell );
         }
 
         private void dataGridView1_CellFormatting( object sender, DataGridViewCellFormattingEventArgs e )
@@ -168,8 +160,11 @@ namespace FFTPatcher.Editors
             e.Control.KeyDown += Control_KeyDown;
         }
 
+        private void InvalidateCell( DataGridViewCell cell )
+        {
+            dataGridView1.InvalidateCell( cell );
+        }
 
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

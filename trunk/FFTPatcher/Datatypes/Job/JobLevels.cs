@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,20 +26,14 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
     /// </summary>
-    public class JobLevels : IChangeable, IXmlDigest
+    public class JobLevels : PatchableFile, IXmlDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (4) 
 
         private static readonly string[] digestableProperties = new string[] {
             "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
             "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown",
             "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (3)
-
         private string[] levelFields = new string[] {
             "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8" };
         private ushort[] levels = new ushort[8];
@@ -47,10 +41,9 @@ namespace FFTPatcher.Datatypes
             "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner", "Thief", "Orator", 
             "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard", "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown" };
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (32)
-
+		#region Public Properties (32) 
 
         public Requirements Archer { get; private set; }
 
@@ -76,7 +69,7 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -188,10 +181,9 @@ namespace FFTPatcher.Datatypes
 
         public Requirements WhiteMage { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (3)
+		#region Constructors (3) 
 
         public JobLevels( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
@@ -227,21 +219,38 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
             }
             else
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x568C4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x277084, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x277084, bytes ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -301,9 +310,7 @@ namespace FFTPatcher.Datatypes
             writer.WriteEndElement();
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
     /// <summary>
@@ -316,7 +323,7 @@ namespace FFTPatcher.Datatypes
             "Thief", "Orator", "Mystic", "Geomancer", "Dragoon", "Samurai", "Ninja", "Arithmetician", "Bard",
             "Dancer", "Mime", "DarkKnight", "OnionKnight", "Unknown1", "Unknown2" };
 
-        #regionÂ PropertiesÂ (26)
+        #region Properties (26)
 
 
         public int Archer { get; set; }
@@ -383,9 +390,9 @@ namespace FFTPatcher.Datatypes
         public int WhiteMage { get; set; }
 
 
-        #endregionÂ Properties
+        #endregion Properties
 
-        #regionÂ ConstructorsÂ (3)
+        #region Constructors (3)
 
         public Requirements( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
@@ -429,9 +436,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+        #endregion Constructors
 
-        #regionÂ MethodsÂ (7)
+        #region Methods (7)
 
 
         public byte[] ToByteArray( Context context )
@@ -517,7 +524,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Methods
+        #endregion Methods
 
     }
 }

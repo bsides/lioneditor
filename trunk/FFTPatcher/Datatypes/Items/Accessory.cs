@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,23 +27,15 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Accessory : Item
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly List<string> accessoryDigestableProperties;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (5)
-
+		#region Public Properties (5) 
 
         public Accessory AccessoryDefault { get; private set; }
-
-        public byte MagicEvade { get; set; }
-
-        public byte PhysicalEvade { get; set; }
-
-
 
         public override IList<string> DigestableProperties
         {
@@ -65,10 +57,13 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        public byte MagicEvade { get; set; }
 
-        #endregionÂ Properties
+        public byte PhysicalEvade { get; set; }
 
-        #regionÂ ConstructorsÂ (3)
+		#endregion Public Properties 
+
+		#region Constructors (3) 
 
         static Accessory()
         {
@@ -90,14 +85,40 @@ namespace FFTPatcher.Datatypes
             MagicEvade = accessoryBytes[1];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
+		#region Public Methods (8) 
 
+        public static void CopyAccessory( Accessory source, Accessory destination )
+        {
+            destination.PhysicalEvade = source.PhysicalEvade;
+            destination.MagicEvade = source.MagicEvade;
+        }
+
+        public void CopyAccessoryTo( Accessory destination )
+        {
+            CopyAccessory( this, destination );
+        }
+
+        public static void CopyAll( Accessory source, Accessory destination )
+        {
+            CopyAccessory( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Accessory destination )
+        {
+            CopyAll( this, destination );
+        }
 
         public byte[] ToAccessoryByteArray()
         {
             return new byte[2] { PhysicalEvade, MagicEvade };
+        }
+
+        public override byte[] ToFirstByteArray()
+        {
+            return ToItemByteArray();
         }
 
         public byte[] ToItemByteArray()
@@ -105,20 +126,11 @@ namespace FFTPatcher.Datatypes
             return base.ToByteArray().ToArray();
         }
 
-
-
-        public override byte[] ToFirstByteArray()
-        {
-            return ToItemByteArray();
-        }
-
         public override byte[] ToSecondByteArray()
         {
             return ToAccessoryByteArray();
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

@@ -1,4 +1,23 @@
-ï»¿using System;
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.ComponentModel;
 using System.Drawing;
 
@@ -17,8 +36,7 @@ namespace FFTPatcher.Controls
     ///
     public class VerticalLabel : System.Windows.Forms.Control
     {
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (3) 
 
         private System.ComponentModel.Container components = null;
         /// 
@@ -30,26 +48,9 @@ namespace FFTPatcher.Controls
         /// 
         private System.Drawing.ContentAlignment labelTextAlign;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (2)Â 
-
-
-        [Category( "Verticallabel" ), Description( "Text Alignment" )]
-        public System.Drawing.ContentAlignment TextAlign
-        {
-            get
-            {
-                return labelTextAlign;
-            }
-            set
-            {
-                labelTextAlign = value;
-                Invalidate();
-            }
-        }
-
-
+		#region Public Properties (2) 
 
         /// 
         /// Windows designer Text setting
@@ -68,10 +69,23 @@ namespace FFTPatcher.Controls
             }
         }
 
+        [Category( "Verticallabel" ), Description( "Text Alignment" )]
+        public System.Drawing.ContentAlignment TextAlign
+        {
+            get
+            {
+                return labelTextAlign;
+            }
+            set
+            {
+                labelTextAlign = value;
+                Invalidate();
+            }
+        }
 
-		#endregionÂ PropertiesÂ 
+		#endregion Public Properties 
 
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public VerticalLabel()
         {
@@ -79,10 +93,9 @@ namespace FFTPatcher.Controls
             InitializeComponent();
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (4)Â 
-
+		#region Private Methods (1) 
 
         [System.Diagnostics.DebuggerStepThrough()]
         private void InitializeComponent()
@@ -90,7 +103,9 @@ namespace FFTPatcher.Controls
             this.Size = new System.Drawing.Size( 24, 100 );
         }
 
+		#endregion Private Methods 
 
+		#region Protected Methods (3) 
 
         protected override void Dispose( bool disposing )
         {
@@ -161,8 +176,6 @@ namespace FFTPatcher.Controls
             base.OnResize( e );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Protected Methods 
     }
 }

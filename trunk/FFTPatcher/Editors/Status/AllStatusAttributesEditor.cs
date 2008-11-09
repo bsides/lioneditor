@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,18 +25,30 @@ namespace FFTPatcher.Editors
 {
     public partial class AllStatusAttributesEditor : UserControl
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllStatusAttributesEditor()
         {
             InitializeComponent();
+            statusAttributeEditor.DataChanged += new EventHandler( statusAttributeEditor_DataChanged );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
+		#region Public Methods (1) 
 
+        public void UpdateView( AllStatusAttributes attributes )
+        {
+            listBox.SelectedIndexChanged -= listBox_SelectedIndexChanged;
+            listBox.DataSource = attributes.StatusAttributes;
+            listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
+            listBox.SelectedIndex = 0;
+            statusAttributeEditor.StatusAttribute = listBox.SelectedItem as StatusAttribute;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (2) 
 
         private void listBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -44,18 +56,12 @@ namespace FFTPatcher.Editors
             statusAttributeEditor.StatusAttribute = a;
         }
 
-        public void UpdateView( AllStatusAttributes attributes )
+        private void statusAttributeEditor_DataChanged( object sender, EventArgs e )
         {
-            listBox.SelectedIndexChanged -= listBox_SelectedIndexChanged;
-            listBox.Items.Clear();
-            listBox.Items.AddRange( attributes.StatusAttributes );
-            listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
-            listBox.SelectedIndex = 0;
-            statusAttributeEditor.StatusAttribute = listBox.SelectedItem as StatusAttribute;
+            CurrencyManager cm = (CurrencyManager)BindingContext[listBox.DataSource];
+            cm.Refresh();
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

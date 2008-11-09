@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,23 +24,35 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all <see cref="Job"/>s in memory.
     /// </summary>
-    public class AllJobs : IChangeable, IXmlDigest
+    public class AllJobs : PatchableFile, IXmlDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (2)
+		#region Instance Variables (2) 
 
         private static Job[] pspJobs;
         private static Job[] psxJobs;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ StaticÂ PropertiesÂ (4)
-
+		#region Public Properties (6) 
 
         public static Job[] DummyJobs
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspJobs : psxJobs; }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public override bool HasChanged
+        {
+            get
+            {
+                return Jobs.Exists( j => j.HasChanged );
+            }
+        }
+
+        public Job[] Jobs { get; private set; }
 
         public static string[] Names
         {
@@ -51,35 +63,9 @@ namespace FFTPatcher.Datatypes
 
         public static string[] PSXNames { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ StaticÂ Properties
-
-        #regionÂ PropertiesÂ (2)
-
-
-        /// <summary>
-        /// Gets a value indicating whether this instance has changed.
-        /// </summary>
-        /// <value></value>
-        public bool HasChanged
-        {
-            get
-            {
-                foreach( Job j in Jobs )
-                {
-                    if( j.HasChanged )
-                        return true;
-                }
-                return false;
-            }
-        }
-
-        public Job[] Jobs { get; private set; }
-
-
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (3)
+		#region Constructors (3) 
 
         static AllJobs()
         {
@@ -87,7 +73,7 @@ namespace FFTPatcher.Datatypes
             psxJobs = new Job[0xA0];
 
             PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.Jobs,
+                PSPResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xAA );
             List<string> psxNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
@@ -117,7 +103,7 @@ namespace FFTPatcher.Datatypes
         {
             int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
             int jobLength = context == Context.US_PSP ? 49 : 48;
-            byte[] defaultBytes = context == Context.US_PSP ? Resources.JobsBin : PSXResources.JobsBin;
+            byte[] defaultBytes = context == Context.US_PSP ? PSPResources.JobsBin : PSXResources.JobsBin;
             Jobs = new Job[numJobs];
             for( int i = 0; i < numJobs; i++ )
             {
@@ -126,21 +112,38 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.JobsBin, this.ToByteArray(), 0x277988 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.JobsBin, this.ToByteArray(), 0x277988 );
             }
             else
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x518B8, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2739DC, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2739DC, bytes ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -179,9 +182,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
     /// <summary>
@@ -189,8 +190,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Job : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly string[] digestableAttributes = new string[] {
             "SkillSet", "HPConstant", "HPMultiplier", "MPConstant", "MPMultiplier", "SpeedConstant", "SpeedMultiplier",
@@ -198,10 +198,9 @@ namespace FFTPatcher.Datatypes
             "MPalette", "MGraphic", "InnateA", "InnateB", "InnateC", "InnateD", "AbsorbElement", "CancelElement",
             "HalfElement", "WeakElement", "Equipment", "PermanentStatus", "StartingStatus", "StatusImmunity" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (34)
-
+		#region Public Properties (34) 
 
         public Elements AbsorbElement { get; private set; }
 
@@ -246,6 +245,7 @@ namespace FFTPatcher.Datatypes
                     MPMultiplier != Default.MPMultiplier ||
                     MPortrait != Default.MPortrait ||
                     PAConstant != Default.PAConstant ||
+                    PAMultiplier != Default.PAMultiplier ||
                     SkillSet.Value != Default.SkillSet.Value ||
                     SpeedConstant != Default.SpeedConstant ||
                     SpeedMultiplier != Default.SpeedMultiplier ||
@@ -316,10 +316,9 @@ namespace FFTPatcher.Datatypes
 
         public Elements WeakElement { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (5)
+		#region Constructors (5) 
 
         public Job( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
@@ -389,10 +388,47 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (3)
+		#region Public Methods (5) 
 
+        public static void Copy( Job source, Job destination )
+        {
+            source.PermanentStatus.CopyTo( destination.PermanentStatus );
+            source.StatusImmunity.CopyTo( destination.StatusImmunity );
+            source.StartingStatus.CopyTo( destination.StartingStatus );
+            source.AbsorbElement.CopyTo( destination.AbsorbElement );
+            source.CancelElement.CopyTo( destination.CancelElement );
+            source.HalfElement.CopyTo( destination.HalfElement );
+            source.WeakElement.CopyTo( destination.WeakElement );
+            source.Equipment.CopyTo( destination.Equipment );
+            destination.SkillSet = source.SkillSet;
+            destination.InnateA = source.InnateA;
+            destination.InnateB = source.InnateB;
+            destination.InnateC = source.InnateC;
+            destination.InnateD = source.InnateD;
+            destination.HPConstant = source.HPConstant;
+            destination.HPMultiplier = source.HPMultiplier;
+            destination.MPConstant = source.MPConstant;
+            destination.MPMultiplier = source.MPMultiplier;
+            destination.PAConstant = source.PAConstant;
+            destination.PAMultiplier = source.PAMultiplier;
+            destination.MAConstant = source.MAConstant;
+            destination.MAMultiplier = source.MAMultiplier;
+            destination.SpeedConstant = source.SpeedConstant;
+            destination.SpeedMultiplier = source.SpeedMultiplier;
+            destination.Move = source.Move;
+            destination.Jump = source.Jump;
+            destination.CEvade = source.CEvade;
+            destination.MPortrait = source.MPortrait;
+            destination.MPalette = source.MPalette;
+            destination.MGraphic = source.MGraphic;
+        }
+
+        public void CopyTo( Job destination )
+        {
+            Copy( this, destination );
+        }
 
         public byte[] ToByteArray()
         {
@@ -435,15 +471,11 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-
-
         public override string ToString()
         {
-            return Value.ToString( "X2" ) + " " + Name;
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" ) + " " + Name;
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

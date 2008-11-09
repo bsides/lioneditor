@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -21,33 +21,84 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
+    public class FFTFontWidths : PatchableFile
+    {
+		#region Instance Variables (1) 
+
+        private FFTFont owner;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
+
+        public override bool HasChanged
+        {
+            get { return true; }
+        }
+
+		#endregion Public Properties 
+
+		#region Constructors (1) 
+
+        public FFTFontWidths( FFTFont owner )
+        {
+            this.owner = owner;
+        }
+
+		#endregion Constructors 
+
+		#region Public Methods (1) 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var width = owner.ToWidthsByteArray();
+
+            if( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, width ) );
+            }
+            else if( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, width ) );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293F40, width ) );
+            }
+
+            return result;
+        }
+
+		#endregion Public Methods 
+    }
+
+
     /// <summary>
     /// Represents a font used in FFT, which is an array of 2200 bitmaps.
     /// </summary>
-    public class FFTFont : IChangeable
+    public class FFTFont : PatchableFile
     {
-
-		#regionÂ PropertiesÂ (2)Â 
-
+		#region Public Properties (3) 
 
         public Glyph[] Glyphs { get; private set; }
+
+        public FFTFontWidths GlyphWidths { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get { return true; }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public FFTFont( IList<byte> bytes, IList<byte> widthBytes )
         {
+            GlyphWidths = new FFTFontWidths( this );
             Glyphs = new Glyph[2200];
             for( int i = 0; i < 2200; i++ )
             {
@@ -55,10 +106,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (3)Â 
-
+		#region Public Methods (4) 
 
         public List<string> GenerateCodes()
         {
@@ -66,10 +116,10 @@ namespace FFTPatcher.Datatypes
 
             if( FFTPatch.Context == Context.US_PSP )
             {
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontBin, this.ToByteArray(), 0x2FB364 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontBin, this.ToByteArray(), 0x27F7B8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontWidthsBin, this.ToWidthsByteArray(), 0x297EEC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontBin, this.ToByteArray(), 0x2FB364 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.FontWidthsBin, this.ToWidthsByteArray(), 0x313A6C ) );
             }
             else
             {
@@ -77,6 +127,26 @@ namespace FFTPatcher.Datatypes
                 strings.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.FontWidthsBin, this.ToWidthsByteArray(), 0x1533E0 ) );
             }
             return strings;
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 5 );
+
+            var font = ToByteArray();
+            var width = ToWidthsByteArray();
+
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.Sectors.EVENT_FONT_BIN, 0, font ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27B80C, font ) );
+                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27B80C, font ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -100,8 +170,6 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }

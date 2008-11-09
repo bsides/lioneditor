@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,23 +26,17 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AIFlags : ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        private static readonly string[] digestableProperties = new string[] {
-            "AddStatus","Blank","CancelStatus","DefenseUp","DirectAttack","HP","IgnoreRange","LineAttack",
-            "MagicDefenseUp","MP","RandomHits","Reflectable","Silence","Stats","TargetAllies","TargetEnemies",
-            "TripleAttack","TripleBracelet","UndeadReverse","Unequip","Unknown1","Unknown2","Unknown3",
-            "VerticalIncrease" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (24)
+		#region Instance Variables (25) 
 
         public bool AddStatus;
         public bool Blank;
         public bool CancelStatus;
         public bool DefenseUp;
+        private static readonly string[] digestableProperties = new string[] {
+            "AddStatus","Blank","CancelStatus","DefenseUp","DirectAttack","HP","IgnoreRange","LineAttack",
+            "MagicDefenseUp","MP","RandomHits","Reflectable","Silence","Stats","TargetAllies","TargetEnemies",
+            "TripleAttack","TripleBracelet","UndeadReverse","Unequip","Unknown1","Unknown2","Unknown3",
+            "VerticalIncrease" };
         public bool DirectAttack;
         public bool HP;
         public bool IgnoreRange;
@@ -64,10 +58,9 @@ namespace FFTPatcher.Datatypes
         public bool Unknown3;
         public bool VerticalIncrease;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (3)
-
+		#region Public Properties (3) 
 
         public AIFlags Default { get; set; }
 
@@ -81,10 +74,9 @@ namespace FFTPatcher.Datatypes
             get { return !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() ); }
         }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public AIFlags( IList<byte> bytes )
             : this( bytes, null )
@@ -107,10 +99,42 @@ namespace FFTPatcher.Datatypes
             VerticalIncrease = !VerticalIncrease;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (2)
+		#region Public Methods (4) 
 
+        public static void Copy( AIFlags source, AIFlags destination )
+        {
+            destination.AddStatus = source.AddStatus;
+            destination.Blank = source.Blank;
+            destination.CancelStatus = source.CancelStatus;
+            destination.DefenseUp = source.DefenseUp;
+            destination.DirectAttack = source.DirectAttack;
+            destination.HP = source.HP;
+            destination.IgnoreRange = source.IgnoreRange;
+            destination.LineAttack = source.LineAttack;
+            destination.MagicDefenseUp = source.MagicDefenseUp;
+            destination.MP = source.MP;
+            destination.RandomHits = source.RandomHits;
+            destination.Reflectable = source.Reflectable;
+            destination.Silence = source.Silence;
+            destination.Stats = source.Stats;
+            destination.TargetAllies = source.TargetAllies;
+            destination.TargetEnemies = source.TargetEnemies;
+            destination.TripleAttack = source.TripleAttack;
+            destination.TripleBracelet = source.TripleBracelet;
+            destination.UndeadReverse = source.UndeadReverse;
+            destination.Unequip = source.Unequip;
+            destination.Unknown1 = source.Unknown1;
+            destination.Unknown2 = source.Unknown2;
+            destination.Unknown3 = source.Unknown3;
+            destination.VerticalIncrease = source.VerticalIncrease;
+        }
+
+        public void CopyTo( AIFlags destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool[] ToBoolArray()
         {
@@ -129,8 +153,6 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,11 +25,13 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class EventUnitEditor : UserControl
+    public partial class EventUnitEditor : BaseEditor
     {
+		#region Instance Variables (8) 
 
-        #regionÂ StaticÂ FieldsÂ (3)
-
+        private ComboBoxWithDefault[] comboBoxes;
+        private EventUnit eventUnit = null;
+        private bool ignoreChanges = false;
         private static readonly string[] levelStrings = new string[] { 
             "Party level", 
             "1", "2", "3", "4", "5", "6", "7", "8", "9", 
@@ -56,6 +58,8 @@ namespace FFTPatcher.Editors
 
             "Party level - Random"
         };
+        private Context ourContext = Context.Default;
+        private NumericUpDownWithDefault[] spinners;
         private static readonly string[] zeroTo100 = new string[] {
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
             "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", 
@@ -74,20 +78,9 @@ namespace FFTPatcher.Editors
             "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
             "30", "31", "Random" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ FieldsÂ (5)
-
-        private ComboBoxWithDefault[] comboBoxes;
-        private EventUnit eventUnit = null;
-        private bool ignoreChanges = false;
-        private Context ourContext = Context.Default;
-        private NumericUpDownWithDefault[] spinners;
-
-        #endregionÂ Fields
-
-        #regionÂ PropertiesÂ (1)
-
+		#region Public Properties (1) 
 
         public EventUnit EventUnit
         {
@@ -108,10 +101,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public EventUnitEditor()
         {
@@ -142,106 +134,14 @@ namespace FFTPatcher.Editors
             levelComboBox.SelectedIndexChanged += levelComboBox_SelectedIndexChanged;
             flags1CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
             flags2CheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
+            upperLevelCheckBox.CheckedChanged += upperLevelCheckBox_CheckedChanged;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ EventsÂ (1)
+		#region Public Methods (1) 
 
-        public event EventHandler DataChanged;
-
-        #endregionÂ Events
-
-        #regionÂ MethodsÂ (9)
-
-
-        private void comboBox_SelectedIndexChanged( object sender, System.EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), c.SelectedItem );
-                if( (c == spriteSetComboBox) || (c == specialNameComboBox) || (c == jobComboBox) )
-                {
-                    FireDataChangedEvent();
-                }
-            }
-        }
-
-        private void FireDataChangedEvent()
-        {
-            if( DataChanged != null )
-            {
-                DataChanged( this, EventArgs.Empty );
-            }
-        }
-
-        private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
-        {
-            if( sender == flags1CheckedListBox )
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
-            else if( sender == flags2CheckedListBox )
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
-        }
-
-        private void levelComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault combo = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty(
-                    eventUnit,
-                    combo.Tag.ToString(),
-                    (byte)(combo.SelectedIndex > 199 ? 254 : combo.SelectedIndex) );
-            }
-        }
-
-        private void spinner_ValueChanged( object sender, System.EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), (byte)c.Value );
-            }
-        }
-
-        private void UpdateDataSources()
-        {
-            foreach( ComboBoxWithDefault itemComboBox in
-                new ComboBoxWithDefault[] { rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox, warTrophyComboBox } )
-            {
-                itemComboBox.BindingContext = new BindingContext();
-                itemComboBox.DataSource = Item.EventItems;
-            }
-
-            primarySkillComboBox.BindingContext = new BindingContext();
-            primarySkillComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
-            secondaryActionComboBox.BindingContext = new BindingContext();
-            secondaryActionComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
-            foreach( ComboBoxWithDefault abilityComboBox in
-                new ComboBoxWithDefault[] { reactionComboBox, supportComboBox, movementComboBox } )
-            {
-                abilityComboBox.BindingContext = new BindingContext();
-                abilityComboBox.DataSource = AllAbilities.EventAbilities;
-            }
-
-            faithComboBox.BindingContext = new BindingContext();
-            faithComboBox.DataSource = zeroTo100;
-            braveryComboBox.BindingContext = new BindingContext();
-            braveryComboBox.DataSource = zeroTo100;
-            dayComboBox.DataSource = zeroTo31;
-            levelComboBox.DataSource = levelStrings;
-
-            spriteSetComboBox.DataSource = SpriteSet.SpriteSets;
-            specialNameComboBox.DataSource = SpecialName.SpecialNames;
-            jobComboBox.DataSource = AllJobs.DummyJobs;
-            monthComboBox.DataSource = Enum.GetValues( typeof( Month ) );
-            teamColorComboBox.DataSource = Enum.GetValues( typeof( TeamColor ) );
-            facingDirectionComboBox.DataSource = Enum.GetValues( typeof( Facing ) );
-            preRequisiteJobComboBox.DataSource = Enum.GetValues( typeof( PreRequisiteJob ) );
-        }
-
-        private void UpdateView()
+        public void UpdateView()
         {
             ignoreChanges = true;
 
@@ -293,6 +193,96 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
+		#endregion Public Methods 
+
+		#region Private Methods (8) 
+
+        private void comboBox_SelectedIndexChanged( object sender, System.EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), c.SelectedItem );
+                OnDataChanged( this, EventArgs.Empty );
+            }
+        }
+
+        private void flagsCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            if( sender == flags1CheckedListBox )
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags1FieldNames[e.Index], e.NewValue == CheckState.Checked );
+            else if( sender == flags2CheckedListBox )
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, EventUnit.Flags2FieldNames[e.Index], e.NewValue == CheckState.Checked );
+        }
+
+        private void levelComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault combo = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty(
+                    eventUnit,
+                    combo.Tag.ToString(),
+                    (byte)(combo.SelectedIndex > 199 ? 254 : combo.SelectedIndex) );
+                OnDataChanged( this, EventArgs.Empty );
+            }
+        }
+
+        private void spinner_ValueChanged( object sender, System.EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( eventUnit, c.Tag.ToString(), (byte)c.Value );
+                OnDataChanged( this, EventArgs.Empty );
+            }
+        }
+
+        private void UpdateDataSources()
+        {
+            foreach( ComboBoxWithDefault itemComboBox in
+                new ComboBoxWithDefault[] { rightHandComboBox, leftHandComboBox, headComboBox, bodyComboBox, accessoryComboBox, warTrophyComboBox } )
+            {
+                itemComboBox.BindingContext = new BindingContext();
+                itemComboBox.DataSource = Item.EventItems;
+            }
+
+            primarySkillComboBox.BindingContext = new BindingContext();
+            primarySkillComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
+            secondaryActionComboBox.BindingContext = new BindingContext();
+            secondaryActionComboBox.DataSource = new List<SkillSet>( SkillSet.EventSkillSets.Values );
+            foreach( ComboBoxWithDefault abilityComboBox in
+                new ComboBoxWithDefault[] { reactionComboBox, supportComboBox, movementComboBox } )
+            {
+                abilityComboBox.BindingContext = new BindingContext();
+                abilityComboBox.DataSource = AllAbilities.EventAbilities;
+            }
+
+            faithComboBox.BindingContext = new BindingContext();
+            faithComboBox.DataSource = zeroTo100;
+            braveryComboBox.BindingContext = new BindingContext();
+            braveryComboBox.DataSource = zeroTo100;
+            dayComboBox.DataSource = zeroTo31;
+            levelComboBox.DataSource = levelStrings;
+
+            spriteSetComboBox.DataSource = SpriteSet.SpriteSets;
+            specialNameComboBox.DataSource = SpecialName.SpecialNames;
+            jobComboBox.DataSource = AllJobs.DummyJobs;
+            monthComboBox.DataSource = Enum.GetValues( typeof( Month ) );
+            teamColorComboBox.DataSource = Enum.GetValues( typeof( TeamColor ) );
+            facingDirectionComboBox.DataSource = Enum.GetValues( typeof( Facing ) );
+            preRequisiteJobComboBox.DataSource = Enum.GetValues( typeof( PreRequisiteJob ) );
+        }
+
+        private void upperLevelCheckBox_CheckedChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                eventUnit.UpperLevel = upperLevelCheckBox.Checked;
+                OnDataChanged( this, EventArgs.Empty );
+            }
+        }
+
         private void zeroTo31ComboBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             if( !ignoreChanges )
@@ -302,6 +292,7 @@ namespace FFTPatcher.Editors
                     eventUnit,
                     combo.Tag.ToString(),
                     (byte)(combo.SelectedIndex > 31 ? 254 : combo.SelectedIndex) );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -314,11 +305,10 @@ namespace FFTPatcher.Editors
                     eventUnit,
                     combo.Tag.ToString(),
                     (byte)(combo.SelectedIndex > 100 ? 254 : combo.SelectedIndex) );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Private Methods 
     }
 }

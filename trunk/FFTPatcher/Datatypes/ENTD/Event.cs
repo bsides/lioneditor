@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,29 +27,21 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Event : IEquatable<Event>, IChangeable, IXmlDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (2)
+		#region Instance Variables (2) 
 
         private static string[] pspEventNames;
         private static string[] psxEventNames;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ StaticÂ PropertiesÂ (1)
+		#region Public Properties (6) 
 
+        public Event Default { get; private set; }
 
         public static string[] EventNames
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspEventNames : psxEventNames; }
         }
-
-
-        #endregionÂ StaticÂ Properties
-
-        #regionÂ PropertiesÂ (5)
-
-
-        public Event Default { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -66,15 +58,14 @@ namespace FFTPatcher.Datatypes
 
         public int Value { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         static Event()
         {
             pspEventNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.EventNames,
+                PSPResources.EventNames,
                 "/Events/Event[@value='{0:X3}']/@name",
                 0x200 + 77 );
             psxEventNames = Utilities.GetStringsFromNumberedXmlNodes(
@@ -97,10 +88,22 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
+		#region Public Methods (6) 
 
+        public static void Copy( Event source, Event destination )
+        {
+            for( int i = 0; i < source.Units.Length; i++ )
+            {
+                source.Units[i].CopyTo( destination.Units[i] );
+            }
+        }
+
+        public void CopyTo( Event destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool Equals( Event other )
         {
@@ -124,6 +127,11 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
+        public override string ToString()
+        {
+            return (HasChanged ? "*" : "") + string.Format( "{0:X3} {1}", Value, Name );
+        }
+
         public void WriteXml( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
@@ -144,15 +152,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-
-        public override string ToString()
-        {
-            return string.Format( "{0:X3} {1}", Value, Name );
-        }
-
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

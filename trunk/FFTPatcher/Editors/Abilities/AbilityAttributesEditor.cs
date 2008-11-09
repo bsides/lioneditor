@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,11 +25,11 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class AbilityAttributesEditor : UserControl
+    public partial class AbilityAttributesEditor : BaseEditor
     {
+		#region Instance Variables (6) 
 
-		#regionÂ StaticÂ FieldsÂ (2)Â 
-
+        private AbilityAttributes attributes;
         private static readonly List<string> FieldNames = new List<string>( new string[] {
             "Range", "Effect", "Vertical", "X", "Y", "InflictStatus", "CT", "MPCost" } );
         private static readonly List<string> FlagNames = new List<string>( new string[] {
@@ -37,20 +37,13 @@ namespace FFTPatcher.Editors
             "HitEnemies", "HitAllies", "Blank8", "FollowTarget", "RandomFire", "LinearAttack", "ThreeDirections", "HitCaster",
             "Reflect", "Arithmetick", "Silence", "Mimic", "NormalAttack", "Perservere", "ShowQuote", "AnimateMiss",
             "CounterFlood", "CounterMagic", "Direct", "Shirahadori", "RequiresSword", "RequiresMateriaBlade", "Evadeable", "Targeting"} );
-
-		#endregionÂ StaticÂ FieldsÂ 
-
-		#regionÂ FieldsÂ (4)Â 
-
-        private AbilityAttributes attributes;
         private bool ignoreChanges = false;
         private Context ourContext = Context.Default;
         private List<NumericUpDownWithDefault> spinners;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public AbilityAttributes Attributes
         {
@@ -71,10 +64,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AbilityAttributesEditor()
         {
@@ -88,19 +80,13 @@ namespace FFTPatcher.Editors
             formulaComboBox.SelectedIndexChanged += formulaComboBox_SelectedIndexChanged;
             flagsCheckedListBox.ItemCheck += flagsCheckedListBox_ItemCheck;
             inflictStatusLabel.Click += inflictStatusLabel_Click;
+            elementsEditor.DataChanged += OnDataChanged;
             inflictStatusLabel.TabStop = false;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (1)Â 
-
-        public event EventHandler<LabelClickedEventArgs> LinkClicked;
-
-		#endregionÂ EventsÂ 
-
-		#regionÂ MethodsÂ (6)Â 
-
+		#region Private Methods (6) 
 
         private void FireLinkClickedEvent()
         {
@@ -115,6 +101,7 @@ namespace FFTPatcher.Editors
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFlag( attributes, FlagNames[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -125,6 +112,7 @@ namespace FFTPatcher.Editors
                 if( attributes != null )
                 {
                     attributes.Formula = formulaComboBox.SelectedItem as AbilityFormula;
+                    OnDataChanged( this, EventArgs.Empty );
                 }
             }
         }
@@ -141,6 +129,7 @@ namespace FFTPatcher.Editors
                 NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
                 int i = spinners.IndexOf( c );
                 ReflectionHelpers.SetFieldOrProperty( attributes, FieldNames[i], (byte)c.Value );
+                OnDataChanged( this, EventArgs.Empty );
             }
         }
 
@@ -155,7 +144,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 flagsCheckedListBox.Items.Clear();
-                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.AbilityAttributes : PSXResources.AbilityAttributes );
+                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.AbilityAttributes : PSXResources.AbilityAttributes );
                 formulaComboBox.DataSource = ourContext == Context.US_PSP ? AbilityFormula.PSPAbilityFormulas : AbilityFormula.PSXAbilityFormulas;
             }
 
@@ -183,36 +172,22 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
+		#endregion Private Methods 
 
-		#endregionÂ MethodsÂ 
-
+        public event EventHandler<LabelClickedEventArgs> LinkClicked;
     }
 
     public class LabelClickedEventArgs : EventArgs
     {
+		#region Public Properties (2) 
 
-        public enum SecondTableType
-        {
-            None,
-            Weapon,
-            Shield,
-            HeadBody,
-            Accessory,
-            ChemistItem
-        }
-
-
-		#regionÂ PropertiesÂ (2)Â 
-
-
-        public SecondTableType SecondTable { get; private set; }
+public SecondTableType SecondTable { get; private set; }
 
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
         public LabelClickedEventArgs( byte value )
             : this( value, SecondTableType.None )
@@ -225,7 +200,16 @@ namespace FFTPatcher.Editors
             SecondTable = secondTable;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
+        public enum SecondTableType
+        {
+            None,
+            Weapon,
+            Shield,
+            HeadBody,
+            Accessory,
+            ChemistItem
+        }
     }
 }

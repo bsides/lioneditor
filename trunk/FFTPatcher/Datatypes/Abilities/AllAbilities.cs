@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -23,20 +23,68 @@ using System.Xml;
 
 namespace FFTPatcher.Datatypes
 {
+    public class AllAbilityEffects : PatchableFile
+    {
+		#region Instance Variables (1) 
+
+        private AllAbilities owner;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
+
+        public override bool HasChanged
+        {
+            get { return owner.Abilities.Exists( ability => ability.Effect != null && ability.Default != null && ability.Default.Effect != null && ability.Effect.Value != ability.Default.Effect.Value ); }
+        }
+
+		#endregion Public Properties 
+
+		#region Constructors (1) 
+
+        public AllAbilityEffects( AllAbilities owner )
+        {
+            this.owner = owner;
+        }
+
+		#endregion Constructors 
+
+		#region Public Methods (1) 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            byte[] effects = owner.ToEffectsByteArray();
+            List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
+            if( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x14F3F0, effects ) );
+            }
+            else if( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3177B4, effects ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3177B4, effects ) );
+            }
+
+            return result;
+        }
+
+		#endregion Public Methods 
+    }
+
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
-    public class AllAbilities : IChangeable, IXmlDigest
+    public class AllAbilities : PatchableFile, IXmlDigest
     {
 
-        #regionÂ StaticÂ FieldsÂ (2)
+        #region Static Fields (2)
 
         private static Ability[] pspEventAbilites;
         private static Ability[] psxEventAbilites;
 
-        #endregionÂ StaticÂ Fields
+        #endregion Static Fields
 
-        #regionÂ StaticÂ PropertiesÂ (7)
+        #region Static Properties (7)
 
 
         public static Ability[] DummyAbilities
@@ -72,20 +120,22 @@ namespace FFTPatcher.Datatypes
         public static string[] PSXNames { get; private set; }
 
 
-        #endregionÂ StaticÂ Properties
+        #endregion Static Properties
 
-        #regionÂ PropertiesÂ (3)
+        #region Properties (3)
 
 
         public Ability[] Abilities { get; private set; }
 
         public Ability[] DefaultAbilities { get; private set; }
 
+        public AllAbilityEffects AllEffects { get; private set;}
+
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -101,9 +151,9 @@ namespace FFTPatcher.Datatypes
         }
 
 
-        #endregionÂ Properties
+        #endregion Properties
 
-        #regionÂ ConstructorsÂ (2)
+        #region Constructors (2)
 
         static AllAbilities()
         {
@@ -113,7 +163,7 @@ namespace FFTPatcher.Datatypes
             pspEventAbilites = new Ability[512];
 
             PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.Abilities,
+                PSPResources.Abilities,
                 "/Abilities/Ability[@value='{0}']/@name",
                 512 );
             PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
@@ -137,9 +187,10 @@ namespace FFTPatcher.Datatypes
 
         public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.AbilitiesBin : PSXResources.AbilitiesBin;
+            AllEffects = new AllAbilityEffects( this );
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilitiesBin : PSXResources.AbilitiesBin;
             Dictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
-            byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? Resources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
+            byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
 
             Abilities = new Ability[512];
             DefaultAbilities = new Ability[512];
@@ -199,9 +250,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+        #endregion Constructors
 
-        #regionÂ MethodsÂ (5)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -209,8 +260,8 @@ namespace FFTPatcher.Datatypes
             if( FFTPatch.Context == Context.US_PSP )
             {
                 List<string> result = new List<string>();
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
                 return result;
             }
             else
@@ -270,7 +321,25 @@ namespace FFTPatcher.Datatypes
         }
 
 
-        #endregionÂ Methods
+        #endregion Methods
 
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 4 );
+            byte[] bytes = ToByteArray( context );
+
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x4F3F0, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x271514, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x271514, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

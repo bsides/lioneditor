@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,9 +26,7 @@ namespace FFTPatcher
 {
     static class Program
     {
-
-		#regionÂ MethodsÂ (1)Â 
-
+		#region Private Methods (1) 
 
         /// <summary>
         /// The main entry point for the application.
@@ -41,7 +39,7 @@ namespace FFTPatcher
 
             // Access some class members to force the static constructors to run.
             object dummy = AllAbilities.PSPNames;
-            dummy = Resources.AbilityAttributes;
+            dummy = PSPResources.AbilityAttributes;
             dummy = PSXResources.AbilityAttributes;
             dummy = new GlyphEditor();
             dummy = FFTPatchEditor.ToolTip;
@@ -57,8 +55,6 @@ namespace FFTPatcher
             Application.Run(new MainForm());
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

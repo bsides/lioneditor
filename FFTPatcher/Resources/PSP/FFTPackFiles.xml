@@ -18,9 +18,6 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <files>
-  <!-- EVENT/BONUS.BIN not found (958464 bytes) -->
-  <!-- EVENT/ITEM.BIN not found (33280 bytes) -->
-  <!-- EVENT/MAPTITLE.BIN not found (307200 bytes) -->
   <!-- MAP/MAP001.GNS not found (2388 bytes) -->
   <!-- MAP/MAP002.GNS not found (2288 bytes) -->
   <!-- MAP/MAP003.GNS not found (568 bytes) -->
@@ -142,7 +139,6 @@
   <!-- MAP/MAP118.GNS not found (208 bytes) -->
   <!-- MAP/MAP119.GNS not found (208 bytes) -->
   <!-- MAP/MAP125.GNS not found (208 bytes) -->
-  <!-- WORLD/WLDTEX.TM2 not found (274432 bytes) -->
   <file entry="0003" name="SYSTEM.CNF"/>
   <file entry="0004" name="SLPS_007.70"/>
   <file entry="0005" name="BATTLE.BIN"/>
@@ -159,6 +155,7 @@
   <file entry="0016" name="EVENT/CARD.OUT"/>
   <file entry="0017" name="EVENT/BUNIT.OUT"/>
   <file entry="0018" name="EVENT/EVTOOL.OUT"/>
+  <file entry="0019" name="EVENT/MAPTITLE.BIN"/>
   <file entry="0020" name="EVENT/FONT.BIN"/>
   <file entry="0021" name="EVENT/FRAME.BIN"/>
   <file entry="0022" name="EVENT/TEST.EVT"/>
@@ -170,7 +167,9 @@
   <file entry="0028" name="EVENT/CHAPTER3.OUT"/>
   <file entry="0029" name="EVENT/CHAPTER4.OUT"/>
   <file entry="0030" name="EVENT/GAMEOVER.BIN"/>
+  <file entry="0031" name="EVENT/BONUS.BIN"/>
   <file entry="0032" name="EVENT/WIN001.BIN"/>
+  <file entry="0033" name="EVENT/ITEM.BIN"/>
   <file entry="0034" name="EVENT/WLDFACE4.BIN"/>
   <file entry="0035" name="EVENT/WLDFACE.BIN"/>
   <file entry="0036" name="EVENT/END1.BIN"/>
@@ -1017,6 +1016,7 @@
   <file entry="0878" name="SOUND/MUSIC_97.SMD"/>
   <file entry="0879" name="SOUND/MUSIC_98.SMD"/>
   <file entry="0880" name="SOUND/MUSIC_99.SMD"/>
+  <file entry="0882" name="OPEN/OPNTEX.BIN"/>
   <file entry="0885" name="BATTLE/MaleDarkKnight.SPR"/>
   <file entry="0886" name="BATTLE/FemaleDarkKnight.SPR"/>
   <file entry="0887" name="BATTLE/MaleOnionKnight.SPR"/>
@@ -1063,6 +1063,7 @@
   <file entry="0933" name="SAVEIMAGE/933.png"/>
   <file entry="0934" name="SAVEIMAGE/934.png"/>
   <file entry="0935" name="SAVEIMAGE/935.png"/>
+  <file entry="0936" name="WORLD/WLDTEX.TM2"/>
   <file entry="0940" name="EFFECT/E001.BIN.duplicate"/>
   <file entry="0941" name="EFFECT/E002.BIN.duplicate"/>
   <file entry="0942" name="EFFECT/E003.BIN.duplicate"/>

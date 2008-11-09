@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,33 +24,61 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using FFTPatcher.Datatypes;
+using System.ComponentModel;
 
 namespace FFTPatcher
 {
     public partial class MainForm : Form
     {
+		#region Instance Variables (2) 
 
-        #regionÂ ConstructorsÂ (1)
+        private PatchPSPForm patchPspForm = null;
+        private PatchPSXForm patchPsxForm = null;
+
+		#endregion Instance Variables 
+
+		#region Private Properties (2) 
+
+        private PatchPSPForm PatchPSPForm
+        {
+            get
+            {
+                if( patchPspForm == null )
+                {
+                    patchPspForm = new PatchPSPForm();
+                }
+                return patchPspForm;
+            }
+        }
+
+        private PatchPSXForm PatchPSXForm
+        {
+            get
+            {
+                if( patchPsxForm == null )
+                {
+                    patchPsxForm = new PatchPSXForm();
+                }
+                return patchPsxForm;
+            }
+        }
+
+		#endregion Private Properties 
+
+		#region Constructors (1) 
 
         public MainForm()
         {
             InitializeComponent();
             openMenuItem.Click += openMenuItem_Click;
-            applySCUSMenuItem.Click += applyMenuItem_Click;
             saveMenuItem.Click += saveMenuItem_Click;
             saveAsPspMenuItem.Click += saveAsPspMenuItem_Click;
             newPSPMenuItem.Click += newPSPMenuItem_Click;
             newPSXMenuItem.Click += newPSXMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
-            openModifiedMenuItem.Click += openModifiedMenuItem_Click;
             aboutMenuItem.Click += aboutMenuItem_Click;
-            applySCUSMenuItem.Enabled = false;
             saveMenuItem.Enabled = false;
             saveAsPspMenuItem.Enabled = false;
-            generateMenuItem.Click += generateMenuItem_Click;
-            generateMenuItem.Enabled = false;
-            generateFontMenuItem.Click += generateFontMenuItem_Click;
-            applyBattleBinMenuItem.Click += applyBattleBinMenuItem_Click;
 
             extractFFTPackMenuItem.Click += extractFFTPackMenuItem_Click;
             rebuildFFTPackMenuItem.Click += rebuildFFTPackMenuItem_Click;
@@ -59,14 +87,62 @@ namespace FFTPatcher
             patchPspIsoMenuItem.Click += patchPspIsoMenuItem_Click;
             patchPsxIsoMenuItem.Click += patchPsxIsoMenuItem_Click;
             cheatdbMenuItem.Click += cheatdbMenuItem_Click;
+            openPatchedPsxIso.Click += new EventHandler( openPatchedPsxIso_Click );
 
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
+            fileMenuItem.Popup += new EventHandler( fileMenuItem_Popup );
+            psxMenu.Popup += new EventHandler( psxMenu_Popup );
+            pspMenu.Popup += new EventHandler( pspMenu_Popup );
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (19)
+		#region Public Methods (1) 
 
+        public void HandleException( Exception e )
+        {
+            string message = string.Empty;
+            if ( e is FFTPatcher.Datatypes.FFTPatch.LoadPatchException )
+            {
+                message = "Could not load patch";
+            }
+            else if( e is ArgumentNullException )
+            {
+                message = "Argument was null";
+            }
+            else if( e is ArgumentException )
+            {
+                message = "Bad argument";
+            }
+            else if( e is FileNotFoundException )
+            {
+            }
+            else if( e is IOException )
+            {
+                message = "IO error occurred";
+            }
+            else if( e is System.Security.SecurityException )
+            {
+                message = "Security access";
+            }
+            else if( e is DirectoryNotFoundException )
+            {
+                message = "Folder not found";
+            }
+            else if( e is UnauthorizedAccessException )
+            {
+                message = "Incorrect permissions";
+            }
+            else
+            {
+                message = e.ToString();
+            }
+
+            MessageBox.Show( string.Format( "An error of type {0} occurred:\n{1}", e.GetType(), message ), "Error", MessageBoxButtons.OK );
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (20) 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
@@ -74,76 +150,13 @@ namespace FFTPatcher
             a.ShowDialog( this );
         }
 
-        private void applyBattleBinMenuItem_Click( object sender, EventArgs e )
-        {
-            applyPatchOpenFileDialog.Filter = "BATTLE.BIN|BATTLE.BIN";
-            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.PatchBattleBin( applyPatchOpenFileDialog.FileName );
-                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
-                }
-                catch( InvalidDataException )
-                {
-                    MessageBox.Show(
-                        "Could not find patch locations.\n" +
-                        //"Ensure that the file is an ISO image if you are patching War of the Lions." +
-                        "Ensure that you have selected BATTLE.BIN if you are patching Final Fantasy Tactics",
-                        "Invalid data", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void applyMenuItem_Click( object sender, System.EventArgs e )
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                applyPatchOpenFileDialog.Filter = "ISO Files (*.iso) |*.iso";
-            }
-            else
-            {
-                applyPatchOpenFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
-            }
-
-            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.ApplyPatchesToExecutable( applyPatchOpenFileDialog.FileName );
-                    MessageBox.Show( "Patch complete!", "Finished", MessageBoxButtons.OK );
-                }
-                catch( InvalidDataException )
-                {
-                    MessageBox.Show(
-                        "Could not find patch locations.\n" +
-                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
-                        "Invalid data", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-            }
-        }
-
         private void cheatdbMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "CWCheat DB files|cheat.db";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                try
-                {
-                    Codes.SaveToFile( saveFileDialog.FileName );
-                }
-                catch
-                {
-                    MessageBox.Show( "Could not save file.", "Error", MessageBoxButtons.OK );
-                }
+                TryAndHandle( delegate() { Codes.SaveToFile( saveFileDialog.FileName ); }, false );
             }
         }
 
@@ -152,22 +165,7 @@ namespace FFTPatcher
             applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
             if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                try
-                {
-                    PspIso.DecryptISO( applyPatchOpenFileDialog.FileName );
-                }
-                catch( NotSupportedException )
-                {
-                    MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
-                }
+                TryAndHandle( delegate() { PspIso.DecryptISO( applyPatchOpenFileDialog.FileName ); }, false );
             }
         }
 
@@ -178,107 +176,69 @@ namespace FFTPatcher
 
         private void extractFFTPackMenuItem_Click( object sender, EventArgs e )
         {
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
+                {
+                    FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath, sender1 as BackgroundWorker );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Visible = true;
+                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    Enabled = true;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if( args.Error is Exception )
+                    {
+                        MessageBox.Show(
+                            "Could not extract file.\n" +
+                            "Make sure you chose the correct file and that there \n" +
+                            "enough room in the destination directory.",
+                            "Error", MessageBoxButtons.OK );
+                    }
+                };
+
             openFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
             openFileDialog.FilterIndex = 0;
             folderBrowserDialog.Description = "Where should the files be extracted?";
 
-            bool oldEnabled = fftPatchEditor1.Enabled;
-
             if( (openFileDialog.ShowDialog( this ) == DialogResult.OK) && (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) )
             {
-                try
-                {
-                    FFTPack.FileProgress += FFTPack_FileProgress;
-                    progressBar.Visible = true;
-                    progressBar.BringToFront();
-                    fftPatchEditor1.Enabled = false;
-                    FFTPack.DumpToDirectory( openFileDialog.FileName, folderBrowserDialog.SelectedPath );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show(
-                        "Could not extract file.\n" +
-                        "Make sure you chose the correct file and that there \n" +
-                        "enough room in the destination directory.",
-                        "Error", MessageBoxButtons.OK );
-                }
-                finally
-                {
-                    FFTPack.FileProgress -= FFTPack_FileProgress;
-                    progressBar.SendToBack();
-                    progressBar.Visible = false;
-                    fftPatchEditor1.Enabled = oldEnabled;
-                }
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
+
+                Enabled = false;
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+                progressBar.BringToFront();
+                patchPsxBackgroundWorker.RunWorkerAsync();
             }
         }
 
-        private void FFTPack_FileProgress( object sender, ProgressEventArgs e )
+        void fileMenuItem_Popup( object sender, EventArgs e )
         {
-            progressBar.Location = new Point( (Width - progressBar.Width) / 2, (Height - progressBar.Height) / 2 );
-            progressBar.Maximum = e.TotalTasks;
-            progressBar.Minimum = 0;
-            progressBar.Value = e.TasksComplete;
-        }
-
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
-        {
-            applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            patchPsxIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            saveMenuItem.Enabled = true;
-            generateMenuItem.Enabled = true;
-            generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-
-            patchPspIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
-            cheatdbMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
-
-        }
-
-        private void generateFontMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.Filter = "FONT.BIN|FONT.BIN";
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.SaveFontsAs( saveFileDialog.FileName );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not open or create file.", "File not found", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void generateMenuItem_Click( object sender, EventArgs e )
-        {
-            folderBrowserDialog.Description = "Where should the files be exported?\nAny files in the folder you choose with the n" +
-                "ames ENTD1.ENT, ENTD2.ENT, ENTD3.ENT, or ENTD4.ENT will be overwritte" +
-                "n.";
-            if( folderBrowserDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    FFTPatch.ExportENTDFiles( folderBrowserDialog.SelectedPath );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not save files.", "Error", MessageBoxButtons.OK );
-                }
-            }
+            openMenuItem.Enabled = true;
+            saveAsPspMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
+            saveMenuItem.Enabled = fftPatchEditor1.Enabled;
         }
 
         private void newPSPMenuItem_Click( object sender, System.EventArgs e )
         {
             FFTPatch.New( Context.US_PSP );
-            saveAsPspMenuItem.Enabled = true;
         }
 
         private void newPSXMenuItem_Click( object sender, System.EventArgs e )
         {
             FFTPatch.New( Context.US_PSX );
-            saveAsPspMenuItem.Enabled = true;
         }
 
         private void openMenuItem_Click( object sender, System.EventArgs e )
@@ -286,143 +246,173 @@ namespace FFTPatcher
             openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                FFTPatch.LoadPatch( openFileDialog.FileName );
-                saveAsPspMenuItem.Enabled = true;
+                TryAndHandle( delegate() { FFTPatch.LoadPatch( openFileDialog.FileName ); }, true );
             }
         }
 
-        private void openModifiedMenuItem_Click( object sender, System.EventArgs e )
+        private void openPatchedPsxIso_Click( object sender, EventArgs e )
         {
-            openFileDialog.Filter = "SCUS_942.21|SCUS_942.21";
+            openFileDialog.Filter = "ISO images|*.iso;*.bin;*.img";
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                try
-                {
-                    FFTPatch.OpenModifiedPSXFile( openFileDialog.FileName );
-                    saveAsPspMenuItem.Enabled = true;
-                }
-                catch( InvalidDataException )
-                {
-                    MessageBox.Show(
-                        "Could not find patch locations.\n" +
-                        "Ensure that you have selected SCUS_942.21 if you are patching Final Fantasy Tactics",
-                        "Invalid data", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
+                TryAndHandle( delegate() { FFTPatch.OpenPatchedISO( openFileDialog.FileName ); }, true );
             }
         }
 
         private void patchPspIsoMenuItem_Click( object sender, EventArgs e )
         {
-            applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
-            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
+                {
+                    PspIso.PatchISO( sender1 as BackgroundWorker, args, PatchPSPForm );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Visible = true;
+                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    Enabled = true;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if( args.Error is NotSupportedException )
+                    {
+                        MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
+                    }
+                    else if( args.Error != null )
+                    {
+                        HandleException( args.Error );
+                    }
+                };
+
+            if( PatchPSPForm.CustomShowDialog( this ) == DialogResult.OK )
             {
-                try
-                {
-                    PspIso.PatchISO( applyPatchOpenFileDialog.FileName );
-                }
-                catch( NotSupportedException )
-                {
-                    MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
-                }
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
+
+                Enabled = false;
+
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+
+                patchPsxBackgroundWorker.RunWorkerAsync();
             }
         }
 
         private void patchPsxIsoMenuItem_Click( object sender, EventArgs e )
         {
-            Enabled = false;
-            CDTool.PatchISOWithFFTPatchAsync( FFTPatch.Abilities, FFTPatch.Items, FFTPatch.ItemAttributes, FFTPatch.Jobs, FFTPatch.JobLevels,
-                FFTPatch.SkillSets, FFTPatch.MonsterSkills, FFTPatch.ActionMenus, FFTPatch.StatusAttributes, FFTPatch.InflictStatuses,
-                FFTPatch.PoachProbabilities, FFTPatch.Font, FFTPatch.ENTDs, PatchDataReceived, PatchFinished );
-        }
-
-        private void PatchDataReceived( object sender, DataReceivedEventArgs e )
-        {
-        }
-
-        private void PatchFinished( object sender, EventArgs e )
-        {
-            Process p = sender as Process;
-            if( p != null && p.ExitCode != 0 )
-            {
-                MethodInvoker mii = new MethodInvoker(
-                    delegate()
-                    {
-                        MessageBox.Show( "Error while patching", "Error", MessageBoxButtons.OK );
-                    } );
-                if( InvokeRequired )
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
                 {
-                    Invoke( mii );
-                }
-                else
+                    PsxIso.PatchPsxIso( sender1 as BackgroundWorker, args, PatchPSXForm );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
                 {
-                    mii();
-                }
-            }
-
-            MethodInvoker mi = new MethodInvoker(
-                delegate()
+                    progressBar.Visible = true;
+                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
                 {
+                    progressBar.Visible = false;
                     Enabled = true;
-                } );
-            if( fftPatchEditor1.InvokeRequired )
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    
+                    if ( args.Error != null )
+                    {
+                        HandleException( args.Error );
+                    }
+                };
+
+            
+            if ( PatchPSXForm.CustomShowDialog( this ) == DialogResult.OK )
             {
-                Invoke( mi );
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
+                
+                Enabled = false;
+
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+
+                patchPsxBackgroundWorker.RunWorkerAsync();
             }
-            else
-            {
-                mi();
-            }
+        }
+
+        void pspMenu_Popup( object sender, EventArgs e )
+        {
+            patchPspIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
+            cheatdbMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
+        }
+
+        void psxMenu_Popup( object sender, EventArgs e )
+        {
+            openPatchedPsxIso.Enabled = true;
+            patchPsxIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
         }
 
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
         {
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
+                {
+                    FFTPack.MergeDumpedFiles( folderBrowserDialog.SelectedPath, saveFileDialog.FileName, sender1 as BackgroundWorker );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Visible = true;
+                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    Enabled = true;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if( args.Error is Exception )
+                    {
+                        MessageBox.Show(
+                            "Could not merge files.\n" +
+                            "Make sure you chose the correct file and that there is\n" +
+                            "enough room in the destination directory.",
+                            "Error", MessageBoxButtons.OK );
+                    }
+                };
+
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "fftpack.bin|fftpack.bin|All Files (*.*)|*.*";
             saveFileDialog.FilterIndex = 0;
             folderBrowserDialog.Description = "Where are the extracted files?";
-            bool oldEnabled = fftPatchEditor1.Enabled;
 
             if( (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) && (saveFileDialog.ShowDialog( this ) == DialogResult.OK) )
             {
-                try
-                {
-                    FFTPack.FileProgress += FFTPack_FileProgress;
-                    progressBar.Visible = true;
-                    fftPatchEditor1.Enabled = false;
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
 
-                    FFTPack.MergeDumpedFiles( folderBrowserDialog.SelectedPath, saveFileDialog.FileName );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show(
-                        "Could not merge files.\n" +
-                        "Make sure you chose the correct path and that there \n" +
-                        "enough room in the destination location.",
-                        "Error", MessageBoxButtons.OK );
-                }
-                finally
-                {
-                    FFTPack.FileProgress -= FFTPack_FileProgress;
-                    progressBar.Visible = false;
-                    fftPatchEditor1.Enabled = oldEnabled;
-                }
+                Enabled = false;
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+                progressBar.BringToFront();
+                patchPsxBackgroundWorker.RunWorkerAsync();
             }
-        }
 
-        private void saveMenuItem_Click( object sender, System.EventArgs e )
-        {
-            SavePatch( true );
         }
 
         private void saveAsPspMenuItem_Click( object sender, EventArgs e )
@@ -433,23 +423,26 @@ namespace FFTPatcher
                 // HACK
                 if( FFTPatch.Context != Context.US_PSP )
                 {
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load( fn );
-                    FFTPatch.ConvertPsxPatchToPsp( doc );
-                    doc.Save( fn );
+                    FFTPatch.ConvertPsxPatchToPsp( fn );
                     FFTPatch.LoadPatch( fn );
                 }
             }
         }
 
+        private void saveMenuItem_Click( object sender, System.EventArgs e )
+        {
+            SavePatch( false );
+        }
+
         private string SavePatch( bool digest )
         {
+            saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 try
                 {
-                    FFTPatch.SavePatchToFile( saveFileDialog.FileName, FFTPatch.Context, digest );
+                    TryAndHandle( delegate() { FFTPatch.SavePatchToFile( saveFileDialog.FileName, FFTPatch.Context, digest ); }, false, true );
                     return saveFileDialog.FileName;
                 }
                 catch( Exception )
@@ -460,7 +453,34 @@ namespace FFTPatcher
             return string.Empty;
         }
 
-        #endregionÂ Methods
+        private void TryAndHandle( MethodInvoker action, bool disableOnFail, bool rethrow )
+        {
+            try
+            {
+                action();
+            }
+            catch( Exception e )
+            {
+                if( disableOnFail )
+                {
+                    fftPatchEditor1.Enabled = false;
+                }
+                if( rethrow )
+                {
+                    throw;
+                }
+                else
+                {
+                    HandleException( e );
+                }
+            }
+        }
 
+        private void TryAndHandle( MethodInvoker action, bool disableOnFail )
+        {
+            TryAndHandle( action, disableOnFail, false );
+        }
+
+		#endregion Private Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,41 +24,32 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class SpecialName
     {
-
-		#regionÂ StaticÂ FieldsÂ (2)Â 
+		#region Instance Variables (2) 
 
         private static SpecialName[] pspNames = new SpecialName[256];
         private static SpecialName[] psxNames = new SpecialName[256];
 
-		#endregionÂ StaticÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ StaticÂ PropertiesÂ (1)Â 
+		#region Public Properties (3) 
 
+        public string Name { get; private set; }
 
         public static SpecialName[] SpecialNames
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspNames : psxNames; }
         }
 
-
-		#endregionÂ StaticÂ PropertiesÂ 
-
-		#regionÂ PropertiesÂ (2)Â 
-
-
-        public string Name { get; private set; }
-
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
         static SpecialName()
         {
             string[] pspStrings = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.SpecialNames,
+                PSPResources.SpecialNames,
                 "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
                 256 );
             string[] psxStrings = Utilities.GetStringsFromNumberedXmlNodes(
@@ -78,25 +69,20 @@ namespace FFTPatcher.Datatypes
             Name = name;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
-
+		#region Public Methods (2) 
 
         public byte ToByte()
         {
             return Value;
         }
 
-
-
         public override string ToString()
         {
             return string.Format( "{0:X2} {1}", Value, Name );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }

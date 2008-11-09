@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,8 +25,7 @@ namespace FFTPatcher.Editors
 {
     public partial class AllItemsEditor : UserControl
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllItemsEditor()
         {
@@ -34,20 +33,31 @@ namespace FFTPatcher.Editors
             itemEditor.InflictStatusClicked += itemEditor_InflictStatusClicked;
             itemEditor.ItemAttributesClicked += itemEditor_ItemAttributesClicked;
             itemEditor.SecondTableLinkClicked += itemEditor_SecondTableLinkClicked;
+            itemEditor.DataChanged += new EventHandler( itemEditor_DataChanged );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (2)Â 
+		#region Public Methods (1) 
 
-        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+        public void UpdateView( AllItems items )
+        {
+            itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;
+            itemListBox.DataSource = items.Items;
+            itemListBox.SelectedIndexChanged += itemListBox_SelectedIndexChanged;
+            itemListBox.SelectedIndex = 0;
+            itemEditor.Item = itemListBox.SelectedItem as Item;
+        }
 
-        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
+		#endregion Public Methods 
 
-		#endregionÂ EventsÂ 
+		#region Private Methods (5) 
 
-		#regionÂ MethodsÂ (5)Â 
-
+        private void itemEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[itemListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void itemEditor_InflictStatusClicked( object sender, LabelClickedEventArgs e )
         {
@@ -110,18 +120,9 @@ namespace FFTPatcher.Editors
             itemEditor.Item = itemListBox.SelectedItem as Item;
         }
 
-        public void UpdateView( AllItems items )
-        {
-            itemListBox.SelectedIndexChanged -= itemListBox_SelectedIndexChanged;
-            itemListBox.Items.Clear();
-            itemListBox.Items.AddRange( items.Items.ToArray() );
-            itemListBox.SelectedIndexChanged += itemListBox_SelectedIndexChanged;
-            itemListBox.SelectedIndex = 0;
-            itemEditor.Item = itemListBox.SelectedItem as Item;
-        }
+		#endregion Private Methods 
 
-
-		#endregionÂ MethodsÂ 
-
+        public event EventHandler<LabelClickedEventArgs> InflictStatusClicked;
+        public event EventHandler<LabelClickedEventArgs> ItemAttributesClicked;
     }
 }

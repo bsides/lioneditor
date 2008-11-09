@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,19 +24,17 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class ItemAttributeEditor : UserControl
+    public partial class ItemAttributeEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (3) 
 
         private ItemAttributes attributes;
         private bool ignoreChanges = false;
         private NumericUpDownWithDefault[] spinners;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public ItemAttributes ItemAttributes
         {
@@ -57,10 +55,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public ItemAttributeEditor()
         {
@@ -70,23 +67,23 @@ namespace FFTPatcher.Editors
             {
                 spinner.ValueChanged += spinner_ValueChanged;
             }
+
+            statusImmunityEditor.DataChanged += OnDataChanged;
+            startingStatusesEditor.DataChanged += OnDataChanged;
+            permanentStatusesEditor.DataChanged += OnDataChanged;
+
+            strongElementsEditor.DataChanged += OnDataChanged;
+            weakElementsEditor.DataChanged += OnDataChanged;
+            halfElementsEditor.DataChanged += OnDataChanged;
+            absorbElementsEditor.DataChanged += OnDataChanged;
+            cancelElementsEditor.DataChanged += OnDataChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
+		#region Public Methods (1) 
 
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
-            }
-        }
-
-        private void UpdateView()
+        public void UpdateView()
         {
             this.ignoreChanges = true;
             SuspendLayout();
@@ -105,6 +102,7 @@ namespace FFTPatcher.Editors
                     ReflectionHelpers.GetFieldOrProperty<byte>( attributes, spinner.Tag.ToString() ),
                     ReflectionHelpers.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
             }
+            
             statusImmunityEditor.Statuses = attributes.StatusImmunity;
             startingStatusesEditor.Statuses = attributes.StartingStatuses;
             permanentStatusesEditor.Statuses = attributes.PermanentStatuses;
@@ -127,8 +125,20 @@ namespace FFTPatcher.Editors
             this.ignoreChanges = false;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (1) 
 
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
+                OnDataChanged( sender, System.EventArgs.Empty );
+            }
+        }
+
+		#endregion Private Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,10 +25,9 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class AbilityEditor : UserControl
+    public partial class AbilityEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (9)Â 
+		#region Instance Variables (9) 
 
         private Ability ability;
         private List<ComboBoxWithDefault> comboBoxes;
@@ -40,10 +39,9 @@ namespace FFTPatcher.Editors
         private List<ItemSubType> psxItemTypes = new List<ItemSubType>( (ItemSubType[])Enum.GetValues( typeof( ItemSubType ) ) );
         private List<NumericUpDownWithDefault> spinners;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public Ability Ability
         {
@@ -58,10 +56,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AbilityEditor()
         {
@@ -106,46 +103,15 @@ namespace FFTPatcher.Editors
             psxItemTypes.Remove( ItemSubType.FellSword );
 
             abilityAttributesEditor.LinkClicked += abilityAttributesEditor_LinkClicked;
+            commonAbilitiesEditor.DataChanged += OnDataChanged;
+            abilityAttributesEditor.DataChanged += OnDataChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (1)Â 
+		#region Public Methods (1) 
 
-        public event EventHandler<LabelClickedEventArgs> InflictStatusLabelClicked;
-
-		#endregionÂ EventsÂ 
-
-		#regionÂ MethodsÂ (4)Â 
-
-
-        private void abilityAttributesEditor_LinkClicked( object sender, LabelClickedEventArgs e )
-        {
-            if( InflictStatusLabelClicked != null )
-            {
-                InflictStatusLabelClicked( this, e );
-            }
-        }
-
-        private void combo_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
-            }
-        }
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
-            }
-        }
-
-        private void UpdateView()
+        public void UpdateView()
         {
             ignoreChanges = true;
 
@@ -207,8 +173,40 @@ namespace FFTPatcher.Editors
             ignoreChanges = false;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (3) 
 
+        private void abilityAttributesEditor_LinkClicked( object sender, LabelClickedEventArgs e )
+        {
+            if( InflictStatusLabelClicked != null )
+            {
+                InflictStatusLabelClicked( this, e );
+            }
+        }
+
+        private void combo_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, c.SelectedItem );
+                OnDataChanged( this, EventArgs.Empty );
+            }
+        }
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault c = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( ability, c.Tag as string, (byte)c.Value );
+                OnDataChanged( this, EventArgs.Empty );
+            }
+        }
+
+		#endregion Private Methods 
+
+        public event EventHandler<LabelClickedEventArgs> InflictStatusLabelClicked;
     }
 }

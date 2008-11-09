@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,20 +27,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AbilityAttributes : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        private static readonly string[] valuesToSerialize = new string[] {
-            "AnimateMiss","Arithmetick","Auto","Blank6","Blank7","Blank8","CounterFlood","CounterMagic",
-            "CT","Direct","Effect","Evadeable","FollowTarget","HitAllies","HitCaster","HitEnemies",
-            "InflictStatus","LinearAttack","Mimic","MPCost","NormalAttack","Perservere","RandomFire",
-            "Range","Reflect","RequiresMateriaBlade","RequiresSword","Shirahadori","ShowQuote","Silence",
-            "Targeting","TargetSelf","ThreeDirections","Vertical","VerticalFixed","VerticalTolerance",
-            "WeaponRange","WeaponStrike","X","Y", "Elements", "Formula" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (41)
+		#region Instance Variables (42) 
 
         public bool AnimateMiss;
         public bool Arithmetick;
@@ -77,6 +64,13 @@ namespace FFTPatcher.Datatypes
         public bool Targeting;
         public bool TargetSelf;
         public bool ThreeDirections;
+        private static readonly string[] valuesToSerialize = new string[] {
+            "AnimateMiss","Arithmetick","Auto","Blank6","Blank7","Blank8","CounterFlood","CounterMagic",
+            "CT","Direct","Effect","Evadeable","FollowTarget","HitAllies","HitCaster","HitEnemies",
+            "InflictStatus","LinearAttack","Mimic","MPCost","NormalAttack","Perservere","RandomFire",
+            "Range","Reflect","RequiresMateriaBlade","RequiresSword","Shirahadori","ShowQuote","Silence",
+            "Targeting","TargetSelf","ThreeDirections","Vertical","VerticalFixed","VerticalTolerance",
+            "WeaponRange","WeaponStrike","X","Y", "Elements", "Formula" };
         public byte Vertical;
         public bool VerticalFixed;
         public bool VerticalTolerance;
@@ -85,10 +79,9 @@ namespace FFTPatcher.Datatypes
         public byte X;
         public byte Y;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (7)
-
+		#region Public Properties (7) 
 
         public AbilityAttributes Default
         {
@@ -127,10 +120,9 @@ namespace FFTPatcher.Datatypes
 
         public UInt16 Offset { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public AbilityAttributes( string name, UInt16 offset, IList<byte> second )
         {
@@ -177,10 +169,63 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (2)
+		#region Public Methods (4) 
 
+        public static void Copy( AbilityAttributes source, AbilityAttributes destination )
+        {
+            destination.Range = source.Range;
+            destination.Effect = source.Effect;
+            destination.Vertical = source.Vertical;
+            source.Elements.CopyTo( destination.Elements );
+            destination.Formula = source.Formula;
+            destination.X = source.X;
+            destination.Y = source.Y;
+            destination.InflictStatus = source.InflictStatus;
+            destination.CT = source.CT;
+            destination.MPCost = source.MPCost;
+            destination.Blank6 = source.Blank6;
+            destination.Blank7 = source.Blank7;
+            destination.WeaponRange = source.WeaponRange;
+            destination.VerticalFixed = source.VerticalFixed;
+            destination.VerticalTolerance = source.VerticalTolerance;
+            destination.WeaponStrike = source.WeaponStrike;
+            destination.Auto = source.Auto;
+            destination.TargetSelf = source.TargetSelf;
+
+            destination.HitEnemies = source.HitEnemies;
+            destination.HitAllies = source.HitAllies;
+            destination.Blank8 = source.Blank8;
+            destination.FollowTarget = source.FollowTarget;
+            destination.RandomFire = source.RandomFire;
+            destination.LinearAttack = source.LinearAttack;
+            destination.ThreeDirections = source.ThreeDirections;
+            destination.HitCaster = source.HitCaster;
+
+            destination.Reflect = source.Reflect;
+            destination.Arithmetick = source.Arithmetick;
+            destination.Silence = source.Silence;
+            destination.Mimic = source.Mimic;
+            destination.NormalAttack = source.NormalAttack;
+            destination.Perservere = source.Perservere;
+            destination.ShowQuote = source.ShowQuote;
+            destination.AnimateMiss = source.AnimateMiss;
+
+            destination.CounterFlood = source.CounterFlood;
+            destination.CounterMagic = source.CounterMagic;
+            destination.Direct = source.Direct;
+            destination.Shirahadori = source.Shirahadori;
+            destination.RequiresSword = source.RequiresSword;
+            destination.RequiresMateriaBlade = source.RequiresMateriaBlade;
+            destination.Evadeable = source.Evadeable;
+            destination.Targeting = source.Targeting;
+        }
+
+        public void CopyTo( AbilityAttributes destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool[] ToBoolArray()
         {
@@ -212,8 +257,6 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

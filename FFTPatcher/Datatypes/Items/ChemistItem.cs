@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,32 +27,23 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class ChemistItem : Item
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly List<string> chemistItemDigestableProperties;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (6)
-
+		#region Public Properties (6) 
 
         public ChemistItem ChemistItemDefault { get; private set; }
-
-        [Hex]
-        public byte Formula { get; set; }
-
-        [Hex]
-        public byte InflictStatus { get; set; }
-
-        public byte X { get; set; }
-
-
 
         public override IList<string> DigestableProperties
         {
             get { return chemistItemDigestableProperties; }
         }
+
+        [Hex]
+        public byte Formula { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -70,10 +61,14 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        [Hex]
+        public byte InflictStatus { get; set; }
 
-        #endregionÂ Properties
+        public byte X { get; set; }
 
-        #regionÂ ConstructorsÂ (3)
+		#endregion Public Properties 
+
+		#region Constructors (3) 
 
         static ChemistItem()
         {
@@ -97,14 +92,41 @@ namespace FFTPatcher.Datatypes
             InflictStatus = chemistBytes[2];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
+		#region Public Methods (8) 
 
+        public static void CopyAll( ChemistItem source, ChemistItem destination )
+        {
+            CopyChemistItem( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( ChemistItem destination )
+        {
+            CopyAll( this, destination );
+        }
+
+        public static void CopyChemistItem( ChemistItem source, ChemistItem destination )
+        {
+            destination.Formula = source.Formula;
+            destination.X = source.X;
+            destination.InflictStatus = source.InflictStatus;
+        }
+
+        public void CopyChemistItemTo( ChemistItem destination )
+        {
+            CopyChemistItem( this, destination );
+        }
 
         public byte[] ToChemistItemByteArray()
         {
             return new byte[3] { Formula, X, InflictStatus };
+        }
+
+        public override byte[] ToFirstByteArray()
+        {
+            return ToItemByteArray();
         }
 
         public byte[] ToItemByteArray()
@@ -112,20 +134,11 @@ namespace FFTPatcher.Datatypes
             return base.ToByteArray().ToArray();
         }
 
-
-
-        public override byte[] ToFirstByteArray()
-        {
-            return ToItemByteArray();
-        }
-
         public override byte[] ToSecondByteArray()
         {
             return ToChemistItemByteArray();
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

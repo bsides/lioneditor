@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,44 +25,48 @@ namespace FFTPatcher.Editors
 {
     public partial class AllInflictStatusesEditor : UserControl
     {
-
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public int SelectedIndex { get { return offsetListBox.SelectedIndex; } set { offsetListBox.SelectedIndex = value; } }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllInflictStatusesEditor()
         {
             InitializeComponent();
+            inflictStatusEditor.DataChanged += new EventHandler( inflictStatusEditor_DataChanged );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
+		#region Public Methods (1) 
 
+        public void UpdateView( AllInflictStatuses statuses )
+        {
+            offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
+            offsetListBox.DataSource = statuses.InflictStatuses;
+            offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
+            offsetListBox.SelectedIndex = 0;
+            inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (2) 
+
+        private void inflictStatusEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;
         }
 
-        public void UpdateView( AllInflictStatuses statuses )
-        {
-            offsetListBox.SelectedIndexChanged -= offsetListBox_SelectedIndexChanged;
-            offsetListBox.Items.Clear();
-            offsetListBox.Items.AddRange( statuses.InflictStatuses );
-            offsetListBox.SelectedIndexChanged += offsetListBox_SelectedIndexChanged;
-            offsetListBox.SelectedIndex = 0;
-            inflictStatusEditor.InflictStatus = offsetListBox.SelectedItem as InflictStatus;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,16 +26,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class InflictStatus : ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        public static readonly string[] digestableProperties = new string[] {
-            "AllOrNothing", "Random", "Separate", "Cancel", "Blank1", "Blank2", "Blank3",
-            "Blank4", "Statuses" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (8)
+		#region Instance Variables (9) 
 
         public bool AllOrNothing;
         public bool Blank1;
@@ -43,13 +34,15 @@ namespace FFTPatcher.Datatypes
         public bool Blank3;
         public bool Blank4;
         public bool Cancel;
+        public static readonly string[] digestableProperties = new string[] {
+            "AllOrNothing", "Random", "Separate", "Cancel", "Blank1", "Blank2", "Blank3",
+            "Blank4", "Statuses" };
         public bool Random;
         public bool Separate;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (8)
-
+		#region Public Properties (8) 
 
         public string CorrespondingAbilities
         {
@@ -130,10 +123,9 @@ namespace FFTPatcher.Datatypes
 
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public InflictStatus( byte value, IList<byte> bytes )
             : this( value, bytes, null )
@@ -148,10 +140,27 @@ namespace FFTPatcher.Datatypes
             Statuses = new Statuses( bytes.Sub( 1, 5 ), defaults == null ? null : defaults.Statuses );
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (3)
+		#region Public Methods (5) 
 
+        public static void Copy( InflictStatus source, InflictStatus destination )
+        {
+            source.Statuses.CopyTo( destination.Statuses );
+            destination.AllOrNothing = source.AllOrNothing;
+            destination.Random = source.Random;
+            destination.Separate = source.Separate;
+            destination.Cancel = source.Cancel;
+            destination.Blank1 = source.Blank1;
+            destination.Blank2 = source.Blank2;
+            destination.Blank3 = source.Blank3;
+            destination.Blank4 = source.Blank4;
+        }
+
+        public void CopyTo( InflictStatus destination )
+        {
+            Copy( this, destination );
+        }
 
         public bool[] ToBoolArray()
         {
@@ -167,29 +176,23 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-
-
         public override string ToString()
         {
-            return Value.ToString( "X2" );
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" );
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
-    public class AllInflictStatuses : IChangeable, IXmlDigest
+    public class AllInflictStatuses : PatchableFile, IXmlDigest
     {
-
-        #regionÂ PropertiesÂ (2)
-
+		#region Public Properties (2) 
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -205,14 +208,13 @@ namespace FFTPatcher.Datatypes
 
         public InflictStatus[] InflictStatuses { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public AllInflictStatuses( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.InflictStatusesBin : PSXResources.InflictStatusesBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.InflictStatusesBin : PSXResources.InflictStatusesBin;
             InflictStatuses = new InflictStatus[0x80];
             for( int i = 0; i < 0x80; i++ )
             {
@@ -221,21 +223,38 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (3)
-
+		#region Public Methods (4) 
 
         public List<string> GenerateCodes()
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.InflictStatusesBin, this.ToByteArray(), 0x32A394 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.InflictStatusesBin, this.ToByteArray(), 0x32A394 );
             }
             else
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.InflictStatusesBin, this.ToByteArray(), 0x063FC4 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray();
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x547C4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3263E8, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3263E8, bytes ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -272,8 +291,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

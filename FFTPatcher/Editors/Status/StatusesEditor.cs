@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -22,19 +22,17 @@ using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.Editors
 {
-    public partial class StatusesEditor : UserControl
+    public partial class StatusesEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (3) 
 
         private bool ignoreChanges = false;
         private Context ourContext = Context.Default;
         private Statuses statuses;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (2)Â 
-
+		#region Public Properties (2) 
 
         public string Status { get { return statusGroupBox.Text; } set { statusGroupBox.Text = value; } }
 
@@ -57,10 +55,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public StatusesEditor()
         {
@@ -68,16 +65,16 @@ namespace FFTPatcher.Editors
             statusesCheckedListBox.ItemCheck += statusesCheckedListBox_ItemCheck;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
-
+		#region Private Methods (2) 
 
         private void statusesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
             if( !ignoreChanges )
             {
                 ReflectionHelpers.SetFlag( statuses, Statuses.FieldNames[e.Index], e.NewValue == CheckState.Checked );
+                OnDataChanged( this, System.EventArgs.Empty );
             }
         }
 
@@ -92,7 +89,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 statusesCheckedListBox.Items.Clear();
-                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? Resources.Statuses : PSXResources.Statuses );
+                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.Statuses : PSXResources.Statuses );
             }
         
             if( statuses.Default != null )
@@ -105,8 +102,6 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

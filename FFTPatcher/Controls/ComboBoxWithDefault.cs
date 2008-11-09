@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -30,19 +30,15 @@ namespace FFTPatcher.Controls
     /// </summary>
     public class ComboBoxWithDefault : ComboBox
     {
-
-		#regionÂ PropertiesÂ (6)Â 
-
-
-        public object DefaultValue { get; private set; }
-
-
+		#region Public Properties (6) 
 
         [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new AutoCompleteMode AutoCompleteMode { get { return base.AutoCompleteMode; } private set { base.AutoCompleteMode = value; } }
 
         [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new AutoCompleteSource AutoCompleteSource { get { return base.AutoCompleteSource; } private set { base.AutoCompleteSource = value; } }
+
+        public object DefaultValue { get; private set; }
 
         [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
         public new DrawMode DrawMode { get { return base.DrawMode; } private set { base.DrawMode = value; } }
@@ -59,10 +55,9 @@ namespace FFTPatcher.Controls
             private set { base.SelectedItem = value; }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public ComboBoxWithDefault()
             : base()
@@ -72,10 +67,25 @@ namespace FFTPatcher.Controls
             AutoCompleteMode = AutoCompleteMode.Append;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (5)Â 
+		#region Public Methods (1) 
 
+        /// <summary>
+        /// Sets the SelectedItem and its default value.
+        /// </summary>
+        public void SetValueAndDefault( object value, object defaultValue )
+        {
+            FFTPatchEditor.ToolTip.SetToolTip( this, "Default: " + defaultValue.ToString() );
+
+            DefaultValue = defaultValue;
+            SelectedItem = value;
+            OnSelectedIndexChanged( EventArgs.Empty );
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (1) 
 
         private void SetColors()
         {
@@ -96,19 +106,9 @@ namespace FFTPatcher.Controls
             }
         }
 
-        /// <summary>
-        /// Sets the SelectedItem and its default value.
-        /// </summary>
-        public void SetValueAndDefault( object value, object defaultValue )
-        {
-            FFTPatchEditor.ToolTip.SetToolTip( this, "Default: " + defaultValue.ToString() );
+		#endregion Private Methods 
 
-            DefaultValue = defaultValue;
-            SelectedItem = value;
-            OnSelectedIndexChanged( EventArgs.Empty );
-        }
-
-
+		#region Protected Methods (3) 
 
         protected override void OnInvalidated( InvalidateEventArgs e )
         {
@@ -131,8 +131,6 @@ namespace FFTPatcher.Controls
             SetColors();
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Protected Methods 
     }
 }

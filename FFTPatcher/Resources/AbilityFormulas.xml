@@ -67,13 +67,13 @@
   <Ability value="2E">Equipped:Break Dmg_(PA*WP) NS ELSE miss</Ability>
   <Ability value="2F">AbsMP_(PA*WP) NS</Ability>
   <Ability value="30">AbsHP_(PA*WP) NS</Ability>
-  <Ability value="31">Dmg_((PA+Y)/2*MA)</Ability>
+  <Ability value="31">Dmg_((PA+Y)/2*PA)</Ability>
   <Ability value="32">Dmg_(Rdm(1..X)*(PA*3+Y)) NS</Ability>
   <Ability value="33">Hit_(PA+X)%</Ability>
   <Ability value="34">Heal_(PA*Y) HealMP_(PA*Y/2) NS</Ability>
   <Ability value="35">Heal_(Y)% Hit_(PA+X)%</Ability>
   <Ability value="36">+PA_(Y) NS</Ability>
-  <Ability value="37">Dmg_(Rdm(1..Y)*PA)</Ability>
+  <Ability value="37">Dmg_(Rdm(1..Y)*PA) NS</Ability>
   <Ability value="38">(100%)</Ability>
   <Ability value="39">+SP_(Y) NS</Ability>
   <Ability value="3A">+Brave_(Y) NS</Ability>
@@ -101,7 +101,7 @@
   <Ability value="50">Hit_(MA+X)%</Ability>
   <Ability value="51">Hit_(MA+X)%</Ability>
   <Ability value="52">Dmg_(CasMaxHP-CasCurHP) 100% Add Status CasterInAoE: DmgSelf_(CasCurHP) NS</Ability>
-  <Ability value="53">Dmg_(X)% Hit_(MA+X)%</Ability>
+  <Ability value="53">Dmg_(Y)% Hit_(MA+X)%</Ability>
   <Ability value="54">HealMP_(MA*Y) NS</Ability>
   <Ability value="55">-PA_(Y) Hit_(MA+X)% NS</Ability>
   <Ability value="56">-MA_(Y) Hit_(MA+X)% NS</Ability>

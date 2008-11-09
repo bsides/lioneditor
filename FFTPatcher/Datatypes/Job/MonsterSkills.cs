@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,16 +26,14 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class MonsterSkill : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly string[] digestableProperties = new string[4] {
             "Ability1", "Ability2", "Ability3", "Beastmaster" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (9)
-
+		#region Public Properties (9) 
 
         public Ability Ability1 { get; set; }
 
@@ -60,7 +58,7 @@ namespace FFTPatcher.Datatypes
         {
             get
             {
-                return (Default != null) &&
+                return ( Default != null ) &&
                     Ability1.Offset != Default.Ability1.Offset ||
                     Ability2.Offset != Default.Ability2.Offset ||
                     Ability3.Offset != Default.Ability3.Offset ||
@@ -72,10 +70,9 @@ namespace FFTPatcher.Datatypes
 
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (3)
+		#region Constructors (3) 
 
         public MonsterSkill( IList<byte> bytes )
             : this( 0, "", bytes, null )
@@ -93,16 +90,15 @@ namespace FFTPatcher.Datatypes
             Name = name;
             Value = value;
             bool[] flags = Utilities.BooleansFromByteMSB( bytes[0] );
-            Ability1 = AllAbilities.DummyAbilities[flags[0] ? (bytes[1] + 0x100) : bytes[1]];
-            Ability2 = AllAbilities.DummyAbilities[flags[1] ? (bytes[2] + 0x100) : bytes[2]];
-            Ability3 = AllAbilities.DummyAbilities[flags[2] ? (bytes[3] + 0x100) : bytes[3]];
-            Beastmaster = AllAbilities.DummyAbilities[flags[3] ? (bytes[4] + 0x100) : bytes[4]];
+            Ability1 = AllAbilities.DummyAbilities[flags[0] ? ( bytes[1] + 0x100 ) : bytes[1]];
+            Ability2 = AllAbilities.DummyAbilities[flags[1] ? ( bytes[2] + 0x100 ) : bytes[2]];
+            Ability3 = AllAbilities.DummyAbilities[flags[2] ? ( bytes[3] + 0x100 ) : bytes[3]];
+            Beastmaster = AllAbilities.DummyAbilities[flags[3] ? ( bytes[4] + 0x100 ) : bytes[4]];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (2)
-
+		#region Public Methods (2) 
 
         public byte[] ToByteArray()
         {
@@ -113,10 +109,10 @@ namespace FFTPatcher.Datatypes
                 Ability3.Offset > 0xFF,
                 Beastmaster.Offset > 0xFF,
                 false, false, false, false );
-            result[1] = (byte)(Ability1.Offset & 0xFF);
-            result[2] = (byte)(Ability2.Offset & 0xFF);
-            result[3] = (byte)(Ability3.Offset & 0xFF);
-            result[4] = (byte)(Beastmaster.Offset & 0xFF);
+            result[1] = (byte)( Ability1.Offset & 0xFF );
+            result[2] = (byte)( Ability2.Offset & 0xFF );
+            result[3] = (byte)( Ability3.Offset & 0xFF );
+            result[4] = (byte)( Beastmaster.Offset & 0xFF );
 
             return result;
         }
@@ -126,15 +122,13 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
-    public class AllMonsterSkills : IChangeable, IXmlDigest
+    public class AllMonsterSkills : PatchableFile, IXmlDigest
     {
 
-        #regionÂ StaticÂ PropertiesÂ (3)
+        #region Static Properties (3)
 
 
         public static string[] Names { get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; } }
@@ -144,9 +138,9 @@ namespace FFTPatcher.Datatypes
         public static string[] PSXNames { get; private set; }
 
 
-        #endregionÂ StaticÂ Properties
+        #endregion Static Properties
 
-        #regionÂ PropertiesÂ (2)
+        #region Properties (2)
 
 
         public MonsterSkill[] MonsterSkills { get; private set; }
@@ -156,13 +150,13 @@ namespace FFTPatcher.Datatypes
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
-                foreach( MonsterSkill m in MonsterSkills )
+                foreach ( MonsterSkill m in MonsterSkills )
                 {
-                    if( m.HasChanged )
+                    if ( m.HasChanged )
                         return true;
                 }
 
@@ -170,14 +164,14 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Properties
+        #endregion Properties
 
-        #regionÂ ConstructorsÂ (2)
+        #region Constructors (2)
 
         static AllMonsterSkills()
         {
             PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
-                Resources.Jobs,
+                PSPResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 48,
                 0x5E );
@@ -190,26 +184,26 @@ namespace FFTPatcher.Datatypes
 
         public AllMonsterSkills( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? Resources.MonsterSkillsBin : PSXResources.MonsterSkillsBin;
+            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.MonsterSkillsBin : PSXResources.MonsterSkillsBin;
 
             MonsterSkills = new MonsterSkill[48];
-            for( int i = 0; i < 48; i++ )
+            for ( int i = 0; i < 48; i++ )
             {
-                MonsterSkills[i] = new MonsterSkill( (byte)(i + 0xB0), Names[i], bytes.Sub( 5 * i, 5 * i + 4 ),
-                    new MonsterSkill( (byte)(i + 0xB0), Names[i], defaultBytes.Sub( 5 * i, 5 * i + 4 ) ) );
+                MonsterSkills[i] = new MonsterSkill( (byte)( i + 0xB0 ), Names[i], bytes.Sub( 5 * i, 5 * i + 4 ),
+                    new MonsterSkill( (byte)( i + 0xB0 ), Names[i], defaultBytes.Sub( 5 * i, 5 * i + 4 ) ) );
             }
         }
 
-        #endregionÂ Constructors
+        #endregion Constructors
 
-        #regionÂ MethodsÂ (5)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
         {
-            if( FFTPatch.Context == Context.US_PSP )
+            if ( FFTPatch.Context == Context.US_PSP )
             {
-                return Codes.GenerateCodes( Context.US_PSP, Resources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
             }
             else
             {
@@ -220,7 +214,7 @@ namespace FFTPatcher.Datatypes
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 5 * MonsterSkills.Length );
-            foreach( MonsterSkill s in MonsterSkills )
+            foreach ( MonsterSkill s in MonsterSkills )
             {
                 result.AddRange( s.ToByteArray() );
             }
@@ -235,13 +229,13 @@ namespace FFTPatcher.Datatypes
 
         public void WriteXml( System.Xml.XmlWriter writer )
         {
-            if( HasChanged )
+            if ( HasChanged )
             {
                 writer.WriteStartElement( this.GetType().Name );
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
-                foreach( MonsterSkill m in MonsterSkills )
+                foreach ( MonsterSkill m in MonsterSkills )
                 {
-                    if( m.HasChanged )
+                    if ( m.HasChanged )
                     {
                         writer.WriteStartElement( m.GetType().Name );
                         writer.WriteAttributeString( "value", m.Value.ToString( "X2" ) );
@@ -253,6 +247,25 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Methods
+        #endregion Methods
+
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x563C4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276BB4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276BB4, bytes ) );
+            }
+
+            return result;
+        }
     }
 }

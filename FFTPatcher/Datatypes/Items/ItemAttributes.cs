@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,17 +26,19 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class ItemAttributes : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly string[] digestableProperties = new string[] {
             "PA", "MA", "Speed", "Move", "Jump", "Absorb", "Cancel", "Half", "Weak", "Strong",
             "PermanentStatuses", "StatusImmunity", "StartingStatuses" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (18)
+		#region Public Properties (18) 
 
+        public Elements Absorb { get; private set; }
+
+        public Elements Cancel { get; private set; }
 
         public string CorrespondingItems
         {
@@ -54,10 +56,6 @@ namespace FFTPatcher.Datatypes
                 return string.Join( ", ", result.ToArray() );
             }
         }
-
-        public Elements Absorb { get; private set; }
-
-        public Elements Cancel { get; private set; }
 
         public ItemAttributes Default { get; private set; }
 
@@ -102,10 +100,9 @@ namespace FFTPatcher.Datatypes
 
         public Elements Weak { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public ItemAttributes( byte value, IList<byte> bytes )
             : this( value, bytes, null )
@@ -142,10 +139,31 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (2)
+		#region Public Methods (4) 
 
+        public static void Copy( ItemAttributes source, ItemAttributes destination )
+        {
+            destination.PA = source.PA;
+            destination.MA = source.MA;
+            destination.Speed = source.Speed;
+            destination.Move = source.Move;
+            destination.Jump = source.Jump;
+            source.PermanentStatuses.CopyTo( destination.PermanentStatuses );
+            source.StatusImmunity.CopyTo( destination.StatusImmunity );
+            source.StartingStatuses.CopyTo( destination.StartingStatuses );
+            source.Absorb.CopyTo( destination.Absorb );
+            source.Cancel.CopyTo( destination.Cancel );
+            source.Half.CopyTo( destination.Half );
+            source.Weak.CopyTo( destination.Weak );
+            source.Strong.CopyTo( destination.Strong );
+        }
+
+        public void CopyTo( ItemAttributes destination )
+        {
+            Copy( this, destination );
+        }
 
         public byte[] ToByteArray()
         {
@@ -167,29 +185,23 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-
-
         public override string ToString()
         {
-            return Value.ToString( "X2" );
+            return (HasChanged ? "*" : "") + Value.ToString( "X2" );
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
-    public class AllItemAttributes : IChangeable, IXmlDigest
+    public class AllItemAttributes : PatchableFile, IXmlDigest
     {
-
-        #regionÂ PropertiesÂ (2)
-
+		#region Public Properties (2) 
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
         /// </summary>
         /// <value></value>
-        public bool HasChanged
+        public override bool HasChanged
         {
             get
             {
@@ -204,16 +216,15 @@ namespace FFTPatcher.Datatypes
 
         public ItemAttributes[] ItemAttributes { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public AllItemAttributes( IList<byte> first, IList<byte> second )
         {
             List<ItemAttributes> temp = new List<ItemAttributes>( 0x65 );
-            byte[] defaultFirst = second == null ? PSXResources.OldItemAttributesBin : Resources.OldItemAttributesBin;
-            byte[] defaultSecond = second == null ? null : Resources.NewItemAttributesBin;
+            byte[] defaultFirst = second == null ? PSXResources.OldItemAttributesBin : PSPResources.OldItemAttributesBin;
+            byte[] defaultSecond = second == null ? null : PSPResources.NewItemAttributesBin;
 
             for( byte i = 0; i < 0x50; i++ )
             {
@@ -232,24 +243,44 @@ namespace FFTPatcher.Datatypes
             ItemAttributes = temp.ToArray();
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
             if( FFTPatch.Context == Context.US_PSP )
             {
                 List<string> strings = new List<string>();
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8 ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, Resources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694 ) );
                 return strings;
             }
             else
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x0642C4 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 4 );
+
+            var first = ToFirstByteArray();
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x54AC4, first ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                var second = ToSecondByteArray();
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3266E8, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x25720C, second ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3266E8, first ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x25720C, second ) );
+            }
+
+            return result;
         }
 
         public byte[] ToFirstByteArray()
@@ -293,8 +324,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

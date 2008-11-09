@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,8 +25,7 @@ namespace FFTPatcher.Editors
 {
     public partial class AllActionMenusEditor : UserControl
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllActionMenusEditor()
         {
@@ -44,10 +43,18 @@ namespace FFTPatcher.Editors
             dataGridView.CellToolTipTextNeeded += dataGridView_CellToolTipTextNeeded;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (6)Â 
+		#region Public Methods (1) 
 
+        public void UpdateView( AllActionMenus actionMenus )
+        {
+            dataGridView.DataSource = actionMenus.ActionMenus;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (5) 
 
         private void Control_KeyDown( object sender, KeyEventArgs e )
         {
@@ -125,13 +132,6 @@ namespace FFTPatcher.Editors
             e.Control.KeyDown += Control_KeyDown;
         }
 
-        public void UpdateView( AllActionMenus actionMenus )
-        {
-            dataGridView.DataSource = actionMenus.ActionMenus;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,26 +25,87 @@ namespace FFTPatcher.Editors
 {
     public partial class AllSkillSetsEditor : UserControl
     {
+		#region Instance Variables (2) 
 
-		#regionÂ PropertiesÂ (1)Â 
+        private SkillSet cbSkillSet = null;
+        private Context ourContext = Context.Default;
 
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
 
         public int SelectedIndex { get { return skillSetListBox.SelectedIndex; } set { skillSetListBox.SelectedIndex = value; } }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllSkillSetsEditor()
         {
             InitializeComponent();
+            skillSetEditor.DataChanged += new EventHandler( skillSetEditor_DataChanged );
+            skillSetListBox.ContextMenu = new ContextMenu( new MenuItem[] {
+                new MenuItem("Clone", CloneClick),
+                new MenuItem("Paste", PasteClick) } );
+            skillSetListBox.ContextMenu.Popup += new EventHandler( ContextMenu_Popup );
+            skillSetListBox.MouseDown += new MouseEventHandler( skillSetListBox_MouseDown );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
+		#region Public Methods (1) 
 
+        public void UpdateView( AllSkillSets skills )
+        {
+            if( ourContext != FFTPatch.Context )
+            {
+                ourContext = FFTPatch.Context;
+                cbSkillSet = null;
+            }
+            skillSetListBox.SelectedIndexChanged -= skillSetListBox_SelectedIndexChanged;
+            skillSetListBox.DataSource = skills.SkillSets;
+            skillSetListBox.SelectedIndexChanged += skillSetListBox_SelectedIndexChanged;
+            skillSetListBox.SelectedIndex = 0;
+            skillSetEditor.SkillSet = skillSetListBox.SelectedItem as SkillSet;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (6) 
+
+        private void CloneClick( object sender, EventArgs args )
+        {
+            cbSkillSet = skillSetListBox.SelectedItem as SkillSet;
+        }
+
+        void ContextMenu_Popup( object sender, EventArgs e )
+        {
+            skillSetListBox.ContextMenu.MenuItems[1].Enabled = cbSkillSet != null;
+        }
+
+        private void PasteClick( object sender, EventArgs args )
+        {
+            if( cbSkillSet != null )
+            {
+                cbSkillSet.CopyTo( skillSetListBox.SelectedItem as SkillSet );
+                skillSetEditor.UpdateView();
+                skillSetEditor_DataChanged( skillSetEditor, EventArgs.Empty );
+            }
+        }
+
+        private void skillSetEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[skillSetListBox.DataSource];
+            cm.Refresh();
+        }
+
+        void skillSetListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                skillSetListBox.SelectedIndex = skillSetListBox.IndexFromPoint( e.Location );
+            }
+        }
 
         private void skillSetListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -52,18 +113,6 @@ namespace FFTPatcher.Editors
             skillSetEditor.SkillSet = s;
         }
 
-        public void UpdateView( AllSkillSets skills )
-        {
-            skillSetListBox.SelectedIndexChanged -= skillSetListBox_SelectedIndexChanged;
-            skillSetListBox.Items.Clear();
-            skillSetListBox.Items.AddRange( skills.SkillSets );
-            skillSetListBox.SelectedIndexChanged += skillSetListBox_SelectedIndexChanged;
-            skillSetListBox.SelectedIndex = 0;
-            skillSetEditor.SkillSet = skillSetListBox.SelectedItem as SkillSet;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

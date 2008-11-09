@@ -1,4 +1,4 @@
-﻿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -21,5 +21,6 @@ namespace FFTPatcher.Datatypes
 {
     public class HexAttribute : System.Attribute
     {
-    }
+
+}
 }

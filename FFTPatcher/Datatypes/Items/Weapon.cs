@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,14 +27,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Weapon : Item
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        private static readonly List<string> weaponDigestableProperties;
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (8)
+		#region Instance Variables (9) 
 
         public bool Arc;
         public bool Blank;
@@ -44,35 +37,22 @@ namespace FFTPatcher.Datatypes
         public bool Striking;
         public bool TwoHands;
         public bool TwoSwords;
+        private static readonly List<string> weaponDigestableProperties;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (10)
+		#region Public Properties (10) 
 
+        public override IList<string> DigestableProperties
+        {
+            get { return weaponDigestableProperties; }
+        }
 
         public Elements Elements { get; private set; }
 
         public byte EvadePercentage { get; set; }
 
         public AbilityFormula Formula { get; set; }
-
-        [Hex]
-        public byte InflictStatus { get; set; }
-
-        public byte Range { get; set; }
-
-        public byte Unknown { get; set; }
-
-        public Weapon WeaponDefault { get; private set; }
-
-        public byte WeaponPower { get; set; }
-
-
-
-        public override IList<string> DigestableProperties
-        {
-            get { return weaponDigestableProperties; }
-        }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -85,6 +65,7 @@ namespace FFTPatcher.Datatypes
                 return base.HasChanged ||
                     (WeaponDefault != null &&
                     (Elements.ToByte() != WeaponDefault.Elements.ToByte() ||
+                    !Utilities.CompareArrays( ToWeaponBoolArray(), WeaponDefault.ToWeaponBoolArray() ) ||
                     EvadePercentage != WeaponDefault.EvadePercentage ||
                     Formula.Value != WeaponDefault.Formula.Value ||
                     InflictStatus != WeaponDefault.InflictStatus ||
@@ -94,10 +75,20 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        [Hex]
+        public byte InflictStatus { get; set; }
 
-        #endregionÂ Properties
+        public byte Range { get; set; }
 
-        #regionÂ ConstructorsÂ (3)
+        public byte Unknown { get; set; }
+
+        public Weapon WeaponDefault { get; private set; }
+
+        public byte WeaponPower { get; set; }
+
+		#endregion Public Properties 
+
+		#region Constructors (3) 
 
         static Weapon()
         {
@@ -132,14 +123,59 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (5)
+		#region Public Methods (9) 
 
+        public static void CopyAll( Weapon source, Weapon destination )
+        {
+            CopyWeapon( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Weapon destination )
+        {
+            CopyAll( this, destination );
+        }
+
+        public static void CopyWeapon( Weapon source, Weapon destination )
+        {
+            destination.Range = source.Range;
+            destination.Striking = source.Striking;
+            destination.Lunging = source.Lunging;
+            destination.Direct = source.Direct;
+            destination.Arc = source.Arc;
+            destination.TwoSwords = source.TwoSwords;
+            destination.TwoHands = source.TwoHands;
+            destination.Blank = source.Blank;
+            destination.Force2Hands = source.Force2Hands;
+            destination.Formula = source.Formula;
+            destination.Unknown = source.Unknown;
+            destination.WeaponPower = source.WeaponPower;
+            destination.EvadePercentage = source.EvadePercentage;
+            destination.InflictStatus = source.InflictStatus;
+
+            source.Elements.CopyTo( destination.Elements );
+        }
+
+        public void CopyWeaponTo( Weapon destination )
+        {
+            CopyWeapon( this, destination );
+        }
+
+        public override byte[] ToFirstByteArray()
+        {
+            return ToItemByteArray();
+        }
 
         public byte[] ToItemByteArray()
         {
             return base.ToByteArray().ToArray();
+        }
+
+        public override byte[] ToSecondByteArray()
+        {
+            return ToWeaponByteArray();
         }
 
         public bool[] ToWeaponBoolArray()
@@ -162,20 +198,6 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-
-
-        public override byte[] ToFirstByteArray()
-        {
-            return ToItemByteArray();
-        }
-
-        public override byte[] ToSecondByteArray()
-        {
-            return ToWeaponByteArray();
-        }
-
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

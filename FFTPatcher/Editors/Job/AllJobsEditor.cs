@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,25 +25,64 @@ namespace FFTPatcher.Editors
 {
     public partial class AllJobsEditor : UserControl
     {
+		#region Instance Variables (2) 
 
-		#regionÂ ConstructorsÂ (1)Â 
+        private Job cbJob = null;
+        private Context ourContext = Context.Default;
+
+		#endregion Instance Variables 
+
+		#region Constructors (1) 
 
         public AllJobsEditor()
         {
             InitializeComponent();
             jobEditor.SkillSetClicked += jobEditor_SkillSetClicked;
+            jobEditor.DataChanged += jobEditor_DataChanged;
+            jobsListBox.ContextMenu = new ContextMenu( new MenuItem[] {
+                new MenuItem("Clone", CloneClick),
+                new MenuItem("Paste", PasteClick) } );
+            jobsListBox.ContextMenu.Popup += new EventHandler( ContextMenu_Popup );
+            jobsListBox.MouseDown += new MouseEventHandler( jobsListBox_MouseDown );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (1)Â 
+		#region Public Methods (1) 
 
-        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
+        public void UpdateView( AllJobs jobs )
+        {
+            if( FFTPatch.Context != ourContext )
+            {
+                ourContext = FFTPatch.Context;
+                cbJob = null;
+            }
+            jobsListBox.SelectedIndexChanged -= jobsListBox_SelectedIndexChanged;
+            jobsListBox.DataSource = jobs.Jobs;
+            jobsListBox.SelectedIndexChanged += jobsListBox_SelectedIndexChanged;
+            jobsListBox.SelectedIndex = 0;
+            jobEditor.Job = jobsListBox.SelectedItem as Job;
+        }
 
-		#endregionÂ EventsÂ 
+		#endregion Public Methods 
 
-		#regionÂ MethodsÂ (3)Â 
+		#region Private Methods (7) 
 
+        private void CloneClick( object sender, EventArgs args )
+        {
+            cbJob = jobsListBox.SelectedItem as Job;
+        }
+
+        void ContextMenu_Popup( object sender, EventArgs e )
+        {
+            jobsListBox.ContextMenu.MenuItems[1].Enabled = cbJob != null;
+        }
+
+        private void jobEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[jobsListBox.DataSource];
+            cm.Refresh();
+        }
 
         private void jobEditor_SkillSetClicked( object sender, LabelClickedEventArgs e )
         {
@@ -53,24 +92,32 @@ namespace FFTPatcher.Editors
             }
         }
 
+        void jobsListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                jobsListBox.SelectedIndex = jobsListBox.IndexFromPoint( e.Location );
+            }
+        }
+
         private void jobsListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             Job j = jobsListBox.SelectedItem as Job;
             jobEditor.Job = j;
         }
 
-        public void UpdateView( AllJobs jobs )
+        private void PasteClick( object sender, EventArgs args )
         {
-            jobsListBox.SelectedIndexChanged -= jobsListBox_SelectedIndexChanged;
-            jobsListBox.Items.Clear();
-            jobsListBox.Items.AddRange( jobs.Jobs );
-            jobsListBox.SelectedIndexChanged += jobsListBox_SelectedIndexChanged;
-            jobsListBox.SelectedIndex = 0;
-            jobEditor.Job = jobsListBox.SelectedItem as Job;
+            if( cbJob != null )
+            {
+                cbJob.CopyTo( jobsListBox.SelectedItem as Job );
+                jobEditor.UpdateView();
+                jobEditor_DataChanged( jobEditor, EventArgs.Empty );
+            }
         }
 
+		#endregion Private Methods 
 
-		#endregionÂ MethodsÂ 
-
+        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
     }
 }

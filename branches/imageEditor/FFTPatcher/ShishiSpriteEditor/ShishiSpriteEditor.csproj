@@ -70,16 +70,7 @@
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Files\BaseFile.cs" />
-    <Compile Include="Files\EVENT\EVTFACEbin.cs" />
     <Compile Include="Frame.cs" />
-    <Compile Include="GraphicsFile.cs" />
-    <Compile Include="ImageListView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ImageListView.Designer.cs">
-      <DependentUpon>ImageListView.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,15 +79,10 @@
     </Compile>
     <Compile Include="OPNBK.cs" />
     <Compile Include="Palette.cs" />
-    <Compile Include="PalettedImage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImageListView.resx">
-      <DependentUpon>ImageListView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -113,7 +99,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -321,7 +306,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="RawImage.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SpriteViewer.cs">
@@ -336,12 +320,6 @@
       <Project>{48BE23D0-2943-44EF-A3A6-8537D7695B37}</Project>
       <Name>FFTPatcher</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Files\BATTLE\" />
-    <Folder Include="Files\MENU\" />
-    <Folder Include="Files\OPEN\" />
-    <Folder Include="Files\WORLD\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

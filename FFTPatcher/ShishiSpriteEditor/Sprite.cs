@@ -27,7 +27,7 @@ namespace FFTPatcher.SpriteEditor
     /// <summary>
     /// A FFT sprite.
     /// </summary>
-    public class Sprite : PalettedImage
+    public class Sprite
     {
 
         #region Properties (6)
@@ -38,9 +38,14 @@ namespace FFTPatcher.SpriteEditor
         private long OriginalSize { get; set; }
 
         /// <summary>
+        /// Gets or sets the palettes used to draw this sprite.
+        /// </summary>
+        public Palette[] Palettes { get; set; }
+
+        /// <summary>
         /// Gets the pixels used to draw this sprite.
         /// </summary>
-        public byte[] BytPixels { get; private set; }
+        public byte[] Pixels { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this sprite is a SP2 file.
@@ -187,7 +192,7 @@ namespace FFTPatcher.SpriteEditor
         {
             SP2 = true;
             SPR = false;
-            BytPixels = BuildPixels( bytes, new byte[0] );
+            Pixels = BuildPixels( bytes, new byte[0] );
             Compressed = false;
             Palettes = new Palette[16];
             for( int i = 0; i < 16; i++ )
@@ -206,12 +211,12 @@ namespace FFTPatcher.SpriteEditor
 
             if( bytes.Count < 0x9200 || ((bytes.Count > 0x9200) && (bytes[0x9200] == 0x00)) )
             {
-                BytPixels = BuildPixels( bytes.Sub( 16 * 32 ), new byte[0] );
+                Pixels = BuildPixels( bytes.Sub( 16 * 32 ), new byte[0] );
                 Compressed = false;
             }
             else
             {
-                BytPixels = BuildPixels( bytes.Sub( 16 * 32, 16 * 32 + 36864 - 1 ), bytes.Sub( 16 * 32 + 36864 ) );
+                Pixels = BuildPixels( bytes.Sub( 16 * 32, 16 * 32 + 36864 - 1 ), bytes.Sub( 16 * 32 + 36864 ) );
                 Compressed = true;
             }
         }
@@ -309,10 +314,10 @@ namespace FFTPatcher.SpriteEditor
             }
 
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
-            for( int i = 0; (i < BytPixels.Length) && (i / 256 < bmp.Height); i++ )
+            for( int i = 0; (i < Pixels.Length) && (i / 256 < bmp.Height); i++ )
             {
-                BytPixels[i] = (byte)bmd.GetPixel( i % 256, i / 256 );
-                if( BytPixels[i] >= 16 )
+                Pixels[i] = (byte)bmd.GetPixel( i % 256, i / 256 );
+                if( Pixels[i] >= 16 )
                 {
                     foundBadPixels = true;
                 }
@@ -349,7 +354,7 @@ namespace FFTPatcher.SpriteEditor
             ColorPalette palette = bmp.Palette;
 
             int k = 0;
-            for( int i = 0; i < Palettes.Count; i++ )
+            for( int i = 0; i < Palettes.Length; i++ )
             {
                 for( int j = 0; j < Palettes[i].Colors.Length; j++, k++ )
                 {
@@ -368,24 +373,24 @@ namespace FFTPatcher.SpriteEditor
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
             if( proper )
             {
-                for( int i = 0; (i < this.BytPixels.Length) && (i / 256 < 256); i++ )
+                for( int i = 0; (i < this.Pixels.Length) && (i / 256 < 256); i++ )
                 {
-                    bmd.SetPixel( i % 256, i / 256, BytPixels[i] );
+                    bmd.SetPixel( i % 256, i / 256, Pixels[i] );
                 }
-                for( int i = 288 * 256; (i < this.BytPixels.Length) && (i / 256 < 488); i++ )
+                for( int i = 288 * 256; (i < this.Pixels.Length) && (i / 256 < 488); i++ )
                 {
-                    bmd.SetPixel( i % 256, i / 256 - 32, BytPixels[i] );
+                    bmd.SetPixel( i % 256, i / 256 - 32, Pixels[i] );
                 }
-                for( int i = 256 * 256; (i < this.BytPixels.Length) && (i / 256 < 288); i++ )
+                for( int i = 256 * 256; (i < this.Pixels.Length) && (i / 256 < 288); i++ )
                 {
-                    bmd.SetPixel( i % 256, i / 256 + 200, BytPixels[i] );
+                    bmd.SetPixel( i % 256, i / 256 + 200, Pixels[i] );
                 }
             }
             else
             {
-                for( int i = 0; (i < this.BytPixels.Length) && (i / 256 < bmp.Height); i++ )
+                for( int i = 0; (i < this.Pixels.Length) && (i / 256 < bmp.Height); i++ )
                 {
-                    bmd.SetPixel( i % 256, i / 256, BytPixels[i] );
+                    bmd.SetPixel( i % 256, i / 256, Pixels[i] );
                 }
             }
             bmp.UnlockBits( bmd );
@@ -401,7 +406,7 @@ namespace FFTPatcher.SpriteEditor
         /// <summary>
         /// Converts this sprite to an array of bytes.
         /// </summary>
-        public override byte[] ToByteArray()
+        public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>();
             if( SPR && !SP2 )
@@ -414,16 +419,16 @@ namespace FFTPatcher.SpriteEditor
 
             for(
                 int i = 0;
-                (Compressed && (i < 36864) && (2 * i + 1 < BytPixels.Length)) ||
-                (!Compressed && (2 * i + 1 < BytPixels.Length));
+                (Compressed && (i < 36864) && (2 * i + 1 < Pixels.Length)) ||
+                (!Compressed && (2 * i + 1 < Pixels.Length));
                 i++ )
             {
-                result.Add( (byte)((BytPixels[2 * i + 1] << 4) | (BytPixels[2 * i] & 0x0F)) );
+                result.Add( (byte)((Pixels[2 * i + 1] << 4) | (Pixels[2 * i] & 0x0F)) );
             }
 
-            if( BytPixels.Length > 2 * 36864 && Compressed )
+            if( Pixels.Length > 2 * 36864 && Compressed )
             {
-                result.AddRange( Recompress( BytPixels.Sub( 2 * 36864 ) ) );
+                result.AddRange( Recompress( Pixels.Sub( 2 * 36864 ) ) );
             }
 
             if( result.Count < OriginalSize )

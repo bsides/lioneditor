@@ -3,64 +3,71 @@
   <Class Name="FFTPatcher.SpriteEditor.AbstractSprite">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAAAAACAAQCAgAAIICBBAAAAIABAAEABCEBgAAAAAA=</HashCode>
-      <FileName>AbstractSprite.cs</FileName>
+      <HashCode>EACAAAACBAQAAgAAIIABBEQAAAAAAAAAACAAiAAAAAA=</HashCode>
+      <FileName>DataTypes\Sprites\AbstractSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.AbstractCompressedSprite" Collapsed="true">
     <Position X="4" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AbstractCompressedSprite.cs</FileName>
+      <HashCode>EACEAAICBAACAAAAAICAAAAAAAABAAAAAAABCAAAAAA=</HashCode>
+      <FileName>DataTypes\Sprites\AbstractCompressedSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.TYPE1Sprite" Collapsed="true">
-    <Position X="2.75" Y="2.25" Width="1.75" />
+    <Position X="2.75" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>TYPE1Sprite.cs</FileName>
+      <FileName>DataTypes\Sprites\TYPE1Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.TYPE2Sprite" Collapsed="true">
-    <Position X="4.75" Y="2.25" Width="1.75" />
+    <Position X="5" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>TYPE2Sprite.cs</FileName>
+      <FileName>DataTypes\Sprites\TYPE2Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.MonsterSprite" Collapsed="true">
-    <Position X="6.75" Y="2.25" Width="2.75" />
+    <Position X="7.25" Y="0.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MonsterSprite.cs</FileName>
+      <HashCode>AAAAAAACBAACAAAAAIAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>DataTypes\Sprites\MonsterSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.ARUTE" Collapsed="true">
     <Position X="4.75" Y="3.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ARUTE.cs</FileName>
+      <FileName>DataTypes\Sprites\ARUTE.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.CYOKO" Collapsed="true">
     <Position X="2.75" Y="3.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CYOKO.cs</FileName>
+      <FileName>DataTypes\Sprites\CYOKO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.KANZEN" Collapsed="true">
     <Position X="6.75" Y="3.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>KANZEN.cs</FileName>
+      <FileName>DataTypes\Sprites\KANZEN.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FFTPatcher.SpriteEditor.ShortSprite" Collapsed="true">
-    <Position X="2.5" Y="6" Width="1.5" />
+  <Class Name="FFTPatcher.SpriteEditor.ShortSprite">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAACBAAAAAAAAIAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>DataTypes\Sprites\ShortSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.AbstractShapedSprite" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ShortSprite.cs</FileName>
+      <FileName>AbstractShapedSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -19,6 +20,7 @@ namespace FFTPatcher.SpriteEditor
          * CYOMON2
          * CYOMON3
          * CYOMON4
+         * FURAIA
          */
 
         public override int Height
@@ -26,12 +28,22 @@ namespace FFTPatcher.SpriteEditor
             get { return 288; }
         }
 
-        public ShortSprite( IList<byte> bytes )
-            : base( bytes )
+        public ShortSprite( string name, IList<byte> bytes )
+            : base( name, bytes )
         {
         }
 
-        protected override void ToBitmapInner( bool proper, System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
+        protected override Rectangle PortraitRectangle
+        {
+            get { return new Rectangle( 80, 256, 48, 42 ); }
+        }
+
+        protected override Rectangle ThumbnailRectangle
+        {
+            get { return new Rectangle( 39, 5, 26, 38 ); }
+        }
+
+        protected override void ToBitmapInner( System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
         {
             throw new NotImplementedException();
         }
@@ -50,12 +62,17 @@ namespace FFTPatcher.SpriteEditor
 
         public override IList<byte[]> ToByteArrays()
         {
-            byte[] ourResult = new byte[256 * 288 / 2];
+            List<byte> ourResult = new List<byte>( 37377 );
+            foreach ( Palette p in Palettes )
+            {
+                ourResult.AddRange( p.ToByteArray() );
+            }
+
             for( int i = 0; i < Pixels.Count / 2; i++ )
             {
-                ourResult[i / 2] = (byte)((Pixels[2 * i + 1] << 4) | (Pixels[2 * i] & 0x0F));
+                ourResult.Add( (byte)( ( Pixels[2 * i + 1] << 4 ) | ( Pixels[2 * i] & 0x0F ) ) );
             }
-            return new byte[][] { ourResult };
+            return new byte[][] { ourResult.ToArray() };
         }
     }
 }

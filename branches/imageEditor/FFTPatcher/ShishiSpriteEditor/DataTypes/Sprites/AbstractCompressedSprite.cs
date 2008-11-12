@@ -1,19 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace FFTPatcher.SpriteEditor
 {
     public abstract class AbstractCompressedSprite : AbstractSprite
     {
+
+        public override System.Drawing.Image GetThumbnail()
+        {
+            throw new NotImplementedException();
+        }
+
         public override int Height
         {
             get { return 488; }
         }
 
-        protected AbstractCompressedSprite( IList<byte> bytes, params IList<byte>[] extraBytes )
-            : base( bytes, extraBytes )
+        protected AbstractCompressedSprite( string name, IList<byte> bytes, params IList<byte>[] extraBytes )
+            : base( name, bytes, extraBytes )
         {
+        }
+
+        protected override Rectangle PortraitRectangle
+        {
+            get { new Rectangle( 80, 456, 48, 32 ); }
         }
 
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
@@ -140,34 +152,24 @@ namespace FFTPatcher.SpriteEditor
         public const int portraintHeight = 32;
         public const int compressedHeight = 200;
 
-        protected override void ToBitmapInner( bool proper, System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
+        protected override void ToBitmapInner( System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
         {
-            if( proper )
+            // Top portrait
+            for ( int i = 0; ( i < this.Pixels.Count ) && ( i / Width < topHeight ); i++ )
             {
-                // Top portrait
-                for( int i = 0; (i < this.Pixels.Count) && (i / Width < topHeight); i++ )
-                {
-                    bmd.SetPixel( i % Width, i / Width, Pixels[i] );
-                }
-
-                // Compressed part
-                for( int i = (topHeight + portraintHeight) * Width; (i < this.Pixels.Count) && (i / Width < Height); i++ )
-                {
-                    bmd.SetPixel( i % Width, i / Width - portraintHeight, Pixels[i] );
-                }
-
-                // Portrait part
-                for( int i = topHeight * Width; (i < this.Pixels.Count) && (i / Width < (topHeight + portraintHeight)); i++ )
-                {
-                    bmd.SetPixel( i % Width, i / Width + compressedHeight, Pixels[i] );
-                }
+                bmd.SetPixel( i % Width, i / Width, Pixels[i] );
             }
-            else
+
+            // Compressed part
+            for ( int i = ( topHeight + portraintHeight ) * Width; ( i < this.Pixels.Count ) && ( i / Width < Height ); i++ )
             {
-                for( int i = 0; (i < this.Pixels.Count) && (i / Width < bmp.Height); i++ )
-                {
-                    bmd.SetPixel( i % Width, i / Width, Pixels[i] );
-                }
+                bmd.SetPixel( i % Width, i / Width - portraintHeight, Pixels[i] );
+            }
+
+            // Portrait part
+            for ( int i = topHeight * Width; ( i < this.Pixels.Count ) && ( i / Width < ( topHeight + portraintHeight ) ); i++ )
+            {
+                bmd.SetPixel( i % Width, i / Width + compressedHeight, Pixels[i] );
             }
         }
 

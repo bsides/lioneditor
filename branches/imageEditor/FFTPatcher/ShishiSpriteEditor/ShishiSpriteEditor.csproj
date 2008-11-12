@@ -69,21 +69,23 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbstractCompressedSprite.cs" />
-    <Compile Include="ARUTE.cs" />
-    <Compile Include="CYOKO.cs" />
+    <Compile Include="AbstractShapedSprite.cs" />
+    <Compile Include="DataTypes\Sprites\AbstractCompressedSprite.cs" />
+    <Compile Include="DataTypes\Sprites\ARUTE.cs" />
+    <Compile Include="DataTypes\Sprites\CYOKO.cs" />
+    <Compile Include="DataTypes\Sprites\FullSpriteSet.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Frame.cs" />
-    <Compile Include="KANZEN.cs" />
+    <Compile Include="DataTypes\Frame.cs" />
+    <Compile Include="DataTypes\Sprites\KANZEN.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MonsterSprite.cs" />
-    <Compile Include="OPNBK.cs" />
-    <Compile Include="Palette.cs" />
+    <Compile Include="DataTypes\Sprites\MonsterSprite.cs" />
+    <Compile Include="DataTypes\OPNBK.cs" />
+    <Compile Include="DataTypes\Palette.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
@@ -149,13 +151,13 @@
     <None Include="Resources\BATTLE\TYPE1\DILY.SPR" />
     <None Include="Resources\BATTLE\TYPE1\DILY2.SPR" />
     <None Include="Resources\BATTLE\TYPE1\DILY3.SPR" />
-    <None Include="Resources\BATTLE\MON\DORA.SPR" />
+    <None Include="Resources\BATTLE\TYPE2\DORA.SPR" />
     <None Include="Resources\BATTLE\MON\DORA1.SPR" />
     <None Include="Resources\BATTLE\MON\DORA2.SPR" />
     <None Include="Resources\BATTLE\MON\SP2\DORA22.SP2" />
     <None Include="Resources\BATTLE\EFC_FNT.TIM" />
     <None Include="Resources\BATTLE\TYPE2\ERU.SPR" />
-    <None Include="Resources\BATTLE\TYPE2\FURAIA.SPR" />
+    <None Include="Resources\BATTLE\other_unknown\FURAIA.SPR" />
     <None Include="Resources\BATTLE\TYPE2\FUSUI_M.SPR" />
     <None Include="Resources\BATTLE\TYPE2\FUSUI_W.SPR" />
     <None Include="Resources\BATTLE\TYPE2\FYUNE.SPR" />
@@ -311,17 +313,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Shape.cs" />
-    <Compile Include="AbstractSprite.cs" />
-    <Compile Include="ShortSprite.cs" />
+    <Compile Include="DataTypes\Shape.cs" />
+    <Compile Include="DataTypes\Sprites\AbstractSprite.cs" />
+    <Compile Include="DataTypes\Sprites\ShortSprite.cs" />
     <Compile Include="SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Tile.cs" />
-    <Compile Include="TYPE1Sprite.cs" />
-    <Compile Include="TYPE2Sprite.cs" />
+    <Compile Include="DataTypes\Tile.cs" />
+    <Compile Include="DataTypes\Sprites\TYPE1Sprite.cs" />
+    <Compile Include="DataTypes\Sprites\TYPE2Sprite.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="WLDFACE.cs" />
+    <Compile Include="DataTypes\WLDFACE.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FFTPatcher.csproj">

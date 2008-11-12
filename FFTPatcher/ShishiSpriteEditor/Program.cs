@@ -35,6 +35,8 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
+            object o = TYPE1Sprite.AGURI;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
             Application.Run( new MainForm() );

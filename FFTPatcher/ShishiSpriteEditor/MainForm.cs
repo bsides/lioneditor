@@ -165,35 +165,35 @@ namespace FFTPatcher.SpriteEditor
 
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                byte[] bytes = null;
-                try
-                {
-                    bytes = GetBytes( openFileDialog.FileName );
-                    spriteViewer1.SetPalette( 0, 8 );
-                    paletteSelector.SelectedIndex = 0;
-                    spriteViewer1.Sprite = new Sprite( bytes );
-                    if( shapesComboBox.SelectedIndex != -1 )
-                    {
-                        shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
-                    }
+                //byte[] bytes = null;
+                //try
+                //{
+                //    bytes = GetBytes( openFileDialog.FileName );
+                //    spriteViewer1.SetPalette( 0, 8 );
+                //    paletteSelector.SelectedIndex = 0;
+                //    spriteViewer1.Sprite = new AbstractSprite( bytes );
+                //    if( shapesComboBox.SelectedIndex != -1 )
+                //    {
+                //        shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
+                //    }
 
-                    paletteSelector.Enabled = true;
-                    properCheckbox.Enabled = true;
-                    portraitCheckbox.Enabled = true;
-                    saveMenuItem.Enabled = true;
-                    saveAsMenuItem.Enabled = true;
-                    importMenuItem.Enabled = true;
-                    exportMenuItem.Enabled = true;
-                    paletteSaveMenuItem.Enabled = true;
-                    paletteOpenMenuItem.Enabled = true;
-                    shapesComboBox.Enabled = true;
+                //    paletteSelector.Enabled = true;
+                //    properCheckbox.Enabled = true;
+                //    portraitCheckbox.Enabled = true;
+                //    saveMenuItem.Enabled = true;
+                //    saveAsMenuItem.Enabled = true;
+                //    importMenuItem.Enabled = true;
+                //    exportMenuItem.Enabled = true;
+                //    paletteSaveMenuItem.Enabled = true;
+                //    paletteOpenMenuItem.Enabled = true;
+                //    shapesComboBox.Enabled = true;
 
-                    filename = openFileDialog.FileName;
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
-                }
+                //    filename = openFileDialog.FileName;
+                //}
+                //catch( Exception )
+                //{
+                //    MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
+                //}
             }
         }
 
@@ -253,12 +253,12 @@ namespace FFTPatcher.SpriteEditor
         private void saveAsMenuItem_Click( object sender, EventArgs e )
         {
             saveFileDialog.FileName = filename;
-            saveFileDialog.Filter = spriteViewer1.Sprite.SPR ? "Sprite files (*.SPR)|*.SPR" : "Secondary sprite files (*.SP2)|*.SP2";
+            //saveFileDialog.Filter = spriteViewer1.Sprite.SPR ? "Sprite files (*.SPR)|*.SPR" : "Secondary sprite files (*.SP2)|*.SP2";
             saveFileDialog.FilterIndex = 0;
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.ToByteArray() );
-                filename = saveFileDialog.FileName;
+                //SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.ToByteArray() );
+                //filename = saveFileDialog.FileName;
             }
         }
 
@@ -287,7 +287,7 @@ namespace FFTPatcher.SpriteEditor
 
         private void saveMenuItem_Click( object sender, EventArgs e )
         {
-            SaveBytes( filename, spriteViewer1.Sprite.ToByteArray() );
+            //SaveBytes( filename, spriteViewer1.Sprite.ToByteArray() );
         }
 
         private void shapesComboBox_SelectedIndexChanged( object sender, EventArgs e )

@@ -93,7 +93,7 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         /// <param name="s">The <see cref="Sprite"/> to draw.</param>
         /// <param name="p">The <see cref="Palette"/> to use to draw the sprite.</param>
-        public static void DrawSprite( this Graphics g, Sprite s, Palette p, Palette portrait, bool proper )
+        public static void DrawSprite( this Graphics g, AbstractSprite s, Palette p, Palette portrait, bool proper )
         {
             using( Bitmap b = new Bitmap( 256, 488 ) )
             {
@@ -108,19 +108,19 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="b">The <see cref="Bitmap"/> object to draw on.</param>
         /// <param name="s">The <see cref="Sprite"/> to draw.</param>
         /// <param name="p">The <see cref="Palette"/> to use to draw the sprite.</param>
-        public static void DrawSprite( this Bitmap b, Sprite s, Palette p, Palette portrait, bool proper )
+        public static void DrawSprite( this Bitmap b, AbstractSprite s, Palette p, Palette portrait, bool proper )
         {
             if( proper )
             {
-                for( int i = 0; (i < s.Pixels.Length) && (i / 256 < 256); i++ )
+                for( int i = 0; (i < s.Pixels.Count) && (i / 256 < 256); i++ )
                 {
                     b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
                 }
-                for( int i = 288 * 256; (i < s.Pixels.Length) && (i / 256 < 488); i++ )
+                for( int i = 288 * 256; (i < s.Pixels.Count) && (i / 256 < 488); i++ )
                 {
                     b.SetPixel( i % 256, i / 256 - 32, p.Colors[s.Pixels[i] % 16] );
                 }
-                for( int i = 256 * 256; (i < s.Pixels.Length) && (i / 256 < 288); i++ )
+                for( int i = 256 * 256; (i < s.Pixels.Count) && (i / 256 < 288); i++ )
                 {
                     b.SetPixel( i % 256, i / 256 + 200, p.Colors[s.Pixels[i] % 16] );
                 }
@@ -130,7 +130,7 @@ namespace FFTPatcher.SpriteEditor
 
                 for( int x = pRect.X; x < pRect.Right; x++ )
                 {
-                    for( int y = pRect.Y; y < pRect.Bottom && (x + y * 256 < s.Pixels.Length); y++ )
+                    for( int y = pRect.Y; y < pRect.Bottom && (x + y * 256 < s.Pixels.Count); y++ )
                     {
                         b.SetPixel( x, y, portrait.Colors[s.Pixels[x + (y - 200) * 256] % 16] );
                     }
@@ -138,14 +138,14 @@ namespace FFTPatcher.SpriteEditor
             }
             else
             {
-                for( int i = 0; (i < s.Pixels.Length) && (i / 256 < b.Height); i++ )
+                for( int i = 0; (i < s.Pixels.Count) && (i / 256 < b.Height); i++ )
                 {
                     b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
                 }
 
                 for( int x = portraitRectangle.X; x < portraitRectangle.Right; x++ )
                 {
-                    for( int y = portraitRectangle.Y; y < portraitRectangle.Bottom && (x + y * 256 < s.Pixels.Length); y++ )
+                    for( int y = portraitRectangle.Y; y < portraitRectangle.Bottom && (x + y * 256 < s.Pixels.Count); y++ )
                     {
                         b.SetPixel( x, y, portrait.Colors[s.Pixels[x + y * 256] % 16] );
                     }

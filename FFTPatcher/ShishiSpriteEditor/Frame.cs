@@ -67,7 +67,7 @@ namespace FFTPatcher.SpriteEditor
         /// <summary>
         /// Gets this frame from the specified sprite.
         /// </summary>
-        public Bitmap GetFrame( Sprite source )
+        public Bitmap GetFrame( AbstractSprite source )
         {
             Bitmap result = new Bitmap( 210, 160, System.Drawing.Imaging.PixelFormat.Format8bppIndexed );
 

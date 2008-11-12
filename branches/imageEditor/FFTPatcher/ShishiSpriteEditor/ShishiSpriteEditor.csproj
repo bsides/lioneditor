@@ -69,14 +69,19 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbstractCompressedSprite.cs" />
+    <Compile Include="ARUTE.cs" />
+    <Compile Include="CYOKO.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Frame.cs" />
+    <Compile Include="KANZEN.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MonsterSprite.cs" />
     <Compile Include="OPNBK.cs" />
     <Compile Include="Palette.cs" />
     <Compile Include="Program.cs" />
@@ -99,6 +104,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -115,7 +121,7 @@
     <None Include="Resources\BATTLE\TYPE1\AGURI.SPR" />
     <None Include="Resources\BATTLE\TYPE2\AJORA.SPR" />
     <None Include="Resources\BATTLE\MON\ARLI.SPR" />
-    <None Include="Resources\BATTLE\SP2\ARLI2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\ARLI2.SP2" />
     <None Include="Resources\BATTLE\TYPE1\ARU.SPR" />
     <None Include="Resources\BATTLE\TYPE2\ARUFU.SPR" />
     <None Include="Resources\BATTLE\TYPE2\ARUMA.SPR" />
@@ -124,12 +130,12 @@
     <None Include="Resources\BATTLE\TYPE2\BARU.SPR" />
     <None Include="Resources\BATTLE\TYPE1\BARUNA.SPR" />
     <None Include="Resources\BATTLE\MON\BEHI.SPR" />
-    <None Include="Resources\BATTLE\SP2\BEHI2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\BEHI2.SP2" />
     <None Include="Resources\BATTLE\TYPE1\BEIO.SPR" />
-    <None Include="Resources\BATTLE\SP2\BIBU2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\BIBU2.SP2" />
     <None Include="Resources\BATTLE\MON\BIBUROS.SPR" />
     <None Include="Resources\BATTLE\MON\BOM.SPR" />
-    <None Include="Resources\BATTLE\SP2\BOM2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\BOM2.SP2" />
     <None Include="Resources\BATTLE\TYPE1\CLOUD.SPR" />
     <None Include="Resources\BATTLE\other\CYOKO.SPR" />
     <None Include="Resources\BATTLE\other_unknown\CYOMON1.SPR" />
@@ -139,14 +145,14 @@
     <None Include="Resources\BATTLE\TYPE1\DAISU.SPR" />
     <None Include="Resources\BATTLE\other_unknown\DAMI.SPR" />
     <None Include="Resources\BATTLE\MON\DEMON.SPR" />
-    <None Include="Resources\BATTLE\SP2\DEMON2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\DEMON2.SP2" />
     <None Include="Resources\BATTLE\TYPE1\DILY.SPR" />
     <None Include="Resources\BATTLE\TYPE1\DILY2.SPR" />
     <None Include="Resources\BATTLE\TYPE1\DILY3.SPR" />
     <None Include="Resources\BATTLE\MON\DORA.SPR" />
     <None Include="Resources\BATTLE\MON\DORA1.SPR" />
     <None Include="Resources\BATTLE\MON\DORA2.SPR" />
-    <None Include="Resources\BATTLE\SP2\DORA22.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\DORA22.SP2" />
     <None Include="Resources\BATTLE\EFC_FNT.TIM" />
     <None Include="Resources\BATTLE\TYPE2\ERU.SPR" />
     <None Include="Resources\BATTLE\TYPE2\FURAIA.SPR" />
@@ -174,12 +180,12 @@
     <None Include="Resources\BATTLE\MON\HEBI.SPR" />
     <None Include="Resources\BATTLE\TYPE2\HIME.SPR" />
     <None Include="Resources\BATTLE\MON\HYOU.SPR" />
-    <None Include="Resources\BATTLE\SP2\HYOU2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\HYOU2.SP2" />
     <None Include="Resources\BATTLE\TYPE2\IKA.SPR" />
-    <None Include="Resources\BATTLE\SP2\IRON2.SP2" />
-    <None Include="Resources\BATTLE\SP2\IRON3.SP2" />
-    <None Include="Resources\BATTLE\SP2\IRON4.SP2" />
-    <None Include="Resources\BATTLE\SP2\IRON5.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\IRON2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\IRON3.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\IRON4.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\IRON5.SP2" />
     <None Include="Resources\BATTLE\TYPE2\ITEM_M.SPR" />
     <None Include="Resources\BATTLE\TYPE2\ITEM_W.SPR" />
     <None Include="Resources\BATTLE\TYPE1\KANBA.SPR" />
@@ -197,9 +203,9 @@
     <None Include="Resources\BATTLE\TYPE1\MINA_M.SPR" />
     <None Include="Resources\BATTLE\TYPE1\MINA_W.SPR" />
     <None Include="Resources\BATTLE\MON\MINOTA.SPR" />
-    <None Include="Resources\BATTLE\SP2\MINOTA2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\MINOTA2.SP2" />
     <None Include="Resources\BATTLE\MON\MOL.SPR" />
-    <None Include="Resources\BATTLE\SP2\MOL2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\MOL2.SP2" />
     <None Include="Resources\BATTLE\TYPE1\MONK_M.SPR" />
     <None Include="Resources\BATTLE\TYPE1\MONK_W.SPR" />
     <None Include="Resources\BATTLE\TYPE2\MONO_M.SPR" />
@@ -241,9 +247,9 @@
     <None Include="Resources\BATTLE\TYPE2\TOKI_M.SPR" />
     <None Include="Resources\BATTLE\TYPE2\TOKI_W.SPR" />
     <None Include="Resources\BATTLE\MON\TORI.SPR" />
-    <None Include="Resources\BATTLE\SP2\TORI2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\TORI2.SP2" />
     <None Include="Resources\BATTLE\MON\URI.SPR" />
-    <None Include="Resources\BATTLE\SP2\URI2.SP2" />
+    <None Include="Resources\BATTLE\MON\SP2\URI2.SP2" />
     <None Include="Resources\BATTLE\MON\VERI.SPR" />
     <None Include="Resources\BATTLE\TYPE1\VORU.SPR" />
     <None Include="Resources\BATTLE\TYPE2\WAJU_M.SPR" />
@@ -287,18 +293,17 @@
     <None Include="Resources\MENU\BK_SHOP3.TIM" />
     <None Include="Resources\OPEN\OPNBK.BIN" />
     <None Include="Resources\OPEN\OPNTEX.BIN" />
-    <None Include="PSXResources\resources.tar.gz" />
     <None Include="Resources\WORLD\WLDPIC.BIN" />
     <None Include="Resources\WORLD\WLDTEX.TM2" />
-    <None Include="Resources\ARUTE.SHP" />
-    <None Include="Resources\CYOKO.SHP" />
+    <None Include="Resources\BATTLE\other\ARUTE.SHP" />
+    <None Include="Resources\BATTLE\other\CYOKO.SHP" />
     <None Include="Resources\EFF1.SHP" />
     <None Include="Resources\EFF2.SHP" />
-    <None Include="Resources\kanzen.shp" />
+    <None Include="Resources\BATTLE\other\KANZEN.SHP" />
     <None Include="Resources\MON.SHP" />
     <None Include="Resources\OTHER.SHP" />
-    <None Include="Resources\TYPE1.SHP" />
-    <None Include="Resources\TYPE2.SHP" />
+    <None Include="Resources\BATTLE\TYPE1\TYPE1.SHP" />
+    <None Include="Resources\BATTLE\TYPE2\TYPE2.SHP" />
     <None Include="Resources\WEP1.SHP" />
     <None Include="Resources\WEP2.SHP" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -307,11 +312,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Shape.cs" />
-    <Compile Include="Sprite.cs" />
+    <Compile Include="AbstractSprite.cs" />
+    <Compile Include="ShortSprite.cs" />
     <Compile Include="SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Tile.cs" />
+    <Compile Include="TYPE1Sprite.cs" />
+    <Compile Include="TYPE2Sprite.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="WLDFACE.cs" />
   </ItemGroup>

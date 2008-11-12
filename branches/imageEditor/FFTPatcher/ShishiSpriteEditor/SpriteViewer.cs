@@ -31,7 +31,7 @@ namespace FFTPatcher.SpriteEditor
         private int palette = 0;
         private int portraitPalette = 8;
         private bool proper = true;
-        private Sprite sprite = null;
+        private AbstractSprite sprite = null;
         private IList<Tile> tiles;
 
 		#endregion Fields 
@@ -52,7 +52,7 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        public Sprite Sprite
+        public AbstractSprite Sprite
         {
             get { return sprite; }
             set

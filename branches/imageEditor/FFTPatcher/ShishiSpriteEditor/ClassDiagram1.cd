@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FFTPatcher.SpriteEditor.AbstractSprite">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAACAAQCAgAAIICBBAAAAIABAAEABCEBgAAAAAA=</HashCode>
+      <FileName>AbstractSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.AbstractCompressedSprite" Collapsed="true">
+    <Position X="4" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractCompressedSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.TYPE1Sprite" Collapsed="true">
+    <Position X="2.75" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TYPE1Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.TYPE2Sprite" Collapsed="true">
+    <Position X="4.75" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TYPE2Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.MonsterSprite" Collapsed="true">
+    <Position X="6.75" Y="2.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonsterSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.ARUTE" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ARUTE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.CYOKO" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CYOKO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.KANZEN" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>KANZEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.SpriteEditor.ShortSprite" Collapsed="true">
+    <Position X="2.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ShortSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -103,7 +103,7 @@ namespace FFTPatcher.SpriteEditor
 		#region Methods (2) 
 
 
-        public IList<Bitmap> GetFrames( Sprite source )
+        public IList<Bitmap> GetFrames( AbstractSprite source )
         {
             List<Bitmap> result = new List<Bitmap>( frames.Count );
             foreach( Frame f in frames )

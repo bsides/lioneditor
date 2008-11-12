@@ -119,39 +119,626 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="KANZEN_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\kanzen.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\BATTLE\other\KANZEN.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ARUTE_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ARUTE.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\BATTLE\other\ARUTE.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="CYOKO_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CYOKO.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\BATTLE\other\CYOKO.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="EFF1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="EFF1_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EFF1.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="EFF2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="EFF2_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EFF2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="MON" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="MON_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MON.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="OTHER" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="OTHER_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OTHER.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TYPE1_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TYPE1.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\BATTLE\TYPE1\TYPE1.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TYPE2_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TYPE2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\BATTLE\TYPE2\TYPE2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="WEP1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="WEP1_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WEP1.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="WEP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="WEP2_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WEP2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="resources_tar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\psxresources\resources.tar.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+
+  <data name="ARLI2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\ARLI2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+
+  <data name="BEHI2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\BEHI2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BIBU2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\BIBU2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BOM2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\BOM2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DEMON2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\DEMON2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DORA22_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\DORA22.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="HYOU2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\HYOU2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="IRON2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\IRON2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="IRON3_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\IRON3.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="IRON4_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\IRON4.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="IRON5_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\IRON5.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MINOTA2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\MINOTA2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MOL2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\MOL2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="TORI2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\TORI2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="URI2_SP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\SP2\URI2.SP2;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARUTE_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other\ARUTE.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="CYOKO_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other\CYOKO.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KANZEN_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other\KANZEN.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_10M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\10M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_10W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\10W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_20M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\20M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_20W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\20W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_40M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\40M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_40W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\40W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_60M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\60M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="_60W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\60W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="CYOMON1_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\CYOMON1.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="CYOMON2_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\CYOMON2.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="CYOMON3_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\CYOMON3.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="CYOMON4_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\other_unknown\CYOMON4.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="AGURI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\AGURI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ARU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\ARU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BARUNA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\BARUNA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BEIO_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\BEIO.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="CLOUD_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\CLOUD.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DAISU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\DAISU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DILY_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\DILY.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DILY2_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\DILY2.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DILY3_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\DILY3.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="GANDO_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\GANDO.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="GARU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\GARU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="GOB_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\GOB.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="GORU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\GORU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H61_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H61.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H75_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H75.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H76_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H76.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H77_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H77.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H78_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H78.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H80_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H80.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H81_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H81.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H85_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\H85.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KANBA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\KANBA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KNIGHT_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\KNIGHT_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KNIGHT_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\KNIGHT_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MARA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\MARA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MINA_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\MINA_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MINA_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\MINA_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MONK_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\MONK_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MONK_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\MONK_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MUSU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\MUSU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="NINJA_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\NINJA_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="NINJA_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\NINJA_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ORAN_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\ORAN.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ORU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\ORU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RAMUZA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\RAMUZA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RAMUZA2_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\RAMUZA2.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RAMUZA3_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\RAMUZA3.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RUDO_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\RUDO.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RYU_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\RYU_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RYU_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\RYU_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SAMU_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\SAMU_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SAMU_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\SAMU_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SUKERU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\SUKERU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="THIEF_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\THIEF_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="THIEF_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\THIEF_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="VORU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\VORU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="WIGU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\WIGU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="YUMI_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\YUMI_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="YUMI_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\YUMI_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ZARU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\ZARU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ZARU2_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE1\ZARU2.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AJORA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\AJORA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ARUFU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ARUFU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ARUMA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ARUMA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BARITEN_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\BARITEN.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BARU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\BARU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ERU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ERU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="FURAIA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\FURAIA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="FUSUI_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\FUSUI_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="FUSUI_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\FUSUI_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="FYUNE_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\FYUNE.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="GIN_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\GIN_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="GYUMU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\GYUMU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H79_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\H79.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H82_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\H82.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="H83_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\H83.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="HIME_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\HIME.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="IKA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\IKA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ITEM_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ITEM_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ITEM_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ITEM_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KURO_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\KURO_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KURO_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\KURO_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="LEDY_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\LEDY.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MONO_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\MONO_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MONO_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\MONO_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ODORI_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ODORI_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ONMYO_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ONMYO_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ONMYO_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ONMYO_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RAFA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\RAFA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="RAGU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\RAGU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="REZE_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\REZE.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SAN_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SAN_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SAN_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SAN_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SERIA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SERIA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SIMON_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SIMON.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SIRO_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SIRO_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SIRO_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SIRO_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SOURYO_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SOURYO.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SYOU_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SYOU_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="SYOU_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\SYOU_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="TOKI_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\TOKI_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="TOKI_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\TOKI_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="WAJU_M_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\WAJU_M.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="WAJU_W_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\WAJU_W.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ZARUMOU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\TYPE2\ZARUMOU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ADORA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\ADORA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ARLI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\ARLI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BEHI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\BEHI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BIBUROS_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\BIBUROS.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="BOM_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\BOM.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DEMON_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\DEMON.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DORA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\DORA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DORA1_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\DORA1.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="DORA2_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\DORA2.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="HASYU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\HASYU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="HEBI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\HEBI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="HYOU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\HYOU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\KI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="KYUKU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\KYUKU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MINOTA_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\MINOTA.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="MOL_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\MOL.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="REZE_D_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\REZE_D.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="TETSU_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\TETSU.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="TORI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\TORI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="URI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\URI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="VERI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\VERI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="YUREI_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\YUREI.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
+  <data name="ZARUE_SPR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BATTLE\MON\ZARUE.SPR;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+
 </root>

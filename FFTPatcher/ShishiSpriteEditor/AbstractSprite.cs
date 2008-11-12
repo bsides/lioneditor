@@ -55,7 +55,8 @@ namespace FFTPatcher.SpriteEditor
         public AbstractSprite( IList<byte> bytes, params IList<byte>[] extraBytes )
         {
             OriginalSize = bytes.Count;
-            Pixels = BuildPixels( bytes, extraBytes );
+            Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
+            Pixels = BuildPixels( bytes.Sub( 16 * 32 ), extraBytes );
         }
 
         #endregion Constructors
@@ -133,9 +134,11 @@ namespace FFTPatcher.SpriteEditor
             return ToBitmap( false );
         }
 
+        protected abstract void ToBitmapInner(bool proper, Bitmap bmp, BitmapData bmd);
+
         public unsafe Bitmap ToBitmap( bool proper )
         {
-            Bitmap bmp = new Bitmap( 256, 488, PixelFormat.Format8bppIndexed );
+            Bitmap bmp = new Bitmap( Width, Height, PixelFormat.Format8bppIndexed );
             ColorPalette palette = bmp.Palette;
 
             int k = 0;
@@ -155,29 +158,31 @@ namespace FFTPatcher.SpriteEditor
             }
             bmp.Palette = palette;
 
+
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
-            if( proper )
-            {
-                for( int i = 0; (i < this.Pixels.Count) && (i / 256 < 256); i++ )
-                {
-                    bmd.SetPixel( i % 256, i / 256, Pixels[i] );
-                }
-                for( int i = 288 * 256; (i < this.Pixels.Count) && (i / 256 < 488); i++ )
-                {
-                    bmd.SetPixel( i % 256, i / 256 - 32, Pixels[i] );
-                }
-                for( int i = 256 * 256; (i < this.Pixels.Count) && (i / 256 < 288); i++ )
-                {
-                    bmd.SetPixel( i % 256, i / 256 + 200, Pixels[i] );
-                }
-            }
-            else
-            {
-                for( int i = 0; (i < this.Pixels.Count) && (i / 256 < bmp.Height); i++ )
-                {
-                    bmd.SetPixel( i % 256, i / 256, Pixels[i] );
-                }
-            }
+            ToBitmapInner( proper, bmp, bmd );
+            //if( proper )
+            //{
+            //    for( int i = 0; (i < this.Pixels.Count) && (i / Width < Width); i++ )
+            //    {
+            //        bmd.SetPixel( i % Width, i / Width, Pixels[i] );
+            //    }
+            //    for( int i = 288 * Width; (i < this.Pixels.Count) && (i / Width < 488); i++ )
+            //    {
+            //        bmd.SetPixel( i % Width, i / Width - 32, Pixels[i] );
+            //    }
+            //    for( int i = 256 * 256; (i < this.Pixels.Count) && (i / Width < 288); i++ )
+            //    {
+            //        bmd.SetPixel( i % Width, i / Width + 200, Pixels[i] );
+            //    }
+            //}
+            //else
+            //{
+            //    for( int i = 0; (i < this.Pixels.Count) && (i / 256 < bmp.Height); i++ )
+            //    {
+            //        bmd.SetPixel( i % 256, i / 256, Pixels[i] );
+            //    }
+            //}
             bmp.UnlockBits( bmd );
 
             return bmp;

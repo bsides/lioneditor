@@ -31,6 +31,11 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
+        protected override void ToBitmapInner( bool proper, System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
+        {
+            throw new NotImplementedException();
+        }
+
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
         {
             byte[] result = new byte[36864 * 2];

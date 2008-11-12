@@ -136,6 +136,40 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        public const int topHeight = 256;
+        public const int portraintHeight = 32;
+        public const int compressedHeight = 200;
+
+        protected override void ToBitmapInner( bool proper, System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
+        {
+            if( proper )
+            {
+                // Top portrait
+                for( int i = 0; (i < this.Pixels.Count) && (i / Width < topHeight); i++ )
+                {
+                    bmd.SetPixel( i % Width, i / Width, Pixels[i] );
+                }
+
+                // Compressed part
+                for( int i = (topHeight + portraintHeight) * Width; (i < this.Pixels.Count) && (i / Width < Height); i++ )
+                {
+                    bmd.SetPixel( i % Width, i / Width - portraintHeight, Pixels[i] );
+                }
+
+                // Portrait part
+                for( int i = topHeight * Width; (i < this.Pixels.Count) && (i / Width < (topHeight + portraintHeight)); i++ )
+                {
+                    bmd.SetPixel( i % Width, i / Width + compressedHeight, Pixels[i] );
+                }
+            }
+            else
+            {
+                for( int i = 0; (i < this.Pixels.Count) && (i / Width < bmp.Height); i++ )
+                {
+                    bmd.SetPixel( i % Width, i / Width, Pixels[i] );
+                }
+            }
+        }
 
         protected static IList<byte> Decompress( IList<byte> bytes )
         {

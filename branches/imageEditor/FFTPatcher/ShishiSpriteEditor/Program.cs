@@ -35,7 +35,32 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
-            object o = TYPE1Sprite.AGURI;
+            foreach( var pi in typeof( TYPE1Sprite ).GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public ) )
+            {
+                if( pi.PropertyType == typeof( TYPE1Sprite ) )
+                {
+                    var s = pi.GetValue( null, null ) as TYPE1Sprite;
+                    s.ToBitmap( true ).Save( pi.Name + ".bmp" );
+                }
+            }
+            foreach( var pi in typeof( TYPE2Sprite ).GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public ) )
+            {
+                if( pi.PropertyType == typeof( TYPE2Sprite ) )
+                {
+                    var s = pi.GetValue( null, null ) as TYPE2Sprite;
+                    s.ToBitmap( true ).Save( pi.Name + ".bmp" );
+                }
+            }
+            foreach( var pi in typeof( MonsterSprite ).GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public ) )
+            {
+                if( pi.PropertyType == typeof( MonsterSprite ) )
+                {
+                    var s = pi.GetValue( null, null ) as MonsterSprite;
+                    s.ToBitmap( true ).Save( pi.Name + ".bmp" );
+                }
+            }
+            //AbstractSprite s = TYPE1Sprite.AGURI;
+            //s.ToBitmap(true).Save( "bmp.bmp" );
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );

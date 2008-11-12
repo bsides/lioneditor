@@ -33,6 +33,18 @@ namespace FFTPatcher.SpriteEditor
         private List<Frame> frames;
         private string name = string.Empty;
 
+        private static Shape type1 = new Shape( Properties.Resources.TYPE1_SHP, "TYPE1" );
+        private static Shape type2 = new Shape( Properties.Resources.TYPE2_SHP, "TYPE2" );
+        private static Shape kanzen = new Shape( Properties.Resources.KANZEN_SHP, "KANZEN" );
+        private static Shape arute = new Shape( Properties.Resources.ARUTE_SHP, "ARUTE" );
+        private static Shape cyoko = new Shape( Properties.Resources.CYOKO_SHP, "CYOKO" );
+
+        public static Shape TYPE1 { get { return type1; } }
+        public static Shape TYPE2 { get { return type2; } }
+        public static Shape KANZEN { get { return kanzen; } }
+        public static Shape ARUTE { get { return arute; } }
+        public static Shape CYOKO { get { return cyoko; } }
+
 		#endregion Fields 
 
 		#region Properties (2) 
@@ -50,7 +62,7 @@ namespace FFTPatcher.SpriteEditor
 
 		#region Constructors (1) 
 
-        public Shape( IList<byte> bytes, string name )
+        private Shape( IList<byte> bytes, string name )
         {
             this.name = name;
             int jump = (int)bytes.Sub( 0, 3 ).ToUInt32();

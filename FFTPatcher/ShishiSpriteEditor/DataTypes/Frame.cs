@@ -71,7 +71,7 @@ namespace FFTPatcher.SpriteEditor
         {
             Bitmap result = new Bitmap( 210, 160, System.Drawing.Imaging.PixelFormat.Format8bppIndexed );
 
-            using( Bitmap sourceBmp = source.ToBitmap( true ) )
+            using( Bitmap sourceBmp = source.ToBitmap() )
             {
                 result.Palette = sourceBmp.Palette;
 

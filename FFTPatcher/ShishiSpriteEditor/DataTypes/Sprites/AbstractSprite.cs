@@ -47,13 +47,18 @@ namespace FFTPatcher.SpriteEditor
 
         public virtual int Width { get { return 256; } }
         public abstract int Height { get; }
+        public string Name { get; private set; }
+
+        protected abstract Rectangle PortraitRectangle { get; }
+        protected abstract Rectangle ThumbnailRectangle { get; }
 
         #endregion Properties
 
         #region Constructors (1)
 
-        public AbstractSprite( IList<byte> bytes, params IList<byte>[] extraBytes )
+        public AbstractSprite( string name, IList<byte> bytes, params IList<byte>[] extraBytes )
         {
+            Name = name;
             OriginalSize = bytes.Count;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             Pixels = BuildPixels( bytes.Sub( 16 * 32 ), extraBytes );
@@ -63,6 +68,8 @@ namespace FFTPatcher.SpriteEditor
 
         #region Methods (11)
 
+        public abstract Image GetThumbnail();
+        public abstract Image GetPortrait();
 
         protected abstract IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes );
 
@@ -125,28 +132,14 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-
-        /// <summary>
-        /// Converts this sprite to an indexed bitmap.
-        /// </summary>
-        public unsafe Bitmap ToBitmap()
+        protected void FixupColorPalette( ColorPalette palette )
         {
-            return ToBitmap( false );
-        }
-
-        protected abstract void ToBitmapInner(bool proper, Bitmap bmp, BitmapData bmd);
-
-        public unsafe Bitmap ToBitmap( bool proper )
-        {
-            Bitmap bmp = new Bitmap( Width, Height, PixelFormat.Format8bppIndexed );
-            ColorPalette palette = bmp.Palette;
-
             int k = 0;
-            for( int i = 0; i < Palettes.Length; i++ )
+            for ( int i = 0; i < Palettes.Length; i++ )
             {
-                for( int j = 0; j < Palettes[i].Colors.Length; j++, k++ )
+                for ( int j = 0; j < Palettes[i].Colors.Length; j++, k++ )
                 {
-                    if( Palettes[i].Colors[j].ToArgb() == Color.Transparent.ToArgb() )
+                    if ( Palettes[i].Colors[j].ToArgb() == Color.Transparent.ToArgb() )
                     {
                         palette.Entries[k] = Color.Black;
                     }
@@ -156,37 +149,27 @@ namespace FFTPatcher.SpriteEditor
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Converts this sprite to an indexed bitmap.
+        /// </summary>
+        public unsafe Bitmap ToBitmap()
+        {
+            Bitmap bmp = new Bitmap( Width, Height, PixelFormat.Format8bppIndexed );
+            ColorPalette palette = bmp.Palette;
+            FixupColorPalette( palette );
             bmp.Palette = palette;
 
 
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
-            ToBitmapInner( proper, bmp, bmd );
-            //if( proper )
-            //{
-            //    for( int i = 0; (i < this.Pixels.Count) && (i / Width < Width); i++ )
-            //    {
-            //        bmd.SetPixel( i % Width, i / Width, Pixels[i] );
-            //    }
-            //    for( int i = 288 * Width; (i < this.Pixels.Count) && (i / Width < 488); i++ )
-            //    {
-            //        bmd.SetPixel( i % Width, i / Width - 32, Pixels[i] );
-            //    }
-            //    for( int i = 256 * 256; (i < this.Pixels.Count) && (i / Width < 288); i++ )
-            //    {
-            //        bmd.SetPixel( i % Width, i / Width + 200, Pixels[i] );
-            //    }
-            //}
-            //else
-            //{
-            //    for( int i = 0; (i < this.Pixels.Count) && (i / 256 < bmp.Height); i++ )
-            //    {
-            //        bmd.SetPixel( i % 256, i / 256, Pixels[i] );
-            //    }
-            //}
+            ToBitmapInner( bmp, bmd );
             bmp.UnlockBits( bmd );
 
             return bmp;
         }
+
+        protected abstract void ToBitmapInner( Bitmap bmp, BitmapData bmd );
 
         public Image Export()
         {

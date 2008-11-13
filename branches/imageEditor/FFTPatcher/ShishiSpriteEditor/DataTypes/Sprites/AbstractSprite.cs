@@ -52,6 +52,8 @@ namespace FFTPatcher.SpriteEditor
         protected abstract Rectangle PortraitRectangle { get; }
         protected abstract Rectangle ThumbnailRectangle { get; }
 
+        public virtual Shape Shape { get { return null; } }
+
         #endregion Properties
 
         #region Constructors (1)

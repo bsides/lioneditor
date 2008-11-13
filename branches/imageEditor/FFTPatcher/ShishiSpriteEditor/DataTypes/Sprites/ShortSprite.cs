@@ -35,12 +35,12 @@ namespace FFTPatcher.SpriteEditor
 
         protected override Rectangle PortraitRectangle
         {
-            get { return new Rectangle( 80, 256, 48, 42 ); }
+            get { return new Rectangle( 80, 256, 48, 32 ); }
         }
 
         protected override Rectangle ThumbnailRectangle
         {
-            get { return new Rectangle( 39, 5, 26, 38 ); }
+            get { return new Rectangle( 32, 0, 32, 40 ); }
         }
 
         protected override void ToBitmapInner( System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )

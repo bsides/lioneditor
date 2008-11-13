@@ -38,12 +38,15 @@ namespace FFTPatcher.SpriteEditor
 
             foreach( var sprite in Sprites )
             {
-                try
+                if ( !( sprite is ShortSprite ) )
                 {
-                    sprite.GetThumbnail().Save( sprite.Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
-                }
-                catch( NotImplementedException )
-                {
+                    try
+                    {
+                        sprite.GetThumbnail().Save( sprite.Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
+                    }
+                    catch ( NotImplementedException )
+                    {
+                    }
                 }
             }
         }

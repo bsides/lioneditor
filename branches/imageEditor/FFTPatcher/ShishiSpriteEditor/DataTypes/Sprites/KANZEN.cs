@@ -18,7 +18,7 @@ namespace FFTPatcher.SpriteEditor
 
         protected override System.Drawing.Rectangle ThumbnailRectangle
         {
-            get { return new System.Drawing.Rectangle( 107, 10, 32, 48 ); }
+            get { return new System.Drawing.Rectangle( 105, 10, 48, 48 ); }
         }
 
         public KANZEN( IList<byte> bytes )

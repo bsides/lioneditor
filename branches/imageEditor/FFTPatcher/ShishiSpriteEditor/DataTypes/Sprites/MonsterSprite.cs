@@ -16,7 +16,7 @@ namespace FFTPatcher.SpriteEditor
 
         protected override System.Drawing.Rectangle ThumbnailRectangle
         {
-            get { return new System.Drawing.Rectangle( 0, 8, 32, 48 ); }
+            get { return new System.Drawing.Rectangle( 0, 0, 48, 48 ); }
         }
 
         private int sp2Count;

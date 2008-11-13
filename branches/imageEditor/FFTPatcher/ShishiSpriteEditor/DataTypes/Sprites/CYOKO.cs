@@ -18,7 +18,7 @@ namespace FFTPatcher.SpriteEditor
 
         protected override System.Drawing.Rectangle ThumbnailRectangle
         {
-            get { return new System.Drawing.Rectangle( 112, 92, 32, 48 ); }
+            get { return new System.Drawing.Rectangle( 110, 92, 48, 48 ); }
         }
 
         public CYOKO( IList<byte> bytes )

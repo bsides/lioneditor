@@ -83,11 +83,11 @@ namespace FFTPatcher.SpriteEditor
         private void BuildShapes()
         {
             shapes = new List<Shape>();
-            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.ARUTE_SHP, "ARUTE.SHP" ) );
-            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.TYPE1_SHP, "TYPE1.SHP" ) );
-            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.TYPE2_SHP, "TYPE2.SHP" ) );
-            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.CYOKO_SHP, "CYOKO.SHP" ) );
-            shapes.Add( new Shape( FFTPatcher.SpriteEditor.Properties.Resources.KANZEN_SHP, "KANZEN.SHP" ) );
+            shapes.Add( Shape.ARUTE );
+            shapes.Add( Shape.TYPE1 );
+            shapes.Add( Shape.TYPE2 );
+            shapes.Add( Shape.CYOKO );
+            shapes.Add( Shape.KANZEN );
         }
 
         private void exitMenuItem_Click( object sender, EventArgs e )
@@ -165,6 +165,7 @@ namespace FFTPatcher.SpriteEditor
 
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
+                new FullSpriteSet( openFileDialog.FileName, FFTPatcher.Datatypes.Context.US_PSX );
                 //byte[] bytes = null;
                 //try
                 //{

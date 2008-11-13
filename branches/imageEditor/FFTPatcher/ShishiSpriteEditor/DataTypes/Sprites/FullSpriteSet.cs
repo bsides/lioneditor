@@ -17,6 +17,10 @@ namespace FFTPatcher.SpriteEditor
         public FullSpriteSet( Stream iso, Context isoType )
         {
             DoInit( iso, isoType );
+            foreach( var s in sprites )
+            {
+                s.GetThumbnail().Save( s.Name + ".PNG", System.Drawing.Imaging.ImageFormat.Png );
+            }
         }
 
         public FullSpriteSet( string isoFileName, Context isoType )
@@ -24,6 +28,13 @@ namespace FFTPatcher.SpriteEditor
             using ( FileStream stream = File.Open( isoFileName, FileMode.Open, FileAccess.Read ) )
             {
                 DoInit( stream, isoType );
+            }
+            foreach( var s in sprites )
+            {
+                if( !(s is ShortSprite) )
+                {
+                    s.GetThumbnail().Save( s.Name + ".PNG", System.Drawing.Imaging.ImageFormat.Png );
+                }
             }
         }
 

@@ -37,6 +37,42 @@ namespace FFTPatcher.SpriteEditor
 
         #region Methods (5)
 
+        public static void CopyRectangleToPointNonIndexed( this Bitmap source, Rectangle sourceRectangle, Bitmap destination, Point destinationPoint, Palette sourcePalette, bool flip )
+        {
+            BitmapData bmdSource = source.LockBits( new Rectangle( 0, 0, source.Width, source.Height ), ImageLockMode.ReadOnly, source.PixelFormat );
+            if( flip )
+            {
+                for( int col = 0; col < sourceRectangle.Width; col++ )
+                {
+                    for( int row = 0; row < sourceRectangle.Height; row++ )
+                    {
+                        int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
+                        Color c = sourcePalette.Colors[index % 16];
+                        if( c.A != 0 )
+                        {
+                            destination.SetPixel( destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row, c );
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for( int col = 0; col < sourceRectangle.Width; col++ )
+                {
+                    for( int row = 0; row < sourceRectangle.Height; row++ )
+                    {
+                        int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
+                        Color c = sourcePalette.Colors[index % 16];
+
+                        if( c.A != 0 )
+                        {
+                            destination.SetPixel( destinationPoint.X + col, destinationPoint.Y + row, c );
+                        }
+                    }
+                }
+            }
+            source.UnlockBits( bmdSource );
+        }
 
         /// <summary>
         /// Copies the rectangle to point.

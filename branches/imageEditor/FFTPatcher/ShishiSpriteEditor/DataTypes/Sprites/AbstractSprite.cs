@@ -69,7 +69,6 @@ namespace FFTPatcher.SpriteEditor
         #region Methods (11)
 
         public abstract Image GetThumbnail();
-        public abstract Image GetPortrait();
 
         protected abstract IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes );
 

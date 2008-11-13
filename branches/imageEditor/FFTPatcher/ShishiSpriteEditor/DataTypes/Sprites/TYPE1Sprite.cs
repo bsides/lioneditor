@@ -18,7 +18,7 @@ namespace FFTPatcher.SpriteEditor
 
         protected override System.Drawing.Rectangle ThumbnailRectangle
         {
-            get { return new Rectangle( 116, 95, 48, 32 ); }
+            get { return new System.Drawing.Rectangle( 116, 95, 48, 32 ); }
         }
 
         public TYPE1Sprite( string name, IList<byte> bytes )

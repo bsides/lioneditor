@@ -14,6 +14,11 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        protected override System.Drawing.Rectangle ThumbnailRectangle
+        {
+            get { return new System.Drawing.Rectangle( 0, 8, 32, 48 ); }
+        }
+
         private int sp2Count;
 
         public MonsterSprite( string name, IList<byte> bytes, params IList<byte>[] sp2Files )

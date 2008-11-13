@@ -48,6 +48,11 @@ namespace FFTPatcher.SpriteEditor
             throw new NotImplementedException();
         }
 
+        public override Image GetThumbnail()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
         {
             byte[] result = new byte[36864 * 2];

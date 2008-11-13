@@ -39,13 +39,9 @@ namespace FFTPatcher.SpriteEditor
 
         public override Image GetThumbnail()
         {
-            Bitmap result = new Bitmap( 64, 48, PixelFormat.Format8bppIndexed );
+            Bitmap result = new Bitmap( 64, 48, PixelFormat.Format24bppRgb );
 
-            ColorPalette palette = result.Palette;
-            FixupColorPalette( palette );
-            result.Palette = palette;
-
-            Frames[ThumbnailFrame].CopyRectangleToPoint( ThumbnailRectangle, result, Point.Empty, Palettes[0], false );
+            Frames[ThumbnailFrame].CopyRectangleToPointNonIndexed( ThumbnailRectangle, result, Point.Empty, Palettes[0], false );
 
             using ( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
             using ( Bitmap wholeImage = ToBitmap() )
@@ -55,7 +51,7 @@ namespace FFTPatcher.SpriteEditor
                 portrait.Palette = palette2;
                 wholeImage.CopyRectangleToPoint( PortraitRectangle, portrait, Point.Empty, Palettes[8], false );
                 portrait.RotateFlip( RotateFlipType.Rotate270FlipNone );
-                portrait.CopyRectangleToPoint( new Rectangle( 0, 0, 32, 48 ), result, new Point( 32, 0 ), Palettes[8], false );
+                portrait.CopyRectangleToPointNonIndexed( new Rectangle( 0, 0, 32, 48 ), result, new Point( 32, 0 ), Palettes[8], false );
             }
 
             return result;

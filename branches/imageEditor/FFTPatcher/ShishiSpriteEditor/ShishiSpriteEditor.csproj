@@ -69,7 +69,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbstractShapedSprite.cs" />
+    <Compile Include="DataTypes\Sprites\AbstractShapedSprite.cs" />
     <Compile Include="DataTypes\Sprites\AbstractCompressedSprite.cs" />
     <Compile Include="DataTypes\Sprites\ARUTE.cs" />
     <Compile Include="DataTypes\Sprites\CYOKO.cs" />
@@ -106,7 +106,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="DataTypes\Sprites\SpriteTypes.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

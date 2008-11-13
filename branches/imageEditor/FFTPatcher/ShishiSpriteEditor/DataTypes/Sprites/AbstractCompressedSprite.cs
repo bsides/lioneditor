@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -10,7 +11,23 @@ namespace FFTPatcher.SpriteEditor
 
         public override System.Drawing.Image GetThumbnail()
         {
-            throw new NotImplementedException();
+            Bitmap result = new Bitmap( 64, 48, PixelFormat.Format24bppRgb );
+
+            using( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
+            using( Bitmap wholeImage = ToBitmap() )
+            {
+                wholeImage.CopyRectangleToPointNonIndexed( ThumbnailRectangle, result, Point.Empty, Palettes[0], false );
+
+                ColorPalette palette2 = portrait.Palette;
+                FixupColorPalette( palette2 );
+                portrait.Palette = palette2;
+                wholeImage.CopyRectangleToPoint( PortraitRectangle, portrait, Point.Empty, Palettes[8], false );
+                portrait.RotateFlip( RotateFlipType.Rotate270FlipNone );
+
+                portrait.CopyRectangleToPointNonIndexed( new Rectangle( 0, 0, 32, 48 ), result, new Point( 32, 0 ), Palettes[8], false );
+            }
+
+            return result;
         }
 
         public override int Height
@@ -25,7 +42,7 @@ namespace FFTPatcher.SpriteEditor
 
         protected override Rectangle PortraitRectangle
         {
-            get { new Rectangle( 80, 456, 48, 32 ); }
+            get { return new Rectangle( 80, 456, 48, 32 ); }
         }
 
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )

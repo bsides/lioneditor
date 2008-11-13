@@ -58,6 +58,89 @@ namespace FFTPatcher
 
 		#region Methods (13) 
 
+        public static void SortList<T>( IList<T> list ) where T : IComparable<T>
+        {
+            QuickSort( list, 0, list.Count - 1, ( a, b ) => a.CompareTo( b ) );
+        }
+
+        public static void SortList<T>( IList<T> list, Comparison<T> comparer )
+        {
+            QuickSort( list, 0, list.Count - 1, comparer );
+        }
+
+        private static int QuickSortPivot<T>( IList<T> list, int beginning, int end, Comparison<T> comparer )
+        {
+            T pivot = list[beginning];
+            int m = beginning;
+            int n = end + 1;
+
+            do
+            {
+                m += 1;
+            } while( comparer( list[m], pivot ) <= 0 && m < end );
+            do
+            {
+                n -= 1;
+            } while( comparer( list[n], pivot ) > 0 );
+
+            while( m < n )
+            {
+                T temp = list[m];
+                list[m] = list[n];
+                list[n] = temp;
+
+                do
+                {
+                    m += 1;
+                } while( comparer( list[m], pivot ) <= 0 );
+                do
+                {
+                    n -= 1;
+                } while( comparer( list[n], pivot ) > 0 );
+            }
+
+            T temp2 = list[n];
+            list[n] = list[beginning];
+            list[beginning] = temp2;
+            return n;
+        }
+
+        private static void SelectionSort<T>( IList<T> list, int beginning, int end, Comparison<T> comparer )
+        {
+            for( int i = beginning; i < end; i++ )
+            {
+                int minj = i;
+                T minx = list[i];
+                for( int j = i + 1; j <= end; j++ )
+                {
+                    if( comparer( list[j], minx ) < 0 )
+                    {
+                        minj = j;
+                        minx = list[j];
+                    }
+                }
+
+                list[minj] = list[i];
+                list[i] = minx;
+            }
+        }
+
+        private static void QuickSort<T>( IList<T> list, int beginning, int end, Comparison<T> comparer )
+        {
+            if( end == beginning ) return;
+            if( (end - beginning) < 9 )
+            {
+                SelectionSort( list, beginning, end, comparer );
+            }
+            else
+            {
+                int l = QuickSortPivot( list, beginning, end, comparer );
+                QuickSort( list, beginning, l - 1, comparer );
+                QuickSort( list, l + 1, end, comparer );
+            }
+        }
+
+
         /// <summary>
         /// Builds a dictionary given a list of Key/Value pairs.
         /// </summary>

@@ -77,6 +77,12 @@ namespace FFTPatcher.SpriteEditor
             {
                 ourResult.Add( (byte)( ( Pixels[2 * i + 1] << 4 ) | ( Pixels[2 * i] & 0x0F ) ) );
             }
+
+            if( ourResult.Count < OriginalSize )
+            {
+                ourResult.AddRange( new byte[OriginalSize - ourResult.Count] );
+            }
+
             return new byte[][] { ourResult.ToArray() };
         }
     }

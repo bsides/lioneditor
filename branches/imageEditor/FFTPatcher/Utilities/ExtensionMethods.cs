@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace System.Runtime.CompilerServices
 {
@@ -39,6 +40,21 @@ namespace FFTPatcher
     {
 
         #region Methods (14)
+
+        public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
+        {
+            return new ReadOnlyCollection<T>( list );
+        }
+
+        public static void Sort<T>( this IList<T> list ) where T : IComparable<T>
+        {
+            Utilities.SortList( list );
+        }
+
+        public static void Sort<T>( this IList<T> list, Comparison<T> comparer )
+        {
+            Utilities.SortList( list, comparer );
+        }
 
         /// <summary>
         /// Sums the items in the list.

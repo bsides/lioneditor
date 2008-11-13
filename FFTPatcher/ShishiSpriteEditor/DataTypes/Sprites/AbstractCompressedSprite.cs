@@ -160,6 +160,11 @@ namespace FFTPatcher.SpriteEditor
 
             ourResult.AddRange( Recompress( Pixels.Sub( 2 * 36864, 2 * 36864 + 200 * 256 - 1 ) ) );
 
+            if( ourResult.Count < OriginalSize )
+            {
+                ourResult.AddRange( new byte[OriginalSize - ourResult.Count] );
+            }
+
             result.Add( ourResult.ToArray() );
 
             return result;

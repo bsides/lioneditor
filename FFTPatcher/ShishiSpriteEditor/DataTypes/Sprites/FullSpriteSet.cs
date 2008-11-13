@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using FFTPatcher.Datatypes;
+using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Core;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
 
 namespace FFTPatcher.SpriteEditor
 {
     public class FullSpriteSet
     {
-        private List<AbstractSprite> sprites;
+        private IList<AbstractSprite> sprites;
         public IList<AbstractSprite> Sprites
         {
             get { return sprites.AsReadOnly(); }
         }
 
+        private FullSpriteSet( IList<AbstractSprite> sprites )
+        {
+            sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
+            this.sprites = sprites;
+        }
+
         public FullSpriteSet( Stream iso, Context isoType )
         {
             DoInit( iso, isoType );
-            foreach( var s in sprites )
-            {
-                s.GetThumbnail().Save( s.Name + ".PNG", System.Drawing.Imaging.ImageFormat.Png );
-            }
         }
 
         public FullSpriteSet( string isoFileName, Context isoType )
@@ -29,11 +35,15 @@ namespace FFTPatcher.SpriteEditor
             {
                 DoInit( stream, isoType );
             }
-            foreach( var s in sprites )
+
+            foreach( var sprite in Sprites )
             {
-                if( !(s is ShortSprite) )
+                try
                 {
-                    s.GetThumbnail().Save( s.Name + ".PNG", System.Drawing.Imaging.ImageFormat.Png );
+                    sprite.GetThumbnail().Save( sprite.Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
+                }
+                catch( NotImplementedException )
+                {
                 }
             }
         }
@@ -224,5 +234,105 @@ namespace FFTPatcher.SpriteEditor
         private void DoInitPSP( Stream iso )
         {
         }
+
+        public void SaveFile( string filename )
+        {
+            using( ZipOutputStream stream = new ZipOutputStream( File.Open( filename, FileMode.Create, FileAccess.ReadWrite ) ) )
+            {
+                Dictionary<string, Dictionary<string, int>> files = new Dictionary<string, Dictionary<string, int>>();
+
+                foreach( var sprite in Sprites )
+                {
+                    IList<byte[]> bytes = sprite.ToByteArrays();
+                    string type = sprite.GetType().FullName;
+                    if( !files.ContainsKey( type ) )
+                    {
+                        files[type] = new Dictionary<string, int>();
+                    }
+
+                    files[type][sprite.Name] = bytes.Count;
+
+                    for( int i = 0; i < bytes.Count; i++ )
+                    {
+                        WriteFileToZip( 
+                            stream, 
+                            string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", sprite.GetType().FullName, sprite.Name, i ), 
+                            bytes[i] );
+                    }
+                }
+
+                BinaryFormatter f = new BinaryFormatter();
+                stream.PutNextEntry( new ZipEntry( "manifest" ) );
+                f.Serialize( stream, files );
+
+                const string fileVersion = "1.0";
+                WriteFileToZip( stream, "version", Encoding.UTF8.GetBytes( fileVersion ) );
+            }
+        }
+
+        public static FullSpriteSet FromFile( string filename )
+        {
+            Dictionary<string, Dictionary<string, int>> manifest;
+
+            List<AbstractSprite> sprites = new List<AbstractSprite>();
+
+            using( ZipFile zf = new ZipFile( filename ) )
+            {
+                BinaryFormatter f = new BinaryFormatter();
+                manifest = f.Deserialize( zf.GetInputStream( zf.GetEntry( "manifest" ) ) ) as Dictionary<string, Dictionary<string, int>>;
+
+                foreach( string type in manifest.Keys )
+                {
+                    Type spriteType = Type.GetType( type );
+                    ConstructorInfo shortestConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof( IList<byte> ) }, null );
+                    ConstructorInfo shortConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance , null, new Type[] { typeof( string ), typeof( IList<byte> ) }, null );
+                    ConstructorInfo longConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof( string ), typeof( IList<byte> ), typeof( IList<byte>[] ) }, null );
+
+                    foreach( string name in manifest[type].Keys )
+                    {
+                        int size = manifest[type][name];
+                        byte[][] bytes = new byte[size][];
+                        for( int i = 0; i < size; i++ )
+                        {
+                            ZipEntry entry = zf.GetEntry( string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", type, name, i ) );
+                            bytes[i] = new byte[entry.Size];
+                            StreamUtils.ReadFully( zf.GetInputStream( entry ), bytes[i] );
+                        }
+
+                        if( shortestConstructor != null )
+                        {
+                            sprites.Add( shortestConstructor.Invoke( new object[] { bytes[0] } ) as AbstractSprite );
+                        }
+                        else if( shortConstructor != null )
+                        {
+                            sprites.Add( shortConstructor.Invoke( new object[] { name, bytes[0] } ) as AbstractSprite );
+                        }
+                        else if( longConstructor != null )
+                        {
+                            IList<byte>[] extraParams = new IList<byte>[0];
+                            if( bytes.Length > 1 )
+                            {
+                                extraParams = bytes.Sub( 1 ).ToArray();
+                            }
+                            sprites.Add( longConstructor.Invoke( new object[] { name, bytes[0], extraParams } ) as AbstractSprite );
+                        }
+                        else
+                        {
+                            throw new FormatException( "manifest malformated" );
+                        }
+                    }
+                }
+                
+            }
+
+            return new FullSpriteSet( sprites );
+        }
+
+        private static void WriteFileToZip( ZipOutputStream stream, string filename, byte[] bytes )
+        {
+            stream.PutNextEntry( new ZipEntry( filename ) );
+            stream.Write( bytes, 0, bytes.Length );
+        }
+
     }
 }

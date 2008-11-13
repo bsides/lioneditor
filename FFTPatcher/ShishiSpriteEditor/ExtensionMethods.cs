@@ -40,6 +40,7 @@ namespace FFTPatcher.SpriteEditor
         public static void CopyRectangleToPointNonIndexed( this Bitmap source, Rectangle sourceRectangle, Bitmap destination, Point destinationPoint, Palette sourcePalette, bool flip )
         {
             BitmapData bmdSource = source.LockBits( new Rectangle( 0, 0, source.Width, source.Height ), ImageLockMode.ReadOnly, source.PixelFormat );
+            BitmapData bmdDest = destination.LockBits( new Rectangle( 0, 0, destination.Width, destination.Height ), ImageLockMode.WriteOnly, destination.PixelFormat );
             if( flip )
             {
                 for( int col = 0; col < sourceRectangle.Width; col++ )
@@ -50,7 +51,7 @@ namespace FFTPatcher.SpriteEditor
                         Color c = sourcePalette.Colors[index % 16];
                         if( c.A != 0 )
                         {
-                            destination.SetPixel( destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row, c );
+                            bmdDest.SetPixel24bpp( destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row, c );
                         }
                     }
                 }
@@ -66,12 +67,13 @@ namespace FFTPatcher.SpriteEditor
 
                         if( c.A != 0 )
                         {
-                            destination.SetPixel( destinationPoint.X + col, destinationPoint.Y + row, c );
+                            bmdDest.SetPixel24bpp( destinationPoint.X + col, destinationPoint.Y + row, c );
                         }
                     }
                 }
             }
             source.UnlockBits( bmdSource );
+            destination.UnlockBits( bmdDest );
         }
 
         /// <summary>
@@ -203,6 +205,15 @@ namespace FFTPatcher.SpriteEditor
             p[offset] = (byte)index;
         }
 
+        public static unsafe void SetPixel24bpp( this BitmapData bmd, int x, int y, Color color )
+        {
+            byte* p = (byte*)bmd.Scan0.ToPointer();
+            int offset = y * bmd.Stride + x * 3;
+            p[offset] = color.B;
+            p[offset + 1] = color.G;
+            p[offset + 2] = color.R;
+        }
+
         /// <summary>
         /// Gets a pixel in this bitmap.
         /// </summary>
@@ -215,6 +226,13 @@ namespace FFTPatcher.SpriteEditor
             byte* p = (byte*)bmd.Scan0.ToPointer();
             int offset = y * bmd.Stride + x;
             return p[offset];
+        }
+
+        public static unsafe Color GetPixel24bpp( this BitmapData bmd, int x, int y )
+        {
+            byte* p = (byte*)bmd.Scan0.ToPointer();
+            int offset = y * bmd.Stride + x * 3;
+            return Color.FromArgb( p[offset + 2], p[offset + 1], p[offset] );
         }
 
 

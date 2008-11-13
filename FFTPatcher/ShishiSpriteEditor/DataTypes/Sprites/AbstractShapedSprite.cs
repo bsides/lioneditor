@@ -13,8 +13,6 @@ namespace FFTPatcher.SpriteEditor
 
         protected bool FramesDirty { get; set; }
 
-        public abstract Shape Shape { get; }
-
         public abstract int ThumbnailFrame { get; }
 
         public IList<Bitmap> Frames 
@@ -39,9 +37,14 @@ namespace FFTPatcher.SpriteEditor
 
         public override Image GetThumbnail()
         {
-            Bitmap result = new Bitmap( 64, 48, PixelFormat.Format24bppRgb );
+            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format24bppRgb );
 
-            Frames[ThumbnailFrame].CopyRectangleToPointNonIndexed( ThumbnailRectangle, result, Point.Empty, Palettes[0], false );
+            Shape.Frames[ThumbnailFrame].GetFrame( this ).CopyRectangleToPointNonIndexed(
+                ThumbnailRectangle,
+                result,
+                new Point( ( 48 - ThumbnailRectangle.Width ) / 2, ( 48 - ThumbnailRectangle.Height ) / 2 ),
+                Palettes[0],
+                false );
 
             using ( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
             using ( Bitmap wholeImage = ToBitmap() )
@@ -49,9 +52,10 @@ namespace FFTPatcher.SpriteEditor
                 ColorPalette palette2 = portrait.Palette;
                 FixupColorPalette( palette2 );
                 portrait.Palette = palette2;
+
                 wholeImage.CopyRectangleToPoint( PortraitRectangle, portrait, Point.Empty, Palettes[8], false );
                 portrait.RotateFlip( RotateFlipType.Rotate270FlipNone );
-                portrait.CopyRectangleToPointNonIndexed( new Rectangle( 0, 0, 32, 48 ), result, new Point( 32, 0 ), Palettes[8], false );
+                portrait.CopyRectangleToPointNonIndexed( new Rectangle( 0, 0, 32, 48 ), result, new Point( 48, 0 ), Palettes[8], false );
             }
 
             return result;

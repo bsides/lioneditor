@@ -165,7 +165,13 @@ namespace FFTPatcher.SpriteEditor
 
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                new FullSpriteSet( openFileDialog.FileName, FFTPatcher.Datatypes.Context.US_PSX );
+                foreach ( var s in new FullSpriteSet( openFileDialog.FileName, FFTPatcher.Datatypes.Context.US_PSX ).Sprites )
+                {
+                    if ( !( s is ShortSprite ) )
+                    {
+                        s.GetThumbnail().Save( s.Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
+                    }
+                }
                 //byte[] bytes = null;
                 //try
                 //{

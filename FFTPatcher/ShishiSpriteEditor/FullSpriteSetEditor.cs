@@ -10,6 +10,8 @@ namespace FFTPatcher.SpriteEditor
 {
     public partial class FullSpriteSetEditor : UserControl
     {
+        public FullSpriteSet FullSpriteSet { get; private set; }
+
         private class FlickerFreeListView : ListView
         {
             public FlickerFreeListView()
@@ -47,6 +49,8 @@ namespace FFTPatcher.SpriteEditor
 
             listView1.Enabled = true;
             listView1.VirtualListSize = set.Sprites.Count;
+
+            FullSpriteSet = set;
 
         }
 

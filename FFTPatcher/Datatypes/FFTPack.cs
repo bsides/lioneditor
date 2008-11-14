@@ -88,7 +88,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static byte[] GetFile( FileStream stream, int index )
+        public static byte[] GetFile( Stream stream, int index )
         {
             byte[] bytes = new byte[4];
             stream.Seek( index * 4 + 4, SeekOrigin.Begin );
@@ -111,6 +111,41 @@ namespace FFTPatcher.Datatypes
             byte[] result = new byte[length];
 
             stream.Seek( start, SeekOrigin.Begin );
+            stream.Read( result, 0, (int)length );
+
+            return result;
+        }
+
+        public static byte[] GetFileFromIso( Stream stream, Files file )
+        {
+            stream.Seek( (int)PspIso.Files.PSP_GAME.USRDIR.fftpack_bin * 2048, SeekOrigin.Begin );
+            return GetFileFromFFTPack( stream, file );
+        }
+
+        public static byte[] GetFileFromFFTPack( Stream stream, Files file )
+        {
+            long pos = stream.Position;
+            byte[] loc = new byte[4];
+
+            int index = (int)file;
+            stream.Seek( index * 4 + 4 + pos, SeekOrigin.Begin );
+            stream.Read( loc, 0, 4 );
+            UInt32 start = loc.ToUInt32();
+
+            UInt32 end;
+            if ( index >= 3970 )
+            {
+                throw new ArgumentException( "file" );
+            }
+            else
+            {
+                stream.Read( loc, 0, 4 );
+                end = loc.ToUInt32();
+            }
+
+            UInt32 length = end - start;
+            byte[] result = new byte[length];
+            stream.Seek( start + pos, SeekOrigin.Begin );
             stream.Read( result, 0, (int)length );
 
             return result;

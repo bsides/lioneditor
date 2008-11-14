@@ -21,58 +21,21 @@ namespace FFTPatcher.SpriteEditor
 
         public ImageList Thumbnails { get; private set; }
 
-        private void FinishInit()
+        private FullSpriteSet( IList<AbstractSprite> sprites )
         {
+            sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
+            this.sprites = sprites;
             Thumbnails = new ImageList();
             Thumbnails.ImageSize = new System.Drawing.Size( 80, 48 );
-            foreach( var sprite in sprites )
+            foreach ( var sprite in sprites )
             {
                 Thumbnails.Images.Add( sprite.Name, sprite.GetThumbnail() );
             }
         }
 
-        private FullSpriteSet( IList<AbstractSprite> sprites )
+        private static FullSpriteSet DoInitPSX( Stream iso )
         {
-            sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
-            this.sprites = sprites;
-            FinishInit();
-        }
-
-        public FullSpriteSet( Stream iso, Context isoType )
-        {
-            DoInit( iso, isoType );
-            FinishInit();
-        }
-
-        public FullSpriteSet( string isoFileName, Context isoType )
-        {
-            using ( FileStream stream = File.Open( isoFileName, FileMode.Open, FileAccess.Read ) )
-            {
-                DoInit( stream, isoType );
-            }
-
-            FinishInit();
-        }
-
-        private void DoInit( Stream iso, Context isoType )
-        {
-            if ( isoType == Context.US_PSP )
-            {
-                DoInitPSP( iso );
-            }
-            else if ( isoType == Context.US_PSX )
-            {
-                DoInitPSX( iso );
-            }
-            else
-            {
-                throw new ArgumentException( "invalid iso type", "isoType" );
-            }
-        }
-
-        private void DoInitPSX( Stream iso )
-        {
-            sprites = new List<AbstractSprite>();
+            var sprites = new List<AbstractSprite>();
             sprites.Add( new MonsterSprite( "ADORA", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ADORA_SPR, 0, 47100 ) ) );
             sprites.Add( new MonsterSprite( "ARLI",
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ARLI_SPR, 0, 41475 ),
@@ -235,13 +198,220 @@ namespace FFTPatcher.SpriteEditor
             sprites.Add( new ShortSprite( "FURAIA", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.FURAIA_SPR, 0, 37377 ) ) );
 
             sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
+
+            return new FullSpriteSet( sprites );
         }
 
-        private void DoInitPSP( Stream iso )
+        private static FullSpriteSet DoInitPSP( Stream iso )
         {
+            
+            var sprites = new List<AbstractSprite>();
+            sprites.Add( new MonsterSprite( "ADORA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ADORA_SPR ) ) );
+            sprites.Add( new MonsterSprite( "ARLI",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARLI_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARLI2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "BEHI",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BEHI_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BEHI2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "BIBUROS",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BIBUROS_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BIBU2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "BOM",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BOM_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BOM2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "BremondtDarkDragon", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BremondtDarkDragon_SPR ) ) );
+            sprites.Add( new MonsterSprite( "DEMON",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DEMON_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DEMON2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "DORA1", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA1_SPR ) ) );
+            sprites.Add( new MonsterSprite( "DORA2",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA2_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA22_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "HASYU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HASYU_SPR ) ) );
+            sprites.Add( new MonsterSprite( "HEBI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HEBI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "HYOU",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HYOU_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HYOU2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "KI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "KYUKU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KYUKU_SPR ) ) );
+            sprites.Add( new MonsterSprite( "MINOTA",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MINOTA_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MINOTA2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "MOL",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MOL_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MOL2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "REZE_D", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.REZE_D_SPR ) ) );
+            sprites.Add( new MonsterSprite( "TETSU",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TETSU_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON2_SP2 ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON3_SP2 ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON4_SP2 ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON5_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "TORI",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TORI_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TORI2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "URI",
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.URI_SPR ),
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.URI2_SP2 ) ) );
+            sprites.Add( new MonsterSprite( "VERI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.VERI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "YUREI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.YUREI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "ZARUE", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ZARUE_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "AGURI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.AGURI_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "Aliste", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.Aliste_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "ARU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "Balthier", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.Balthier_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "BARUNA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BARUNA_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "BEIO", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BEIO_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "CLOUD", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.CLOUD_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "DAISU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DAISU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "DeathKnightArgath", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DeathKnightArgath_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "DILY", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DILY_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "DILY2", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DILY2_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "DILY3", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DILY3_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "FemaleDarkKnight", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.FemaleDarkKnight_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "FemaleOnionKnight", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.FemaleOnionKnight_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "GANDO", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.GANDO_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "GARU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.GARU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "GOB", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.GOB_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "GORU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.GORU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H61", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H61_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H75", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H75_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H76", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H76_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H77", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H77_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H78", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H78_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H80", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H80_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H81", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H81_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "H85", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H85_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "KANBA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KANBA_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "KNIGHT_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KNIGHT_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "KNIGHT_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KNIGHT_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MaleDarkKnight", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MaleDarkKnight_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MaleOnionKnight", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MaleOnionKnight_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MARA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MARA_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MINA_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MINA_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MINA_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MINA_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MONK_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MONK_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MONK_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MONK_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "MUSU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MUSU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "NINJA_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.NINJA_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "NINJA_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.NINJA_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "ORAN", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ORAN_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "ORU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ORU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "RAMUZA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RAMUZA_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "RAMUZA2", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RAMUZA2_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "RAMUZA3", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RAMUZA3_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "RUDO", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RUDO_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "RYU_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RYU_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "RYU_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RYU_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "SAMU_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SAMU_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "SAMU_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SAMU_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "SUKERU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SUKERU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "THIEF_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.THIEF_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "THIEF_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.THIEF_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "VORU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.VORU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "WIGU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.WIGU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "YUMI_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.YUMI_M_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "YUMI_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.YUMI_W_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "ZARU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ZARU_SPR ) ) );
+            sprites.Add( new TYPE1Sprite( "ZARU2", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ZARU2_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "AJORA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.AJORA_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ARUFU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARUFU_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ARUMA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARUMA_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "BARITEN", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BARITEN_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "BARU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BARU_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "BremondtHuman", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BremondtHuman_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "DORA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ERU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ERU_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "FUSUI_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.FUSUI_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "FUSUI_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.FUSUI_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "FYUNE", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.FYUNE_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "GIN_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.GIN_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "GYUMU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.GYUMU_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "H79", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H79_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "H82", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H82_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "H83", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.H83_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "HIME", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HIME_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "IKA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IKA_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ITEM_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ITEM_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ITEM_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ITEM_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "KURO_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KURO_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "KURO_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KURO_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "LEDY", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.LEDY_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "MONO_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MONO_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "MONO_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MONO_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ODORI_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ODORI_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ONMYO_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ONMYO_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ONMYO_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ONMYO_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "RAFA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RAFA_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "RAGU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.RAGU_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "REZE", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.REZE_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SAN_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SAN_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SAN_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SAN_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SERIA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SERIA_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SIMON", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SIMON_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SIRO_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SIRO_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SIRO_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SIRO_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SOURYO", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SOURYO_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SYOU_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SYOU_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "SYOU_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.SYOU_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "TOKI_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TOKI_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "TOKI_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TOKI_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "WAJU_M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.WAJU_M_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "WAJU_W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.WAJU_W_SPR ) ) );
+            sprites.Add( new TYPE2Sprite( "ZARUMOU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ZARUMOU_SPR ) ) );
+            sprites.Add( new ARUTE( FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARUTE_SPR ) ) );
+            sprites.Add( new CYOKO( FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.CYOKO_SPR ) ) );
+            sprites.Add( new KANZEN( FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KANZEN_SPR ) ) );
+            sprites.Add( new ShortSprite( "10M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._10M_SPR ) ) );
+            sprites.Add( new ShortSprite( "10W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._10W_SPR ) ) );
+            sprites.Add( new ShortSprite( "20M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._20M_SPR ) ) );
+            sprites.Add( new ShortSprite( "20W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._20W_SPR ) ) );
+            sprites.Add( new ShortSprite( "40M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._40M_SPR ) ) );
+            sprites.Add( new ShortSprite( "40W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._40W_SPR ) ) );
+            sprites.Add( new ShortSprite( "60M", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._60M_SPR ) ) );
+            sprites.Add( new ShortSprite( "60W", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE._60W_SPR ) ) );
+            sprites.Add( new ShortSprite( "CYOMON1", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.CYOMON1_SPR ) ) );
+            sprites.Add( new ShortSprite( "CYOMON2", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.CYOMON2_SPR ) ) );
+            sprites.Add( new ShortSprite( "CYOMON3", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.CYOMON3_SPR ) ) );
+            sprites.Add( new ShortSprite( "CYOMON4", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.CYOMON4_SPR ) ) );
+            sprites.Add( new ShortSprite( "FURAIA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.FURAIA_SPR ) ) );
+
+            sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
+
+            return new FullSpriteSet( sprites );
         }
 
-        public void SaveFile( string filename )
+        public void PatchPsxISO( string filename )
+        {
+            using ( Stream stream = File.Open( filename, FileMode.Open, FileAccess.ReadWrite ) )
+            {
+                PatchPsxISO( stream );
+            }
+        }
+
+        public void PatchPsxISO( Stream stream )
+        {
+            throw new NotImplementedException();
+            foreach ( var sprite in sprites )
+            {
+                //Enum.Parse(typeof(PsxIso.Sectors), 
+            }
+        }
+
+        public void PatchPspISO( Stream stream )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PatchPspISO( string filename )
+        {
+            using ( Stream stream = File.Open( filename, FileMode.Open, FileAccess.ReadWrite ) )
+            {
+                PatchPspISO( stream );
+            }
+        }
+
+        public void SaveShishiFile( string filename )
         {
             using( ZipOutputStream stream = new ZipOutputStream( File.Open( filename, FileMode.Create, FileAccess.ReadWrite ) ) )
             {
@@ -276,7 +446,33 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        public static FullSpriteSet FromFile( string filename )
+        public static FullSpriteSet FromPsxISO( string filename )
+        {
+            using ( FileStream stream = File.OpenRead( filename ) )
+            {
+                return FromPsxISO( stream );
+            }
+        }
+
+        public static FullSpriteSet FromPsxISO( Stream stream )
+        {
+            return DoInitPSX( stream );
+        }
+
+        public static FullSpriteSet FromPspISO( string filename )
+        {
+            using ( FileStream stream = File.OpenRead( filename ) )
+            {
+                return FromPspISO( stream );
+            }
+        }
+
+        public static FullSpriteSet FromPspISO( Stream stream )
+        {
+            return DoInitPSP( stream );
+        }
+
+        public static FullSpriteSet FromShishiFile( string filename )
         {
             Dictionary<string, Dictionary<string, int>> manifest;
 

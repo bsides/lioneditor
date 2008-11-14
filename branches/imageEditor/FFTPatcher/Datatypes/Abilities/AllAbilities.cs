@@ -57,7 +57,7 @@ namespace FFTPatcher.Datatypes
             List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
             if( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x14F3F0, effects ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE_BIN, 0x14F3F0, effects ) );
             }
             else if( context == Context.US_PSP )
             {

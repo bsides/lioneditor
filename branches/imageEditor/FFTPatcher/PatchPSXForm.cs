@@ -58,7 +58,7 @@ namespace FFTPatcher
 		#region Instance Variables (4) 
 
         private bool[] battlePatchable = new bool[Enum.GetValues( typeof( BATTLEPatchable ) ).Length];
-private byte[] SCEAP_DAT = new byte[20480];
+        private byte[] SCEAP_DAT = new byte[20480];
         private Bitmap sceapPreview = new Bitmap( 320, 32 );
         private bool[] scusPatchable = new bool[Enum.GetValues( typeof( SCUSPatchable ) ).Length];
 
@@ -84,7 +84,7 @@ private byte[] SCEAP_DAT = new byte[20480];
             set { scusPatchable[(int)SCUSPatchable.ActionMenus] = value; }
         }
 
-public string CustomSCEAPFileName
+        public string CustomSCEAPFileName
         {
             get { return sceapFileNameTextBox.Text; }
         }
@@ -251,7 +251,7 @@ public string CustomSCEAPFileName
             entd4CheckBox.Checked = FFTPatch.ENTDs.ENTDs[3].HasChanged;
             fontCheckBox.Checked = false;
             eccCheckBox.Enabled = false;
-            eccCheckBox.Checked = false;
+            eccCheckBox.Checked = true;
 
             UpdateNextEnabled();
 
@@ -299,7 +299,7 @@ public string CustomSCEAPFileName
             UpdateNextEnabled();
         }
 
-private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
+        private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
         {
             CheckBox box = (CheckBox)sender;
             Checkboxes cb = (Checkboxes)Enum.Parse( typeof( Checkboxes ), box.Tag as string );
@@ -429,7 +429,7 @@ private void UpdateNextEnabled()
             Default,
             Custom
         }
-private enum Checkboxes
+        private enum Checkboxes
         {
             ENTD1,
             ENTD2,
@@ -438,7 +438,7 @@ private enum Checkboxes
             FONT,
             RegenECC,
         }
-private enum SCUSPatchable
+        private enum SCUSPatchable
         {
             Abilities,
             Items,
@@ -452,7 +452,7 @@ private enum SCUSPatchable
             InflictStatus,
             Poach
         }
-private enum BATTLEPatchable
+        private enum BATTLEPatchable
         {
             AbilityEffects,
             FontWidths,

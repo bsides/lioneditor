@@ -228,16 +228,16 @@ namespace FFTPatcher
             {
                 foreach ( PatchedByteArray patch in patches )
                 {
-                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, false, patch.Sector,
+                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector,
                         patch.Offset, patch.Bytes, true );
                     sendProgress( "Patching ISO" );
                 }
 
-                if ( patchList.RegenECC )
-                {
-                    IsoPatch.FixupECC( IsoPatch.IsoType.Mode2Form1, stream );
-                    sendProgress( "Fixing ECC/EDC" );
-                }
+                //if ( patchList.RegenECC )
+                //{
+                //    IsoPatch.FixupECC( IsoPatch.IsoType.Mode2Form1, stream );
+                //    sendProgress( "Fixing ECC/EDC" );
+                //}
             }
 
         }

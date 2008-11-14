@@ -326,6 +326,7 @@ namespace FFTPatcher
             // eccCheckBox
             // 
             this.eccCheckBox.AutoSize = true;
+            this.eccCheckBox.Checked = true;
             this.eccCheckBox.Location = new System.Drawing.Point( 172, 287 );
             this.eccCheckBox.Name = "eccCheckBox";
             this.eccCheckBox.Size = new System.Drawing.Size( 103, 17 );

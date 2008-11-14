@@ -37,7 +37,7 @@ namespace FFTPatcher.SpriteEditor
 
         public override Image GetThumbnail()
         {
-            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format24bppRgb );
+            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format32bppArgb );
 
             Shape.Frames[ThumbnailFrame].GetFrame( this ).CopyRectangleToPointNonIndexed(
                 ThumbnailRectangle,

@@ -34,6 +34,7 @@ namespace FFTPatcher.SpriteEditor
         string filename = string.Empty;
         IList<Bitmap> frames;
         private List<Shape> shapes;
+        private SpriteDialog dialog = new SpriteDialog();
 
         #endregion Fields
 
@@ -66,9 +67,15 @@ namespace FFTPatcher.SpriteEditor
             //shapesListBox.DrawItem += new DrawItemEventHandler( shapesListBox_DrawItem );
             //shapesListBox.SelectedIndexChanged += new EventHandler( shapesListBox_SelectedIndexChanged );
 
+            fullSpriteSetEditor1.ImageActivated += new EventHandler<FullSpriteSetEditor.ImageEventArgs>( fullSpriteSetEditor1_ImageActivated );
             BuildShapes();
             //shapesComboBox.Items.AddRange( shapes.ToArray() );
             //shapesComboBox.SelectedIndexChanged += new EventHandler( shapesComboBox_SelectedIndexChanged );
+        }
+
+        void fullSpriteSetEditor1_ImageActivated( object sender, FullSpriteSetEditor.ImageEventArgs e )
+        {
+            dialog.ShowDialog( e.Image );
         }
 
         #endregion Constructors
@@ -191,6 +198,16 @@ namespace FFTPatcher.SpriteEditor
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 fullSpriteSetEditor1.LoadFullSpriteSet( FullSpriteSet.FromShishiFile( openFileDialog.FileName ) );
+                int j = fullSpriteSetEditor1.FullSpriteSet.Sprites.Count;
+                for ( int i = 0; i < j; i++ )
+                {
+                    fullSpriteSetEditor1.FullSpriteSet.Thumbnails.Images[i].Save( fullSpriteSetEditor1.FullSpriteSet.Sprites[i].Name + ".thumb.png", System.Drawing.Imaging.ImageFormat.Png );
+                    //fullSpriteSetEditor1.FullSpriteSet.Sprites[i].ToBitmap().Save( fullSpriteSetEditor1.FullSpriteSet.Sprites[i].Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
+                }
+                //foreach ( var s in fullSpriteSetEditor1.FullSpriteSet.Thumbnails.Images )
+                //{
+                //    (s as Image).Save(
+                //}
                 //foreach ( var s in new FullSpriteSet( openFileDialog.FileName, FFTPatcher.Datatypes.Context.US_PSX ).Sprites )
                 //{
                 //    if ( !( s is ShortSprite ) )

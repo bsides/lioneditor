@@ -110,6 +110,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="SpriteDialog.resx">
+      <DependentUpon>SpriteDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -325,6 +329,12 @@
     <Compile Include="DataTypes\Shape.cs" />
     <Compile Include="DataTypes\Sprites\AbstractSprite.cs" />
     <Compile Include="DataTypes\Sprites\ShortSprite.cs" />
+    <Compile Include="SpriteDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpriteDialog.Designer.cs">
+      <DependentUpon>SpriteDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>

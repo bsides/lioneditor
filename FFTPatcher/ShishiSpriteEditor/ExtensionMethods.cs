@@ -51,7 +51,7 @@ namespace FFTPatcher.SpriteEditor
                         Color c = sourcePalette.Colors[index % 16];
                         if( c.A != 0 )
                         {
-                            bmdDest.SetPixel24bpp( destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row, c );
+                            bmdDest.SetPixel32bpp( destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row, c );
                         }
                     }
                 }
@@ -67,7 +67,7 @@ namespace FFTPatcher.SpriteEditor
 
                         if( c.A != 0 )
                         {
-                            bmdDest.SetPixel24bpp( destinationPoint.X + col, destinationPoint.Y + row, c );
+                            bmdDest.SetPixel32bpp( destinationPoint.X + col, destinationPoint.Y + row, c );
                         }
                     }
                 }
@@ -205,13 +205,14 @@ namespace FFTPatcher.SpriteEditor
             p[offset] = (byte)index;
         }
 
-        public static unsafe void SetPixel24bpp( this BitmapData bmd, int x, int y, Color color )
+        public static unsafe void SetPixel32bpp( this BitmapData bmd, int x, int y, Color color )
         {
             byte* p = (byte*)bmd.Scan0.ToPointer();
-            int offset = y * bmd.Stride + x * 3;
+            int offset = y * bmd.Stride + x * 4;
             p[offset] = color.B;
             p[offset + 1] = color.G;
             p[offset + 2] = color.R;
+            p[offset + 3] = color.A;
         }
 
         /// <summary>
@@ -228,11 +229,11 @@ namespace FFTPatcher.SpriteEditor
             return p[offset];
         }
 
-        public static unsafe Color GetPixel24bpp( this BitmapData bmd, int x, int y )
+        public static unsafe Color GetPixel32bpp( this BitmapData bmd, int x, int y )
         {
             byte* p = (byte*)bmd.Scan0.ToPointer();
-            int offset = y * bmd.Stride + x * 3;
-            return Color.FromArgb( p[offset + 2], p[offset + 1], p[offset] );
+            int offset = y * bmd.Stride + x * 4;
+            return Color.FromArgb( p[offset + 3], p[offset + 2], p[offset + 1], p[offset] );
         }
 
 

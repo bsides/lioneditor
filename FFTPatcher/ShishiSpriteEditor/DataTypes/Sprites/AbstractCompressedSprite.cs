@@ -11,7 +11,7 @@ namespace FFTPatcher.SpriteEditor
 
         public override System.Drawing.Image GetThumbnail()
         {
-            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format24bppRgb );
+            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format32bppRgb );
 
             using( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
             using( Bitmap wholeImage = ToBitmap() )

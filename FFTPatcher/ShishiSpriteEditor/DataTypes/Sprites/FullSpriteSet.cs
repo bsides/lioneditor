@@ -7,6 +7,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -18,15 +19,29 @@ namespace FFTPatcher.SpriteEditor
             get { return sprites.AsReadOnly(); }
         }
 
+        public ImageList Thumbnails { get; private set; }
+
+        private void FinishInit()
+        {
+            Thumbnails = new ImageList();
+            Thumbnails.ImageSize = new System.Drawing.Size( 80, 48 );
+            foreach( var sprite in sprites )
+            {
+                Thumbnails.Images.Add( sprite.Name, sprite.GetThumbnail() );
+            }
+        }
+
         private FullSpriteSet( IList<AbstractSprite> sprites )
         {
             sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
             this.sprites = sprites;
+            FinishInit();
         }
 
         public FullSpriteSet( Stream iso, Context isoType )
         {
             DoInit( iso, isoType );
+            FinishInit();
         }
 
         public FullSpriteSet( string isoFileName, Context isoType )
@@ -36,19 +51,7 @@ namespace FFTPatcher.SpriteEditor
                 DoInit( stream, isoType );
             }
 
-            foreach( var sprite in Sprites )
-            {
-                if ( !( sprite is ShortSprite ) )
-                {
-                    try
-                    {
-                        sprite.GetThumbnail().Save( sprite.Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
-                    }
-                    catch ( NotImplementedException )
-                    {
-                    }
-                }
-            }
+            FinishInit();
         }
 
         private void DoInit( Stream iso, Context isoType )

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -45,12 +46,36 @@ namespace FFTPatcher.SpriteEditor
 
         protected override void ToBitmapInner( System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
         {
-            throw new NotImplementedException();
+            for( int i = 0; (i < Pixels.Count) && (i / Width < Height); i++ )
+            {
+                bmd.SetPixel( i % Width, i / Width, Pixels[i] );
+            }
         }
 
         public override Image GetThumbnail()
         {
-            throw new NotImplementedException();
+            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format24bppRgb );
+
+            using( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
+            using( Bitmap wholeImage = ToBitmap() )
+            {
+                wholeImage.CopyRectangleToPointNonIndexed(
+                    ThumbnailRectangle,
+                    result,
+                    new Point( (48 - ThumbnailRectangle.Width) / 2, (48 - ThumbnailRectangle.Height) / 2 ),
+                    Palettes[0],
+                    false );
+
+                ColorPalette palette2 = portrait.Palette;
+                FixupColorPalette( palette2 );
+                portrait.Palette = palette2;
+                wholeImage.CopyRectangleToPoint( PortraitRectangle, portrait, Point.Empty, Palettes[8], false );
+                portrait.RotateFlip( RotateFlipType.Rotate270FlipNone );
+
+                portrait.CopyRectangleToPointNonIndexed( new Rectangle( 0, 0, 32, 48 ), result, new Point( 48, 0 ), Palettes[8], false );
+            }
+
+            return result;
         }
 
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )

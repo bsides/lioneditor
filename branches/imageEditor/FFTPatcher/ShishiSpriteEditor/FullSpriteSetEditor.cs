@@ -27,6 +27,28 @@ namespace FFTPatcher.SpriteEditor
             listView1.RetrieveVirtualItem += new RetrieveVirtualItemEventHandler( listView1_RetrieveVirtualItem );
             listView1.CacheVirtualItems += new CacheVirtualItemsEventHandler( listView1_CacheVirtualItems );
             listView1.Enabled = false;
+            listView1.Activation = ItemActivation.Standard;
+            listView1.ItemActivate += new EventHandler( listView1_ItemActivate );
+        }
+
+        public class ImageEventArgs : EventArgs
+        {
+            public Image Image { get; private set; }
+            public ImageEventArgs( Image image )
+            {
+                Image = image;
+            }
+        }
+
+        public event EventHandler<ImageEventArgs> ImageActivated;
+
+        void listView1_ItemActivate( object sender, EventArgs e )
+        {
+            if ( ImageActivated != null )
+            {
+                ImageActivated( this, new ImageEventArgs( FullSpriteSet.Sprites[listView1.SelectedIndices[0]].ToBitmap() ) );
+            }
+            
         }
 
         void listView1_CacheVirtualItems( object sender, CacheVirtualItemsEventArgs e )

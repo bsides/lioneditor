@@ -181,38 +181,6 @@ namespace FFTPatcher.SpriteEditor
         /// Converts this sprite to an array of bytes.
         /// </summary>
         public abstract IList<byte[]> ToByteArrays();
-        //{
-        //    List<byte> result = new List<byte>();
-        //    if( SPR && !SP2 )
-        //    {
-        //        foreach( Palette p in Palettes )
-        //        {
-        //            result.AddRange( p.ToByteArray() );
-        //        }
-        //    }
-
-        //    for(
-        //        int i = 0;
-        //        (Compressed && (i < 36864) && (2 * i + 1 < Pixels.Length)) ||
-        //        (!Compressed && (2 * i + 1 < Pixels.Length));
-        //        i++ )
-        //    {
-        //        result.Add( (byte)((Pixels[2 * i + 1] << 4) | (Pixels[2 * i] & 0x0F)) );
-        //    }
-
-        //    if( Pixels.Length > 2 * 36864 && Compressed )
-        //    {
-        //        result.AddRange( Recompress( Pixels.Sub( 2 * 36864 ) ) );
-        //    }
-
-        //    if( result.Count < OriginalSize )
-        //    {
-        //        result.AddRange( new byte[OriginalSize - result.Count] );
-        //    }
-
-        //    return result.ToArray();
-        //}
-
         #endregion Methods
 
         public void Draw( Graphics graphics, int paletteIndex )

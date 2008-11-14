@@ -2714,9 +2714,9 @@ namespace FFTPatcher
             BATTLE_BIN = 1000,
             SCEAP_DAT = 198,
             SCUS_942_21 = 24,
-            SYSTEM_CNF = 24,
+            SYSTEM_CNF = 23,
         }
-public static class BATTLE
+        public static class BATTLE
         {
             public const Sectors _10M_SPR = Sectors.BATTLE_10M_SPR;
             public const Sectors _10W_SPR = Sectors.BATTLE_10W_SPR;
@@ -5205,7 +5205,7 @@ public static class BATTLE
             public Sectors Sector { get; private set; }
             public int StartLocation { get; private set; }
             public int Length { get; private set; }
-                        public KnownPosition( Sectors sector, int startLocation, int length )
+            public KnownPosition( Sectors sector, int startLocation, int length )
             {
                Sector = sector;
                StartLocation = startLocation;

@@ -77,6 +77,12 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="DataTypes\Frame.cs" />
     <Compile Include="DataTypes\Sprites\KANZEN.cs" />
+    <Compile Include="FullSpriteSetEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FullSpriteSetEditor.Designer.cs">
+      <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,9 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FullSpriteSetEditor.resx">
+      <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -33,10 +33,10 @@ namespace FFTPatcher.SpriteEditor
 
         public class ImageEventArgs : EventArgs
         {
-            public Image Image { get; private set; }
-            public ImageEventArgs( Image image )
+            public AbstractSprite Sprite { get; private set; }
+            public ImageEventArgs( AbstractSprite sprite )
             {
-                Image = image;
+                Sprite = sprite;
             }
         }
 
@@ -46,7 +46,7 @@ namespace FFTPatcher.SpriteEditor
         {
             if ( ImageActivated != null )
             {
-                ImageActivated( this, new ImageEventArgs( FullSpriteSet.Sprites[listView1.SelectedIndices[0]].ToBitmap() ) );
+                ImageActivated( this, new ImageEventArgs( FullSpriteSet.Sprites[listView1.SelectedIndices[0]] ) );
             }
             
         }
@@ -57,6 +57,10 @@ namespace FFTPatcher.SpriteEditor
 
         private List<ListViewItem> items;
 
+        /// <summary>
+        /// Loads the full sprite set.
+        /// </summary>
+        /// <param name="set">The set.</param>
         public void LoadFullSpriteSet( FullSpriteSet set )
         {
             items = new List<ListViewItem>();
@@ -71,7 +75,7 @@ namespace FFTPatcher.SpriteEditor
 
             listView1.Enabled = true;
             listView1.VirtualListSize = set.Sprites.Count;
-
+            
             FullSpriteSet = set;
 
         }

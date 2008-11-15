@@ -32,7 +32,6 @@ namespace FFTPatcher.SpriteEditor
         #region Fields (3)
 
         string filename = string.Empty;
-        IList<Bitmap> frames;
         private List<Shape> shapes;
         private SpriteDialog dialog = new SpriteDialog();
 
@@ -75,7 +74,7 @@ namespace FFTPatcher.SpriteEditor
 
         void fullSpriteSetEditor1_ImageActivated( object sender, FullSpriteSetEditor.ImageEventArgs e )
         {
-            dialog.ShowDialog( e.Image );
+            dialog.ShowDialog( e.Sprite, this );
         }
 
         #endregion Constructors
@@ -285,21 +284,6 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private void paletteSelector_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            //spriteViewer1.SetPalette( paletteSelector.SelectedIndex, portraitCheckbox.Checked ? (paletteSelector.SelectedIndex % 8 + 8) : paletteSelector.SelectedIndex );
-        }
-
-        private void portraitCheckbox_CheckedChanged( object sender, EventArgs e )
-        {
-            //spriteViewer1.SetPalette( paletteSelector.SelectedIndex, portraitCheckbox.Checked ? (paletteSelector.SelectedIndex % 8 + 8) : paletteSelector.SelectedIndex );
-        }
-
-        private void properCheckbox_CheckedChanged( object sender, EventArgs e )
-        {
-            //spriteViewer1.Proper = properCheckbox.Checked;
-        }
-
         private void SaveBytes( string filename, byte[] bytes )
         {
             FileStream stream = null;
@@ -355,40 +339,6 @@ namespace FFTPatcher.SpriteEditor
             //    }
             //}
         }
-
-        private void shapesListBox_DrawItem( object sender, DrawItemEventArgs e )
-        {
-            //if( shapesListBox.Items.Count > 0 && spriteViewer1.Sprite != null )
-            //{
-            //    if( (e.State & DrawItemState.Selected) == DrawItemState.Selected )
-            //    {
-            //        e.Graphics.FillRectangle( SystemBrushes.Highlight, e.Bounds );
-            //    }
-            //    else
-            //    {
-            //        e.Graphics.FillRectangle( SystemBrushes.Window, e.Bounds );
-            //    }
-
-            //    Bitmap f = frames[e.Index];
-            //    e.Graphics.DrawImage( f, new Point( e.Bounds.Location.X + 10, e.Bounds.Location.Y + 10 ) );
-            //}
-        }
-
-        private void shapesListBox_MeasureItem( object sender, MeasureItemEventArgs e )
-        {
-            e.ItemHeight = 180;
-            e.ItemWidth = 230;
-        }
-
-        private void shapesListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            //Frame f = shapesListBox.Items[shapesListBox.SelectedIndex] as Frame;
-            //if( f != null )
-            //{
-            //    spriteViewer1.HighlightTiles( f.Tiles );
-            //}
-        }
-
 
         #endregion Methods
 

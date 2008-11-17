@@ -129,13 +129,11 @@ namespace FFTPatcher.SpriteEditor
         /// Draws a sprite.
         /// </summary>
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
-        /// <param name="s">The <see cref="Sprite"/> to draw.</param>
-        /// <param name="p">The <see cref="Palette"/> to use to draw the sprite.</param>
-        public static void DrawSprite( this Graphics g, AbstractSprite s, Palette p, Palette portrait, bool proper )
+        public static void DrawSprite( this Graphics g, AbstractSprite s, int palette, int portrait )
         {
-            using( Bitmap b = new Bitmap( 256, 488 ) )
+            using ( Bitmap b = new Bitmap( s.Width, s.Height ) )
             {
-                b.DrawSprite( s, p, portrait, proper );
+                b.DrawSprite( s, palette, portrait );
                 g.DrawImage( b, 0, 0 );
             }
         }
@@ -146,49 +144,9 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="b">The <see cref="Bitmap"/> object to draw on.</param>
         /// <param name="s">The <see cref="Sprite"/> to draw.</param>
         /// <param name="p">The <see cref="Palette"/> to use to draw the sprite.</param>
-        public static void DrawSprite( this Bitmap b, AbstractSprite s, Palette p, Palette portrait, bool proper )
+        public static void DrawSprite( this Bitmap b, AbstractSprite s, int palette, int portrait )
         {
-            if( proper )
-            {
-                for( int i = 0; (i < s.Pixels.Count) && (i / 256 < 256); i++ )
-                {
-                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
-                }
-                for( int i = 288 * 256; (i < s.Pixels.Count) && (i / 256 < 488); i++ )
-                {
-                    b.SetPixel( i % 256, i / 256 - 32, p.Colors[s.Pixels[i] % 16] );
-                }
-                for( int i = 256 * 256; (i < s.Pixels.Count) && (i / 256 < 288); i++ )
-                {
-                    b.SetPixel( i % 256, i / 256 + 200, p.Colors[s.Pixels[i] % 16] );
-                }
-
-                Rectangle pRect = portraitRectangle;
-                pRect.Offset( 0, 200 );
-
-                for( int x = pRect.X; x < pRect.Right; x++ )
-                {
-                    for( int y = pRect.Y; y < pRect.Bottom && (x + y * 256 < s.Pixels.Count); y++ )
-                    {
-                        b.SetPixel( x, y, portrait.Colors[s.Pixels[x + (y - 200) * 256] % 16] );
-                    }
-                }
-            }
-            else
-            {
-                for( int i = 0; (i < s.Pixels.Count) && (i / 256 < b.Height); i++ )
-                {
-                    b.SetPixel( i % 256, i / 256, p.Colors[s.Pixels[i] % 16] );
-                }
-
-                for( int x = portraitRectangle.X; x < portraitRectangle.Right; x++ )
-                {
-                    for( int y = portraitRectangle.Y; y < portraitRectangle.Bottom && (x + y * 256 < s.Pixels.Count); y++ )
-                    {
-                        b.SetPixel( x, y, portrait.Colors[s.Pixels[x + y * 256] % 16] );
-                    }
-                }
-            }
+            s.DrawSprite( b, palette, portrait );
         }
 
         /// <summary>

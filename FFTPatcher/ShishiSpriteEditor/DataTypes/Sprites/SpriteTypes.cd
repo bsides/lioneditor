@@ -2,15 +2,22 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="FFTPatcher.SpriteEditor.AbstractSprite">
     <Position X="0.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="FFTPatcher.SpriteEditor.AbstractSprite.SetPixel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataTypes\Sprites\AbstractSprite.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>EACEAAASBEQAAgAAIIABBEQAAAAAAAgAACAAiAAAAAA=</HashCode>
+      <HashCode>EACEAAASBEQAwgAAIYABDGQAAAAAAAhAACgAiAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\AbstractSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.AbstractCompressedSprite" Collapsed="true">
     <Position X="4" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>EACEAAISBAACAAAAAICAAAAAAAABAAAAAAABCAAAAAA=</HashCode>
+      <HashCode>EAAEAAISBAACgAAAAICAACAAAAABAABAAAABCAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\AbstractCompressedSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -31,7 +38,7 @@
   <Class Name="FFTPatcher.SpriteEditor.MonsterSprite" Collapsed="true">
     <Position X="7.25" Y="0.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACBEACAAAAAIAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAACBEACAAAAAIAAAAAAAAAAAABAAAAACAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\MonsterSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -57,16 +64,16 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.ShortSprite">
-    <Position X="0.5" Y="6" Width="1.5" />
+    <Position X="3" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAASBEAAAAAAAIAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAASBEAAgAAAAIAAACAAAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\ShortSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.AbstractShapedSprite" Collapsed="true">
     <Position X="4.25" Y="1.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AACAAAAIAAAAAAAAAAAAAAABAAAAAAAAAAAAAQAAAAE=</HashCode>
+      <HashCode>AAAAAAAJAAQAgAAAIAAAAAABAAAAAAAAAAAAAQAAAAE=</HashCode>
       <FileName>DataTypes\Sprites\AbstractShapedSprite.cs</FileName>
     </TypeIdentifier>
   </Class>

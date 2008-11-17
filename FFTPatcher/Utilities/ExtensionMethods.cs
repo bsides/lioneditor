@@ -82,6 +82,19 @@ namespace FFTPatcher
             return false;
         }
 
+        public static void CopyTo<T>( this IList<T> list, IList<T> destination, int index )
+        {
+            if ( destination.Count - index > list.Count )
+            {
+                throw new InvalidOperationException( "source list is larger than destination" );
+            }
+
+            for ( int i = 0; i < list.Count - index; i++ )
+            {
+                destination[i] = list[i];
+            }
+        }
+
         /// <summary>
         /// Returns the location of every item in the list that is equal to a given item.
         /// </summary>

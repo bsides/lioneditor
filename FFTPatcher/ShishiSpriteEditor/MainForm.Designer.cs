@@ -53,6 +53,7 @@ namespace FFTPatcher.SpriteEditor
             System.Windows.Forms.MenuItem separator3;
             System.Windows.Forms.MenuItem pspMenuItem;
             System.Windows.Forms.MenuItem psxMenuItem;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
@@ -66,6 +67,7 @@ namespace FFTPatcher.SpriteEditor
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.fullSpriteSetEditor1 = new FFTPatcher.SpriteEditor.FullSpriteSetEditor();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             fileMenu = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
@@ -186,15 +188,20 @@ namespace FFTPatcher.SpriteEditor
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.fullSpriteSetEditor1.Location = new System.Drawing.Point( 12, 12 );
             this.fullSpriteSetEditor1.Name = "fullSpriteSetEditor1";
-            this.fullSpriteSetEditor1.Size = new System.Drawing.Size( 516, 500 );
+            this.fullSpriteSetEditor1.Size = new System.Drawing.Size( 516, 536 );
             this.fullSpriteSetEditor1.TabIndex = 0;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 540, 524 );
+            this.ClientSize = new System.Drawing.Size( 540, 560 );
             this.Controls.Add( this.fullSpriteSetEditor1 );
+            this.Icon = ( (System.Drawing.Icon)( resources.GetObject( "$this.Icon" ) ) );
             this.MaximizeBox = false;
             this.Menu = this.mainMenu;
             this.MinimizeBox = false;
@@ -221,6 +228,7 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.MenuItem importPsxMenuItem;
         private System.Windows.Forms.MenuItem patchPsxMenuItem;
         private FullSpriteSetEditor fullSpriteSetEditor1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

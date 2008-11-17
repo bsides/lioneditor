@@ -21,21 +21,44 @@ namespace FFTPatcher.SpriteEditor
             {
                 if ( FramesDirty )
                 {
-                    frames = Shape.GetFrames( this );
-                    FramesDirty = false;
+                    CacheFrames();
                 }
 
                 return new ReadOnlyCollection<Bitmap>( frames );
             }
         }
 
-        public AbstractShapedSprite( string name, IList<byte> bytes, params IList<byte>[] otherBytes )
-            : base( name, bytes, otherBytes )
+        public void CacheFrames()
+        {
+            frames = Shape.GetFrames( this );
+            FramesDirty = false;
+        }
+
+        public AbstractShapedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] otherBytes )
+            : base( name, filenames, bytes, otherBytes )
         {
             FramesDirty = true;
         }
 
-        public override Image GetThumbnail()
+        public override void Import( Image file )
+        {
+            base.Import( file );
+            FramesDirty = true;
+        }
+
+        public override void ImportBitmap( Bitmap bmp, out bool foundBadPixels )
+        {
+            base.ImportBitmap( bmp, out foundBadPixels );
+            FramesDirty = true;
+        }
+
+        protected override void ImportSPRInner( IList<byte> bytes )
+        {
+            FramesDirty = true;
+            base.ImportSPRInner( bytes );
+        }
+
+        protected override Image GetThumbnailInner()
         {
             Bitmap result = new Bitmap( 80, 48, PixelFormat.Format32bppArgb );
 
@@ -47,8 +70,8 @@ namespace FFTPatcher.SpriteEditor
                 false );
 
             using ( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
-            using ( Bitmap wholeImage = ToBitmap() )
             {
+                Bitmap wholeImage = ToBitmap();
                 ColorPalette palette2 = portrait.Palette;
                 FixupColorPalette( palette2 );
                 portrait.Palette = palette2;

@@ -33,11 +33,11 @@ namespace FFTPatcher.SpriteEditor
         private List<Frame> frames;
         private string name = string.Empty;
 
-        private static Shape type1 = new Shape( Properties.Resources.TYPE1_SHP, "TYPE1" );
-        private static Shape type2 = new Shape( Properties.Resources.TYPE2_SHP, "TYPE2" );
-        private static Shape kanzen = new Shape( Properties.Resources.KANZEN_SHP, "KANZEN" );
-        private static Shape arute = new Shape( Properties.Resources.ARUTE_SHP, "ARUTE" );
-        private static Shape cyoko = new Shape( Properties.Resources.CYOKO_SHP, "CYOKO" );
+        private static Shape type1 = new Shape( Properties.Resources.TYPE1_SHP, "TYPE1", new Rectangle( 106, 85, 48, 56 ) );
+        private static Shape type2 = new Shape( Properties.Resources.TYPE2_SHP, "TYPE2", new Rectangle( 106, 85, 48, 56 ) );
+        private static Shape kanzen = new Shape( Properties.Resources.KANZEN_SHP, "KANZEN", new Rectangle( 75, 5, 100, 115 ) );
+        private static Shape arute = new Shape( Properties.Resources.ARUTE_SHP, "ARUTE", new Rectangle( 75, 35, 90, 100 ) );
+        private static Shape cyoko = new Shape( Properties.Resources.CYOKO_SHP, "CYOKO", new Rectangle( 100, 80, 56, 56 ) );
 
         public static Shape TYPE1 { get { return type1; } }
         public static Shape TYPE2 { get { return type2; } }
@@ -58,12 +58,15 @@ namespace FFTPatcher.SpriteEditor
         }
 
 
+        public Rectangle RelevantRectangle { get; private set; }
+
 		#endregion Properties 
 
 		#region Constructors (1) 
 
-        private Shape( IList<byte> bytes, string name )
+        private Shape( IList<byte> bytes, string name, Rectangle relevantRectangle )
         {
+            RelevantRectangle = relevantRectangle;
             this.name = name;
             int jump = (int)bytes.Sub( 0, 3 ).ToUInt32();
             int secondHalf = bytes[4] + bytes[5] * 256;

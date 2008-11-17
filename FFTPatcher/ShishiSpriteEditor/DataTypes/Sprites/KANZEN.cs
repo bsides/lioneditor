@@ -22,6 +22,10 @@ namespace FFTPatcher.SpriteEditor
             //get { return new System.Drawing.Rectangle( 30, 5, 48, 48 ); }
         }
 
+        internal KANZEN( SerializedSprite sprite )
+            : base( sprite )
+        {
+        }
         public KANZEN( IList<byte> bytes )
             : base( "KANZEN", new string[] { "KANZEN.SPR" }, bytes )
         {

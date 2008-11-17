@@ -79,15 +79,29 @@ namespace FFTPatcher.SpriteEditor
 
         #region Constructors (1)
 
-        public AbstractSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
+        internal AbstractSprite( SerializedSprite sprite )
+            : this( sprite.Name, sprite.Filenames )
+        {
+            OriginalSize = sprite.OriginalSize;
+            Palettes = BuildPalettes( sprite.Palettes );
+            Pixels = new byte[sprite.Pixels.Count];
+            sprite.Pixels.CopyTo( Pixels, 0 );
+        }
+
+        private AbstractSprite( string name, IList<string> filenames )
         {
             Name = name;
             Filenames = filenames.ToArray();
+            ThumbnailDirty = true;
+            BitmapDirty = true;
+        }
+
+        protected AbstractSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
+            : this( name, filenames )
+        {
             OriginalSize = bytes.Count;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             Pixels = BuildPixels( bytes.Sub( 16 * 32 ), extraBytes );
-            ThumbnailDirty = true;
-            BitmapDirty = true;
         }
 
         #endregion Constructors

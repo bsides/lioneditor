@@ -34,6 +34,12 @@ namespace FFTPatcher.SpriteEditor
             FramesDirty = false;
         }
 
+        internal AbstractShapedSprite( SerializedSprite sprite )
+            : base( sprite )
+        {
+            FramesDirty = true;
+        }
+
         public AbstractShapedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] otherBytes )
             : base( name, filenames, bytes, otherBytes )
         {

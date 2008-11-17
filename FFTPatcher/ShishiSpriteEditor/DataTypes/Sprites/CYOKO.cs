@@ -22,6 +22,11 @@ namespace FFTPatcher.SpriteEditor
             //get { return new System.Drawing.Rectangle( 10, 12, 48, 48 ); }
         }
 
+        internal CYOKO( SerializedSprite sprite )
+            : base( sprite )
+        {
+        }
+
         public CYOKO( IList<byte> bytes )
             : base( "CYOKO", new string[] { "CYOKO.SPR" }, bytes )
         {

@@ -43,7 +43,6 @@
             this.listView1.TabIndex = 0;
             this.listView1.TileSize = new System.Drawing.Size( 80, 48 );
             this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.VirtualMode = true;
             // 
             // FullSpriteSetEditor
             // 

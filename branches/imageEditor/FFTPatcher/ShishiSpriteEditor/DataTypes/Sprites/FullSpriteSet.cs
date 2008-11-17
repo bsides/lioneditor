@@ -21,70 +21,90 @@ namespace FFTPatcher.SpriteEditor
 
         public ImageList Thumbnails { get; private set; }
 
-        private FullSpriteSet( IList<AbstractSprite> sprites )
+        private FullSpriteSet( IList<AbstractSprite> sprites, System.ComponentModel.BackgroundWorker worker, int tasksComplete, int tasks )
         {
+            bool haveWorker = worker != null;
+            if ( haveWorker )
+                worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, "Sorting" );
             sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
             this.sprites = sprites;
             Thumbnails = new ImageList();
             Thumbnails.ImageSize = new System.Drawing.Size( 80, 48 );
             foreach ( var sprite in sprites )
             {
+                if ( haveWorker )
+                    worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, string.Format( "Generating thumbnail for {0}", sprite.Name ) );
+
                 Thumbnails.Images.Add( sprite.Name, sprite.GetThumbnail() );
+                if ( sprite is AbstractShapedSprite )
+                {
+                    ( sprite as AbstractShapedSprite ).CacheFrames();
+                }
             }
         }
 
         private static FullSpriteSet DoInitPSX( Stream iso )
         {
             var sprites = new List<AbstractSprite>();
-            sprites.Add( new MonsterSprite( "ADORA", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ADORA_SPR, 0, 47100 ) ) );
-            sprites.Add( new MonsterSprite( "ARLI",
+            sprites.Add( new MonsterSprite( "ADORA", new string[] { "ADORA.SPR" },
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ADORA_SPR, 0, 47100 ) ) );
+            sprites.Add( new MonsterSprite( "ARLI", new string[] { "ARLI.SPR", "ARLI2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ARLI_SPR, 0, 41475 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ARLI2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "BEHI",
+            sprites.Add( new MonsterSprite( "BEHI", new string[] { "BEHI.SPR", "BEHI2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.BEHI_SPR, 0, 46393 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.BEHI2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "BIBUROS",
+            sprites.Add( new MonsterSprite( "BIBUROS", new string[] { "BIBUROS.SPR", "BIBU2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.BIBUROS_SPR, 0, 44353 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.BIBU2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "BOM",
+            sprites.Add( new MonsterSprite( "BOM", new string[] { "BOM.SPR", "BOM2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.BOM_SPR, 0, 42546 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.BOM2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "DEMON",
+            sprites.Add( new MonsterSprite( "DEMON", new string[] { "DEMON.SPR", "DEMON2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.DEMON_SPR, 0, 45648 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.DEMON2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "DORA1", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.DORA1_SPR, 0, 46754 ) ) );
-            sprites.Add( new MonsterSprite( "DORA2",
+            sprites.Add( new MonsterSprite( "DORA1", new string[] { "DORA1.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.DORA1_SPR, 0, 46754 ) ) );
+            sprites.Add( new MonsterSprite( "DORA2", new string[] { "DORA2.SPR", "DORA22.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.DORA2_SPR, 0, 46437 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.DORA22_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "HASYU", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.HASYU_SPR, 0, 47430 ) ) );
-            sprites.Add( new MonsterSprite( "HEBI", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.HEBI_SPR, 0, 48525 ) ) );
-            sprites.Add( new MonsterSprite( "HYOU",
+            sprites.Add( new MonsterSprite( "HASYU", new string[] { "HASYU.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.HASYU_SPR, 0, 47430 ) ) );
+            sprites.Add( new MonsterSprite( "HEBI", new string[] { "HEBI.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.HEBI_SPR, 0, 48525 ) ) );
+            sprites.Add( new MonsterSprite( "HYOU", new string[] { "HYOU.SPR", "HYOU2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.HYOU_SPR, 0, 43553 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.HYOU2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "KI", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.KI_SPR, 0, 45205 ) ) );
-            sprites.Add( new MonsterSprite( "KYUKU", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.KYUKU_SPR, 0, 48094 ) ) );
-            sprites.Add( new MonsterSprite( "MINOTA",
+            sprites.Add( new MonsterSprite( "KI", new string[] { "KI.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.KI_SPR, 0, 45205 ) ) );
+            sprites.Add( new MonsterSprite( "KYUKU", new string[] { "KYUKU.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.KYUKU_SPR, 0, 48094 ) ) );
+            sprites.Add( new MonsterSprite( "MINOTA", new string[] { "MINOTA.SPR", "MINOTA2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.MINOTA_SPR, 0, 47737 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.MINOTA2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "MOL",
+            sprites.Add( new MonsterSprite( "MOL", new string[] { "MOL.SPR", "MOL2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.MOL_SPR, 0, 47102 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.MOL2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "REZE_D", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.REZE_D_SPR, 0, 46744 ) ) );
-            sprites.Add( new MonsterSprite( "TETSU",
+            sprites.Add( new MonsterSprite( "REZE_D", new string[] { "REZE_D.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.REZE_D_SPR, 0, 46744 ) ) );
+            sprites.Add( new MonsterSprite( "TETSU", new string[] { "TETSU.SPR", "IRON2.SP2", "IRON3.SP2", "IRON4.SP2", "IRON5.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.TETSU_SPR, 0, 46001 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.IRON2_SP2, 0, 32768 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.IRON3_SP2, 0, 32768 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.IRON4_SP2, 0, 32768 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.IRON5_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "TORI",
+            sprites.Add( new MonsterSprite( "TORI", new string[] { "TORI.SPR", "TORI2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.TORI_SPR, 0, 43332 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.TORI2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "URI",
+            sprites.Add( new MonsterSprite( "URI", new string[] { "URI.SPR", "URI2.SP2" },
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.URI_SPR, 0, 40595 ),
                 IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.URI2_SP2, 0, 32768 ) ) );
-            sprites.Add( new MonsterSprite( "VERI", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.VERI_SPR, 0, 46848 ) ) );
-            sprites.Add( new MonsterSprite( "YUREI", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.YUREI_SPR, 0, 41970 ) ) );
-            sprites.Add( new MonsterSprite( "ZARUE", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ZARUE_SPR, 0, 47018 ) ) );
+            sprites.Add( new MonsterSprite( "VERI", new string[] { "VERI.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.VERI_SPR, 0, 46848 ) ) );
+            sprites.Add( new MonsterSprite( "YUREI", new string[] { "YUREI.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.YUREI_SPR, 0, 41970 ) ) );
+            sprites.Add( new MonsterSprite( "ZARUE", new string[] { "ZARUE.SPR" }, 
+                IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ZARUE_SPR, 0, 47018 ) ) );
             sprites.Add( new TYPE1Sprite( "AGURI", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.AGURI_SPR, 0, 43309 ) ) );
             sprites.Add( new TYPE1Sprite( "ARU", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.ARU_SPR, 0, 43358 ) ) );
             sprites.Add( new TYPE1Sprite( "BARUNA", IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)PsxIso.BATTLE.BARUNA_SPR, 0, 44172 ) ) );
@@ -199,63 +219,75 @@ namespace FFTPatcher.SpriteEditor
 
             sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
 
-            return new FullSpriteSet( sprites );
+            //return new FullSpriteSet( sprites );
+            return null;
         }
 
         private static FullSpriteSet DoInitPSP( Stream iso )
         {
             
             var sprites = new List<AbstractSprite>();
-            sprites.Add( new MonsterSprite( "ADORA", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ADORA_SPR ) ) );
-            sprites.Add( new MonsterSprite( "ARLI",
+            sprites.Add( new MonsterSprite( "ADORA", new string[] { "ADORA.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ADORA_SPR ) ) );
+            sprites.Add( new MonsterSprite( "ARLI", new string[] { "ARLI.SPR", "ARLI2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARLI_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARLI2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "BEHI",
+            sprites.Add( new MonsterSprite( "BEHI", new string[] { "BEHI.SPR", "BEHI2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BEHI_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BEHI2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "BIBUROS",
+            sprites.Add( new MonsterSprite( "BIBUROS", new string[] { "BIBUROS.SPR", "BIBU2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BIBUROS_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BIBU2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "BOM",
+            sprites.Add( new MonsterSprite( "BOM", new string[] { "BOM.SPR", "BOM2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BOM_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BOM2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "BremondtDarkDragon", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BremondtDarkDragon_SPR ) ) );
-            sprites.Add( new MonsterSprite( "DEMON",
+            sprites.Add( new MonsterSprite( "BremondtDarkDragon", new string[] { "BremondtDarkDragon.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.BremondtDarkDragon_SPR ) ) );
+            sprites.Add( new MonsterSprite( "DEMON", new string[] { "DEMON.SPR", "DEMON2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DEMON_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DEMON2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "DORA1", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA1_SPR ) ) );
-            sprites.Add( new MonsterSprite( "DORA2",
+            sprites.Add( new MonsterSprite( "DORA1", new string[] { "DORA1.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA1_SPR ) ) );
+            sprites.Add( new MonsterSprite( "DORA2", new string[] { "DORA2.SPR", "DORA22.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA2_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.DORA22_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "HASYU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HASYU_SPR ) ) );
-            sprites.Add( new MonsterSprite( "HEBI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HEBI_SPR ) ) );
-            sprites.Add( new MonsterSprite( "HYOU",
+            sprites.Add( new MonsterSprite( "HASYU", new string[] { "HASYU.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HASYU_SPR ) ) );
+            sprites.Add( new MonsterSprite( "HEBI", new string[] { "HEBI.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HEBI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "HYOU", new string[] { "HYOU.SPR", "HYOU2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HYOU_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.HYOU2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "KI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KI_SPR ) ) );
-            sprites.Add( new MonsterSprite( "KYUKU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KYUKU_SPR ) ) );
-            sprites.Add( new MonsterSprite( "MINOTA",
+            sprites.Add( new MonsterSprite( "KI", new string[] { "KI.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "KYUKU", new string[] { "KYUKU.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.KYUKU_SPR ) ) );
+            sprites.Add( new MonsterSprite( "MINOTA", new string[] { "MINOTA.SPR", "MINOTA2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MINOTA_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MINOTA2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "MOL",
+            sprites.Add( new MonsterSprite( "MOL", new string[] { "MOL.SPR", "MOL2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MOL_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.MOL2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "REZE_D", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.REZE_D_SPR ) ) );
-            sprites.Add( new MonsterSprite( "TETSU",
+            sprites.Add( new MonsterSprite( "REZE_D", new string[] { "REZE_D.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.REZE_D_SPR ) ) );
+            sprites.Add( new MonsterSprite( "TETSU", new string[] { "TETSU.SPR", "IRON2.SP2","IRON3.SP2","IRON4.SP2","IRON5.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TETSU_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON2_SP2 ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON3_SP2 ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON4_SP2 ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.IRON5_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "TORI",
+            sprites.Add( new MonsterSprite( "TORI", new string[] { "TORI.SPR", "TORI2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TORI_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.TORI2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "URI",
+            sprites.Add( new MonsterSprite( "URI", new string[] { "URI.SPR", "URI2.SP2" },
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.URI_SPR ),
                 FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.URI2_SP2 ) ) );
-            sprites.Add( new MonsterSprite( "VERI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.VERI_SPR ) ) );
-            sprites.Add( new MonsterSprite( "YUREI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.YUREI_SPR ) ) );
-            sprites.Add( new MonsterSprite( "ZARUE", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ZARUE_SPR ) ) );
+            sprites.Add( new MonsterSprite( "VERI", new string[] { "VERI.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.VERI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "YUREI", new string[] { "YUREI.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.YUREI_SPR ) ) );
+            sprites.Add( new MonsterSprite( "ZARUE", new string[] { "ZARUE.SPR" }, 
+                FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ZARUE_SPR ) ) );
             sprites.Add( new TYPE1Sprite( "AGURI", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.AGURI_SPR ) ) );
             sprites.Add( new TYPE1Sprite( "Aliste", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.Aliste_SPR ) ) );
             sprites.Add( new TYPE1Sprite( "ARU", FFTPack.GetFileFromIso( iso, FFTPack.BATTLE.ARU_SPR ) ) );
@@ -378,7 +410,7 @@ namespace FFTPatcher.SpriteEditor
 
             sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
 
-            return new FullSpriteSet( sprites );
+            return new FullSpriteSet( sprites, null, 0, 0 );
         }
 
         public void PatchPsxISO( string filename )
@@ -415,7 +447,7 @@ namespace FFTPatcher.SpriteEditor
         {
             using( ZipOutputStream stream = new ZipOutputStream( File.Open( filename, FileMode.Create, FileAccess.ReadWrite ) ) )
             {
-                Dictionary<string, Dictionary<string, int>> files = new Dictionary<string, Dictionary<string, int>>();
+                Dictionary<string, Dictionary<string, List<string>>> files = new Dictionary<string, Dictionary<string, List<string>>>();
 
                 foreach( var sprite in Sprites )
                 {
@@ -423,17 +455,19 @@ namespace FFTPatcher.SpriteEditor
                     string type = sprite.GetType().FullName;
                     if( !files.ContainsKey( type ) )
                     {
-                        files[type] = new Dictionary<string, int>();
+                        files[type] = new Dictionary<string, List<string>>();
                     }
 
-                    files[type][sprite.Name] = bytes.Count;
+                    List<string> fileList = new List<string>( bytes.Count );
+                    files[type][sprite.Name] = fileList;
 
                     for( int i = 0; i < bytes.Count; i++ )
                     {
                         WriteFileToZip( 
                             stream, 
-                            string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", sprite.GetType().FullName, sprite.Name, i ), 
+                            string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", sprite.GetType().FullName, sprite.Name, sprite.Filenames[i] ), 
                             bytes[i] );
+                        fileList.Add( sprite.Filenames[i] );
                     }
                 }
 
@@ -472,36 +506,49 @@ namespace FFTPatcher.SpriteEditor
             return DoInitPSP( stream );
         }
 
-        public static FullSpriteSet FromShishiFile( string filename )
+        public static FullSpriteSet FromShishiFile( string filename, System.ComponentModel.BackgroundWorker worker )
         {
-            Dictionary<string, Dictionary<string, int>> manifest;
+            Dictionary<string, Dictionary<string, List<string>>> manifest;
 
             List<AbstractSprite> sprites = new List<AbstractSprite>();
 
-            using( ZipFile zf = new ZipFile( filename ) )
+            int tasks = 0;
+            int tasksComplete = 0;
+            using ( ZipFile zf = new ZipFile( filename ) )
             {
                 BinaryFormatter f = new BinaryFormatter();
-                manifest = f.Deserialize( zf.GetInputStream( zf.GetEntry( "manifest" ) ) ) as Dictionary<string, Dictionary<string, int>>;
+                manifest = f.Deserialize( zf.GetInputStream( zf.GetEntry( "manifest" ) ) ) as Dictionary<string, Dictionary<string, List<string>>>;
 
+                foreach ( KeyValuePair<string, Dictionary<string, List<string>>> kvp in manifest )
+                {
+                    tasks += kvp.Value.Keys.Count * 3;
+                }
+
+                tasks += 1;
                 foreach( string type in manifest.Keys )
                 {
                     Type spriteType = Type.GetType( type );
                     ConstructorInfo shortestConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof( IList<byte> ) }, null );
                     ConstructorInfo shortConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance , null, new Type[] { typeof( string ), typeof( IList<byte> ) }, null );
-                    ConstructorInfo longConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof( string ), typeof( IList<byte> ), typeof( IList<byte>[] ) }, null );
+                    ConstructorInfo longConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof( string ), typeof( IList<string> ), typeof( IList<byte> ), typeof( IList<byte>[] ) }, null );
 
                     foreach( string name in manifest[type].Keys )
                     {
-                        int size = manifest[type][name];
+                        List<string> filenames = manifest[type][name];
+                        int size = filenames.Count;
                         byte[][] bytes = new byte[size][];
+
+                        worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, string.Format( "Extracting {0}", name ) );
+
                         for( int i = 0; i < size; i++ )
                         {
-                            ZipEntry entry = zf.GetEntry( string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", type, name, i ) );
+                            ZipEntry entry = zf.GetEntry( string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", type, name, filenames[i] ) );
                             bytes[i] = new byte[entry.Size];
                             StreamUtils.ReadFully( zf.GetInputStream( entry ), bytes[i] );
                         }
 
-                        if( shortestConstructor != null )
+                        worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, string.Format( "Building {0}", name ) );
+                        if ( shortestConstructor != null )
                         {
                             sprites.Add( shortestConstructor.Invoke( new object[] { bytes[0] } ) as AbstractSprite );
                         }
@@ -516,7 +563,7 @@ namespace FFTPatcher.SpriteEditor
                             {
                                 extraParams = bytes.Sub( 1 ).ToArray();
                             }
-                            sprites.Add( longConstructor.Invoke( new object[] { name, bytes[0], extraParams } ) as AbstractSprite );
+                            sprites.Add( longConstructor.Invoke( new object[] { name, filenames, bytes[0], extraParams } ) as AbstractSprite );
                         }
                         else
                         {
@@ -527,7 +574,7 @@ namespace FFTPatcher.SpriteEditor
                 
             }
 
-            return new FullSpriteSet( sprites );
+            return new FullSpriteSet( sprites, worker, tasksComplete, tasks );
         }
 
         private static void WriteFileToZip( ZipOutputStream stream, string filename, byte[] bytes )

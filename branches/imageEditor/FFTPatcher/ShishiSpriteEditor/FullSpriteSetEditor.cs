@@ -11,6 +11,11 @@ namespace FFTPatcher.SpriteEditor
     public partial class FullSpriteSetEditor : UserControl
     {
         public FullSpriteSet FullSpriteSet { get; private set; }
+        private ListViewGroup type1Group = new ListViewGroup( "TYPE1" );
+        private ListViewGroup type2Group = new ListViewGroup( "TYPE2" );
+        private ListViewGroup shortGroup = new ListViewGroup( "Short" );
+        private ListViewGroup specialGroup = new ListViewGroup( "Special" );
+        private ListViewGroup monsterGroup = new ListViewGroup( "MON" );
 
         private class FlickerFreeListView : ListView
         {
@@ -24,11 +29,14 @@ namespace FFTPatcher.SpriteEditor
         public FullSpriteSetEditor()
         {
             InitializeComponent();
-            listView1.RetrieveVirtualItem += new RetrieveVirtualItemEventHandler( listView1_RetrieveVirtualItem );
-            listView1.CacheVirtualItems += new CacheVirtualItemsEventHandler( listView1_CacheVirtualItems );
             listView1.Enabled = false;
             listView1.Activation = ItemActivation.Standard;
             listView1.ItemActivate += new EventHandler( listView1_ItemActivate );
+            listView1.Groups.Add( type1Group );
+            listView1.Groups.Add( type2Group );
+            listView1.Groups.Add( specialGroup );
+            listView1.Groups.Add( shortGroup );
+            listView1.Groups.Add( monsterGroup );
         }
 
         public class ImageEventArgs : EventArgs
@@ -51,11 +59,7 @@ namespace FFTPatcher.SpriteEditor
             
         }
 
-        void listView1_CacheVirtualItems( object sender, CacheVirtualItemsEventArgs e )
-        {
-        }
-
-        private List<ListViewItem> items;
+        private ListViewItem[] items;
 
         /// <summary>
         /// Loads the full sprite set.
@@ -63,29 +67,55 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="set">The set.</param>
         public void LoadFullSpriteSet( FullSpriteSet set )
         {
-            items = new List<ListViewItem>();
+            listView1.BeginUpdate();
+            listView1.ShowGroups = true;
+            items = new ListViewItem[set.Sprites.Count];
 
             listView1.LargeImageList = set.Thumbnails;
 
             IList<AbstractSprite> sprites = set.Sprites;
-            for( int i = 0; i < sprites.Count; i++ )
+            for ( int i = 0; i < sprites.Count; i++ )
             {
-                items.Add( new ListViewItem( sprites[i].Name, i ) );
+                items[i] = new ListViewItem( sprites[i].Name, i );
+                if ( sprites[i] is TYPE1Sprite )
+                {
+                    items[i].Group = type1Group;
+                }
+                else if ( sprites[i] is TYPE2Sprite )
+                {
+                    items[i].Group = type2Group;
+                }
+                else if ( sprites[i] is MonsterSprite )
+                {
+                    items[i].Group = monsterGroup;
+                }
+                else if ( sprites[i] is ShortSprite )
+                {
+                    items[i].Group = shortGroup;
+                }
+                else
+                {
+                    items[i].Group = specialGroup;
+                }
+
+                sprites[i].PixelsChanged += new EventHandler( FullSpriteSetEditor_PixelsChanged );
             }
+
+            listView1.Items.Clear();
+            listView1.Items.AddRange( items );
 
             listView1.Enabled = true;
-            listView1.VirtualListSize = set.Sprites.Count;
             
             FullSpriteSet = set;
+            listView1.EndUpdate();
 
         }
 
-        private void listView1_RetrieveVirtualItem( object sender, RetrieveVirtualItemEventArgs e )
+        private void FullSpriteSetEditor_PixelsChanged( object sender, EventArgs e )
         {
-            if( items != null && e.ItemIndex < items.Count )
-            {
-                e.Item = items[e.ItemIndex];
-            }
+            int idx = FullSpriteSet.Sprites.IndexOf( sender as AbstractSprite );
+            listView1.LargeImageList.Images[idx] = FullSpriteSet.Sprites[idx].GetThumbnail();
         }
+
     }
 }

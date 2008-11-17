@@ -19,10 +19,11 @@ namespace FFTPatcher.SpriteEditor
         protected override System.Drawing.Rectangle ThumbnailRectangle
         {
             get { return new System.Drawing.Rectangle( 108, 68, 48, 48 ); }
+            //get { return new System.Drawing.Rectangle( 33, 33, 48, 48 ); }
         }
 
         public ARUTE( IList<byte> bytes )
-            : base( "ARUTE", bytes )
+            : base( "ARUTE", new string[] { "ARUTE.SPR" }, bytes )
         {
         }
     }

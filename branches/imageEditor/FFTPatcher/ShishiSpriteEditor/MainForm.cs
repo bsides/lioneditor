@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -35,6 +36,7 @@ namespace FFTPatcher.SpriteEditor
         private List<Shape> shapes;
         private SpriteDialog dialog = new SpriteDialog();
 
+        FFTPatcher.Controls.ProgressBarWithText progressBar = new FFTPatcher.Controls.ProgressBarWithText();
         #endregion Fields
 
         #region Constructors (1)
@@ -46,6 +48,14 @@ namespace FFTPatcher.SpriteEditor
 
             openMenuItem.Click += openMenuItem_Click;
             saveMenuItem.Click += saveMenuItem_Click;
+
+            progressBar.Visible = false;
+            progressBar.Enabled = false;
+            progressBar.ProgressBarBlockSpace = 0;
+            progressBar.ProgressBarBlockWidth = 1;
+            progressBar.ProgressBarFillColor = Color.Blue;
+            progressBar.ForeColor = Color.White;
+            Controls.Add( progressBar );
 
             //paletteSaveMenuItem.Click += paletteSaveMenuItem_Click;
             //paletteOpenMenuItem.Click += paletteOpenMenuItem_Click;
@@ -102,20 +112,6 @@ namespace FFTPatcher.SpriteEditor
             Application.Exit();
         }
 
-        private void exportMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.FileName = string.Empty;
-            saveFileDialog.Filter = "Bitmap files (*.BMP)|*.BMP";
-            saveFileDialog.FilterIndex = 0;
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                //using( Bitmap bmp = spriteViewer1.Sprite.ToBitmap() )
-                //{
-                //    bmp.Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
-                //}
-            }
-        }
-
         private byte[] GetBytes( string filename )
         {
             FileStream stream = null;
@@ -137,30 +133,6 @@ namespace FFTPatcher.SpriteEditor
                     stream.Close();
                     stream = null;
                 }
-            }
-        }
-
-        private void importMenuItem_Click( object sender, EventArgs e )
-        {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "Bitmap files (*.BMP)|*.BMP";
-            openFileDialog.FilterIndex = 0;
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                using( Bitmap b = new Bitmap( openFileDialog.FileName ) )
-                {
-                    bool bad = false;
-                    //spriteViewer1.Sprite.ImportBitmap( b, out bad );
-                    //spriteViewer1.Invalidate();
-                    if( bad )
-                    {
-                        MessageBox.Show( this, "The imported file had some pixels that weren't in the first 16 palette entries.", "Warning", MessageBoxButtons.OK );
-                    }
-                }
-                //if( shapesComboBox.SelectedIndex != -1 )
-                //{
-                //    shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
-                //}
             }
         }
 
@@ -188,6 +160,8 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        public delegate void ProgressReport( int percent, string message );
+
         private void openMenuItem_Click( object sender, System.EventArgs e )
         {
             openFileDialog.FileName = string.Empty;
@@ -196,53 +170,53 @@ namespace FFTPatcher.SpriteEditor
 
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                fullSpriteSetEditor1.LoadFullSpriteSet( FullSpriteSet.FromShishiFile( openFileDialog.FileName ) );
-                int j = fullSpriteSetEditor1.FullSpriteSet.Sprites.Count;
-                for ( int i = 0; i < j; i++ )
-                {
-                    fullSpriteSetEditor1.FullSpriteSet.Thumbnails.Images[i].Save( fullSpriteSetEditor1.FullSpriteSet.Sprites[i].Name + ".thumb.png", System.Drawing.Imaging.ImageFormat.Png );
-                    //fullSpriteSetEditor1.FullSpriteSet.Sprites[i].ToBitmap().Save( fullSpriteSetEditor1.FullSpriteSet.Sprites[i].Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
-                }
-                //foreach ( var s in fullSpriteSetEditor1.FullSpriteSet.Thumbnails.Images )
-                //{
-                //    (s as Image).Save(
-                //}
-                //foreach ( var s in new FullSpriteSet( openFileDialog.FileName, FFTPatcher.Datatypes.Context.US_PSX ).Sprites )
-                //{
-                //    if ( !( s is ShortSprite ) )
-                //    {
-                //        s.GetThumbnail().Save( s.Name + ".png", System.Drawing.Imaging.ImageFormat.Png );
-                //    }
-                //}
-                //byte[] bytes = null;
-                //try
-                //{
-                //    bytes = GetBytes( openFileDialog.FileName );
-                //    spriteViewer1.SetPalette( 0, 8 );
-                //    paletteSelector.SelectedIndex = 0;
-                //    spriteViewer1.Sprite = new AbstractSprite( bytes );
-                //    if( shapesComboBox.SelectedIndex != -1 )
-                //    {
-                //        shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
-                //    }
+                DoWorkEventHandler doWork =
+                    delegate( object o, DoWorkEventArgs args )
+                    {
+                        FullSpriteSet set = FullSpriteSet.FromShishiFile( openFileDialog.FileName, o as BackgroundWorker );
+                        if ( fullSpriteSetEditor1.InvokeRequired )
+                        {
+                            fullSpriteSetEditor1.Invoke( new MethodInvoker( delegate() { fullSpriteSetEditor1.LoadFullSpriteSet( set ); } ) );
+                        }
+                        else
+                        {
+                            fullSpriteSetEditor1.LoadFullSpriteSet( set );
+                        }
+                    };
+                ProgressChangedEventHandler changed =
+                    delegate( object o3, ProgressChangedEventArgs args3 )
+                    {
+                        progressBar.Value = args3.ProgressPercentage;
+                        progressBar.ProgressBarText = args3.UserState as string;
+                    };
+                RunWorkerCompletedEventHandler completed = null;
+                completed = 
+                    delegate( object o2, RunWorkerCompletedEventArgs args2 )
+                    {
+                        backgroundWorker1.DoWork -= doWork;
+                        backgroundWorker1.ProgressChanged -= changed;
+                        backgroundWorker1.RunWorkerCompleted -= completed;
+                        progressBar.Visible = false;
+                        progressBar.Enabled = false;
+                        Enabled = true;
+                    };
+                Enabled = false;
+                progressBar.Bounds =
+                    new Rectangle(
+                        ClientRectangle.Left + 10,
+                        ( ClientRectangle.Height - progressBar.Height ) / 2, 
+                        ClientRectangle.Width - 20, 
+                        progressBar.Height );
+                progressBar.Enabled = false;
+                progressBar.Value = 0;
+                progressBar.ProgressBarText = string.Empty;
+                progressBar.Visible = true;
+                progressBar.BringToFront();
 
-                //    paletteSelector.Enabled = true;
-                //    properCheckbox.Enabled = true;
-                //    portraitCheckbox.Enabled = true;
-                //    saveMenuItem.Enabled = true;
-                //    saveAsMenuItem.Enabled = true;
-                //    importMenuItem.Enabled = true;
-                //    exportMenuItem.Enabled = true;
-                //    paletteSaveMenuItem.Enabled = true;
-                //    paletteOpenMenuItem.Enabled = true;
-                //    shapesComboBox.Enabled = true;
-
-                //    filename = openFileDialog.FileName;
-                //}
-                //catch( Exception )
-                //{
-                //    MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
-                //}
+                backgroundWorker1.DoWork += doWork;
+                backgroundWorker1.ProgressChanged += changed;
+                backgroundWorker1.RunWorkerCompleted += completed;
+                backgroundWorker1.RunWorkerAsync();
             }
         }
 
@@ -252,7 +226,7 @@ namespace FFTPatcher.SpriteEditor
             openFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
             openFileDialog.FilterIndex = 0;
 
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 byte[] bytes = null;
                 try
@@ -266,7 +240,7 @@ namespace FFTPatcher.SpriteEditor
                     //    shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
                     //}
                 }
-                catch( Exception )
+                catch ( Exception )
                 {
                     MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
                 }
@@ -316,28 +290,6 @@ namespace FFTPatcher.SpriteEditor
             {
                 fullSpriteSetEditor1.FullSpriteSet.SaveShishiFile( saveFileDialog.FileName );
             }
-        }
-
-        private void shapesComboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            //if( shapesComboBox.SelectedIndex != -1 )
-            //{
-            //    Shape s = shapesComboBox.Items[shapesComboBox.SelectedIndex] as Shape;
-            //    if( s != null )
-            //    {
-            //        IList<Frame> f = s.Frames;
-            //        frames = new List<Bitmap>( f.Count );
-            //        foreach( Frame frame in f )
-            //        {
-            //            frames.Add( frame.GetFrame( spriteViewer1.Sprite ) );
-            //        }
-
-            //        shapesListBox.BeginUpdate();
-            //        shapesListBox.Items.Clear();
-            //        shapesListBox.Items.AddRange( f.ToArray() );
-            //        shapesListBox.EndUpdate();
-            //    }
-            //}
         }
 
         #endregion Methods

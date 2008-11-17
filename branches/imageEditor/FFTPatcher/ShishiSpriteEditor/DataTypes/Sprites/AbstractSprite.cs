@@ -54,25 +54,81 @@ namespace FFTPatcher.SpriteEditor
 
         public virtual Shape Shape { get { return null; } }
 
+        protected bool ThumbnailDirty { get; set; }
+        protected Image CachedThumbnail { get; set; }
+        protected bool BitmapDirty { get; set; }
+        protected Bitmap CachedBitmap { get; set; }
+
+        public void DrawSprite( Bitmap b, int palette, int portraitPalette )
+        {
+            DrawSpriteInternal( palette, portraitPalette, ( x, y, z ) => b.SetPixel( x, y, z ) );
+        }
+
+        public void DrawSprite( BitmapData bmd, int palette, int portraitPalette )
+        {
+            DrawSpriteInternal( palette, portraitPalette, ( x, y, z ) => bmd.SetPixel32bpp( x, y, z ) );
+        }
+
+        protected abstract void DrawSpriteInternal( int palette, int portraitPalette, SetPixel setPixel );
+
+        protected delegate void SetPixel( int x, int y, Color color );
+
+        public IList<string> Filenames { get; private set; }
+
         #endregion Properties
 
         #region Constructors (1)
 
-        public AbstractSprite( string name, IList<byte> bytes, params IList<byte>[] extraBytes )
+        public AbstractSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
         {
             Name = name;
+            Filenames = filenames.ToArray();
             OriginalSize = bytes.Count;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             Pixels = BuildPixels( bytes.Sub( 16 * 32 ), extraBytes );
+            ThumbnailDirty = true;
+            BitmapDirty = true;
         }
 
         #endregion Constructors
 
         #region Methods (11)
 
-        public abstract Image GetThumbnail();
+        protected abstract Image GetThumbnailInner();
+
+        public Image GetThumbnail()
+        {
+            if ( ThumbnailDirty )
+            {
+                CachedThumbnail = GetThumbnailInner();
+                ThumbnailDirty = false;
+            }
+
+            return CachedThumbnail;
+        }
+
+        public event EventHandler PixelsChanged;
+
+        protected void FirePixelsChanged()
+        {
+            if ( PixelsChanged != null )
+            {
+                PixelsChanged( this, EventArgs.Empty );
+            }
+        }
+
+        public void ImportSPR( IList<byte> bytes )
+        {
+            BitmapDirty = true;
+            ThumbnailDirty = true;
+            Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
+            ImportSPRInner( bytes.Sub( 16 * 32 ) );
+            FirePixelsChanged();
+        }
 
         protected abstract IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes );
+
+        protected abstract void ImportSPRInner( IList<byte> bytes );
 
         protected static Palette[] BuildPalettes( IList<byte> paletteBytes )
         {
@@ -88,7 +144,7 @@ namespace FFTPatcher.SpriteEditor
         /// <summary>
         /// Imports a bitmap and tries to convert it to a FFT sprite.
         /// </summary>
-        public void ImportBitmap( Bitmap bmp, out bool foundBadPixels )
+        public virtual void ImportBitmap( Bitmap bmp, out bool foundBadPixels )
         {
             foundBadPixels = false;
 
@@ -118,9 +174,14 @@ namespace FFTPatcher.SpriteEditor
             }
 
             bmp.UnlockBits( bmd );
+
+            ThumbnailDirty = true;
+            BitmapDirty = true;
+
+            FirePixelsChanged();
         }
 
-        public void Import( Image file )
+        public virtual void Import( Image file )
         {
             if( file is Bitmap )
             {
@@ -131,6 +192,9 @@ namespace FFTPatcher.SpriteEditor
             {
                 throw new ArgumentException( "file must be Bitmap", "file" );
             }
+
+            ThumbnailDirty = true;
+            BitmapDirty = true;
         }
 
         protected void FixupColorPalette( ColorPalette palette )
@@ -157,17 +221,23 @@ namespace FFTPatcher.SpriteEditor
         /// </summary>
         public unsafe Bitmap ToBitmap()
         {
-            Bitmap bmp = new Bitmap( Width, Height, PixelFormat.Format8bppIndexed );
-            ColorPalette palette = bmp.Palette;
-            FixupColorPalette( palette );
-            bmp.Palette = palette;
+            if ( BitmapDirty )
+            {
+
+                Bitmap bmp = new Bitmap( Width, Height, PixelFormat.Format8bppIndexed );
+                ColorPalette palette = bmp.Palette;
+                FixupColorPalette( palette );
+                bmp.Palette = palette;
 
 
-            BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
-            ToBitmapInner( bmp, bmd );
-            bmp.UnlockBits( bmd );
+                BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
+                ToBitmapInner( bmp, bmd );
+                bmp.UnlockBits( bmd );
 
-            return bmp;
+                CachedBitmap = bmp;
+                BitmapDirty = false;
+            }
+            return CachedBitmap;
         }
 
         protected abstract void ToBitmapInner( Bitmap bmp, BitmapData bmd );
@@ -181,11 +251,8 @@ namespace FFTPatcher.SpriteEditor
         /// Converts this sprite to an array of bytes.
         /// </summary>
         public abstract IList<byte[]> ToByteArrays();
+
         #endregion Methods
 
-        public void Draw( Graphics graphics, int paletteIndex )
-        {
-            graphics.DrawSprite( this, Palettes[paletteIndex], Palettes[(paletteIndex + 8) % 8 + 8], true );
-        }
     }
 }

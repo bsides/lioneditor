@@ -21,6 +21,11 @@ namespace FFTPatcher.SpriteEditor
 
         private int sp2Count;
 
+        internal MonsterSprite( SerializedSprite sprite )
+            : base( sprite )
+        {
+        }
+
         public MonsterSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] sp2Files )
             : base( name, filenames, bytes, sp2Files )
         {

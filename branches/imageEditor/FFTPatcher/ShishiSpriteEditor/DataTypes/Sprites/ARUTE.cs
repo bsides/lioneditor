@@ -22,6 +22,11 @@ namespace FFTPatcher.SpriteEditor
             //get { return new System.Drawing.Rectangle( 33, 33, 48, 48 ); }
         }
 
+        internal ARUTE( SerializedSprite sprite )
+            : base( sprite )
+        {
+        }
+
         public ARUTE( IList<byte> bytes )
             : base( "ARUTE", new string[] { "ARUTE.SPR" }, bytes )
         {

@@ -23,6 +23,11 @@ namespace FFTPatcher.SpriteEditor
             //get { return new System.Drawing.Rectangle( 1, 3, 48, 48 ); }
         }
 
+        internal TYPE2Sprite( SerializedSprite sprite )
+            : base( sprite )
+        {
+        }
+
         public TYPE2Sprite( string name, IList<byte> bytes )
             : base( name, new string[] { name + ".SPR" }, bytes )
         {

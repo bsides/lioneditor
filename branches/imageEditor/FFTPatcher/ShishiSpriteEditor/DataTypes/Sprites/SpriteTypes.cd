@@ -1,7 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="FFTPatcher.SpriteEditor.AbstractSprite">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <Members>
+      <Property Name="BitmapDirty" Hidden="true" />
+      <Method Name="BuildPalettes" Hidden="true" />
+      <Method Name="BuildPixels" Hidden="true" />
+      <Property Name="CachedBitmap" Hidden="true" />
+      <Property Name="CachedThumbnail" Hidden="true" />
+      <Method Name="DrawSpriteInternal" Hidden="true" />
+      <Method Name="FirePixelsChanged" Hidden="true" />
+      <Method Name="FixupColorPalette" Hidden="true" />
+      <Method Name="GetThumbnailInner" Hidden="true" />
+      <Method Name="ImportSPRInner" Hidden="true" />
+      <Property Name="OriginalSize" Hidden="true" />
+      <Property Name="PortraitRectangle" Hidden="true" />
+      <Property Name="ThumbnailDirty" Hidden="true" />
+      <Property Name="ThumbnailRectangle" Hidden="true" />
+      <Method Name="ToBitmapInner" Hidden="true" />
+    </Members>
     <NestedTypes>
       <Delegate Name="FFTPatcher.SpriteEditor.AbstractSprite.SetPixel" Collapsed="true">
         <TypeIdentifier>
@@ -10,70 +27,108 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>EACEAAASBEQAwgAAIYABDGQAAAAAAAhAACgAiAAAAAA=</HashCode>
+      <HashCode>EACEAAASBEQAwgAAoYABDGQEAAAAAAhAACgAiAAAABA=</HashCode>
       <FileName>DataTypes\Sprites\AbstractSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.AbstractCompressedSprite" Collapsed="true">
-    <Position X="4" Y="0.5" Width="2" />
+    <Position X="3.25" Y="1.75" Width="2" />
+    <Members>
+      <Method Name="AbstractCompressedSprite" Hidden="true" />
+      <Method Name="BuildPixels" Hidden="true" />
+      <Field Name="compressedHeight" Hidden="true" />
+      <Method Name="CompressNibbles" Hidden="true" />
+      <Method Name="Decompress" Hidden="true" />
+      <Method Name="DrawSpriteInternal" Hidden="true" />
+      <Method Name="GetThumbnailInner" Hidden="true" />
+      <Property Name="Height" Hidden="true" />
+      <Method Name="ImportSPRInner" Hidden="true" />
+      <Method Name="NumberOfZeroes" Hidden="true" />
+      <Field Name="portraintHeight" Hidden="true" />
+      <Property Name="PortraitRectangle" Hidden="true" />
+      <Method Name="Recompress" Hidden="true" />
+      <Method Name="ToBitmapInner" Hidden="true" />
+      <Method Name="ToByteArrays" Hidden="true" />
+      <Field Name="topHeight" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>EAAEAAISBAACgAAAAICAACAAAAABAABAAAABCAAAAAA=</HashCode>
+      <HashCode>EAAEAAISBAACgAAAAICAACAEAAABAAAAAAABCAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\AbstractCompressedSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.TYPE1Sprite" Collapsed="true">
-    <Position X="2.75" Y="4.75" Width="1.75" />
+    <Position X="1.75" Y="6" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\TYPE1Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.TYPE2Sprite" Collapsed="true">
-    <Position X="5" Y="4.75" Width="1.75" />
+    <Position X="6.25" Y="6" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\TYPE2Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.MonsterSprite" Collapsed="true">
-    <Position X="7.25" Y="0.5" Width="2.75" />
+    <Position X="6.25" Y="1.75" Width="2.75" />
+    <Members>
+      <Method Name="BuildPixels" Hidden="true" />
+      <Property Name="Height" Hidden="true" />
+      <Method Name="ImportSP2" Hidden="true" />
+      <Method Name="MonsterSprite" Hidden="true" />
+      <Field Name="sp2Count" Hidden="true" />
+      <Property Name="ThumbnailRectangle" Hidden="true" />
+      <Method Name="ToBitmapInner" Hidden="true" />
+      <Method Name="ToByteArrays" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAACBEACAAAAAIAAAAAAAAAAAABAAAAACAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\MonsterSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.ARUTE" Collapsed="true">
-    <Position X="4.75" Y="3.5" Width="1.75" />
+    <Position X="3" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\ARUTE.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.CYOKO" Collapsed="true">
-    <Position X="2.75" Y="3.5" Width="1.75" />
+    <Position X="3.75" Y="6" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\CYOKO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.SpriteEditor.KANZEN" Collapsed="true">
-    <Position X="6.75" Y="3.5" Width="1.75" />
+    <Position X="5.25" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\KANZEN.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FFTPatcher.SpriteEditor.ShortSprite">
-    <Position X="3" Y="6.25" Width="1.5" />
+  <Class Name="FFTPatcher.SpriteEditor.ShortSprite" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAASBEAAgAAAAIAAACAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAASBEAAgAAAAIAAACAEAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>DataTypes\Sprites\ShortSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FFTPatcher.SpriteEditor.AbstractShapedSprite" Collapsed="true">
-    <Position X="4.25" Y="1.75" Width="1.75" />
+  <Class Name="FFTPatcher.SpriteEditor.AbstractShapedSprite">
+    <Position X="3" Y="2.75" Width="2.5" />
+    <Members>
+      <Method Name="AbstractShapedSprite" Hidden="true" />
+      <Field Name="frames" Hidden="true" />
+      <Property Name="FramesDirty" Hidden="true" />
+      <Method Name="GetThumbnailInner" Hidden="true" />
+      <Method Name="Import" Hidden="true" />
+      <Method Name="ImportBitmap" Hidden="true" />
+      <Method Name="ImportSPRInner" Hidden="true" />
+      <Property Name="ThumbnailFrame" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAJAAQAgAAAIAAAAAABAAAAAAAAAAAAAQAAAAE=</HashCode>
+      <HashCode>AAAAAAAJAAQAgAAAIAAAAAAFAAAAAAAAAAAAAQAAAAE=</HashCode>
       <FileName>DataTypes\Sprites\AbstractShapedSprite.cs</FileName>
     </TypeIdentifier>
   </Class>

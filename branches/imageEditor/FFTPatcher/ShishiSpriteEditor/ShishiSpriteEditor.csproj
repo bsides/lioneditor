@@ -75,6 +75,7 @@
     <Compile Include="DataTypes\Sprites\ARUTE.cs" />
     <Compile Include="DataTypes\Sprites\CYOKO.cs" />
     <Compile Include="DataTypes\Sprites\FullSpriteSet.cs" />
+    <Compile Include="DataTypes\Sprites\SerializedSprite.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="DataTypes\Frame.cs" />
     <Compile Include="DataTypes\Sprites\KANZEN.cs" />
@@ -101,6 +102,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FullSpriteSetEditor.resx">
       <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -117,6 +119,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SpriteViewer.resx">
       <DependentUpon>SpriteViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -40,6 +40,11 @@ namespace FFTPatcher.SpriteEditor
             get { return 488; }
         }
 
+        internal AbstractCompressedSprite( SerializedSprite sprite )
+            : base( sprite )
+        {
+        }
+
         protected AbstractCompressedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
             : base( name, filenames, bytes, extraBytes )
         {

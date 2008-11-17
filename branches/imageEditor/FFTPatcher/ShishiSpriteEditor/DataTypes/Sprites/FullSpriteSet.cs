@@ -451,24 +451,33 @@ namespace FFTPatcher.SpriteEditor
 
                 foreach( var sprite in Sprites )
                 {
-                    IList<byte[]> bytes = sprite.ToByteArrays();
+                    byte[] pixels = sprite.Pixels.ToArray();
+                    IList<byte> palettes = new List<byte>();
+                    sprite.Palettes.ForEach( p => palettes.AddRange( p.ToByteArray() ) );
+                    palettes = palettes.ToArray();
+
                     string type = sprite.GetType().FullName;
                     if( !files.ContainsKey( type ) )
                     {
                         files[type] = new Dictionary<string, List<string>>();
                     }
 
-                    List<string> fileList = new List<string>( bytes.Count );
+                    List<string> fileList = new List<string>( );
                     files[type][sprite.Name] = fileList;
 
-                    for( int i = 0; i < bytes.Count; i++ )
-                    {
-                        WriteFileToZip( 
-                            stream, 
-                            string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", sprite.GetType().FullName, sprite.Name, sprite.Filenames[i] ), 
-                            bytes[i] );
-                        fileList.Add( sprite.Filenames[i] );
-                    }
+                    WriteFileToZip(
+                        stream,
+                        string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/Pixels", type, sprite.Name ),
+                        pixels );
+                    WriteFileToZip(
+                        stream,
+                        string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/Palettes", type, sprite.Name ),
+                        palettes.ToArray() );
+                    WriteFileToZip(
+                        stream,
+                        string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/Size", type, sprite.Name ),
+                        sprite.OriginalSize.ToString( System.Globalization.CultureInfo.InvariantCulture ).ToByteArray() );
+                    fileList.AddRange( sprite.Filenames );
                 }
 
                 BinaryFormatter f = new BinaryFormatter();
@@ -528,9 +537,7 @@ namespace FFTPatcher.SpriteEditor
                 foreach( string type in manifest.Keys )
                 {
                     Type spriteType = Type.GetType( type );
-                    ConstructorInfo shortestConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof( IList<byte> ) }, null );
-                    ConstructorInfo shortConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance , null, new Type[] { typeof( string ), typeof( IList<byte> ) }, null );
-                    ConstructorInfo longConstructor = spriteType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof( string ), typeof( IList<string> ), typeof( IList<byte> ), typeof( IList<byte>[] ) }, null );
+                    ConstructorInfo constructor = spriteType.GetConstructor( BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof( SerializedSprite ) }, null );
 
                     foreach( string name in manifest[type].Keys )
                     {
@@ -540,35 +547,22 @@ namespace FFTPatcher.SpriteEditor
 
                         worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, string.Format( "Extracting {0}", name ) );
 
-                        for( int i = 0; i < size; i++ )
-                        {
-                            ZipEntry entry = zf.GetEntry( string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/{2}", type, name, filenames[i] ) );
-                            bytes[i] = new byte[entry.Size];
-                            StreamUtils.ReadFully( zf.GetInputStream( entry ), bytes[i] );
-                        }
+                        ZipEntry entry = zf.GetEntry( string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/Pixels", type, name ) );
+                        byte[] pixels = new byte[entry.Size];
+                        StreamUtils.ReadFully( zf.GetInputStream( entry ), pixels );
+
+                        entry = zf.GetEntry( string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/Palettes", type, name ) );
+                        byte[] palettes = new byte[entry.Size];
+                        StreamUtils.ReadFully( zf.GetInputStream( entry ), palettes );
+
+                        entry = zf.GetEntry( string.Format( System.Globalization.CultureInfo.InvariantCulture, "{0}/{1}/Size", type, name ) );
+                        byte[] sizeBytes = new byte[entry.Size];
+                        StreamUtils.ReadFully( zf.GetInputStream( entry ), sizeBytes );
+                        int origSize = Int32.Parse( new string( Encoding.UTF8.GetChars( sizeBytes ) ), System.Globalization.CultureInfo.InvariantCulture );
+
 
                         worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, string.Format( "Building {0}", name ) );
-                        if ( shortestConstructor != null )
-                        {
-                            sprites.Add( shortestConstructor.Invoke( new object[] { bytes[0] } ) as AbstractSprite );
-                        }
-                        else if( shortConstructor != null )
-                        {
-                            sprites.Add( shortConstructor.Invoke( new object[] { name, bytes[0] } ) as AbstractSprite );
-                        }
-                        else if( longConstructor != null )
-                        {
-                            IList<byte>[] extraParams = new IList<byte>[0];
-                            if( bytes.Length > 1 )
-                            {
-                                extraParams = bytes.Sub( 1 ).ToArray();
-                            }
-                            sprites.Add( longConstructor.Invoke( new object[] { name, filenames, bytes[0], extraParams } ) as AbstractSprite );
-                        }
-                        else
-                        {
-                            throw new FormatException( "manifest malformated" );
-                        }
+                        sprites.Add( constructor.Invoke( new object[] { new SerializedSprite( name, origSize, filenames, pixels, palettes ) } ) as AbstractSprite );
                     }
                 }
                 

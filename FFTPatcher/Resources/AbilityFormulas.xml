@@ -96,7 +96,7 @@
   <Ability value="4B">Heal_(Rdm(1..9)) 100% Status</Ability>
   <Ability value="4C">Heal_(MA*Y) NS</Ability>
   <Ability value="4D">AbsHP_(Y)% Hit_(MA+X)% NS</Ability>
-  <Ability value="4E">Dmg_(MA*Y) Hit_(MA+X)%</Ability>
+  <Ability value="4E">Dmg_(MA*Y)</Ability>
   <Ability value="4F">Dmg_(CasMaxHP-CasCurHP) Hit_(MA+X)% NS</Ability>
   <Ability value="50">Hit_(MA+X)%</Ability>
   <Ability value="51">Hit_(MA+X)%</Ability>

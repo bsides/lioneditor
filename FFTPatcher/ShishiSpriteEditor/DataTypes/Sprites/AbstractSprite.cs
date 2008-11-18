@@ -34,11 +34,21 @@ namespace FFTPatcher.SpriteEditor
 
         public int OriginalSize { get; private set; }
 
+        private Palette[] palettes;
 
         /// <summary>
         /// Gets or sets the palettes used to draw this sprite.
         /// </summary>
-        public Palette[] Palettes { get; set; }
+        public Palette[] Palettes 
+        {
+            get { return palettes; }
+            set
+            {
+                palettes = value;
+                ThumbnailDirty = true;
+                BitmapDirty = true;
+            }
+        }
 
         /// <summary>
         /// Gets the pixels used to draw this sprite.
@@ -177,6 +187,8 @@ namespace FFTPatcher.SpriteEditor
                 Palettes[i] = new Palette( bmp.Palette.Entries.Sub( 16 * i, 16 * (i + 1) - 1 ) );
             }
 
+            Pixels.InitializeElements();
+
             BitmapData bmd = bmp.LockBits( new Rectangle( 0, 0, bmp.Width, bmp.Height ), ImageLockMode.ReadWrite, bmp.PixelFormat );
             for( int i = 0; (i < Pixels.Count) && (i / 256 < bmp.Height); i++ )
             {
@@ -256,7 +268,7 @@ namespace FFTPatcher.SpriteEditor
 
         protected abstract void ToBitmapInner( Bitmap bmp, BitmapData bmd );
 
-        public Image Export()
+        public virtual Image Export()
         {
             return ToBitmap();
         }

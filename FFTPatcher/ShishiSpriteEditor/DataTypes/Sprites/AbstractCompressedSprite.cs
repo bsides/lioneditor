@@ -35,6 +35,19 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        public override void ImportBitmap( Bitmap bmp, out bool foundBadPixels )
+        {
+            base.ImportBitmap( bmp, out foundBadPixels );
+            byte[] portraitArea = Pixels.Sub( Width * ( topHeight + compressedHeight ), Width * ( topHeight + compressedHeight + portraintHeight ) - 1 ).ToArray();
+            byte[] compressedArea = Pixels.Sub( Width * topHeight, Width * ( topHeight + compressedHeight ) - 1 ).ToArray();
+            portraitArea.CopyTo( Pixels, Width * topHeight );
+            compressedArea.CopyTo( Pixels, Width * ( topHeight + portraintHeight ) );
+            ThumbnailDirty = true;
+            BitmapDirty = true;
+
+            FirePixelsChanged();
+        }
+
         public override int Height
         {
             get { return 488; }

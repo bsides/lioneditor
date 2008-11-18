@@ -24,6 +24,7 @@ namespace FFTPatcher.SpriteEditor
         internal MonsterSprite( SerializedSprite sprite )
             : base( sprite )
         {
+            sp2Count = ( sprite.Pixels.Count - ( 256 + 32 + 200 ) * 256 ) / 256 / 256;
         }
 
         public MonsterSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] sp2Files )
@@ -95,7 +96,7 @@ namespace FFTPatcher.SpriteEditor
         protected override void ToBitmapInner( System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
         {
             base.ToBitmapInner( bmp, bmd );
-            for( int i = 256 * 488; (i < Pixels.Count) && (i / Width < Height); i++ )
+            for ( int i = 256 * 488; ( i < Pixels.Count ) && ( i / Width < Height ); i++ )
             {
                 bmd.SetPixel( i % Width, i / Width, Pixels[i] );
             }

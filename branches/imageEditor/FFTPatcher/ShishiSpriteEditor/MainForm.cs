@@ -44,8 +44,7 @@ namespace FFTPatcher.SpriteEditor
         public MainForm()
         {
             InitializeComponent();
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-
+            
             openMenuItem.Click += openMenuItem_Click;
             saveMenuItem.Click += saveMenuItem_Click;
 
@@ -57,29 +56,13 @@ namespace FFTPatcher.SpriteEditor
             progressBar.ForeColor = Color.White;
             Controls.Add( progressBar );
 
-            //paletteSaveMenuItem.Click += paletteSaveMenuItem_Click;
-            //paletteOpenMenuItem.Click += paletteOpenMenuItem_Click;
-
-            //exportMenuItem.Click += exportMenuItem_Click;
-            //importMenuItem.Click += importMenuItem_Click;
-
-            //paletteSelector.SelectedIndexChanged += paletteSelector_SelectedIndexChanged;
-            //portraitCheckbox.CheckedChanged += portraitCheckbox_CheckedChanged;
-            //properCheckbox.CheckedChanged += new EventHandler( properCheckbox_CheckedChanged );
-
             aboutMenuItem.Click += aboutMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
             importPspMenuItem.Click += new EventHandler( importPspMenuItem_Click );
             importPsxMenuItem.Click += new EventHandler( importPsxMenuItem_Click );
 
-            //shapesListBox.MeasureItem += new MeasureItemEventHandler( shapesListBox_MeasureItem );
-            //shapesListBox.DrawItem += new DrawItemEventHandler( shapesListBox_DrawItem );
-            //shapesListBox.SelectedIndexChanged += new EventHandler( shapesListBox_SelectedIndexChanged );
-
             fullSpriteSetEditor1.ImageActivated += new EventHandler<FullSpriteSetEditor.ImageEventArgs>( fullSpriteSetEditor1_ImageActivated );
             BuildShapes();
-            //shapesComboBox.Items.AddRange( shapes.ToArray() );
-            //shapesComboBox.SelectedIndexChanged += new EventHandler( shapesComboBox_SelectedIndexChanged );
         }
 
         void fullSpriteSetEditor1_ImageActivated( object sender, FullSpriteSetEditor.ImageEventArgs e )
@@ -112,30 +95,6 @@ namespace FFTPatcher.SpriteEditor
             Application.Exit();
         }
 
-        private byte[] GetBytes( string filename )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( filename, FileMode.Open );
-                byte[] result = new byte[stream.Length];
-                stream.Read( result, 0, (int)stream.Length );
-                return result;
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Close();
-                    stream = null;
-                }
-            }
-        }
-
         void importPsxMenuItem_Click( object sender, EventArgs e )
         {
             openFileDialog.FileName = string.Empty;
@@ -144,7 +103,19 @@ namespace FFTPatcher.SpriteEditor
 
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                fullSpriteSetEditor1.LoadFullSpriteSet( FullSpriteSet.FromPsxISO( openFileDialog.FileName ) );
+                DoBackgroundTask(
+                    delegate( object o, DoWorkEventArgs args )
+                    {
+                        FullSpriteSet set = FullSpriteSet.FromPsxISO( openFileDialog.FileName, o as BackgroundWorker );
+                        if ( fullSpriteSetEditor1.InvokeRequired )
+                        {
+                            fullSpriteSetEditor1.Invoke( new MethodInvoker( delegate() { fullSpriteSetEditor1.LoadFullSpriteSet( set ); } ) );
+                        }
+                        else
+                        {
+                            fullSpriteSetEditor1.LoadFullSpriteSet( set );
+                        }
+                    } );
             }
         }
 
@@ -156,11 +127,64 @@ namespace FFTPatcher.SpriteEditor
 
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                fullSpriteSetEditor1.LoadFullSpriteSet( FullSpriteSet.FromPspISO( openFileDialog.FileName ) );
+                DoBackgroundTask(
+                    delegate( object o, DoWorkEventArgs args )
+                    {
+                        FullSpriteSet set = FullSpriteSet.FromPspISO( openFileDialog.FileName, o as BackgroundWorker );
+                        if ( fullSpriteSetEditor1.InvokeRequired )
+                        {
+                            fullSpriteSetEditor1.Invoke( new MethodInvoker( delegate() { fullSpriteSetEditor1.LoadFullSpriteSet( set ); } ) );
+                        }
+                        else
+                        {
+                            fullSpriteSetEditor1.LoadFullSpriteSet( set );
+                        }
+                    } );
             }
         }
 
         public delegate void ProgressReport( int percent, string message );
+
+        private void DoBackgroundTask( DoWorkEventHandler work )
+        {
+            DoWorkEventHandler doWork = work;
+            ProgressChangedEventHandler changed =
+                delegate( object o3, ProgressChangedEventArgs args3 )
+                {
+                    progressBar.Value = args3.ProgressPercentage;
+                    progressBar.ProgressBarText = args3.UserState as string;
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object o2, RunWorkerCompletedEventArgs args2 )
+                {
+                    backgroundWorker1.DoWork -= doWork;
+                    backgroundWorker1.ProgressChanged -= changed;
+                    backgroundWorker1.RunWorkerCompleted -= completed;
+                    progressBar.Visible = false;
+                    progressBar.Enabled = false;
+                    Enabled = true;
+                    Cursor = Cursors.Arrow;
+                };
+            Enabled = false;
+            progressBar.Bounds =
+                new Rectangle(
+                    ClientRectangle.Left + 10,
+                    ( ClientRectangle.Height - progressBar.Height ) / 2,
+                    ClientRectangle.Width - 20,
+                    progressBar.Height );
+            progressBar.Enabled = false;
+            progressBar.Value = 0;
+            progressBar.ProgressBarText = string.Empty;
+            progressBar.Visible = true;
+            progressBar.BringToFront();
+
+            backgroundWorker1.DoWork += doWork;
+            backgroundWorker1.ProgressChanged += changed;
+            backgroundWorker1.RunWorkerCompleted += completed;
+            backgroundWorker1.RunWorkerAsync();
+            Cursor = Cursors.WaitCursor;
+        }
 
         private void openMenuItem_Click( object sender, System.EventArgs e )
         {
@@ -170,7 +194,7 @@ namespace FFTPatcher.SpriteEditor
 
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                DoWorkEventHandler doWork =
+                DoBackgroundTask(
                     delegate( object o, DoWorkEventArgs args )
                     {
                         FullSpriteSet set = FullSpriteSet.FromShishiFile( openFileDialog.FileName, o as BackgroundWorker );
@@ -182,102 +206,7 @@ namespace FFTPatcher.SpriteEditor
                         {
                             fullSpriteSetEditor1.LoadFullSpriteSet( set );
                         }
-                    };
-                ProgressChangedEventHandler changed =
-                    delegate( object o3, ProgressChangedEventArgs args3 )
-                    {
-                        progressBar.Value = args3.ProgressPercentage;
-                        progressBar.ProgressBarText = args3.UserState as string;
-                    };
-                RunWorkerCompletedEventHandler completed = null;
-                completed = 
-                    delegate( object o2, RunWorkerCompletedEventArgs args2 )
-                    {
-                        backgroundWorker1.DoWork -= doWork;
-                        backgroundWorker1.ProgressChanged -= changed;
-                        backgroundWorker1.RunWorkerCompleted -= completed;
-                        progressBar.Visible = false;
-                        progressBar.Enabled = false;
-                        Enabled = true;
-                    };
-                Enabled = false;
-                progressBar.Bounds =
-                    new Rectangle(
-                        ClientRectangle.Left + 10,
-                        ( ClientRectangle.Height - progressBar.Height ) / 2, 
-                        ClientRectangle.Width - 20, 
-                        progressBar.Height );
-                progressBar.Enabled = false;
-                progressBar.Value = 0;
-                progressBar.ProgressBarText = string.Empty;
-                progressBar.Visible = true;
-                progressBar.BringToFront();
-
-                backgroundWorker1.DoWork += doWork;
-                backgroundWorker1.ProgressChanged += changed;
-                backgroundWorker1.RunWorkerCompleted += completed;
-                backgroundWorker1.RunWorkerAsync();
-            }
-        }
-
-        private void paletteOpenMenuItem_Click( object sender, EventArgs e )
-        {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
-            openFileDialog.FilterIndex = 0;
-
-            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                byte[] bytes = null;
-                try
-                {
-                    bytes = GetBytes( openFileDialog.FileName );
-                    //spriteViewer1.Sprite.Palettes = Palette.FromPALFile( bytes );
-                    //paletteSelector.SelectedIndex = 0;
-                    //spriteViewer1.Invalidate();
-                    //if( shapesComboBox.SelectedIndex != -1 )
-                    //{
-                    //    shapesComboBox_SelectedIndexChanged( null, EventArgs.Empty );
-                    //}
-                }
-                catch ( Exception )
-                {
-                    MessageBox.Show( "Could not open file.", "Error", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void paletteSaveMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.FileName = string.Empty;
-            saveFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
-            saveFileDialog.FilterIndex = 0;
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                //SaveBytes( saveFileDialog.FileName, spriteViewer1.Sprite.Palettes.ToPALFile() );
-            }
-        }
-
-        private void SaveBytes( string filename, byte[] bytes )
-        {
-            FileStream stream = null;
-            try
-            {
-                stream = new FileStream( filename, FileMode.Create );
-                stream.Write( bytes, 0, bytes.Length );
-            }
-            catch( Exception )
-            {
-                MessageBox.Show( "Could not save file.", "Error", MessageBoxButtons.OK );
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                    stream = null;
-                }
+                    } );
             }
         }
 
@@ -288,7 +217,7 @@ namespace FFTPatcher.SpriteEditor
             saveFileDialog.FilterIndex = 0;
             if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                fullSpriteSetEditor1.FullSpriteSet.SaveShishiFile( saveFileDialog.FileName );
+                DoBackgroundTask( ( o, w ) => fullSpriteSetEditor1.FullSpriteSet.SaveShishiFile( saveFileDialog.FileName ) );
             }
         }
 
@@ -312,5 +241,36 @@ namespace FFTPatcher.SpriteEditor
             importPsxMenuItem.Enabled = true;
         }
 
+        private void patchPspMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = "PSP ISO files (*.iso)|*.iso";
+            openFileDialog.FilterIndex = 0;
+
+            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                DoBackgroundTask(
+                    delegate( object o, DoWorkEventArgs args )
+                    {
+                        fullSpriteSetEditor1.FullSpriteSet.PatchPspISO( openFileDialog.FileName, o as BackgroundWorker );
+                    } );
+            }
+        }
+
+        private void patchPsxMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = "PSX ISO files (*.iso, *.img, *.bin)|*.iso;*.img;*.bin";
+            openFileDialog.FilterIndex = 0;
+
+            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                DoBackgroundTask(
+                    delegate( object o, DoWorkEventArgs args )
+                    {
+                        fullSpriteSetEditor1.FullSpriteSet.PatchPsxISO( openFileDialog.FileName, o as BackgroundWorker );
+                    } );
+            }
+        }
     }
 }

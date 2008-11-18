@@ -132,6 +132,7 @@ namespace FFTPatcher.SpriteEditor
             this.patchPspMenuItem.Enabled = false;
             this.patchPspMenuItem.Index = 1;
             this.patchPspMenuItem.Text = "&Patch ISO with sprites...";
+            this.patchPspMenuItem.Click += new System.EventHandler( this.patchPspMenuItem_Click );
             // 
             // psxMenuItem
             // 
@@ -152,6 +153,7 @@ namespace FFTPatcher.SpriteEditor
             this.patchPsxMenuItem.Enabled = false;
             this.patchPsxMenuItem.Index = 1;
             this.patchPsxMenuItem.Text = "&Patch ISO with sprites...";
+            this.patchPsxMenuItem.Click += new System.EventHandler( this.patchPsxMenuItem_Click );
             // 
             // mainMenu
             // 
@@ -188,7 +190,7 @@ namespace FFTPatcher.SpriteEditor
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.fullSpriteSetEditor1.Location = new System.Drawing.Point( 12, 12 );
             this.fullSpriteSetEditor1.Name = "fullSpriteSetEditor1";
-            this.fullSpriteSetEditor1.Size = new System.Drawing.Size( 516, 536 );
+            this.fullSpriteSetEditor1.Size = new System.Drawing.Size( 516, 500 );
             this.fullSpriteSetEditor1.TabIndex = 0;
             // 
             // backgroundWorker1
@@ -199,7 +201,7 @@ namespace FFTPatcher.SpriteEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 540, 560 );
+            this.ClientSize = new System.Drawing.Size( 540, 524 );
             this.Controls.Add( this.fullSpriteSetEditor1 );
             this.Icon = ( (System.Drawing.Icon)( resources.GetObject( "$this.Icon" ) ) );
             this.MaximizeBox = false;
@@ -207,7 +209,6 @@ namespace FFTPatcher.SpriteEditor
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size( 488, 560 );
             this.Name = "MainForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Shishi Sprite Manager";
             this.ResumeLayout( false );
 

@@ -9,58 +9,35 @@ namespace FFTPatcher.SpriteEditor
 {
     public abstract class AbstractShapedSprite : AbstractCompressedSprite
     {
-        private IList<Bitmap> frames;
-
-        protected bool FramesDirty { get; set; }
-
         public abstract int ThumbnailFrame { get; }
 
-        public IList<Bitmap> Frames 
+        public IList<Bitmap> GetFrames()
         {
-            get
-            {
-                if ( FramesDirty )
-                {
-                    CacheFrames();
-                }
-
-                return new ReadOnlyCollection<Bitmap>( frames );
-            }
-        }
-
-        public void CacheFrames()
-        {
-            frames = Shape.GetFrames( this );
-            FramesDirty = false;
+            return Shape.GetFrames( this );
         }
 
         internal AbstractShapedSprite( SerializedSprite sprite )
             : base( sprite )
         {
-            FramesDirty = true;
         }
 
         public AbstractShapedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] otherBytes )
             : base( name, filenames, bytes, otherBytes )
         {
-            FramesDirty = true;
         }
 
         public override void Import( Image file )
         {
             base.Import( file );
-            FramesDirty = true;
         }
 
         public override void ImportBitmap( Bitmap bmp, out bool foundBadPixels )
         {
             base.ImportBitmap( bmp, out foundBadPixels );
-            FramesDirty = true;
         }
 
         protected override void ImportSPRInner( IList<byte> bytes )
         {
-            FramesDirty = true;
             base.ImportSPRInner( bytes );
         }
 

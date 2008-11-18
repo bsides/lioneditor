@@ -227,12 +227,12 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public static void PatchFile( FileStream stream, int index, byte[] bytes )
+        public static void PatchFile( Stream stream, int index, byte[] bytes )
         {
             PatchFile( stream, index, 0, bytes );
         }
 
-        public static void PatchFile( FileStream stream, int index, int offset, byte[] bytes )
+        public static void PatchFile( Stream stream, int index, int offset, byte[] bytes )
         {
             try
             {

@@ -202,6 +202,18 @@ namespace FFTPatcher.SpriteEditor
 
         private void exportPaletteMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
+            saveFileDialog.FilterIndex = 0;
+
+            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                bool success = DoFileOperation(
+                    delegate()
+                    {
+                        File.WriteAllBytes( saveFileDialog.FileName, Sprite.Palettes.ToPALFile() );
+                    } );
+            }
         }
 
         private bool DoFileOperation( MethodInvoker action )
@@ -339,8 +351,8 @@ namespace FFTPatcher.SpriteEditor
 
         private void sprMenu_Popup( object sender, EventArgs e )
         {
-            importSprMenuItem.Text = string.Format( "&Import {0}...", Sprite.Filenames[0] );
-            exportSprMenuItem.Text = string.Format( "E&xport {0}...", Sprite.Filenames[0] );
+            importSprMenuItem.Text = string.Format( "&Import SPR..." );
+            exportSprMenuItem.Text = string.Format( "E&xport SPR..." );
         }
     }
 }

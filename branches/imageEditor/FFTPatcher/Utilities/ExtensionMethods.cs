@@ -82,16 +82,24 @@ namespace FFTPatcher
             return false;
         }
 
-        public static void CopyTo<T>( this IList<T> list, IList<T> destination, int index )
+        public static void CopyTo<T>( this IList<T> list, IList<T> destination, int destinationIndex )
         {
-            if ( destination.Count - index > list.Count )
+            if ( destination.Count - destinationIndex < list.Count )
             {
                 throw new InvalidOperationException( "source list is larger than destination" );
             }
 
-            for ( int i = 0; i < list.Count - index; i++ )
+            for ( int i = 0; i < list.Count; i++ )
             {
-                destination[i] = list[i];
+                destination[i + destinationIndex] = list[i];
+            }
+        }
+
+        public static void InitializeElements<T>( this IList<T> list )
+        {
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                list[i] = default( T );
             }
         }
 

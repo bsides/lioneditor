@@ -45,6 +45,8 @@ namespace FFTPatcher.SpriteEditor
             ThumbnailDirty = true;
             BitmapDirty = true;
 
+            UpdateCurrentSize();
+
             FirePixelsChanged();
         }
 
@@ -56,11 +58,13 @@ namespace FFTPatcher.SpriteEditor
         internal AbstractCompressedSprite( SerializedSprite sprite )
             : base( sprite )
         {
+            CurrentSize = OriginalSize;
         }
 
         protected AbstractCompressedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
             : base( name, filenames, bytes, extraBytes )
         {
+            CurrentSize = OriginalSize;
         }
 
         protected override Rectangle PortraitRectangle
@@ -86,6 +90,7 @@ namespace FFTPatcher.SpriteEditor
         protected override void ImportSPRInner( IList<byte> bytes )
         {
             BuildPixels( bytes, null ).Sub( 0, 488 * 256 - 1 ).CopyTo( Pixels, 0 );
+            UpdateCurrentSize();
         }
 
         protected override void DrawSpriteInternal( int palette, int portraitPalette, SetPixel setPixel )
@@ -117,6 +122,14 @@ namespace FFTPatcher.SpriteEditor
                     setPixel( x, y, Palettes[portraitPalette].Colors[Pixels[x + ( y - compressedHeight ) * Width] % 16] );
                 }
             }
+        }
+
+        private void UpdateCurrentSize()
+        {
+            CurrentSize =
+                512 + // palettes
+                36864 + // uncompressed
+                Recompress( Pixels.Sub( 2 * 36864, 2 * 36864 + 200 * 256 - 1 ) ).Length;
         }
 
         private static byte[] Recompress( IList<byte> bytes )

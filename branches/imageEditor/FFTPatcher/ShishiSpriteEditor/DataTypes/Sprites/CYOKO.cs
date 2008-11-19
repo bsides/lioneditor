@@ -27,8 +27,13 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
+        public CYOKO( string name, IList<byte> bytes )
+            : base( name, new string[] { name + ".SPR" }, bytes )
+        {
+        }
+
         public CYOKO( IList<byte> bytes )
-            : base( "CYOKO", new string[] { "CYOKO.SPR" }, bytes )
+            : this( "CYOKO", bytes )
         {
         }
     }

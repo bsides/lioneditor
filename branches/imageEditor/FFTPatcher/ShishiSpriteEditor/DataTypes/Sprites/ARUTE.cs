@@ -27,8 +27,13 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
+        public ARUTE( string name, IList<byte> bytes )
+            : base( name, new string[] { name + ".SPR" }, bytes )
+        {
+        }
+
         public ARUTE( IList<byte> bytes )
-            : base( "ARUTE", new string[] { "ARUTE.SPR" }, bytes )
+            : this( "ARUTE", bytes )
         {
         }
     }

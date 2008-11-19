@@ -49,13 +49,10 @@ namespace FFTPatcher.SpriteEditor
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.MenuItem separator1;
-            System.Windows.Forms.MenuItem palettesMenu;
             System.Windows.Forms.GroupBox paletteGroupBox;
             System.Windows.Forms.MainMenu mainMenu;
             System.Windows.Forms.MenuItem sprMenu;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( SpriteDialog ) );
-            this.importPaletteMenuItem = new System.Windows.Forms.MenuItem();
-            this.exportPaletteMenuItem = new System.Windows.Forms.MenuItem();
             this.portraitCheckbox = new System.Windows.Forms.CheckBox();
             this.paletteSelector = new System.Windows.Forms.ComboBox();
             this.fileMenu = new System.Windows.Forms.MenuItem();
@@ -83,7 +80,6 @@ namespace FFTPatcher.SpriteEditor
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             separator1 = new System.Windows.Forms.MenuItem();
-            palettesMenu = new System.Windows.Forms.MenuItem();
             paletteGroupBox = new System.Windows.Forms.GroupBox();
             mainMenu = new System.Windows.Forms.MainMenu( this.components );
             sprMenu = new System.Windows.Forms.MenuItem();
@@ -95,26 +91,6 @@ namespace FFTPatcher.SpriteEditor
             // 
             separator1.Index = 2;
             separator1.Text = "-";
-            // 
-            // palettesMenu
-            // 
-            palettesMenu.Index = 3;
-            palettesMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.importPaletteMenuItem,
-            this.exportPaletteMenuItem} );
-            palettesMenu.Text = "&Palettes";
-            // 
-            // importPaletteMenuItem
-            // 
-            this.importPaletteMenuItem.Index = 0;
-            this.importPaletteMenuItem.Text = "&Import...";
-            this.importPaletteMenuItem.Click += new System.EventHandler( this.importPaletteMenuItem_Click );
-            // 
-            // exportPaletteMenuItem
-            // 
-            this.exportPaletteMenuItem.Index = 1;
-            this.exportPaletteMenuItem.Text = "&Export...";
-            this.exportPaletteMenuItem.Click += new System.EventHandler( this.exportPaletteMenuItem_Click );
             // 
             // paletteGroupBox
             // 
@@ -171,8 +147,7 @@ namespace FFTPatcher.SpriteEditor
             mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.fileMenu,
             sprMenu,
-            this.sp2Menu,
-            palettesMenu} );
+            this.sp2Menu} );
             // 
             // fileMenu
             // 
@@ -348,14 +323,14 @@ namespace FFTPatcher.SpriteEditor
             this.shapesListBox.ItemHeight = 180;
             this.shapesListBox.Location = new System.Drawing.Point( 317, 140 );
             this.shapesListBox.Name = "shapesListBox";
-            this.shapesListBox.Size = new System.Drawing.Size( 270, 367 );
+            this.shapesListBox.Size = new System.Drawing.Size( 270, 366 );
             this.shapesListBox.TabIndex = 3;
             // 
             // SpriteDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 599, 571 );
+            this.ClientSize = new System.Drawing.Size( 599, 570 );
             this.Controls.Add( this.shapesListBox );
             this.Controls.Add( paletteGroupBox );
             this.Controls.Add( this.panel1 );
@@ -386,8 +361,6 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.MenuItem importBmpMenuItem;
         private System.Windows.Forms.MenuItem exportBmpMenuItem;
         private System.Windows.Forms.MenuItem closeMenuItem;
-        private System.Windows.Forms.MenuItem importPaletteMenuItem;
-        private System.Windows.Forms.MenuItem exportPaletteMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;

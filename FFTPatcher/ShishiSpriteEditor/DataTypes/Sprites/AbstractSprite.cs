@@ -47,12 +47,29 @@ namespace FFTPatcher.SpriteEditor
                 palettes = value;
                 ThumbnailDirty = true;
                 BitmapDirty = true;
+             }
+         }
+ 
+        public int CurrentSize { get; protected set; }
+
+        public int MaximumSize
+        {
+            get
+            {
+                if( OriginalSize % 2048 == 0 )
+                {
+                    return OriginalSize;
+                }
+                else
+                {
+                    return OriginalSize / 2048 + 2048;
+                }
             }
         }
 
-        /// <summary>
-        /// Gets the pixels used to draw this sprite.
-        /// </summary>
+         /// <summary>
+         /// Gets the pixels used to draw this sprite.
+         /// </summary>
         public IList<byte> Pixels { get; private set; }
 
         public virtual int Width { get { return 256; } }
@@ -93,6 +110,7 @@ namespace FFTPatcher.SpriteEditor
             : this( sprite.Name, sprite.Filenames )
         {
             OriginalSize = sprite.OriginalSize;
+            CurrentSize = OriginalSize;
             Palettes = BuildPalettes( sprite.Palettes );
             Pixels = new byte[sprite.Pixels.Count];
             sprite.Pixels.CopyTo( Pixels, 0 );
@@ -110,6 +128,7 @@ namespace FFTPatcher.SpriteEditor
             : this( name, filenames )
         {
             OriginalSize = bytes.Count;
+            CurrentSize = OriginalSize;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             Pixels = BuildPixels( bytes.Sub( 16 * 32 ), extraBytes );
         }

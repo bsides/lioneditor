@@ -26,8 +26,14 @@ namespace FFTPatcher.SpriteEditor
             : base( sprite )
         {
         }
+
+        public KANZEN( string name, IList<byte> bytes )
+            : base( name, new string[] { name + ".SPR" }, bytes )
+        {
+        }
+
         public KANZEN( IList<byte> bytes )
-            : base( "KANZEN", new string[] { "KANZEN.SPR" }, bytes )
+            : this( "KANZEN", bytes )
         {
         }
     }

@@ -81,6 +81,48 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;PsxFiles&gt;
+        ///  &lt;FFTPatcher.SpriteEditor.MonsterSprite&gt;
+        ///    &lt;Sprite name=&quot;ARLI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;ARLI.SPR&quot; enum=&quot;BATTLE_ARLI_SPR&quot; original_size=&quot;41475&quot;/&gt;
+        ///        &lt;File name=&quot;ARLI2.SP2&quot; enum=&quot;BATTLE_ARLI2_SP2&quot; original_size=&quot;32768&quot;/&gt;
+        ///      &lt;/Files&gt;
+        ///    &lt;/Sprite&gt;
+        ///    &lt;Sprite name=&quot;BEHI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;BEHI.SPR&quot; enum=&quot;BATTLE_BEHI_SPR&quot; original_size=&quot;46393&quot;/&gt;
+        ///        &lt;File name=&quot;BEHI2.SP2&quot; enum=&quot;BATTLE_BEHI2_SP2&quot; original_siz [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PSPFiles {
+            get {
+                return ResourceManager.GetString("PSPFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;PsxFiles&gt;
+        ///  &lt;FFTPatcher.SpriteEditor.MonsterSprite&gt;
+        ///    &lt;Sprite name=&quot;ARLI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;ARLI.SPR&quot; enum=&quot;BATTLE_ARLI_SPR&quot; original_size=&quot;41475&quot;/&gt;
+        ///        &lt;File name=&quot;ARLI2.SP2&quot; enum=&quot;BATTLE_ARLI2_SP2&quot; original_size=&quot;32768&quot;/&gt;
+        ///      &lt;/Files&gt;
+        ///    &lt;/Sprite&gt;
+        ///    &lt;Sprite name=&quot;BEHI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;BEHI.SPR&quot; enum=&quot;BATTLE_BEHI_SPR&quot; original_size=&quot;46393&quot;/&gt;
+        ///        &lt;File name=&quot;BEHI2.SP2&quot; enum=&quot;BATTLE_BEHI2_SP2&quot; original_siz [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PSXFiles {
+            get {
+                return ResourceManager.GetString("PSXFiles", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Icon sprite {
             get {
                 object obj = ResourceManager.GetObject("sprite", resourceCulture);

@@ -177,45 +177,6 @@ namespace FFTPatcher.SpriteEditor
             Close();
         }
 
-        private void importPaletteMenuItem_Click( object sender, EventArgs e )
-        {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
-            openFileDialog.FilterIndex = 0;
-
-            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                Palette[] p = null;
-                bool success = DoFileOperation( 
-                    delegate()
-                    {
-                        p = Palette.FromPALFile( File.ReadAllBytes( openFileDialog.FileName ) );
-                    } );
-                Sprite.Palettes = p;
-                paletteSelector.SelectedIndex = 0;
-                AbstractSprite s = Sprite;
-                Sprite = null;
-                Sprite = s;
-                shapesListBox.Invalidate();
-            }
-        }
-
-        private void exportPaletteMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.FileName = string.Empty;
-            saveFileDialog.Filter = "Palette files (*.PAL)|*.PAL";
-            saveFileDialog.FilterIndex = 0;
-
-            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                bool success = DoFileOperation(
-                    delegate()
-                    {
-                        File.WriteAllBytes( saveFileDialog.FileName, Sprite.Palettes.ToPALFile() );
-                    } );
-            }
-        }
-
         private bool DoFileOperation( MethodInvoker action )
         {
             try

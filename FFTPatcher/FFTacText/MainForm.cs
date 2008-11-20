@@ -312,6 +312,7 @@ namespace FFTPatcher.TextEditor
                     using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
                     {
                         File = xs.Deserialize( stream ) as FFTText;
+                        File.UpgradeStrings();
                     }
                 }
                 catch( Exception )

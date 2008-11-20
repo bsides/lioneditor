@@ -108,6 +108,29 @@ namespace FFTPatcher.TextEditor
 
 		#region Methods (9) 
 
+        public void UpgradeStrings()
+        {
+            foreach ( IStringSectioned stringSectioned in SectionedFiles )
+            {
+                foreach ( IList<string> section in stringSectioned.Sections )
+                {
+                    for ( int i = 0; i < section.Count; i++ )
+                    {
+                        section[i] = TextUtilities.UpgradeString( section[i], CharMap );
+                    }
+                }
+            }
+            foreach ( IPartitionedFile partitioned in PartitionedFiles )
+            {
+                foreach ( IPartition partition in partitioned.Sections )
+                {
+                    for (int i =0; i < partition.Entries.Count; i++)
+                    {
+                        partition.Entries[i] = TextUtilities.UpgradeString( partition.Entries[i], this.CharMap );
+                    }
+                }
+            }
+        }
 
         private void AddToAppropriateCollection( object o )
         {

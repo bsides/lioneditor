@@ -58,6 +58,7 @@ namespace FFTPatcher.SpriteEditor
             this.fileMenu = new System.Windows.Forms.MenuItem();
             this.importBmpMenuItem = new System.Windows.Forms.MenuItem();
             this.exportBmpMenuItem = new System.Windows.Forms.MenuItem();
+            this.exportBmpCurrentPalette = new System.Windows.Forms.MenuItem();
             this.closeMenuItem = new System.Windows.Forms.MenuItem();
             this.importSprMenuItem = new System.Windows.Forms.MenuItem();
             this.exportSprMenuItem = new System.Windows.Forms.MenuItem();
@@ -89,7 +90,7 @@ namespace FFTPatcher.SpriteEditor
             // 
             // separator1
             // 
-            separator1.Index = 2;
+            separator1.Index = 3;
             separator1.Text = "-";
             // 
             // paletteGroupBox
@@ -155,6 +156,7 @@ namespace FFTPatcher.SpriteEditor
             this.fileMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.importBmpMenuItem,
             this.exportBmpMenuItem,
+            this.exportBmpCurrentPalette,
             separator1,
             this.closeMenuItem} );
             this.fileMenu.Text = "&File";
@@ -172,10 +174,16 @@ namespace FFTPatcher.SpriteEditor
             this.exportBmpMenuItem.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
             this.exportBmpMenuItem.Text = "&Export BMP...";
             this.exportBmpMenuItem.Click += new System.EventHandler( this.exportBmpMenuItem_Click );
-            // 
+            //
+            // exportBmpCurrentPalette
+            //
+            this.exportBmpCurrentPalette.Index = 2;
+            this.exportBmpCurrentPalette.Text = "Export BMP with current palette...";
+            this.exportBmpCurrentPalette.Click += new System.EventHandler( this.exportBmpCurrentPalette_Click );
+            //
             // closeMenuItem
-            // 
-            this.closeMenuItem.Index = 3;
+            //
+            this.closeMenuItem.Index = 4;
             this.closeMenuItem.Shortcut = System.Windows.Forms.Shortcut.CtrlF4;
             this.closeMenuItem.Text = "&Close";
             this.closeMenuItem.Click += new System.EventHandler( this.closeMenuItem_Click );
@@ -314,9 +322,9 @@ namespace FFTPatcher.SpriteEditor
             // 
             // shapesListBox
             // 
-            this.shapesListBox.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
-                        | System.Windows.Forms.AnchorStyles.Left )
-                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.shapesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.shapesListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.shapesListBox.FormattingEnabled = true;
             this.shapesListBox.IntegralHeight = false;
@@ -378,6 +386,7 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.MenuItem sp2Separator3;
         private System.Windows.Forms.MenuItem importSp2dMenuItem;
         private System.Windows.Forms.MenuItem exportSp2dMenuItem;
+        private System.Windows.Forms.MenuItem exportBmpCurrentPalette;
     }
 }
 

@@ -24,13 +24,6 @@ namespace FFTPatcher.SpriteEditor
             shapesListBox.SelectedIndexChanged += new EventHandler( shapesListBox_SelectedIndexChanged );
             StartPosition = FormStartPosition.CenterParent;
             ShowInTaskbar = false;
-
-            fileMenu.Popup += new EventHandler( fileMenu_Popup );
-        }
-
-        private void fileMenu_Popup( object sender, EventArgs e )
-        {
-            //saveSp2MenuItem.Enabled = Sprite != null && Sprite.Height > 488;
         }
 
         private void paletteSelector_SelectedIndexChanged( object sender, EventArgs e )
@@ -219,10 +212,10 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private void ShowSaveFile( int whichFile )
+        private void ShowSaveFile( int whichFile, string filter )
         {
-            string filterName = Sprite.Filenames[whichFile];
-            saveFileDialog.Filter = filterName + "|" + filterName;
+            saveFileDialog.Filter = filter;
+            saveFileDialog.FileName = string.Empty;
             if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 IList<byte[]> bytes = Sprite.ToByteArrays();
@@ -231,15 +224,17 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        private const string sprFilter = "SPR files (*.spr)|*.spr";
+
         private void exportSprMenuItem_Click( object sender, EventArgs e )
         {
-            ShowSaveFile( 0 );
+            ShowSaveFile( 0, sprFilter );
         }
 
-        private void ShowOpenSP2( int whichSp2 )
+        private void ShowOpenSP2( int whichSp2, string filter )
         {
-            string filterName = Sprite.Filenames[whichSp2 + 1];
-            saveFileDialog.Filter = filterName + "|" + filterName;
+            saveFileDialog.Filter = filter;
+            saveFileDialog.FileName = string.Empty;
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 ( Sprite as MonsterSprite ).ImportSP2( File.ReadAllBytes( openFileDialog.FileName ), whichSp2 );
@@ -248,42 +243,44 @@ namespace FFTPatcher.SpriteEditor
 
         private void importSp2MenuItem_Click( object sender, EventArgs e )
         {
-            ShowOpenSP2( 0 );
+            ShowOpenSP2( 0, sp2Filter );
         }
+
+        private const string sp2Filter = "SP2 files (*.sp2)|*.sp2";
 
         private void exportSp2MenuItem_Click( object sender, EventArgs e )
         {
-            ShowSaveFile( 1 );
+            ShowSaveFile( 1, sp2Filter );
         }
 
         private void importSp2bMenuItem_Click( object sender, EventArgs e )
         {
-            ShowOpenSP2( 1 );
+            ShowOpenSP2( 1, sp2Filter );
         }
 
         private void exportSp2bMenuItem_Click( object sender, EventArgs e )
         {
-            ShowSaveFile( 2 );
+            ShowSaveFile( 2, sp2Filter );
         }
 
         private void importSp2cMenuItem_Click( object sender, EventArgs e )
         {
-            ShowOpenSP2( 2 );
+            ShowOpenSP2( 2, sp2Filter );
         }
 
         private void exportSp2cMenuItem_Click( object sender, EventArgs e )
         {
-            ShowSaveFile( 3 );
+            ShowSaveFile( 3, sp2Filter );
         }
 
         private void importSp2dMenuItem_Click( object sender, EventArgs e )
         {
-            ShowOpenSP2( 3 );
+            ShowOpenSP2( 3, sp2Filter );
         }
 
         private void exportSp2dMenuItem_Click( object sender, EventArgs e )
         {
-            ShowSaveFile( 4 );
+            ShowSaveFile( 4, sp2Filter );
         }
 
         private void sp2Menu_Popup( object sender, EventArgs e )
@@ -314,6 +311,19 @@ namespace FFTPatcher.SpriteEditor
         {
             importSprMenuItem.Text = string.Format( "&Import SPR..." );
             exportSprMenuItem.Text = string.Format( "E&xport SPR..." );
+        }
+
+        private void exportBmpCurrentPalette_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.Filter = "Bitmap files (*.bmp)|*.bmp";
+            saveFileDialog.FileName = string.Empty;
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                using( Bitmap bmp = Sprite.To4bppBitmapUncached( paletteSelector.SelectedIndex ) )
+                {
+                    bmp.Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
+                }
+            }
         }
     }
 }

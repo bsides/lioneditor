@@ -249,23 +249,46 @@ namespace FFTPatcher.SpriteEditor
 
         protected override void ToBitmapInner( System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )
         {
-            // Top portrait
+            // Above portrait
             for ( int i = 0; ( i < this.Pixels.Count ) && ( i / Width < topHeight ); i++ )
             {
-                bmd.SetPixel( i % Width, i / Width, Pixels[i] );
+                bmd.SetPixel8bpp( i % Width, i / Width, Pixels[i] );
             }
 
             // Compressed part
             for ( int i = ( topHeight + portraintHeight ) * Width; ( i < this.Pixels.Count ) && ( i / Width < Height ); i++ )
             {
-                bmd.SetPixel( i % Width, i / Width - portraintHeight, Pixels[i] );
+                bmd.SetPixel8bpp( i % Width, i / Width - portraintHeight, Pixels[i] );
             }
 
             // Portrait part
             for ( int i = topHeight * Width; ( i < this.Pixels.Count ) && ( i / Width < ( topHeight + portraintHeight ) ); i++ )
             {
-                bmd.SetPixel( i % Width, i / Width + compressedHeight, Pixels[i] );
+                bmd.SetPixel8bpp( i % Width, i / Width + compressedHeight, Pixels[i] );
             }
+        }
+
+        public override unsafe Bitmap To4bppBitmapUncached( int whichPalette )
+        {
+            Bitmap result = base.To4bppBitmapUncached( whichPalette );
+
+            BitmapData bmd = result.LockBits( new Rectangle( Point.Empty, result.Size ), ImageLockMode.WriteOnly, PixelFormat.Format4bppIndexed ); 
+
+            // Compressed part
+            for ( int i = ( topHeight + portraintHeight ) * Width; ( i < this.Pixels.Count ) && ( i / Width < Height ); i++ )
+            {
+                bmd.SetPixel4bpp( i % Width, i / Width - portraintHeight, Pixels[i] );
+            }
+
+            // Portrait part
+            for ( int i = topHeight * Width; ( i < this.Pixels.Count ) && ( i / Width < ( topHeight + portraintHeight ) ); i++ )
+            {
+                bmd.SetPixel4bpp( i % Width, i / Width + compressedHeight, Pixels[i] );
+            }
+
+            result.UnlockBits( bmd );
+
+            return result;
         }
 
         protected static IList<byte> Decompress( IList<byte> bytes )

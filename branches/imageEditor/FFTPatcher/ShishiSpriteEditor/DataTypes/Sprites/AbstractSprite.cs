@@ -247,16 +247,21 @@ namespace FFTPatcher.SpriteEditor
             int k = 0;
             for ( int i = 0; i < Palettes.Length; i++ )
             {
-                for ( int j = 0; j < Palettes[i].Colors.Length; j++, k++ )
+                FixupColorPalette( palette, i, i * 16 );
+            }
+        }
+
+        protected void FixupColorPalette( ColorPalette palette, int whichPalette, int destStartIndex )
+        {
+            for ( int i = 0; i < Palettes[whichPalette].Colors.Length; i++ )
+            {
+                if ( Palettes[whichPalette].Colors[i].ToArgb() == Color.Transparent.ToArgb() )
                 {
-                    if ( Palettes[i].Colors[j].ToArgb() == Color.Transparent.ToArgb() )
-                    {
-                        palette.Entries[k] = Color.Black;
-                    }
-                    else
-                    {
-                        palette.Entries[k] = Palettes[i].Colors[j];
-                    }
+                    palette.Entries[destStartIndex + i] = Color.Black;
+                }
+                else
+                {
+                    palette.Entries[destStartIndex + i] = Palettes[whichPalette].Colors[i];
                 }
             }
         }
@@ -285,6 +290,25 @@ namespace FFTPatcher.SpriteEditor
             return CachedBitmap;
         }
 
+        public virtual unsafe Bitmap To4bppBitmapUncached( int whichPalette )
+        {
+            Bitmap result = new Bitmap( Width, Height, System.Drawing.Imaging.PixelFormat.Format4bppIndexed );
+            System.Drawing.Imaging.BitmapData bmd = result.LockBits( new Rectangle( Point.Empty, result.Size ), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format4bppIndexed );
+            ColorPalette pal = result.Palette;
+            FixupColorPalette( pal, whichPalette, 0 );
+            result.Palette = pal;
+
+            for( int i = 0; i < Pixels.Count; i++ )
+            {
+                bmd.SetPixel4bpp( i % Width, i / Width, Pixels[i] % 16 );
+            }
+
+            result.UnlockBits( bmd );
+
+            return result;
+        }
+
+    
         protected abstract void ToBitmapInner( Bitmap bmp, BitmapData bmd );
 
         public virtual Image Export()

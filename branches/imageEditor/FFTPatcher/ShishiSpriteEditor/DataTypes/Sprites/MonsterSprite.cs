@@ -98,7 +98,7 @@ namespace FFTPatcher.SpriteEditor
             base.ToBitmapInner( bmp, bmd );
             for ( int i = 256 * 488; ( i < Pixels.Count ) && ( i / Width < Height ); i++ )
             {
-                bmd.SetPixel( i % Width, i / Width, Pixels[i] );
+                bmd.SetPixel8bpp( i % Width, i / Width, Pixels[i] );
             }
         }
     }

@@ -71,7 +71,7 @@ namespace FFTPatcher.SpriteEditor
         {
             for( int i = 0; (i < Pixels.Count) && (i / Width < Height); i++ )
             {
-                bmd.SetPixel( i % Width, i / Width, Pixels[i] );
+                bmd.SetPixel8bpp( i % Width, i / Width, Pixels[i] );
             }
         }
 

@@ -97,7 +97,7 @@ namespace FFTPatcher.SpriteEditor
                         int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
                         if( palette.Colors[index % 16].A != 0 )
                         {
-                            bmdDest.SetPixel(
+                            bmdDest.SetPixel8bpp(
                                 destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row,
                                 index );
                         }
@@ -113,7 +113,7 @@ namespace FFTPatcher.SpriteEditor
                         int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
                         if( palette.Colors[index % 16].A != 0 )
                         {
-                            bmdDest.SetPixel(
+                            bmdDest.SetPixel8bpp(
                                 destinationPoint.X + col, destinationPoint.Y + row,
                                 index );
                         }
@@ -156,7 +156,7 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="x">The x position of the pixel.</param>
         /// <param name="y">The y position of the pixel.</param>
         /// <param name="index">The index in the palette to use to set the pixel to.</param>
-        public static unsafe void SetPixel( this BitmapData bmd, int x, int y, int index )
+        public static unsafe void SetPixel8bpp( this BitmapData bmd, int x, int y, int index )
         {
             byte* p = (byte*)bmd.Scan0.ToPointer();
             int offset = y * bmd.Stride + x;
@@ -171,6 +171,26 @@ namespace FFTPatcher.SpriteEditor
             p[offset + 1] = color.G;
             p[offset + 2] = color.R;
             p[offset + 3] = color.A;
+        }
+
+        public static unsafe void SetPixel4bpp( this BitmapData bmd, int x, int y, int index )
+        {
+            System.Diagnostics.Debug.Assert( bmd.PixelFormat == PixelFormat.Format4bppIndexed );
+            int offset = y * bmd.Stride + x / 2;
+            byte* p = (byte*)bmd.Scan0.ToPointer();
+            byte currentByte = p[offset];
+            if ( ( x & 1 ) == 1 )
+            {
+                currentByte &= 0xF0;
+                currentByte |= (byte)( index & 0x0F );
+            }
+            else
+            {
+                currentByte &= 0x0F;
+                currentByte |= (byte)( ( index & 0x0F ) << 4 );
+            }
+
+            p[offset] = currentByte;
         }
 
         /// <summary>

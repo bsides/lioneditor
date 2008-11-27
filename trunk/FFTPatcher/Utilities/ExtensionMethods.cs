@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace System.Runtime.CompilerServices
 {
@@ -39,6 +40,21 @@ namespace FFTPatcher
     {
 
         #region Methods (14)
+
+        public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
+        {
+            return new ReadOnlyCollection<T>( list );
+        }
+
+        public static void Sort<T>( this IList<T> list ) where T : IComparable<T>
+        {
+            Utilities.SortList( list );
+        }
+
+        public static void Sort<T>( this IList<T> list, Comparison<T> comparer )
+        {
+            Utilities.SortList( list, comparer );
+        }
 
         /// <summary>
         /// Sums the items in the list.
@@ -64,6 +80,27 @@ namespace FFTPatcher
             }
 
             return false;
+        }
+
+        public static void CopyTo<T>( this IList<T> list, IList<T> destination, int destinationIndex )
+        {
+            if ( destination.Count - destinationIndex < list.Count )
+            {
+                throw new InvalidOperationException( "source list is larger than destination" );
+            }
+
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                destination[i + destinationIndex] = list[i];
+            }
+        }
+
+        public static void InitializeElements<T>( this IList<T> list )
+        {
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                list[i] = default( T );
+            }
         }
 
         /// <summary>

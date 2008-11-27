@@ -286,8 +286,6 @@ namespace FFTPatcher
             {
                 patches.Add( patch );
                 sendProgress( "Getting other patches" );
-                sendProgress( "Getting other patches" );
-                sendProgress( "Getting other patches" );
             }
             if( patchList.Poach )
             {

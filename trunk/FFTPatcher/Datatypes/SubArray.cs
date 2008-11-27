@@ -72,11 +72,13 @@ namespace FFTPatcher
             return result;
         }
 
+        [DebuggerStepThrough]
         public static IList<T> Sub<T>( this IList<T> list, int start )
         {
             return new SubArray<T>( list, start );
         }
 
+        [DebuggerStepThrough]
         public static IList<T> Sub<T>( this IList<T> list, int start, int stop )
         {
             return new SubArray<T>( list, start, stop );
@@ -123,6 +125,7 @@ namespace FFTPatcher.Datatypes
 
     [DebuggerTypeProxy( typeof( CollectionDebugView<> ) )]
     [DebuggerDisplay( "Count = {Count}" )]
+    [DebuggerStepThrough]
     public class SubArray<T> : ICollection<T>, IList<T>, IDisposable
     {
 		#region Instance Variables (3) 
@@ -326,6 +329,7 @@ namespace FFTPatcher.Datatypes
         }
     }
 
+    [DebuggerStepThrough]
     public class SubArrayEnumerator<T> : IEnumerator<T>
     {
 		#region Instance Variables (2) 

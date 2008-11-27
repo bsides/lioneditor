@@ -25,6 +25,7 @@ namespace FFTPatcher.SpriteEditor
     static class Program
     {
 
+
 		#region Methods (1) 
 
 

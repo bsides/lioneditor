@@ -39,8 +39,6 @@ namespace FFTPatcher
     Raijinili: Figured out what some of the checkboxes in the ENTD editor do
     Weltall: CWCheat
     aerostar: Final Fantasy Tactics Battle Mechanics Guide
-    agemo: Portions of the ISO patching code
-    gomtuu/Zodiac/Armorvil: Discovered traps/move-find items locations and format
 
 Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 

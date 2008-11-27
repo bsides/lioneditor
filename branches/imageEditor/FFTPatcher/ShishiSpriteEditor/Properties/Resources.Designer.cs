@@ -143,12 +143,5 @@ namespace FFTPatcher.SpriteEditor.Properties {
                 return ((byte[])(obj));
             }
         }
-        
-        internal static byte[] WLDFACE {
-            get {
-                object obj = ResourceManager.GetObject("WLDFACE", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

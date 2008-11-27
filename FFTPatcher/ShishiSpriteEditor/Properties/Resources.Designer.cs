@@ -83,7 +83,7 @@ namespace FFTPatcher.SpriteEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;PsxFiles&gt;
+        ///&lt;PspFiles&gt;
         ///  &lt;FFTPatcher.SpriteEditor.MonsterSprite&gt;
         ///    &lt;Sprite name=&quot;ARLI&quot;&gt;
         ///      &lt;Files&gt;
@@ -140,6 +140,13 @@ namespace FFTPatcher.SpriteEditor.Properties {
         internal static byte[] TYPE2_SHP {
             get {
                 object obj = ResourceManager.GetObject("TYPE2_SHP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] WLDFACE {
+            get {
+                object obj = ResourceManager.GetObject("WLDFACE", resourceCulture);
                 return ((byte[])(obj));
             }
         }

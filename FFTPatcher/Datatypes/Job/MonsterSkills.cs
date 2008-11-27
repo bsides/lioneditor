@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,16 +26,14 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class MonsterSkill : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly string[] digestableProperties = new string[4] {
             "Ability1", "Ability2", "Ability3", "Beastmaster" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (9)
-
+		#region Public Properties (9) 
 
         public Ability Ability1 { get; set; }
 
@@ -72,10 +70,9 @@ namespace FFTPatcher.Datatypes
 
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (3)
+		#region Constructors (3) 
 
         public MonsterSkill( IList<byte> bytes )
             : this( 0, "", bytes, null )
@@ -99,10 +96,9 @@ namespace FFTPatcher.Datatypes
             Beastmaster = AllAbilities.DummyAbilities[flags[3] ? ( bytes[4] + 0x100 ) : bytes[4]];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (2)
-
+		#region Public Methods (2) 
 
         public byte[] ToByteArray()
         {
@@ -126,15 +122,13 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
     public class AllMonsterSkills : PatchableFile, IXmlDigest
     {
 
-        #regionÂ StaticÂ PropertiesÂ (3)
+        #region Static Properties (3)
 
 
         public static string[] Names { get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; } }
@@ -144,9 +138,9 @@ namespace FFTPatcher.Datatypes
         public static string[] PSXNames { get; private set; }
 
 
-        #endregionÂ StaticÂ Properties
+        #endregion Static Properties
 
-        #regionÂ PropertiesÂ (2)
+        #region Properties (2)
 
 
         public MonsterSkill[] MonsterSkills { get; private set; }
@@ -170,9 +164,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Properties
+        #endregion Properties
 
-        #regionÂ ConstructorsÂ (2)
+        #region Constructors (2)
 
         static AllMonsterSkills()
         {
@@ -200,9 +194,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+        #endregion Constructors
 
-        #regionÂ MethodsÂ (5)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -253,7 +247,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Methods
+        #endregion Methods
 
 
         public override IList<PatchedByteArray> GetPatches( Context context )

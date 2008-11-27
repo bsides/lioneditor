@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,17 +26,15 @@ namespace FFTPatcher.Editors
 {
     public partial class ItemAttributeEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (3) 
 
         private ItemAttributes attributes;
         private bool ignoreChanges = false;
         private NumericUpDownWithDefault[] spinners;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public ItemAttributes ItemAttributes
         {
@@ -57,10 +55,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public ItemAttributeEditor()
         {
@@ -82,20 +79,9 @@ namespace FFTPatcher.Editors
             cancelElementsEditor.DataChanged += OnDataChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
-
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
-                OnDataChanged( sender, System.EventArgs.Empty );
-            }
-        }
+		#region Public Methods (1) 
 
         public void UpdateView()
         {
@@ -139,8 +125,20 @@ namespace FFTPatcher.Editors
             this.ignoreChanges = false;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (1) 
 
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( attributes, spinner.Tag.ToString(), (byte)spinner.Value );
+                OnDataChanged( sender, System.EventArgs.Empty );
+            }
+        }
+
+		#endregion Private Methods 
     }
 }

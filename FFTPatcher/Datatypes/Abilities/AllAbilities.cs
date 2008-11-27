@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,6 +25,31 @@ namespace FFTPatcher.Datatypes
 {
     public class AllAbilityEffects : PatchableFile
     {
+		#region Instance Variables (1) 
+
+        private AllAbilities owner;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
+
+        public override bool HasChanged
+        {
+            get { return owner.Abilities.Exists( ability => ability.Effect != null && ability.Default != null && ability.Default.Effect != null && ability.Effect.Value != ability.Default.Effect.Value ); }
+        }
+
+		#endregion Public Properties 
+
+		#region Constructors (1) 
+
+        public AllAbilityEffects( AllAbilities owner )
+        {
+            this.owner = owner;
+        }
+
+		#endregion Constructors 
+
+		#region Public Methods (1) 
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -32,7 +57,7 @@ namespace FFTPatcher.Datatypes
             List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
             if( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x14F3F0, effects ) );
+                result.Add( new PatchedByteArray( PsxIso.BATTLE_BIN, 0x14F3F0, effects ) );
             }
             else if( context == Context.US_PSP )
             {
@@ -43,17 +68,7 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public override bool HasChanged
-        {
-            get { return owner.Abilities.Exists( ability => ability.Effect != null && ability.Default != null && ability.Default.Effect != null && ability.Effect.Value != ability.Default.Effect.Value ); }
-        }
-
-        private AllAbilities owner;
-
-        public AllAbilityEffects( AllAbilities owner )
-        {
-            this.owner = owner;
-        }
+		#endregion Public Methods 
     }
 
     /// <summary>
@@ -62,14 +77,14 @@ namespace FFTPatcher.Datatypes
     public class AllAbilities : PatchableFile, IXmlDigest
     {
 
-        #regionÂ StaticÂ FieldsÂ (2)
+        #region Static Fields (2)
 
         private static Ability[] pspEventAbilites;
         private static Ability[] psxEventAbilites;
 
-        #endregionÂ StaticÂ Fields
+        #endregion Static Fields
 
-        #regionÂ StaticÂ PropertiesÂ (7)
+        #region Static Properties (7)
 
 
         public static Ability[] DummyAbilities
@@ -105,9 +120,9 @@ namespace FFTPatcher.Datatypes
         public static string[] PSXNames { get; private set; }
 
 
-        #endregionÂ StaticÂ Properties
+        #endregion Static Properties
 
-        #regionÂ PropertiesÂ (3)
+        #region Properties (3)
 
 
         public Ability[] Abilities { get; private set; }
@@ -136,9 +151,9 @@ namespace FFTPatcher.Datatypes
         }
 
 
-        #endregionÂ Properties
+        #endregion Properties
 
-        #regionÂ ConstructorsÂ (2)
+        #region Constructors (2)
 
         static AllAbilities()
         {
@@ -235,9 +250,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+        #endregion Constructors
 
-        #regionÂ MethodsÂ (5)
+        #region Methods (5)
 
 
         public List<string> GenerateCodes()
@@ -306,7 +321,7 @@ namespace FFTPatcher.Datatypes
         }
 
 
-        #endregionÂ Methods
+        #endregion Methods
 
 
         public override IList<PatchedByteArray> GetPatches( Context context )

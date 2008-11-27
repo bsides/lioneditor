@@ -26,19 +26,13 @@ namespace FFTPatcher
 
     public static class PSXResources
     {
-
-
-		#region Static Fields (7) 
+		#region Instance Variables (9) 
 
         private static string[] abilityAI;
         private static string[] abilityAttributes;
         private static string[] abilityEffects;
         private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
-        private static string[] shopAvailabilities;
-        private static string[] statuses;
-
-        private static ReadOnlyCollection<string> mapNamesReadOnly;
         private static string[] mapNames = new string[128] {
             "(No name)",
             "At main gate of Igros Castle",
@@ -163,22 +157,13 @@ namespace FFTPatcher
             "(Garbled name) -- Sloped Checkerboard",
             "","","","","","",""
             };
-		#endregion Static Fields 
+        private static ReadOnlyCollection<string> mapNamesReadOnly;
+        private static string[] shopAvailabilities;
+        private static string[] statuses;
 
-		#region Static Properties (31) 
+		#endregion Instance Variables 
 
-        public static ReadOnlyCollection<string> MapNames
-        {
-            get
-            {
-                if ( mapNamesReadOnly == null )
-                {
-                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
-                }
-
-                return mapNamesReadOnly;
-            }
-        }
+		#region Public Properties (37) 
 
         public static string Abilities { get { return dict[Paths.AbilitiesNamesXML] as string; } }
 
@@ -262,8 +247,6 @@ namespace FFTPatcher
 
         public static byte[] ENTD4 { get { return dict[Paths.Binaries.ENTD4] as byte[]; } }
 
-        public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
-
         public static string EventNames { get { return dict[Paths.EventNamesXML] as string; } }
 
         public static byte[] FontBin { get { return dict[Paths.Binaries.Font] as byte[]; } }
@@ -282,7 +265,22 @@ namespace FFTPatcher
 
         public static byte[] JobsBin { get { return dict[Paths.Binaries.Jobs] as byte[]; } }
 
+        public static ReadOnlyCollection<string> MapNames
+        {
+            get
+            {
+                if ( mapNamesReadOnly == null )
+                {
+                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
+                }
+
+                return mapNamesReadOnly;
+            }
+        }
+
         public static byte[] MonsterSkillsBin { get { return dict[Paths.Binaries.MonsterSkills] as byte[]; } }
+
+        public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
 
         public static byte[] OldItemAttributesBin { get { return dict[Paths.Binaries.OldItemAttributes] as byte[]; } }
 
@@ -337,7 +335,7 @@ namespace FFTPatcher
 
         public static string StatusNames { get { return dict[Paths.StatusNamesXML] as string; } }
 
-		#endregion Static Properties 
+		#endregion Public Properties 
 
 		#region Constructors (1) 
 
@@ -378,6 +376,5 @@ namespace FFTPatcher
         }
 
 		#endregion Constructors 
-
     }
 }

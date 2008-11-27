@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,21 +26,33 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AllJobs : PatchableFile, IXmlDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (2)
+		#region Instance Variables (2) 
 
         private static Job[] pspJobs;
         private static Job[] psxJobs;
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ StaticÂ PropertiesÂ (4)
-
+		#region Public Properties (6) 
 
         public static Job[] DummyJobs
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspJobs : psxJobs; }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has changed.
+        /// </summary>
+        /// <value></value>
+        public override bool HasChanged
+        {
+            get
+            {
+                return Jobs.Exists( j => j.HasChanged );
+            }
+        }
+
+        public Job[] Jobs { get; private set; }
 
         public static string[] Names
         {
@@ -51,35 +63,9 @@ namespace FFTPatcher.Datatypes
 
         public static string[] PSXNames { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ StaticÂ Properties
-
-        #regionÂ PropertiesÂ (2)
-
-
-        /// <summary>
-        /// Gets a value indicating whether this instance has changed.
-        /// </summary>
-        /// <value></value>
-        public override bool HasChanged
-        {
-            get
-            {
-                foreach( Job j in Jobs )
-                {
-                    if( j.HasChanged )
-                        return true;
-                }
-                return false;
-            }
-        }
-
-        public Job[] Jobs { get; private set; }
-
-
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (3)
+		#region Constructors (3) 
 
         static AllJobs()
         {
@@ -126,10 +112,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
@@ -141,6 +126,24 @@ namespace FFTPatcher.Datatypes
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x518B8, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2739DC, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2739DC, bytes ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -179,27 +182,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
-
-        public override IList<PatchedByteArray> GetPatches( Context context )
-        {
-            var result = new List<PatchedByteArray>( 2 );
-
-            var bytes = ToByteArray( context );
-            if ( context == Context.US_PSX )
-            {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x518B8, bytes ) );
-            }
-            else if ( context == Context.US_PSP )
-            {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2739DC, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2739DC, bytes ) );
-            }
-
-            return result;
-        }
+		#endregion Public Methods 
     }
 
     /// <summary>
@@ -207,8 +190,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Job : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly string[] digestableAttributes = new string[] {
             "SkillSet", "HPConstant", "HPMultiplier", "MPConstant", "MPMultiplier", "SpeedConstant", "SpeedMultiplier",
@@ -216,10 +198,9 @@ namespace FFTPatcher.Datatypes
             "MPalette", "MGraphic", "InnateA", "InnateB", "InnateC", "InnateD", "AbsorbElement", "CancelElement",
             "HalfElement", "WeakElement", "Equipment", "PermanentStatus", "StartingStatus", "StatusImmunity" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (34)
-
+		#region Public Properties (34) 
 
         public Elements AbsorbElement { get; private set; }
 
@@ -335,10 +316,9 @@ namespace FFTPatcher.Datatypes
 
         public Elements WeakElement { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (5)
+		#region Constructors (5) 
 
         public Job( IList<byte> bytes )
             : this( Context.US_PSP, bytes )
@@ -408,6 +388,10 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+		#endregion Constructors 
+
+		#region Public Methods (5) 
+
         public static void Copy( Job source, Job destination )
         {
             source.PermanentStatus.CopyTo( destination.PermanentStatus );
@@ -445,11 +429,6 @@ namespace FFTPatcher.Datatypes
         {
             Copy( this, destination );
         }
-
-        #endregionÂ Constructors
-
-        #regionÂ MethodsÂ (3)
-
 
         public byte[] ToByteArray()
         {
@@ -492,15 +471,11 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-
-
         public override string ToString()
         {
             return (HasChanged ? "*" : "") + Value.ToString( "X2" ) + " " + Name;
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

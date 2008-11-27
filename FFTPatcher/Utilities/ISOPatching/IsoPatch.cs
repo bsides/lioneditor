@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,45 +27,21 @@ namespace FFTPatcher
 {
     public static class IsoPatch
     {
-        public struct NewOldValue
-        {
-            public byte OldValue;
-            public byte NewValue;
-
-            public NewOldValue( byte newValue, byte oldValue )
-            {
-                OldValue = oldValue;
-                NewValue = newValue;
-            }
-        }
-
-		#regionÂ StaticÂ FieldsÂ (6)Â 
+		#region Instance Variables (7) 
 
         private static readonly int[] dataSizes = new int[3] { 2048, 2048, 2324 };
         private static readonly int[] dataStarts = new int[3] { 0, 0x18, 0x18 };
         private static byte[] eccBLUT = new byte[256];
         private static byte[] eccFLUT = new byte[256];
         private static ulong[] edcLUT = new ulong[256];
+        private const int fullSectorSize = 2352;
         private static readonly int[] sectorSizes = new int[3] { 2048, fullSectorSize, fullSectorSize };
 
-		#endregionÂ StaticÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ FieldsÂ (1)Â 
+		#region Constructors (1) 
 
-        private const int fullSectorSize = 2352;
-
-		#endregionÂ FieldsÂ 
-
-        public enum IsoType
-        {
-            Mode1 = 0,
-            Mode2Form1 = 1,
-            Mode2Form2 = 2
-        }
-
-		#regionÂ ConstructorsÂ (1)Â 
-
-        static IsoPatch()
+static IsoPatch()
         {
             uint j = 0;
             ulong edc = 0;
@@ -83,119 +59,43 @@ namespace FFTPatcher
             }
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (11)Â 
+		#region Public Methods (8) 
 
-
-        private static void ComputeEccBlock( IList<byte> source, uint majorCount, uint minorCount, uint majorMult, uint minorIncrement, IList<byte> destination )
+        public static void FixupECC( IsoType isoType, Stream iso )
         {
-            ulong size = majorCount * minorCount;
-            uint major = 0;
-            uint minor = 0;
-            for( major = 0; major < majorCount; major++ )
+            int type = (int)isoType;
+            int sectorSize = sectorSizes[type];
+            byte[] sector = new byte[sectorSize];
+
+            if ( iso.Length % sectorSize != 0 )
             {
-                ulong i = (major >> 1) * majorMult + (major & 1);
-                byte eccA = 0;
-                byte eccB = 0;
-                for( minor = 0; minor < minorCount; minor++ )
+                throw new ArgumentException( "ISO does not have correct length for its type", "isoType" );
+            }
+            if ( isoType == IsoType.Mode1 )
+            {
+                throw new ArgumentException( "Mode1 does not support ECC/EDC", "isoType" );
+            }
+
+            Int64 numberOfSectors = iso.Length / sectorSize;
+            iso.Seek( 0, SeekOrigin.Begin );
+            for ( Int64 i = 0; i < numberOfSectors; i++ )
+            {
+                iso.Read( sector, 0, sectorSize );
+
+                if ( isoType != IsoType.Mode1 && ( sector[0x12] & 8 ) == 0 )
                 {
-                    byte t = source[(int)i];
-                    i += minorIncrement;
-                    if( i >= size ) i -= size;
-                    eccA ^= t;
-                    eccB ^= t;
-                    eccA = eccFLUT[eccA];
+                    sector[0x12] = 8;
+                    sector[0x16] = 8;
                 }
 
-                eccA = eccBLUT[eccFLUT[eccA] ^ eccB];
-                destination[(int)major] = eccA;
-                destination[(int)(major + majorCount)] = (byte)(eccA ^ eccB);
+                GenerateEccEdc( sector, isoType );
+                iso.Seek( -sectorSize, SeekOrigin.Current );
+                iso.Write( sector, 0, sectorSize );
             }
         }
 
-        private static void ComputeEdcBlock( IList<byte> source, int size, IList<byte> destination )
-        {
-            ulong edc = 0;
-            for( int i = 0; i < size; i++ )
-            {
-                edc = (edc >> 8) ^ edcLUT[(edc ^ source[i]) & 0xFF];
-            }
-            destination[0] = (byte)((edc >> 0) & 0xFF);
-            destination[1] = (byte)((edc >> 8) & 0xFF);
-            destination[2] = (byte)((edc >> 16) & 0xFF);
-            destination[3] = (byte)((edc >> 24) & 0xFF);
-        }
-
-        private static void GenerateEcc( IList<byte> sector, bool zeroAddress )
-        {
-            byte[] address = new byte[4];
-            byte i = 0;
-            if( zeroAddress )
-            {
-                for( i = 0; i < 4; i++ )
-                {
-                    address[i] = sector[12 + i];
-                    sector[12 + i] = 0;
-                }
-            }
-
-            ComputeEccBlock( sector.Sub( 0x0C ), 86, 24, 2, 86, sector.Sub( 0x81C ) );
-            ComputeEccBlock( sector.Sub( 0x0C ), 52, 43, 86, 88, sector.Sub( 0x8C8 ) );
-            if( zeroAddress )
-            {
-                for( i = 0; i < 4; i++ )
-                {
-                    sector[12 + i] = address[i];
-                }
-            }
-        }
-
-        private static void GenerateEccEdc( IList<byte> sector, IsoType isoType )
-        {
-            switch( isoType )
-            {
-                case IsoType.Mode2Form1:
-                    ComputeEdcBlock( sector.Sub( 0x10 ), 0x808, sector.Sub( 0x818 ) );
-                    GenerateEcc( sector, true );
-                    break;
-                case IsoType.Mode2Form2:
-                    ComputeEdcBlock( sector.Sub( 0x10 ), 0x91C, sector.Sub( 0x92C ) );
-                    break;
-                case IsoType.Mode1:
-                default:
-                    throw new ArgumentException( "isotype" );
-            }
-        }
-
-        public static byte[] ReadFile( IsoType isoType, Stream iso, int fileSector, int offset, int length )
-        {
-            int dataSize = dataSizes[(int)isoType];
-            int dataStart = dataStarts[(int)isoType];
-            int sectorSize = sectorSizes[(int)isoType];
-
-            int desiredStartSector = fileSector + offset / dataSize;
-            int startOffset = offset % dataSize;
-
-            int bytesLeftInFirstSector = dataSize - startOffset;
-
-            iso.Seek( desiredStartSector * sectorSize + dataStart + startOffset, SeekOrigin.Begin );
-
-            byte[] result = new byte[length];
-
-            int bytesRead = iso.Read( result, 0, Math.Min( bytesLeftInFirstSector, length ) );
-            desiredStartSector++;
-
-            while ( bytesRead < length )
-            {
-               iso.Seek( desiredStartSector * sectorSize + dataStart, SeekOrigin.Begin );
-               bytesRead += iso.Read( result, bytesRead, Math.Min( length - bytesRead, dataSize) );
-               desiredStartSector++;
-            }
-
-            return result;
-        }
-        
         /// <summary>
         /// Patches the bytes at a given offset.
         /// </summary>
@@ -295,39 +195,6 @@ namespace FFTPatcher
             }
         }
 
-        public static void FixupECC( IsoType isoType, Stream iso )
-        {
-            int type = (int)isoType;
-            int sectorSize = sectorSizes[type];
-            byte[] sector = new byte[sectorSize];
-
-            if ( iso.Length % sectorSize != 0 )
-            {
-                throw new ArgumentException( "ISO does not have correct length for its type", "isoType" );
-            }
-            if ( isoType == IsoType.Mode1 )
-            {
-                throw new ArgumentException( "Mode1 does not support ECC/EDC", "isoType" );
-            }
-
-            Int64 numberOfSectors = iso.Length / sectorSize;
-            iso.Seek( 0, SeekOrigin.Begin );
-            for ( Int64 i = 0; i < numberOfSectors; i++ )
-            {
-                iso.Read( sector, 0, sectorSize );
-
-                if ( isoType != IsoType.Mode1 && ( sector[0x12] & 8 ) == 0 )
-                {
-                    sector[0x12] = 8;
-                    sector[0x16] = 8;
-                }
-
-                GenerateEccEdc( sector, isoType );
-                iso.Seek( -sectorSize, SeekOrigin.Current );
-                iso.Write( sector, 0, sectorSize );
-            }
-        }
-
         /// <summary>
         /// Patches the file at a given sector in an ISO.
         /// </summary>
@@ -381,8 +248,135 @@ namespace FFTPatcher
             PatchFile( isoType, iso, patchEccEdc, realOffset, input, patchIso );
         }
 
+        public static byte[] ReadFile( IsoType isoType, Stream iso, int fileSector, int offset, int length )
+        {
+            int dataSize = dataSizes[(int)isoType];
+            int dataStart = dataStarts[(int)isoType];
+            int sectorSize = sectorSizes[(int)isoType];
 
-		#endregionÂ MethodsÂ 
+            int desiredStartSector = fileSector + offset / dataSize;
+            int startOffset = offset % dataSize;
 
+            int bytesLeftInFirstSector = dataSize - startOffset;
+
+            iso.Seek( desiredStartSector * sectorSize + dataStart + startOffset, SeekOrigin.Begin );
+
+            byte[] result = new byte[length];
+
+            int bytesRead = iso.Read( result, 0, Math.Min( bytesLeftInFirstSector, length ) );
+            desiredStartSector++;
+
+            while ( bytesRead < length )
+            {
+               iso.Seek( desiredStartSector * sectorSize + dataStart, SeekOrigin.Begin );
+               bytesRead += iso.Read( result, bytesRead, Math.Min( length - bytesRead, dataSize) );
+               desiredStartSector++;
+            }
+
+            return result;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (4) 
+
+        private static void ComputeEccBlock( IList<byte> source, uint majorCount, uint minorCount, uint majorMult, uint minorIncrement, IList<byte> destination )
+        {
+            ulong size = majorCount * minorCount;
+            uint major = 0;
+            uint minor = 0;
+            for( major = 0; major < majorCount; major++ )
+            {
+                ulong i = (major >> 1) * majorMult + (major & 1);
+                byte eccA = 0;
+                byte eccB = 0;
+                for( minor = 0; minor < minorCount; minor++ )
+                {
+                    byte t = source[(int)i];
+                    i += minorIncrement;
+                    if( i >= size ) i -= size;
+                    eccA ^= t;
+                    eccB ^= t;
+                    eccA = eccFLUT[eccA];
+                }
+
+                eccA = eccBLUT[eccFLUT[eccA] ^ eccB];
+                destination[(int)major] = eccA;
+                destination[(int)(major + majorCount)] = (byte)(eccA ^ eccB);
+            }
+        }
+
+        private static void ComputeEdcBlock( IList<byte> source, int size, IList<byte> destination )
+        {
+            ulong edc = 0;
+            for( int i = 0; i < size; i++ )
+            {
+                edc = (edc >> 8) ^ edcLUT[(edc ^ source[i]) & 0xFF];
+            }
+            destination[0] = (byte)((edc >> 0) & 0xFF);
+            destination[1] = (byte)((edc >> 8) & 0xFF);
+            destination[2] = (byte)((edc >> 16) & 0xFF);
+            destination[3] = (byte)((edc >> 24) & 0xFF);
+        }
+
+        private static void GenerateEcc( IList<byte> sector, bool zeroAddress )
+        {
+            byte[] address = new byte[4];
+            byte i = 0;
+            if( zeroAddress )
+            {
+                for( i = 0; i < 4; i++ )
+                {
+                    address[i] = sector[12 + i];
+                    sector[12 + i] = 0;
+                }
+            }
+
+            ComputeEccBlock( sector.Sub( 0x0C ), 86, 24, 2, 86, sector.Sub( 0x81C ) );
+            ComputeEccBlock( sector.Sub( 0x0C ), 52, 43, 86, 88, sector.Sub( 0x8C8 ) );
+            if( zeroAddress )
+            {
+                for( i = 0; i < 4; i++ )
+                {
+                    sector[12 + i] = address[i];
+                }
+            }
+        }
+
+        private static void GenerateEccEdc( IList<byte> sector, IsoType isoType )
+        {
+            switch( isoType )
+            {
+                case IsoType.Mode2Form1:
+                    ComputeEdcBlock( sector.Sub( 0x10 ), 0x808, sector.Sub( 0x818 ) );
+                    GenerateEcc( sector, true );
+                    break;
+                case IsoType.Mode2Form2:
+                    ComputeEdcBlock( sector.Sub( 0x10 ), 0x91C, sector.Sub( 0x92C ) );
+                    break;
+                case IsoType.Mode1:
+                default:
+                    throw new ArgumentException( "isotype" );
+            }
+        }
+
+		#endregion Private Methods 
+
+
+        public struct NewOldValue
+        {
+            public byte OldValue;
+            public byte NewValue;
+            public NewOldValue( byte newValue, byte oldValue )
+            {
+                OldValue = oldValue;
+                NewValue = newValue;
+            }
+        }        public enum IsoType
+        {
+            Mode1 = 0,
+            Mode2Form1 = 1,
+            Mode2Form2 = 2
+        }
     }
 }

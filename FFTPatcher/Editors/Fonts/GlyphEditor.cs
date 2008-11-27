@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,24 +26,17 @@ namespace FFTPatcher.Editors
 {
     public partial class GlyphEditor : UserControl
     {
-
-		#regionÂ StaticÂ FieldsÂ (1)Â 
+		#region Instance Variables (5) 
 
         private static Dictionary<FontColor, Brush> colors = new Dictionary<FontColor, Brush>();
-
-		#endregionÂ StaticÂ FieldsÂ 
-
-		#regionÂ FieldsÂ (4)Â 
-
         private FontColor currentColor;
         private Glyph glyph;
         private bool ignoreChanges = false;
         private RadioButton[] radios = new RadioButton[4];
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public Glyph Glyph 
         {
@@ -63,18 +56,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (2)Â 
-
-        static GlyphEditor()
-        {
-            colors[FontColor.Black] = new SolidBrush( Color.FromArgb( 70, 63, 51 ) );
-            colors[FontColor.Dark] = new SolidBrush( Color.FromArgb( 107, 104, 85 ) );
-            colors[FontColor.Light] = new SolidBrush( Color.FromArgb( 120, 112, 96 ) );
-            colors[FontColor.Transparent] = new SolidBrush( Color.Transparent );
-        }
+		#region Constructors (2) 
 
         public GlyphEditor()
         {
@@ -104,10 +88,17 @@ namespace FFTPatcher.Editors
             }
         }
 
-		#endregionÂ ConstructorsÂ 
+        static GlyphEditor()
+        {
+            colors[FontColor.Black] = new SolidBrush( Color.FromArgb( 70, 63, 51 ) );
+            colors[FontColor.Dark] = new SolidBrush( Color.FromArgb( 107, 104, 85 ) );
+            colors[FontColor.Light] = new SolidBrush( Color.FromArgb( 120, 112, 96 ) );
+            colors[FontColor.Transparent] = new SolidBrush( Color.Transparent );
+        }
 
-		#regionÂ MethodsÂ (7)Â 
+		#endregion Constructors 
 
+		#region Private Methods (7) 
 
         private void glyphPanel_MouseClick( object sender, MouseEventArgs e )
         {
@@ -207,8 +198,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

@@ -30,21 +30,14 @@ namespace FFTPatcher
 {
     public partial class MainForm : Form
     {
-        private PatchPSXForm patchPsxForm = null;
-
-        private PatchPSXForm PatchPSXForm
-        {
-            get
-            {
-                if( patchPsxForm == null )
-                {
-                    patchPsxForm = new PatchPSXForm();
-                }
-                return patchPsxForm;
-            }
-        }
+		#region Instance Variables (2) 
 
         private PatchPSPForm patchPspForm = null;
+        private PatchPSXForm patchPsxForm = null;
+
+		#endregion Instance Variables 
+
+		#region Private Properties (2) 
 
         private PatchPSPForm PatchPSPForm
         {
@@ -58,26 +51,34 @@ namespace FFTPatcher
             }
         }
 
-        #region Constructors (1) 
+        private PatchPSXForm PatchPSXForm
+        {
+            get
+            {
+                if( patchPsxForm == null )
+                {
+                    patchPsxForm = new PatchPSXForm();
+                }
+                return patchPsxForm;
+            }
+        }
+
+		#endregion Private Properties 
+
+		#region Constructors (1) 
 
         public MainForm()
         {
             InitializeComponent();
             openMenuItem.Click += openMenuItem_Click;
-            //applySCUSMenuItem.Click += applyMenuItem_Click;
             saveMenuItem.Click += saveMenuItem_Click;
             saveAsPspMenuItem.Click += saveAsPspMenuItem_Click;
             newPSPMenuItem.Click += newPSPMenuItem_Click;
             newPSXMenuItem.Click += newPSXMenuItem_Click;
             exitMenuItem.Click += exitMenuItem_Click;
             aboutMenuItem.Click += aboutMenuItem_Click;
-            //applySCUSMenuItem.Enabled = false;
             saveMenuItem.Enabled = false;
             saveAsPspMenuItem.Enabled = false;
-            //generateMenuItem.Click += generateMenuItem_Click;
-            //generateMenuItem.Enabled = false;
-            //generateFontMenuItem.Click += generateFontMenuItem_Click;
-            //applyBattleBinMenuItem.Click += applyBattleBinMenuItem_Click;
 
             extractFFTPackMenuItem.Click += extractFFTPackMenuItem_Click;
             rebuildFFTPackMenuItem.Click += rebuildFFTPackMenuItem_Click;
@@ -88,13 +89,60 @@ namespace FFTPatcher
             cheatdbMenuItem.Click += cheatdbMenuItem_Click;
             openPatchedPsxIso.Click += new EventHandler( openPatchedPsxIso_Click );
 
-            FFTPatch.DataChanged += FFTPatch_DataChanged;
+            fileMenuItem.Popup += new EventHandler( fileMenuItem_Popup );
+            psxMenu.Popup += new EventHandler( psxMenu_Popup );
+            pspMenu.Popup += new EventHandler( pspMenu_Popup );
         }
 
 		#endregion Constructors 
 
-		#region Methods (24) 
+		#region Public Methods (1) 
 
+        public void HandleException( Exception e )
+        {
+            string message = string.Empty;
+            if ( e is FFTPatcher.Datatypes.FFTPatch.LoadPatchException )
+            {
+                message = "Could not load patch";
+            }
+            else if( e is ArgumentNullException )
+            {
+                message = "Argument was null";
+            }
+            else if( e is ArgumentException )
+            {
+                message = "Bad argument";
+            }
+            else if( e is FileNotFoundException )
+            {
+            }
+            else if( e is IOException )
+            {
+                message = "IO error occurred";
+            }
+            else if( e is System.Security.SecurityException )
+            {
+                message = "Security access";
+            }
+            else if( e is DirectoryNotFoundException )
+            {
+                message = "Folder not found";
+            }
+            else if( e is UnauthorizedAccessException )
+            {
+                message = "Incorrect permissions";
+            }
+            else
+            {
+                message = e.ToString();
+            }
+
+            MessageBox.Show( string.Format( "An error of type {0} occurred:\n{1}", e.GetType(), message ), "Error", MessageBoxButtons.OK );
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (20) 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
@@ -108,14 +156,7 @@ namespace FFTPatcher
             saveFileDialog.Filter = "CWCheat DB files|cheat.db";
             if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                try
-                {
-                    Codes.SaveToFile( saveFileDialog.FileName );
-                }
-                catch
-                {
-                    MessageBox.Show( "Could not save file.", "Error", MessageBoxButtons.OK );
-                }
+                TryAndHandle( delegate() { Codes.SaveToFile( saveFileDialog.FileName ); }, false );
             }
         }
 
@@ -124,22 +165,7 @@ namespace FFTPatcher
             applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
             if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                try
-                {
-                    PspIso.DecryptISO( applyPatchOpenFileDialog.FileName );
-                }
-                catch( NotSupportedException )
-                {
-                    MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
-                }
-                catch( FileNotFoundException )
-                {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
-                }
+                TryAndHandle( delegate() { PspIso.DecryptISO( applyPatchOpenFileDialog.FileName ); }, false );
             }
         }
 
@@ -198,31 +224,21 @@ namespace FFTPatcher
             }
         }
 
-        private void FFTPatch_DataChanged( object sender, EventArgs e )
+        void fileMenuItem_Popup( object sender, EventArgs e )
         {
-            //applySCUSMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            patchPsxIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            saveMenuItem.Enabled = true;
-            //generateMenuItem.Enabled = true;
-            //generateFontMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            //applyBattleBinMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-            //generateMenuItem.Enabled = FFTPatch.Context == Context.US_PSX;
-
-            patchPspIsoMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
-            cheatdbMenuItem.Enabled = FFTPatch.Context == Context.US_PSP;
-
+            openMenuItem.Enabled = true;
+            saveAsPspMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
+            saveMenuItem.Enabled = fftPatchEditor1.Enabled;
         }
 
         private void newPSPMenuItem_Click( object sender, System.EventArgs e )
         {
             FFTPatch.New( Context.US_PSP );
-            saveAsPspMenuItem.Enabled = true;
         }
 
         private void newPSXMenuItem_Click( object sender, System.EventArgs e )
         {
             FFTPatch.New( Context.US_PSX );
-            saveAsPspMenuItem.Enabled = true;
         }
 
         private void openMenuItem_Click( object sender, System.EventArgs e )
@@ -230,18 +246,16 @@ namespace FFTPatcher
             openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                FFTPatch.LoadPatch( openFileDialog.FileName );
-                saveAsPspMenuItem.Enabled = true;
+                TryAndHandle( delegate() { FFTPatch.LoadPatch( openFileDialog.FileName ); }, true );
             }
         }
-
 
         private void openPatchedPsxIso_Click( object sender, EventArgs e )
         {
             openFileDialog.Filter = "ISO images|*.iso;*.bin;*.img";
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                FFTPatch.OpenPatchedISO( openFileDialog.FileName );
+                TryAndHandle( delegate() { FFTPatch.OpenPatchedISO( openFileDialog.FileName ); }, true );
             }
         }
 
@@ -271,13 +285,9 @@ namespace FFTPatcher
                     {
                         MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
                     }
-                    else if( args.Error is FileNotFoundException )
+                    else if( args.Error != null )
                     {
-                        MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
-                    }
-                    else if( args.Error is Exception )
-                    {
-                        MessageBox.Show( "Could not decrypt file.", "Error", MessageBoxButtons.OK );
+                        HandleException( args.Error );
                     }
                 };
 
@@ -318,9 +328,10 @@ namespace FFTPatcher
                     patchPsxBackgroundWorker.ProgressChanged -= progress;
                     patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
                     patchPsxBackgroundWorker.DoWork -= doWork;
+                    
                     if ( args.Error != null )
                     {
-                        MessageBox.Show( this, "There was an error patching the file", "Error" );
+                        HandleException( args.Error );
                     }
                 };
 
@@ -338,6 +349,18 @@ namespace FFTPatcher
 
                 patchPsxBackgroundWorker.RunWorkerAsync();
             }
+        }
+
+        void pspMenu_Popup( object sender, EventArgs e )
+        {
+            patchPspIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
+            cheatdbMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSP;
+        }
+
+        void psxMenu_Popup( object sender, EventArgs e )
+        {
+            openPatchedPsxIso.Enabled = true;
+            patchPsxIsoMenuItem.Enabled = fftPatchEditor1.Enabled && FFTPatch.Context == Context.US_PSX;
         }
 
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
@@ -400,10 +423,7 @@ namespace FFTPatcher
                 // HACK
                 if( FFTPatch.Context != Context.US_PSP )
                 {
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load( fn );
-                    FFTPatch.ConvertPsxPatchToPsp( doc );
-                    doc.Save( fn );
+                    FFTPatch.ConvertPsxPatchToPsp( fn );
                     FFTPatch.LoadPatch( fn );
                 }
             }
@@ -411,7 +431,7 @@ namespace FFTPatcher
 
         private void saveMenuItem_Click( object sender, System.EventArgs e )
         {
-            SavePatch( true );
+            SavePatch( false );
         }
 
         private string SavePatch( bool digest )
@@ -422,7 +442,7 @@ namespace FFTPatcher
             {
                 try
                 {
-                    FFTPatch.SavePatchToFile( saveFileDialog.FileName, FFTPatch.Context, digest );
+                    TryAndHandle( delegate() { FFTPatch.SavePatchToFile( saveFileDialog.FileName, FFTPatch.Context, digest ); }, false, true );
                     return saveFileDialog.FileName;
                 }
                 catch( Exception )
@@ -433,8 +453,34 @@ namespace FFTPatcher
             return string.Empty;
         }
 
+        private void TryAndHandle( MethodInvoker action, bool disableOnFail, bool rethrow )
+        {
+            try
+            {
+                action();
+            }
+            catch( Exception e )
+            {
+                if( disableOnFail )
+                {
+                    fftPatchEditor1.Enabled = false;
+                }
+                if( rethrow )
+                {
+                    throw;
+                }
+                else
+                {
+                    HandleException( e );
+                }
+            }
+        }
 
-		#endregion Methods 
+        private void TryAndHandle( MethodInvoker action, bool disableOnFail )
+        {
+            TryAndHandle( action, disableOnFail, false );
+        }
 
+		#endregion Private Methods 
     }
 }

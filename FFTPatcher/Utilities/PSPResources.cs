@@ -1,4 +1,23 @@
-ï»¿using System;
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
@@ -10,16 +29,14 @@ namespace FFTPatcher
 
     static class PSPResources
     {
+		#region Instance Variables (10) 
+
         private static string[] abilityAI;
         private static string[] abilityAttributes;
         private static string[] abilityEffects;
         private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
         private static Dictionary<int, string> fftPackFiles;
-        private static string[] shopAvailabilities;
-        private static string[] statuses;
-
-        private static ReadOnlyCollection<string> mapNamesReadOnly;
         private static string[] mapNames = new string[128] {
             "",
             "Eagrose Castle Gate",
@@ -113,9 +130,9 @@ namespace FFTPatcher
             "Lake Poeskas",
             "Mount Germinas",
             "Brigands' Den",
-            "IgrosÂ·Beoulve residence",
-            "Broke down shedÂ·Wooden building",
-            "Broke down shedÂ·Stone building",
+            "Igros·Beoulve residence",
+            "Broke down shed·Wooden building",
+            "Broke down shed·Stone building",
             "Church",
             "Pub",
             "Inside castle gate in Lesalia",
@@ -150,21 +167,13 @@ namespace FFTPatcher
             "Zeltennia Castle Postern",
             "Limberry Castle: Inner Court"
             };
+        private static ReadOnlyCollection<string> mapNamesReadOnly;
+        private static string[] shopAvailabilities;
+        private static string[] statuses;
 
+		#endregion Instance Variables 
 
-        public static ReadOnlyCollection<string> MapNames
-        {
-            get
-            {
-                if( mapNamesReadOnly == null )
-                {
-                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
-                }
-
-                return mapNamesReadOnly;
-            }
-        }
-
+		#region Public Properties (42) 
 
         public static string Abilities { get { return dict[Paths.AbilitiesNamesXML] as string; } }
 
@@ -250,21 +259,6 @@ namespace FFTPatcher
 
         public static byte[] ENTD5 { get { return dict[Paths.Binaries.ENTD5] as byte[]; } }
 
-        public static byte[] ICON0 { get { return dict[Paths.Binaries.ICON0] as byte[]; } }
-
-        public static System.Drawing.Image ICON0_PNG
-        {
-            get
-            {
-                using( System.IO.MemoryStream stream = new System.IO.MemoryStream( ICON0, false ) )
-                {
-                    return System.Drawing.Image.FromStream( stream );
-                }
-            }
-        }
-
-        public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
-
         public static string EventNames { get { return dict[Paths.EventNamesXML] as string; } }
 
         public static Dictionary<int, string> FFTPackFiles
@@ -293,6 +287,19 @@ namespace FFTPatcher
 
         public static byte[] FontWidthsBin { get { return dict[Paths.Binaries.FontWidths] as byte[]; } }
 
+        public static byte[] ICON0 { get { return dict[Paths.Binaries.ICON0] as byte[]; } }
+
+        public static System.Drawing.Image ICON0_PNG
+        {
+            get
+            {
+                using( System.IO.MemoryStream stream = new System.IO.MemoryStream( ICON0, false ) )
+                {
+                    return System.Drawing.Image.FromStream( stream );
+                }
+            }
+        }
+
         public static byte[] InflictStatusesBin { get { return dict[Paths.Binaries.InflictStatuses] as byte[]; } }
 
         public static string Items { get { return dict[Paths.ItemsXML] as string; } }
@@ -305,7 +312,22 @@ namespace FFTPatcher
 
         public static byte[] JobsBin { get { return dict[Paths.Binaries.Jobs] as byte[]; } }
 
+        public static ReadOnlyCollection<string> MapNames
+        {
+            get
+            {
+                if( mapNamesReadOnly == null )
+                {
+                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
+                }
+
+                return mapNamesReadOnly;
+            }
+        }
+
         public static byte[] MonsterSkillsBin { get { return dict[Paths.Binaries.MonsterSkills] as byte[]; } }
+
+        public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
 
         public static byte[] NewItemAttributesBin { get { return dict[Paths.Binaries.NewItemAttributes] as byte[]; } }
 
@@ -362,6 +384,10 @@ namespace FFTPatcher
 
         public static string StatusNames { get { return dict[Paths.StatusNamesXML] as string; } }
 
+		#endregion Public Properties 
+
+		#region Constructors (1) 
+
         static PSPResources()
         {
             dict[Resources.Paths.PSP.Binaries.ENTD1] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD1];
@@ -401,5 +427,7 @@ namespace FFTPatcher
             dict[Resources.Paths.PSP.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsXML].ToUTF8String();
             dict[Resources.Paths.PSP.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsStringsXML].ToUTF8String();
          }
+
+		#endregion Constructors 
     }
 }

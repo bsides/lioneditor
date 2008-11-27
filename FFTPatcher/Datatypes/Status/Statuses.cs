@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -23,19 +23,7 @@ namespace FFTPatcher.Datatypes
 {
     public class Statuses : ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        public static string[] FieldNames = new string[] {
-            "NoEffect","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
-            "Petrify","Invite","Darkness","Confusion","Silence","BloodSuck","DarkEvilLooking","Treasure",
-            "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
-            "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
-            "Faith","Innocent","Charm","Sleep","DontMove","DontAct","Reflect","DeathSentence" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (40)
+		#region Instance Variables (41) 
 
         public bool Berserk;
         public bool BloodSuck;
@@ -53,6 +41,12 @@ namespace FFTPatcher.Datatypes
         public bool DontAct;
         public bool DontMove;
         public bool Faith;
+        public static string[] FieldNames = new string[] {
+            "NoEffect","Crystal","Dead","Undead","Charging","Jump","Defending","Performing",
+            "Petrify","Invite","Darkness","Confusion","Silence","BloodSuck","DarkEvilLooking","Treasure",
+            "Oil","Float","Reraise","Transparent","Berserk","Chicken","Frog","Critical",
+            "Poison","Regen","Protect","Shell","Haste","Slow","Stop","Wall",
+            "Faith","Innocent","Charm","Sleep","DontMove","DontAct","Reflect","DeathSentence" };
         public bool Float;
         public bool Frog;
         public bool Haste;
@@ -78,10 +72,9 @@ namespace FFTPatcher.Datatypes
         public bool Undead;
         public bool Wall;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (3)
-
+		#region Public Properties (3) 
 
         public Statuses Default { get; private set; }
 
@@ -95,10 +88,9 @@ namespace FFTPatcher.Datatypes
             get { return Default != null && !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() ); }
         }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public Statuses( IList<byte> bytes )
         {
@@ -115,9 +107,9 @@ namespace FFTPatcher.Datatypes
             Default = defaults;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (5)
+		#region Public Methods (7) 
 
         public static void Copy( Statuses source, Statuses destination )
         {
@@ -168,6 +160,16 @@ namespace FFTPatcher.Datatypes
             Copy( this, destination );
         }
 
+        public override bool Equals( object obj )
+        {
+            return obj is Statuses && Utilities.CompareArrays( ToByteArray(), (obj as Statuses).ToByteArray() );
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public bool[] ToBoolArray()
         {
             return new bool[40] { 
@@ -189,18 +191,6 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-
-
-        public override bool Equals( object obj )
-        {
-            return obj is Statuses && Utilities.CompareArrays( ToByteArray(), (obj as Statuses).ToByteArray() );
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
         public override string ToString()
         {
             List<string> strings = new List<string>( 40 );
@@ -215,8 +205,6 @@ namespace FFTPatcher.Datatypes
             return string.Join( " | ", strings.ToArray() );
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

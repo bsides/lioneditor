@@ -118,40 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="KANZEN_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\kanzen.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="ARUTE_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ARUTE.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\battle\other\arute.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="CYOKO_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CYOKO.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\battle\other\cyoko.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="EFF1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EFF1.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="KANZEN_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\battle\other\kanzen.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="EFF2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EFF2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MON" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MON.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="OTHER" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OTHER.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\sprite.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TYPE1_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TYPE1.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\battle\type1\type1.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TYPE2_SHP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TYPE2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\resources\battle\type2\type2.shp;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="WEP1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WEP1.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="PSXFiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psxfiles.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="WEP2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WEP2.SHP;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="PSPFiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\pspfiles.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="OPNBK" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\psxresources\open\opnbk.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="WLDFACE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\event\wldface.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

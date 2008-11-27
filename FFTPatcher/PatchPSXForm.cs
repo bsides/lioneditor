@@ -1,4 +1,23 @@
-ï»¿using System;
+/*
+    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+    This file is part of FFTPatcher.
+
+    FFTPatcher is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FFTPatcher is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,7 +39,6 @@ namespace FFTPatcher
         bool AbilityEffects { get; }
         bool FontWidths { get; }
         bool MoveFindItems { get; }
-
         bool Items { get; }
         bool ItemAttributes { get; }
         bool Jobs { get; }
@@ -31,24 +49,123 @@ namespace FFTPatcher
         bool StatusAttributes { get; }
         bool InflictStatus { get; }
         bool Poach { get; }
-
         IList<PatchedByteArray> OtherPatches { get; }
-
         int PatchCount { get; }
     }
 
     public partial class PatchPSXForm : Form, IGeneratePatchList
     {
-        private bool[] scusPatchable = new bool[Enum.GetValues( typeof( SCUSPatchable ) ).Length];
+		#region Instance Variables (4) 
+
         private bool[] battlePatchable = new bool[Enum.GetValues( typeof( BATTLEPatchable ) ).Length];
-        public bool ENTD1 { get; private set; }
-        public bool ENTD2 { get; private set; }
-        public bool ENTD3 { get; private set; }
-        public bool ENTD4 { get; private set; }
-        public bool FONT { get; private set; }
-        public bool RegenECC { get; private set; }
-        public string FileName { get { return isoPathTextBox.Text; } }
+        private byte[] SCEAP_DAT = new byte[20480];
+        private Bitmap sceapPreview = new Bitmap( 320, 32 );
+        private bool[] scusPatchable = new bool[Enum.GetValues( typeof( SCUSPatchable ) ).Length];
+
+		#endregion Instance Variables 
+
+		#region Public Properties (26) 
+
+        public bool Abilities
+        {
+            get { return scusPatchable[(int)SCUSPatchable.Abilities]; }
+            set { scusPatchable[(int)SCUSPatchable.Abilities] = value; }
+        }
+
+        public bool AbilityEffects
+        {
+            get { return battlePatchable[(int)BATTLEPatchable.AbilityEffects]; }
+            set { battlePatchable[(int)BATTLEPatchable.AbilityEffects] = value; }
+        }
+
+        public bool ActionMenus
+        {
+            get { return scusPatchable[(int)SCUSPatchable.ActionMenus]; }
+            set { scusPatchable[(int)SCUSPatchable.ActionMenus] = value; }
+        }
+
+        public string CustomSCEAPFileName
+        {
+            get { return sceapFileNameTextBox.Text; }
+        }
+
         public bool[] ENTD { get { return new bool[] { ENTD1, ENTD2, ENTD3, ENTD4 }; } }
+
+        public bool ENTD1 { get; private set; }
+
+        public bool ENTD2 { get; private set; }
+
+        public bool ENTD3 { get; private set; }
+
+        public bool ENTD4 { get; private set; }
+
+        public string FileName { get { return isoPathTextBox.Text; } }
+
+        public bool FONT { get; private set; }
+
+        public bool FontWidths
+        {
+            get { return battlePatchable[(int)BATTLEPatchable.FontWidths]; }
+            set { battlePatchable[(int)BATTLEPatchable.FontWidths] = value; }
+        }
+
+        public bool InflictStatus
+        {
+            get { return scusPatchable[(int)SCUSPatchable.InflictStatus]; }
+            set { scusPatchable[(int)SCUSPatchable.InflictStatus] = value; }
+        }
+
+        public bool ItemAttributes
+        {
+            get { return scusPatchable[(int)SCUSPatchable.ItemAttributes]; }
+            set { scusPatchable[(int)SCUSPatchable.ItemAttributes] = value; }
+        }
+
+        public bool Items
+        {
+            get { return scusPatchable[(int)SCUSPatchable.Items]; }
+            set { scusPatchable[(int)SCUSPatchable.Items] = value; }
+        }
+
+        public bool JobLevels
+        {
+            get { return scusPatchable[(int)SCUSPatchable.JobLevels]; }
+            set { scusPatchable[(int)SCUSPatchable.JobLevels] = value; }
+        }
+
+        public bool Jobs
+        {
+            get { return scusPatchable[(int)SCUSPatchable.Jobs]; }
+            set { scusPatchable[(int)SCUSPatchable.Jobs] = value; }
+        }
+
+        public bool MonsterSkills
+        {
+            get { return scusPatchable[(int)SCUSPatchable.MonsterSkills]; }
+            set { scusPatchable[(int)SCUSPatchable.MonsterSkills] = value; }
+        }
+
+        public bool MoveFindItems
+        {
+            get { return battlePatchable[(int)BATTLEPatchable.MoveFindItems]; }
+            set { battlePatchable[(int)BATTLEPatchable.MoveFindItems] = value; }
+        }
+
+        public IList<PatchedByteArray> OtherPatches
+        {
+            get
+            {
+                if ( SCEAP != CustomSCEAP.NoChange )
+                {
+                    return new PatchedByteArray[] { new PatchedByteArray( PsxIso.Sectors.SCEAP_DAT, 0, SCEAP_DAT ) };
+                }
+                else
+                {
+                    return new PatchedByteArray[0];
+                }
+            }
+        }
+
         public int PatchCount
         {
             get
@@ -62,63 +179,25 @@ namespace FFTPatcher
                 return result;
             }
         }
-        public bool Abilities
+
+        public bool Poach
         {
-            get { return scusPatchable[(int)SCUSPatchable.Abilities]; }
-            set { scusPatchable[(int)SCUSPatchable.Abilities] = value; }
+            get { return scusPatchable[(int)SCUSPatchable.Poach]; }
+            set { scusPatchable[(int)SCUSPatchable.Poach] = value; }
         }
 
-        public bool AbilityEffects
-        {
-            get { return battlePatchable[(int)BATTLEPatchable.AbilityEffects]; }
-            set { battlePatchable[(int)BATTLEPatchable.AbilityEffects] = value; }
-        }
+        public bool RegenECC { get; private set; }
 
-        public bool MoveFindItems
+        public CustomSCEAP SCEAP
         {
-            get { return battlePatchable[(int)BATTLEPatchable.MoveFindItems]; }
-            set { battlePatchable[(int)BATTLEPatchable.MoveFindItems] = value; }
-        }
+            get
+            {
+                return
+                    useCustomSceapRadioButton.Checked ? CustomSCEAP.Custom :
+                    dontChangeSceapRadioButton.Checked ? CustomSCEAP.NoChange :
+                                                         CustomSCEAP.Default;
 
-        public bool FontWidths
-        {
-            get { return battlePatchable[(int)BATTLEPatchable.FontWidths]; }
-            set { battlePatchable[(int)BATTLEPatchable.FontWidths] = value; }
-        }
-        public enum CustomSCEAP
-        {
-            NoChange,
-            Default,
-            Custom
-        }
-
-        public string CustomSCEAPFileName
-        {
-            get { return sceapFileNameTextBox.Text; }
-        }
-
-        public bool Items
-        {
-            get { return scusPatchable[(int)SCUSPatchable.Items]; }
-            set { scusPatchable[(int)SCUSPatchable.Items] = value; }
-        }
-
-        public bool ItemAttributes
-        {
-            get { return scusPatchable[(int)SCUSPatchable.ItemAttributes]; }
-            set { scusPatchable[(int)SCUSPatchable.ItemAttributes] = value; }
-        }
-
-        public bool Jobs
-        {
-            get { return scusPatchable[(int)SCUSPatchable.Jobs]; }
-            set { scusPatchable[(int)SCUSPatchable.Jobs] = value; }
-        }
-
-        public bool JobLevels
-        {
-            get { return scusPatchable[(int)SCUSPatchable.JobLevels]; }
-            set { scusPatchable[(int)SCUSPatchable.JobLevels] = value; }
+            }
         }
 
         public bool Skillsets
@@ -127,40 +206,24 @@ namespace FFTPatcher
             set { scusPatchable[(int)SCUSPatchable.Skillsets] = value; }
         }
 
-        public bool MonsterSkills
-        {
-            get { return scusPatchable[(int)SCUSPatchable.MonsterSkills]; }
-            set { scusPatchable[(int)SCUSPatchable.MonsterSkills] = value; }
-        }
-
-        public bool ActionMenus
-        {
-            get { return scusPatchable[(int)SCUSPatchable.ActionMenus]; }
-            set { scusPatchable[(int)SCUSPatchable.ActionMenus] = value; }
-        }
-
         public bool StatusAttributes
         {
             get { return scusPatchable[(int)SCUSPatchable.StatusAttributes]; }
             set { scusPatchable[(int)SCUSPatchable.StatusAttributes] = value; }
         }
 
-        public bool InflictStatus
-        {
-            get { return scusPatchable[(int)SCUSPatchable.InflictStatus]; }
-            set { scusPatchable[(int)SCUSPatchable.InflictStatus] = value; }
-        }
+		#endregion Public Properties 
 
-        public bool Poach
-        {
-            get { return scusPatchable[(int)SCUSPatchable.Poach]; }
-            set { scusPatchable[(int)SCUSPatchable.Poach] = value; }
-        }
+		#region Constructors (1) 
 
         public PatchPSXForm()
         {
             InitializeComponent();
         }
+
+		#endregion Constructors 
+
+		#region Public Methods (1) 
 
         public DialogResult CustomShowDialog( IWin32Window owner )
         {
@@ -187,11 +250,106 @@ namespace FFTPatcher
             entd3CheckBox.Checked = FFTPatch.ENTDs.ENTDs[2].HasChanged;
             entd4CheckBox.Checked = FFTPatch.ENTDs.ENTDs[3].HasChanged;
             fontCheckBox.Checked = false;
+            eccCheckBox.Enabled = false;
             eccCheckBox.Checked = true;
 
             UpdateNextEnabled();
 
             return ShowDialog( owner );
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (10) 
+
+        private void BuildSCEAPPreview()
+        {
+            for ( int i = 0; i < 20480; i += 2 )
+            {
+                sceapPreview.SetPixel( 
+                    ( i / 2 ) % 320, 
+                    ( i / 2 ) / 320, 
+                    BytesToColor( SCEAP_DAT[i], SCEAP_DAT[i + 1] ) );
+            }
+            pictureBox1.Image = sceapPreview;
+            pictureBox1.Invalidate();
+        }
+
+        private static Color BytesToColor( byte first, byte second )
+        {
+            int b = (second & 0x7C) << 1;
+            int g = (second & 0x03) << 6 | (first & 0xE0) >> 2;
+            int r = (first & 0x1F) << 3;
+
+            return Color.FromArgb( r, g, b );
+        }
+
+        private void checkedListBox1_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            CheckedListBox clb = (CheckedListBox)sender;
+            if ( (string)clb.Tag == "SCUS_942.21" )
+            {
+                scusPatchable[e.Index] = e.NewValue == CheckState.Checked;
+            }
+            else if ( (string)clb.Tag == "BATTLE.BIN" )
+            {
+                battlePatchable[e.Index] = e.NewValue == CheckState.Checked;
+            }
+
+            UpdateNextEnabled();
+        }
+
+        private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
+        {
+            CheckBox box = (CheckBox)sender;
+            Checkboxes cb = (Checkboxes)Enum.Parse( typeof( Checkboxes ), box.Tag as string );
+            switch ( cb )
+            {
+                case Checkboxes.ENTD1:
+                    ENTD1 = box.Checked;
+                    break;
+                case Checkboxes.ENTD2:
+                    ENTD2 = box.Checked;
+                    break;
+                case Checkboxes.ENTD3:
+                    ENTD3 = box.Checked;
+                    break;
+                case Checkboxes.ENTD4:
+                    ENTD4 = box.Checked;
+                    break;
+                case Checkboxes.FONT:
+                    FONT = box.Checked;
+                    break;
+                case Checkboxes.RegenECC:
+                    RegenECC = box.Checked;
+                    break;
+                default:
+                    break;
+            }
+            UpdateNextEnabled();
+        }
+
+        private void isoBrowseButton_Click( object sender, EventArgs e )
+        {
+            patchIsoDialog.FileName = isoPathTextBox.Text;
+            while (
+                patchIsoDialog.ShowDialog( this ) == DialogResult.OK &&
+                !ValidateISO( patchIsoDialog.FileName ) )
+                ;
+            isoPathTextBox.Text = patchIsoDialog.FileName;
+            UpdateNextEnabled();
+        }
+
+        private void sceapBrowseButton_Click( object sender, EventArgs e )
+        {
+            sceapOpenFileDialog.FileName = sceapFileNameTextBox.Text;
+            while (
+                sceapOpenFileDialog.ShowDialog( this ) == DialogResult.OK &&
+                !ValidateSCEAP( sceapOpenFileDialog.FileName ) )
+                ;
+            sceapFileNameTextBox.Text = sceapOpenFileDialog.FileName;
+
+            UpdateNextEnabled();
         }
 
         private void sceapRadioButton_CheckedChanged( object sender, EventArgs e )
@@ -232,27 +390,20 @@ namespace FFTPatcher
             UpdateNextEnabled();
         }
 
-        private void sceapBrowseButton_Click( object sender, EventArgs e )
+private void UpdateNextEnabled()
         {
-            sceapOpenFileDialog.FileName = sceapFileNameTextBox.Text;
-            while (
-                sceapOpenFileDialog.ShowDialog( this ) == DialogResult.OK &&
-                !ValidateSCEAP( sceapOpenFileDialog.FileName ) )
-                ;
-            sceapFileNameTextBox.Text = sceapOpenFileDialog.FileName;
+            bool enabled = true;
+            enabled = enabled &&
+                ( !useCustomSceapRadioButton.Checked ||
+                 ValidateSCEAP( sceapFileNameTextBox.Text ) );
+            enabled = enabled && ValidateISO( isoPathTextBox.Text );
+            enabled = enabled &&
+                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || FONT || RegenECC || Abilities || Items ||
+                  ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
+                  StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
+                  AbilityEffects || FontWidths || MoveFindItems );
 
-            UpdateNextEnabled();
-        }
-
-        private void isoBrowseButton_Click( object sender, EventArgs e )
-        {
-            patchIsoDialog.FileName = isoPathTextBox.Text;
-            while (
-                patchIsoDialog.ShowDialog( this ) == DialogResult.OK &&
-                !ValidateISO( patchIsoDialog.FileName ) )
-                ;
-            isoPathTextBox.Text = patchIsoDialog.FileName;
-            UpdateNextEnabled();
+            okButton.Enabled = enabled;
         }
 
         private bool ValidateISO( string filename )
@@ -270,6 +421,14 @@ namespace FFTPatcher
                 new FileInfo( filename ).Length == 20480;
         }
 
+		#endregion Private Methods 
+
+        public enum CustomSCEAP
+        {
+            NoChange,
+            Default,
+            Custom
+        }
         private enum Checkboxes
         {
             ENTD1,
@@ -278,51 +437,6 @@ namespace FFTPatcher
             ENTD4,
             FONT,
             RegenECC,
-        }
-
-        private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
-        {
-            CheckBox box = (CheckBox)sender;
-            Checkboxes cb = (Checkboxes)Enum.Parse( typeof( Checkboxes ), box.Tag as string );
-            switch ( cb )
-            {
-                case Checkboxes.ENTD1:
-                    ENTD1 = box.Checked;
-                    break;
-                case Checkboxes.ENTD2:
-                    ENTD2 = box.Checked;
-                    break;
-                case Checkboxes.ENTD3:
-                    ENTD3 = box.Checked;
-                    break;
-                case Checkboxes.ENTD4:
-                    ENTD4 = box.Checked;
-                    break;
-                case Checkboxes.FONT:
-                    FONT = box.Checked;
-                    break;
-                case Checkboxes.RegenECC:
-                    RegenECC = box.Checked;
-                    break;
-                default:
-                    break;
-            }
-            UpdateNextEnabled();
-        }
-
-        private void checkedListBox1_ItemCheck( object sender, ItemCheckEventArgs e )
-        {
-            CheckedListBox clb = (CheckedListBox)sender;
-            if ( (string)clb.Tag == "SCUS_942.21" )
-            {
-                scusPatchable[e.Index] = e.NewValue == CheckState.Checked;
-            }
-            else if ( (string)clb.Tag == "BATTLE.BIN" )
-            {
-                battlePatchable[e.Index] = e.NewValue == CheckState.Checked;
-            }
-
-            UpdateNextEnabled();
         }
         private enum SCUSPatchable
         {
@@ -338,81 +452,11 @@ namespace FFTPatcher
             InflictStatus,
             Poach
         }
-
-
-        private void UpdateNextEnabled()
-        {
-            bool enabled = true;
-            enabled = enabled &&
-                ( !useCustomSceapRadioButton.Checked ||
-                 ValidateSCEAP( sceapFileNameTextBox.Text ) );
-            enabled = enabled && ValidateISO( isoPathTextBox.Text );
-            enabled = enabled &&
-                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || FONT || RegenECC || Abilities || Items ||
-                  ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
-                  StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
-                  AbilityEffects || FontWidths || MoveFindItems );
-
-            okButton.Enabled = enabled;
-        }
-
         private enum BATTLEPatchable
         {
             AbilityEffects,
             FontWidths,
             MoveFindItems
-        }
-
-        private byte[] SCEAP_DAT = new byte[20480];
-        private Bitmap sceapPreview = new Bitmap( 320, 32 );
-
-        private void BuildSCEAPPreview()
-        {
-            for ( int i = 0; i < 20480; i += 2 )
-            {
-                sceapPreview.SetPixel( 
-                    ( i / 2 ) % 320, 
-                    ( i / 2 ) / 320, 
-                    BytesToColor( SCEAP_DAT[i], SCEAP_DAT[i + 1] ) );
-            }
-            pictureBox1.Image = sceapPreview;
-            pictureBox1.Invalidate();
-        }
-
-        public CustomSCEAP SCEAP
-        {
-            get
-            {
-                return
-                    useCustomSceapRadioButton.Checked ? CustomSCEAP.Custom :
-                    dontChangeSceapRadioButton.Checked ? CustomSCEAP.NoChange :
-                                                         CustomSCEAP.Default;
-
-            }
-        }
-
-        private static Color BytesToColor( byte first, byte second )
-        {
-            int b = (second & 0x7C) << 1;
-            int g = (second & 0x03) << 6 | (first & 0xE0) >> 2;
-            int r = (first & 0x1F) << 3;
-
-            return Color.FromArgb( r, g, b );
-        }
-
-        public IList<PatchedByteArray> OtherPatches
-        {
-            get
-            {
-                if ( SCEAP != CustomSCEAP.NoChange )
-                {
-                    return new PatchedByteArray[] { new PatchedByteArray( PsxIso.Sectors.SCEAP_DAT, 0, SCEAP_DAT ) };
-                }
-                else
-                {
-                    return new PatchedByteArray[0];
-                }
-            }
         }
     }
 }

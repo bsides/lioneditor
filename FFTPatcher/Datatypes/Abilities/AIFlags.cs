@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,23 +26,17 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class AIFlags : ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        private static readonly string[] digestableProperties = new string[] {
-            "AddStatus","Blank","CancelStatus","DefenseUp","DirectAttack","HP","IgnoreRange","LineAttack",
-            "MagicDefenseUp","MP","RandomHits","Reflectable","Silence","Stats","TargetAllies","TargetEnemies",
-            "TripleAttack","TripleBracelet","UndeadReverse","Unequip","Unknown1","Unknown2","Unknown3",
-            "VerticalIncrease" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (24)
+		#region Instance Variables (25) 
 
         public bool AddStatus;
         public bool Blank;
         public bool CancelStatus;
         public bool DefenseUp;
+        private static readonly string[] digestableProperties = new string[] {
+            "AddStatus","Blank","CancelStatus","DefenseUp","DirectAttack","HP","IgnoreRange","LineAttack",
+            "MagicDefenseUp","MP","RandomHits","Reflectable","Silence","Stats","TargetAllies","TargetEnemies",
+            "TripleAttack","TripleBracelet","UndeadReverse","Unequip","Unknown1","Unknown2","Unknown3",
+            "VerticalIncrease" };
         public bool DirectAttack;
         public bool HP;
         public bool IgnoreRange;
@@ -64,10 +58,9 @@ namespace FFTPatcher.Datatypes
         public bool Unknown3;
         public bool VerticalIncrease;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (3)
-
+		#region Public Properties (3) 
 
         public AIFlags Default { get; set; }
 
@@ -81,10 +74,9 @@ namespace FFTPatcher.Datatypes
             get { return !Utilities.CompareArrays( ToByteArray(), Default.ToByteArray() ); }
         }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public AIFlags( IList<byte> bytes )
             : this( bytes, null )
@@ -107,27 +99,9 @@ namespace FFTPatcher.Datatypes
             VerticalIncrease = !VerticalIncrease;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (2)
-
-
-        public bool[] ToBoolArray()
-        {
-            return new bool[24] { 
-                HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies,
-                IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, Silence,
-                Blank, DirectAttack, LineAttack, VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp };
-        }
-
-        public byte[] ToByteArray()
-        {
-            byte[] result = new byte[3];
-            result[0] = Utilities.ByteFromBooleans( HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies );
-            result[1] = Utilities.ByteFromBooleans( IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, !Silence );
-            result[2] = Utilities.ByteFromBooleans( Blank, DirectAttack, LineAttack, !VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp );
-            return result;
-        }
+		#region Public Methods (4) 
 
         public static void Copy( AIFlags source, AIFlags destination )
         {
@@ -162,7 +136,23 @@ namespace FFTPatcher.Datatypes
             Copy( this, destination );
         }
 
-        #endregionÂ Methods
+        public bool[] ToBoolArray()
+        {
+            return new bool[24] { 
+                HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies,
+                IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, Silence,
+                Blank, DirectAttack, LineAttack, VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp };
+        }
 
+        public byte[] ToByteArray()
+        {
+            byte[] result = new byte[3];
+            result[0] = Utilities.ByteFromBooleans( HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies );
+            result[1] = Utilities.ByteFromBooleans( IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, !Silence );
+            result[2] = Utilities.ByteFromBooleans( Blank, DirectAttack, LineAttack, !VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp );
+            return result;
+        }
+
+		#endregion Public Methods 
     }
 }

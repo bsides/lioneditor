@@ -48,27 +48,28 @@ namespace FFTPatcher
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.MenuItem fileMenuItem;
             System.Windows.Forms.MenuItem separator1;
             System.Windows.Forms.MenuItem separator2;
-            System.Windows.Forms.MenuItem psxMenu;
             System.Windows.Forms.MenuItem separator3;
-            System.Windows.Forms.MenuItem pspMenu;
             System.Windows.Forms.MenuItem separator5;
             System.Windows.Forms.MenuItem utilitiesMenuItem;
             System.Windows.Forms.MenuItem separator6;
+            this.extractFFTPackMenuItem = new System.Windows.Forms.MenuItem();
+            this.rebuildFFTPackMenuItem = new System.Windows.Forms.MenuItem();
+            this.decryptMenuItem = new System.Windows.Forms.MenuItem();
+            this.fileMenuItem = new System.Windows.Forms.MenuItem();
             this.newPSXMenuItem = new System.Windows.Forms.MenuItem();
             this.newPSPMenuItem = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.saveAsPspMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
+            this.psxMenu = new System.Windows.Forms.MenuItem();
             this.patchPsxIsoMenuItem = new System.Windows.Forms.MenuItem();
+            this.openPatchedPsxIso = new System.Windows.Forms.MenuItem();
+            this.pspMenu = new System.Windows.Forms.MenuItem();
             this.patchPspIsoMenuItem = new System.Windows.Forms.MenuItem();
             this.cheatdbMenuItem = new System.Windows.Forms.MenuItem();
-            this.extractFFTPackMenuItem = new System.Windows.Forms.MenuItem();
-            this.rebuildFFTPackMenuItem = new System.Windows.Forms.MenuItem();
-            this.decryptMenuItem = new System.Windows.Forms.MenuItem();
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -78,114 +79,28 @@ namespace FFTPatcher
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.fftPatchEditor1 = new FFTPatcher.Editors.FFTPatchEditor();
             this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.openPatchedPsxIso = new System.Windows.Forms.MenuItem();
-            fileMenuItem = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
-            psxMenu = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
-            pspMenu = new System.Windows.Forms.MenuItem();
             separator5 = new System.Windows.Forms.MenuItem();
             utilitiesMenuItem = new System.Windows.Forms.MenuItem();
             separator6 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
-            // 
-            // fileMenuItem
-            // 
-            fileMenuItem.Index = 0;
-            fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.newPSXMenuItem,
-            this.newPSPMenuItem,
-            separator1,
-            this.openMenuItem,
-            this.saveMenuItem,
-            this.saveAsPspMenuItem,
-            separator2,
-            this.exitMenuItem} );
-            fileMenuItem.Text = "&File";
-            // 
-            // newPSXMenuItem
-            // 
-            this.newPSXMenuItem.Index = 0;
-            this.newPSXMenuItem.Text = "New PS&X patch";
-            // 
-            // newPSPMenuItem
-            // 
-            this.newPSPMenuItem.Index = 1;
-            this.newPSPMenuItem.Text = "New PS&P patch";
             // 
             // separator1
             // 
             separator1.Index = 2;
             separator1.Text = "-";
             // 
-            // openMenuItem
-            // 
-            this.openMenuItem.Index = 3;
-            this.openMenuItem.Text = "&Open patch...";
-            // 
-            // saveMenuItem
-            // 
-            this.saveMenuItem.Enabled = false;
-            this.saveMenuItem.Index = 4;
-            this.saveMenuItem.Text = "&Save patch...";
-            // 
-            // saveAsPspMenuItem
-            // 
-            this.saveAsPspMenuItem.Enabled = false;
-            this.saveAsPspMenuItem.Index = 5;
-            this.saveAsPspMenuItem.Text = "Save &as PSP patch...";
-            // 
             // separator2
             // 
             separator2.Index = 6;
             separator2.Text = "-";
             // 
-            // exitMenuItem
-            // 
-            this.exitMenuItem.Index = 7;
-            this.exitMenuItem.Text = "E&xit";
-            // 
-            // psxMenu
-            // 
-            psxMenu.Index = 1;
-            psxMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.patchPsxIsoMenuItem,
-            this.openPatchedPsxIso} );
-            psxMenu.Text = "PS&X";
-            // 
-            // patchPsxIsoMenuItem
-            // 
-            this.patchPsxIsoMenuItem.Enabled = false;
-            this.patchPsxIsoMenuItem.Index = 0;
-            this.patchPsxIsoMenuItem.Text = "Patch &ISO...";
-            // 
             // separator3
             // 
             separator3.Index = -1;
             separator3.Text = "";
-            // 
-            // pspMenu
-            // 
-            pspMenu.Index = 2;
-            pspMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.patchPspIsoMenuItem,
-            this.cheatdbMenuItem,
-            separator5,
-            utilitiesMenuItem} );
-            pspMenu.Text = "&PSP";
-            // 
-            // patchPspIsoMenuItem
-            // 
-            this.patchPspIsoMenuItem.Enabled = false;
-            this.patchPspIsoMenuItem.Index = 0;
-            this.patchPspIsoMenuItem.Text = "&Patch War of the Lions ISO...";
-            // 
-            // cheatdbMenuItem
-            // 
-            this.cheatdbMenuItem.Enabled = false;
-            this.cheatdbMenuItem.Index = 1;
-            this.cheatdbMenuItem.Text = "&Generate cheat.db...";
             // 
             // separator5
             // 
@@ -222,12 +137,99 @@ namespace FFTPatcher
             this.decryptMenuItem.Index = 3;
             this.decryptMenuItem.Text = "&Decrypt War of the Lions ISO...";
             // 
+            // fileMenuItem
+            // 
+            this.fileMenuItem.Index = 0;
+            this.fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.newPSXMenuItem,
+            this.newPSPMenuItem,
+            separator1,
+            this.openMenuItem,
+            this.saveMenuItem,
+            this.saveAsPspMenuItem,
+            separator2,
+            this.exitMenuItem} );
+            this.fileMenuItem.Text = "&File";
+            // 
+            // newPSXMenuItem
+            // 
+            this.newPSXMenuItem.Index = 0;
+            this.newPSXMenuItem.Text = "New PS&X patch";
+            // 
+            // newPSPMenuItem
+            // 
+            this.newPSPMenuItem.Index = 1;
+            this.newPSPMenuItem.Text = "New PS&P patch";
+            // 
+            // openMenuItem
+            // 
+            this.openMenuItem.Index = 3;
+            this.openMenuItem.Text = "&Open patch...";
+            // 
+            // saveMenuItem
+            // 
+            this.saveMenuItem.Enabled = false;
+            this.saveMenuItem.Index = 4;
+            this.saveMenuItem.Text = "&Save patch...";
+            // 
+            // saveAsPspMenuItem
+            // 
+            this.saveAsPspMenuItem.Enabled = false;
+            this.saveAsPspMenuItem.Index = 5;
+            this.saveAsPspMenuItem.Text = "Save &as PSP patch...";
+            // 
+            // exitMenuItem
+            // 
+            this.exitMenuItem.Index = 7;
+            this.exitMenuItem.Text = "E&xit";
+            // 
+            // psxMenu
+            // 
+            this.psxMenu.Index = 1;
+            this.psxMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.patchPsxIsoMenuItem,
+            this.openPatchedPsxIso} );
+            this.psxMenu.Text = "PS&X";
+            // 
+            // patchPsxIsoMenuItem
+            // 
+            this.patchPsxIsoMenuItem.Enabled = false;
+            this.patchPsxIsoMenuItem.Index = 0;
+            this.patchPsxIsoMenuItem.Text = "Patch &ISO...";
+            // 
+            // openPatchedPsxIso
+            // 
+            this.openPatchedPsxIso.Index = 1;
+            this.openPatchedPsxIso.Text = "Open patched ISO...";
+            // 
+            // pspMenu
+            // 
+            this.pspMenu.Index = 2;
+            this.pspMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.patchPspIsoMenuItem,
+            this.cheatdbMenuItem,
+            separator5,
+            utilitiesMenuItem} );
+            this.pspMenu.Text = "&PSP";
+            // 
+            // patchPspIsoMenuItem
+            // 
+            this.patchPspIsoMenuItem.Enabled = false;
+            this.patchPspIsoMenuItem.Index = 0;
+            this.patchPspIsoMenuItem.Text = "&Patch War of the Lions ISO...";
+            // 
+            // cheatdbMenuItem
+            // 
+            this.cheatdbMenuItem.Enabled = false;
+            this.cheatdbMenuItem.Index = 1;
+            this.cheatdbMenuItem.Text = "&Generate cheat.db...";
+            // 
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            fileMenuItem,
-            psxMenu,
-            pspMenu,
+            this.fileMenuItem,
+            this.psxMenu,
+            this.pspMenu,
             this.aboutMenuItem} );
             // 
             // aboutMenuItem
@@ -269,11 +271,6 @@ namespace FFTPatcher
             this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
             this.patchPsxBackgroundWorker.WorkerSupportsCancellation = true;
             // 
-            // openPatchedPsxIso
-            // 
-            this.openPatchedPsxIso.Index = 1;
-            this.openPatchedPsxIso.Text = "Open patched ISO...";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -314,6 +311,9 @@ namespace FFTPatcher
         private System.Windows.Forms.MenuItem saveAsPspMenuItem;
         private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
         private System.Windows.Forms.MenuItem openPatchedPsxIso;
+        private System.Windows.Forms.MenuItem fileMenuItem;
+        private System.Windows.Forms.MenuItem psxMenu;
+        private System.Windows.Forms.MenuItem pspMenu;
 
     }
 }

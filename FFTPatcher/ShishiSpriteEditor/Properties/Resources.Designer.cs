@@ -74,20 +74,6 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
-        internal static byte[] EFF1 {
-            get {
-                object obj = ResourceManager.GetObject("EFF1", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] EFF2 {
-            get {
-                object obj = ResourceManager.GetObject("EFF2", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         internal static byte[] KANZEN_SHP {
             get {
                 object obj = ResourceManager.GetObject("KANZEN_SHP", resourceCulture);
@@ -95,24 +81,52 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
-        internal static byte[] MON {
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;PspFiles&gt;
+        ///  &lt;FFTPatcher.SpriteEditor.MonsterSprite&gt;
+        ///    &lt;Sprite name=&quot;ARLI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;ARLI.SPR&quot; enum=&quot;BATTLE_ARLI_SPR&quot; original_size=&quot;41475&quot;/&gt;
+        ///        &lt;File name=&quot;ARLI2.SP2&quot; enum=&quot;BATTLE_ARLI2_SP2&quot; original_size=&quot;32768&quot;/&gt;
+        ///      &lt;/Files&gt;
+        ///    &lt;/Sprite&gt;
+        ///    &lt;Sprite name=&quot;BEHI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;BEHI.SPR&quot; enum=&quot;BATTLE_BEHI_SPR&quot; original_size=&quot;46393&quot;/&gt;
+        ///        &lt;File name=&quot;BEHI2.SP2&quot; enum=&quot;BATTLE_BEHI2_SP2&quot; original_siz [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PSPFiles {
             get {
-                object obj = ResourceManager.GetObject("MON", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("PSPFiles", resourceCulture);
             }
         }
         
-        internal static byte[] OPNBK {
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;PsxFiles&gt;
+        ///  &lt;FFTPatcher.SpriteEditor.MonsterSprite&gt;
+        ///    &lt;Sprite name=&quot;ARLI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;ARLI.SPR&quot; enum=&quot;BATTLE_ARLI_SPR&quot; original_size=&quot;41475&quot;/&gt;
+        ///        &lt;File name=&quot;ARLI2.SP2&quot; enum=&quot;BATTLE_ARLI2_SP2&quot; original_size=&quot;32768&quot;/&gt;
+        ///      &lt;/Files&gt;
+        ///    &lt;/Sprite&gt;
+        ///    &lt;Sprite name=&quot;BEHI&quot;&gt;
+        ///      &lt;Files&gt;
+        ///        &lt;File name=&quot;BEHI.SPR&quot; enum=&quot;BATTLE_BEHI_SPR&quot; original_size=&quot;46393&quot;/&gt;
+        ///        &lt;File name=&quot;BEHI2.SP2&quot; enum=&quot;BATTLE_BEHI2_SP2&quot; original_siz [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PSXFiles {
             get {
-                object obj = ResourceManager.GetObject("OPNBK", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("PSXFiles", resourceCulture);
             }
         }
         
-        internal static byte[] OTHER {
+        internal static System.Drawing.Icon sprite {
             get {
-                object obj = ResourceManager.GetObject("OTHER", resourceCulture);
-                return ((byte[])(obj));
+                object obj = ResourceManager.GetObject("sprite", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -130,16 +144,9 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
-        internal static byte[] WEP1 {
+        internal static byte[] WLDFACE {
             get {
-                object obj = ResourceManager.GetObject("WEP1", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] WEP2 {
-            get {
-                object obj = ResourceManager.GetObject("WEP2", resourceCulture);
+                object obj = ResourceManager.GetObject("WLDFACE", resourceCulture);
                 return ((byte[])(obj));
             }
         }

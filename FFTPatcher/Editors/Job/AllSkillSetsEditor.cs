@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,18 +25,20 @@ namespace FFTPatcher.Editors
 {
     public partial class AllSkillSetsEditor : UserControl
     {
+		#region Instance Variables (2) 
 
+        private SkillSet cbSkillSet = null;
         private Context ourContext = Context.Default;
 
-		#regionÂ PropertiesÂ (1)Â 
+		#endregion Instance Variables 
 
+		#region Public Properties (1) 
 
         public int SelectedIndex { get { return skillSetListBox.SelectedIndex; } set { skillSetListBox.SelectedIndex = value; } }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllSkillSetsEditor()
         {
@@ -49,51 +51,9 @@ namespace FFTPatcher.Editors
             skillSetListBox.MouseDown += new MouseEventHandler( skillSetListBox_MouseDown );
         }
 
-        void skillSetListBox_MouseDown( object sender, MouseEventArgs e )
-        {
-            if( e.Button == MouseButtons.Right )
-            {
-                skillSetListBox.SelectedIndex = skillSetListBox.IndexFromPoint( e.Location );
-            }
-        }
+		#endregion Constructors 
 
-        private SkillSet cbSkillSet = null;
-        void ContextMenu_Popup( object sender, EventArgs e )
-        {
-            skillSetListBox.ContextMenu.MenuItems[1].Enabled = cbSkillSet != null;
-        }
-
-        private void CloneClick( object sender, EventArgs args )
-        {
-            cbSkillSet = skillSetListBox.SelectedItem as SkillSet;
-        }
-
-        private void PasteClick( object sender, EventArgs args )
-        {
-            if( cbSkillSet != null )
-            {
-                cbSkillSet.CopyTo( skillSetListBox.SelectedItem as SkillSet );
-                skillSetEditor.UpdateView();
-                skillSetEditor_DataChanged( skillSetEditor, EventArgs.Empty );
-            }
-        }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ MethodsÂ (3)Â 
-
-
-        private void skillSetEditor_DataChanged( object sender, EventArgs e )
-        {
-            CurrencyManager cm = (CurrencyManager)BindingContext[skillSetListBox.DataSource];
-            cm.Refresh();
-        }
-
-        private void skillSetListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            SkillSet s = skillSetListBox.SelectedItem as SkillSet;
-            skillSetEditor.SkillSet = s;
-        }
+		#region Public Methods (1) 
 
         public void UpdateView( AllSkillSets skills )
         {
@@ -109,8 +69,50 @@ namespace FFTPatcher.Editors
             skillSetEditor.SkillSet = skillSetListBox.SelectedItem as SkillSet;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (6) 
 
+        private void CloneClick( object sender, EventArgs args )
+        {
+            cbSkillSet = skillSetListBox.SelectedItem as SkillSet;
+        }
+
+        void ContextMenu_Popup( object sender, EventArgs e )
+        {
+            skillSetListBox.ContextMenu.MenuItems[1].Enabled = cbSkillSet != null;
+        }
+
+        private void PasteClick( object sender, EventArgs args )
+        {
+            if( cbSkillSet != null )
+            {
+                cbSkillSet.CopyTo( skillSetListBox.SelectedItem as SkillSet );
+                skillSetEditor.UpdateView();
+                skillSetEditor_DataChanged( skillSetEditor, EventArgs.Empty );
+            }
+        }
+
+        private void skillSetEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[skillSetListBox.DataSource];
+            cm.Refresh();
+        }
+
+        void skillSetListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                skillSetListBox.SelectedIndex = skillSetListBox.IndexFromPoint( e.Location );
+            }
+        }
+
+        private void skillSetListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            SkillSet s = skillSetListBox.SelectedItem as SkillSet;
+            skillSetEditor.SkillSet = s;
+        }
+
+		#endregion Private Methods 
     }
 }

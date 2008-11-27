@@ -24,21 +24,19 @@ namespace FFTPatcher
 {
     public class PatchedByteArray
     {
-
-		#region Properties (3) 
-
+		#region Public Properties (4) 
 
         public byte[] Bytes { get; private set; }
 
         public long Offset { get; private set; }
 
-        public Enum SectorEnum { get; private set; }
         public int Sector { get; private set; }
 
+        public Enum SectorEnum { get; private set; }
 
-		#endregion Properties 
+		#endregion Public Properties 
 
-		#region Constructors (1) 
+		#region Constructors (4) 
 
         public PatchedByteArray( PsxIso.Sectors sector, long offset, byte[] bytes )
             : this( (int)sector, offset, bytes )
@@ -58,7 +56,6 @@ namespace FFTPatcher
             SectorEnum = file;
         }
 
-
         public PatchedByteArray( int sector, long offset, byte[] bytes )
         {
             Sector = sector;
@@ -67,6 +64,5 @@ namespace FFTPatcher
         }
 
 		#endregion Constructors 
-
     }
 }

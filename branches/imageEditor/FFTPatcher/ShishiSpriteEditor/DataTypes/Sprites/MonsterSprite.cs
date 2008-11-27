@@ -76,21 +76,27 @@ namespace FFTPatcher.SpriteEditor
             return result.ToArray();
         }
 
-        public override IList<byte[]> ToByteArrays()
+        public override byte[] ToByteArray( int index )
         {
-            List<byte[]> result = new List<byte[]>( base.ToByteArrays() );
-            for( int i = 0; i < sp2Count; i++ )
+            if ( index == 0 )
             {
-                IList<byte> sp2 = Pixels.Sub( 256 * 488 + i * 256 * 256, 256 * 488 + ( i + 1 ) * 256 * 256 - 1 );
-                byte[] sp2Array = new byte[32768];
-                for( int j = 0; j < sp2.Count; j += 2 )
-                {
-                    sp2Array[j / 2] = (byte)((sp2[j + 1] << 4) | (sp2[j] & 0x0F));
-                }
-                result.Add( sp2Array );
+                return base.ToByteArray( index );
             }
+            else
+            {
+                return GetSp2ByteArray( index - 1 );
+            }
+        }
 
-            return result;
+        private byte[] GetSp2ByteArray( int sp2Index )
+        {
+            IList<byte> sp2 = Pixels.Sub( 256 * 488 + sp2Index * 256 * 256, 256 * 488 + ( sp2Index + 1 ) * 256 * 256 - 1 );
+            byte[] sp2Array = new byte[32768];
+            for ( int j = 0; j < sp2.Count; j += 2 )
+            {
+                sp2Array[j / 2] = (byte)( ( sp2[j + 1] << 4 ) | ( sp2[j] & 0x0F ) );
+            }
+            return sp2Array;
         }
 
         protected override void ToBitmapInner( System.Drawing.Bitmap bmp, System.Drawing.Imaging.BitmapData bmd )

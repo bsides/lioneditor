@@ -360,8 +360,21 @@ namespace FFTPatcher
             return (byte)(((upper & 0x0F) << 4) | (lower & 0x0F));
         }
 
+        public static bool TryParseEnum<T>( string value, out T t ) where T : struct
+        {
+            t = default( T );
+            if ( Enum.IsDefined( typeof( T ), value ) )
+            {
+                t = (T)Enum.Parse( typeof( T ), value, false );
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-		#endregion Methods 
+        #endregion Methods 
 
     }
 }

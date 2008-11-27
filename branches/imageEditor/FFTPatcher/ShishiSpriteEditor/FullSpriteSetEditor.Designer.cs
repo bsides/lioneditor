@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new FFTPatcher.SpriteEditor.FullSpriteSetEditor.FlickerFreeListView();
+            this.listView1 = new FFTPatcher.SpriteEditor.FlickerFreeListView();
             this.SuspendLayout();
             // 
             // listView1
@@ -56,6 +56,6 @@
 
         #endregion
 
-        private FFTPatcher.SpriteEditor.FullSpriteSetEditor.FlickerFreeListView listView1;
+        private FFTPatcher.SpriteEditor.FlickerFreeListView listView1;
     }
 }

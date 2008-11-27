@@ -162,63 +162,51 @@ namespace FFTPatcher.SpriteEditor
             return new FullSpriteSet( sprites, worker, tasksComplete, tasks );
         }
 
-        public void PatchPsxISO( string filename, BackgroundWorker worker )
+        public void PatchPsxISO( string filename, BackgroundWorker worker, IList<PatchedByteArray> patches )
         {
             using ( Stream stream = File.Open( filename, FileMode.Open, FileAccess.ReadWrite ) )
             {
-                PatchPsxISO( stream, worker );
+                PatchPsxISO( stream, worker, patches );
             }
         }
 
-        public void PatchPsxISO( Stream stream, BackgroundWorker worker )
+        public void PatchPsxISO( Stream stream, BackgroundWorker worker, IList<PatchedByteArray> patches )
         {
-            int totalTasks = 0;
-            sprites.ForEach( s => totalTasks += s.Filenames.Count );
+            int totalTasks = patches.Count;
             int tasksComplete = 0;
 
-            foreach ( var sprite in sprites )
+            foreach ( PatchedByteArray patch in patches )
             {
-                var filenames = sprite.Filenames;
-                var bytes = sprite.ToByteArrays();
-                for ( int i = 0; i < filenames.Count; i++ )
+                if ( patch != null )
                 {
-                    PsxIso.Sectors sector =
-                        (PsxIso.Sectors)Enum.Parse(
-                            typeof( PsxIso.Sectors ),
-                            "BATTLE_" + filenames[i].Replace( '.', '_' ) );
-                    worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + filenames[i] );
-                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, (int)sector, 0, bytes[i], true );
+                    worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + patch.SectorEnum.ToString() );
+                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true );
+                }
+                else
+                {
+                    tasksComplete++;
                 }
             }
         }
 
-        public void PatchPspISO( Stream stream, BackgroundWorker worker )
+        public void PatchPspISO( Stream stream, BackgroundWorker worker, IList<PatchedByteArray> patches )
         {
-            int totalTasks = 0;
-            sprites.ForEach( s => totalTasks += s.Filenames.Count );
+            int totalTasks = patches.Count;
             int tasksComplete = 0;
 
-            foreach ( var sprite in sprites )
+            foreach ( var patch in patches )
             {
-                var filenames = sprite.Filenames;
-                var bytes = sprite.ToByteArrays();
-                for ( int i = 0; i < filenames.Count; i++ )
-                {
-                    FFTPack.Files sector =
-                        (FFTPack.Files)Enum.Parse(
-                            typeof( FFTPack.Files ),
-                            "BATTLE_" + filenames[i].Replace( '.', '_' ) );
-                    worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + filenames[i] );
-                    FFTPack.PatchFile( stream, (int)sector, 0, bytes[i] );
-                }
+                worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + patch.SectorEnum.ToString() );
+                FFTPack.PatchFile( stream, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.Bytes );
             }
+
         }
 
-        public void PatchPspISO( string filename, BackgroundWorker worker )
+        public void PatchPspISO( string filename, BackgroundWorker worker, IList<PatchedByteArray> patches )
         {
             using ( Stream stream = File.Open( filename, FileMode.Open, FileAccess.ReadWrite ) )
             {
-                PatchPspISO( stream, worker );
+                PatchPspISO( stream, worker, patches );
             }
         }
 

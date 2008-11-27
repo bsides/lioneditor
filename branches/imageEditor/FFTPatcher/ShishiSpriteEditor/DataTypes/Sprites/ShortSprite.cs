@@ -118,25 +118,25 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
-        public override IList<byte[]> ToByteArrays()
+        public override byte[] ToByteArray( int index )
         {
+            System.Diagnostics.Debug.Assert( index == 0 );
             List<byte> ourResult = new List<byte>( 37377 );
             foreach ( Palette p in Palettes )
             {
                 ourResult.AddRange( p.ToByteArray() );
             }
 
-            for( int i = 0; i < Pixels.Count / 2; i++ )
+            for ( int i = 0; i < Pixels.Count / 2; i++ )
             {
                 ourResult.Add( (byte)( ( Pixels[2 * i + 1] << 4 ) | ( Pixels[2 * i] & 0x0F ) ) );
             }
 
-            if( ourResult.Count < OriginalSize )
+            if ( ourResult.Count < OriginalSize )
             {
                 ourResult.AddRange( new byte[OriginalSize - ourResult.Count] );
             }
-
-            return new byte[][] { ourResult.ToArray() };
+            return ourResult.ToArray();
         }
     }
 }

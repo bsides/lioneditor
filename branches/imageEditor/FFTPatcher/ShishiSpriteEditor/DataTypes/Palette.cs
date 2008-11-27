@@ -19,6 +19,7 @@
 
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -58,6 +59,11 @@ namespace FFTPatcher.SpriteEditor
 
 		#region Properties (1) 
 
+        public Color this[int index]
+        {
+            get { return Colors[index]; }
+            set { Colors[index] = value; }
+        }
 
         public Color[] Colors { get; private set; }
 
@@ -68,6 +74,30 @@ namespace FFTPatcher.SpriteEditor
 
         private Palette()
         {
+        }
+
+        public static void FixupColorPalette( ColorPalette destination, IList<Palette> palettes )
+        {
+            int k = 0;
+            for ( int i = 0; i < palettes.Count; i++ )
+            {
+                FixupColorPalette( destination, palettes, i, i * 16 );
+            }
+        }
+
+        public static void FixupColorPalette( ColorPalette destination, IList<Palette> palettes, int whichPalette, int destStartIndex )
+        {
+            for ( int i = 0; i < palettes[whichPalette].Colors.Length; i++ )
+            {
+                if ( palettes[whichPalette][i].ToArgb() == Color.Transparent.ToArgb() )
+                {
+                    destination.Entries[destStartIndex + i] = Color.Black;
+                }
+                else
+                {
+                    destination.Entries[destStartIndex + i] = palettes[whichPalette][i];
+                }
+            }
         }
 
         public Palette( IList<byte> bytes )

@@ -242,30 +242,6 @@ namespace FFTPatcher.SpriteEditor
             BitmapDirty = true;
         }
 
-        protected void FixupColorPalette( ColorPalette palette )
-        {
-            int k = 0;
-            for ( int i = 0; i < Palettes.Length; i++ )
-            {
-                FixupColorPalette( palette, i, i * 16 );
-            }
-        }
-
-        protected void FixupColorPalette( ColorPalette palette, int whichPalette, int destStartIndex )
-        {
-            for ( int i = 0; i < Palettes[whichPalette].Colors.Length; i++ )
-            {
-                if ( Palettes[whichPalette].Colors[i].ToArgb() == Color.Transparent.ToArgb() )
-                {
-                    palette.Entries[destStartIndex + i] = Color.Black;
-                }
-                else
-                {
-                    palette.Entries[destStartIndex + i] = Palettes[whichPalette].Colors[i];
-                }
-            }
-        }
-
         /// <summary>
         /// Converts this sprite to an indexed bitmap.
         /// </summary>
@@ -276,7 +252,7 @@ namespace FFTPatcher.SpriteEditor
 
                 Bitmap bmp = new Bitmap( Width, Height, PixelFormat.Format8bppIndexed );
                 ColorPalette palette = bmp.Palette;
-                FixupColorPalette( palette );
+                Palette.FixupColorPalette( palette, Palettes );
                 bmp.Palette = palette;
 
 
@@ -295,7 +271,7 @@ namespace FFTPatcher.SpriteEditor
             Bitmap result = new Bitmap( Width, Height, System.Drawing.Imaging.PixelFormat.Format4bppIndexed );
             System.Drawing.Imaging.BitmapData bmd = result.LockBits( new Rectangle( Point.Empty, result.Size ), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format4bppIndexed );
             ColorPalette pal = result.Palette;
-            FixupColorPalette( pal, whichPalette, 0 );
+            Palette.FixupColorPalette( pal, Palettes, whichPalette, 0 );
             result.Palette = pal;
 
             for( int i = 0; i < Pixels.Count; i++ )

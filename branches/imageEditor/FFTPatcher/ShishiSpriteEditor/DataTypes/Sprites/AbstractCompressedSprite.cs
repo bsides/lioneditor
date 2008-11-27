@@ -24,7 +24,7 @@ namespace FFTPatcher.SpriteEditor
                     false );
 
                 ColorPalette palette2 = portrait.Palette;
-                FixupColorPalette( palette2 );
+                Palette.FixupColorPalette( palette2, Palettes );
                 portrait.Palette = palette2;
                 wholeImage.CopyRectangleToPoint( PortraitRectangle, portrait, Point.Empty, Palettes[8], false );
                 portrait.RotateFlip( RotateFlipType.Rotate270FlipNone );

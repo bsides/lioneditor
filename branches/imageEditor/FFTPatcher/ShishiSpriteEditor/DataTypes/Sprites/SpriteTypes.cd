@@ -10,7 +10,6 @@
       <Property Name="CachedThumbnail" Hidden="true" />
       <Method Name="DrawSpriteInternal" Hidden="true" />
       <Method Name="FirePixelsChanged" Hidden="true" />
-      <Method Name="FixupColorPalette" Hidden="true" />
       <Method Name="GetThumbnailInner" Hidden="true" />
       <Method Name="ImportSPRInner" Hidden="true" />
       <Property Name="OriginalSize" Hidden="true" />
@@ -27,7 +26,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>EACEAAASBEQAwhAAoYABDGQEAAAAAghAACgAiBCAABA=</HashCode>
+      <HashCode>EACEAAASBEQAwhAAoYABDGQEAAAAAgBAACgAiBCAABA=</HashCode>
       <FileName>DataTypes\Sprites\AbstractSprite.cs</FileName>
     </TypeIdentifier>
   </Class>

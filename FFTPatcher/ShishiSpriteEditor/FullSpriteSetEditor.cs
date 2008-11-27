@@ -17,15 +17,6 @@ namespace FFTPatcher.SpriteEditor
         private ListViewGroup specialGroup = new ListViewGroup( "Special" );
         private ListViewGroup monsterGroup = new ListViewGroup( "MON" );
 
-        private class FlickerFreeListView : ListView
-        {
-            public FlickerFreeListView()
-                : base()
-            {
-                DoubleBuffered = true;
-            }
-        }
-
         public FullSpriteSetEditor()
         {
             InitializeComponent();

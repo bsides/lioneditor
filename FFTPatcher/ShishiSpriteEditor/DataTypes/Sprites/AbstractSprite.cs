@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -62,7 +63,7 @@ namespace FFTPatcher.SpriteEditor
                 }
                 else
                 {
-                    return OriginalSize / 2048 + 2048;
+                    return ( OriginalSize / 2048 ) * 2048 + 2048;
                 }
             }
         }
@@ -85,6 +86,49 @@ namespace FFTPatcher.SpriteEditor
         protected Image CachedThumbnail { get; set; }
         protected bool BitmapDirty { get; set; }
         protected Bitmap CachedBitmap { get; set; }
+
+        public IList<PatchedByteArray> GetPatchedByteArrays( Context context )
+        {
+            PatchedByteArray[] result = new PatchedByteArray[Filenames.Count];
+            for ( int i = 0; i < Filenames.Count; i++ )
+            {
+                result[i] = GetPatchedByteArray( context, i );
+            }
+            return result;
+        }
+
+        public PatchedByteArray GetPatchedByteArray( Context context, int index )
+        {
+            return context == Context.US_PSP ? 
+                GetPatchedByteArrayPSPInternal( index ) :
+                GetPatchedByteArrayPSXInternal( index );
+        }
+
+        private PatchedByteArray GetPatchedByteArrayPSXInternal( int index )
+        {
+            PsxIso.Sectors sector;
+            if ( FFTPatcher.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
+            {
+                return new PatchedByteArray( sector, 0, ToByteArray( index ) );
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private PatchedByteArray GetPatchedByteArrayPSPInternal( int index )
+        {
+            FFTPack.Files sector;
+            if ( FFTPatcher.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
+            {
+                return new PatchedByteArray( sector, 0, ToByteArray( index ) );
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public void DrawSprite( Bitmap b, int palette, int portraitPalette )
         {
@@ -295,7 +339,17 @@ namespace FFTPatcher.SpriteEditor
         /// <summary>
         /// Converts this sprite to an array of bytes.
         /// </summary>
-        public abstract IList<byte[]> ToByteArrays();
+        public IList<byte[]> ToByteArrays()
+        {
+            byte[][] result = new byte[Filenames.Count][];
+            for ( int i = 0; i < Filenames.Count; i++ )
+            {
+                result[i] = ToByteArray( i );
+            }
+            return result;
+        }
+
+        public abstract byte[] ToByteArray( int index );
 
         #endregion Methods
 

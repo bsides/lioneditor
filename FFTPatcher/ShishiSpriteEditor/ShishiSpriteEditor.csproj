@@ -79,6 +79,9 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="DataTypes\Frame.cs" />
     <Compile Include="DataTypes\Sprites\KANZEN.cs" />
+    <Compile Include="FlickerFreeListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FullSpriteSetEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>

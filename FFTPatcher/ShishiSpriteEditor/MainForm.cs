@@ -243,32 +243,37 @@ namespace FFTPatcher.SpriteEditor
 
         private void patchPspMenuItem_Click( object sender, EventArgs e )
         {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "PSP ISO files (*.iso)|*.iso";
-            openFileDialog.FilterIndex = 0;
-
-            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            patchDialog.LoadFullSpriteSet( fullSpriteSetEditor1.FullSpriteSet );
+            if ( patchDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 DoBackgroundTask(
                     delegate( object o, DoWorkEventArgs args )
                     {
-                        fullSpriteSetEditor1.FullSpriteSet.PatchPspISO( openFileDialog.FileName, o as BackgroundWorker );
+                        ( o as BackgroundWorker ).ReportProgress( 0, "Building sprites" );
+
+                        fullSpriteSetEditor1.FullSpriteSet.PatchPspISO(
+                            patchDialog.Filename,
+                            o as BackgroundWorker,
+                            patchDialog.GetPatches( FFTPatcher.Datatypes.Context.US_PSP ) );
                     } );
             }
         }
 
+        PatchDialog patchDialog = new PatchDialog();
         private void patchPsxMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "PSX ISO files (*.iso, *.img, *.bin)|*.iso;*.img;*.bin";
-            openFileDialog.FilterIndex = 0;
-
-            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            patchDialog.LoadFullSpriteSet( fullSpriteSetEditor1.FullSpriteSet );
+            if ( patchDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 DoBackgroundTask(
                     delegate( object o, DoWorkEventArgs args )
                     {
-                        fullSpriteSetEditor1.FullSpriteSet.PatchPsxISO( openFileDialog.FileName, o as BackgroundWorker );
+                        ( o as BackgroundWorker ).ReportProgress( 0, "Building sprites" );
+
+                        fullSpriteSetEditor1.FullSpriteSet.PatchPsxISO(
+                            patchDialog.Filename,
+                            o as BackgroundWorker,
+                            patchDialog.GetPatches( FFTPatcher.Datatypes.Context.US_PSX ) );
                     } );
             }
         }

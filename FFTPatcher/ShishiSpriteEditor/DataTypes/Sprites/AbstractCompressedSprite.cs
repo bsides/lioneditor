@@ -218,29 +218,27 @@ namespace FFTPatcher.SpriteEditor
             return bytes.Count;
         }
 
-        public override IList<byte[]> ToByteArrays()
+        public override byte[] ToByteArray( int index )
         {
-            List<byte[]> result = new List<byte[]>();
+            System.Diagnostics.Debug.Assert( index == 0 );
             List<byte> ourResult = new List<byte>( 36864 );
-            foreach( Palette p in Palettes )
+            foreach ( Palette p in Palettes )
             {
                 ourResult.AddRange( p.ToByteArray() );
             }
-            for( int i = 0; i < 36864; i++ )
+            for ( int i = 0; i < 36864; i++ )
             {
-                ourResult.Add( (byte)((Pixels[2 * i + 1] << 4) | (Pixels[2 * i] & 0x0F)) );
+                ourResult.Add( (byte)( ( Pixels[2 * i + 1] << 4 ) | ( Pixels[2 * i] & 0x0F ) ) );
             }
 
             ourResult.AddRange( Recompress( Pixels.Sub( 2 * 36864, 2 * 36864 + 200 * 256 - 1 ) ) );
 
-            if( ourResult.Count < OriginalSize )
+            if ( ourResult.Count < OriginalSize )
             {
                 ourResult.AddRange( new byte[OriginalSize - ourResult.Count] );
             }
 
-            result.Add( ourResult.ToArray() );
-
-            return result;
+            return ourResult.ToArray();
         }
 
         public const int topHeight = 256;

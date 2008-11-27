@@ -185,7 +185,7 @@ namespace FFTPatcher
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Visible = true;
-                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                    progressBar.Value = args.ProgressPercentage;
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =
@@ -270,7 +270,7 @@ namespace FFTPatcher
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Visible = true;
-                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                    progressBar.Value = args.ProgressPercentage;
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =
@@ -317,7 +317,7 @@ namespace FFTPatcher
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Visible = true;
-                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                    progressBar.Value = args.ProgressPercentage;
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =
@@ -374,7 +374,7 @@ namespace FFTPatcher
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Visible = true;
-                    progressBar.Value = Math.Min( args.ProgressPercentage, progressBar.Maximum );
+                    progressBar.Value = args.ProgressPercentage;
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =

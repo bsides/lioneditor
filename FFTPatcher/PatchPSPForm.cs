@@ -60,7 +60,7 @@ namespace FFTPatcher
             set { bootBinPatchable[(int)BootBinPatchable.ActionMenus] = value; }
         }
 
-        public string CustomICON0FileName
+public string CustomICON0FileName
         {
             get { return icon0FileNameTextBox.Text; }
         }
@@ -145,24 +145,13 @@ namespace FFTPatcher
         {
             get
             {
-                if ( ICON0 == CustomICON0.NoChange )
+                if( ICON0 == CustomICON0.NoChange )
                 {
                     return new PatchedByteArray[0];
                 }
                 else
                 {
-                    int length = ICON0_PNG.Length;
-                    byte[] lengthBytes = { 
-                                             (byte)(( length & 0xFF000000 ) >> 24), 
-                                             (byte)(( length & 0xFF0000 ) >> 16), 
-                                             (byte)(( length & 0xFF00 ) >> 8), 
-                                             (byte)(length & 0xFF) };
-                    byte[] lengthBytesBackwards = { lengthBytes[3], lengthBytes[2], lengthBytes[1], lengthBytes[0] };
-                    return new PatchedByteArray[] { 
-                        new PatchedByteArray( PspIso.Files.PSP_GAME.ICON0_PNG, 0, ICON0_PNG ),
-                        new PatchedByteArray( 23, 0x6A, lengthBytesBackwards ),
-                        new PatchedByteArray( 23, 0x6E, lengthBytes )
-                    };
+                    return new PatchedByteArray[] { new PatchedByteArray( PspIso.Files.PSP_GAME.ICON0_PNG, 0, ICON0_PNG ) };
                 }
             }
         }
@@ -177,7 +166,7 @@ namespace FFTPatcher
                     Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
                     StatusAttributes, InflictStatus, Poach }.ForEach( b => result += b ? 2 : 0 );
                 if( RegenECC ) result++;
-                if( ICON0 != CustomICON0.NoChange ) result += 3;
+                if( ICON0 != CustomICON0.NoChange ) result++;
                 if( ItemAttributes ) result += 4;
                 if( Items ) result += 4;
 
@@ -278,7 +267,7 @@ namespace FFTPatcher
             UpdateNextEnabled();
         }
 
-        private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
+private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
         {
             CheckBox box = (CheckBox)sender;
             Checkboxes cb = (Checkboxes)Enum.Parse( typeof( Checkboxes ), box.Tag as string );
@@ -355,7 +344,6 @@ namespace FFTPatcher
             {
                 icon0FileNameTextBox.Enabled = false;
                 icon0BrowseButton.Enabled = false;
-                ICON0_PNG = PSPResources.ICON0;
                 BuildICON0Preview( PSPResources.ICON0_PNG );
             }
 
@@ -373,7 +361,7 @@ namespace FFTPatcher
             UpdateNextEnabled();
         }
 
-        private void UpdateNextEnabled()
+private void UpdateNextEnabled()
         {
             bool enabled = true;
             enabled = enabled &&
@@ -424,7 +412,7 @@ namespace FFTPatcher
             Default,
             Custom
         }
-        private enum Checkboxes
+private enum Checkboxes
         {
             ENTD1,
             ENTD2,
@@ -433,7 +421,7 @@ namespace FFTPatcher
             ENTD5,
             Decrypt,
         }
-        private enum BootBinPatchable
+private enum BootBinPatchable
         {
             Abilities,
             AbilityEffects,

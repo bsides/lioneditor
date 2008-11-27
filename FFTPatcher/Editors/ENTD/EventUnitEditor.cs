@@ -189,6 +189,8 @@ namespace FFTPatcher.Editors
                 levelComboBox.SetValueAndDefault(
                     eventUnit.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Level],
                     eventUnit.Default.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Default.Level] );
+
+                upperLevelCheckBox.Checked = eventUnit.UpperLevel;
             }
             ignoreChanges = false;
         }

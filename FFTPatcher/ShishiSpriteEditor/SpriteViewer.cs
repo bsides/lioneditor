@@ -20,6 +20,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -30,8 +31,8 @@ namespace FFTPatcher.SpriteEditor
 
         private int palette = 0;
         private int portraitPalette = 8;
-        private bool proper = true;
-        private Sprite sprite = null;
+        private AbstractSprite sprite = null;
+        private PictureBox pictureBox1;
         private IList<Tile> tiles;
 
 		#endregion Fields 
@@ -39,28 +40,16 @@ namespace FFTPatcher.SpriteEditor
 		#region Properties (2) 
 
 
-        public bool Proper
-        {
-            get { return proper; }
-            set
-            {
-                if( proper ^ value )
-                {
-                    proper = value;
-                    Invalidate();
-                }
-            }
-        }
-
-        public Sprite Sprite
+        public AbstractSprite Sprite
         {
             get { return sprite; }
             set
             {
                 if( value != sprite )
                 {
+                    this.tiles = new Tile[0];
                     sprite = value;
-                    Invalidate();
+                    UpdateImage();
                 }
             }
         }
@@ -72,7 +61,21 @@ namespace FFTPatcher.SpriteEditor
 
         public SpriteViewer()
         {
-            SetStyle( ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true );
+            pictureBox1 = new PictureBox();
+            ( pictureBox1 as System.ComponentModel.ISupportInitialize ).BeginInit();
+            SuspendLayout();
+            pictureBox1.Location = new Point( 0, 0 );
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size( 256, 50 );
+            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox1.TabStop = false;
+            AutoScroll = true;
+            Controls.Add( pictureBox1 );
+            Name = "SpriteViewer";
+            Size = new Size( 256 + 10 + SystemInformation.VerticalScrollBarWidth, 50 );
+            ( pictureBox1 as System.ComponentModel.ISupportInitialize ).EndInit();
+            ResumeLayout( false );
+            PerformLayout();
         }
 
 		#endregion Constructors 
@@ -83,7 +86,7 @@ namespace FFTPatcher.SpriteEditor
         public void HighlightTiles( IList<Tile> tiles )
         {
             this.tiles = tiles;
-            Invalidate();
+            UpdateImage();
         }
 
         public void SetPalette( int paletteId )
@@ -97,24 +100,42 @@ namespace FFTPatcher.SpriteEditor
             {
                 palette = paletteId;
                 portraitPalette = portraitPaletteId;
-                Invalidate();
+                UpdateImage();
             }
         }
 
-
-
-        protected override void OnPaint( PaintEventArgs e )
+        private void UpdateImage()
         {
-            base.OnPaint( e );
-            if( sprite != null )
+            if ( sprite != null )
             {
-                e.Graphics.DrawSprite( sprite, sprite.Palettes[palette], sprite.Palettes[portraitPalette], proper );
-                if( tiles != null )
-                    using( Pen p = new Pen( Color.Yellow ) )
-                        foreach( Tile t in tiles )
-                            e.Graphics.DrawRectangle( p, t.Rectangle );
-            }
+                Bitmap b = new Bitmap( sprite.Width, sprite.Height, PixelFormat.Format32bppArgb );
+                BitmapData bmd = b.LockBits( new Rectangle( Point.Empty, b.Size ), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb );
+                sprite.DrawSprite( bmd, palette, portraitPalette );
+                b.UnlockBits( bmd );
+                if ( tiles != null )
+                {
+                    using ( Pen p = new Pen( Color.Yellow ) )
+                    using ( Graphics g = Graphics.FromImage( b ) )
+                    {
+                        foreach ( Tile t in tiles )
+                            g.DrawRectangle( p, t.Rectangle );
+                    }
+                }
+
+                SuspendLayout();
+                pictureBox1.SuspendLayout();
+                if ( pictureBox1.Image != null )
+                {
+                    pictureBox1.Image.Dispose();
+                    pictureBox1.Image = null;
+                }
+                pictureBox1.Image = b;
+                pictureBox1.ResumeLayout();
+                ResumeLayout( false );
+                PerformLayout();
+            }           
         }
+
 
 
 		#endregion Methods 

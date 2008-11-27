@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,30 +25,23 @@ namespace FFTPatcher.Editors
 {
     public partial class CommonAbilitiesEditor : BaseEditor
     {
+		#region Instance Variables (5) 
 
-		#regionÂ StaticÂ FieldsÂ (2)Â 
-
+        private Ability ability;
         private static readonly string[] AIPropertyNames = new string[] {
             "AIHP", "AIMP", "AICancelStatus", "AIAddStatus", "AIStats", "AIUnequip", "AITargetEnemies", "AITargetAllies",
             "AIIgnoreRange", "AIReflectable", "AIUndeadReverse", "AIUnknown1", "AIRandomHits", "AIUnknown2", "AIUnknown3", "AISilence",
             "AIBlank", "AIDirectAttack", "AILineAttack", "AIVerticalIncrease", "AITripleAttack", "AITripleBracelet", "AIMagicDefenseUp", "AIDefenseUp" };
+        bool ignoreChanges = false;
+        private Context ourContext = Context.Default;
         private static readonly string[] PropertiesNames = new string[] { 
             "LearnWithJP", "Action", "LearnOnHit", "Blank1", 
             "Unknown1", "Unknown2", "Unknown3", "Blank2", 
             "Blank3", "Blank4", "Blank5", "Unknown4" };
 
-		#endregionÂ StaticÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ FieldsÂ (3)Â 
-
-        private Ability ability;
-        bool ignoreChanges = false;
-        private Context ourContext = Context.Default;
-
-		#endregionÂ FieldsÂ 
-
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public Ability Ability
         {
@@ -63,10 +56,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public CommonAbilitiesEditor()
         {
@@ -103,10 +95,9 @@ namespace FFTPatcher.Editors
             aiCheckedListBox.ItemCheck += CheckedListBox_ItemCheck;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (4)Â 
-
+		#region Private Methods (4) 
 
         private void CheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
@@ -167,8 +158,6 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

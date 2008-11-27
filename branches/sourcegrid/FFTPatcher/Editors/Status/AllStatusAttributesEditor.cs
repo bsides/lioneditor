@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,8 +25,7 @@ namespace FFTPatcher.Editors
 {
     public partial class AllStatusAttributesEditor : UserControl
     {
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllStatusAttributesEditor()
         {
@@ -34,10 +33,22 @@ namespace FFTPatcher.Editors
             statusAttributeEditor.DataChanged += new EventHandler( statusAttributeEditor_DataChanged );
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (3)Â 
+		#region Public Methods (1) 
 
+        public void UpdateView( AllStatusAttributes attributes )
+        {
+            listBox.SelectedIndexChanged -= listBox_SelectedIndexChanged;
+            listBox.DataSource = attributes.StatusAttributes;
+            listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
+            listBox.SelectedIndex = 0;
+            statusAttributeEditor.StatusAttribute = listBox.SelectedItem as StatusAttribute;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (2) 
 
         private void listBox_SelectedIndexChanged( object sender, EventArgs e )
         {
@@ -51,17 +62,6 @@ namespace FFTPatcher.Editors
             cm.Refresh();
         }
 
-        public void UpdateView( AllStatusAttributes attributes )
-        {
-            listBox.SelectedIndexChanged -= listBox_SelectedIndexChanged;
-            listBox.DataSource = attributes.StatusAttributes;
-            listBox.SelectedIndexChanged += listBox_SelectedIndexChanged;
-            listBox.SelectedIndex = 0;
-            statusAttributeEditor.StatusAttribute = listBox.SelectedItem as StatusAttribute;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

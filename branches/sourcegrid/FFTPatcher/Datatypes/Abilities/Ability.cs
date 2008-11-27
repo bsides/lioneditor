@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -51,17 +51,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Ability : IChangeable, IXmlDigest, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        private static readonly string[] digestableProperties = new string[] {
-            "JPCost", "LearnRate", "AbilityType", "LearnWithJP", "Action",
-            "LearnOnHit", "Blank1", "Unknown1", "Unknown2", "Unknown3",
-            "Blank2", "Blank3", "Blank4", "Blank5", "Unknown4"};
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (12)
+		#region Instance Variables (13) 
 
         private bool action;
         private bool blank1;
@@ -69,6 +59,10 @@ namespace FFTPatcher.Datatypes
         private bool blank3;
         private bool blank4;
         private bool blank5;
+        private static readonly string[] digestableProperties = new string[] {
+            "JPCost", "LearnRate", "AbilityType", "LearnWithJP", "Action",
+            "LearnOnHit", "Blank1", "Unknown1", "Unknown2", "Unknown3",
+            "Blank2", "Blank3", "Blank4", "Blank5", "Unknown4"};
         private bool learnOnHit;
         private bool learnWithJP;
         private bool unknown1;
@@ -76,10 +70,9 @@ namespace FFTPatcher.Datatypes
         private bool unknown3;
         private bool unknown4;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (63)
-
+		#region Public Properties (63) 
 
         public AbilityType AbilityType { get; set; }
 
@@ -275,10 +268,15 @@ namespace FFTPatcher.Datatypes
 
         public bool Unknown4 { get { return unknown4; } set { unknown4 = value; } }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
+		#region Constructors (4) 
 
-        #regionÂ ConstructorsÂ (4)
+        public Ability( string name, UInt16 offset )
+        {
+            Name = name;
+            Offset = offset;
+        }
 
         private Ability( string name, UInt16 offset, IList<byte> first )
         {
@@ -298,98 +296,6 @@ namespace FFTPatcher.Datatypes
 
             Utilities.CopyByteToBooleans( first[7],
                 ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
-        }
-
-        public static void CopyCommon( Ability source, Ability destination )
-        {
-            destination.JPCost = source.JPCost;
-            destination.LearnRate = source.LearnRate;
-            destination.LearnWithJP = source.LearnWithJP;
-            destination.Action = source.Action;
-            destination.LearnOnHit = source.LearnOnHit;
-            destination.Blank1 = source.Blank1;
-            destination.AbilityType = source.AbilityType;
-            destination.Unknown1 = source.Unknown1;
-            destination.Unknown2 = source.Unknown2;
-            destination.Unknown3 = source.Unknown3;
-            destination.Unknown4 = source.Unknown4;
-            destination.Blank2 = source.Blank2;
-            destination.Blank3 = source.Blank3;
-            destination.Blank4 = source.Blank4;
-            destination.Blank5 = source.Blank5;
-            source.AIFlags.CopyTo( destination.AIFlags );
-        }
-
-        public void CopyCommonTo( Ability destination )
-        {
-            CopyCommon( this, destination );
-        }
-
-        public void CopyAllTo( Ability destination )
-        {
-            CopyAll( this, destination );
-        }
-
-        public void CopySpecificTo( Ability destination )
-        {
-            CopySpecific( this, destination );
-        }
-
-        public static void CopyAll( Ability source, Ability destination )
-        {
-            CopySpecific( source, destination );
-            CopyCommon( source, destination );
-        }
-
-        public static void CopySpecific( Ability source, Ability destination )
-        {
-            if( (source.IsNormal ^ destination.IsNormal) ||
-                (source.IsItem ^ destination.IsItem) ||
-                (source.IsThrowing ^ destination.IsThrowing) ||
-                (source.IsJumping ^ destination.IsJumping) ||
-                (source.IsCharging ^ destination.IsCharging) ||
-                (source.IsArithmetick ^ destination.IsArithmetick) ||
-                (source.IsOther ^ destination.IsOther) )
-            {
-                throw new InvalidOperationException( "Cannot convert between ability types" );
-            }
-            if( destination.IsNormal )
-            {
-                source.Attributes.CopyTo( destination.Attributes );
-                destination.Effect = source.Effect;
-            }
-            if( destination.IsItem )
-            {
-                destination.ItemOffset = source.ItemOffset;
-            }
-            if( destination.IsThrowing )
-            {
-                destination.Throwing = source.Throwing;
-            }
-            if( destination.IsJumping )
-            {
-                destination.JumpHorizontal = source.JumpHorizontal;
-                destination.JumpVertical = source.JumpVertical;
-            }
-            if( destination.IsCharging )
-            {
-                destination.ChargeCT = source.ChargeCT;
-                destination.ChargeBonus = source.ChargeBonus;
-            }
-            if( destination.IsArithmetick )
-            {
-                destination.ArithmetickSkill = source.ArithmetickSkill;
-            }
-            if( destination.IsOther )
-            {
-                destination.OtherID = source.OtherID;
-            }
-        }
-
-        public Ability( string name, UInt16 offset )
-        {
-            Name = name;
-            Offset = offset;
         }
 
         public Ability( string name, UInt16 offset, IList<byte> first, IList<byte> second )
@@ -446,9 +352,95 @@ namespace FFTPatcher.Datatypes
             AIFlags.Default = Default.AIFlags;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (7)
+		#region Public Methods (13) 
+
+        public static void CopyAll( Ability source, Ability destination )
+        {
+            CopySpecific( source, destination );
+            CopyCommon( source, destination );
+        }
+
+        public void CopyAllTo( Ability destination )
+        {
+            CopyAll( this, destination );
+        }
+
+        public static void CopyCommon( Ability source, Ability destination )
+        {
+            destination.JPCost = source.JPCost;
+            destination.LearnRate = source.LearnRate;
+            destination.LearnWithJP = source.LearnWithJP;
+            destination.Action = source.Action;
+            destination.LearnOnHit = source.LearnOnHit;
+            destination.Blank1 = source.Blank1;
+            destination.AbilityType = source.AbilityType;
+            destination.Unknown1 = source.Unknown1;
+            destination.Unknown2 = source.Unknown2;
+            destination.Unknown3 = source.Unknown3;
+            destination.Unknown4 = source.Unknown4;
+            destination.Blank2 = source.Blank2;
+            destination.Blank3 = source.Blank3;
+            destination.Blank4 = source.Blank4;
+            destination.Blank5 = source.Blank5;
+            source.AIFlags.CopyTo( destination.AIFlags );
+        }
+
+        public void CopyCommonTo( Ability destination )
+        {
+            CopyCommon( this, destination );
+        }
+
+        public static void CopySpecific( Ability source, Ability destination )
+        {
+            if( (source.IsNormal ^ destination.IsNormal) ||
+                (source.IsItem ^ destination.IsItem) ||
+                (source.IsThrowing ^ destination.IsThrowing) ||
+                (source.IsJumping ^ destination.IsJumping) ||
+                (source.IsCharging ^ destination.IsCharging) ||
+                (source.IsArithmetick ^ destination.IsArithmetick) ||
+                (source.IsOther ^ destination.IsOther) )
+            {
+                throw new InvalidOperationException( "Cannot convert between ability types" );
+            }
+            if( destination.IsNormal )
+            {
+                source.Attributes.CopyTo( destination.Attributes );
+                destination.Effect = source.Effect;
+            }
+            if( destination.IsItem )
+            {
+                destination.ItemOffset = source.ItemOffset;
+            }
+            if( destination.IsThrowing )
+            {
+                destination.Throwing = source.Throwing;
+            }
+            if( destination.IsJumping )
+            {
+                destination.JumpHorizontal = source.JumpHorizontal;
+                destination.JumpVertical = source.JumpVertical;
+            }
+            if( destination.IsCharging )
+            {
+                destination.ChargeCT = source.ChargeCT;
+                destination.ChargeBonus = source.ChargeBonus;
+            }
+            if( destination.IsArithmetick )
+            {
+                destination.ArithmetickSkill = source.ArithmetickSkill;
+            }
+            if( destination.IsOther )
+            {
+                destination.OtherID = source.OtherID;
+            }
+        }
+
+        public void CopySpecificTo( Ability destination )
+        {
+            CopySpecific( this, destination );
+        }
 
         public bool[] PropertiesToBoolArray()
         {
@@ -512,6 +504,11 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
+        public override string ToString()
+        {
+            return (HasChanged ? "*" : "") + Name;
+        }
+
         public void WriteXml( XmlWriter writer )
         {
             if( HasChanged )
@@ -573,15 +570,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-
-        public override string ToString()
-        {
-            return (HasChanged ? "*" : "") + Name;
-        }
-
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 }

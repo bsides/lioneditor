@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,28 +24,19 @@ namespace FFTPatcher.Datatypes
 {
     public class Effect
     {
+		#region Public Properties (4) 
 
-		#regionÂ StaticÂ PropertiesÂ (2)Â 
-
+        public string Name { get; private set; }
 
         public static Dictionary<UInt16, Effect> PSPEffects { get; private set; }
 
         public static Dictionary<UInt16, Effect> PSXEffects { get; private set; }
 
-
-		#endregionÂ StaticÂ PropertiesÂ 
-
-		#regionÂ PropertiesÂ (2)Â 
-
-
-        public string Name { get; private set; }
-
         public UInt16 Value { get; private set; }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (2)Â 
+		#region Constructors (2) 
 
         static Effect()
         {
@@ -68,18 +59,15 @@ namespace FFTPatcher.Datatypes
             Name = name;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (1)Â 
-
+		#region Public Methods (1) 
 
         public override string ToString()
         {
             return string.Format( "{0:X3} {1}", Value, Name );
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Public Methods 
     }
 }

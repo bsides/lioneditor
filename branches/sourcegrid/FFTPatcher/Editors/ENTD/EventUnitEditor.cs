@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,9 +27,11 @@ namespace FFTPatcher.Editors
 {
     public partial class EventUnitEditor : BaseEditor
     {
+		#region Instance Variables (8) 
 
-        #regionÂ StaticÂ FieldsÂ (3)
-
+        private ComboBoxWithDefault[] comboBoxes;
+        private EventUnit eventUnit = null;
+        private bool ignoreChanges = false;
         private static readonly string[] levelStrings = new string[] { 
             "Party level", 
             "1", "2", "3", "4", "5", "6", "7", "8", "9", 
@@ -56,6 +58,8 @@ namespace FFTPatcher.Editors
 
             "Party level - Random"
         };
+        private Context ourContext = Context.Default;
+        private NumericUpDownWithDefault[] spinners;
         private static readonly string[] zeroTo100 = new string[] {
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
             "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", 
@@ -74,20 +78,9 @@ namespace FFTPatcher.Editors
             "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", 
             "30", "31", "Random" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ FieldsÂ (5)
-
-        private ComboBoxWithDefault[] comboBoxes;
-        private EventUnit eventUnit = null;
-        private bool ignoreChanges = false;
-        private Context ourContext = Context.Default;
-        private NumericUpDownWithDefault[] spinners;
-
-        #endregionÂ Fields
-
-        #regionÂ PropertiesÂ (1)
-
+		#region Public Properties (1) 
 
         public EventUnit EventUnit
         {
@@ -108,10 +101,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public EventUnitEditor()
         {
@@ -145,18 +137,67 @@ namespace FFTPatcher.Editors
             upperLevelCheckBox.CheckedChanged += upperLevelCheckBox_CheckedChanged;
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (9)
+		#region Public Methods (1) 
 
-        private void upperLevelCheckBox_CheckedChanged( object sender, EventArgs e )
+        public void UpdateView()
         {
-            if( !ignoreChanges )
+            ignoreChanges = true;
+
+            if( ourContext != FFTPatch.Context )
             {
-                eventUnit.UpperLevel = upperLevelCheckBox.Checked;
-                OnDataChanged( this, EventArgs.Empty );
+                ourContext = FFTPatch.Context;
+                UpdateDataSources();
             }
+
+            if( eventUnit.Default != null )
+            {
+                foreach( NumericUpDownWithDefault spinner in spinners )
+                {
+                    spinner.SetValueAndDefault(
+                        ReflectionHelpers.GetFieldOrProperty<byte>( eventUnit, spinner.Tag.ToString() ),
+                        ReflectionHelpers.GetFieldOrProperty<byte>( eventUnit.Default, spinner.Tag.ToString() ) );
+                }
+
+                foreach( ComboBoxWithDefault comboBox in comboBoxes )
+                {
+                    comboBox.SetValueAndDefault(
+                        ReflectionHelpers.GetFieldOrProperty<object>( eventUnit, comboBox.Tag.ToString() ),
+                        ReflectionHelpers.GetFieldOrProperty<object>( eventUnit.Default, comboBox.Tag.ToString() ) );
+                }
+
+                flags1CheckedListBox.SetValuesAndDefaults(
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags1FieldNames ),
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags1FieldNames ) );
+
+                flags2CheckedListBox.SetValuesAndDefaults(
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags2FieldNames ),
+                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags2FieldNames ) );
+                teamColorComboBox.SetValueAndDefault(
+                    eventUnit.TeamColor,
+                    eventUnit.Default.TeamColor );
+                faithComboBox.SetValueAndDefault(
+                    eventUnit.Faith == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Faith],
+                    eventUnit.Default.Faith == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Default.Faith] );
+                braveryComboBox.SetValueAndDefault(
+                    eventUnit.Bravery == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Bravery],
+                    eventUnit.Default.Bravery == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Default.Bravery] );
+                dayComboBox.SetValueAndDefault(
+                    eventUnit.Day == 254 ? zeroTo31[32] : zeroTo31[eventUnit.Day],
+                    eventUnit.Default.Day == 254 ? zeroTo31[32] : zeroTo31[eventUnit.Default.Day] );
+                levelComboBox.SetValueAndDefault(
+                    eventUnit.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Level],
+                    eventUnit.Default.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Default.Level] );
+
+                upperLevelCheckBox.Checked = eventUnit.UpperLevel;
+            }
+            ignoreChanges = false;
         }
+
+		#endregion Public Methods 
+
+		#region Private Methods (8) 
 
         private void comboBox_SelectedIndexChanged( object sender, System.EventArgs e )
         {
@@ -235,56 +276,13 @@ namespace FFTPatcher.Editors
             preRequisiteJobComboBox.DataSource = Enum.GetValues( typeof( PreRequisiteJob ) );
         }
 
-        public void UpdateView()
+        private void upperLevelCheckBox_CheckedChanged( object sender, EventArgs e )
         {
-            ignoreChanges = true;
-
-            if( ourContext != FFTPatch.Context )
+            if( !ignoreChanges )
             {
-                ourContext = FFTPatch.Context;
-                UpdateDataSources();
+                eventUnit.UpperLevel = upperLevelCheckBox.Checked;
+                OnDataChanged( this, EventArgs.Empty );
             }
-
-            if( eventUnit.Default != null )
-            {
-                foreach( NumericUpDownWithDefault spinner in spinners )
-                {
-                    spinner.SetValueAndDefault(
-                        ReflectionHelpers.GetFieldOrProperty<byte>( eventUnit, spinner.Tag.ToString() ),
-                        ReflectionHelpers.GetFieldOrProperty<byte>( eventUnit.Default, spinner.Tag.ToString() ) );
-                }
-
-                foreach( ComboBoxWithDefault comboBox in comboBoxes )
-                {
-                    comboBox.SetValueAndDefault(
-                        ReflectionHelpers.GetFieldOrProperty<object>( eventUnit, comboBox.Tag.ToString() ),
-                        ReflectionHelpers.GetFieldOrProperty<object>( eventUnit.Default, comboBox.Tag.ToString() ) );
-                }
-
-                flags1CheckedListBox.SetValuesAndDefaults(
-                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags1FieldNames ),
-                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags1FieldNames ) );
-
-                flags2CheckedListBox.SetValuesAndDefaults(
-                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit, EventUnit.Flags2FieldNames ),
-                    ReflectionHelpers.GetFieldsOrProperties<bool>( eventUnit.Default, EventUnit.Flags2FieldNames ) );
-                teamColorComboBox.SetValueAndDefault(
-                    eventUnit.TeamColor,
-                    eventUnit.Default.TeamColor );
-                faithComboBox.SetValueAndDefault(
-                    eventUnit.Faith == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Faith],
-                    eventUnit.Default.Faith == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Default.Faith] );
-                braveryComboBox.SetValueAndDefault(
-                    eventUnit.Bravery == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Bravery],
-                    eventUnit.Default.Bravery == 254 ? zeroTo100[101] : zeroTo100[eventUnit.Default.Bravery] );
-                dayComboBox.SetValueAndDefault(
-                    eventUnit.Day == 254 ? zeroTo31[32] : zeroTo31[eventUnit.Day],
-                    eventUnit.Default.Day == 254 ? zeroTo31[32] : zeroTo31[eventUnit.Default.Day] );
-                levelComboBox.SetValueAndDefault(
-                    eventUnit.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Level],
-                    eventUnit.Default.Level == 254 ? levelStrings[200] : levelStrings[eventUnit.Default.Level] );
-            }
-            ignoreChanges = false;
         }
 
         private void zeroTo31ComboBox_SelectedIndexChanged( object sender, EventArgs e )
@@ -313,8 +311,6 @@ namespace FFTPatcher.Editors
             }
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Private Methods 
     }
 }

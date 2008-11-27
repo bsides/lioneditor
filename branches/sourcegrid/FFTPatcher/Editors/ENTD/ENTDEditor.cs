@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,8 +24,19 @@ namespace FFTPatcher.Editors
 {
     public partial class ENTDEditor : UserControl
     {
+		#region Instance Variables (1) 
 
-		#regionÂ ConstructorsÂ (1)Â 
+        private Context ourContext = Context.Default;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
+
+        public Event ClipBoardEvent { get; private set; }
+
+		#endregion Public Properties 
+
+		#region Constructors (1) 
 
         public ENTDEditor()
         {
@@ -37,50 +48,10 @@ namespace FFTPatcher.Editors
             eventListBox.MouseDown += new MouseEventHandler( eventListBox_MouseDown );
         }
 
-        private void eventListBox_MouseDown( object sender, MouseEventArgs e )
-        {
-            if( e.Button == MouseButtons.Right )
-            {
-                eventListBox.SelectedIndex = eventListBox.IndexFromPoint( e.Location );
-            }
-        }
+		#endregion Constructors 
 
-		#endregionÂ ConstructorsÂ 
+		#region Public Methods (1) 
 
-		#regionÂ MethodsÂ (3)Â 
-
-        public Event ClipBoardEvent { get; private set; }
-
-        private void CopyClickEventHandler( object sender, System.EventArgs args )
-        {
-            eventListBox.ContextMenu.MenuItems[1].Enabled = true;
-            ClipBoardEvent = eventListBox.SelectedItem as Event;
-        }
-
-        private void PasteClickEventHandler( object sender, System.EventArgs args )
-        {
-            if( ClipBoardEvent != null )
-            {
-                ClipBoardEvent.CopyTo( eventListBox.SelectedItem as Event );
-                eventEditor1.Event = eventListBox.SelectedItem as Event;
-                eventEditor1.UpdateView();
-                eventEditor1_DataChanged( eventEditor1, System.EventArgs.Empty );
-            }
-        }
-
-
-        private void eventEditor1_DataChanged( object sender, System.EventArgs e )
-        {
-            CurrencyManager cm = (CurrencyManager)BindingContext[eventListBox.DataSource];
-            cm.Refresh();
-        }
-
-        private void eventListBox_SelectedIndexChanged( object sender, System.EventArgs e )
-        {
-            eventEditor1.Event = eventListBox.SelectedItem as Event;
-        }
-
-        private Context ourContext = Context.Default;
         public void UpdateView( AllENTDs entds )
         {
             if( ourContext != FFTPatch.Context )
@@ -97,8 +68,46 @@ namespace FFTPatcher.Editors
             eventListBox.SelectedIndexChanged += eventListBox_SelectedIndexChanged;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (5) 
 
+        private void CopyClickEventHandler( object sender, System.EventArgs args )
+        {
+            eventListBox.ContextMenu.MenuItems[1].Enabled = true;
+            ClipBoardEvent = eventListBox.SelectedItem as Event;
+        }
+
+        private void eventEditor1_DataChanged( object sender, System.EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[eventListBox.DataSource];
+            cm.Refresh();
+        }
+
+        private void eventListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                eventListBox.SelectedIndex = eventListBox.IndexFromPoint( e.Location );
+            }
+        }
+
+        private void eventListBox_SelectedIndexChanged( object sender, System.EventArgs e )
+        {
+            eventEditor1.Event = eventListBox.SelectedItem as Event;
+        }
+
+        private void PasteClickEventHandler( object sender, System.EventArgs args )
+        {
+            if( ClipBoardEvent != null )
+            {
+                ClipBoardEvent.CopyTo( eventListBox.SelectedItem as Event );
+                eventEditor1.Event = eventListBox.SelectedItem as Event;
+                eventEditor1.UpdateView();
+                eventEditor1_DataChanged( eventEditor1, System.EventArgs.Empty );
+            }
+        }
+
+		#endregion Private Methods 
     }
 }

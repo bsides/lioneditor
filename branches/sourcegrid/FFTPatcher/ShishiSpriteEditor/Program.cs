@@ -25,6 +25,7 @@ namespace FFTPatcher.SpriteEditor
     static class Program
     {
 
+
 		#region Methods (1) 
 
 
@@ -34,7 +35,6 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
-            new OPNBK( Properties.Resources.OPNBK );
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
             Application.Run( new MainForm() );

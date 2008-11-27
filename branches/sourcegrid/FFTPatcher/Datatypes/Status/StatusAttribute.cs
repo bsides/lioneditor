@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,20 +26,14 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class StatusAttribute : ISupportDigest
     {
+		#region Instance Variables (17) 
 
-        #regionÂ StaticÂ FieldsÂ (1)
-
+        public bool Blank;
+        public bool CanReact;
         private static readonly string[] digestableProperties = new string[] {
             "Blank1", "Blank2", "Order", "CT", "FreezeCT", "Unknown1", "Unknown2", "Unknown3", "Unknown4",
             "Unknown5", "Unknown6", "KO", "CanReact", "Blank", "IgnoreAttack", "Unknown7", "Unknown8",
             "Unknown9", "Unknown10", "Unknown11", "Cancels", "CantStackOn" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (16)
-
-        public bool Blank;
-        public bool CanReact;
         public bool FreezeCT;
         public bool IgnoreAttack;
         public bool KO;
@@ -55,10 +49,9 @@ namespace FFTPatcher.Datatypes
         public bool Unknown8;
         public bool Unknown9;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (11)
-
+		#region Public Properties (11) 
 
         [Hex]
         public byte Blank1 { get; set; }
@@ -116,10 +109,9 @@ namespace FFTPatcher.Datatypes
 
         public byte Value { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public StatusAttribute( string name, byte value, IList<byte> bytes )
             : this( name, value, bytes, null )
@@ -143,6 +135,10 @@ namespace FFTPatcher.Datatypes
             Cancels = new Statuses( bytes.Sub( 6, 10 ), defaults == null ? null : defaults.Cancels );
             CantStackOn = new Statuses( bytes.Sub( 11, 15 ), defaults == null ? null : defaults.CantStackOn );
         }
+
+		#endregion Constructors 
+
+		#region Public Methods (5) 
 
         public static void Copy( StatusAttribute source, StatusAttribute destination )
         {
@@ -175,11 +171,6 @@ namespace FFTPatcher.Datatypes
             Copy( this, destination );
         }
 
-        #endregionÂ Constructors
-
-        #regionÂ MethodsÂ (3)
-
-
         public bool[] ToBoolArray()
         {
             return new bool[16] {
@@ -202,23 +193,17 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-
-
         public override string ToString()
         {
             return (HasChanged ? "*" : "") + Name;
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
     public class AllStatusAttributes : PatchableFile, IXmlDigest
     {
-
-        #regionÂ PropertiesÂ (2)
-
+		#region Public Properties (2) 
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -240,10 +225,9 @@ namespace FFTPatcher.Datatypes
 
         public StatusAttribute[] StatusAttributes { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public AllStatusAttributes( IList<byte> bytes )
         {
@@ -259,10 +243,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (5)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
@@ -274,6 +257,24 @@ namespace FFTPatcher.Datatypes
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x565E4, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276DA4, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276DA4, bytes ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -313,26 +314,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
-
-        public override IList<PatchedByteArray> GetPatches( Context context )
-        {
-            var result = new List<PatchedByteArray>( 2 );
-
-            var bytes = ToByteArray( context );
-            if ( context == Context.US_PSX )
-            {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x565E4, bytes ) );
-            }
-            else if ( context == Context.US_PSP )
-            {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276DA4, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276DA4, bytes ) );
-            }
-
-            return result;
-        }
+		#endregion Public Methods 
     }
 }

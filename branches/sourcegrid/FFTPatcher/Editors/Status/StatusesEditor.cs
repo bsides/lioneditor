@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -24,17 +24,15 @@ namespace FFTPatcher.Editors
 {
     public partial class StatusesEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (3)Â 
+		#region Instance Variables (3) 
 
         private bool ignoreChanges = false;
         private Context ourContext = Context.Default;
         private Statuses statuses;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (2)Â 
-
+		#region Public Properties (2) 
 
         public string Status { get { return statusGroupBox.Text; } set { statusGroupBox.Text = value; } }
 
@@ -57,10 +55,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public StatusesEditor()
         {
@@ -68,10 +65,9 @@ namespace FFTPatcher.Editors
             statusesCheckedListBox.ItemCheck += statusesCheckedListBox_ItemCheck;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (2)Â 
-
+		#region Private Methods (2) 
 
         private void statusesCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
@@ -106,8 +102,6 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

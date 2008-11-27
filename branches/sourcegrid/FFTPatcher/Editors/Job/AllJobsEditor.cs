@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,8 +25,14 @@ namespace FFTPatcher.Editors
 {
     public partial class AllJobsEditor : UserControl
     {
+		#region Instance Variables (2) 
 
-		#regionÂ ConstructorsÂ (1)Â 
+        private Job cbJob = null;
+        private Context ourContext = Context.Default;
+
+		#endregion Instance Variables 
+
+		#region Constructors (1) 
 
         public AllJobsEditor()
         {
@@ -40,45 +46,37 @@ namespace FFTPatcher.Editors
             jobsListBox.MouseDown += new MouseEventHandler( jobsListBox_MouseDown );
         }
 
-        void jobsListBox_MouseDown( object sender, MouseEventArgs e )
+		#endregion Constructors 
+
+		#region Public Methods (1) 
+
+        public void UpdateView( AllJobs jobs )
         {
-            if( e.Button == MouseButtons.Right )
+            if( FFTPatch.Context != ourContext )
             {
-                jobsListBox.SelectedIndex = jobsListBox.IndexFromPoint( e.Location );
+                ourContext = FFTPatch.Context;
+                cbJob = null;
             }
+            jobsListBox.SelectedIndexChanged -= jobsListBox_SelectedIndexChanged;
+            jobsListBox.DataSource = jobs.Jobs;
+            jobsListBox.SelectedIndexChanged += jobsListBox_SelectedIndexChanged;
+            jobsListBox.SelectedIndex = 0;
+            jobEditor.Job = jobsListBox.SelectedItem as Job;
         }
 
-        private Job cbJob = null;
-        void ContextMenu_Popup( object sender, EventArgs e )
-        {
-            jobsListBox.ContextMenu.MenuItems[1].Enabled = cbJob != null;
-        }
+		#endregion Public Methods 
+
+		#region Private Methods (7) 
 
         private void CloneClick( object sender, EventArgs args )
         {
             cbJob = jobsListBox.SelectedItem as Job;
         }
 
-        private void PasteClick( object sender, EventArgs args )
+        void ContextMenu_Popup( object sender, EventArgs e )
         {
-            if( cbJob != null )
-            {
-                cbJob.CopyTo( jobsListBox.SelectedItem as Job );
-                jobEditor.UpdateView();
-                jobEditor_DataChanged( jobEditor, EventArgs.Empty );
-            }
+            jobsListBox.ContextMenu.MenuItems[1].Enabled = cbJob != null;
         }
-
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ EventsÂ (1)Â 
-
-        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
-
-		#endregionÂ EventsÂ 
-
-		#regionÂ MethodsÂ (4)Â 
-
 
         private void jobEditor_DataChanged( object sender, EventArgs e )
         {
@@ -94,29 +92,32 @@ namespace FFTPatcher.Editors
             }
         }
 
+        void jobsListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                jobsListBox.SelectedIndex = jobsListBox.IndexFromPoint( e.Location );
+            }
+        }
+
         private void jobsListBox_SelectedIndexChanged( object sender, EventArgs e )
         {
             Job j = jobsListBox.SelectedItem as Job;
             jobEditor.Job = j;
         }
 
-        private Context ourContext = Context.Default;
-        public void UpdateView( AllJobs jobs )
+        private void PasteClick( object sender, EventArgs args )
         {
-            if( FFTPatch.Context != ourContext )
+            if( cbJob != null )
             {
-                ourContext = FFTPatch.Context;
-                cbJob = null;
+                cbJob.CopyTo( jobsListBox.SelectedItem as Job );
+                jobEditor.UpdateView();
+                jobEditor_DataChanged( jobEditor, EventArgs.Empty );
             }
-            jobsListBox.SelectedIndexChanged -= jobsListBox_SelectedIndexChanged;
-            jobsListBox.DataSource = jobs.Jobs;
-            jobsListBox.SelectedIndexChanged += jobsListBox_SelectedIndexChanged;
-            jobsListBox.SelectedIndex = 0;
-            jobEditor.Job = jobsListBox.SelectedItem as Job;
         }
 
+		#endregion Private Methods 
 
-		#endregionÂ MethodsÂ 
-
+        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
     }
 }

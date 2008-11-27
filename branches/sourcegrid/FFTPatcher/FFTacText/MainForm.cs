@@ -143,7 +143,7 @@ namespace FFTPatcher.TextEditor
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
             using( About a = new About() )
-                a.ShowDialog();
+                a.ShowDialog( this );
         }
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -312,6 +312,7 @@ namespace FFTPatcher.TextEditor
                     using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
                     {
                         File = xs.Deserialize( stream ) as FFTText;
+                        File.UpgradeStrings();
                     }
                 }
                 catch( Exception )

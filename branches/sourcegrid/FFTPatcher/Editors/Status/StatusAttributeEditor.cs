@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,25 +26,18 @@ namespace FFTPatcher.Editors
 {
     public partial class StatusAttributeEditor : BaseEditor
     {
+		#region Instance Variables (4) 
 
-		#regionÂ StaticÂ FieldsÂ (1)Â 
-
+        private bool ignoreChanges = false;
         private static readonly string[] PropertyNames = new string[] {
             "FreezeCT", "Unknown1", "Unknown2", "Unknown3", "Unknown4", "Unknown5", "Unknown6", "KO",
             "CanReact", "Blank", "IgnoreAttack", "Unknown7", "Unknown8", "Unknown9", "Unknown10", "Unknown11" };
-
-		#endregionÂ StaticÂ FieldsÂ 
-
-		#regionÂ FieldsÂ (3)Â 
-
-        private bool ignoreChanges = false;
         private NumericUpDownWithDefault[] spinners;
         private StatusAttribute statusAttribute;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public StatusAttribute StatusAttribute
         {
@@ -65,10 +58,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public StatusAttributeEditor()
         {
@@ -84,10 +76,9 @@ namespace FFTPatcher.Editors
             cancelStatusesEditor.DataChanged += OnDataChanged;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (3)Â 
-
+		#region Private Methods (3) 
 
         private void checkedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
         {
@@ -130,8 +121,6 @@ namespace FFTPatcher.Editors
             this.ignoreChanges = false;
         }
 
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

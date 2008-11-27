@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -36,9 +36,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Glyph : IChangeable
     {
-
-		#regionÂ PropertiesÂ (3)Â 
-
+		#region Public Properties (3) 
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -53,10 +51,9 @@ namespace FFTPatcher.Datatypes
 
         public byte Width { get; set; }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public Glyph( byte width, IList<byte> bytes )
         {
@@ -68,10 +65,24 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ MethodsÂ (3)Â 
+		#region Public Methods (1) 
 
+        public byte[] ToByteArray()
+        {
+            byte[] result = new byte[35];
+            for( int i = 0; i < 35; i++ )
+            {
+                result[i] = CopyPixelsToByte( Pixels, i * 4 );
+            }
+
+            return result;
+        }
+
+		#endregion Public Methods 
+
+		#region Private Methods (2) 
 
         private void CopyByteToPixels( byte b, FontColor[] destination, int index )
         {
@@ -91,19 +102,6 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        public byte[] ToByteArray()
-        {
-            byte[] result = new byte[35];
-            for( int i = 0; i < 35; i++ )
-            {
-                result[i] = CopyPixelsToByte( Pixels, i * 4 );
-            }
-
-            return result;
-        }
-
-
-		#endregionÂ MethodsÂ 
-
+		#endregion Private Methods 
     }
 }

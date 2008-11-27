@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -27,14 +27,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class Weapon : Item
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
-
-        private static readonly List<string> weaponDigestableProperties;
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (8)
+		#region Instance Variables (9) 
 
         public bool Arc;
         public bool Blank;
@@ -44,35 +37,22 @@ namespace FFTPatcher.Datatypes
         public bool Striking;
         public bool TwoHands;
         public bool TwoSwords;
+        private static readonly List<string> weaponDigestableProperties;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (10)
+		#region Public Properties (10) 
 
+        public override IList<string> DigestableProperties
+        {
+            get { return weaponDigestableProperties; }
+        }
 
         public Elements Elements { get; private set; }
 
         public byte EvadePercentage { get; set; }
 
         public AbilityFormula Formula { get; set; }
-
-        [Hex]
-        public byte InflictStatus { get; set; }
-
-        public byte Range { get; set; }
-
-        public byte Unknown { get; set; }
-
-        public Weapon WeaponDefault { get; private set; }
-
-        public byte WeaponPower { get; set; }
-
-
-
-        public override IList<string> DigestableProperties
-        {
-            get { return weaponDigestableProperties; }
-        }
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -95,10 +75,20 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        [Hex]
+        public byte InflictStatus { get; set; }
 
-        #endregionÂ Properties
+        public byte Range { get; set; }
 
-        #regionÂ ConstructorsÂ (3)
+        public byte Unknown { get; set; }
+
+        public Weapon WeaponDefault { get; private set; }
+
+        public byte WeaponPower { get; set; }
+
+		#endregion Public Properties 
+
+		#region Constructors (3) 
 
         static Weapon()
         {
@@ -133,46 +123,19 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (5)
+		#region Public Methods (9) 
 
-
-        public byte[] ToItemByteArray()
+        public static void CopyAll( Weapon source, Weapon destination )
         {
-            return base.ToByteArray().ToArray();
+            CopyWeapon( source, destination );
+            CopyCommon( source, destination );
         }
 
-        public bool[] ToWeaponBoolArray()
+        public void CopyAllTo( Weapon destination )
         {
-            return new bool[8] {
-                Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands };
-        }
-
-        public byte[] ToWeaponByteArray()
-        {
-            byte[] result = new byte[8];
-            result[0] = Range;
-            result[1] = Utilities.ByteFromBooleans( Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands );
-            result[2] = Formula.Value;
-            result[3] = Unknown;
-            result[4] = WeaponPower;
-            result[5] = EvadePercentage;
-            result[6] = Elements.ToByte();
-            result[7] = InflictStatus;
-            return result;
-        }
-
-
-
-        public override byte[] ToFirstByteArray()
-        {
-            return ToItemByteArray();
-        }
-
-        public override byte[] ToSecondByteArray()
-        {
-            return ToWeaponByteArray();
+            CopyAll( this, destination );
         }
 
         public static void CopyWeapon( Weapon source, Weapon destination )
@@ -200,18 +163,41 @@ namespace FFTPatcher.Datatypes
             CopyWeapon( this, destination );
         }
 
-        public static void CopyAll( Weapon source, Weapon destination )
+        public override byte[] ToFirstByteArray()
         {
-            CopyWeapon( source, destination );
-            CopyCommon( source, destination );
+            return ToItemByteArray();
         }
 
-        public void CopyAllTo( Weapon destination )
+        public byte[] ToItemByteArray()
         {
-            CopyAll( this, destination );
+            return base.ToByteArray().ToArray();
         }
 
-        #endregionÂ Methods
+        public override byte[] ToSecondByteArray()
+        {
+            return ToWeaponByteArray();
+        }
 
+        public bool[] ToWeaponBoolArray()
+        {
+            return new bool[8] {
+                Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands };
+        }
+
+        public byte[] ToWeaponByteArray()
+        {
+            byte[] result = new byte[8];
+            result[0] = Range;
+            result[1] = Utilities.ByteFromBooleans( Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands );
+            result[2] = Formula.Value;
+            result[3] = Unknown;
+            result[4] = WeaponPower;
+            result[5] = EvadePercentage;
+            result[6] = Elements.ToByte();
+            result[7] = InflictStatus;
+            return result;
+        }
+
+		#endregion Public Methods 
     }
 }

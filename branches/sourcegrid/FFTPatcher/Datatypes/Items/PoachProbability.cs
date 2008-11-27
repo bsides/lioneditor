@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,16 +26,14 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class PoachProbability : IChangeable, ISupportDigest
     {
-
-        #regionÂ StaticÂ FieldsÂ (1)
+		#region Instance Variables (1) 
 
         private static readonly string[] digestableProperties = new string[] {
             "Common", "Uncommon" };
 
-        #endregionÂ StaticÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (6)
-
+		#region Public Properties (6) 
 
         public Item Common { get; set; }
 
@@ -65,10 +63,9 @@ namespace FFTPatcher.Datatypes
 
         public Item Uncommon { get; set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public PoachProbability( string name, IList<byte> bytes )
             : this( name, bytes, null )
@@ -83,10 +80,9 @@ namespace FFTPatcher.Datatypes
             Uncommon = Item.GetItemAtOffset( bytes[1] );
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (1)
-
+		#region Public Methods (1) 
 
         public byte[] ToByteArray()
         {
@@ -96,16 +92,12 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-
-        #endregionÂ Methods
-
+		#endregion Public Methods 
     }
 
     public class AllPoachProbabilities : PatchableFile, IXmlDigest
     {
-
-        #regionÂ PropertiesÂ (2)
-
+		#region Public Properties (2) 
 
         /// <summary>
         /// Gets a value indicating whether this instance has changed.
@@ -127,10 +119,9 @@ namespace FFTPatcher.Datatypes
 
         public PoachProbability[] PoachProbabilities { get; private set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
         public AllPoachProbabilities( IList<byte> bytes )
         {
@@ -144,10 +135,9 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (4)
-
+		#region Public Methods (5) 
 
         public List<string> GenerateCodes()
         {
@@ -159,6 +149,24 @@ namespace FFTPatcher.Datatypes
             {
                 return Codes.GenerateCodes( Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064 );
             }
+        }
+
+        public override IList<PatchedByteArray> GetPatches( Context context )
+        {
+            var result = new List<PatchedByteArray>( 2 );
+
+            var bytes = ToByteArray( context );
+            if ( context == Context.US_PSX )
+            {
+                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x56864, bytes ) );
+            }
+            else if ( context == Context.US_PSP )
+            {
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x277024, bytes ) );
+                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x277024, bytes ) );
+            }
+
+            return result;
         }
 
         public byte[] ToByteArray()
@@ -196,25 +204,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-
-        #endregionÂ Methods
-
-        public override IList<PatchedByteArray> GetPatches( Context context )
-        {
-            var result = new List<PatchedByteArray>( 2 );
-
-            var bytes = ToByteArray( context );
-            if ( context == Context.US_PSX )
-            {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x56864, bytes ) );
-            }
-            else if ( context == Context.US_PSP )
-            {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x277024, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x277024, bytes ) );
-            }
-
-            return result;
-        }
+		#endregion Public Methods 
     }
 }

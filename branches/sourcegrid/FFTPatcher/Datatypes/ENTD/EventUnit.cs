@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -103,9 +103,13 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class EventUnit : IEquatable<EventUnit>, IChangeable, ISupportDigest
     {
+		#region Instance Variables (17) 
 
-        #regionÂ StaticÂ FieldsÂ (3)
-
+        public bool AlwaysPresent;
+        public bool Blank2;
+        public bool Blank6;
+        public bool Blank7;
+        public bool Control;
         private static readonly string[] digestableProperties = new string[] {
             "SpriteSet", "SpecialName", "Month", "Day", "Job", "Level", "Faith", "Bravery", "Palette", "UnitID",
             "X", "Y", "PrerequisiteJob", "PrerequisiteJobLevel", "FacingDirection", "UpperLevel", "TeamColor", "Target", 
@@ -114,21 +118,11 @@ namespace FFTPatcher.Datatypes
             "LoadFormation", "ZodiacMonster", "Blank2", "SaveFormation", "AlwaysPresent", "RandomlyPresent",
             "Control", "Immortal", "Blank6", "Blank7", "Unknown2", "Unknown6", "Unknown7", "Unknown8", 
             "Unknown10", "Unknown11", "Unknown12" };
+        public bool Female;
         public static readonly string[] Flags1FieldNames = new string[] { 
             "Male", "Female", "Monster", "JoinAfterEvent", "LoadFormation", "ZodiacMonster", "Blank2", "SaveFormation" };
         public static readonly string[] Flags2FieldNames = new string[] { 
             "AlwaysPresent", "RandomlyPresent", "Control", "Immortal", "Blank6", "Blank7" };
-
-        #endregionÂ StaticÂ Fields
-
-        #regionÂ FieldsÂ (14)
-
-        public bool AlwaysPresent;
-        public bool Blank2;
-        public bool Blank6;
-        public bool Blank7;
-        public bool Control;
-        public bool Female;
         public bool Immortal;
         public bool JoinAfterEvent;
         public bool LoadFormation;
@@ -138,10 +132,9 @@ namespace FFTPatcher.Datatypes
         public bool SaveFormation;
         public bool ZodiacMonster;
 
-        #endregionÂ Fields
+		#endregion Instance Variables 
 
-        #regionÂ PropertiesÂ (40)
-
+		#region Public Properties (41) 
 
         public Item Accessory { get; set; }
 
@@ -166,8 +159,6 @@ namespace FFTPatcher.Datatypes
         }
 
         public Facing FacingDirection { get; set; }
-
-        public bool UpperLevel { get; set; }
 
         public byte Faith { get; set; }
 
@@ -242,16 +233,17 @@ namespace FFTPatcher.Datatypes
         [Hex]
         public byte Unknown8 { get; set; }
 
+        public bool UpperLevel { get; set; }
+
         public Item WarTrophy { get; set; }
 
         public byte X { get; set; }
 
         public byte Y { get; set; }
 
+		#endregion Public Properties 
 
-        #endregionÂ Properties
-
-        #regionÂ ConstructorsÂ (2)
+		#region Constructors (2) 
 
         public EventUnit( IList<byte> bytes )
             : this( bytes, null )
@@ -303,66 +295,9 @@ namespace FFTPatcher.Datatypes
             Unknown12 = bytes[39];
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (3)
-
-
-        public bool Equals( EventUnit other )
-        {
-            return Utilities.CompareArrays( other.ToByteArray(), this.ToByteArray() );
-        }
-
-        public byte[] ToByteArray()
-        {
-            List<byte> result = new List<byte>( 40 );
-            result.Add( SpriteSet.ToByte() );
-            result.Add( Utilities.ByteFromBooleans( Male, Female, Monster, JoinAfterEvent, LoadFormation, ZodiacMonster, Blank2, SaveFormation ) );
-            result.Add( SpecialName.ToByte() );
-            result.Add( Level );
-            result.Add( (byte)Month );
-            result.Add( Day );
-            result.Add( Bravery );
-            result.Add( Faith );
-            result.Add( (byte)PrerequisiteJob );
-            result.Add( PrerequisiteJobLevel );
-            result.Add( Job.Value );
-            result.Add( SecondaryAction.Value );
-            result.AddRange( Reaction.Offset.ToBytes() );
-            result.AddRange( Support.Offset.ToBytes() );
-            result.AddRange( Movement.Offset.ToBytes() );
-            result.Add( (byte)(Head.Offset & 0xFF) );
-            result.Add( (byte)(Body.Offset & 0xFF) );
-            result.Add( (byte)(Accessory.Offset & 0xFF) );
-            result.Add( (byte)(RightHand.Offset & 0xFF) );
-            result.Add( (byte)(LeftHand.Offset & 0xFF) );
-            result.Add( Palette );
-            result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, (((int)TeamColor) & 0x02) == 2, (((int)TeamColor) & 0x01) == 1, Control, Immortal, Blank6, Blank7 ) );
-            result.Add( X );
-            result.Add( Y );
-            result.Add( (byte)(((byte)FacingDirection & 0x7F) | (UpperLevel ? 0x80 : 0x00)) );
-            result.Add( Unknown2 );
-            result.Add( SkillSet.Value );
-            result.Add( (byte)(WarTrophy.Offset & 0xFF) );
-            result.Add( BonusMoney );
-            result.Add( UnitID );
-            result.Add( Unknown6 );
-            result.Add( Unknown7 );
-            result.Add( Unknown8 );
-            result.Add( Target );
-            result.Add( Unknown10 );
-            result.Add( Unknown11 );
-            result.Add( Unknown12 );
-
-            return result.ToArray();
-        }
-
-
-
-        public override string ToString()
-        {
-            return Description;
-        }
+		#region Public Methods (5) 
 
         public static void Copy( EventUnit source, EventUnit destination )
         {
@@ -424,7 +359,60 @@ namespace FFTPatcher.Datatypes
             Copy( this, destination );
         }
 
-        #endregionÂ Methods
+        public bool Equals( EventUnit other )
+        {
+            return Utilities.CompareArrays( other.ToByteArray(), this.ToByteArray() );
+        }
 
+        public byte[] ToByteArray()
+        {
+            List<byte> result = new List<byte>( 40 );
+            result.Add( SpriteSet.ToByte() );
+            result.Add( Utilities.ByteFromBooleans( Male, Female, Monster, JoinAfterEvent, LoadFormation, ZodiacMonster, Blank2, SaveFormation ) );
+            result.Add( SpecialName.ToByte() );
+            result.Add( Level );
+            result.Add( (byte)Month );
+            result.Add( Day );
+            result.Add( Bravery );
+            result.Add( Faith );
+            result.Add( (byte)PrerequisiteJob );
+            result.Add( PrerequisiteJobLevel );
+            result.Add( Job.Value );
+            result.Add( SecondaryAction.Value );
+            result.AddRange( Reaction.Offset.ToBytes() );
+            result.AddRange( Support.Offset.ToBytes() );
+            result.AddRange( Movement.Offset.ToBytes() );
+            result.Add( (byte)(Head.Offset & 0xFF) );
+            result.Add( (byte)(Body.Offset & 0xFF) );
+            result.Add( (byte)(Accessory.Offset & 0xFF) );
+            result.Add( (byte)(RightHand.Offset & 0xFF) );
+            result.Add( (byte)(LeftHand.Offset & 0xFF) );
+            result.Add( Palette );
+            result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, (((int)TeamColor) & 0x02) == 2, (((int)TeamColor) & 0x01) == 1, Control, Immortal, Blank6, Blank7 ) );
+            result.Add( X );
+            result.Add( Y );
+            result.Add( (byte)(((byte)FacingDirection & 0x7F) | (UpperLevel ? 0x80 : 0x00)) );
+            result.Add( Unknown2 );
+            result.Add( SkillSet.Value );
+            result.Add( (byte)(WarTrophy.Offset & 0xFF) );
+            result.Add( BonusMoney );
+            result.Add( UnitID );
+            result.Add( Unknown6 );
+            result.Add( Unknown7 );
+            result.Add( Unknown8 );
+            result.Add( Target );
+            result.Add( Unknown10 );
+            result.Add( Unknown11 );
+            result.Add( Unknown12 );
+
+            return result.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return Description;
+        }
+
+		#endregion Public Methods 
     }
 }

@@ -20,6 +20,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
+using ICSharpCode.SharpZipLib.Core;
 
 namespace FFTPatcher
 {
@@ -28,9 +31,7 @@ namespace FFTPatcher
     /// </summary>
     public static class GZip
     {
-
-		#region Methods (2) 
-
+		#region Public Methods (5) 
 
         /// <summary>
         /// Compresses the specified bytes.
@@ -83,8 +84,45 @@ namespace FFTPatcher
             return result.ToArray();
         }
 
+        public static IDictionary<string, byte[]> UntarGz( string filename )
+        {
+            using ( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.Read ) )
+            {
+                return UntarGz( stream );
+            }
+        }
 
-		#endregion Methods 
+        public static IDictionary<string, byte[]> UntarGz( byte[] file )
+        {
+            using ( MemoryStream stream = new MemoryStream( file, false ) )
+            {
+                return UntarGz( stream );
+            }
+        }
 
+        public static IDictionary<string, byte[]> UntarGz( Stream stream )
+        {
+            var result = new Dictionary<string, byte[]>();
+            using ( GZipInputStream gzStream = new GZipInputStream( stream ) )
+            using ( TarInputStream tarStream = new TarInputStream( gzStream ) )
+            {
+                TarEntry entry;
+                entry = tarStream.GetNextEntry();
+                while ( entry != null )
+                {
+                    if ( entry.Size != 0 )
+                    {
+                        byte[] bytes = new byte[entry.Size];
+                        StreamUtils.ReadFully( tarStream, bytes );
+                        result[entry.Name] = bytes;
+                    }
+                    entry = tarStream.GetNextEntry();
+                }
+            }
+
+            return result;
+        }
+
+		#endregion Public Methods 
     }
 }

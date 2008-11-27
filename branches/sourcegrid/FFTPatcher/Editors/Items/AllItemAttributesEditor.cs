@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,16 +25,20 @@ namespace FFTPatcher.Editors
 {
     public partial class AllItemAttributesEditor : UserControl
     {
+		#region Instance Variables (2) 
 
-		#regionÂ PropertiesÂ (1)Â 
+        private ItemAttributes ClipBoardAttributes;
+        private Context ourContext = Context.Default;
 
+		#endregion Instance Variables 
+
+		#region Public Properties (1) 
 
         public int SelectedIndex { get { return offsetListBox.SelectedIndex; } set { offsetListBox.SelectedIndex = value; } }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public AllItemAttributesEditor()
         {
@@ -46,52 +50,10 @@ namespace FFTPatcher.Editors
             offsetListBox.MouseDown += new MouseEventHandler( offsetListBox_MouseDown );
         }
 
-        void offsetListBox_MouseDown( object sender, MouseEventArgs e )
-        {
-            if( e.Button == MouseButtons.Right )
-            {
-                offsetListBox.SelectedIndex = offsetListBox.IndexFromPoint( e.Location );
-            }
-        }
+		#endregion Constructors 
 
-        private ItemAttributes ClipBoardAttributes;
+		#region Public Methods (1) 
 
-		#endregionÂ ConstructorsÂ 
-
-		#regionÂ MethodsÂ (3)Â 
-
-        private void CopyClickEventHandler( object sender, System.EventArgs args )
-        {
-            offsetListBox.ContextMenu.MenuItems[1].Enabled = true;
-            ClipBoardAttributes = offsetListBox.SelectedItem as ItemAttributes;
-        }
-
-        private void PasteClickEventHandler( object sender, System.EventArgs args )
-        {
-            if ( ClipBoardAttributes != null )
-            {
-                ClipBoardAttributes.CopyTo( offsetListBox.SelectedItem as ItemAttributes );
-                itemAttributeEditor.ItemAttributes = null;
-                itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
-                itemAttributeEditor.UpdateView();
-                itemAttributeEditor_DataChanged( itemAttributeEditor, System.EventArgs.Empty );
-                itemAttributeEditor.PerformLayout();
-            }
-        }
-
-
-        private void itemAttributeEditor_DataChanged( object sender, EventArgs e )
-        {
-            CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
-            cm.Refresh();
-        }
-
-        private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
-        }
-
-        private Context ourContext = Context.Default;
         public void UpdateView( AllItemAttributes attributes )
         {
             if ( ourContext != FFTPatch.Context )
@@ -108,8 +70,48 @@ namespace FFTPatcher.Editors
             itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (5) 
 
+        private void CopyClickEventHandler( object sender, System.EventArgs args )
+        {
+            offsetListBox.ContextMenu.MenuItems[1].Enabled = true;
+            ClipBoardAttributes = offsetListBox.SelectedItem as ItemAttributes;
+        }
+
+        private void itemAttributeEditor_DataChanged( object sender, EventArgs e )
+        {
+            CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
+            cm.Refresh();
+        }
+
+        void offsetListBox_MouseDown( object sender, MouseEventArgs e )
+        {
+            if( e.Button == MouseButtons.Right )
+            {
+                offsetListBox.SelectedIndex = offsetListBox.IndexFromPoint( e.Location );
+            }
+        }
+
+        private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
+        }
+
+        private void PasteClickEventHandler( object sender, System.EventArgs args )
+        {
+            if ( ClipBoardAttributes != null )
+            {
+                ClipBoardAttributes.CopyTo( offsetListBox.SelectedItem as ItemAttributes );
+                itemAttributeEditor.ItemAttributes = null;
+                itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
+                itemAttributeEditor.UpdateView();
+                itemAttributeEditor_DataChanged( itemAttributeEditor, System.EventArgs.Empty );
+                itemAttributeEditor.PerformLayout();
+            }
+        }
+
+		#endregion Private Methods 
     }
 }

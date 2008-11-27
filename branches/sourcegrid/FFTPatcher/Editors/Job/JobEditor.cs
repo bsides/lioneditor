@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,8 +26,7 @@ namespace FFTPatcher.Editors
 {
     public partial class JobEditor : BaseEditor
     {
-
-		#regionÂ FieldsÂ (5)Â 
+		#region Instance Variables (5) 
 
         private ComboBoxWithDefault[] comboBoxes;
         private bool ignoreChanges;
@@ -35,10 +34,9 @@ namespace FFTPatcher.Editors
         private Context ourContext = Context.Default;
         private NumericUpDownWithDefault[] spinners;
 
-		#endregionÂ FieldsÂ 
+		#endregion Instance Variables 
 
-		#regionÂ PropertiesÂ (1)Â 
-
+		#region Public Properties (1) 
 
         public Job Job
         {
@@ -59,10 +57,9 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Public Properties 
 
-		#endregionÂ PropertiesÂ 
-
-		#regionÂ ConstructorsÂ (1)Â 
+		#region Constructors (1) 
 
         public JobEditor()
         {
@@ -97,44 +94,9 @@ namespace FFTPatcher.Editors
             skillSetLabel.Click += skillSetLabel_Click;
         }
 
-		#endregionÂ ConstructorsÂ 
+		#endregion Constructors 
 
-		#regionÂ EventsÂ (1)Â 
-
-        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
-
-		#endregionÂ EventsÂ 
-
-		#regionÂ MethodsÂ (4)Â 
-
-
-        private void comboBox_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
-                OnDataChanged( this, System.EventArgs.Empty );
-            }
-        }
-
-        private void skillSetLabel_Click( object sender, EventArgs e )
-        {
-            if( SkillSetClicked != null )
-            {
-                SkillSetClicked( this, new LabelClickedEventArgs( (byte)skillsetComboBox.SelectedIndex ) );
-            }
-        }
-
-        private void spinner_ValueChanged( object sender, EventArgs e )
-        {
-            if( !ignoreChanges )
-            {
-                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
-                ReflectionHelpers.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
-                OnDataChanged( this, System.EventArgs.Empty );
-            }
-        }
+		#region Public Methods (1) 
 
         public void UpdateView()
         {
@@ -196,8 +158,40 @@ namespace FFTPatcher.Editors
             this.ResumeLayout();
         }
 
+		#endregion Public Methods 
 
-		#endregionÂ MethodsÂ 
+		#region Private Methods (3) 
 
+        private void comboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                ComboBoxWithDefault c = sender as ComboBoxWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( job, c.Tag.ToString(), c.SelectedItem );
+                OnDataChanged( this, System.EventArgs.Empty );
+            }
+        }
+
+        private void skillSetLabel_Click( object sender, EventArgs e )
+        {
+            if( SkillSetClicked != null )
+            {
+                SkillSetClicked( this, new LabelClickedEventArgs( (byte)skillsetComboBox.SelectedIndex ) );
+            }
+        }
+
+        private void spinner_ValueChanged( object sender, EventArgs e )
+        {
+            if( !ignoreChanges )
+            {
+                NumericUpDownWithDefault spinner = sender as NumericUpDownWithDefault;
+                ReflectionHelpers.SetFieldOrProperty( job, spinner.Tag.ToString(), (byte)spinner.Value );
+                OnDataChanged( this, System.EventArgs.Empty );
+            }
+        }
+
+		#endregion Private Methods 
+
+        public event EventHandler<LabelClickedEventArgs> SkillSetClicked;
     }
 }

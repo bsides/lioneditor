@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -25,12 +25,20 @@ using ICSharpCode.SharpZipLib.GZip;
 using System.IO;
 using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace FFTPatcher
 {
     public static class Resources
     {
+		#region Instance Variables (1) 
+
         private static Dictionary<byte, string> abilityFormulas;
+
+		#endregion Instance Variables 
+
+		#region Public Properties (2) 
+
         public static Dictionary<byte, string> AbilityFormulas
         {
             get
@@ -52,9 +60,89 @@ namespace FFTPatcher
             }
         }
 
+        public static Dictionary<string, byte[]> ZipFileContents
+        {
+            get; private set;
+        }
 
+		#endregion Public Properties 
 
-        #regionÂ StaticÂ FieldsÂ (9)
+		#region Private Properties (1) 
+
+        private static Dictionary<string, byte[]> DefaultZipFileContents
+        {
+            get; set;
+        }
+
+		#endregion Private Properties 
+
+		#region Constructors (1) 
+
+        static Resources()
+        {
+            using( MemoryStream memStream = new MemoryStream( Properties.Resources.ZippedResources, false ) )
+            using( GZipInputStream gzStream = new GZipInputStream( memStream ) )
+            using( TarInputStream tarStream = new TarInputStream( gzStream ) )
+            {
+                DefaultZipFileContents = new Dictionary<string, byte[]>();
+                TarEntry entry;
+                entry = tarStream.GetNextEntry();
+                while( entry != null )
+                {
+                    if( entry.Size != 0 )
+                    {
+                        byte[] bytes = new byte[entry.Size];
+                        StreamUtils.ReadFully( tarStream, bytes );
+                        DefaultZipFileContents[entry.Name] = bytes;
+                    }
+                    entry = tarStream.GetNextEntry();
+                }
+            }
+
+            string defaultsFile = Path.Combine( Path.GetDirectoryName( System.Windows.Forms.Application.ExecutablePath ), "Resources.zip" );
+            if( File.Exists( defaultsFile ) )
+            {
+                try
+                {
+                    using( FileStream file = File.Open( defaultsFile, FileMode.Open, FileAccess.Read ) )
+                    using( ZipInputStream zipStream = new ZipInputStream( file ) )
+                    {
+                        ZipFileContents = new Dictionary<string, byte[]>();
+                        ZipEntry entry = zipStream.GetNextEntry();
+                        while( entry != null )
+                        {
+                            if( entry.Size != 0 )
+                            {
+                                byte[] bytes = new byte[entry.Size];
+                                StreamUtils.ReadFully( zipStream, bytes );
+                                ZipFileContents[entry.Name] = bytes;
+                            }
+                            entry = zipStream.GetNextEntry();
+                        }
+
+                        foreach( KeyValuePair<string, byte[]> kvp in DefaultZipFileContents )
+                        {
+                            if( !ZipFileContents.ContainsKey( kvp.Key ) )
+                            {
+                                ZipFileContents[kvp.Key] = kvp.Value;
+                            }
+                        }
+                    }
+                }
+                catch( Exception )
+                {
+                    ZipFileContents = DefaultZipFileContents;
+                }
+            }
+            else
+            {
+                ZipFileContents = DefaultZipFileContents;
+            }
+
+        }
+
+		#endregion Constructors 
+
 
         public static class Paths
         {
@@ -66,8 +154,12 @@ namespace FFTPatcher
             private const string ENTD4 = "ENTD4.ENT";
             private const string MoveFindBin = "MoveFind.bin";
 
+
+
             public static class PSP
             {
+
+
                 public static class Binaries
                 {
                     public const string ENTD1 = Paths.ENTD1;
@@ -93,9 +185,7 @@ namespace FFTPatcher
                     public const string PoachProbabilities = "PSP/bin/PoachProbabilities.bin";
                     public const string SkillSets = "PSP/bin/SkillSetsBin.bin";
                     public const string StatusAttributes = "PSP/bin/StatusAttributes.bin";
-                }
-
-                public const string EventNamesXML = "PSP/EventNames.xml";
+                }                public const string EventNamesXML = "PSP/EventNames.xml";
                 public const string FFTPackFilesXML = "PSP/FFTPackFiles.xml";
                 public const string JobsXML = "PSP/Jobs.xml";
                 public const string SkillSetsXML = "PSP/SkillSets.xml";
@@ -108,11 +198,12 @@ namespace FFTPatcher
                 public const string ItemAttributesXML = "PSP/Items/ItemAttributes.xml";
                 public const string ItemsXML = "PSP/Items/Items.xml";
                 public const string ItemsStringsXML = "PSP/Items/Strings.xml";
-
             }
 
             public static class PSX
             {
+
+
                 public static class Binaries
                 {
                     public const string ENTD1 = Paths.ENTD1;
@@ -135,9 +226,7 @@ namespace FFTPatcher
                     public const string PoachProbabilities = "PSX-US/bin/PoachProbabilities.bin";
                     public const string SkillSets = "PSX-US/bin/SkillSetsBin.bin";
                     public const string StatusAttributes = "PSX-US/bin/StatusAttributes.bin";
-                }
-
-                public const string EventNamesXML = "PSX-US/EventNames.xml";
+                }                public const string EventNamesXML = "PSX-US/EventNames.xml";
                 public const string FileList = "PSX-US/FileList.txt";
                 public const string JobsXML = "PSX-US/Jobs.xml";
                 public const string SkillSetsXML = "PSX-US/SkillSets.xml";
@@ -152,40 +241,5 @@ namespace FFTPatcher
                 public const string ItemsStringsXML = "PSX-US/Items/Strings.xml";
             }
         }
-
-
-        #endregionÂ StaticÂ Properties
-
-        #regionÂ ConstructorsÂ (1)
-
-        public static Dictionary<string, byte[]> ZipFileContents
-        {
-            get; private set;
-        }
-
-        static Resources()
-        {
-            using( MemoryStream memStream = new MemoryStream( Properties.Resources.ZippedResources, false ) )
-            using( GZipInputStream gzStream = new GZipInputStream( memStream ) )
-            using( TarInputStream tarStream = new TarInputStream( gzStream ) )
-            {
-                ZipFileContents = new Dictionary<string, byte[]>();
-                TarEntry entry;
-                entry = tarStream.GetNextEntry();
-                while( entry != null )
-                {
-                    if( entry.Size != 0 )
-                    {
-                        byte[] bytes = new byte[entry.Size];
-                        StreamUtils.ReadFully( tarStream, bytes );
-                        ZipFileContents[entry.Name] = bytes;
-                    }
-                    entry = tarStream.GetNextEntry();
-                }
-            }
-
-       }
-
-        #endregionÂ Constructors
     }
 }

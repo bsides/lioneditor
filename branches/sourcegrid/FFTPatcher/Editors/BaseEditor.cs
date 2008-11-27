@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -26,18 +26,7 @@ namespace FFTPatcher.Editors
 {
     public class BaseEditor : UserControl, INotifyDataChanged
     {
-
-		#regionÂ EventsÂ (1)Â 
-
-        /// <summary>
-        /// Occurs when data in the object has changed.
-        /// </summary>
-        public event EventHandler DataChanged;
-
-		#endregionÂ EventsÂ 
-
-		#regionÂ MethodsÂ (1)Â 
-
+		#region Protected Methods (1) 
 
         protected void OnDataChanged( object sender, EventArgs args )
         {
@@ -47,8 +36,11 @@ namespace FFTPatcher.Editors
             }
         }
 
+		#endregion Protected Methods 
 
-		#endregionÂ MethodsÂ 
-
+        /// <summary>
+        /// Occurs when data in the object has changed.
+        /// </summary>
+        public event EventHandler DataChanged;
     }
 }

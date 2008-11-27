@@ -293,6 +293,11 @@
         <File name="KNIGHT_W.SPR" enum="BATTLE_KNIGHT_W_SPR" original_size="44433"/>
       </Files>
     </Sprite>
+    <Sprite name="Luso">
+      <Files>
+        <File name="LUSO.SPR" enum="BATTLE_Luso_SPR" original_size="45106"/>
+      </Files>
+    </Sprite>
     <Sprite name="MARA">
       <Files>
         <File name="MARA.SPR" enum="BATTLE_MARA_SPR" original_size="42967"/>

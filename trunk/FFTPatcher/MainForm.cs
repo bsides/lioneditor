@@ -185,7 +185,7 @@ namespace FFTPatcher
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Visible = true;
-                    progressBar.Value = args.ProgressPercentage;
+                    progressBar.Value = Math.Min( args.ProgressPercentage, 100 );
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =

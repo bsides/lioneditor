@@ -41,7 +41,7 @@ namespace FFTPatcher
 
 		#region Constructors (1) 
 
-        static IsoPatch()
+static IsoPatch()
         {
             uint j = 0;
             ulong edc = 0;

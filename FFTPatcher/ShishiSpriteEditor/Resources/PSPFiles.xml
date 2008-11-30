@@ -86,11 +86,6 @@
         <File name="ADORA.SPR" enum="BATTLE_ADORA_SPR" original_size="47100"/>
       </Files>
     </Sprite>
-    <Sprite name="ADORA">
-      <Files>
-        <File name="ADORA.SPR" enum="BATTLE_ADORA_SPR" original_size="47100"/>
-      </Files>
-    </Sprite>
     <Sprite name="DORA1">
       <Files>
         <File name="DORA1.SPR" enum="BATTLE_DORA1_SPR" original_size="46754"/>

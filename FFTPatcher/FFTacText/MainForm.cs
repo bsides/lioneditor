@@ -1,4 +1,4 @@
-ï»¿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -19,29 +19,29 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
-using System.Diagnostics;
+using System.ComponentModel;
 
 namespace FFTPatcher.TextEditor
 {
     public partial class MainForm : Form
     {
 
-        #regionÂ FieldsÂ (3)
+		#region Fields (4) 
 
         private readonly MenuItem[] defaultPspMenuItems;
         private readonly MenuItem[] defaultPsxMenuItems;
-
         private FFTText file;
         private MenuItem[] menuItems;
 
-        #endregionÂ Fields
+		#endregion Fields 
 
-        #regionÂ PropertiesÂ (1)
+		#region Properties (1) 
 
 
         /// <summary>
@@ -92,13 +92,16 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        #endregionÂ Properties
+		#endregion Properties 
 
-        #regionÂ ConstructorsÂ (1)
+		#region Constructors (1) 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
         public MainForm()
         {
-#if DEBUG
+#if DONGS
             FillPSPFiles();
             FillPSXFiles();
 #endif
@@ -109,6 +112,8 @@ namespace FFTPatcher.TextEditor
             partitionEditor.Visible = false;
             stringSectionedEditor.SavingFile += editor_SavingFile;
             compressedStringSectionedEditor.SavingFile += editor_SavingFile;
+            compressedStringSectionedEditor.CompressionStarted += compressedStringSectionedEditor_CompressionStarted;
+            compressedStringSectionedEditor.CompressionFinished += compressedStringSectionedEditor_CompressionFinished;
             partitionEditor.SavingFile += partitionEditor_SavingFile;
 
             newPspMenuItem.Click += newPspMenuItem_Click;
@@ -118,22 +123,27 @@ namespace FFTPatcher.TextEditor
             exitMenuItem.Click += exitMenuItem_Click;
             aboutMenuItem.Click += aboutMenuItem_Click;
             allowedSymbolsMenuItem.Click += allowedSymbolsMenuItem_Click;
-            defaultPspMenuItems = new MenuItem[2] { 
+            defaultPspMenuItems = new MenuItem[4] { 
+                new MenuItem( "-" ),
+                new MenuItem( "Quick Edit", quickEditMenuItem_Click ),
                 new MenuItem( "-" ), 
                 new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
-            defaultPsxMenuItems = new MenuItem[2] {
-                new MenuItem("-"),
-                new MenuItem("Patch ISO...", patchMenuItem_Click ) };
+            defaultPsxMenuItems = new MenuItem[4] {
+                new MenuItem( "-" ),
+                new MenuItem( "Quick Edit", quickEditMenuItem_Click ),
+                new MenuItem( "-" ),
+                new MenuItem( "Patch ISO...", patchMenuItem_Click ) };
         }
 
-        #endregionÂ Constructors
+		#endregion Constructors 
 
-        #regionÂ MethodsÂ (22)
+		#region Methods (20) 
 
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
-            new About().ShowDialog( this );
+            using( About a = new About() )
+                a.ShowDialog( this );
         }
 
         private MenuItem AddMenuItem( MenuItem owner, string text, object tag )
@@ -172,13 +182,35 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        private void compressedStringSectionedEditor_CompressionFinished( object sender, EventArgs e )
+        {
+            Cursor = Cursors.Default;
+
+            compressedStringSectionedEditor.Enabled = true;
+            foreach ( MenuItem item in mainMenu.MenuItems )
+            {
+                item.Enabled = true;
+            }
+        }
+
+        private void compressedStringSectionedEditor_CompressionStarted( object sender, EventArgs e )
+        {
+            Cursor = Cursors.WaitCursor;
+            compressedStringSectionedEditor.Enabled = false;
+            foreach ( MenuItem item in mainMenu.MenuItems )
+            {
+                item.Enabled = false;
+            }
+        }
+
         private void editor_SavingFile( object sender, SavingFileEventArgs e )
         {
             string name = Path.GetFileName( e.SuggestedFilename );
             openFileDialog.Filter = string.Format( "{0}|{0}", name );
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                WriteBytesToFile( e.File.ToByteArray(), openFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
+                PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), e.SuggestedFilename, false );
+                WriteBytesToFile( e.File.ToByteArray(), openFileDialog.FileName, e.File.Locations[sector] );
             }
         }
 
@@ -187,7 +219,263 @@ namespace FFTPatcher.TextEditor
             Application.Exit();
         }
 
-#if DEBUG
+        private void LoadFileFromByteArray( byte[] bytes )
+        {
+            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+            using( MemoryStream ms = new MemoryStream( bytes ) )
+            using( XmlTextReader reader = new XmlTextReader( ms ) )
+            {
+                reader.WhitespaceHandling = WhitespaceHandling.None;
+                File = xs.Deserialize( reader ) as FFTText;
+            }
+        }
+
+        private void menuItem_Click( object sender, EventArgs e )
+        {
+            Cursor = Cursors.WaitCursor;
+            UncheckAllMenuItems( menuItems );
+            MenuItem thisItem = sender as MenuItem;
+            thisItem.Checked = true;
+
+            object file = thisItem.Tag;
+
+            if( file is ICompressed )
+            {
+                compressedStringSectionedEditor.Strings = file as IStringSectioned;
+                compressedStringSectionedEditor.Visible = true;
+                stringSectionedEditor.Visible = false;
+                partitionEditor.Visible = false;
+            }
+            else if( file is IStringSectioned )
+            {
+                stringSectionedEditor.Strings = file as IStringSectioned;
+                stringSectionedEditor.Visible = true;
+                compressedStringSectionedEditor.Visible = false;
+                partitionEditor.Visible = false;
+            }
+            else if( file is IPartition )
+            {
+                partitionEditor.Visible = true;
+                partitionEditor.Strings = file as IPartition;
+                compressedStringSectionedEditor.Visible = false;
+                stringSectionedEditor.Visible = false;
+            }
+            Cursor = Cursors.Default;
+        }
+
+        private void newPspMenuItem_Click( object sender, EventArgs e )
+        {
+            LoadFileFromByteArray( PSPResources.DefaultDocument );
+            File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSP.BOOT326F24( Properties.PSPResources.boot ) );
+            var oldFile = File;
+            file = null;
+            File = oldFile;
+        }
+
+        private void newPsxMenuItem_Click( object sender, EventArgs e )
+        {
+            LoadFileFromByteArray( PSXResources.DefaultDocument );
+            //File.SectionedFiles.Add(new FFTPatcher.TextEditor.Files.PSX.QuickEdit(File));
+            //using( XmlTextWriter writer = new XmlTextWriter( "ffffff", System.Text.Encoding.UTF8 ) )
+            //{
+            //    writer.WriteStartDocument();
+            //    writer.WriteStartElement( "fff" );
+
+            //    new FFTPatcher.TextEditor.Files.PSX.SPELLMES( FFTPatcher.TextEditor.Properties.PSXResources.SPELLMES ).WriteXml( writer, true );
+            //    writer.WriteEndElement();
+            //    writer.WriteEndDocument();
+            //}
+            ////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.HELPLZW( FFTPatcher.TextEditor.Properties.PSXResources.HELPLZW ) );
+            ////using (XmlTextWriter writer = new XmlTextWriter("fff", System.Text.Encoding.UTF8))
+            ////{
+            ////    writer.WriteStartDocument();
+            ////    writer.WriteStartElement( "ffF" );
+            ////    new FFTPatcher.TextEditor.Files.PSX.HELPLZW( FFTPatcher.TextEditor.Properties.PSXResources.HELPLZW ).WriteXml( writer, true );
+            ////    writer.WriteEndElement();
+            ////    writer.WriteEndDocument();
+            ////}
+            //////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.EQUIPOUT( FFTPatcher.TextEditor.Properties.PSXResources.EQUIP ) );
+            //////File.SectionedFiles.Add( new FFTPatcher.TextEditor.Files.PSX.BUNITOUT( FFTPatcher.TextEditor.Properties.PSXResources.BUNIT ) );
+            //var oldFile = File;
+            //file = null;
+            //File = oldFile;
+        }
+
+        private void openMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
+            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+                    using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
+                    {
+                        File = xs.Deserialize( stream ) as FFTText;
+                        File.UpgradeStrings();
+                    }
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( this, "Error opening file.", "Error", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void partitionEditor_SavingFile( object sender, SavingFileEventArgs e )
+        {
+            IPartitionedFile file = e.File as IPartitionedFile;
+            if( file != null )
+            {
+                string name = Path.GetFileName( e.SuggestedFilename );
+                openFileDialog.Filter = string.Format( "{0}|{0}", name );
+
+                if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+                {
+                    PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), e.SuggestedFilename, false );
+                    if( e.PartitionNumber == -1 )
+                    {
+                        WriteBytesToFile( file.ToByteArray(), openFileDialog.FileName, e.File.Locations[sector] );
+                    }
+                    else
+                    {
+                        WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), openFileDialog.FileName,
+                            e.File.Locations[sector] + file.SectionLength * e.PartitionNumber );
+                    }
+                }
+            }
+        }
+
+        private void patchMenuItem_Click( object sender, EventArgs e )
+        {
+            bool oldStringSectionedEditorEnabled = stringSectionedEditor.Enabled;
+            bool oldCompressedEditorEnabled = compressedStringSectionedEditor.Enabled;
+            bool oldPartitionEditorEnabled = partitionEditor.Enabled;
+
+            DoWorkEventHandler doWork =
+                delegate( object sender1, DoWorkEventArgs args )
+                {
+                    File.UpdateIso( sender1 as BackgroundWorker, args );
+                };
+            ProgressChangedEventHandler progress =
+                delegate( object sender2, ProgressChangedEventArgs args )
+                {
+                    progressBar.Value = args.ProgressPercentage;
+                };
+            RunWorkerCompletedEventHandler completed = null;
+            completed =
+                delegate( object sender3, RunWorkerCompletedEventArgs args )
+                {
+                    progressBar.Visible = false;
+                    fileMenuItem.Enabled = true;
+
+                    ( File.Filetype == Filetype.PSX ? psxMenuItem : pspMenuItem ).Enabled = true;
+
+                    helpMenuItem.Enabled = true;
+                    stringSectionedEditor.Enabled = oldStringSectionedEditorEnabled;
+                    compressedStringSectionedEditor.Enabled = oldCompressedEditorEnabled;
+                    partitionEditor.Enabled = oldPartitionEditorEnabled;
+                    UseWaitCursor = false;
+                    patchPsxBackgroundWorker.ProgressChanged -= progress;
+                    patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
+                    patchPsxBackgroundWorker.DoWork -= doWork;
+                    if ( args.Error != null )
+                    {
+                        MessageBox.Show( this, "There was an error patching the ISO", "Error" );
+                    }
+                };
+
+
+            openFileDialog.Filter = File.Filetype == Filetype.PSX ? "ISO images (*.bin)|*.bin" : "ISO images (*.iso)|*.iso";
+            saveFileDialog.OverwritePrompt = false;
+            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                patchPsxBackgroundWorker.ProgressChanged += progress;
+                patchPsxBackgroundWorker.RunWorkerCompleted += completed;
+                patchPsxBackgroundWorker.DoWork += doWork;
+
+                fileMenuItem.Enabled = false;
+
+                ( File.Filetype == Filetype.PSX ? psxMenuItem : pspMenuItem ).Enabled = false;
+
+                helpMenuItem.Enabled = false;
+                stringSectionedEditor.Enabled = false;
+                compressedStringSectionedEditor.Enabled = false;
+                partitionEditor.Enabled = false;
+                UseWaitCursor = true;
+
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+                patchPsxBackgroundWorker.RunWorkerAsync( saveFileDialog.FileName );
+            }
+        }
+
+        private void quickEditMenuItem_Click( object sender, EventArgs e )
+        {
+            MenuItem mi = sender as MenuItem;
+            mi.Tag = File.QuickEdit;
+            menuItem_Click( sender, e );
+            mi.Tag = null;
+        }
+
+        private void RemoveAllDescendants( MenuItem item )
+        {
+            foreach( MenuItem subitem in item.MenuItems )
+            {
+                RemoveAllDescendants( subitem );
+            }
+
+            item.MenuItems.Clear();
+        }
+
+        private void saveMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
+            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                try
+                {
+                    XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
+                    using( FileStream stream = new FileStream( saveFileDialog.FileName, FileMode.Create ) )
+                    using( XmlTextWriter writer = new XmlTextWriter( stream, System.Text.Encoding.UTF8 ) )
+                    {
+                        writer.Formatting = Formatting.Indented;
+                        xs.Serialize( writer, File );
+                    }
+                }
+                catch( Exception )
+                {
+                    MessageBox.Show( this, "Error saving file.", "Error", MessageBoxButtons.OK );
+                }
+            }
+        }
+
+        private void UncheckAllMenuItems( MenuItem[] menuItems )
+        {
+            menuItems.ForEach( item => item.Checked = false );
+            defaultPsxMenuItems.ForEach( item => item.Checked = false );
+            defaultPspMenuItems.ForEach( item => item.Checked = false );
+        }
+
+        private void WriteBytesToFile( byte[] bytes, string filename, long position )
+        {
+            try
+            {
+                using( FileStream stream = new FileStream( filename, FileMode.Open ) )
+                {
+                    stream.WriteArrayToPosition( bytes, position );
+                }
+            }
+            catch( Exception )
+            {
+                MessageBox.Show( this, "Error writing to file", "Error", MessageBoxButtons.OK );
+            }
+        }
+
+
+		#endregion Methods 
+#if DONGS
         private void FillFile( IPartitionedFile file, string filename )
         {
             string format = "{0}/{1}/{2:X}";
@@ -214,7 +502,6 @@ namespace FFTPatcher.TextEditor
                 }
             }
         }
-
         private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
         {
             string format = "{0}/{1}/{2:X}";
@@ -244,22 +531,8 @@ namespace FFTPatcher.TextEditor
                 }
             }
         }
-
         private void FillFiles()
         {
-            //BasePSXSectionedFile[] psxFiles1 = new BasePSXSectionedFile[] {
-            //    new ATCHELPLZW(PSXResources.ATCHELP_LZW),
-            //    new ATTACKOUT(PSXResources.ATTACK_OUT_partial),
-            //    new JOINLZW(PSXResources.JOIN_LZW),
-            //    new OPENLZW(PSXResources.OPEN_LZW),
-            //    new SAMPLELZW(PSXResources.SAMPLE_LZW),
-            //    new WORLDLZW(PSXResources.WORLD_LZW)};
-            //BasePSXCompressedFile[] psxFiles2 = new BasePSXCompressedFile[] {
-            //    new WLDHELPLZW(PSXResources.WLDHELP_LZW),
-            //    new HELPMENU(PSXResources.HELPMENU_OUT)};
-            ////BasePSXPartitionedFile[] psxFiles3 = new BasePSXPartitionedFile[] {
-            ////    new SNPLMESBIN(PSXResources.SNPLMES_BIN),
-            ////    new WLDMES(PSXResources.WLDMES_BIN) };
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
 
             FFTText mine = null;
@@ -338,7 +611,6 @@ namespace FFTPatcher.TextEditor
 
             File = mine;
         }
-
         private void FillPSPFiles()
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
@@ -365,7 +637,6 @@ namespace FFTPatcher.TextEditor
                 xs.Serialize( fs, mine );
             }
         }
-
         private void FillPSXFiles()
         {
             XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
@@ -391,198 +662,6 @@ namespace FFTPatcher.TextEditor
             }
         }
 #endif
-
-        private void LoadFileFromByteArray( byte[] bytes )
-        {
-            XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
-            using( MemoryStream ms = new MemoryStream( bytes ) )
-            {
-                File = xs.Deserialize( ms ) as FFTText;
-            }
-        }
-
-        private void menuItem_Click( object sender, EventArgs e )
-        {
-            UncheckAllMenuItems( menuItems );
-            MenuItem thisItem = sender as MenuItem;
-            thisItem.Checked = true;
-
-            object file = thisItem.Tag;
-
-            if( file is ICompressed )
-            {
-                compressedStringSectionedEditor.Strings = file as IStringSectioned;
-                compressedStringSectionedEditor.Visible = true;
-                stringSectionedEditor.Visible = false;
-                partitionEditor.Visible = false;
-            }
-            else if( file is IStringSectioned )
-            {
-                stringSectionedEditor.Strings = file as IStringSectioned;
-                stringSectionedEditor.Visible = true;
-                compressedStringSectionedEditor.Visible = false;
-                partitionEditor.Visible = false;
-            }
-            else if( file is IPartition )
-            {
-                partitionEditor.Visible = true;
-                partitionEditor.Strings = file as IPartition;
-                compressedStringSectionedEditor.Visible = false;
-                stringSectionedEditor.Visible = false;
-            }
-        }
-
-        private void newPspMenuItem_Click( object sender, EventArgs e )
-        {
-            LoadFileFromByteArray( PSPResources.DefaultDocument );
-        }
-
-        private void newPsxMenuItem_Click( object sender, EventArgs e )
-        {
-            LoadFileFromByteArray( PSXResources.DefaultDocument );
-        }
-
-        private void openMenuItem_Click( object sender, EventArgs e )
-        {
-            openFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
-                    using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
-                    {
-                        File = xs.Deserialize( stream ) as FFTText;
-                    }
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( this, "Error opening file.", "Error", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void partitionEditor_SavingFile( object sender, SavingFileEventArgs e )
-        {
-            IPartitionedFile file = e.File as IPartitionedFile;
-            if( file != null )
-            {
-                string name = Path.GetFileName( e.SuggestedFilename );
-                openFileDialog.Filter = string.Format( "{0}|{0}", name );
-
-                if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-                {
-                    if( e.PartitionNumber == -1 )
-                    {
-                        WriteBytesToFile( file.ToByteArray(), openFileDialog.FileName, e.File.Locations[e.SuggestedFilename] );
-                    }
-                    else
-                    {
-                        WriteBytesToFile( file.Sections[e.PartitionNumber].ToByteArray(), openFileDialog.FileName,
-                            e.File.Locations[e.SuggestedFilename] + file.SectionLength * e.PartitionNumber );
-                    }
-                }
-            }
-        }
-
-        private void patchMenuItem_Click( object sender, EventArgs e )
-        {
-            if( File.Filetype == Filetype.PSP )
-            {
-                openFileDialog.Filter = "ISO images (*.iso)|*.iso";
-                if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-                {
-                    try
-                    {
-                        using( FileStream stream = new FileStream( openFileDialog.FileName, FileMode.Open ) )
-                        {
-                            File.UpdatePspIso( stream );
-                        }
-                    }
-                    catch( Exception )
-                    {
-                        MessageBox.Show( this, "Error patching file.", "Error", MessageBoxButtons.OK );
-                    }
-                }
-            }
-            else if( File.Filetype == Filetype.PSX )
-            {
-                Enabled = false;
-                DataReceivedEventHandler dataReceived = new DataReceivedEventHandler( delegate( object o, DataReceivedEventArgs drea ) { } );
-                EventHandler finished = new EventHandler(
-                    delegate( object o2, EventArgs ea )
-                    {
-                        MethodInvoker mi = new MethodInvoker( delegate() { Enabled = true; } );
-                        if( InvokeRequired )
-                        {
-                            Invoke( mi );
-                        }
-                        else
-                        {
-                            mi();
-                        }
-                    } );
-                File.UpdatePsxIso( dataReceived, finished );
-            }
-        }
-
-        private void RemoveAllDescendants( MenuItem item )
-        {
-            foreach( MenuItem subitem in item.MenuItems )
-            {
-                RemoveAllDescendants( subitem );
-            }
-
-            item.MenuItems.Clear();
-        }
-
-        private void saveMenuItem_Click( object sender, EventArgs e )
-        {
-            saveFileDialog.Filter = "FFTacText files (*.ffttext)|*.ffttext";
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                try
-                {
-                    XmlSerializer xs = new XmlSerializer( typeof( FFTText ) );
-                    using( FileStream stream = new FileStream( saveFileDialog.FileName, FileMode.Create ) )
-                    using( XmlTextWriter writer = new XmlTextWriter( stream, System.Text.Encoding.UTF8 ) )
-                    {
-                        writer.Formatting = Formatting.Indented;
-                        xs.Serialize( writer, File );
-                    }
-                }
-                catch( Exception )
-                {
-                    MessageBox.Show( this, "Error saving file.", "Error", MessageBoxButtons.OK );
-                }
-            }
-        }
-
-        private void UncheckAllMenuItems( MenuItem[] menuItems )
-        {
-            foreach( MenuItem item in menuItems )
-            {
-                item.Checked = false;
-            }
-        }
-
-        private void WriteBytesToFile( byte[] bytes, string filename, long position )
-        {
-            try
-            {
-                using( FileStream stream = new FileStream( filename, FileMode.Open ) )
-                {
-                    stream.WriteArrayToPosition( bytes, position );
-                }
-            }
-            catch( Exception )
-            {
-                MessageBox.Show( this, "Error writing to file", "Error", MessageBoxButtons.OK );
-            }
-        }
-
-
-        #endregionÂ Methods
 #if DEBUG
         private string[] GetLayoutOfCloseAndNewLines( string s )
         {

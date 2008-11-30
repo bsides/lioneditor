@@ -1,4 +1,57 @@
-FFTPatcher - v0.271
+FFTPatcher - v0.352
+
+Changes since v0.328:
+  Fixed bug that caused Ability Effects to be applied to the ISO incorrectly
+  Fixed Formula 0x4E: Dmg_(MA*Y)
+  Fixed bug that caused the Upper Level flag to not be updated on screen 
+    properly in the ENTD unit editor
+  
+  Rewrite of Sprite Manager. Now, it reads all character/monster sprites from 
+    an ISO file. Make your changes and save as a .shishi file or patch
+    the ISO directly.
+    
+    *Not supported yet:
+      WEP.SPR, OTHER.SPR 
+      Changing "type" of sprite (Making AGURI be TYPE2 instead of TYPE1, etc)
+      WLDFACE.BIN, EVTFACE.BIN, EVTCHR.BIN, UNIT.BIN
+    
+    Known bug: The thumbnail images in the main window look ugly...
+
+  FFTacText won't work with this version. If you want to use
+  it, download an old version and copy it to another directory.
+
+Changes since v0.271:
+  Added ability to convert a PSX fftpatch file to a PSP fftpatch file. 
+    (NOTE: The new PSP abilities for Balthier and Dark Knight are overwritten
+     during this process)
+  Added dialogs when patching a PSP or PSX image that let you select
+    what parts you want to patch.
+  Added ability to patch the SCEAP.DAT file on PSX 
+    ("Sony Computer Entertainment Presents...")
+  Added ability to patch the ICON0.PNG file on PSP (This is the image that shows up
+    when you load your game from memory stick)
+  Added direct ISO patching for PSP and PSX. No need for CD-Tool anymore
+  Added asterisks * to changed items in each screen
+  Added "upper level" flag to ENTD units
+  Added ability to edit the "Move-Find Items" and traps on maps
+  Added ability to "Clone" and "Paste" certain objects 
+    (ex. Right click "Cure 2" on the left side of Abilities and paste it on top of 
+     "Cure 3" and it will copy all the data from Cure 2 to Cure 3)
+    (There is a cosmetic bug with this feature, the destination for the paste will not
+     have the correct "blue highlighting" for changes until you select another ability
+     and come back)
+  Changed the .fftpatch file format. You can still open old files, but once you save
+    them again you can only open them with new versions of FFTPatcher.
+  Added ability to open an already-patched PSX ISO
+  The file ICSharpCode.SharpZipLib.dll must be in the same directory as FFTPatcher.exe
+  Removed:
+    Export font (Use Patch ISO instead)
+    Export ENTD (Use patch ISO instead)
+    Patch BATTLE.BIN (Use Patch ISO instead)
+    Open modified SCUS_942.21 (Use open modified ISO instead)
+
+  FFTacText and ShishiSpriteEditor won't work with this version. If you want to use
+  them, download an old version and copy it to another directory.
 
 Changes since v0.269:
   Fixed bug when loading certain bitmaps in the Sprite Editor (Thanks to Sen

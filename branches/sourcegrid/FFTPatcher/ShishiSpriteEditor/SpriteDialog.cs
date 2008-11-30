@@ -205,7 +205,7 @@ namespace FFTPatcher.SpriteEditor
 
         private void importSprMenuItem_Click( object sender, EventArgs e )
         {
-            openFileDialog.Filter = Sprite.Filenames[0] + "|" + Sprite.Filenames[0];
+            openFileDialog.Filter = sprFilter;
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 Sprite.ImportSPR( File.ReadAllBytes( openFileDialog.FileName ) );
@@ -233,8 +233,8 @@ namespace FFTPatcher.SpriteEditor
 
         private void ShowOpenSP2( int whichSp2, string filter )
         {
-            saveFileDialog.Filter = filter;
-            saveFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = filter;
+            openFileDialog.FileName = string.Empty;
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 ( Sprite as MonsterSprite ).ImportSP2( File.ReadAllBytes( openFileDialog.FileName ), whichSp2 );

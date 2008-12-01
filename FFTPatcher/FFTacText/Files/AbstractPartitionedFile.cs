@@ -299,6 +299,12 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
+        public override IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements )
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>( replacements.Count );
+            replacements.ForEach( g => result[g.Group] = 0 );
+            return result;
+        }
 
 		#endregion Methods 
 

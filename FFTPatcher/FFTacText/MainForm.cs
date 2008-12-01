@@ -228,6 +228,25 @@ namespace FFTPatcher.TextEditor
                 reader.WhitespaceHandling = WhitespaceHandling.None;
                 File = xs.Deserialize( reader ) as FFTText;
             }
+            Dictionary<IStringSectioned, IDictionary<string, int>> bytesSaved = new Dictionary<IStringSectioned, IDictionary<string, int>>();
+            foreach ( IStringSectioned file in File.SectionedFiles )
+            {
+                bytesSaved[file] = file.CalculateBytesSaved( Program.groups );
+            }
+
+            using (FileStream fs = System.IO.File.OpenWrite("out.txt"))
+            using (StreamWriter sw = new StreamWriter(fs))
+            foreach ( var kvp in bytesSaved[File.SectionedFiles[0]] )
+            {
+                int sum = 0;
+                sw.Write(kvp.Key + "\t");
+                foreach ( IStringSectioned file in File.SectionedFiles )
+                {
+                    sw.Write( bytesSaved[file][kvp.Key] );
+                    sw.Write( "\t" );
+                }
+                sw.Write( Environment.NewLine );
+            }
         }
 
         private void menuItem_Click( object sender, EventArgs e )

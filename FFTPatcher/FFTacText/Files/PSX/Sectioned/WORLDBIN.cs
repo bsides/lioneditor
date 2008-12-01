@@ -460,23 +460,28 @@ namespace FFTPatcher.TextEditor.Files.PSX
             return result.ToArray();
         }
 
-        /// <summary>
-        /// Creates an uncompressed byte array representing this file.
-        /// </summary>
-        public IList<byte> ToUncompressedBytes()
+        private static IList<IList<byte>> GetSectionBytes( IList<IList<string>> sections, GenericCharMap map )
         {
-            GenericCharMap map = CharMap;
-
-            List<List<byte>> byteSections = new List<List<byte>>( NumberOfSections );
-            foreach( IList<string> section in Sections )
+            IList<IList<byte>> byteSections = new List<IList<byte>>( sections.Count );
+            foreach ( IList<string> section in sections )
             {
-                List<byte> sectionBytes = new List<byte>();
-                foreach( string s in section )
+                IList<byte> sectionBytes = new List<byte>();
+                foreach ( string s in section )
                 {
                     sectionBytes.AddRange( map.StringToByteArray( s ) );
                 }
                 byteSections.Add( sectionBytes );
             }
+
+            return byteSections;
+        }
+
+        /// <summary>
+        /// Creates an uncompressed byte array representing this file.
+        /// </summary>
+        public IList<byte> ToUncompressedBytes()
+        {
+            IList<IList<byte>> byteSections = GetSectionBytes( Sections, CharMap );
 
             List<byte> result = new List<byte>();
 
@@ -522,6 +527,45 @@ namespace FFTPatcher.TextEditor.Files.PSX
             WriteXml( writer, false );
         }
 
+        /// <summary>
+        /// Determines how many bytes would be saved if the specified string could be replaced with a single byte.
+        /// </summary>
+        public IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements )
+        {
+            GenericCharMap map = CharMap;
+            StringBuilder virgin = new StringBuilder( MaxLength );
+            Sections.ForEach( s => s.ForEach( t => virgin.Append( t ) ) );
+            string virginString = virgin.ToString();
+
+            Dictionary<string, int> result = new Dictionary<string, int>( replacements.Count );
+            foreach ( var v in replacements )
+            {
+                string subString = v.Group;
+                int i = 0;
+                int count = 0;
+                while ( i < virginString.Length )
+                {
+                    char c = virginString[i];
+                    if ( c == '{' )
+                    {
+                        while ( c != '}' )
+                            c = virginString[++i];
+                    }
+                    else if ( i + subString.Length < virginString.Length &&
+                         virginString.IndexOf( subString, i, subString.Length ) == i )
+                    {
+                        count++;
+                        i++;
+                    }
+                    i++;
+                };
+
+                result[v.Group] = count;
+            }
+
+            return result;
+
+        }
 
 		#endregion Methods 
 

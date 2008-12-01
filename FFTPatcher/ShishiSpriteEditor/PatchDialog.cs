@@ -137,34 +137,6 @@ namespace FFTPatcher.SpriteEditor
             listView1.EndUpdate();
         }
 
-        private class Set<T>
-        {
-            Dictionary<T, bool> backing = new Dictionary<T, bool>();
-
-            public bool Contains( T item )
-            {
-                return backing.ContainsKey( item );
-            }
-
-            public void Add( T item )
-            {
-                backing[item] = true;
-            }
-
-            public void Remove( T item )
-            {
-                if ( Contains( item ) )
-                {
-                    backing.Remove( item );
-                }
-            }
-
-            public IList<T> GetElements()
-            {
-                return new List<T>( backing.Keys ).AsReadOnly();
-            }
-        }
-
         private void SetAllItems( bool checkState )
         {
             listView1.BeginUpdate();

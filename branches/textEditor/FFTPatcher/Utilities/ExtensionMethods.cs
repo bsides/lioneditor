@@ -95,6 +95,31 @@ namespace FFTPatcher
             }
         }
 
+        public static void CopyTo<TKey, TValue>( this Dictionary<TKey, TValue>.ValueCollection list, IList<TValue> destination, int destinationIndex )
+        {
+            if ( destination.Count - destinationIndex < list.Count )
+            {
+                throw new InvalidOperationException( "source list is larger than destination" );
+            }
+
+            int count = 0;
+            foreach ( TValue v in list )
+            {
+                destination[destinationIndex + count++] = v;
+            }
+        }
+
+        public static List<T> FindAll<T>( this IList<T> list, Predicate<T> match )
+        {
+            List<T> result = new List<T>( list.Count );
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                if ( match( list[i] ) )
+                    result.Add( list[i] );
+            }
+            return result;
+        }
+
         public static void InitializeElements<T>( this IList<T> list )
         {
             for ( int i = 0; i < list.Count; i++ )

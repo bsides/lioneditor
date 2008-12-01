@@ -88,6 +88,7 @@
     <Compile Include="Controls\VerticalLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Datatypes\Set.cs" />
     <Compile Include="PatchPSPForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -124,7 +124,7 @@ namespace FFTPatcher.TextEditor
             {
                 foreach ( IPartition partition in partitioned.Sections )
                 {
-                    for (int i =0; i < partition.Entries.Count; i++)
+                    for ( int i = 0; i < partition.Entries.Count; i++ )
                     {
                         partition.Entries[i] = TextUtilities.UpgradeString( partition.Entries[i], this.CharMap );
                     }
@@ -263,6 +263,7 @@ namespace FFTPatcher.TextEditor
                         throw new InvalidOperationException( string.Format( "Can't upgrade from version {0} file", version ) );
                 }
             }
+
         }
 
         private void AddMisingFiles( Filetype Filetype, int version )

@@ -30,5 +30,10 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets all patches that this file needs to apply to the ISO for full functionality.
         /// </summary>
         public abstract IList<PatchedByteArray> GetAllPatches();
+
+        /// <summary>
+        /// Determines how many bytes would be saved if the specified string could be replaced with a single byte.
+        /// </summary>
+        public abstract IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements );
     }
 }

@@ -49,7 +49,8 @@ namespace FFTPatcher.Editors
         {
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.glyphEditor1 = new FFTPatcher.Editors.GlyphEditor();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            ( (System.ComponentModel.ISupportInitialize)( this.numericUpDown1 ) ).BeginInit();
             this.SuspendLayout();
             // 
             // numericUpDown1
@@ -66,15 +67,25 @@ namespace FFTPatcher.Editors
             this.numericUpDown1.TabIndex = 3;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // glyphEditor2
+            // glyphEditor1
             // 
             this.glyphEditor1.AutoSize = true;
             this.glyphEditor1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.glyphEditor1.Glyph = null;
             this.glyphEditor1.Location = new System.Drawing.Point( 27, 41 );
-            this.glyphEditor1.Name = "glyphEditor2";
-            this.glyphEditor1.Size = new System.Drawing.Size( 183, 216 );
+            this.glyphEditor1.Name = "glyphEditor1";
+            this.glyphEditor1.Size = new System.Drawing.Size( 210, 269 );
             this.glyphEditor1.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font( "Arial Unicode MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
+            this.label1.Location = new System.Drawing.Point( 193, 114 );
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size( 52, 21 );
+            this.label1.TabIndex = 5;
+            this.label1.Text = "label1";
             // 
             // FontEditor
             // 
@@ -82,11 +93,12 @@ namespace FFTPatcher.Editors
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.label1 );
             this.Controls.Add( this.glyphEditor1 );
             this.Controls.Add( this.numericUpDown1 );
             this.Name = "FontEditor";
-            this.Size = new System.Drawing.Size( 213, 260 );
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.Size = new System.Drawing.Size( 248, 313 );
+            ( (System.ComponentModel.ISupportInitialize)( this.numericUpDown1 ) ).EndInit();
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -96,5 +108,6 @@ namespace FFTPatcher.Editors
 
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private GlyphEditor glyphEditor1;
+        private System.Windows.Forms.Label label1;
     }
 }

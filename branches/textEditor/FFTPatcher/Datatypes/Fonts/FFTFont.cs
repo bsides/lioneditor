@@ -77,7 +77,7 @@ namespace FFTPatcher.Datatypes
     /// </summary>
     public class FFTFont : PatchableFile
     {
-		#region Public Properties (3) 
+        #region Public Properties (3) 
 
         public Glyph[] Glyphs { get; private set; }
 
@@ -104,11 +104,39 @@ namespace FFTPatcher.Datatypes
             {
                 Glyphs[i] = new Glyph( widthBytes[i], bytes.Sub( i * 35, (i + 1) * 35 - 1 ) );
             }
+
+#if DEBUG
+            using ( System.Drawing.Bitmap b = new System.Drawing.Bitmap( 550, 560 ) )
+            {
+                for ( int i = 0; i < 2200; i++ )
+                {
+                    DrawGlyphOnBitmap( b, Glyphs[i], new System.Drawing.Point( 10 * ( i % 55 ), 14 * ( i / 55 ) ) );
+                }
+                b.Save( "font.png", System.Drawing.Imaging.ImageFormat.Png );
+            }
+#endif            
         }
 
-		#endregion Constructors 
+#if DEBUG
+        System.Drawing.Color[] colors = new System.Drawing.Color[4] { 
+                    //System.Drawing.Color.Transparent,
+                    System.Drawing.Color.FromArgb( 166, 157, 133 ),
+                    System.Drawing.Color.FromArgb(49, 41, 33),
+                    System.Drawing.Color.FromArgb(82,82,66),
+                    System.Drawing.Color.FromArgb(133,124,108) };
 
-		#region Public Methods (4) 
+        private void DrawGlyphOnBitmap( System.Drawing.Bitmap b, Glyph g, System.Drawing.Point loc )
+        {
+            for ( int i = 0; i < g.Pixels.Length; i++ )
+            {
+                b.SetPixel( loc.X + i % 10, loc.Y + i / 10, colors[(int)g.Pixels[i]] );
+            }
+        }
+#endif
+
+        #endregion Constructors
+
+        #region Public Methods (4)
 
         public List<string> GenerateCodes()
         {

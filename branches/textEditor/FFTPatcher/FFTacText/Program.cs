@@ -126,12 +126,22 @@ namespace FFTPatcher.TextEditor
             return false;
         }
 
+        public static IList<TextUtilities.GroupableSet> groups;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main( string[] args )
         {
+            var f = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSPResources.FontBin, FFTPatcher.PSPResources.FontWidthsBin );
+
+            List<int> widths = new List<int>( 2200 );
+            f.Glyphs.ForEach( g => widths.Add( g.Width ) );
+
+            groups = TextUtilities.GetGroups( TextUtilities.PSPMap, FFTPatcher.PSPResources.CharacterSet, widths );
+           
+           
             if( !HandleArgs( args ) )
             {
                 Application.EnableVisualStyles();

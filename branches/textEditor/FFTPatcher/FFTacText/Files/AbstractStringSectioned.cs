@@ -326,14 +326,18 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public IList<IList<byte>> GetSectionByteArrays()
         {
-            IList<IList<byte>> result = new List<IList<byte>>( NumberOfSections );
+            return GetSectionByteArrays( Sections, CharMap );
+        }
 
-            foreach( IList<string> section in Sections )
+        public static IList<IList<byte>> GetSectionByteArrays( IList<IList<string>> sections, GenericCharMap charmap )
+        {
+            IList<IList<byte>> result = new List<IList<byte>>( sections.Count );
+            foreach ( IList<string> section in sections )
             {
                 List<byte> sectionBytes = new List<byte>();
-                foreach( string s in section )
+                foreach ( string s in section )
                 {
-                    sectionBytes.AddRange( CharMap.StringToByteArray( s ) );
+                    sectionBytes.AddRange( charmap.StringToByteArray( s ) );
                 }
 
                 result.Add( sectionBytes );
@@ -444,6 +448,41 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
+        public override IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements )
+        {
+            StringBuilder virgin = new StringBuilder( MaxLength );
+            Sections.ForEach( s => s.ForEach( t => virgin.Append( t ) ) );
+            string virginString = virgin.ToString();
+
+
+            Dictionary<string, int> result = new Dictionary<string, int>( replacements.Count );
+            foreach ( var v in replacements )
+            {
+                string subString = v.Group;
+                int i = 0;
+                int count = 0;
+                while ( i < virginString.Length )
+                {
+                    char c = virginString[i];
+                    if ( c == '{' )
+                    {
+                        while ( c != '}' )
+                            c = virginString[++i];
+                    }
+                    else if ( i + subString.Length < virginString.Length &&
+                         virginString.IndexOf( subString, i, subString.Length ) == i )
+                    {
+                        count++;
+                        i++;
+                    }
+                    i++;
+                };
+
+                result[v.Group] = count;
+            }
+
+            return result;
+        }
 
 		#endregion Methods 
 

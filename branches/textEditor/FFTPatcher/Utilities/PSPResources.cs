@@ -27,9 +27,11 @@ namespace FFTPatcher
     using Paths = FFTPatcher.Resources.Paths.PSP;
     using System.Xml;
 
-    static class PSPResources
+    public static class PSPResources
     {
 		#region Instance Variables (10) 
+
+        public static IList<string> CharacterSet { get; private set; }
 
         private static string[] abilityAI;
         private static string[] abilityAttributes;
@@ -426,7 +428,21 @@ namespace FFTPatcher
             dict[Resources.Paths.PSP.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemAttributesXML].ToUTF8String();
             dict[Resources.Paths.PSP.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsXML].ToUTF8String();
             dict[Resources.Paths.PSP.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsStringsXML].ToUTF8String();
-         }
+
+            string[] characterSet = new string[2200];
+            PSXResources.CharacterSet.CopyTo( characterSet, 0 );
+            characterSet[0x95] = " ";
+            characterSet[0x880] = "á";
+            characterSet[0x881] = "à";
+            characterSet[0x882] = "é";
+            characterSet[0x883] = "è";
+            characterSet[0x884] = "í";
+            characterSet[0x885] = "ú";
+            characterSet[0x886] = "ù";
+            characterSet[0x887] = "-";
+            characterSet[0x888] = "—";
+            CharacterSet = characterSet.AsReadOnly();
+        }
 
 		#endregion Constructors 
     }

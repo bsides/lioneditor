@@ -51,5 +51,17 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets all patches that this file needs to apply to the ISO for full functionality.
         /// </summary>
         IList<PatchedByteArray> GetAllPatches();
+
+        /// <summary>
+        /// Determines how many bytes would be saved if the specified string could be replaced with a single byte.
+        /// </summary>
+        IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements );
+
+
+        /// <summary>
+        /// Determines if this file will require DTE in order 
+        /// </summary>
+        /// <returns></returns>
+        //bool IsDTENeeded();
     }
 }

@@ -4,22 +4,22 @@ using System.Text;
 
 namespace FFTPatcher
 {
-    public class Set<T>
+    public class Set<T> : IEnumerable<T>
     {
-        private class SetEqualityComparer<T> : IEqualityComparer<T>
+        private class SetEqualityComparer<U> : IEqualityComparer<U>
         {
-            private Comparison<T> comparison;
-            public SetEqualityComparer( Comparison<T> comparison )
+            private Comparison<U> comparison;
+            public SetEqualityComparer( Comparison<U> comparison )
             {
                 this.comparison = comparison;
             }
 
-            public bool Equals( T x, T y )
+            public bool Equals( U x, U y )
             {
                 return comparison( x, y ) == 0;
             }
 
-            public int GetHashCode( T obj )
+            public int GetHashCode( U obj )
             {
                 return obj.GetHashCode();
             }
@@ -38,19 +38,19 @@ namespace FFTPatcher
             backing = new Dictionary<T, bool>( comparer );
         }
 
-        public Set( IList<T> items )
+        public Set( IEnumerable<T> items )
             : this()
         {
             items.ForEach( i => Add( i ) );
         }
 
-        public Set( IList<T> items, IEqualityComparer<T> comparer )
+        public Set( IEnumerable<T> items, IEqualityComparer<T> comparer )
             : this( comparer )
         {
             items.ForEach( i => Add( i ) );
         }
 
-        public Set( IList<T> items, Comparison<T> comparer )
+        public Set( IEnumerable<T> items, Comparison<T> comparer )
             : this( items, new SetEqualityComparer<T>( comparer ) )
         {
         }
@@ -70,6 +70,11 @@ namespace FFTPatcher
             backing[item] = true;
         }
 
+        public void AddRange( IEnumerable<T> items )
+        {
+            items.ForEach( i => Add( i ) );
+        }
+
         public void Remove( T item )
         {
             if ( Contains( item ) )
@@ -82,5 +87,17 @@ namespace FFTPatcher
         {
             return new List<T>( backing.Keys ).AsReadOnly();
         }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return backing.Keys.GetEnumerator() as IEnumerator<T>;
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return backing.Keys.GetEnumerator();
+        }
+
+        public int Count { get { return backing.Count; } }
     }
 }

@@ -185,7 +185,9 @@ namespace FFTPatcher
                     public const string PoachProbabilities = "PSP/bin/PoachProbabilities.bin";
                     public const string SkillSets = "PSP/bin/SkillSetsBin.bin";
                     public const string StatusAttributes = "PSP/bin/StatusAttributes.bin";
-                }                public const string EventNamesXML = "PSP/EventNames.xml";
+                    public const string StoreInventories = "StoreInventories.bin";
+                }
+                public const string EventNamesXML = "PSP/EventNames.xml";
                 public const string FFTPackFilesXML = "PSP/FFTPackFiles.xml";
                 public const string JobsXML = "PSP/Jobs.xml";
                 public const string SkillSetsXML = "PSP/SkillSets.xml";
@@ -226,7 +228,9 @@ namespace FFTPatcher
                     public const string PoachProbabilities = "PSX-US/bin/PoachProbabilities.bin";
                     public const string SkillSets = "PSX-US/bin/SkillSetsBin.bin";
                     public const string StatusAttributes = "PSX-US/bin/StatusAttributes.bin";
-                }                public const string EventNamesXML = "PSX-US/EventNames.xml";
+                    public const string StoreInventories = "StoreInventories.bin";
+                }
+                public const string EventNamesXML = "PSX-US/EventNames.xml";
                 public const string FileList = "PSX-US/FileList.txt";
                 public const string JobsXML = "PSX-US/Jobs.xml";
                 public const string SkillSetsXML = "PSX-US/SkillSets.xml";

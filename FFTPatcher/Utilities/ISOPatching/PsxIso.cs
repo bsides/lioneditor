@@ -76,7 +76,9 @@ namespace FFTPatcher
 
         public static KnownPosition StatusAttributes { get; private set; }
 
-		#endregion Public Properties 
+        public static KnownPosition StoreInventories { get; private set; }
+
+        #endregion Public Properties 
 
 		#region Constructors (1) 
 
@@ -101,6 +103,7 @@ namespace FFTPatcher
             ENTD3 = new KnownPosition( BATTLE.ENTD3_ENT, 0, 81920 );
             ENTD4 = new KnownPosition( BATTLE.ENTD4_ENT, 0, 81920 );
             MoveFindItems = new KnownPosition( BATTLE_BIN, 0x8EE74, 0x800 );
+            StoreInventories = new KnownPosition( WORLD.WORLD_BIN, 0xAD844, 0x200 );
         }
 
 		#endregion Constructors 

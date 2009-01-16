@@ -55,17 +55,18 @@ namespace FFTPatcher.Datatypes
             ElementName.ENTD5, "entd5", 
             ElementName.Font, "font", 
             ElementName.FontWidths, "fontWidths",
-            ElementName.MoveFindItems, "moveFindItems" } );
+            ElementName.MoveFindItems, "moveFindItems",
+            ElementName.StoreInventories, "storeInventories" } );
         private static string[] elementNameStrings = new string[] {
             "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
             "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths", "moveFindItems" };
+            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths", "moveFindItems", "storeInventories" };
 
 		#endregion Instance Variables 
 
 		#region Public Properties (15) 
 
-public static AllAbilities Abilities { get; private set; }
+        public static AllAbilities Abilities { get; private set; }
 
         public static AllActionMenus ActionMenus { get; private set; }
 
@@ -94,6 +95,8 @@ public static AllAbilities Abilities { get; private set; }
         public static AllSkillSets SkillSets { get; private set; }
 
         public static AllStatusAttributes StatusAttributes { get; private set; }
+
+        public static AllStoreInventories StoreInventories { get; private set; }
 
 		#endregion Public Properties 
 
@@ -287,7 +290,8 @@ public static AllAbilities Abilities { get; private set; }
                     null,
                     PsxIso.GetBlock( stream, PsxIso.Font ),
                     PsxIso.GetBlock( stream, PsxIso.FontWidths ),
-                    PsxIso.GetBlock( stream, PsxIso.MoveFindItems ) );
+                    PsxIso.GetBlock( stream, PsxIso.MoveFindItems ),
+                    PsxIso.GetBlock( stream, PsxIso.StoreInventories ) );
                 FireDataChangedEvent();
             }
         }
@@ -341,6 +345,7 @@ public static AllAbilities Abilities { get; private set; }
                     Font = new FFTFont( PSPResources.FontBin, PSPResources.FontWidthsBin );
                     ENTDs = new AllENTDs( PSPResources.ENTD1, PSPResources.ENTD2, PSPResources.ENTD3, PSPResources.ENTD4, PSPResources.ENTD5 );
                     MoveFind = new AllMoveFindItems( Context, PSPResources.MoveFind, new AllMoveFindItems( Context, PSPResources.MoveFind ) );
+                    StoreInventories = new AllStoreInventories( Context, PSPResources.StoreInventoriesBin, PSPResources.StoreInventoriesBin );
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
@@ -359,6 +364,7 @@ public static AllAbilities Abilities { get; private set; }
                     Font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
                     ENTDs = new AllENTDs( PSXResources.ENTD1, PSXResources.ENTD2, PSXResources.ENTD3, PSXResources.ENTD4 );
                     MoveFind = new AllMoveFindItems( Context, PSXResources.MoveFind, new AllMoveFindItems( Context, PSXResources.MoveFind ) );
+                    StoreInventories = new AllStoreInventories( Context, PSXResources.StoreInventoriesBin, PSXResources.StoreInventoriesBin );
                     break;
                 default:
                     throw new ArgumentException();
@@ -427,7 +433,8 @@ public static AllAbilities Abilities { get; private set; }
             byte[] poach,
             byte[] entd1, byte[] entd2, byte[] entd3, byte[] entd4, byte[] entd5,
             byte[] font, byte[] fontWidths,
-            byte[] moveFind )
+            byte[] moveFind,
+            byte[] inventories )
         {
             try
             {
@@ -448,7 +455,7 @@ public static AllAbilities Abilities { get; private set; }
                 var ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
                 var Font = new FFTFont( font, fontWidths );
                 var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.MoveFind : PSXResources.MoveFind ) );
-
+                var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
                 FFTPatch.Abilities = Abilities;
                 FFTPatch.Items = Items;
                 FFTPatch.ItemAttributes = ItemAttributes;
@@ -463,6 +470,7 @@ public static AllAbilities Abilities { get; private set; }
                 FFTPatch.ENTDs = ENTDs;
                 FFTPatch.Font = Font;
                 FFTPatch.MoveFind = MoveFind;
+                FFTPatch.StoreInventories = StoreInventories;
             }
             catch( Exception )
             {
@@ -501,7 +509,8 @@ public static AllAbilities Abilities { get; private set; }
                     psp ? GetZipEntry( file, elementNames[ElementName.ENTD5] ) : null,
                     GetZipEntry( file, elementNames[ElementName.Font] ),
                     GetZipEntry( file, elementNames[ElementName.FontWidths] ),
-                    GetZipEntry( file, elementNames[ElementName.MoveFindItems] ) );
+                    GetZipEntry( file, elementNames[ElementName.MoveFindItems] ),
+                    GetZipEntry( file, elementNames[ElementName.StoreInventories] ) );
             }
         }
 
@@ -535,11 +544,12 @@ public static AllAbilities Abilities { get; private set; }
             byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? PSPResources.FontBin : PSXResources.FontBin );
             byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? PSPResources.FontWidthsBin : PSXResources.FontWidthsBin );
             byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? PSPResources.MoveFind : PSXResources.MoveFind );
+            byte[] inventories = GetFromNodeOrReturnDefault( rootNode, "storeInventories", psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
 
             LoadDataFromBytes( abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes,
                 jobs, jobLevels, skillSets, monsterSkills, actionMenus, statusAttributes,
                 inflictStatuses, poach, entd1, entd2, entd3, entd4, entd5, font,
-                fontWidths, moveFind );
+                fontWidths, moveFind, inventories );
         }
 
         private static string ReadString( FileStream stream, int length )
@@ -590,6 +600,7 @@ public static AllAbilities Abilities { get; private set; }
                 WriteFileToZip( stream, elementNames[ElementName.Font], Font.ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.FontWidths], Font.ToWidthsByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.MoveFindItems], MoveFind.ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.StoreInventories], StoreInventories.ToByteArray() );
             }
         }
 
@@ -624,9 +635,11 @@ public static AllAbilities Abilities { get; private set; }
             ENTD5,
             Font,
             FontWidths,
-            MoveFindItems
+            MoveFindItems,
+            StoreInventories
         }
-public static event EventHandler DataChanged;
+
+        public static event EventHandler DataChanged;
 
         public class LoadPatchException : Exception
         {

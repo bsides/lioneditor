@@ -69,6 +69,7 @@ namespace FFTPatcher.Editors
             jobLevelsEditor1.UpdateView( FFTPatch.JobLevels );
             entdEditor1.UpdateView( FFTPatch.ENTDs );
             allMoveFindItemsEditor1.UpdateView( FFTPatch.MoveFind );
+            allStoreInventoryEditor1.UpdateView( FFTPatch.StoreInventories );
             fontEditor1.FFTFont = FFTPatch.Font;
             codeCreator1.UpdateView();
             codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
@@ -106,5 +107,6 @@ namespace FFTPatcher.Editors
         }
 
 		#endregion Private Methods 
+
     }
 }

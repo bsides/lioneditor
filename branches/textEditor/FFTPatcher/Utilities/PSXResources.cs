@@ -35,6 +35,28 @@ namespace FFTPatcher
         private static string[] abilityEffects;
         private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
+
+        private static Dictionary<FFTPatcher.Datatypes.Shops, string> storeNames = new Dictionary<FFTPatcher.Datatypes.Shops, string>
+        {
+            { FFTPatcher.Datatypes.Shops.Bervenia, "Bervenia Free City" },
+            { FFTPatcher.Datatypes.Shops.Dorter, "Dorter Trade City" },
+            { FFTPatcher.Datatypes.Shops.Gariland, "Gariland Magic City" },
+            { FFTPatcher.Datatypes.Shops.Goland, "Goland Coal City" },
+            { FFTPatcher.Datatypes.Shops.Goug, "Goug Machine City" },
+            { FFTPatcher.Datatypes.Shops.Igros, "Igros Castle" },
+            { FFTPatcher.Datatypes.Shops.Lesalia, "Lesalia Imperial Castle" },
+            { FFTPatcher.Datatypes.Shops.Limberry, "Limberry Castle" },
+            { FFTPatcher.Datatypes.Shops.Lionel, "Lionel Castle" },
+            { FFTPatcher.Datatypes.Shops.None, "Unknown" },
+            { FFTPatcher.Datatypes.Shops.Riovanes, "Riovanes Castle" },
+            { FFTPatcher.Datatypes.Shops.Warjilis, "Warjilis Trade City" },
+            { FFTPatcher.Datatypes.Shops.Yardrow, "Yardow Fort City" },
+            { FFTPatcher.Datatypes.Shops.Zaland, "Zaland Fort City" },
+            { FFTPatcher.Datatypes.Shops.Zarghidas, "Zarghidas Trade City" },
+            { FFTPatcher.Datatypes.Shops.Zeltennia, "Zeltennia Castle" }
+        };
+        private static IDictionary<FFTPatcher.Datatypes.Shops, string> readOnlyStoreNames;
+
         private static string[] mapNames = new string[128] {
             "(No name)",
             "At main gate of Igros Castle",
@@ -280,6 +302,19 @@ namespace FFTPatcher
             }
         }
 
+        public static IDictionary<FFTPatcher.Datatypes.Shops, string> ShopNames
+        {
+            get
+            {
+                if( readOnlyStoreNames == null )
+                {
+                    readOnlyStoreNames = new FFTPatcher.Datatypes.ReadOnlyDictionary<FFTPatcher.Datatypes.Shops, string>( storeNames );
+                }
+
+                return readOnlyStoreNames;
+            }
+        }
+
         public static byte[] MonsterSkillsBin { get { return dict[Paths.Binaries.MonsterSkills] as byte[]; } }
 
         public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
@@ -337,12 +372,15 @@ namespace FFTPatcher
 
         public static string StatusNames { get { return dict[Paths.StatusNamesXML] as string; } }
 
-		#endregion Public Properties 
+        public static byte[] StoreInventoriesBin { get { return dict[Paths.Binaries.StoreInventories] as byte[]; } }
+
+        #endregion Public Properties 
 
 		#region Constructors (1) 
 
         static PSXResources()
         {
+            dict[Resources.Paths.PSX.Binaries.StoreInventories] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories];
             dict[Resources.Paths.PSX.Binaries.ENTD1] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1];
             dict[Resources.Paths.PSX.Binaries.ENTD2] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD2];
             dict[Resources.Paths.PSX.Binaries.ENTD3] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD3];
@@ -391,7 +429,7 @@ namespace FFTPatcher
                 "バ","パ","ヒ","ビ","ピ","フ","ブ","プ","ヘ","ベ","ペ","ホ","ボ","ポ","マ","ミ", 
                 "ム","メ","モ","ャ","ヤ","ュ","ユ","ョ","ヨ","ラ","リ","ル","レ","ロ","ヮ","ワ", 
                 "☇","*","ヲ","ン","ヴ","ヵ","ヶ","—","「","、","！","⋯",".","－","＋","×", 
-                "÷","∩","∪","＝","≠","＞","＜","≧","≦","*"," ","*","*","*","*","*", 
+                "÷","∩","∪","＝","≠","＞","＜","≧","≦","*","*","*","*","*","*","*", 
                 "*","*","*","剣","一","乙","七","丁","九","了","憎","人","入","八","刀","力", 
                 "十","下","三","上","丈","万","与","久","丸","乞","也","亡","凡","刃","千","飯", 
                 "土","士","夕","大","女","子","寸","小","山","川","工","己","干","弓","々","油", 

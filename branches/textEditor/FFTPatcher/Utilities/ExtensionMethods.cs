@@ -46,6 +46,22 @@ namespace FFTPatcher
             return new ReadOnlyCollection<T>( list );
         }
 
+        public static void RemoveAll<T, U>( this IDictionary<T, U> dict, Predicate<T> criteria )
+        {
+            Set<T> toRemove = new Set<T>();
+            foreach ( T key in dict.Keys )
+            {
+                if ( criteria( key ) )
+                {
+                    toRemove.Add( key );
+                }
+            }
+            foreach ( T key in toRemove.GetElements() )
+            {
+                dict.Remove( key );
+            }
+        }
+
         public static void Sort<T>( this IList<T> list ) where T : IComparable<T>
         {
             Utilities.SortList( list );
@@ -54,6 +70,20 @@ namespace FFTPatcher
         public static void Sort<T>( this IList<T> list, Comparison<T> comparer )
         {
             Utilities.SortList( list, comparer );
+        }
+
+        public static IList<T> Join<T>( this IEnumerable<IEnumerable<T>> lists )
+        {
+            List<T> result = new List<T>();
+            lists.ForEach( l => result.AddRange( l ) );
+            return result;
+        }
+
+        public static IList<T> Join<T>( this IList<IList<T>> lists )
+        {
+            List<T> result = new List<T>();
+            lists.ForEach( l => result.AddRange( l ) );
+            return result;
         }
 
         /// <summary>
@@ -164,6 +194,26 @@ namespace FFTPatcher
 
             int count = list.Count;
             for( int i = 0; i < count; i++ ) action( list[i] );
+        }
+
+        public static void ForEach<T>( this IEnumerable<T> list, Action<T> action )
+        {
+            if ( action == null )
+            {
+                throw new ArgumentNullException( "action" );
+            }
+
+            foreach ( T item in list )
+            {
+                action( item );
+            }
+        }
+
+        public static string Join( this IList<string> strings, string joiner )
+        {
+            StringBuilder result = new StringBuilder();
+            strings.ForEach( s => result.Append( s + joiner ) );
+            return result.ToString();
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace FFTPatcher.TextEditor.Files
     /// <summary>
     /// An <see cref="AbstractStringSectioned"/> whose text can be compressed.
     /// </summary>
-    public abstract class AbstractCompressedFile : AbstractStringSectioned, ICompressed
+    public abstract class AbstractCompressedFile : AbstractStringSectioned
     {
 
         #region Properties (2)
@@ -73,24 +73,11 @@ namespace FFTPatcher.TextEditor.Files
 
         #endregion Constructors
 
-        #region Events (2)
-
-        /// <summary>
-        /// Occurs when a compression operation has finished.
-        /// </summary>
-        public event EventHandler<CompressionEventArgs> CompressionFinished;
-
-        /// <summary>
-        /// Occurs when the progress of a compresison operation has changed.
-        /// </summary>
-        public event EventHandler<CompressionEventArgs> ProgressChanged;
-
-        #endregion Events
 
         #region Methods (5)
 
 
-        private IList<byte> BuildHeaderFromSectionOffsets( IList<UInt32> offsets )
+        private static IList<byte> BuildHeaderFromSectionOffsets( IList<UInt32> offsets )
         {
             List<byte> result = new List<byte>( 0x80 );
             foreach( UInt32 offset in offsets )
@@ -106,50 +93,54 @@ namespace FFTPatcher.TextEditor.Files
             return result.Sub( 0, 0x7F );
         }
 
-        private void FireCompressionFinishedEvent( IList<byte> result )
-        {
-            if( CompressionFinished != null )
-            {
-                CompressionFinished( this, new CompressionEventArgs( 100, result ) );
-            }
-        }
-
-        private void FireProgressChangedEvent( int progress )
-        {
-            if( ProgressChanged != null )
-            {
-                ProgressChanged( this, new CompressionEventArgs( progress ) );
-            }
-        }
-
         /// <summary>
         /// Compresses this instance.
         /// </summary>
-        public IList<byte> Compress()
+        private IList<byte> Compress( out IList<UInt32> offsets )
         {
-            TextUtilities.ProgressCallback p = progress => FireProgressChangedEvent( progress );
+            var result = Compress( Sections, out offsets );
 
-            TextUtilities.CompressionResult r = TextUtilities.Compress( this, ExcludedEntries, p );
+            return result;
+        }
 
-            List<UInt32> offsets = new List<UInt32>( 32 );
+        private IList<byte> Compress( IList<IList<string>> sections, out IList<UInt32> offsets )
+        {
+            return Compress( sections, out offsets, CharMap );
+        }
+
+        private IList<byte> Compress( IList<IList<string>> strings, out IList<UInt32> offsets, GenericCharMap map )
+        {
+            TextUtilities.CompressionResult r = TextUtilities.Compress( strings, map, ExcludedEntries );
+
+            offsets = new List<UInt32>( 32 );
             offsets.Add( 0 );
             int pos = 0;
-            for( int i = 0; i < r.SectionLengths.Count; i++ )
+            for ( int i = 0; i < r.SectionLengths.Count; i++ )
             {
                 pos += r.SectionLengths[i];
                 offsets.Add( (UInt32)pos );
             }
 
-            List<byte> result = new List<byte>( 0x80 + r.Bytes.Count );
-            result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
-            result.AddRange( r.Bytes );
+            return r.Bytes.AsReadOnly();
+        }
 
-            FireCompressionFinishedEvent( result );
+        private IList<byte> Compress( IDictionary<string, byte> dteTable, out IList<UInt32> offsets )
+        {
+            IList<IList<string>> strings = new List<IList<string>>( Sections.Count );
+            foreach ( IList<string> sec in Sections )
+            {
+                IList<string> s = new List<string>( sec.Count );
+                s.AddRange( sec );
+
+                TextUtilities.DoDTEEncoding( s, dteTable );
+
+                strings.Add( s );
+            }
+
+            var result = Compress( strings, out offsets );
 
             return result;
         }
-
-
 
         /// <summary>
         /// Gets a list of bytes that represent this file in its on-disc form.
@@ -157,9 +148,45 @@ namespace FFTPatcher.TextEditor.Files
         /// <returns></returns>
         protected override IList<byte> ToFinalBytes()
         {
-            return Compress();
+            IList<UInt32> offsets;
+            IList<byte> compressedBytes = Compress( out offsets );
+            List<byte> result = new List<byte>( 0x80 + compressedBytes.Count );
+            result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
+            result.AddRange( compressedBytes );
+            return result.AsReadOnly();
         }
 
+        protected override IList<byte> ToFinalBytes( IDictionary<string, byte> dteTable )
+        {
+            IList<UInt32> offsets;
+            IList<byte> compressedBytes = Compress( dteTable, out offsets );
+            List<byte> result = new List<byte>( 0x80 + compressedBytes.Count );
+            result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
+            result.AddRange( compressedBytes );
+            return result.AsReadOnly();
+        }
+
+        public override IList<IList<byte>> GetSectionByteArrays()
+        {
+            return GetSectionByteArrays( Sections, CharMap );
+        }
+
+        public override IList<IList<byte>> GetSectionByteArrays( IList<IList<string>> sections, GenericCharMap charmap )
+        {
+            IList<IList<byte>> result = new IList<byte>[NumberOfSections];
+            IList<UInt32> offsets;
+            IList<byte> compression = Compress( sections, out offsets, charmap );
+            uint pos = 0;
+
+            offsets = new List<UInt32>( offsets );
+            offsets.Add( (uint)compression.Count );
+
+            for ( int i = 0; i < NumberOfSections; i++ )
+            {
+                result[i] = compression.Sub( (int)offsets[i], (int)offsets[i + 1] - 1 );
+            }
+            return result;
+        }
 
         #endregion Methods
 

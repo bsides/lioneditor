@@ -54,5 +54,13 @@ namespace FFTPatcher.TextEditor.Files.PSP
             }
             return result;
         }
+
+        public override IList<PatchedByteArray> GetAllPatches( IDictionary<string, byte> dteTable )
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray( dteTable );
+            Locations.ForEach( kvp => result.Add( new PatchedByteArray( (FFTPack.Files)kvp.Key, kvp.Value, bytes ) ) );
+            return result;
+        }
     }
 }

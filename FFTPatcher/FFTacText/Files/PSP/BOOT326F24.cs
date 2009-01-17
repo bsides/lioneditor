@@ -136,7 +136,14 @@ namespace FFTPatcher.TextEditor.Files.PSP
             return result;
         }
 
-		#endregion Methods 
+        public override IList<PatchedByteArray> GetAllPatches( IDictionary<string, byte> dteTable )
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray( dteTable );
+            Locations.ForEach( kvp => result.Add( new PatchedByteArray( (PspIso.Sectors)kvp.Key, kvp.Value, bytes ) ) );
+            return result;
+        }
+        #endregion Methods 
 
     }
 

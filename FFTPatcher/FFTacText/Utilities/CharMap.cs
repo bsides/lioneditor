@@ -195,15 +195,7 @@ namespace FFTPatcher.TextEditor
                 }
                 else
                 {
-                    string t = s[i].ToString();
-                    if ( !Reverse.ContainsKey( t ) )
-                    {
-                        return new byte[0];
-                    }
-                    else
-                    {
-                        val = Reverse[s[i].ToString()];
-                    }
+                    val = Reverse[s[i].ToString()];
                 }
                 if( val >= 0 )
                 {

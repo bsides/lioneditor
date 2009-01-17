@@ -299,11 +299,30 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-        public override IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements )
+        public override IDictionary<string, int> CalculateBytesSaved( Set<string> replacements )
         {
+            System.Diagnostics.Debug.Print( "FIX THIS" );
+
             Dictionary<string, int> result = new Dictionary<string, int>( replacements.Count );
-            replacements.ForEach( g => result[g.Group] = 0 );
+
+            replacements.ForEach( s => result[s] = 0 );
+
             return result;
+        }
+
+        public override bool IsDTENeeded()
+        {
+            return false;
+        }
+
+        public override Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs )
+        {
+            return new Set<string>();
+        }
+
+        public override byte[] ToByteArray( IDictionary<string, byte> dteTable )
+        {
+            return ToByteArray();
         }
 
 		#endregion Methods 

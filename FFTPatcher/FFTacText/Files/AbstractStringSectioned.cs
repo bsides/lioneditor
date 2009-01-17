@@ -324,18 +324,28 @@ namespace FFTPatcher.TextEditor.Files
         /// <summary>
         /// Gets the byte arrays for each section.
         /// </summary>
-        public IList<IList<byte>> GetSectionByteArrays()
+        public IList<IList<byte>> GetSectionByteArraysUncompressed()
         {
-            return GetSectionByteArrays( Sections, CharMap );
+            return GetSectionByteArraysUncompressed( Sections, CharMap );
         }
 
-        public static IList<IList<byte>> GetSectionByteArrays( IList<IList<string>> sections, GenericCharMap charmap )
+        public virtual IList<IList<byte>> GetSectionByteArrays( IList<IList<string>> sections, GenericCharMap charmap )
+        {
+            return GetSectionByteArraysUncompressed( sections, charmap );
+        }
+
+        public virtual IList<IList<byte>> GetSectionByteArrays()
+        {
+            return GetSectionByteArraysUncompressed();
+        }
+
+        public IList<IList<byte>> GetSectionByteArraysUncompressed( IList<IList<string>> sections, GenericCharMap charmap )
         {
             IList<IList<byte>> result = new List<IList<byte>>( sections.Count );
-            foreach ( IList<string> section in sections )
+            foreach( IList<string> section in sections )
             {
                 List<byte> sectionBytes = new List<byte>();
-                foreach ( string s in section )
+                foreach( string s in section )
                 {
                     sectionBytes.AddRange( charmap.StringToByteArray( s ) );
                 }
@@ -345,6 +355,7 @@ namespace FFTPatcher.TextEditor.Files
 
             return result;
         }
+
 
         /// <summary>
         /// Generates an object from its XML representation.
@@ -370,9 +381,20 @@ namespace FFTPatcher.TextEditor.Files
         /// </summary>
         public override byte[] ToByteArray()
         {
-            IList<byte> result = ToFinalBytes();
+            IList<byte> result = new List<byte>( ToFinalBytes() );
 
             if( result.Count < MaxLength )
+            {
+                result.AddRange( new byte[MaxLength - result.Count] );
+            }
+
+            return result.ToArray();
+        }
+
+        public override byte[] ToByteArray( IDictionary<string, byte> dteTable )
+        {
+            IList<byte> result = new List<byte>( ToFinalBytes( dteTable ) );
+            if ( result.Count < MaxLength )
             {
                 result.AddRange( new byte[MaxLength - result.Count] );
             }
@@ -415,6 +437,11 @@ namespace FFTPatcher.TextEditor.Files
             return ToUncompressedBytes();
         }
 
+        protected virtual IList<byte> ToFinalBytes( IDictionary<string, byte> dteTable )
+        {
+            return ToUncompressedBytes( dteTable );
+        }
+
         /// <summary>
         /// Gets a list of indices for named sections.
         /// </summary>
@@ -423,24 +450,38 @@ namespace FFTPatcher.TextEditor.Files
             return new List<NamedSection>();
         }
 
-        /// <summary>
-        /// Creates a collection of bytes representing the uncompressed contents of this file.
-        /// </summary>
-        public virtual IList<byte> ToUncompressedBytes()
+        public virtual IList<byte> ToUncompressedBytes( IDictionary<string, byte> dteTable )
         {
-            IList<IList<byte>> byteSections = GetSectionByteArrays();
+            IList<IList<string>> strings = new List<IList<string>>( Sections.Count );
+            foreach ( IList<string> sec in Sections )
+            {
+                IList<string> s = new List<string>( sec.Count );
+                s.AddRange( sec );
 
+                TextUtilities.DoDTEEncoding( s, dteTable );
+
+                strings.Add( s );
+            }
+
+            return ToUncompressedBytes( GetSectionByteArraysUncompressed( strings, CharMap ) );
+        }
+
+        private static IList<byte> ToUncompressedBytes( IList<IList<byte>> byteSections )
+        {
+            int numberOfSections = byteSections.Count;
             List<byte> result = new List<byte>();
             result.AddRange( new byte[] { 0x00, 0x00, 0x00, 0x00 } );
             int old = 0;
-            for( int i = 0; i < NumberOfSections - 1; i++ )
+
+            for ( int i = 0; i < numberOfSections - 1; i++ )
             {
-                result.AddRange( ((UInt32)(byteSections[i].Count + old)).ToBytes() );
+                result.AddRange( ( (UInt32)( byteSections[i].Count + old ) ).ToBytes() );
                 old += byteSections[i].Count;
             }
-            result.AddRange( new byte[dataStart - NumberOfSections * 4] );
+            
+            result.AddRange( new byte[dataStart - numberOfSections * 4] );
 
-            foreach( List<byte> bytes in byteSections )
+            foreach ( List<byte> bytes in byteSections )
             {
                 result.AddRange( bytes );
             }
@@ -448,40 +489,90 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
-        public override IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements )
+        /// <summary>
+        /// Creates a collection of bytes representing the uncompressed contents of this file.
+        /// </summary>
+        public virtual IList<byte> ToUncompressedBytes()
+        {
+            return ToUncompressedBytes( GetSectionByteArraysUncompressed() );
+        }
+
+        public override IDictionary<string, int> CalculateBytesSaved( Set<string> replacements )
         {
             StringBuilder virgin = new StringBuilder( MaxLength );
             Sections.ForEach( s => s.ForEach( t => virgin.Append( t ) ) );
             string virginString = virgin.ToString();
 
+            return TextUtilities.GetPairAndTripleCounts( virginString, replacements );
+        }
 
-            Dictionary<string, int> result = new Dictionary<string, int>( replacements.Count );
-            foreach ( var v in replacements )
+        public override bool IsDTENeeded()
+        {
+            return EstimatedLength >= MaxLength;
+        }
+
+        protected IList<IList<string>> GetCopyOfSections()
+        {
+            string[][] result = new string[Sections.Count][];
+            for( int i = 0; i < Sections.Count; i++ )
             {
-                string subString = v.Group;
-                int i = 0;
-                int count = 0;
-                while ( i < virginString.Length )
-                {
-                    char c = virginString[i];
-                    if ( c == '{' )
-                    {
-                        while ( c != '}' )
-                            c = virginString[++i];
-                    }
-                    else if ( i + subString.Length < virginString.Length &&
-                         virginString.IndexOf( subString, i, subString.Length ) == i )
-                    {
-                        count++;
-                        i++;
-                    }
-                    i++;
-                };
+                result[i] = new string[Sections[i].Count];
+                Sections[i].CopyTo( result[i], 0 );
+            }
+            return result;
+        }
 
-                result[v.Group] = count;
+        public override Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs )
+        {
+            IList<IList<string>> sections = GetCopyOfSections();
+            IList<byte> bytes = GetSectionByteArrays( sections, CharMap ).Join();
+
+            IDictionary<string, byte> result = new Dictionary<string, byte>();
+            IList<string> currentPairsList = currentPairs.GetElements();
+
+            StringBuilder sb = new StringBuilder( MaxLength );
+            Sections.ForEach( s => s.ForEach( t => sb.Append( t ) ) );
+
+            var dict = TextUtilities.GetPairAndTripleCounts( sb.ToString(), replacements );
+
+            int bytesNeeded = bytes.Count - (MaxLength - dataStart);
+
+            int j = 0;
+
+
+            while ( bytesNeeded > 0 && j < currentPairsList.Count )
+            {
+                if( dict.ContainsKey( currentPairsList[j] ) )
+                {
+                    result[currentPairsList[j]] = 0x00;
+                    TextUtilities.DoDTEEncoding( sections, result );
+                    bytes = GetSectionByteArrays( sections, CharMap ).Join();
+
+                    bytesNeeded = bytes.Count - (MaxLength - dataStart);
+                }
+                j++;
             }
 
-            return result;
+            j = 0;
+
+            var l = new List<KeyValuePair<string, int>>( dict );
+            //l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
+
+            while ( bytesNeeded > 0 && j < l.Count )
+            {
+                result[l[j].Key] = 0x00;
+                TextUtilities.DoDTEEncoding( sections, result );
+                bytes = GetSectionByteArrays( sections, CharMap ).Join();
+                bytesNeeded = bytes.Count - (MaxLength - dataStart);
+                j++;
+            }
+
+            if ( bytesNeeded > 0 )
+            {
+                return null;
+            }
+
+            return new Set<string>( result.Keys );
         }
 
 		#endregion Methods 

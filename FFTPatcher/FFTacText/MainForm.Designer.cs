@@ -70,7 +70,6 @@ namespace FFTPatcher.TextEditor
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
             this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
-            this.compressedStringSectionedEditor = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
             this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             separator1 = new System.Windows.Forms.MenuItem();
@@ -190,15 +189,6 @@ namespace FFTPatcher.TextEditor
             this.stringSectionedEditor.Strings = null;
             this.stringSectionedEditor.TabIndex = 0;
             // 
-            // compressedStringSectionedEditor
-            // 
-            this.compressedStringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compressedStringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.compressedStringSectionedEditor.Name = "compressedStringSectionedEditor";
-            this.compressedStringSectionedEditor.Size = new System.Drawing.Size( 543, 374 );
-            this.compressedStringSectionedEditor.Strings = null;
-            this.compressedStringSectionedEditor.TabIndex = 1;
-            // 
             // patchPsxBackgroundWorker
             // 
             this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
@@ -222,7 +212,6 @@ namespace FFTPatcher.TextEditor
             this.Controls.Add( this.progressBar );
             this.Controls.Add( this.partitionEditor );
             this.Controls.Add( this.stringSectionedEditor );
-            this.Controls.Add( this.compressedStringSectionedEditor );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTacText Editor";
@@ -237,7 +226,6 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem psxMenuItem;
         private System.Windows.Forms.MenuItem pspMenuItem;
         private StringSectionedEditor stringSectionedEditor;
-        private CompressedStringSectionedEditor compressedStringSectionedEditor;
         private FFTPatcher.TextEditor.Editors.PartitionEditor partitionEditor;
         private System.Windows.Forms.MenuItem newPsxMenuItem;
         private System.Windows.Forms.MenuItem newPspMenuItem;

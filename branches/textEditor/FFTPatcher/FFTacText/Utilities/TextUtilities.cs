@@ -566,10 +566,10 @@ namespace FFTPatcher.TextEditor
         /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
         /// <param name="callback">The progress callback.</param>
-        public static CompressionResult Compress<T>( T file, ProgressCallback callback ) where T : IStringSectioned, ICompressed
-        {
-            return Compress( file, null, callback );
-        }
+        //public static CompressionResult Compress<T>( T file, ProgressCallback callback ) where T : IStringSectioned, ICompressed
+        //{
+        //    return Compress( file, null, callback );
+        //}
 
         /// <summary>
         /// Compresses the specified file.
@@ -579,27 +579,24 @@ namespace FFTPatcher.TextEditor
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
         /// <param name="callback">The progress callback.</param>
-        public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections, ProgressCallback callback ) where T : IStringSectioned, ICompressed
+        public static CompressionResult Compress( IList<IList<string>> sections, GenericCharMap charmap, IDictionary<int, IList<int>> ignoreSections )
         {
             int length = 0;
-            foreach( IList<string> section in file.Sections )
-            {
-                length += file.CharMap.StringsToByteArray( section ).Length;
-            }
+            sections.ForEach( s => length += charmap.StringsToByteArray( s ).Length );
 
             byte[] result = new byte[length];
-            int[] lengths = new int[file.Sections.Count];
+            int[] lengths = new int[sections.Count];
 
             int pos = 0;
-            for( int section = 0; section < file.Sections.Count; section++ )
+            for( int section = 0; section < sections.Count; section++ )
             {
                 int oldPos = pos;
 
                 if( ignoreSections != null && ignoreSections.ContainsKey( section ) )
                 {
-                    for( int entry = 0; entry < file.Sections[section].Count; entry++ )
+                    for( int entry = 0; entry < sections[section].Count; entry++ )
                     {
-                        byte[] bytes = file.CharMap.StringToByteArray( file.Sections[section][entry] );
+                        byte[] bytes = charmap.StringToByteArray( sections[section][entry] );
                         if( ignoreSections[section].Contains( entry ) )
                         {
                             Array.Copy( bytes, 0, result, pos, bytes.Length );
@@ -613,15 +610,11 @@ namespace FFTPatcher.TextEditor
                 }
                 else
                 {
-                    CompressSection( file.CharMap.StringsToByteArray( file.Sections[section] ), result, ref pos );
+                    CompressSection( charmap.StringsToByteArray( sections[section] ), result, ref pos );
                 }
 
                 lengths[section] = pos - oldPos;
 
-                if( callback != null )
-                {
-                    callback( section * 100 / file.Sections.Count );
-                }
             }
 
             return new CompressionResult( result.Sub( 0, pos - 1 ), lengths );
@@ -632,10 +625,10 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
-        public static CompressionResult Compress<T>( T file ) where T : IStringSectioned, ICompressed
-        {
-            return Compress( file, null, null );
-        }
+        //public static CompressionResult Compress<T>( T file ) where T : IStringSectioned, ICompressed
+        //{
+        //    return Compress( file, null, null );
+        //}
 
         /// <summary>
         /// Compresses the specified file.
@@ -644,10 +637,10 @@ namespace FFTPatcher.TextEditor
         /// <param name="file">The file to compress.</param>
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
-        public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections ) where T : IStringSectioned, ICompressed
-        {
-            return Compress( file, ignoreSections, null );
-        }
+        //public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections ) where T : IStringSectioned, ICompressed
+        //{
+        //    return Compress( file, ignoreSections, null );
+        //}
 
         /// <summary>
         /// Decompresses the specified section.
@@ -778,84 +771,85 @@ namespace FFTPatcher.TextEditor
             return result.ToArray();
         }
 
-        public static IList<GroupableSet> GetGroups( GenericCharMap charmap, IList<string> characterSet, IList<int> characterWidths )
+        public static Set<string> GetGroups( GenericCharMap charmap, IList<string> characterSet, IList<int> characterWidths )
         {
             const bool alphaNumOnly = true;
-            const string allowedAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,=";
-            System.Diagnostics.Debug.Assert( allowedAlphaNum.Length == 10 + 26 + 26 + 9 );
+            const string allowedAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,=/";
+            System.Diagnostics.Debug.Assert( allowedAlphaNum.Length == 10 + 26 + 26 + 10 );
             Dictionary<string,string> allowedPairs = new Dictionary<string,string> {
-              { "0", "0123456789 .," }, // 0
-              { "1", "0123456789!? .," }, // 1
-              { "2", "0123456789!? .," }, // 2
-              { "3", "0123456789!? .," },
-              { "4", "0123456789!? .," },
-              { "5", "0123456789 .," },
-              { "6", "0123456789 .," },
-              { "7", "0123456789 .," },
-              { "8", "0123456789 .," },
-              { "9", "0123456789 .," }, // 9
-              { "A", "bcdfghijklmnpqrstuvwxyz!?\"' .,=" }, // A
-              { "B", "aeilmorsuy!?\"' .,=" },
-              { "C", "aehiklorstu!?\"' .,=" },
-              { "D", "aeghilnorstuwy!?\"' .,=" }, // D
-              { "E", "abcdefghijklmnopqrstuvwxyz!?\"' .,=" },
-              { "F", "aeiorstuy!?\"' .,=" },
-              { "G", "adehilnorsu!?\"' .,=" },
-              { "H", "aeiou!?\"' .,=" },
-              { "I", "cdefghjklmnopqrstuvwxyz!?\"' .,=" },
-              { "J", "aeious!?\"' .,=" }, // J
-              { "K", "aeilostuy!?\"' .,=" },
-              { "L", "aehiou!?\"' .,=" },
-              { "M", "aeiou!?\"' .,=" },
-              { "N", "aeiou!?\"' .,=" },
-              { "O", "abcdefghijklmnprstuvwxyz!?\"' .,=" },
-              { "P", "aehioruy!?\"' .,=" }, // P
-              { "Q", "u!?\"' .,=" },
-              { "R", "aehiouwy!?\"' .,=" },
-              { "S", "acdefghiklmnopqrtuwyz!?\"' .,=" },
-              { "T", "aehiouwy!?\"' .,=" },
-              { "U", "ghlmnoprst!?\"' .,=" },
-              { "V", "aeiouy!?\"' .,=" }, // V
-              { "W", "aehiouy!?\"' .,=" },
-              { "X", "aeiou!?\"' .,=" },
-              { "Y", "aeiou!?\"' .,=" },
-              { "Z", "aeiou!?\"' .,=" }, // Z
-              { "a", "bcdefghijklmnopqrstuvwxyz!?:\"' .,=" }, // a
-              { "b", "abeilmorsuy!?:\"' .,=" },
-              { "c", "acehiklorstu!?:\"' .,=" },
-              { "d", "adeghilnorstuwy!?:\"' .,=" }, // d
-              { "e", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "f", "aefiorstuy!?:\"' .,=" },
-              { "g", "adeghilnorsu!?:\"' .,=" },
-              { "h", "acdegilmnoprstuw!?:\"' .,=" },
-              { "i", "abcdefghjklmnopqrstuvwxyz!?:\"' .,=" },
-              { "j", "aeiosuy!?:\"' .,=" }, // j
-              { "k", "aeiklorsuwy!?:\"' .,=" },
-              { "l", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "m", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "n", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "o", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "p", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" }, // p
-              { "q", "u!?:\"'.,=" },
-              { "r", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "s", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "t", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "u", "abcdefghijklmnopqrstvwxyz!?:\"' .,=" },
-              { "v", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" }, // v
-              { "w", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "x", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "y", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" },
-              { "z", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=" }, // z
+              { "0", "0123456789 .,/" }, // 0
+              { "1", "0123456789!? .,/" }, // 1
+              { "2", "0123456789!? .,/" }, // 2
+              { "3", "0123456789!? .,/" },
+              { "4", "0123456789!? .,/" },
+              { "5", "0123456789 .,/" },
+              { "6", "0123456789 .,/" },
+              { "7", "0123456789 .,/" },
+              { "8", "0123456789 .,/" },
+              { "9", "0123456789 .,/" }, // 9
+              { "A", "bcdfghijklmnpqrstuvwxyz!?\"' .,=/" }, // A
+              { "B", "aeilmorsuy!?\"' .,=/" },
+              { "C", "aehiklorstu!?\"' .,=/" },
+              { "D", "aeghilnorstuwy!?\"' .,=/" }, // D
+              { "E", "abcdefghijklmnopqrstuvwxyz!?\"' .,=/" },
+              { "F", "aeiorstuy!?\"' .,=/" },
+              { "G", "adehilnorsu!?\"' .,=/" },
+              { "H", "aeiou!?\"' .,=/" },
+              { "I", "cdefghjklmnopqrstuvwxyz!?\"' .,=/" },
+              { "J", "aeious!?\"' .,=/" }, // J
+              { "K", "aeilostuy!?\"' .,=/" },
+              { "L", "aehiou!?\"' .,=/" },
+              { "M", "aeiou!?\"' .,=/" },
+              { "N", "aeiou!?\"' .,=/" },
+              { "O", "abcdefghijklmnprstuvwxyz!?\"' .,=/" },
+              { "P", "aehioruy!?\"' .,=/" }, // P
+              { "Q", "u!?\"' .,=/" },
+              { "R", "aehiouwy!?\"' .,=/" },
+              { "S", "acdefghiklmnopqrtuwyz!?\"' .,=/" },
+              { "T", "aehiouwy!?\"' .,=/" },
+              { "U", "ghlmnoprst!?\"' .,=/" },
+              { "V", "aeiouy!?\"' .,=/" }, // V
+              { "W", "aehiouy!?\"' .,=/" },
+              { "X", "aeiou!?\"' .,=/" },
+              { "Y", "aeiou!?\"' .,=/" },
+              { "Z", "aeiou!?\"' .,=/" }, // Z
+              { "a", "bcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // a
+              { "b", "abeilmorsuy!?:\"' .,=/" },
+              { "c", "acehiklorstu!?:\"' .,=/" },
+              { "d", "adeghilnorstuwy!?:\"' .,=/" }, // d
+              { "e", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "f", "aefiorstuy!?:\"' .,=/" },
+              { "g", "adeghilnorsu!?:\"' .,=/" },
+              { "h", "acdegilmnoprstuw!?:\"' .,=/" },
+              { "i", "abcdefghjklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "j", "aeiosuy!?:\"' .,=/" }, // j
+              { "k", "aeiklorsuwy!?:\"' .,=/" },
+              { "l", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "m", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "n", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "o", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "p", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // p
+              { "q", "u!?:\"'.,=/" },
+              { "r", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "s", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "t", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "u", "abcdefghijklmnopqrstvwxyz!?:\"' .,=/" },
+              { "v", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // v
+              { "w", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "x", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "y", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "z", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // z
 
-              { "!", "!?\" =" }, // !
-              { "?", "!?\" =" }, // ?
-              { ":", "!?\" " }, // :
-              { "\"", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?: .,=" }, // "
-              { "'", "dlrstv " }, // '
-              { " ", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =" }, //  
-              { ".", "!?\"' .=" }, // .
-              { ",", "\"' =" }, // ,
-              { "=", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =" } // =
+              { "!", "!?\" =/" }, // !
+              { "?", "!?\" =/" }, // ?
+              { ":", "!?\" /" }, // :
+              { "\"", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?: .,=/" }, // "
+              { "'", "dlrstv /" }, // '
+              { " ", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =/" }, //  
+              { ".", "!?\"' .=/" }, // .
+              { ",", "\"' =/" }, // ,
+              { "=", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =/" }, // =
+              { "/", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }
             };
             
             List<string> allowed = new List<string>( allowedAlphaNum.Length );
@@ -865,7 +859,7 @@ namespace FFTPatcher.TextEditor
             Set<string> allowedChars = new Set<string>( allowed );
 
             const int maxWidth = 10;
-            Dictionary<string, GroupableSet> result = new Dictionary<string, GroupableSet>();
+            Set<string> result = new Set<string>();
 
             System.Diagnostics.Debug.Assert( characterSet.Count == characterWidths.Count );
             for ( int i = 0; i < characterSet.Count; i++ )
@@ -874,75 +868,76 @@ namespace FFTPatcher.TextEditor
                 {
                     for ( int j = i; j < characterSet.Count; j++ )
                     {
-                        int newCost = IntToBytes( charmap.Reverse[characterSet[i]] ).Count
-                               + IntToBytes( charmap.Reverse[characterSet[j]] ).Count;
                         bool goodWidth = characterWidths[i] + characterWidths[j] <= maxWidth;
                         if ( goodWidth &&
                              ( !alphaNumOnly || allowedPairs[characterSet[i]].Contains( characterSet[j] ) ) ) 
                         {
-                            result[characterSet[i] + characterSet[j]] =
-                                new GroupableSet(
-                                    characterSet[i] + characterSet[j],
-                                    new int[] { i, j },
-                                    newCost );
+                            result.Add( characterSet[i] + characterSet[j] );
                         }
                         if ( goodWidth &&
                              ( !alphaNumOnly || 
                                (allowedPairs.ContainsKey(characterSet[j]) &&
                                 allowedPairs[characterSet[j]].Contains( characterSet[i] ) ) ))
                         {
-                            result[characterSet[j] + characterSet[i]] =
-                                new GroupableSet(
-                                    characterSet[j] + characterSet[i],
-                                    new int[] { j, i },
-                                    newCost );
+                            result.Add( characterSet[j] + characterSet[i] );
                         }
 
                     }
                 }
             }
-            Dictionary<string, GroupableSet> realResult = new Dictionary<string, GroupableSet>( result );
-            //foreach ( var kvp in result )
-            //{
-            //    var set = kvp.Value;
 
-            //    for ( int i = 0; i < characterSet.Count; i++ )
-            //    {
-            //        if ( !alphaNumOnly || allowedChars.Contains( characterSet[i] ) )
-            //        {
-            //            int sum = characterWidths[i];
-            //            set.Indices.ForEach( j => sum += characterWidths[j] );
-            //            if ( sum <= maxWidth )
-            //            {
-            //                int newCost = set.OriginalCost + IntToBytes( charmap.Reverse[characterSet[i]] ).Count;
-            //                if ( allowedPairs[set.Group[1].ToString()].Contains( characterSet[i] ) )
-            //                {
-            //                    realResult[set.Group + characterSet[i]] =
-            //                        new GroupableSet(
-            //                            set.Group + characterSet[i],
-            //                            new int[] { set.Indices[0], set.Indices[1], i },
-            //                            newCost );
-            //                }
-            //                if ( allowedPairs.ContainsKey( characterSet[i] ) && allowedPairs[characterSet[i]].Contains( set.Group[0].ToString() ) )
-            //                {
-            //                    realResult[set.Group + characterSet[i]] =
-            //                        new GroupableSet(
-            //                            characterSet[i] + set.Group,
-            //                            new int[] { i, set.Indices[0], set.Indices[1] },
-            //                            newCost );
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+            return result;
+        }
 
-            IList<GroupableSet> s = new GroupableSet[realResult.Values.Count];
-            realResult.Values.CopyTo( s, 0 );
-            s = new List<GroupableSet>( new Set<GroupableSet>( s ).GetElements() );
-            //s.ForEach( r => Debug.Assert( s.FindAll( f => f.Group == r.Group ).Count == 1 ) );
-            //s.Sort( ( i, j ) => ( j.OriginalCost.CompareTo( i.OriginalCost ) ) );
+        private static void IncrementPairCount( string pair, IDictionary<string, int> dict )
+        {
+            if( dict.ContainsKey( pair ) )
+            {
+                dict[pair] += 1;
+            }
+            else
+            {
+                dict[pair] = 1;
+            }
+        }
 
-            return s;
+        public static IDictionary<string, int> GetPairAndTripleCounts( string text, Set<string> allowedGroups )
+        {
+            Dictionary<string, int> counts = new Dictionary<string, int>();
+            text = text.Replace( "\r\n", "{}" );
+            int length = text.Length;
+            
+            Action<int> meth =
+                delegate( int groupSize )
+                {
+                    for ( int pos = 0; pos + groupSize - 1 < length; )
+                    {
+                        for ( int j = 1; j < groupSize; j++ )
+                        {
+                            if ( text[pos + j] == '{' )
+                            {
+                                pos++;
+                            }
+                        }
+                        while ( pos < length && text[pos] == '{' )
+                        {
+                            while ( text[++pos] != '}' )
+                                ;
+                            pos++;
+                        }
+
+                        if ( pos + groupSize - 1 < length )
+                        {
+                            IncrementPairCount( text.Substring( pos, groupSize ), counts );
+                        }
+                        pos++;
+                    }
+                };
+
+            meth( 2 );
+
+            counts.RemoveAll( p => !allowedGroups.Contains( p ) );
+            return counts;
         }
 
 
@@ -990,5 +985,70 @@ namespace FFTPatcher.TextEditor
 
         }
 
+        public static void DoDTEEncoding( IList<IList<string>> strings, IDictionary<string, byte> dteTable )
+        {
+            for( int i = 0; i < strings.Count; i++ )
+            {
+                DoDTEEncoding( strings[i], dteTable );
+            }
+        }
+
+        public static void DoDTEEncoding( IList<string> strings, IDictionary<string, byte> dteTable )
+        {
+            for ( int i = 0; i < strings.Count; i++ )
+            {
+                strings[i] = DoDTEEncoding( strings[i], dteTable );
+            }
+        }
+
+        private static string DoDTEEncoding( string text, IDictionary<string, byte> dteTable )
+        {
+            int length = text.Length;
+            StringBuilder sb = new StringBuilder( text.Length );
+            Action<int> meth =
+                delegate( int groupSize )
+                {
+                    for ( int pos = 0; pos + groupSize - 1 < length; )
+                    {
+                        for ( int j = 1; j < groupSize; j++ )
+                        {
+                            if ( text[pos + j] == '{' )
+                            {
+                                sb.Append( text[pos] );
+                                pos++;
+                            }
+                        }
+                        while ( pos < length && text[pos] == '{' )
+                        {
+                            sb.Append( text[pos] );
+                            while ( text[++pos] != '}' )
+                            {
+                                sb.Append( text[pos] );
+                            }
+                            sb.Append( text[pos] );
+                            pos++;
+                        }
+
+                        if ( pos + groupSize - 1 < length )
+                        {
+                            string sub = text.Substring( pos, groupSize );
+                            if( dteTable.ContainsKey( sub ) )
+                            {
+                                sb.Append( @"{0x" );
+                                sb.AppendFormat( "{0:X2}", dteTable[sub] );
+                                sb.Append( @"}" );
+                                pos += groupSize;
+                            }
+                            else
+                            {
+                                sb.Append( sub[0] );
+                                pos += 1;
+                            }
+                        }
+                    }
+                };
+            meth( 2 );
+            return sb.ToString();
+        }
     }
 }

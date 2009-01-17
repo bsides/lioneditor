@@ -61,12 +61,6 @@
     <Compile Include="CharmapForm.Designer.cs">
       <DependentUpon>CharmapForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\CompressedStringSectionedEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\CompressedStringSectionedEditor.Designer.cs">
-      <DependentUpon>CompressedStringSectionedEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Editors\PartitionEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -78,6 +72,9 @@
     </Compile>
     <Compile Include="Editors\StringListEditor.Designer.cs">
       <DependentUpon>StringListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TextPropertyGrid.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Files\AbstractCompressedFile.cs" />
     <Compile Include="Files\AbstractDelimitedFile.cs" />
@@ -125,7 +122,6 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Utilities\CompressionEventArgs.cs" />
     <Compile Include="Files\AbstractStringSectioned.cs" />
-    <Compile Include="Files\ICompressed.cs" />
     <Compile Include="Files\IStringSectioned.cs" />
     <Compile Include="Files\PSP\Sectioned\ATCHELPLZW.cs" />
     <Compile Include="Files\PSP\BasePSPSectionedFile.cs" />
@@ -157,10 +153,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CharmapForm.resx">
       <DependentUpon>CharmapForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\CompressedStringSectionedEditor.resx">
-      <DependentUpon>CompressedStringSectionedEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\PartitionEditor.resx">

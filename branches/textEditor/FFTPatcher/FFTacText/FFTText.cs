@@ -398,37 +398,77 @@ namespace FFTPatcher.TextEditor
                 throw new InvalidOperationException();
             }
 
+            IList<IFile> filesNeedingDte = new List<IFile>();
+            
             foreach ( IStringSectioned sectioned in SectionedFiles )
             {
-                byte[] bytes = sectioned.ToByteArray();
-                progress();
-                foreach( KeyValuePair<Enum, long> kvp in sectioned.Locations )
+                if ( sectioned.IsDTENeeded() )
                 {
-                    patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
-                    progress();
-                    foreach ( PatchedByteArray otherPatch in sectioned.GetAllPatches() )
-                    {
-                        patches.Add( otherPatch );
-                        progress();
-                    }
+                    filesNeedingDte.Add( sectioned );
+                }
+            }
+            foreach ( IPartitionedFile part in PartitionedFiles )
+            {
+                if ( part.IsDTENeeded() )
+                {
+                    filesNeedingDte.Add( part );
                 }
             }
 
-            foreach ( IPartitionedFile partitioned in PartitionedFiles )
+            List<IFile> normalFiles = new List<IFile>();
+            SectionedFiles.ForEach( f => normalFiles.Add( f ) );
+            PartitionedFiles.ForEach( p => normalFiles.Add( p ) );
+            normalFiles.RemoveAll( f => filesNeedingDte.Contains( f ) );
+
+            Set<string> validDtePairs = Program.groups;
+            Set<string> currentPairs = new Set<string>();
+            IDictionary<IFile, Set<string>> filePreferredPairs = new Dictionary<IFile, Set<string>>( filesNeedingDte.Count );
+
+            foreach ( var f in filesNeedingDte )
             {
-                byte[] bytes = partitioned.ToByteArray();
-                progress();
-                foreach ( KeyValuePair<Enum, long> kvp in partitioned.Locations )
+                var r = f.GetPreferredDTEPairs( validDtePairs, currentPairs );
+                filePreferredPairs[f] = r;
+                currentPairs.AddRange( r );
+            }
+
+            // TODO check pairs returned against max dte pairs
+
+            IDictionary<IFile, byte[]> fileBytes = new Dictionary<IFile, byte[]>();
+            IDictionary<string, byte> dteEncodings = new Dictionary<string, byte>();
+            IList<string> dtePairs = currentPairs.GetElements();
+            for ( int i = 0; i < dtePairs.Count; i++ )
+            {
+                byte b = (byte)( i + 0x3E );
+                if ( b > 0xB1 )
+                    b += 1;
+                if ( b > 0xB4 )
+                    b += 1;
+                dteEncodings[dtePairs[i]] = (byte)b;
+            }
+
+            foreach ( var f in filesNeedingDte )
+            {
+                IDictionary<string, byte> currentFileEncoding = new Dictionary<string, byte>();
+                foreach ( string s in filePreferredPairs[f] )
                 {
-                    patches.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) );
-                    progress();
-                    foreach ( PatchedByteArray otherPatch in partitioned.GetAllPatches() )
-                    {
-                        patches.Add( otherPatch );
-                        progress();
-                    }
+                    currentFileEncoding[s] = dteEncodings[s];
+                }
+
+                foreach ( var otherPatch in f.GetAllPatches( currentFileEncoding ) )
+                {
+                    patches.Add( otherPatch );
                 }
             }
+
+            foreach ( var f in normalFiles )
+            {
+                foreach ( var otherPatch in f.GetAllPatches() )
+                {
+                    patches.Add( otherPatch );
+                }
+            }
+
+            patches.AddRange( GeneratePsxFontBinPatches( dteEncodings ) );
 
             using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
             {
@@ -438,6 +478,62 @@ namespace FFTPatcher.TextEditor
                     progress();
                 }
             }
+        }
+
+        private IList<PatchedByteArray> GeneratePsxFontBinPatches( IDictionary<string, byte> dteEncodings )
+        {
+            // BATTLE.BIN -> 0xE7614
+            // FONT.BIN -> 0
+            // WORLD.BIN -> 0x5B8F8
+            var charSet = FFTPatcher.PSXResources.CharacterSet;
+            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSXResources.FontBin, FFTPatcher.PSXResources.FontWidthsBin );
+            foreach ( var kvp in dteEncodings )
+            {
+                int[] chars = new int[] { charSet.IndexOf( kvp.Key.Substring( 0, 1 ) ), charSet.IndexOf( kvp.Key.Substring( 1, 1 ) ) };
+                int[] widths = new int[] { font.Glyphs[chars[0]].Width, font.Glyphs[chars[1]].Width };
+                int newWidth = widths[0] + widths[1];
+
+                font.Glyphs[kvp.Value].Width = (byte)newWidth;
+                IList<FFTPatcher.Datatypes.FontColor> newPixels = font.Glyphs[kvp.Value].Pixels;
+                for ( int i = 0; i < newPixels.Count; i++ )
+                {
+                    newPixels[i] = FFTPatcher.Datatypes.FontColor.Transparent;
+                }
+
+                const int fontHeight = 14;
+                const int fontWidth = 10;
+
+                int offset = 0;
+                for ( int c = 0; c < chars.Length; c++ )
+                {
+                    var pix = font.Glyphs[chars[c]].Pixels;
+
+                    for ( int x = 0; x < widths[c]; x++ )
+                    {
+                        for ( int y = 0; y < fontHeight; y++ )
+                        {
+                            newPixels[y * fontWidth + x + offset] = pix[y * fontWidth + x];
+                        }
+                    }
+
+                    offset += widths[c];
+                }
+            }
+
+            byte[] bytes = font.ToByteArray();
+            byte[] widthBytes = font.ToWidthsByteArray();
+
+            // widths:
+            // 0x363234 => 1510 = BATTLE.BIN
+            // 0xBD84908 => 84497 = WORLD.BIN
+            return
+                new PatchedByteArray[] {
+                    new PatchedByteArray(PsxIso.BATTLE_BIN, 0xE7614, bytes),
+                    new PatchedByteArray(PsxIso.EVENT.FONT_BIN, 0x00, bytes),
+                    new PatchedByteArray(PsxIso.WORLD.WORLD_BIN, 0x5B8f8, bytes),
+                    new PatchedByteArray(PsxIso.BATTLE_BIN, 0xFF0FC, widthBytes),
+                    new PatchedByteArray(PsxIso.WORLD.WORLD_BIN, 0x733E0, widthBytes)
+                };
         }
 
         /// <summary>

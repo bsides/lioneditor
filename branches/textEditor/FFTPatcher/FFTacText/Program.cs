@@ -126,7 +126,7 @@ namespace FFTPatcher.TextEditor
             return false;
         }
 
-        public static IList<TextUtilities.GroupableSet> groups;
+        public static Set<string> groups;
 
         /// <summary>
         /// The main entry point for the application.

@@ -16,6 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
+//#define DONGS
 
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using FFTPatcher.TextEditor.Files;
 using System.ComponentModel;
+
 
 namespace FFTPatcher.TextEditor
 {
@@ -55,7 +57,6 @@ namespace FFTPatcher.TextEditor
                 if( value == null )
                 {
                     stringSectionedEditor.Visible = false;
-                    compressedStringSectionedEditor.Visible = false;
                     partitionEditor.Visible = false;
                 }
                 else if( file != value )
@@ -108,12 +109,8 @@ namespace FFTPatcher.TextEditor
             InitializeComponent();
 
             stringSectionedEditor.Visible = false;
-            compressedStringSectionedEditor.Visible = false;
             partitionEditor.Visible = false;
             stringSectionedEditor.SavingFile += editor_SavingFile;
-            compressedStringSectionedEditor.SavingFile += editor_SavingFile;
-            compressedStringSectionedEditor.CompressionStarted += compressedStringSectionedEditor_CompressionStarted;
-            compressedStringSectionedEditor.CompressionFinished += compressedStringSectionedEditor_CompressionFinished;
             partitionEditor.SavingFile += partitionEditor_SavingFile;
 
             newPspMenuItem.Click += newPspMenuItem_Click;
@@ -182,27 +179,6 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        private void compressedStringSectionedEditor_CompressionFinished( object sender, EventArgs e )
-        {
-            Cursor = Cursors.Default;
-
-            compressedStringSectionedEditor.Enabled = true;
-            foreach ( MenuItem item in mainMenu.MenuItems )
-            {
-                item.Enabled = true;
-            }
-        }
-
-        private void compressedStringSectionedEditor_CompressionStarted( object sender, EventArgs e )
-        {
-            Cursor = Cursors.WaitCursor;
-            compressedStringSectionedEditor.Enabled = false;
-            foreach ( MenuItem item in mainMenu.MenuItems )
-            {
-                item.Enabled = false;
-            }
-        }
-
         private void editor_SavingFile( object sender, SavingFileEventArgs e )
         {
             string name = Path.GetFileName( e.SuggestedFilename );
@@ -234,19 +210,19 @@ namespace FFTPatcher.TextEditor
                 bytesSaved[file] = file.CalculateBytesSaved( Program.groups );
             }
 
-            using (FileStream fs = System.IO.File.OpenWrite("out.txt"))
-            using (StreamWriter sw = new StreamWriter(fs))
-            foreach ( var kvp in bytesSaved[File.SectionedFiles[0]] )
-            {
-                int sum = 0;
-                sw.Write(kvp.Key + "\t");
-                foreach ( IStringSectioned file in File.SectionedFiles )
-                {
-                    sw.Write( bytesSaved[file][kvp.Key] );
-                    sw.Write( "\t" );
-                }
-                sw.Write( Environment.NewLine );
-            }
+            //using (FileStream fs = System.IO.File.OpenWrite("out.txt"))
+            //using (StreamWriter sw = new StreamWriter(fs))
+            //foreach ( var kvp in bytesSaved[File.SectionedFiles[0]] )
+            //{
+            //    int sum = 0;
+            //    sw.Write(kvp.Key + "\t");
+            //    foreach ( IStringSectioned file in File.SectionedFiles )
+            //    {
+            //        sw.Write( bytesSaved[file][kvp.Key] );
+            //        sw.Write( "\t" );
+            //    }
+            //    sw.Write( Environment.NewLine );
+            //}
         }
 
         private void menuItem_Click( object sender, EventArgs e )
@@ -258,25 +234,16 @@ namespace FFTPatcher.TextEditor
 
             object file = thisItem.Tag;
 
-            if( file is ICompressed )
-            {
-                compressedStringSectionedEditor.Strings = file as IStringSectioned;
-                compressedStringSectionedEditor.Visible = true;
-                stringSectionedEditor.Visible = false;
-                partitionEditor.Visible = false;
-            }
-            else if( file is IStringSectioned )
+            if( file is IStringSectioned )
             {
                 stringSectionedEditor.Strings = file as IStringSectioned;
                 stringSectionedEditor.Visible = true;
-                compressedStringSectionedEditor.Visible = false;
                 partitionEditor.Visible = false;
             }
             else if( file is IPartition )
             {
                 partitionEditor.Visible = true;
                 partitionEditor.Strings = file as IPartition;
-                compressedStringSectionedEditor.Visible = false;
                 stringSectionedEditor.Visible = false;
             }
             Cursor = Cursors.Default;
@@ -368,7 +335,6 @@ namespace FFTPatcher.TextEditor
         private void patchMenuItem_Click( object sender, EventArgs e )
         {
             bool oldStringSectionedEditorEnabled = stringSectionedEditor.Enabled;
-            bool oldCompressedEditorEnabled = compressedStringSectionedEditor.Enabled;
             bool oldPartitionEditorEnabled = partitionEditor.Enabled;
 
             DoWorkEventHandler doWork =
@@ -392,7 +358,6 @@ namespace FFTPatcher.TextEditor
 
                     helpMenuItem.Enabled = true;
                     stringSectionedEditor.Enabled = oldStringSectionedEditorEnabled;
-                    compressedStringSectionedEditor.Enabled = oldCompressedEditorEnabled;
                     partitionEditor.Enabled = oldPartitionEditorEnabled;
                     UseWaitCursor = false;
                     patchPsxBackgroundWorker.ProgressChanged -= progress;
@@ -419,7 +384,6 @@ namespace FFTPatcher.TextEditor
 
                 helpMenuItem.Enabled = false;
                 stringSectionedEditor.Enabled = false;
-                compressedStringSectionedEditor.Enabled = false;
                 partitionEditor.Enabled = false;
                 UseWaitCursor = true;
 
@@ -497,7 +461,7 @@ namespace FFTPatcher.TextEditor
 #if DONGS
         private void FillFile( IPartitionedFile file, string filename )
         {
-            string format = "{0}/{1}/{2:X}";
+            string format = "{0}/{1}/{2:x}";
             for( int section = 0; section < file.Sections.Count; section++ )
             {
                 for( int i = 0; i < file.Sections[section].Entries.Count; i++ )
@@ -523,7 +487,7 @@ namespace FFTPatcher.TextEditor
         }
         private void FillFileExcept( IStringSectioned file, string filename, IList<int> badSections )
         {
-            string format = "{0}/{1}/{2:X}";
+            string format = "{0}/{1}/{2:x}";
             for( int section = 0; section < file.Sections.Count; section++ )
             {
                 if( !badSections.Contains( section ) )
@@ -563,10 +527,10 @@ namespace FFTPatcher.TextEditor
 
             foreach( IStringSectioned sectionFile in mine.SectionedFiles )
             {
-                foreach( KeyValuePair<string, long> kvp in sectionFile.Locations )
+                foreach( var kvp in sectionFile.Locations )
                 {
-                    var filename = kvp.Key;
-                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    var filename = kvp.Key.ToString();
+                    var realFilename = filename;
                     int dotIndex = realFilename.LastIndexOf( '.' );
                     if( dotIndex < 0 )
                         dotIndex = realFilename.Length - 1;
@@ -605,8 +569,8 @@ namespace FFTPatcher.TextEditor
             {
                 foreach( var kvp in partitionedFile.Locations )
                 {
-                    var filename = kvp.Key;
-                    var realFilename = filename.Substring( filename.LastIndexOf( "/" ) + 1 );
+                    var filename = kvp.Key.ToString();
+                    var realFilename = filename;
                     int dotIndex = realFilename.LastIndexOf( '.' );
                     if( dotIndex < 0 )
                         dotIndex = realFilename.Length - 1;
@@ -664,14 +628,14 @@ namespace FFTPatcher.TextEditor
             {
                 mine = xs.Deserialize( ms ) as FFTText;
             }
-            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES" );
-            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES" );
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "SNPLMESBIN" ); } ), "SNPLMES".ToLower() );
+            FillFile( mine.PartitionedFiles.Find( delegate( IPartitionedFile file ) { return file.GetType().ToString().Contains( "WLDMESBIN" ); } ), "WLDMES".ToLower() );
 
             foreach( IStringSectioned sectioned in mine.SectionedFiles )
             {
                 FillFileExcept(
                     sectioned,
-                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ),
+                    sectioned.GetType().ToString().Substring( sectioned.GetType().ToString().LastIndexOf( "." ) + 1 ).ToLower(),
                     new int[0] );
             }
 

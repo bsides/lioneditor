@@ -68,5 +68,12 @@ namespace FFTPatcher.TextEditor.Files.PSX
             return result;
         }
 
+        public override IList<PatchedByteArray> GetAllPatches( IDictionary<string, byte> dteTable )
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray( dteTable );
+            Locations.ForEach( kvp => result.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) ) );
+            return result;
+        }
     }
 }

@@ -105,15 +105,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
 
 
         /// <summary>
-        /// Gets a list of bytes that represent this file in its on-disc form.
-        /// </summary>
-        /// <returns></returns>
-        protected override IList<byte> ToFinalBytes()
-        {
-            return Compress();
-        }
-
-        /// <summary>
         /// Gets a list of indices for named sections.
         /// </summary>
         public override IList<NamedSection> GetNamedSections()

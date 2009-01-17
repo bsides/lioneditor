@@ -129,8 +129,14 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value></value>
         public int MaxLength
         {
-            get { return 0x5758; }
+            get { return 0x5732; }
         }
+
+        private static readonly IList<int> SectionMaxLengths = 
+            new int[] { 0x44F, 0x582, 0x1333, 0x387, 0xFD5, 0x1A3D, 0x112, 0xB76 }.AsReadOnly();
+
+        private static readonly IList<int> SectionOffsets =
+            new int[] { 0x00, 0x450, 0x9D4, 0x1D08, 0x2090, 0x3068, 0x4AA8, 0x4BBC }.AsReadOnly();
 
         /// <summary>
         /// Gets the number of sections.
@@ -138,8 +144,10 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <value>The number of sections.</value>
         public int NumberOfSections
         {
-            get { return 8; }
+            get { return numberOfSections; }
         }
+
+        private const int numberOfSections = 8;
 
         /// <summary>
         /// Gets a collection of strings with a description of each section in this file.
@@ -195,21 +203,11 @@ namespace FFTPatcher.TextEditor.Files.PSX
         public WORLDBIN( IList<byte> bytes )
             : this()
         {
-            IList<UInt32> offsets = GetOffsets( bytes.Sub( 0x5734 ) );
-
             for( int i = 0; i < 8; i++ )
             {
-                IList<byte> thisSection;
-                if( i == NumberOfSections - 1 )
-                {
-                    thisSection = bytes.Sub( (int)offsets[i], bytes.Count - 0x24 - 1 );
-                }
-                else
-                {
-                    thisSection = bytes.Sub( (int)offsets[i], (int)offsets[i + 1] - 1 );
-                }
-
-                Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
+                Sections.Add( 
+                    TextUtilities.ProcessList( 
+                        bytes.Sub( SectionOffsets[i], SectionOffsets[i] + SectionMaxLengths[i] - 1 ), CharMap ) );
             }
 
             entryLengths = new int[NumberOfSections][];
@@ -228,44 +226,6 @@ namespace FFTPatcher.TextEditor.Files.PSX
 		#endregion Constructors 
 
 		#region Methods (17) 
-
-
-        private IList<byte> BuildAddresses( int[] lengths )
-        {
-            UInt32[] addresses = new UInt32[8];
-            addresses[0] = baseAddress;
-            for( int i = 1; i < 8; i++ )
-            {
-                addresses[i] = (UInt32)(addresses[i - 1] + lengths[i - 1]);
-            }
-
-            byte[] result = new byte[0x24];
-            addresses[0].ToBytes().CopyTo( result, 0 );
-            addresses[1].ToBytes().CopyTo( result, 4 );
-            addresses[2].ToBytes().CopyTo( result, 8 );
-            addresses[3].ToBytes().CopyTo( result, 12 );
-            addresses[4].ToBytes().CopyTo( result, 16 );
-            addresses[5].ToBytes().CopyTo( result, 20 );
-            addresses[6].ToBytes().CopyTo( result, 28 );
-            addresses[7].ToBytes().CopyTo( result, 32 );
-
-            return result;
-        }
-
-        private IList<UInt32> GetOffsets( IList<byte> bytes )
-        {
-            UInt32[] result = new UInt32[8];
-            result[0] = bytes.Sub( 0, 3 ).ToUInt32() - baseAddress;
-            result[1] = bytes.Sub( 4, 7 ).ToUInt32() - baseAddress;
-            result[2] = bytes.Sub( 8, 11 ).ToUInt32() - baseAddress;
-            result[3] = bytes.Sub( 12, 15 ).ToUInt32() - baseAddress;
-            result[4] = bytes.Sub( 16, 19 ).ToUInt32() - baseAddress;
-            result[5] = bytes.Sub( 20, 23 ).ToUInt32() - baseAddress;
-            result[6] = bytes.Sub( 28, 31 ).ToUInt32() - baseAddress;
-            result[7] = bytes.Sub( 32, 35 ).ToUInt32() - baseAddress;
-
-            return result;
-        }
 
         private void InitializeEntryLengths()
         {
@@ -412,7 +372,18 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <returns></returns>
         public IList<PatchedByteArray> GetAllPatches()
         {
-            return new PatchedByteArray[0];
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            Locations.ForEach( kvp => result.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) ) );
+            return result;
+        }
+
+        public IList<PatchedByteArray> GetAllPatches( IDictionary<string, byte> dteTable )
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray( dteTable );
+            Locations.ForEach( kvp => result.Add( new PatchedByteArray( (PsxIso.Sectors)kvp.Key, kvp.Value, bytes ) ) );
+            return result;
         }
 
         /// <summary>
@@ -451,18 +422,13 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <returns></returns>
         public byte[] ToByteArray()
         {
-            List<byte> result = new List<byte>( ToFinalBytes() );
-            if( result.Count < MaxLength )
-            {
-                result.InsertRange( result.Count - 1 - 0x24, new byte[MaxLength - result.Count] );
-            }
-
-            return result.ToArray();
+            return ToFinalBytes().ToArray();
         }
 
         private static IList<IList<byte>> GetSectionBytes( IList<IList<string>> sections, GenericCharMap map )
         {
             IList<IList<byte>> byteSections = new List<IList<byte>>( sections.Count );
+
             foreach ( IList<string> section in sections )
             {
                 IList<byte> sectionBytes = new List<byte>();
@@ -476,29 +442,40 @@ namespace FFTPatcher.TextEditor.Files.PSX
             return byteSections;
         }
 
+        public byte[] ToByteArray( IDictionary<string, byte> dteTable )
+        {
+            IList<IList<string>> strings = new List<IList<string>>( Sections.Count );
+            foreach ( IList<string> sec in Sections )
+            {
+                IList<string> s = new List<string>( sec.Count );
+                s.AddRange( sec );
+
+                TextUtilities.DoDTEEncoding( s, dteTable );
+
+                strings.Add( s );
+            }
+
+            return ToUncompressedBytes( GetSectionBytes( strings, CharMap ) ).ToArray();
+        }
+
         /// <summary>
         /// Creates an uncompressed byte array representing this file.
         /// </summary>
+        public IList<byte> ToUncompressedBytes( IList<IList<byte>> byteSections )
+        {
+            byte[] result = new byte[MaxLength];
+
+            for ( int i = 0; i < numberOfSections; i++ )
+            {
+                byteSections[i].CopyTo( result, SectionOffsets[i] );
+            }
+
+            return result.AsReadOnly();
+        }
+
         public IList<byte> ToUncompressedBytes()
         {
-            IList<IList<byte>> byteSections = GetSectionBytes( Sections, CharMap );
-
-            List<byte> result = new List<byte>();
-
-            foreach( List<byte> bytes in byteSections )
-            {
-                result.AddRange( bytes );
-            }
-
-            int[] lengths = new int[8];
-            for( int i = 0; i < byteSections.Count; i++ )
-            {
-                lengths[i] = byteSections[i].Count;
-            }
-
-            result.AddRange( BuildAddresses( lengths ) );
-
-            return result;
+            return ToUncompressedBytes( GetSectionBytes( Sections, CharMap ) );
         }
 
         /// <summary>
@@ -530,44 +507,93 @@ namespace FFTPatcher.TextEditor.Files.PSX
         /// <summary>
         /// Determines how many bytes would be saved if the specified string could be replaced with a single byte.
         /// </summary>
-        public IDictionary<string, int> CalculateBytesSaved( IList<TextUtilities.GroupableSet> replacements )
+        public IDictionary<string, int> CalculateBytesSaved( Set<string> replacements )
         {
             GenericCharMap map = CharMap;
             StringBuilder virgin = new StringBuilder( MaxLength );
             Sections.ForEach( s => s.ForEach( t => virgin.Append( t ) ) );
+            virgin.Replace( "\r\n", "{}" );
             string virginString = virgin.ToString();
 
-            Dictionary<string, int> result = new Dictionary<string, int>( replacements.Count );
-            foreach ( var v in replacements )
-            {
-                string subString = v.Group;
-                int i = 0;
-                int count = 0;
-                while ( i < virginString.Length )
-                {
-                    char c = virginString[i];
-                    if ( c == '{' )
-                    {
-                        while ( c != '}' )
-                            c = virginString[++i];
-                    }
-                    else if ( i + subString.Length < virginString.Length &&
-                         virginString.IndexOf( subString, i, subString.Length ) == i )
-                    {
-                        count++;
-                        i++;
-                    }
-                    i++;
-                };
+            return TextUtilities.GetPairAndTripleCounts( virginString, replacements );
+        }
 
-                result[v.Group] = count;
+        public bool IsDTENeeded()
+        {
+            IList<IList<byte>> sections = GetSectionBytes( Sections, CharMap );
+            for ( int i = 0; i < numberOfSections; i++ )
+            {
+                if ( sections[i].Count > SectionMaxLengths[i] )
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs )
+        {
+            IList<IList<byte>> sections = GetSectionBytes( Sections, CharMap );
+            Set<string> result = new Set<string>();
+            IList<string> currentPairsList = currentPairs.GetElements();
+
+            for ( int i = 0; i < numberOfSections; i++ )
+            {
+                if ( sections[i].Count > SectionMaxLengths[i] )
+                {
+                    var dict = TextUtilities.GetPairAndTripleCounts( Sections[i].Join( string.Empty ), replacements );
+
+                    int bytesNeeded = sections[i].Count - SectionMaxLengths[i];
+                    int j  = 0;
+
+                    while ( bytesNeeded > 0 && j < currentPairsList.Count )
+                    {
+                        if ( dict.ContainsKey( currentPairsList[j] ) )
+                        {
+                            bytesNeeded -= dict[currentPairsList[j]];
+                            dict.Remove( currentPairsList[j] );
+                            result.Add( currentPairsList[j] );
+                        }
+                        j++;
+                    }
+
+                    j = 0;
+
+                    IList<string> resultList = result.GetElements();
+
+                    while ( bytesNeeded > 0 && j < resultList.Count )
+                    {
+                        if ( dict.ContainsKey( resultList[j] ) )
+                        {
+                            bytesNeeded -= dict[resultList[j]];
+                            dict.Remove( resultList[j] );
+                        }
+                        j++;
+                    }
+
+                    j = 0;
+                    var l = new List<KeyValuePair<string, int>>( dict );
+                    l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
+                    while ( bytesNeeded > 0 && j < l.Count )
+                    {
+                        bytesNeeded -= dict[l[j].Key];
+                        result.Add( l[j].Key );
+                        j++;
+                    }
+
+                    if ( bytesNeeded > 0 )
+                    {
+                        return null;
+                    }
+                }
             }
 
             return result;
-
         }
 
-		#endregion Methods 
+        #endregion Methods
+
 
     }
 }

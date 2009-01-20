@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{210DDF20-2CEA-4A2C-B2C6-D2EB7938BEB2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FFTPatcher.TextEditor</RootNamespace>
+    <AssemblyName>FFTactext</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\FFTactext.XML</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevAge.Core, Version=4.10.2845.21697, Culture=neutral, PublicKeyToken=faad465d84242dbf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\utils\SourceGrid4_11\Bin\DevAge.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevAge.Windows.Forms, Version=4.10.2845.21698, Culture=neutral, PublicKeyToken=faad465d84242dbf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\utils\SourceGrid4_11\Bin\DevAge.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharmapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharmapForm.Designer.cs">
+      <DependentUpon>CharmapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\PartitionEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\PartitionEditor.Designer.cs">
+      <DependentUpon>PartitionEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\StringListEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\StringListEditor.Designer.cs">
+      <DependentUpon>StringListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TextPropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Files\AbstractCompressedFile.cs" />
+    <Compile Include="Files\AbstractDelimitedFile.cs" />
+    <Compile Include="Files\AbstractFile.cs" />
+    <Compile Include="Files\AbstractPartitionedFile.cs" />
+    <Compile Include="Files\FilePartition.cs" />
+    <Compile Include="Files\IFile.cs" />
+    <Compile Include="Files\IPartition.cs" />
+    <Compile Include="Files\IPartitionedFile.cs" />
+    <Compile Include="Files\IQuickEdit.cs" />
+    <Compile Include="Files\PSP\AbstractBootBinFile.cs" />
+    <Compile Include="Files\PSP\BasePSPCompressedFile.cs" />
+    <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
+    <Compile Include="Files\PSP\BOOT326F24.cs" />
+    <Compile Include="Files\PSP\QuickEdit.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT28E5EC.cs" />
+    <Compile Include="Files\PSP\IBootBin.cs" />
+    <Compile Include="Files\PSP\IFFTPackFile.cs" />
+    <Compile Include="Files\PSP\Partitioned\SNPLMESBIN.cs" />
+    <Compile Include="Files\PSP\Partitioned\WLDMESBIN.cs" />
+    <Compile Include="Files\PSP\Sectioned\WORLDLZW.cs" />
+    <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
+    <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
+    <Compile Include="Files\PSX\QuickEdit.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\BUNITOUT.cs" />
+    <Compile Include="Utilities\EntryNames.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\EQUIPOUT.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\HELPLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\HELPMENUOUT.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\JOBSTTSOUT.cs" />
+    <Compile Include="Files\PSX\Partiitoned\SNPLMESBIN.cs" />
+    <Compile Include="Files\PSX\Partiitoned\WLDMESBIN.cs" />
+    <Compile Include="Files\PSX\Sectioned\WORLDBIN.cs" />
+    <Compile Include="Files\PSX\SPELLMES.cs" />
+    <Compile Include="Files\SavingFileEventArgs.cs" />
+    <Compile Include="Utilities\NotifyStringList.cs" />
+    <Compile Include="Utilities\SectionType.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="FFTText.cs" />
+    <Compile Include="Files\QuickEditFactory.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Utilities\CompressionEventArgs.cs" />
+    <Compile Include="Files\AbstractStringSectioned.cs" />
+    <Compile Include="Files\IStringSectioned.cs" />
+    <Compile Include="Files\PSP\Sectioned\ATCHELPLZW.cs" />
+    <Compile Include="Files\PSP\BasePSPSectionedFile.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT299024.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT29E334.cs" />
+    <Compile Include="Files\PSP\Sectioned\Compressed\BOOT2A1630.cs" />
+    <Compile Include="Files\PSP\Sectioned\BOOT2EB4C0.cs" />
+    <Compile Include="Files\PSP\Sectioned\Compressed\BOOT32D368.cs" />
+    <Compile Include="Files\PSP\Sectioned\OPENLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\ATCHELPLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\ATTACKOUT.cs" />
+    <Compile Include="Files\PSX\BasePSXSectionedFile.cs" />
+    <Compile Include="Files\PSX\Sectioned\JOINLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\OPENLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\SAMPLELZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\Compressed\WLDHELPLZW.cs" />
+    <Compile Include="Files\PSX\Sectioned\WORLDLZW.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharmapForm.resx">
+      <DependentUpon>CharmapForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\PartitionEditor.resx">
+      <DependentUpon>PartitionEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\StringListEditor.resx">
+      <DependentUpon>StringListEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\PSXResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PSXResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\PSPResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PSPResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\StringSectionedEditor.resx">
+      <DependentUpon>StringSectionedEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\PSXResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PSXResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Files.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\PSP\boot.bin" />
+    <None Include="Resources\PSP\pspText.ffttext" />
+    <None Include="Resources\PSX\psxText.ffttext" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Properties\PSPResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PSPResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\StringSectionedEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\StringSectionedEditor.Designer.cs">
+      <DependentUpon>StringSectionedEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\CharMap.cs" />
+    <Compile Include="Utilities\PSPResources.cs" />
+    <Compile Include="Utilities\PSXResources.cs" />
+    <Compile Include="Utilities\Resources.cs" />
+    <Compile Include="Utilities\TextUtilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FFTPatcher.csproj">
+      <Project>{48BE23D0-2943-44EF-A3A6-8537D7695B37}</Project>
+      <Name>FFTPatcher</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\PSP\FileContents.txt" />
+    <Content Include="Resources\EntryNames.xml" />
+    <Content Include="Files\PSX\FileContents.txt" />
+    <Content Include="notes.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>rem copy "$(SolutionDir)\$(ConfigurationName)\FFTTextCompression.dll" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

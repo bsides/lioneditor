@@ -27,9 +27,11 @@ namespace FFTPatcher
     using Paths = FFTPatcher.Resources.Paths.PSP;
     using System.Xml;
 
-    static class PSPResources
+    public static class PSPResources
     {
 		#region Instance Variables (10) 
+
+        public static IList<string> CharacterSet { get; private set; }
 
         private static string[] abilityAI;
         private static string[] abilityAttributes;
@@ -37,6 +39,26 @@ namespace FFTPatcher
         private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
         private static Dictionary<int, string> fftPackFiles;
+        private static Dictionary<FFTPatcher.Datatypes.Shops, string> storeNames = new Dictionary<FFTPatcher.Datatypes.Shops, string>
+        {
+            { FFTPatcher.Datatypes.Shops.Bervenia, "Free City of Bervenia" },
+            { FFTPatcher.Datatypes.Shops.Dorter, "Merchant City of Dorter" },
+            { FFTPatcher.Datatypes.Shops.Gariland, "Magick City of Gariland" },
+            { FFTPatcher.Datatypes.Shops.Goland, "Mining Town of Gollund" },
+            { FFTPatcher.Datatypes.Shops.Goug, "Clockwork City of Goug" },
+            { FFTPatcher.Datatypes.Shops.Igros, "Eagrose Castle" },
+            { FFTPatcher.Datatypes.Shops.Lesalia, "Royal Capital of Lesalia" },
+            { FFTPatcher.Datatypes.Shops.Limberry, "Limberry Castle" },
+            { FFTPatcher.Datatypes.Shops.Lionel, "Lionel Castle" },
+            { FFTPatcher.Datatypes.Shops.None, "Unknown" },
+            { FFTPatcher.Datatypes.Shops.Riovanes, "Riovanes Castle" },
+            { FFTPatcher.Datatypes.Shops.Warjilis, "Port City of Warjilis" },
+            { FFTPatcher.Datatypes.Shops.Yardrow, "Walled City of Yardrow" },
+            { FFTPatcher.Datatypes.Shops.Zaland, "Castle City of Zaland" },
+            { FFTPatcher.Datatypes.Shops.Zarghidas, "Trade City of Sal Ghidos" },
+            { FFTPatcher.Datatypes.Shops.Zeltennia, "Zeltennia Castle" }
+        };
+        private static IDictionary<FFTPatcher.Datatypes.Shops, string> readOnlyStoreNames;
         private static string[] mapNames = new string[128] {
             "",
             "Eagrose Castle Gate",
@@ -194,6 +216,19 @@ namespace FFTPatcher
                             24 );
                 }
                 return abilityAI;
+            }
+        }
+
+        public static IDictionary<FFTPatcher.Datatypes.Shops, string> ShopNames
+        {
+            get
+            {
+                if( readOnlyStoreNames == null )
+                {
+                    readOnlyStoreNames = new FFTPatcher.Datatypes.ReadOnlyDictionary<FFTPatcher.Datatypes.Shops, string>( storeNames );
+                }
+
+                return readOnlyStoreNames;
             }
         }
 
@@ -384,12 +419,15 @@ namespace FFTPatcher
 
         public static string StatusNames { get { return dict[Paths.StatusNamesXML] as string; } }
 
+        public static byte[] StoreInventoriesBin { get { return dict[Paths.Binaries.StoreInventories] as byte[]; } }
+
 		#endregion Public Properties 
 
 		#region Constructors (1) 
 
         static PSPResources()
         {
+            dict[Resources.Paths.PSP.Binaries.StoreInventories] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.StoreInventories];
             dict[Resources.Paths.PSP.Binaries.ENTD1] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD1];
             dict[Resources.Paths.PSP.Binaries.ENTD2] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD2];
             dict[Resources.Paths.PSP.Binaries.ENTD3] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD3];
@@ -426,7 +464,21 @@ namespace FFTPatcher
             dict[Resources.Paths.PSP.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemAttributesXML].ToUTF8String();
             dict[Resources.Paths.PSP.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsXML].ToUTF8String();
             dict[Resources.Paths.PSP.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsStringsXML].ToUTF8String();
-         }
+
+            string[] characterSet = new string[2200];
+            PSXResources.CharacterSet.CopyTo( characterSet, 0 );
+            characterSet[0x95] = " ";
+            characterSet[0x880] = "á";
+            characterSet[0x881] = "à";
+            characterSet[0x882] = "é";
+            characterSet[0x883] = "è";
+            characterSet[0x884] = "í";
+            characterSet[0x885] = "ú";
+            characterSet[0x886] = "ù";
+            characterSet[0x887] = "-";
+            characterSet[0x888] = "—";
+            CharacterSet = characterSet.AsReadOnly();
+        }
 
 		#endregion Constructors 
     }

@@ -19,31 +19,65 @@
 
 using System.Collections.Generic;
 
+using FFTPatcher.Datatypes;
+
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Represents a sectioned file in the PSP version.
+    /// </summary>
     public abstract class BasePSPSectionedFile : AbstractStringSectioned
     {
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
+        /// <summary>
+        /// Gets the character map that is used for this file.
+        /// </summary>
+        /// <value></value>
         public override GenericCharMap CharMap { get { return TextUtilities.PSPMap; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSPSectionedFile"/> class.
+        /// </summary>
         protected BasePSPSectionedFile()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSPSectionedFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected BasePSPSectionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
+
+        public override IList<PatchedByteArray> GetAllPatches()
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            foreach( var kvp in Locations )
+            {
+                result.Add( new PatchedByteArray( (FFTPack.Files)kvp.Key, kvp.Value, bytes ) );
+            }
+            return result;
+        }
+        public override IList<PatchedByteArray> GetAllPatches( IDictionary<string, byte> dteTable )
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray( dteTable );
+            Locations.ForEach( kvp => result.Add( new PatchedByteArray( (FFTPack.Files)kvp.Key, kvp.Value, bytes ) ) );
+            return result;
+        }
 
     }
 }

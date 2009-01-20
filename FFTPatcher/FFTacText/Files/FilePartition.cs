@@ -27,14 +27,15 @@ namespace FFTPatcher.TextEditor.Files
     public class FilePartition : IPartition
     {
 
-		#region Fields (2) 
+        #region Fields (2)
 
         private GenericCharMap charmap;
         private int length;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (5) 
+        #region Properties (5)
+
 
         /// <summary>
         /// Gets the entries.
@@ -62,9 +63,9 @@ namespace FFTPatcher.TextEditor.Files
         public IPartitionedFile Owner { get; private set; }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (3) 
+        #region Constructors (3)
 
         private FilePartition( IPartitionedFile owner, IList<string> entryNames, int maxLength, GenericCharMap charmap )
         {
@@ -74,21 +75,37 @@ namespace FFTPatcher.TextEditor.Files
             EntryNames = entryNames;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilePartition"/> class.
+        /// </summary>
+        /// <param name="owner">The IPartitionedFile that owns this partition.</param>
+        /// <param name="bytes">The bytes.</param>
+        /// <param name="entryNames">The names of each entry.</param>
+        /// <param name="maxLength">The maximum length for this partition.</param>
+        /// <param name="charmap">The charmap to use.</param>
         public FilePartition( IPartitionedFile owner, IList<byte> bytes, IList<string> entryNames, int maxLength, GenericCharMap charmap )
             : this( owner, entryNames, maxLength, charmap )
         {
             Entries = TextUtilities.ProcessList( bytes.Sub( 0, bytes.LastIndexOf( (byte)0xFE ) ), charmap );
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilePartition"/> class.
+        /// </summary>
+        /// <param name="owner">The IPartitionedFile that owns this partition.</param>
+        /// <param name="entries">The entries.</param>
+        /// <param name="entryNames">The names of each entry.</param>
+        /// <param name="maxLength">The maximum length for this partition.</param>
+        /// <param name="charmap">The charmap to use.</param>
         public FilePartition( IPartitionedFile owner, IList<string> entries, int maxLength, IList<string> entryNames, GenericCharMap charmap )
             : this( owner, entryNames, maxLength, charmap )
         {
             Entries = entries;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (3) 
+        #region Methods (3)
 
 
         private int CalcLength()
@@ -123,7 +140,7 @@ namespace FFTPatcher.TextEditor.Files
         }
 
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

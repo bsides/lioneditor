@@ -28,6 +28,8 @@ namespace FFTPatcher.Editors
 		#region Instance Variables (1) 
 
         private FFTFont font;
+        private Context ourContext = Context.Default;
+        private System.Collections.Generic.IList<string> chars;
 
 		#endregion Instance Variables 
 
@@ -41,6 +43,8 @@ namespace FFTPatcher.Editors
                 if( font != value )
                 {
                     font = value;
+                    ourContext = FFTPatch.Context;
+                    chars = ourContext == Context.US_PSP ? PSPResources.CharacterSet : PSXResources.CharacterSet;
                     numericUpDown1.Value = 0;
                     numericUpDown1_ValueChanged( numericUpDown1, EventArgs.Empty );
                 }
@@ -66,6 +70,7 @@ namespace FFTPatcher.Editors
             if( FFTFont != null )
             {
                 glyphEditor1.Glyph = FFTFont.Glyphs[(int)numericUpDown1.Value];
+                label1.Text = chars[(int)numericUpDown1.Value];
             }
         }
 

@@ -16,34 +16,68 @@
     You should have received a copy of the GNU General Public License
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using System.Collections.Generic;
+
+using FFTPatcher.Datatypes;
 
 namespace FFTPatcher.TextEditor.Files.PSP
 {
+    /// <summary>
+    /// Represents a file in the PSP version that is partitioned.
+    /// </summary>
     public abstract class BasePSPPartitionedFile : AbstractPartitionedFile
     {
 
-		#region Properties (1) 
+        #region Properties (1)
 
 
-        protected override GenericCharMap CharMap { get { return TextUtilities.PSPMap; } }
+        /// <summary>
+        /// Gets the character map used for this file.
+        /// </summary>
+        /// <value></value>
+        public override GenericCharMap CharMap { get { return TextUtilities.PSPMap; } }
 
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSPPartitionedFile"/> class.
+        /// </summary>
         protected BasePSPPartitionedFile()
             : base()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePSPPartitionedFile"/> class.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
         protected BasePSPPartitionedFile( IList<byte> bytes )
             : base( bytes )
         {
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
+        public override IList<PatchedByteArray> GetAllPatches()
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            foreach( var kvp in Locations )
+            {
+                result.Add( new PatchedByteArray( (FFTPack.Files)kvp.Key, kvp.Value, bytes ) );
+            }
+            return result;
+        }
+        public override IList<PatchedByteArray> GetAllPatches( IDictionary<string, byte> dteTable )
+        {
+            var result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray( dteTable );
+            Locations.ForEach( kvp => result.Add( new PatchedByteArray( (FFTPack.Files)kvp.Key, kvp.Value, bytes ) ) );
+            return result;
+        }
     }
 }

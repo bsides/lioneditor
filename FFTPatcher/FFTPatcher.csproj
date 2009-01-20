@@ -79,6 +79,12 @@
     <Compile Include="Controls\ComboBoxWithDefault.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\DualList\DualList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DualList\DualListActionEventArgs.cs" />
+    <Compile Include="Controls\DualList\DualListCancelEventArgs.cs" />
+    <Compile Include="Controls\DualList\DualListDesigner.cs" />
     <Compile Include="Controls\NumericUpDownWithDefault.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -87,6 +93,22 @@
     </Compile>
     <Compile Include="Controls\VerticalLabel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Datatypes\FFTPatch.cs" />
+    <Compile Include="Datatypes\Items\StoreInventory.cs" />
+    <Compile Include="Datatypes\ReadOnlyDictionary.cs" />
+    <Compile Include="Datatypes\Set.cs" />
+    <Compile Include="Editors\Items\AllStoreInventoryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Items\AllStoreInventoryEditor.Designer.cs">
+      <DependentUpon>AllStoreInventoryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Items\StoreInventoryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Items\StoreInventoryEditor.Designer.cs">
+      <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="PatchPSPForm.cs">
       <SubType>Form</SubType>
@@ -109,7 +131,6 @@
     <Compile Include="Datatypes\ENTD\SpecialName.cs" />
     <Compile Include="Datatypes\ENTD\SpriteSet.cs" />
     <Compile Include="Datatypes\FFTPack.cs" />
-    <Compile Include="Datatypes\FFTPatch.cs" />
     <Compile Include="Datatypes\Fonts\FFTFont.cs" />
     <Compile Include="Datatypes\Fonts\Glyph.cs" />
     <Compile Include="Datatypes\HexAttribute.cs" />
@@ -363,6 +384,14 @@
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Items\AllStoreInventoryEditor.resx">
+      <DependentUpon>AllStoreInventoryEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Items\StoreInventoryEditor.resx">
+      <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="PatchPSPForm.resx">
       <DependentUpon>PatchPSPForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -590,6 +619,7 @@
     <Content Include="Resources\PSP\Abilities\Strings.xml" />
     <None Include="Resources\PSP\bin\ICON0" />
     <None Include="Resources\MoveFind.bin" />
+    <None Include="Resources\StoreInventories.bin" />
     <Content Include="Resources\PSP\EventNames.xml" />
     <Content Include="Resources\PSP\FFTPackFiles.xml" />
     <Content Include="Resources\PSP\Items\ItemAttributes.xml" />

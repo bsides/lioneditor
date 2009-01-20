@@ -46,6 +46,22 @@ namespace FFTPatcher
             return new ReadOnlyCollection<T>( list );
         }
 
+        public static void RemoveAll<T, U>( this IDictionary<T, U> dict, Predicate<T> criteria )
+        {
+            Set<T> toRemove = new Set<T>();
+            foreach ( T key in dict.Keys )
+            {
+                if ( criteria( key ) )
+                {
+                    toRemove.Add( key );
+                }
+            }
+            foreach ( T key in toRemove.GetElements() )
+            {
+                dict.Remove( key );
+            }
+        }
+
         public static void Sort<T>( this IList<T> list ) where T : IComparable<T>
         {
             Utilities.SortList( list );
@@ -54,6 +70,20 @@ namespace FFTPatcher
         public static void Sort<T>( this IList<T> list, Comparison<T> comparer )
         {
             Utilities.SortList( list, comparer );
+        }
+
+        public static IList<T> Join<T>( this IEnumerable<IEnumerable<T>> lists )
+        {
+            List<T> result = new List<T>();
+            lists.ForEach( l => result.AddRange( l ) );
+            return result;
+        }
+
+        public static IList<T> Join<T>( this IList<IList<T>> lists )
+        {
+            List<T> result = new List<T>();
+            lists.ForEach( l => result.AddRange( l ) );
+            return result;
         }
 
         /// <summary>
@@ -93,6 +123,31 @@ namespace FFTPatcher
             {
                 destination[i + destinationIndex] = list[i];
             }
+        }
+
+        public static void CopyTo<TKey, TValue>( this Dictionary<TKey, TValue>.ValueCollection list, IList<TValue> destination, int destinationIndex )
+        {
+            if ( destination.Count - destinationIndex < list.Count )
+            {
+                throw new InvalidOperationException( "source list is larger than destination" );
+            }
+
+            int count = 0;
+            foreach ( TValue v in list )
+            {
+                destination[destinationIndex + count++] = v;
+            }
+        }
+
+        public static List<T> FindAll<T>( this IList<T> list, Predicate<T> match )
+        {
+            List<T> result = new List<T>( list.Count );
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                if ( match( list[i] ) )
+                    result.Add( list[i] );
+            }
+            return result;
         }
 
         public static void InitializeElements<T>( this IList<T> list )
@@ -139,6 +194,26 @@ namespace FFTPatcher
 
             int count = list.Count;
             for( int i = 0; i < count; i++ ) action( list[i] );
+        }
+
+        public static void ForEach<T>( this IEnumerable<T> list, Action<T> action )
+        {
+            if ( action == null )
+            {
+                throw new ArgumentNullException( "action" );
+            }
+
+            foreach ( T item in list )
+            {
+                action( item );
+            }
+        }
+
+        public static string Join( this IList<string> strings, string joiner )
+        {
+            StringBuilder result = new StringBuilder();
+            strings.ForEach( s => result.Append( s + joiner ) );
+            return result.ToString();
         }
 
         /// <summary>

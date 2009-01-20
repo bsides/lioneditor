@@ -34,7 +34,7 @@ namespace FFTPatcher
         private static byte[] eccBLUT = new byte[256];
         private static byte[] eccFLUT = new byte[256];
         private static ulong[] edcLUT = new ulong[256];
-        private const int fullSectorSize = 2352;
+        private const int fullSectorSize = 2352;    
         private static readonly int[] sectorSizes = new int[3] { 2048, fullSectorSize, fullSectorSize };
 
 		#endregion Instance Variables 

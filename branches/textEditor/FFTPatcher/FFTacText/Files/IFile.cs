@@ -74,7 +74,7 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets the DTE pairs that this file needs in order to fit on disc, given a set of possible DTE pairs
         /// and a set of the pairs that are already required.
         /// </summary>
-        Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs );
+        Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes );
 
     }
 }

@@ -155,55 +155,90 @@ namespace FFTPatcher.TextEditor
             return result.ToArray();
         }
 
-        /// <summary>
-        /// Converts a FFTacText string into a FFT text byte array.
-        /// </summary>
-        public byte[] StringToByteArray( string s )
+        public string LastError { get; private set; }
+
+        public bool TryStringToByteArray( string s, out byte[] bytes )
         {
             List<byte> result = new List<byte>( s.Length );
-
-            for( int i = 0; i < s.Length; i++ )
+            for ( int i = 0; i < s.Length; i++ )
             {
                 int val = 0;
-                if( s[i] == '{' )
+                if ( s[i] == '{' )
                 {
                     int j = s.IndexOf( '}', i );
+                    if( j == -1 )
+                    {
+                        LastError = s.Substring( i );
+                        bytes = null;
+                        return false;
+                    }
+
                     string key = s.Substring( i, j - i + 1 );
-                    if( Reverse.ContainsKey( key ) )
+                    if ( Reverse.ContainsKey( key ) )
                     {
                         val = Reverse[key];
                     }
                     else
                     {
                         Match match = regex.Match( key );
-                        if( match.Success )
+                        if ( match.Success )
                         {
                             result.AddRange( IntToOneOrTwoOrThreeBytes( Convert.ToInt32( match.Groups[1].Value, 16 ) ) );
                             val = -1;
                         }
                         else
                         {
-                            throw new Exception();
+                            LastError = key;
+                            bytes = null;
+                            return false;
                         }
                     }
                     i = j;
                 }
-                else if( s[i] == '\r' && (i + 1) < s.Length && s[i + 1] == '\n' )
+                else if ( s[i] == '\r' && ( i + 1 ) < s.Length && s[i + 1] == '\n' )
                 {
                     i += 1;
                     val = Reverse["\r\n"];
                 }
-                else
+                else 
                 {
-                    val = Reverse[s[i].ToString()];
+                    string t = s[i].ToString();
+                    if ( Reverse.ContainsKey( t ) )
+                    {
+                        val = Reverse[t];
+                    }
+                    else
+                    {
+                        LastError = t;
+                        bytes = null;
+                        return false;
+                    }
                 }
-                if( val >= 0 )
+
+                if ( val >= 0 )
                 {
                     result.AddRange( IntToOneOrTwoOrThreeBytes( val ) );
                 }
             }
 
-            return result.ToArray();
+            bytes = result.ToArray();
+            return true;
+        }
+
+        /// <summary>
+        /// Converts a FFTacText string into a FFT text byte array.
+        /// </summary>
+        public byte[] StringToByteArray( string s )
+        {
+            byte[] result;
+            if ( TryStringToByteArray( s, out result ) )
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -211,16 +246,8 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public bool ValidateString( string s )
         {
-            try
-            {
-                StringToByteArray( s );
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
+            byte[] dummy;
+            return TryStringToByteArray( s, out dummy );
         }
 
 

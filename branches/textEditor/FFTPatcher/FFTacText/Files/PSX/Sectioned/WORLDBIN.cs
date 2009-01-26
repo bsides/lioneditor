@@ -532,42 +532,46 @@ namespace FFTPatcher.TextEditor.Files.PSX
             return false;
         }
 
-        public Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs )
+        public Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
         {
-            IList<IList<byte>> sections = GetSectionBytes( Sections, CharMap );
-            Set<string> result = new Set<string>();
-            IList<string> currentPairsList = currentPairs.GetElements();
+            Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
+
+            IList<IList<string>> sectionStrings = new List<IList<string>>( numberOfSections );
+            Sections.ForEach( s => sectionStrings.Add( new List<string>( s ) ) );
+            IList<IList<byte>> sections = GetSectionBytes( sectionStrings, CharMap );
 
             for ( int i = 0; i < numberOfSections; i++ )
             {
                 if ( sections[i].Count > SectionMaxLengths[i] )
                 {
-                    var dict = TextUtilities.GetPairAndTripleCounts( Sections[i].Join( string.Empty ), replacements );
+                    var dict = TextUtilities.GetPairAndTripleCounts( sectionStrings[i].Join( string.Empty ), replacements );
 
                     int bytesNeeded = sections[i].Count - SectionMaxLengths[i];
                     int j  = 0;
 
-                    while ( bytesNeeded > 0 && j < currentPairsList.Count )
+                    while ( bytesNeeded > 0 && j < currentPairs.Count )
                     {
-                        if ( dict.ContainsKey( currentPairsList[j] ) )
+                        if ( dict.ContainsKey( currentPairs[j].Key ) )
                         {
-                            bytesNeeded -= dict[currentPairsList[j]];
-                            dict.Remove( currentPairsList[j] );
-                            result.Add( currentPairsList[j] );
+                            result.Add( currentPairs[j] );
+                            TextUtilities.DoDTEEncoding( sectionStrings[i], Utilities.DictionaryFromKVPs( result ) );
+                            sections = GetSectionBytes( sectionStrings, CharMap );
+                            bytesNeeded = sections[i].Count - SectionMaxLengths[i];
+                            dict.Remove( currentPairs[j].Key );
                         }
                         j++;
                     }
 
                     j = 0;
 
-                    IList<string> resultList = result.GetElements();
-
-                    while ( bytesNeeded > 0 && j < resultList.Count )
+                    while ( bytesNeeded > 0 && j < result.Count )
                     {
-                        if ( dict.ContainsKey( resultList[j] ) )
+                        if ( dict.ContainsKey( result[j].Key ) )
                         {
-                            bytesNeeded -= dict[resultList[j]];
-                            dict.Remove( resultList[j] );
+                            TextUtilities.DoDTEEncoding( sectionStrings[i], Utilities.DictionaryFromKVPs( result ) );
+                            sections = GetSectionBytes( sectionStrings, CharMap );
+                            bytesNeeded = sections[i].Count - SectionMaxLengths[i];
+                            dict.Remove( result[j].Key );
                         }
                         j++;
                     }
@@ -575,10 +579,12 @@ namespace FFTPatcher.TextEditor.Files.PSX
                     j = 0;
                     var l = new List<KeyValuePair<string, int>>( dict );
                     l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
-                    while ( bytesNeeded > 0 && j < l.Count )
+                    while ( bytesNeeded > 0 && j < l.Count && dteBytes.Count > 0 )
                     {
-                        bytesNeeded -= dict[l[j].Key];
-                        result.Add( l[j].Key );
+                        result.Add( new KeyValuePair<string, byte>( l[j].Key, dteBytes.Pop() ) );
+                        TextUtilities.DoDTEEncoding( sectionStrings[i], Utilities.DictionaryFromKVPs( result ) );
+                        sections = GetSectionBytes( sectionStrings, CharMap );
+                        bytesNeeded = sections[i].Count - SectionMaxLengths[i];
                         j++;
                     }
 

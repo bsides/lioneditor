@@ -58,6 +58,17 @@ namespace FFTPatcher
 
 		#region Methods (13) 
 
+
+        public static IDictionary<TKey, TValue> DictionaryFromKVPs<TKey, TValue>( IEnumerable<KeyValuePair<TKey, TValue>> kvps )
+        {
+            Dictionary<TKey, TValue> result = new Dictionary<TKey, TValue>();
+            foreach ( var kvp in kvps )
+            {
+                result[kvp.Key] = kvp.Value;
+            }
+            return result;
+        }
+
         public static void SortList<T>( IList<T> list ) where T : IComparable<T>
         {
             QuickSort( list, 0, list.Count - 1, ( a, b ) => a.CompareTo( b ) );

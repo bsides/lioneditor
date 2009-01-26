@@ -377,83 +377,119 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+        private static Stack<byte> GetAllowedDteBytes()
+        {
+            Stack<byte> result = new Stack<byte>();
+
+            for ( byte b = 0xCF; b >= 0xB6; b-- )
+            {
+                result.Push( b );
+            }
+            result.Push( 0xb4 );
+            result.Push( 0xb3 );
+            for ( byte b = 0xB1; b >= 0x94; b-- )
+            {
+                result.Push( b );
+            }
+            result.Push( 0x92 );
+            result.Push( 0x90 );
+            result.Push( 0x8F );
+            result.Push( 0x8C );
+            for ( byte b = 0x8A; b >= 0x60; b-- )
+            {
+                result.Push( b );
+            }
+            for ( byte b = 0x5E; b >= 0x47; b-- )
+            {
+                result.Push( b );
+            }
+            result.Push( 0x45 );
+            result.Push( 0x43 );
+            result.Push( 0x41 );
+            result.Push( 0x3f );
+
+            return result;
+        }
+
+        public void ClearOutGarbagePSX()
+        {
+            // OPEN.LZW, Section 25 (1-indexed) (#96 has no {END})
+            //           section 26
+            // SAMPLE.LZW, section 10
+        }
+
         /// <summary>
         /// Updates a PSX FFT ISO with the text files in this instance.
         /// </summary>
         public void UpdatePsxIso( BackgroundWorker worker, DoWorkEventArgs doWork )
         {
             string filename = doWork.Argument as string;
-            int defaultNumberOfTasks = SectionedFiles.Count + PartitionedFiles.Count;
             List<PatchedByteArray> patches = new List<PatchedByteArray>();
+            int numberOfTasks = 1 + // "determining which"
+                                SectionedFiles.Count + // each file
+                                1 + // font.bin
+                                1; // applying patches
+
 
             int tasksCompleted = 0;
-            MethodInvoker progress =
-                delegate()
+            Action<string> progress =
+                delegate(string s)
                 {
-                    int numberOfTasks = defaultNumberOfTasks + patches.Count * 2;
-                    worker.ReportProgress( ++tasksCompleted * 100 / numberOfTasks );
+                    worker.ReportProgress( ++tasksCompleted * 100 / numberOfTasks, s);
                 };
+
             if ( Filetype != Filetype.PSX )
             {
                 throw new InvalidOperationException();
             }
 
-            IList<IFile> filesNeedingDte = new List<IFile>();
-            
+            IList<IStringSectioned> filesNeedingDte = new List<IStringSectioned>();
+
+            progress( "Determining files which are too large" );
             foreach ( IStringSectioned sectioned in SectionedFiles )
             {
-                if ( sectioned.IsDTENeeded() )
+                progress( string.Format( "Processing {0}", sectioned.GetType().Name ) );
+                if ( !(sectioned is Files.PSX.WORLDBIN) && sectioned.IsDTENeeded() )
                 {
                     filesNeedingDte.Add( sectioned );
-                }
-            }
-            foreach ( IPartitionedFile part in PartitionedFiles )
-            {
-                if ( part.IsDTENeeded() )
-                {
-                    filesNeedingDte.Add( part );
                 }
             }
 
             List<IFile> normalFiles = new List<IFile>();
             SectionedFiles.ForEach( f => normalFiles.Add( f ) );
             PartitionedFiles.ForEach( p => normalFiles.Add( p ) );
-            normalFiles.RemoveAll( f => filesNeedingDte.Contains( f ) );
+            normalFiles.RemoveAll( f => f is IStringSectioned && filesNeedingDte.Contains( f as IStringSectioned ) );
 
             Set<string> validDtePairs = Program.groups;
-            Set<string> currentPairs = new Set<string>();
-            IDictionary<IFile, Set<string>> filePreferredPairs = new Dictionary<IFile, Set<string>>( filesNeedingDte.Count );
+            Set<KeyValuePair<string, byte>> currentPairs = 
+                new Set<KeyValuePair<string, byte>>( ( x, y ) => x.Key.Equals( y.Key ) && ( x.Value == y.Value ) ? 0 : -1 );
+            IDictionary<IStringSectioned, Set<KeyValuePair<string, byte>>> filePreferredPairs = new Dictionary<IStringSectioned, Set<KeyValuePair<string, byte>>>( filesNeedingDte.Count );
 
+            filesNeedingDte.Sort( ( x, y ) => ( y.ActualLength - y.MaxLength ).CompareTo( x.ActualLength - x.MaxLength ) );
+
+            IStringSectioned worldbin = SectionedFiles.Find( f => ( f is Files.PSX.WORLDBIN ) );
+            if ( worldbin.IsDTENeeded() )
+            {
+                filesNeedingDte.Add( worldbin );
+                normalFiles.Remove( worldbin );
+            }
+
+            Stack<byte> dteBytes = GetAllowedDteBytes();
+            numberOfTasks += filesNeedingDte.Count * 2;
+            numberOfTasks += normalFiles.Count;
             foreach ( var f in filesNeedingDte )
             {
-                var r = f.GetPreferredDTEPairs( validDtePairs, currentPairs );
+                progress( string.Format( "Calculating DTE for {0}", f.GetType().Name ) );
+                var r = f.GetPreferredDTEPairs( validDtePairs, currentPairs, dteBytes );
                 filePreferredPairs[f] = r;
                 currentPairs.AddRange( r );
             }
 
-            // TODO check pairs returned against max dte pairs
-
-            IDictionary<IFile, byte[]> fileBytes = new Dictionary<IFile, byte[]>();
-            IDictionary<string, byte> dteEncodings = new Dictionary<string, byte>();
-            IList<string> dtePairs = currentPairs.GetElements();
-            for ( int i = 0; i < dtePairs.Count; i++ )
-            {
-                byte b = (byte)( i + 0x3E );
-                if ( b > 0xB1 )
-                    b += 1;
-                if ( b > 0xB4 )
-                    b += 1;
-                dteEncodings[dtePairs[i]] = (byte)b;
-            }
-
             foreach ( var f in filesNeedingDte )
             {
-                IDictionary<string, byte> currentFileEncoding = new Dictionary<string, byte>();
-                foreach ( string s in filePreferredPairs[f] )
-                {
-                    currentFileEncoding[s] = dteEncodings[s];
-                }
+                IDictionary<string, byte> currentFileEncoding = Utilities.DictionaryFromKVPs( filePreferredPairs[f] );
 
+                progress( string.Format( "Getting patches for {0}", f.GetType().Name ) );
                 foreach ( var otherPatch in f.GetAllPatches( currentFileEncoding ) )
                 {
                     patches.Add( otherPatch );
@@ -462,25 +498,27 @@ namespace FFTPatcher.TextEditor
 
             foreach ( var f in normalFiles )
             {
+                progress( string.Format( "Getting patches for {0}", f.GetType().Name ) );
                 foreach ( var otherPatch in f.GetAllPatches() )
                 {
                     patches.Add( otherPatch );
                 }
             }
 
-            patches.AddRange( GeneratePsxFontBinPatches( dteEncodings ) );
+            progress( string.Format( "Updating font for DTE" ) );
+            patches.AddRange( GeneratePsxFontBinPatches( currentPairs ) );
 
             using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
             {
+                progress( string.Format( "Applying patches" ) );
                 foreach ( PatchedByteArray patch in patches )
                 {
                     IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true );
-                    progress();
                 }
             }
         }
 
-        private IList<PatchedByteArray> GeneratePsxFontBinPatches( IDictionary<string, byte> dteEncodings )
+        private IList<PatchedByteArray> GeneratePsxFontBinPatches( IEnumerable<KeyValuePair<string, byte>> dteEncodings )
         {
             // BATTLE.BIN -> 0xE7614
             // FONT.BIN -> 0

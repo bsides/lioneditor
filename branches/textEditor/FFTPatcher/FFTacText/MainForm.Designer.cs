@@ -71,7 +71,7 @@ namespace FFTPatcher.TextEditor
             this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
             this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
             this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.progressBar = new FFTPatcher.Controls.ProgressBarWithText();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
@@ -198,6 +198,8 @@ namespace FFTPatcher.TextEditor
             // 
             this.progressBar.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left )
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.progressBar.BackColor = System.Drawing.Color.White;
+            this.progressBar.ForeColor = System.Drawing.Color.Blue;
             this.progressBar.Location = new System.Drawing.Point( 12, 339 );
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size( 519, 23 );
@@ -238,7 +240,7 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem helpMenuItem;
         private System.Windows.Forms.MenuItem allowedSymbolsMenuItem;
         private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
-        private System.Windows.Forms.ProgressBar progressBar;
+        private FFTPatcher.Controls.ProgressBarWithText progressBar;
 
     }
 }

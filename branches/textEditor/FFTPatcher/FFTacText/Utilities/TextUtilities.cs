@@ -1003,6 +1003,7 @@ namespace FFTPatcher.TextEditor
 
         private static string DoDTEEncoding( string text, IDictionary<string, byte> dteTable )
         {
+            text = text.Replace( "\r\n", "\n" );
             int length = text.Length;
             StringBuilder sb = new StringBuilder( text.Length );
             Action<int> meth =
@@ -1048,6 +1049,7 @@ namespace FFTPatcher.TextEditor
                     }
                 };
             meth( 2 );
+            sb.Replace( "\n", "\r\n" );
             return sb.ToString();
         }
     }

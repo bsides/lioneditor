@@ -51,11 +51,12 @@ namespace FFTPatcher.TextEditor.Files
         /// <param name="replacements"></param>
         /// <param name="currentPairs"></param>
         /// <returns></returns>
-        public abstract Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs );
+        public abstract Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes );
 
         /// <summary>
         /// Creates a byte array representing this file with DTE substitutions performed as specified.
         /// </summary>
         public abstract byte[] ToByteArray( IDictionary<string, byte> dteTable );
+
     }
 }

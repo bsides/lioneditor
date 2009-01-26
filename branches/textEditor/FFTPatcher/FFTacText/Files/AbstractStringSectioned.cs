@@ -31,9 +31,6 @@ namespace FFTPatcher.TextEditor.Files
     /// </summary>
     public abstract class AbstractStringSectioned : AbstractFile, IStringSectioned
     {
-
-		#region Fields (4) 
-
         /// <summary>
         /// The location where the data starts in normal sectioned files.
         /// </summary>
@@ -41,11 +38,6 @@ namespace FFTPatcher.TextEditor.Files
         private int[][] entryLengths = null;
         private IList<IList<string>> entryNames;
         private IList<string> sectionNames;
-
-		#endregion Fields 
-
-		#region Abstract Properties (5) 
-
 
         /// <summary>
         /// Gets the number of sections.
@@ -57,12 +49,6 @@ namespace FFTPatcher.TextEditor.Files
         /// Gets the filename.
         /// </summary>
         public abstract string Filename { get; }
-
-
-		#endregion Abstract Properties 
-
-		#region Properties (7) 
-
 
         private int[][] EntryLengths
         {
@@ -113,7 +99,11 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-
+        protected bool SectionsDirty
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets the estimated length of this file if it were turned into a byte array.
@@ -151,11 +141,6 @@ namespace FFTPatcher.TextEditor.Files
             }
         }
 
-
-		#endregion Properties 
-
-		#region Constructors (2) 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractStringSectioned"/> class.
         /// </summary>
@@ -181,14 +166,16 @@ namespace FFTPatcher.TextEditor.Files
                 }
 
                 IList<byte> thisSection = bytes.Sub( (int)(start + dataStart), (int)(stop + dataStart) );
-                Sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
+                NotifyStringList l = new NotifyStringList( TextUtilities.ProcessList( thisSection, CharMap ) );
+                l.ListMemberChanged += OnStringListChanged;
+                Sections.Add( l );
             }
         }
 
-		#endregion Constructors 
-
-		#region Methods (16) 
-
+        protected virtual void OnStringListChanged( object sender, NotifyStringList.ListMemberChangedEventArgs args )
+        {
+            SectionsDirty = true;
+        }
 
         private void InitializeEntryLengths()
         {
@@ -211,11 +198,13 @@ namespace FFTPatcher.TextEditor.Files
             string s = Encoding.UTF8.GetString( GZip.Decompress( Convert.FromBase64String( reader.ReadString() ) ) );
             string[] sectionArray = s.Split( '\u2801' );
 
-            Sections = new string[sectionArray.Length][];
+            Sections = new IList<string>[sectionArray.Length];
 
             for( int i = 0; i < sectionArray.Length; i++ )
             {
-                Sections[i] = sectionArray[i].Split( '\u2800' );
+                NotifyStringList l = new NotifyStringList(sectionArray[i].Split( '\u2800' ) );
+                l.ListMemberChanged += OnStringListChanged;
+                Sections[i] = l;
             }
             reader.ReadEndElement();
         }
@@ -226,7 +215,7 @@ namespace FFTPatcher.TextEditor.Files
             int sectionCount = reader.ReadContentAsInt();
             reader.MoveToElement();
             reader.ReadStartElement();
-            Sections = new string[sectionCount][];
+            Sections = new IList<string>[sectionCount];
 
             for( int i = 0; i < sectionCount; i++ )
             {
@@ -238,7 +227,7 @@ namespace FFTPatcher.TextEditor.Files
                 reader.MoveToElement();
                 reader.ReadStartElement( "section" );
 
-                Sections[currentSection] = new string[entryCount];
+                IList<string> whatever = new string[entryCount];
 
                 for( int j = 0; j < entryCount; j++ )
                 {
@@ -246,9 +235,13 @@ namespace FFTPatcher.TextEditor.Files
                     int currentEntry = reader.ReadContentAsInt();
                     reader.MoveToElement();
                     reader.ReadStartElement( "entry" );
-                    Sections[currentSection][currentEntry] = reader.ReadString().Replace( @"\n", "\r\n" );
+                    whatever[currentEntry] = reader.ReadString().Replace( @"\n", "\r\n" );
                     reader.ReadEndElement();
                 }
+
+                NotifyStringList l = new NotifyStringList( whatever );
+                l.ListMemberChanged += OnStringListChanged;
+                Sections[currentSection] = l;
 
                 reader.ReadEndElement();
             }
@@ -522,14 +515,13 @@ namespace FFTPatcher.TextEditor.Files
             return result;
         }
 
-        public override Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs )
+        public override Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
         {
             IList<IList<string>> sections = GetCopyOfSections();
             IList<byte> bytes = GetSectionByteArrays( sections, CharMap ).Join();
 
-            IDictionary<string, byte> result = new Dictionary<string, byte>();
-            IList<string> currentPairsList = currentPairs.GetElements();
-
+            Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
+            
             StringBuilder sb = new StringBuilder( MaxLength );
             Sections.ForEach( s => s.ForEach( t => sb.Append( t ) ) );
 
@@ -540,15 +532,16 @@ namespace FFTPatcher.TextEditor.Files
             int j = 0;
 
 
-            while ( bytesNeeded > 0 && j < currentPairsList.Count )
+            while ( bytesNeeded > 0 && j < currentPairs.Count )
             {
-                if( dict.ContainsKey( currentPairsList[j] ) )
+                if ( dict.ContainsKey( currentPairs[j].Key ) )
                 {
-                    result[currentPairsList[j]] = 0x00;
-                    TextUtilities.DoDTEEncoding( sections, result );
+                    result.Add( currentPairs[j] );
+
+                    TextUtilities.DoDTEEncoding( sections, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
                     bytes = GetSectionByteArrays( sections, CharMap ).Join();
 
-                    bytesNeeded = bytes.Count - (MaxLength - dataStart);
+                    bytesNeeded = bytes.Count - ( MaxLength - dataStart );
                 }
                 j++;
             }
@@ -556,15 +549,19 @@ namespace FFTPatcher.TextEditor.Files
             j = 0;
 
             var l = new List<KeyValuePair<string, int>>( dict );
-            //l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
+            l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
 
-            while ( bytesNeeded > 0 && j < l.Count )
+            while ( bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0 )
             {
-                result[l[j].Key] = 0x00;
-                TextUtilities.DoDTEEncoding( sections, result );
+                result.Add( new KeyValuePair<string, byte>( l[0].Key, dteBytes.Pop() ) );
+                TextUtilities.DoDTEEncoding( sections, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
                 bytes = GetSectionByteArrays( sections, CharMap ).Join();
                 bytesNeeded = bytes.Count - (MaxLength - dataStart);
-                j++;
+
+                StringBuilder sb2 = new StringBuilder( MaxLength );
+                sections.ForEach( s => s.ForEach( t => sb2.Append( t ) ) );
+                l = new List<KeyValuePair<string, int>>( TextUtilities.GetPairAndTripleCounts( sb2.ToString(), replacements ) );
+                l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
             }
 
             if ( bytesNeeded > 0 )
@@ -572,10 +569,10 @@ namespace FFTPatcher.TextEditor.Files
                 return null;
             }
 
-            return new Set<string>( result.Keys );
+            return result;
         }
 
-		#endregion Methods 
+ 
 
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace FFTPatcher.Datatypes
 {
+    [Flags]
     public enum Shops
     {
         Lesalia = 0x8000,
@@ -21,7 +22,8 @@ namespace FFTPatcher.Datatypes
         Warjilis = 0x0008,
         Bervenia = 0x0004,
         Zarghidas = 0x0002,
-        None = 0x0001
+        None = 0x0001,
+        Empty = 0
     }
 
     public class StoreInventory : IChangeable, ISupportDigest
@@ -116,6 +118,33 @@ namespace FFTPatcher.Datatypes
         public IList<StoreInventory> Stores { get; private set; }
         public IDictionary<Shops, StoreInventory> StoresDict { get; private set; }
 
+        public Shops this[Item i]
+        {
+            get
+            {
+                Shops result = Shops.Empty;
+                foreach( var s in Stores )
+                {
+                    if( s[i] )
+                    {
+                        result |= s.WhichStore;
+                    }
+                }
+                return result;
+            }
+            set
+            {
+                foreach( var s in shops )
+                {
+                    StoresDict[s][i] = ((value & s) == s);
+                }
+            }
+        }
+
+        private Shops[] shops = new Shops[16] { Shops.Bervenia, Shops.Dorter, Shops.Gariland, Shops.Goland, Shops.Goug, Shops.Igros, 
+                                    Shops.Lesalia,Shops.Limberry, Shops.Lionel, Shops.None, Shops.Riovanes, Shops.Warjilis, 
+                                    Shops.Yardrow, Shops.Zaland, Shops.Zarghidas, Shops.Zeltennia };
+
         public AllStoreInventories( Context context, IList<byte> bytes, IList<byte> defaultBytes )
         {
             if (defaultBytes != null)
@@ -124,7 +153,6 @@ namespace FFTPatcher.Datatypes
             }
 
             ourContext = context;
-            Shops[] shops = (Shops[])Enum.GetValues( typeof( Shops ) );
             List<StoreInventory> stores = new List<StoreInventory>( shops.Length );
             Dictionary<Shops, StoreInventory> storesDict = new Dictionary<Shops, StoreInventory>( shops.Length );
             foreach ( Shops s in shops )

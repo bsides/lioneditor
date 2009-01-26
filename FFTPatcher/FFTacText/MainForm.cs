@@ -346,6 +346,14 @@ namespace FFTPatcher.TextEditor
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Value = args.ProgressPercentage;
+                    if ( args.UserState is string )
+                    {
+                        progressBar.ProgressBarText = (string)args.UserState;
+                    }
+                    else
+                    {
+                        progressBar.ProgressBarText = string.Empty;
+                    }
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =

@@ -93,14 +93,22 @@ namespace FFTPatcher.TextEditor.Files
             return result.Sub( 0, 0x7F );
         }
 
+        IList<byte> compressResult;
+        IList<UInt32> cachedOffsets;
+
         /// <summary>
         /// Compresses this instance.
         /// </summary>
         private IList<byte> Compress( out IList<UInt32> offsets )
         {
-            var result = Compress( Sections, out offsets );
+            if ( SectionsDirty || compressResult == null || cachedOffsets == null )
+            {
+                compressResult = Compress( Sections, out cachedOffsets );
+                SectionsDirty = false;
+            }
 
-            return result;
+            offsets = cachedOffsets;
+            return compressResult;
         }
 
         private IList<byte> Compress( IList<IList<string>> sections, out IList<UInt32> offsets )
@@ -154,6 +162,11 @@ namespace FFTPatcher.TextEditor.Files
             result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
             result.AddRange( compressedBytes );
             return result.AsReadOnly();
+        }
+
+        public override bool IsDTENeeded()
+        {
+            return ToFinalBytes().Count > MaxLength;
         }
 
         protected override IList<byte> ToFinalBytes( IDictionary<string, byte> dteTable )

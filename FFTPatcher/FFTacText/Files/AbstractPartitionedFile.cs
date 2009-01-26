@@ -315,9 +315,9 @@ namespace FFTPatcher.TextEditor.Files
             return false;
         }
 
-        public override Set<string> GetPreferredDTEPairs( Set<string> replacements, Set<string> currentPairs )
+        public override Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
         {
-            return new Set<string>();
+            return new Set<KeyValuePair<string, byte>>();
         }
 
         public override byte[] ToByteArray( IDictionary<string, byte> dteTable )

@@ -6,7 +6,7 @@ namespace FFTPatcher
 {
     public class Set<T> : IEnumerable<T>
     {
-        private class SetEqualityComparer<U> : IEqualityComparer<U>
+        public class SetEqualityComparer<U> : IEqualityComparer<U>
         {
             private Comparison<U> comparison;
             public SetEqualityComparer( Comparison<U> comparison )
@@ -25,17 +25,21 @@ namespace FFTPatcher
             }
         }
 
-
+        List<T> backingList;
         Dictionary<T, bool> backing;
+        IEqualityComparer<T> comparer;
 
         public Set()
         {
             backing = new Dictionary<T, bool>();
+            backingList = new List<T>();
         }
 
         public Set( IEqualityComparer<T> comparer )
         {
             backing = new Dictionary<T, bool>( comparer );
+            backingList = new List<T>();
+            this.comparer = comparer;
         }
 
         public Set( IEnumerable<T> items )
@@ -67,6 +71,10 @@ namespace FFTPatcher
 
         public void Add( T item )
         {
+            if ( !backing.ContainsKey( item ) )
+            {
+                backingList.Add( item );
+            }
             backing[item] = true;
         }
 
@@ -80,24 +88,42 @@ namespace FFTPatcher
             if ( Contains( item ) )
             {
                 backing.Remove( item );
+                backingList.Remove( item );
             }
         }
 
         public IList<T> GetElements()
         {
-            return new List<T>( backing.Keys ).AsReadOnly();
+            return backingList.AsReadOnly();
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return backing.Keys.GetEnumerator() as IEnumerator<T>;
+            return backingList.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return backing.Keys.GetEnumerator();
+            return backingList.GetEnumerator();
         }
 
-        public int Count { get { return backing.Count; } }
+        public int Count { get { return backingList.Count; } }
+
+        public int IndexOf( T item )
+        {
+            if ( comparer != null )
+            {
+                return backingList.FindIndex( x => comparer.Equals( x, item ) );
+            }
+            else
+            {
+                return backingList.IndexOf( item );
+            }
+        }
+
+        public T this[int index]
+        {
+            get { return backingList[index]; }
+        }
     }
 }

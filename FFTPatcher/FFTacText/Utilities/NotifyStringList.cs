@@ -25,12 +25,12 @@ namespace FFTPatcher.TextEditor
     /// <summary>
     /// A list of strings that fires an event when value is set.
     /// </summary>
-    internal class NotifyStringList : IList<string>
+    public class NotifyStringList : IList<string>
     {
         
         #region Fields (1)
 
-        private List<string> innerList;
+        private IList<string> innerList;
 
         #endregion Fields
 
@@ -52,6 +52,11 @@ namespace FFTPatcher.TextEditor
         {
             Type = type;
             innerList = new List<string>();
+        }
+
+        public NotifyStringList( IList<string> list )
+        {
+            innerList = list;
         }
 
         #endregion Constructors
@@ -90,8 +95,11 @@ namespace FFTPatcher.TextEditor
             }
             set
             {
-                innerList[index] = value;
-                OnListMemberChanged( index );
+                if( innerList[index] != value )
+                {
+                    innerList[index] = value;
+                    OnListMemberChanged( index );
+                }
             }
         }
 

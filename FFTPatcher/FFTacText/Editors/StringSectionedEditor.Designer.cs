@@ -48,11 +48,7 @@ namespace FFTPatcher.TextEditor
         private void InitializeComponent()
         {
             this.sectionComboBox = new System.Windows.Forms.ComboBox();
-            this.lengthLabel = new System.Windows.Forms.Label();
-            this.maxLengthLabel = new System.Windows.Forms.Label();
             this.errorLabel = new System.Windows.Forms.Label();
-            this.filesListBox = new System.Windows.Forms.ListBox();
-            this.saveButton = new System.Windows.Forms.Button();
             this.stringListEditor1 = new FFTPatcher.TextEditor.StringListEditor();
             this.SuspendLayout();
             //
@@ -68,26 +64,6 @@ namespace FFTPatcher.TextEditor
             this.sectionComboBox.Size = new System.Drawing.Size( 335, 21 );
             this.sectionComboBox.TabIndex = 0;
             //
-            // lengthLabel
-            //
-            this.lengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lengthLabel.AutoSize = true;
-            this.lengthLabel.Location = new System.Drawing.Point( 3, 231 );
-            this.lengthLabel.Name = "lengthLabel";
-            this.lengthLabel.Size = new System.Drawing.Size( 35, 13 );
-            this.lengthLabel.TabIndex = 3;
-            this.lengthLabel.Text = "label1";
-            //
-            // maxLengthLabel
-            //
-            this.maxLengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.maxLengthLabel.AutoSize = true;
-            this.maxLengthLabel.Location = new System.Drawing.Point( 3, 261 );
-            this.maxLengthLabel.Name = "maxLengthLabel";
-            this.maxLengthLabel.Size = new System.Drawing.Size( 35, 13 );
-            this.maxLengthLabel.TabIndex = 4;
-            this.maxLengthLabel.Text = "label2";
-            //
             // errorLabel
             //
             this.errorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -100,27 +76,6 @@ namespace FFTPatcher.TextEditor
             this.errorLabel.Size = new System.Drawing.Size( 46, 13 );
             this.errorLabel.TabIndex = 5;
             this.errorLabel.Text = "ERROR";
-            //
-            // filesListBox
-            //
-            this.filesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesListBox.FormattingEnabled = true;
-            this.filesListBox.Location = new System.Drawing.Point( 199, 231 );
-            this.filesListBox.MultiColumn = true;
-            this.filesListBox.Name = "filesListBox";
-            this.filesListBox.Size = new System.Drawing.Size( 188, 82 );
-            this.filesListBox.TabIndex = 6;
-            //
-            // saveButton
-            //
-            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Enabled = false;
-            this.saveButton.Location = new System.Drawing.Point( 199, 331 );
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size( 188, 23 );
-            this.saveButton.TabIndex = 7;
-            this.saveButton.Text = "Save to selected file";
-            this.saveButton.UseVisualStyleBackColor = true;
             //
             // stringListEditor1
             //
@@ -138,10 +93,6 @@ namespace FFTPatcher.TextEditor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add( this.sectionComboBox );
             this.Controls.Add( this.errorLabel );
-            this.Controls.Add( this.saveButton );
-            this.Controls.Add( this.filesListBox );
-            this.Controls.Add( this.lengthLabel );
-            this.Controls.Add( this.maxLengthLabel );
             this.Controls.Add( this.stringListEditor1 );
             this.Name = "StringSectionedEditor";
             this.Size = new System.Drawing.Size( 390, 357 );
@@ -153,14 +104,10 @@ namespace FFTPatcher.TextEditor
         #endregion
 
         private System.Windows.Forms.ComboBox sectionComboBox;
-        private System.Windows.Forms.Label lengthLabel;
-        private System.Windows.Forms.Label maxLengthLabel;
         /// <summary>
         /// Label for showing &quot;ERROR&quot;
         /// </summary>
         protected System.Windows.Forms.Label errorLabel;
-        private System.Windows.Forms.ListBox filesListBox;
-        private System.Windows.Forms.Button saveButton;
         private StringListEditor stringListEditor1;
     }
 }

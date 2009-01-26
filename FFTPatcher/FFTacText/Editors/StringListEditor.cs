@@ -19,10 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace FFTPatcher.TextEditor
 {
@@ -31,9 +29,9 @@ namespace FFTPatcher.TextEditor
     /// </summary>
     public partial class StringListEditor : UserControl
     {
-
-		#region Properties (1) 
-
+        private IList<string> boundValues;
+        private bool ignoreChanges = false;
+        public const int TextColumnIndex = 2;
 
         /// <summary>
         /// Gets the current row.
@@ -41,13 +39,8 @@ namespace FFTPatcher.TextEditor
         /// <value>The current row.</value>
         public int CurrentRow
         {
-            get { return (int)dataGridView.CurrentRow.Cells[numberColumn.Name].Value; }
+            get { return dataGridView.CurrentRow != null ? (int)dataGridView.CurrentRow.Cells[numberColumn.Name].Value : -1; }
         }
-
-
-		#endregion Properties 
-
-		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringListEditor"/> class.
@@ -57,31 +50,36 @@ namespace FFTPatcher.TextEditor
             InitializeComponent();
             dataGridView.CellEndEdit += dataGridView_CellEndEdit;
             dataGridView.EditingControlShowing += dataGridView_EditingControlShowing;
+            dataGridView.CellValidating += new DataGridViewCellValidatingEventHandler( dataGridView_CellValidating );
+            dataGridView.CellValidated += new DataGridViewCellEventHandler( dataGridView_CellValidated );
             textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
         }
 
-		#endregion Constructors 
-
-		#region Events (2) 
-
-        /// <summary>
-        /// Occurs when a cell is validating.
-        /// </summary>
-        public event DataGridViewCellValidatingEventHandler CellValidating
+        private void dataGridView_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
         {
-            add { dataGridView.CellValidating += value; }
-            remove { dataGridView.CellValidating -= value; }
+            if ( !ignoreChanges &&
+                CellValidating != null )
+            {
+                CellValidating( this, e );
+            }
         }
+
+        private void dataGridView_CellValidated( object sender, DataGridViewCellEventArgs e )
+        {
+            if ( !ignoreChanges && 
+                 e.ColumnIndex == TextColumnIndex )
+            {
+                boundValues[CurrentRow] = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value;
+            }
+        }
+
+
+        public event DataGridViewCellValidatingEventHandler CellValidating;
 
         /// <summary>
         /// Occurs when text in a textbox has changed.
         /// </summary>
         public event EventHandler TextBoxTextChanged;
-
-		#endregion Events 
-
-		#region Methods (4) 
-
 
         private void dataGridView_CellEndEdit( object sender, DataGridViewCellEventArgs e )
         {
@@ -93,7 +91,10 @@ namespace FFTPatcher.TextEditor
 
         private void dataGridView_EditingControlShowing( object sender, DataGridViewEditingControlShowingEventArgs e )
         {
-            if( dataGridView.CurrentCell.ColumnIndex == textColumn.Index && dataGridView.EditingControl is TextBox )
+            if( !ignoreChanges &&
+                dataGridView.CurrentCell != null && 
+                dataGridView.CurrentCell.ColumnIndex == textColumn.Index && 
+                dataGridView.EditingControl is TextBox )
             {
                 TextBox tb = dataGridView.EditingControl as TextBox;
                 tb.Font = new Font( "Arial Unicode MS", 9 );
@@ -103,12 +104,14 @@ namespace FFTPatcher.TextEditor
 
         private void tb_TextChanged( object sender, EventArgs e )
         {
-            if( TextBoxTextChanged != null )
+            if( !ignoreChanges && 
+                TextBoxTextChanged != null )
             {
                 TextBoxTextChanged( sender, e );
             }
         }
 
+        
         /// <summary>
         /// Binds this editor to a list of strings.
         /// </summary>
@@ -133,10 +136,8 @@ namespace FFTPatcher.TextEditor
             dataGridView.Rows.Clear();
             dataGridView.Rows.AddRange( rows );
             dataGridView.ResumeLayout();
+            boundValues = values;
         }
-
-
-		#endregion Methods 
 
     }
 }

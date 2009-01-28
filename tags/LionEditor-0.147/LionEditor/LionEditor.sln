@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kernel", "kernel", "{D63D8F75-18B1-4844-B0BD-8DD8852EBEC3}"
+	ProjectSection(SolutionItems) = preProject
+		kernel\main.c = kernel\main.c
+		kernel\Makefile = kernel\Makefile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4145A9B8-D46B-4981-96AF-387F8EB5AD17}"
+	ProjectSection(SolutionItems) = preProject
+		COPYING = COPYING
+		FFTA.SYS = FFTA.SYS
+		gendates.py = gendates.py
+		readme.txt = readme.txt
+		testCharacter.hex = testCharacter.hex
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LionEditor", "LionEditor\LionEditor.csproj", "{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = 
+	EndGlobalSection
+EndGlobal

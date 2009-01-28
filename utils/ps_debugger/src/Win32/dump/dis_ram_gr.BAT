@@ -1,1 +1,0 @@
-adisasm ram.bin ram.asm -v -b 00000000 00000000 -u -a

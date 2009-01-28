@@ -1,0 +1,258 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{634BFD5F-2004-4C73-BDF4-D1BA836D31AD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LionEditor</RootNamespace>
+    <AssemblyName>LionEditor</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Datatypes\Artefacts.cs" />
+    <Compile Include="Datatypes\Feats.cs" />
+    <Compile Include="Datatypes\Inventory.cs" />
+    <Compile Include="Datatypes\JobsAndAbilities.cs" />
+    <Compile Include="About.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Datatypes\Options.cs" />
+    <Compile Include="Datatypes\Wonders.cs" />
+    <Compile Include="Editors\CharacterEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\CharacterEditor.Designer.cs">
+      <DependentUpon>CharacterEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Datatypes\Ability.cs" />
+    <Compile Include="Datatypes\Character.cs" />
+    <Compile Include="Datatypes\Class.cs" />
+    <Compile Include="Datatypes\Location.cs" />
+    <None Include="Datatypes\Proposition.cs" />
+    <Compile Include="Datatypes\Savegame.cs" />
+    <Compile Include="Datatypes\SecondaryAction.cs" />
+    <Compile Include="Datatypes\SpriteSet.cs" />
+    <Compile Include="Editors\Chronicle\ArtefactsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\ArtefactsEditor.Designer.cs">
+      <DependentUpon>ArtefactsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\ChronicleEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\ChronicleEditor.Designer.cs">
+      <DependentUpon>ChronicleEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\EventsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\EventsEditor.Designer.cs">
+      <DependentUpon>EventsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\FeatsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\FeatsEditor.Designer.cs">
+      <DependentUpon>FeatsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\PersonaeEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\PersonaeEditor.Designer.cs">
+      <DependentUpon>PersonaeEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\StupidDateEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\StupidDateEditor.Designer.cs">
+      <DependentUpon>StupidDateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\TimerEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\TimerEditor.Designer.cs">
+      <DependentUpon>TimerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Chronicle\WondersEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Chronicle\WondersEditor.Designer.cs">
+      <DependentUpon>WondersEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\InventoryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\InventoryEditor.Designer.cs">
+      <DependentUpon>InventoryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\JobEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\JobEditor.Designer.cs">
+      <DependentUpon>JobEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\JobsAndAbilitiesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\JobsAndAbilitiesEditor.Designer.cs">
+      <DependentUpon>JobsAndAbilitiesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Datatypes\StupidDate.cs">
+    </Compile>
+    <Compile Include="Editors\OptionsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\OptionsEditor.Designer.cs">
+      <DependentUpon>OptionsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Datatypes\Item.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="About.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\CharacterEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CharacterEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\ArtefactsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ArtefactsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\ChronicleEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChronicleEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\EventsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EventsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\FeatsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FeatsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\PersonaeEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PersonaeEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\StupidDateEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>StupidDateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\TimerEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TimerEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Chronicle\WondersEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WondersEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\InventoryEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>InventoryEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\JobEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>JobEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\JobsAndAbilitiesEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>JobsAndAbilitiesEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\OptionsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OptionsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SavegameEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SavegameEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Datatypes\Zodiac.cs" />
+    <Compile Include="Editors\SavegameEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SavegameEditor.Designer.cs">
+      <DependentUpon>SavegameEditor.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Abilities.xml" />
+    <Content Include="Resources\Artefacts.xml" />
+    <Content Include="Resources\Classes.xml" />
+    <Content Include="Resources\Feats.xml" />
+    <Content Include="Resources\MainJobBasedOnSprite.xml" />
+    <Content Include="Resources\Items.xml" />
+    <Content Include="Resources\SecondaryAction.xml" />
+    <Content Include="Resources\Sprites.xml" />
+    <Content Include="Resources\Wonders.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

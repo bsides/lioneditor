@@ -1,4 +1,0 @@
-EXPORTS
-	iso_patch_file
-	iso_patch_byte
-	iso_patch_list

@@ -1,0 +1,1564 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+
+	This file is part of LionEditor.
+
+    LionEditor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LionEditor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LionEditor.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<Abilities>
+  <Ability value="0">
+    <name>&lt;Nothing&gt;</name>
+  </Ability>
+  <Ability value="1">
+    <name>Cure</name>
+  </Ability>
+  <Ability value="2">
+    <name>Cura</name>
+  </Ability>
+  <Ability value="3">
+    <name>Curaga</name>
+  </Ability>
+  <Ability value="4">
+    <name>Curaja</name>
+  </Ability>
+  <Ability value="5">
+    <name>Raise</name>
+  </Ability>
+  <Ability value="6">
+    <name>Arise</name>
+  </Ability>
+  <Ability value="7">
+    <name>Reraise</name>
+  </Ability>
+  <Ability value="8">
+    <name>Regen</name>
+  </Ability>
+  <Ability value="9">
+    <name>Protect</name>
+  </Ability>
+  <Ability value="10">
+    <name>Protectja</name>
+  </Ability>
+  <Ability value="11">
+    <name>Shell</name>
+  </Ability>
+  <Ability value="12">
+    <name>Shellja</name>
+  </Ability>
+  <Ability value="13">
+    <name>Wall</name>
+  </Ability>
+  <Ability value="14">
+    <name>Esuna</name>
+  </Ability>
+  <Ability value="15">
+    <name>Holy</name>
+  </Ability>
+  <Ability value="16">
+    <name>Fire</name>
+  </Ability>
+  <Ability value="17">
+    <name>Fira</name>
+  </Ability>
+  <Ability value="18">
+    <name>Firaga</name>
+  </Ability>
+  <Ability value="19">
+    <name>Firaja</name>
+  </Ability>
+  <Ability value="20">
+    <name>Thunder</name>
+  </Ability>
+  <Ability value="21">
+    <name>Thundara</name>
+  </Ability>
+  <Ability value="22">
+    <name>Thundaga</name>
+  </Ability>
+  <Ability value="23">
+    <name>Thundaja</name>
+  </Ability>
+  <Ability value="24">
+    <name>Blizzard</name>
+  </Ability>
+  <Ability value="25">
+    <name>Blizzara</name>
+  </Ability>
+  <Ability value="26">
+    <name>Blizzaga</name>
+  </Ability>
+  <Ability value="27">
+    <name>Blizzaja</name>
+  </Ability>
+  <Ability value="28">
+    <name>Poison</name>
+  </Ability>
+  <Ability value="29">
+    <name>Toad</name>
+  </Ability>
+  <Ability value="30">
+    <name>Death</name>
+  </Ability>
+  <Ability value="31">
+    <name>Flare</name>
+  </Ability>
+  <Ability value="32">
+    <name>Haste</name>
+  </Ability>
+  <Ability value="33">
+    <name>Hasteja</name>
+  </Ability>
+  <Ability value="34">
+    <name>Slow</name>
+  </Ability>
+  <Ability value="35">
+    <name>Slowja</name>
+  </Ability>
+  <Ability value="36">
+    <name>Stop</name>
+  </Ability>
+  <Ability value="37">
+    <name>Immobilize</name>
+  </Ability>
+  <Ability value="38">
+    <name>Float</name>
+  </Ability>
+  <Ability value="39">
+    <name>Reflect</name>
+  </Ability>
+  <Ability value="40">
+    <name>&lt;Unknown&gt;</name>
+  </Ability>
+  <Ability value="41">
+    <name>Quick</name>
+  </Ability>
+  <Ability value="42">
+    <name>Gravity</name>
+  </Ability>
+  <Ability value="43">
+    <name>Graviga</name>
+  </Ability>
+  <Ability value="44">
+    <name>Meteor</name>
+  </Ability>
+  <Ability value="45">
+    <name>Sanguine Sword</name>
+  </Ability>
+  <Ability value="46">
+    <name>Umbra</name>
+  </Ability>
+  <Ability value="47">
+    <name>Empowerment</name>
+  </Ability>
+  <Ability value="48">
+    <name>Invigoration</name>
+  </Ability>
+  <Ability value="49">
+    <name>Belief</name>
+  </Ability>
+  <Ability value="50">
+    <name>Disbelief</name>
+  </Ability>
+  <Ability value="51">
+    <name>Corruption</name>
+  </Ability>
+  <Ability value="52">
+    <name>Quiescence</name>
+  </Ability>
+  <Ability value="53">
+    <name>Fervor</name>
+  </Ability>
+  <Ability value="54">
+    <name>Trepidation</name>
+  </Ability>
+  <Ability value="55">
+    <name>Delirium</name>
+  </Ability>
+  <Ability value="56">
+    <name>Harmony</name>
+  </Ability>
+  <Ability value="57">
+    <name>Hesitation</name>
+  </Ability>
+  <Ability value="58">
+    <name>Repose</name>
+  </Ability>
+  <Ability value="59">
+    <name>Induration</name>
+  </Ability>
+  <Ability value="60">
+    <name>Moogle</name>
+  </Ability>
+  <Ability value="61">
+    <name>Shiva</name>
+  </Ability>
+  <Ability value="62">
+    <name>Ramuh</name>
+  </Ability>
+  <Ability value="63">
+    <name>Ifrit</name>
+  </Ability>
+  <Ability value="64">
+    <name>Titan</name>
+  </Ability>
+  <Ability value="65">
+    <name>Golem</name>
+  </Ability>
+  <Ability value="66">
+    <name>Carbuncle</name>
+  </Ability>
+  <Ability value="67">
+    <name>Bahamut</name>
+  </Ability>
+  <Ability value="68">
+    <name>Odin</name>
+  </Ability>
+  <Ability value="69">
+    <name>Leviathan</name>
+  </Ability>
+  <Ability value="70">
+    <name>Salamander</name>
+  </Ability>
+  <Ability value="71">
+    <name>Sylph</name>
+  </Ability>
+  <Ability value="72">
+    <name>Faerie</name>
+  </Ability>
+  <Ability value="73">
+    <name>Lich</name>
+  </Ability>
+  <Ability value="74">
+    <name>Cyclops</name>
+  </Ability>
+  <Ability value="75">
+    <name>Zodiark</name>
+  </Ability>
+  <Ability value="76">
+    <name>Ashura</name>
+  </Ability>
+  <Ability value="77">
+    <name>Kotetsu</name>
+  </Ability>
+  <Ability value="78">
+    <name>Osafune</name>
+  </Ability>
+  <Ability value="79">
+    <name>Murasame</name>
+  </Ability>
+  <Ability value="80">
+    <name>Ama-no-Murakumo</name>
+  </Ability>
+  <Ability value="81">
+    <name>Kiyomuri</name>
+  </Ability>
+  <Ability value="82">
+    <name>Muramasa</name>
+  </Ability>
+  <Ability value="83">
+    <name>Kiku-ichimonji</name>
+  </Ability>
+  <Ability value="84">
+    <name>Masamune</name>
+  </Ability>
+  <Ability value="85">
+    <name>Chirijiraden</name>
+  </Ability>
+  <Ability value="86">
+    <name>Seraph Song</name>
+  </Ability>
+  <Ability value="87">
+    <name>Life's Anthem</name>
+  </Ability>
+  <Ability value="88">
+    <name>Rousing Melody</name>
+  </Ability>
+  <Ability value="89">
+    <name>Battle Chant</name>
+  </Ability>
+  <Ability value="90">
+    <name>Magickal Refrain</name>
+  </Ability>
+  <Ability value="91">
+    <name>Nameless Song</name>
+  </Ability>
+  <Ability value="92">
+    <name>Finale</name>
+  </Ability>
+  <Ability value="93">
+    <name>Witch Hunt</name>
+  </Ability>
+  <Ability value="94">
+    <name>Mincing Minuet</name>
+  </Ability>
+  <Ability value="95">
+    <name>Slow Dance</name>
+  </Ability>
+  <Ability value="96">
+    <name>Polka</name>
+  </Ability>
+  <Ability value="97">
+    <name>Heathen Frolic</name>
+  </Ability>
+  <Ability value="98">
+    <name>Forbidden Dance</name>
+  </Ability>
+  <Ability value="99">
+    <name>Last Waltz</name>
+  </Ability>
+  <Ability value="100">
+    <name>Cyclone</name>
+  </Ability>
+  <Ability value="101">
+    <name>Pummel</name>
+  </Ability>
+  <Ability value="102">
+    <name>Aurablast</name>
+  </Ability>
+  <Ability value="103">
+    <name>Shockwave</name>
+  </Ability>
+  <Ability value="104">
+    <name>Doom Fist</name>
+  </Ability>
+  <Ability value="105">
+    <name>Purification</name>
+  </Ability>
+  <Ability value="106">
+    <name>Chakra</name>
+  </Ability>
+  <Ability value="107">
+    <name>Revive</name>
+  </Ability>
+  <Ability value="108">
+    <name>Steal Gil</name>
+  </Ability>
+  <Ability value="109">
+    <name>Steal Heart</name>
+  </Ability>
+  <Ability value="110">
+    <name>Steal Helm</name>
+  </Ability>
+  <Ability value="111">
+    <name>Steal Armor</name>
+  </Ability>
+  <Ability value="112">
+    <name>Steal Shield</name>
+  </Ability>
+  <Ability value="113">
+    <name>Steal Weapon</name>
+  </Ability>
+  <Ability value="114">
+    <name>Steal Accessory</name>
+  </Ability>
+  <Ability value="115">
+    <name>Steal EXP</name>
+  </Ability>
+  <Ability value="116">
+    <name>Entice</name>
+  </Ability>
+  <Ability value="117">
+    <name>Stall</name>
+  </Ability>
+  <Ability value="118">
+    <name>Praise</name>
+  </Ability>
+  <Ability value="119">
+    <name>Intimidate</name>
+  </Ability>
+  <Ability value="120">
+    <name>Preach</name>
+  </Ability>
+  <Ability value="121">
+    <name>Enlighten</name>
+  </Ability>
+  <Ability value="122">
+    <name>Condemn</name>
+  </Ability>
+  <Ability value="123">
+    <name>Beg</name>
+  </Ability>
+  <Ability value="124">
+    <name>Insult</name>
+  </Ability>
+  <Ability value="125">
+    <name>Mimic Darlavon</name>
+  </Ability>
+  <Ability value="126">
+    <name>Sinkhole</name>
+  </Ability>
+  <Ability value="127">
+    <name>Torrent</name>
+  </Ability>
+  <Ability value="128">
+    <name>Tanglevine</name>
+  </Ability>
+  <Ability value="129">
+    <name>Contortion</name>
+  </Ability>
+  <Ability value="130">
+    <name>Tremor</name>
+  </Ability>
+  <Ability value="131">
+    <name>Wind Slash</name>
+  </Ability>
+  <Ability value="132">
+    <name>Will-o'-the-Wisp</name>
+  </Ability>
+  <Ability value="133">
+    <name>Quicksand</name>
+  </Ability>
+  <Ability value="134">
+    <name>Sandstorm</name>
+  </Ability>
+  <Ability value="135">
+    <name>Snowstorm</name>
+  </Ability>
+  <Ability value="136">
+    <name>Wind Blast</name>
+  </Ability>
+  <Ability value="137">
+    <name>Magma Surge</name>
+  </Ability>
+  <Ability value="138">
+    <name>Rend Helm</name>
+  </Ability>
+  <Ability value="139">
+    <name>Rend Armor</name>
+  </Ability>
+  <Ability value="140">
+    <name>Rend Shield</name>
+  </Ability>
+  <Ability value="141">
+    <name>Rend Weapon</name>
+  </Ability>
+  <Ability value="142">
+    <name>Rend MP</name>
+  </Ability>
+  <Ability value="143">
+    <name>Rend Speed</name>
+  </Ability>
+  <Ability value="144">
+    <name>Rend Power</name>
+  </Ability>
+  <Ability value="145">
+    <name>Rend Magick</name>
+  </Ability>
+  <Ability value="146">
+    <name>Focus</name>
+  </Ability>
+  <Ability value="147">
+    <name>Rush</name>
+  </Ability>
+  <Ability value="148">
+    <name>Stone</name>
+  </Ability>
+  <Ability value="149">
+    <name>Salve</name>
+  </Ability>
+  <Ability value="150">
+    <name>Tailwind</name>
+  </Ability>
+  <Ability value="151">
+    <name>Steel</name>
+  </Ability>
+  <Ability value="152">
+    <name>Chant</name>
+  </Ability>
+  <Ability value="153">
+    <name>Shout</name>
+  </Ability>
+  <Ability value="154">
+    <name>Ultima</name>
+  </Ability>
+  <Ability value="155">
+    <name>Judgment Blade</name>
+  </Ability>
+  <Ability value="156">
+    <name>Cleansing Strike</name>
+  </Ability>
+  <Ability value="157">
+    <name>Northswain's Strike</name>
+  </Ability>
+  <Ability value="158">
+    <name>Hallowed Bolt</name>
+  </Ability>
+  <Ability value="159">
+    <name>Divine Ruination</name>
+  </Ability>
+  <Ability value="160">
+    <name>Crush Armor</name>
+  </Ability>
+  <Ability value="161">
+    <name>Crush Helm</name>
+  </Ability>
+  <Ability value="162">
+    <name>Crush Weapon</name>
+  </Ability>
+  <Ability value="163">
+    <name>Crush Accessory</name>
+  </Ability>
+  <Ability value="164">
+    <name>Duskblade</name>
+  </Ability>
+  <Ability value="165">
+    <name>Shadowblade</name>
+  </Ability>
+  <Ability value="166">
+    <name>Unholy Darkness</name>
+  </Ability>
+  <Ability value="167">
+    <name>Dispelna</name>
+  </Ability>
+  <Ability value="168">
+    <name>Celestial Stasis</name>
+  </Ability>
+  <Ability value="169">
+    <name>Heaven's Wrath</name>
+  </Ability>
+  <Ability value="170">
+    <name>Ashura</name>
+  </Ability>
+  <Ability value="171">
+    <name>Adamantine Blade</name>
+  </Ability>
+  <Ability value="172">
+    <name>Maelstrom</name>
+  </Ability>
+  <Ability value="173">
+    <name>Celestial Void</name>
+  </Ability>
+  <Ability value="174">
+    <name>Divinity</name>
+  </Ability>
+  <Ability value="175">
+    <name>Hell's Wrath</name>
+  </Ability>
+  <Ability value="176">
+    <name>Nether Ashura</name>
+  </Ability>
+  <Ability value="177">
+    <name>Nether Blade</name>
+  </Ability>
+  <Ability value="178">
+    <name>Nether Maelstrom</name>
+  </Ability>
+  <Ability value="179">
+    <name>Corporeal Void</name>
+  </Ability>
+  <Ability value="180">
+    <name>Impiety</name>
+  </Ability>
+  <Ability value="181">
+    <name>Petrify</name>
+  </Ability>
+  <Ability value="182">
+    <name>Shadowbind</name>
+  </Ability>
+  <Ability value="183">
+    <name>Suffocate</name>
+  </Ability>
+  <Ability value="184">
+    <name>Infernal Strike</name>
+  </Ability>
+  <Ability value="185">
+    <name>Vengeance</name>
+  </Ability>
+  <Ability value="186">
+    <name>Manaburn</name>
+  </Ability>
+  <Ability value="187">
+    <name>Petrify</name>
+  </Ability>
+  <Ability value="188">
+    <name>Fowlheart</name>
+  </Ability>
+  <Ability value="189">
+    <name>Embrace</name>
+  </Ability>
+  <Ability value="190">
+    <name>Darkness</name>
+  </Ability>
+  <Ability value="191">
+    <name>Aphony</name>
+  </Ability>
+  <Ability value="192">
+    <name>Befuddle</name>
+  </Ability>
+  <Ability value="193">
+    <name>Bind</name>
+  </Ability>
+  <Ability value="194">
+    <name>Nightmare</name>
+  </Ability>
+  <Ability value="195">
+    <name>Ague</name>
+  </Ability>
+  <Ability value="196">
+    <name>Magicksap</name>
+  </Ability>
+  <Ability value="197">
+    <name>Speedsap</name>
+  </Ability>
+  <Ability value="198">
+    <name>Powersap</name>
+  </Ability>
+  <Ability value="199">
+    <name>Mindsap</name>
+  </Ability>
+  <Ability value="200">
+    <name>Vampire</name>
+  </Ability>
+  <Ability value="201">
+    <name>Charm</name>
+  </Ability>
+  <Ability value="202">
+    <name>Bio</name>
+  </Ability>
+  <Ability value="203">
+    <name>Bio</name>
+  </Ability>
+  <Ability value="204">
+    <name>Bio</name>
+  </Ability>
+  <Ability value="205">
+    <name>Biora</name>
+  </Ability>
+  <Ability value="206">
+    <name>Biora</name>
+  </Ability>
+  <Ability value="207">
+    <name>Biora</name>
+  </Ability>
+  <Ability value="208">
+    <name>Biora</name>
+  </Ability>
+  <Ability value="209">
+    <name>Bioga</name>
+  </Ability>
+  <Ability value="210">
+    <name>Bioga</name>
+  </Ability>
+  <Ability value="211">
+    <name>Bioga</name>
+  </Ability>
+  <Ability value="212">
+    <name>Aegis</name>
+  </Ability>
+  <Ability value="213">
+    <name>Leg Shot</name>
+  </Ability>
+  <Ability value="214">
+    <name>Arm Shot</name>
+  </Ability>
+  <Ability value="215">
+    <name>Seal Evil</name>
+  </Ability>
+  <Ability value="216">
+    <name>Meltdown</name>
+  </Ability>
+  <Ability value="217">
+    <name>Tornado</name>
+  </Ability>
+  <Ability value="218">
+    <name>Quake</name>
+  </Ability>
+  <Ability value="219">
+    <name>Crushing Blow</name>
+  </Ability>
+  <Ability value="220">
+    <name>Abyssal Blade</name>
+  </Ability>
+  <Ability value="221">
+    <name>Toadja</name>
+  </Ability>
+  <Ability value="222">
+    <name>Gravija</name>
+  </Ability>
+  <Ability value="223">
+    <name>Flareja</name>
+  </Ability>
+  <Ability value="224">
+    <name>Blindja</name>
+  </Ability>
+  <Ability value="225">
+    <name>Bomblet</name>
+  </Ability>
+  <Ability value="226">
+    <name>Bomblet</name>
+  </Ability>
+  <Ability value="227">
+    <name>Confuseja</name>
+  </Ability>
+  <Ability value="228">
+    <name>Sleepja</name>
+  </Ability>
+  <Ability value="229">
+    <name>Ultima</name>
+  </Ability>
+  <Ability value="230">
+    <name>Divine Ultima</name>
+  </Ability>
+  <Ability value="231">
+    <name>Disempower</name>
+  </Ability>
+  <Ability value="232">
+    <name>Dispelja</name>
+  </Ability>
+  <Ability value="233">
+    <name>Return</name>
+  </Ability>
+  <Ability value="234">
+    <name>Blind</name>
+  </Ability>
+  <Ability value="235">
+    <name>Syphon</name>
+  </Ability>
+  <Ability value="236">
+    <name>Drain</name>
+  </Ability>
+  <Ability value="237">
+    <name>Faith</name>
+  </Ability>
+  <Ability value="238">
+    <name>Doubt</name>
+  </Ability>
+  <Ability value="239">
+    <name>Zombie</name>
+  </Ability>
+  <Ability value="240">
+    <name>Silence</name>
+  </Ability>
+  <Ability value="241">
+    <name>Berserk</name>
+  </Ability>
+  <Ability value="242">
+    <name>Chicken</name>
+  </Ability>
+  <Ability value="243">
+    <name>Confuse</name>
+  </Ability>
+  <Ability value="244">
+    <name>Dispel</name>
+  </Ability>
+  <Ability value="245">
+    <name>Disable</name>
+  </Ability>
+  <Ability value="246">
+    <name>Sleep</name>
+  </Ability>
+  <Ability value="247">
+    <name>Break</name>
+  </Ability>
+  <Ability value="248">
+    <name>Ice Breath</name>
+  </Ability>
+  <Ability value="249">
+    <name>Fire Breath</name>
+  </Ability>
+  <Ability value="250">
+    <name>Thunder Breath</name>
+  </Ability>
+  <Ability value="251">
+    <name>Dragon's Charm</name>
+  </Ability>
+  <Ability value="252">
+    <name>Dragon's Gift</name>
+  </Ability>
+  <Ability value="253">
+    <name>Dragon's Might</name>
+  </Ability>
+  <Ability value="254">
+    <name>Dragon's Speed</name>
+  </Ability>
+  <Ability value="255">
+    <name>Holy Breath</name>
+  </Ability>
+  <Ability value="256">
+    <name>Vengeance</name>
+  </Ability>
+  <Ability value="257">
+    <name>Brave Slash</name>
+  </Ability>
+  <Ability value="258">
+    <name>Cross Slash</name>
+  </Ability>
+  <Ability value="259">
+    <name>Blade Beam</name>
+  </Ability>
+  <Ability value="260">
+    <name>Climhazzard</name>
+  </Ability>
+  <Ability value="261">
+    <name>Meteorain</name>
+  </Ability>
+  <Ability value="262">
+    <name>Finishing Touch</name>
+  </Ability>
+  <Ability value="263">
+    <name>Omnislash</name>
+  </Ability>
+  <Ability value="264">
+    <name>Cherry Blossom</name>
+  </Ability>
+  <Ability value="265">
+    <name>Choco Beak</name>
+  </Ability>
+  <Ability value="266">
+    <name>Choco Pellets</name>
+  </Ability>
+  <Ability value="267">
+    <name>Choco Meteor</name>
+  </Ability>
+  <Ability value="268">
+    <name>Choco Esuna</name>
+  </Ability>
+  <Ability value="269">
+    <name>Choco Cure</name>
+  </Ability>
+  <Ability value="270">
+    <name>Tackle</name>
+  </Ability>
+  <Ability value="271">
+    <name>Goblin Punch</name>
+  </Ability>
+  <Ability value="272">
+    <name>Spin Punch</name>
+  </Ability>
+  <Ability value="273">
+    <name>Eye Gouge</name>
+  </Ability>
+  <Ability value="274">
+    <name>Bloodfeast</name>
+  </Ability>
+  <Ability value="275">
+    <name>Bite</name>
+  </Ability>
+  <Ability value="276">
+    <name>Bomblet</name>
+  </Ability>
+  <Ability value="277">
+    <name>Self-Destruct</name>
+  </Ability>
+  <Ability value="278">
+    <name>Flame Attack</name>
+  </Ability>
+  <Ability value="279">
+    <name>Spark</name>
+  </Ability>
+  <Ability value="280">
+    <name>Claw</name>
+  </Ability>
+  <Ability value="281">
+    <name>Cat Scratch</name>
+  </Ability>
+  <Ability value="282">
+    <name>Blaster</name>
+  </Ability>
+  <Ability value="283">
+    <name>Venom Fang</name>
+  </Ability>
+  <Ability value="284">
+    <name>Vampire</name>
+  </Ability>
+  <Ability value="285">
+    <name>Tentacles</name>
+  </Ability>
+  <Ability value="286">
+    <name>Ink</name>
+  </Ability>
+  <Ability value="287">
+    <name>Dischord</name>
+  </Ability>
+  <Ability value="288">
+    <name>Mind Blast</name>
+  </Ability>
+  <Ability value="289">
+    <name>Level Drain</name>
+  </Ability>
+  <Ability value="290">
+    <name>Chop</name>
+  </Ability>
+  <Ability value="291">
+    <name>Thunder Anima</name>
+  </Ability>
+  <Ability value="292">
+    <name>Water Anima</name>
+  </Ability>
+  <Ability value="293">
+    <name>Ice Anima</name>
+  </Ability>
+  <Ability value="294">
+    <name>Wind Anima</name>
+  </Ability>
+  <Ability value="295">
+    <name>Ectoplasm</name>
+  </Ability>
+  <Ability value="296">
+    <name>Zombie Touch</name>
+  </Ability>
+  <Ability value="297">
+    <name>Sleep Touch</name>
+  </Ability>
+  <Ability value="298">
+    <name>Drain Touch</name>
+  </Ability>
+  <Ability value="299">
+    <name>Oily Touch</name>
+  </Ability>
+  <Ability value="300">
+    <name>Wing Buffet</name>
+  </Ability>
+  <Ability value="301">
+    <name>Bewitching Gaze</name>
+  </Ability>
+  <Ability value="302">
+    <name>Dread Gaze</name>
+  </Ability>
+  <Ability value="303">
+    <name>Beam</name>
+  </Ability>
+  <Ability value="304">
+    <name>Doom</name>
+  </Ability>
+  <Ability value="305">
+    <name>Talon Dive</name>
+  </Ability>
+  <Ability value="306">
+    <name>Beak</name>
+  </Ability>
+  <Ability value="307">
+    <name>Glitterlust</name>
+  </Ability>
+  <Ability value="308">
+    <name>Featherbomb</name>
+  </Ability>
+  <Ability value="309">
+    <name>Peck</name>
+  </Ability>
+  <Ability value="310">
+    <name>Reckless Charge</name>
+  </Ability>
+  <Ability value="311">
+    <name>Snort</name>
+  </Ability>
+  <Ability value="312">
+    <name>Squeal</name>
+  </Ability>
+  <Ability value="313">
+    <name>Toot</name>
+  </Ability>
+  <Ability value="314">
+    <name>Bequeath Bacon</name>
+  </Ability>
+  <Ability value="315">
+    <name>Leaf Rain</name>
+  </Ability>
+  <Ability value="316">
+    <name>Guardian Nymph</name>
+  </Ability>
+  <Ability value="317">
+    <name>Shell Nymph</name>
+  </Ability>
+  <Ability value="318">
+    <name>Life Nymph</name>
+  </Ability>
+  <Ability value="319">
+    <name>Magick Nymph</name>
+  </Ability>
+  <Ability value="320">
+    <name>Pickaxe</name>
+  </Ability>
+  <Ability value="321">
+    <name>Feral Spin</name>
+  </Ability>
+  <Ability value="322">
+    <name>Earthsplitter</name>
+  </Ability>
+  <Ability value="323">
+    <name>Beef Up</name>
+  </Ability>
+  <Ability value="324">
+    <name>Breathe Fire</name>
+  </Ability>
+  <Ability value="325">
+    <name>Tentacles</name>
+  </Ability>
+  <Ability value="326">
+    <name>Lick</name>
+  </Ability>
+  <Ability value="327">
+    <name>Goo</name>
+  </Ability>
+  <Ability value="328">
+    <name>Bad Breath</name>
+  </Ability>
+  <Ability value="329">
+    <name>Malboro Spores</name>
+  </Ability>
+  <Ability value="330">
+    <name>Gore</name>
+  </Ability>
+  <Ability value="331">
+    <name>Heave</name>
+  </Ability>
+  <Ability value="332">
+    <name>Twister</name>
+  </Ability>
+  <Ability value="333">
+    <name>Almagest</name>
+  </Ability>
+  <Ability value="334">
+    <name>Gigaflare</name>
+  </Ability>
+  <Ability value="335">
+    <name>Charge</name>
+  </Ability>
+  <Ability value="336">
+    <name>Tail Sweep</name>
+  </Ability>
+  <Ability value="337">
+    <name>Ice Breath</name>
+  </Ability>
+  <Ability value="338">
+    <name>Fire Breath</name>
+  </Ability>
+  <Ability value="339">
+    <name>Thunder Breath</name>
+  </Ability>
+  <Ability value="340">
+    <name>Tri-Attack</name>
+  </Ability>
+  <Ability value="341">
+    <name>Tri-Breath</name>
+  </Ability>
+  <Ability value="342">
+    <name>Tri-Thunder</name>
+  </Ability>
+  <Ability value="343">
+    <name>Tri-Flame</name>
+  </Ability>
+  <Ability value="344">
+    <name>Dark Whisper</name>
+  </Ability>
+  <Ability value="345">
+    <name>Snakecharm</name>
+  </Ability>
+  <Ability value="346">
+    <name>Poisonous Frog</name>
+  </Ability>
+  <Ability value="347">
+    <name>Migardsormr</name>
+  </Ability>
+  <Ability value="348">
+    <name>Kerma</name>
+  </Ability>
+  <Ability value="349">
+    <name>Nanoflare</name>
+  </Ability>
+  <Ability value="350">
+    <name>Grand Cross</name>
+  </Ability>
+  <Ability value="351">
+    <name>Destroy</name>
+  </Ability>
+  <Ability value="352">
+    <name>Compress</name>
+  </Ability>
+  <Ability value="353">
+    <name>Dispose</name>
+  </Ability>
+  <Ability value="354">
+    <name>Pulverize</name>
+  </Ability>
+  <Ability value="355">
+    <name>Energize</name>
+  </Ability>
+  <Ability value="356">
+    <name>Parasite</name>
+  </Ability>
+  <Ability value="357">
+    <name>Unholy Sacrifice</name>
+  </Ability>
+  <Ability value="358">
+    <name>Barrage</name>
+  </Ability>
+  <Ability value="359">
+    <name>Plunder Gil</name>
+  </Ability>
+  <Ability value="360">
+    <name>Plunder Heart</name>
+  </Ability>
+  <Ability value="361">
+    <name>Plunder Helm</name>
+  </Ability>
+  <Ability value="362">
+    <name>Plunder Armor</name>
+  </Ability>
+  <Ability value="363">
+    <name>Plunder Shield</name>
+  </Ability>
+  <Ability value="364">
+    <name>Plunder Weapon</name>
+  </Ability>
+  <Ability value="365">
+    <name>Plunder Accessory</name>
+  </Ability>
+  <Ability value="366">
+    <name>Plunder EXP</name>
+  </Ability>
+  <Ability value="367">
+    <name>Attack</name>
+  </Ability>
+  <Ability value="368">
+    <name>Potion</name>
+  </Ability>
+  <Ability value="369">
+    <name>Hi-Potion</name>
+  </Ability>
+  <Ability value="370">
+    <name>X-Potion</name>
+  </Ability>
+  <Ability value="371">
+    <name>Ether</name>
+  </Ability>
+  <Ability value="372">
+    <name>Hi-Ether</name>
+  </Ability>
+  <Ability value="373">
+    <name>Elixir</name>
+  </Ability>
+  <Ability value="374">
+    <name>Antitode</name>
+  </Ability>
+  <Ability value="375">
+    <name>Eye Drops</name>
+  </Ability>
+  <Ability value="376">
+    <name>Echo Herbs</name>
+  </Ability>
+  <Ability value="377">
+    <name>Maiden's Kiss</name>
+  </Ability>
+  <Ability value="378">
+    <name>Gold Needle</name>
+  </Ability>
+  <Ability value="379">
+    <name>Holy Water</name>
+  </Ability>
+  <Ability value="380">
+    <name>Remedy</name>
+  </Ability>
+  <Ability value="381">
+    <name>Phoenix Down</name>
+  </Ability>
+  <Ability value="382">
+    <name>Shuriken</name>
+  </Ability>
+  <Ability value="383">
+    <name>Knife</name>
+  </Ability>
+  <Ability value="384">
+    <name>Sword</name>
+  </Ability>
+  <Ability value="385">
+    <name>Flail</name>
+  </Ability>
+  <Ability value="386">
+    <name>Katana</name>
+  </Ability>
+  <Ability value="387">
+    <name>Ninja Blade</name>
+  </Ability>
+  <Ability value="388">
+    <name>Axe</name>
+  </Ability>
+  <Ability value="389">
+    <name>Polearm</name>
+  </Ability>
+  <Ability value="390">
+    <name>Pole</name>
+  </Ability>
+  <Ability value="391">
+    <name>Knight's Sword</name>
+  </Ability>
+  <Ability value="392">
+    <name>Book</name>
+  </Ability>
+  <Ability value="393">
+    <name>Bomb</name>
+  </Ability>
+  <Ability value="394">
+    <name>Horizontal Jump 2</name>
+  </Ability>
+  <Ability value="395">
+    <name>Horizontal Jump 3</name>
+  </Ability>
+  <Ability value="396">
+    <name>Horizontal Jump 4</name>
+  </Ability>
+  <Ability value="397">
+    <name>Horizontal Jump 5</name>
+  </Ability>
+  <Ability value="398">
+    <name>Horizontal Jump 8</name>
+  </Ability>
+  <Ability value="399">
+    <name>Vertical Jump 2</name>
+  </Ability>
+  <Ability value="400">
+    <name>Vertical Jump 3</name>
+  </Ability>
+  <Ability value="401">
+    <name>Vertical Jump 4</name>
+  </Ability>
+  <Ability value="402">
+    <name>Vertical Jump 5</name>
+  </Ability>
+  <Ability value="403">
+    <name>Vertical Jump 6</name>
+  </Ability>
+  <Ability value="404">
+    <name>Vertical Jump 7</name>
+  </Ability>
+  <Ability value="405">
+    <name>Vertical Jump 8</name>
+  </Ability>
+  <Ability value="406">
+    <name>Aim +1</name>
+  </Ability>
+  <Ability value="407">
+    <name>Aim +2</name>
+  </Ability>
+  <Ability value="408">
+    <name>Aim +3</name>
+  </Ability>
+  <Ability value="409">
+    <name>Aim +4</name>
+  </Ability>
+  <Ability value="410">
+    <name>Aim +5</name>
+  </Ability>
+  <Ability value="411">
+    <name>Aim +7</name>
+  </Ability>
+  <Ability value="412">
+    <name>Aim +10</name>
+  </Ability>
+  <Ability value="413">
+    <name>Aim +20</name>
+  </Ability>
+  <Ability value="414">
+    <name>CT</name>
+  </Ability>
+  <Ability value="415">
+    <name>Level</name>
+  </Ability>
+  <Ability value="416">
+    <name>EXP</name>
+  </Ability>
+  <Ability value="417">
+    <name>Height</name>
+  </Ability>
+  <Ability value="418">
+    <name>Prime</name>
+  </Ability>
+  <Ability value="419">
+    <name>Multiple of 5</name>
+  </Ability>
+  <Ability value="420">
+    <name>Multiple of 4</name>
+  </Ability>
+  <Ability value="421">
+    <name>Multiple of 3</name>
+  </Ability>
+  <Ability value="422">
+    <name>Fury</name>
+  </Ability>
+  <Ability value="423">
+    <name>Magick Boost</name>
+  </Ability>
+  <Ability value="424">
+    <name>Adrenaline Rush</name>
+  </Ability>
+  <Ability value="425">
+    <name>Vanish</name>
+  </Ability>
+  <Ability value="426">
+    <name>Vigilance</name>
+  </Ability>
+  <Ability value="427">
+    <name>Dragonheart</name>
+  </Ability>
+  <Ability value="428">
+    <name>Regenerate</name>
+  </Ability>
+  <Ability value="429">
+    <name>Bravery Boost</name>
+  </Ability>
+  <Ability value="430">
+    <name>Faith Boost</name>
+  </Ability>
+  <Ability value="431">
+    <name>Critical: Recover HP</name>
+  </Ability>
+  <Ability value="432">
+    <name>Critical: Recover MP</name>
+  </Ability>
+  <Ability value="433">
+    <name>Critical: Quick</name>
+  </Ability>
+  <Ability value="434">
+    <name>Bonecrusher</name>
+  </Ability>
+  <Ability value="435">
+    <name>Magick Counter</name>
+  </Ability>
+  <Ability value="436">
+    <name>Counter Tackle</name>
+  </Ability>
+  <Ability value="437">
+    <name>Nature's Wrath</name>
+  </Ability>
+  <Ability value="438">
+    <name>Absorb MP</name>
+  </Ability>
+  <Ability value="439">
+    <name>Gil Snapper</name>
+  </Ability>
+  <Ability value="440">
+    <name>Reflect</name>
+  </Ability>
+  <Ability value="441">
+    <name>Auto-Potion</name>
+  </Ability>
+  <Ability value="442">
+    <name>Counter</name>
+  </Ability>
+  <Ability value="443">
+    <name>&lt;Unknown&gt;</name>
+  </Ability>
+  <Ability value="444">
+    <name>Cup of Life</name>
+  </Ability>
+  <Ability value="445">
+    <name>Mana Shield</name>
+  </Ability>
+  <Ability value="446">
+    <name>Soulbind</name>
+  </Ability>
+  <Ability value="447">
+    <name>Parry</name>
+  </Ability>
+  <Ability value="448">
+    <name>Earplug</name>
+  </Ability>
+  <Ability value="449">
+    <name>Reflexes</name>
+  </Ability>
+  <Ability value="450">
+    <name>Sticky Fingers</name>
+  </Ability>
+  <Ability value="451">
+    <name>Shirahadori</name>
+  </Ability>
+  <Ability value="452">
+    <name>Archer's Bane</name>
+  </Ability>
+  <Ability value="453">
+    <name>First Strike</name>
+  </Ability>
+  <Ability value="454">
+    <name>Equip Heavy Armor</name>
+  </Ability>
+  <Ability value="455">
+    <name>Equip Shields</name>
+  </Ability>
+  <Ability value="456">
+    <name>Equip Swords</name>
+  </Ability>
+  <Ability value="457">
+    <name>Equip Katana</name>
+  </Ability>
+  <Ability value="458">
+    <name>Equip Crossbows</name>
+  </Ability>
+  <Ability value="459">
+    <name>Equip Polearms</name>
+  </Ability>
+  <Ability value="460">
+    <name>Equip Axes</name>
+  </Ability>
+  <Ability value="461">
+    <name>Equip Guns</name>
+  </Ability>
+  <Ability value="462">
+    <name>Halve MP</name>
+  </Ability>
+  <Ability value="463">
+    <name>JP Boost</name>
+  </Ability>
+  <Ability value="464">
+    <name>EXP Boost</name>
+  </Ability>
+  <Ability value="465">
+    <name>Attack Boost</name>
+  </Ability>
+  <Ability value="466">
+    <name>Defense Boost</name>
+  </Ability>
+  <Ability value="467">
+    <name>Arcane Strength</name>
+  </Ability>
+  <Ability value="468">
+    <name>Arcane Defense</name>
+  </Ability>
+  <Ability value="469">
+    <name>Concentration</name>
+  </Ability>
+  <Ability value="470">
+    <name>Tame</name>
+  </Ability>
+  <Ability value="471">
+    <name>Poach</name>
+  </Ability>
+  <Ability value="472">
+    <name>Brawler</name>
+  </Ability>
+  <Ability value="473">
+    <name>Beast Tongue</name>
+  </Ability>
+  <Ability value="474">
+    <name>Throw Items</name>
+  </Ability>
+  <Ability value="475">
+    <name>Safeguard</name>
+  </Ability>
+  <Ability value="476">
+    <name>Doublehand</name>
+  </Ability>
+  <Ability value="477">
+    <name>Dual Wield</name>
+  </Ability>
+  <Ability value="478">
+    <name>Beastmaster</name>
+  </Ability>
+  <Ability value="479">
+    <name>Defend</name>
+  </Ability>
+  <Ability value="480">
+    <name>Reequip</name>
+  </Ability>
+  <Ability value="481">
+    <name>&lt;Unknown&gt;</name>
+  </Ability>
+  <Ability value="482">
+    <name>Swiftness</name>
+  </Ability>
+  <Ability value="483">
+    <name>CT 0</name>
+  </Ability>
+  <Ability value="484">
+    <name>HP Boost</name>
+    <hpMultiplier>20</hpMultiplier>
+  </Ability>
+  <Ability value="485">
+    <name>Vehemence</name>
+  </Ability>
+  <Ability value="486">
+    <name>Move +1</name>
+    <move>1</move>
+  </Ability>
+  <Ability value="487">
+    <name>Move +2</name>
+    <move>2</move>
+  </Ability>
+  <Ability value="488">
+    <name>Move +3</name>
+    <move>3</move>
+  </Ability>
+  <Ability value="489">
+    <name>Jump +1</name>
+    <jump>1</jump>
+  </Ability>
+  <Ability value="490">
+    <name>Jump +2</name>
+    <jump>2</jump>
+  </Ability>
+  <Ability value="491">
+    <name>Jump +3</name>
+    <jump>3</jump>
+  </Ability>
+  <Ability value="492">
+    <name>Ignore Elevation</name>
+  </Ability>
+  <Ability value="493">
+    <name>Lifefont</name>
+  </Ability>
+  <Ability value="494">
+    <name>Manafont</name>
+  </Ability>
+  <Ability value="495">
+    <name>Accrue EXP</name>
+  </Ability>
+  <Ability value="496">
+    <name>Accrue JP</name>
+  </Ability>
+  <Ability value="497">
+    <name>&lt;Unknown&gt;</name>
+  </Ability>
+  <Ability value="498">
+    <name>Teleport</name>
+  </Ability>
+  <Ability value="499">
+    <name>Master Teleportation</name>
+  </Ability>
+  <Ability value="500">
+    <name>Ignore Weather</name>
+  </Ability>
+  <Ability value="501">
+    <name>Ignore Terrain</name>
+  </Ability>
+  <Ability value="502">
+    <name>Waterwalking</name>
+  </Ability>
+  <Ability value="503">
+    <name>Swim</name>
+  </Ability>
+  <Ability value="504">
+    <name>Lavawalking</name>
+  </Ability>
+  <Ability value="505">
+    <name>Waterbreathing</name>
+  </Ability>
+  <Ability value="506">
+    <name>Levitate</name>
+  </Ability>
+  <Ability value="507">
+    <name>Fly</name>
+  </Ability>
+  <Ability value="508">
+    <name>Stealth</name>
+  </Ability>
+  <Ability value="509">
+    <name>Treasure Hunter</name>
+  </Ability>
+  <Ability value="510">
+    <name>&lt;Unknown&gt;</name>
+  </Ability>
+  <Ability value="511">
+    <name>&lt;Unknown&gt;</name>
+  </Ability>
+</Abilities>

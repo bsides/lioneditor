@@ -1140,7 +1140,7 @@ namespace LionEditor
                     && (TwoBytesToUShort(charData[24], charData[25]) < 316)
                     && (TwoBytesToUShort(charData[26], charData[27]) < 316)))
                 && (charData[28] < 100)
-                && ((charData[29] >= 0) && (charData[29] < 100))
+                && ((charData[29] > 0) && (charData[29] < 100))
                 && ((charData[30] >= 0) && (charData[30] <= 100))
                 && ((charData[31] >= 0) && (charData[31] <= 100));
         }
@@ -1343,7 +1343,7 @@ namespace LionEditor
         /// <returns></returns>
         public override string ToString()
         {
-             return Name;
+            return Name;
         }
 
         /// <summary>

@@ -323,11 +323,7 @@ namespace LionEditor
 
             characterSelector.Items[characterSelector.SelectedIndex] = notMoved;
             characterSelector.Items[characterSelector.SelectedIndex + add] = moved;
-            
             characterSelector.SelectedItem = moved;
-
-            CharacterCollection[moved.Index] = moved;
-            CharacterCollection[notMoved.Index] = notMoved;
 
             FireDataChangedEvent();
             this.ResumeLayout();

@@ -2,61 +2,60 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FFTPatcher.TextEditor.Files
+namespace FFTPatcher.TextEditor
 {
-    public abstract class AbstractFile : IFile
+    abstract class AbstractFile : ISerializableFile
     {
-        /// <summary>
-        /// Gets the filenames and locations for this file.
-        /// </summary>
-        public abstract IDictionary<Enum, long> Locations { get; }
+        public virtual byte[] ToByteArray()
+        {
+            throw new NotImplementedException();
+        }
 
-        /// <summary>
-        /// Gets the charmap to use for this file.
-        /// </summary>
-        public abstract GenericCharMap CharMap { get; }
+        public virtual byte[] ToTextByteArray()
+        {
+            throw new NotImplementedException();
+        }
 
-        /// <summary>
-        /// Gets the maximum length of this file as a byte array.
-        /// </summary>
-        public abstract int MaxLength { get; }
+        protected AbstractFile( GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout )
+        {
+            NumberOfSections = layout.SectionLengths.Count;
+            Layout = layout;
+            CharMap = charmap;
+            EntryNames = layout.EntryNames;
+            SectionLengths = layout.SectionLengths.AsReadOnly();
+            SectionNames = layout.SectionNames;
+            DisplayName = layout.DisplayName;
+        }
 
-        /// <summary>
-        /// Creates a byte array representing this file.
-        /// </summary>
-        public abstract byte[] ToByteArray();
+        public virtual string this[int section, int entry]
+        {
+            get { return Sections[section][entry]; }
+            set 
+            {
+                if ( section < SectionLengths.Count && 
+                     entry < SectionLengths[section] && 
+                     !Layout.DisallowedEntries[section].Contains( entry ) )
+                {
+                    Sections[section][entry] = value;
+                }
+            }
+        }
 
-        /// <summary>
-        /// Gets all patches that this file needs to apply to the ISO for full functionality.
-        /// </summary>
-        public abstract IList<PatchedByteArray> GetAllPatches();
+        public FFTPatcher.TextEditor.FFTTextFactory.FileInfo Layout { get; private set; }
 
-        public abstract IList<PatchedByteArray> GetAllPatches( IDictionary<string, byte> dteTable );
+        public GenericCharMap CharMap { get; private set; }
 
-        /// <summary>
-        /// Determines how many bytes would be saved if the specified string could be replaced with a single byte.
-        /// </summary>
-        public abstract IDictionary<string, int> CalculateBytesSaved( Set<string> replacements );
+        protected IList<IList<string>> Sections { get; set; }
 
-        /// <summary>
-        /// Determines if this file will require DTE in order to fit on disc.
-        /// </summary>
-        /// <returns></returns>
-        public abstract bool IsDTENeeded();
+        public IList<IList<string>> EntryNames { get; private set; }
 
-        /// <summary>
-        /// Gets the DTE pairs that this file needs in order to fit on disc, given a set of possible DTE pairs
-        /// and a set of the pairs that are already required.
-        /// </summary>
-        /// <param name="replacements"></param>
-        /// <param name="currentPairs"></param>
-        /// <returns></returns>
-        public abstract Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes );
+        public int NumberOfSections { get; private set; }
 
-        /// <summary>
-        /// Creates a byte array representing this file with DTE substitutions performed as specified.
-        /// </summary>
-        public abstract byte[] ToByteArray( IDictionary<string, byte> dteTable );
+        public IList<int> SectionLengths { get; private set; }
 
+        public IList<string> SectionNames { get; private set; }
+
+
+        public string DisplayName { get; private set; }
     }
 }

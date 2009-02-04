@@ -59,7 +59,7 @@ namespace FFTPatcher.TextEditor
         static PSXResources()
         {
             //resourceMapping["psxText_ffttext"] = Encoding.UTF8.GetString( GZip.Decompress( Properties.PSXResources.psxText_ffttext ) );
-            resourceMapping["psxText_ffttext"] = GZip.Decompress( Properties.PSXResources.psxText_ffttext );
+            //resourceMapping["psxText_ffttext"] = GZip.Decompress( Properties.PSXResources.psxText_ffttext );
             //resourceMapping["ATCHELP_LZW"] = GZip.Decompress( Properties.PSXResources.ATCHELP_LZW );
             //resourceMapping["ATTACK_OUT_partial"] = GZip.Decompress( Properties.PSXResources.ATTACK_OUT_partial );
             //resourceMapping["JOIN_LZW"] = GZip.Decompress( Properties.PSXResources.JOIN_LZW );

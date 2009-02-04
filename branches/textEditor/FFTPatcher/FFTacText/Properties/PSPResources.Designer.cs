@@ -59,19 +59,5 @@ namespace FFTPatcher.TextEditor.Properties {
                 resourceCulture = value;
             }
         }
-        
-        internal static byte[] boot {
-            get {
-                object obj = ResourceManager.GetObject("boot", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] pspText_ffttext {
-            get {
-                object obj = ResourceManager.GetObject("pspText_ffttext", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

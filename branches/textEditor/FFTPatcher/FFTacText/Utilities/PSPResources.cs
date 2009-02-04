@@ -57,7 +57,7 @@ namespace FFTPatcher.TextEditor
         static PSPResources()
         {
             //resourceMapping["pspText_ffttext"] = Encoding.UTF8.GetString( GZip.Decompress( Properties.PSPResources.pspText_ffttext ) );
-            resourceMapping["pspText_ffttext"] = GZip.Decompress( Properties.PSPResources.pspText_ffttext );
+            //resourceMapping["pspText_ffttext"] = GZip.Decompress( Properties.PSPResources.pspText_ffttext );
             //resourceMapping["ATCHELP_LZW"] = GZip.Decompress( Properties.PSPResources.ATCHELP_LZW );
             //resourceMapping["BOOT_299024"] = GZip.Decompress( Properties.PSPResources.BOOT_299024 );
             //resourceMapping["BOOT_29E334"] = GZip.Decompress( Properties.PSPResources.BOOT_29E334 );

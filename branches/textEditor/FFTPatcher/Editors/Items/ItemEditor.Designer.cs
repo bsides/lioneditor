@@ -76,6 +76,7 @@ namespace FFTPatcher.Editors
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( ItemEditor ) );
             this.hLabel4 = new System.Windows.Forms.Label();
             this.weaponPanel = new System.Windows.Forms.Panel();
+            this.formulasHelpLabel = new System.Windows.Forms.Label();
             this.weaponFormulaComboBox = new FFTPatcher.Controls.ComboBoxWithDefault();
             this.weaponCastSpellLabel = new System.Windows.Forms.Label();
             this.weaponSpellStatusLabel = new System.Windows.Forms.LinkLabel();
@@ -116,7 +117,6 @@ namespace FFTPatcher.Editors
             this.itemAttributesSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.graphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.paletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.formulasHelpLabel = new System.Windows.Forms.Label();
             hLabel5 = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
             hLabel2 = new System.Windows.Forms.Label();
@@ -144,28 +144,28 @@ namespace FFTPatcher.Editors
             itemFormulaLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             this.weaponPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponSpellStatusSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponEvadePercentageSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponPowerSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponRangeSpinner)).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponSpellStatusSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponEvadePercentageSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponPowerSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponRangeSpinner ) ).BeginInit();
             this.shieldPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldPhysicalBlockRateSpinner)).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.shieldMagicBlockRateSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.shieldPhysicalBlockRateSpinner ) ).BeginInit();
             this.armorPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.armorMPBonusSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.armorHPBonusSpinner ) ).BeginInit();
             this.accessoryPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.accessoryMagicEvadeRateSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.accessoryPhysicalEvadeRateSpinner ) ).BeginInit();
             this.chemistItemPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondTableIdSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.priceSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.enemyLevelSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemAttributesSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.graphicSpinner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.chemistItemSpellStatusSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.chemistItemXSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.secondTableIdSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.priceSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.enemyLevelSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.itemAttributesSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.graphicSpinner ) ).BeginInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.paletteSpinner ) ).BeginInit();
             this.SuspendLayout();
             // 
             // hLabel5
@@ -435,6 +435,15 @@ namespace FFTPatcher.Editors
             this.weaponPanel.Name = "weaponPanel";
             this.weaponPanel.Size = new System.Drawing.Size( 482, 304 );
             this.weaponPanel.TabIndex = 12;
+            // 
+            // formulasHelpLabel
+            // 
+            this.formulasHelpLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.formulasHelpLabel.Location = new System.Drawing.Point( 216, 130 );
+            this.formulasHelpLabel.Name = "formulasHelpLabel";
+            this.formulasHelpLabel.Size = new System.Drawing.Size( 263, 174 );
+            this.formulasHelpLabel.TabIndex = 28;
+            this.formulasHelpLabel.Text = resources.GetString( "formulasHelpLabel.Text" );
             // 
             // weaponFormulaComboBox
             // 
@@ -945,15 +954,6 @@ namespace FFTPatcher.Editors
             this.paletteSpinner.Tag = "Palette";
             this.paletteSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // formulasHelpLabel
-            // 
-            this.formulasHelpLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.formulasHelpLabel.Location = new System.Drawing.Point( 216, 130 );
-            this.formulasHelpLabel.Name = "formulasHelpLabel";
-            this.formulasHelpLabel.Size = new System.Drawing.Size( 263, 174 );
-            this.formulasHelpLabel.TabIndex = 28;
-            this.formulasHelpLabel.Text = resources.GetString( "formulasHelpLabel.Text" );
-            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -995,32 +995,32 @@ namespace FFTPatcher.Editors
             this.Size = new System.Drawing.Size( 493, 466 );
             this.weaponPanel.ResumeLayout( false );
             this.weaponPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponSpellStatusSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponEvadePercentageSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponPowerSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weaponRangeSpinner)).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponSpellStatusSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponEvadePercentageSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponPowerSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.weaponRangeSpinner ) ).EndInit();
             this.shieldPanel.ResumeLayout( false );
             this.shieldPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldMagicBlockRateSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.shieldPhysicalBlockRateSpinner)).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.shieldMagicBlockRateSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.shieldPhysicalBlockRateSpinner ) ).EndInit();
             this.armorPanel.ResumeLayout( false );
             this.armorPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.armorMPBonusSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.armorHPBonusSpinner)).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.armorMPBonusSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.armorHPBonusSpinner ) ).EndInit();
             this.accessoryPanel.ResumeLayout( false );
             this.accessoryPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryMagicEvadeRateSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accessoryPhysicalEvadeRateSpinner)).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.accessoryMagicEvadeRateSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.accessoryPhysicalEvadeRateSpinner ) ).EndInit();
             this.chemistItemPanel.ResumeLayout( false );
             this.chemistItemPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemSpellStatusSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chemistItemXSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondTableIdSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.priceSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.enemyLevelSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemAttributesSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.graphicSpinner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.chemistItemSpellStatusSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.chemistItemXSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.secondTableIdSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.priceSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.enemyLevelSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.itemAttributesSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.graphicSpinner ) ).EndInit();
+            ( (System.ComponentModel.ISupportInitialize)( this.paletteSpinner ) ).EndInit();
             this.ResumeLayout( false );
             this.PerformLayout();
 

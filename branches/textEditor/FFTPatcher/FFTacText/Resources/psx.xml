@@ -1,0 +1,2955 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PSX>
+  <QuickEdit>
+    <JobDescriptions>
+      <File>
+        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Section>12</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{F714E509-2838-4623-9280-67D8DAC30450}</Guid>
+        <Section>12</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Section>12</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Section>12</Section>
+        <Offset>0</Offset>
+      </File>
+      <MainFile>
+        <Guid>{DB6D00B3-5992-4f8d-ABB7-0F566D14A01D}</Guid>
+        <Section>12</Section>
+        <Offset>0</Offset>
+        <Length>160</Length>
+      </MainFile>
+    </JobDescriptions>
+    <JobNames>
+      <File>
+        <Guid>{4C29FBA2-B49B-4ba7-8880-E785A61743FB}</Guid>
+        <Section>2</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Section>6</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Section>6</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{4EF37678-0F94-4f24-B383-43638C137302}</Guid>
+        <Section>0</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{AA4A30E6-C03B-4842-8BCC-1774EA1EA452}</Guid>
+        <Section>0</Section>
+        <Offset>0</Offset>
+      </File>
+
+      <MainFile>
+        <Guid>{A45B2DE6-520A-4484-A208-6F7895798869}</Guid>
+        <Section>4</Section>
+        <Offset>0</Offset>
+        <Length>155</Length>
+      </MainFile>
+
+    </JobNames>
+    <ItemDescriptions>
+      <File>
+        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Section>13</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{E2BC5BE9-EBF9-4b1d-B533-1FEF6EC8C50C}</Guid>
+        <Section>13</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Section>13</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Section>13</Section>
+        <Offset>0</Offset>
+      </File>
+      <MainFile>
+        <Guid>{F714E509-2838-4623-9280-67D8DAC30450}</Guid>
+        <Section>13</Section>
+        <Offset>0</Offset>
+        <Length>256</Length>
+      </MainFile>
+    </ItemDescriptions>
+    <ItemNames>
+      <File>
+        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Section>7</Section>
+        <Offset>0</Offset>
+      </File>
+      <MainFile>
+        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Section>7</Section>
+        <Offset>0</Offset>
+        <Length>256</Length>
+      </MainFile>
+    </ItemNames>
+    <SkillsetNames>
+      <MainFile>
+        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Section>22</Section>
+        <Offset>0</Offset>
+        <Length>189</Length>
+      </MainFile>
+      <File>
+        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Section>22</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{908FEAF1-B00F-4201-B574-DB1E5E5AAF3A}</Guid>
+        <Section>0</Section>
+        <Offset>0</Offset>
+      </File>
+    </SkillsetNames>
+    <SkillsetDescriptions>
+      <File>
+        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Index>19</Index>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Index>19</Index>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Index>19</Index>
+        <Offset>0</Offset>
+      </File>
+      <MainFile>
+        <Guid>{F714E509-2838-4623-9280-67D8DAC30450}</Guid>
+        <Index>19</Index>
+        <Offset>0</Offset>
+        <Length>188</Length>
+      </MainFile>
+    </SkillsetDescriptions>
+    <AbilityNames>
+      <File>
+        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Section>14</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Section>14</Section>
+        <Offset>0</Offset>
+      </File>
+      <MainFile>
+        <Guid>{DFD34E73-17DD-4416-AB4F-2F03FCE3FA2D}</Guid>
+        <Section>0</Section>
+        <Offset>0</Offset>
+        <Length>512</Length>
+      </MainFile>
+    </AbilityNames>
+    <AbilityDescriptions>
+      <File>
+        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Section>15</Section>
+        <Offset>265</Offset>
+      </File>
+      <File>
+        <Guid>{F714E509-2838-4623-9280-67D8DAC30450}</Guid>
+        <Section>15</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Section>15</Section>
+        <Offset>0</Offset>
+      </File>
+      <File>
+        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Section>15</Section>
+        <Offset>0</Offset>
+      </File>
+      <MainFile>
+        <Guid>{DB6D00B3-5992-4f8d-ABB7-0F566D14A01D}</Guid>
+        <Section>15</Section>
+        <Offset>0</Offset>
+        <Length>512</Length>
+      </MainFile>
+    </AbilityDescriptions>
+    <JobRequirements>
+      <MainFile>
+        <Guid>{248AAA33-B58B-4072-AFBD-BBC5ED5B5DB7}</Guid>
+        <Section>0</Section>
+        <Offset>0</Offset>
+        <Length>94</Length>
+      </MainFile>
+    </JobRequirements>
+    <AbilityQuotes>
+      <MainFile>
+        <Guid>{75CA7D0F-7752-477c-9133-26317BF788E7}</Guid>
+        <Section>0</Section>
+        <Offset>0</Offset>
+        <Length>512</Length>
+      </MainFile>
+    </AbilityQuotes>
+  </QuickEdit>
+  <Files>
+    <SectionedFile>
+      <DisplayName>ATCHELP.LZW</DisplayName>
+      <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+      <Size>92160</Size>
+      <Sectors>
+        <Sector filename="EVENT_ATCHELP_LZW" offset="0"/>
+      </Sectors>
+      <Sections count="21">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="1" empty="true"/>
+        <Section value="2" entries="1" empty="true"/>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="1" empty="true"/>
+        <Section value="7" entries="1" empty="true"/>
+        <Section value="8" entries="1" empty="true"/>
+        <Section value="9" entries="1" empty="true"/>
+        <Section value="10" entries="1" empty="true"/>
+        <Section value="11" entries="40" empty="false" name="Help">
+          <include name="Help1" start="0" end="39" offset="0"/>
+        </Section>
+        <Section value="12" entries="160" empty="false" name="Job descriptions">
+          <include name="JobNames" start="0" end="159" offset="0"/>
+        </Section>
+        <Section value="13" entries="256" empty="false" name="Item descriptions">
+          <include name="ItemNames" start="0" end="255" offset="0"/>
+        </Section>
+        <Section value="14" entries="1" empty="true"/>
+        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+        </Section>
+        <Section value="16" entries="1" empty="true"/>
+        <Section value="17" entries="1" empty="true"/>
+        <Section value="18" entries="1" empty="true"/>
+        <Section value="19" entries="188" empty="false" name="Skillset descriptions">
+          <include name="SkillsetNames" start="0" end="187" offset="0"/>
+        </Section>
+        <Section value="20" entries="1" empty="true"/>
+      </Sections>
+    </SectionedFile>
+    <SectionedFile>
+      <DisplayName>ATTACK.OUT</DisplayName>
+      <Guid>{4C29FBA2-B49B-4ba7-8880-E785A61743FB}</Guid>
+      <Size>7783</Size>
+      <Sectors>
+        <Sector filename="EVENT_ATTACK_OUT" offset="58032"/>
+        <Sector filename="EVENT_SMALL_OUT" offset="108"/>
+      </Sectors>
+      <Sections count="3">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="1024" empty="true" name="Unit names"/>
+        <Section value="2" entries="155" empty="false" name="Job names">
+          <include name="JobNames" start="0" end="154" offset="0"/>
+        </Section>
+      </Sections>
+    </SectionedFile>
+    
+    <SectionedFile>
+      <DisplayName>JOIN.LZW</DisplayName>
+      <Guid>{A45B2DE6-520A-4484-A208-6F7895798869}</Guid>
+      <Size>18432</Size>
+      <Sectors>
+        <Sector filename="EVENT_JOIN_LZW" offset="0"/>
+        <Sector filename="EVENT_REQUIRE_OUT" offset="52848"/>
+      </Sectors>
+      <Sections count="5">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="172" empty="true" name="Faith/Brave quotes"/>
+        <Section value="2" entries="172" empty="true" name="Faith/Brave quotes"/>
+        <Section value="3" entries="172" empty="true" name="Dismiss quotes"/>
+        <Section value="4" entries="155" empty="false" name="Job names">
+          <include name="JobNames" start="0" end="154" offset="0"/>
+        </Section>
+      </Sections>
+    </SectionedFile>    
+    <SectionedFile>
+      <DisplayName>OPEN.LZW</DisplayName>
+      <Guid>{FBFFD898-2E12-4e3c-B73D-CA6FA6997F42}</Guid>
+      <Size>22528</Size>
+      <Sectors>
+        <Sector filename="EVENT_OPEN_LZW" offset="0"/>
+      </Sectors>
+      <Sections count="32">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="1" empty="true"/>
+        <Section value="2" entries="1" empty="true"/>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="1" empty="true"/>
+        <Section value="7" entries="1" empty="true"/>
+        <Section value="8" entries="1024" empty="true" name="Unit names"/>
+        <Section value="9" entries="1" empty="true"/>
+        <Section value="10" entries="1" empty="true"/>
+        <Section value="11" entries="1" empty="true"/>
+        <Section value="12" entries="1" empty="true"/>
+        <Section value="13" entries="1" empty="true"/>
+        <Section value="14" entries="1" empty="true"/>
+        <Section value="15" entries="1" empty="true"/>
+        <Section value="16" entries="1" empty="true"/>
+        <Section value="17" entries="1" empty="true"/>
+        <Section value="18" entries="1" empty="true"/>
+        <Section value="19" entries="1" empty="true"/>
+        <Section value="20" entries="1" empty="true"/>
+        <Section value="21" entries="1" empty="true"/>
+        <Section value="22" entries="1" empty="true"/>
+        <Section value="23" entries="16" empty="true" name="Birthday entry"/>
+        <Section value="24" entries="97" empty="true" name="Sound test track names"/>
+        <Section value="25" entries="96" empty="true" name="Sound test comments"/>
+        <Section value="26" entries="1" empty="true"/>
+        <Section value="27" entries="1" empty="true"/>
+        <Section value="28" entries="1" empty="true"/>
+        <Section value="29" entries="1" empty="true"/>
+        <Section value="30" entries="1" empty="true"/>
+        <Section value="31" entries="1" empty="true"/>
+      </Sections>
+    </SectionedFile>
+    <SectionedFile>
+      <DisplayName>SAMPLE.LZW</DisplayName>
+      <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+      <Size>19336</Size>
+      <Sectors>
+        <Sector filename="EVENT_SAMPLE_LZW" offset="0"/>
+        <Sector filename="BATTLE_BIN" offset="1024732"/>
+        <Sector filename="WORLD_WORLD_BIN" offset="452032"/>
+      </Sectors>
+      <Sections count="24">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="1" empty="true"/>
+        <Section value="2" entries="38" empty="false" name="Error/Battle messages">
+          <entry value="0" name=""/>
+          <entry value="1" name="Don't move"/>
+          <entry value="2" name="Don't act"/>
+          <entry value="3" name="Underwater"/>
+          <entry value="4" name="Out of range"/>
+          <entry value="5" name="Unusable abilities"/>
+          <entry value="6" name="No combos"/>
+          <entry value="7" name="Frog"/>
+          <entry value="8" name="Insufficient MP"/>
+          <entry value="9" name="Silence"/>
+          <entry value="10" name="No units in range"/>
+          <entry value="11" name="Out of stock"/>
+          <entry value="12" name="Out of stock (Throw)"/>
+          <entry value="13" name="Out of stock (Draw out)"/>
+          <entry value="14" name=""/>
+          <entry value="15" name="Out of gun range"/>
+          <entry value="16" name="Can't target self"/>
+          <entry value="17" name="Can't target ally"/>
+          <entry value="18" name="Select target"/>
+          <entry value="19" name="Can't target panel"/>
+          <entry value="20" name="Can't target ally"/>
+          <entry value="21" name="Select target to protect"/>
+          <entry value="22" name="Can't target enemy"/>
+          <entry value="23" name="Learn ability?"/>
+          <entry value="24" name="Inherit abilities?"/>
+          <entry value="25" name="Restore HP/MP?"/>
+          <entry value="26" name="Received item"/>
+          <entry value="27" name="Received item (full stock)"/>
+          <entry value="28" name="Discovered item"/>
+          <entry value="29" name="Discovered item (full stock)"/>
+          <entry value="30" name=""/>
+          <entry value="31" name="Add party member?"/>
+          <entry value="32" name="Equipment sold"/>
+          <entry value="33" name="Party full"/>
+          <entry value="34" name="Select unit to dismiss"/>
+          <entry value="35" name=""/>
+          <entry value="36" name="Don't have Geomancy"/>
+          <entry value="37" name="Can't move"/>
+        </Section>
+        <Section value="3" entries="80" empty="false" name="Battle messages">
+          <entry value="0" name=""/>
+          <entry value="1" name="Item broke"/>
+          <entry value="2" name="Stole gil"/>
+          <entry value="3" name="Stole item"/>
+          <entry value="4" name="Invited"/>
+          <entry value="5" name="Stole XP"/>
+          <entry value="6" name="Unit joined"/>
+          <entry value="7" name="WT=0"/>
+          <entry value="8" name="Brave++"/>
+          <entry value="9" name="Brave--"/>
+          <entry value="10" name="Faith++"/>
+          <entry value="11" name="Faith--"/>
+          <entry value="12" name="Death sentence"/>
+          <entry value="13" name="Got gil"/>
+          <entry value="14" name="Berserk"/>
+          <entry value="15" name="Asleep"/>
+          <entry value="16" name="Destroyed item"/>
+          <entry value="17" name="MP--"/>
+          <entry value="18" name="Speed--"/>
+          <entry value="19" name="ATK--"/>
+          <entry value="20" name="MAG--"/>
+          <entry value="21" name="ATK++"/>
+          <entry value="22" name=""/>
+          <entry value="23" name="Speed++"/>
+          <entry value="24" name=""/>
+          <entry value="25" name="Max power"/>
+          <entry value="26" name="Sealed movement"/>
+          <entry value="27" name="Killed"/>
+          <entry value="28" name=""/>
+          <entry value="29" name="Barely survived"/>
+          <entry value="30" name="Sealed Act"/>
+          <entry value="31" name="Sealed Move"/>
+          <entry value="32" name="Caused Silence"/>
+          <entry value="33" name=""/>
+          <entry value="34" name=""/>
+          <entry value="35" name="Vampire"/>
+          <entry value="36" name="Oil"/>
+          <entry value="37" name=""/>
+          <entry value="38" name=""/>
+          <entry value="39" name="Sealed"/>
+          <entry value="40" name="Tamed"/>
+          <entry value="41" name="ATK++"/>
+          <entry value="42" name="Confused"/>
+          <entry value="43" name="Malboro"/>
+          <entry value="44" name="ATK++"/>
+          <entry value="45" name="MAG++"/>
+          <entry value="46" name="Speed++"/>
+          <entry value="47" name="Damage=gil"/>
+          <entry value="48" name="Degenerator"/>
+          <entry value="49" name="Deathtrap"/>
+          <entry value="50" name="Sleeping gas"/>
+          <entry value="51" name="Steel needle"/>
+          <entry value="52" name=""/>
+          <entry value="53" name=""/>
+          <entry value="54" name="Found item"/>
+          <entry value="55" name=""/>
+          <entry value="56" name="Successful poach"/>
+          <entry value="57" name=""/>
+          <entry value="58" name="Failed mimic"/>
+          <entry value="59" name="Failed teleport"/>
+          <entry value="60" name="Unit dropped treasure"/>
+          <entry value="61" name="Unit became crystal"/>
+          <entry value="62" name="Job level up"/>
+          <entry value="63" name="Level up"/>
+          <entry value="64" name=""/>
+          <entry value="65" name=""/>
+          <entry value="66" name=""/>
+          <entry value="67" name=""/>
+          <entry value="68" name=""/>
+          <entry value="69" name=""/>
+          <entry value="70" name=""/>
+          <entry value="71" name=""/>
+          <entry value="72" name=""/>
+          <entry value="73" name=""/>
+          <entry value="74" name=""/>
+          <entry value="75" name=""/>
+          <entry value="76" name=""/>
+          <entry value="77" name=""/>
+          <entry value="78" name=""/>
+          <entry value="79" name=""/>
+        </Section>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="155" empty="false" name="Job names">
+          <include name="JobNames" start="0" end="154" offset="0"/>
+        </Section>
+        <Section value="7" entries="257" empty="false" name="Item names">
+          <include name="ItemNames" start="0" end="255" offset="0"/>
+          <entry value="256" name=""/>
+        </Section>
+        <Section value="8" entries="26" empty="true"/>
+        <Section value="9" entries="64" empty="true" name="Unknown Japanese text"/>
+        <Section value="10" entries="11" empty="true" name="Battle menus"/>
+        <Section value="11" entries="26" empty="true"/>
+        <Section value="12" entries="1" empty="true"/>
+        <Section value="13" entries="1" empty="true"/>
+        <Section value="14" entries="513" empty="false" name="Ability names">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+          <entry value="512" name="Do not edit"/>
+        </Section>
+        <Section value="15" entries="1" empty="true"/>
+        <Section value="16" entries="20" empty="false" name="Battle messages">
+          <entry value="0" name=""/>
+          <entry value="1" name="Charging"/>
+          <entry value="2" name="Performing"/>
+          <entry value="3" name="Move"/>
+          <entry value="4" name="Ride chocobo"/>
+          <entry value="5" name="Inherit crystal"/>
+          <entry value="6" name="Move confirmation"/>
+          <entry value="7" name="Select combo"/>
+          <entry value="8" name="Combo target"/>
+          <entry value="9" name="Select magic"/>
+          <entry value="10" name="Insufficient MP"/>
+          <entry value="11" name="Select target"/>
+          <entry value="12" name="Select target"/>
+          <entry value="13" name="Confirm attack"/>
+          <entry value="14" name="Confirm protect"/>
+          <entry value="15" name="Set direction"/>
+          <entry value="16" name="Select chargeup ability"/>
+          <entry value="17" name="Confirm chargeup ability"/>
+          <entry value="18" name="Confirm action"/>
+          <entry value="19" name="Silence"/>
+        </Section>
+        <Section value="17" entries="40" empty="false" name="Status names">
+          <include name="StatusNames" start="0" end="39" offset="0"/>
+        </Section>
+        <Section value="18" entries="31" empty="false" name="Error/Confirmation messages">
+          <entry value="0" name="No items"/>
+          <entry value="1" name="Item out of stock"/>
+          <entry value="2" name="No more shields"/>
+          <entry value="3" name="No unequipped items"/>
+          <entry value="4" name="Set number to dispose"/>
+          <entry value="5" name="Cancel equip?"/>
+          <entry value="6" name="No ability learned"/>
+          <entry value="7" name="Learned all abilities"/>
+          <entry value="8" name="Is __ OK?"/>
+          <entry value="9" name="Insufficient JP"/>
+          <entry value="10" name="Remove __?"/>
+          <entry value="11" name="Team not ready"/>
+          <entry value="12" name="Team full"/>
+          <entry value="13" name="Can't delete leader"/>
+          <entry value="14" name="No memory card"/>
+          <entry value="15" name="No saves"/>
+          <entry value="16" name="No room on memory card"/>
+          <entry value="17" name="Save?"/>
+          <entry value="18" name="Can't remove unit"/>
+          <entry value="19" name="Format memory card?"/>
+          <entry value="20" name="Input birthday"/>
+          <entry value="21" name="Input name"/>
+          <entry value="22" name="Kanji search method"/>
+          <entry value="23" name="First Kanji"/>
+          <entry value="24" name="Kanji strokes"/>
+          <entry value="25" name="Input name"/>
+          <entry value="26" name="Is __ OK?"/>
+          <entry value="27" name="Destroy egg?"/>
+          <entry value="28" name="Save error"/>
+          <entry value="29" name="Load error"/>
+          <entry value="30" name="Save?"/>
+        </Section>
+        <Section value="19" entries="1" empty="true"/>
+        <Section value="20" entries="1" empty="true"/>
+        <Section value="21" entries="1" empty="true"/>
+        <Section value="22" entries="189" empty="false" name="Skillset names">
+          <include name="SkillsetNames" start="0" end="188" offset="0"/>
+        </Section>
+        <Section value="23" entries="27" empty="false" name="Summon/Draw Out">
+          <entry value="0" name="Mogri"/>
+          <entry value="1" name="Shiva"/>
+          <entry value="2" name="Ramuh"/>
+          <entry value="3" name="Ifrit"/>
+          <entry value="4" name="Titan"/>
+          <entry value="5" name="Golem"/>
+          <entry value="6" name="Carbunkle"/>
+          <entry value="7" name="Bahamut"/>
+          <entry value="8" name="Odin"/>
+          <entry value="9" name="Leviathan"/>
+          <entry value="10" name="Salamander"/>
+          <entry value="11" name="Silf"/>
+          <entry value="12" name="Fairy"/>
+          <entry value="13" name="Rich"/>
+          <entry value="14" name="Clops"/>
+          <entry value="15" name="Zodiac"/>
+          <entry value="16" name="Asura"/>
+          <entry value="17" name="Koutetsu"/>
+          <entry value="18" name="Bizen Boat"/>
+          <entry value="19" name="Murasame"/>
+          <entry value="20" name="Heaven's Cloud"/>
+          <entry value="21" name="Kiyomori"/>
+          <entry value="22" name="Muramasa"/>
+          <entry value="23" name="Kikuichimoji"/>
+          <entry value="24" name="Masamune"/>
+          <entry value="25" name="Chirijiraden"/>
+          <entry value="26" name=""/>
+        </Section>
+      </Sections>
+    </SectionedFile>
+    <SectionedFile>
+      <DisplayName>WORLD.LZW</DisplayName>
+      <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+      <Size>58077</Size>
+      <Sectors>
+        <Sector filename="EVENT_WORLD_LZW" offset="0"/>
+      </Sectors>
+      <Sections count="32">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="1" empty="true"/>
+        <Section value="2" entries="1" empty="true"/>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="155" empty="false" name="Job names">
+          <include name="JobNames" start="0" end="154" offset="0"/>
+        </Section>
+        <Section value="7" entries="257" empty="false" name="Item names">
+          <include name="ItemNames" start="0" end="255" offset="0"/>
+          <entry value="256" name=""/>
+        </Section>
+        <Section value="8" entries="1024" empty="true" name="Unit names"/>
+        <Section value="9" entries="1024" empty="true" name="Unit names"/>
+        <Section value="10" entries="11" empty="true" name="Battle menus"/>
+        <Section value="11" entries="2" empty="true" name="Help text"/>
+        <Section value="12" entries="96" empty="true" name="Errand outcomes"/>
+        <Section value="13" entries="1" empty="true"/>
+        <Section value="14" entries="513" empty="false" name="Ability names">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+          <entry value="512" name=""/>
+        </Section>
+        <Section value="15" entries="77" empty="true" name="Errand rewards"/>
+        <Section value="16" entries="41" empty="true" name="Tutorial menu"/>
+        <Section value="17" entries="1" empty="true"/>
+        <Section value="18" entries="44" empty="false" name="Location names">
+          <entry value="0" name="Lesalia Imperial Capital"/>
+          <entry value="1" name="Riovanes Castle"/>
+          <entry value="2" name="Igros Castle"/>
+          <entry value="3" name="Lionel Castle"/>
+          <entry value="4" name="Limberry Castle"/>
+          <entry value="5" name="Zeltennia Castle"/>
+          <entry value="6" name="Magic City Gariland"/>
+          <entry value="7" name="Yardow Fort City"/>
+          <entry value="8" name="Goland Coal City"/>
+          <entry value="9" name="Dorter Trade City"/>
+          <entry value="10" name="Zaland Fort City"/>
+          <entry value="11" name="Goug Machine City"/>
+          <entry value="12" name="Warjils Trade City"/>
+          <entry value="13" name="Bervenia Free City"/>
+          <entry value="14" name="Zarghidas Trade City"/>
+          <entry value="15" name="Fort Zeakden"/>
+          <entry value="16" name="Murond Holy Place"/>
+          <entry value="17" name="Thieves Fort"/>
+          <entry value="18" name="Orbonne Monastery"/>
+          <entry value="19" name="Golgorand Execution Site"/>
+          <entry value="20" name="Murond Death City"/>
+          <entry value="21" name="Bethla Garrison"/>
+          <entry value="22" name="Deep Dungeon"/>
+          <entry value="23" name="Nelveska Temple"/>
+          <entry value="24" name="Mandalia Plains"/>
+          <entry value="25" name="Fovoham Plains"/>
+          <entry value="26" name="Sweegy Woods"/>
+          <entry value="27" name="Bervenia Volcano"/>
+          <entry value="28" name="Zeklaus Desert"/>
+          <entry value="29" name="Lenalia Plateau"/>
+          <entry value="30" name="Zigolis Swamp"/>
+          <entry value="31" name="Yuguo Woods"/>
+          <entry value="32" name="Araguay Woods"/>
+          <entry value="33" name="Grog Hill"/>
+          <entry value="34" name="Bed Desert"/>
+          <entry value="35" name="Zirekile Falls"/>
+          <entry value="36" name="Dolbodar Swamp"/>
+          <entry value="37" name="Bariaus Hill"/>
+          <entry value="38" name="Doguola Pass"/>
+          <entry value="39" name="Bariaus Valley"/>
+          <entry value="40" name="Finath River"/>
+          <entry value="41" name="Poeskas Lake"/>
+          <entry value="42" name="Germinas Peak"/>
+          <entry value="43" name=""/>
+        </Section>
+        <Section value="19" entries="24" empty="true"/>
+        <Section value="20" entries="1" empty="true" name="Map menu"/>
+        <Section value="21" entries="116" empty="true" name="Map names"/>
+        <Section value="22" entries="189" empty="false" name="Skillset names">
+          <include name="SkillsetNames" start="0" end="188" offset="0"/>
+        </Section>
+        <Section value="23" entries="272" empty="true" name="Tavern text"/>
+        <Section value="24" entries="24" empty="true" name="Tutorial menu"/>
+        <Section value="25" entries="64" empty="true" name="Brave story menu"/>
+        <Section value="26" entries="96" empty="true" name="Errand names"/>
+        <Section value="27" entries="16" empty="true" name="Unexplored land"/>
+        <Section value="28" entries="47" empty="true" name="Treasure"/>
+        <Section value="29" entries="64" empty="true" name="Record"/>
+        <Section value="30" entries="1024" empty="true" name="Person"/>
+        <Section value="31" entries="96" empty="true" name="Errand objectives"/>
+      </Sections>
+    </SectionedFile>
+
+    <CompressedFile>
+      <DisplayName>BUNIT.OUT</DisplayName>
+      <Guid>{F714E509-2838-4623-9280-67D8DAC30450}</Guid>
+      <Size>79459</Size>
+      <Sectors>
+        <Sector filename="EVENT_BUNIT_OUT" offset="69112"/>
+      </Sectors>
+      <Sections count="21">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="40" empty="false" name="Help">
+          <include name="Help1" start="0" end="39" offset="0"/>
+        </Section>
+        <Section value="2" entries="14" empty="false" name="Battle unit screen help">
+          <entry value="0" name="General help"/>
+          <entry value="1" name="Find"/>
+          <entry value="2" name="Sort by number"/>
+          <entry value="3" name="Sort by level"/>
+          <entry value="4" name="Sort by job"/>
+          <entry value="5" name="Sort by AT"/>
+          <entry value="6" name="Sort by Brave"/>
+          <entry value="7" name="Sort by Faith"/>
+          <entry value="8" name="Sort by HP"/>
+          <entry value="9" name="Sort by Max HP"/>
+          <entry value="10" name="Sort by MP"/>
+          <entry value="11" name="Sort by Max MP"/>
+          <entry value="12" name="Sort by CT"/>
+          <entry value="13" name="Sort by Max CT"/>
+        </Section>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="1" empty="true"/>
+        <Section value="7" entries="1" empty="true"/>
+        <Section value="8" entries="1" empty="true"/>
+        <Section value="9" entries="1" empty="true"/>
+        <Section value="10" entries="1" empty="true"/>
+        <Section value="11" entries="1" empty="true"/>
+        <Section value="12" entries="160" empty="false" name="Job descriptions">
+          <include name="JobNames" start="0" end="159" offset="0"/>
+        </Section>
+        <Section value="13" entries="256" empty="false" name="Item descriptions">
+          <include name="ItemNames" start="0" end="255" offset="0"/>
+        </Section>
+        <Section value="14" entries="1" empty="true"/>
+        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+        </Section>
+        <Section value="16" entries="1" empty="true"/>
+        <Section value="17" entries="1" empty="true"/>
+        <Section value="18" entries="1" empty="true"/>
+        <Section value="19" entries="188" empty="false" name="Skillset descriptions">
+          <include name="SkillsetNames" start="0" end="187" offset="0"/>
+        </Section>
+        <Section value="20" entries="1" empty="true"/>
+      </Sections>
+    </CompressedFile>
+    
+
+    <CompressedFile>
+      <DisplayName>EQUIP.OUT</DisplayName>
+      <Guid>{E2BC5BE9-EBF9-4b1d-B533-1FEF6EC8C50C}</Guid>
+      <Size>35511</Size>
+      <Sectors>
+        <Sector filename="EVENT_EQUIP_OUT" offset="68568"/>
+      </Sectors>
+      <Sections count="21">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="1" empty="true"/>
+        <Section value="2" entries="155" empty="true" name="Menu/Options help"/>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="1" empty="true"/>
+        <Section value="7" entries="1" empty="true"/>
+        <Section value="8" entries="1" empty="true"/>
+        <Section value="9" entries="1" empty="true"/>
+        <Section value="10" entries="1" empty="true"/>
+        <Section value="11" entries="1" empty="true"/>
+        <Section value="12" entries="1" empty="true"/>
+        <Section value="13" entries="256" empty="false" name="Item descriptions">
+          <include name="ItemNames" start="0" end="255" offset="0"/>
+        </Section>
+        <Section value="14" entries="1" empty="true"/>
+        <Section value="15" entries="1" empty="true"/>
+        <Section value="16" entries="1" empty="true"/>
+        <Section value="17" entries="1" empty="true"/>
+        <Section value="18" entries="1" empty="true"/>
+        <Section value="19" entries="1" empty="true"/>
+        <Section value="20" entries="1" empty="true"/>
+      </Sections>
+    </CompressedFile>
+
+    <CompressedFile>
+      <DisplayName>HELP.LZW</DisplayName>
+      <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+      <Size>92608</Size>
+      <Sectors>
+        <Sector filename="EVENT_HELP_LZW" offset="0"/>
+        <Sector filename="EVENT_HELPMENU_OUT" offset="6960"/>
+        <Sector filename="WORLD_WORLD_BIN" offset="489440"/>
+      </Sectors>
+      <Sections count="21">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="40" empty="false" name="Help">
+          <include name="Help1" start="0" end="39" offset="0"/>
+        </Section>
+        <Section value="2" entries="155" empty="true" name="Menu/Options Help"/>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="1" empty="true"/>
+        <Section value="7" entries="1" empty="true"/>
+        <Section value="8" entries="1" empty="true"/>
+        <Section value="9" entries="1" empty="true"/>
+        <Section value="10" entries="1" empty="true"/>
+        <Section value="11" entries="64" empty="false" name="Terrain descriptions">
+          <include name="TerrainNames" start="0" end="63" offset="0"/>
+        </Section>
+        <Section value="12" entries="160" empty="false" name="Job descriptions">
+          <include name="JobNames" start="0" end="159" offset="0"/>
+        </Section>
+        <Section value="13" entries="256" empty="false" name="Item descriptions">
+          <include name="ItemNames" start="0" end="255" offset="0"/>
+        </Section>
+        <Section value="14" entries="1" empty="true"/>
+        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+        </Section>
+        <Section value="16" entries="1" empty="true"/>
+        <Section value="17" entries="1" empty="true"/>
+        <Section value="18" entries="1" empty="true"/>
+        <Section value="19" entries="188" empty="false" name="Skillset descriptions">
+          <include name="SkillsetNames" start="0" end="187" offset="0"/>
+        </Section>
+        <Section value="20" entries="40" empty="false" name="Status descriptions">
+          <include name="StatusNames" start="0" end="39" offset="0"/>
+        </Section>
+      </Sections>
+    </CompressedFile>
+
+    <CompressedFile>
+      <DisplayName>JOBSTTS.OUT</DisplayName>
+      <Guid>{DB6D00B3-5992-4f8d-ABB7-0F566D14A01D}</Guid>
+      <Size>43607</Size>
+      <Sectors>
+        <Sector filename="EVENT_JOBSTTS_OUT" offset="25864"/>
+      </Sectors>
+      <Sections count="21">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="1" empty="true"/>
+        <Section value="2" entries="1" empty="true"/>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="1" empty="true"/>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="1" empty="true"/>
+        <Section value="7" entries="1" empty="true"/>
+        <Section value="8" entries="1" empty="true"/>
+        <Section value="9" entries="1" empty="true"/>
+        <Section value="10" entries="1" empty="true"/>
+        <Section value="11" entries="1" empty="true"/>
+        <Section value="12" entries="160" empty="false" name="Job descriptions">
+          <include name="JobNames" start="0" end="159" offset="0"/>
+        </Section>
+        <Section value="13" entries="1" empty="true"/>
+        <Section value="14" entries="1" empty="true"/>
+        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+        </Section>
+        <Section value="16" entries="1" empty="true"/>
+        <Section value="17" entries="1" empty="true"/>
+        <Section value="18" entries="1" empty="true"/>
+        <Section value="19" entries="1" empty="true"/>
+        <Section value="20" entries="1" empty="true"/>
+      </Sections>
+    </CompressedFile>
+
+    <CompressedFile>
+      <DisplayName>WLDHELP.LZW</DisplayName>
+      <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+      <Size>110052</Size>
+      <Sectors>
+        <Sector filename="EVENT_WLDHELP_LZW" offset="0"/>
+        <Sector filename="WORLD_WORLD_BIN" offset="585320"/>
+      </Sectors>
+      <Sections count="21">
+        <Section value="0" entries="1" empty="true"/>
+        <Section value="1" entries="40" empty="false" name="Help">
+          <include name="Help1" start="0" end="39" offset="0"/>
+        </Section>
+        <Section value="2" entries="155" empty="true" name="Menu/Options Help"/>
+        <Section value="3" entries="1" empty="true"/>
+        <Section value="4" entries="31" empty="false" name="Error/Confirmation messages">
+          <entry value="0" name="No items"/>
+          <entry value="1" name="Item out of stock"/>
+          <entry value="2" name="No more shields"/>
+          <entry value="3" name="No unequipped items"/>
+          <entry value="4" name="Set number to dispose"/>
+          <entry value="5" name="Cancel equip?"/>
+          <entry value="6" name="No ability learned"/>
+          <entry value="7" name="Learned all abilities"/>
+          <entry value="8" name="Is __ OK?"/>
+          <entry value="9" name="Insufficient JP"/>
+          <entry value="10" name="Remove __?"/>
+          <entry value="11" name="Team not ready"/>
+          <entry value="12" name="Team full"/>
+          <entry value="13" name="Can't delete leader"/>
+          <entry value="14" name="No memory card"/>
+          <entry value="15" name="No saves"/>
+          <entry value="16" name="No room on memory card"/>
+          <entry value="17" name="Save?"/>
+          <entry value="18" name="Can't remove unit"/>
+          <entry value="19" name="Format memory card?"/>
+          <entry value="20" name="Input birthday"/>
+          <entry value="21" name="Input name"/>
+          <entry value="22" name="Kanji search method"/>
+          <entry value="23" name="First Kanji"/>
+          <entry value="24" name="Kanji strokes"/>
+          <entry value="25" name="Input name"/>
+          <entry value="26" name="Is __ OK?"/>
+          <entry value="27" name="Destroy egg?"/>
+          <entry value="28" name="Save error"/>
+          <entry value="29" name="Load error"/>
+          <entry value="30" name="Save?"/>
+        </Section>
+        <Section value="5" entries="1" empty="true"/>
+        <Section value="6" entries="1" empty="true"/>
+        <Section value="7" entries="1" empty="true"/>
+        <Section value="8" entries="1" empty="true"/>
+        <Section value="9" entries="1" empty="true"/>
+        <Section value="10" entries="1" empty="true"/>
+        <Section value="11" entries="1" empty="true"/>
+        <Section value="12" entries="160" empty="false" name="Job descriptions">
+          <include name="JobNames" start="0" end="159" offset="0"/>
+        </Section>
+        <Section value="13" entries="256" empty="false" name="Item descriptions">
+          <include name="ItemNames" start="0" end="255" offset="0"/>
+        </Section>
+        <Section value="14" entries="1" empty="true"/>
+        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+        </Section>
+        <Section value="16" entries="44" empty="false" name="Location descriptions">
+          <entry value="0" name="Lesalia Imperial Capital"/>
+          <entry value="1" name="Riovanes Castle"/>
+          <entry value="2" name="Igros Castle"/>
+          <entry value="3" name="Lionel Castle"/>
+          <entry value="4" name="Limberry Castle"/>
+          <entry value="5" name="Zeltennia Castle"/>
+          <entry value="6" name="Magic City Gariland"/>
+          <entry value="7" name="Yardow Fort City"/>
+          <entry value="8" name="Goland Coal City"/>
+          <entry value="9" name="Dorter Trade City"/>
+          <entry value="10" name="Zaland Fort City"/>
+          <entry value="11" name="Goug Machine City"/>
+          <entry value="12" name="Warjils Trade City"/>
+          <entry value="13" name="Bervenia Free City"/>
+          <entry value="14" name="Zarghidas Trade City"/>
+          <entry value="15" name="Fort Zeakden"/>
+          <entry value="16" name="Murond Holy Place"/>
+          <entry value="17" name="Thieves Fort"/>
+          <entry value="18" name="Orbonne Monastery"/>
+          <entry value="19" name="Golgorand Execution Site"/>
+          <entry value="20" name="Murond Death City"/>
+          <entry value="21" name="Bethla Garrison"/>
+          <entry value="22" name="Deep Dungeon"/>
+          <entry value="23" name="Nelveska Temple"/>
+          <entry value="24" name="Mandalia Plains"/>
+          <entry value="25" name="Fovoham Plains"/>
+          <entry value="26" name="Sweegy Woods"/>
+          <entry value="27" name="Bervenia Volcano"/>
+          <entry value="28" name="Zeklaus Desert"/>
+          <entry value="29" name="Lenalia Plateau"/>
+          <entry value="30" name="Zigolis Swamp"/>
+          <entry value="31" name="Yuguo Woods"/>
+          <entry value="32" name="Araguay Woods"/>
+          <entry value="33" name="Grog Hill"/>
+          <entry value="34" name="Bed Desert"/>
+          <entry value="35" name="Zirekile Falls"/>
+          <entry value="36" name="Dolbodar Swamp"/>
+          <entry value="37" name="Bariaus Hill"/>
+          <entry value="38" name="Doguola Pass"/>
+          <entry value="39" name="Bariaus Valley"/>
+          <entry value="40" name="Finath River"/>
+          <entry value="41" name="Poeskas Lake"/>
+          <entry value="42" name="Germinas Peak"/>
+          <entry value="43" name=""/>
+        </Section>
+        <Section value="17" entries="116" empty="true" name="Map descriptions"/>
+        <Section value="18" entries="1" empty="true"/>
+        <Section value="19" entries="188" empty="false" name="Skillset descriptions">
+          <include name="SkillsetNames" start="0" end="187" offset="0"/>
+        </Section>
+        <Section value="20" entries="768" empty="true" name="Unit quotes"/>
+      </Sections>
+    </CompressedFile>
+
+    <PartitionedFile>
+      <DisplayName>SNPLMES.BIN</DisplayName>
+      <Guid>{3316AC7E-D094-4e3b-B1E8-7401EAD7ADEA}</Guid>
+      <PartitionSize>40960</PartitionSize>
+      <Size>245760</Size>
+      <Sectors>
+        <Sector filename="WORLD_SNPLMES_BIN" offset="0"/>
+      </Sectors>
+      <Sections count="6">
+        <Section value="0" entries="204" empty="true"/>
+        <Section value="1" entries="168" empty="true"/>
+        <Section value="2" entries="186" empty="true"/>
+        <Section value="3" entries="217" empty="true"/>
+        <Section value="4" entries="39" empty="true" name="Germonik Scriptures"/>
+        <Section value="5" entries="14" empty="true"/>
+      </Sections>
+    </PartitionedFile>
+
+    <PartitionedFile>
+      <DisplayName>WLDMES.BIN</DisplayName>
+      <Guid>{496CDC15-60A7-4016-80A7-49136EDBBDD9}</Guid>
+      <Size>5046272</Size>
+      <PartitionSize>45056</PartitionSize>
+      <Sectors>
+        <Sector filename="WORLD_WLDMES_BIN" offset="0"/>
+      </Sectors>
+      <Sections count="112">
+        <Section value="0" entries="64" empty="false" name="Rumors">
+          <entry value="0" name="The Death Corps"/>
+          <entry value="1" name="The King Omdoria"/>
+          <entry value="2" name="The Fifty Year War"/>
+          <entry value="3" name="The condition of Omdoria"/>
+          <entry value="4" name="Destruction of the Death Corps!?"/>
+          <entry value="5" name="Attempt murder of Lord Dycedarg"/>
+          <entry value="6" name="After the king's death"/>
+          <entry value="7" name="Feud between Larg and Goltana"/>
+          <entry value="8" name="Peasant riot in Zeltennia"/>
+          <entry value="9" name="Kidnap of the Princess"/>
+
+          <entry value="10" name="Zodiac Brave Story"/>
+          <entry value="11" name="Zodiac Stone"/>
+          <entry value="12" name="Bart Company's dark rumor"/>
+          <entry value="13" name="Future of the War"/>
+          <entry value="14" name="Rescue of Princess Ovelia"/>
+          <entry value="15" name="Draclau's death"/>
+          <entry value="16" name="Drought and flood damage"/>
+          <entry value="17" name="Death of Marquis Elmdor in battle"/>
+          <entry value="18" name="Future of the War 2"/>
+          <entry value="19" name="Monster in Riovanes Castle"/>
+
+          <entry value="20" name="Ghost of Colliery"/>
+          <entry value="21" name="Cursed Island, Nelveska"/>
+          <entry value="22" name=""/>
+          <entry value="23" name=""/>
+          <entry value="24" name=""/>
+          <entry value="25" name=""/>
+          <entry value="26" name=""/>
+          <entry value="27" name=""/>
+          <entry value="28" name=""/>
+          <entry value="29" name=""/>
+
+          <entry value="30" name=""/>
+          <entry value="31" name=""/>
+          <entry value="32" name=""/>
+          <entry value="33" name=""/>
+          <entry value="34" name=""/>
+          <entry value="35" name=""/>
+          <entry value="36" name=""/>
+          <entry value="37" name=""/>
+          <entry value="38" name=""/>
+          <entry value="39" name=""/>
+
+          <entry value="40" name=""/>
+          <entry value="41" name=""/>
+          <entry value="42" name=""/>
+          <entry value="43" name=""/>
+          <entry value="44" name=""/>
+          <entry value="45" name=""/>
+          <entry value="46" name=""/>
+          <entry value="47" name=""/>
+          <entry value="48" name=""/>
+          <entry value="49" name=""/>
+
+          <entry value="50" name=""/>
+          <entry value="51" name=""/>
+          <entry value="52" name=""/>
+          <entry value="53" name=""/>
+          <entry value="54" name=""/>
+          <entry value="55" name=""/>
+          <entry value="56" name=""/>
+          <entry value="57" name=""/>
+          <entry value="58" name=""/>
+          <entry value="59" name=""/>
+
+          <entry value="60" name=""/>
+          <entry value="61" name=""/>
+          <entry value="62" name=""/>
+          <entry value="63" name=""/>
+        </Section>
+        <Section value="1" entries="96" empty="false" name="Propositions">
+          <entry value="0" name="Merchants' Worries"/>
+          <entry value="1" name="Salvage Tour Thoughts"/>
+          <entry value="2" name="Sailor Tour Thoughts"/>
+          <entry value="3" name="Enterprise Salvage"/>
+          <entry value="4" name="Attractive Workplace?"/>
+          <entry value="5" name="Hindenburg Salvage"/>
+          <entry value="6" name="Falcon Salvage"/>
+          <entry value="7" name="Legend of Heroic King"/>
+          <entry value="8" name="Doga Salvage"/>
+          <entry value="9" name="Envoy Ship of Lionel Castle"/>
+
+          <entry value="10" name="Luxurious Ship Salvage"/>
+          <entry value="11" name="Lost Ancient Writings"/>
+          <entry value="12" name="Good Workplace and Job?"/>
+          <entry value="13" name="Salvage in Riovanes!"/>
+          <entry value="14" name="Vessel of Istanbul"/>
+          <entry value="15" name="Douing Salvage"/>
+          <entry value="16" name="Mining Tour Thoughts"/>
+          <entry value="17" name="Miner's Tour Thoughts"/>
+          <entry value="18" name="Letter to the Family"/>
+          <entry value="19" name="Miner's Tour Thoughts"/>
+
+          <entry value="20" name="Anything's Possible!"/>
+          <entry value="21" name="Guide to Miners"/>
+          <entry value="22" name="Miner's Day Off"/>
+          <entry value="23" name="Girl of Flame!?"/>
+          <entry value="24" name="The First One Back"/>
+          <entry value="25" name="Behind the Cliff"/>
+          <entry value="26" name="Meet With the Unknown"/>
+          <entry value="27" name="One Activity"/>
+          <entry value="28" name="Fight of the Miners"/>
+          <entry value="29" name="Ghost Staffs"/>
+
+          <entry value="30" name="Tears of an Ex-miner"/>
+          <entry value="31" name="15 Black Knights"/>
+          <entry value="32" name="After the Discovery Race"/>
+          <entry value="33" name="Things at Lake Bottom"/>
+          <entry value="34" name="After 2nd Discover Race"/>
+          <entry value="35" name="Thing at Myst. Frontier"/>
+          <entry value="36" name="After 3rd Discovery Race"/>
+          <entry value="37" name="Thing in Deep Forest"/>
+          <entry value="38" name="Thing at Bed Desert"/>
+          <entry value="39" name="Thing at Zeklaus Desert"/>
+
+          <entry value="40" name="Over Mountain Pass"/>
+          <entry value="41" name="Discovery Tour Thoughts"/>
+          <entry value="42" name="Thing in the Swamps"/>
+          <entry value="43" name="Maze of Ancient People"/>
+          <entry value="44" name="Join the Adventurer Team!"/>
+          <entry value="45" name="Report!  It is True!"/>
+          <entry value="46" name="Merchants' Worries!"/>
+          <entry value="47" name="In the Mist..."/>
+          <entry value="48" name="Wyburns Annihilated!"/>
+          <entry value="49" name="Wild Kingdom"/>
+
+          <entry value="50" name="Battle!  Demon Lylis"/>
+          <entry value="51" name="Father and Child"/>
+          <entry value="52" name="Whisper Grass in the Dark"/>
+          <entry value="53" name="Battle!  Whirlwind Karz!"/>
+          <entry value="54" name="Crime of Count Minimum"/>
+          <entry value="55" name="Battle!  The Assault Cave!"/>
+          <entry value="56" name="That's not the Aim!"/>
+          <entry value="57" name="Too Naive"/>
+          <entry value="58" name="Pleasure of a Goddess"/>
+          <entry value="59" name="Women Held in Arms..."/>
+
+          <entry value="60" name="Bye, Noble of Darkness!"/>
+          <entry value="61" name="At the Hilltop Mansion?"/>
+          <entry value="62" name="Unfortunate Monsters"/>
+          <entry value="63" name="Fiar's Intentions!"/>
+          <entry value="64" name="Back then..."/>
+          <entry value="65" name="Rescue of Cornelia!"/>
+          <entry value="66" name="Return of Pappal!"/>
+          <entry value="67" name="Ultimate Avatism"/>
+          <entry value="68" name="Thoughts of a Doll"/>
+          <entry value="69" name="Letter from a distant shore"/>
+
+          <entry value="70" name="Battle!  Mud Man!"/>
+          <entry value="71" name="Darkness of Eternal Way"/>
+          <entry value="72" name="Darkness of Eternal Way"/>
+          <entry value="73" name="Final Resistance"/>
+          <entry value="74" name="Informant"/>
+          <entry value="75" name="Most Precious Thing"/>
+          <entry value="76" name="Poet Gilbert's Thoughts"/>
+          <entry value="77" name="Delighted Count Minimum!"/>
+          <entry value="78" name="Canabablistic Plant"/>
+          <entry value="79" name="Joyous Song for You"/>
+
+          <entry value="80" name="The Talkative Katedona"/>
+          <entry value="81" name="Courage of Durman!"/>
+          <entry value="82" name="Regain Ability!"/>
+          <entry value="83" name="Delighted Count Minimum!"/>
+          <entry value="84" name="Won Machinist Contest!"/>
+          <entry value="85" name="Artist Mameko Leaves!"/>
+          <entry value="86" name="Chocobo Restaurant"/>
+          <entry value="87" name="Ship Casino, Black Jack"/>
+          <entry value="88" name="Storm of 777!"/>
+          <entry value="89" name="Inside Lakam Trade Co."/>
+
+          <entry value="90" name="Cherish Memories"/>
+          <entry value="91" name="A Perfect Smile!"/>
+          <entry value="92" name="Won the Yardow Fight!"/>
+          <entry value="93" name="Won the Zaland Fight!"/>
+          <entry value="94" name="Won Magic Contest!"/>
+          <entry value="95" name="Won the Meister Contest!"/>
+        </Section>
+        <Section value="2" entries="16" empty="false" name="Unexplored Lands">
+          <entry value="0" name="Shrine of Chaos"/>
+          <entry value="1" name="Forbidden Land Eureka"/>
+          <entry value="2" name="Pandemonium"/>
+          <entry value="3" name="Mirage Tower"/>
+          <entry value="4" name="Floating Castle"/>
+          <entry value="5" name="Matoya Cave"/>
+          <entry value="6" name="Crystal Tower"/>
+          <entry value="7" name="Magic Continent"/>
+          <entry value="8" name="Castle of Trials"/>
+          <entry value="9" name="Tower of Babel"/>
+          <entry value="10" name="Ronkan Ruins"/>
+          <entry value="11" name="Falgabird"/>
+          <entry value="12" name="Magic Train"/>
+          <entry value="13" name="Touzas Village"/>
+          <entry value="14" name="Chocobo Forest"/>
+          <entry value="15" name="Semite Falls"/>
+        </Section>
+        <Section value="3" entries="47" empty="false" name="Treasures">
+          <entry value="0" name="Four Gods Set"/>
+          <entry value="1" name="Statue of Lylis"/>
+          <entry value="2" name="Beetle Charm"/>
+          <entry value="3" name="Tobacco Pipe"/>
+          <entry value="4" name="Zeni-Sword"/>
+          <entry value="5" name="Black Cat"/>
+          <entry value="6" name="Malice Mask"/>
+          <entry value="7" name="Parade Helmet"/>
+          <entry value="8" name="Kid's Bread"/>
+          <entry value="9" name="Adult's Bread"/>
+          <entry value="10" name="Calcobrina"/>
+          <entry value="11" name="Yurgeivogue"/>
+          <entry value="12" name="Red Materia"/>
+          <entry value="13" name="Blue Materia"/>
+          <entry value="14" name="Black Materia"/>
+          <entry value="15" name="White Materia"/>
+          <entry value="16" name="Rat Tail"/>
+          <entry value="17" name="M-Fiction Novel"/>
+          <entry value="18" name="Diary of Nanai"/>
+          <entry value="19" name="Wyuvle"/>
+          <entry value="20" name="Book of Enavia"/>
+          <entry value="21" name="Magical Gun"/>
+          <entry value="22" name="M Machinegun"/>
+          <entry value="23" name="Magi-Sword"/>
+          <entry value="24" name="Minu Orb"/>
+          <entry value="25" name="Tarot of Ben"/>
+          <entry value="26" name="Excalipar"/>
+          <entry value="27" name="Parasite Tree"/>
+          <entry value="28" name="Longibunne Spear"/>
+          <entry value="29" name="Chocobo Cannon"/>
+          <entry value="30" name="St. Elmo's Fire"/>
+          <entry value="31" name="Germonik Scriptures"/>
+          <entry value="32" name="Dummy Data 1"/>
+          <entry value="33" name="Dummy Data 2"/>
+          <entry value="34" name="Aries"/>
+          <entry value="35" name="Taurus"/>
+          <entry value="36" name="Gemini"/>
+          <entry value="37" name="Cancer"/>
+          <entry value="38" name="Leo"/>
+          <entry value="39" name="Virgo"/>
+          <entry value="40" name="Libra"/>
+          <entry value="41" name="Scorpio"/>
+          <entry value="42" name="Sagittarius"/>
+          <entry value="43" name="Capricorn"/>
+          <entry value="44" name="Aquarius"/>
+          <entry value="45" name="Pisces"/>
+          <entry value="46" name="Serpentarius"/>
+        </Section>
+        <Section value="4" entries="64" empty="false" name="Brave Story">
+          <entry value="0" name="Cadets"/>
+          <entry value="1" name="Death of Balbanes"/>
+          <entry value="2" name="First Meeting with Algus"/>
+          <entry value="3" name="Reunion with Dycedarg"/>
+          <entry value="4" name="At Igros Castle"/>
+          <entry value="5" name="After Gustav!"/>
+          <entry value="6" name="Rescue of Marquis Elmdor"/>
+          <entry value="7" name="Master of Gallione"/>
+          <entry value="8" name="Lady of the Death Corps"/>
+          <entry value="9" name="Attack by the Death Corps!"/>
+          <entry value="10" name="Delita's Anger"/>
+          <entry value="11" name="Reed Pipe"/>
+          <entry value="12" name="One Rock and a Small Ripple"/>
+          <entry value="13" name="And I escaped..."/>
+          <entry value="14" name="Prayer of Queen Ovelia"/>
+          <entry value="15" name="Ovelia Chase"/>
+          <entry value="16" name="Reunion with Delita"/>
+          <entry value="17" name="Machinist"/>
+          <entry value="18" name="Worries of Ovelia"/>
+          <entry value="19" name="Dycedarg's Plans"/>
+          <entry value="20" name="Cardinal Draclau and the Holy Stone"/>
+          <entry value="21" name="Those who seek the Holy Stone"/>
+          <entry value="22" name="Besrodio Rescue"/>
+          <entry value="23" name="Delita's Advice"/>
+          <entry value="24" name="Cardinal's Anger"/>
+          <entry value="25" name="Those Who Use. Those Who Get Used."/>
+          <entry value="26" name="The Lion War Outbreak"/>
+          <entry value="27" name="T.G. Cid"/>
+          <entry value="28" name="First Meeting With Olan"/>
+          <entry value="29" name="Reunion with Zalbag"/>
+          <entry value="30" name="As a Heretic"/>
+          <entry value="31" name="Confessions of Simon"/>
+          <entry value="32" name="Velius"/>
+          <entry value="33" name="Ovelia and Delita"/>
+          <entry value="34" name="Son of T.G. Cid"/>
+          <entry value="35" name="Divine Rafa"/>
+          <entry value="36" name="Ambitions of Prince Barinten"/>
+          <entry value="37" name="Escaping Alma"/>
+          <entry value="38" name="Scars of a Tragedy"/>
+          <entry value="39" name="The Other Power"/>
+          <entry value="40" name="The Lying Heart"/>
+          <entry value="41" name="Those Who Squirm in Darkness"/>
+          <entry value="42" name="A Man with the Holy Stone"/>
+          <entry value="43" name="Delita's Thoughts"/>
+          <entry value="44" name="Unstoppable Cog"/>
+          <entry value="45" name="Siezed T.G. Cid"/>
+          <entry value="46" name="Assassination of Prince Larg"/>
+          <entry value="47" name="Rescue of Cid"/>
+          <entry value="48" name="Prince Goltana's Final Moments"/>
+          <entry value="49" name="Ambition of Dycedarg"/>
+          <entry value="50" name="Men of Odd Appearance"/>
+          <entry value="51" name="Mystery of Lucavi"/>
+          <entry value="52" name="Delita's Betrayal"/>
+          <entry value="53" name="Mosfungus"/>
+          <entry value="54" name="Funera's Final Moments"/>
+          <entry value="55" name="Requiem"/>
+          <entry value="56" name="Steel Ball Found"/>
+          <entry value="57" name="The Steel Giant Starts"/>
+          <entry value="58" name="Celestial Globe Found"/>
+          <entry value="59" name="Summon Cloud"/>
+          <entry value="60" name="Reis' Curse"/>
+          <entry value="61" name="Entrance to the Other World"/>
+          <entry value="62" name="Reunion and Beyond..."/>
+          <entry value="63" name="Things Obtained"/>
+        </Section>
+        <Section value="5" entries="41" empty="true" name=""/>
+        <Section value="6" entries="256" empty="true" name="Character Bios"/>
+        <Section value="7" entries="256" empty="true" name="Character Bios"/>
+        <Section value="8" entries="256" empty="true" name="Character Bios"/>
+        <Section value="9" entries="256" empty="true" name="Character Bios"/>
+
+        <Section value="10" entries="96" empty="true" name="Errand Completion Notes"/>
+        <Section value="11" entries="24" empty="true" name=""/>
+        <Section value="12" entries="1" empty="true" name=""/>
+        <Section value="13" entries="1" empty="true" name=""/>
+        <Section value="14" entries="1" empty="true" name=""/>
+        <Section value="15" entries="1" empty="true" name=""/>
+        <Section value="16" entries="168" empty="true" name=""/>
+        <Section value="17" entries="168" empty="true" name=""/>
+        <Section value="18" entries="168" empty="true" name=""/>
+        <Section value="19" entries="168" empty="true" name=""/>
+
+        <Section value="20" entries="168" empty="true" name=""/>
+        <Section value="21" entries="168" empty="true" name=""/>
+        <Section value="22" entries="168" empty="true" name=""/>
+        <Section value="23" entries="168" empty="true" name=""/>
+        <Section value="24" entries="168" empty="true" name=""/>
+        <Section value="25" entries="168" empty="true" name=""/>
+        <Section value="26" entries="168" empty="true" name=""/>
+        <Section value="27" entries="168" empty="true" name=""/>
+        <Section value="28" entries="168" empty="true" name=""/>
+        <Section value="29" entries="168" empty="true" name=""/>
+
+        <Section value="30" entries="168" empty="true" name=""/>
+        <Section value="31" entries="168" empty="true" name=""/>
+        <Section value="32" entries="168" empty="true" name=""/>
+        <Section value="33" entries="168" empty="true" name=""/>
+        <Section value="34" entries="168" empty="true" name=""/>
+        <Section value="35" entries="168" empty="true" name=""/>
+        <Section value="36" entries="168" empty="true" name=""/>
+        <Section value="37" entries="168" empty="true" name=""/>
+        <Section value="38" entries="168" empty="true" name=""/>
+        <Section value="39" entries="168" empty="true" name=""/>
+
+        <Section value="40" entries="168" empty="true" name=""/>
+        <Section value="41" entries="168" empty="true" name=""/>
+        <Section value="42" entries="168" empty="true" name=""/>
+        <Section value="43" entries="168" empty="true" name=""/>
+        <Section value="44" entries="168" empty="true" name=""/>
+        <Section value="45" entries="168" empty="true" name=""/>
+        <Section value="46" entries="168" empty="true" name=""/>
+        <Section value="47" entries="168" empty="true" name=""/>
+        <Section value="48" entries="168" empty="true" name=""/>
+        <Section value="49" entries="168" empty="true" name=""/>
+
+        <Section value="50" entries="168" empty="true" name=""/>
+        <Section value="51" entries="168" empty="true" name=""/>
+        <Section value="52" entries="168" empty="true" name=""/>
+        <Section value="53" entries="168" empty="true" name=""/>
+        <Section value="54" entries="168" empty="true" name=""/>
+        <Section value="55" entries="168" empty="true" name=""/>
+        <Section value="56" entries="168" empty="true" name=""/>
+        <Section value="57" entries="168" empty="true" name=""/>
+        <Section value="58" entries="168" empty="true" name=""/>
+        <Section value="59" entries="168" empty="true" name=""/>
+
+        <Section value="60" entries="168" empty="true" name=""/>
+        <Section value="61" entries="168" empty="true" name=""/>
+        <Section value="62" entries="168" empty="true" name=""/>
+        <Section value="63" entries="168" empty="true" name=""/>
+        <Section value="64" entries="168" empty="true" name=""/>
+        <Section value="65" entries="168" empty="true" name=""/>
+        <Section value="66" entries="168" empty="true" name=""/>
+        <Section value="67" entries="168" empty="true" name=""/>
+        <Section value="68" entries="168" empty="true" name=""/>
+        <Section value="69" entries="168" empty="true" name=""/>
+
+        <Section value="70" entries="168" empty="true" name=""/>
+        <Section value="71" entries="168" empty="true" name=""/>
+        <Section value="72" entries="168" empty="true" name=""/>
+        <Section value="73" entries="168" empty="true" name=""/>
+        <Section value="74" entries="168" empty="true" name=""/>
+        <Section value="75" entries="168" empty="true" name=""/>
+        <Section value="76" entries="168" empty="true" name=""/>
+        <Section value="77" entries="168" empty="true" name=""/>
+        <Section value="78" entries="168" empty="true" name=""/>
+        <Section value="79" entries="168" empty="true" name=""/>
+
+        <Section value="80" entries="168" empty="true" name=""/>
+        <Section value="81" entries="168" empty="true" name=""/>
+        <Section value="82" entries="168" empty="true" name=""/>
+        <Section value="83" entries="168" empty="true" name=""/>
+        <Section value="84" entries="168" empty="true" name=""/>
+        <Section value="85" entries="168" empty="true" name=""/>
+        <Section value="86" entries="168" empty="true" name=""/>
+        <Section value="87" entries="168" empty="true" name=""/>
+        <Section value="88" entries="168" empty="true" name=""/>
+        <Section value="89" entries="168" empty="true" name=""/>
+
+        <Section value="90" entries="168" empty="true" name=""/>
+        <Section value="91" entries="168" empty="true" name=""/>
+        <Section value="92" entries="168" empty="true" name=""/>
+        <Section value="93" entries="168" empty="true" name=""/>
+        <Section value="94" entries="168" empty="true" name=""/>
+        <Section value="95" entries="168" empty="true" name=""/>
+        <Section value="96" entries="168" empty="true" name=""/>
+        <Section value="97" entries="168" empty="true" name=""/>
+        <Section value="98" entries="168" empty="true" name=""/>
+        <Section value="99" entries="168" empty="true" name=""/>
+
+        <Section value="100" entries="168" empty="true" name=""/>
+        <Section value="101" entries="168" empty="true" name=""/>
+        <Section value="102" entries="168" empty="true" name=""/>
+        <Section value="103" entries="168" empty="true" name=""/>
+        <Section value="104" entries="168" empty="true" name=""/>
+        <Section value="105" entries="168" empty="true" name=""/>
+        <Section value="106" entries="168" empty="true" name=""/>
+        <Section value="107" entries="168" empty="true" name=""/>
+        <Section value="108" entries="168" empty="true" name=""/>
+        <Section value="109" entries="168" empty="true" name=""/>
+
+        <Section value="110" entries="168" empty="true" name=""/>
+        <Section value="111" entries="168" empty="true" name=""/>
+      </Sections>
+    </PartitionedFile>
+
+    <OneShotFile>
+      <DisplayName>SPELL.MES</DisplayName>
+      <Guid>{75CA7D0F-7752-477c-9133-26317BF788E7}</Guid>
+      <Size>14085</Size>
+      <Sectors>
+        <Sector filename="EVENT_SPELL_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="512" empty="false" name="Spell Quotes">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+        </Section>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 1</DisplayName>
+      <Guid>{908FEAF1-B00F-4201-B574-DB1E5E5AAF3A}</Guid>
+      <Size>1103</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="713960"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="190" empty="false" name="Skillset Names">
+          <include name="SkillsetNames" start="0" end="188" offset="0"/>
+          <entry value="189" name=""/>
+        </Section>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 2</DisplayName>
+      <Guid>{4EF37678-0F94-4f24-B383-43638C137302}</Guid>
+      <Size>1410</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="715064"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="156" empty="false" name="Job names">
+          <include name="JobNames" start="0" end="154" offset="0"/>
+          <entry value="155" name=""/>
+        </Section>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 3</DisplayName>
+      <Guid>{DFD34E73-17DD-4416-AB4F-2F03FCE3FA2D}</Guid>
+      <Size>4915</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="716476"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="513" empty="false" name="Ability names">
+          <include name="AbilityNames" start="0" end="511" offset="0"/>
+          <entry value="512" name=""/>
+        </Section>
+      </Sections>
+    </OneShotFile>
+
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 4</DisplayName>
+      <Guid>{140908D5-11FF-4b72-9826-DA2142D76A23}</Guid>
+      <Size>903</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="721392"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="32" empty="true" name="Shop/Save text"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 5</DisplayName>
+      <Guid>{162DC5BF-983B-4e04-972E-C51B51EE1DCA}</Guid>
+      <Size>4053</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="722296"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="173" empty="true" name="Dismiss quotes"/>
+      </Sections>
+    </OneShotFile>
+
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 6</DisplayName>
+      <Guid>{248AAA33-B58B-4072-AFBD-BBC5ED5B5DB7}</Guid>
+      <Size>6717</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="726352"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="95" empty="false" name="Job requirements">
+          <include name="JobNames" start="74" end="93" offset="-74"/>
+          <include name="JobNames" start="1" end="74" offset="19"/>
+          <entry value="94" name=""/>
+        </Section>
+      </Sections>
+    </OneShotFile>
+
+    <!--
+  <OneShotFile>
+    <DisplayName>WORLD.BIN 7</DisplayName>
+    <Size>274</Size>
+    <Sectors>
+      <Sector filename="WORLD_WORLD_BIN" offset="733072"/>
+    </Sectors>
+    <Sections count="1">
+      <Section value="0" entries="10" empty="true" name="Name entry"/>
+    </Sections>
+  </OneShotFile>
+  -->
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 8</DisplayName>
+      <Guid>{CE15EBFC-E888-43d2-B79B-211148F74409}</Guid>
+      <Size>2934</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="733348"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="74" empty="true" name="Shop text"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 9</DisplayName>
+      <Guid>{AD068B24-812B-4dfd-893E-DA321A6F7EA6}</Guid>
+      <Size>683</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="582048"/>
+        <Sector filename="EVENT_CARD_OUT" offset="39740"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="1000" empty="true" name="Map locations"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>CARD.OUT 1</DisplayName>
+      <Guid>{E9CAD776-9944-4ed4-BBB4-A53F10424279}</Guid>
+      <Size>247</Size>
+      <Sectors>
+        <Sector filename="EVENT_CARD_OUT" offset="38588"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="29" empty="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>CARD.OUT 2</DisplayName>
+      <Guid>{D7A6956F-6E93-4449-9E52-F6C0BE824F2F}</Guid>
+      <Size>904</Size>
+      <Sectors>
+        <Sector filename="EVENT_CARD_OUT" offset="38835"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="1000" empty="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>CARD.OUT 4</DisplayName>
+      <Guid>{AA4A30E6-C03B-4842-8BCC-1774EA1EA452}</Guid>
+      <Size>1410</Size>
+      <Sectors>
+        <Sector filename="EVENT_CARD_OUT" offset="40428"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="1000" empty="true" name="Job names"/>
+      </Sections>
+    </OneShotFile>
+
+  </Files>
+  <Templates>
+    <TerrainNames>
+      <entry value="0" name=""/>
+      <entry value="1" name=""/>
+      <entry value="2" name=""/>
+      <entry value="3" name=""/>
+      <entry value="4" name=""/>
+      <entry value="5" name=""/>
+      <entry value="6" name=""/>
+      <entry value="7" name=""/>
+      <entry value="8" name=""/>
+      <entry value="9" name=""/>
+      <entry value="10" name=""/>
+      <entry value="11" name=""/>
+      <entry value="12" name=""/>
+      <entry value="13" name=""/>
+      <entry value="14" name=""/>
+      <entry value="15" name=""/>
+      <entry value="16" name=""/>
+      <entry value="17" name=""/>
+      <entry value="18" name=""/>
+      <entry value="19" name=""/>
+      <entry value="20" name=""/>
+      <entry value="21" name=""/>
+      <entry value="22" name=""/>
+      <entry value="23" name=""/>
+      <entry value="24" name=""/>
+      <entry value="25" name=""/>
+      <entry value="26" name=""/>
+      <entry value="27" name=""/>
+      <entry value="28" name=""/>
+      <entry value="29" name=""/>
+      <entry value="30" name=""/>
+      <entry value="31" name=""/>
+      <entry value="32" name=""/>
+      <entry value="33" name=""/>
+      <entry value="34" name=""/>
+      <entry value="35" name=""/>
+      <entry value="36" name=""/>
+      <entry value="37" name=""/>
+      <entry value="38" name=""/>
+      <entry value="39" name=""/>
+      <entry value="40" name=""/>
+      <entry value="41" name=""/>
+      <entry value="42" name=""/>
+      <entry value="43" name=""/>
+      <entry value="44" name=""/>
+      <entry value="45" name=""/>
+      <entry value="46" name=""/>
+      <entry value="47" name=""/>
+      <entry value="48" name=""/>
+      <entry value="49" name=""/>
+      <entry value="50" name=""/>
+      <entry value="51" name=""/>
+      <entry value="52" name=""/>
+      <entry value="53" name=""/>
+      <entry value="54" name=""/>
+      <entry value="55" name=""/>
+      <entry value="56" name=""/>
+      <entry value="57" name=""/>
+      <entry value="58" name=""/>
+      <entry value="59" name=""/>
+      <entry value="60" name=""/>
+      <entry value="61" name=""/>
+      <entry value="62" name=""/>
+      <entry value="63" name=""/>
+    </TerrainNames>
+    <Help1>
+      <entry value="0" name="Unit #"/>
+      <entry value="1" name="Level"/>
+      <entry value="2" name="HP"/>
+      <entry value="3" name="MP"/>
+      <entry value="4" name="CT"/>
+      <entry value="5" name="AT"/>
+      <entry value="6" name="Exp"/>
+      <entry value="7" name="Name"/>
+      <entry value="8" name="Brave"/>
+      <entry value="9" name="Faith"/>
+      <entry value="10" name=""/>
+      <entry value="11" name="Move"/>
+      <entry value="12" name="Jump"/>
+      <entry value="13" name=""/>
+      <entry value="14" name=""/>
+      <entry value="15" name=""/>
+      <entry value="16" name="Speed"/>
+      <entry value="17" name="ATK"/>
+      <entry value="18" name="Weapon ATK"/>
+      <entry value="19" name=""/>
+      <entry value="20" name="Eva%"/>
+      <entry value="21" name="SEv%"/>
+      <entry value="22" name="AEv%"/>
+      <entry value="23" name="Phys land effect"/>
+      <entry value="24" name="Magic land effect"/>
+      <entry value="25" name="Estimated"/>
+      <entry value="26" name="Hit rate"/>
+      <entry value="27" name="Aries"/>
+      <entry value="28" name="Taurus"/>
+      <entry value="29" name="Gemini"/>
+      <entry value="30" name="Cancer"/>
+      <entry value="31" name="Leo"/>
+      <entry value="32" name="Virgo"/>
+      <entry value="33" name="Libra"/>
+      <entry value="34" name="Scorpio"/>
+      <entry value="35" name="Sagittarius"/>
+      <entry value="36" name="Capricorn"/>
+      <entry value="37" name="Aquarius"/>
+      <entry value="38" name="Pisces"/>
+      <entry value="39" name="Serpentarius"/>
+    </Help1>
+    <JobNames>
+      <entry value="0" name=""/>
+      <entry value="1" name="Squire"/>
+      <entry value="2" name="Squire"/>
+      <entry value="3" name="Squire"/>
+      <entry value="4" name="Squire"/>
+      <entry value="5" name="Holy Knight"/>
+      <entry value="6" name="Arc Knight"/>
+      <entry value="7" name="Squire"/>
+      <entry value="8" name="Arc Knight"/>
+      <entry value="9" name="Lune Knight"/>
+      <entry value="10" name="Duke"/>
+      <entry value="11" name="Duke"/>
+      <entry value="12" name="Princess"/>
+      <entry value="13" name="Holy Swordsman"/>
+      <entry value="14" name="High Priest"/>
+      <entry value="15" name="Dragoner"/>
+      <entry value="16" name="Holy Priest"/>
+      <entry value="17" name="Dark Knight"/>
+      <entry value="18" name="Hell Knight"/>
+      <entry value="19" name="Bishop"/>
+      <entry value="20" name="Cleric"/>
+      <entry value="21" name="Astrologist"/>
+      <entry value="22" name="Engineer"/>
+      <entry value="23" name="Dark Knight"/>
+      <entry value="24" name="Cardinal"/>
+      <entry value="25" name="Heaven Knight"/>
+      <entry value="26" name="Hell Knight"/>
+      <entry value="27" name="Arc Knight"/>
+      <entry value="28" name="Delita's Sis"/>
+      <entry value="29" name="Arc Duke"/>
+      <entry value="30" name="Holy Knight"/>
+      <entry value="31" name="Temple Knight"/>
+      <entry value="32" name="White Knight"/>
+      <entry value="33" name="Arc Witch"/>
+      <entry value="34" name="Engineer"/>
+      <entry value="35" name="Bi-Count"/>
+      <entry value="36" name="Divine Knight"/>
+      <entry value="37" name="Divine Knight"/>
+      <entry value="38" name="Knight Blade"/>
+      <entry value="39" name="Sorcerer"/>
+      <entry value="40" name="White Knight"/>
+      <entry value="41" name="Heaven Knight"/>
+      <entry value="42" name="Divine Knight"/>
+      <entry value="43" name="Engineer"/>
+      <entry value="44" name="Cleric"/>
+      <entry value="45" name="Assassin"/>
+      <entry value="46" name="Assassin"/>
+      <entry value="47" name="Divine Knight"/>
+      <entry value="48" name="Cleric"/>
+      <entry value="49" name="Phony Saint"/>
+      <entry value="50" name="Soldier"/>
+      <entry value="51" name="Arc Knight"/>
+      <entry value="52" name="Holy Knight"/>
+      <entry value="53" name="Chemist"/>
+      <entry value="54" name="Priest"/>
+      <entry value="55" name="Wizard"/>
+      <entry value="56" name="Oracle"/>
+      <entry value="57" name="Oracle"/>
+      <entry value="58" name=""/>
+      <entry value="59" name=""/>
+      <entry value="60" name="Warlock"/>
+      <entry value="61" name="Knight"/>
+      <entry value="62" name="Angel of Death"/>
+      <entry value="63" name="Archer"/>
+      <entry value="64" name="Regulator"/>
+      <entry value="65" name="Holy Angel"/>
+      <entry value="66" name="Wizard"/>
+      <entry value="67" name="Impure King"/>
+      <entry value="68" name="Time Mage"/>
+      <entry value="69" name="Ghost of Fury"/>
+      <entry value="70" name="Oracle"/>
+      <entry value="71" name="Summoner"/>
+      <entry value="72" name="Holy Dragon"/>
+      <entry value="73" name="Arch Angel"/>
+      <entry value="74" name="Squire"/>
+      <entry value="75" name="Chemist"/>
+      <entry value="76" name="Knight"/>
+      <entry value="77" name="Archer"/>
+      <entry value="78" name="Monk"/>
+      <entry value="79" name="Priest"/>
+      <entry value="80" name="Wizard"/>
+      <entry value="81" name="Time Mage"/>
+      <entry value="82" name="Summoner"/>
+      <entry value="83" name="Thief"/>
+      <entry value="84" name="Mediator"/>
+      <entry value="85" name="Oracle"/>
+      <entry value="86" name="Geomancer"/>
+      <entry value="87" name="Lancer"/>
+      <entry value="88" name="Samurai"/>
+      <entry value="89" name="Ninja"/>
+      <entry value="90" name="Calculator"/>
+      <entry value="91" name="Bard"/>
+      <entry value="92" name="Dancer"/>
+      <entry value="93" name="Mime"/>
+      <entry value="94" name="Chocobo"/>
+      <entry value="95" name="Black Chocobo"/>
+      <entry value="96" name="Red Chocobo"/>
+      <entry value="97" name="Goblin"/>
+      <entry value="98" name="Black Goblin"/>
+      <entry value="99" name="Gobbledeguck"/>
+      <entry value="100" name="Bomb"/>
+      <entry value="101" name="Grenade"/>
+      <entry value="102" name="Explosive"/>
+      <entry value="103" name="Red Panther"/>
+      <entry value="104" name="Cuar"/>
+      <entry value="105" name="Vampire"/>
+      <entry value="106" name="Pisco Demon"/>
+      <entry value="107" name="Squidlarkin"/>
+      <entry value="108" name="Mindflare"/>
+      <entry value="109" name="Skeleton"/>
+      <entry value="110" name="Bone Snatch"/>
+      <entry value="111" name="Living Bone"/>
+      <entry value="112" name="Ghoul"/>
+      <entry value="113" name="Gust"/>
+      <entry value="114" name="Revnant"/>
+      <entry value="115" name="Flotiball"/>
+      <entry value="116" name="Ahriman"/>
+      <entry value="117" name="Plague"/>
+      <entry value="118" name="Juravis"/>
+      <entry value="119" name="Steel Hawk"/>
+      <entry value="120" name="Cocatoris"/>
+      <entry value="121" name="Uribo"/>
+      <entry value="122" name="Porky"/>
+      <entry value="123" name="Wildbow"/>
+      <entry value="124" name="Woodman"/>
+      <entry value="125" name="Trent"/>
+      <entry value="126" name="Taiju"/>
+      <entry value="127" name="Bull Demon"/>
+      <entry value="128" name="Minitaurus"/>
+      <entry value="129" name="Sacred"/>
+      <entry value="130" name="Morbol"/>
+      <entry value="131" name="Ochu"/>
+      <entry value="132" name="Great Morbol"/>
+      <entry value="133" name="Behemoth"/>
+      <entry value="134" name="King Behemoth"/>
+      <entry value="135" name="Dark Behemoth"/>
+      <entry value="136" name="Dragon"/>
+      <entry value="137" name="Blue Dragon"/>
+      <entry value="138" name="Red Dragon"/>
+      <entry value="139" name="Hyudra"/>
+      <entry value="140" name="Hydra"/>
+      <entry value="141" name="Tiamat"/>
+      <entry value="142" name=""/>
+      <entry value="143" name=""/>
+      <entry value="144" name="Byblos"/>
+      <entry value="145" name="Steel Giant"/>
+      <entry value="146" name=""/>
+      <entry value="147" name=""/>
+      <entry value="148" name=""/>
+      <entry value="149" name=""/>
+      <entry value="150" name="Apanda"/>
+      <entry value="151" name="Serpentarius"/>
+      <entry value="152" name=""/>
+      <entry value="153" name="Archaic Demon"/>
+      <entry value="154" name="Ultima Demon"/>
+      <entry value="155" name=""/>
+      <entry value="156" name=""/>
+      <entry value="157" name=""/>
+      <entry value="158" name=""/>
+      <entry value="159" name=""/>
+    </JobNames>
+    <SkillsetNames>
+      <entry value="0" name=""/>
+      <entry value="1" name="Attack"/>
+      <entry value="2" name="Defend"/>
+      <entry value="3" name="Equip Change"/>
+      <entry value="4" name=""/>
+      <entry value="5" name="Basic Skill"/>
+      <entry value="6" name="Item"/>
+      <entry value="7" name="Battle Skill"/>
+      <entry value="8" name="Charge"/>
+      <entry value="9" name="Punch Art"/>
+      <entry value="10" name="White Magic"/>
+      <entry value="11" name="Black Magic"/>
+      <entry value="12" name="Time Magic"/>
+      <entry value="13" name="Summon Magic"/>
+      <entry value="14" name="Steal"/>
+      <entry value="15" name="Talk Skill"/>
+      <entry value="16" name="Ying-Yang Magic"/>
+      <entry value="17" name="Elemental"/>
+      <entry value="18" name="Jump"/>
+      <entry value="19" name="Draw Out"/>
+      <entry value="20" name="Throw"/>
+      <entry value="21" name="Math Skill"/>
+      <entry value="22" name="Sing"/>
+      <entry value="23" name="Dance"/>
+      <entry value="24" name="Mimic"/>
+      <entry value="25" name="Guts"/>
+      <entry value="26" name="Guts"/>
+      <entry value="27" name="Guts"/>
+      <entry value="28" name="Guts"/>
+      <entry value="29" name="Holy Sword"/>
+      <entry value="30" name="Mighty Sword"/>
+      <entry value="31" name="Basic Skill"/>
+      <entry value="32" name="Dark Sword"/>
+      <entry value="33" name="Holy Sword"/>
+      <entry value="34" name="Holy Sword"/>
+      <entry value="35" name="Magic"/>
+      <entry value="36" name="Holy Magic"/>
+      <entry value="37" name="Snipe"/>
+      <entry value="38" name="Snipe"/>
+      <entry value="39" name="Dark Sword"/>
+      <entry value="40" name="Holy Sword"/>
+      <entry value="41" name="Limit"/>
+      <entry value="42" name="White-Aid"/>
+      <entry value="43" name="Dragon"/>
+      <entry value="44" name="Breath"/>
+      <entry value="45" name="Truth"/>
+      <entry value="46" name="Un-Truth"/>
+      <entry value="47" name="Starry Heaven"/>
+      <entry value="48" name="Holy Sword"/>
+      <entry value="49" name="Holy Magic"/>
+      <entry value="50" name="Truth"/>
+      <entry value="51" name="Battle Skill"/>
+      <entry value="52" name="Jump"/>
+      <entry value="53" name="Punch Skill"/>
+      <entry value="54" name="Use Hand"/>
+      <entry value="55" name="Use Hand"/>
+      <entry value="56" name="Throw"/>
+      <entry value="57" name="Throw"/>
+      <entry value="58" name="Holy Sword"/>
+      <entry value="59" name="Sword Spirit"/>
+      <entry value="60" name="Mighty Sword"/>
+      <entry value="61" name="All Magic"/>
+      <entry value="62" name="Sword Spirit"/>
+      <entry value="63" name="Blood Suck"/>
+      <entry value="64" name="Mighty Sword"/>
+      <entry value="65" name="All Magic"/>
+      <entry value="66" name="Mighty Sword"/>
+      <entry value="67" name="Mighty Sword"/>
+      <entry value="68" name="Snipe"/>
+      <entry value="69" name="Magic Sword"/>
+      <entry value="70" name="Sword Skill"/>
+      <entry value="71" name="All Magic"/>
+      <entry value="72" name="All Magic"/>
+      <entry value="73" name="Phantom"/>
+      <entry value="74" name="All Swordskill"/>
+      <entry value="75" name="Destroy Sword"/>
+      <entry value="76" name="Holy Magic"/>
+      <entry value="77" name=""/>
+      <entry value="78" name=""/>
+      <entry value="79" name=""/>
+      <entry value="80" name=""/>
+      <entry value="81" name=""/>
+      <entry value="82" name=""/>
+      <entry value="83" name=""/>
+      <entry value="84" name=""/>
+      <entry value="85" name=""/>
+      <entry value="86" name=""/>
+      <entry value="87" name=""/>
+      <entry value="88" name=""/>
+      <entry value="89" name=""/>
+      <entry value="90" name=""/>
+      <entry value="91" name=""/>
+      <entry value="92" name=""/>
+      <entry value="93" name=""/>
+      <entry value="94" name=""/>
+      <entry value="95" name=""/>
+      <entry value="96" name=""/>
+      <entry value="97" name=""/>
+      <entry value="98" name=""/>
+      <entry value="99" name=""/>
+      <entry value="100" name=""/>
+      <entry value="101" name=""/>
+      <entry value="102" name=""/>
+      <entry value="103" name="Fear"/>
+      <entry value="104" name="Warlock Summon"/>
+      <entry value="105" name=""/>
+      <entry value="106" name=""/>
+      <entry value="107" name="Fear"/>
+      <entry value="108" name="Ja Magic"/>
+      <entry value="109" name=""/>
+      <entry value="110" name=""/>
+      <entry value="111" name="Fear"/>
+      <entry value="112" name="Dimension Magic"/>
+      <entry value="113" name=""/>
+      <entry value="114" name=""/>
+      <entry value="115" name="Fear"/>
+      <entry value="116" name="Impure"/>
+      <entry value="117" name=""/>
+      <entry value="118" name=""/>
+      <entry value="119" name="Fear"/>
+      <entry value="120" name="All Magic"/>
+      <entry value="121" name=""/>
+      <entry value="122" name=""/>
+      <entry value="123" name="Ultimate Magic"/>
+      <entry value="124" name="Chaos"/>
+      <entry value="125" name="Complete Magic"/>
+      <entry value="126" name="Saturation"/>
+      <entry value="127" name=""/>
+      <entry value="128" name=""/>
+      <entry value="129" name=""/>
+      <entry value="130" name=""/>
+      <entry value="131" name=""/>
+      <entry value="132" name=""/>
+      <entry value="133" name=""/>
+      <entry value="134" name=""/>
+      <entry value="135" name=""/>
+      <entry value="136" name=""/>
+      <entry value="137" name=""/>
+      <entry value="138" name=""/>
+      <entry value="139" name=""/>
+      <entry value="140" name=""/>
+      <entry value="141" name=""/>
+      <entry value="142" name=""/>
+      <entry value="143" name=""/>
+      <entry value="144" name=""/>
+      <entry value="145" name=""/>
+      <entry value="146" name=""/>
+      <entry value="147" name=""/>
+      <entry value="148" name=""/>
+      <entry value="149" name=""/>
+      <entry value="150" name=""/>
+      <entry value="151" name=""/>
+      <entry value="152" name=""/>
+      <entry value="153" name=""/>
+      <entry value="154" name=""/>
+      <entry value="155" name="Sword Skill"/>
+      <entry value="156" name="Charge"/>
+      <entry value="157" name="Black Magic"/>
+      <entry value="158" name="Time Magic"/>
+      <entry value="159" name="Ying-Yang Magic"/>
+      <entry value="160" name="Summon Magic"/>
+      <entry value="161" name="Item"/>
+      <entry value="162" name="White Magic"/>
+      <entry value="163" name="Black Magic"/>
+      <entry value="164" name="Ying-Yang Magic"/>
+      <entry value="165" name=""/>
+      <entry value="166" name=""/>
+      <entry value="167" name=""/>
+      <entry value="168" name=""/>
+      <entry value="169" name=""/>
+      <entry value="170" name="Byblos"/>
+      <entry value="171" name="Work"/>
+      <entry value="172" name="Bio"/>
+      <entry value="173" name="Dark Cloud"/>
+      <entry value="174" name="Dark Magic"/>
+      <entry value="175" name="Night Magic"/>
+      <entry value="176" name="Chocobo"/>
+      <entry value="177" name="Black Chocobo"/>
+      <entry value="178" name="Red Chocobo"/>
+      <entry value="179" name="Goblin"/>
+      <entry value="180" name="Black Goblin"/>
+      <entry value="181" name="Gobbledeguck"/>
+      <entry value="182" name="Bomb"/>
+      <entry value="183" name="Grenade"/>
+      <entry value="184" name="Explosive"/>
+      <entry value="185" name="Red Panther"/>
+      <entry value="186" name="Cuar"/>
+      <entry value="187" name="Vampire"/>
+      <entry value="188" name="Pisco Demon"/>
+      <entry value="189" name="Squidlarkin"/>
+      <entry value="190" name="Mindflare"/>
+      <entry value="191" name="Skeleton"/>
+      <entry value="192" name="Bone Snatch"/>
+      <entry value="193" name="Living Bone"/>
+      <entry value="194" name="Ghoul"/>
+      <entry value="195" name="Ghost"/>
+      <entry value="196" name="Revenant"/>
+      <entry value="197" name="Flotiball"/>
+      <entry value="198" name="Ahriman"/>
+      <entry value="199" name="Plague"/>
+      <entry value="200" name="Juravis"/>
+      <entry value="201" name="Steel Hawk"/>
+      <entry value="202" name="Cockatoris"/>
+      <entry value="203" name="Uribo"/>
+      <entry value="204" name="Porky"/>
+      <entry value="205" name="Wildbow"/>
+      <entry value="206" name="Woodman"/>
+      <entry value="207" name="Trent"/>
+      <entry value="208" name="Taiju"/>
+      <entry value="209" name="Bull Demon"/>
+      <entry value="210" name="Minitaurus"/>
+      <entry value="211" name="Sacred"/>
+      <entry value="212" name="Morbol"/>
+      <entry value="213" name="Ochu"/>
+      <entry value="214" name="Great Morbol"/>
+      <entry value="215" name="Behemoth"/>
+      <entry value="216" name="King Behemoth"/>
+      <entry value="217" name="Dark Behemoth"/>
+      <entry value="218" name="Dragon"/>
+      <entry value="219" name="Blue Dragon"/>
+      <entry value="220" name="Red Dragon"/>
+      <entry value="221" name="Hyudra"/>
+      <entry value="222" name="Hydra"/>
+      <entry value="223" name="Tiamat"/>
+      <entry value="224" name=""/>
+      <entry value="225" name=""/>
+      <entry value="226" name=""/>
+      <entry value="227" name=""/>
+      <entry value="228" name=""/>
+      <entry value="229" name=""/>
+      <entry value="230" name=""/>
+      <entry value="231" name=""/>
+      <entry value="232" name=""/>
+      <entry value="233" name=""/>
+      <entry value="234" name=""/>
+      <entry value="235" name=""/>
+      <entry value="236" name=""/>
+      <entry value="237" name=""/>
+      <entry value="238" name=""/>
+      <entry value="239" name=""/>
+      <entry value="240" name=""/>
+      <entry value="241" name=""/>
+      <entry value="242" name=""/>
+      <entry value="243" name=""/>
+      <entry value="244" name=""/>
+      <entry value="245" name=""/>
+      <entry value="246" name=""/>
+      <entry value="247" name=""/>
+      <entry value="248" name=""/>
+      <entry value="249" name=""/>
+      <entry value="250" name=""/>
+      <entry value="251" name=""/>
+      <entry value="252" name=""/>
+      <entry value="253" name=""/>
+      <entry value="254" name=""/>
+      <entry value="255" name=""/>
+    </SkillsetNames>
+    <StatusNames>
+      <entry value="0" name=""/>
+      <entry value="1" name="Crystal"/>
+      <entry value="2" name="Dead"/>
+      <entry value="3" name="Undead"/>
+      <entry value="4" name="Charging"/>
+      <entry value="5" name="Jump"/>
+      <entry value="6" name="Defending"/>
+      <entry value="7" name="Performing"/>
+      <entry value="8" name="Petrify"/>
+      <entry value="9" name="Invite"/>
+      <entry value="10" name="Darkness"/>
+      <entry value="11" name="Confusion"/>
+      <entry value="12" name="Silence"/>
+      <entry value="13" name="Blood Suck"/>
+      <entry value="14" name="Dark/Evil Looking"/>
+      <entry value="15" name="Treasure"/>
+      <entry value="16" name="Oil"/>
+      <entry value="17" name="Float"/>
+      <entry value="18" name="Reraise"/>
+      <entry value="19" name="Transparent"/>
+      <entry value="20" name="Berserk"/>
+      <entry value="21" name="Chicken"/>
+      <entry value="22" name="Frog"/>
+      <entry value="23" name="Critical"/>
+      <entry value="24" name="Poison"/>
+      <entry value="25" name="Regen"/>
+      <entry value="26" name="Protect"/>
+      <entry value="27" name="Shell"/>
+      <entry value="28" name="Haste"/>
+      <entry value="29" name="Slow"/>
+      <entry value="30" name="Stop"/>
+      <entry value="31" name="Wall"/>
+      <entry value="32" name="Faith"/>
+      <entry value="33" name="Innocent"/>
+      <entry value="34" name="Charm"/>
+      <entry value="35" name="Sleep"/>
+      <entry value="36" name="Don't Move"/>
+      <entry value="37" name="Don't Act"/>
+      <entry value="38" name="Reflect"/>
+      <entry value="39" name="Death Sentence"/>
+    </StatusNames>
+    <ItemNames>
+      <entry value="0" name="&lt;Nothing&gt;"/>
+      <entry value="1" name="Dagger"/>
+      <entry value="2" name="Mythril Knife"/>
+      <entry value="3" name="Blind Knife"/>
+      <entry value="4" name="Mage Masher"/>
+      <entry value="5" name="Platina Dagger"/>
+      <entry value="6" name="Main Gauche"/>
+      <entry value="7" name="Orichalcum"/>
+      <entry value="8" name="Assassin Dagger"/>
+      <entry value="9" name="Air Knife"/>
+      <entry value="10" name="Zorlin Shape"/>
+      <entry value="11" name="Hidden Knife"/>
+      <entry value="12" name="Ninja Knife"/>
+      <entry value="13" name="Short Edge"/>
+      <entry value="14" name="Ninja Edge"/>
+      <entry value="15" name="Spell Edge"/>
+      <entry value="16" name="Sasuke Knife"/>
+      <entry value="17" name="Iga Knife"/>
+      <entry value="18" name="Koga Knife"/>
+      <entry value="19" name="Broad Sword"/>
+      <entry value="20" name="Long Sword"/>
+      <entry value="21" name="Iron Sword"/>
+      <entry value="22" name="Mythril Sword"/>
+      <entry value="23" name="Blood Sword"/>
+      <entry value="24" name="Coral Sword"/>
+      <entry value="25" name="Ancient Sword"/>
+      <entry value="26" name="Sleep Sword"/>
+      <entry value="27" name="Platinum Sword"/>
+      <entry value="28" name="Diamond Sword"/>
+      <entry value="29" name="Ice Brand"/>
+      <entry value="30" name="Rune Blade"/>
+      <entry value="31" name="Nagrarock"/>
+      <entry value="32" name="Materia Blade"/>
+      <entry value="33" name="Defender"/>
+      <entry value="34" name="Save the Queen"/>
+      <entry value="35" name="Excalibur"/>
+      <entry value="36" name="Ragnarok"/>
+      <entry value="37" name="Chaos Blade"/>
+      <entry value="38" name="Asura Knife"/>
+      <entry value="39" name="Koutetsu Knife"/>
+      <entry value="40" name="Bizen Boat"/>
+      <entry value="41" name="Murasame"/>
+      <entry value="42" name="Heaven's Cloud"/>
+      <entry value="43" name="Kiyomori"/>
+      <entry value="44" name="Muramasa"/>
+      <entry value="45" name="Kikuichimoji"/>
+      <entry value="46" name="Masamune"/>
+      <entry value="47" name="Chirijiraden"/>
+      <entry value="48" name="Battle Axe"/>
+      <entry value="49" name="Giant Axe"/>
+      <entry value="50" name="Slasher"/>
+      <entry value="51" name="Rod"/>
+      <entry value="52" name="Thunder Rod"/>
+      <entry value="53" name="Flame Rod"/>
+      <entry value="54" name="Ice Rod"/>
+      <entry value="55" name="Poison Rod"/>
+      <entry value="56" name="Wizard Rod"/>
+      <entry value="57" name="Dragon Rod"/>
+      <entry value="58" name="Faith Rod"/>
+      <entry value="59" name="Oak Staff"/>
+      <entry value="60" name="White Staff"/>
+      <entry value="61" name="Healing Staff"/>
+      <entry value="62" name="Rainbow Staff"/>
+      <entry value="63" name="Wizard Staff"/>
+      <entry value="64" name="Gold Staff"/>
+      <entry value="65" name="Mace of Zeus"/>
+      <entry value="66" name="Sage Staff"/>
+      <entry value="67" name="Flail"/>
+      <entry value="68" name="Flame Whip"/>
+      <entry value="69" name="Morning Star"/>
+      <entry value="70" name="Scorpion Tail"/>
+      <entry value="71" name="Romanda Gun"/>
+      <entry value="72" name="Mythril Gun"/>
+      <entry value="73" name="Stone Gun"/>
+      <entry value="74" name="Blaze Gun"/>
+      <entry value="75" name="Glacier Gun"/>
+      <entry value="76" name="Blast Gun"/>
+      <entry value="77" name="Bow Gun"/>
+      <entry value="78" name="Night Killer"/>
+      <entry value="79" name="Cross Bow"/>
+      <entry value="80" name="Poison Bow"/>
+      <entry value="81" name="Hunting Bow"/>
+      <entry value="82" name="Gastrafitis"/>
+      <entry value="83" name="Long Bow"/>
+      <entry value="84" name="Silver Bow"/>
+      <entry value="85" name="Ice Bow"/>
+      <entry value="86" name="Lightning Bow"/>
+      <entry value="87" name="Windslash Bow"/>
+      <entry value="88" name="Mythril Bow"/>
+      <entry value="89" name="Ultimus Bow"/>
+      <entry value="90" name="Yoichi Bow"/>
+      <entry value="91" name="Perseus Bow"/>
+      <entry value="92" name="Ramia Harp"/>
+      <entry value="93" name="Bloody Strings"/>
+      <entry value="94" name="Fairy Harp"/>
+      <entry value="95" name="Battle Dict"/>
+      <entry value="96" name="Monster Dict"/>
+      <entry value="97" name="Papyrus Plate"/>
+      <entry value="98" name="Madlemgen"/>
+      <entry value="99" name="Javelin"/>
+      <entry value="100" name="Spear"/>
+      <entry value="101" name="Mythril Spear"/>
+      <entry value="102" name="Partisan"/>
+      <entry value="103" name="Oberisk"/>
+      <entry value="104" name="Holy Lance"/>
+      <entry value="105" name="Dragon Whisker"/>
+      <entry value="106" name="Javelin"/>
+      <entry value="107" name="Cypress Rod"/>
+      <entry value="108" name="Battle Bamboo"/>
+      <entry value="109" name="Musk Rod"/>
+      <entry value="110" name="Iron Fan"/>
+      <entry value="111" name="Gokuu Rod"/>
+      <entry value="112" name="Ivory Rod"/>
+      <entry value="113" name="Octagon Rod"/>
+      <entry value="114" name="Whale Whisker"/>
+      <entry value="115" name="C Bag"/>
+      <entry value="116" name="FS Bag"/>
+      <entry value="117" name="P Bag"/>
+      <entry value="118" name="H Bag"/>
+      <entry value="119" name="Persia"/>
+      <entry value="120" name="Cashmere"/>
+      <entry value="121" name="Ryozan Silk"/>
+      <entry value="122" name="Shuriken"/>
+      <entry value="123" name="Magic Shuriken"/>
+      <entry value="124" name="Yagyu Darkness"/>
+      <entry value="125" name="Fire Ball"/>
+      <entry value="126" name="Water Ball"/>
+      <entry value="127" name="Lightning Ball"/>
+      <entry value="128" name="Escutcheon"/>
+      <entry value="129" name="Buckler"/>
+      <entry value="130" name="Bronze Shield"/>
+      <entry value="131" name="Round Shield"/>
+      <entry value="132" name="Mythril Shield"/>
+      <entry value="133" name="Gold Shield"/>
+      <entry value="134" name="Ice Shield"/>
+      <entry value="135" name="Flame Shield"/>
+      <entry value="136" name="Aegis Shield"/>
+      <entry value="137" name="Diamond Shield"/>
+      <entry value="138" name="Platina Shield"/>
+      <entry value="139" name="Crystal Shield"/>
+      <entry value="140" name="Genji Shield"/>
+      <entry value="141" name="Kaiser Plate"/>
+      <entry value="142" name="Venetian Shield"/>
+      <entry value="143" name="Escutcheon"/>
+      <entry value="144" name="Leather Helmet"/>
+      <entry value="145" name="Bronze Helmet"/>
+      <entry value="146" name="Iron Helmet"/>
+      <entry value="147" name="Barbuta"/>
+      <entry value="148" name="Mythril Helmet"/>
+      <entry value="149" name="Gold Helmet"/>
+      <entry value="150" name="Cross Helmet"/>
+      <entry value="151" name="Diamond Helmet"/>
+      <entry value="152" name="Platina Helmet"/>
+      <entry value="153" name="Circlet"/>
+      <entry value="154" name="Crystal Helmet"/>
+      <entry value="155" name="Genji Helmet"/>
+      <entry value="156" name="Grand Helmet"/>
+      <entry value="157" name="Leather Hat"/>
+      <entry value="158" name="Feather Hat"/>
+      <entry value="159" name="Red Hood"/>
+      <entry value="160" name="Headgear"/>
+      <entry value="161" name="Triangle Hat"/>
+      <entry value="162" name="Green Beret"/>
+      <entry value="163" name="Twist Headband"/>
+      <entry value="164" name="Holy Miter"/>
+      <entry value="165" name="Black Hood"/>
+      <entry value="166" name="Golden Hairpin"/>
+      <entry value="167" name="Flash Hat"/>
+      <entry value="168" name="Thief Hat"/>
+      <entry value="169" name="Cachusha"/>
+      <entry value="170" name="Barette"/>
+      <entry value="171" name="Ribbon"/>
+      <entry value="172" name="Leather Armor"/>
+      <entry value="173" name="Linen Cuirass"/>
+      <entry value="174" name="Bronze Armor"/>
+      <entry value="175" name="Chain Mail"/>
+      <entry value="176" name="Mythril Armor"/>
+      <entry value="177" name="Plate Mail"/>
+      <entry value="178" name="Gold Armor"/>
+      <entry value="179" name="Diamond Armor"/>
+      <entry value="180" name="Platina Armor"/>
+      <entry value="181" name="Carabini Mail"/>
+      <entry value="182" name="Crystal Mail"/>
+      <entry value="183" name="Genji Armor"/>
+      <entry value="184" name="Reflect Mail"/>
+      <entry value="185" name="Maximillian"/>
+      <entry value="186" name="Clothes"/>
+      <entry value="187" name="Leather Outfit"/>
+      <entry value="188" name="Leather Vest"/>
+      <entry value="189" name="Chain Vest"/>
+      <entry value="190" name="Mythril Vest"/>
+      <entry value="191" name="Adaman Vest"/>
+      <entry value="192" name="Wizard Outfit"/>
+      <entry value="193" name="Brigandine"/>
+      <entry value="194" name="Judo Outfit"/>
+      <entry value="195" name="Power Sleeve"/>
+      <entry value="196" name="Earth Clothes"/>
+      <entry value="197" name="Secret Clothes"/>
+      <entry value="198" name="Black Costume"/>
+      <entry value="199" name="Rubber Costume"/>
+      <entry value="200" name="Linen Robe"/>
+      <entry value="201" name="Silk Robe"/>
+      <entry value="202" name="Wizard Robe"/>
+      <entry value="203" name="Chameleon Robe"/>
+      <entry value="204" name="White Robe"/>
+      <entry value="205" name="Black Robe"/>
+      <entry value="206" name="Light Robe"/>
+      <entry value="207" name="Robe of Lords"/>
+      <entry value="208" name="Battle Boots"/>
+      <entry value="209" name="Spike Shoes"/>
+      <entry value="210" name="Germinas Boots"/>
+      <entry value="211" name="Rubber Shoes"/>
+      <entry value="212" name="Feather Boots"/>
+      <entry value="213" name="Sprint Shoes"/>
+      <entry value="214" name="Red Shoes"/>
+      <entry value="215" name="Power Wrist"/>
+      <entry value="216" name="Genji Gauntlet"/>
+      <entry value="217" name="Magic Gauntlet"/>
+      <entry value="218" name="Bracer"/>
+      <entry value="219" name="Reflect Ring"/>
+      <entry value="220" name="Defense Ring"/>
+      <entry value="221" name="Magic Ring"/>
+      <entry value="222" name="Cursed Ring"/>
+      <entry value="223" name="Angel Ring"/>
+      <entry value="224" name="Diamond Armlet"/>
+      <entry value="225" name="Jade Armlet"/>
+      <entry value="226" name="108 Gems"/>
+      <entry value="227" name="N-Kai Armlet"/>
+      <entry value="228" name="Defense Armlet"/>
+      <entry value="229" name="Small Mantle"/>
+      <entry value="230" name="Leather Mantle"/>
+      <entry value="231" name="Wizard Mantle"/>
+      <entry value="232" name="Elf Mantle"/>
+      <entry value="233" name="Dracula Mantle"/>
+      <entry value="234" name="Feather Mantle"/>
+      <entry value="235" name="Vanish Mantle"/>
+      <entry value="236" name="Chantage"/>
+      <entry value="237" name="Cherche"/>
+      <entry value="238" name="Setiemson"/>
+      <entry value="239" name="Salty Rage"/>
+      <entry value="240" name="Potion"/>
+      <entry value="241" name="Hi-Potion"/>
+      <entry value="242" name="X-Potion"/>
+      <entry value="243" name="Ether"/>
+      <entry value="244" name="Hi-Ether"/>
+      <entry value="245" name="Elixir"/>
+      <entry value="246" name="Antidote"/>
+      <entry value="247" name="Eye Drop"/>
+      <entry value="248" name="Echo Grass"/>
+      <entry value="249" name="Maiden's Kiss"/>
+      <entry value="250" name="Soft"/>
+      <entry value="251" name="Holy Water"/>
+      <entry value="252" name="Remedy"/>
+      <entry value="253" name="Phoenix Down"/>
+      <entry value="254" name="&lt;Nothing&gt;"/>
+      <entry value="255" name="&lt;Nothing&gt;"/>
+    </ItemNames>
+    <AbilityNames>
+      <entry value="0" name="&lt;Nothing&gt;"/>
+      <entry value="1" name="Cure"/>
+      <entry value="2" name="Cure 2"/>
+      <entry value="3" name="Cure 3"/>
+      <entry value="4" name="Cure 4"/>
+      <entry value="5" name="Raise"/>
+      <entry value="6" name="Raise 2"/>
+      <entry value="7" name="Reraise"/>
+      <entry value="8" name="Regen"/>
+      <entry value="9" name="Protect"/>
+      <entry value="10" name="Protect 2"/>
+      <entry value="11" name="Shell"/>
+      <entry value="12" name="Shell 2"/>
+      <entry value="13" name="Wall"/>
+      <entry value="14" name="Esuna"/>
+      <entry value="15" name="Holy"/>
+      <entry value="16" name="Fire"/>
+      <entry value="17" name="Fire 2"/>
+      <entry value="18" name="Fire 3"/>
+      <entry value="19" name="Fire 4"/>
+      <entry value="20" name="Bolt"/>
+      <entry value="21" name="Bolt 2"/>
+      <entry value="22" name="Bolt 3"/>
+      <entry value="23" name="Bolt 4"/>
+      <entry value="24" name="Ice"/>
+      <entry value="25" name="Ice 2"/>
+      <entry value="26" name="Ice 3"/>
+      <entry value="27" name="Ice 4"/>
+      <entry value="28" name="Poison"/>
+      <entry value="29" name="Frog"/>
+      <entry value="30" name="Death"/>
+      <entry value="31" name="Flare"/>
+      <entry value="32" name="Haste"/>
+      <entry value="33" name="Haste 2"/>
+      <entry value="34" name="Slow"/>
+      <entry value="35" name="Slow 2"/>
+      <entry value="36" name="Stop"/>
+      <entry value="37" name="Don't Move"/>
+      <entry value="38" name="Float"/>
+      <entry value="39" name="Reflect"/>
+      <entry value="40" name=""/>
+      <entry value="41" name="Quick"/>
+      <entry value="42" name="Demi"/>
+      <entry value="43" name="Demi 2"/>
+      <entry value="44" name="Meteor"/>
+      <entry value="45" name=""/>
+      <entry value="46" name="Blind"/>
+      <entry value="47" name="Spell Absorb"/>
+      <entry value="48" name="Life Drain"/>
+      <entry value="49" name="Pray Faith"/>
+      <entry value="50" name="Doubt Faith"/>
+      <entry value="51" name="Zombie"/>
+      <entry value="52" name="Silence Song"/>
+      <entry value="53" name="Blind Rage"/>
+      <entry value="54" name="Foxbird"/>
+      <entry value="55" name="Confusion Song"/>
+      <entry value="56" name="Dispel Magic"/>
+      <entry value="57" name="Paralyze"/>
+      <entry value="58" name="Sleep"/>
+      <entry value="59" name="Petrify"/>
+      <entry value="60" name="Moogle"/>
+      <entry value="61" name="Shiva"/>
+      <entry value="62" name="Ramuh"/>
+      <entry value="63" name="Ifrit"/>
+      <entry value="64" name="Titan"/>
+      <entry value="65" name="Golem"/>
+      <entry value="66" name="Carbunkle"/>
+      <entry value="67" name="Bahamut"/>
+      <entry value="68" name="Odin"/>
+      <entry value="69" name="Leviathan"/>
+      <entry value="70" name="Salamander"/>
+      <entry value="71" name="Silf"/>
+      <entry value="72" name="Fairy"/>
+      <entry value="73" name="Lich"/>
+      <entry value="74" name="Cyclops"/>
+      <entry value="75" name="Zodiac"/>
+      <entry value="76" name="Asura"/>
+      <entry value="77" name="Koutetsu"/>
+      <entry value="78" name="Bizen Boat"/>
+      <entry value="79" name="Murasame"/>
+      <entry value="80" name="Heaven's Cloud"/>
+      <entry value="81" name="Kiyomori"/>
+      <entry value="82" name="Muramasa"/>
+      <entry value="83" name="Kikuichimoji"/>
+      <entry value="84" name="Masamune"/>
+      <entry value="85" name="Chirijiraden"/>
+      <entry value="86" name="Angel Song"/>
+      <entry value="87" name="Life Song"/>
+      <entry value="88" name="Cheer Song"/>
+      <entry value="89" name="Battle Song"/>
+      <entry value="90" name="Magic Song"/>
+      <entry value="91" name="Nameless Song"/>
+      <entry value="92" name="Last Song"/>
+      <entry value="93" name="Witch Hunt"/>
+      <entry value="94" name="Wiznaibus"/>
+      <entry value="95" name="Slow Dance"/>
+      <entry value="96" name="Polka Polka"/>
+      <entry value="97" name="Disillusion"/>
+      <entry value="98" name="Nameless Dance"/>
+      <entry value="99" name="Last Dance"/>
+      <entry value="100" name="Spin Fist"/>
+      <entry value="101" name="Repeating Fist"/>
+      <entry value="102" name="Wave Fist"/>
+      <entry value="103" name="Earth Slash"/>
+      <entry value="104" name="Secret Fist"/>
+      <entry value="105" name="Stigma Magic"/>
+      <entry value="106" name="Chakra"/>
+      <entry value="107" name="Revive"/>
+      <entry value="108" name="Gil Taking"/>
+      <entry value="109" name="Steal Heart"/>
+      <entry value="110" name="Steal Helmet"/>
+      <entry value="111" name="Steal Armor"/>
+      <entry value="112" name="Steal Shield"/>
+      <entry value="113" name="Steal Weapon"/>
+      <entry value="114" name="Steal Accessory"/>
+      <entry value="115" name="Steal Exp"/>
+      <entry value="116" name="Invitation"/>
+      <entry value="117" name="Persuade"/>
+      <entry value="118" name="Praise"/>
+      <entry value="119" name="Threaten"/>
+      <entry value="120" name="Preach"/>
+      <entry value="121" name="Solution"/>
+      <entry value="122" name="Death Sentence"/>
+      <entry value="123" name="Negotiate"/>
+      <entry value="124" name="Insult"/>
+      <entry value="125" name="Mimic Daravon"/>
+      <entry value="126" name="Pitfall"/>
+      <entry value="127" name="Water Ball"/>
+      <entry value="128" name="Hell Ivy"/>
+      <entry value="129" name="Carve Model"/>
+      <entry value="130" name="Local Quake"/>
+      <entry value="131" name="Kamaitachi"/>
+      <entry value="132" name="Demon Fire"/>
+      <entry value="133" name="Quicksand"/>
+      <entry value="134" name="Sand Storm"/>
+      <entry value="135" name="Blizzard"/>
+      <entry value="136" name="Gusty Wind"/>
+      <entry value="137" name="Lava Ball"/>
+      <entry value="138" name="Head Break"/>
+      <entry value="139" name="Armor Break"/>
+      <entry value="140" name="Shield Break"/>
+      <entry value="141" name="Weapon Break"/>
+      <entry value="142" name="Magic Break"/>
+      <entry value="143" name="Speed Break"/>
+      <entry value="144" name="Power Break"/>
+      <entry value="145" name="Mind Break"/>
+      <entry value="146" name="Accumulate"/>
+      <entry value="147" name="Dash"/>
+      <entry value="148" name="Throw Stone"/>
+      <entry value="149" name="Heal"/>
+      <entry value="150" name="Yell"/>
+      <entry value="151" name="Cheer Up"/>
+      <entry value="152" name="Wish"/>
+      <entry value="153" name="Scream"/>
+      <entry value="154" name="Ultima"/>
+      <entry value="155" name="Stasis Sword"/>
+      <entry value="156" name="Split Punch"/>
+      <entry value="157" name="Crush Punch"/>
+      <entry value="158" name="Lightning Stab"/>
+      <entry value="159" name="Holy Explosion"/>
+      <entry value="160" name="Shellbust Stab"/>
+      <entry value="161" name="Blastar Punch"/>
+      <entry value="162" name="Hellcry Punch"/>
+      <entry value="163" name="Icewolf Bite"/>
+      <entry value="164" name="Dark Sword"/>
+      <entry value="165" name="Night Sword"/>
+      <entry value="166" name="Dark Holy"/>
+      <entry value="167" name="Deathspell 2"/>
+      <entry value="168" name="Galaxy Stop"/>
+      <entry value="169" name="Heaven Thunder"/>
+      <entry value="170" name="Asura"/>
+      <entry value="171" name="Diamond Sword"/>
+      <entry value="172" name="Hydragon Pit"/>
+      <entry value="173" name="Space Storage"/>
+      <entry value="174" name="Sky Demon"/>
+      <entry value="175" name="Heaven Bolt Back"/>
+      <entry value="176" name="Asura Back"/>
+      <entry value="177" name="Diamond Sword Back"/>
+      <entry value="178" name="Hydragon Pit Back"/>
+      <entry value="179" name="Space Storage Back"/>
+      <entry value="180" name="Sky Demon Back"/>
+      <entry value="181" name="Seal"/>
+      <entry value="182" name="Shadow Stitch"/>
+      <entry value="183" name="Stop Bracelet"/>
+      <entry value="184" name=""/>
+      <entry value="185" name="Shock"/>
+      <entry value="186" name="Difference"/>
+      <entry value="187" name="Seal"/>
+      <entry value="188" name="Chicken Race"/>
+      <entry value="189" name="Hold Tight"/>
+      <entry value="190" name="Darkness"/>
+      <entry value="191" name="Lose Voice"/>
+      <entry value="192" name="Loss"/>
+      <entry value="193" name="Spell"/>
+      <entry value="194" name="Nightmare"/>
+      <entry value="195" name="Death Cold"/>
+      <entry value="196" name="Magic Ruin"/>
+      <entry value="197" name="Speed Ruin"/>
+      <entry value="198" name="Power Ruin"/>
+      <entry value="199" name="Mind Ruin"/>
+      <entry value="200" name="Blood Suck"/>
+      <entry value="201" name="Allure"/>
+      <entry value="202" name="Bio"/>
+      <entry value="203" name="Bio"/>
+      <entry value="204" name="Bio"/>
+      <entry value="205" name="Bio 2"/>
+      <entry value="206" name="Bio 2"/>
+      <entry value="207" name="Bio 2"/>
+      <entry value="208" name="Bio 2"/>
+      <entry value="209" name="Bio 3"/>
+      <entry value="210" name="Bio 3"/>
+      <entry value="211" name="Bio 3"/>
+      <entry value="212" name="Magic Barrier"/>
+      <entry value="213" name="Leg Aim"/>
+      <entry value="214" name="Arm Aim"/>
+      <entry value="215" name="Seal Evil"/>
+      <entry value="216" name="Melt"/>
+      <entry value="217" name="Tornado"/>
+      <entry value="218" name="Quake"/>
+      <entry value="219" name=""/>
+      <entry value="220" name=""/>
+      <entry value="221" name="Toad 2"/>
+      <entry value="222" name="Gravi 2"/>
+      <entry value="223" name="Flare 2"/>
+      <entry value="224" name="Blind 2"/>
+      <entry value="225" name="Small Bomb"/>
+      <entry value="226" name="Small Bomb"/>
+      <entry value="227" name="Confuse 2"/>
+      <entry value="228" name="Sleep 2"/>
+      <entry value="229" name="Ultima"/>
+      <entry value="230" name="All-Ultima"/>
+      <entry value="231" name="Mute"/>
+      <entry value="232" name="Despair 2"/>
+      <entry value="233" name="Return 2"/>
+      <entry value="234" name="Blind"/>
+      <entry value="235" name="Aspel"/>
+      <entry value="236" name="Drain"/>
+      <entry value="237" name="Faith"/>
+      <entry value="238" name="Innocent"/>
+      <entry value="239" name="Zombie"/>
+      <entry value="240" name="Silence"/>
+      <entry value="241" name="Berserk"/>
+      <entry value="242" name="Chicken"/>
+      <entry value="243" name="Confuse"/>
+      <entry value="244" name="Despair"/>
+      <entry value="245" name="Don't Act"/>
+      <entry value="246" name="Sleep"/>
+      <entry value="247" name="Break"/>
+      <entry value="248" name="Ice Bracelet"/>
+      <entry value="249" name="Fire Bracelet"/>
+      <entry value="250" name="Thunder Bracelet"/>
+      <entry value="251" name="Dragon Tame"/>
+      <entry value="252" name="Dragon Care"/>
+      <entry value="253" name="Dragon Power Up"/>
+      <entry value="254" name="Dragon Level Up"/>
+      <entry value="255" name="Holy Bracelet"/>
+      <entry value="256" name="Shock"/>
+      <entry value="257" name="Braver"/>
+      <entry value="258" name="Cross Slash"/>
+      <entry value="259" name="Blade Beam"/>
+      <entry value="260" name="Climhazzard"/>
+      <entry value="261" name="Meteorain"/>
+      <entry value="262" name="Finish Touch"/>
+      <entry value="263" name="Omnislash"/>
+      <entry value="264" name="Cherry Blossom"/>
+      <entry value="265" name="Choco Attack"/>
+      <entry value="266" name="Choco Ball"/>
+      <entry value="267" name="Choco Meteor"/>
+      <entry value="268" name="Choco Esuna"/>
+      <entry value="269" name="Choco Cure"/>
+      <entry value="270" name="Tackle"/>
+      <entry value="271" name="Goblin Punch"/>
+      <entry value="272" name="Turn Punch"/>
+      <entry value="273" name="Eye Gouge"/>
+      <entry value="274" name="Mutilate"/>
+      <entry value="275" name="Bite"/>
+      <entry value="276" name="Small Bomb"/>
+      <entry value="277" name="Self Destruct"/>
+      <entry value="278" name="Flame Attack"/>
+      <entry value="279" name="Spark"/>
+      <entry value="280" name="Scratch"/>
+      <entry value="281" name="Cat Kick"/>
+      <entry value="282" name="Blaster"/>
+      <entry value="283" name="Poison Nail"/>
+      <entry value="284" name="Blood Suck"/>
+      <entry value="285" name="Tentacle"/>
+      <entry value="286" name="Black Ink"/>
+      <entry value="287" name="Odd Soundwave"/>
+      <entry value="288" name="Mind Blast"/>
+      <entry value="289" name="Level Blast"/>
+      <entry value="290" name="Knife Hand"/>
+      <entry value="291" name="Thunder Soul"/>
+      <entry value="292" name="Aqua Soul"/>
+      <entry value="293" name="Ice Soul"/>
+      <entry value="294" name="Wind Soul"/>
+      <entry value="295" name="Throw Spirit"/>
+      <entry value="296" name="Zombie Touch"/>
+      <entry value="297" name="Sleep Touch"/>
+      <entry value="298" name="Drain Touch"/>
+      <entry value="299" name="Grease Touch"/>
+      <entry value="300" name="Wing Attack"/>
+      <entry value="301" name="Look of Devil"/>
+      <entry value="302" name="Look of Fright"/>
+      <entry value="303" name="Circle"/>
+      <entry value="304" name="Death Sentence"/>
+      <entry value="305" name="Scratch Up"/>
+      <entry value="306" name="Beak"/>
+      <entry value="307" name="Shine Lover"/>
+      <entry value="308" name="Feather Bomb"/>
+      <entry value="309" name="Beaking"/>
+      <entry value="310" name="Straight Dash"/>
+      <entry value="311" name="Nose Bracelet"/>
+      <entry value="312" name="Oink"/>
+      <entry value="313" name="Pooh"/>
+      <entry value="314" name="Please Eat"/>
+      <entry value="315" name="Leaf Dance"/>
+      <entry value="316" name="Protect Spirit"/>
+      <entry value="317" name="Calm Spirit"/>
+      <entry value="318" name="Life Spirit"/>
+      <entry value="319" name="Magic Spirit"/>
+      <entry value="320" name="Shake Off"/>
+      <entry value="321" name="Wave Around"/>
+      <entry value="322" name="Mimic Titan"/>
+      <entry value="323" name="Gather Power"/>
+      <entry value="324" name="Blow Fire"/>
+      <entry value="325" name="Tentacle"/>
+      <entry value="326" name="Lick"/>
+      <entry value="327" name="Goo"/>
+      <entry value="328" name="Bad Bracelet"/>
+      <entry value="329" name="Moldball Virus"/>
+      <entry value="330" name="Stab Up"/>
+      <entry value="331" name="Sudden Cry"/>
+      <entry value="332" name="Hurricane"/>
+      <entry value="333" name="Ulmaguest"/>
+      <entry value="334" name="Giga Flare"/>
+      <entry value="335" name="Dash"/>
+      <entry value="336" name="Tail Swing"/>
+      <entry value="337" name="Ice Bracelet"/>
+      <entry value="338" name="Fire Bracelet"/>
+      <entry value="339" name="Thunder Bracelet"/>
+      <entry value="340" name="Triple Attack"/>
+      <entry value="341" name="Triple Bracelet"/>
+      <entry value="342" name="Triple Thunder"/>
+      <entry value="343" name="Triple Flame"/>
+      <entry value="344" name="Dark Whisper"/>
+      <entry value="345" name="Snake Carrier"/>
+      <entry value="346" name="Poison Frog"/>
+      <entry value="347" name="Midgar Zolom"/>
+      <entry value="348" name="Lifebreak"/>
+      <entry value="349" name="Nanoflare"/>
+      <entry value="350" name="Grand Cross"/>
+      <entry value="351" name="Destroy"/>
+      <entry value="352" name="Compress"/>
+      <entry value="353" name="Dispose"/>
+      <entry value="354" name="Crush"/>
+      <entry value="355" name="Energy"/>
+      <entry value="356" name="Parasite"/>
+      <entry value="357" name=""/>
+      <entry value="358" name=""/>
+      <entry value="359" name=""/>
+      <entry value="360" name=""/>
+      <entry value="361" name=""/>
+      <entry value="362" name=""/>
+      <entry value="363" name=""/>
+      <entry value="364" name=""/>
+      <entry value="365" name=""/>
+      <entry value="366" name=""/>
+      <entry value="367" name=""/>
+      <entry value="368" name="Potion"/>
+      <entry value="369" name="Hi-Potion"/>
+      <entry value="370" name="X-Potion"/>
+      <entry value="371" name="Ether"/>
+      <entry value="372" name="Hi-Ether"/>
+      <entry value="373" name="Elixir"/>
+      <entry value="374" name="Antidote"/>
+      <entry value="375" name="Eye Drop"/>
+      <entry value="376" name="Echo Grass"/>
+      <entry value="377" name="Maiden's Kiss"/>
+      <entry value="378" name="Soft"/>
+      <entry value="379" name="Holy Water"/>
+      <entry value="380" name="Remedy"/>
+      <entry value="381" name="Phoenix Down"/>
+      <entry value="382" name="Shuriken"/>
+      <entry value="383" name="Knife"/>
+      <entry value="384" name="Sword"/>
+      <entry value="385" name="Hammer"/>
+      <entry value="386" name="Katana"/>
+      <entry value="387" name="Ninja Sword"/>
+      <entry value="388" name="Axe"/>
+      <entry value="389" name="Spear"/>
+      <entry value="390" name="Stick"/>
+      <entry value="391" name="Knight Sword"/>
+      <entry value="392" name="Dictionary"/>
+      <entry value="393" name="Ball"/>
+      <entry value="394" name="Level Jump2"/>
+      <entry value="395" name="Level Jump3"/>
+      <entry value="396" name="Level Jump4"/>
+      <entry value="397" name="Level Jump5"/>
+      <entry value="398" name="Level Jump8"/>
+      <entry value="399" name="Vertical Jump2"/>
+      <entry value="400" name="Vertical Jump3"/>
+      <entry value="401" name="Vertical Jump4"/>
+      <entry value="402" name="Vertical Jump5"/>
+      <entry value="403" name="Vertical Jump6"/>
+      <entry value="404" name="Vertical Jump7"/>
+      <entry value="405" name="Vertical Jump8"/>
+      <entry value="406" name="Charge +1"/>
+      <entry value="407" name="Charge +2"/>
+      <entry value="408" name="Charge +3"/>
+      <entry value="409" name="Charge +4"/>
+      <entry value="410" name="Charge +5"/>
+      <entry value="411" name="Charge +7"/>
+      <entry value="412" name="Charge +10"/>
+      <entry value="413" name="Charge +20"/>
+      <entry value="414" name="CT"/>
+      <entry value="415" name="Level"/>
+      <entry value="416" name="Exp"/>
+      <entry value="417" name="Height"/>
+      <entry value="418" name="Prime Number"/>
+      <entry value="419" name="5"/>
+      <entry value="420" name="4"/>
+      <entry value="421" name="3"/>
+      <entry value="422" name="A Save"/>
+      <entry value="423" name="MA Save"/>
+      <entry value="424" name="Speed Save"/>
+      <entry value="425" name="Sunken State"/>
+      <entry value="426" name="Caution"/>
+      <entry value="427" name="Dragon Spirit"/>
+      <entry value="428" name="Regenerator"/>
+      <entry value="429" name="Brave Up"/>
+      <entry value="430" name="Face Up"/>
+      <entry value="431" name="HP Restore"/>
+      <entry value="432" name="MP Restore"/>
+      <entry value="433" name="Critical Quick"/>
+      <entry value="434" name="Meatbone Slash"/>
+      <entry value="435" name="Counter Magic"/>
+      <entry value="436" name="Counter Tackle"/>
+      <entry value="437" name="Counter Flood"/>
+      <entry value="438" name="Absorb Used MP"/>
+      <entry value="439" name="Gilgame Heart"/>
+      <entry value="440" name="Reflect"/>
+      <entry value="441" name="Auto Potion"/>
+      <entry value="442" name="Counter"/>
+      <entry value="443" name=""/>
+      <entry value="444" name="Distribute"/>
+      <entry value="445" name="MP Switch"/>
+      <entry value="446" name="Damage Split"/>
+      <entry value="447" name="Weapon Guard"/>
+      <entry value="448" name="Finger Guard"/>
+      <entry value="449" name="Abandon"/>
+      <entry value="450" name="Catch"/>
+      <entry value="451" name="Blade Grasp"/>
+      <entry value="452" name="Arrow Guard"/>
+      <entry value="453" name="Hamedo"/>
+      <entry value="454" name="Equip Armor"/>
+      <entry value="455" name="Equip Shield"/>
+      <entry value="456" name="Equip Sword"/>
+      <entry value="457" name="Equip Katana"/>
+      <entry value="458" name="Equip Crossbow"/>
+      <entry value="459" name="Equip Spear"/>
+      <entry value="460" name="Equip Axe"/>
+      <entry value="461" name="Equip Gun"/>
+      <entry value="462" name="Half of MP"/>
+      <entry value="463" name="Gained JP-UP"/>
+      <entry value="464" name="Gained EXP-UP"/>
+      <entry value="465" name="Attack UP"/>
+      <entry value="466" name="Defense UP"/>
+      <entry value="467" name="Magic Att. UP"/>
+      <entry value="468" name="Magic Def. UP"/>
+      <entry value="469" name="Concentrate"/>
+      <entry value="470" name="Train"/>
+      <entry value="471" name="Secret Hunt"/>
+      <entry value="472" name="Martial Arts"/>
+      <entry value="473" name="Monster Talk"/>
+      <entry value="474" name="Throw Item"/>
+      <entry value="475" name="Maintenance"/>
+      <entry value="476" name="Two Hands"/>
+      <entry value="477" name="Two Swords"/>
+      <entry value="478" name="Monster Skill"/>
+      <entry value="479" name="Defend"/>
+      <entry value="480" name="Equip Change"/>
+      <entry value="481" name=""/>
+      <entry value="482" name="Short Charge"/>
+      <entry value="483" name="Non-charge"/>
+      <entry value="484" name=""/>
+      <entry value="485" name=""/>
+      <entry value="486" name="Move +1"/>
+      <entry value="487" name="Move +2"/>
+      <entry value="488" name="Move +3"/>
+      <entry value="489" name="Jump +1"/>
+      <entry value="490" name="Jump +2"/>
+      <entry value="491" name="Jump +3"/>
+      <entry value="492" name="Ignore Height"/>
+      <entry value="493" name="Move-HP Up"/>
+      <entry value="494" name="Move-MP Up"/>
+      <entry value="495" name="Move-Get Exp"/>
+      <entry value="496" name="Move-Get Jp"/>
+      <entry value="497" name="Cannot enter water"/>
+      <entry value="498" name="Teleport"/>
+      <entry value="499" name="Teleport 2"/>
+      <entry value="500" name="Any Weather"/>
+      <entry value="501" name="Any Ground"/>
+      <entry value="502" name="Walk on Water"/>
+      <entry value="503" name="Move in Water"/>
+      <entry value="504" name="Move on Lava"/>
+      <entry value="505" name="Move Underwater"/>
+      <entry value="506" name="Float"/>
+      <entry value="507" name="Fly"/>
+      <entry value="508" name="Silent Walk"/>
+      <entry value="509" name="Move-Find Item"/>
+      <entry value="510" name=""/>
+      <entry value="511" name=""/>
+      <entry value="512" name=""/>
+    </AbilityNames>
+  </Templates>
+</PSX>

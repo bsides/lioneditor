@@ -392,6 +392,20 @@ namespace FFTPatcher
             return true;
         }
 
+        public static IList<byte> GetFile( Stream stream, PspIso.Sectors sector, int start, int length )
+        {
+            byte[] result = new byte[length];
+            stream.Seek( (int)sector * 2048 + start, SeekOrigin.Begin );
+            stream.Read( result, 0, length );
+            return result;
+        }
+
+        public static IList<byte> GetFile( Stream stream, FFTPack.Files file, int start, int length )
+        {
+            byte[] result = FFTPack.GetFileFromIso( stream, file );
+            return result.Sub( start, start + length - 1 );
+        }
+
         private static void CopyBytes( FileStream stream, long src, long srcSize, long dest, long destOldSize )
         {
             long bytesRead = 0;

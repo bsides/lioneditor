@@ -68,10 +68,9 @@ namespace FFTPatcher.TextEditor
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
-            this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
             this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.progressBar = new FFTPatcher.Controls.ProgressBarWithText();
+            this.fileEditor1 = new FFTPatcher.TextEditor.Editors.FileEditor();
             separator1 = new System.Windows.Forms.MenuItem();
             separator2 = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
@@ -171,24 +170,6 @@ namespace FFTPatcher.TextEditor
             this.aboutMenuItem.Index = 2;
             this.aboutMenuItem.Text = "About...";
             // 
-            // partitionEditor
-            // 
-            this.partitionEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.partitionEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.partitionEditor.Name = "partitionEditor";
-            this.partitionEditor.Size = new System.Drawing.Size( 543, 374 );
-            this.partitionEditor.Strings = null;
-            this.partitionEditor.TabIndex = 2;
-            // 
-            // stringSectionedEditor
-            // 
-            this.stringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.stringSectionedEditor.Name = "stringSectionedEditor";
-            this.stringSectionedEditor.Size = new System.Drawing.Size( 543, 374 );
-            this.stringSectionedEditor.Strings = null;
-            this.stringSectionedEditor.TabIndex = 0;
-            // 
             // patchPsxBackgroundWorker
             // 
             this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
@@ -200,20 +181,29 @@ namespace FFTPatcher.TextEditor
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.progressBar.BackColor = System.Drawing.Color.White;
             this.progressBar.ForeColor = System.Drawing.Color.Blue;
-            this.progressBar.Location = new System.Drawing.Point( 12, 339 );
+            this.progressBar.Location = new System.Drawing.Point( 12, 534 );
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size( 519, 23 );
+            this.progressBar.Size = new System.Drawing.Size( 754, 23 );
             this.progressBar.TabIndex = 3;
             this.progressBar.Visible = false;
+            // 
+            // fileEditor1
+            // 
+            this.fileEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
+                        | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.fileEditor1.Location = new System.Drawing.Point( 13, 13 );
+            this.fileEditor1.Name = "fileEditor1";
+            this.fileEditor1.Size = new System.Drawing.Size( 753, 544 );
+            this.fileEditor1.TabIndex = 4;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 543, 374 );
+            this.ClientSize = new System.Drawing.Size( 778, 569 );
+            this.Controls.Add( this.fileEditor1 );
             this.Controls.Add( this.progressBar );
-            this.Controls.Add( this.partitionEditor );
-            this.Controls.Add( this.stringSectionedEditor );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTacText Editor";
@@ -227,8 +217,6 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem fileMenuItem;
         private System.Windows.Forms.MenuItem psxMenuItem;
         private System.Windows.Forms.MenuItem pspMenuItem;
-        private StringSectionedEditor stringSectionedEditor;
-        private FFTPatcher.TextEditor.Editors.PartitionEditor partitionEditor;
         private System.Windows.Forms.MenuItem newPsxMenuItem;
         private System.Windows.Forms.MenuItem newPspMenuItem;
         private System.Windows.Forms.MenuItem openMenuItem;
@@ -241,6 +229,7 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem allowedSymbolsMenuItem;
         private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
         private FFTPatcher.Controls.ProgressBarWithText progressBar;
+        private FFTPatcher.TextEditor.Editors.FileEditor fileEditor1;
 
     }
 }

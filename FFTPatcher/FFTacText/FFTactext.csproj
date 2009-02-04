@@ -53,11 +53,11 @@
     <Compile Include="CharmapForm.Designer.cs">
       <DependentUpon>CharmapForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\PartitionEditor.cs">
+    <Compile Include="Editors\FileEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Editors\PartitionEditor.Designer.cs">
-      <DependentUpon>PartitionEditor.cs</DependentUpon>
+    <Compile Include="Editors\FileEditor.Designer.cs">
+      <DependentUpon>FileEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\StringListEditor.cs">
       <SubType>UserControl</SubType>
@@ -68,40 +68,15 @@
     <Compile Include="Editors\TextPropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Files\AbstractCompressedFile.cs" />
-    <Compile Include="Files\AbstractDelimitedFile.cs" />
-    <Compile Include="Files\AbstractFile.cs" />
-    <Compile Include="Files\AbstractPartitionedFile.cs" />
-    <Compile Include="Files\FilePartition.cs" />
     <Compile Include="Files\IFile.cs" />
-    <Compile Include="Files\IPartition.cs" />
-    <Compile Include="Files\IPartitionedFile.cs" />
-    <Compile Include="Files\IQuickEdit.cs" />
-    <Compile Include="Files\PSP\AbstractBootBinFile.cs" />
-    <Compile Include="Files\PSP\BasePSPCompressedFile.cs" />
-    <Compile Include="Files\PSP\BasePSPPartitionedFile.cs" />
-    <Compile Include="Files\PSP\BOOT326F24.cs" />
-    <Compile Include="Files\PSP\QuickEdit.cs" />
-    <Compile Include="Files\PSP\Sectioned\BOOT28E5EC.cs" />
-    <Compile Include="Files\PSP\IBootBin.cs" />
-    <Compile Include="Files\PSP\IFFTPackFile.cs" />
-    <Compile Include="Files\PSP\Partitioned\SNPLMESBIN.cs" />
-    <Compile Include="Files\PSP\Partitioned\WLDMESBIN.cs" />
-    <Compile Include="Files\PSP\Sectioned\WORLDLZW.cs" />
-    <Compile Include="Files\PSX\BasePSXCompressedFile.cs" />
-    <Compile Include="Files\PSX\BasePSXPartitionedFile.cs" />
-    <Compile Include="Files\PSX\QuickEdit.cs" />
-    <Compile Include="Files\PSX\Sectioned\Compressed\BUNITOUT.cs" />
+    <Compile Include="Files\ISerializableFile.cs" />
+    <Compile Include="Files\NamedSection.cs" />
+    <Compile Include="Files\AbstractFile.cs" />
+    <Compile Include="Files\PartitionedFile.cs" />
+    <Compile Include="Files\QuickEdit.cs" />
+    <Compile Include="Files\SectionedFile.cs" />
+    <Compile Include="Files\FFTTextFactory.cs" />
     <Compile Include="Utilities\EntryNames.cs" />
-    <Compile Include="Files\PSX\Sectioned\Compressed\EQUIPOUT.cs" />
-    <Compile Include="Files\PSX\Sectioned\Compressed\HELPLZW.cs" />
-    <Compile Include="Files\PSX\Sectioned\Compressed\HELPMENUOUT.cs" />
-    <Compile Include="Files\PSX\Sectioned\Compressed\JOBSTTSOUT.cs" />
-    <Compile Include="Files\PSX\Partiitoned\SNPLMESBIN.cs" />
-    <Compile Include="Files\PSX\Partiitoned\WLDMESBIN.cs" />
-    <Compile Include="Files\PSX\Sectioned\WORLDBIN.cs" />
-    <Compile Include="Files\PSX\SPELLMES.cs" />
-    <Compile Include="Files\SavingFileEventArgs.cs" />
     <Compile Include="Utilities\NotifyStringList.cs" />
     <Compile Include="Utilities\SectionType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -109,28 +84,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="FFTText.cs" />
-    <Compile Include="Files\QuickEditFactory.cs" />
+    <Compile Include="Files\FFTText.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utilities\CompressionEventArgs.cs" />
-    <Compile Include="Files\AbstractStringSectioned.cs" />
-    <Compile Include="Files\IStringSectioned.cs" />
-    <Compile Include="Files\PSP\Sectioned\ATCHELPLZW.cs" />
-    <Compile Include="Files\PSP\BasePSPSectionedFile.cs" />
-    <Compile Include="Files\PSP\Sectioned\BOOT299024.cs" />
-    <Compile Include="Files\PSP\Sectioned\BOOT29E334.cs" />
-    <Compile Include="Files\PSP\Sectioned\Compressed\BOOT2A1630.cs" />
-    <Compile Include="Files\PSP\Sectioned\BOOT2EB4C0.cs" />
-    <Compile Include="Files\PSP\Sectioned\Compressed\BOOT32D368.cs" />
-    <Compile Include="Files\PSP\Sectioned\OPENLZW.cs" />
-    <Compile Include="Files\PSX\Sectioned\ATCHELPLZW.cs" />
-    <Compile Include="Files\PSX\Sectioned\ATTACKOUT.cs" />
-    <Compile Include="Files\PSX\BasePSXSectionedFile.cs" />
-    <Compile Include="Files\PSX\Sectioned\JOINLZW.cs" />
-    <Compile Include="Files\PSX\Sectioned\OPENLZW.cs" />
-    <Compile Include="Files\PSX\Sectioned\SAMPLELZW.cs" />
-    <Compile Include="Files\PSX\Sectioned\Compressed\WLDHELPLZW.cs" />
-    <Compile Include="Files\PSX\Sectioned\WORLDLZW.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,8 +103,8 @@
       <DependentUpon>CharmapForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editors\PartitionEditor.resx">
-      <DependentUpon>PartitionEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Editors\FileEditor.resx">
+      <DependentUpon>FileEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\StringListEditor.resx">
@@ -169,10 +125,6 @@
       <LastGenOutput>PSPResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editors\StringSectionedEditor.resx">
-      <DependentUpon>StringSectionedEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -189,9 +141,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\PSP\boot.bin" />
-    <None Include="Resources\PSP\pspText.ffttext" />
-    <None Include="Resources\PSX\psxText.ffttext" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -201,12 +150,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PSPResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\StringSectionedEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\StringSectionedEditor.Designer.cs">
-      <DependentUpon>StringSectionedEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\CharMap.cs" />
     <Compile Include="Utilities\PSPResources.cs" />
@@ -225,6 +168,8 @@
     <Content Include="Resources\EntryNames.xml" />
     <Content Include="Files\PSX\FileContents.txt" />
     <Content Include="notes.txt" />
+    <Content Include="Resources\psx.xml" />
+    <Content Include="Resources\psp.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

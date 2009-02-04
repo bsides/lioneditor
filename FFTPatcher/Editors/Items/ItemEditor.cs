@@ -159,6 +159,7 @@ namespace FFTPatcher.Editors
                     itemFormulaItems.Add( string.Format( "{0:X2}", i ) );
                 }
             }
+
         }
 
 		#endregion Constructors 

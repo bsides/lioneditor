@@ -121,4 +121,10 @@
   <data name="EntryNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\entrynames.xml.gz;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="psp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psp.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="psx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\psx.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

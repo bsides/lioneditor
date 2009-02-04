@@ -27,9 +27,11 @@ namespace FFTPatcher.TextEditor
     /// <summary>
     /// An editor that edits lists of strings.
     /// </summary>
-    public partial class StringListEditor : UserControl
+    partial class StringListEditor : UserControl
     {
-        private IList<string> boundValues;
+        private IFile boundFile;
+        private int boundSection;
+
         private bool ignoreChanges = false;
         public const int TextColumnIndex = 2;
 
@@ -69,7 +71,7 @@ namespace FFTPatcher.TextEditor
             if ( !ignoreChanges && 
                  e.ColumnIndex == TextColumnIndex )
             {
-                boundValues[CurrentRow] = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value;
+                boundFile[boundSection, CurrentRow] = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value;
             }
         }
 
@@ -117,26 +119,29 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         /// <param name="names">The names.</param>
         /// <param name="values">The values.</param>
-        public void BindTo( IList<string> names, IList<string> values )
+        public void BindTo( IList<string> names, IFile file, int section )
         {
+            int count = file.SectionLengths[section];
             List<string> ourNames = new List<string>( names );
-            for ( int i = names.Count; i < values.Count; i++ )
+            for ( int i = names.Count; i < count; i++ )
             {
                 ourNames.Add( string.Empty );
             }
 
-            DataGridViewRow[] rows = new DataGridViewRow[values.Count];
+            DataGridViewRow[] rows = new DataGridViewRow[count];
             dataGridView.SuspendLayout();
-            for( int i = 0; i < values.Count; i++ )
+            for( int i = 0; i < count; i++ )
             {
                 DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells( dataGridView, i, ourNames[i], values[i] );
+                row.CreateCells( dataGridView, i, ourNames[i], file[section, i] );
                 rows[i] = row;
             }
             dataGridView.Rows.Clear();
             dataGridView.Rows.AddRange( rows );
             dataGridView.ResumeLayout();
-            boundValues = values;
+
+            boundFile = file;
+            boundSection = section;
         }
 
     }

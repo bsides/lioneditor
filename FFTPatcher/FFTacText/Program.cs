@@ -24,7 +24,6 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
-using FFTPatcher.TextEditor.Files;
 
 namespace FFTPatcher.TextEditor
 {
@@ -96,30 +95,31 @@ namespace FFTPatcher.TextEditor
                     }
 
                     object o = ci.Invoke( new object[] { bytes } );
-                    if( o is IStringSectioned )
-                    {
-                        using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
-                        {
-                            writer.WriteStartElement( "dongs" );
-                            (o as IStringSectioned).WriteXml( writer, true );
-                            writer.WriteEndElement();
-                            return true;
-                        }
-                    }
-                    else if( o is IPartitionedFile )
-                    {
-                        using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
-                        {
-                            writer.WriteStartElement( "dongs" );
-                            (o as IPartitionedFile).WriteXml( writer, true );
-                            writer.WriteEndElement();
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    //if( o is IStringSectioned )
+                    //{
+                    //    using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
+                    //    {
+                    //        writer.WriteStartElement( "dongs" );
+                    //        (o as IStringSectioned).WriteXml( writer, true );
+                    //        writer.WriteEndElement();
+                    //        return true;
+                    //    }
+                    //}
+                    //else if( o is IPartitionedFile )
+                    //{
+                    //    using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
+                    //    {
+                    //        writer.WriteStartElement( "dongs" );
+                    //        (o as IPartitionedFile).WriteXml( writer, true );
+                    //        writer.WriteEndElement();
+                    //        return true;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    return false;
+                    //}
+                    return true;
                 }
             }
 
@@ -134,12 +134,14 @@ namespace FFTPatcher.TextEditor
         [STAThread]
         static void Main( string[] args )
         {
-            var f = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSPResources.FontBin, FFTPatcher.PSPResources.FontWidthsBin );
+            //IList<FFTTextFactory> psp = FFTTextFactory.PSPFileLayout;
+            //IList<FFTTextFactory> psx = FFTTextFactory.PSXFileLayout;
+            var f = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSXResources.FontBin, FFTPatcher.PSXResources.FontWidthsBin );
 
             List<int> widths = new List<int>( 2200 );
             f.Glyphs.ForEach( g => widths.Add( g.Width ) );
 
-            groups = TextUtilities.GetGroups( TextUtilities.PSPMap, FFTPatcher.PSPResources.CharacterSet, widths );
+            groups = TextUtilities.GetGroups( TextUtilities.PSXMap, FFTPatcher.PSXResources.CharacterSet, widths );
            
            
             if( !HandleArgs( args ) )

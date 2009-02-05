@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FFTPatcher.TextEditor
 {
-    interface IFile
+    public interface IFile
     {
         IList<string> SectionNames { get; }
         IList<IList<string>> EntryNames { get; }

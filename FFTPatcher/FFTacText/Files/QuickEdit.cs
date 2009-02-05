@@ -71,6 +71,7 @@ namespace FFTPatcher.TextEditor.Files
             NumberOfSections = sections.Count;
             this.sectionTypes = sectionTypes.AsReadOnly();
             this.SectionNames = sectionNames.AsReadOnly();
+            this.SectionLengths = sectionLengths.AsReadOnly();
         }
 
         public struct QuickEditEntry

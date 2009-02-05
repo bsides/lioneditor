@@ -4,13 +4,11 @@
     <Position X="21.5" Y="1.75" Width="3" />
     <Members>
       <Method Name="FFTText" Hidden="true" />
-      <Method Name="GetSchema" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ACAAEAAAABgAAAAAAEICAAACAgBAAAgGAAAAgAAAAAA=</HashCode>
+      <HashCode>ACAAEAAAABAAAAAAAgIAAAACAAAAAAgCAAAAAAAAAIA=</HashCode>
       <FileName>Files\FFTText.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FFTPatcher.TextEditor.FFTTextFactory">
     <Position X="10" Y="1.25" Width="3" />
@@ -19,41 +17,78 @@
       <Method Name="GetEntryNames" Hidden="true" />
     </Members>
     <NestedTypes>
-      <Delegate Name="FFTPatcher.TextEditor.FFTTextFactory.BytesFromIso" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Files\FFTTextFactory.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
       <Struct Name="FFTPatcher.TextEditor.FFTTextFactory.FileInfo" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Files\FFTTextFactory.cs</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
+      <Delegate Name="FFTPatcher.TextEditor.FFTTextFactory.BytesFromIso" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Files\FFTTextFactory.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAACAAIAACAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAIAAAAAAAAACAAIAACAAAAQAAABAAAAAACAAAgAAAA=</HashCode>
       <FileName>Files\FFTTextFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="FFTPatcher.TextEditor.AbstractFile">
+    <Position X="11.25" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAQABAACAAICYAAQEAAEAQAFCCIAEAAAAAAAAg=</HashCode>
+      <FileName>Files\AbstractFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.PartitionedFile" Collapsed="true">
+    <Position X="14.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Files\PartitionedFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.SectionedFile">
+    <Position X="7.5" Y="5.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAEAAAABAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Files\SectionedFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FFTPatcher.TextEditor.Files.QuickEdit" Collapsed="true">
+    <Position X="16.25" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="FFTPatcher.TextEditor.Files.QuickEdit.QuickEditEntry" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Files\QuickEdit.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAABAACAAACAAAAAAQECAAQACAAAAAgAAAAAg=</HashCode>
+      <FileName>Files\QuickEdit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="FFTPatcher.TextEditor.IFile" Collapsed="true">
+    <Position X="14.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAABAACAAACAAAAAAAEAAAAACAAAAAAAAAAAg=</HashCode>
+      <FileName>Files\IFile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FFTPatcher.TextEditor.ISerializableFile" Collapsed="true">
+    <Position X="14.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAIAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Files\ISerializableFile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="FFTPatcher.TextEditor.SectionType">
     <Position X="23.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAUEABAAAAAAABAAAAAAEEAAAAQAAAAAAAAAAAIAIA=</HashCode>
       <FileName>Utilities\SectionType.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="FFTPatcher.TextEditor.FileType" Collapsed="true">
-    <Position X="7.25" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAECCEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Files\FFTTextFactory.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="FFTPatcher.TextEditor.SectorType" Collapsed="true">
-    <Position X="9" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAACAAAAAAAAAAAAAQAAAAAAAAAAAAAACAAAAA=</HashCode>
-      <FileName>Files\FFTTextFactory.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Tahoma" Size="8.25" />

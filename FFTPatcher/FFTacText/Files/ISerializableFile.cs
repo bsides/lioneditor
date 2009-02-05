@@ -7,7 +7,13 @@ namespace FFTPatcher.TextEditor
     interface ISerializableFile : IFile
     {
         FFTPatcher.TextEditor.FFTTextFactory.FileInfo Layout { get; }
-        byte[] ToByteArray();
-        byte[] ToTextByteArray();
+        byte[] ToCDByteArray();
+        byte[] ToCDByteArray( IDictionary<string, byte> dteTable );
+        Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes );
+
+        bool IsDteNeeded();
+
+        IList<PatchedByteArray> GetNonDtePatches();
+        IList<PatchedByteArray> GetDtePatches( IDictionary<string, byte> dteBytes );
     }
 }

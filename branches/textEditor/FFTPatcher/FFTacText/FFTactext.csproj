@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{210DDF20-2CEA-4A2C-B2C6-D2EB7938BEB2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -76,6 +76,7 @@
     <Compile Include="Files\QuickEdit.cs" />
     <Compile Include="Files\SectionedFile.cs" />
     <Compile Include="Files\FFTTextFactory.cs" />
+    <Compile Include="Utilities\DTE.cs" />
     <Compile Include="Utilities\EntryNames.cs" />
     <Compile Include="Utilities\NotifyStringList.cs" />
     <Compile Include="Utilities\SectionType.cs" />

@@ -126,24 +126,12 @@ namespace FFTPatcher.TextEditor
             return false;
         }
 
-        public static Set<string> groups;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main( string[] args )
         {
-            //IList<FFTTextFactory> psp = FFTTextFactory.PSPFileLayout;
-            //IList<FFTTextFactory> psx = FFTTextFactory.PSXFileLayout;
-            var f = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSXResources.FontBin, FFTPatcher.PSXResources.FontWidthsBin );
-
-            List<int> widths = new List<int>( 2200 );
-            f.Glyphs.ForEach( g => widths.Add( g.Width ) );
-
-            groups = TextUtilities.GetGroups( TextUtilities.PSXMap, FFTPatcher.PSXResources.CharacterSet, widths );
-           
-           
             if( !HandleArgs( args ) )
             {
                 Application.EnableVisualStyles();

@@ -143,6 +143,8 @@ namespace FFTPatcher.TextEditor
                 switch ( filetype )
                 {
                     case FileType.CompressedFile:
+                        files.Add( guid, new SectionedFile( charmap, fi, bytes, true ) );
+                        break;
                     case FileType.SectionedFile:
                         files.Add( guid, new SectionedFile( charmap, fi, bytes ) );
                         break;
@@ -207,7 +209,7 @@ namespace FFTPatcher.TextEditor
         public static FFTText GetPsxText( Stream iso )
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load( Properties.Resources.psx );
+            doc.LoadXml( Properties.Resources.psx );
             return GetText( iso, Context.US_PSX, doc, BytesFromPsxIso, TextUtilities.PSXMap );
         }
 
@@ -215,7 +217,7 @@ namespace FFTPatcher.TextEditor
         {
             IDictionary<Guid, ISerializableFile> files = GetFiles( iso, context, doc, reader, charmap );
             var quickEdit = new QuickEdit( files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ) ) );
-            return null;
+            return new FFTText( files, quickEdit );
         }
 
         private static IList<string> GetSectionNames( XmlNode sectionsNode )

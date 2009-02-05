@@ -6,10 +6,17 @@ namespace FFTPatcher.TextEditor
 {
     class SectionedFile : AbstractFile
     {
-        const int dataStart = 0x80;
+        private const int dataStart = 0x80;
+
+        protected override int DataStart { get { return dataStart; } }
 
         public SectionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
-            : base( map, layout )
+            : this( map, layout, bytes, false )
+        {
+        }
+
+        public SectionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes, bool compressible )
+            : base( map, layout, compressible )
         {
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
 
@@ -19,20 +26,90 @@ namespace FFTPatcher.TextEditor
                 uint stop = Utilities.BytesToUInt32( bytes.Sub( ( i + 1 ) * 4, ( i + 2 ) * 4 - 1 ) ) - 1;
                 if ( i == NumberOfSections - 1 )
                 {
-                    stop = (uint)bytes.Count - 1 - dataStart;
+                    stop = (uint)bytes.Count - 1 - (uint)DataStart;
                 }
-                IList<byte> thisSection = bytes.Sub( (int)( start + dataStart ), (int)( stop + dataStart ) );
-                thisSection = TextUtilities.Decompress( bytes, thisSection, (int)( start - dataStart ) );
+                IList<byte> thisSection = bytes.Sub( (int)( start + DataStart ), (int)( stop + DataStart ) );
+                if ( compressible )
+                {
+                    thisSection = TextUtilities.Decompress( bytes, thisSection, (int)( start + DataStart ) );
+                }
                 sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
             }
             Sections = sections.AsReadOnly();
         }
 
-        public override byte[] ToByteArray()
+        protected override IList<byte> ToByteArray()
         {
-            return base.ToByteArray();
+            if ( Compressible )
+            {
+                IList<UInt32> offsets;
+                IList<byte> bytes = Compress( out offsets );
+                List<byte> result = new List<byte>( DataStart + bytes.Count );
+                result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
+                result.AddRange( bytes );
+                return result.AsReadOnly();
+            }
+            else
+            {
+                int numberOfSections = Sections.Count;
+                List<byte> result = new List<byte>();
+                result.AddRange( new byte[] { 0x00, 0x00, 0x00, 0x00 } );
+                int old = 0;
+                IList<IList<byte>> bytes = GetUncompressedSectionBytes();
+                for ( int i = 0; i < numberOfSections - 1; i++ )
+                {
+                    result.AddRange( ( (UInt32)( bytes[i].Count + old ) ).ToBytes() );
+                    old += bytes[i].Count;
+                }
+                result.AddRange( new byte[Math.Max( DataStart - numberOfSections * 4, 0 )] );
+                bytes.ForEach( b => result.AddRange( b ) );
+                return result.AsReadOnly();
+            }
+
+
         }
 
-        //public IList<IList<byte>> GetSectionByteArraysUncompressed
+
+        private static IList<byte> BuildHeaderFromSectionOffsets( IList<UInt32> offsets )
+        {
+            List<byte> result = new List<byte>( dataStart );
+            offsets.ForEach( o => result.AddRange( o.ToBytes() ) );
+            while ( result.Count < dataStart )
+            {
+                result.Add( 0x00 );
+            }
+
+            return result.Sub( 0, dataStart - 1 ).AsReadOnly();
+        }
+
+        protected override IList<byte> ToByteArray( IDictionary<string, byte> dteTable )
+        {
+            if ( Compressible )
+            {
+                IList<UInt32> offsets;
+                IList<byte> bytes = Compress( dteTable, out offsets );
+                List<byte> result = new List<byte>( DataStart + bytes.Count );
+                result.AddRange( BuildHeaderFromSectionOffsets( offsets ) );
+                result.AddRange( bytes );
+                return result.AsReadOnly();
+            }
+            else
+            {
+                int numberOfSections = Sections.Count;
+                List<byte> result = new List<byte>();
+                result.AddRange( new byte[] { 0x00, 0x00, 0x00, 0x00 } );
+                int old = 0;
+                IList<IList<byte>> bytes = GetUncompressedSectionBytes( GetDteStrings( dteTable ), CharMap );
+                for ( int i = 0; i < numberOfSections - 1; i++ )
+                {
+                    result.AddRange( ( (UInt32)( bytes[i].Count + old ) ).ToBytes() );
+                    old += bytes[i].Count;
+                }
+                result.AddRange( new byte[Math.Max( DataStart - numberOfSections * 4, 0 )] );
+                bytes.ForEach( b => result.AddRange( b ) );
+                return result.AsReadOnly();
+            }
+        }
+
     }
 }

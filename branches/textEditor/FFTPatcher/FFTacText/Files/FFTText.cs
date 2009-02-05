@@ -70,254 +70,50 @@ namespace FFTPatcher.TextEditor
 
 		#region Methods (9) 
 
-        /// <summary>
-        /// Gets the menu items for this object.
-        /// </summary>
-        public IList<MenuItem> GetMenuItems()
+        public IList<PatchedByteArray> GetPatches()
         {
-            List<MenuItem> result = new List<MenuItem>();
-            result.Sort( ( left, right ) => left.Text.CompareTo( right.Text ) );
+            IList<ISerializableFile> files = new List<ISerializableFile>( Files.Count );
+            Files.FindAll( f => f is ISerializableFile ).ForEach( f => files.Add( (ISerializableFile)f ) );
 
-            return result;
-        }
+            List<ISerializableFile> dteFiles = new List<ISerializableFile>();
 
-        private static Stack<byte> GetAllowedDteBytes()
-        {
-            Stack<byte> result = new Stack<byte>();
-
-            for ( byte b = 0xCF; b >= 0xB6; b-- )
-            {
-                result.Push( b );
-            }
-            result.Push( 0xb4 );
-            result.Push( 0xb3 );
-            for ( byte b = 0xB1; b >= 0x94; b-- )
-            {
-                result.Push( b );
-            }
-            result.Push( 0x92 );
-            result.Push( 0x90 );
-            result.Push( 0x8F );
-            result.Push( 0x8C );
-            for ( byte b = 0x8A; b >= 0x60; b-- )
-            {
-                result.Push( b );
-            }
-            for ( byte b = 0x5E; b >= 0x47; b-- )
-            {
-                result.Push( b );
-            }
-            result.Push( 0x45 );
-            result.Push( 0x43 );
-            result.Push( 0x41 );
-            result.Push( 0x3f );
-
-            return result;
-        }
-
-        public void ClearOutGarbagePSX()
-        {
-            // OPEN.LZW, Section 25 (1-indexed) (#96 has no {END})
-            //           section 26
-            // SAMPLE.LZW, section 10
-        }
-
-        /// <summary>
-        /// Updates a PSX FFT ISO with the text files in this instance.
-        /// </summary>
-        public void UpdatePsxIso( BackgroundWorker worker, DoWorkEventArgs doWork )
-        {
-            string filename = doWork.Argument as string;
             List<PatchedByteArray> patches = new List<PatchedByteArray>();
-            int numberOfTasks = 1 + // "determining which"
-                                //SectionedFiles.Count + // each file
-                                1 + // font.bin
-                                1; // applying patches
 
-
-            int tasksCompleted = 0;
-            Action<string> progress =
-                delegate(string s)
-                {
-                    worker.ReportProgress( ++tasksCompleted * 100 / numberOfTasks, s);
-                };
-
-            if ( Filetype != Context.US_PSX )
+            foreach ( ISerializableFile file in files )
             {
-                throw new InvalidOperationException();
-            }
-
-            //IList<IStringSectioned> filesNeedingDte = new List<IStringSectioned>();
-
-            //progress( "Determining files which are too large" );
-            //foreach ( IStringSectioned sectioned in SectionedFiles )
-            //{
-            //    progress( string.Format( "Processing {0}", sectioned.GetType().Name ) );
-            //    if ( !(sectioned is Files.PSX.WORLDBIN) && sectioned.IsDTENeeded() )
-            //    {
-            //        filesNeedingDte.Add( sectioned );
-            //    }
-            //}
-
-            //List<IFile> normalFiles = new List<IFile>();
-            //SectionedFiles.ForEach( f => normalFiles.Add( f ) );
-            //PartitionedFiles.ForEach( p => normalFiles.Add( p ) );
-            //normalFiles.RemoveAll( f => f is IStringSectioned && filesNeedingDte.Contains( f as IStringSectioned ) );
-
-            //Set<string> validDtePairs = Program.groups;
-            //Set<KeyValuePair<string, byte>> currentPairs = 
-            //    new Set<KeyValuePair<string, byte>>( ( x, y ) => x.Key.Equals( y.Key ) && ( x.Value == y.Value ) ? 0 : -1 );
-            //IDictionary<IStringSectioned, Set<KeyValuePair<string, byte>>> filePreferredPairs = new Dictionary<IStringSectioned, Set<KeyValuePair<string, byte>>>( filesNeedingDte.Count );
-
-            //filesNeedingDte.Sort( ( x, y ) => ( y.ActualLength - y.MaxLength ).CompareTo( x.ActualLength - x.MaxLength ) );
-
-            //IStringSectioned worldbin = SectionedFiles.Find( f => ( f is Files.PSX.WORLDBIN ) );
-            //if ( worldbin.IsDTENeeded() )
-            //{
-            //    filesNeedingDte.Add( worldbin );
-            //    normalFiles.Remove( worldbin );
-            //}
-
-            //Stack<byte> dteBytes = GetAllowedDteBytes();
-            //numberOfTasks += filesNeedingDte.Count * 2;
-            //numberOfTasks += normalFiles.Count;
-            //foreach ( var f in filesNeedingDte )
-            //{
-            //    progress( string.Format( "Calculating DTE for {0}", f.GetType().Name ) );
-            //    var r = f.GetPreferredDTEPairs( validDtePairs, currentPairs, dteBytes );
-            //    filePreferredPairs[f] = r;
-            //    currentPairs.AddRange( r );
-            //}
-
-            //foreach ( var f in filesNeedingDte )
-            //{
-            //    IDictionary<string, byte> currentFileEncoding = Utilities.DictionaryFromKVPs( filePreferredPairs[f] );
-
-            //    progress( string.Format( "Getting patches for {0}", f.GetType().Name ) );
-            //    foreach ( var otherPatch in f.GetAllPatches( currentFileEncoding ) )
-            //    {
-            //        patches.Add( otherPatch );
-            //    }
-            //}
-
-            //foreach ( var f in normalFiles )
-            //{
-            //    progress( string.Format( "Getting patches for {0}", f.GetType().Name ) );
-            //    foreach ( var otherPatch in f.GetAllPatches() )
-            //    {
-            //        patches.Add( otherPatch );
-            //    }
-            //}
-
-            //progress( string.Format( "Updating font for DTE" ) );
-            //patches.AddRange( GeneratePsxFontBinPatches( currentPairs ) );
-
-            //using ( FileStream stream = new FileStream( filename, FileMode.Open ) )
-            //{
-            //    progress( string.Format( "Applying patches" ) );
-            //    foreach ( PatchedByteArray patch in patches )
-            //    {
-            //        IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true );
-            //    }
-            //}
-        }
-
-        private void GenerateFontBinPatches( 
-            IEnumerable<KeyValuePair<string, byte>> dteEncodings, 
-            FFTPatcher.Datatypes.FFTFont baseFont, 
-            IList<string> baseCharSet,
-            out byte[] fontBytes,
-            out byte[] widthBytes )
-        {
-            FFTPatcher.Datatypes.FFTFont font = 
-                new FFTPatcher.Datatypes.FFTFont( baseFont.ToByteArray(), baseFont.ToWidthsByteArray() );
-            IList<string> charSet = new List<string>( baseCharSet );
-
-            foreach ( var kvp in dteEncodings )
-            {
-                int[] chars = new int[] { charSet.IndexOf( kvp.Key.Substring( 0, 1 ) ), charSet.IndexOf( kvp.Key.Substring( 1, 1 ) ) };
-                int[] widths = new int[] { font.Glyphs[chars[0]].Width, font.Glyphs[chars[1]].Width };
-                int newWidth = widths[0] + widths[1];
-
-                font.Glyphs[kvp.Value].Width = (byte)newWidth;
-                IList<FFTPatcher.Datatypes.FontColor> newPixels = font.Glyphs[kvp.Value].Pixels;
-                for ( int i = 0; i < newPixels.Count; i++ )
+                if ( file.IsDteNeeded() )
                 {
-                    newPixels[i] = FFTPatcher.Datatypes.FontColor.Transparent;
+                    dteFiles.Add( file );
                 }
-
-                const int fontHeight = 14;
-                const int fontWidth = 10;
-
-                int offset = 0;
-                for ( int c = 0; c < chars.Length; c++ )
+                else
                 {
-                    var pix = font.Glyphs[chars[c]].Pixels;
-
-                    for ( int x = 0; x < widths[c]; x++ )
-                    {
-                        for ( int y = 0; y < fontHeight; y++ )
-                        {
-                            newPixels[y * fontWidth + x + offset] = pix[y * fontWidth + x];
-                        }
-                    }
-
-                    offset += widths[c];
+                    patches.AddRange( file.GetNonDtePatches() );
                 }
             }
 
-            fontBytes = font.ToByteArray();
-            widthBytes = font.ToWidthsByteArray();
-        }
+            Set<string> pairs = DTE.GetDteGroups( this.Filetype );
+            Set<KeyValuePair<string, byte>> currentPairs =
+                new Set<KeyValuePair<string, byte>>( ( x, y ) => x.Key.Equals( y.Key ) && ( x.Value == y.Value ) ? 0 : -1 );
+            var filePreferredPairs =
+                new Dictionary<ISerializableFile, Set<KeyValuePair<string, byte>>>( dteFiles.Count );
+            dteFiles.Sort( ( x, y ) => ( y.ToCDByteArray().Length - y.Layout.Size ).CompareTo( x.ToCDByteArray().Length - x.Layout.Size ) );
+            Stack<byte> dteBytes = DTE.GetAllowedDteBytes();
 
-        private IList<PatchedByteArray> GeneratePspFontBinPatches( IEnumerable<KeyValuePair<string, byte>> dteEncodings )
-        {
-            var charSet = FFTPatcher.PSPResources.CharacterSet;
-            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSPResources.FontBin, FFTPatcher.PSPResources.FontWidthsBin );
+            foreach ( var dte in dteFiles )
+            {
+                filePreferredPairs[dte] = dte.GetPreferredDTEPairs( pairs, currentPairs, dteBytes );
+                currentPairs.AddRange( filePreferredPairs[dte] );
+            }
 
-            byte[] fontBytes;
-            byte[] widthBytes;
+            foreach ( var dte in dteFiles )
+            {
+                var currentFileEncoding = Utilities.DictionaryFromKVPs( filePreferredPairs[dte] );
+                patches.AddRange( dte.GetDtePatches( currentFileEncoding ) );
+            }
 
-            GenerateFontBinPatches( dteEncodings, font, charSet, out fontBytes, out widthBytes );
+            patches.AddRange( DTE.GenerateDtePatches( this.Filetype, currentPairs ) );
 
-            return
-                new PatchedByteArray[] {
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x27b80c, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2f73b8, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x27b80c, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2f73b8, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x293f40, widthBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x30fac0, widthBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x293f40, widthBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x30fac0, widthBytes)
-                };
-        }
-
-        private IList<PatchedByteArray> GeneratePsxFontBinPatches( IEnumerable<KeyValuePair<string, byte>> dteEncodings )
-        {
-            // BATTLE.BIN -> 0xE7614
-            // FONT.BIN -> 0
-            // WORLD.BIN -> 0x5B8F8
-
-            var charSet = FFTPatcher.PSXResources.CharacterSet;
-            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSXResources.FontBin, FFTPatcher.PSXResources.FontWidthsBin );
-
-            byte[] fontBytes;
-            byte[] widthBytes;
-
-            GenerateFontBinPatches( dteEncodings, font, charSet, out fontBytes, out widthBytes );
-
-            // widths:
-            // 0x363234 => 1510 = BATTLE.BIN
-            // 0xBD84908 => 84497 = WORLD.BIN
-            return
-                new PatchedByteArray[] {
-                    new PatchedByteArray(PsxIso.BATTLE_BIN, 0xE7614, fontBytes),
-                    new PatchedByteArray(PsxIso.EVENT.FONT_BIN, 0x00, fontBytes),
-                    new PatchedByteArray(PsxIso.WORLD.WORLD_BIN, 0x5B8f8, fontBytes),
-                    new PatchedByteArray(PsxIso.BATTLE_BIN, 0xFF0FC, widthBytes),
-                    new PatchedByteArray(PsxIso.WORLD.WORLD_BIN, 0x733E0, widthBytes)
-                };
+            return patches.AsReadOnly();
         }
 
         public IList<IFile> Files { get; private set; }
@@ -358,12 +154,5 @@ namespace FFTPatcher.TextEditor
         }
 
 		#endregion Methods 
-
-    
-
-        public void ReadXml( XmlReader reader )
-        {
-            throw new NotImplementedException();
-        }
     }
 }

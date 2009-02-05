@@ -126,22 +126,22 @@
     <SkillsetDescriptions>
       <File>
         <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
-        <Index>19</Index>
+        <Section>19</Section>
         <Offset>0</Offset>
       </File>
       <File>
         <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
-        <Index>19</Index>
+        <Section>19</Section>
         <Offset>0</Offset>
       </File>
       <File>
         <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
-        <Index>19</Index>
+        <Section>19</Section>
         <Offset>0</Offset>
       </File>
       <MainFile>
         <Guid>{F714E509-2838-4623-9280-67D8DAC30450}</Guid>
-        <Index>19</Index>
+        <Section>19</Section>
         <Offset>0</Offset>
         <Length>188</Length>
       </MainFile>
@@ -659,7 +659,7 @@
         </Section>
         <Section value="19" entries="24" empty="true"/>
         <Section value="20" entries="1" empty="true" name="Map menu"/>
-        <Section value="21" entries="116" empty="true" name="Map names"/>
+        <Section value="21" entries="115" empty="true" name="Map names"/>
         <Section value="22" entries="189" empty="false" name="Skillset names">
           <include name="SkillsetNames" start="0" end="188" offset="0"/>
         </Section>
@@ -1453,9 +1453,8 @@
         <Sector filename="WORLD_WORLD_BIN" offset="713960"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="190" empty="false" name="Skillset Names">
+        <Section value="0" entries="189" empty="false" name="Skillset Names">
           <include name="SkillsetNames" start="0" end="188" offset="0"/>
-          <entry value="189" name=""/>
         </Section>
       </Sections>
     </OneShotFile>
@@ -1468,9 +1467,8 @@
         <Sector filename="WORLD_WORLD_BIN" offset="715064"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="156" empty="false" name="Job names">
+        <Section value="0" entries="155" empty="false" name="Job names">
           <include name="JobNames" start="0" end="154" offset="0"/>
-          <entry value="155" name=""/>
         </Section>
       </Sections>
     </OneShotFile>
@@ -1499,7 +1497,7 @@
         <Sector filename="WORLD_WORLD_BIN" offset="721392"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="32" empty="true" name="Shop/Save text"/>
+        <Section value="0" entries="31" empty="true" name="Shop/Save text"/>
       </Sections>
     </OneShotFile>
 
@@ -1511,7 +1509,7 @@
         <Sector filename="WORLD_WORLD_BIN" offset="722296"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="173" empty="true" name="Dismiss quotes"/>
+        <Section value="0" entries="172" empty="true" name="Dismiss quotes"/>
       </Sections>
     </OneShotFile>
 
@@ -1524,10 +1522,9 @@
         <Sector filename="WORLD_WORLD_BIN" offset="726352"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="95" empty="false" name="Job requirements">
+        <Section value="0" entries="94" empty="false" name="Job requirements">
           <include name="JobNames" start="74" end="93" offset="-74"/>
           <include name="JobNames" start="1" end="74" offset="19"/>
-          <entry value="94" name=""/>
         </Section>
       </Sections>
     </OneShotFile>
@@ -1553,7 +1550,7 @@
         <Sector filename="WORLD_WORLD_BIN" offset="733348"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="74" empty="true" name="Shop text"/>
+        <Section value="0" entries="73" empty="true" name="Shop text"/>
       </Sections>
     </OneShotFile>
 
@@ -1566,31 +1563,31 @@
         <Sector filename="EVENT_CARD_OUT" offset="39740"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="1000" empty="true" name="Map locations"/>
+        <Section value="0" entries="44" empty="true" name="Map locations"/>
       </Sections>
     </OneShotFile>
 
     <OneShotFile>
       <DisplayName>CARD.OUT 1</DisplayName>
       <Guid>{E9CAD776-9944-4ed4-BBB4-A53F10424279}</Guid>
-      <Size>247</Size>
+      <Size>248</Size>
       <Sectors>
         <Sector filename="EVENT_CARD_OUT" offset="38588"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="29" empty="true"/>
+        <Section value="0" entries="26" empty="true"/>
       </Sections>
     </OneShotFile>
 
     <OneShotFile>
       <DisplayName>CARD.OUT 2</DisplayName>
       <Guid>{D7A6956F-6E93-4449-9E52-F6C0BE824F2F}</Guid>
-      <Size>904</Size>
+      <Size>903</Size>
       <Sectors>
-        <Sector filename="EVENT_CARD_OUT" offset="38835"/>
+        <Sector filename="EVENT_CARD_OUT" offset="38836"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="1000" empty="true"/>
+        <Section value="0" entries="31" empty="true"/>
       </Sections>
     </OneShotFile>
 
@@ -1602,7 +1599,7 @@
         <Sector filename="EVENT_CARD_OUT" offset="40428"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="1000" empty="true" name="Job names"/>
+        <Section value="0" entries="155" empty="true" name="Job names"/>
       </Sections>
     </OneShotFile>
 

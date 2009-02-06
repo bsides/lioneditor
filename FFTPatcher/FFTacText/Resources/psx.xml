@@ -3,7 +3,7 @@
   <QuickEdit>
     <JobDescriptions>
       <File>
-        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Guid>{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}</Guid>
         <Section>12</Section>
         <Offset>0</Offset>
       </File>
@@ -13,17 +13,17 @@
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Guid>{2C0D8754-9784-4D2B-A62E-58BC3296F6A1}</Guid>
         <Section>12</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Guid>{D1CA95EC-FAE1-41DD-AFB1-EF2EF2563025}</Guid>
         <Section>12</Section>
         <Offset>0</Offset>
       </File>
       <MainFile>
-        <Guid>{DB6D00B3-5992-4f8d-ABB7-0F566D14A01D}</Guid>
+        <Guid>{DB6D00B3-5992-4F8D-ABB7-0F566D14A01D}</Guid>
         <Section>12</Section>
         <Offset>0</Offset>
         <Length>160</Length>
@@ -31,22 +31,22 @@
     </JobDescriptions>
     <JobNames>
       <File>
-        <Guid>{4C29FBA2-B49B-4ba7-8880-E785A61743FB}</Guid>
+        <Guid>{4C29FBA2-B49B-4BA7-8880-E785A61743FB}</Guid>
         <Section>2</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Guid>{CFE9A6B2-3919-4B32-B76A-6BEAC2CA604F}</Guid>
         <Section>6</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Guid>{5AD4F95A-0C00-445D-8A29-EA4E09B9553F}</Guid>
         <Section>6</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{4EF37678-0F94-4f24-B383-43638C137302}</Guid>
+        <Guid>{4EF37678-0F94-4F24-B383-43638C137302}</Guid>
         <Section>0</Section>
         <Offset>0</Offset>
       </File>
@@ -66,22 +66,22 @@
     </JobNames>
     <ItemDescriptions>
       <File>
-        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Guid>{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}</Guid>
         <Section>13</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{E2BC5BE9-EBF9-4b1d-B533-1FEF6EC8C50C}</Guid>
+        <Guid>{E2BC5BE9-EBF9-4B1D-B533-1FEF6EC8C50C}</Guid>
         <Section>13</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Guid>{2C0D8754-9784-4D2B-A62E-58BC3296F6A1}</Guid>
         <Section>13</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Guid>{D1CA95EC-FAE1-41DD-AFB1-EF2EF2563025}</Guid>
         <Section>13</Section>
         <Offset>0</Offset>
       </File>
@@ -94,12 +94,12 @@
     </ItemDescriptions>
     <ItemNames>
       <File>
-        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Guid>{CFE9A6B2-3919-4B32-B76A-6BEAC2CA604F}</Guid>
         <Section>7</Section>
         <Offset>0</Offset>
       </File>
       <MainFile>
-        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Guid>{5AD4F95A-0C00-445D-8A29-EA4E09B9553F}</Guid>
         <Section>7</Section>
         <Offset>0</Offset>
         <Length>256</Length>
@@ -107,13 +107,13 @@
     </ItemNames>
     <SkillsetNames>
       <MainFile>
-        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Guid>{CFE9A6B2-3919-4B32-B76A-6BEAC2CA604F}</Guid>
         <Section>22</Section>
         <Offset>0</Offset>
         <Length>189</Length>
       </MainFile>
       <File>
-        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Guid>{5AD4F95A-0C00-445D-8A29-EA4E09B9553F}</Guid>
         <Section>22</Section>
         <Offset>0</Offset>
       </File>
@@ -125,17 +125,17 @@
     </SkillsetNames>
     <SkillsetDescriptions>
       <File>
-        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Guid>{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}</Guid>
         <Section>19</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Guid>{2C0D8754-9784-4D2B-A62E-58BC3296F6A1}</Guid>
         <Section>19</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Guid>{D1CA95EC-FAE1-41DD-AFB1-EF2EF2563025}</Guid>
         <Section>19</Section>
         <Offset>0</Offset>
       </File>
@@ -148,12 +148,12 @@
     </SkillsetDescriptions>
     <AbilityNames>
       <File>
-        <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+        <Guid>{CFE9A6B2-3919-4B32-B76A-6BEAC2CA604F}</Guid>
         <Section>14</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+        <Guid>{5AD4F95A-0C00-445D-8A29-EA4E09B9553F}</Guid>
         <Section>14</Section>
         <Offset>0</Offset>
       </File>
@@ -166,7 +166,7 @@
     </AbilityNames>
     <AbilityDescriptions>
       <File>
-        <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+        <Guid>{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}</Guid>
         <Section>15</Section>
         <Offset>265</Offset>
       </File>
@@ -176,17 +176,17 @@
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+        <Guid>{2C0D8754-9784-4D2B-A62E-58BC3296F6A1}</Guid>
         <Section>15</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+        <Guid>{D1CA95EC-FAE1-41DD-AFB1-EF2EF2563025}</Guid>
         <Section>15</Section>
         <Offset>0</Offset>
       </File>
       <MainFile>
-        <Guid>{DB6D00B3-5992-4f8d-ABB7-0F566D14A01D}</Guid>
+        <Guid>{DB6D00B3-5992-4F8D-ABB7-0F566D14A01D}</Guid>
         <Section>15</Section>
         <Offset>0</Offset>
         <Length>512</Length>
@@ -202,7 +202,7 @@
     </JobRequirements>
     <AbilityQuotes>
       <MainFile>
-        <Guid>{75CA7D0F-7752-477c-9133-26317BF788E7}</Guid>
+        <Guid>{75CA7D0F-7752-477C-9133-26317BF788E7}</Guid>
         <Section>0</Section>
         <Offset>0</Offset>
         <Length>512</Length>
@@ -212,7 +212,7 @@
   <Files>
     <SectionedFile>
       <DisplayName>ATCHELP.LZW</DisplayName>
-      <Guid>{8BF49EAB-6D21-44c6-B63F-F6315AAEFD9B}</Guid>
+      <Guid>{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}</Guid>
       <Size>92160</Size>
       <Sectors>
         <Sector filename="EVENT_ATCHELP_LZW" offset="0"/>
@@ -253,7 +253,7 @@
     </SectionedFile>
     <SectionedFile>
       <DisplayName>ATTACK.OUT</DisplayName>
-      <Guid>{4C29FBA2-B49B-4ba7-8880-E785A61743FB}</Guid>
+      <Guid>{4C29FBA2-B49B-4BA7-8880-E785A61743FB}</Guid>
       <Size>7783</Size>
       <Sectors>
         <Sector filename="EVENT_ATTACK_OUT" offset="58032"/>
@@ -288,7 +288,7 @@
     </SectionedFile>    
     <SectionedFile>
       <DisplayName>OPEN.LZW</DisplayName>
-      <Guid>{FBFFD898-2E12-4e3c-B73D-CA6FA6997F42}</Guid>
+      <Guid>{FBFFD898-2E12-4E3C-B73D-CA6FA6997F42}</Guid>
       <Size>22528</Size>
       <Sectors>
         <Sector filename="EVENT_OPEN_LZW" offset="0"/>
@@ -330,7 +330,7 @@
     </SectionedFile>
     <SectionedFile>
       <DisplayName>SAMPLE.LZW</DisplayName>
-      <Guid>{CFE9A6B2-3919-4b32-B76A-6BEAC2CA604F}</Guid>
+      <Guid>{CFE9A6B2-3919-4B32-B76A-6BEAC2CA604F}</Guid>
       <Size>19336</Size>
       <Sectors>
         <Sector filename="EVENT_SAMPLE_LZW" offset="0"/>
@@ -579,7 +579,7 @@
     </SectionedFile>
     <SectionedFile>
       <DisplayName>WORLD.LZW</DisplayName>
-      <Guid>{5AD4F95A-0C00-445d-8A29-EA4E09B9553F}</Guid>
+      <Guid>{5AD4F95A-0C00-445D-8A29-EA4E09B9553F}</Guid>
       <Size>58077</Size>
       <Sectors>
         <Sector filename="EVENT_WORLD_LZW" offset="0"/>
@@ -735,7 +735,7 @@
 
     <CompressedFile>
       <DisplayName>EQUIP.OUT</DisplayName>
-      <Guid>{E2BC5BE9-EBF9-4b1d-B533-1FEF6EC8C50C}</Guid>
+      <Guid>{E2BC5BE9-EBF9-4B1D-B533-1FEF6EC8C50C}</Guid>
       <Size>35511</Size>
       <Sectors>
         <Sector filename="EVENT_EQUIP_OUT" offset="68568"/>
@@ -769,7 +769,7 @@
 
     <CompressedFile>
       <DisplayName>HELP.LZW</DisplayName>
-      <Guid>{2C0D8754-9784-4d2b-A62E-58BC3296F6A1}</Guid>
+      <Guid>{2C0D8754-9784-4D2B-A62E-58BC3296F6A1}</Guid>
       <Size>92608</Size>
       <Sectors>
         <Sector filename="EVENT_HELP_LZW" offset="0"/>
@@ -817,7 +817,7 @@
 
     <CompressedFile>
       <DisplayName>JOBSTTS.OUT</DisplayName>
-      <Guid>{DB6D00B3-5992-4f8d-ABB7-0F566D14A01D}</Guid>
+      <Guid>{DB6D00B3-5992-4F8D-ABB7-0F566D14A01D}</Guid>
       <Size>43607</Size>
       <Sectors>
         <Sector filename="EVENT_JOBSTTS_OUT" offset="25864"/>
@@ -853,7 +853,7 @@
 
     <CompressedFile>
       <DisplayName>WLDHELP.LZW</DisplayName>
-      <Guid>{D1CA95EC-FAE1-41dd-AFB1-EF2EF2563025}</Guid>
+      <Guid>{D1CA95EC-FAE1-41DD-AFB1-EF2EF2563025}</Guid>
       <Size>110052</Size>
       <Sectors>
         <Sector filename="EVENT_WLDHELP_LZW" offset="0"/>
@@ -973,7 +973,7 @@
 
     <PartitionedFile>
       <DisplayName>SNPLMES.BIN</DisplayName>
-      <Guid>{3316AC7E-D094-4e3b-B1E8-7401EAD7ADEA}</Guid>
+      <Guid>{3316AC7E-D094-4E3B-B1E8-7401EAD7ADEA}</Guid>
       <PartitionSize>40960</PartitionSize>
       <Size>245760</Size>
       <Sectors>
@@ -1364,7 +1364,7 @@
         <Section value="51" entries="168" empty="true" name=""/>
         <Section value="52" entries="168" empty="true" name=""/>
         <Section value="53" entries="168" empty="true" name=""/>
-        <Section value="54" entries="168" empty="true" name=""/>
+        <Section value="54" entries="162" empty="true" name=""/>
         <Section value="55" entries="168" empty="true" name=""/>
         <Section value="56" entries="168" empty="true" name=""/>
         <Section value="57" entries="168" empty="true" name=""/>
@@ -1398,7 +1398,7 @@
         <Section value="82" entries="168" empty="true" name=""/>
         <Section value="83" entries="168" empty="true" name=""/>
         <Section value="84" entries="168" empty="true" name=""/>
-        <Section value="85" entries="168" empty="true" name=""/>
+        <Section value="85" entries="162" empty="true" name=""/>
         <Section value="86" entries="168" empty="true" name=""/>
         <Section value="87" entries="168" empty="true" name=""/>
         <Section value="88" entries="168" empty="true" name=""/>
@@ -1411,7 +1411,7 @@
         <Section value="94" entries="168" empty="true" name=""/>
         <Section value="95" entries="168" empty="true" name=""/>
         <Section value="96" entries="168" empty="true" name=""/>
-        <Section value="97" entries="168" empty="true" name=""/>
+        <Section value="97" entries="162" empty="true" name=""/>
         <Section value="98" entries="168" empty="true" name=""/>
         <Section value="99" entries="168" empty="true" name=""/>
 
@@ -1433,7 +1433,7 @@
 
     <OneShotFile>
       <DisplayName>SPELL.MES</DisplayName>
-      <Guid>{75CA7D0F-7752-477c-9133-26317BF788E7}</Guid>
+      <Guid>{75CA7D0F-7752-477C-9133-26317BF788E7}</Guid>
       <Size>14085</Size>
       <Sectors>
         <Sector filename="EVENT_SPELL_MES" offset="0"/>
@@ -1461,7 +1461,7 @@
 
     <OneShotFile>
       <DisplayName>WORLD.BIN 2</DisplayName>
-      <Guid>{4EF37678-0F94-4f24-B383-43638C137302}</Guid>
+      <Guid>{4EF37678-0F94-4F24-B383-43638C137302}</Guid>
       <Size>1410</Size>
       <Sectors>
         <Sector filename="WORLD_WORLD_BIN" offset="715064"/>
@@ -1491,7 +1491,7 @@
 
     <OneShotFile>
       <DisplayName>WORLD.BIN 4</DisplayName>
-      <Guid>{140908D5-11FF-4b72-9826-DA2142D76A23}</Guid>
+      <Guid>{140908D5-11FF-4B72-9826-DA2142D76A23}</Guid>
       <Size>903</Size>
       <Sectors>
         <Sector filename="WORLD_WORLD_BIN" offset="721392"/>
@@ -1503,7 +1503,7 @@
 
     <OneShotFile>
       <DisplayName>WORLD.BIN 5</DisplayName>
-      <Guid>{162DC5BF-983B-4e04-972E-C51B51EE1DCA}</Guid>
+      <Guid>{162DC5BF-983B-4E04-972E-C51B51EE1DCA}</Guid>
       <Size>4053</Size>
       <Sectors>
         <Sector filename="WORLD_WORLD_BIN" offset="722296"/>
@@ -1544,7 +1544,7 @@
 
     <OneShotFile>
       <DisplayName>WORLD.BIN 8</DisplayName>
-      <Guid>{CE15EBFC-E888-43d2-B79B-211148F74409}</Guid>
+      <Guid>{CE15EBFC-E888-43D2-B79B-211148F74409}</Guid>
       <Size>2934</Size>
       <Sectors>
         <Sector filename="WORLD_WORLD_BIN" offset="733348"/>
@@ -1556,7 +1556,7 @@
 
     <OneShotFile>
       <DisplayName>WORLD.BIN 9</DisplayName>
-      <Guid>{AD068B24-812B-4dfd-893E-DA321A6F7EA6}</Guid>
+      <Guid>{AD068B24-812B-4DFD-893E-DA321A6F7EA6}</Guid>
       <Size>683</Size>
       <Sectors>
         <Sector filename="WORLD_WORLD_BIN" offset="582048"/>
@@ -1569,7 +1569,7 @@
 
     <OneShotFile>
       <DisplayName>CARD.OUT 1</DisplayName>
-      <Guid>{E9CAD776-9944-4ed4-BBB4-A53F10424279}</Guid>
+      <Guid>{E9CAD776-9944-4ED4-BBB4-A53F10424279}</Guid>
       <Size>248</Size>
       <Sectors>
         <Sector filename="EVENT_CARD_OUT" offset="38588"/>

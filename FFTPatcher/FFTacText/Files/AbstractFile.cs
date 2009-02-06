@@ -9,6 +9,27 @@ namespace FFTPatcher.TextEditor
         private bool dirty = true;
         private IList<byte> cachedBytes;
 
+        protected AbstractFile( GenericCharMap charmap, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, bool compressible )
+            : this( charmap, layout, compressible )
+        {
+            List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
+            for ( int i = 0; i < NumberOfSections; i++ )
+            {
+                string[] thisSection = new string[strings[i].Count];
+                strings[i].CopyTo( thisSection, 0 );
+                for ( int j = 0; j < thisSection.Length; j++ )
+                {
+                    if ( !CharMap.ValidateString( thisSection[j] ) )
+                    {
+                        throw new InvalidStringException( layout.Guid.ToString(), i, j, thisSection[j] );
+                    }
+                }
+                sections.Add( thisSection );
+            }
+
+            this.Sections = sections.AsReadOnly();
+        }
+
         protected AbstractFile( GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, bool compressible )
         {
             NumberOfSections = layout.SectionLengths.Count;
@@ -19,6 +40,42 @@ namespace FFTPatcher.TextEditor
             SectionNames = layout.SectionNames;
             DisplayName = layout.DisplayName;
             Compressible = compressible;
+        }
+
+        public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
+        {
+            switch ( type )
+            {
+                case FileType.CompressedFile:
+                    return new SectionedFile( charmap, layout, bytes, true );
+                    break;
+                case FileType.SectionedFile:
+                    return new SectionedFile( charmap, layout, bytes, false );
+                    break;
+                case FileType.OneShotFile:
+                case FileType.PartitionedFile:
+                    return new PartitionedFile( charmap, layout, bytes );
+                    break;
+            }
+            return null;
+        }
+
+        public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
+        {
+            switch ( type )
+            {
+                case FileType.CompressedFile:
+                    return new SectionedFile( charmap, layout, strings, true );
+                    break;
+                case FileType.SectionedFile:
+                    return new SectionedFile( charmap, layout, strings, false );
+                    break;
+                case FileType.OneShotFile:
+                case FileType.PartitionedFile:
+                    return new PartitionedFile( charmap, layout, strings );
+                    break;
+            }
+            return null;
         }
 
         public virtual string this[int section, int entry]

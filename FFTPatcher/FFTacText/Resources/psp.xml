@@ -3,45 +3,45 @@
   <QuickEdit>
     <JobDescriptions>
       <MainFile>
-        <Guid>{B66C9774-1EA0-422c-9148-B5019301EAB4}</Guid>
+        <Guid>{B66C9774-1EA0-422C-9148-B5019301EAB4}</Guid>
         <Section>12</Section>
         <Offset>0</Offset>
         <Length>169</Length>
       </MainFile>
       <File>
-        <Guid>{8B291A28-EAEA-42e7-8BB3-150871BBB89F}</Guid>
+        <Guid>{8B291A28-EAEA-42E7-8BB3-150871BBB89F}</Guid>
         <Offset>0</Offset>
         <Section>12</Section>
       </File>
       <File>
-        <Guid>{7B15B85F-238D-40d5-AED0-5BC1E1BBF8C4}</Guid>
+        <Guid>{7B15B85F-238D-40D5-AED0-5BC1E1BBF8C4}</Guid>
         <Offset>0</Offset>
         <Section>12</Section>
       </File>
     </JobDescriptions>
     <JobNames>
       <File>
-        <Guid>{1C12B7FA-638A-493f-AB21-929236DAA15F}</Guid>
+        <Guid>{1C12B7FA-638A-493F-AB21-929236DAA15F}</Guid>
         <Offset>0</Offset>
         <Section>6</Section>
       </File>
       <File>
-        <Guid>{396EF3EC-D861-4dc9-B4DA-BBCEC443FFC2}</Guid>
+        <Guid>{396EF3EC-D861-4DC9-B4DA-BBCEC443FFC2}</Guid>
         <Offset>0</Offset>
         <Section>4</Section>
       </File>
       <File>
-        <Guid>{CE4B8E36-0DA8-4a2e-A03E-ABEF21AD3A03}</Guid>
+        <Guid>{CE4B8E36-0DA8-4A2E-A03E-ABEF21AD3A03}</Guid>
         <Offset>0</Offset>
         <Section>2</Section>
       </File>
       <File>
-        <Guid>{B213AD73-E433-46a8-BBD2-34147A1A7B6D}</Guid>
+        <Guid>{B213AD73-E433-46A8-BBD2-34147A1A7B6D}</Guid>
         <Offset>0</Offset>
         <Section>6</Section>
       </File>
       <MainFile>
-        <Guid>{7A61692C-D0A8-471c-8C42-95D9D00B79FD}</Guid>
+        <Guid>{7A61692C-D0A8-471C-8C42-95D9D00B79FD}</Guid>
         <Offset>0</Offset>
         <Section>0</Section>
         <Length>169</Length>
@@ -49,48 +49,48 @@
     </JobNames>
     <ItemDescriptions>
       <MainFile>
-        <Guid>{B66C9774-1EA0-422c-9148-B5019301EAB4}</Guid>
+        <Guid>{B66C9774-1EA0-422C-9148-B5019301EAB4}</Guid>
         <Offset>0</Offset>
         <Section>13</Section>
         <Length>316</Length>
       </MainFile>
       <File>
-        <Guid>{8B291A28-EAEA-42e7-8BB3-150871BBB89F}</Guid>
+        <Guid>{8B291A28-EAEA-42E7-8BB3-150871BBB89F}</Guid>
         <Offset>0</Offset>
         <Section>13</Section>
       </File>
       <File>
-        <Guid>{7B15B85F-238D-40d5-AED0-5BC1E1BBF8C4}</Guid>
+        <Guid>{7B15B85F-238D-40D5-AED0-5BC1E1BBF8C4}</Guid>
         <Offset>0</Offset>
         <Section>13</Section>
       </File>
     </ItemDescriptions>
     <ItemNames>
       <MainFile>
-        <Guid>{1C12B7FA-638A-493f-AB21-929236DAA15F}</Guid>
+        <Guid>{1C12B7FA-638A-493F-AB21-929236DAA15F}</Guid>
         <Section>7</Section>
         <Offset>0</Offset>
         <Length>316</Length>
       </MainFile>
       <File>
-        <Guid>{B213AD73-E433-46a8-BBD2-34147A1A7B6D}</Guid>
+        <Guid>{B213AD73-E433-46A8-BBD2-34147A1A7B6D}</Guid>
         <Section>7</Section>
         <Offset>0</Offset>
       </File>
     </ItemNames>
     <SkillsetNames>
       <File>
-        <Guid>{1C12B7FA-638A-493f-AB21-929236DAA15F}</Guid>
+        <Guid>{1C12B7FA-638A-493F-AB21-929236DAA15F}</Guid>
         <Section>22</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{B213AD73-E433-46a8-BBD2-34147A1A7B6D}</Guid>
+        <Guid>{B213AD73-E433-46A8-BBD2-34147A1A7B6D}</Guid>
         <Section>22</Section>
         <Offset>0</Offset>
       </File>
       <MainFile>
-        <Guid>{21DE48BF-8E4B-4df4-9C09-5EAE49756526}</Guid>
+        <Guid>{21DE48BF-8E4B-4DF4-9C09-5EAE49756526}</Guid>
         <Section>0</Section>
         <Offset>0</Offset>
         <Length>227</Length>
@@ -98,35 +98,35 @@
     </SkillsetNames>
     <SkillsetDescriptions>
       <MainFile>
-        <Guid>{B66C9774-1EA0-422c-9148-B5019301EAB4}</Guid>
+        <Guid>{B66C9774-1EA0-422C-9148-B5019301EAB4}</Guid>
         <Section>19</Section>
         <Offset>0</Offset>
         <Length>227</Length>
       </MainFile>
       <File>
-        <Guid>{8B291A28-EAEA-42e7-8BB3-150871BBB89F}</Guid>
+        <Guid>{8B291A28-EAEA-42E7-8BB3-150871BBB89F}</Guid>
         <Section>19</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{7B15B85F-238D-40d5-AED0-5BC1E1BBF8C4}</Guid>
+        <Guid>{7B15B85F-238D-40D5-AED0-5BC1E1BBF8C4}</Guid>
         <Section>19</Section>
         <Offset>0</Offset>
       </File>
     </SkillsetDescriptions>
     <AbilityNames>
       <File>
-        <Guid>{1C12B7FA-638A-493f-AB21-929236DAA15F}</Guid>
+        <Guid>{1C12B7FA-638A-493F-AB21-929236DAA15F}</Guid>
         <Section>14</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{B213AD73-E433-46a8-BBD2-34147A1A7B6D}</Guid>
+        <Guid>{B213AD73-E433-46A8-BBD2-34147A1A7B6D}</Guid>
         <Section>14</Section>
         <Offset>0</Offset>
       </File>
       <MainFile>
-        <Guid>{AFF6A62D-A9B1-400f-A247-B21E49B0FCEC}</Guid>
+        <Guid>{AFF6A62D-A9B1-400F-A247-B21E49B0FCEC}</Guid>
         <Section>0</Section>
         <Offset>0</Offset>
         <Length>512</Length>
@@ -134,17 +134,17 @@
     </AbilityNames>
     <AbilityDescriptions>
       <File>
-        <Guid>{B66C9774-1EA0-422c-9148-B5019301EAB4}</Guid>
+        <Guid>{B66C9774-1EA0-422C-9148-B5019301EAB4}</Guid>
         <Section>15</Section>
         <Offset>0</Offset>
       </File>
       <File>
-        <Guid>{7B15B85F-238D-40d5-AED0-5BC1E1BBF8C4}</Guid>
+        <Guid>{7B15B85F-238D-40D5-AED0-5BC1E1BBF8C4}</Guid>
         <Section>15</Section>
         <Offset>0</Offset>
       </File>
       <MainFile>
-        <Guid>{8B291A28-EAEA-42e7-8BB3-150871BBB89F}</Guid>
+        <Guid>{8B291A28-EAEA-42E7-8BB3-150871BBB89F}</Guid>
         <Section>15</Section>
         <Offset>0</Offset>
         <Length>512</Length>
@@ -162,7 +162,7 @@
   <Files>
     <SectionedFile>
       <DisplayName>ATCHELP.LZW</DisplayName>
-      <Guid>{B66C9774-1EA0-422c-9148-B5019301EAB4}</Guid>
+      <Guid>{B66C9774-1EA0-422C-9148-B5019301EAB4}</Guid>
       <Size>129076</Size>
       <Sectors>
         <FFTPack index="EVENT_ATCHELP_LZW" offset="0"/>
@@ -469,7 +469,7 @@
 
     <SectionedFile>
       <DisplayName>BOOT.BIN[28E5EC]</DisplayName>
-      <Guid>{1C12B7FA-638A-493f-AB21-929236DAA15F}</Guid>
+      <Guid>{1C12B7FA-638A-493F-AB21-929236DAA15F}</Guid>
       <Size>22538</Size>
       <Sectors>
         <BootBin offset="2680300"/>
@@ -685,7 +685,7 @@
 
     <SectionedFile>
       <DisplayName>BOOT.BIN[299024]</DisplayName>
-      <Guid>{396EF3EC-D861-4dc9-B4DA-BBCEC443FFC2}</Guid>
+      <Guid>{396EF3EC-D861-4DC9-B4DA-BBCEC443FFC2}</Guid>
       <Size>14510</Size>
       <Sectors>
         <BootBin offset="2723876"/>
@@ -703,7 +703,7 @@
 
     <SectionedFile>
       <DisplayName>BOOT.BIN[29E334]</DisplayName>
-      <Guid>{CE4B8E36-0DA8-4a2e-A03E-ABEF21AD3A03}</Guid>
+      <Guid>{CE4B8E36-0DA8-4A2E-A03E-ABEF21AD3A03}</Guid>
       <Size>10351</Size>
       <Sectors>
         <BootBin offset="2745140"/>
@@ -791,7 +791,7 @@
 
     <SectionedFile>
       <DisplayName>WORLD.LZW</DisplayName>
-      <Guid>{B213AD73-E433-46a8-BBD2-34147A1A7B6D}</Guid>
+      <Guid>{B213AD73-E433-46A8-BBD2-34147A1A7B6D}</Guid>
       <Size>81920</Size>
       <Sectors>
         <FFTPack index="EVENT_WORLD_LZW" offset="0"/>
@@ -852,7 +852,7 @@
 -->
     <CompressedFile>
       <DisplayName>BOOT.BIN[2A1630]</DisplayName>
-      <Guid>{8B291A28-EAEA-42e7-8BB3-150871BBB89F}</Guid>
+      <Guid>{8B291A28-EAEA-42E7-8BB3-150871BBB89F}</Guid>
       <Size>220264</Size>
       <Sectors>
         <BootBin offset="2758192"/>
@@ -904,7 +904,7 @@
 
     <CompressedFile>
       <DisplayName>BOOT.BIN[32D368]</DisplayName>
-      <Guid>{7B15B85F-238D-40d5-AED0-5BC1E1BBF8C4}</Guid>
+      <Guid>{7B15B85F-238D-40D5-AED0-5BC1E1BBF8C4}</Guid>
       <Size>184155</Size>
       <Sectors>
         <BootBin offset="3330920"/>
@@ -969,7 +969,7 @@
     -->
     <OneShotFile>
       <DisplayName>BOOT.BIN 1</DisplayName>
-      <Guid>{21DE48BF-8E4B-4df4-9C09-5EAE49756526}</Guid>
+      <Guid>{21DE48BF-8E4B-4DF4-9C09-5EAE49756526}</Guid>
       <Size>1218</Size>
       <Sectors>
         <BootBin offset="3305252"/>
@@ -982,7 +982,7 @@
     </OneShotFile>
     <OneShotFile>
       <DisplayName>BOOT.BIN 2</DisplayName>
-      <Guid>{7A61692C-D0A8-471c-8C42-95D9D00B79FD}</Guid>
+      <Guid>{7A61692C-D0A8-471C-8C42-95D9D00B79FD}</Guid>
       <Size>1545</Size>
       <Sectors>
         <BootBin offset="3306472"/>
@@ -996,7 +996,7 @@
 
     <OneShotFile>
       <DisplayName>BOOT.BIN 3</DisplayName>
-      <Guid>{AFF6A62D-A9B1-400f-A247-B21E49B0FCEC}</Guid>
+      <Guid>{AFF6A62D-A9B1-400F-A247-B21E49B0FCEC}</Guid>
       <Size>5092</Size>
       <Sectors>
         <BootBin offset="3308020"/>
@@ -1010,7 +1010,7 @@
 
     <OneShotFile>
       <DisplayName>BOOT.BIN 4</DisplayName>
-      <Guid>{156491F6-8376-48b1-B9DB-4C8E5B279303}</Guid>
+      <Guid>{156491F6-8376-48B1-B9DB-4C8E5B279303}</Guid>
       <Size>1616</Size>
       <Sectors>
         <BootBin offset="3313112"/>
@@ -1022,7 +1022,7 @@
 
     <OneShotFile>
       <DisplayName>BOOT.BIN 5</DisplayName>
-      <Guid>{8AB063AC-7E8E-4b8f-9F67-11D16560B874}</Guid>
+      <Guid>{8AB063AC-7E8E-4B8F-9F67-11D16560B874}</Guid>
       <Size>4246</Size>
       <Sectors>
         <BootBin offset="3314728"/>
@@ -1046,7 +1046,7 @@
 
     <OneShotFile>
       <DisplayName>BOOT.BIN 7</DisplayName>
-      <Guid>{331C389C-15BD-43de-ADAF-EEFE3871C051}</Guid>
+      <Guid>{331C389C-15BD-43DE-ADAF-EEFE3871C051}</Guid>
       <Size>3841</Size>
       <Sectors>
         <BootBin offset="3327076"/>
@@ -1058,7 +1058,7 @@
 
     <PartitionedFile>
       <DisplayName>SNPLMES.BIN</DisplayName>
-      <Guid>{66600266-8B13-4dd5-AE01-82E2FF8516B3}</Guid>
+      <Guid>{66600266-8B13-4DD5-AE01-82E2FF8516B3}</Guid>
       <PartitionSize>40960</PartitionSize>
       <Size>245760</Size>
       <Sectors>
@@ -1076,7 +1076,7 @@
 
     <PartitionedFile>
       <DisplayName>WLDMES.BIN</DisplayName>
-      <Guid>{CC222621-1B07-45e6-8E3B-8A72E02A1CC8}</Guid>
+      <Guid>{CC222621-1B07-45E6-8E3B-8A72E02A1CC8}</Guid>
       <PartitionSize>32768</PartitionSize>
       <Size>3964928</Size>
       <Sectors>

@@ -76,6 +76,7 @@
     <Compile Include="Files\QuickEdit.cs" />
     <Compile Include="Files\SectionedFile.cs" />
     <Compile Include="Files\FFTTextFactory.cs" />
+    <Compile Include="InvalidStringException.cs" />
     <Compile Include="Utilities\DTE.cs" />
     <Compile Include="Utilities\EntryNames.cs" />
     <Compile Include="Utilities\NotifyStringList.cs" />

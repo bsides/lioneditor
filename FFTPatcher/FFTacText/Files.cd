@@ -6,7 +6,7 @@
       <Method Name="FFTText" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ACAAEAAAABAAAAAAAgIAAAACAAAAAAgCAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAACAABAAAAAAAgIAAAAAAAAAAAgCAAAAAAAAAIA=</HashCode>
       <FileName>Files\FFTText.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -29,14 +29,14 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAACAAIAACAAAAQAAABAAAAAACAAAgAAAA=</HashCode>
+      <HashCode>AAIEAAAEAAAACAAIAACAAAAQAAABAAAAAACAgAgACAQ=</HashCode>
       <FileName>Files\FFTTextFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FFTPatcher.TextEditor.AbstractFile">
     <Position X="11.25" Y="4.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAQABAACAAICYAAQEAAEAQAFCCIAEAAAAAAAAg=</HashCode>
+      <HashCode>AAAAEACQABAACAAICYAAQEACEAQEHCCIgEAAAABAAAg=</HashCode>
       <FileName>Files\AbstractFile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -80,7 +80,7 @@
   <Interface Name="FFTPatcher.TextEditor.ISerializableFile" Collapsed="true">
     <Position X="14.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAIAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAABAAAAAIAAAAAAACAAAEAAAIAAAAAABAAAA=</HashCode>
       <FileName>Files\ISerializableFile.cs</FileName>
     </TypeIdentifier>
   </Interface>

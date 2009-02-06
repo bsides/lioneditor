@@ -8,6 +8,11 @@ namespace FFTPatcher.TextEditor
     {
         public int PartitionSize { get; private set; }
 
+        public PartitionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
+            : base( map, layout, strings, false )
+        {
+        }
+
         public PartitionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
             : base( map, layout, false )
         {

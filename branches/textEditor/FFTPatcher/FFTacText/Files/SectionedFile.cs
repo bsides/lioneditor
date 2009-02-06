@@ -10,6 +10,16 @@ namespace FFTPatcher.TextEditor
 
         protected override int DataStart { get { return dataStart; } }
 
+        public SectionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
+            : this( map, layout, strings, false )
+        {
+        }
+
+        public SectionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, bool compressed ) :
+            base( map, layout, strings, compressed )
+        {
+        }
+
         public SectionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
             : this( map, layout, bytes, false )
         {

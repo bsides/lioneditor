@@ -37,6 +37,7 @@ namespace FFTPatcher.TextEditor
             public IList<string> SectionNames { get; set; }
             public IList<IList<string>> EntryNames { get; set; }
             public IList<IList<int>> DisallowedEntries { get; set; }
+            public KeyValuePair<Enum, int> PrimaryFile { get; set; }
         }
 
         delegate IList<byte> BytesFromIso( Stream iso, Enum file, int offset, int size );
@@ -68,89 +69,103 @@ namespace FFTPatcher.TextEditor
                 throw new ArgumentException();
             }
         }
-        private static IDictionary<Guid, ISerializableFile> GetFiles( Stream iso, Context context, XmlDocument doc, BytesFromIso reader, GenericCharMap charmap )
+
+        private static FileInfo GetFileInfo( Context context, XmlNode node )
+        {
+            string displayName = node.SelectSingleNode( "DisplayName" ).InnerText;
+            Guid guid = new Guid( node.SelectSingleNode( "Guid" ).InnerText );
+            int size = Int32.Parse( node.SelectSingleNode( "Size" ).InnerText );
+            FileType filetype = (FileType)Enum.Parse( typeof( FileType ), node.Name );
+
+            int sectionCount = Int32.Parse( node.SelectSingleNode( "Sections/@count" ).InnerText );
+            int[] sectionLengths = new int[sectionCount];
+            for ( int i = 0; i < sectionCount; i++ )
+            {
+                sectionLengths[i] = Int32.Parse( node.SelectSingleNode( string.Format( "Sections/Section[@value='{0}']/@entries", i ) ).InnerText );
+            }
+            XmlNodeList sectors = node.SelectNodes( "Sectors/*" );
+            Dictionary<SectorType, IList<KeyValuePair<Enum, int>>> dict = new Dictionary<SectorType, IList<KeyValuePair<Enum, int>>>( 3 );
+            bool first = true;
+            IList<byte> bytes = null;
+            KeyValuePair<Enum, int> primaryFile = new KeyValuePair<Enum, int>();
+            foreach ( XmlNode sectorNode in sectors )
+            {
+                SectorType sectorType = (SectorType)Enum.Parse( typeof( SectorType ), sectorNode.Name );
+                if ( !dict.ContainsKey( sectorType ) )
+                {
+                    dict.Add( sectorType, new List<KeyValuePair<Enum, int>>() );
+                }
+                int offset = Int32.Parse( sectorNode.Attributes["offset"].InnerText );
+                Enum fileEnum = null;
+                switch ( sectorType )
+                {
+                    case SectorType.BootBin:
+                        dict[sectorType].Add( new KeyValuePair<Enum, int>( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, offset ) );
+                        dict[sectorType].Add( new KeyValuePair<Enum, int>( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, offset ) );
+                        fileEnum = PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN;
+                        break;
+                    case SectorType.FFTPack:
+                        Datatypes.FFTPack.Files fftPackFile = (Datatypes.FFTPack.Files)Enum.Parse( typeof( Datatypes.FFTPack.Files ), sectorNode.SelectSingleNode( "@index" ).InnerText );
+                        dict[sectorType].Add( new KeyValuePair<Enum, int>( fftPackFile, offset ) );
+                        fileEnum = fftPackFile;
+                        break;
+                    case SectorType.Sector:
+                        PsxIso.Sectors file = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), sectorNode.SelectSingleNode( "@filename" ).InnerText );
+                        dict[sectorType].Add( new KeyValuePair<Enum, int>( file, offset ) );
+                        fileEnum = file;
+                        break;
+                }
+
+
+                if ( first )
+                {
+                    //bytes = reader( iso, fileEnum, offset, size );
+                    primaryFile = new KeyValuePair<Enum, int>( fileEnum, offset );
+                    first = false;
+                }
+            }
+
+            IList<IList<string>> entryNames = GetEntryNames( node.SelectSingleNode( "Sections" ), node.SelectSingleNode( "//Templates" ) );
+            IList<string> sectionNames = GetSectionNames( node.SelectSingleNode( "Sections" ) );
+            IList<IList<int>> disallowedEntries = GetDisallowedEntries( node, sectionLengths.Length );
+
+            FileInfo fi = new FileInfo
+            {
+                Context = context,
+                DisplayName = displayName,
+                DisallowedEntries = disallowedEntries.AsReadOnly(),
+                EntryNames = entryNames.AsReadOnly(),
+                FileType = filetype,
+                Guid = guid,
+                SectionLengths = sectionLengths.AsReadOnly(),
+                Sectors = new ReadOnlyDictionary<SectorType, IList<KeyValuePair<Enum, int>>>( dict ),
+                SectionNames = sectionNames,
+                Size = size,
+                PrimaryFile = primaryFile
+            };
+
+            return fi;
+        }
+
+        private static IDictionary<Guid, ISerializableFile> GetFiles( Stream iso, Context context, XmlDocument layoutDoc, BytesFromIso reader, GenericCharMap charmap )
         {
             Dictionary<Guid, ISerializableFile> files = new Dictionary<Guid, ISerializableFile>();
-            foreach ( XmlNode node in doc.SelectNodes( "//Files/*" ) )
+            foreach ( XmlNode node in layoutDoc.SelectNodes( "//Files/*" ) )
             {
-                string displayName = node.SelectSingleNode( "DisplayName" ).InnerText;
-                Guid guid = new Guid( node.SelectSingleNode( "Guid" ).InnerText );
-                int size = Int32.Parse( node.SelectSingleNode( "Size" ).InnerText );
-                FileType filetype = (FileType)Enum.Parse( typeof( FileType ), node.Name );
+                FileInfo fi = GetFileInfo( context, node );
 
-                int sectionCount = Int32.Parse( node.SelectSingleNode( "Sections/@count" ).InnerText );
-                int[] sectionLengths = new int[sectionCount];
-                for ( int i = 0; i < sectionCount; i++ )
-                {
-                    sectionLengths[i] = Int32.Parse( node.SelectSingleNode( string.Format( "Sections/Section[@value='{0}']/@entries", i ) ).InnerText );
-                }
-                XmlNodeList sectors = node.SelectNodes( "Sectors/*" );
-                Dictionary<SectorType, IList<KeyValuePair<Enum, int>>> dict = new Dictionary<SectorType, IList<KeyValuePair<Enum, int>>>( 3 );
-                bool first = true;
-                IList<byte> bytes = null;
-                foreach ( XmlNode sectorNode in sectors )
-                {
-                    SectorType sectorType = (SectorType)Enum.Parse( typeof( SectorType ), sectorNode.Name );
-                    if ( !dict.ContainsKey( sectorType ) )
-                    {
-                        dict.Add( sectorType, new List<KeyValuePair<Enum, int>>() );
-                    }
-                    int offset = Int32.Parse( sectorNode.Attributes["offset"].InnerText );
-                    Enum fileEnum = null;
-                    switch ( sectorType )
-                    {
-                        case SectorType.BootBin:
-                            dict[sectorType].Add( new KeyValuePair<Enum, int>( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, offset ) );
-                            dict[sectorType].Add( new KeyValuePair<Enum, int>( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, offset ) );
-                            fileEnum = PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN;
-                            break;
-                        case SectorType.FFTPack:
-                            Datatypes.FFTPack.Files fftPackFile = (Datatypes.FFTPack.Files)Enum.Parse( typeof( Datatypes.FFTPack.Files ), sectorNode.SelectSingleNode( "@index" ).InnerText );
-                            dict[sectorType].Add( new KeyValuePair<Enum, int>( fftPackFile, offset ) );
-                            fileEnum = fftPackFile;
-                            break;
-                        case SectorType.Sector:
-                            PsxIso.Sectors file = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), sectorNode.SelectSingleNode( "@filename" ).InnerText );
-                            dict[sectorType].Add( new KeyValuePair<Enum, int>( file, offset ) );
-                            fileEnum = file;
-                            break;
-                    }
-                    if ( first )
-                    {
-                        bytes = reader( iso, fileEnum, offset, size );
-                        first = false;
-                    }
-                }
-
-                IList<IList<string>> entryNames = GetEntryNames( node.SelectSingleNode( "Sections" ), node.SelectSingleNode( "//Templates" ) );
-                IList<string> sectionNames = GetSectionNames( node.SelectSingleNode( "Sections" ) );
-                IList<IList<int>> disallowedEntries = GetDisallowedEntries( node, sectionLengths.Length );
-
-                FileInfo fi = new FileInfo
-                {
-                    Context = context,
-                    DisplayName = displayName,
-                    DisallowedEntries = disallowedEntries.AsReadOnly(),
-                    EntryNames = entryNames.AsReadOnly(),
-                    FileType = filetype,
-                    Guid = guid,
-                    SectionLengths = sectionLengths.AsReadOnly(),
-                    Sectors = new ReadOnlyDictionary<SectorType, IList<KeyValuePair<Enum, int>>>( dict ),
-                    SectionNames = sectionNames,
-                    Size = size
-                };
-
-                switch ( filetype )
+                IList<byte> bytes = reader( iso, fi.PrimaryFile.Key, fi.PrimaryFile.Value, fi.Size );
+                switch ( fi.FileType )
                 {
                     case FileType.CompressedFile:
-                        files.Add( guid, new SectionedFile( charmap, fi, bytes, true ) );
+                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, true ) );
                         break;
                     case FileType.SectionedFile:
-                        files.Add( guid, new SectionedFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes ) );
                         break;
                     case FileType.OneShotFile:
                     case FileType.PartitionedFile:
-                        files.Add( guid, new PartitionedFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new PartitionedFile( charmap, fi, bytes ) );
                         break;
                 }
             }
@@ -218,6 +233,56 @@ namespace FFTPatcher.TextEditor
             IDictionary<Guid, ISerializableFile> files = GetFiles( iso, context, doc, reader, charmap );
             var quickEdit = new QuickEdit( files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ) ) );
             return new FFTText( files, quickEdit );
+        }
+
+
+        public static FFTText GetFilesXml( string filename )
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load( filename );
+            return GetFilesXml( doc );
+        }
+
+        public static FFTText GetFilesXml( XmlDocument doc )
+        {
+            Context context = (Context)Enum.Parse( typeof( Context ), doc.SelectSingleNode( "/FFTText/@context" ).InnerText );
+            XmlDocument layoutDoc = new XmlDocument();
+            layoutDoc.LoadXml( context == Context.US_PSP ? Properties.Resources.psp : Properties.Resources.psx );
+            GenericCharMap charmap = ( context == Context.US_PSP ) ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
+
+            Dictionary<Guid, ISerializableFile> result = new Dictionary<Guid, ISerializableFile>();
+            foreach ( XmlNode fileNode in doc.SelectNodes( "//File" ) )
+            {
+                string guidText = fileNode.SelectSingleNode( "Guid" ).InnerText;
+                Guid guid = new Guid( guidText );
+                FileInfo fi = GetFileInfo( context, layoutDoc.SelectSingleNode( string.Format( "//Files/*[Guid='{0}']", guidText ) ) );
+                result.Add(
+                    guid,
+                    AbstractFile.ConstructFile( fi.FileType, charmap, fi, GetStrings( fileNode.SelectSingleNode( "Sections" ) ) ) );
+            }
+
+            var quickEdit = new QuickEdit( result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ) ) );
+            return new FFTText( result, quickEdit );
+
+        }
+
+        private static IList<IList<string>> GetStrings( XmlNode sectionsNode )
+        {
+            XmlNodeList sections = sectionsNode.SelectNodes( "Section" );
+
+            List<IList<string>> result = new List<IList<string>>( sections.Count );
+
+            foreach ( XmlNode sectionNode in sections )
+            {
+                XmlNodeList entries = sectionNode.SelectNodes( "Entry" );
+                List<string> thisSection = new List<string>( entries.Count );
+                foreach ( XmlNode entry in entries )
+                {
+                    thisSection.Add( entry.InnerText );
+                }
+                result.Add( thisSection.ToArray() );
+            }
+            return result.AsReadOnly();
         }
 
         private static IList<string> GetSectionNames( XmlNode sectionsNode )
@@ -298,6 +363,56 @@ namespace FFTPatcher.TextEditor
             }
 
             return result.AsReadOnly();
+        }
+
+        private static void WriteFileXml( ISerializableFile file, XmlWriter writer )
+        {
+            writer.WriteStartElement( "File" );
+            writer.WriteElementString( "Guid", file.Layout.Guid.ToString("B").ToUpper() );
+            writer.WriteStartElement( "Sections" );
+            int numSections = file.NumberOfSections;
+            for ( int i = 0; i < numSections; i++ )
+            {
+                writer.WriteStartElement( "Section" );
+                int length = file.SectionLengths[i];
+                for ( int j = 0; j < length; j++ )
+                {
+                    writer.WriteElementString( "Entry", file[i, j] );
+                }
+
+                writer.WriteEndElement(); // Section
+            }
+
+            writer.WriteEndElement(); // Sections
+            writer.WriteEndElement(); // File
+        }
+
+        public static void WriteXml( FFTText text, string filename )
+        {
+            using ( Stream stream = File.Open( filename, FileMode.Create, FileAccess.ReadWrite ) )
+            {
+                WriteXml( text, stream );
+            }
+        }
+
+        public static void WriteXml( FFTText text, Stream output )
+        {
+            XmlTextWriter writer = new XmlTextWriter( output, Encoding.UTF8 );
+            writer.Formatting = Formatting.Indented;
+            writer.Indentation = 3;
+            writer.IndentChar = ' ';
+
+            writer.WriteStartDocument();
+            writer.WriteStartElement( "FFTText" );
+            writer.WriteAttributeString( "context", text.Filetype.ToString() );
+            IList<ISerializableFile> files = new List<ISerializableFile>( text.Files.Count );
+            text.Files.FindAll( f => f is ISerializableFile ).ForEach( s => files.Add( s as ISerializableFile ) );
+
+            files.ForEach( f => WriteFileXml( f, writer ) );
+
+            writer.WriteEndElement(); // FFTText
+            writer.WriteEndDocument();
+            writer.Flush();
         }
     }
 }

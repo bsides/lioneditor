@@ -150,9 +150,7 @@ namespace FFTPatcher.TextEditor
             }
 
             StringBuilder sb = new StringBuilder( Layout.Size );
-            Sections.ForEach( s => s.ForEach( t => sb.Append( t ) ) );
-
-            var dict = TextUtilities.GetPairAndTripleCounts( sb.ToString(), replacements );
+            Sections.ForEach( s => s.ForEach( t => sb.Append( t ).Append( "{0xFE}" ) ) );
 
             result.AddRange( currentPairs );
             TextUtilities.DoDTEEncoding( secs, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
@@ -165,7 +163,11 @@ namespace FFTPatcher.TextEditor
                 return result;
             }
 
-            int j = 0;
+            sb = new StringBuilder( Layout.Size );
+            secs.ForEach( s => s.ForEach( t => sb.Append( t ).Append( "{0xFE}" ) ) );
+
+            var dict = TextUtilities.GetPairAndTripleCounts( sb.ToString(), replacements );
+
             var l = new List<KeyValuePair<string, int>>( dict );
             l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
 
@@ -179,7 +181,7 @@ namespace FFTPatcher.TextEditor
                 if ( bytesNeeded > 0 )
                 {
                     StringBuilder sb2 = new StringBuilder( Layout.Size );
-                    secs.ForEach( s => s.ForEach( t => sb2.Append( t ) ) );
+                    secs.ForEach( s => s.ForEach( t => sb2.Append( t ).Append( "{0xFE}" ) ) );
                     l = new List<KeyValuePair<string, int>>( TextUtilities.GetPairAndTripleCounts( sb2.ToString(), replacements ) );
                     l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
                 }

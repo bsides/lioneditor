@@ -11,6 +11,7 @@ namespace FFTPatcher.TextEditor
         public PartitionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
             : base( map, layout, strings, false )
         {
+            PartitionSize = layout.Size / NumberOfSections;
         }
 
         public PartitionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )

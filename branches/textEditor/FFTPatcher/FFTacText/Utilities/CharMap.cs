@@ -221,6 +221,8 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
+            result.Add( 0xFE );
+
             bytes = result.ToArray();
             return true;
         }

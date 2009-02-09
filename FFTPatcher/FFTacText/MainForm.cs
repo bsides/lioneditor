@@ -47,6 +47,18 @@ namespace FFTPatcher.TextEditor
             importPspIsoMenuItem.Click += new EventHandler( importPspIsoMenuItem_Click );
             saveMenuItem.Click += new EventHandler( saveMenuItem_Click );
             openMenuItem.Click += new EventHandler( openMenuItem_Click );
+            menuItem2.Click += new EventHandler( menuItem2_Click );
+        }
+
+        void menuItem2_Click( object sender, EventArgs e )
+        {
+            var patches = internalFile.GetPatches();
+            using ( Stream stream = File.Open( @"N:\dev\fft\ita\virginimages\FINALFANTASYTACTICS - Copy.BIN", FileMode.Open, FileAccess.ReadWrite ) )
+            {
+                PsxIso.PatchPsxIso( stream, patches );
+            }
+            
+            //internalFile.GetPatches().for
         }
 
         void openMenuItem_Click( object sender, EventArgs e )
@@ -104,6 +116,7 @@ namespace FFTPatcher.TextEditor
             fileClick( textMenuItem.MenuItems[0], EventArgs.Empty );
             textMenuItem.Enabled = true;
             saveMenuItem.Enabled = true;
+            menuItem2.Enabled = true;
         }
 
         private void fileClick( object sender, EventArgs e )

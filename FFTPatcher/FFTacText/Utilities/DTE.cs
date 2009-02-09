@@ -13,7 +13,7 @@ namespace FFTPatcher.TextEditor
                 0x12, 0xc8, 0x00, 0x0c  // jal 0x80032048
             }.AsReadOnly();
 
-        // Apply to WORLD.BIN @ 0x4C00
+        // Apply to WORLD.BIN @ 0x4C04
         private static IList<byte> worldBin2 =
             new byte[] {
                 0x7c, 0xc8, 0x00, 0x08, // j 0x800321f0
@@ -93,8 +93,8 @@ namespace FFTPatcher.TextEditor
 
         static IList<PatchedByteArray> psxDtePatches = new PatchedByteArray[] {
             new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x6CAC, worldBin1.ToArray() ),
-            new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x4c00, worldBin2.ToArray() ),
-            new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x4cca, worldBin3.ToArray() ),
+            new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x4c04, worldBin2.ToArray() ),
+            new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x4cc0, worldBin3.ToArray() ),
             new PatchedByteArray( PsxIso.SCUS_942_21, 0x229F0, scus1.ToArray() ),
             new PatchedByteArray( PsxIso.SCUS_942_21, 0x22a30, scus2.ToArray() ),
             new PatchedByteArray( PsxIso.SCUS_942_21, 0x22848, scus3.ToArray() ) }.AsReadOnly();
@@ -231,8 +231,7 @@ namespace FFTPatcher.TextEditor
 
             foreach ( var kvp in dteEncodings )
             {
-                result[kvp.Value - minDteByte] = (byte)baseCharSet.IndexOf( kvp.Key.Substring( 0, 1 ) );
-                result[kvp.Value - minDteByte + 1] = (byte)baseCharSet.IndexOf( kvp.Key.Substring( 1, 1 ) );
+                TextUtilities.PSXMap.StringToByteArray( kvp.Key ).Sub( 0, 1 ).CopyTo( result, ( kvp.Value - minDteByte ) * 2 );
             }
 
             return result;

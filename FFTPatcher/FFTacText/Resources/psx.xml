@@ -213,7 +213,7 @@
     <SectionedFile>
       <DisplayName>ATCHELP.LZW</DisplayName>
       <Guid>{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}</Guid>
-      <Size>92160</Size>
+      <Size>90325</Size>
       <Sectors>
         <Sector filename="EVENT_ATCHELP_LZW" offset="0"/>
       </Sectors>
@@ -271,7 +271,7 @@
     <SectionedFile>
       <DisplayName>JOIN.LZW</DisplayName>
       <Guid>{A45B2DE6-520A-4484-A208-6F7895798869}</Guid>
-      <Size>18432</Size>
+      <Size>16886</Size>
       <Sectors>
         <Sector filename="EVENT_JOIN_LZW" offset="0"/>
         <Sector filename="EVENT_REQUIRE_OUT" offset="52848"/>
@@ -289,7 +289,7 @@
     <SectionedFile>
       <DisplayName>OPEN.LZW</DisplayName>
       <Guid>{FBFFD898-2E12-4E3C-B73D-CA6FA6997F42}</Guid>
-      <Size>22528</Size>
+      <Size>21881</Size>
       <Sectors>
         <Sector filename="EVENT_OPEN_LZW" offset="0"/>
       </Sectors>
@@ -467,9 +467,8 @@
         <Section value="6" entries="155" empty="false" name="Job names">
           <include name="JobNames" start="0" end="154" offset="0"/>
         </Section>
-        <Section value="7" entries="257" empty="false" name="Item names">
+        <Section value="7" entries="256" empty="false" name="Item names">
           <include name="ItemNames" start="0" end="255" offset="0"/>
-          <entry value="256" name=""/>
         </Section>
         <Section value="8" entries="26" empty="true"/>
         <Section value="9" entries="64" empty="true" name="Unknown Japanese text"/>
@@ -594,9 +593,8 @@
         <Section value="6" entries="155" empty="false" name="Job names">
           <include name="JobNames" start="0" end="154" offset="0"/>
         </Section>
-        <Section value="7" entries="257" empty="false" name="Item names">
+        <Section value="7" entries="256" empty="false" name="Item names">
           <include name="ItemNames" start="0" end="255" offset="0"/>
-          <entry value="256" name=""/>
         </Section>
         <Section value="8" entries="1024" empty="true" name="Unit names"/>
         <Section value="9" entries="1024" empty="true" name="Unit names"/>

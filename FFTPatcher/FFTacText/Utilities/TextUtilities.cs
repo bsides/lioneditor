@@ -245,7 +245,6 @@ namespace FFTPatcher.TextEditor
             psx.Add( 0xF8, "\r\n" );
             psx.Add( 0xFB, "{Begin List}" );
             psx.Add( 0xFC, "{End List}" );
-            psx.Add( 0xFE, "{END}" );
             psx.Add( 0xFF, "{Close}" );
 
             for( int i = 0; i < 10; i++ )
@@ -689,11 +688,11 @@ namespace FFTPatcher.TextEditor
 
             List<string> result = new List<string>( words.Count );
 
-            foreach( IList<byte> word in words )
+            foreach ( IList<byte> word in words )
             {
                 StringBuilder sb = new StringBuilder();
                 int pos = 0;
-                while( pos < word.Count )
+                while ( pos < ( word.Count - 1 ) || ( pos == ( word.Count - 1 ) && word[pos] != 0xFE ) )
                 {
                     sb.Append( charmap.GetNextChar( word, ref pos ) );
                 }
@@ -1008,7 +1007,8 @@ namespace FFTPatcher.TextEditor
             Action<int> meth =
                 delegate( int groupSize )
                 {
-                    for ( int pos = 0; pos + groupSize - 1 < length; )
+                    int pos = 0;
+                    for ( pos = 0; pos + groupSize - 1 < length; )
                     {
                         for ( int j = 1; j < groupSize; j++ )
                         {
@@ -1045,6 +1045,10 @@ namespace FFTPatcher.TextEditor
                                 pos += 1;
                             }
                         }
+                    }
+                    for ( ; pos < length; pos++ )
+                    {
+                        sb.Append( text[pos] );
                     }
                 };
             meth( 2 );

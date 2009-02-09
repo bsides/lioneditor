@@ -651,7 +651,7 @@
         <Section value="22" entries="227" empty="false" name="Skillset names">
           <include name="SkillsetNames" start="0" end="226" offset="0"/>
         </Section>
-        <Section value="23" entries="27" empty="false" name="Summon/Iaido">
+        <Section value="23" entries="26" empty="false" name="Summon/Iaido">
           <entry value="0" name="Moogle"/>
           <entry value="1" name="Shiva"/>
           <entry value="2" name="Ramuh"/>
@@ -678,7 +678,6 @@
           <entry value="23" name="Kiku-ichimonji"/>
           <entry value="24" name="Masamune"/>
           <entry value="25" name="Chirijiraden"/>
-          <entry value="26" name=""/>
         </Section>
       </Sections>
     </SectionedFile>

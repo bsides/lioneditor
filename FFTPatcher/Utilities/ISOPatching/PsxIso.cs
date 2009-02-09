@@ -115,6 +115,15 @@ namespace FFTPatcher
             return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
         }
 
+        public static void PatchPsxIso( Stream iso, IEnumerable<PatchedByteArray> patches )
+        {
+            foreach ( var patch in patches )
+            {
+                IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
+                    patch.Offset, patch.Bytes, true );
+            }
+        }
+
         public static void PatchPsxIso( BackgroundWorker backgroundWorker, DoWorkEventArgs e, IGeneratePatchList patchList )
         {
             string filename = patchList.FileName;

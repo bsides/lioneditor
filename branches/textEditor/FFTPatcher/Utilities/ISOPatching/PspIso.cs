@@ -73,7 +73,7 @@ namespace FFTPatcher
         /// Decrypts the ISO.
         /// </summary>
         /// <param name="stream">The stream of the ISO to decrypt.</param>
-        public static void DecryptISO( FileStream stream )
+        public static void DecryptISO( Stream stream )
         {
             if( IsJP( stream ) )
             {
@@ -100,7 +100,7 @@ namespace FFTPatcher
         /// <returns>
         /// 	<c>true</c> if the specified stream is EU; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsEU( FileStream stream )
+        public static bool IsEU( Stream stream )
         {
             return CheckFile( stream, "ULES-00850", "ULES00850", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
         }
@@ -112,7 +112,7 @@ namespace FFTPatcher
         /// <returns>
         /// 	<c>true</c> if the specified stream is JP; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsJP( FileStream stream )
+        public static bool IsJP( Stream stream )
         {
             return CheckFile( stream, "ULJM-05194", "ULJM05194", new long[] { 0x8373, 0xE000 }, new long[] { 0x2BF0128, 0xFD619FC, 0xFD97A5C } );
         }
@@ -124,7 +124,7 @@ namespace FFTPatcher
         /// <returns>
         /// 	<c>true</c> if the specified stream is US; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsUS( FileStream stream )
+        public static bool IsUS( Stream stream )
         {
             return CheckFile( stream, "ULUS-10297", "ULUS10297", new long[] { 0x8373, 0xE000 }, new long[] { 0x2C18128, 0x101EC3A8, 0x10232530 } );
         }
@@ -161,11 +161,17 @@ namespace FFTPatcher
             }
         }
 
+        public static void PatchISO( Stream file, IEnumerable<PatchedByteArray> patches )
+        {
+            DecryptISO( file );
+            patches.ForEach( p => ApplyPatch( file, p ) );
+        }
+
         /// <summary>
         /// Patches the ISO.
         /// </summary>
         /// <param name="stream">The stream of the ISO to patch.</param>
-        public static void PatchISO( FileStream stream, BackgroundWorker worker, IGeneratePatchList patchList )
+        public static void PatchISO( Stream stream, BackgroundWorker worker, IGeneratePatchList patchList )
         {
             if( IsJP( stream ) )
             {
@@ -319,7 +325,7 @@ namespace FFTPatcher
         /// <param name="stream">The stream that represents a War of the Lions ISO image.</param>
         /// <param name="location">The location in BOOT.BIN to update.</param>
         /// <param name="bytes">The bytes to update BOOT.BIN with.</param>
-        public static void UpdateBootBin( FileStream stream, long location, byte[] bytes )
+        public static void UpdateBootBin( Stream stream, long location, byte[] bytes )
         {
             DecryptISO( stream );
 
@@ -335,7 +341,7 @@ namespace FFTPatcher
         /// <param name="stream">The stream that represents a War of the Lions ISO image.</param>
         /// <param name="index">The index of the file in fftpack.bin to update.</param>
         /// <param name="bytes">The bytes to update the file with.</param>
-        public static void UpdateFFTPack( FileStream stream, int index, byte[] bytes )
+        public static void UpdateFFTPack( Stream stream, int index, byte[] bytes )
         {
             FFTPack.PatchFile( stream, index, 0, bytes );
         }
@@ -344,7 +350,7 @@ namespace FFTPatcher
 
 		#region Private Methods (3) 
 
-        private static void ApplyPatch( FileStream stream, PatchedByteArray patch )
+        private static void ApplyPatch( Stream stream, PatchedByteArray patch )
         {
             if( patch.SectorEnum != null )
             {
@@ -363,7 +369,7 @@ namespace FFTPatcher
             }
         }
 
-        private static bool CheckFile( FileStream stream, string str1, string str2, long[] loc1, long[] loc2 )
+        private static bool CheckFile( Stream stream, string str1, string str2, long[] loc1, long[] loc2 )
         {
             byte[] str1bytes = str1.ToByteArray();
             foreach( long l in loc1 )
@@ -406,7 +412,7 @@ namespace FFTPatcher
             return result.Sub( start, start + length - 1 );
         }
 
-        private static void CopyBytes( FileStream stream, long src, long srcSize, long dest, long destOldSize )
+        private static void CopyBytes( Stream stream, long src, long srcSize, long dest, long destOldSize )
         {
             long bytesRead = 0;
             while( (bytesRead + bufferSize) < srcSize )

@@ -68,6 +68,7 @@
     <Compile Include="Editors\TextPropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Files\CompressibleOneShotFile.cs" />
     <Compile Include="Files\IFile.cs" />
     <Compile Include="Files\ISerializableFile.cs" />
     <Compile Include="Files\NamedSection.cs" />
@@ -76,7 +77,19 @@
     <Compile Include="Files\QuickEdit.cs" />
     <Compile Include="Files\SectionedFile.cs" />
     <Compile Include="Files\FFTTextFactory.cs" />
+    <Compile Include="ImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportForm.Designer.cs">
+      <DependentUpon>ImportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="InvalidStringException.cs" />
+    <Compile Include="ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\DTE.cs" />
     <Compile Include="Utilities\EntryNames.cs" />
     <Compile Include="Utilities\NotifyStringList.cs" />
@@ -113,9 +126,15 @@
       <DependentUpon>StringListEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImportForm.resx">
+      <DependentUpon>ImportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\PSXResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -143,6 +162,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\Resources.xsd" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

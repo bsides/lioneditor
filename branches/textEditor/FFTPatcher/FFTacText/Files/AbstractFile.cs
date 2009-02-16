@@ -35,11 +35,13 @@ namespace FFTPatcher.TextEditor
             NumberOfSections = layout.SectionLengths.Count;
             Layout = layout;
             CharMap = charmap;
-            EntryNames = layout.EntryNames;
+            EntryNames = layout.EntryNames.AsReadOnly();
             SectionLengths = layout.SectionLengths.AsReadOnly();
-            SectionNames = layout.SectionNames;
+            SectionNames = layout.SectionNames.AsReadOnly();
             DisplayName = layout.DisplayName;
             Compressible = compressible;
+            CompressionAllowed = layout.CompressionAllowed.AsReadOnly();
+            DteAllowed = layout.DteAllowed.AsReadOnly();
         }
 
         public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
@@ -70,6 +72,9 @@ namespace FFTPatcher.TextEditor
                 case FileType.SectionedFile:
                     return new SectionedFile( charmap, layout, strings, false );
                     break;
+                case FileType.CompressibleOneShotFile:
+                    return new CompressibleOneShotFile( charmap, layout, strings );
+                    break;
                 case FileType.OneShotFile:
                 case FileType.PartitionedFile:
                     return new PartitionedFile( charmap, layout, strings );
@@ -86,7 +91,7 @@ namespace FFTPatcher.TextEditor
                 if ( section < SectionLengths.Count && 
                      entry < SectionLengths[section] && 
                      !Layout.DisallowedEntries[section].Contains( entry ) &&
-                    Sections[section][entry] != value )
+                     Sections[section][entry] != value )
                 {
                     dirty = true;
                     Sections[section][entry] = value;
@@ -107,6 +112,9 @@ namespace FFTPatcher.TextEditor
         public IList<int> SectionLengths { get; private set; }
 
         public IList<string> SectionNames { get; private set; }
+
+        public IList<bool> DteAllowed { get; private set; }
+        public IList<bool> CompressionAllowed { get; private set; }
 
         public bool Compressible { get; private set; }
 
@@ -138,7 +146,7 @@ namespace FFTPatcher.TextEditor
         public Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
         {
             var secs = GetCopyOfSections();
-            IList<byte> bytes = GetSectionByteArrays( secs, CharMap, Compressible ).Join();
+            IList<byte> bytes = GetSectionByteArrays( secs, CharMap, CompressionAllowed ).Join();
 
             Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
 
@@ -149,12 +157,10 @@ namespace FFTPatcher.TextEditor
                 return result;
             }
 
-            StringBuilder sb = new StringBuilder( Layout.Size );
-            Sections.ForEach( s => s.ForEach( t => sb.Append( t ).Append( "{0xFE}" ) ) );
 
             result.AddRange( currentPairs );
-            TextUtilities.DoDTEEncoding( secs, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
-            bytes = GetSectionByteArrays( secs, CharMap, Compressible ).Join();
+            TextUtilities.DoDTEEncoding( secs, DteAllowed, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
+            bytes = GetSectionByteArrays( secs, CharMap, CompressionAllowed ).Join();
 
             bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
 
@@ -163,8 +169,14 @@ namespace FFTPatcher.TextEditor
                 return result;
             }
 
-            sb = new StringBuilder( Layout.Size );
-            secs.ForEach( s => s.ForEach( t => sb.Append( t ).Append( "{0xFE}" ) ) );
+            StringBuilder sb = new StringBuilder( Layout.Size );
+            for ( int i = 0; i < secs.Count; i++ )
+            {
+                if ( DteAllowed[i] )
+                {
+                    secs[i].ForEach( t => sb.Append( t ).Append( "{0xFE}" ) );
+                }
+            }
 
             var dict = TextUtilities.GetPairAndTripleCounts( sb.ToString(), replacements );
 
@@ -174,14 +186,20 @@ namespace FFTPatcher.TextEditor
             while ( bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0 )
             {
                 result.Add( new KeyValuePair<string, byte>( l[0].Key, dteBytes.Pop() ) );
-                TextUtilities.DoDTEEncoding( secs, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
-                bytes = GetSectionByteArrays( secs, CharMap, Compressible ).Join();
+                TextUtilities.DoDTEEncoding( secs, DteAllowed, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
+                bytes = GetSectionByteArrays( secs, CharMap, CompressionAllowed ).Join();
                 bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
 
                 if ( bytesNeeded > 0 )
                 {
                     StringBuilder sb2 = new StringBuilder( Layout.Size );
-                    secs.ForEach( s => s.ForEach( t => sb2.Append( t ).Append( "{0xFE}" ) ) );
+                    for ( int i = 0; i < secs.Count; i++ )
+                    {
+                        if ( DteAllowed[i] )
+                        {
+                            secs[i].ForEach( t => sb2.Append( t ).Append( "{0xFE}" ) );
+                        }
+                    }
                     l = new List<KeyValuePair<string, int>>( TextUtilities.GetPairAndTripleCounts( sb2.ToString(), replacements ) );
                     l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
                 }
@@ -206,9 +224,9 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        protected static IList<byte> Compress( IList<IList<string>> strings, out IList<UInt32> offsets, GenericCharMap charmap )
+        protected static IList<byte> Compress( IList<IList<string>> strings, out IList<UInt32> offsets, GenericCharMap charmap, IList<bool> allowedSections )
         {
-            TextUtilities.CompressionResult r = TextUtilities.Compress( strings, charmap, null );
+            TextUtilities.CompressionResult r = TextUtilities.Compress( strings, charmap, allowedSections );
             offsets = new List<UInt32>( 32 );
             offsets.Add( 0 );
             int pos = 0;
@@ -223,7 +241,7 @@ namespace FFTPatcher.TextEditor
 
         protected IList<byte> Compress( IList<IList<string>> strings, out IList<UInt32> offsets )
         {
-            return Compress( strings, out offsets, CharMap );
+            return Compress( strings, out offsets, CharMap, CompressionAllowed );
         }
 
         protected IList<byte> Compress( out IList<UInt32> offsets )
@@ -249,11 +267,11 @@ namespace FFTPatcher.TextEditor
 
         }
 
-        private static IList<IList<byte>> GetCompressedSectionByteArrays( IList<IList<string>> sections, GenericCharMap charmap )
+        private static IList<IList<byte>> GetCompressedSectionByteArrays( IList<IList<string>> sections, GenericCharMap charmap, IList<bool> compressibleSections )
         {
             IList<IList<byte>> result = new IList<byte>[sections.Count];
             IList<UInt32> offsets;
-            IList<byte> compression = Compress( sections, out offsets, charmap );
+            IList<byte> compression = Compress( sections, out offsets, charmap, compressibleSections );
             uint pos = 0;
             offsets = new List<UInt32>( offsets );
             offsets.Add( (uint)compression.Count );
@@ -264,11 +282,11 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        protected static IList<IList<byte>> GetSectionByteArrays( IList<IList<string>> strings, GenericCharMap charmap, bool compressible )
+        protected static IList<IList<byte>> GetSectionByteArrays( IList<IList<string>> strings, GenericCharMap charmap, IList<bool> compressibleSections )
         {
-            if ( compressible )
+            if ( compressibleSections.Contains( true ) )
             {
-                return GetCompressedSectionByteArrays( strings, charmap );
+                return GetCompressedSectionByteArrays( strings, charmap, compressibleSections );
             }
             else
             {

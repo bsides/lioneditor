@@ -13,7 +13,8 @@ namespace FFTPatcher.TextEditor
         SectionedFile,
         CompressedFile,
         PartitionedFile,
-        OneShotFile
+        OneShotFile,
+        CompressibleOneShotFile
     }
 
     public enum SectorType
@@ -38,6 +39,8 @@ namespace FFTPatcher.TextEditor
             public IList<IList<string>> EntryNames { get; set; }
             public IList<IList<int>> DisallowedEntries { get; set; }
             public KeyValuePair<Enum, int> PrimaryFile { get; set; }
+            public IList<bool> DteAllowed { get; set; }
+            public IList<bool> CompressionAllowed { get; set; }
         }
 
         delegate IList<byte> BytesFromIso( Stream iso, Enum file, int offset, int size );
@@ -79,10 +82,21 @@ namespace FFTPatcher.TextEditor
 
             int sectionCount = Int32.Parse( node.SelectSingleNode( "Sections/@count" ).InnerText );
             int[] sectionLengths = new int[sectionCount];
+            bool[] dteAllowed = new bool[sectionCount];
+            bool[] compressionAllowed = new bool[sectionCount];
+
             for ( int i = 0; i < sectionCount; i++ )
             {
-                sectionLengths[i] = Int32.Parse( node.SelectSingleNode( string.Format( "Sections/Section[@value='{0}']/@entries", i ) ).InnerText );
+                XmlNode sectionNode = node.SelectSingleNode( string.Format( "Sections/Section[@value='{0}']", i ) );
+
+                sectionLengths[i] = Int32.Parse( sectionNode.Attributes["entries"].InnerText );
+                dteAllowed[i] = Boolean.Parse( sectionNode.Attributes["dte"].InnerText );
+                if ( filetype == FileType.CompressedFile )
+                {
+                    compressionAllowed[i] = Boolean.Parse( sectionNode.Attributes["compressible"].InnerText );
+                }
             }
+
             XmlNodeList sectors = node.SelectNodes( "Sectors/*" );
             Dictionary<SectorType, IList<KeyValuePair<Enum, int>>> dict = new Dictionary<SectorType, IList<KeyValuePair<Enum, int>>>( 3 );
             bool first = true;
@@ -141,7 +155,9 @@ namespace FFTPatcher.TextEditor
                 Sectors = new ReadOnlyDictionary<SectorType, IList<KeyValuePair<Enum, int>>>( dict ),
                 SectionNames = sectionNames,
                 Size = size,
-                PrimaryFile = primaryFile
+                PrimaryFile = primaryFile,
+                CompressionAllowed = compressionAllowed,
+                DteAllowed = dteAllowed
             };
 
             return fi;
@@ -162,6 +178,9 @@ namespace FFTPatcher.TextEditor
                         break;
                     case FileType.SectionedFile:
                         files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes ) );
+                        break;
+                    case FileType.CompressibleOneShotFile:
+                        files.Add( fi.Guid, new CompressibleOneShotFile( charmap, fi, bytes ) );
                         break;
                     case FileType.OneShotFile:
                     case FileType.PartitionedFile:
@@ -213,26 +232,46 @@ namespace FFTPatcher.TextEditor
             return new ReadOnlyDictionary<SectionType, IList<QuickEdit.QuickEditEntry>>( result );
         }
 
-        public static FFTText GetPspText( Stream iso )
+        public static FFTText GetPspText( Stream iso, GenericCharMap charmap )
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml( Properties.Resources.psp );
+            return GetText( iso, Context.US_PSP, doc, BytesFromPspIso, charmap );
+        }
 
-            return GetText( iso, Context.US_PSP, doc, BytesFromPspIso, TextUtilities.PSPMap );
+        public static FFTText GetPspText( Stream iso, Stream tblStream )
+        {
+            return GetPspText( iso, DTE.GenerateCharMap( tblStream ) );
+        }
+
+        public static FFTText GetPsxText( Stream iso, Stream tblStream )
+        {
+            return GetPsxText( iso, DTE.GenerateCharMap( tblStream ) );
+        }
+
+        public static FFTText GetPspText( Stream iso )
+        {
+            return GetPspText( iso, TextUtilities.PSPMap );
+        }
+
+        public static FFTText GetPsxText( Stream iso, GenericCharMap charmap )
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml( Properties.Resources.psx );
+            return GetText( iso, Context.US_PSX, doc, BytesFromPsxIso, charmap );
         }
 
         public static FFTText GetPsxText( Stream iso )
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Properties.Resources.psx );
-            return GetText( iso, Context.US_PSX, doc, BytesFromPsxIso, TextUtilities.PSXMap );
+            return GetPsxText( iso, TextUtilities.PSXMap );
         }
+
 
         private static FFTText GetText( Stream iso, Context context, XmlDocument doc, BytesFromIso reader, GenericCharMap charmap )
         {
             IDictionary<Guid, ISerializableFile> files = GetFiles( iso, context, doc, reader, charmap );
             var quickEdit = new QuickEdit( files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ) ) );
-            return new FFTText( files, quickEdit );
+            return new FFTText( context, files, quickEdit );
         }
 
 
@@ -262,7 +301,7 @@ namespace FFTPatcher.TextEditor
             }
 
             var quickEdit = new QuickEdit( result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ) ) );
-            return new FFTText( result, quickEdit );
+            return new FFTText( context, result, quickEdit );
 
         }
 
@@ -368,7 +407,7 @@ namespace FFTPatcher.TextEditor
         private static void WriteFileXml( ISerializableFile file, XmlWriter writer )
         {
             writer.WriteStartElement( "File" );
-            writer.WriteElementString( "Guid", file.Layout.Guid.ToString("B").ToUpper() );
+            writer.WriteElementString( "Guid", file.Layout.Guid.ToString( "B" ).ToUpper() );
             writer.WriteStartElement( "Sections" );
             int numSections = file.NumberOfSections;
             for ( int i = 0; i < numSections; i++ )

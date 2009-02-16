@@ -22,6 +22,13 @@ namespace FFTPatcher.TextEditor
             for ( int i = 0; i < NumberOfSections; i++ )
             {
                 sections.Add( TextUtilities.ProcessList( bytes.Sub( i * PartitionSize, ( i + 1 ) * PartitionSize - 1 ), map ) );
+                if ( sections[i].Count < SectionLengths[i] )
+                {
+                    string[] newSection = new string[SectionLengths[i]];
+                    sections[i].CopyTo( newSection, 0 );
+                    new string[SectionLengths[i] - sections[i].Count].CopyTo( newSection, sections[i].Count );
+                    sections[i] = newSection;
+                }
             }
             Sections = sections.AsReadOnly();
         }

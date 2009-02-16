@@ -70,56 +70,147 @@ namespace FFTPatcher.TextEditor
 
 		#region Methods (9) 
 
-        public IList<PatchedByteArray> GetPatches()
+        public delegate void PatchIso( Stream iso, IEnumerable<PatchedByteArray> patches );
+        public class PatchIsoArgs
         {
-            IList<ISerializableFile> files = new List<ISerializableFile>( Files.Count );
-            Files.FindAll( f => f is ISerializableFile ).ForEach( f => files.Add( (ISerializableFile)f ) );
+            public string Filename { get; set; }
+            public PatchIso Patcher { get; set; }
+        }
 
-            List<ISerializableFile> dteFiles = new List<ISerializableFile>();
-
-            List<PatchedByteArray> patches = new List<PatchedByteArray>();
-
-            foreach ( ISerializableFile file in files )
+        public void BuildAndApplyPatches( object sender, DoWorkEventArgs args )
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            PatchIsoArgs patchArgs = args.Argument as PatchIsoArgs;
+            if ( patchArgs == null )
             {
-                if ( file.IsDteNeeded() )
+                throw new Exception( "Incorrect args passed to BuildAndApplyPatches" );
+            }
+            if ( patchArgs.Patcher == null )
+            {
+                throw new ArgumentNullException( "Patcher", "Patcher cannot be null" );
+            }
+
+            using ( Stream stream = File.Open( patchArgs.Filename, FileMode.Open, FileAccess.ReadWrite ) )
+            {
+                if (stream == null )
                 {
-                    dteFiles.Add( file );
+                    throw new Exception( "Could not open ISO file" );
                 }
-                else
+
+                IList<ISerializableFile> files = new List<ISerializableFile>( Files.Count );
+                Files.FindAll( f => f is ISerializableFile ).ForEach( f => files.Add( (ISerializableFile)f ) );
+
+                List<ISerializableFile> dteFiles = new List<ISerializableFile>();
+                List<ISerializableFile> nonDteFiles = new List<ISerializableFile>();
+                List<PatchedByteArray> patches = new List<PatchedByteArray>();
+
+                foreach ( ISerializableFile file in files )
                 {
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.IsDteNeeded } );
+                    if ( file.IsDteNeeded() )
+                    {
+                        dteFiles.Add( file );
+                    }
+                    else
+                    {
+                        nonDteFiles.Add( file );
+                    }
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.IsDteNeeded } );
+                    if ( worker.CancellationPending )
+                    {
+                        args.Cancel = true;
+                        return;
+                    }
+                }
+
+                Set<string> pairs = DTE.GetDteGroups( this.Filetype );
+                if ( worker.CancellationPending )
+                {
+                    args.Cancel = true;
+                    return;
+                }
+                Set<KeyValuePair<string, byte>> currentPairs =
+                    new Set<KeyValuePair<string, byte>>( ( x, y ) => x.Key.Equals( y.Key ) && ( x.Value == y.Value ) ? 0 : -1 );
+                var filePreferredPairs =
+                    new Dictionary<ISerializableFile, Set<KeyValuePair<string, byte>>>( dteFiles.Count );
+                dteFiles.Sort( ( x, y ) => ( y.ToCDByteArray().Length - y.Layout.Size ).CompareTo( x.ToCDByteArray().Length - x.Layout.Size ) );
+                Stack<byte> dteBytes = DTE.GetAllowedDteBytes();
+                if ( worker.CancellationPending )
+                {
+                    args.Cancel = true;
+                    return;
+                }
+
+                foreach ( var dte in dteFiles )
+                {
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.CalculateDte } );
+                    filePreferredPairs[dte] = dte.GetPreferredDTEPairs( pairs, currentPairs, dteBytes );
+                    currentPairs.AddRange( filePreferredPairs[dte] );
+                    if ( filePreferredPairs[dte] == null )
+                    {
+                        throw new DTE.DteException( dte );
+                    }
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.CalculateDte } );
+                    if ( worker.CancellationPending )
+                    {
+                        args.Cancel = true;
+                        return;
+                    }
+                }
+
+                foreach ( var file in nonDteFiles )
+                {
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.GeneratePatch } );
                     patches.AddRange( file.GetNonDtePatches() );
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.GeneratePatch } );
+                    if ( worker.CancellationPending )
+                    {
+                        args.Cancel = true;
+                        return;
+                    }
                 }
+
+                foreach ( var file in dteFiles )
+                {
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.GeneratePatch } );
+                    var currentFileEncoding = Utilities.DictionaryFromKVPs( filePreferredPairs[file] );
+                    patches.AddRange( file.GetDtePatches( currentFileEncoding ) );
+                    worker.ReportProgress( 0,
+                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.GeneratePatch } );
+                    if ( worker.CancellationPending )
+                    {
+                        args.Cancel = true;
+                        return;
+                    }
+                }
+                patches.AddRange( DTE.GenerateDtePatches( this.Filetype, currentPairs ) );
+                if ( worker.CancellationPending )
+                {
+                    args.Cancel = true;
+                    return;
+                }
+
+                worker.ReportProgress( 0,
+                    new ProgressForm.FileProgress { File = null, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.ApplyingPatches } );
+                patchArgs.Patcher( stream, patches );
+                worker.ReportProgress( 0,
+                    new ProgressForm.FileProgress { File = null, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.ApplyingPatches } );
+
             }
-
-            Set<string> pairs = DTE.GetDteGroups( this.Filetype );
-            Set<KeyValuePair<string, byte>> currentPairs =
-                new Set<KeyValuePair<string, byte>>( ( x, y ) => x.Key.Equals( y.Key ) && ( x.Value == y.Value ) ? 0 : -1 );
-            var filePreferredPairs =
-                new Dictionary<ISerializableFile, Set<KeyValuePair<string, byte>>>( dteFiles.Count );
-            dteFiles.Sort( ( x, y ) => ( y.ToCDByteArray().Length - y.Layout.Size ).CompareTo( x.ToCDByteArray().Length - x.Layout.Size ) );
-            Stack<byte> dteBytes = DTE.GetAllowedDteBytes();
-
-            foreach ( var dte in dteFiles )
-            {
-                filePreferredPairs[dte] = dte.GetPreferredDTEPairs( pairs, currentPairs, dteBytes );
-                currentPairs.AddRange( filePreferredPairs[dte] );
-            }
-
-            foreach ( var dte in dteFiles )
-            {
-                var currentFileEncoding = Utilities.DictionaryFromKVPs( filePreferredPairs[dte] );
-                patches.AddRange( dte.GetDtePatches( currentFileEncoding ) );
-            }
-
-            patches.AddRange( DTE.GenerateDtePatches( this.Filetype, currentPairs ) );
-
-            return patches.AsReadOnly();
         }
 
         public IList<IFile> Files { get; private set; }
 
-        internal FFTText( IDictionary<Guid, ISerializableFile> files, QuickEdit quickEdit )
+        internal FFTText( Context context, IDictionary<Guid, ISerializableFile> files, QuickEdit quickEdit )
         {
+            Filetype = context;
             List<IFile> filesList = new List<IFile>( files.Count + 1 );
             files.ForEach( kvp => filesList.Add( kvp.Value ) );
             filesList.Sort( ( a, b ) => a.DisplayName.CompareTo( b.DisplayName ) );

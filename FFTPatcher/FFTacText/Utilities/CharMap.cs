@@ -195,10 +195,10 @@ namespace FFTPatcher.TextEditor
                     }
                     i = j;
                 }
-                else if ( s[i] == '\r' && ( i + 1 ) < s.Length && s[i + 1] == '\n' )
+                else if ( s[i] == '\r' || s[i]=='\n' )
                 {
-                    i += 1;
-                    val = Reverse["\r\n"];
+                    // ignore
+                    val = -1;
                 }
                 else 
                 {
@@ -233,7 +233,7 @@ namespace FFTPatcher.TextEditor
         public byte[] StringToByteArray( string s )
         {
             byte[] result;
-            if ( TryStringToByteArray( s, out result ) )
+            if ( TryStringToByteArray( s ?? string.Empty, out result ) )
             {
                 return result;
             }
@@ -271,4 +271,7 @@ namespace FFTPatcher.TextEditor
     {
     }
 
+    public class NonDefaultCharMap : GenericCharMap
+    {
+    }
 }

@@ -168,37 +168,37 @@
         <FFTPack index="EVENT_ATCHELP_LZW" offset="0"/>
       </Sectors>
       <Sections count="21">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="1" empty="true"/>
-        <Section value="2" entries="1" empty="true"/>
-        <Section value="3" entries="1" empty="true"/>
-        <Section value="4" entries="1" empty="true"/>
-        <Section value="5" entries="1" empty="true"/>
-        <Section value="6" entries="1" empty="true"/>
-        <Section value="7" entries="1" empty="true"/>
-        <Section value="8" entries="1" empty="true"/>
-        <Section value="9" entries="1" empty="true"/>
-        <Section value="10" entries="1" empty="true"/>
-        <Section value="11" entries="40" empty="false" name="Help">
+        <Section value="0" entries="1" empty="true" dte="true"/>
+        <Section value="1" entries="1" empty="true" dte="true"/>
+        <Section value="2" entries="1" empty="true" dte="true"/>
+        <Section value="3" entries="1" empty="true" dte="true"/>
+        <Section value="4" entries="1" empty="true" dte="true"/>
+        <Section value="5" entries="1" empty="true" dte="true"/>
+        <Section value="6" entries="1" empty="true" dte="true"/>
+        <Section value="7" entries="1" empty="true" dte="true"/>
+        <Section value="8" entries="1" empty="true" dte="true"/>
+        <Section value="9" entries="1" empty="true" dte="true"/>
+        <Section value="10" entries="1" empty="true" dte="true"/>
+        <Section value="11" entries="40" empty="false" dte="true" name="Help">
           <include name="Help1" start="0" end="39" offset="0"/>
         </Section>
-        <Section value="12" entries="169" empty="false" name="Job descriptions">
+        <Section value="12" entries="169" empty="false" dte="true" name="Job descriptions">
           <include name="JobNames" start="0" end="168" offset="0"/>
         </Section>
-        <Section value="13" entries="316" empty="false" name="Item descriptions">
+        <Section value="13" entries="316" empty="false" dte="true" name="Item descriptions">
           <include name="ItemNames" start="0" end="315" offset="0"/>
         </Section>
-        <Section value="14" entries="1" empty="true"/>
-        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+        <Section value="14" entries="1" empty="true" dte="true"/>
+        <Section value="15" entries="512" empty="false" dte="true" name="Ability descriptions">
           <include name="AbilityNames" start="0" end="511" offset="0"/>
         </Section>
-        <Section value="16" entries="1" empty="true"/>
-        <Section value="17" entries="1" empty="true"/>
-        <Section value="18" entries="1" empty="true"/>
-        <Section value="19" entries="227" empty="false" name="Skillset descriptions">
+        <Section value="16" entries="1" empty="true" dte="true"/>
+        <Section value="17" entries="1" empty="true" dte="true"/>
+        <Section value="18" entries="1" empty="true" dte="true"/>
+        <Section value="19" entries="227" empty="false" dte="true" name="Skillset descriptions">
           <include name="SkillsetNames" start="0" end="226" offset="0"/>
         </Section>
-        <Section value="20" entries="1" empty="true"/>
+        <Section value="20" entries="1" empty="true" dte="true"/>
       </Sections>
       <DisallowedEntries>
         <Section value="15">
@@ -467,7 +467,7 @@
       </DisallowedEntries>
     </SectionedFile>
 
-    <SectionedFile>
+    <CompressedFile>
       <DisplayName>BOOT.BIN[28E5EC]</DisplayName>
       <Guid>{1C12B7FA-638A-493F-AB21-929236DAA15F}</Guid>
       <Size>22538</Size>
@@ -476,9 +476,9 @@
         <BootBin offset="3187096"/>
       </Sectors>
       <Sections count="24">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="1" empty="true"/>
-        <Section value="2" entries="39" empty="false" name="Battle messages">
+        <Section value="0" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="1" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="2" entries="39" empty="false" dte="true" compressible="true" name="Battle messages">
           <entry value="0" name=""/>
           <entry value="1" name="Don't move"/>
           <entry value="2" name="Don't act"/>
@@ -519,7 +519,7 @@
           <entry value="37" name="Can't move"/>
           <entry value="38" name="Arithmeticks not allowed"/>
         </Section>
-        <Section value="3" entries="80" empty="false" name="Battle messages">
+        <Section value="3" entries="80" empty="false" dte="true" compressible="true" name="Battle messages">
           <entry value="0" name=""/>
           <entry value="1" name="Item broke"/>
           <entry value="2" name="Stole item"/>
@@ -601,25 +601,25 @@
           <entry value="78" name=""/>
           <entry value="79" name=""/>
         </Section>
-        <Section value="4" entries="1" empty="true"/>
-        <Section value="5" entries="1" empty="true"/>
-        <Section value="6" entries="169" empty="false" name="Job names">
+        <Section value="4" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="5" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="6" entries="169" empty="false" dte="true" compressible="false" name="Job names">
           <include name="JobNames" start="0" end="168" offset="0"/>
         </Section>
-        <Section value="7" entries="316" empty="false" name="Item names">
+        <Section value="7" entries="316" empty="false" dte="true"  compressible="false" name="Item names">
           <include name="ItemNames" start="0" end="315" offset="0"/>
         </Section>
-        <Section value="8" entries="26" empty="true" name="Blank spaces"/>
-        <Section value="9" entries="64" empty="true" name="Terrain names"/>
-        <Section value="10" entries="20" empty="true" name="Battle menus"/>
-        <Section value="11" entries="26" empty="true" name="Blank spaces"/>
-        <Section value="12" entries="1" empty="true"/>
-        <Section value="13" entries="1" empty="true"/>
-        <Section value="14" entries="512" empty="false" name="Ability names">
+        <Section value="8" entries="26" empty="true" dte="true"  compressible="true" name="Blank spaces"/>
+        <Section value="9" entries="64" empty="true" dte="true" compressible="false" name="Terrain names"/>
+        <Section value="10" entries="20" empty="true" dte="true" compressible="false" name="Battle menus"/>
+        <Section value="11" entries="26" empty="true" dte="true" compressible="true" name="Blank spaces"/>
+        <Section value="12" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="13" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="14" entries="512" empty="false" dte="true"  compressible="false" name="Ability names">
           <include name="AbilityNames" start="0" end="511" offset="0"/>
         </Section>
-        <Section value="15" entries="1" empty="true"/>
-        <Section value="16" entries="20" empty="false" name="Battle messages">
+        <Section value="15" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="16" entries="20" empty="false" dte="true" compressible="true" name="Battle messages">
           <entry value="0" name=""/>
           <entry value="1" name="Charging"/>
           <entry value="2" name="Performing"/>
@@ -641,17 +641,17 @@
           <entry value="18" name="Confirm action"/>
           <entry value="19" name="Silence"/>
         </Section>
-        <Section value="17" entries="40" empty="false" name="Status names">
+        <Section value="17" entries="40" empty="false" dte="true" compressible="false" name="Status names">
           <include name="StatusNames" start="0" end="39" offset="0"/>
         </Section>
-        <Section value="18" entries="76" empty="true" name="Misc. messages"/>
-        <Section value="19" entries="1" empty="true"/>
-        <Section value="20" entries="1" empty="true"/>
-        <Section value="21" entries="1" empty="true"/>
-        <Section value="22" entries="227" empty="false" name="Skillset names">
+        <Section value="18" entries="76" empty="true" dte="false" compressible="false" name="Misc. messages"/>
+        <Section value="19" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="20" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="21" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="22" entries="227" empty="false" dte="true" compressible="false" name="Skillset names">
           <include name="SkillsetNames" start="0" end="226" offset="0"/>
         </Section>
-        <Section value="23" entries="26" empty="false" name="Summon/Iaido">
+        <Section value="23" entries="26" empty="false" dte="true" compressible="false" name="Summon/Iaido">
           <entry value="0" name="Moogle"/>
           <entry value="1" name="Shiva"/>
           <entry value="2" name="Ramuh"/>
@@ -680,9 +680,9 @@
           <entry value="25" name="Chirijiraden"/>
         </Section>
       </Sections>
-    </SectionedFile>
+    </CompressedFile>
 
-    <SectionedFile>
+    <CompressedFile>
       <DisplayName>BOOT.BIN[299024]</DisplayName>
       <Guid>{396EF3EC-D861-4DC9-B4DA-BBCEC443FFC2}</Guid>
       <Size>14510</Size>
@@ -690,15 +690,15 @@
         <BootBin offset="2723876"/>
       </Sectors>
       <Sections count="5">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="176" empty="true" name="Bravery/Faith too low/high"/>
-        <Section value="2" entries="176" empty="true" name="Bravery/Faith too low/high"/>
-        <Section value="3" entries="175" empty="true" name="Leaving quotes"/>
-        <Section value="4" entries="155" empty="false" name="Job names">
+        <Section value="0" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="1" entries="176" empty="true" dte="true" compressible="true" name="Bravery/Faith too low/high"/>
+        <Section value="2" entries="176" empty="true" dte="true" compressible="true" name="Bravery/Faith too low/high"/>
+        <Section value="3" entries="175" empty="true" dte="true" compressible="true" name="Leaving quotes"/>
+        <Section value="4" entries="155" empty="false" dte="true" compressible="false" name="Job names">
           <include name="JobNames" start="0" end="154" offset="0"/>
         </Section>
       </Sections>      
-    </SectionedFile>
+    </CompressedFile>
 
     <SectionedFile>
       <DisplayName>BOOT.BIN[29E334]</DisplayName>
@@ -709,39 +709,39 @@
         <BootBin offset="3060928"/>
       </Sectors>
       <Sections count="31">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="1024" empty="true" name="Unit names"/>
-        <Section value="2" entries="170" empty="false" name="Job names">
+        <Section value="0" entries="1" empty="true" dte="true"/>
+        <Section value="1" entries="1024" empty="true" dte="false" name="Unit names"/>
+        <Section value="2" entries="170" empty="false" dte="false" name="Job names">
           <include name="JobNames" start="0" end="169" offset="0"/>
         </Section>
-        <Section value="3" entries="1" empty="true"/>
-        <Section value="4" entries="1" empty="true"/>
-        <Section value="5" entries="1" empty="true"/>
-        <Section value="6" entries="1" empty="true"/>
-        <Section value="7" entries="1" empty="true"/>
-        <Section value="8" entries="1" empty="true"/>
-        <Section value="9" entries="1" empty="true"/>
-        <Section value="10" entries="1" empty="true"/>
-        <Section value="11" entries="1" empty="true"/>
-        <Section value="12" entries="1" empty="true"/>
-        <Section value="13" entries="1" empty="true"/>
-        <Section value="14" entries="1" empty="true"/>
-        <Section value="15" entries="1" empty="true"/>
-        <Section value="16" entries="1" empty="true"/>
-        <Section value="17" entries="1" empty="true"/>
-        <Section value="18" entries="1" empty="true"/>
-        <Section value="19" entries="1" empty="true"/>
-        <Section value="20" entries="1" empty="true"/>
-        <Section value="21" entries="1" empty="true"/>
-        <Section value="22" entries="1" empty="true"/>
-        <Section value="23" entries="1" empty="true"/>
-        <Section value="24" entries="1" empty="true"/>
-        <Section value="25" entries="1" empty="true"/>
-        <Section value="26" entries="1" empty="true"/>
-        <Section value="27" entries="1" empty="true"/>
-        <Section value="28" entries="1" empty="true"/>
-        <Section value="29" entries="1" empty="true"/>
-        <Section value="30" entries="1" empty="true"/>
+        <Section value="3" entries="1" empty="true" dte="true"/>
+        <Section value="4" entries="1" empty="true" dte="true"/>
+        <Section value="5" entries="1" empty="true" dte="true"/>
+        <Section value="6" entries="1" empty="true" dte="true"/>
+        <Section value="7" entries="1" empty="true" dte="true"/>
+        <Section value="8" entries="1" empty="true" dte="true"/>
+        <Section value="9" entries="1" empty="true" dte="true"/>
+        <Section value="10" entries="1" empty="true" dte="true"/>
+        <Section value="11" entries="1" empty="true" dte="true"/>
+        <Section value="12" entries="1" empty="true" dte="true"/>
+        <Section value="13" entries="1" empty="true" dte="true"/>
+        <Section value="14" entries="1" empty="true" dte="true"/>
+        <Section value="15" entries="1" empty="true" dte="true"/>
+        <Section value="16" entries="1" empty="true" dte="true"/>
+        <Section value="17" entries="1" empty="true" dte="true"/>
+        <Section value="18" entries="1" empty="true" dte="true"/>
+        <Section value="19" entries="1" empty="true" dte="true"/>
+        <Section value="20" entries="1" empty="true" dte="true"/>
+        <Section value="21" entries="1" empty="true" dte="true"/>
+        <Section value="22" entries="1" empty="true" dte="true"/>
+        <Section value="23" entries="1" empty="true" dte="true"/>
+        <Section value="24" entries="1" empty="true" dte="true"/>
+        <Section value="25" entries="1" empty="true" dte="true"/>
+        <Section value="26" entries="1" empty="true" dte="true"/>
+        <Section value="27" entries="1" empty="true" dte="true"/>
+        <Section value="28" entries="1" empty="true" dte="true"/>
+        <Section value="29" entries="1" empty="true" dte="true"/>
+        <Section value="30" entries="1" empty="true" dte="true"/>
       </Sections>
     </SectionedFile>
 
@@ -753,42 +753,42 @@
         <FFTPack index="EVENT_OPEN_LZW" offset="0"/>
       </Sectors>
       <Sections count="32">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="1" empty="true"/>
-        <Section value="2" entries="1" empty="true"/>
-        <Section value="3" entries="1" empty="true"/>
-        <Section value="4" entries="1" empty="true"/>
-        <Section value="5" entries="1" empty="true"/>
-        <Section value="6" entries="1" empty="true"/>
-        <Section value="7" entries="1" empty="true"/>
-        <Section value="8" entries="1024" empty="true" name="Unit names"/>
-        <Section value="9" entries="1" empty="true"/>
-        <Section value="10" entries="1" empty="true"/>
-        <Section value="11" entries="1" empty="true"/>
-        <Section value="12" entries="1" empty="true"/>
-        <Section value="13" entries="1" empty="true"/>
-        <Section value="14" entries="1" empty="true"/>
-        <Section value="15" entries="1" empty="true"/>
-        <Section value="16" entries="1" empty="true"/>
-        <Section value="17" entries="1" empty="true"/>
-        <Section value="18" entries="1" empty="true"/>
-        <Section value="19" entries="1" empty="true"/>
-        <Section value="20" entries="1" empty="true"/>
-        <Section value="21" entries="1" empty="true"/>
-        <Section value="22" entries="1" empty="true"/>
-        <Section value="23" entries="16" empty="true" name="Birthday"/>
-        <Section value="24" entries="97" empty="true" name="Track names"/>
-        <Section value="25" entries="96" empty="true" name="Composers comments"/>
-        <Section value="26" entries="1" empty="true"/>
-        <Section value="27" entries="1" empty="true"/>
-        <Section value="28" entries="1" empty="true"/>
-        <Section value="29" entries="1" empty="true"/>
-        <Section value="30" entries="1" empty="true"/>
-        <Section value="31" entries="12" empty="true" name="Months"/>
+        <Section value="0" entries="1" empty="true" dte="true"/>
+        <Section value="1" entries="1" empty="true" dte="true"/>
+        <Section value="2" entries="1" empty="true" dte="true"/>
+        <Section value="3" entries="1" empty="true" dte="true"/>
+        <Section value="4" entries="1" empty="true" dte="true"/>
+        <Section value="5" entries="1" empty="true" dte="true"/>
+        <Section value="6" entries="1" empty="true" dte="true"/>
+        <Section value="7" entries="1" empty="true" dte="true"/>
+        <Section value="8" entries="1024" empty="true" dte="false" name="Unit names"/>
+        <Section value="9" entries="1" empty="true" dte="true"/>
+        <Section value="10" entries="1" empty="true" dte="true"/>
+        <Section value="11" entries="1" empty="true" dte="true"/>
+        <Section value="12" entries="1" empty="true" dte="true"/>
+        <Section value="13" entries="1" empty="true" dte="true"/>
+        <Section value="14" entries="1" empty="true" dte="true"/>
+        <Section value="15" entries="1" empty="true" dte="true"/>
+        <Section value="16" entries="1" empty="true" dte="true"/>
+        <Section value="17" entries="1" empty="true" dte="true"/>
+        <Section value="18" entries="1" empty="true" dte="true"/>
+        <Section value="19" entries="1" empty="true" dte="true"/>
+        <Section value="20" entries="1" empty="true" dte="true"/>
+        <Section value="21" entries="1" empty="true" dte="true"/>
+        <Section value="22" entries="1" empty="true" dte="true"/>
+        <Section value="23" entries="16" empty="true" dte="true" name="Birthday"/>
+        <Section value="24" entries="97" empty="true" dte="false" name="Track names"/>
+        <Section value="25" entries="96" empty="true" dte="false" name="Composers comments"/>
+        <Section value="26" entries="1" empty="true" dte="true"/>
+        <Section value="27" entries="1" empty="true" dte="true"/>
+        <Section value="28" entries="1" empty="true" dte="true"/>
+        <Section value="29" entries="1" empty="true" dte="true"/>
+        <Section value="30" entries="1" empty="true" dte="true"/>
+        <Section value="31" entries="12" empty="true" dte="true" name="Months"/>
       </Sections>
     </SectionedFile>
 
-    <SectionedFile>
+    <CompressedFile>
       <DisplayName>WORLD.LZW</DisplayName>
       <Guid>{B213AD73-E433-46A8-BBD2-34147A1A7B6D}</Guid>
       <Size>81920</Size>
@@ -796,59 +796,48 @@
         <FFTPack index="EVENT_WORLD_LZW" offset="0"/>
       </Sectors>
       <Sections count="32">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="1" empty="true"/>
-        <Section value="2" entries="1" empty="true"/>
-        <Section value="3" entries="1" empty="true"/>
-        <Section value="4" entries="1" empty="true"/>
-        <Section value="5" entries="1" empty="true"/>
-        <Section value="6" entries="169" empty="false" name="Job names">
+        <Section value="0" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="1" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="2" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="3" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="4" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="5" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="6" entries="169" empty="false" dte="false" compressible="false" name="Job names">
           <include name="JobNames" start="0" end="168" offset="0"/>
         </Section>
-        <Section value="7" entries="316" empty="false" name="Item names">
+        <Section value="7" entries="316" empty="false" dte="true" compressible="false" name="Item names">
           <include name="ItemNames" start="0" end="315" offset="0"/>
         </Section>
-        <Section value="8" entries="1024" empty="true" name="Unit names"/>
-        <Section value="9" entries="1024" empty="true" name="Unit names"/>
-        <Section value="10" entries="11" empty="true" name="Battle menus"/>
-        <Section value="11" entries="2" empty="true" name="Map help"/>
-        <Section value="12" entries="96" empty="true" name="Errand names"/>
-        <Section value="13" entries="1" empty="true"/>
-        <Section value="14" entries="512" empty="false" name="Ability names">
+        <Section value="8" entries="1024" empty="true" dte="false" compressible="false" name="Unit names"/>
+        <Section value="9" entries="1024" empty="true" dte="false" compressible="false" name="Unit names"/>
+        <Section value="10" entries="11" empty="true" dte="true" compressible="false" name="Battle menus"/>
+        <Section value="11" entries="2" empty="true" dte="true" compressible="false" name="Map help"/>
+        <Section value="12" entries="96" empty="true" dte="true" compressible="true" name="Errand names"/>
+        <Section value="13" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="14" entries="512" empty="false" dte="true" compressible="false" name="Ability names">
           <include name="AbilityNames" start="0" end="511" offset="0"/>
         </Section>
-        <Section value="15" entries="77" empty="true" name="Feat rewards"/>
-        <Section value="16" entries="76" empty="true" name="Tutorial menus"/>
-        <Section value="17" entries="1" empty="true"/>
-        <Section value="18" entries="44" empty="true" name="Location names"/>
-        <Section value="19" entries="24" empty="true" name="Empty"/>
-        <Section value="20" entries="1" empty="true" name="Map menu text"/>
-        <Section value="21" entries="115" empty="true" name="Event names"/>
-        <Section value="22" entries="227" empty="false" name="Skillset names">
+        <Section value="15" entries="77" empty="true" dte="true" compressible="true" name="Feat rewards"/>
+        <Section value="16" entries="76" empty="true" dte="true" compressible="true" name="Tutorial menus"/>
+        <Section value="17" entries="1" empty="true" dte="true" compressible="false"/>
+        <Section value="18" entries="44" empty="true" dte="true" compressible="false" name="Location names"/>
+        <Section value="19" entries="24" empty="true" dte="true" compressible="false" name="Empty"/>
+        <Section value="20" entries="1" empty="true" dte="true" compressible="false" name="Map menu text"/>
+        <Section value="21" entries="115" empty="true" dte="true" compressible="true" name="Event names"/>
+        <Section value="22" entries="227" empty="false" dte="true" compressible="true" name="Skillset names">
           <include name="SkillsetNames" start="0" end="226" offset="0"/>
         </Section>
-        <Section value="23" entries="374" empty="true" name="Tavern text"/>
-        <Section value="24" entries="32" empty="true" name="Tutorial menus"/>
-        <Section value="25" entries="185" empty="true" name="Rumors/Multiplayer text"/>
-        <Section value="26" entries="96" empty="true" name="Feats names"/>
-        <Section value="27" entries="16" empty="true" name="Wonders names"/>
-        <Section value="28" entries="47" empty="true" name="Artefacts names"/>
-        <Section value="29" entries="78" empty="true" name="Events names"/>
-        <Section value="30" entries="1024" empty="true" name="Personae names"/>
-        <Section value="31" entries="96" empty="true" name="Feats descriptions"/>
-      </Sections>
-    </SectionedFile>
-    <!--
-    <CompressedFile>
-      <DisplayName></DisplayName>
-      <Size></Size>
-      <Sectors>
-        <BootBin offset=""/>
-      </Sectors>
-      <Sections count="">
+        <Section value="23" entries="374" empty="true" dte="false" compressible="false" name="Tavern text"/>
+        <Section value="24" entries="32" empty="true" dte="true" compressible="true" name="Tutorial menus"/>
+        <Section value="25" entries="185" empty="true" dte="true" compressible="true" name="Rumors/Multiplayer text"/>
+        <Section value="26" entries="96" empty="true" dte="true" compressible="true" name="Feats names"/>
+        <Section value="27" entries="16" empty="true" dte="true" compressible="true" name="Wonders names"/>
+        <Section value="28" entries="47" empty="true" dte="true" compressible="true" name="Artefacts names"/>
+        <Section value="29" entries="78" empty="true" dte="true" compressible="true" name="Events names"/>
+        <Section value="30" entries="1024" empty="true" dte="false" compressible="false" name="Personae names"/>
+        <Section value="31" entries="96" empty="true" dte="true"  compressible="true" name="Feats descriptions"/>
       </Sections>
     </CompressedFile>
--->
     <CompressedFile>
       <DisplayName>BOOT.BIN[2A1630]</DisplayName>
       <Guid>{8B291A28-EAEA-42E7-8BB3-150871BBB89F}</Guid>
@@ -857,8 +846,8 @@
         <BootBin offset="2758192"/>
       </Sectors>
       <Sections count="21">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="50" empty="false" name="Help">
+        <Section value="0" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="1" entries="50" empty="false" dte="true" compressible="true" name="Help">
           <include name="Help1" start="0" end="39" offset="0"/>
           <entry value="40" name="Add"/>
           <entry value="41" name="Don't add"/>
@@ -871,33 +860,33 @@
           <entry value="48" name="View status"/>
           <entry value="49" name="AI"/>
         </Section>
-        <Section value="2" entries="181" empty="true" name="Menu/Options help"/>
-        <Section value="3" entries="2" empty="true" name=""/>
-        <Section value="4" entries="31" empty="true" name=""/>
-        <Section value="5" entries="1" empty="true"/>
-        <Section value="6" entries="1" empty="true"/>
-        <Section value="7" entries="1" empty="true"/>
-        <Section value="8" entries="1" empty="true"/>
-        <Section value="9" entries="1" empty="true"/>
-        <Section value="10" entries="1" empty="true"/>
-        <Section value="11" entries="1" empty="true"/>
-        <Section value="12" entries="169" empty="false" name="Job descriptions">
+        <Section value="2" entries="181" empty="true" dte="true" compressible="true" name="Menu/Options help"/>
+        <Section value="3" entries="2" empty="true" dte="true" compressible="false" name=""/>
+        <Section value="4" entries="31" empty="true" dte="false" compressible="false" name=""/>
+        <Section value="5" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="6" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="7" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="8" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="9" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="10" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="11" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="12" entries="169" empty="false" dte="true" compressible="true" name="Job descriptions">
           <include name="JobNames" start="0" end="168" offset="0"/>
         </Section>
-        <Section value="13" entries="316" empty="false" name="Item descriptions">
+        <Section value="13" entries="316" empty="false" dte="true" compressible="true" name="Item descriptions">
           <include name="ItemNames" start="0" end="315" offset="0"/>
         </Section>
-        <Section value="14" entries="1" empty="true"/>
-        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+        <Section value="14" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="15" entries="512" empty="false" dte="true" compressible="true" name="Ability descriptions">
           <include name="AbilityNames" start="0" end="511" offset="0"/>
         </Section>
-        <Section value="16" entries="45" empty="true" name="Location descriptions"/>
-        <Section value="17" entries="116" empty="true" name="Location descriptions"/>
-        <Section value="18" entries="1" empty="true"/>
-        <Section value="19" entries="227" empty="false" name="Skillset descriptions">
+        <Section value="16" entries="45" empty="true" dte="true" compressible="true" name="Location descriptions"/>
+        <Section value="17" entries="116" empty="true" dte="true" compressible="true" name="Location descriptions"/>
+        <Section value="18" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="19" entries="227" empty="false" dte="true" compressible="true" name="Skillset descriptions">
           <include name="SkillsetNames" start="0" end="226" offset="0"/>
         </Section>
-        <Section value="20" entries="768" empty="true" name="Unit quotes"/>
+        <Section value="20" entries="768" empty="true" dte="true" name="Unit quotes" compressible="true"/>
       </Sections>
     </CompressedFile>
 
@@ -909,8 +898,8 @@
         <BootBin offset="3330920"/>
       </Sectors>
       <Sections count="21">
-        <Section value="0" entries="1" empty="true"/>
-        <Section value="1" entries="50" empty="false" name="Help">
+        <Section value="0" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="1" entries="50" empty="false" dte="true" compressible="true" name="Help">
           <include name="Help1" start="0" end="39" offset="0"/>
           <entry value="40" name="Add"/>
           <entry value="41" name="Don't add"/>
@@ -923,33 +912,33 @@
           <entry value="48" name="View status"/>
           <entry value="49" name="AI"/>
         </Section>
-        <Section value="2" entries="157" empty="true" name="Menu/Options help"/>
-        <Section value="3" entries="1" empty="true"/>
-        <Section value="4" entries="1" empty="true"/>
-        <Section value="5" entries="1" empty="true"/>
-        <Section value="6" entries="1" empty="true"/>
-        <Section value="7" entries="1" empty="true"/>
-        <Section value="8" entries="1" empty="true"/>
-        <Section value="9" entries="1" empty="true"/>
-        <Section value="10" entries="1" empty="true"/>
-        <Section value="11" entries="64" empty="true" name="Terrain descriptions"/>
-        <Section value="12" entries="169" empty="false" name="Job descriptions">
+        <Section value="2" entries="157" empty="true" dte="true" compressible="true" name="Menu/Options help"/>
+        <Section value="3" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="4" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="5" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="6" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="7" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="8" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="9" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="10" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="11" entries="64" empty="true" dte="true" compressible="true" name="Terrain descriptions"/>
+        <Section value="12" entries="169" empty="false" dte="true" compressible="true" name="Job descriptions">
           <include name="JobNames" start="0" end="168" offset="0"/>
         </Section>
-        <Section value="13" entries="316" empty="false" name="Item descriptions">
+        <Section value="13" entries="316" empty="false" dte="true" compressible="true" name="Item descriptions">
           <include name="ItemNames" start="0" end="315" offset="0"/>
         </Section>
-        <Section value="14" entries="1" empty="true"/>
-        <Section value="15" entries="512" empty="false" name="Ability descriptions">
+        <Section value="14" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="15" entries="512" empty="false" dte="true" compressible="true" name="Ability descriptions">
           <include name="AbilityNames" start="0" end="511" offset="0"/>
         </Section>
-        <Section value="16" entries="1" empty="true"/>
-        <Section value="17" entries="1" empty="true"/>
-        <Section value="18" entries="1" empty="true"/>
-        <Section value="19" entries="227" empty="false" name="Skillset descriptions">
+        <Section value="16" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="17" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="18" entries="1" empty="true" dte="true" compressible="true"/>
+        <Section value="19" entries="227" empty="false" dte="true" compressible="true" name="Skillset descriptions">
           <include name="SkillsetNames" start="0" end="226" offset="0"/>
         </Section>
-        <Section value="20" entries="40" empty="false" name="Status messages">
+        <Section value="20" entries="40" empty="false" dte="true" compressible="true" name="Status messages">
           <include name="StatusNames" start="0" end="39" offset="0"/>
         </Section>
       </Sections>
@@ -974,7 +963,7 @@
         <BootBin offset="3305252"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="227" empty="false" name="Skillset names">
+        <Section value="0" entries="227" empty="false" dte="true" name="Skillset names">
           <include name="SkillsetNames" start="0" end="226" offset="0" />
         </Section>
       </Sections>
@@ -987,7 +976,7 @@
         <BootBin offset="3306472"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="169" empty="false" name="Job names">
+        <Section value="0" entries="169" empty="false" dte="true" name="Job names">
           <include name="JobNames" start="0" end="168" offset="0"/>
         </Section>
       </Sections>
@@ -1001,7 +990,7 @@
         <BootBin offset="3308020"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="512" empty="false" name="Ability names">
+        <Section value="0" entries="512" empty="false" dte="true" name="Ability names">
           <include name="AbilityNames" start="0" end="511" offset="0"/>
         </Section>
       </Sections>
@@ -1015,11 +1004,11 @@
         <BootBin offset="3313112"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="31" empty="true" name="Error"/>
+        <Section value="0" entries="31" empty="true" dte="false" name="Error"/>
       </Sections>
     </OneShotFile>
 
-    <OneShotFile>
+    <CompressibleOneShotFile>
       <DisplayName>BOOT.BIN 5</DisplayName>
       <Guid>{8AB063AC-7E8E-4B8F-9F67-11D16560B874}</Guid>
       <Size>4246</Size>
@@ -1027,11 +1016,11 @@
         <BootBin offset="3314728"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="175" empty="true" name="Dismiss quotes"/>
+        <Section value="0" entries="175" empty="true" dte="false" compressible="true" name="Dismiss quotes"/>
       </Sections>
-    </OneShotFile>
+    </CompressibleOneShotFile>
 
-    <OneShotFile>
+    <CompressibleOneShotFile>
       <DisplayName>BOOT.BIN 6</DisplayName>
       <Guid>{EC126CCF-77B2-4622-859D-ECF6B501004D}</Guid>
       <Size>7159</Size>
@@ -1039,11 +1028,11 @@
         <BootBin offset="3318976"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="99" empty="true" name="Job requirements"/>
+        <Section value="0" entries="99" empty="true" dte="true" compressible="true" name="Job requirements"/>
       </Sections>
-    </OneShotFile>
+    </CompressibleOneShotFile>
 
-    <OneShotFile>
+    <CompressibleOneShotFile>
       <DisplayName>BOOT.BIN 7</DisplayName>
       <Guid>{331C389C-15BD-43DE-ADAF-EEFE3871C051}</Guid>
       <Size>3841</Size>
@@ -1051,9 +1040,9 @@
         <BootBin offset="3327076"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="74" empty="true" name="Shop text"/>
+        <Section value="0" entries="74" empty="true" dte="false" compressible="true" name="Shop text"/>
       </Sections>
-    </OneShotFile>
+    </CompressibleOneShotFile>
 
     <PartitionedFile>
       <DisplayName>SNPLMES.BIN</DisplayName>
@@ -1064,12 +1053,12 @@
         <FFTPack index="WORLD_SNPLMES_BIN" offset="0"/>
       </Sectors>
       <Sections count="6">
-        <Section value="0" entries="204" empty="true"/>
-        <Section value="1" entries="168" empty="true"/>
-        <Section value="2" entries="186" empty="true"/>
-        <Section value="3" entries="217" empty="true"/>
-        <Section value="4" entries="40" empty="true" name="Germonik Scriptures"/>
-        <Section value="5" entries="14" empty="true"/>
+        <Section value="0" entries="204" empty="true" dte="true"/>
+        <Section value="1" entries="168" empty="true" dte="true"/>
+        <Section value="2" entries="186" empty="true" dte="true"/>
+        <Section value="3" entries="217" empty="true" dte="true"/>
+        <Section value="4" entries="40" empty="true" dte="true" name="Germonik Scriptures"/>
+        <Section value="5" entries="14" empty="true" dte="true"/>
       </Sections>
     </PartitionedFile>
 
@@ -1082,131 +1071,132 @@
         <FFTPack index="WORLD_WLDMES_BIN" offset="0"/>
       </Sectors>
       <Sections count="121">
-        <Section value="0" entries="68" empty="true"/>
-        <Section value="1" entries="96" empty="true"/>
-        <Section value="2" entries="16" empty="true"/>
-        <Section value="3" entries="47" empty="true"/>
-        <Section value="4" entries="48" empty="true"/>
-        <Section value="5" entries="30" empty="true"/>
-        <Section value="6" entries="24" empty="true"/>
-        <Section value="7" entries="24" empty="true"/>
-        <Section value="8" entries="24" empty="true"/>
-        <Section value="9" entries="128" empty="true"/>
-        <Section value="10" entries="128" empty="true"/>
-        <Section value="11" entries="128" empty="true"/>
-        <Section value="12" entries="128" empty="true"/>
-        <Section value="13" entries="128" empty="true"/>
-        <Section value="14" entries="128" empty="true"/>
-        <Section value="15" entries="128" empty="true"/>
-        <Section value="16" entries="128" empty="true"/>
-        <Section value="17" entries="48" empty="true"/>
-        <Section value="18" entries="48" empty="true"/>
-        <Section value="19" entries="24" empty="true"/>
-        <Section value="20" entries="1" empty="true"/>
-        <Section value="21" entries="1" empty="true"/>
-        <Section value="22" entries="1" empty="true"/>
-        <Section value="23" entries="1" empty="true"/>
-        <Section value="24" entries="168" empty="true"/>
-        <Section value="25" entries="168" empty="true"/>
-        <Section value="26" entries="168" empty="true"/>
-        <Section value="27" entries="168" empty="true"/>
-        <Section value="28" entries="168" empty="true"/>
-        <Section value="29" entries="168" empty="true"/>
-        <Section value="30" entries="168" empty="true"/>
-        <Section value="31" entries="168" empty="true"/>
-        <Section value="32" entries="168" empty="true"/>
-        <Section value="33" entries="168" empty="true"/>
-        <Section value="34" entries="168" empty="true"/>
-        <Section value="35" entries="168" empty="true"/>
-        <Section value="36" entries="168" empty="true"/>
-        <Section value="37" entries="168" empty="true"/>
-        <Section value="38" entries="168" empty="true"/>
-        <Section value="39" entries="168" empty="true"/>
-        <Section value="40" entries="168" empty="true"/>
-        <Section value="41" entries="168" empty="true"/>
-        <Section value="42" entries="168" empty="true"/>
-        <Section value="43" entries="168" empty="true"/>
-        <Section value="44" entries="168" empty="true"/>
-        <Section value="45" entries="168" empty="true"/>
-        <Section value="46" entries="168" empty="true"/>
-        <Section value="47" entries="168" empty="true"/>
-        <Section value="48" entries="168" empty="true"/>
-        <Section value="49" entries="168" empty="true"/>
-        <Section value="50" entries="168" empty="true"/>
-        <Section value="51" entries="168" empty="true"/>
-        <Section value="52" entries="168" empty="true"/>
-        <Section value="53" entries="168" empty="true"/>
-        <Section value="54" entries="168" empty="true"/>
-        <Section value="55" entries="168" empty="true"/>
-        <Section value="56" entries="168" empty="true"/>
-        <Section value="57" entries="168" empty="true"/>
-        <Section value="58" entries="168" empty="true"/>
-        <Section value="59" entries="168" empty="true"/>
-        <Section value="60" entries="168" empty="true"/>
-        <Section value="61" entries="168" empty="true"/>
-        <Section value="62" entries="168" empty="true"/>
-        <Section value="63" entries="168" empty="true"/>
-        <Section value="64" entries="168" empty="true"/>
-        <Section value="65" entries="168" empty="true"/>
-        <Section value="66" entries="168" empty="true"/>
-        <Section value="67" entries="168" empty="true"/>
-        <Section value="68" entries="168" empty="true"/>
-        <Section value="69" entries="168" empty="true"/>
-        <Section value="70" entries="168" empty="true"/>
-        <Section value="71" entries="168" empty="true"/>
-        <Section value="72" entries="168" empty="true"/>
-        <Section value="73" entries="168" empty="true"/>
-        <Section value="74" entries="168" empty="true"/>
-        <Section value="75" entries="168" empty="true"/>
-        <Section value="76" entries="168" empty="true"/>
-        <Section value="77" entries="168" empty="true"/>
-        <Section value="78" entries="168" empty="true"/>
-        <Section value="79" entries="168" empty="true"/>
-        <Section value="80" entries="168" empty="true"/>
-        <Section value="81" entries="168" empty="true"/>
-        <Section value="82" entries="168" empty="true"/>
-        <Section value="83" entries="168" empty="true"/>
-        <Section value="84" entries="168" empty="true"/>
-        <Section value="85" entries="168" empty="true"/>
-        <Section value="86" entries="168" empty="true"/>
-        <Section value="87" entries="168" empty="true"/>
-        <Section value="88" entries="168" empty="true"/>
-        <Section value="89" entries="168" empty="true"/>
-        <Section value="90" entries="168" empty="true"/>
-        <Section value="91" entries="168" empty="true"/>
-        <Section value="92" entries="168" empty="true"/>
-        <Section value="93" entries="168" empty="true"/>
-        <Section value="94" entries="168" empty="true"/>
-        <Section value="95" entries="168" empty="true"/>
-        <Section value="96" entries="168" empty="true"/>
-        <Section value="97" entries="168" empty="true"/>
-        <Section value="98" entries="168" empty="true"/>
-        <Section value="99" entries="168" empty="true"/>
-        <Section value="100" entries="168" empty="true"/>
-        <Section value="101" entries="168" empty="true"/>
-        <Section value="102" entries="168" empty="true"/>
-        <Section value="103" entries="168" empty="true"/>
-        <Section value="104" entries="168" empty="true"/>
-        <Section value="105" entries="168" empty="true"/>
-        <Section value="106" entries="168" empty="true"/>
-        <Section value="107" entries="168" empty="true"/>
-        <Section value="108" entries="168" empty="true"/>
-        <Section value="109" entries="168" empty="true"/>
-        <Section value="110" entries="168" empty="true"/>
-        <Section value="111" entries="168" empty="true"/>
-        <Section value="112" entries="168" empty="true"/>
-        <Section value="113" entries="168" empty="true"/>
-        <Section value="114" entries="168" empty="true"/>
-        <Section value="115" entries="168" empty="true"/>
-        <Section value="116" entries="168" empty="true"/>
-        <Section value="117" entries="168" empty="true"/>
-        <Section value="118" entries="168" empty="true"/>
-        <Section value="119" entries="168" empty="true"/>
-        <Section value="120" entries="30" empty="true"/>
+        <Section value="0" entries="68" empty="true" dte="true"/>
+        <Section value="1" entries="96" empty="true" dte="true"/>
+        <Section value="2" entries="16" empty="true" dte="true"/>
+        <Section value="3" entries="47" empty="true" dte="true"/>
+        <Section value="4" entries="48" empty="true" dte="true"/>
+        <Section value="5" entries="30" empty="true" dte="true"/>
+        <Section value="6" entries="24" empty="true" dte="true"/>
+        <Section value="7" entries="24" empty="true" dte="true"/>
+        <Section value="8" entries="24" empty="true" dte="true"/>
+        <Section value="9" entries="128" empty="true" dte="true"/>
+        <Section value="10" entries="128" empty="true" dte="true"/>
+        <Section value="11" entries="128" empty="true" dte="true"/>
+        <Section value="12" entries="128" empty="true" dte="true"/>
+        <Section value="13" entries="128" empty="true" dte="true"/>
+        <Section value="14" entries="128" empty="true" dte="true"/>
+        <Section value="15" entries="128" empty="true" dte="true"/>
+        <Section value="16" entries="128" empty="true" dte="true"/>
+        <Section value="17" entries="48" empty="true" dte="true"/>
+        <Section value="18" entries="48" empty="true" dte="true"/>
+        <Section value="19" entries="24" empty="true" dte="true"/>
+        <Section value="20" entries="1" empty="true" dte="true"/>
+        <Section value="21" entries="1" empty="true" dte="true"/>
+        <Section value="22" entries="1" empty="true" dte="true"/>
+        <Section value="23" entries="1" empty="true" dte="true"/>
+        <Section value="24" entries="168" empty="true" dte="true"/>
+        <Section value="25" entries="168" empty="true" dte="true"/>
+        <Section value="26" entries="168" empty="true" dte="true"/>
+        <Section value="27" entries="168" empty="true" dte="true"/>
+        <Section value="28" entries="168" empty="true" dte="true"/>
+        <Section value="29" entries="168" empty="true" dte="true"/>
+        <Section value="30" entries="168" empty="true" dte="true"/>
+        <Section value="31" entries="168" empty="true" dte="true"/>
+        <Section value="32" entries="168" empty="true" dte="true"/>
+        <Section value="33" entries="168" empty="true" dte="true"/>
+        <Section value="34" entries="168" empty="true" dte="true"/>
+        <Section value="35" entries="168" empty="true" dte="true"/>
+        <Section value="36" entries="168" empty="true" dte="true"/>
+        <Section value="37" entries="168" empty="true" dte="true"/>
+        <Section value="38" entries="168" empty="true" dte="true"/>
+        <Section value="39" entries="168" empty="true" dte="true"/>
+        <Section value="40" entries="168" empty="true" dte="true"/>
+        <Section value="41" entries="168" empty="true" dte="true"/>
+        <Section value="42" entries="168" empty="true" dte="true"/>
+        <Section value="43" entries="168" empty="true" dte="true"/>
+        <Section value="44" entries="168" empty="true" dte="true"/>
+        <Section value="45" entries="168" empty="true" dte="true"/>
+        <Section value="46" entries="168" empty="true" dte="true"/>
+        <Section value="47" entries="168" empty="true" dte="true"/>
+        <Section value="48" entries="168" empty="true" dte="true"/>
+        <Section value="49" entries="168" empty="true" dte="true"/>
+        <Section value="50" entries="168" empty="true" dte="true"/>
+        <Section value="51" entries="168" empty="true" dte="true"/>
+        <Section value="52" entries="168" empty="true" dte="true"/>
+        <Section value="53" entries="168" empty="true" dte="true"/>
+        <Section value="54" entries="168" empty="true" dte="true"/>
+        <Section value="55" entries="168" empty="true" dte="true"/>
+        <Section value="56" entries="168" empty="true" dte="true"/>
+        <Section value="57" entries="168" empty="true" dte="true"/>
+        <Section value="58" entries="168" empty="true" dte="true"/>
+        <Section value="59" entries="168" empty="true" dte="true"/>
+        <Section value="60" entries="168" empty="true" dte="true"/>
+        <Section value="61" entries="168" empty="true" dte="true"/>
+        <Section value="62" entries="168" empty="true" dte="true"/>
+        <Section value="63" entries="168" empty="true" dte="true"/>
+        <Section value="64" entries="168" empty="true" dte="true"/>
+        <Section value="65" entries="168" empty="true" dte="true"/>
+        <Section value="66" entries="168" empty="true" dte="true"/>
+        <Section value="67" entries="168" empty="true" dte="true"/>
+        <Section value="68" entries="168" empty="true" dte="true"/>
+        <Section value="69" entries="168" empty="true" dte="true"/>
+        <Section value="70" entries="168" empty="true" dte="true"/>
+        <Section value="71" entries="168" empty="true" dte="true"/>
+        <Section value="72" entries="168" empty="true" dte="true"/>
+        <Section value="73" entries="168" empty="true" dte="true"/>
+        <Section value="74" entries="168" empty="true" dte="true"/>
+        <Section value="75" entries="168" empty="true" dte="true"/>
+        <Section value="76" entries="168" empty="true" dte="true"/>
+        <Section value="77" entries="168" empty="true" dte="true"/>
+        <Section value="78" entries="168" empty="true" dte="true"/>
+        <Section value="79" entries="168" empty="true" dte="true"/>
+        <Section value="80" entries="168" empty="true" dte="true"/>
+        <Section value="81" entries="168" empty="true" dte="true"/>
+        <Section value="82" entries="168" empty="true" dte="true"/>
+        <Section value="83" entries="168" empty="true" dte="true"/>
+        <Section value="84" entries="168" empty="true" dte="true"/>
+        <Section value="85" entries="168" empty="true" dte="true"/>
+        <Section value="86" entries="168" empty="true" dte="true"/>
+        <Section value="87" entries="168" empty="true" dte="true"/>
+        <Section value="88" entries="168" empty="true" dte="true"/>
+        <Section value="89" entries="168" empty="true" dte="true"/>
+        <Section value="90" entries="168" empty="true" dte="true"/>
+        <Section value="91" entries="168" empty="true" dte="true"/>
+        <Section value="92" entries="168" empty="true" dte="true"/>
+        <Section value="93" entries="168" empty="true" dte="true"/>
+        <Section value="94" entries="168" empty="true" dte="true"/>
+        <Section value="95" entries="168" empty="true" dte="true"/>
+        <Section value="96" entries="168" empty="true" dte="true"/>
+        <Section value="97" entries="168" empty="true" dte="true"/>
+        <Section value="98" entries="168" empty="true" dte="true"/>
+        <Section value="99" entries="168" empty="true" dte="true"/>
+        <Section value="100" entries="168" empty="true" dte="true"/>
+        <Section value="101" entries="168" empty="true" dte="true"/>
+        <Section value="102" entries="168" empty="true" dte="true"/>
+        <Section value="103" entries="168" empty="true" dte="true"/>
+        <Section value="104" entries="168" empty="true" dte="true"/>
+        <Section value="105" entries="168" empty="true" dte="true"/>
+        <Section value="106" entries="168" empty="true" dte="true"/>
+        <Section value="107" entries="168" empty="true" dte="true"/>
+        <Section value="108" entries="168" empty="true" dte="true"/>
+        <Section value="109" entries="168" empty="true" dte="true"/>
+        <Section value="110" entries="168" empty="true" dte="true"/>
+        <Section value="111" entries="168" empty="true" dte="true"/>
+        <Section value="112" entries="168" empty="true" dte="true"/>
+        <Section value="113" entries="168" empty="true" dte="true"/>
+        <Section value="114" entries="168" empty="true" dte="true"/>
+        <Section value="115" entries="168" empty="true" dte="true"/>
+        <Section value="116" entries="168" empty="true" dte="true"/>
+        <Section value="117" entries="168" empty="true" dte="true"/>
+        <Section value="118" entries="168" empty="true" dte="true"/>
+        <Section value="119" entries="168" empty="true" dte="true"/>
+        <Section value="120" entries="30" empty="true" dte="true"/>
       </Sections>
     </PartitionedFile>
 
-  </Files>
+  
+</Files>
   <Templates>
     <Help1>
       <entry value="0" name="Unit #"/>

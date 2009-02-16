@@ -6,6 +6,20 @@ namespace FFTPatcher.TextEditor
 {
     static class DTE
     {
+        public class DteException : Exception
+        {
+            private string message;
+            public override string Message
+            {
+                get { return message; }
+            }
+
+            public DteException( IFile failedFile )
+            {
+                message = string.Format( "DTE for {0} failed.", failedFile.DisplayName );
+            }
+        }
+
         // Apply to WORLD.BIN @ 0x6CAC
         private static IList<byte> worldBin1 =
             new byte[] { 
@@ -175,7 +189,7 @@ namespace FFTPatcher.TextEditor
                     new PatchedByteArray(PsxIso.BATTLE_BIN, 0xFF0FC, widthBytes),
                     new PatchedByteArray(PsxIso.WORLD.WORLD_BIN, 0x733E0, widthBytes),
                     new PatchedByteArray(PsxIso.SCUS_942_21, 0x228e0, GeneratePsxLookupTable(dteEncodings, charSet).ToArray())
-                });
+                } );
 
             return result;
         }
@@ -285,6 +299,66 @@ namespace FFTPatcher.TextEditor
             widthBytes = font.ToWidthsByteArray();
         }
 
+
+        public static IList<byte> GenerateTable( IEnumerable<KeyValuePair<string, byte>> dteEncodings, GenericCharMap charmap )
+        {
+            Dictionary<int, string> dict = new Dictionary<int, string>( charmap );
+            foreach ( var kvp in dteEncodings )
+            {
+                dict[kvp.Value] = kvp.Key;
+            }
+            List<KeyValuePair<int, string>> list = new List<KeyValuePair<int, string>>(dict);
+            list.Sort((a, b) => a.Key.CompareTo(b.Key));
+
+            StringBuilder result = new StringBuilder();
+            foreach ( var kvp in list )
+            {
+                result.AppendFormat( "{0:X2}={1}", kvp.Key, kvp.Value );
+                result.Append( Environment.NewLine );
+            }
+
+            Encoding e = Encoding.GetEncoding( "shift_jis" );
+            return e.GetBytes( result.ToString() );
+        }
+
+        public static GenericCharMap GenerateCharMap( IEnumerable<KeyValuePair<int, string>> table )
+        {
+            GenericCharMap map = new NonDefaultCharMap();
+            foreach ( var kvp in table )
+            {
+                map[kvp.Key] = kvp.Value;
+            }
+            return map;
+        }
+
+        public static GenericCharMap GenerateCharMap( System.IO.StreamReader reader )
+        {
+            Dictionary<int, string> table = new Dictionary<int, string>();
+            while ( !reader.EndOfStream )
+            {
+                string line = reader.ReadLine();
+                string[] lineSplit = line.Split( new char[] { '=' }, 2 );
+                table[Int32.Parse( lineSplit[0], System.Globalization.NumberStyles.HexNumber )] = lineSplit[1];
+            }
+
+            return GenerateCharMap( table );
+        }
+
+        public static GenericCharMap GenerateCharMap( string filename )
+        {
+            using ( System.IO.Stream stream = System.IO.File.OpenRead( filename ) )
+            {
+                return GenerateCharMap( stream );
+            }
+        }
+
+        public static GenericCharMap GenerateCharMap( System.IO.Stream file )
+        {
+            using ( System.IO.StreamReader reader = new System.IO.StreamReader( file ) )
+            {
+                return GenerateCharMap( reader );
+            }
+        }
 
     }
 }

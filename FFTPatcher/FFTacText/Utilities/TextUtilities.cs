@@ -242,7 +242,7 @@ namespace FFTPatcher.TextEditor
             psx.Add( 0xD131, "*" );
             psx.Add( 0xD132, "*" );
             psx.Add( 0xE0, "{Ramza}" );
-            psx.Add( 0xF8, "\r\n" );
+            psx.Add( 0xF8, "{Newline}" );
             psx.Add( 0xFB, "{Begin List}" );
             psx.Add( 0xFC, "{End List}" );
             psx.Add( 0xFF, "{Close}" );
@@ -263,7 +263,6 @@ namespace FFTPatcher.TextEditor
                 // HACK
                 psx.Add( 0xE200 + i, string.Format( "{{Delay {0:X2}", i ) + @"}" );
                 psx.Add( 0xE300 + i, string.Format( "{{Color {0:X2}", i ) + @"}" );
-                psx.Add( 0xEE00 + i, string.Format( "{{Tab {0:X2}", i ) + @"}" );
             }
 
             psx.Add( 0x3F, "\u3042" );
@@ -335,6 +334,12 @@ namespace FFTPatcher.TextEditor
             {
                 psp.Add( kvp.Key, kvp.Value );
             }
+
+            for (int i = 0; i < 256; i++)
+            {
+                psp.Add( 0xEE00 + i, string.Format( "{{Tab {0:X2}", i ) + @"}" );
+            }
+
 
             psp[0x95] = " ";
             psp.Add( 0xDA60, "\xE1" );
@@ -577,7 +582,7 @@ namespace FFTPatcher.TextEditor
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
         /// <param name="callback">The progress callback.</param>
-        public static CompressionResult Compress( IList<IList<string>> sections, GenericCharMap charmap, IDictionary<int, IList<int>> ignoreSections )
+        public static CompressionResult Compress( IList<IList<string>> sections, GenericCharMap charmap, IList<bool> allowedSections )
         {
             int length = 0;
             sections.ForEach( s => length += charmap.StringsToByteArray( s ).Length );
@@ -590,25 +595,15 @@ namespace FFTPatcher.TextEditor
             {
                 int oldPos = pos;
 
-                if( ignoreSections != null && ignoreSections.ContainsKey( section ) )
+                if ( allowedSections == null || allowedSections[section] )
                 {
-                    for( int entry = 0; entry < sections[section].Count; entry++ )
-                    {
-                        byte[] bytes = charmap.StringToByteArray( sections[section][entry] );
-                        if( ignoreSections[section].Contains( entry ) )
-                        {
-                            Array.Copy( bytes, 0, result, pos, bytes.Length );
-                            pos += bytes.Length;
-                        }
-                        else
-                        {
-                            CompressSection( bytes, result, ref pos );
-                        }
-                    }
+                    CompressSection( charmap.StringsToByteArray( sections[section] ), result, ref pos );
                 }
                 else
                 {
-                    CompressSection( charmap.StringsToByteArray( sections[section] ), result, ref pos );
+                    byte[] secResult = charmap.StringsToByteArray( sections[section] );
+                    secResult.CopyTo( result, pos );
+                    pos += secResult.Length;
                 }
 
                 lengths[section] = pos - oldPos;
@@ -696,6 +691,8 @@ namespace FFTPatcher.TextEditor
                 {
                     sb.Append( charmap.GetNextChar( word, ref pos ) );
                 }
+
+                sb.Replace(@"{Newline}", @"{Newline}" + Environment.NewLine);
 
                 result.Add( sb.ToString() );
             }
@@ -983,11 +980,14 @@ namespace FFTPatcher.TextEditor
 
         }
 
-        public static void DoDTEEncoding( IList<IList<string>> strings, IDictionary<string, byte> dteTable )
+        public static void DoDTEEncoding( IList<IList<string>> strings, IList<bool> allowedSections, IDictionary<string, byte> dteTable )
         {
             for( int i = 0; i < strings.Count; i++ )
             {
-                DoDTEEncoding( strings[i], dteTable );
+                if ( allowedSections[i] )
+                {
+                    DoDTEEncoding( strings[i], dteTable );
+                }
             }
         }
 

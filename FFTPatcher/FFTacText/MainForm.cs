@@ -48,17 +48,41 @@ namespace FFTPatcher.TextEditor
             saveMenuItem.Click += new EventHandler( saveMenuItem_Click );
             openMenuItem.Click += new EventHandler( openMenuItem_Click );
             menuItem2.Click += new EventHandler( menuItem2_Click );
+            importPspIsoCustomMenuItem.Click += new EventHandler(importPspIsoCustomMenuItem_Click);
+            importPsxIsoCustomMenuItem.Click += new EventHandler(importPsxIsoCustomMenuItem_Click);
         }
 
         void menuItem2_Click( object sender, EventArgs e )
         {
-            var patches = internalFile.GetPatches();
-            using ( Stream stream = File.Open( @"N:\dev\fft\ita\virginimages\FINALFANTASYTACTICS - Copy.BIN", FileMode.Open, FileAccess.ReadWrite ) )
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.OverwritePrompt = false;
+            saveFileDialog.Filter = "ISO files (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
+            saveFileDialog.CheckFileExists=true;
+            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                PsxIso.PatchPsxIso( stream, patches );
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += internalFile.BuildAndApplyPatches;
+                worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler( worker_RunWorkerCompleted );
+                worker.WorkerReportsProgress = true;
+                worker.WorkerSupportsCancellation = true;
+                ProgressForm f = new ProgressForm();
+                IList<ISerializableFile> files = new List<ISerializableFile>( internalFile.Files.Count );
+                internalFile.Files.FindAll( g => g is ISerializableFile ).ForEach( g => files.Add( (ISerializableFile)g ) );
+                f.BuildNodes( files );
+                f.DoWork( this, worker,
+                    new FFTText.PatchIsoArgs
+                    {
+                        Patcher = internalFile.Filetype == Context.US_PSP ? (FFTText.PatchIso)PspIso.PatchISO : (FFTText.PatchIso)PsxIso.PatchPsxIso,
+                        Filename = saveFileDialog.FileName
+                    } );
             }
-            
-            //internalFile.GetPatches().for
+        }
+
+        void worker_RunWorkerCompleted( object sender, RunWorkerCompletedEventArgs e )
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            worker.RunWorkerCompleted -= worker_RunWorkerCompleted;
+            worker.DoWork -= internalFile.BuildAndApplyPatches;
         }
 
         void openMenuItem_Click( object sender, EventArgs e )
@@ -72,6 +96,8 @@ namespace FFTPatcher.TextEditor
 
         void saveMenuItem_Click( object sender, EventArgs e )
         {
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.FileName = string.Empty;
             saveFileDialog.Filter = "FFTText files (*.ffttext)|*.ffttext";
             if (saveFileDialog.ShowDialog( this) == DialogResult.OK)
             {
@@ -79,7 +105,37 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        void importPspIsoMenuItem_Click( object sender, EventArgs e )
+        void importPsxIsoCustomMenuItem_Click(object sender, EventArgs e)
+        {
+            using (ImportForm form = new ImportForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    using (Stream fileStream = File.OpenRead(form.IsoFileName))
+                    using (Stream tblStream = File.OpenRead(form.TblFileName))
+                    {
+                        LoadFile(FFTTextFactory.GetPsxText(fileStream, tblStream));
+                    }
+                }
+            }
+        }
+
+        void importPspIsoCustomMenuItem_Click(object sender, EventArgs e)
+        {
+            using (ImportForm form = new ImportForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    using (Stream fileStream = File.OpenRead(form.IsoFileName))
+                    using (Stream tblStream = File.OpenRead(form.TblFileName))
+                    {
+                        LoadFile(FFTTextFactory.GetPspText(fileStream, tblStream));
+                    }
+                }
+            }
+        }
+
+        void importPspIsoMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "ISO files (*.iso)|*.iso";
             openFileDialog.FileName = string.Empty;

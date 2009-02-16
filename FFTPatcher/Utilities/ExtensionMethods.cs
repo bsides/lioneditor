@@ -432,7 +432,7 @@ namespace FFTPatcher
         /// <param name="stream">The stream to write to.</param>
         /// <param name="array">The array to write.</param>
         /// <param name="position">The position to start writing.</param>
-        public static void WriteArrayToPosition( this FileStream stream, byte[] array, long position )
+        public static void WriteArrayToPosition( this Stream stream, byte[] array, long position )
         {
             stream.Seek( position, SeekOrigin.Begin );
             stream.Write( array, 0, array.Length );
@@ -444,7 +444,7 @@ namespace FFTPatcher
         /// <param name="stream">The stream to write to.</param>
         /// <param name="array">The array to write.</param>
         /// <param name="positions">The positions to start writing.</param>
-        public static void WriteArrayToPositions( this FileStream stream, byte[] array, params long[] positions )
+        public static void WriteArrayToPositions( this Stream stream, byte[] array, params long[] positions )
         {
             foreach( long position in positions )
             {

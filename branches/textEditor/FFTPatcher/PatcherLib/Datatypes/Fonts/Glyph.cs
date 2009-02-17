@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 
-namespace FFTPatcher.Datatypes
+namespace PatcherLib.Datatypes
 {
     public enum FontColor
     {

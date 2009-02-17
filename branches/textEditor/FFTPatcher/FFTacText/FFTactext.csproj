@@ -34,8 +34,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -180,10 +178,6 @@
     <Compile Include="Utilities\TextUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FFTPatcher.csproj">
-      <Project>{48BE23D0-2943-44EF-A3A6-8537D7695B37}</Project>
-      <Name>FFTPatcher</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PatcherLib\PatcherLib.csproj">
       <Project>{BB7322AD-75D3-44AF-A0BF-76015C53998F}</Project>
       <Name>PatcherLib</Name>

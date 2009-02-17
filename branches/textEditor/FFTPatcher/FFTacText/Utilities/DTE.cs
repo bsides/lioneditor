@@ -115,9 +115,9 @@ namespace FFTPatcher.TextEditor
             new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x22a30, scus2.ToArray() ),
             new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x22848, scus3.ToArray() ) }.AsReadOnly();
 
-        private static Set<string> GetDteGroups( FFTPatcher.Datatypes.FFTFont font, GenericCharMap charmap, IList<string> charset )
+        private static Set<string> GetDteGroups( FFTFont font, GenericCharMap charmap, IList<string> charset )
         {
-            var f = new FFTPatcher.Datatypes.FFTFont( font.ToByteArray(), font.ToWidthsByteArray() );
+            var f = new FFTFont( font.ToByteArray(), font.ToWidthsByteArray() );
             List<int> widths = new List<int>( 2200 );
             f.Glyphs.ForEach( g => widths.Add( g.Width ) );
             return TextUtilities.GetGroups( charmap, charset, widths );
@@ -130,19 +130,19 @@ namespace FFTPatcher.TextEditor
 
         private static Set<string> GetPsxDteGroups()
         {
-            return GetDteGroups( new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin ), TextUtilities.PSXMap, PatcherLib.PSXResources.CharacterSet );
+            return GetDteGroups( new FFTFont( PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin ), TextUtilities.PSXMap, PatcherLib.PSXResources.CharacterSet );
         }
 
         private static Set<string> GetPspDteGroups()
         {
-            return GetDteGroups( new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSPResources.FontBin, PatcherLib.PSXResources.FontWidthsBin ), TextUtilities.PSPMap, PatcherLib.PSPResources.CharacterSet );
+            return GetDteGroups( new FFTFont( PatcherLib.PSPResources.FontBin, PatcherLib.PSXResources.FontWidthsBin ), TextUtilities.PSPMap, PatcherLib.PSPResources.CharacterSet );
         }
 
 
         public static IList<PatchedByteArray> GeneratePspDtePatches( IEnumerable<KeyValuePair<string, byte>> dteEncodings )
         {
             var charSet = PatcherLib.PSPResources.CharacterSet;
-            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSPResources.FontBin, PatcherLib.PSPResources.FontWidthsBin );
+            FFTFont font = new FFTFont( PatcherLib.PSPResources.FontBin, PatcherLib.PSPResources.FontWidthsBin );
 
             byte[] fontBytes;
             byte[] widthBytes;
@@ -170,7 +170,7 @@ namespace FFTPatcher.TextEditor
             // WORLD.BIN -> 0x5B8F8
 
             var charSet = PatcherLib.PSXResources.CharacterSet;
-            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin );
+            FFTFont font = new FFTFont( PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin );
 
             byte[] fontBytes;
             byte[] widthBytes;
@@ -255,13 +255,13 @@ namespace FFTPatcher.TextEditor
 
         private static void GenerateFontBinPatches(
             IEnumerable<KeyValuePair<string, byte>> dteEncodings,
-            FFTPatcher.Datatypes.FFTFont baseFont,
+            FFTFont baseFont,
             IList<string> baseCharSet,
             out byte[] fontBytes,
             out byte[] widthBytes )
         {
-            FFTPatcher.Datatypes.FFTFont font =
-                new FFTPatcher.Datatypes.FFTFont( baseFont.ToByteArray(), baseFont.ToWidthsByteArray() );
+            FFTFont font =
+                new FFTFont( baseFont.ToByteArray(), baseFont.ToWidthsByteArray() );
             IList<string> charSet = new List<string>( baseCharSet );
 
             foreach ( var kvp in dteEncodings )
@@ -271,10 +271,10 @@ namespace FFTPatcher.TextEditor
                 int newWidth = widths[0] + widths[1];
 
                 font.Glyphs[kvp.Value].Width = (byte)newWidth;
-                IList<FFTPatcher.Datatypes.FontColor> newPixels = font.Glyphs[kvp.Value].Pixels;
+                IList<FontColor> newPixels = font.Glyphs[kvp.Value].Pixels;
                 for ( int i = 0; i < newPixels.Count; i++ )
                 {
-                    newPixels[i] = FFTPatcher.Datatypes.FontColor.Transparent;
+                    newPixels[i] = FontColor.Transparent;
                 }
 
                 const int fontHeight = 14;

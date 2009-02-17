@@ -20,7 +20,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using PatcherLib.Datatypes;
 
+namespace System.Runtime.CompilerServices
+{
+    public class ExtensionAttribute : Attribute
+    {
+
+    }
+}
 namespace FFTPatcher.SpriteEditor
 {
     public static partial class ExtensionMethods

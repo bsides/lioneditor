@@ -19,40 +19,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher
 {
-    public interface IGeneratePatchList
-    {
-        bool[] ENTD { get; }
-        bool FONT { get; }
-        bool RegenECC { get; }
-        string FileName { get; }
-        bool Abilities { get; }
-        bool AbilityEffects { get; }
-        bool FontWidths { get; }
-        bool MoveFindItems { get; }
-        bool Items { get; }
-        bool ItemAttributes { get; }
-        bool Jobs { get; }
-        bool JobLevels { get; }
-        bool Skillsets { get; }
-        bool MonsterSkills { get; }
-        bool ActionMenus { get; }
-        bool StatusAttributes { get; }
-        bool InflictStatus { get; }
-        bool Poach { get; }
-        IList<PatchedByteArray> OtherPatches { get; }
-        int PatchCount { get; }
-    }
-
     public partial class PatchPSXForm : Form, IGeneratePatchList
     {
 		#region Instance Variables (4) 
@@ -157,7 +133,7 @@ namespace FFTPatcher
             {
                 if ( SCEAP != CustomSCEAP.NoChange )
                 {
-                    return new PatchedByteArray[] { new PatchedByteArray( PsxIso.Sectors.SCEAP_DAT, 0, SCEAP_DAT ) };
+                    return new PatchedByteArray[] { new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCEAP_DAT, 0, SCEAP_DAT ) };
                 }
                 else
                 {

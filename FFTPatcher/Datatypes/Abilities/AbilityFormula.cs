@@ -18,6 +18,7 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
 
 namespace FFTPatcher.Datatypes
 {

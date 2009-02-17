@@ -27,8 +27,9 @@ using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace FFTPatcher
+namespace PatcherLib
 {
+    using PatcherLib.Utilities;
     public static class Resources
     {
 		#region Instance Variables (1) 
@@ -46,7 +47,7 @@ namespace FFTPatcher
                 if( abilityFormulas == null )
                 {
                     abilityFormulas = new Dictionary<byte, string>();
-                    string[] formulaNames = Utilities.GetStringsFromNumberedXmlNodes(
+                    string[] formulaNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                         ZipFileContents[Paths.AbilityFormulasXML].ToUTF8String(),
                         "/AbilityFormulas/Ability[@value='{0:X2}']",
                         256 );
@@ -80,7 +81,7 @@ namespace FFTPatcher
 
         static Resources()
         {
-            using( MemoryStream memStream = new MemoryStream( Properties.Resources.ZippedResources, false ) )
+            using( MemoryStream memStream = new MemoryStream( PatcherLib.Properties.Resources.ZippedResources, false ) )
             using( GZipInputStream gzStream = new GZipInputStream( memStream ) )
             using( TarInputStream tarStream = new TarInputStream( gzStream ) )
             {

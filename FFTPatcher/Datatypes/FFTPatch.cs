@@ -22,10 +22,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
-using System.ComponentModel;
-using System.Windows.Forms;
-using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -33,7 +34,7 @@ namespace FFTPatcher.Datatypes
     {
 		#region Instance Variables (2) 
 
-        private static IDictionary<ElementName, string> elementNames = Utilities.BuildDictionary<ElementName, string>( new object[] {
+        private static IDictionary<ElementName, string> elementNames = PatcherLib.Utilities.Utilities.BuildDictionary<ElementName, string>( new object[] {
             ElementName.Abilities, "abilities",
             ElementName.AbilityEffects, "abilityEffects", 
             ElementName.Items, "items", 
@@ -168,11 +169,11 @@ namespace FFTPatcher.Datatypes
                 fileList["entd5"] = PSPResources.ENTD5;
 
 
-                if( Utilities.CompareArrays( fileList["font"], PSXResources.FontBin ) )
+                if ( PatcherLib.Utilities.Utilities.CompareArrays( fileList["font"], PSXResources.FontBin ) )
                 {
                     fileList["font"] = PSPResources.FontBin;
                 }
-                if( Utilities.CompareArrays( fileList["fontWidths"], PSXResources.FontWidthsBin ) )
+                if ( PatcherLib.Utilities.Utilities.CompareArrays( fileList["fontWidths"], PSXResources.FontWidthsBin ) )
                 {
                     fileList["fontWidths"] = PSPResources.FontWidthsBin;
                 }
@@ -269,29 +270,29 @@ namespace FFTPatcher.Datatypes
             {
                 Context = Context.US_PSX;
                 LoadDataFromBytes(
-                    PsxIso.GetBlock( stream, PsxIso.Abilities ),
-                    PsxIso.GetBlock( stream, PsxIso.AbilityEffects ),
-                    PsxIso.GetBlock( stream, PsxIso.OldItems ),
-                    PsxIso.GetBlock( stream, PsxIso.OldItemAttributes ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.Abilities ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.AbilityEffects ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.OldItems ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.OldItemAttributes ),
                     null,
                     null,
-                    PsxIso.GetBlock( stream, PsxIso.Jobs ),
-                    PsxIso.GetBlock( stream, PsxIso.JobLevels ),
-                    PsxIso.GetBlock( stream, PsxIso.SkillSets ),
-                    PsxIso.GetBlock( stream, PsxIso.MonsterSkills ),
-                    PsxIso.GetBlock( stream, PsxIso.ActionEvents ),
-                    PsxIso.GetBlock( stream, PsxIso.StatusAttributes ),
-                    PsxIso.GetBlock( stream, PsxIso.InflictStatuses ),
-                    PsxIso.GetBlock( stream, PsxIso.PoachProbabilities ),
-                    PsxIso.GetBlock( stream, PsxIso.ENTD1 ),
-                    PsxIso.GetBlock( stream, PsxIso.ENTD2 ),
-                    PsxIso.GetBlock( stream, PsxIso.ENTD3 ),
-                    PsxIso.GetBlock( stream, PsxIso.ENTD4 ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.Jobs ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.JobLevels ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.SkillSets ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.MonsterSkills ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ActionEvents ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.StatusAttributes ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.InflictStatuses ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.PoachProbabilities ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD1 ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD2 ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD3 ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD4 ),
                     null,
-                    PsxIso.GetBlock( stream, PsxIso.Font ),
-                    PsxIso.GetBlock( stream, PsxIso.FontWidths ),
-                    PsxIso.GetBlock( stream, PsxIso.MoveFindItems ),
-                    PsxIso.GetBlock( stream, PsxIso.StoreInventories ) );
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.Font ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.FontWidths ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.MoveFindItems ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.StoreInventories ) );
                 FireDataChangedEvent();
             }
         }
@@ -381,7 +382,7 @@ namespace FFTPatcher.Datatypes
 
         private static StringBuilder GetBase64StringIfNonDefault( byte[] bytes, byte[] def )
         {
-            if( !Utilities.CompareArrays( bytes, def ) )
+            if ( !PatcherLib.Utilities.Utilities.CompareArrays( bytes, def ) )
             {
                 return new StringBuilder( Convert.ToBase64String( bytes, Base64FormattingOptions.InsertLineBreaks ) );
             }

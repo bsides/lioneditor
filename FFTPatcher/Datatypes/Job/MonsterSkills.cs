@@ -18,6 +18,8 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
@@ -89,7 +91,7 @@ namespace FFTPatcher.Datatypes
             Default = defaults;
             Name = name;
             Value = value;
-            bool[] flags = Utilities.BooleansFromByteMSB( bytes[0] );
+            bool[] flags = PatcherLib.Utilities.Utilities.BooleansFromByteMSB( bytes[0] );
             Ability1 = AllAbilities.DummyAbilities[flags[0] ? ( bytes[1] + 0x100 ) : bytes[1]];
             Ability2 = AllAbilities.DummyAbilities[flags[1] ? ( bytes[2] + 0x100 ) : bytes[2]];
             Ability3 = AllAbilities.DummyAbilities[flags[2] ? ( bytes[3] + 0x100 ) : bytes[3]];
@@ -103,7 +105,7 @@ namespace FFTPatcher.Datatypes
         public byte[] ToByteArray()
         {
             byte[] result = new byte[5];
-            result[0] = Utilities.ByteFromBooleans(
+            result[0] = PatcherLib.Utilities.Utilities.ByteFromBooleans(
                 Ability1.Offset > 0xFF,
                 Ability2.Offset > 0xFF,
                 Ability3.Offset > 0xFF,
@@ -170,12 +172,12 @@ namespace FFTPatcher.Datatypes
 
         static AllMonsterSkills()
         {
-            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 48,
                 0x5E );
-            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSXNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 48,
@@ -257,12 +259,12 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x563C4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x563C4, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276BB4, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276BB4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276BB4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276BB4, bytes ) );
             }
 
             return result;

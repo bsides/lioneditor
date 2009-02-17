@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Collections.ObjectModel;
 using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using PatcherLib.Datatypes;
+using PatcherLib.Iso;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -159,7 +162,7 @@ namespace FFTPatcher.TextEditor
 
 
             result.AddRange( currentPairs );
-            TextUtilities.DoDTEEncoding( secs, DteAllowed, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
+            TextUtilities.DoDTEEncoding( secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs( result ) );
             bytes = GetSectionByteArrays( secs, CharMap, CompressionAllowed ).Join();
 
             bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
@@ -186,7 +189,7 @@ namespace FFTPatcher.TextEditor
             while ( bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0 )
             {
                 result.Add( new KeyValuePair<string, byte>( l[0].Key, dteBytes.Pop() ) );
-                TextUtilities.DoDTEEncoding( secs, DteAllowed, FFTPatcher.Utilities.DictionaryFromKVPs( result ) );
+                TextUtilities.DoDTEEncoding( secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs( result ) );
                 bytes = GetSectionByteArrays( secs, CharMap, CompressionAllowed ).Join();
                 bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
 
@@ -338,14 +341,14 @@ namespace FFTPatcher.TextEditor
                     switch ( type )
                     {
                         case SectorType.BootBin:
-                            result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, kvp2.Value, bytes ) );
-                            result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, kvp2.Value, bytes ) );
                             break;
                         case SectorType.FFTPack:
-                            result.Add( new PatchedByteArray( (Datatypes.FFTPack.Files)kvp2.Key, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( (FFTPack.Files)kvp2.Key, kvp2.Value, bytes ) );
                             break;
                         case SectorType.Sector:
-                            result.Add( new PatchedByteArray( (PsxIso.Sectors)kvp2.Key, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( (PatcherLib.Iso.PsxIso.Sectors)kvp2.Key, kvp2.Value, bytes ) );
                             break;
                     }
                 }

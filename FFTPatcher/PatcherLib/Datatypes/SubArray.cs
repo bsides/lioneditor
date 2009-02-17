@@ -21,10 +21,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace FFTPatcher
+namespace PatcherLib.Datatypes
 {
-    using FFTPatcher.Datatypes;
-
     public static partial class ExtensionMethods
     {
 		#region Public Methods (4) 
@@ -88,8 +86,9 @@ namespace FFTPatcher
     }
 }
 
-namespace FFTPatcher.Datatypes
+namespace PatcherLib.Datatypes
 {
+    using PatcherLib.Utilities;
     internal class CollectionDebugView<T>
     {
 		#region Instance Variables (1) 

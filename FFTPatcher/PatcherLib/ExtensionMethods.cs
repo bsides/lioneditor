@@ -19,19 +19,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
-using System.Collections.ObjectModel;
+using PatcherLib.Datatypes;
 
 namespace System.Runtime.CompilerServices
 {
     public class ExtensionAttribute : Attribute
     {
 
-}
+    }
 }
 
-namespace FFTPatcher
+namespace PatcherLib.Utilities
 {
     /// <summary>
     /// Extension methods for various types.

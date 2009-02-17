@@ -18,6 +18,8 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
@@ -57,12 +59,12 @@ namespace FFTPatcher.Datatypes
 
             if( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, width ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, width ) );
             }
             else if( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, width ) );
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293F40, width ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, width ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293F40, width ) );
             }
 
             return result;
@@ -166,12 +168,12 @@ namespace FFTPatcher.Datatypes
 
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.Sectors.EVENT_FONT_BIN, 0, font ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.EVENT_FONT_BIN, 0, font ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27B80C, font ) );
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27B80C, font ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27B80C, font ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27B80C, font ) );
             }
 
             return result;

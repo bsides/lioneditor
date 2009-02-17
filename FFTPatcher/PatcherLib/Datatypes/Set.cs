@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using PatcherLib.Utilities;
 
-namespace FFTPatcher
+namespace PatcherLib.Datatypes
 {
     public class Set<T> : IEnumerable<T>
     {

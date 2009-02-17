@@ -24,7 +24,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Xml;
 
-namespace FFTPatcher
+namespace PatcherLib.Utilities
 {
     public class PSXDescriptionAttribute : DescriptionAttribute
     {

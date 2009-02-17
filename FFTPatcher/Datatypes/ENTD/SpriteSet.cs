@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using PatcherLib;
+using PatcherLib.Datatypes;
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
@@ -48,11 +50,11 @@ namespace FFTPatcher.Datatypes
 
         static SpriteSet()
         {
-            string[] pspSpriteNames = Utilities.GetStringsFromNumberedXmlNodes(
+            string[] pspSpriteNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.SpriteSets,
                 "/Sprites/Sprite[@byte='{0:X2}']/@name",
                 256 );
-            string[] psxSpriteNames = Utilities.GetStringsFromNumberedXmlNodes(
+            string[] psxSpriteNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.SpriteSets,
                 "/Sprites/Sprite[@byte='{0:X2}']/@name",
                 256 );

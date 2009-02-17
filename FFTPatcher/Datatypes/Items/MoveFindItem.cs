@@ -17,9 +17,10 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -100,7 +101,7 @@ namespace FFTPatcher.Datatypes
             Y = (byte)( bytes[0] & 0x0F );
             CommonItem = Item.DummyItems[bytes[3]];
             RareItem = Item.DummyItems[bytes[2]];
-            bool[] b = Utilities.BooleansFromByteMSB( bytes[1] );
+            bool[] b = PatcherLib.Utilities.Utilities.BooleansFromByteMSB( bytes[1] );
             Unknown1 = b[0];
             Unknown2 = b[1];
             Unknown3 = b[2];
@@ -125,7 +126,7 @@ namespace FFTPatcher.Datatypes
         {
             return new byte[] { 
                 (byte)( ( ( X & 0x0F ) << 4 ) | ( Y & 0x0F ) ), 
-                Utilities.ByteFromBooleans(Unknown1, Unknown2, Unknown3, Unknown4, SteelNeedle, SleepingGas, Deathtrap, Degenerator),
+                PatcherLib.Utilities.Utilities.ByteFromBooleans(Unknown1, Unknown2, Unknown3, Unknown4, SteelNeedle, SleepingGas, Deathtrap, Degenerator),
                 (byte)(RareItem.Offset & 0xFF),
                 (byte)(CommonItem.Offset & 0xFF) };
         }
@@ -292,12 +293,12 @@ namespace FFTPatcher.Datatypes
 
             if( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, 0x08EE74, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x08EE74, bytes ) );
             }
             else if( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2707A8, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2707A8, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2707A8, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2707A8, bytes ) );
             }
 
             return result;

@@ -18,9 +18,9 @@
 */
 
 using System;
-using FFTPatcher.Datatypes;
+using PatcherLib.Iso;
 
-namespace FFTPatcher
+namespace PatcherLib.Datatypes
 {
     public class PatchedByteArray
     {

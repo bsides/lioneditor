@@ -21,9 +21,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Diagnostics;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
-namespace FFTPatcher
+namespace PatcherLib.Iso
 {
     public static class IsoPatch
     {

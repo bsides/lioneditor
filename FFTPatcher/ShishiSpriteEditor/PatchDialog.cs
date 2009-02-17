@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -58,7 +56,7 @@ namespace FFTPatcher.SpriteEditor
             okButton.Enabled = ValidateISO( isoPathTextBox.Text );
         }
 
-        public IList<PatchedByteArray> GetPatches( FFTPatcher.Datatypes.Context context )
+        public IList<PatchedByteArray> GetPatches( Context context )
         {
             if ( set == null )
             {

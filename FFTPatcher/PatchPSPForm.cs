@@ -19,13 +19,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher
 {
@@ -151,7 +151,7 @@ public string CustomICON0FileName
                 }
                 else
                 {
-                    return new PatchedByteArray[] { new PatchedByteArray( PspIso.Files.PSP_GAME.ICON0_PNG, 0, ICON0_PNG ) };
+                    return new PatchedByteArray[] { new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.ICON0_PNG, 0, ICON0_PNG ) };
                 }
             }
         }

@@ -17,6 +17,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using PatcherLib;
+using PatcherLib.Datatypes;
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
@@ -48,11 +50,11 @@ namespace FFTPatcher.Datatypes
 
         static SpecialName()
         {
-            string[] pspStrings = Utilities.GetStringsFromNumberedXmlNodes(
+            string[] pspStrings = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.SpecialNames,
                 "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
                 256 );
-            string[] psxStrings = Utilities.GetStringsFromNumberedXmlNodes(
+            string[] psxStrings = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.SpecialNames,
                 "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
                 256 );

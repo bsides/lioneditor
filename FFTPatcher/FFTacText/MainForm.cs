@@ -19,14 +19,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
-using System.ComponentModel;
-using FFTPatcher.Datatypes;
-
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -72,7 +69,7 @@ namespace FFTPatcher.TextEditor
                 f.DoWork( this, worker,
                     new FFTText.PatchIsoArgs
                     {
-                        Patcher = internalFile.Filetype == Context.US_PSP ? (FFTText.PatchIso)PspIso.PatchISO : (FFTText.PatchIso)PsxIso.PatchPsxIso,
+                        Patcher = internalFile.Filetype == Context.US_PSP ? (FFTText.PatchIso)PatcherLib.Iso.PspIso.PatchISO : (FFTText.PatchIso)PatcherLib.Iso.PsxIso.PatchPsxIso,
                         Filename = saveFileDialog.FileName
                     } );
             }

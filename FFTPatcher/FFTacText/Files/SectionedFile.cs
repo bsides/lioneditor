@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -32,8 +33,8 @@ namespace FFTPatcher.TextEditor
 
             for ( int i = 0; i < NumberOfSections; i++ )
             {
-                uint start = Utilities.BytesToUInt32( bytes.Sub( i * 4, ( i + 1 ) * 4 - 1 ) );
-                uint stop = Utilities.BytesToUInt32( bytes.Sub( ( i + 1 ) * 4, ( i + 2 ) * 4 - 1 ) ) - 1;
+                uint start = PatcherLib.Utilities.Utilities.BytesToUInt32( bytes.Sub( i * 4, ( i + 1 ) * 4 - 1 ) );
+                uint stop = PatcherLib.Utilities.Utilities.BytesToUInt32( bytes.Sub( ( i + 1 ) * 4, ( i + 2 ) * 4 - 1 ) ) - 1;
                 if ( i == NumberOfSections - 1 )
                 {
                     stop = (uint)bytes.Count - 1 - (uint)DataStart;

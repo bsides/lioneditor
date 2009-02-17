@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
 {

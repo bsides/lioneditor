@@ -110,6 +110,10 @@
     <None Include="Resources\Resources.tar.gz" />
     <None Include="Resources\StoreInventories.bin" />
     <None Include="zipResources.bat" />
+    <Compile Include="Datatypes\Fonts\FFTFont.cs" />
+    <Compile Include="Datatypes\Fonts\Glyph.cs" />
+    <Compile Include="Datatypes\IChangeable.cs" />
+    <Compile Include="Datatypes\IPatchableFile.cs" />
     <Compile Include="GZip.cs" />
     <Compile Include="ProgressBarWithText.cs">
       <SubType>Component</SubType>

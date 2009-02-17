@@ -108,10 +108,6 @@ namespace FFTPatcher
             {
                 sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Inflict Statuses" : "", FFTPatch.InflictStatuses.GenerateCodes() );
             }
-            if( FFTPatch.Font != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Font" : "", FFTPatch.Font.GenerateCodes() );
-            }
             if( FFTPatch.MoveFind != null )
             {
                 sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Move/Find Items" : "", FFTPatch.MoveFind.GenerateCodes() );

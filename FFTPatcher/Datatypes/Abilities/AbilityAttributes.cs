@@ -25,7 +25,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an <see cref="Ability"/>'s attributes.
     /// </summary>
-    public class AbilityAttributes : IChangeable, ISupportDigest
+    public class AbilityAttributes : PatcherLib.Datatypes.IChangeable, ISupportDigest
     {
 		#region Instance Variables (42) 
 

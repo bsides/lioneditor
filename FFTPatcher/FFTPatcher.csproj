@@ -59,8 +59,6 @@
       <HintPath>..\utils\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -124,10 +122,7 @@
     <Compile Include="Datatypes\ENTD\Months.cs" />
     <Compile Include="Datatypes\ENTD\SpecialName.cs" />
     <Compile Include="Datatypes\ENTD\SpriteSet.cs" />
-    <Compile Include="Datatypes\Fonts\FFTFont.cs" />
-    <Compile Include="Datatypes\Fonts\Glyph.cs" />
     <Compile Include="Datatypes\HexAttribute.cs" />
-    <Compile Include="Datatypes\IChangeable.cs" />
     <Compile Include="Datatypes\ISupportDigest.cs" />
     <Compile Include="Datatypes\Items\MoveFindItem.cs" />
     <Compile Include="Datatypes\IXmlDigest.cs" />

@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
-    public interface ISupportDigest : IChangeable
+    public interface ISupportDigest : PatcherLib.Datatypes.IChangeable
     {
         IList<string> DigestableProperties { get; }
     }

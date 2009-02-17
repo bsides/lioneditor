@@ -22,7 +22,7 @@ using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
-    public abstract class PatchableFile : IChangeable
+    public abstract class PatchableFile : IPatchableFile
     {
 		#region Public Methods (1) 
 

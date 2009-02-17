@@ -42,7 +42,6 @@ namespace FFTPatcher
             object dummy = AllAbilities.PSPNames;
             dummy = PSPResources.AbilityAttributes;
             dummy = PSXResources.AbilityAttributes;
-            dummy = new GlyphEditor();
             dummy = FFTPatchEditor.ToolTip;
             dummy = SkillSet.DummySkillSets;
             dummy = AllMonsterSkills.PSXNames;

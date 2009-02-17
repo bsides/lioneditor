@@ -49,10 +49,6 @@ namespace PatcherLib.Iso
 
         public static KnownPosition ENTD4 { get; private set; }
 
-        public static KnownPosition Font { get; private set; }
-
-        public static KnownPosition FontWidths { get; private set; }
-
         public static KnownPosition InflictStatuses { get; private set; }
 
         public static KnownPosition JobLevels { get; private set; }
@@ -84,8 +80,6 @@ namespace PatcherLib.Iso
             Abilities = new KnownPosition( SCUS_942_21, 0x4F3F0, 9414 );
             AbilityEffects = new KnownPosition( BATTLE_BIN, 0x14F3F0, 0x2E0 );
             ActionEvents = new KnownPosition( SCUS_942_21, 0x564B4, 224 );
-            Font = new KnownPosition( BATTLE_BIN, 0xE7614, 77000 );
-            FontWidths = new KnownPosition( BATTLE_BIN, 0xFF0FC, 0x898 );
             InflictStatuses = new KnownPosition( SCUS_942_21, 0x547C4, 0x300 );
             Jobs = new KnownPosition( SCUS_942_21, 0x518B8, 0x1E00 );
             JobLevels = new KnownPosition( SCUS_942_21, 0x568C4, 0xD0 );

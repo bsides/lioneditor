@@ -62,7 +62,6 @@ namespace FFTPatcher
             this.scusCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.battleCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.sceapOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.fontCheckBox = new System.Windows.Forms.CheckBox();
             this.entd1CheckBox = new System.Windows.Forms.CheckBox();
             this.entd2CheckBox = new System.Windows.Forms.CheckBox();
             this.entd3CheckBox = new System.Windows.Forms.CheckBox();
@@ -217,7 +216,6 @@ namespace FFTPatcher
             this.battleCheckedListBox.FormattingEnabled = true;
             this.battleCheckedListBox.Items.AddRange( new object[] {
             "Ability Effects",
-            "Font Widths",
             "Move-Find Items"} );
             this.battleCheckedListBox.Location = new System.Drawing.Point( 6, 19 );
             this.battleCheckedListBox.Name = "battleCheckedListBox";
@@ -262,18 +260,6 @@ namespace FFTPatcher
             this.sceapOpenFileDialog.FileName = "SCEAP.DAT";
             this.sceapOpenFileDialog.Filter = "SCEAP.DAT|SCEAP.DAT";
             this.sceapOpenFileDialog.ShowReadOnly = true;
-            // 
-            // fontCheckBox
-            // 
-            this.fontCheckBox.AutoSize = true;
-            this.fontCheckBox.Location = new System.Drawing.Point( 307, 48 );
-            this.fontCheckBox.Name = "fontCheckBox";
-            this.fontCheckBox.Size = new System.Drawing.Size( 76, 17 );
-            this.fontCheckBox.TabIndex = 2;
-            this.fontCheckBox.Tag = "FONT";
-            this.fontCheckBox.Text = "FONT.BIN";
-            this.fontCheckBox.UseVisualStyleBackColor = true;
-            this.fontCheckBox.CheckedChanged += new System.EventHandler( this.entd2CheckBox_CheckedChanged );
             // 
             // entd1CheckBox
             // 
@@ -379,7 +365,6 @@ namespace FFTPatcher
             this.Controls.Add( this.entd3CheckBox );
             this.Controls.Add( this.entd2CheckBox );
             this.Controls.Add( this.entd1CheckBox );
-            this.Controls.Add( this.fontCheckBox );
             this.Controls.Add( battleBinGroupBox );
             this.Controls.Add( scusGroupBox );
             this.Controls.Add( sceapGroupBox );
@@ -406,7 +391,6 @@ namespace FFTPatcher
         private System.Windows.Forms.OpenFileDialog sceapOpenFileDialog;
         private System.Windows.Forms.CheckedListBox scusCheckedListBox;
         private System.Windows.Forms.CheckedListBox battleCheckedListBox;
-        private System.Windows.Forms.CheckBox fontCheckBox;
         private System.Windows.Forms.CheckBox entd1CheckBox;
         private System.Windows.Forms.CheckBox entd2CheckBox;
         private System.Windows.Forms.CheckBox entd3CheckBox;

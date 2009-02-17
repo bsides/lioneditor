@@ -287,18 +287,6 @@
     <Compile Include="Editors\FFTPatchEditor.Designer.cs">
       <DependentUpon>FFTPatchEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\Fonts\FontEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\Fonts\FontEditor.Designer.cs">
-      <DependentUpon>FontEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\Fonts\GlyphEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\Fonts\GlyphEditor.Designer.cs">
-      <DependentUpon>GlyphEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Editors\Status\InflictStatusEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -473,14 +461,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\FFTPatchEditor.resx">
       <DependentUpon>FFTPatchEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\Fonts\FontEditor.resx">
-      <DependentUpon>FontEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\Fonts\GlyphEditor.resx">
-      <DependentUpon>GlyphEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\Status\InflictStatusEditor.resx">

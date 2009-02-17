@@ -5,12 +5,10 @@ namespace PatcherLib.Datatypes
     public interface IGeneratePatchList
     {
         bool[] ENTD { get; }
-        bool FONT { get; }
         bool RegenECC { get; }
         string FileName { get; }
         bool Abilities { get; }
         bool AbilityEffects { get; }
-        bool FontWidths { get; }
         bool MoveFindItems { get; }
         bool Items { get; }
         bool ItemAttributes { get; }

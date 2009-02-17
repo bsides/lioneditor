@@ -106,9 +106,7 @@ namespace FFTPatcher
             "Status Attributes",
             "Inflict Status",
             "Poach Probabilities",
-            "Move-Find Items",
-            "Font",
-            "Font Widths"} );
+            "Move-Find Items"} );
             this.bootBinCheckedListBox.Location = new System.Drawing.Point( 6, 19 );
             this.bootBinCheckedListBox.Name = "bootBinCheckedListBox";
             this.bootBinCheckedListBox.Size = new System.Drawing.Size( 142, 229 );

@@ -104,18 +104,6 @@ namespace FFTPatcher
                 }
             }
 
-            if ( patchList.FONT )
-            {
-                patches.AddRange( FFTPatch.Font.GetPatches( context ) );
-                sendProgress( "Getting Font patches" );
-                sendProgress( "Getting Font patches" );
-            }
-            if ( patchList.FontWidths )
-            {
-                patches.AddRange( FFTPatch.Font.GlyphWidths.GetPatches( context ) );
-                sendProgress( "Getting Font width patches" );
-                sendProgress( "Getting Font width patches" );
-            }
             if ( patchList.InflictStatus )
             {
                 patches.AddRange( FFTPatch.InflictStatuses.GetPatches( context ) );

@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatcherLib", "PatcherLib\Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatcherLib.Resources", "PatcherLib.Resources\PatcherLib.Resources.csproj", "{E8B981CB-2A97-4901-9A04-E6E5D369F471}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTorgASM", "FFTorgASM\FFTorgASM.csproj", "{2176002F-BDE2-491A-9502-110275008F42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		asd|Any CPU = asd|Any CPU
@@ -136,6 +138,21 @@ Global
 		{E8B981CB-2A97-4901-9A04-E6E5D369F471}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E8B981CB-2A97-4901-9A04-E6E5D369F471}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E8B981CB-2A97-4901-9A04-E6E5D369F471}.Release|Win32.ActiveCfg = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.asd|Any CPU.ActiveCfg = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.asd|Any CPU.Build.0 = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.asd|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.asd|Mixed Platforms.Build.0 = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.asd|Win32.ActiveCfg = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2176002F-BDE2-491A-9502-110275008F42}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

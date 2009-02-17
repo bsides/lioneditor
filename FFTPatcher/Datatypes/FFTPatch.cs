@@ -54,14 +54,12 @@ namespace FFTPatcher.Datatypes
             ElementName.ENTD3, "entd3", 
             ElementName.ENTD4, "entd4", 
             ElementName.ENTD5, "entd5", 
-            ElementName.Font, "font", 
-            ElementName.FontWidths, "fontWidths",
             ElementName.MoveFindItems, "moveFindItems",
             ElementName.StoreInventories, "storeInventories" } );
         private static string[] elementNameStrings = new string[] {
             "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
             "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-            "entd1", "entd2", "entd3", "entd4", "entd5", "font", "fontWidths", "moveFindItems", "storeInventories" };
+            "entd1", "entd2", "entd3", "entd4", "entd5", "moveFindItems", "storeInventories" };
 
 		#endregion Instance Variables 
 
@@ -74,8 +72,6 @@ namespace FFTPatcher.Datatypes
         public static Context Context { get; private set; }
 
         public static AllENTDs ENTDs { get; private set; }
-
-        public static FFTFont Font { get; private set; }
 
         public static AllInflictStatuses InflictStatuses { get; private set; }
 
@@ -169,14 +165,6 @@ namespace FFTPatcher.Datatypes
                 fileList["entd5"] = PSPResources.ENTD5;
 
 
-                if ( PatcherLib.Utilities.Utilities.CompareArrays( fileList["font"], PSXResources.FontBin ) )
-                {
-                    fileList["font"] = PSPResources.FontBin;
-                }
-                if ( PatcherLib.Utilities.Utilities.CompareArrays( fileList["fontWidths"], PSXResources.FontWidthsBin ) )
-                {
-                    fileList["fontWidths"] = PSPResources.FontWidthsBin;
-                }
 
                 fileList["type"] = Encoding.UTF8.GetBytes( Context.US_PSP.ToString() );
 
@@ -289,8 +277,6 @@ namespace FFTPatcher.Datatypes
                     PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD3 ),
                     PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD4 ),
                     null,
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.Font ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.FontWidths ),
                     PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.MoveFindItems ),
                     PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.StoreInventories ) );
                 FireDataChangedEvent();
@@ -343,7 +329,6 @@ namespace FFTPatcher.Datatypes
                     StatusAttributes = new AllStatusAttributes( PSPResources.StatusAttributesBin );
                     InflictStatuses = new AllInflictStatuses( PSPResources.InflictStatusesBin );
                     PoachProbabilities = new AllPoachProbabilities( PSPResources.PoachProbabilitiesBin );
-                    Font = new FFTFont( PSPResources.FontBin, PSPResources.FontWidthsBin );
                     ENTDs = new AllENTDs( PSPResources.ENTD1, PSPResources.ENTD2, PSPResources.ENTD3, PSPResources.ENTD4, PSPResources.ENTD5 );
                     MoveFind = new AllMoveFindItems( Context, PSPResources.MoveFind, new AllMoveFindItems( Context, PSPResources.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSPResources.StoreInventoriesBin, PSPResources.StoreInventoriesBin );
@@ -362,7 +347,6 @@ namespace FFTPatcher.Datatypes
                     StatusAttributes = new AllStatusAttributes( PSXResources.StatusAttributesBin );
                     InflictStatuses = new AllInflictStatuses( PSXResources.InflictStatusesBin );
                     PoachProbabilities = new AllPoachProbabilities( PSXResources.PoachProbabilitiesBin );
-                    Font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
                     ENTDs = new AllENTDs( PSXResources.ENTD1, PSXResources.ENTD2, PSXResources.ENTD3, PSXResources.ENTD4 );
                     MoveFind = new AllMoveFindItems( Context, PSXResources.MoveFind, new AllMoveFindItems( Context, PSXResources.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSXResources.StoreInventoriesBin, PSXResources.StoreInventoriesBin );
@@ -407,11 +391,18 @@ namespace FFTPatcher.Datatypes
             return def;
         }
 
-        private static byte[] GetZipEntry( ZipFile file, string entry )
+        private static byte[] GetZipEntry( ZipFile file, string entry, bool throwOnError )
         {
             if ( file.FindEntry( entry, false ) == -1 )
             {
-                throw new FormatException( "entry not found" );
+                if ( throwOnError )
+                {
+                    throw new FormatException( "entry not found" );
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
@@ -433,7 +424,6 @@ namespace FFTPatcher.Datatypes
             byte[] statusAttributes, byte[] inflictStatuses,
             byte[] poach,
             byte[] entd1, byte[] entd2, byte[] entd3, byte[] entd4, byte[] entd5,
-            byte[] font, byte[] fontWidths,
             byte[] moveFind,
             byte[] inventories )
         {
@@ -454,7 +444,6 @@ namespace FFTPatcher.Datatypes
                 var InflictStatuses = new AllInflictStatuses( inflictStatuses );
                 var PoachProbabilities = new AllPoachProbabilities( poach );
                 var ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
-                var Font = new FFTFont( font, fontWidths );
                 var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.MoveFind : PSXResources.MoveFind ) );
                 var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
                 FFTPatch.Abilities = Abilities;
@@ -469,7 +458,6 @@ namespace FFTPatcher.Datatypes
                 FFTPatch.InflictStatuses = InflictStatuses;
                 FFTPatch.PoachProbabilities = PoachProbabilities;
                 FFTPatch.ENTDs = ENTDs;
-                FFTPatch.Font = Font;
                 FFTPatch.MoveFind = MoveFind;
                 FFTPatch.StoreInventories = StoreInventories;
             }
@@ -483,35 +471,34 @@ namespace FFTPatcher.Datatypes
         {
             using ( ZipFile file = new ZipFile( filename ) )
             {
-                string fileVersion = Encoding.UTF8.GetString( GetZipEntry( file, "version" ) );
-                Context = (Context)Enum.Parse( typeof( Context ), Encoding.UTF8.GetString( GetZipEntry( file, "type" ) ) );
+                string fileVersion = Encoding.UTF8.GetString( GetZipEntry( file, "version", true ) );
+                Context = (Context)Enum.Parse( typeof( Context ), Encoding.UTF8.GetString( GetZipEntry( file, "type", true ) ) );
                 bool psp = Context == Context.US_PSP;
 
+                IDictionary<ElementName, byte[]> defaults = psp ? DefaultPspElements : DefaultPsxElements;
 
                 LoadDataFromBytes(
-                    GetZipEntry( file, elementNames[ElementName.Abilities] ),
-                    GetZipEntry( file, elementNames[ElementName.AbilityEffects] ),
-                    GetZipEntry( file, elementNames[ElementName.Items] ),
-                    GetZipEntry( file, elementNames[ElementName.ItemAttributes] ),
-                    psp ? GetZipEntry( file, elementNames[ElementName.PSPItems] ) : null,
-                    psp ? GetZipEntry( file, elementNames[ElementName.PSPItemAttributes] ) : null,
-                    GetZipEntry( file, elementNames[ElementName.Jobs] ),
-                    GetZipEntry( file, elementNames[ElementName.JobLevels] ),
-                    GetZipEntry( file, elementNames[ElementName.SkillSets] ),
-                    GetZipEntry( file, elementNames[ElementName.MonsterSkills] ),
-                    GetZipEntry( file, elementNames[ElementName.ActionMenus] ),
-                    GetZipEntry( file, elementNames[ElementName.StatusAttributes] ),
-                    GetZipEntry( file, elementNames[ElementName.InflictStatuses] ),
-                    GetZipEntry( file, elementNames[ElementName.Poaching] ),
-                    GetZipEntry( file, elementNames[ElementName.ENTD1] ),
-                    GetZipEntry( file, elementNames[ElementName.ENTD2] ),
-                    GetZipEntry( file, elementNames[ElementName.ENTD3] ),
-                    GetZipEntry( file, elementNames[ElementName.ENTD4] ),
-                    psp ? GetZipEntry( file, elementNames[ElementName.ENTD5] ) : null,
-                    GetZipEntry( file, elementNames[ElementName.Font] ),
-                    GetZipEntry( file, elementNames[ElementName.FontWidths] ),
-                    GetZipEntry( file, elementNames[ElementName.MoveFindItems] ),
-                    GetZipEntry( file, elementNames[ElementName.StoreInventories] ) );
+                    GetZipEntry( file, elementNames[ElementName.Abilities], false ) ?? defaults[ElementName.Abilities],
+                    GetZipEntry( file, elementNames[ElementName.AbilityEffects], false ) ?? defaults[ElementName.AbilityEffects],
+                    GetZipEntry( file, elementNames[ElementName.Items], false ) ?? defaults[ElementName.Items],
+                    GetZipEntry( file, elementNames[ElementName.ItemAttributes], false ) ?? defaults[ElementName.ItemAttributes],
+                    psp ? ( GetZipEntry( file, elementNames[ElementName.PSPItems], false ) ?? defaults[ElementName.PSPItems] ) : null,
+                    psp ? ( GetZipEntry( file, elementNames[ElementName.PSPItemAttributes], false ) ?? defaults[ElementName.PSPItemAttributes] ) : null,
+                    GetZipEntry( file, elementNames[ElementName.Jobs], false ) ?? defaults[ElementName.Jobs],
+                    GetZipEntry( file, elementNames[ElementName.JobLevels], false ) ?? defaults[ElementName.JobLevels],
+                    GetZipEntry( file, elementNames[ElementName.SkillSets], false ) ?? defaults[ElementName.SkillSets],
+                    GetZipEntry( file, elementNames[ElementName.MonsterSkills], false ) ?? defaults[ElementName.MonsterSkills],
+                    GetZipEntry( file, elementNames[ElementName.ActionMenus], false ) ?? defaults[ElementName.ActionMenus],
+                    GetZipEntry( file, elementNames[ElementName.StatusAttributes], false ) ?? defaults[ElementName.StatusAttributes],
+                    GetZipEntry( file, elementNames[ElementName.InflictStatuses], false ) ?? defaults[ElementName.InflictStatuses],
+                    GetZipEntry( file, elementNames[ElementName.Poaching], false ) ?? defaults[ElementName.Poaching],
+                    GetZipEntry( file, elementNames[ElementName.ENTD1], false ) ?? defaults[ElementName.ENTD1],
+                    GetZipEntry( file, elementNames[ElementName.ENTD2], false ) ?? defaults[ElementName.ENTD2],
+                    GetZipEntry( file, elementNames[ElementName.ENTD3], false ) ?? defaults[ElementName.ENTD3],
+                    GetZipEntry( file, elementNames[ElementName.ENTD4], false ) ?? defaults[ElementName.ENTD4],
+                    psp ? ( GetZipEntry( file, elementNames[ElementName.ENTD5], false ) ?? defaults[ElementName.ENTD5] ) : null,
+                    GetZipEntry( file, elementNames[ElementName.MoveFindItems], false ) ?? defaults[ElementName.MoveFindItems],
+                    GetZipEntry( file, elementNames[ElementName.StoreInventories], false ) ?? defaults[ElementName.StoreInventories] );
             }
         }
 
@@ -542,15 +529,13 @@ namespace FFTPatcher.Datatypes
             byte[] entd3 = GetFromNodeOrReturnDefault( rootNode, "entd3", PSPResources.ENTD3 );
             byte[] entd4 = GetFromNodeOrReturnDefault( rootNode, "entd4", PSPResources.ENTD4 );
             byte[] entd5 = GetFromNodeOrReturnDefault( rootNode, "entd5", PSPResources.ENTD5 );
-            byte[] font = GetFromNodeOrReturnDefault( rootNode, "font", psp ? PSPResources.FontBin : PSXResources.FontBin );
-            byte[] fontWidths = GetFromNodeOrReturnDefault( rootNode, "fontWidths", psp ? PSPResources.FontWidthsBin : PSXResources.FontWidthsBin );
             byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? PSPResources.MoveFind : PSXResources.MoveFind );
             byte[] inventories = GetFromNodeOrReturnDefault( rootNode, "storeInventories", psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
 
             LoadDataFromBytes( abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes,
                 jobs, jobLevels, skillSets, monsterSkills, actionMenus, statusAttributes,
-                inflictStatuses, poach, entd1, entd2, entd3, entd4, entd5, font,
-                fontWidths, moveFind, inventories );
+                inflictStatuses, poach, entd1, entd2, entd3, entd4, entd5,
+                moveFind, inventories );
         }
 
         private static string ReadString( FileStream stream, int length )
@@ -571,8 +556,8 @@ namespace FFTPatcher.Datatypes
             using ( ZipOutputStream stream = new ZipOutputStream( File.Open( path, FileMode.Create, FileAccess.ReadWrite ) ) )
             {
                 const string fileVersion = "1.0";
-
                 bool psp = destinationContext == Context.US_PSP;
+
                 WriteFileToZip( stream, "version", Encoding.UTF8.GetBytes( fileVersion ) );
                 WriteFileToZip( stream, "type", Encoding.UTF8.GetBytes( destinationContext.ToString() ) );
 
@@ -598,8 +583,6 @@ namespace FFTPatcher.Datatypes
                 WriteFileToZip( stream, elementNames[ElementName.ENTD2], ENTDs.ENTDs[1].ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.ENTD3], ENTDs.ENTDs[2].ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.ENTD4], ENTDs.ENTDs[3].ToByteArray() );
-                WriteFileToZip( stream, elementNames[ElementName.Font], Font.ToByteArray() );
-                WriteFileToZip( stream, elementNames[ElementName.FontWidths], Font.ToWidthsByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.MoveFindItems], MoveFind.ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.StoreInventories], StoreInventories.ToByteArray() );
             }
@@ -612,6 +595,51 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Private Methods 
+
+        private static IDictionary<ElementName,byte[]> DefaultPsxElements = new Dictionary<ElementName, byte[]> {
+            { ElementName.Abilities, PSXResources.AbilitiesBin },
+            { ElementName.AbilityEffects, PSXResources.AbilityEffectsBin },
+            { ElementName.Items, PSXResources.OldItemsBin },
+            { ElementName.ItemAttributes, PSXResources.OldItemAttributesBin },
+            { ElementName.PSPItems, null },
+            { ElementName.PSPItemAttributes, null },
+            { ElementName.Jobs, PSXResources.JobsBin },
+            { ElementName.JobLevels, PSXResources.JobLevelsBin},
+            { ElementName.SkillSets, PSXResources.SkillSetsBin },
+            { ElementName.MonsterSkills, PSXResources.MonsterSkillsBin},
+            { ElementName.ActionMenus, PSXResources.ActionEventsBin},
+            { ElementName.InflictStatuses, PSXResources.InflictStatusesBin },
+            { ElementName.StatusAttributes, PSXResources.StatusAttributesBin },
+            { ElementName.Poaching, PSXResources.PoachProbabilitiesBin },
+            { ElementName.ENTD1, PSXResources.ENTD1 },
+            { ElementName.ENTD2, PSXResources.ENTD2},
+            { ElementName.ENTD3, PSXResources.ENTD3},
+            { ElementName.ENTD4, PSXResources.ENTD4},
+            { ElementName.ENTD5, null},
+            { ElementName.MoveFindItems, PSXResources.MoveFind},
+            { ElementName.StoreInventories, PSXResources.StoreInventoriesBin} };
+        private static IDictionary<ElementName,byte[]> DefaultPspElements = new Dictionary<ElementName, byte[]> {
+            { ElementName.Abilities, PSPResources.AbilitiesBin },
+            { ElementName.AbilityEffects, PSPResources.AbilityEffectsBin },
+            { ElementName.Items, PSPResources.OldItemsBin },
+            { ElementName.ItemAttributes, PSPResources.OldItemAttributesBin },
+            { ElementName.PSPItems, PSPResources.NewItemsBin },
+            { ElementName.PSPItemAttributes, PSPResources.NewItemAttributesBin },
+            { ElementName.Jobs, PSPResources.JobsBin },
+            { ElementName.JobLevels, PSPResources.JobLevelsBin},
+            { ElementName.SkillSets, PSPResources.SkillSetsBin },
+            { ElementName.MonsterSkills, PSPResources.MonsterSkillsBin},
+            { ElementName.ActionMenus, PSPResources.ActionEventsBin},
+            { ElementName.InflictStatuses, PSPResources.InflictStatusesBin },
+            { ElementName.StatusAttributes, PSPResources.StatusAttributesBin },
+            { ElementName.Poaching, PSPResources.PoachProbabilitiesBin },
+            { ElementName.ENTD1, PSPResources.ENTD1 },
+            { ElementName.ENTD2, PSPResources.ENTD2},
+            { ElementName.ENTD3, PSPResources.ENTD3},
+            { ElementName.ENTD4, PSPResources.ENTD4},
+            { ElementName.ENTD5, PSPResources.ENTD5},
+            { ElementName.MoveFindItems, PSPResources.MoveFind},
+            { ElementName.StoreInventories, PSPResources.StoreInventoriesBin} };
 
         private enum ElementName
         {
@@ -634,8 +662,6 @@ namespace FFTPatcher.Datatypes
             ENTD3,
             ENTD4,
             ENTD5,
-            Font,
-            FontWidths,
             MoveFindItems,
             StoreInventories
         }
@@ -645,6 +671,6 @@ namespace FFTPatcher.Datatypes
         public class LoadPatchException : Exception
         {
 
-}
+        }
     }
 }

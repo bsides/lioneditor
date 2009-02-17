@@ -107,7 +107,6 @@
     <None Include="Resources\PSX-US\bin\SCEAP.DAT.patched.bin" />
     <None Include="Resources\PSX-US\bin\SkillSetsBin.bin" />
     <None Include="Resources\PSX-US\bin\StatusAttributes.bin" />
-    <None Include="Resources\Resources.tar.gz" />
     <None Include="Resources\StoreInventories.bin" />
     <None Include="zipResources.bat" />
     <Compile Include="Datatypes\Fonts\FFTFont.cs" />

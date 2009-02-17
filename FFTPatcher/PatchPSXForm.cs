@@ -77,14 +77,6 @@ namespace FFTPatcher
 
         public string FileName { get { return isoPathTextBox.Text; } }
 
-        public bool FONT { get; private set; }
-
-        public bool FontWidths
-        {
-            get { return battlePatchable[(int)BATTLEPatchable.FontWidths]; }
-            set { battlePatchable[(int)BATTLEPatchable.FontWidths] = value; }
-        }
-
         public bool InflictStatus
         {
             get { return scusPatchable[(int)SCUSPatchable.InflictStatus]; }
@@ -148,7 +140,7 @@ namespace FFTPatcher
             {
                 int result = 0;
                 ENTD.ForEach( b => result += b ? 1 : 0 );
-                bool[] bb = new bool[] { FONT, RegenECC, Abilities, AbilityEffects, FontWidths, MoveFindItems,
+                bool[] bb = new bool[] { RegenECC, Abilities, AbilityEffects, MoveFindItems,
                     Items, ItemAttributes, Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
                     StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange};
                 bb.ForEach( b => result += b ? 1 : 0 );
@@ -216,7 +208,6 @@ namespace FFTPatcher
             scusCheckedListBox.SetItemChecked( (int)SCUSPatchable.StatusAttributes, FFTPatch.StatusAttributes.HasChanged );
 
             battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged );
-            battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.FontWidths, false );
             battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged );
 
             dontChangeSceapRadioButton.Checked = true;
@@ -225,7 +216,6 @@ namespace FFTPatcher
             entd2CheckBox.Checked = FFTPatch.ENTDs.ENTDs[1].HasChanged;
             entd3CheckBox.Checked = FFTPatch.ENTDs.ENTDs[2].HasChanged;
             entd4CheckBox.Checked = FFTPatch.ENTDs.ENTDs[3].HasChanged;
-            fontCheckBox.Checked = false;
             eccCheckBox.Enabled = false;
             eccCheckBox.Checked = true;
 
@@ -292,9 +282,6 @@ namespace FFTPatcher
                     break;
                 case Checkboxes.ENTD4:
                     ENTD4 = box.Checked;
-                    break;
-                case Checkboxes.FONT:
-                    FONT = box.Checked;
                     break;
                 case Checkboxes.RegenECC:
                     RegenECC = box.Checked;
@@ -374,10 +361,10 @@ private void UpdateNextEnabled()
                  ValidateSCEAP( sceapFileNameTextBox.Text ) );
             enabled = enabled && ValidateISO( isoPathTextBox.Text );
             enabled = enabled &&
-                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || FONT || RegenECC || Abilities || Items ||
+                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
                   StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
-                  AbilityEffects || FontWidths || MoveFindItems );
+                  AbilityEffects || MoveFindItems );
 
             okButton.Enabled = enabled;
         }
@@ -411,7 +398,6 @@ private void UpdateNextEnabled()
             ENTD2,
             ENTD3,
             ENTD4,
-            FONT,
             RegenECC,
         }
         private enum SCUSPatchable
@@ -431,7 +417,6 @@ private void UpdateNextEnabled()
         private enum BATTLEPatchable
         {
             AbilityEffects,
-            FontWidths,
             MoveFindItems
         }
     }

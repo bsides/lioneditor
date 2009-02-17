@@ -21,6 +21,8 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using PatcherLib.Utilities;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace PatcherLib.Iso
 {
@@ -35,6 +37,30 @@ namespace PatcherLib.Iso
 		#endregion Instance Variables 
 
 		#region Public Methods (7) 
+        private static Dictionary<int, string> fftPackFiles;
+
+        public static Dictionary<int, string> FFTPackFiles
+        {
+            get
+            {
+                if ( fftPackFiles == null )
+                {
+                    fftPackFiles = new Dictionary<int, string>();
+
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml( PatcherLib.Properties.Resources.FFTPackFiles );
+
+                    XmlNodeList nodes = doc.SelectNodes( "/files/file" );
+                    foreach ( XmlNode node in nodes )
+                    {
+                        fftPackFiles.Add( Convert.ToInt32( node.Attributes["entry"].InnerText ), node.Attributes["name"].InnerText );
+                    }
+                }
+
+                return fftPackFiles;
+            }
+        }
+
 
         public static void DumpToDirectory( string filename, string path, BackgroundWorker worker )
         {
@@ -66,9 +92,9 @@ namespace PatcherLib.Iso
                 byte[] bytes = GetFile( stream, i );
                 string filename = string.Empty;
 
-                if( PSPResources.FFTPackFiles.ContainsKey( i ) )
+                if( FFTPackFiles.ContainsKey( i ) )
                 {
-                    filename = PSPResources.FFTPackFiles[i];
+                    filename = FFTPackFiles[i];
                 }
                 else if( bytes.Length == 0 )
                 {
@@ -269,9 +295,9 @@ namespace PatcherLib.Iso
 
             try
             {
-                if( PSPResources.FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, PSPResources.FFTPackFiles[index] ) ) )
+                if( FFTPackFiles.ContainsKey( index ) && File.Exists( Path.Combine( path, FFTPackFiles[index] ) ) )
                 {
-                    stream = new FileStream( Path.Combine( path, PSPResources.FFTPackFiles[index] ), FileMode.Open );
+                    stream = new FileStream( Path.Combine( path, FFTPackFiles[index] ), FileMode.Open );
                 }
                 else if( File.Exists( Path.Combine( path, string.Format( "unknown/fftpack.{0}", index ) ) ) )
                 {

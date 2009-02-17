@@ -39,7 +39,6 @@ namespace PatcherLib
         private static string[] abilityEffects;
         private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
-        private static Dictionary<int, string> fftPackFiles;
         private static Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>
         {
             { Shops.Bervenia, "Free City of Bervenia" },
@@ -296,28 +295,6 @@ namespace PatcherLib
         public static byte[] ENTD5 { get { return dict[Paths.Binaries.ENTD5] as byte[]; } }
 
         public static string EventNames { get { return dict[Paths.EventNamesXML] as string; } }
-
-        public static Dictionary<int, string> FFTPackFiles
-        {
-            get
-            {
-                if( fftPackFiles == null )
-                {
-                    fftPackFiles = new Dictionary<int, string>();
-
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml( dict[Paths.FFTPackFilesXML] as string );
-
-                    XmlNodeList nodes = doc.SelectNodes( "/files/file" );
-                    foreach( XmlNode node in nodes )
-                    {
-                        fftPackFiles.Add( Convert.ToInt32( node.Attributes["entry"].InnerText ), node.Attributes["name"].InnerText );
-                    }
-                }
-
-                return fftPackFiles;
-            }
-        }
 
         public static byte[] FontBin { get { return dict[Paths.Binaries.Font] as byte[]; } }
 

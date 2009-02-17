@@ -524,6 +524,10 @@
     <Compile Include="Utilities\ReflectionHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="PatcherLib.Resources\PatcherLib.Resources.csproj">
+      <Project>{E8B981CB-2A97-4901-9A04-E6E5D369F471}</Project>
+      <Name>PatcherLib.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="PatcherLib\PatcherLib.csproj">
       <Project>{BB7322AD-75D3-44AF-A0BF-76015C53998F}</Project>
       <Name>PatcherLib</Name>

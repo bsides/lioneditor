@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml;
-using FFTPatcher.Datatypes;
-using System.IO;
 using FFTPatcher.TextEditor.Files;
+using PatcherLib.Datatypes;
+using PatcherLib.Iso;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -51,9 +53,9 @@ namespace FFTPatcher.TextEditor
             {
                 return FFTPack.GetFileFromIso( iso, (FFTPack.Files)file ).Sub( offset, offset + size - 1 );
             }
-            else if ( file.GetType() == typeof( PspIso.Sectors ) )
+            else if ( file.GetType() == typeof( PatcherLib.Iso.PspIso.Sectors ) )
             {
-                return PspIso.GetFile( iso, (PspIso.Sectors)file, offset, size );
+                return PatcherLib.Iso.PspIso.GetFile( iso, (PatcherLib.Iso.PspIso.Sectors)file, offset, size );
             }
             else
             {
@@ -63,9 +65,9 @@ namespace FFTPatcher.TextEditor
 
         private static IList<byte> BytesFromPsxIso( Stream iso, Enum file, int offset, int size )
         {
-            if ( file.GetType() == typeof( PsxIso.Sectors ) )
+            if ( file.GetType() == typeof( PatcherLib.Iso.PsxIso.Sectors ) )
             {
-                return PsxIso.ReadFile( iso, (PsxIso.Sectors)file, offset, size );
+                return PatcherLib.Iso.PsxIso.ReadFile( iso, (PatcherLib.Iso.PsxIso.Sectors)file, offset, size );
             }
             else
             {
@@ -114,17 +116,17 @@ namespace FFTPatcher.TextEditor
                 switch ( sectorType )
                 {
                     case SectorType.BootBin:
-                        dict[sectorType].Add( new KeyValuePair<Enum, int>( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, offset ) );
-                        dict[sectorType].Add( new KeyValuePair<Enum, int>( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, offset ) );
-                        fileEnum = PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN;
+                        dict[sectorType].Add( new KeyValuePair<Enum, int>( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, offset ) );
+                        dict[sectorType].Add( new KeyValuePair<Enum, int>( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, offset ) );
+                        fileEnum = PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN;
                         break;
                     case SectorType.FFTPack:
-                        Datatypes.FFTPack.Files fftPackFile = (Datatypes.FFTPack.Files)Enum.Parse( typeof( Datatypes.FFTPack.Files ), sectorNode.SelectSingleNode( "@index" ).InnerText );
+                        FFTPack.Files fftPackFile = (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), sectorNode.SelectSingleNode( "@index" ).InnerText );
                         dict[sectorType].Add( new KeyValuePair<Enum, int>( fftPackFile, offset ) );
                         fileEnum = fftPackFile;
                         break;
                     case SectorType.Sector:
-                        PsxIso.Sectors file = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), sectorNode.SelectSingleNode( "@filename" ).InnerText );
+                        PatcherLib.Iso.PsxIso.Sectors file = (PatcherLib.Iso.PsxIso.Sectors)Enum.Parse( typeof( PatcherLib.Iso.PsxIso.Sectors ), sectorNode.SelectSingleNode( "@filename" ).InnerText );
                         dict[sectorType].Add( new KeyValuePair<Enum, int>( file, offset ) );
                         fileEnum = file;
                         break;

@@ -22,8 +22,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -516,8 +516,8 @@ namespace FFTPatcher.TextEditor
 
         private static void BuildVersion3Charmap( PSXCharMap PSXMap, PSPCharMap PSPMap )
         {
-            IList<string> psxChars = FFTPatcher.PSXResources.CharacterSet;
-            IList<string> pspChars = FFTPatcher.PSPResources.CharacterSet;
+            IList<string> psxChars = PatcherLib.PSXResources.CharacterSet;
+            IList<string> pspChars = PatcherLib.PSPResources.CharacterSet;
 
             for ( int i = 0; i < 0xD0; i++ )
             {

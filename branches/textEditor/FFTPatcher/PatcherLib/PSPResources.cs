@@ -19,13 +19,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 
-namespace FFTPatcher
+namespace PatcherLib
 {
-    using Paths = FFTPatcher.Resources.Paths.PSP;
     using System.Xml;
+    using PatcherLib.Datatypes;
+    using PatcherLib.Utilities;
+    using Paths = Resources.Paths.PSP;
 
     public static class PSPResources
     {
@@ -39,26 +40,26 @@ namespace FFTPatcher
         private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
         private static Dictionary<int, string> fftPackFiles;
-        private static Dictionary<FFTPatcher.Datatypes.Shops, string> storeNames = new Dictionary<FFTPatcher.Datatypes.Shops, string>
+        private static Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>
         {
-            { FFTPatcher.Datatypes.Shops.Bervenia, "Free City of Bervenia" },
-            { FFTPatcher.Datatypes.Shops.Dorter, "Merchant City of Dorter" },
-            { FFTPatcher.Datatypes.Shops.Gariland, "Magick City of Gariland" },
-            { FFTPatcher.Datatypes.Shops.Goland, "Mining Town of Gollund" },
-            { FFTPatcher.Datatypes.Shops.Goug, "Clockwork City of Goug" },
-            { FFTPatcher.Datatypes.Shops.Igros, "Eagrose Castle" },
-            { FFTPatcher.Datatypes.Shops.Lesalia, "Royal Capital of Lesalia" },
-            { FFTPatcher.Datatypes.Shops.Limberry, "Limberry Castle" },
-            { FFTPatcher.Datatypes.Shops.Lionel, "Lionel Castle" },
-            { FFTPatcher.Datatypes.Shops.None, "Unknown" },
-            { FFTPatcher.Datatypes.Shops.Riovanes, "Riovanes Castle" },
-            { FFTPatcher.Datatypes.Shops.Warjilis, "Port City of Warjilis" },
-            { FFTPatcher.Datatypes.Shops.Yardrow, "Walled City of Yardrow" },
-            { FFTPatcher.Datatypes.Shops.Zaland, "Castle City of Zaland" },
-            { FFTPatcher.Datatypes.Shops.Zarghidas, "Trade City of Sal Ghidos" },
-            { FFTPatcher.Datatypes.Shops.Zeltennia, "Zeltennia Castle" }
+            { Shops.Bervenia, "Free City of Bervenia" },
+            { Shops.Dorter, "Merchant City of Dorter" },
+            { Shops.Gariland, "Magick City of Gariland" },
+            { Shops.Goland, "Mining Town of Gollund" },
+            { Shops.Goug, "Clockwork City of Goug" },
+            { Shops.Igros, "Eagrose Castle" },
+            { Shops.Lesalia, "Royal Capital of Lesalia" },
+            { Shops.Limberry, "Limberry Castle" },
+            { Shops.Lionel, "Lionel Castle" },
+            { Shops.None, "Unknown" },
+            { Shops.Riovanes, "Riovanes Castle" },
+            { Shops.Warjilis, "Port City of Warjilis" },
+            { Shops.Yardrow, "Walled City of Yardrow" },
+            { Shops.Zaland, "Castle City of Zaland" },
+            { Shops.Zarghidas, "Trade City of Sal Ghidos" },
+            { Shops.Zeltennia, "Zeltennia Castle" }
         };
-        private static IDictionary<FFTPatcher.Datatypes.Shops, string> readOnlyStoreNames;
+        private static IDictionary<Shops, string> readOnlyStoreNames;
         private static string[] mapNames = new string[128] {
             "",
             "Eagrose Castle Gate",
@@ -210,7 +211,7 @@ namespace FFTPatcher
                 if( abilityAI == null )
                 {
                     abilityAI =
-                        Utilities.GetStringsFromNumberedXmlNodes(
+                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             AbilitiesStrings,
                             "/AbilityStrings/AI/string[@value='{0}']/@name",
                             24 );
@@ -219,13 +220,13 @@ namespace FFTPatcher
             }
         }
 
-        public static IDictionary<FFTPatcher.Datatypes.Shops, string> ShopNames
+        public static IDictionary<Shops, string> ShopNames
         {
             get
             {
                 if( readOnlyStoreNames == null )
                 {
-                    readOnlyStoreNames = new FFTPatcher.Datatypes.ReadOnlyDictionary<FFTPatcher.Datatypes.Shops, string>( storeNames );
+                    readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>( storeNames );
                 }
 
                 return readOnlyStoreNames;
@@ -239,7 +240,7 @@ namespace FFTPatcher
                 if( abilityAttributes == null )
                 {
                     abilityAttributes =
-                        Utilities.GetStringsFromNumberedXmlNodes(
+                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             AbilitiesStrings,
                             "/AbilityStrings/Attributes/string[@value='{0}']/@name",
                             32 );
@@ -254,7 +255,7 @@ namespace FFTPatcher
             {
                 if( abilityEffects == null )
                 {
-                    abilityEffects = Utilities.GetStringsFromNumberedXmlNodes(
+                    abilityEffects = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                         dict[Paths.AbilityEffectsXML] as string,
                         "/Effects/Effect[@value='{0:X3}']/@name",
                         512 );
@@ -273,7 +274,7 @@ namespace FFTPatcher
                 if( abilityTypes == null )
                 {
                     abilityTypes =
-                        Utilities.GetStringsFromNumberedXmlNodes(
+                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             AbilitiesStrings,
                             "/AbilityStrings/Types/string[@value='{0}']/@name",
                             16 );
@@ -381,7 +382,7 @@ namespace FFTPatcher
                 if( shopAvailabilities == null )
                 {
                     shopAvailabilities =
-                        Utilities.GetStringsFromNumberedXmlNodes(
+                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             ItemsStrings,
                             "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
                             21 );
@@ -407,7 +408,7 @@ namespace FFTPatcher
             {
                 if( statuses == null )
                 {
-                    statuses = Utilities.GetStringsFromNumberedXmlNodes(
+                    statuses = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                         StatusNames,
                         "/Statuses/Status[@offset='{0}']/@name",
                         40 );

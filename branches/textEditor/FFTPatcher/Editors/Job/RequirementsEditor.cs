@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
 {
@@ -89,7 +90,7 @@ namespace FFTPatcher.Editors
                 Requirements reqs = dataGridView1.CurrentRow.DataBoundItem as Requirements;
                 dataGridView1.EditingControl.Text = ReflectionHelpers.GetFieldOrProperty<int>( reqs.Default, dataGridView1.Columns[dataGridView1.CurrentCell.ColumnIndex].DataPropertyName ).ToString();
                 dataGridView1.EndEdit();
-                if( !Utilities.IsRunningOnMono() )
+                if ( !PatcherLib.Utilities.Utilities.IsRunningOnMono() )
                 {
                     InvalidateCell( dataGridView1.CurrentCell );
                 }

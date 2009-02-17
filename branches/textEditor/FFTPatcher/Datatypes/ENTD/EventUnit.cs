@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -254,7 +255,7 @@ namespace FFTPatcher.Datatypes
         {
             SpriteSet = SpriteSet.SpriteSets[bytes[0]];
             Default = defaults;
-            Utilities.CopyByteToBooleans( bytes[1], ref Male, ref Female, ref Monster, ref JoinAfterEvent, ref LoadFormation, ref ZodiacMonster, ref Blank2, ref SaveFormation );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[1], ref Male, ref Female, ref Monster, ref JoinAfterEvent, ref LoadFormation, ref ZodiacMonster, ref Blank2, ref SaveFormation );
             SpecialName = SpecialName.SpecialNames[bytes[2]];
             Level = bytes[3];
             Month = (Month)bytes[4];
@@ -265,9 +266,9 @@ namespace FFTPatcher.Datatypes
             PrerequisiteJobLevel = bytes[9];
             Job = AllJobs.DummyJobs[bytes[10]];
             SecondaryAction = SkillSet.EventSkillSets[bytes[11]];
-            Reaction = AllAbilities.EventAbilities[Utilities.BytesToUShort( bytes[12], bytes[13] )];
-            Support = AllAbilities.EventAbilities[Utilities.BytesToUShort( bytes[14], bytes[15] )];
-            Movement = AllAbilities.EventAbilities[Utilities.BytesToUShort( bytes[16], bytes[17] )];
+            Reaction = AllAbilities.EventAbilities[PatcherLib.Utilities.Utilities.BytesToUShort( bytes[12], bytes[13] )];
+            Support = AllAbilities.EventAbilities[PatcherLib.Utilities.Utilities.BytesToUShort( bytes[14], bytes[15] )];
+            Movement = AllAbilities.EventAbilities[PatcherLib.Utilities.Utilities.BytesToUShort( bytes[16], bytes[17] )];
             Head = Item.EventItems[bytes[18]];
             Body = Item.EventItems[bytes[19]];
             Accessory = Item.EventItems[bytes[20]];
@@ -275,7 +276,7 @@ namespace FFTPatcher.Datatypes
             LeftHand = Item.EventItems[bytes[22]];
             Palette = bytes[23];
             bool dummy = false;
-            Utilities.CopyByteToBooleans( bytes[24], ref AlwaysPresent, ref RandomlyPresent, ref dummy, ref dummy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[24], ref AlwaysPresent, ref RandomlyPresent, ref dummy, ref dummy, ref Control, ref Immortal, ref Blank6, ref Blank7 );
             TeamColor = (TeamColor)((bytes[24] & 0x30) >> 4);
             X = bytes[25];
             Y = bytes[26];
@@ -361,14 +362,14 @@ namespace FFTPatcher.Datatypes
 
         public bool Equals( EventUnit other )
         {
-            return Utilities.CompareArrays( other.ToByteArray(), this.ToByteArray() );
+            return PatcherLib.Utilities.Utilities.CompareArrays( other.ToByteArray(), this.ToByteArray() );
         }
 
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 40 );
             result.Add( SpriteSet.ToByte() );
-            result.Add( Utilities.ByteFromBooleans( Male, Female, Monster, JoinAfterEvent, LoadFormation, ZodiacMonster, Blank2, SaveFormation ) );
+            result.Add( PatcherLib.Utilities.Utilities.ByteFromBooleans( Male, Female, Monster, JoinAfterEvent, LoadFormation, ZodiacMonster, Blank2, SaveFormation ) );
             result.Add( SpecialName.ToByte() );
             result.Add( Level );
             result.Add( (byte)Month );
@@ -388,7 +389,7 @@ namespace FFTPatcher.Datatypes
             result.Add( (byte)(RightHand.Offset & 0xFF) );
             result.Add( (byte)(LeftHand.Offset & 0xFF) );
             result.Add( Palette );
-            result.Add( Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, (((int)TeamColor) & 0x02) == 2, (((int)TeamColor) & 0x01) == 1, Control, Immortal, Blank6, Blank7 ) );
+            result.Add( PatcherLib.Utilities.Utilities.ByteFromBooleans( AlwaysPresent, RandomlyPresent, ( ( (int)TeamColor ) & 0x02 ) == 2, ( ( (int)TeamColor ) & 0x01 ) == 1, Control, Immortal, Blank6, Blank7 ) );
             result.Add( X );
             result.Add( Y );
             result.Add( (byte)(((byte)FacingDirection & 0x7F) | (UpperLevel ? 0x80 : 0x00)) );

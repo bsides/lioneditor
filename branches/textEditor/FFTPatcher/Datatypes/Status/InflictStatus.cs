@@ -18,6 +18,8 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
@@ -136,7 +138,7 @@ namespace FFTPatcher.Datatypes
         {
             Default = defaults;
             Value = value;
-            Utilities.CopyByteToBooleans( bytes[0], ref AllOrNothing, ref Random, ref Separate, ref Cancel, ref Blank1, ref Blank2, ref Blank3, ref Blank4 );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[0], ref AllOrNothing, ref Random, ref Separate, ref Cancel, ref Blank1, ref Blank2, ref Blank3, ref Blank4 );
             Statuses = new Statuses( bytes.Sub( 1, 5 ), defaults == null ? null : defaults.Statuses );
         }
 
@@ -171,7 +173,7 @@ namespace FFTPatcher.Datatypes
         public byte[] ToByteArray()
         {
             List<byte> result = new List<byte>( 6 );
-            result.Add( Utilities.ByteFromBooleans( AllOrNothing, Random, Separate, Cancel, Blank1, Blank2, Blank3, Blank4 ) );
+            result.Add( PatcherLib.Utilities.Utilities.ByteFromBooleans( AllOrNothing, Random, Separate, Cancel, Blank1, Blank2, Blank3, Blank4 ) );
             result.AddRange( Statuses.ToByteArray() );
             return result.ToArray();
         }
@@ -198,7 +200,7 @@ namespace FFTPatcher.Datatypes
             {
                 foreach( InflictStatus s in InflictStatuses )
                 {
-                    if( s.Default != null && !Utilities.CompareArrays( s.ToByteArray(), s.Default.ToByteArray() ) )
+                    if ( s.Default != null && !PatcherLib.Utilities.Utilities.CompareArrays( s.ToByteArray(), s.Default.ToByteArray() ) )
                         return true;
                 }
 
@@ -246,12 +248,12 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray();
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x547C4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x547C4, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3263E8, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3263E8, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3263E8, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3263E8, bytes ) );
             }
 
             return result;

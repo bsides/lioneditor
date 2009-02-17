@@ -71,7 +71,7 @@ namespace FFTPatcher.TextEditor
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.progressBar = new FFTPatcher.Controls.ProgressBarWithText();
+            this.progressBar = new PatcherLib.Controls.ProgressBarWithText();
             this.fileEditor1 = new FFTPatcher.TextEditor.Editors.FileEditor();
             this.importPsxIsoCustomMenuItem = new System.Windows.Forms.MenuItem();
             this.importPspIsoCustomMenuItem = new System.Windows.Forms.MenuItem();
@@ -254,7 +254,7 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem helpMenuItem;
         private System.Windows.Forms.MenuItem allowedSymbolsMenuItem;
         private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
-        private FFTPatcher.Controls.ProgressBarWithText progressBar;
+        private PatcherLib.Controls.ProgressBarWithText progressBar;
         private FFTPatcher.TextEditor.Editors.FileEditor fileEditor1;
         private System.Windows.Forms.MenuItem isoMenuItem;
         private System.Windows.Forms.MenuItem textMenuItem;

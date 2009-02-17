@@ -18,11 +18,11 @@
 */
 
 using System;
-using System.IO;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using PatcherLib.Utilities;
 
-namespace FFTPatcher.Datatypes
+namespace PatcherLib.Iso
 {
     public static class FFTPack
     {

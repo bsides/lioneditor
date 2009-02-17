@@ -18,13 +18,12 @@
 */
 
 using System;
-using System.Diagnostics;
-using System.Drawing;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml;
 using FFTPatcher.Datatypes;
-using System.ComponentModel;
+using PatcherLib.Datatypes;
+using PatcherLib.Iso;
 
 namespace FFTPatcher
 {
@@ -165,7 +164,7 @@ namespace FFTPatcher
             applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
             if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                TryAndHandle( delegate() { PspIso.DecryptISO( applyPatchOpenFileDialog.FileName ); }, false );
+                TryAndHandle( delegate() { PatcherLib.Iso.PspIso.DecryptISO( applyPatchOpenFileDialog.FileName ); }, false );
             }
         }
 

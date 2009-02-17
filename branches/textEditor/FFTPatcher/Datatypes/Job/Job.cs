@@ -18,6 +18,9 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -72,11 +75,11 @@ namespace FFTPatcher.Datatypes
             pspJobs = new Job[0xAA];
             psxJobs = new Job[0xA0];
 
-            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xAA );
-            List<string> psxNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
+            List<string> psxNames = new List<string>( PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Jobs,
                 "/Jobs/Job[@offset='{0:X2}']/@name",
                 0xA0 ) );
@@ -135,12 +138,12 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x518B8, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x518B8, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2739DC, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2739DC, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2739DC, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2739DC, bytes ) );
             }
 
             return result;
@@ -253,10 +256,10 @@ namespace FFTPatcher.Datatypes
                     CancelElement.ToByte() != Default.CancelElement.ToByte() ||
                     HalfElement.ToByte() != Default.HalfElement.ToByte() ||
                     WeakElement.ToByte() != Default.WeakElement.ToByte() ||
-                    !Utilities.CompareArrays( PermanentStatus.ToByteArray(), Default.PermanentStatus.ToByteArray() ) ||
-                    !Utilities.CompareArrays( Equipment.ToByteArray( FFTPatch.Context ), Default.Equipment.ToByteArray( FFTPatch.Context ) ) ||
-                    !Utilities.CompareArrays( StartingStatus.ToByteArray(), Default.StartingStatus.ToByteArray() ) ||
-                    !Utilities.CompareArrays( StatusImmunity.ToByteArray(), Default.StatusImmunity.ToByteArray() )
+                    !PatcherLib.Utilities.Utilities.CompareArrays( PermanentStatus.ToByteArray(), Default.PermanentStatus.ToByteArray() ) ||
+                    !PatcherLib.Utilities.Utilities.CompareArrays( Equipment.ToByteArray( FFTPatch.Context ), Default.Equipment.ToByteArray( FFTPatch.Context ) ) ||
+                    !PatcherLib.Utilities.Utilities.CompareArrays( StartingStatus.ToByteArray(), Default.StartingStatus.ToByteArray() ) ||
+                    !PatcherLib.Utilities.Utilities.CompareArrays( StatusImmunity.ToByteArray(), Default.StatusImmunity.ToByteArray() )
                     );
             }
         }
@@ -348,10 +351,10 @@ namespace FFTPatcher.Datatypes
             int equipEnd = context == Context.US_PSP ? 13 : 12;
 
             SkillSet = context == Context.US_PSP ? SkillSet.PSPSkills[bytes[0]] : SkillSet.PSXSkills[bytes[0]];
-            InnateA = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[1], bytes[2] )];
-            InnateB = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[3], bytes[4] )];
-            InnateC = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[5], bytes[6] )];
-            InnateD = AllAbilities.DummyAbilities[Utilities.BytesToUShort( bytes[7], bytes[8] )];
+            InnateA = AllAbilities.DummyAbilities[PatcherLib.Utilities.Utilities.BytesToUShort( bytes[1], bytes[2] )];
+            InnateB = AllAbilities.DummyAbilities[PatcherLib.Utilities.Utilities.BytesToUShort( bytes[3], bytes[4] )];
+            InnateC = AllAbilities.DummyAbilities[PatcherLib.Utilities.Utilities.BytesToUShort( bytes[5], bytes[6] )];
+            InnateD = AllAbilities.DummyAbilities[PatcherLib.Utilities.Utilities.BytesToUShort( bytes[7], bytes[8] )];
             Equipment = new Equipment( bytes.Sub( 9, equipEnd ), defaults == null ? null : defaults.Equipment );
             HPConstant = bytes[equipEnd + 1];
             HPMultiplier = bytes[equipEnd + 2];

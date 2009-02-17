@@ -23,7 +23,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Xml;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.TextEditor
 {

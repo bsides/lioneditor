@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using FFTPatcher.Datatypes;
+using PatcherLib.Datatypes;
+using PatcherLib.Iso;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -107,7 +109,7 @@ namespace FFTPatcher.SpriteEditor
         private PatchedByteArray GetPatchedByteArrayPSXInternal( int index )
         {
             PsxIso.Sectors sector;
-            if ( FFTPatcher.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
+            if ( PatcherLib.Utilities.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
             {
                 return new PatchedByteArray( sector, 0, ToByteArray( index ) );
             }
@@ -120,7 +122,7 @@ namespace FFTPatcher.SpriteEditor
         private PatchedByteArray GetPatchedByteArrayPSPInternal( int index )
         {
             FFTPack.Files sector;
-            if ( FFTPatcher.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
+            if ( PatcherLib.Utilities.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
             {
                 return new PatchedByteArray( sector, 0, ToByteArray( index ) );
             }

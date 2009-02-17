@@ -19,7 +19,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -215,7 +217,7 @@ namespace FFTPatcher.Datatypes
 
             for( int i = 0; i < levels.Length; i++ )
             {
-                levels[i] = Utilities.BytesToUShort( bytes[start + i * 2], bytes[start + i * 2 + 1] );
+                levels[i] = PatcherLib.Utilities.Utilities.BytesToUShort( bytes[start + i * 2], bytes[start + i * 2 + 1] );
             }
         }
 
@@ -242,12 +244,12 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x568C4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x568C4, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x277084, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x277084, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x277084, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x277084, bytes ) );
             }
 
             return result;
@@ -355,7 +357,7 @@ namespace FFTPatcher.Datatypes
             {
                 return
                     Default != null &&
-                    !Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) );
+                    !PatcherLib.Utilities.Utilities.CompareArrays( ToByteArray( FFTPatch.Context ), Default.ToByteArray( FFTPatch.Context ) );
             }
         }
 
@@ -444,20 +446,20 @@ namespace FFTPatcher.Datatypes
         public byte[] ToByteArray( Context context )
         {
             List<byte> result = new List<byte>( 12 );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Squire, Chemist ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Knight, Archer ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Monk, WhiteMage ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( BlackMage, TimeMage ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Summoner, Thief ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Orator, Mystic ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Geomancer, Dragoon ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Samurai, Ninja ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Arithmetician, Bard ) );
-            result.Add( Utilities.MoveToUpperAndLowerNibbles( Dancer, Mime ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Squire, Chemist ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Knight, Archer ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Monk, WhiteMage ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( BlackMage, TimeMage ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Summoner, Thief ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Orator, Mystic ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Geomancer, Dragoon ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Samurai, Ninja ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Arithmetician, Bard ) );
+            result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Dancer, Mime ) );
             if( context == Context.US_PSP )
             {
-                result.Add( Utilities.MoveToUpperAndLowerNibbles( DarkKnight, OnionKnight ) );
-                result.Add( Utilities.MoveToUpperAndLowerNibbles( Unknown1, Unknown2 ) );
+                result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( DarkKnight, OnionKnight ) );
+                result.Add( PatcherLib.Utilities.Utilities.MoveToUpperAndLowerNibbles( Unknown1, Unknown2 ) );
             }
 
             return result.ToArray();
@@ -497,7 +499,7 @@ namespace FFTPatcher.Datatypes
 
         public bool Equals( Requirements other )
         {
-            return Utilities.CompareArrays( ToByteArray(), other.ToByteArray() );
+            return PatcherLib.Utilities.Utilities.CompareArrays( ToByteArray(), other.ToByteArray() );
         }
 
 

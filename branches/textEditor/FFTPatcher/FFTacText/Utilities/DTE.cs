@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -106,12 +108,12 @@ namespace FFTPatcher.TextEditor
             }.AsReadOnly();
 
         static IList<PatchedByteArray> psxDtePatches = new PatchedByteArray[] {
-            new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x6CAC, worldBin1.ToArray() ),
-            new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x4c04, worldBin2.ToArray() ),
-            new PatchedByteArray( PsxIso.WORLD.WORLD_BIN, 0x4cc0, worldBin3.ToArray() ),
-            new PatchedByteArray( PsxIso.SCUS_942_21, 0x229F0, scus1.ToArray() ),
-            new PatchedByteArray( PsxIso.SCUS_942_21, 0x22a30, scus2.ToArray() ),
-            new PatchedByteArray( PsxIso.SCUS_942_21, 0x22848, scus3.ToArray() ) }.AsReadOnly();
+            new PatchedByteArray( PatcherLib.Iso.PsxIso.WORLD.WORLD_BIN, 0x6CAC, worldBin1.ToArray() ),
+            new PatchedByteArray( PatcherLib.Iso.PsxIso.WORLD.WORLD_BIN, 0x4c04, worldBin2.ToArray() ),
+            new PatchedByteArray( PatcherLib.Iso.PsxIso.WORLD.WORLD_BIN, 0x4cc0, worldBin3.ToArray() ),
+            new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x229F0, scus1.ToArray() ),
+            new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x22a30, scus2.ToArray() ),
+            new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x22848, scus3.ToArray() ) }.AsReadOnly();
 
         private static Set<string> GetDteGroups( FFTPatcher.Datatypes.FFTFont font, GenericCharMap charmap, IList<string> charset )
         {
@@ -121,26 +123,26 @@ namespace FFTPatcher.TextEditor
             return TextUtilities.GetGroups( charmap, charset, widths );
         }
 
-        public static Set<string> GetDteGroups( FFTPatcher.Datatypes.Context context )
+        public static Set<string> GetDteGroups( Context context )
         {
-            return context == FFTPatcher.Datatypes.Context.US_PSP ? GetPspDteGroups() : GetPsxDteGroups();
+            return context == Context.US_PSP ? GetPspDteGroups() : GetPsxDteGroups();
         }
 
         private static Set<string> GetPsxDteGroups()
         {
-            return GetDteGroups( new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSXResources.FontBin, FFTPatcher.PSXResources.FontWidthsBin ), TextUtilities.PSXMap, FFTPatcher.PSXResources.CharacterSet );
+            return GetDteGroups( new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin ), TextUtilities.PSXMap, PatcherLib.PSXResources.CharacterSet );
         }
 
         private static Set<string> GetPspDteGroups()
         {
-            return GetDteGroups( new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSPResources.FontBin, FFTPatcher.PSXResources.FontWidthsBin ), TextUtilities.PSPMap, FFTPatcher.PSPResources.CharacterSet );
+            return GetDteGroups( new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSPResources.FontBin, PatcherLib.PSXResources.FontWidthsBin ), TextUtilities.PSPMap, PatcherLib.PSPResources.CharacterSet );
         }
 
 
         public static IList<PatchedByteArray> GeneratePspDtePatches( IEnumerable<KeyValuePair<string, byte>> dteEncodings )
         {
-            var charSet = FFTPatcher.PSPResources.CharacterSet;
-            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSPResources.FontBin, FFTPatcher.PSPResources.FontWidthsBin );
+            var charSet = PatcherLib.PSPResources.CharacterSet;
+            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSPResources.FontBin, PatcherLib.PSPResources.FontWidthsBin );
 
             byte[] fontBytes;
             byte[] widthBytes;
@@ -150,14 +152,14 @@ namespace FFTPatcher.TextEditor
             fontBytes = fontBytes.Sub( minDteByte * characterSize, ( maxDteByte + 1 ) * characterSize - 1 ).ToArray();
             return
                 new PatchedByteArray[] {
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x27b80c+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2f73b8+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x27b80c+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2f73b8+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x293f40, widthBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x30fac0, widthBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x293f40, widthBytes),
-                    new PatchedByteArray(PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x30fac0, widthBytes)
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x27b80c+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2f73b8+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x27b80c+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2f73b8+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x293f40, widthBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x30fac0, widthBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x293f40, widthBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x30fac0, widthBytes)
                 };
         }
 
@@ -167,8 +169,8 @@ namespace FFTPatcher.TextEditor
             // FONT.BIN -> 0
             // WORLD.BIN -> 0x5B8F8
 
-            var charSet = FFTPatcher.PSXResources.CharacterSet;
-            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( FFTPatcher.PSXResources.FontBin, FFTPatcher.PSXResources.FontWidthsBin );
+            var charSet = PatcherLib.PSXResources.CharacterSet;
+            FFTPatcher.Datatypes.FFTFont font = new FFTPatcher.Datatypes.FFTFont( PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin );
 
             byte[] fontBytes;
             byte[] widthBytes;
@@ -183,20 +185,20 @@ namespace FFTPatcher.TextEditor
             var result = new List<PatchedByteArray>();
             result.AddRange( psxDtePatches );
             result.AddRange( new PatchedByteArray[] {
-                    new PatchedByteArray(PsxIso.BATTLE_BIN, 0xE7614+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PsxIso.EVENT.FONT_BIN, 0x00+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PsxIso.WORLD.WORLD_BIN, 0x5B8f8+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PsxIso.BATTLE_BIN, 0xFF0FC, widthBytes),
-                    new PatchedByteArray(PsxIso.WORLD.WORLD_BIN, 0x733E0, widthBytes),
-                    new PatchedByteArray(PsxIso.SCUS_942_21, 0x228e0, GeneratePsxLookupTable(dteEncodings, charSet).ToArray())
+                    new PatchedByteArray(PatcherLib.Iso.PsxIso.BATTLE_BIN, 0xE7614+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PsxIso.EVENT.FONT_BIN, 0x00+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PsxIso.WORLD.WORLD_BIN, 0x5B8f8+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PsxIso.BATTLE_BIN, 0xFF0FC, widthBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PsxIso.WORLD.WORLD_BIN, 0x733E0, widthBytes),
+                    new PatchedByteArray(PatcherLib.Iso.PsxIso.SCUS_942_21, 0x228e0, GeneratePsxLookupTable(dteEncodings, charSet).ToArray())
                 } );
 
             return result;
         }
 
-        public static IList<PatchedByteArray> GenerateDtePatches( FFTPatcher.Datatypes.Context context, IEnumerable<KeyValuePair<string, byte>> dteEncodings )
+        public static IList<PatchedByteArray> GenerateDtePatches( Context context, IEnumerable<KeyValuePair<string, byte>> dteEncodings )
         {
-            return context == FFTPatcher.Datatypes.Context.US_PSP ? GeneratePspDtePatches( dteEncodings ) : GeneratePsxDtePatches( dteEncodings );
+            return context == Context.US_PSP ? GeneratePspDtePatches( dteEncodings ) : GeneratePsxDtePatches( dteEncodings );
         }
 
         public static Stack<byte> GetAllowedDteBytes()

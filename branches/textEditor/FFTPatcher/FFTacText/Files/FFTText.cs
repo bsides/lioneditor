@@ -21,12 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using FFTPatcher.Datatypes;
 using FFTPatcher.TextEditor.Files;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -180,7 +177,7 @@ namespace FFTPatcher.TextEditor
                 {
                     worker.ReportProgress( 0,
                         new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.GeneratePatch } );
-                    var currentFileEncoding = Utilities.DictionaryFromKVPs( filePreferredPairs[file] );
+                    var currentFileEncoding = PatcherLib.Utilities.Utilities.DictionaryFromKVPs( filePreferredPairs[file] );
                     patches.AddRange( file.GetDtePatches( currentFileEncoding ) );
                     worker.ReportProgress( 0,
                         new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.GeneratePatch } );

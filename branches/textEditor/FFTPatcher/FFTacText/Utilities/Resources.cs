@@ -18,7 +18,8 @@
 */
 
 using System.Collections.Generic;
-using System.Text;
+using PatcherLib;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {

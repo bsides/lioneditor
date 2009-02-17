@@ -144,7 +144,7 @@ namespace FFTPatcher.Editors
             // 
             smallerThumbnailPanelPanel.AutoSize = true;
             smallerThumbnailPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            smallerThumbnailPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
+            smallerThumbnailPanelPanel.BackgroundImage = global::PatcherLib.Properties.Resources.bg;
             smallerThumbnailPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             smallerThumbnailPanelPanel.Controls.Add( this.smallerThumbnailPanel );
             smallerThumbnailPanelPanel.Location = new System.Drawing.Point( 164, 45 );
@@ -164,7 +164,7 @@ namespace FFTPatcher.Editors
             // 
             this.glyphPanelPanel.AutoSize = true;
             this.glyphPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.glyphPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
+            this.glyphPanelPanel.BackgroundImage = global::PatcherLib.Properties.Resources.bg;
             this.glyphPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.glyphPanelPanel.Controls.Add( this.glyphPanel );
             this.glyphPanelPanel.Location = new System.Drawing.Point( 3, 3 );
@@ -186,7 +186,7 @@ namespace FFTPatcher.Editors
             // 
             thumbnailPanelPanel.AutoSize = true;
             thumbnailPanelPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            thumbnailPanelPanel.BackgroundImage = global::FFTPatcher.Properties.Resources.bg;
+            thumbnailPanelPanel.BackgroundImage = global::PatcherLib.Properties.Resources.bg;
             thumbnailPanelPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             thumbnailPanelPanel.Controls.Add( this.thumbnailPanel );
             thumbnailPanelPanel.Location = new System.Drawing.Point( 164, 3 );

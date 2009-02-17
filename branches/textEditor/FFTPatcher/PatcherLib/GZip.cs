@@ -20,11 +20,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
-using ICSharpCode.SharpZipLib.Core;
-
-namespace FFTPatcher
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
+namespace PatcherLib
 {
     /// <summary>
     /// Utilities for decompressing GZip files.

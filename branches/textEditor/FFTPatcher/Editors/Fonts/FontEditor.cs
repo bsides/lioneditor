@@ -20,6 +20,8 @@
 using System;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
 {

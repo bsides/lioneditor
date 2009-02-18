@@ -74,7 +74,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DefaultHacks.xml" />
+    <Content Include="DefaultHacks.xml">
+    </Content>
+    <Content Include="nates1984.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Razele.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zodiac.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PatcherLib\PatcherLib.csproj">

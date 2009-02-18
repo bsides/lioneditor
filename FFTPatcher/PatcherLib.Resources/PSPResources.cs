@@ -430,7 +430,6 @@ namespace PatcherLib
             dict[Resources.Paths.PSP.Binaries.SkillSets] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.SkillSets];
             dict[Resources.Paths.PSP.Binaries.StatusAttributes] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.StatusAttributes];
             dict[Resources.Paths.PSP.EventNamesXML] = Resources.ZipFileContents[Resources.Paths.PSP.EventNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSP.FFTPackFilesXML] = Resources.ZipFileContents[Resources.Paths.PSP.FFTPackFilesXML].ToUTF8String();
             dict[Resources.Paths.PSP.JobsXML] = Resources.ZipFileContents[Resources.Paths.PSP.JobsXML].ToUTF8String();
             dict[Resources.Paths.PSP.SkillSetsXML] = Resources.ZipFileContents[Resources.Paths.PSP.SkillSetsXML].ToUTF8String();
             dict[Resources.Paths.PSP.SpecialNamesXML] = Resources.ZipFileContents[Resources.Paths.PSP.SpecialNamesXML].ToUTF8String();

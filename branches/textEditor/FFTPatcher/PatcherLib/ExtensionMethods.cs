@@ -42,11 +42,13 @@ namespace PatcherLib.Utilities
 
         #region Methods (14)
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {
             return new ReadOnlyCollection<T>( list );
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static void RemoveAll<T, U>( this IDictionary<T, U> dict, Predicate<T> criteria )
         {
             Set<T> toRemove = new Set<T>();
@@ -63,16 +65,19 @@ namespace PatcherLib.Utilities
             }
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static void Sort<T>( this IList<T> list ) where T : IComparable<T>
         {
             Utilities.SortList( list );
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static void Sort<T>( this IList<T> list, Comparison<T> comparer )
         {
             Utilities.SortList( list, comparer );
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static IList<T> Join<T>( this IEnumerable<IEnumerable<T>> lists )
         {
             List<T> result = new List<T>();
@@ -80,6 +85,7 @@ namespace PatcherLib.Utilities
             return result;
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static IList<T> Join<T>( this IList<IList<T>> lists )
         {
             List<T> result = new List<T>();
@@ -90,6 +96,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Sums the items in the list.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static int Sum( this IList<int> items )
         {
             int sum = 0;
@@ -100,6 +107,7 @@ namespace PatcherLib.Utilities
             return sum;
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static bool Exists<T>( this IList<T> list, Predicate<T> match )
         {
             foreach ( T t in list )
@@ -113,6 +121,7 @@ namespace PatcherLib.Utilities
             return false;
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static void CopyTo<T>( this IList<T> list, IList<T> destination, int destinationIndex )
         {
             if ( destination.Count - destinationIndex < list.Count )
@@ -126,6 +135,7 @@ namespace PatcherLib.Utilities
             }
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static void CopyTo<TKey, TValue>( this Dictionary<TKey, TValue>.ValueCollection list, IList<TValue> destination, int destinationIndex )
         {
             if ( destination.Count - destinationIndex < list.Count )
@@ -140,6 +150,7 @@ namespace PatcherLib.Utilities
             }
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static List<T> FindAll<T>( this IList<T> list, Predicate<T> match )
         {
             List<T> result = new List<T>( list.Count );
@@ -151,6 +162,7 @@ namespace PatcherLib.Utilities
             return result;
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static void InitializeElements<T>( this IList<T> list )
         {
             for ( int i = 0; i < list.Count; i++ )
@@ -164,6 +176,7 @@ namespace PatcherLib.Utilities
         /// </summary>
         /// <param name="list">The list.</param>
         /// <param name="item">The item to match.</param>
+        [System.Diagnostics.DebuggerStepThrough]
         public static IList<int> IndexOfEvery<T>( this IList<T> list, T item ) where T : IEquatable<T>
         {
             List<int> result = new List<int>();
@@ -186,6 +199,7 @@ namespace PatcherLib.Utilities
         /// The <see cref="System.Action&lt;T&gt;"/> delegate to perform on each element of the <see cref="System.Collections.Generic.List&lt;T&gt;"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException"><paramref name="action"/> is null</exception>
+        [System.Diagnostics.DebuggerStepThrough]
         public static void ForEach<T>( this IList<T> list, Action<T> action )
         {
             if( action == null )
@@ -197,6 +211,7 @@ namespace PatcherLib.Utilities
             for( int i = 0; i < count; i++ ) action( list[i] );
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static void ForEach<T>( this IEnumerable<T> list, Action<T> action )
         {
             if ( action == null )
@@ -210,6 +225,7 @@ namespace PatcherLib.Utilities
             }
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public static string Join( this IList<string> strings, string joiner )
         {
             StringBuilder result = new StringBuilder();
@@ -222,6 +238,7 @@ namespace PatcherLib.Utilities
         /// </summary>
         /// <param name="match">The <see cref="System.Predicate&lt;T&gt;"/> delegate that defines the conditions of the element to search for.</param>
         /// <exception cref="System.ArgumentNullException"/><paramref name="match"/> is null</exception>.
+        [System.Diagnostics.DebuggerStepThrough]
         public static T Find<T>( this IList<T> list, Predicate<T> match ) where T : class
         {
             foreach( T item in list )
@@ -241,6 +258,7 @@ namespace PatcherLib.Utilities
         /// <param name="groupSize">Number of strings in each group</param>
         /// <param name="groupName">What to name each group.</param>
         /// <param name="lines">Lines to add</param>
+        [System.Diagnostics.DebuggerStepThrough]
         public static void AddGroups( this StringBuilder sb, int groupSize, string groupName, List<string> lines )
         {
             if( lines.Count == 0 )
@@ -274,6 +292,7 @@ namespace PatcherLib.Utilities
         /// Adds a collection of values to the list.
         /// </summary>
         /// <param name="items">The items to add</param>
+        [System.Diagnostics.DebuggerStepThrough]
         public static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
         {
             foreach( T item in items )
@@ -285,6 +304,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Adds <paramref name="lines"/> to the StringBuilder.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static void AppendLines( this StringBuilder sb, IEnumerable<string> lines )
         {
             foreach( string line in lines )
@@ -296,6 +316,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Gets the lower nibble of this byte.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static byte GetLowerNibble( this byte b )
         {
             return (byte)(b & 0x0F);
@@ -304,6 +325,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Gets the upper nibble of this byte.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static byte GetUpperNibble( this byte b )
         {
             return (byte)((b & 0xF0) >> 4);
@@ -314,6 +336,7 @@ namespace PatcherLib.Utilities
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The index of the item found. -1 if not found.</returns>
+        [System.Diagnostics.DebuggerStepThrough]
         public static int LastIndexOf<T>( this IList<T> list, T value ) where T : IEquatable<T>
         {
             for( int i = list.Count - 1; i >= 0; i-- )
@@ -330,6 +353,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Converts this list into an array.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static T[] ToArray<T>( this IList<T> list )
         {
             T[] result = new T[list.Count];
@@ -350,6 +374,7 @@ namespace PatcherLib.Utilities
         /// Converts this string to an array of bytes.
         /// Each character in the string should be a single byte ASCII character.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToByteArray( this string s )
         {
             byte[] result = new byte[s.Length];
@@ -364,6 +389,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Converts this into a pair of big endian bytes.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this UInt16 value )
         {
             byte[] result = new byte[2];
@@ -375,6 +401,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Converts this into a set of four big endian bytes.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this UInt32 value )
         {
             byte[] result = new byte[4];
@@ -388,6 +415,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Converts this into a set of eight big endian bytes.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this long value )
         {
             byte[] result = new byte[8];
@@ -401,6 +429,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Converts this array of bytes into a UInt32.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static UInt32 ToUInt32( this IList<byte> bytes )
         {
             UInt32 result = 0;
@@ -415,6 +444,7 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Converts this to a string.
         /// </summary>
+        [System.Diagnostics.DebuggerStepThrough]
         public static string ToUTF8String( this byte[] bytes )
         {
             if( (bytes[0] == 0xef) && (bytes[1] == 0xbb) && (bytes[2] == 0xbf) )
@@ -433,6 +463,7 @@ namespace PatcherLib.Utilities
         /// <param name="stream">The stream to write to.</param>
         /// <param name="array">The array to write.</param>
         /// <param name="position">The position to start writing.</param>
+        [System.Diagnostics.DebuggerStepThrough]
         public static void WriteArrayToPosition( this Stream stream, byte[] array, long position )
         {
             stream.Seek( position, SeekOrigin.Begin );
@@ -445,6 +476,7 @@ namespace PatcherLib.Utilities
         /// <param name="stream">The stream to write to.</param>
         /// <param name="array">The array to write.</param>
         /// <param name="positions">The positions to start writing.</param>
+        [System.Diagnostics.DebuggerStepThrough]
         public static void WriteArrayToPositions( this Stream stream, byte[] array, params long[] positions )
         {
             foreach( long position in positions )

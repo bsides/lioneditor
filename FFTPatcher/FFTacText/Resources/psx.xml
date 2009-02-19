@@ -530,7 +530,7 @@
       </Sectors>
       <Sections count="3">
         <Section value="0" entries="1" empty="true" dte="true"/>
-        <Section value="1" entries="1024" empty="true" name="Unit names" dte="true"/>
+        <Section value="1" entries="1024" empty="true" name="Unit names" dte="false"/>
         <Section value="2" entries="155" empty="false" name="Job names" dte="true">
           <include name="JobNames" start="0" end="154" offset="0"/>
         </Section>

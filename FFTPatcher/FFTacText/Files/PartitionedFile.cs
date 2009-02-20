@@ -32,6 +32,7 @@ namespace FFTPatcher.TextEditor
                 }
             }
             Sections = sections.AsReadOnly();
+            PopulateDisallowedSections();
         }
 
         protected override IList<byte> ToByteArray()

@@ -60,12 +60,12 @@ namespace FFTPatcher.Datatypes
             List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
             if( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.BATTLE_BIN, 0x14F3F0, effects ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x14F3F0, effects ) );
             }
             else if( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3177B4, effects ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3177B4, effects ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3177B4, effects ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3177B4, effects ) );
             }
 
             return result;
@@ -334,12 +334,12 @@ namespace FFTPatcher.Datatypes
 
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x4F3F0, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x4F3F0, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x271514, bytes ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x271514, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x271514, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x271514, bytes ) );
             }
 
             return result;

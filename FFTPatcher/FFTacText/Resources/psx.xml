@@ -601,7 +601,7 @@
       <Guid>{CFE9A6B2-3919-4B32-B76A-6BEAC2CA604F}</Guid>
       <Size>19336</Size>
       <Sectors>
-<!--        <Sector filename="EVENT_SAMPLE_LZW" offset="0"/> -->
+        <!--        <Sector filename="EVENT_SAMPLE_LZW" offset="0"/> -->
         <Sector filename="BATTLE_BIN" offset="1024732"/>
         <Sector filename="WORLD_WORLD_BIN" offset="452032"/>
       </Sectors>
@@ -648,12 +648,12 @@
           <entry value="36" name="Don't have Geomancy"/>
           <entry value="37" name="Can't move"/>
         </Section>
-        <Section value="3" entries="80" empty="false" name="Battle messages" dte="true">
+        <Section value="3" entries="80" empty="false" name="Battle messages" dte="false">
           <entry value="0" name=""/>
           <entry value="1" name="Item broke"/>
           <entry value="2" name="Stole gil"/>
-          <entry value="3" name="Stole item"/>
-          <entry value="4" name="Invited"/>
+          <entry value="3" name="Invited"/>
+          <entry value="4" name="Stole item"/>
           <entry value="5" name="Stole XP"/>
           <entry value="6" name="Unit joined"/>
           <entry value="7" name="WT=0"/>
@@ -738,10 +738,10 @@
         <Section value="7" entries="256" empty="false" name="Item names" dte="true">
           <include name="ItemNames" start="0" end="255" offset="0"/>
         </Section>
-        <Section value="8" entries="26" empty="true" dte="true"/>
+        <Section value="8" entries="26" empty="true" dte="false"/>
         <Section value="9" entries="64" empty="true" name="Unknown Japanese text" dte="true"/>
         <Section value="10" entries="11" empty="true" name="Battle menus" dte="true"/>
-        <Section value="11" entries="26" empty="true" dte="true"/>
+        <Section value="11" entries="26" empty="true" dte="false"/>
         <Section value="12" entries="1" empty="true" dte="true"/>
         <Section value="13" entries="1" empty="true" dte="true"/>
         <Section value="14" entries="513" empty="false" name="Ability names" dte="true">
@@ -843,6 +843,64 @@
           <entry value="26" name=""/>
         </Section>
       </Sections>
+      <DisallowedEntries>
+        <Section value="8">
+          <entry staticValue="                ">0</entry>
+          <entry staticValue="                ">1</entry>
+          <entry staticValue="                ">2</entry>
+          <entry staticValue="                ">3</entry>
+          <entry staticValue="                ">4</entry>
+          <entry staticValue="                ">5</entry>
+          <entry staticValue="                ">6</entry>
+          <entry staticValue="                ">7</entry>
+          <entry staticValue="                ">8</entry>
+          <entry staticValue="                ">9</entry>
+          <entry staticValue="                ">10</entry>
+          <entry staticValue="                ">11</entry>
+          <entry staticValue="                ">12</entry>
+          <entry staticValue="                ">13</entry>
+          <entry staticValue="                ">14</entry>
+          <entry staticValue="                ">15</entry>
+          <entry staticValue="                ">16</entry>
+          <entry staticValue="                ">17</entry>
+          <entry staticValue="                ">18</entry>
+          <entry staticValue="                ">19</entry>
+          <entry staticValue="                ">20</entry>
+          <entry staticValue="                ">21</entry>
+          <entry staticValue="                ">22</entry>
+          <entry staticValue="                ">23</entry>
+          <entry staticValue="                ">24</entry>
+          <entry staticValue="                ">25</entry>
+        </Section>
+        <Section value="11">
+          <entry staticValue="                ">0</entry>
+          <entry staticValue="                ">1</entry>
+          <entry staticValue="                ">2</entry>
+          <entry staticValue="                ">3</entry>
+          <entry staticValue="                ">4</entry>
+          <entry staticValue="                ">5</entry>
+          <entry staticValue="                ">6</entry>
+          <entry staticValue="                ">7</entry>
+          <entry staticValue="                ">8</entry>
+          <entry staticValue="                ">9</entry>
+          <entry staticValue="                ">10</entry>
+          <entry staticValue="                ">11</entry>
+          <entry staticValue="                ">12</entry>
+          <entry staticValue="                ">13</entry>
+          <entry staticValue="                ">14</entry>
+          <entry staticValue="                ">15</entry>
+          <entry staticValue="                ">16</entry>
+          <entry staticValue="                ">17</entry>
+          <entry staticValue="                ">18</entry>
+          <entry staticValue="                ">19</entry>
+          <entry staticValue="                ">20</entry>
+          <entry staticValue="                ">21</entry>
+          <entry staticValue="                ">22</entry>
+          <entry staticValue="                ">23</entry>
+          <entry staticValue="                ">24</entry>
+          <entry staticValue="                ">25</entry>
+        </Section>
+      </DisallowedEntries>
     </SectionedFile>
 
     <CompressedFile>

@@ -280,56 +280,5 @@ namespace PatcherLib.Iso
             PSP_GAME_USRDIR_movie_013_StaffRoll_pmf = 202128,
             UMD_DATA_BIN = 28,
         }
-public static class Files
-        {
-
-
-            public static class PSP_GAME
-            {
-                public const Sectors ICON0_PNG = Sectors.PSP_GAME_ICON0_PNG;
-                public const Sectors PARAM_SFO = Sectors.PSP_GAME_PARAM_SFO;
-                public const Sectors PIC0_PNG = Sectors.PSP_GAME_PIC0_PNG;
-                public const Sectors PIC1_PNG = Sectors.PSP_GAME_PIC1_PNG;
-
-
-
-                public static class SYSDIR
-                {
-                    public const Sectors BOOT_BIN = Sectors.PSP_GAME_SYSDIR_BOOT_BIN;
-                    public const Sectors EBOOT_BIN = Sectors.PSP_GAME_SYSDIR_EBOOT_BIN;
-
-
-
-                    public static class UPDATE
-                    {
-                        public const Sectors DATA_BIN = Sectors.PSP_GAME_SYSDIR_UPDATE_DATA_BIN;
-                        public const Sectors EBOOT_BIN = Sectors.PSP_GAME_SYSDIR_UPDATE_EBOOT_BIN;
-                        public const Sectors PARAM_SFO = Sectors.PSP_GAME_SYSDIR_UPDATE_PARAM_SFO;
-                    }
-                }
-                public static class USRDIR
-                {
-                    public const Sectors fftpack_bin = Sectors.PSP_GAME_USRDIR_fftpack_bin;
-
-
-                    public static class movie
-                    {
-                        public const Sectors _001_HolyStone_pmf = Sectors.PSP_GAME_USRDIR_movie_001_HolyStone_pmf;
-                        public const Sectors _002_Opening_pmf = Sectors.PSP_GAME_USRDIR_movie_002_Opening_pmf;
-                        public const Sectors _003_Abduction_pmf = Sectors.PSP_GAME_USRDIR_movie_003_Abduction_pmf;
-                        public const Sectors _004_Kusabue_pmf = Sectors.PSP_GAME_USRDIR_movie_004_Kusabue_pmf;
-                        public const Sectors _005_Get_away_pmf = Sectors.PSP_GAME_USRDIR_movie_005_Get_away_pmf;
-                        public const Sectors _006_Reassume_Dilita_pmf = Sectors.PSP_GAME_USRDIR_movie_006_Reassume_Dilita_pmf;
-                        public const Sectors _007_Dilita_Advice_pmf = Sectors.PSP_GAME_USRDIR_movie_007_Dilita_Advice_pmf;
-                        public const Sectors _008_Ovelia_and_Dilita_pmf = Sectors.PSP_GAME_USRDIR_movie_008_Ovelia_and_Dilita_pmf;
-                        public const Sectors _009_Dilita_Musing_pmf = Sectors.PSP_GAME_USRDIR_movie_009_Dilita_Musing_pmf;
-                        public const Sectors _010_Ending_pmf = Sectors.PSP_GAME_USRDIR_movie_010_Ending_pmf;
-                        public const Sectors _011_Russo_pmf = Sectors.PSP_GAME_USRDIR_movie_011_Russo_pmf;
-                        public const Sectors _012_Valuhurea_pmf = Sectors.PSP_GAME_USRDIR_movie_012_Valuhurea_pmf;
-                        public const Sectors _013_StaffRoll_pmf = Sectors.PSP_GAME_USRDIR_movie_013_StaffRoll_pmf;
-                    }
-                }
-            }            public const Sectors UMD_DATA_BIN = Sectors.UMD_DATA_BIN;
-        }
     }
 }

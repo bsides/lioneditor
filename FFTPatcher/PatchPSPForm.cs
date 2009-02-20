@@ -145,7 +145,7 @@ public string CustomICON0FileName
                 }
                 else
                 {
-                    return new PatchedByteArray[] { new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.ICON0_PNG, 0, ICON0_PNG ) };
+                    return new PatchedByteArray[] { new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_ICON0_PNG, 0, ICON0_PNG ) };
                 }
             }
         }

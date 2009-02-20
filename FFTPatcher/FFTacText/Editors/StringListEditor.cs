@@ -128,12 +128,15 @@ namespace FFTPatcher.TextEditor
                 ourNames.Add( string.Empty );
             }
 
+            IList<int> disallowed = ( file is ISerializableFile ) ? ( (ISerializableFile)file ).Layout.DisallowedEntries[section] : null;
+
             DataGridViewRow[] rows = new DataGridViewRow[count];
             dataGridView.SuspendLayout();
             for( int i = 0; i < count; i++ )
             {
                 DataGridViewRow row = new DataGridViewRow();
                 row.CreateCells( dataGridView, i, ourNames[i], file[section, i] );
+                row.ReadOnly = disallowed != null && disallowed.Count > 0 && disallowed.Contains( i );
                 rows[i] = row;
             }
             dataGridView.Rows.Clear();

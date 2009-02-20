@@ -174,8 +174,8 @@ namespace FFTPatcher.Datatypes
             byte[] bytes = ToByteArray();
             if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x2DC8D0, bytes ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x2DC8D0, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2DC8D0, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2DC8D0, bytes ) );
             }
             else
             {

@@ -271,15 +271,15 @@ namespace FFTPatcher.Datatypes
             var first = ToFirstByteArray();
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.SCUS_942_21, 0x54AC4, first ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x54AC4, first ) );
             }
             else if ( context == Context.US_PSP )
             {
                 var second = ToSecondByteArray();
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3266E8, first ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x25720C, second ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3266E8, first ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x25720C, second ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3266E8, first ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x25720C, second ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3266E8, first ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x25720C, second ) );
             }
 
             return result;

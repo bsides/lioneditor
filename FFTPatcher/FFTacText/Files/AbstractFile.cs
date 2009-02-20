@@ -31,6 +31,20 @@ namespace FFTPatcher.TextEditor
             }
 
             this.Sections = sections.AsReadOnly();
+
+            PopulateDisallowedSections();
+        }
+
+        protected void PopulateDisallowedSections()
+        {
+            for ( int i = 0; i < Layout.DisallowedEntries.Count; i++ )
+            {
+                for ( int j = 0; j < Layout.DisallowedEntries[i].Count; j++ )
+                {
+                    int index = Layout.DisallowedEntries[i][j];
+                    Sections[i][index] = Layout.StaticEntries[i][index];
+                }
+            }
         }
 
         protected AbstractFile( GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, bool compressible )
@@ -341,8 +355,8 @@ namespace FFTPatcher.TextEditor
                     switch ( type )
                     {
                         case SectorType.BootBin:
-                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, kvp2.Value, bytes ) );
-                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, kvp2.Value, bytes ) );
                             break;
                         case SectorType.FFTPack:
                             result.Add( new PatchedByteArray( (FFTPack.Files)kvp2.Key, kvp2.Value, bytes ) );

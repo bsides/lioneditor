@@ -104,20 +104,15 @@ namespace FFTPatcher.TextEditor
             psx.Add( 0xD9C9, "?" );
             psx.Add( 0xB2, "\u266A" );
             psx.Add( 0xD0B2, "\u266A" );
-            psx.Add( 0xD0E7, "\u2014" );
             psx.Add( 0xD117, "\u2014" );
-            psx.Add( 0xD0E8, "\u300C" );
             psx.Add( 0xD118, "\u300C" );
-            psx.Add( 0xD0EB, "\u22EF" );
             psx.Add( 0xD11B, "\u22EF" );
-            psx.Add( 0xD0EF, "\xD7" );
             psx.Add( 0xD11F, "\xD7" );
             psx.Add( 0xD120, "\xF7" );
             psx.Add( 0xD121, "\u2229" );
             psx.Add( 0xD122, "\u222A" );
             psx.Add( 0xD123, "=" );
             psx.Add( 0xDA70, "=" );
-            psx.Add( 0xD0F4, "\u2260" );
             psx.Add( 0xD124, "\u2260" );
             psx.Add( 0xD9B5, "\u221E" );
             psx.Add( 0xD9B7, "&" );
@@ -155,12 +150,10 @@ namespace FFTPatcher.TextEditor
             psx.Add( 0xDA74, "," );
             psx.Add( 0xDA75, ";" );
 
-            psx.Add( 0xD0ED, "-" );
             psx.Add( 0xD11D, "-" );
 
             psx.Add( 0x42, "+" );
             psx.Add( 0xD042, "+" );
-            psx.Add( 0xD0EE, "+" );
             psx.Add( 0xD11E, "+" );
 
             psx.Add( 0x46, ":" );
@@ -193,50 +186,36 @@ namespace FFTPatcher.TextEditor
             psx.Add( 0xD044, "/" );
             psx.Add( 0xD9C6, "/" );
 
-            psx.Add( 0xD0F5, ">" );
             psx.Add( 0xD125, ">" );
 
-            psx.Add( 0xD0F6, "<" );
             psx.Add( 0xD126, "<" );
 
-            psx.Add( 0xD0F7, "\u2267" );
             psx.Add( 0xD127, "\u2267" );
 
             psx.Add( 0xD128, "\u2266" );
 
             psx.Add( 0xFA, " " );
-            psx.Add( 0xD0FA, " " );
             psx.Add( 0xD12A, " " );
             psx.Add( 0xDA73, " " );
 
             psx.Add( 0x5F, "." );
             psx.Add( 0xD05F, "." );
-            psx.Add( 0xD0E9, "." );
             psx.Add( 0xD119, "." );
-            psx.Add( 0xD0EC, "." );
             psx.Add( 0xD11C, "." );
             psx.Add( 0xD9B6, "." );
 
             psx.Add( 0x3E, "!" );
             psx.Add( 0xD03E, "!" );
-            psx.Add( 0xD0EA, "!" );
             psx.Add( 0xD11A, "!" );
 
             psx.Add( 0xB5, "*" );
             psx.Add( 0xD0B5, "*" );
-            psx.Add( 0xD0E1, "*" );
             psx.Add( 0xD111, "*" );
-            psx.Add( 0xD0F9, "*" );
             psx.Add( 0xD129, "*" );
-            psx.Add( 0xD0FB, "*" );
             psx.Add( 0xD12B, "*" );
-            psx.Add( 0xD0FC, "*" );
             psx.Add( 0xD12C, "*" );
-            psx.Add( 0xD0FD, "*" );
             psx.Add( 0xD12D, "*" );
-            psx.Add( 0xD0FE, "*" );
             psx.Add( 0xD12E, "*" );
-            psx.Add( 0xD0FF, "*" );
             psx.Add( 0xD12F, "*" );
             psx.Add( 0xD130, "*" );
             psx.Add( 0xD131, "*" );
@@ -313,20 +292,16 @@ namespace FFTPatcher.TextEditor
 
             for( int i = 0xD0; i <= 0xDB; i++ )
             {
-                psx.Add( i + 0xD000, ((char)(i - 0xD0 + 0x30E0)).ToString() );
                 psx.Add( i - 0xD0 + 0xD100, ((char)(i - 0xD0 + 0x30E0)).ToString() );
             }
 
             psx.Add( 0xD10C, "\u30EC" );
             psx.Add( 0xD10D, "\u30ED" );
-            psx.Add( 0xD0DE, "\u30EE" );
             psx.Add( 0xD10E, "\u30EE" );
-            psx.Add( 0xD0DF, "\u30EF" );
             psx.Add( 0xD10F, "\u30EF" );
 
             for( int i = 0xE2; i <= 0xE6; i++ )
             {
-                psx.Add( i + 0xD000, ((char)(i - 0xE2 + 0x30F2)).ToString() );
                 psx.Add( i - 0xE2 + 0xD112, ((char)(i - 0xE2 + 0x30F2)).ToString() );
             }
 

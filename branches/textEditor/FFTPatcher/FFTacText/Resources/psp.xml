@@ -609,10 +609,10 @@
         <Section value="7" entries="316" empty="false" dte="true"  compressible="false" name="Item names">
           <include name="ItemNames" start="0" end="315" offset="0"/>
         </Section>
-        <Section value="8" entries="26" empty="true" dte="true"  compressible="true" name="Blank spaces"/>
+        <Section value="8" entries="26" empty="true" dte="false"  compressible="false" name="Blank spaces"/>
         <Section value="9" entries="64" empty="true" dte="true" compressible="false" name="Terrain names"/>
         <Section value="10" entries="20" empty="true" dte="true" compressible="false" name="Battle menus"/>
-        <Section value="11" entries="26" empty="true" dte="true" compressible="true" name="Blank spaces"/>
+        <Section value="11" entries="26" empty="true" dte="false" compressible="false" name="Blank spaces"/>
         <Section value="12" entries="1" empty="true" dte="true" compressible="true"/>
         <Section value="13" entries="1" empty="true" dte="true" compressible="true"/>
         <Section value="14" entries="512" empty="false" dte="true"  compressible="false" name="Ability names">
@@ -680,6 +680,64 @@
           <entry value="25" name="Chirijiraden"/>
         </Section>
       </Sections>
+      <DisallowedEntries>
+        <Section value="8">
+          <entry staticValue="                ">0</entry>
+          <entry staticValue="                ">1</entry>
+          <entry staticValue="                ">2</entry>
+          <entry staticValue="                ">3</entry>
+          <entry staticValue="                ">4</entry>
+          <entry staticValue="                ">5</entry>
+          <entry staticValue="                ">6</entry>
+          <entry staticValue="                ">7</entry>
+          <entry staticValue="                ">8</entry>
+          <entry staticValue="                ">9</entry>
+          <entry staticValue="                ">10</entry>
+          <entry staticValue="                ">11</entry>
+          <entry staticValue="                ">12</entry>
+          <entry staticValue="                ">13</entry>
+          <entry staticValue="                ">14</entry>
+          <entry staticValue="                ">15</entry>
+          <entry staticValue="                ">16</entry>
+          <entry staticValue="                ">17</entry>
+          <entry staticValue="                ">18</entry>
+          <entry staticValue="                ">19</entry>
+          <entry staticValue="                ">20</entry>
+          <entry staticValue="                ">21</entry>
+          <entry staticValue="                ">22</entry>
+          <entry staticValue="                ">23</entry>
+          <entry staticValue="                ">24</entry>
+          <entry staticValue="                ">25</entry>
+        </Section>
+        <Section value="11">
+          <entry staticValue="                ">0</entry>
+          <entry staticValue="                ">1</entry>
+          <entry staticValue="                ">2</entry>
+          <entry staticValue="                ">3</entry>
+          <entry staticValue="                ">4</entry>
+          <entry staticValue="                ">5</entry>
+          <entry staticValue="                ">6</entry>
+          <entry staticValue="                ">7</entry>
+          <entry staticValue="                ">8</entry>
+          <entry staticValue="                ">9</entry>
+          <entry staticValue="                ">10</entry>
+          <entry staticValue="                ">11</entry>
+          <entry staticValue="                ">12</entry>
+          <entry staticValue="                ">13</entry>
+          <entry staticValue="                ">14</entry>
+          <entry staticValue="                ">15</entry>
+          <entry staticValue="                ">16</entry>
+          <entry staticValue="                ">17</entry>
+          <entry staticValue="                ">18</entry>
+          <entry staticValue="                ">19</entry>
+          <entry staticValue="                ">20</entry>
+          <entry staticValue="                ">21</entry>
+          <entry staticValue="                ">22</entry>
+          <entry staticValue="                ">23</entry>
+          <entry staticValue="                ">24</entry>
+          <entry staticValue="                ">25</entry>
+        </Section>
+      </DisallowedEntries>
     </CompressedFile>
 
     <CompressedFile>

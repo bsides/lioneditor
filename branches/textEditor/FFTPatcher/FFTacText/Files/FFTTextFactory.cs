@@ -40,6 +40,7 @@ namespace FFTPatcher.TextEditor
             public IList<string> SectionNames { get; set; }
             public IList<IList<string>> EntryNames { get; set; }
             public IList<IList<int>> DisallowedEntries { get; set; }
+            public IList<IDictionary<int,string>> StaticEntries { get; set; }
             public KeyValuePair<Enum, int> PrimaryFile { get; set; }
             public IList<bool> DteAllowed { get; set; }
             public IList<bool> CompressionAllowed { get; set; }
@@ -143,13 +144,16 @@ namespace FFTPatcher.TextEditor
 
             IList<IList<string>> entryNames = GetEntryNames( node.SelectSingleNode( "Sections" ), node.SelectSingleNode( "//Templates" ) );
             IList<string> sectionNames = GetSectionNames( node.SelectSingleNode( "Sections" ) );
-            IList<IList<int>> disallowedEntries = GetDisallowedEntries( node, sectionLengths.Length );
+            IList<IList<int>> disallowedEntries;
+            IList<IDictionary<int,string>> staticEntries;
+            GetDisallowedEntries( node, sectionLengths.Length, out disallowedEntries, out staticEntries );
 
             FileInfo fi = new FileInfo
             {
                 Context = context,
                 DisplayName = displayName,
                 DisallowedEntries = disallowedEntries.AsReadOnly(),
+                StaticEntries = staticEntries.AsReadOnly(),
                 EntryNames = entryNames.AsReadOnly(),
                 FileType = filetype,
                 Guid = guid,
@@ -337,21 +341,34 @@ namespace FFTPatcher.TextEditor
             return result.AsReadOnly();
         }
 
-        private static IList<IList<int>> GetDisallowedEntries( XmlNode node, int numSections )
+        private static void GetDisallowedEntries( XmlNode node, int numSections, out IList<IList<int>> disallowed, out IList<IDictionary<int,string>> staticEntries )
         {
             IList<IList<int>> result = new IList<int>[numSections];
-            XmlNode disallowed = node.SelectSingleNode( "DisallowedEntries" );
-            if ( disallowed != null )
+            IList<IDictionary<int, string>> ourStatic = new IDictionary<int, string>[numSections];
+            XmlNode disallowedNode = node.SelectSingleNode( "DisallowedEntries" );
+            if ( disallowedNode != null )
             {
-                foreach ( XmlNode node2 in disallowed.SelectNodes( "Section" ) )
+                foreach ( XmlNode node2 in disallowedNode.SelectNodes( "Section" ) )
                 {
                     int sec = Int32.Parse( node2.Attributes["value"].InnerText );
                     List<int> ourResult = new List<int>();
+                    Dictionary<int, string> ourDict = new Dictionary<int, string>();
                     foreach ( XmlNode ent in node2.SelectNodes( "entry" ) )
                     {
-                        ourResult.Add( Int32.Parse( ent.InnerText ) );
+                        int idx = Int32.Parse(ent.InnerText);
+                        ourResult.Add( idx);
+                        XmlAttribute stat = ent.Attributes["staticValue"];
+                        if ( stat != null )
+                        {
+                            ourDict[idx] = stat.InnerText;
+                        }
+                        else
+                        {
+                            ourDict[idx] = string.Empty;
+                        }
                     }
                     result[sec] = ourResult.AsReadOnly();
+                    ourStatic[sec] = new ReadOnlyDictionary<int, string>( ourDict );
                 }
             }
             for ( int i = 0; i < result.Count; i++ )
@@ -360,8 +377,14 @@ namespace FFTPatcher.TextEditor
                 {
                     result[i] = new int[0].AsReadOnly();
                 }
+                if ( ourStatic[i] == null )
+                {
+                    ourStatic[i] = new ReadOnlyDictionary<int, string>( new Dictionary<int, string>( 0 ) );
+                }
             }
-            return result.AsReadOnly();
+
+            disallowed = result.AsReadOnly();
+            staticEntries = ourStatic.AsReadOnly();
         }
 
         private static IList<IList<string>> GetEntryNames( XmlNode sectionsNode, XmlNode templatesNode )

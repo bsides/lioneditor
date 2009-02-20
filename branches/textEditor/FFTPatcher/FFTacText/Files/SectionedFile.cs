@@ -47,6 +47,7 @@ namespace FFTPatcher.TextEditor
                 sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
             }
             Sections = sections.AsReadOnly();
+            PopulateDisallowedSections();
         }
 
         protected override IList<byte> ToByteArray()

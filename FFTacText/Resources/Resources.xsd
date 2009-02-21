@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Resources"
+    targetNamespace="http://tempuri.org/Resources.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/Resources.xsd"
+    xmlns:mstns="http://tempuri.org/Resources.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:complexType name="t_TemplateEntry">
+    <xs:attribute name="value" type="xs:integer"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_Template">
+    <xs:sequence>
+      <xs:element name="entry" type="t_TemplateEntry" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="t_Templates">
+    <xs:sequence>
+      <xs:any minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="t_Sector">
+    <xs:attribute name="filename" type="xs:string"/>
+    <xs:attribute name="offset" type="xs:integer"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_Sectors">
+    <xs:sequence>
+      <xs:element name="Sector" type="t_Sector" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="t_SectionedSection">
+    <xs:attribute name="value" type="xs:integer"/>
+    <xs:attribute name="entries" type="xs:integer"/>
+    <xs:attribute name="empty" type="xs:boolean"/>
+  </xs:complexType>
+  
+  
+  <xs:complexType name="t_SectionFile">
+    <xs:sequence>
+      <xs:element name="DisplayName" type="xs:string"/>
+      <xs:element name="Guid" type="xs:string"/>
+      <xs:element name="Size" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+</xs:schema>

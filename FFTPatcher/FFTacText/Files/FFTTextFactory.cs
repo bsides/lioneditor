@@ -7,6 +7,7 @@ using FFTPatcher.TextEditor.Files;
 using PatcherLib.Datatypes;
 using PatcherLib.Iso;
 using PatcherLib.Utilities;
+using System.ComponentModel;
 
 namespace FFTPatcher.TextEditor
 {
@@ -169,14 +170,24 @@ namespace FFTPatcher.TextEditor
             return fi;
         }
 
-        private static IDictionary<Guid, ISerializableFile> GetFiles( Stream iso, Context context, XmlDocument layoutDoc, BytesFromIso reader, GenericCharMap charmap )
+        private static IDictionary<Guid, ISerializableFile> GetFiles( Stream iso, Context context, XmlNode layoutDoc, BytesFromIso reader, GenericCharMap charmap, BackgroundWorker worker )
         {
             Dictionary<Guid, ISerializableFile> files = new Dictionary<Guid, ISerializableFile>();
             foreach ( XmlNode node in layoutDoc.SelectNodes( "//Files/*" ) )
             {
+                if ( worker.CancellationPending )
+                    return null;
+
                 FileInfo fi = GetFileInfo( context, node );
 
+                if ( worker.CancellationPending )
+                    return null;
+
                 IList<byte> bytes = reader( iso, fi.PrimaryFile.Key, fi.PrimaryFile.Value, fi.Size );
+
+                if ( worker.CancellationPending )
+                    return null;
+
                 switch ( fi.FileType )
                 {
                     case FileType.CompressedFile:
@@ -193,16 +204,23 @@ namespace FFTPatcher.TextEditor
                         files.Add( fi.Guid, new PartitionedFile( charmap, fi, bytes ) );
                         break;
                 }
+
+                if ( worker.CancellationPending )
+                    return null;
             }
 
             return new ReadOnlyDictionary<Guid, ISerializableFile>( files );
         }
 
-        private static IDictionary<SectionType, IList<QuickEdit.QuickEditEntry>> GetQuickEditLookup( XmlNode quickEditNode )
+        private static IDictionary<SectionType, IList<QuickEdit.QuickEditEntry>> GetQuickEditLookup( XmlNode quickEditNode, BackgroundWorker worker )
         {
             Dictionary<SectionType, IList<QuickEdit.QuickEditEntry>> result = new Dictionary<SectionType, IList<QuickEdit.QuickEditEntry>>();
+
             foreach ( XmlNode node in quickEditNode.SelectNodes( "*" ) )
             {
+                if ( worker.CancellationPending )
+                    return null;
+
                 SectionType type = (SectionType)Enum.Parse( typeof( SectionType ), node.Name );
                 List<QuickEdit.QuickEditEntry> entries = new List<QuickEdit.QuickEditEntry>();
                 foreach ( XmlNode fileNode in node.SelectNodes( "*" ) )
@@ -230,69 +248,75 @@ namespace FFTPatcher.TextEditor
                                 Offset = Int32.Parse( fileNode.SelectSingleNode( "Offset" ).InnerText )
                             } );
                     }
+
+                    if ( worker.CancellationPending )
+                        return null;
                 }
 
                 result[type] = entries.AsReadOnly();
+                if ( worker.CancellationPending )
+                    return null;
             }
 
             return new ReadOnlyDictionary<SectionType, IList<QuickEdit.QuickEditEntry>>( result );
         }
 
-        public static FFTText GetPspText( Stream iso, GenericCharMap charmap )
+        public static FFTText GetPspText( Stream iso, GenericCharMap charmap, BackgroundWorker worker )
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Properties.Resources.psp );
-            return GetText( iso, Context.US_PSP, doc, BytesFromPspIso, charmap );
+            return GetText( iso, Context.US_PSP, Resources.PSP, BytesFromPspIso, charmap, worker );
         }
 
-        public static FFTText GetPspText( Stream iso, Stream tblStream )
+        public static FFTText GetPspText( Stream iso, Stream tblStream, BackgroundWorker worker )
         {
-            return GetPspText( iso, DTE.GenerateCharMap( tblStream ) );
+            return GetPspText( iso, DTE.GenerateCharMap( tblStream ), worker );
         }
 
-        public static FFTText GetPsxText( Stream iso, Stream tblStream )
+        public static FFTText GetPsxText( Stream iso, Stream tblStream, BackgroundWorker worker )
         {
-            return GetPsxText( iso, DTE.GenerateCharMap( tblStream ) );
+            return GetPsxText( iso, DTE.GenerateCharMap( tblStream ), worker );
         }
 
-        public static FFTText GetPspText( Stream iso )
+        public static FFTText GetPspText( Stream iso, BackgroundWorker worker )
         {
-            return GetPspText( iso, TextUtilities.PSPMap );
+            return GetPspText( iso, TextUtilities.PSPMap, worker );
         }
 
-        public static FFTText GetPsxText( Stream iso, GenericCharMap charmap )
+        public static FFTText GetPsxText( Stream iso, GenericCharMap charmap, BackgroundWorker worker )
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( Properties.Resources.psx );
-            return GetText( iso, Context.US_PSX, doc, BytesFromPsxIso, charmap );
+            return GetText( iso, Context.US_PSX, Resources.PSX, BytesFromPsxIso, charmap, worker );
         }
 
-        public static FFTText GetPsxText( Stream iso )
+        public static FFTText GetPsxText( Stream iso, BackgroundWorker worker )
         {
-            return GetPsxText( iso, TextUtilities.PSXMap );
+            return GetPsxText( iso, TextUtilities.PSXMap, worker );
         }
 
 
-        private static FFTText GetText( Stream iso, Context context, XmlDocument doc, BytesFromIso reader, GenericCharMap charmap )
+        private static FFTText GetText( Stream iso, Context context, XmlNode doc, BytesFromIso reader, GenericCharMap charmap, BackgroundWorker worker )
         {
-            IDictionary<Guid, ISerializableFile> files = GetFiles( iso, context, doc, reader, charmap );
-            var quickEdit = new QuickEdit( files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ) ) );
+            IDictionary<Guid, ISerializableFile> files = GetFiles( iso, context, doc, reader, charmap, worker );
+            if ( files == null || worker.CancellationPending )
+                return null;
+
+            var quickEdit = new QuickEdit( files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ), worker ) );
+            if ( quickEdit == null || worker.CancellationPending )
+                return null;
+
             return new FFTText( context, files, quickEdit );
         }
 
 
-        public static FFTText GetFilesXml( string filename )
+        public static FFTText GetFilesXml( string filename, BackgroundWorker worker )
         {
             XmlDocument doc = new XmlDocument();
             doc.Load( filename );
-            return GetFilesXml( doc );
+            return GetFilesXml( doc, worker );
         }
 
-        public static FFTText GetFilesXml( XmlDocument doc )
+        public static FFTText GetFilesXml( XmlNode doc, BackgroundWorker worker )
         {
             Context context = (Context)Enum.Parse( typeof( Context ), doc.SelectSingleNode( "/FFTText/@context" ).InnerText );
-            XmlDocument layoutDoc = new XmlDocument();
-            layoutDoc.LoadXml( context == Context.US_PSP ? Properties.Resources.psp : Properties.Resources.psx );
+            XmlNode layoutDoc = context == Context.US_PSP ? Resources.PSP : Resources.PSX;
             GenericCharMap charmap = ( context == Context.US_PSP ) ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
 
             Dictionary<Guid, ISerializableFile> result = new Dictionary<Guid, ISerializableFile>();
@@ -300,13 +324,24 @@ namespace FFTPatcher.TextEditor
             {
                 string guidText = fileNode.SelectSingleNode( "Guid" ).InnerText;
                 Guid guid = new Guid( guidText );
+                if ( worker.CancellationPending )
+                    return null;
                 FileInfo fi = GetFileInfo( context, layoutDoc.SelectSingleNode( string.Format( "//Files/*[Guid='{0}']", guidText ) ) );
+                if ( worker.CancellationPending )
+                    return null;
                 result.Add(
                     guid,
                     AbstractFile.ConstructFile( fi.FileType, charmap, fi, GetStrings( fileNode.SelectSingleNode( "Sections" ) ) ) );
+                if ( worker.CancellationPending )
+                    return null;
             }
 
-            var quickEdit = new QuickEdit( result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ) ) );
+            var quickEdit = new QuickEdit( result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
+            if ( quickEdit == null || worker.CancellationPending )
+            {
+                return null;
+            }
+
             return new FFTText( context, result, quickEdit );
 
         }

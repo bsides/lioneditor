@@ -17,13 +17,11 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace PatcherLib
 {
-    using System.Xml;
     using PatcherLib.Datatypes;
     using PatcherLib.Utilities;
     using Paths = Resources.Paths.PSP;

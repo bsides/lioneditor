@@ -18,17 +18,40 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using PatcherLib.Utilities;
-using System.Collections.Generic;
 using System.Xml;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
+using PatcherLib.Utilities;
 
 namespace PatcherLib.Iso
 {
     public static class FFTPack
     {
 		#region Public Methods (7) 
+        static XmlNode resourcesDoc;
+
+        static FFTPack()
+        {
+            using( MemoryStream memStream = new MemoryStream( PatcherLib.Properties.Resources.Resources_tar, false ) )
+            using( GZipInputStream gzStream = new GZipInputStream( memStream ) )
+            using ( TarInputStream tarStream = new TarInputStream( gzStream ) )
+            {
+                TarEntry entry = tarStream.GetNextEntry();
+                while ( entry != null )
+                {
+                    if ( entry.Name == "FFTPackFiles.xml" )
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load( tarStream );
+                        resourcesDoc = doc;
+                    }
+                    entry = tarStream.GetNextEntry();
+                }
+            }
+        }
         private static Dictionary<int, string> fftPackFiles;
 
         public static Dictionary<int, string> FFTPackFiles
@@ -39,10 +62,7 @@ namespace PatcherLib.Iso
                 {
                     fftPackFiles = new Dictionary<int, string>();
 
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml( PatcherLib.Properties.Resources.FFTPackFiles );
-
-                    XmlNodeList nodes = doc.SelectNodes( "/files/file" );
+                    XmlNodeList nodes = resourcesDoc.SelectNodes( "/files/file" );
                     foreach ( XmlNode node in nodes )
                     {
                         fftPackFiles.Add( Convert.ToInt32( node.Attributes["entry"].InnerText ), node.Attributes["name"].InnerText );

@@ -19,12 +19,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
-using System.Collections.ObjectModel;
-using ICSharpCode.SharpZipLib.GZip;
 using System.IO;
-using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace PatcherLib

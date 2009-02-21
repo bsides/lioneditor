@@ -215,30 +215,30 @@ namespace FFTPatcher.TextEditor
             Files = filesList.AsReadOnly();
         }
 
-        public static FFTText ReadPSPIso( string filename )
+        public static FFTText ReadPSPIso( string filename, BackgroundWorker worker )
         {
             using ( FileStream stream = File.Open( filename, FileMode.Open, FileAccess.Read ) )
             {
-                return ReadPSPIso( stream );
+                return ReadPSPIso( stream, worker );
             }
         }
 
-        public static FFTText ReadPSPIso( FileStream stream )
+        public static FFTText ReadPSPIso( FileStream stream, BackgroundWorker worker )
         {
-            return FFTTextFactory.GetPspText( stream );
+            return FFTTextFactory.GetPspText( stream, worker );
         }
 
-        public static FFTText ReadPSXIso( string filename )
+        public static FFTText ReadPSXIso( string filename, BackgroundWorker worker )
         {
             using ( FileStream stream = File.Open( filename, FileMode.Open, FileAccess.Read ) )
             {
-                return ReadPSXIso( stream );
+                return ReadPSXIso( stream, worker );
             }
         }
 
-        public static FFTText ReadPSXIso( FileStream stream )
+        public static FFTText ReadPSXIso( FileStream stream, BackgroundWorker worker )
         {
-            return FFTTextFactory.GetPsxText( stream );
+            return FFTTextFactory.GetPsxText( stream, worker );
         }
 
 		#endregion Methods 

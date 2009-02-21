@@ -80,7 +80,6 @@
     <Content Include="Resources\PSX-US\StatusNames.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Resources\ENTD1.ENT" />
     <None Include="Resources\ENTD2.ENT" />
     <None Include="Resources\ENTD3.ENT" />

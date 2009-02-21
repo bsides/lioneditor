@@ -61,7 +61,7 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="zipResources.bat" />
     <Compile Include="Datatypes\Fonts\FFTFont.cs" />
     <Compile Include="Datatypes\Fonts\Glyph.cs" />
     <Compile Include="Datatypes\IChangeable.cs" />
@@ -83,7 +83,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FFTPackFiles.xml" />
+    <Content Include="Resources\FFTPackFiles.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -94,7 +94,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>"$(ProjectDir)zipResources.bat" "$(ProjectDir)"</PreBuildEvent>
   </PropertyGroup>
 </Project>

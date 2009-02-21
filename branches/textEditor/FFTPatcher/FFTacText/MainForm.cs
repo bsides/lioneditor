@@ -87,8 +87,74 @@ namespace FFTPatcher.TextEditor
             openFileDialog.Filter = "FFTText files (*.ffttext)|*.ffttext";
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                LoadFile( FFTTextFactory.GetFilesXml( openFileDialog.FileName ) );
+                LoadFile( LoadType.Open, openFileDialog.FileName, null, null );
             }
+        }
+
+        enum LoadType
+        {
+            Open,
+            PsxStreamAndTable,
+            PspStreamAndTable,
+            PspFilename,
+            PsxFilename
+        }
+
+        private void LoadFile( LoadType loadType, string filename, Stream isoStream, Stream tblStream )
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerSupportsCancellation = true;
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += 
+                delegate( object sender, DoWorkEventArgs args )
+                {
+                    FFTText text = null;
+                    switch ( loadType )
+                    {
+                        case LoadType.Open:
+                            text = FFTTextFactory.GetFilesXml( filename, worker );
+                            break;
+                        case LoadType.PspFilename:
+                            text = FFTText.ReadPSPIso( filename, worker );
+                            break;
+                        case LoadType.PsxFilename:
+                            text = FFTText.ReadPSXIso( filename, worker );
+                            break;
+                        case LoadType.PspStreamAndTable:
+                            text = FFTTextFactory.GetPspText( isoStream, tblStream, worker );
+                            break;
+                        case LoadType.PsxStreamAndTable:
+                            text = FFTTextFactory.GetPsxText( isoStream, tblStream, worker );
+                            break;
+                    }
+                    if ( text == null || worker.CancellationPending )
+                    {
+                        args.Cancel = true;
+                        return;
+                    }
+
+                    LoadFile( text );
+                };
+            MethodInvoker enableForm = delegate() { Enabled = true; };
+            worker.RunWorkerCompleted +=
+                delegate( object sender, RunWorkerCompletedEventArgs args )
+                {
+                    if ( args.Error != null )
+                    {
+                        MessageBox.Show( this, "Error loading file: " + args.Error.Message, "Error", MessageBoxButtons.OK );
+                    }
+                    if ( InvokeRequired )
+                    {
+                        Invoke( enableForm );
+                    }
+                    else
+                    {
+                        enableForm();
+                    }
+                };
+
+            Enabled = false;
+            worker.RunWorkerAsync();
         }
 
         void saveMenuItem_Click( object sender, EventArgs e )
@@ -111,7 +177,7 @@ namespace FFTPatcher.TextEditor
                     using (Stream fileStream = File.OpenRead(form.IsoFileName))
                     using (Stream tblStream = File.OpenRead(form.TblFileName))
                     {
-                        LoadFile(FFTTextFactory.GetPsxText(fileStream, tblStream));
+                        LoadFile( LoadType.PsxStreamAndTable, null, fileStream, tblStream );
                     }
                 }
             }
@@ -126,19 +192,20 @@ namespace FFTPatcher.TextEditor
                     using (Stream fileStream = File.OpenRead(form.IsoFileName))
                     using (Stream tblStream = File.OpenRead(form.TblFileName))
                     {
-                        LoadFile(FFTTextFactory.GetPspText(fileStream, tblStream));
+                        LoadFile( LoadType.PspStreamAndTable, null, fileStream, tblStream );
                     }
                 }
             }
         }
 
-        void importPspIsoMenuItem_Click(object sender, EventArgs e)
+
+        void importPspIsoMenuItem_Click( object sender, EventArgs e )
         {
             openFileDialog.Filter = "ISO files (*.iso)|*.iso";
             openFileDialog.FileName = string.Empty;
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                LoadFile( FFTText.ReadPSPIso( openFileDialog.FileName ) );
+                LoadFile( LoadType.PspFilename, openFileDialog.FileName, null, null );
             }
         }
 
@@ -148,7 +215,7 @@ namespace FFTPatcher.TextEditor
             openFileDialog.FileName = string.Empty;
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                LoadFile( FFTText.ReadPSXIso( openFileDialog.FileName ) );
+                LoadFile( LoadType.PsxFilename, openFileDialog.FileName, null, null );
             }
         }
 
@@ -157,19 +224,31 @@ namespace FFTPatcher.TextEditor
 
         private void LoadFile( FFTText file )
         {
-            internalFile = file;
-            textMenuItem.MenuItems.Clear();
-            foreach ( IFile ifile in file.Files )
+            MethodInvoker whatever = delegate()
             {
-                MenuItem mi = new MenuItem( ifile.DisplayName, fileClick );
-                mi.Tag = ifile;
-                textMenuItem.MenuItems.Add( mi );
-            }
+                internalFile = file;
+                textMenuItem.MenuItems.Clear();
+                foreach ( IFile ifile in file.Files )
+                {
+                    MenuItem mi = new MenuItem( ifile.DisplayName, fileClick );
+                    mi.Tag = ifile;
+                    textMenuItem.MenuItems.Add( mi );
+                }
 
-            fileClick( textMenuItem.MenuItems[0], EventArgs.Empty );
-            textMenuItem.Enabled = true;
-            saveMenuItem.Enabled = true;
-            menuItem2.Enabled = true;
+                fileClick( textMenuItem.MenuItems[0], EventArgs.Empty );
+                textMenuItem.Enabled = true;
+                saveMenuItem.Enabled = true;
+                menuItem2.Enabled = true;
+            };
+
+            if ( this.InvokeRequired )
+            {
+                Invoke( whatever );
+            }
+            else
+            {
+                whatever();
+            }
         }
 
         private void fileClick( object sender, EventArgs e )

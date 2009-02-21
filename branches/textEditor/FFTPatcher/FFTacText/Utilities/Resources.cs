@@ -18,8 +18,10 @@
 */
 
 using System.Collections.Generic;
-using PatcherLib;
-using PatcherLib.Utilities;
+using System.IO;
+using System.Xml;
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
 
 namespace FFTPatcher.TextEditor
 {
@@ -31,19 +33,14 @@ namespace FFTPatcher.TextEditor
 
         #region Static Fields (1)
 
-        private static Dictionary<string, object> resourceMapping = new Dictionary<string, object>();
+        private static Dictionary<string, XmlNode> resourceMapping = new Dictionary<string, XmlNode>();
 
         #endregion Static Fields
 
         #region Static Properties (1)
 
-
-        /// <summary>
-        /// Gets the entry names XML document.
-        /// </summary>
-        /// <value>The entry names.</value>
-        public static string EntryNames { get { return resourceMapping["EntryNames"] as string; } }
-
+        public static XmlNode PSX { get { return resourceMapping["psx.xml"]; } }
+        public static XmlNode PSP { get { return resourceMapping["psp.xml"]; } }
 
         #endregion Static Properties
 
@@ -51,7 +48,24 @@ namespace FFTPatcher.TextEditor
 
         static Resources()
         {
-            resourceMapping["EntryNames"] = GZip.Decompress( Properties.Resources.EntryNames ).ToUTF8String();
+            using ( MemoryStream memStream = new MemoryStream( FFTPatcher.TextEditor.Properties.Resources.Resources_tar, false ) )
+            using ( GZipInputStream gzStream = new GZipInputStream( memStream ) )
+            using ( TarInputStream tarStream = new TarInputStream( gzStream ) )
+            {
+                TarEntry entry;
+                entry = tarStream.GetNextEntry();
+                while ( entry != null )
+                {
+                    if ( entry.Size != 0 && !string.IsNullOrEmpty( entry.Name ) )
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load( tarStream );
+                        resourceMapping[entry.Name] = doc;
+                    }
+                    entry = tarStream.GetNextEntry();
+                }
+
+            }
         }
 
         #endregion Constructors

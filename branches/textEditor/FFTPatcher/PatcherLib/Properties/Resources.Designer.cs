@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PatcherLib.Properties {
-    using System;
-    
-    
+namespace PatcherLib.Properties
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -60,24 +60,10 @@ namespace PatcherLib.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;!--
-        ///    Copyright 2007, Joe Davidson &lt;joedavidson@gmail.com&gt;
-        ///
-        ///    This file is part of FFTPatcher.
-        ///
-        ///    FFTPatcher is free software: you can redistribute it and/or modify
-        ///    it under the terms of the GNU General Public License as published by
-        ///    the Free Software Foundation, either version 3 of the License, or
-        ///    (at your option) any later version.
-        ///
-        ///    FFTPatcher is distributed in the hope that it will be useful,
-        ///    but WITHOUT ANY WARRANTY; without  [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string FFTPackFiles {
+        internal static byte[] Resources_tar {
             get {
-                return ResourceManager.GetString("FFTPackFiles", resourceCulture);
+                object obj = ResourceManager.GetObject("Resources_tar", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

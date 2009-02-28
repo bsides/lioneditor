@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -7,7 +8,6 @@ using FFTPatcher.TextEditor.Files;
 using PatcherLib.Datatypes;
 using PatcherLib.Iso;
 using PatcherLib.Utilities;
-using System.ComponentModel;
 
 namespace FFTPatcher.TextEditor
 {

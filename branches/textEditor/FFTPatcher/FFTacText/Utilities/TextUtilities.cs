@@ -317,6 +317,7 @@ namespace FFTPatcher.TextEditor
 
 
             psp[0x95] = " ";
+            psp[0xfa] = "{SP2}";
             psp.Add( 0xDA60, "\xE1" );
             psp.Add( 0xDA61, "\xE0" );
             psp.Add( 0xDA62, "\xE9" );
@@ -587,29 +588,6 @@ namespace FFTPatcher.TextEditor
 
             return new CompressionResult( result.Sub( 0, pos - 1 ), lengths );
         }
-
-        /// <summary>
-        /// Compresses the specified file.
-        /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
-        /// <param name="file">The file to compress.</param>
-        //public static CompressionResult Compress<T>( T file ) where T : IStringSectioned, ICompressed
-        //{
-        //    return Compress( file, null, null );
-        //}
-
-        /// <summary>
-        /// Compresses the specified file.
-        /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
-        /// <param name="file">The file to compress.</param>
-        /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
-        /// entries and each item in the value being an entry to ignore</param>
-        //public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections ) where T : IStringSectioned, ICompressed
-        //{
-        //    return Compress( file, ignoreSections, null );
-        //}
-
         /// <summary>
         /// Decompresses the specified section.
         /// </summary>

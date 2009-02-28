@@ -45,8 +45,8 @@ namespace FFTPatcher.TextEditor
             saveMenuItem.Click += new EventHandler( saveMenuItem_Click );
             openMenuItem.Click += new EventHandler( openMenuItem_Click );
             menuItem2.Click += new EventHandler( menuItem2_Click );
-            importPspIsoCustomMenuItem.Click += new EventHandler(importPspIsoCustomMenuItem_Click);
-            importPsxIsoCustomMenuItem.Click += new EventHandler(importPsxIsoCustomMenuItem_Click);
+            importPspIsoCustomMenuItem.Click += new EventHandler( importPspIsoCustomMenuItem_Click );
+            importPsxIsoCustomMenuItem.Click += new EventHandler( importPsxIsoCustomMenuItem_Click );
         }
 
         void menuItem2_Click( object sender, EventArgs e )
@@ -54,7 +54,7 @@ namespace FFTPatcher.TextEditor
             saveFileDialog.FileName = string.Empty;
             saveFileDialog.OverwritePrompt = false;
             saveFileDialog.Filter = "ISO files (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
-            saveFileDialog.CheckFileExists=true;
+            saveFileDialog.CheckFileExists = true;
             if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 BackgroundWorker worker = new BackgroundWorker();
@@ -105,7 +105,7 @@ namespace FFTPatcher.TextEditor
             BackgroundWorker worker = new BackgroundWorker();
             worker.WorkerSupportsCancellation = true;
             worker.WorkerReportsProgress = true;
-            worker.DoWork += 
+            worker.DoWork +=
                 delegate( object sender, DoWorkEventArgs args )
                 {
                     FFTText text = null;
@@ -135,7 +135,16 @@ namespace FFTPatcher.TextEditor
 
                     LoadFile( text );
                 };
-            MethodInvoker enableForm = delegate() { Enabled = true; };
+            MethodInvoker enableForm =
+                delegate()
+                {
+                    fileMenuItem.Enabled = true;
+                    isoMenuItem.Enabled = true;
+                    textMenuItem.Enabled = true;
+                    fileEditor1.Enabled = true;
+                    helpMenuItem.Enabled = true;
+                    Cursor = Cursors.Default;
+                };
             worker.RunWorkerCompleted +=
                 delegate( object sender, RunWorkerCompletedEventArgs args )
                 {
@@ -153,7 +162,12 @@ namespace FFTPatcher.TextEditor
                     }
                 };
 
-            Enabled = false;
+            fileMenuItem.Enabled = false;
+            isoMenuItem.Enabled = false;
+            textMenuItem.Enabled = false;
+            fileEditor1.Enabled = false;
+            helpMenuItem.Enabled = false;
+            Cursor = Cursors.WaitCursor;
             worker.RunWorkerAsync();
         }
 
@@ -161,21 +175,22 @@ namespace FFTPatcher.TextEditor
         {
             saveFileDialog.OverwritePrompt = true;
             saveFileDialog.FileName = string.Empty;
+            saveFileDialog.CheckFileExists = false;
             saveFileDialog.Filter = "FFTText files (*.ffttext)|*.ffttext";
-            if (saveFileDialog.ShowDialog( this) == DialogResult.OK)
+            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 FFTTextFactory.WriteXml( internalFile, saveFileDialog.FileName );
             }
         }
 
-        void importPsxIsoCustomMenuItem_Click(object sender, EventArgs e)
+        void importPsxIsoCustomMenuItem_Click( object sender, EventArgs e )
         {
-            using (ImportForm form = new ImportForm())
+            using ( ImportForm form = new ImportForm() )
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if ( form.ShowDialog( this ) == DialogResult.OK )
                 {
-                    using (Stream fileStream = File.OpenRead(form.IsoFileName))
-                    using (Stream tblStream = File.OpenRead(form.TblFileName))
+                    using ( Stream fileStream = File.OpenRead( form.IsoFileName ) )
+                    using ( Stream tblStream = File.OpenRead( form.TblFileName ) )
                     {
                         LoadFile( LoadType.PsxStreamAndTable, null, fileStream, tblStream );
                     }
@@ -183,14 +198,14 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        void importPspIsoCustomMenuItem_Click(object sender, EventArgs e)
+        void importPspIsoCustomMenuItem_Click( object sender, EventArgs e )
         {
-            using (ImportForm form = new ImportForm())
+            using ( ImportForm form = new ImportForm() )
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if ( form.ShowDialog( this ) == DialogResult.OK )
                 {
-                    using (Stream fileStream = File.OpenRead(form.IsoFileName))
-                    using (Stream tblStream = File.OpenRead(form.TblFileName))
+                    using ( Stream fileStream = File.OpenRead( form.IsoFileName ) )
+                    using ( Stream tblStream = File.OpenRead( form.TblFileName ) )
                     {
                         LoadFile( LoadType.PspStreamAndTable, null, fileStream, tblStream );
                     }
@@ -266,7 +281,7 @@ namespace FFTPatcher.TextEditor
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
-            using( About a = new About() )
+            using ( About a = new About() )
                 a.ShowDialog( this );
         }
 

@@ -43,7 +43,7 @@ namespace FFTPatcher.TextEditor
                 List<byte> currentPart = new List<byte>( PartitionSize );
                 section.ForEach( s => currentPart.AddRange( CharMap.StringToByteArray( s ) ) );
                 currentPart.AddRange( new byte[Math.Max( PartitionSize - currentPart.Count, 0 )] );
-                result.AddRange( currentPart.Sub( 0, PartitionSize - 1 ) );
+                result.AddRange( currentPart );
             }
 
             return result.AsReadOnly();
@@ -51,7 +51,27 @@ namespace FFTPatcher.TextEditor
 
         protected override IList<byte> ToByteArray( IDictionary<string, byte> dteTable )
         {
-            return ToByteArray();
+            // Clone the sections
+            var secs = GetCopyOfSections();
+            TextUtilities.DoDTEEncoding(secs, DteAllowed, dteTable);
+            List<byte> result = new List<byte>(Layout.Size);
+            foreach (IList<string> section in secs)
+            {
+                List<byte> currentPart = new List<byte>(PartitionSize);
+                section.ForEach(s => currentPart.AddRange(CharMap.StringToByteArray(s)));
+                if (currentPart.Count > PartitionSize)
+                {
+                    return null;
+                }
+                currentPart.AddRange(new byte[Math.Max(PartitionSize - currentPart.Count, 0)]);
+                result.AddRange(currentPart);
+            }
+
+            if (result.Count > Layout.Size)
+            {
+                return null;
+            }
+            return result.AsReadOnly();
         }
     }
 }

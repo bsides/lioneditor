@@ -315,11 +315,7 @@ namespace FFTPatcher.Datatypes
 
         public static Item GetItemAtOffset( UInt16 offset )
         {
-            return DummyItems.Find(
-                delegate( Item i )
-                {
-                    return i.Offset == offset;
-                } );
+            return DummyItems.Find( i => i.Offset == offset );
         }
 
         public bool[] ToBoolArray()

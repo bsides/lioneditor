@@ -117,6 +117,7 @@ namespace FFTPatcher.Editors
             this.itemAttributesSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.graphicSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.paletteSpinner = new FFTPatcher.Controls.NumericUpDownWithDefault();
+            this.storeInventoryCheckedListBox = new FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault();
             hLabel5 = new System.Windows.Forms.Label();
             hLabel1 = new System.Windows.Forms.Label();
             hLabel2 = new System.Windows.Forms.Label();
@@ -431,7 +432,7 @@ namespace FFTPatcher.Editors
             this.weaponPanel.Controls.Add( this.weaponPowerSpinner );
             this.weaponPanel.Controls.Add( this.weaponRangeSpinner );
             this.weaponPanel.Controls.Add( this.weaponCastSpellComboBox );
-            this.weaponPanel.Location = new System.Drawing.Point( 4, 159 );
+            this.weaponPanel.Location = new System.Drawing.Point( 4, 284 );
             this.weaponPanel.Name = "weaponPanel";
             this.weaponPanel.Size = new System.Drawing.Size( 482, 304 );
             this.weaponPanel.TabIndex = 12;
@@ -579,7 +580,7 @@ namespace FFTPatcher.Editors
             this.shieldPanel.Controls.Add( percentLabel2 );
             this.shieldPanel.Controls.Add( this.shieldMagicBlockRateSpinner );
             this.shieldPanel.Controls.Add( this.shieldPhysicalBlockRateSpinner );
-            this.shieldPanel.Location = new System.Drawing.Point( 4, 159 );
+            this.shieldPanel.Location = new System.Drawing.Point( 4, 284 );
             this.shieldPanel.Name = "shieldPanel";
             this.shieldPanel.Size = new System.Drawing.Size( 376, 167 );
             this.shieldPanel.TabIndex = 11;
@@ -618,7 +619,7 @@ namespace FFTPatcher.Editors
             this.armorPanel.Controls.Add( hpBonusLabel );
             this.armorPanel.Controls.Add( this.armorMPBonusSpinner );
             this.armorPanel.Controls.Add( this.armorHPBonusSpinner );
-            this.armorPanel.Location = new System.Drawing.Point( 4, 159 );
+            this.armorPanel.Location = new System.Drawing.Point( 4, 284 );
             this.armorPanel.Name = "armorPanel";
             this.armorPanel.Size = new System.Drawing.Size( 376, 167 );
             this.armorPanel.TabIndex = 10;
@@ -659,7 +660,7 @@ namespace FFTPatcher.Editors
             this.accessoryPanel.Controls.Add( physicalEvadeRateLabel );
             this.accessoryPanel.Controls.Add( this.accessoryMagicEvadeRateSpinner );
             this.accessoryPanel.Controls.Add( this.accessoryPhysicalEvadeRateSpinner );
-            this.accessoryPanel.Location = new System.Drawing.Point( 4, 159 );
+            this.accessoryPanel.Location = new System.Drawing.Point( 4, 284 );
             this.accessoryPanel.Name = "accessoryPanel";
             this.accessoryPanel.Size = new System.Drawing.Size( 376, 167 );
             this.accessoryPanel.TabIndex = 9;
@@ -700,7 +701,7 @@ namespace FFTPatcher.Editors
             this.chemistItemPanel.Controls.Add( zLabel );
             this.chemistItemPanel.Controls.Add( itemFormulaLabel );
             this.chemistItemPanel.Controls.Add( this.chemistItemXSpinner );
-            this.chemistItemPanel.Location = new System.Drawing.Point( 4, 163 );
+            this.chemistItemPanel.Location = new System.Drawing.Point( 4, 284 );
             this.chemistItemPanel.Name = "chemistItemPanel";
             this.chemistItemPanel.Size = new System.Drawing.Size( 376, 167 );
             this.chemistItemPanel.TabIndex = 8;
@@ -954,12 +955,22 @@ namespace FFTPatcher.Editors
             this.paletteSpinner.Tag = "Palette";
             this.paletteSpinner.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // storeInventoryCheckedListBox
+            // 
+            this.storeInventoryCheckedListBox.FormattingEnabled = true;
+            this.storeInventoryCheckedListBox.Location = new System.Drawing.Point( 7, 156 );
+            this.storeInventoryCheckedListBox.MultiColumn = true;
+            this.storeInventoryCheckedListBox.Name = "storeInventoryCheckedListBox";
+            this.storeInventoryCheckedListBox.Size = new System.Drawing.Size( 370, 124 );
+            this.storeInventoryCheckedListBox.TabIndex = 27;
+            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add( this.storeInventoryCheckedListBox );
             this.Controls.Add( this.chemistItemJumpLabel );
             this.Controls.Add( this.accessoryJumpLabel );
             this.Controls.Add( this.headBodyJumpLabel );
@@ -992,7 +1003,7 @@ namespace FFTPatcher.Editors
             this.Controls.Add( this.armorPanel );
             this.Controls.Add( this.shieldPanel );
             this.Name = "ItemEditor";
-            this.Size = new System.Drawing.Size( 493, 466 );
+            this.Size = new System.Drawing.Size( 493, 591 );
             this.weaponPanel.ResumeLayout( false );
             this.weaponPanel.PerformLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.weaponSpellStatusSpinner ) ).EndInit();
@@ -1071,6 +1082,7 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.Label hLabel4;
         private FFTPatcher.Controls.ComboBoxWithDefault weaponCastSpellComboBox;
         private System.Windows.Forms.Label formulasHelpLabel;
+        private FFTPatcher.Controls.CheckedListBoxNoHighlightWithDefault storeInventoryCheckedListBox;
 
     }
 }

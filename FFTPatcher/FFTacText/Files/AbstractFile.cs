@@ -162,11 +162,13 @@ namespace FFTPatcher.TextEditor
 
         public Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
         {
+            // Clone the sections
             var secs = GetCopyOfSections();
             IList<byte> bytes = GetSectionByteArrays( secs, CharMap, CompressionAllowed ).Join();
 
             Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
 
+            // Determine if we even need to do DTE at all
             int bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
 
             if ( bytesNeeded <= 0 )
@@ -174,11 +176,12 @@ namespace FFTPatcher.TextEditor
                 return result;
             }
 
-
+            // Take the pairs that were already used for other files and encode this file with them
             result.AddRange( currentPairs );
             TextUtilities.DoDTEEncoding( secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs( result ) );
             bytes = GetSectionByteArrays( secs, CharMap, CompressionAllowed ).Join();
 
+            // If enough bytes were saved with the existing pairs, no need to look further
             bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
 
             if ( bytesNeeded <= 0 )
@@ -186,6 +189,7 @@ namespace FFTPatcher.TextEditor
                 return result;
             }
 
+            // Otherwise, get all the strings that can be DTE encoded
             StringBuilder sb = new StringBuilder( Layout.Size );
             for ( int i = 0; i < secs.Count; i++ )
             {
@@ -195,11 +199,14 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
+            // ... determine pair frequency
             var dict = TextUtilities.GetPairAndTripleCounts( sb.ToString(), replacements );
 
+            // Sort the list by count
             var l = new List<KeyValuePair<string, int>>( dict );
             l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
 
+            // Go through each one, encode the file with it, and see if we're below the limit
             while ( bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0 )
             {
                 result.Add( new KeyValuePair<string, byte>( l[0].Key, dteBytes.Pop() ) );
@@ -222,6 +229,7 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
+            // Ran out of available pairs and still don't have enough space --> error
             if ( bytesNeeded > 0 )
             {
                 return null;
@@ -355,14 +363,14 @@ namespace FFTPatcher.TextEditor
                     switch ( type )
                     {
                         case SectorType.BootBin:
-                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, kvp2.Value, bytes ) );
-                            result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, kvp2.Value, bytes ) );
                             break;
                         case SectorType.FFTPack:
                             result.Add( new PatchedByteArray( (FFTPack.Files)kvp2.Key, kvp2.Value, bytes ) );
                             break;
                         case SectorType.Sector:
-                            result.Add( new PatchedByteArray( (PatcherLib.Iso.PsxIso.Sectors)kvp2.Key, kvp2.Value, bytes ) );
+                            result.Add( new PatchedByteArray( (PsxIso.Sectors)kvp2.Key, kvp2.Value, bytes ) );
                             break;
                     }
                 }

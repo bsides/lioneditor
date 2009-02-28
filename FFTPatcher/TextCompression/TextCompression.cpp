@@ -26,6 +26,7 @@
 
 #define MIN(x,y) (((x)<(y))?(x):(y))
 #define MAX(x,y) (((x)>(y))?(x):(y))
+#define MIN_NEEDLE_LENGTH 4
 
 #ifdef _MANAGED
 #pragma managed(push, off)
@@ -55,9 +56,9 @@ int FindByte(unsigned char byteToFind, unsigned char* whereToLook, int whereToSt
 BOOL GetPositionOfMaxSubArray(unsigned char* haystack, int haystackLength, unsigned char* needle, int needleLength, 
                               int* location, int* size)
 {
-    if (needleLength >= 4)
+    if (needleLength >= MIN_NEEDLE_LENGTH)
     {
-        for (int i = MIN(needleLength,haystackLength); i >= 4; i--)
+        for (int i = MIN(needleLength,haystackLength); i >= MIN_NEEDLE_LENGTH; i--)
         {
             unsigned char* loc = (unsigned char*)memmem(haystack, haystackLength, needle, i);
             if (loc != NULL)

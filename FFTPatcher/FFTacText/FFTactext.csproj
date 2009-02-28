@@ -73,7 +73,6 @@
     <Compile Include="Files\CompressibleOneShotFile.cs" />
     <Compile Include="Files\IFile.cs" />
     <Compile Include="Files\ISerializableFile.cs" />
-    <Compile Include="Files\NamedSection.cs" />
     <Compile Include="Files\AbstractFile.cs" />
     <Compile Include="Files\PartitionedFile.cs" />
     <Compile Include="Files\QuickEdit.cs" />
@@ -93,7 +92,6 @@
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DTE.cs" />
-    <Compile Include="Utilities\NotifyStringList.cs" />
     <Compile Include="Utilities\SectionType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -101,7 +99,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Files\FFTText.cs" />
-    <Compile Include="Utilities\CompressionEventArgs.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,16 +139,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Files.cd" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="zipResources.bat" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Utilities\CharMap.cs" />
     <Compile Include="Utilities\Resources.cs" />
     <Compile Include="Utilities\TextUtilities.cs" />

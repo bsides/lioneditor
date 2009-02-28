@@ -19,13 +19,13 @@ namespace FFTPatcher.Datatypes
         public bool this[int index]
         {
             get { return items[itemsList[index]]; }
-            set { items[itemsList[index]] = value; }
+            set { items[itemsList[index]] = value; OnDataChanged(); }
         }
 
         public bool this[Item key]
         {
             get { return items[key]; }
-            set { items[key] = value; }
+            set { items[key] = value; OnDataChanged(); }
         }
 
         public StoreInventory Default { get; private set; }
@@ -88,6 +88,15 @@ namespace FFTPatcher.Datatypes
             get { return Default != null && itemsList.Exists( i => items[i] != Default.items[i] ); }
         }
 
+        protected void OnDataChanged()
+        {
+            if ( DataChanged != null )
+            {
+                DataChanged( this, EventArgs.Empty );
+            }
+        }
+
+        public event EventHandler DataChanged;
     }
 
     public class AllStoreInventories : PatchableFile
@@ -105,7 +114,7 @@ namespace FFTPatcher.Datatypes
                 Shops result = Shops.Empty;
                 foreach( var s in Stores )
                 {
-                    if( s[i] )
+                    if( s[i.Offset] )
                     {
                         result |= s.WhichStore;
                     }
@@ -116,9 +125,41 @@ namespace FFTPatcher.Datatypes
             {
                 foreach( var s in shops )
                 {
-                    StoresDict[s][i] = ((value & s) == s);
+                    StoresDict[s][i.Offset] = ((value & s) == s);
                 }
             }
+        }
+
+        public void RemoveFromInventory( Shops shop, Item i )
+        {
+            foreach ( var s in shops )
+            {
+                if ( ( shop & s ) == s )
+                {
+                    StoresDict[s][i.Offset] = false;
+                }
+            }
+        }
+
+        public void AddToInventory( Shops shop, Item i )
+        {
+            foreach ( var s in shops )
+            {
+                if ( ( shop & s ) == s )
+                {
+                    StoresDict[s][i.Offset] = true;
+                }
+            }
+        }
+
+        public bool[] IsItemInShops( Item item, IList<Shops> shopsToCheck )
+        {
+            bool[] result = new bool[shopsToCheck.Count];
+            for ( int i = 0; i < shopsToCheck.Count; i++ )
+            {
+                result[i] = StoresDict[shopsToCheck[i]][item.Offset];
+            }
+            return result;
         }
 
         private Shops[] shops = new Shops[16] { Shops.Bervenia, Shops.Dorter, Shops.Gariland, Shops.Goland, Shops.Goug, Shops.Igros, 
@@ -146,6 +187,7 @@ namespace FFTPatcher.Datatypes
                 {
                     si = new StoreInventory( context, s, bytes );
                 }
+                si.DataChanged += OnDataChanged;
                 stores.Add( si );
                 storesDict.Add( s, si );
             }
@@ -189,6 +231,16 @@ namespace FFTPatcher.Datatypes
         {
             get { return Stores.Exists( s => s.HasChanged ); }
         }
+
+        protected void OnDataChanged( object sender, EventArgs args )
+        {
+            if ( DataChanged != null )
+            {
+                DataChanged( this, EventArgs.Empty );
+            }
+        }
+
+        public event EventHandler DataChanged;
     }
 
 }

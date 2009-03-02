@@ -185,6 +185,11 @@ namespace FFTPatcher.Editors
 
         }
 
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            UpdateView();
+        }
+
 		#endregion Constructors 
 
 		#region Private Methods (12) 
@@ -295,7 +300,7 @@ namespace FFTPatcher.Editors
                 storeInventoryCheckedListBox.Items.Clear();
                 foreach ( Shops shop in shops )
                 {
-                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSXResources.ShopNames[shop] );
+                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSPResources.ShopNames[shop] );
                 }
 
                 ourContext = Context.US_PSP;
@@ -414,9 +419,17 @@ namespace FFTPatcher.Editors
             priceSpinner.SetValueAndDefault( item.Price, item.Default.Price );
             shopAvailabilityComboBox.SetValueAndDefault( item.ShopAvailability, item.Default.ShopAvailability );
 
-            storeInventoryCheckedListBox.SetValuesAndDefaults(
-                FFTPatch.StoreInventories.IsItemInShops( item, shops ),
-                FFTPatch.StoreInventories.Default.IsItemInShops( item, shops ) );
+            if (item.Offset < 256)
+            {
+                storeInventoryCheckedListBox.Visible = true;
+                storeInventoryCheckedListBox.SetValuesAndDefaults(
+                    FFTPatch.StoreInventories.IsItemInShops(item, shops),
+                    FFTPatch.StoreInventories.Default.IsItemInShops(item, shops));
+            }
+            else
+            {
+                storeInventoryCheckedListBox.Visible = false;
+            }
 
             if( item.Default != null )
             {

@@ -19,6 +19,7 @@ namespace FFTPatcher.TextEditor.Editors
             sectionComboBox.SelectedIndex = 0;
             stringListEditor1.BindTo( file.EntryNames[0], file, 0 );
             boundFile = file;
+            restoreButton.Visible = boundFile is ISerializableFile;
             ignoreChanges = false;
         }
 
@@ -48,6 +49,21 @@ namespace FFTPatcher.TextEditor.Editors
             if ( !ignoreChanges && boundFile != null )
             {
                 stringListEditor1.BindTo( boundFile.EntryNames[sectionComboBox.SelectedIndex], boundFile, sectionComboBox.SelectedIndex );
+            }
+        }
+
+        private void restoreButton_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "ISO files (*.bin, *.iso, *.img)|*.bin;*.iso;*.img";
+            openFileDialog1.FileName = string.Empty;
+            if (openFileDialog1.ShowDialog(this.TopLevelControl as Form) == DialogResult.OK)
+            {
+                using (System.IO.Stream stream = System.IO.File.OpenRead(openFileDialog1.FileName))
+                {
+                    (boundFile as AbstractFile).RestoreFile(stream);
+                }
+                BindTo(boundFile);
+                //AbstractFile.ConstructFile(f.Layout.FileType, f.CharMap, f.Layout, 
             }
         }
     }

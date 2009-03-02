@@ -59,6 +59,7 @@ namespace FFTPatcher.Editors
 
         private void UpdateView()
         {
+            storeInventory.DataChanged -= storeInventory_DataChanged;
             foreach ( var listbox in listBoxes )
             {
                 listbox.BeginUpdate();
@@ -93,6 +94,29 @@ namespace FFTPatcher.Editors
             {
                 listbox.ResumeLayout();
                 listbox.EndUpdate();
+            }
+            storeInventory.DataChanged += storeInventory_DataChanged;
+        }
+
+        private bool valueChangedOffScreen = false;
+
+        private void storeInventory_DataChanged(object sender, EventArgs args)
+        {
+            if (!Visible)
+            {
+                valueChangedOffScreen = true;
+            }
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            if (Visible && valueChangedOffScreen)
+            {
+                UpdateView();
+            }
+            else if (!Visible)
+            {
+                valueChangedOffScreen = false;
             }
         }
 

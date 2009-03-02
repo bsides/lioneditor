@@ -142,7 +142,7 @@ namespace FFTPatcher
                 ENTD.ForEach( b => result += b ? 1 : 0 );
                 bool[] bb = new bool[] { RegenECC, Abilities, AbilityEffects, MoveFindItems,
                     Items, ItemAttributes, Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
-                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange};
+                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange, StoreInventory};
                 bb.ForEach( b => result += b ? 1 : 0 );
                 return result;
             }
@@ -209,6 +209,8 @@ namespace FFTPatcher
 
             battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged );
             battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged );
+
+            storeInventoryCheckBox.Checked = FFTPatch.StoreInventories.HasChanged;
 
             dontChangeSceapRadioButton.Checked = true;
 
@@ -285,6 +287,9 @@ namespace FFTPatcher
                     break;
                 case Checkboxes.RegenECC:
                     RegenECC = box.Checked;
+                    break;
+                case Checkboxes.StoreInventory:
+                    StoreInventory = box.Checked;
                     break;
                 default:
                     break;
@@ -364,7 +369,7 @@ private void UpdateNextEnabled()
                 ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
                   StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
-                  AbilityEffects || MoveFindItems );
+                  AbilityEffects || MoveFindItems || StoreInventory );
 
             okButton.Enabled = enabled;
         }
@@ -399,6 +404,7 @@ private void UpdateNextEnabled()
             ENTD3,
             ENTD4,
             RegenECC,
+            StoreInventory
         }
         private enum SCUSPatchable
         {
@@ -419,5 +425,15 @@ private void UpdateNextEnabled()
             AbilityEffects,
             MoveFindItems
         }
+
+        #region IGeneratePatchList Members
+
+
+        public bool StoreInventory
+        {
+            get; private set;
+        }
+
+        #endregion
     }
 }

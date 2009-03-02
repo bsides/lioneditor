@@ -61,6 +61,43 @@ namespace FFTPatcher.TextEditor
             DteAllowed = layout.DteAllowed.AsReadOnly();
         }
 
+        public void RestoreFile(System.IO.Stream iso)
+        {
+            IList<byte> bytes = null;
+            if (Layout.Context == Context.US_PSX)
+            {
+                KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.Sector][0];
+                bytes = PsxIso.ReadFile(iso, (PsxIso.Sectors)sect.Key, sect.Value, Layout.Size);
+            }
+            else if (Layout.Context == Context.US_PSP)
+            {
+                if (Layout.Sectors.ContainsKey(SectorType.BootBin))
+                {
+                    KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.BootBin][0];
+                    bytes = PspIso.GetFile(iso, (PspIso.Sectors)sect.Key, sect.Value, Layout.Size);
+                }
+                else if (Layout.Sectors.ContainsKey(SectorType.FFTPack))
+                {
+                    KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.FFTPack][0];
+                    bytes = PspIso.GetFile(iso, (FFTPack.Files)sect.Key, sect.Value, Layout.Size);
+                }
+                else
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+            AbstractFile tempFile = ConstructFile(
+                Layout.FileType,
+                CharMap,
+                Layout,
+                bytes);
+            this.Sections = tempFile.Sections;
+        }
+
         public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
         {
             switch ( type )
@@ -297,7 +334,6 @@ namespace FFTPatcher.TextEditor
             IList<IList<byte>> result = new IList<byte>[sections.Count];
             IList<UInt32> offsets;
             IList<byte> compression = Compress( sections, out offsets, charmap, compressibleSections );
-            uint pos = 0;
             offsets = new List<UInt32>( offsets );
             offsets.Add( (uint)compression.Count );
             for ( int i = 0; i < sections.Count; i++ )

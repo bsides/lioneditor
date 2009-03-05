@@ -65,7 +65,7 @@
       00000000
     </Location>
   </Patch>
-  <Patch name="Rod formula becomes MA*WP Updated">
+  <Patch name="Rod formula becomes MA*WP">
     <Location file="BATTLE_BIN" offset="11EB54">
       00000000
       78520508

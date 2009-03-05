@@ -8,6 +8,9 @@ namespace FFTorgASM
 {
     static class PatchXmlReader
     {
+        public static readonly System.Text.RegularExpressions.Regex stripRegex = 
+            new System.Text.RegularExpressions.Regex( @"\s" );
+
         public static bool TryGetPatches( string xmlString, out IList<AsmPatch> patches )
         {
             try
@@ -54,6 +57,10 @@ namespace FFTorgASM
             List<AsmPatch> result = new List<AsmPatch>( patchNodes.Count );
             foreach ( XmlNode node in patchNodes )
             {
+                XmlAttribute ignoreNode = node.Attributes["ignore"];
+                if ( ignoreNode != null && Boolean.Parse( ignoreNode.InnerText ) )
+                    continue;
+
                 string name;
                 string description;
                 IList<PatchedByteArray> staticPatches;
@@ -64,7 +71,14 @@ namespace FFTorgASM
                     string varName = varNode.Attributes["name"].InnerText;
                     PsxIso.Sectors varSec = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), varNode.Attributes["file"].InnerText );
                     UInt32 varOffset = UInt32.Parse( varNode.Attributes["offset"].InnerText, System.Globalization.NumberStyles.HexNumber );
-                    variables.Add( new KeyValuePair<string, PatchedByteArray>( varName, new PatchedByteArray( varSec, varOffset, new byte[1] ) ) );
+                    XmlAttribute defaultAttr = varNode.Attributes["default"];
+                    byte def = 0;
+                    if ( defaultAttr != null )
+                    {
+                        def = Byte.Parse( defaultAttr.InnerText, System.Globalization.NumberStyles.HexNumber );
+                    }
+
+                    variables.Add( new KeyValuePair<string, PatchedByteArray>( varName, new PatchedByteArray( varSec, varOffset, new byte[1] { def } ) ) );
                 }
                 result.Add( new AsmPatch( name, description, staticPatches, variables ) );
             }
@@ -73,11 +87,8 @@ namespace FFTorgASM
 
         private static byte[] GetBytes( string byteText )
         {
-            string strippedText = byteText
-                .Replace( " ", string.Empty )
-                .Replace( Environment.NewLine, string.Empty )
-                .Replace( "\r", string.Empty )
-                .Replace( "\n", string.Empty );
+            string strippedText = stripRegex.Replace( byteText, string.Empty );
+    
             int bytes = strippedText.Length / 2;
             byte[] result = new byte[bytes];
 

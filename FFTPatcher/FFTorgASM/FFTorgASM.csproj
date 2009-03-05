@@ -66,6 +66,9 @@
   <ItemGroup>
     <Content Include="DefaultHacks.xml">
     </Content>
+    <Content Include="Example.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="nates1984.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

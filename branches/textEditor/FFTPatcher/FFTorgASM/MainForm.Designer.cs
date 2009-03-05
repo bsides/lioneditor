@@ -35,6 +35,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.variableSpinner = new System.Windows.Forms.NumericUpDown();
             this.variableComboBox = new System.Windows.Forms.ComboBox();
+            this.versionLabel = new System.Windows.Forms.Label();
             ( (System.ComponentModel.ISupportInitialize)( this.variableSpinner ) ).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,13 +47,13 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point( 12, 12 );
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size( 441, 289 );
+            this.checkedListBox1.Size = new System.Drawing.Size( 441, 304 );
             this.checkedListBox1.TabIndex = 0;
             // 
             // patchButton
             // 
             this.patchButton.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right ) ) );
-            this.patchButton.Location = new System.Drawing.Point( 378, 416 );
+            this.patchButton.Location = new System.Drawing.Point( 378, 431 );
             this.patchButton.Name = "patchButton";
             this.patchButton.Size = new System.Drawing.Size( 75, 23 );
             this.patchButton.TabIndex = 1;
@@ -67,7 +68,7 @@
             // reloadButton
             // 
             this.reloadButton.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left ) ) );
-            this.reloadButton.Location = new System.Drawing.Point( 12, 416 );
+            this.reloadButton.Location = new System.Drawing.Point( 12, 431 );
             this.reloadButton.Name = "reloadButton";
             this.reloadButton.Size = new System.Drawing.Size( 75, 23 );
             this.reloadButton.TabIndex = 2;
@@ -78,7 +79,7 @@
             // 
             this.textBox1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left )
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
-            this.textBox1.Location = new System.Drawing.Point( 12, 307 );
+            this.textBox1.Location = new System.Drawing.Point( 12, 322 );
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -89,7 +90,7 @@
             // 
             this.variableSpinner.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left ) ) );
             this.variableSpinner.Hexadecimal = true;
-            this.variableSpinner.Location = new System.Drawing.Point( 179, 388 );
+            this.variableSpinner.Location = new System.Drawing.Point( 179, 403 );
             this.variableSpinner.Maximum = new decimal( new int[] {
             255,
             0,
@@ -106,17 +107,28 @@
             this.variableComboBox.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left ) ) );
             this.variableComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.variableComboBox.FormattingEnabled = true;
-            this.variableComboBox.Location = new System.Drawing.Point( 12, 387 );
+            this.variableComboBox.Location = new System.Drawing.Point( 12, 402 );
             this.variableComboBox.Name = "variableComboBox";
             this.variableComboBox.Size = new System.Drawing.Size( 161, 21 );
             this.variableComboBox.TabIndex = 6;
             this.variableComboBox.Visible = false;
             // 
+            // versionLabel
+            // 
+            this.versionLabel.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Location = new System.Drawing.Point( 418, 405 );
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size( 35, 13 );
+            this.versionLabel.TabIndex = 7;
+            this.versionLabel.Text = "label1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 465, 451 );
+            this.ClientSize = new System.Drawing.Size( 465, 466 );
+            this.Controls.Add( this.versionLabel );
             this.Controls.Add( this.variableComboBox );
             this.Controls.Add( this.variableSpinner );
             this.Controls.Add( this.textBox1 );
@@ -140,6 +152,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.NumericUpDown variableSpinner;
         private System.Windows.Forms.ComboBox variableComboBox;
+        private System.Windows.Forms.Label versionLabel;
     }
 }
 

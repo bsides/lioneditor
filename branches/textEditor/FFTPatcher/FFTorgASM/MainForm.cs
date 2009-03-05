@@ -15,6 +15,7 @@ namespace FFTorgASM
         public MainForm()
         {
             InitializeComponent();
+            versionLabel.Text = string.Format( "v0.{0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString() );
             XmlDocument doc = new XmlDocument();
             reloadButton_Click( reloadButton, EventArgs.Empty );
             if ( patches == null || patches.Length == 0 )

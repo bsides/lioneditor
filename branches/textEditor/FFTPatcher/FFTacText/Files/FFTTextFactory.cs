@@ -368,10 +368,12 @@ namespace FFTPatcher.TextEditor
         private static IList<string> GetSectionNames( XmlNode sectionsNode )
         {
             List<string> result = new List<string>();
+            int count = 1;
             foreach ( XmlNode section in sectionsNode.SelectNodes( "Section" ) )
             {
                 XmlAttribute nameAttr = section.Attributes["name"];
-                result.Add( nameAttr != null ? nameAttr.InnerText : "" );
+                string nameString = nameAttr != null ? nameAttr.InnerText : string.Empty;
+                result.Add( string.Format( "{0}: {1}", count++, nameString ) );
             }
             return result.AsReadOnly();
         }

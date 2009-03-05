@@ -57,8 +57,8 @@
       00000000
     </Location>
   </Patch>
-  <Patch name="AI attacks transparent unit">
-    <Location file="BATTLE_BIN" offset="12fd60">00</Location>
+  <Patch name="AI attacks transparent unit v1.1">
+    <Location file="BATTLE_BIN" offset="12fd66">00</Location>
   </Patch>
   <Patch name="Transparent loses 100% accuracy bonus">
     <Location file="BATTLE_BIN" offset="11e4d0">00</Location>
@@ -86,6 +86,25 @@
       982D228C
       5B004290
       E0180608
+      00000000
+    </Location>
+  </Patch>
+  <Patch name="Wall reduces all HP damage to 1">
+    <Location file="BATTLE_BIN" offset="124ae2">42</Location>
+    <Location file="BATTLE_BIN" offset="124b88">154E0508</Location>
+    <Location file="BATTLE_BIN" offset="ec854">
+      0A000210
+      00000000
+      1980023C
+      982D428C
+      5B004290
+      01004230
+      04000210
+      00000000
+      01000234
+      E52E0608
+      040062A4
+      E32E0608
       00000000
     </Location>
   </Patch>
@@ -141,12 +160,12 @@
       00000000
     </Location>
   </Patch>
-  <Patch name="JP scroll glitch fix">
+  <Patch name="JP scroll glitch fix v1.1">
     <Location file="WORLD_WORLD_BIN" offset="03facc">D5010508</Location>
     <Location file="WORLD_WORLD_BIN" offset="060754">
       BE00A294
-      2B202202
-      03008014
+      2B205100
+      03000410
       98000434
       B67E0408
       00000000
@@ -154,8 +173,24 @@
       00000000
     </Location>
   </Patch>
+  <Patch name="Special characters can do propositions">
+    <Location file="WORLD_WLDCORE_BIN" offset="E834">04</Location>
+  </Patch>
   <Patch name="Every monster is mountable">
     <Location file="BATTLE_BIN" offset="10d3e4">30</Location>
+  </Patch>
+  <Patch name="46 Undead Oracle is mountable">
+    <Location file="BATTLE_BIN" offset="10d3d8">434d0508</Location>
+    <Location file="BATTLE_BIN" offset="EC50C">
+      03000292
+      BAFF4224
+      03004010
+      03000292
+      F8D00508
+      00000000
+      FBD00508
+      00000000
+    </Location>
   </Patch>
   <Patch name="No monster breeding">
     <Location file="WORLD_WORLD_BIN" offset="045b6e">42</Location>
@@ -187,8 +222,10 @@
     <Location file="BATTLE_BIN" offset="12680c">82</Location>
   </Patch>
   <Patch name="Poison damage from 1/8 * MaxHP to 1/8 * Min(999,MaxHP)">
-    <Location file="BATTLE_BIN" offset="126804">054e0508</Location>
-    <Location file="BATTLE_BIN" offset="126808">00000000</Location>
+    <Location file="BATTLE_BIN" offset="126804">
+      054e0508
+      00000000
+    </Location>
     <Location file="BATTLE_BIN" offset="0ec814">
       E803432C
       02006014
@@ -201,8 +238,10 @@
     </Location>
   </Patch>
   <Patch name="Regen heal from 1/8 * MaxHP to 1/8 * Min(999,MaxHP)">
-    <Location file="BATTLE_BIN" offset="12682c">0D4E0508</Location>
-    <Location file="BATTLE_BIN" offset="126830">00000000</Location>
+    <Location file="BATTLE_BIN" offset="12682c">
+      0D4E0508
+      00000000
+    </Location>
     <Location file="BATTLE_BIN" offset="0ec834">
       E803432C
       02006014
@@ -221,7 +260,7 @@
   <Patch name="Cannot recruit any soldier from Soldier Office">
     <Location file="WORLD_WORLD_BIN" offset="584C6">03</Location>
   </Patch>
-  
+
   <Patch name="Blade Grasp trigger : sword attack only">
     <Location file="BATTLE_BIN" offset="126054">5C4D0508</Location>
     <Location file="BATTLE_BIN" offset="12605C">20</Location>
@@ -315,7 +354,103 @@
   </Patch>
 
   <Patch name="Undead units receive 25% max HP damage from Phoenix Down">
-    <Location file="BATTLE_BIN" offset="12334">82100200</Location>
+    <Location file="BATTLE_BIN" offset="123334">82100200</Location>
+  </Patch>
+  <Patch name="Undead units receive 0 damage from all healing ability">
+    <Location file="BATTLE_BIN" offset="120378">040060a4</Location>
+  </Patch>
+
+  <Patch name="Max of X items per battle">
+    <Description>Should set Y to X+1</Description>
+    <Location file="BATTLE_BIN" offset="11b864">6F4D0508</Location>
+    <Location file="BATTLE_BIN" offset="119ed4">8F4D0508</Location>
+    <Location file="BATTLE_BIN" offset="ec5bc">
+      21900000
+      0580013C
+      D0972134
+      1580023C
+      AC354234
+      00002390
+    </Location>
+    <Variable name="Y" file="BATTLE_BIN" offset="EC5D4"/>
+    <Location file="BATTLE_BIN" offset="ec5d5">
+      00642C
+      05008014
+      00000000
+      F6FF6324
+    </Location>
+    <Variable name="X" file="BATTLE_BIN" offset="EC5E4"/>
+    <!--
+    <Variable name="X" file="BATTLE_BIN" offset="EC5E4">
+      <Dupe offset="ec5d4" add="1"/>
+    </Variable>
+    -->
+    <Location file="BATTLE_BIN" offset="EC5E5">
+      000424
+      804D0508
+      00000000
+      21200300
+      21180000
+      804D0508
+      00000000
+      000024A0
+      000043A0
+      01002124
+      01004224
+      01005226
+      0E00442E
+      EDFF8014
+      00000000
+      1580033C
+      BB356334
+      000060A0
+      1980013C
+      21900000
+      1A0A0608
+      00000000
+    </Location>
+    <Location file="BATTLE_BIN" offset="EC63C">
+      1580023C
+      BB354290
+      21004014
+      00000000
+      1580023C
+      00344234
+      000044AC
+      040045AC
+      080046AC
+      21300000
+      0580023C
+      D0974234
+      1580033C
+      AC356334
+      00004490
+      00006590
+      21208500
+      6400852C
+      0200A014
+      00000000
+      63000424
+      000044A0
+      01004224
+      01006324
+      0100C624
+      0E00C42C
+      F3FF8014
+      00000000
+      01000424
+      1580023C
+      BB3544A0
+      1580023C
+      00344234
+      0000448C
+      0400458C
+      0800468C
+      1980023C
+      44384294
+      B7030608
+      00000000
+    </Location>
   </Patch>
 
   <Patch name="Undead units ignore Phoenix Down">
@@ -387,26 +522,30 @@
   </Patch>
 
   <Patch name="Change Drain and Demi formulas to use CurHP">
-    <Description>Formula 4D [Mutilate, Drain Touch]
-4D AbsHP_(Y)% * MaxHP Hit_(MA+X)% NS becomes 4D AbsHP_(Y)% * CurHP Hit_(MA+X)% NS
+    <Description>
+      Formula 4D [Mutilate, Drain Touch]
+      4D AbsHP_(Y)% * MaxHP Hit_(MA+X)% NS becomes 4D AbsHP_(Y)% * CurHP Hit_(MA+X)% NS
 
-Formula 09 [Demi, Demi 2, Lich]
-09 Dmg_(Y/100)% * MaxHP Hit_F(MA+X)% becomes 09 Dmg_(Y/100)% * CurHP Hit_F(MA+X)%
+      Formula 09 [Demi, Demi 2, Lich]
+      09 Dmg_(Y/100)% * MaxHP Hit_F(MA+X)% becomes 09 Dmg_(Y/100)% * CurHP Hit_F(MA+X)%
 
-Formula 10 [Life Drain, Drain]
-10 AbsHP_(Y)% * MaxHP Hit_F(MA+X)% NS becomes 10 AbsHP_(Y)% * CurHP Hit_F(MA+X)% NS</Description>
+      Formula 10 [Life Drain, Drain]
+      10 AbsHP_(Y)% * MaxHP Hit_F(MA+X)% NS becomes 10 AbsHP_(Y)% * CurHP Hit_F(MA+X)% NS
+    </Description>
     <Location file="BATTLE_BIN" offset="11f630">28</Location>
   </Patch>
-  
+
   <Patch name="Change Drain and Demi formulas to use Min(999,MaxHP)">
-    <Description>Formula 4D [Mutilate, Drain Touch]
-4D AbsHP_(Y)% * MaxHP Hit_(MA+X)% NS becomes 4D AbsHP_(Y)% * Min(999,MaxHP) Hit_(MA+X)% NS
+    <Description>
+      Formula 4D [Mutilate, Drain Touch]
+      4D AbsHP_(Y)% * MaxHP Hit_(MA+X)% NS becomes 4D AbsHP_(Y)% * Min(999,MaxHP) Hit_(MA+X)% NS
 
-Formula 09 [Demi, Demi 2, Lich]
-09 Dmg_(Y/100)% * MaxHP Hit_F(MA+X)% becomes 09 Dmg_(Y/100)% * Min(999,MaxHP) Hit_F(MA+X)%
+      Formula 09 [Demi, Demi 2, Lich]
+      09 Dmg_(Y/100)% * MaxHP Hit_F(MA+X)% becomes 09 Dmg_(Y/100)% * Min(999,MaxHP) Hit_F(MA+X)%
 
-Formula 10 [Life Drain, Drain]
-10 AbsHP_(Y)% * MaxHP Hit_F(MA+X)% NS becomes 10 AbsHP_(Y)% * Min(999,MaxHP) Hit_F(MA+X)% NS</Description>
+      Formula 10 [Life Drain, Drain]
+      10 AbsHP_(Y)% * MaxHP Hit_F(MA+X)% NS becomes 10 AbsHP_(Y)% * Min(999,MaxHP) Hit_F(MA+X)% NS
+    </Description>
     <Location file="BATTLE_BIN" offset="11F62C">FF4D0508</Location>
     <Location file="BATTLE_BIN" offset="EC7FC">
       E803622C
@@ -421,11 +560,27 @@ Formula 10 [Life Drain, Drain]
     <Location file="BATTLE_BIN" offset="11E444">08</Location>
     <Location file="BATTLE_BIN" offset="11F3DC">09</Location>
   </Patch>
-  
+
+  <Path name="Katanas chance to break">
+    <Variable file="SCUS_942_21" offset="543EC" default="7" name="Asura"/>
+    <Variable file="SCUS_942_21" offset="543F4" default="8" name="Koutetsu"/>
+    <Variable file="SCUS_942_21" offset="543FC" default="9" name="Bizen Boat"/>
+    <Variable file="SCUS_942_21" offset="54404" default="A" name="Murasame"/>
+    <Variable file="SCUS_942_21" offset="5440C" default="B" name="Heaven's Cloud"/>
+    <Variable file="SCUS_942_21" offset="54414" default="C" name="Kiyomori"/>
+    <Variable file="SCUS_942_21" offset="5441C" default="E" name="Muramasa"/>
+    <Variable file="SCUS_942_21" offset="54424" default="F" name="Kikuichimoji"/>
+    <Variable file="SCUS_942_21" offset="5442C" default="12" name="Masamune"/>
+    <Variable file="SCUS_942_21" offset="54434" default="14" name="Chirijiraden"/>
+  </Path>
+
+
   <Patch name="Change Potions to use % of Max HP">
-    <Description>Potion Formula = Max(030,X% Max HP)
-Hi-Potion Formula = Max(070,Y% Max HP)
-X-Potion Formula = Max(150,Z% Max HP)</Description>
+    <Description>
+      Potion Formula = Max(030,X% Max HP)
+      Hi-Potion Formula = Max(070,Y% Max HP)
+      X-Potion Formula = Max(150,Z% Max HP)
+    </Description>
     <Variable file="BATTLE_BIN" offset="EC774" name="X"/>
     <Variable file="BATTLE_BIN" offset="EC775" name="Y"/>
     <Variable file="BATTLE_BIN" offset="EC776" name="Z"/>

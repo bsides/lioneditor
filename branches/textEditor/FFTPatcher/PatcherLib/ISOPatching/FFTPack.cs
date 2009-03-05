@@ -32,6 +32,7 @@ namespace PatcherLib.Iso
     {
 		#region Public Methods (7) 
         static XmlNode resourcesDoc;
+        const int numFftPackFiles = 3970;
 
         static FFTPack()
         {
@@ -99,7 +100,7 @@ namespace PatcherLib.Iso
         public static void DumpToDirectory( FileStream stream, string path, BackgroundWorker worker )
         {
             MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown", "OPEN" );
-            for( int i = 1; i <= 3970; i++ )
+            for( int i = 1; i <= numFftPackFiles; i++ )
             {
                 byte[] bytes = GetFile( stream, i );
                 string filename = string.Empty;
@@ -117,7 +118,7 @@ namespace PatcherLib.Iso
                     filename = string.Format( "unknown/fftpack.{0}", i );
                 }
 
-                worker.ReportProgress( ( i * 100 ) / 3790, string.Format( "Extracting {0}", filename ) );
+                worker.ReportProgress( ( i * 100 ) / numFftPackFiles, string.Format( "Extracting {0}", filename ) );
 
                 filename = Path.Combine( path, filename );
 
@@ -134,7 +135,7 @@ namespace PatcherLib.Iso
             UInt32 start = bytes.ToUInt32();
 
             UInt32 end;
-            if( index == 3970 )
+            if( index == numFftPackFiles )
             {
                 end = (UInt32)stream.Length;
             }
@@ -171,7 +172,7 @@ namespace PatcherLib.Iso
             UInt32 start = loc.ToUInt32();
 
             UInt32 end;
-            if ( index >= 3970 )
+            if ( index >= numFftPackFiles )
             {
                 throw new ArgumentException( "file" );
             }
@@ -208,7 +209,7 @@ namespace PatcherLib.Iso
                 UInt32 end = (UInt32)stream.Position;
                 UInt32 start = 8;
 
-                for( int i = 1; i <= 3970; i++ )
+                for( int i = 1; i <= numFftPackFiles; i++ )
                 {
                     stream.Seek( start, SeekOrigin.Begin );
                     stream.Write( end.ToBytes(), 0, 4 );
@@ -224,7 +225,7 @@ namespace PatcherLib.Iso
 
                     end = (UInt32)stream.Position;
 
-                    worker.ReportProgress( (i * 100) / 3790 );
+                    worker.ReportProgress( (i * 100) / numFftPackFiles );
                 }
             }
             catch( Exception )

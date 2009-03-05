@@ -213,6 +213,7 @@ namespace FFTPatcher.TextEditor
             filesList.Sort( ( a, b ) => a.DisplayName.CompareTo( b.DisplayName ) );
             filesList.Add( quickEdit );
             Files = filesList.AsReadOnly();
+            CharMap = filesList[0].CharMap;
         }
 
         public static FFTText ReadPSPIso( string filename, BackgroundWorker worker )

@@ -254,6 +254,7 @@ namespace FFTPatcher.TextEditor
                 textMenuItem.Enabled = true;
                 saveMenuItem.Enabled = true;
                 menuItem2.Enabled = true;
+                allowedSymbolsMenuItem.Enabled = true;
             };
 
             if ( this.InvokeRequired )
@@ -294,6 +295,5 @@ namespace FFTPatcher.TextEditor
         {
             Application.Exit();
         }
-
     }
 }

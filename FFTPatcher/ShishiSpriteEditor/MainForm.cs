@@ -18,12 +18,11 @@
 */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -36,7 +35,7 @@ namespace FFTPatcher.SpriteEditor
         private List<Shape> shapes;
         private SpriteDialog dialog = new SpriteDialog();
 
-        FFTPatcher.Controls.ProgressBarWithText progressBar = new FFTPatcher.Controls.ProgressBarWithText();
+        PatcherLib.Controls.ProgressBarWithText progressBar = new PatcherLib.Controls.ProgressBarWithText();
         #endregion Fields
 
         #region Constructors (1)
@@ -254,7 +253,7 @@ namespace FFTPatcher.SpriteEditor
                         fullSpriteSetEditor1.FullSpriteSet.PatchPspISO(
                             patchDialog.Filename,
                             o as BackgroundWorker,
-                            patchDialog.GetPatches( FFTPatcher.Datatypes.Context.US_PSP ) );
+                            patchDialog.GetPatches( Context.US_PSP ) );
                     } );
             }
         }
@@ -273,7 +272,7 @@ namespace FFTPatcher.SpriteEditor
                         fullSpriteSetEditor1.FullSpriteSet.PatchPsxISO(
                             patchDialog.Filename,
                             o as BackgroundWorker,
-                            patchDialog.GetPatches( FFTPatcher.Datatypes.Context.US_PSX ) );
+                            patchDialog.GetPatches( Context.US_PSX ) );
                     } );
             }
         }

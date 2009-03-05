@@ -18,6 +18,8 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
@@ -171,11 +173,11 @@ namespace FFTPatcher.Datatypes
             PSPSkills = new SkillSet[0xE3];
             pspEventSkills = new SortedDictionary<byte, SkillSet>();
 
-            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.SkillSets,
                 "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                 0xE3 );
-            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSXNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.SkillSets,
                 "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                 0xE0 );
@@ -207,9 +209,9 @@ namespace FFTPatcher.Datatypes
             : this( DummySkillSets[value].Name, value )
         {
             List<bool> actions = new List<bool>( 16 );
-            actions.AddRange( Utilities.BooleansFromByteMSB( bytes[0] ) );
-            actions.AddRange( Utilities.BooleansFromByteMSB( bytes[1] ) );
-            List<bool> theRest = new List<bool>( Utilities.BooleansFromByteMSB( bytes[2] ) );
+            actions.AddRange( PatcherLib.Utilities.Utilities.BooleansFromByteMSB( bytes[0] ) );
+            actions.AddRange( PatcherLib.Utilities.Utilities.BooleansFromByteMSB( bytes[1] ) );
+            List<bool> theRest = new List<bool>( PatcherLib.Utilities.Utilities.BooleansFromByteMSB( bytes[2] ) );
 
             Actions = new Ability[16];
             TheRest = new Ability[6];
@@ -260,7 +262,7 @@ namespace FFTPatcher.Datatypes
         public byte[] ToByteArray()
         {
             byte[] result = new byte[25];
-            result[0] = Utilities.ByteFromBooleans(
+            result[0] = PatcherLib.Utilities.Utilities.ByteFromBooleans(
                 Actions[0].Offset > 0xFF,
                 Actions[1].Offset > 0xFF,
                 Actions[2].Offset > 0xFF,
@@ -269,7 +271,7 @@ namespace FFTPatcher.Datatypes
                 Actions[5].Offset > 0xFF,
                 Actions[6].Offset > 0xFF,
                 Actions[7].Offset > 0xFF );
-            result[1] = Utilities.ByteFromBooleans(
+            result[1] = PatcherLib.Utilities.Utilities.ByteFromBooleans(
                 Actions[8].Offset > 0xFF,
                 Actions[9].Offset > 0xFF,
                 Actions[10].Offset > 0xFF,
@@ -278,7 +280,7 @@ namespace FFTPatcher.Datatypes
                 Actions[13].Offset > 0xFF,
                 Actions[14].Offset > 0xFF,
                 Actions[15].Offset > 0xFF );
-            result[2] = Utilities.ByteFromBooleans(
+            result[2] = PatcherLib.Utilities.Utilities.ByteFromBooleans(
                 TheRest[0].Offset > 0xFF,
                 TheRest[1].Offset > 0xFF,
                 TheRest[2].Offset > 0xFF,
@@ -389,12 +391,12 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x55294, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x55294, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x275A38, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x275A38, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x275A38, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x275A38, bytes ) );
             }
 
             return result;

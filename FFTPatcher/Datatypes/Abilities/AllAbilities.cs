@@ -20,6 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -57,12 +60,12 @@ namespace FFTPatcher.Datatypes
             List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
             if( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.BATTLE_BIN, 0x14F3F0, effects ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x14F3F0, effects ) );
             }
             else if( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x3177B4, effects ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x3177B4, effects ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3177B4, effects ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3177B4, effects ) );
             }
 
             return result;
@@ -162,11 +165,11 @@ namespace FFTPatcher.Datatypes
             psxEventAbilites = new Ability[512];
             pspEventAbilites = new Ability[512];
 
-            PSPNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.Abilities,
                 "/Abilities/Ability[@value='{0}']/@name",
                 512 );
-            PSXNames = Utilities.GetStringsFromNumberedXmlNodes(
+            PSXNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Abilities,
                 "/Abilities/Ability[@value='{0}']/@name",
                 512 );
@@ -207,8 +210,8 @@ namespace FFTPatcher.Datatypes
                 {
                     second = bytes.Sub( 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
                     defaultSecond = defaultBytes.Sub( 0x1000 + 14 * i, 0x1000 + 14 * i + 13 );
-                    effect = effects[Utilities.BytesToUShort( effectsBytes[i * 2], effectsBytes[i * 2 + 1] )];
-                    defaultEffect = effects[Utilities.BytesToUShort( defaultEffects[i * 2], defaultEffects[i * 2 + 1] )];
+                    effect = effects[PatcherLib.Utilities.Utilities.BytesToUShort( effectsBytes[i * 2], effectsBytes[i * 2 + 1] )];
+                    defaultEffect = effects[PatcherLib.Utilities.Utilities.BytesToUShort( defaultEffects[i * 2], defaultEffects[i * 2 + 1] )];
                 }
                 else if( i <= 0x17D )
                 {
@@ -331,12 +334,12 @@ namespace FFTPatcher.Datatypes
 
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x4F3F0, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x4F3F0, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x271514, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x271514, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x271514, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x271514, bytes ) );
             }
 
             return result;

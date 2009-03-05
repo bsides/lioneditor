@@ -19,6 +19,7 @@
 
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
 {
@@ -69,7 +70,7 @@ namespace FFTPatcher.Editors
             jobLevelsEditor1.UpdateView( FFTPatch.JobLevels );
             entdEditor1.UpdateView( FFTPatch.ENTDs );
             allMoveFindItemsEditor1.UpdateView( FFTPatch.MoveFind );
-            fontEditor1.FFTFont = FFTPatch.Font;
+            allStoreInventoryEditor1.UpdateView( FFTPatch.StoreInventories );
             codeCreator1.UpdateView();
             codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
         }
@@ -106,5 +107,6 @@ namespace FFTPatcher.Editors
         }
 
 		#endregion Private Methods 
+
     }
 }

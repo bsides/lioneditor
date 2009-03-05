@@ -20,6 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -282,11 +284,11 @@ namespace FFTPatcher.Datatypes
         {
             Name = name;
             Offset = offset;
-            JPCost = Utilities.BytesToUShort( first[0], first[1] );
+            JPCost = PatcherLib.Utilities.Utilities.BytesToUShort( first[0], first[1] );
             LearnRate = first[2];
 
             bool dummy = false;
-            Utilities.CopyByteToBooleans( first[3],
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( first[3],
                 ref learnWithJP, ref action, ref learnOnHit, ref blank1, ref dummy, ref dummy, ref dummy, ref dummy );
             learnWithJP = !learnWithJP;
 
@@ -294,7 +296,7 @@ namespace FFTPatcher.Datatypes
 
             AIFlags = new AIFlags( first.Sub( 4, 6 ) );
 
-            Utilities.CopyByteToBooleans( first[7],
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( first[7],
                 ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
         }
 
@@ -455,10 +457,10 @@ namespace FFTPatcher.Datatypes
             result[0] = (byte)(JPCost & 0xFF);
             result[1] = (byte)(JPCost >> 8);
             result[2] = LearnRate;
-            result[3] = Utilities.ByteFromBooleans( !learnWithJP, action, learnOnHit, blank1, false, false, false, false );
+            result[3] = PatcherLib.Utilities.Utilities.ByteFromBooleans( !learnWithJP, action, learnOnHit, blank1, false, false, false, false );
             result[3] |= (byte)AbilityType;
             Array.Copy( AIFlags.ToByteArray(), 0, result, 4, 3 );
-            result[7] = Utilities.ByteFromBooleans( unknown1, unknown2, unknown3, blank2, blank3, blank4, blank5, unknown4 );
+            result[7] = PatcherLib.Utilities.Utilities.ByteFromBooleans( unknown1, unknown2, unknown3, blank2, blank3, blank4, blank5, unknown4 );
 
             return result;
         }

@@ -17,8 +17,9 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+
 namespace FFTPatcher.Datatypes
 {
     public class Elements : IEquatable<Elements>, ISupportDigest
@@ -67,7 +68,7 @@ namespace FFTPatcher.Datatypes
 
         public Elements( byte b )
         {
-            bool[] flags = Utilities.BooleansFromByte( b );
+            bool[] flags = PatcherLib.Utilities.Utilities.BooleansFromByte( b );
             Fire = flags[7];
             Lightning = flags[6];
             Ice = flags[5];
@@ -138,7 +139,7 @@ namespace FFTPatcher.Datatypes
 
         public byte ToByte()
         {
-            return Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
+            return PatcherLib.Utilities.Utilities.ByteFromBooleans( Fire, Lightning, Ice, Wind, Earth, Water, Holy, Dark );
         }
 
         public override string ToString()

@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using FFTPatcher.Controls;
 using FFTPatcher.Datatypes;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
 {
@@ -46,6 +47,12 @@ namespace FFTPatcher.Editors
             "Striking", "Lunging", "Direct", "Arc",
             "TwoSwords", "TwoHands", "Blank", "Force2Hands" };
         private static List<string> weaponCastSpellItems;
+        private Shops[] shops = new Shops[16] { 
+            Shops.None,
+            Shops.Lesalia, Shops.Riovanes, Shops.Igros, Shops.Lionel,
+            Shops.Limberry, Shops.Zeltennia, Shops.Gariland, Shops.Yardrow,
+            Shops.Goland, Shops.Dorter, Shops.Zaland, Shops.Goug,
+            Shops.Warjilis, Shops.Bervenia, Shops.Zarghidas };
 
 		#endregion Instance Variables 
 
@@ -130,7 +137,23 @@ namespace FFTPatcher.Editors
             chemistItemFormulaComboBox.DataSource = itemFormulaItems;
             weaponElementsEditor.DataChanged += OnDataChanged;
 
+            storeInventoryCheckedListBox.ItemCheck += new ItemCheckEventHandler( storeInventoryCheckedListBox_ItemCheck );
             ignoreChanges = false;
+        }
+
+        void storeInventoryCheckedListBox_ItemCheck( object sender, ItemCheckEventArgs e )
+        {
+            if ( !ignoreChanges )
+            {
+                if ( e.NewValue == CheckState.Checked )
+                {
+                    FFTPatch.StoreInventories.AddToInventory( shops[e.Index], item );
+                }
+                else if ( e.NewValue == CheckState.Unchecked )
+                {
+                    FFTPatch.StoreInventories.RemoveFromInventory( shops[e.Index], item );
+                }
+            }
         }
 
         static ItemEditor()
@@ -159,6 +182,12 @@ namespace FFTPatcher.Editors
                     itemFormulaItems.Add( string.Format( "{0:X2}", i ) );
                 }
             }
+
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            UpdateView();
         }
 
 		#endregion Constructors 
@@ -247,6 +276,7 @@ namespace FFTPatcher.Editors
             armorPanel.SuspendLayout();
             accessoryPanel.SuspendLayout();
             chemistItemPanel.SuspendLayout();
+            storeInventoryCheckedListBox.BeginUpdate();
 
             weaponPanel.Visible = item is Weapon;
             weaponPanel.Enabled = item is Weapon;
@@ -267,12 +297,27 @@ namespace FFTPatcher.Editors
             {
                 itemTypeComboBox.DataSource = pspItemTypes;
                 weaponFormulaComboBox.DataSource = AbilityFormula.PSPAbilityFormulas;
+                storeInventoryCheckedListBox.Items.Clear();
+                foreach ( Shops shop in shops )
+                {
+                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSPResources.ShopNames[shop] );
+                }
+
                 ourContext = Context.US_PSP;
+
             }
             else if( FFTPatch.Context == Context.US_PSX && ourContext != Context.US_PSX )
             {
                 itemTypeComboBox.DataSource = psxItemTypes;
                 weaponFormulaComboBox.DataSource = AbilityFormula.PSXAbilityFormulas;
+                storeInventoryCheckedListBox.BeginUpdate();
+                storeInventoryCheckedListBox.Items.Clear();
+                foreach ( Shops shop in shops )
+                {
+                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSXResources.ShopNames[shop] );
+                }
+                storeInventoryCheckedListBox.EndUpdate();
+
                 ourContext = Context.US_PSX;
             }
 
@@ -374,6 +419,18 @@ namespace FFTPatcher.Editors
             priceSpinner.SetValueAndDefault( item.Price, item.Default.Price );
             shopAvailabilityComboBox.SetValueAndDefault( item.ShopAvailability, item.Default.ShopAvailability );
 
+            if (item.Offset < 256)
+            {
+                storeInventoryCheckedListBox.Visible = true;
+                storeInventoryCheckedListBox.SetValuesAndDefaults(
+                    FFTPatch.StoreInventories.IsItemInShops(item, shops),
+                    FFTPatch.StoreInventories.Default.IsItemInShops(item, shops));
+            }
+            else
+            {
+                storeInventoryCheckedListBox.Visible = false;
+            }
+
             if( item.Default != null )
             {
                 itemAttributesCheckedListBox.SetValuesAndDefaults( ReflectionHelpers.GetFieldsOrProperties<bool>( item, itemBools ), item.Default.ToBoolArray() );
@@ -384,6 +441,7 @@ namespace FFTPatcher.Editors
             armorPanel.ResumeLayout();
             accessoryPanel.ResumeLayout();
             chemistItemPanel.ResumeLayout();
+            storeInventoryCheckedListBox.EndUpdate();
             ResumeLayout();
             ignoreChanges = false;
         }

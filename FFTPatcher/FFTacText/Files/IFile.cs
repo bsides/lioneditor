@@ -1,39 +1,15 @@
-﻿/*
-    Copyright 2007, Joe Davidson <joedavidson@gmail.com>
+﻿using System.Collections.Generic;
 
-    This file is part of FFTPatcher.
-
-    FFTPatcher is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    FFTPatcher is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-using System.Collections.Generic;
-
-namespace FFTPatcher.TextEditor.Files
+namespace FFTPatcher.TextEditor
 {
-    /// <summary>
-    /// A file that can be edited.
-    /// </summary>
     public interface IFile
     {
-        /// <summary>
-        /// Gets the filenames and locations for this file.
-        /// </summary>
-        IDictionary<string, long> Locations { get; }
-
-        /// <summary>
-        /// Creates a byte array representing this file.
-        /// </summary>
-        byte[] ToByteArray();
+        IList<string> SectionNames { get; }
+        IList<IList<string>> EntryNames { get; }
+        GenericCharMap CharMap { get; }
+        int NumberOfSections { get; }
+        string this[int section, int entry] { get; set; }
+        IList<int> SectionLengths { get; }
+        string DisplayName { get; }
     }
 }

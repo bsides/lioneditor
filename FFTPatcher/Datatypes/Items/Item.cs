@@ -20,6 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -170,11 +173,11 @@ namespace FFTPatcher.Datatypes
             pspEventItems = new List<Item>( 256 );
             psxEventItems = new List<Item>( 256 );
 
-            PSPNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
+            PSPNames = new List<string>( PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.Items,
                 "/Items/Item[@offset='{0}']/@name",
                 316 ) );
-            PSXNames = new List<string>( Utilities.GetStringsFromNumberedXmlNodes(
+            PSXNames = new List<string>( PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.Items,
                 "/Items/Item[@offset='{0}']/@name",
                 256 ) );
@@ -225,12 +228,12 @@ namespace FFTPatcher.Datatypes
             Palette = bytes[0];
             Graphic = bytes[1];
             EnemyLevel = bytes[2];
-            Utilities.CopyByteToBooleans( bytes[3], ref weapon, ref shield, ref head, ref body, ref accessory, ref blank1, ref rare, ref blank2 );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[3], ref weapon, ref shield, ref head, ref body, ref accessory, ref blank1, ref rare, ref blank2 );
             SecondTableId = bytes[4];
             ItemType = (ItemSubType)bytes[5];
             Unknown1 = bytes[6];
             SIA = bytes[7];
-            Price = Utilities.BytesToUShort( bytes[8], bytes[9] );
+            Price = PatcherLib.Utilities.Utilities.BytesToUShort( bytes[8], bytes[9] );
             ShopAvailability = ShopAvailability.AllAvailabilities[bytes[10]];
             Unknown2 = bytes[11];
         }
@@ -312,11 +315,7 @@ namespace FFTPatcher.Datatypes
 
         public static Item GetItemAtOffset( UInt16 offset )
         {
-            return DummyItems.Find(
-                delegate( Item i )
-                {
-                    return i.Offset == offset;
-                } );
+            return DummyItems.Find( i => i.Offset == offset );
         }
 
         public bool[] ToBoolArray()
@@ -350,7 +349,7 @@ namespace FFTPatcher.Datatypes
             result.Add( Palette );
             result.Add( Graphic );
             result.Add( EnemyLevel );
-            result.Add( Utilities.ByteFromBooleans( weapon, shield, head, body, accessory, blank1, rare, blank2 ) );
+            result.Add( PatcherLib.Utilities.Utilities.ByteFromBooleans( weapon, shield, head, body, accessory, blank1, rare, blank2 ) );
             result.Add( SecondTableId );
             result.Add( (byte)ItemType );
             result.Add( Unknown1 );

@@ -65,7 +65,7 @@ namespace FFTPatcher.Datatypes
                 return base.HasChanged ||
                     (WeaponDefault != null &&
                     (Elements.ToByte() != WeaponDefault.Elements.ToByte() ||
-                    !Utilities.CompareArrays( ToWeaponBoolArray(), WeaponDefault.ToWeaponBoolArray() ) ||
+                    !PatcherLib.Utilities.Utilities.CompareArrays( ToWeaponBoolArray(), WeaponDefault.ToWeaponBoolArray() ) ||
                     EvadePercentage != WeaponDefault.EvadePercentage ||
                     Formula.Value != WeaponDefault.Formula.Value ||
                     InflictStatus != WeaponDefault.InflictStatus ||
@@ -108,7 +108,7 @@ namespace FFTPatcher.Datatypes
             : base( offset, itemBytes, defaults )
         {
             Range = weaponBytes[0];
-            Utilities.CopyByteToBooleans( weaponBytes[1], ref Striking, ref Lunging, ref Direct, ref Arc, ref TwoSwords, ref TwoHands, ref Blank, ref Force2Hands );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( weaponBytes[1], ref Striking, ref Lunging, ref Direct, ref Arc, ref TwoSwords, ref TwoHands, ref Blank, ref Force2Hands );
             Formula = AbilityFormula.PSPAbilityFormulaHash[weaponBytes[2]];
             Unknown = weaponBytes[3];
             WeaponPower = weaponBytes[4];
@@ -188,7 +188,7 @@ namespace FFTPatcher.Datatypes
         {
             byte[] result = new byte[8];
             result[0] = Range;
-            result[1] = Utilities.ByteFromBooleans( Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands );
+            result[1] = PatcherLib.Utilities.Utilities.ByteFromBooleans( Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands );
             result[2] = Formula.Value;
             result[3] = Unknown;
             result[4] = WeaponPower;

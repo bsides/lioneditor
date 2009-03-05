@@ -22,7 +22,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using FFTPatcher.TextEditor.Files;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -32,17 +33,26 @@ namespace FFTPatcher.TextEditor
     public static class TextUtilities
     {
 
+        /// <summary>
+        /// Types of character maps.
+        /// </summary>
         public enum CharMapType
         {
+            /// <summary>
+            /// Playstation
+            /// </summary>
             PSX,
+            /// <summary>
+            /// PSP
+            /// </summary>
             PSP
         }
 
 
-		#region Static Properties (3) 
+        #region Static Properties (3)
 
 
-private static IDictionary<int, int> CompressionJumps { get; set; }
+        private static IDictionary<int, int> CompressionJumps { get; set; }
 
         /// <summary>
         /// Gets the PSP character map.
@@ -55,9 +65,9 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         public static PSXCharMap PSXMap { get; private set; }
 
 
-		#endregion Static Properties 
+        #endregion Static Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         static TextUtilities()
         {
@@ -65,20 +75,21 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             PSPMap = new PSPCharMap();
             BuildVersion1Charmap( PSXMap, PSPMap );
             BuildVersion2Charmap( PSXMap, PSPMap );
+            BuildVersion3Charmap( PSXMap, PSPMap );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Delegates (1) 
+        #region Delegates (1)
 
         /// <summary>
         /// A delegate to call when the progress of an operation has changed.
         /// </summary>
         public delegate void ProgressCallback( int progress );
 
-		#endregion Delegates 
+        #endregion Delegates
 
-		#region Methods (12) 
+        #region Methods (12)
 
 
         private static void BuildVersion1Charmap( PSXCharMap psx, PSPCharMap psp )
@@ -93,20 +104,15 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             psx.Add( 0xD9C9, "?" );
             psx.Add( 0xB2, "\u266A" );
             psx.Add( 0xD0B2, "\u266A" );
-            psx.Add( 0xD0E7, "\u2014" );
             psx.Add( 0xD117, "\u2014" );
-            psx.Add( 0xD0E8, "\u300C" );
             psx.Add( 0xD118, "\u300C" );
-            psx.Add( 0xD0EB, "\u22EF" );
             psx.Add( 0xD11B, "\u22EF" );
-            psx.Add( 0xD0EF, "\xD7" );
             psx.Add( 0xD11F, "\xD7" );
             psx.Add( 0xD120, "\xF7" );
             psx.Add( 0xD121, "\u2229" );
             psx.Add( 0xD122, "\u222A" );
             psx.Add( 0xD123, "=" );
             psx.Add( 0xDA70, "=" );
-            psx.Add( 0xD0F4, "\u2260" );
             psx.Add( 0xD124, "\u2260" );
             psx.Add( 0xD9B5, "\u221E" );
             psx.Add( 0xD9B7, "&" );
@@ -144,12 +150,10 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             psx.Add( 0xDA74, "," );
             psx.Add( 0xDA75, ";" );
 
-            psx.Add( 0xD0ED, "-" );
             psx.Add( 0xD11D, "-" );
 
             psx.Add( 0x42, "+" );
             psx.Add( 0xD042, "+" );
-            psx.Add( 0xD0EE, "+" );
             psx.Add( 0xD11E, "+" );
 
             psx.Add( 0x46, ":" );
@@ -182,59 +186,44 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             psx.Add( 0xD044, "/" );
             psx.Add( 0xD9C6, "/" );
 
-            psx.Add( 0xD0F5, ">" );
             psx.Add( 0xD125, ">" );
 
-            psx.Add( 0xD0F6, "<" );
             psx.Add( 0xD126, "<" );
 
-            psx.Add( 0xD0F7, "\u2267" );
             psx.Add( 0xD127, "\u2267" );
 
             psx.Add( 0xD128, "\u2266" );
 
             psx.Add( 0xFA, " " );
-            psx.Add( 0xD0FA, " " );
             psx.Add( 0xD12A, " " );
             psx.Add( 0xDA73, " " );
 
             psx.Add( 0x5F, "." );
             psx.Add( 0xD05F, "." );
-            psx.Add( 0xD0E9, "." );
             psx.Add( 0xD119, "." );
-            psx.Add( 0xD0EC, "." );
             psx.Add( 0xD11C, "." );
             psx.Add( 0xD9B6, "." );
 
             psx.Add( 0x3E, "!" );
             psx.Add( 0xD03E, "!" );
-            psx.Add( 0xD0EA, "!" );
             psx.Add( 0xD11A, "!" );
 
             psx.Add( 0xB5, "*" );
             psx.Add( 0xD0B5, "*" );
-            psx.Add( 0xD0E1, "*" );
             psx.Add( 0xD111, "*" );
-            psx.Add( 0xD0F9, "*" );
             psx.Add( 0xD129, "*" );
-            psx.Add( 0xD0FB, "*" );
             psx.Add( 0xD12B, "*" );
-            psx.Add( 0xD0FC, "*" );
             psx.Add( 0xD12C, "*" );
-            psx.Add( 0xD0FD, "*" );
             psx.Add( 0xD12D, "*" );
-            psx.Add( 0xD0FE, "*" );
             psx.Add( 0xD12E, "*" );
-            psx.Add( 0xD0FF, "*" );
             psx.Add( 0xD12F, "*" );
             psx.Add( 0xD130, "*" );
             psx.Add( 0xD131, "*" );
             psx.Add( 0xD132, "*" );
             psx.Add( 0xE0, "{Ramza}" );
-            psx.Add( 0xF8, "\r\n" );
+            psx.Add( 0xF8, "{Newline}" );
             psx.Add( 0xFB, "{Begin List}" );
             psx.Add( 0xFC, "{End List}" );
-            psx.Add( 0xFE, "{END}" );
             psx.Add( 0xFF, "{Close}" );
 
             for( int i = 0; i < 10; i++ )
@@ -253,7 +242,6 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
                 // HACK
                 psx.Add( 0xE200 + i, string.Format( "{{Delay {0:X2}", i ) + @"}" );
                 psx.Add( 0xE300 + i, string.Format( "{{Color {0:X2}", i ) + @"}" );
-                psx.Add( 0xEE00 + i, string.Format( "{{Tab {0:X2}", i ) + @"}" );
             }
 
             psx.Add( 0x3F, "\u3042" );
@@ -304,20 +292,16 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
 
             for( int i = 0xD0; i <= 0xDB; i++ )
             {
-                psx.Add( i + 0xD000, ((char)(i - 0xD0 + 0x30E0)).ToString() );
                 psx.Add( i - 0xD0 + 0xD100, ((char)(i - 0xD0 + 0x30E0)).ToString() );
             }
 
             psx.Add( 0xD10C, "\u30EC" );
             psx.Add( 0xD10D, "\u30ED" );
-            psx.Add( 0xD0DE, "\u30EE" );
             psx.Add( 0xD10E, "\u30EE" );
-            psx.Add( 0xD0DF, "\u30EF" );
             psx.Add( 0xD10F, "\u30EF" );
 
             for( int i = 0xE2; i <= 0xE6; i++ )
             {
-                psx.Add( i + 0xD000, ((char)(i - 0xE2 + 0x30F2)).ToString() );
                 psx.Add( i - 0xE2 + 0xD112, ((char)(i - 0xE2 + 0x30F2)).ToString() );
             }
 
@@ -326,7 +310,14 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
                 psp.Add( kvp.Key, kvp.Value );
             }
 
+            for (int i = 0; i < 256; i++)
+            {
+                psp.Add( 0xEE00 + i, string.Format( "{{Tab {0:X2}", i ) + @"}" );
+            }
+
+
             psp[0x95] = " ";
+            psp[0xfa] = "{SP2}";
             psp.Add( 0xDA60, "\xE1" );
             psp.Add( 0xDA61, "\xE0" );
             psp.Add( 0xDA62, "\xE9" );
@@ -499,22 +490,43 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             }
         }
 
-        /// <summary>
+        private static void BuildVersion3Charmap( PSXCharMap PSXMap, PSPCharMap PSPMap )
+        {
+            IList<string> psxChars = PatcherLib.PSXResources.CharacterSet;
+            IList<string> pspChars = PatcherLib.PSPResources.CharacterSet;
+
+            for ( int i = 0; i < 0xD0; i++ )
+            {
+                PSXMap[i] = psxChars[i];
+                PSPMap[i] = pspChars[i];
+                PSXMap[i + 0xD000] = psxChars[i];
+                PSPMap[i + 0xD000] = pspChars[i];
+            }
+            for ( int i = 0xD0; i < pspChars.Count; i++ )
+            {
+                PSXMap[( i - 0xD0 ) % 0xD0 + 0xD100 + 0x100 * ( ( i - 0xD0 ) / 0xD0 )] = psxChars[i];
+                PSPMap[( i - 0xD0 ) % 0xD0 + 0xD100 + 0x100 * ( ( i - 0xD0 ) / 0xD0 )] = pspChars[i];
+            }
+        }
+
+
+
+        /// 
         /// Compresses the section.
-        /// </summary>
-        /// <param name="input">The section to compress.</param>
-        /// <param name="inputLength">Length of the section.</param>
-        /// <param name="output">The output array.</param>
-        /// <param name="outputPosition">Where in <paramref name="output"/> to start writing</param>
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
         [DllImport( "FFTTextCompression.dll" )]
         static extern void CompressSection( byte[] input, int inputLength, byte[] output, ref int outputPosition );
 
-        /// <summary>
+        /// 
         /// Compresses some bytes.
-        /// </summary>
-        /// <param name="bytes">The bytes to compress.</param>
-        /// <param name="output">Where to copy the compressed bytes.</param>
-        /// <param name="outputPosition">The position to start copying.</param>
+        /// 
+        /// 
+        /// 
+        /// 
         private static void CompressSection( IList<byte> bytes, byte[] output, ref int outputPosition )
         {
             CompressSection( bytes.ToArray(), bytes.Count, output, ref outputPosition );
@@ -530,92 +542,52 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// <summary>
         /// Compresses the specified file.
         /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
         /// <param name="callback">The progress callback.</param>
-        public static CompressionResult Compress<T>( T file, ProgressCallback callback ) where T : IStringSectioned, ICompressed
-        {
-            return Compress( file, null, callback );
-        }
+        //public static CompressionResult Compress<T>( T file, ProgressCallback callback ) where T : IStringSectioned, ICompressed
+        //{
+        //    return Compress( file, null, callback );
+        //}
 
         /// <summary>
         /// Compresses the specified file.
         /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
+        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
         /// <param name="file">The file to compress.</param>
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
         /// <param name="callback">The progress callback.</param>
-        public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections, ProgressCallback callback ) where T : IStringSectioned, ICompressed
+        public static CompressionResult Compress( IList<IList<string>> sections, GenericCharMap charmap, IList<bool> allowedSections )
         {
             int length = 0;
-            foreach( IList<string> section in file.Sections )
-            {
-                length += file.CharMap.StringsToByteArray( section ).Length;
-            }
+            sections.ForEach( s => length += charmap.StringsToByteArray( s ).Length );
 
             byte[] result = new byte[length];
-            int[] lengths = new int[file.Sections.Count];
+            int[] lengths = new int[sections.Count];
 
             int pos = 0;
-            for( int section = 0; section < file.Sections.Count; section++ )
+            for( int section = 0; section < sections.Count; section++ )
             {
                 int oldPos = pos;
 
-                if( ignoreSections != null && ignoreSections.ContainsKey( section ) )
+                if ( allowedSections == null || allowedSections[section] )
                 {
-                    for( int entry = 0; entry < file.Sections[section].Count; entry++ )
-                    {
-                        byte[] bytes = file.CharMap.StringToByteArray( file.Sections[section][entry] );
-                        if( ignoreSections[section].Contains( entry ) )
-                        {
-                            Array.Copy( bytes, 0, result, pos, bytes.Length );
-                            pos += bytes.Length;
-                        }
-                        else
-                        {
-                            CompressSection( bytes, result, ref pos );
-                        }
-                    }
+                    CompressSection( charmap.StringsToByteArray( sections[section] ), result, ref pos );
                 }
                 else
                 {
-                    CompressSection( file.CharMap.StringsToByteArray( file.Sections[section] ), result, ref pos );
+                    byte[] secResult = charmap.StringsToByteArray( sections[section] );
+                    secResult.CopyTo( result, pos );
+                    pos += secResult.Length;
                 }
 
                 lengths[section] = pos - oldPos;
 
-                if( callback != null )
-                {
-                    callback( section * 100 / file.Sections.Count );
-                }
             }
 
             return new CompressionResult( result.Sub( 0, pos - 1 ), lengths );
         }
-
-        /// <summary>
-        /// Compresses the specified file.
-        /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
-        /// <param name="file">The file to compress.</param>
-        public static CompressionResult Compress<T>( T file ) where T : IStringSectioned, ICompressed
-        {
-            return Compress( file, null, null );
-        }
-
-        /// <summary>
-        /// Compresses the specified file.
-        /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSections"/> and <see cref="ICompressed"/></typeparam>
-        /// <param name="file">The file to compress.</param>
-        /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
-        /// entries and each item in the value being an entry to ignore</param>
-        public static CompressionResult Compress<T>( T file, IDictionary<int, IList<int>> ignoreSections ) where T : IStringSectioned, ICompressed
-        {
-            return Compress( file, ignoreSections, null );
-        }
-
         /// <summary>
         /// Decompresses the specified section.
         /// </summary>
@@ -657,21 +629,23 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
         /// Processes a list of FFT text bytes into a list of FFTacText strings.
         /// </summary>
         /// <param name="bytes">The bytes to process</param>
-        /// <param name="type">The charmap to use</param>
+        /// <param name="charmap">The charmap to use</param>
         public static IList<string> ProcessList( IList<byte> bytes, GenericCharMap charmap )
         {
             IList<IList<byte>> words = bytes.Split( (byte)0xFE );
 
             List<string> result = new List<string>( words.Count );
 
-            foreach( IList<byte> word in words )
+            foreach ( IList<byte> word in words )
             {
                 StringBuilder sb = new StringBuilder();
                 int pos = 0;
-                while( pos < word.Count )
+                while ( pos < ( word.Count - 1 ) || ( pos == ( word.Count - 1 ) && word[pos] != 0xFE ) )
                 {
                     sb.Append( charmap.GetNextChar( word, ref pos ) );
                 }
+
+                sb.Replace(@"{Newline}", @"{Newline}" + Environment.NewLine);
 
                 result.Add( sb.ToString() );
             }
@@ -701,20 +675,228 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
                     }
                 }
 
-                return s.ToString();
+                return sb.ToString();
             }
 
             return s;
         }
 
 
-		#endregion Methods 
+        #endregion Methods
+
+        public class GroupableSet
+        {
+            public string Group { get; private set; }
+            public IList<int> Indices { get; private set; }
+            public int OriginalCost { get; private set; }
+
+            private int hashCode = 0;
+
+            public GroupableSet( string group, IList<int> indices, int originalCost )
+            {
+                Group = group;
+                Indices = indices.AsReadOnly();
+                OriginalCost = originalCost;
+                hashCode = group.GetHashCode();
+            }
 
 
+            public override int GetHashCode()
+            {
+                return hashCode;
+            }
+        }
+
+        private static IList<byte> IntToBytes( int val )
+        {
+            List<byte> result = new List<byte>( 4 );
+            do
+            {
+                result.Add( (byte)( val & 0xFF ) );
+                val /= 256;
+            } while ( val > 0 );
+            result.Reverse();
+            return result.ToArray();
+        }
+
+        public static Set<string> GetGroups( GenericCharMap charmap, IList<string> characterSet, IList<int> characterWidths )
+        {
+            const bool alphaNumOnly = true;
+            const string allowedAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,=/";
+            System.Diagnostics.Debug.Assert( allowedAlphaNum.Length == 10 + 26 + 26 + 10 );
+            Dictionary<string,string> allowedPairs = new Dictionary<string,string> {
+              { "0", "0123456789 .,/" }, // 0
+              { "1", "0123456789!? .,/" }, // 1
+              { "2", "0123456789!? .,/" }, // 2
+              { "3", "0123456789!? .,/" },
+              { "4", "0123456789!? .,/" },
+              { "5", "0123456789 .,/" },
+              { "6", "0123456789 .,/" },
+              { "7", "0123456789 .,/" },
+              { "8", "0123456789 .,/" },
+              { "9", "0123456789 .,/" }, // 9
+              { "A", "bcdfghijklmnpqrstuvwxyz!?\"' .,=/" }, // A
+              { "B", "aeilmorsuy!?\"' .,=/" },
+              { "C", "aehiklorstu!?\"' .,=/" },
+              { "D", "aeghilnorstuwy!?\"' .,=/" }, // D
+              { "E", "abcdefghijklmnopqrstuvwxyz!?\"' .,=/" },
+              { "F", "aeiorstuy!?\"' .,=/" },
+              { "G", "adehilnorsu!?\"' .,=/" },
+              { "H", "aeiou!?\"' .,=/" },
+              { "I", "cdefghjklmnopqrstuvwxyz!?\"' .,=/" },
+              { "J", "aeious!?\"' .,=/" }, // J
+              { "K", "aeilostuy!?\"' .,=/" },
+              { "L", "aehiou!?\"' .,=/" },
+              { "M", "aeiou!?\"' .,=/" },
+              { "N", "aeiou!?\"' .,=/" },
+              { "O", "abcdefghijklmnprstuvwxyz!?\"' .,=/" },
+              { "P", "aehioruy!?\"' .,=/" }, // P
+              { "Q", "u!?\"' .,=/" },
+              { "R", "aehiouwy!?\"' .,=/" },
+              { "S", "acdefghiklmnopqrtuwyz!?\"' .,=/" },
+              { "T", "aehiouwy!?\"' .,=/" },
+              { "U", "ghlmnoprst!?\"' .,=/" },
+              { "V", "aeiouy!?\"' .,=/" }, // V
+              { "W", "aehiouy!?\"' .,=/" },
+              { "X", "aeiou!?\"' .,=/" },
+              { "Y", "aeiou!?\"' .,=/" },
+              { "Z", "aeiou!?\"' .,=/" }, // Z
+              { "a", "bcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // a
+              { "b", "abeilmorsuy!?:\"' .,=/" },
+              { "c", "acehiklorstu!?:\"' .,=/" },
+              { "d", "adeghilnorstuwy!?:\"' .,=/" }, // d
+              { "e", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "f", "aefiorstuy!?:\"' .,=/" },
+              { "g", "adeghilnorsu!?:\"' .,=/" },
+              { "h", "acdegilmnoprstuw!?:\"' .,=/" },
+              { "i", "abcdefghjklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "j", "aeiosuy!?:\"' .,=/" }, // j
+              { "k", "aeiklorsuwy!?:\"' .,=/" },
+              { "l", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "m", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "n", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "o", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "p", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // p
+              { "q", "u!?:\"'.,=/" },
+              { "r", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "s", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "t", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "u", "abcdefghijklmnopqrstvwxyz!?:\"' .,=/" },
+              { "v", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // v
+              { "w", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "x", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "y", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
+              { "z", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // z
+
+              { "!", "!?\" =/" }, // !
+              { "?", "!?\" =/" }, // ?
+              { ":", "!?\" /" }, // :
+              { "\"", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?: .,=/" }, // "
+              { "'", "dlrstv /" }, // '
+              { " ", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =/" }, //  
+              { ".", "!?\"' .=/" }, // .
+              { ",", "\"' =/" }, // ,
+              { "=", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =/" }, // =
+              { "/", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }
+            };
+            
+            List<string> allowed = new List<string>( allowedAlphaNum.Length );
+            for ( int i = 0; i < allowedAlphaNum.Length; i++ )
+                allowed.Add( allowedAlphaNum[i].ToString( System.Globalization.CultureInfo.InvariantCulture ) );
+            
+            Set<string> allowedChars = new Set<string>( allowed );
+
+            const int maxWidth = 10;
+            Set<string> result = new Set<string>();
+
+            System.Diagnostics.Debug.Assert( characterSet.Count == characterWidths.Count );
+            for ( int i = 0; i < characterSet.Count; i++ )
+            {
+                if ( !alphaNumOnly || allowedChars.Contains( characterSet[i] ) )
+                {
+                    for ( int j = i; j < characterSet.Count; j++ )
+                    {
+                        bool goodWidth = characterWidths[i] + characterWidths[j] <= maxWidth;
+                        if ( goodWidth &&
+                             ( !alphaNumOnly || allowedPairs[characterSet[i]].Contains( characterSet[j] ) ) ) 
+                        {
+                            result.Add( characterSet[i] + characterSet[j] );
+                        }
+                        if ( goodWidth &&
+                             ( !alphaNumOnly || 
+                               (allowedPairs.ContainsKey(characterSet[j]) &&
+                                allowedPairs[characterSet[j]].Contains( characterSet[i] ) ) ))
+                        {
+                            result.Add( characterSet[j] + characterSet[i] );
+                        }
+
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static void IncrementPairCount( string pair, IDictionary<string, int> dict )
+        {
+            if( dict.ContainsKey( pair ) )
+            {
+                dict[pair] += 1;
+            }
+            else
+            {
+                dict[pair] = 1;
+            }
+        }
+
+        public static IDictionary<string, int> GetPairAndTripleCounts( string text, Set<string> allowedGroups )
+        {
+            Dictionary<string, int> counts = new Dictionary<string, int>();
+            text = text.Replace( "\r\n", "{}" );
+            int length = text.Length;
+            
+            Action<int> meth =
+                delegate( int groupSize )
+                {
+                    for ( int pos = 0; pos + groupSize - 1 < length; )
+                    {
+                        for ( int j = 1; j < groupSize; j++ )
+                        {
+                            if ( text[pos + j] == '{' )
+                            {
+                                pos++;
+                            }
+                        }
+                        while ( pos < length && text[pos] == '{' )
+                        {
+                            while ( text[++pos] != '}' )
+                                ;
+                            pos++;
+                        }
+
+                        if ( pos + groupSize - 1 < length )
+                        {
+                            IncrementPairCount( text.Substring( pos, groupSize ), counts );
+                        }
+                        pos++;
+                    }
+                };
+
+            meth( 2 );
+
+            counts.RemoveAll( p => !allowedGroups.Contains( p ) );
+            return counts;
+        }
+
+
+
+        /// <summary>
+        /// The result of a compression operation.
+        /// </summary>
         public class CompressionResult
         {
 
-		#region Properties (2) 
+            #region Properties (2)
 
 
             /// <summary>
@@ -728,23 +910,103 @@ private static IDictionary<int, int> CompressionJumps { get; set; }
             public IList<int> SectionLengths { get; private set; }
 
 
-		#endregion Properties 
+            #endregion Properties
 
-		#region Constructors (2) 
+            #region Constructors (2)
 
             private CompressionResult()
             {
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CompressionResult"/> class.
+            /// </summary>
+            /// <param name="bytes">The bytes.</param>
+            /// <param name="sectionLengths">The section lengths.</param>
             public CompressionResult( IList<byte> bytes, IList<int> sectionLengths )
             {
                 Bytes = bytes;
                 SectionLengths = sectionLengths;
             }
 
-		#endregion Constructors 
+            #endregion Constructors
 
         }
 
+        public static void DoDTEEncoding( IList<IList<string>> strings, IList<bool> allowedSections, IDictionary<string, byte> dteTable )
+        {
+            for( int i = 0; i < strings.Count; i++ )
+            {
+                if ( allowedSections[i] )
+                {
+                    DoDTEEncoding( strings[i], dteTable );
+                }
+            }
+        }
+
+        public static void DoDTEEncoding( IList<string> strings, IDictionary<string, byte> dteTable )
+        {
+            for ( int i = 0; i < strings.Count; i++ )
+            {
+                strings[i] = DoDTEEncoding( strings[i], dteTable );
+            }
+        }
+
+        private static string DoDTEEncoding( string text, IDictionary<string, byte> dteTable )
+        {
+            text = text.Replace( "\r\n", "\n" );
+            int length = text.Length;
+            StringBuilder sb = new StringBuilder( text.Length );
+            Action<int> meth =
+                delegate( int groupSize )
+                {
+                    int pos = 0;
+                    for ( pos = 0; pos + groupSize - 1 < length; )
+                    {
+                        for ( int j = 1; j < groupSize; j++ )
+                        {
+                            if ( text[pos + j] == '{' )
+                            {
+                                sb.Append( text[pos] );
+                                pos++;
+                            }
+                        }
+                        while ( pos < length && text[pos] == '{' )
+                        {
+                            sb.Append( text[pos] );
+                            while ( text[++pos] != '}' )
+                            {
+                                sb.Append( text[pos] );
+                            }
+                            sb.Append( text[pos] );
+                            pos++;
+                        }
+
+                        if ( pos + groupSize - 1 < length )
+                        {
+                            string sub = text.Substring( pos, groupSize );
+                            if( dteTable.ContainsKey( sub ) )
+                            {
+                                sb.Append( @"{0x" );
+                                sb.AppendFormat( "{0:X2}", dteTable[sub] );
+                                sb.Append( @"}" );
+                                pos += groupSize;
+                            }
+                            else
+                            {
+                                sb.Append( sub[0] );
+                                pos += 1;
+                            }
+                        }
+                    }
+                    for ( ; pos < length; pos++ )
+                    {
+                        sb.Append( text[pos] );
+                    }
+                };
+            meth( 2 );
+            sb.Replace( "\n", "\r\n" );
+            return sb.ToString();
+        }
     }
 }

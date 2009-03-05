@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48BE23D0-2943-44EF-A3A6-8537D7695B37}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -59,8 +59,6 @@
       <HintPath>..\utils\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -79,14 +77,31 @@
     <Compile Include="Controls\ComboBoxWithDefault.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\NumericUpDownWithDefault.cs">
+    <Compile Include="Controls\DualList\DualList.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ProgressBarWithText.cs">
+    <Compile Include="Controls\DualList\DualListActionEventArgs.cs" />
+    <Compile Include="Controls\DualList\DualListCancelEventArgs.cs" />
+    <Compile Include="Controls\DualList\DualListDesigner.cs" />
+    <Compile Include="Controls\NumericUpDownWithDefault.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\VerticalLabel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Datatypes\FFTPatch.cs" />
+    <Compile Include="Datatypes\Items\StoreInventory.cs" />
+    <Compile Include="Editors\Items\AllStoreInventoryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Items\AllStoreInventoryEditor.Designer.cs">
+      <DependentUpon>AllStoreInventoryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Items\StoreInventoryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Items\StoreInventoryEditor.Designer.cs">
+      <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="PatchPSPForm.cs">
       <SubType>Form</SubType>
@@ -100,7 +115,6 @@
     <Compile Include="Datatypes\Abilities\Ability.cs" />
     <Compile Include="Datatypes\Abilities\AIFlags.cs" />
     <Compile Include="Datatypes\Abilities\Effect.cs" />
-    <Compile Include="Datatypes\Context.cs" />
     <Compile Include="Datatypes\Elements.cs" />
     <Compile Include="Datatypes\ENTD\ENTD.cs" />
     <Compile Include="Datatypes\ENTD\Event.cs" />
@@ -108,12 +122,7 @@
     <Compile Include="Datatypes\ENTD\Months.cs" />
     <Compile Include="Datatypes\ENTD\SpecialName.cs" />
     <Compile Include="Datatypes\ENTD\SpriteSet.cs" />
-    <Compile Include="Datatypes\FFTPack.cs" />
-    <Compile Include="Datatypes\FFTPatch.cs" />
-    <Compile Include="Datatypes\Fonts\FFTFont.cs" />
-    <Compile Include="Datatypes\Fonts\Glyph.cs" />
     <Compile Include="Datatypes\HexAttribute.cs" />
-    <Compile Include="Datatypes\IChangeable.cs" />
     <Compile Include="Datatypes\ISupportDigest.cs" />
     <Compile Include="Datatypes\Items\MoveFindItem.cs" />
     <Compile Include="Datatypes\IXmlDigest.cs" />
@@ -136,7 +145,6 @@
     <Compile Include="Datatypes\Status\InflictStatus.cs" />
     <Compile Include="Datatypes\Status\StatusAttribute.cs" />
     <Compile Include="Datatypes\Status\Statuses.cs" />
-    <Compile Include="Datatypes\SubArray.cs" />
     <Compile Include="Editors\Abilities\AbilityAttributesEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -279,18 +287,6 @@
     <Compile Include="Editors\FFTPatchEditor.Designer.cs">
       <DependentUpon>FFTPatchEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\Fonts\FontEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\Fonts\FontEditor.Designer.cs">
-      <DependentUpon>FontEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\Fonts\GlyphEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editors\Fonts\GlyphEditor.Designer.cs">
-      <DependentUpon>GlyphEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Editors\Status\InflictStatusEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -361,6 +357,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Items\AllStoreInventoryEditor.resx">
+      <DependentUpon>AllStoreInventoryEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Items\StoreInventoryEditor.resx">
+      <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PatchPSPForm.resx">
@@ -459,14 +463,6 @@
       <DependentUpon>FFTPatchEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editors\Fonts\FontEditor.resx">
-      <DependentUpon>FontEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\Fonts\GlyphEditor.resx">
-      <DependentUpon>GlyphEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Editors\Status\InflictStatusEditor.resx">
       <DependentUpon>InflictStatusEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -511,108 +507,25 @@
       <DependentUpon>PatchPSXForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Resources\ENTD1.ENT" />
-    <None Include="Resources\ENTD2.ENT" />
-    <None Include="Resources\ENTD3.ENT" />
-    <None Include="Resources\ENTD4.ENT" />
-    <Compile Include="Resources\PSP\bin\Abilities.bin" />
-    <None Include="Resources\PSP\bin\AbilityEffects.bin" />
-    <None Include="Resources\PSP\bin\ActionEvents.bin" />
-    <None Include="Resources\PSP\bin\ENTD5.bin" />
-    <None Include="Resources\PSP\bin\font.bin" />
-    <None Include="Resources\PSP\bin\FontWidths.bin" />
-    <None Include="Resources\PSP\bin\InflictStatuses.bin" />
-    <None Include="Resources\PSP\bin\JobLevels.bin" />
-    <None Include="Resources\PSP\bin\Jobs.bin" />
-    <None Include="Resources\PSP\bin\MonsterSkills.bin" />
-    <None Include="Resources\PSP\bin\NewItemAttributes.bin" />
-    <None Include="Resources\PSP\bin\NewItems.bin" />
-    <None Include="Resources\PSP\bin\OldItemAttributes.bin" />
-    <None Include="Resources\PSP\bin\OldItems.bin" />
-    <None Include="Resources\PSP\bin\PoachProbabilities.bin" />
-    <None Include="Resources\PSP\bin\SkillSetsBin.bin" />
-    <None Include="Resources\PSP\bin\StatusAttributes.bin" />
-    <None Include="Resources\PSX-US\bin\Abilities.bin" />
-    <None Include="Resources\PSX-US\bin\AbilityEffects.bin" />
-    <None Include="Resources\PSX-US\bin\ActionEvents.bin" />
-    <None Include="Resources\PSX-US\bin\font.bin" />
-    <None Include="Resources\PSX-US\bin\FontWidths.bin" />
-    <None Include="Resources\PSX-US\bin\InflictStatuses.bin" />
-    <None Include="Resources\PSX-US\bin\JobLevels.bin" />
-    <None Include="Resources\PSX-US\bin\Jobs.bin" />
-    <None Include="Resources\PSX-US\bin\MonsterSkills.bin" />
-    <None Include="Resources\PSX-US\bin\OldItemAttributes.bin" />
-    <None Include="Resources\PSX-US\bin\OldItems.bin" />
-    <None Include="Resources\PSX-US\bin\PoachProbabilities.bin" />
-    <None Include="Resources\PSX-US\bin\SCEAP.DAT.patched.bin" />
-    <None Include="Resources\PSX-US\bin\SkillSetsBin.bin" />
-    <None Include="Resources\PSX-US\bin\StatusAttributes.bin" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Utilities\Codes.cs" />
     <Compile Include="Utilities\DigestGenerator.cs" />
-    <Compile Include="Utilities\ExtensionMethods.cs" />
-    <Compile Include="Utilities\GZip.cs" />
-    <Compile Include="Utilities\ISOPatching\IsoPatch.cs" />
-    <Compile Include="Utilities\ISOPatching\PsxIso.cs" />
-    <Compile Include="Utilities\PatchedByteArray.cs" />
-    <Compile Include="Utilities\ISOPatching\PspIso.cs" />
-    <Compile Include="Utilities\PSPResources.cs" />
-    <Compile Include="Utilities\PSXResources.cs" />
+    <Compile Include="Utilities\PspIso.cs" />
+    <Compile Include="Utilities\PsxIso.cs" />
     <Compile Include="Utilities\ReflectionHelpers.cs" />
-    <Compile Include="Utilities\Resources.cs" />
-    <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\AbilityFormulas.xml" />
-    <Content Include="Resources\bg.gif" />
-    <Content Include="Resources\digestTransform.xsl" />
-    <Content Include="Resources\PSP\Abilities\Abilities.xml" />
-    <Content Include="Resources\PSP\Abilities\Effects.xml" />
-    <Content Include="Resources\PSP\Abilities\Strings.xml" />
-    <None Include="Resources\PSP\bin\ICON0" />
-    <None Include="Resources\MoveFind.bin" />
-    <Content Include="Resources\PSP\EventNames.xml" />
-    <Content Include="Resources\PSP\FFTPackFiles.xml" />
-    <Content Include="Resources\PSP\Items\ItemAttributes.xml" />
-    <Content Include="Resources\PSP\Items\Items.xml" />
-    <Content Include="Resources\PSP\Items\Strings.xml" />
-    <Content Include="Resources\PSP\Jobs.xml" />
-    <Content Include="Resources\PSP\SkillSets.xml" />
-    <Content Include="Resources\PSP\SpecialNames.xml" />
-    <Content Include="Resources\PSP\SpriteSets.xml" />
-    <Content Include="Resources\PSP\StatusNames.xml" />
-    <Content Include="Resources\PSX-US\Abilities\Abilities.xml" />
-    <Content Include="Resources\PSX-US\Abilities\Effects.xml" />
-    <Content Include="Resources\PSX-US\Abilities\Strings.xml" />
-    <Content Include="Resources\PSX-US\EventNames.xml" />
-    <Content Include="Resources\PSX-US\FileList.txt" />
-    <Content Include="Resources\PSX-US\Items\ItemAttributes.xml" />
-    <Content Include="Resources\PSX-US\Items\Items.xml" />
-    <Content Include="Resources\PSX-US\Items\Strings.xml" />
-    <Content Include="Resources\PSX-US\Jobs.xml" />
-    <Content Include="Resources\PSX-US\SkillSets.xml" />
-    <Content Include="Resources\PSX-US\SpecialNames.xml" />
-    <Content Include="Resources\PSX-US\SpriteSets.xml" />
-    <Content Include="Resources\PSX-US\StatusNames.xml" />
+    <ProjectReference Include="PatcherLib.Resources\PatcherLib.Resources.csproj">
+      <Project>{E8B981CB-2A97-4901-9A04-E6E5D369F471}</Project>
+      <Name>PatcherLib.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="PatcherLib\PatcherLib.csproj">
+      <Project>{BB7322AD-75D3-44AF-A0BF-76015C53998F}</Project>
+      <Name>PatcherLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

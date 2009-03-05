@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using System.Collections.Generic;
+using PatcherLib.Utilities;
 namespace FFTPatcher.SpriteEditor
 {
     internal class SerializedSprite

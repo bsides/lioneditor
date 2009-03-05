@@ -19,6 +19,8 @@
 
 using System;
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
@@ -64,11 +66,11 @@ namespace FFTPatcher.Datatypes
 
         static Event()
         {
-            pspEventNames = Utilities.GetStringsFromNumberedXmlNodes(
+            pspEventNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSPResources.EventNames,
                 "/Events/Event[@value='{0:X3}']/@name",
                 0x200 + 77 );
-            psxEventNames = Utilities.GetStringsFromNumberedXmlNodes(
+            psxEventNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                 PSXResources.EventNames,
                 "/Events/Event[@value='{0:X3}']/@name",
                 0x200 );

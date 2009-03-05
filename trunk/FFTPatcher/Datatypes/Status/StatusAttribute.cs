@@ -18,6 +18,8 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
@@ -129,8 +131,8 @@ namespace FFTPatcher.Datatypes
             Order = bytes[2];
             CT = bytes[3];
 
-            Utilities.CopyByteToBooleans( bytes[4], ref FreezeCT, ref Unknown1, ref Unknown2, ref Unknown3, ref Unknown4, ref Unknown5, ref Unknown6, ref KO );
-            Utilities.CopyByteToBooleans( bytes[5], ref CanReact, ref Blank, ref IgnoreAttack, ref Unknown7, ref Unknown8, ref Unknown9, ref Unknown10, ref Unknown11 );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[4], ref FreezeCT, ref Unknown1, ref Unknown2, ref Unknown3, ref Unknown4, ref Unknown5, ref Unknown6, ref KO );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[5], ref CanReact, ref Blank, ref IgnoreAttack, ref Unknown7, ref Unknown8, ref Unknown9, ref Unknown10, ref Unknown11 );
             CanReact = !CanReact;
             Cancels = new Statuses( bytes.Sub( 6, 10 ), defaults == null ? null : defaults.Cancels );
             CantStackOn = new Statuses( bytes.Sub( 11, 15 ), defaults == null ? null : defaults.CantStackOn );
@@ -185,8 +187,8 @@ namespace FFTPatcher.Datatypes
             result.Add( Blank2 );
             result.Add( Order );
             result.Add( CT );
-            result.Add( Utilities.ByteFromBooleans( FreezeCT, Unknown1, Unknown2, Unknown3, Unknown4, Unknown5, Unknown6, KO ) );
-            result.Add( Utilities.ByteFromBooleans( !CanReact, Blank, IgnoreAttack, Unknown7, Unknown8, Unknown9, Unknown10, Unknown11 ) );
+            result.Add( PatcherLib.Utilities.Utilities.ByteFromBooleans( FreezeCT, Unknown1, Unknown2, Unknown3, Unknown4, Unknown5, Unknown6, KO ) );
+            result.Add( PatcherLib.Utilities.Utilities.ByteFromBooleans( !CanReact, Blank, IgnoreAttack, Unknown7, Unknown8, Unknown9, Unknown10, Unknown11 ) );
             result.AddRange( Cancels.ToByteArray() );
             result.AddRange( CantStackOn.ToByteArray() );
 
@@ -215,7 +217,7 @@ namespace FFTPatcher.Datatypes
             {
                 foreach( StatusAttribute s in StatusAttributes )
                 {
-                    if( s.Default != null && !Utilities.CompareArrays( s.ToByteArray(), s.Default.ToByteArray() ) )
+                    if ( s.Default != null && !PatcherLib.Utilities.Utilities.CompareArrays( s.ToByteArray(), s.Default.ToByteArray() ) )
                         return true;
                 }
 
@@ -266,12 +268,12 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.SCUS_942_21, 0x565E4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x565E4, bytes ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.BOOT_BIN, 0x276DA4, bytes ) );
-                result.Add( new PatchedByteArray( PspIso.Files.PSP_GAME.SYSDIR.EBOOT_BIN, 0x276DA4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x276DA4, bytes ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x276DA4, bytes ) );
             }
 
             return result;

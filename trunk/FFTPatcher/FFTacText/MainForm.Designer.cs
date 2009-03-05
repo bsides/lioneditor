@@ -19,6 +19,9 @@
 
 namespace FFTPatcher.TextEditor
 {
+    /// <summary>
+    /// The main form for FFTacText.
+    /// </summary>
     partial class MainForm
     {
         /// <summary>
@@ -48,39 +51,39 @@ namespace FFTPatcher.TextEditor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.MenuItem separator1;
             System.Windows.Forms.MenuItem separator2;
             System.Windows.Forms.MenuItem separator3;
+            System.Windows.Forms.MenuItem separator4;
+            System.Windows.Forms.MenuItem separator5;
             this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.fileMenuItem = new System.Windows.Forms.MenuItem();
-            this.newPsxMenuItem = new System.Windows.Forms.MenuItem();
-            this.newPspMenuItem = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
-            this.psxMenuItem = new System.Windows.Forms.MenuItem();
-            this.pspMenuItem = new System.Windows.Forms.MenuItem();
+            this.isoMenuItem = new System.Windows.Forms.MenuItem();
+            this.importPsxIsoMenuItem = new System.Windows.Forms.MenuItem();
+            this.importPsxIsoCustomMenuItem = new System.Windows.Forms.MenuItem();
+            this.importPspIsoMenuItem = new System.Windows.Forms.MenuItem();
+            this.importPspIsoCustomMenuItem = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.textMenuItem = new System.Windows.Forms.MenuItem();
             this.helpMenuItem = new System.Windows.Forms.MenuItem();
             this.allowedSymbolsMenuItem = new System.Windows.Forms.MenuItem();
             this.aboutMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.partitionEditor = new FFTPatcher.TextEditor.Editors.PartitionEditor();
-            this.stringSectionedEditor = new FFTPatcher.TextEditor.StringSectionedEditor();
-            this.compressedStringSectionedEditor = new FFTPatcher.TextEditor.CompressedStringSectionedEditor();
-            separator1 = new System.Windows.Forms.MenuItem();
+            this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.progressBar = new PatcherLib.Controls.ProgressBarWithText();
+            this.fileEditor1 = new FFTPatcher.TextEditor.Editors.FileEditor();
             separator2 = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
+            separator4 = new System.Windows.Forms.MenuItem();
+            separator5 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
-            // 
-            // separator1
-            // 
-            separator1.Index = 2;
-            separator1.Text = "-";
             // 
             // separator2
             // 
-            separator2.Index = 5;
+            separator2.Index = 2;
             separator2.Text = "-";
             // 
             // separator3
@@ -88,64 +91,94 @@ namespace FFTPatcher.TextEditor
             separator3.Index = 1;
             separator3.Text = "-";
             // 
+            // separator4
+            // 
+            separator4.Index = 2;
+            separator4.Text = "-";
+            // 
+            // separator5
+            // 
+            separator5.Index = 5;
+            separator5.Text = "-";
+            // 
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.fileMenuItem,
-            this.psxMenuItem,
-            this.pspMenuItem,
+            this.isoMenuItem,
+            this.textMenuItem,
             this.helpMenuItem} );
             // 
             // fileMenuItem
             // 
             this.fileMenuItem.Index = 0;
             this.fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.newPsxMenuItem,
-            this.newPspMenuItem,
-            separator1,
             this.openMenuItem,
             this.saveMenuItem,
             separator2,
             this.exitMenuItem} );
             this.fileMenuItem.Text = "File";
             // 
-            // newPsxMenuItem
-            // 
-            this.newPsxMenuItem.Index = 0;
-            this.newPsxMenuItem.Text = "New PS&X text";
-            // 
-            // newPspMenuItem
-            // 
-            this.newPspMenuItem.Index = 1;
-            this.newPspMenuItem.Text = "New PS&P text";
-            // 
             // openMenuItem
             // 
-            this.openMenuItem.Index = 3;
+            this.openMenuItem.Index = 0;
             this.openMenuItem.Text = "&Open .ffttext...";
             // 
             // saveMenuItem
             // 
             this.saveMenuItem.Enabled = false;
-            this.saveMenuItem.Index = 4;
+            this.saveMenuItem.Index = 1;
             this.saveMenuItem.Text = "&Save .ffttext...";
             // 
             // exitMenuItem
             // 
-            this.exitMenuItem.Index = 6;
+            this.exitMenuItem.Index = 3;
             this.exitMenuItem.Text = "E&xit";
             // 
-            // psxMenuItem
+            // isoMenuItem
             // 
-            this.psxMenuItem.Index = 1;
-            this.psxMenuItem.Text = "PSX";
-            this.psxMenuItem.Visible = false;
+            this.isoMenuItem.Index = 1;
+            this.isoMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.importPsxIsoMenuItem,
+            this.importPsxIsoCustomMenuItem,
+            separator4,
+            this.importPspIsoMenuItem,
+            this.importPspIsoCustomMenuItem,
+            separator5,
+            this.menuItem2} );
+            this.isoMenuItem.Text = "ISO";
             // 
-            // pspMenuItem
+            // importPsxIsoMenuItem
             // 
-            this.pspMenuItem.Index = 2;
-            this.pspMenuItem.Text = "PSP";
-            this.pspMenuItem.Visible = false;
+            this.importPsxIsoMenuItem.Index = 0;
+            this.importPsxIsoMenuItem.Text = "Import PSX ISO...";
+            // 
+            // importPsxIsoCustomMenuItem
+            // 
+            this.importPsxIsoCustomMenuItem.Index = 1;
+            this.importPsxIsoCustomMenuItem.Text = "Import PSX ISO (custom tbl)...";
+            // 
+            // importPspIsoMenuItem
+            // 
+            this.importPspIsoMenuItem.Index = 3;
+            this.importPspIsoMenuItem.Text = "Import PSP ISO...";
+            // 
+            // importPspIsoCustomMenuItem
+            // 
+            this.importPspIsoCustomMenuItem.Index = 4;
+            this.importPspIsoCustomMenuItem.Text = "Import PSP ISO (custom tbl)...";
+            // 
+            // menuItem2
+            // 
+            this.menuItem2.Enabled = false;
+            this.menuItem2.Index = 6;
+            this.menuItem2.Text = "Patch ISO...";
+            // 
+            // textMenuItem
+            // 
+            this.textMenuItem.Enabled = false;
+            this.textMenuItem.Index = 2;
+            this.textMenuItem.Text = "Text";
             // 
             // helpMenuItem
             // 
@@ -167,41 +200,40 @@ namespace FFTPatcher.TextEditor
             this.aboutMenuItem.Index = 2;
             this.aboutMenuItem.Text = "About...";
             // 
-            // partitionEditor
+            // patchPsxBackgroundWorker
             // 
-            this.partitionEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.partitionEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.partitionEditor.Name = "partitionEditor";
-            this.partitionEditor.Size = new System.Drawing.Size( 543, 374 );
-            this.partitionEditor.Strings = null;
-            this.partitionEditor.TabIndex = 2;
+            this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
+            this.patchPsxBackgroundWorker.WorkerSupportsCancellation = true;
             // 
-            // stringSectionedEditor
+            // progressBar
             // 
-            this.stringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.stringSectionedEditor.Name = "stringSectionedEditor";
-            this.stringSectionedEditor.Size = new System.Drawing.Size( 543, 374 );
-            this.stringSectionedEditor.Strings = null;
-            this.stringSectionedEditor.TabIndex = 0;
+            this.progressBar.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.progressBar.BackColor = System.Drawing.Color.White;
+            this.progressBar.ForeColor = System.Drawing.Color.Blue;
+            this.progressBar.Location = new System.Drawing.Point( 12, 534 );
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size( 754, 23 );
+            this.progressBar.TabIndex = 3;
+            this.progressBar.Visible = false;
             // 
-            // compressedStringSectionedEditor
+            // fileEditor1
             // 
-            this.compressedStringSectionedEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compressedStringSectionedEditor.Location = new System.Drawing.Point( 0, 0 );
-            this.compressedStringSectionedEditor.Name = "compressedStringSectionedEditor";
-            this.compressedStringSectionedEditor.Size = new System.Drawing.Size( 543, 374 );
-            this.compressedStringSectionedEditor.Strings = null;
-            this.compressedStringSectionedEditor.TabIndex = 1;
+            this.fileEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
+                        | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.fileEditor1.Location = new System.Drawing.Point( 13, 13 );
+            this.fileEditor1.Name = "fileEditor1";
+            this.fileEditor1.Size = new System.Drawing.Size( 753, 544 );
+            this.fileEditor1.TabIndex = 4;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 543, 374 );
-            this.Controls.Add( this.partitionEditor );
-            this.Controls.Add( this.stringSectionedEditor );
-            this.Controls.Add( this.compressedStringSectionedEditor );
+            this.ClientSize = new System.Drawing.Size( 778, 569 );
+            this.Controls.Add( this.fileEditor1 );
+            this.Controls.Add( this.progressBar );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTacText Editor";
@@ -213,13 +245,6 @@ namespace FFTPatcher.TextEditor
 
         private System.Windows.Forms.MainMenu mainMenu;
         private System.Windows.Forms.MenuItem fileMenuItem;
-        private System.Windows.Forms.MenuItem psxMenuItem;
-        private System.Windows.Forms.MenuItem pspMenuItem;
-        private StringSectionedEditor stringSectionedEditor;
-        private CompressedStringSectionedEditor compressedStringSectionedEditor;
-        private FFTPatcher.TextEditor.Editors.PartitionEditor partitionEditor;
-        private System.Windows.Forms.MenuItem newPsxMenuItem;
-        private System.Windows.Forms.MenuItem newPspMenuItem;
         private System.Windows.Forms.MenuItem openMenuItem;
         private System.Windows.Forms.MenuItem saveMenuItem;
         private System.Windows.Forms.MenuItem exitMenuItem;
@@ -228,6 +253,16 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.MenuItem helpMenuItem;
         private System.Windows.Forms.MenuItem allowedSymbolsMenuItem;
+        private System.ComponentModel.BackgroundWorker patchPsxBackgroundWorker;
+        private PatcherLib.Controls.ProgressBarWithText progressBar;
+        private FFTPatcher.TextEditor.Editors.FileEditor fileEditor1;
+        private System.Windows.Forms.MenuItem isoMenuItem;
+        private System.Windows.Forms.MenuItem textMenuItem;
+        private System.Windows.Forms.MenuItem importPsxIsoMenuItem;
+        private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.MenuItem importPspIsoMenuItem;
+        private System.Windows.Forms.MenuItem importPsxIsoCustomMenuItem;
+        private System.Windows.Forms.MenuItem importPspIsoCustomMenuItem;
 
     }
 }

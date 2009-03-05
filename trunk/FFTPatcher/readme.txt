@@ -42,3 +42,5 @@ Some info about each page on the editor:
   Move-Find Items:
     Traps for each map and items that can be discovered by units that have the "Move-Find Items" skill (called
       Treasure Hunter on PSP)
+  Store Inventory:
+    Add or remove items from each stre

@@ -19,13 +19,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher
 {
@@ -80,12 +80,6 @@ public string CustomICON0FileName
         public string FileName { get { return isoPathTextBox.Text; } }
 
         public bool FONT { get; private set; }
-
-        public bool FontWidths
-        {
-            get { return bootBinPatchable[(int)BootBinPatchable.FontWidths]; }
-            set { bootBinPatchable[(int)BootBinPatchable.FontWidths] = value; }
-        }
 
         public CustomICON0 ICON0
         {
@@ -151,7 +145,7 @@ public string CustomICON0FileName
                 }
                 else
                 {
-                    return new PatchedByteArray[] { new PatchedByteArray( PspIso.Files.PSP_GAME.ICON0_PNG, 0, ICON0_PNG ) };
+                    return new PatchedByteArray[] { new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_ICON0_PNG, 0, ICON0_PNG ) };
                 }
             }
         }
@@ -162,9 +156,9 @@ public string CustomICON0FileName
             {
                 int result = 0;
                 ENTD.ForEach( b => result += b ? 1 : 0 );
-                new bool[] { FONT, Abilities, AbilityEffects, FontWidths, MoveFindItems,
+                new bool[] { Abilities, AbilityEffects, MoveFindItems,
                     Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
-                    StatusAttributes, InflictStatus, Poach }.ForEach( b => result += b ? 2 : 0 );
+                    StatusAttributes, InflictStatus, Poach, StoreInventory }.ForEach( b => result += b ? 2 : 0 );
                 if( RegenECC ) result++;
                 if( ICON0 != CustomICON0.NoChange ) result++;
                 if( ItemAttributes ) result += 4;
@@ -194,6 +188,12 @@ public string CustomICON0FileName
             set { bootBinPatchable[(int)BootBinPatchable.StatusAttributes] = value; }
         }
 
+        public bool StoreInventory
+        {
+            get { return bootBinPatchable[(int)BootBinPatchable.StoreInventory];}
+            set { bootBinPatchable[(int)BootBinPatchable.StoreInventory] = value; }
+        }
+
 		#endregion Public Properties 
 
 		#region Constructors (1) 
@@ -221,8 +221,8 @@ public string CustomICON0FileName
             bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.Skillsets, FFTPatch.SkillSets.HasChanged );
             bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.StatusAttributes, FFTPatch.StatusAttributes.HasChanged );
             bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged );
-            bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged );
-            bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.FontWidths, false );
+            bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged);
+            bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.StoreInventory, FFTPatch.StoreInventories.HasChanged);
 
             dontChangeIcon0RadioButton.Checked = true;
 
@@ -369,10 +369,10 @@ private void UpdateNextEnabled()
                  ValidateICON0( icon0FileNameTextBox.Text ) );
             enabled = enabled && ValidateISO( isoPathTextBox.Text );
             enabled = enabled &&
-                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || ENTD5 || FONT || RegenECC || Abilities || Items ||
+                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || ENTD5 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
                   StatusAttributes || InflictStatus || Poach || ( ICON0 != CustomICON0.NoChange ) ||
-                  AbilityEffects || FontWidths || MoveFindItems );
+                  AbilityEffects || MoveFindItems || StoreInventory );
 
             okButton.Enabled = enabled;
         }
@@ -436,8 +436,7 @@ private enum BootBinPatchable
             InflictStatus,
             PoachProbabilities,
             MoveFindItems,
-            Font,
-            FontWidths
+            StoreInventory
         }
     }
 }

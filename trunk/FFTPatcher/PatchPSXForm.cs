@@ -19,40 +19,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher
 {
-    public interface IGeneratePatchList
-    {
-        bool[] ENTD { get; }
-        bool FONT { get; }
-        bool RegenECC { get; }
-        string FileName { get; }
-        bool Abilities { get; }
-        bool AbilityEffects { get; }
-        bool FontWidths { get; }
-        bool MoveFindItems { get; }
-        bool Items { get; }
-        bool ItemAttributes { get; }
-        bool Jobs { get; }
-        bool JobLevels { get; }
-        bool Skillsets { get; }
-        bool MonsterSkills { get; }
-        bool ActionMenus { get; }
-        bool StatusAttributes { get; }
-        bool InflictStatus { get; }
-        bool Poach { get; }
-        IList<PatchedByteArray> OtherPatches { get; }
-        int PatchCount { get; }
-    }
-
     public partial class PatchPSXForm : Form, IGeneratePatchList
     {
 		#region Instance Variables (4) 
@@ -100,14 +76,6 @@ namespace FFTPatcher
         public bool ENTD4 { get; private set; }
 
         public string FileName { get { return isoPathTextBox.Text; } }
-
-        public bool FONT { get; private set; }
-
-        public bool FontWidths
-        {
-            get { return battlePatchable[(int)BATTLEPatchable.FontWidths]; }
-            set { battlePatchable[(int)BATTLEPatchable.FontWidths] = value; }
-        }
 
         public bool InflictStatus
         {
@@ -157,7 +125,7 @@ namespace FFTPatcher
             {
                 if ( SCEAP != CustomSCEAP.NoChange )
                 {
-                    return new PatchedByteArray[] { new PatchedByteArray( PsxIso.Sectors.SCEAP_DAT, 0, SCEAP_DAT ) };
+                    return new PatchedByteArray[] { new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCEAP_DAT, 0, SCEAP_DAT ) };
                 }
                 else
                 {
@@ -172,9 +140,9 @@ namespace FFTPatcher
             {
                 int result = 0;
                 ENTD.ForEach( b => result += b ? 1 : 0 );
-                bool[] bb = new bool[] { FONT, RegenECC, Abilities, AbilityEffects, FontWidths, MoveFindItems,
+                bool[] bb = new bool[] { RegenECC, Abilities, AbilityEffects, MoveFindItems,
                     Items, ItemAttributes, Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
-                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange};
+                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange, StoreInventory};
                 bb.ForEach( b => result += b ? 1 : 0 );
                 return result;
             }
@@ -240,8 +208,9 @@ namespace FFTPatcher
             scusCheckedListBox.SetItemChecked( (int)SCUSPatchable.StatusAttributes, FFTPatch.StatusAttributes.HasChanged );
 
             battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged );
-            battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.FontWidths, false );
             battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged );
+
+            storeInventoryCheckBox.Checked = FFTPatch.StoreInventories.HasChanged;
 
             dontChangeSceapRadioButton.Checked = true;
 
@@ -249,7 +218,6 @@ namespace FFTPatcher
             entd2CheckBox.Checked = FFTPatch.ENTDs.ENTDs[1].HasChanged;
             entd3CheckBox.Checked = FFTPatch.ENTDs.ENTDs[2].HasChanged;
             entd4CheckBox.Checked = FFTPatch.ENTDs.ENTDs[3].HasChanged;
-            fontCheckBox.Checked = false;
             eccCheckBox.Enabled = false;
             eccCheckBox.Checked = true;
 
@@ -317,11 +285,11 @@ namespace FFTPatcher
                 case Checkboxes.ENTD4:
                     ENTD4 = box.Checked;
                     break;
-                case Checkboxes.FONT:
-                    FONT = box.Checked;
-                    break;
                 case Checkboxes.RegenECC:
                     RegenECC = box.Checked;
+                    break;
+                case Checkboxes.StoreInventory:
+                    StoreInventory = box.Checked;
                     break;
                 default:
                     break;
@@ -398,10 +366,10 @@ private void UpdateNextEnabled()
                  ValidateSCEAP( sceapFileNameTextBox.Text ) );
             enabled = enabled && ValidateISO( isoPathTextBox.Text );
             enabled = enabled &&
-                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || FONT || RegenECC || Abilities || Items ||
+                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
                   StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
-                  AbilityEffects || FontWidths || MoveFindItems );
+                  AbilityEffects || MoveFindItems || StoreInventory );
 
             okButton.Enabled = enabled;
         }
@@ -435,8 +403,8 @@ private void UpdateNextEnabled()
             ENTD2,
             ENTD3,
             ENTD4,
-            FONT,
             RegenECC,
+            StoreInventory
         }
         private enum SCUSPatchable
         {
@@ -455,8 +423,17 @@ private void UpdateNextEnabled()
         private enum BATTLEPatchable
         {
             AbilityEffects,
-            FontWidths,
             MoveFindItems
         }
+
+        #region IGeneratePatchList Members
+
+
+        public bool StoreInventory
+        {
+            get; private set;
+        }
+
+        #endregion
     }
 }

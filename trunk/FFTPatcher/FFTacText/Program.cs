@@ -23,8 +23,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Xml;
-using FFTPatcher.TextEditor.Files;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.TextEditor
 {
@@ -96,44 +95,120 @@ namespace FFTPatcher.TextEditor
                     }
 
                     object o = ci.Invoke( new object[] { bytes } );
-                    if( o is IStringSectioned )
-                    {
-                        using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
-                        {
-                            writer.WriteStartElement( "dongs" );
-                            (o as IStringSectioned).WriteXml( writer, true );
-                            writer.WriteEndElement();
-                            return true;
-                        }
-                    }
-                    else if( o is IPartitionedFile )
-                    {
-                        using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
-                        {
-                            writer.WriteStartElement( "dongs" );
-                            (o as IPartitionedFile).WriteXml( writer, true );
-                            writer.WriteEndElement();
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    //if( o is IStringSectioned )
+                    //{
+                    //    using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
+                    //    {
+                    //        writer.WriteStartElement( "dongs" );
+                    //        (o as IStringSectioned).WriteXml( writer, true );
+                    //        writer.WriteEndElement();
+                    //        return true;
+                    //    }
+                    //}
+                    //else if( o is IPartitionedFile )
+                    //{
+                    //    using( XmlTextWriter writer = new XmlTextWriter( output, System.Text.Encoding.UTF8 ) )
+                    //    {
+                    //        writer.WriteStartElement( "dongs" );
+                    //        (o as IPartitionedFile).WriteXml( writer, true );
+                    //        writer.WriteEndElement();
+                    //        return true;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    return false;
+                    //}
+                    return true;
                 }
             }
 
             return false;
         }
 
+        delegate IFile func( FFTText text, string guid );
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main( string[] args )
         {
-            if( !HandleArgs( args ) )
+            if ( !HandleArgs( args ) )
             {
+                //using ( Stream psx = File.Open( @"N:\dev\fft\ita\virginimages\FINALFANTASYTACTICS.BIN", FileMode.Open, FileAccess.Read ) )
+                //using ( Stream psp = File.Open( @"N:\dev\fft\ita\virginimages\fflw-usa.iso", FileMode.Open, FileAccess.Read ) )
+                //{
+                //    var psxtext = FFTTextFactory.GetPsxText( psx );
+                //    var psptext = FFTTextFactory.GetPspText( psp );
+                //    FFTPatcher.TextEditor.Files.QuickEdit pspQuick = psptext.Files[psptext.Files.Count - 1] as FFTPatcher.TextEditor.Files.QuickEdit;
+                //    FFTPatcher.TextEditor.Files.QuickEdit psxQuick = psxtext.Files[psxtext.Files.Count - 1] as FFTPatcher.TextEditor.Files.QuickEdit;
+                //    int sectionCount = pspQuick.NumberOfSections;
+                //    for ( int i = 0; i < sectionCount; i++ )
+                //    {
+                //        int secLength = pspQuick.SectionLengths[i];
+                //        SectionType type = (SectionType)Enum.Parse( typeof( SectionType ), pspQuick.SectionNames[i] );
+                //        int psxIndex = psxQuick.SectionNames.IndexOf( pspQuick.SectionNames[i] );
+                //        int psxSecLength = psxQuick.SectionLengths[psxIndex];
+                //        for ( int j = 0; j < psxSecLength; j++ )
+                //        {
+                //            psxQuick[psxIndex, j] = pspQuick[i, j];
+                //        }
+
+                //    }
+
+                //    var func =
+                //        new func(
+                //            delegate( FFTText text, string guid )
+                //            {
+                //                Guid g = new Guid( guid );
+                //                return text.Files.Find( f => ( f is AbstractFile ) && ( f as AbstractFile ).Layout.Guid == g );
+                //            } );
+
+                //    var file = func( psptext, @"{396EF3EC-D861-4DC9-B4DA-BBCEC443FFC2}" );
+                //    var destFile = func( psxtext, @"{A45B2DE6-520A-4484-A208-6F7895798869}" );
+                //    for ( int i = 0; i < 172; i++ )
+                //    {
+                //        destFile[1, i] = file[1, i];
+                //        destFile[2, i] = file[2, i];
+                //        destFile[3, i] = file[3, i];
+                //    }
+
+                //    destFile = func( psxtext, @"{D1CA95EC-FAE1-41DD-AFB1-EF2EF2563025}" );
+                //    file = func( psptext, @"{8B291A28-EAEA-42E7-8BB3-150871BBB89F}" );
+                //    for ( int i = 0; i < 768; i++ )
+                //    {
+                //        destFile[20, i] = file[20, i];
+                //    }
+
+                //    destFile = func( psxtext, @"{162DC5BF-983B-4E04-972E-C51B51EE1DCA}" );
+                //    file = func( psptext, @"{8AB063AC-7E8E-4B8F-9F67-11D16560B874}" );
+                //    for ( int i = 0; i < 172; i++ )
+                //    {
+                //        destFile[0, i] = file[0, i];
+                //    }
+
+                //    file = func( psptext, @"{CE4B8E36-0DA8-4A2E-A03E-ABEF21AD3A03}" );
+                //    destFile = func( psxtext, @"{4C29FBA2-B49B-4BA7-8880-E785A61743FB}" );
+                //    for ( int i = 0; i < 1024; i++ )
+                //    {
+                //        destFile[1, i] = file[1, i];
+                //    }
+                //    destFile = func( psxtext, @"{FBFFD898-2E12-4E3C-B73D-CA6FA6997F42}" );
+                //    for ( int i = 0; i < 1024; i++ )
+                //    {
+                //        destFile[8, i] = file[1, i];
+                //    }
+                //    destFile = func( psxtext, @"{5AD4F95A-0C00-445D-8A29-EA4E09B9553F}" );
+                //    for ( int i = 0; i < 1024; i++ )
+                //    {
+                //        destFile[8, i] = file[1, i];
+                //        destFile[9, i] = file[1, i];
+                //    }
+
+
+                //    FFTTextFactory.WriteXml( psxtext, @"N:\dev\fft\ita\virginimages\psxxx.ffttext" );
+                //}
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault( false );
                 Application.Run( new MainForm() );

@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using FFTPatcher.Datatypes;
+using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher
 {
@@ -105,10 +107,6 @@ namespace FFTPatcher
             if( FFTPatch.InflictStatuses != null )
             {
                 sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Inflict Statuses" : "", FFTPatch.InflictStatuses.GenerateCodes() );
-            }
-            if( FFTPatch.Font != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Font" : "", FFTPatch.Font.GenerateCodes() );
             }
             if( FFTPatch.MoveFind != null )
             {

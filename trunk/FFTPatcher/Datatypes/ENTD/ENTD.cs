@@ -18,6 +18,8 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Datatypes
 {
@@ -190,18 +192,18 @@ namespace FFTPatcher.Datatypes
 
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
-                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
-                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
-                result.Add( new PatchedByteArray( PsxIso.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD1_ENT, 0x00, bytes1 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD2_ENT, 0x00, bytes2 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD3_ENT, 0x00, bytes3 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD4_ENT, 0x00, bytes4 ) );
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD1_ENT, 0x00, bytes1 ) );
-                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD2_ENT, 0x00, bytes2 ) );
-                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD3_ENT, 0x00, bytes3 ) );
-                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD4_ENT, 0x00, bytes4 ) );
-                result.Add( new PatchedByteArray( FFTPack.BATTLE.ENTD5_ENT, 0x00, PSPEventsToByteArray() ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD1_ENT, 0x00, bytes1 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD2_ENT, 0x00, bytes2 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD3_ENT, 0x00, bytes3 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD4_ENT, 0x00, bytes4 ) );
+                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD5_ENT, 0x00, PSPEventsToByteArray() ) );
             }
 
             return result;

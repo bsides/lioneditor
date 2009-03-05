@@ -1,5 +1,13 @@
-FFTPatcher - v0.352
+FFTPatcher - v0.388
 
+Changes since v0.352:
+  Added Store Inventories to FFTPatcher
+  Removed Font from FFTPatcher
+  Split shared information into PatcherLib and PatcherLib.Resources
+  Rewrote text editor
+  Added FFTorgASM - Lets you organize and apply custom patches
+                    to the PSX ISO. See Example.xml
+  
 Changes since v0.328:
   Fixed bug that caused Ability Effects to be applied to the ISO incorrectly
   Fixed Formula 0x4E: Dmg_(MA*Y)

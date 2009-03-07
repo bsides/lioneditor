@@ -53,11 +53,11 @@ namespace FFTPatcher.TextEditor
         {
             if ( file.GetType() == typeof( FFTPack.Files ) )
             {
-                return FFTPack.GetFileFromIso( iso, (FFTPack.Files)file ).Sub( offset, offset + size - 1 );
+                return FFTPack.GetFileFromIso( iso, pspIsoInfo, (FFTPack.Files)file ).Sub( offset, offset + size - 1 );
             }
             else if ( file.GetType() == typeof( PatcherLib.Iso.PspIso.Sectors ) )
             {
-                return PatcherLib.Iso.PspIso.GetFile( iso, (PatcherLib.Iso.PspIso.Sectors)file, offset, size );
+                return PatcherLib.Iso.PspIso.GetFile( iso, pspIsoInfo, (PatcherLib.Iso.PspIso.Sectors)file, offset, size );
             }
             else
             {
@@ -261,9 +261,14 @@ namespace FFTPatcher.TextEditor
             return new ReadOnlyDictionary<SectionType, IList<QuickEdit.QuickEditEntry>>( result );
         }
 
+        private static PatcherLib.Iso.PspIso.PspIsoInfo pspIsoInfo = null;
+
         public static FFTText GetPspText( Stream iso, GenericCharMap charmap, BackgroundWorker worker )
         {
-            return GetText( iso, Context.US_PSP, Resources.PSP, BytesFromPspIso, charmap, worker );
+            pspIsoInfo = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
+            var result = GetText( iso, Context.US_PSP, Resources.PSP, BytesFromPspIso, charmap, worker );
+            pspIsoInfo = null;
+            return result;
         }
 
         public static FFTText GetPspText( Stream iso, Stream tblStream, BackgroundWorker worker )

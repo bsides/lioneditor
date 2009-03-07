@@ -58,14 +58,14 @@ namespace FFTPatcher.Datatypes
         {
             byte[] effects = owner.ToEffectsByteArray();
             List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
-            if( context == Context.US_PSX )
+            if (context == Context.US_PSX)
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x14F3F0, effects ) );
+                result.Add(PatcherLib.Iso.PsxIso.AbilityEffects.GetPatchedByteArray(effects));
             }
-            else if( context == Context.US_PSP )
+            else if (context == Context.US_PSP)
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3177B4, effects ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3177B4, effects ) );
+                PatcherLib.Iso.PspIso.AbilityEffects.ForEach(
+                    kl => result.Add(kl.GetPatchedByteArray(effects)));
             }
 
             return result;
@@ -327,19 +327,19 @@ namespace FFTPatcher.Datatypes
         #endregion Methods
 
 
-        public override IList<PatchedByteArray> GetPatches( Context context )
+        public override IList<PatchedByteArray> GetPatches(Context context)
         {
-            var result = new List<PatchedByteArray>( 4 );
-            byte[] bytes = ToByteArray( context );
+            var result = new List<PatchedByteArray>(4);
+            byte[] bytes = ToByteArray(context);
 
-            if ( context == Context.US_PSX )
+            if (context == Context.US_PSX)
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x4F3F0, bytes ) );
+                result.Add(PatcherLib.Iso.PsxIso.Abilities.GetPatchedByteArray(bytes));
             }
-            else if ( context == Context.US_PSP )
+            else if (context == Context.US_PSP)
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x271514, bytes ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x271514, bytes ) );
+                PatcherLib.Iso.PspIso.Abilities.ForEach(
+                    kl => result.Add(kl.GetPatchedByteArray(bytes)));
             }
 
             return result;

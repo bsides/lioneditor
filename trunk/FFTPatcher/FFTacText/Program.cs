@@ -126,7 +126,7 @@ namespace FFTPatcher.TextEditor
             return false;
         }
 
-        delegate IFile func( FFTText text, string guid );
+        //delegate IFile func( FFTText text, string guid );
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

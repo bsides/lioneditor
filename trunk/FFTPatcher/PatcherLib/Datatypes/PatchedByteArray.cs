@@ -56,6 +56,29 @@ namespace PatcherLib.Datatypes
             SectorEnum = file;
         }
 
+        public PatchedByteArray(Enum fileOrSector, long offset, byte[] bytes)
+            : this(-1, offset, bytes)
+        {
+            SectorEnum = fileOrSector;
+            Type t = fileOrSector.GetType();
+            if (t == typeof(PspIso.Sectors))
+            {
+                Sector = (int)((PspIso.Sectors)fileOrSector);
+            }
+            else if (t == typeof(FFTPack.Files))
+            {
+                Sector = (int)((FFTPack.Files)fileOrSector);
+            }
+            else if (t == typeof(PsxIso.Sectors))
+            {
+                Sector = (int)((PsxIso.Sectors)fileOrSector);
+            }
+            else
+            {
+                throw new ArgumentException("fileOrSector has incorrect type");
+            }
+        }
+
         public PatchedByteArray( int sector, long offset, byte[] bytes )
         {
             Sector = sector;

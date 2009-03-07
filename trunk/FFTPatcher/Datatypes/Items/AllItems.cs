@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using PatcherLib;
 using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -206,15 +207,13 @@ namespace FFTPatcher.Datatypes
             var first = ToFirstByteArray();
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x536B8, first ) );
+                result.Add(PatcherLib.Iso.PsxIso.OldItems.GetPatchedByteArray(first));
             }
-            else if ( context == Context.US_PSP )
+            else if (context == Context.US_PSP)
             {
                 var second = ToSecondByteArray();
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3252DC, first ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x256E00, second ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3252DC, first ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x256E00, second ) );
+                PatcherLib.Iso.PspIso.OldItems.ForEach(kl => result.Add(kl.GetPatchedByteArray(first)));
+                PatcherLib.Iso.PspIso.NewItems.ForEach(kl => result.Add(kl.GetPatchedByteArray(second)));
             }
 
             return result;

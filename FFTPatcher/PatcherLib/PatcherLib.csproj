@@ -67,7 +67,6 @@
     <Compile Include="Datatypes\IChangeable.cs" />
     <Compile Include="Datatypes\IPatchableFile.cs" />
     <Compile Include="GZip.cs" />
-    <Compile Include="ISOPatching\ImageMaster\AStream.cs" />
     <Compile Include="ISOPatching\ImageMaster\Reader\IImageRecord.cs" />
     <Compile Include="ISOPatching\ImageMaster\Reader\ImageReader.cs" />
     <Compile Include="ISOPatching\ImageMaster\Reader\ImageRecord.cs" />

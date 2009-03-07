@@ -30,30 +30,27 @@ namespace PatcherLib.Iso
         public class PspIsoInfo
         {
             private delegate void MyFunc( string path, Sectors sector );
-            public IDictionary<Sectors, long> FileToSectorMap { get; private set; }
-            private PspIsoInfo() { }
-            ImageMaster.IsoReader reader;
 
-            public static PspIsoInfo GetPspIsoInfo( Stream iso )
+            private IDictionary<Sectors, long> fileToSectorMap;
+            private PspIsoInfo() { }
+            public long this[PspIso.Sectors file] { get { return fileToSectorMap[file]; } }
+
+            public static PspIsoInfo GetPspIsoInfo(Stream iso)
             {
-                return GetPspIsoInfo( new ImageMaster.IsoReader( iso ) );
+                return GetPspIsoInfo(ImageMaster.IsoReader.GetRecord(iso));
             }
 
-            private static PspIsoInfo GetPspIsoInfo( ImageMaster.IsoReader reader )
+            private static PspIsoInfo GetPspIsoInfo( ImageMaster.ImageRecord record )
             {
-                if ( !reader.Open() )
-                {
-                    throw new IOException( "couldn't open ISO" );
-                }
-                ImageMaster.ImageRecord record = null;
-                Dictionary<Sectors, long> myDict = new Dictionary<Sectors, long>();
+                ImageMaster.ImageRecord myRecord = null;
+                var myDict = new Dictionary<Sectors, long>();
                 MyFunc func =
                     delegate( string path, Sectors sector )
                     {
-                        record = reader.GetItemPath( path );
-                        if ( record != null )
+                        myRecord = record.GetItemPath( path );
+                        if (myRecord != null)
                         {
-                            myDict[sector] = record.Location;
+                            myDict[sector] = myRecord.Location;
                         }
                         else
                         {
@@ -85,29 +82,14 @@ namespace PatcherLib.Iso
                 func( "PSP_GAME/USRDIR/movie/013_StaffRoll.pmf", Sectors.PSP_GAME_USRDIR_movie_013_StaffRoll_pmf );
                 func( "UMD_DATA.BIN", Sectors.UMD_DATA_BIN );
                 PspIsoInfo result = new PspIsoInfo();
-                result.FileToSectorMap = new ReadOnlyDictionary<Sectors, long>( myDict );
-                result.reader = reader;
+                result.fileToSectorMap = myDict;
                 return result;
             }
-            
 
-            public static PspIsoInfo GetPspIsoInfo( string iso )
+
+            public static PspIsoInfo GetPspIsoInfo(string iso)
             {
-                ImageMaster.IsoReader reader = null;
-                try
-                {
-                    reader = new ImageMaster.IsoReader( iso );
-                    var result = GetPspIsoInfo( reader );
-                    result.reader = null;
-                    return result;
-                }
-                finally
-                {
-                    if ( reader != null )
-                    {
-                        reader.Close();
-                    }
-                }
+                return GetPspIsoInfo(ImageMaster.IsoReader.GetRecord(iso));
             }
         }
         
@@ -161,11 +143,11 @@ namespace PatcherLib.Iso
         {
             if ( IsJP( stream, info ) )
             {
-                CopyBytes( stream, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048, 0x37D9E4, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_EBOOT_BIN] * 2048, 0x37DB40 );
+                CopyBytes( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048, 0x37D9E4, info[Sectors.PSP_GAME_SYSDIR_EBOOT_BIN] * 2048, 0x37DB40 );
             }
             else if ( IsUS( stream, info ) || IsEU( stream, info ) )
             {
-                CopyBytes( stream, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048, 0x3A84A4, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_EBOOT_BIN] * 2048, 0x3A8600 );
+                CopyBytes( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048, 0x3A84A4, info[Sectors.PSP_GAME_SYSDIR_EBOOT_BIN] * 2048, 0x3A8600 );
             }
             else
             {
@@ -183,10 +165,10 @@ namespace PatcherLib.Iso
         public static bool IsEU( Stream stream, PspIsoInfo info )
         {
             return
-                CheckString( stream, info.FileToSectorMap[Sectors.UMD_DATA_BIN] * 2048 + 0, "ULES-00850" ) &&
-                CheckString( stream, info.FileToSectorMap[Sectors.PSP_GAME_PARAM_SFO] * 2048 + 0x128, "ULES00850" ) &&
-                CheckString( stream, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x3143A8, "ULES00850" ) &&
-                CheckString( stream, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x35A530, "ULES00850" );
+                CheckString( stream, info[Sectors.UMD_DATA_BIN] * 2048 + 0, "ULES-00850" ) &&
+                CheckString( stream, info[Sectors.PSP_GAME_PARAM_SFO] * 2048 + 0x128, "ULES00850" ) &&
+                CheckString( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x3143A8, "ULES00850" ) &&
+                CheckString( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x35A530, "ULES00850" );
         }
 
         /// <summary>
@@ -200,7 +182,7 @@ namespace PatcherLib.Iso
         {
             //return CheckFile( stream, "ULJM-05194", "ULJM05194", new long[] { 0x8373, 0xE000 }, new long[] { 0x2BF0128, 0xFD619FC, 0xFD97A5C } );
             return
-                CheckString( stream, info.FileToSectorMap[Sectors.UMD_DATA_BIN] * 2048 + 0, "ULJM-05194" );
+                CheckString( stream, info[Sectors.UMD_DATA_BIN] * 2048 + 0, "ULJM-05194" );
         }
 
         /// <summary>
@@ -213,10 +195,10 @@ namespace PatcherLib.Iso
         public static bool IsUS( Stream stream, PspIsoInfo info )
         {
             return
-                CheckString( stream, info.FileToSectorMap[Sectors.UMD_DATA_BIN] * 2048 + 0, "ULUS-10297" ) &&
-                CheckString( stream, info.FileToSectorMap[Sectors.PSP_GAME_PARAM_SFO] * 2048 + 0x128, "ULUS10297" ) &&
-                CheckString( stream, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x3143A8, "ULUS10297" ) &&
-                CheckString( stream, info.FileToSectorMap[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x35A530, "ULUS10297" );
+                CheckString( stream, info[Sectors.UMD_DATA_BIN] * 2048 + 0, "ULUS-10297" ) &&
+                CheckString( stream, info[Sectors.PSP_GAME_PARAM_SFO] * 2048 + 0x128, "ULUS10297" ) &&
+                CheckString( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x3143A8, "ULUS10297" ) &&
+                CheckString( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048 + 0x35A530, "ULUS10297" );
         }
 
         private static bool CheckString( Stream stream, long loc, string expectedString )
@@ -234,33 +216,6 @@ namespace PatcherLib.Iso
             patches.ForEach( p => ApplyPatch( file, info, p ) );
         }
 
-        /// <summary>
-        /// Updates the BOOT.BIN file in a War of the Lions ISO image.
-        /// </summary>
-        /// <param name="stream">The stream that represents a War of the Lions ISO image.</param>
-        /// <param name="location">The location in BOOT.BIN to update.</param>
-        /// <param name="bytes">The bytes to update BOOT.BIN with.</param>
-        //public static void UpdateBootBin( Stream stream, long location, byte[] bytes )
-        //{
-        //    DecryptISO( stream );
-
-        //    foreach( long loc in bootBinLocations )
-        //    {
-        //        stream.WriteArrayToPosition( bytes, loc + location );
-        //    }
-        //}
-
-        /// <summary>
-        /// Updates the specified fftpack.bin file with new data.
-        /// </summary>
-        /// <param name="stream">The stream that represents a War of the Lions ISO image.</param>
-        /// <param name="index">The index of the file in fftpack.bin to update.</param>
-        /// <param name="bytes">The bytes to update the file with.</param>
-        //public static void UpdateFFTPack( Stream stream, int index, byte[] bytes )
-        //{
-        //    FFTPack.PatchFile( stream, index, 0, bytes );
-        //}
-
 		#endregion Public Methods 
 
 		#region Private Methods (3) 
@@ -271,7 +226,7 @@ namespace PatcherLib.Iso
             {
                 if ( patch.SectorEnum.GetType() == typeof( PspIso.Sectors ) )
                 {
-                    stream.WriteArrayToPosition( patch.Bytes, (int)( info.FileToSectorMap[(PspIso.Sectors)patch.SectorEnum] * 2048 ) + patch.Offset );
+                    stream.WriteArrayToPosition( patch.Bytes, (int)( info[(PspIso.Sectors)patch.SectorEnum] * 2048 ) + patch.Offset );
                 }
                 else if ( patch.SectorEnum.GetType() == typeof( FFTPack.Files ) )
                 {
@@ -284,39 +239,10 @@ namespace PatcherLib.Iso
             }
         }
 
-        //private static bool CheckFile( Stream stream, string str1, string str2, long[] loc1, long[] loc2 )
-        //{
-        //    byte[] str1bytes = str1.ToByteArray();
-        //    foreach( long l in loc1 )
-        //    {
-        //        stream.Seek( l, SeekOrigin.Begin );
-        //        stream.Read( buffer, 0, str1.Length );
-        //        for( int i = 0; i < str1bytes.Length; i++ )
-        //        {
-        //            if( buffer[i] != str1bytes[i] )
-        //                return false;
-        //        }
-        //    }
-
-        //    byte[] str2bytes = str2.ToByteArray();
-        //    foreach( long l in loc2 )
-        //    {
-        //        stream.Seek( l, SeekOrigin.Begin );
-        //        stream.Read( buffer, 0, str2.Length );
-        //        for( int i = 0; i < str2bytes.Length; i++ )
-        //        {
-        //            if( buffer[i] != str2bytes[i] )
-        //                return false;
-        //        }
-        //    }
-
-        //    return true;
-        //}
-
         public static IList<byte> GetFile( Stream stream, PspIsoInfo info, PspIso.Sectors sector, int start, int length )
         {
             byte[] result = new byte[length];
-            stream.Seek( info.FileToSectorMap[sector] * 2048 + start, SeekOrigin.Begin );
+            stream.Seek( info[sector] * 2048 + start, SeekOrigin.Begin );
             stream.Read( result, 0, length );
             return result;
         }
@@ -325,6 +251,22 @@ namespace PatcherLib.Iso
         {
             byte[] result = FFTPack.GetFileFromIso( stream, info, file );
             return result.Sub( start, start + length - 1 );
+        }
+
+        public static IList<byte> GetBlock(Stream iso, PspIsoInfo info, KnownPosition pos)
+        {
+            if (pos.FFTPack.HasValue)
+            {
+                return GetFile(iso, info, pos.FFTPack.Value, pos.StartLocation, pos.Length);
+            }
+            else if (pos.Sector.HasValue)
+            {
+                return GetFile(iso, info, pos.Sector.Value, pos.StartLocation, pos.Length);
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         private static void CopyBytes( Stream stream, long src, long srcSize, long dest, long destOldSize )
@@ -350,6 +292,155 @@ namespace PatcherLib.Iso
                 stream.Seek( dest + srcSize, SeekOrigin.Begin );
                 stream.Write( buffer, 0, (int)( destOldSize - srcSize ) );
             }
+        }
+
+        public class KnownPosition
+        {
+            public Enum SectorEnum { get; private set; }
+            public Sectors? Sector { get; private set; }
+            public FFTPack.Files? FFTPack { get; private set; }
+
+            public int StartLocation { get; private set; }
+            public int Length { get; private set; }
+
+            private KnownPosition(Enum sector, int startLocation, int length)
+            {
+                SectorEnum = sector;
+                StartLocation = startLocation;
+                Length = length;
+            }
+
+            public KnownPosition(Sectors sector, int startLocation, int length)
+                : this((Enum)sector, startLocation, length)
+            {
+                Sector = sector;
+            }
+
+            public KnownPosition(FFTPack.Files sector, int startLocation, int length)
+                : this((Enum)sector, startLocation, length)
+            {
+                FFTPack = sector;
+            }
+
+            public PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            {
+                if (Sector.HasValue)
+                {
+                    return new PatchedByteArray(Sector, StartLocation, bytes);
+                }
+                else if (FFTPack.HasValue)
+                {
+                    return new PatchedByteArray(FFTPack, StartLocation, bytes);
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+        }
+
+        public static IList<KnownPosition> Abilities { get; private set; }
+
+        public static IList<KnownPosition> AbilityEffects { get; private set; }
+
+        public static IList<KnownPosition> ActionEvents { get; private set; }
+
+        public static KnownPosition ENTD1 { get; private set; }
+
+        public static KnownPosition ENTD2 { get; private set; }
+
+        public static KnownPosition ENTD3 { get; private set; }
+
+        public static KnownPosition ENTD4 { get; private set; }
+        public static KnownPosition ENTD5 { get; private set; }
+
+        public static IList<KnownPosition> InflictStatuses { get; private set; }
+
+        public static IList<KnownPosition> JobLevels { get; private set; }
+
+        public static IList<KnownPosition> Jobs { get; private set; }
+
+        public static IList<KnownPosition> MonsterSkills { get; private set; }
+
+        public static IList<KnownPosition> MoveFindItems { get; private set; }
+
+        public static IList<KnownPosition> OldItemAttributes { get; private set; }
+
+        public static IList<KnownPosition> OldItems { get; private set; }
+
+        public static IList<KnownPosition> NewItemAttributes { get; private set; }
+
+        public static IList<KnownPosition> NewItems { get; private set; }
+
+        public static IList<KnownPosition> PoachProbabilities { get; private set; }
+
+        public static IList<KnownPosition> SkillSets { get; private set; }
+
+        public static IList<KnownPosition> StatusAttributes { get; private set; }
+
+        public static IList<KnownPosition> StoreInventories { get; private set; }
+
+
+        static PspIso()
+        {
+            Abilities = new KnownPosition[] { 
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x271514, 0x24C6),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x271514, 0x24C6) }.AsReadOnly();
+            AbilityEffects = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3177B4, 0x2E0),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3177B4, 0x2E0)}.AsReadOnly();
+            ActionEvents = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x276CA4, 227),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x276CA4, 227)}.AsReadOnly();
+            InflictStatuses = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3263E8, 0x300),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3263E8, 0x300)}.AsReadOnly();
+            Jobs = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2739DC, 8281),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2739DC, 8281)}.AsReadOnly();
+            JobLevels = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x277084, 280),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x277084, 280)}.AsReadOnly();
+            MonsterSkills = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x276BB4, 0xF0),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x276BB4, 0xF0)}.AsReadOnly();
+            OldItemAttributes = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3266E8, 0x7D0),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3266E8, 0x7D0)}.AsReadOnly();
+            NewItemAttributes = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x25720C, 0x20D),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x25720C, 0x20D)}.AsReadOnly();
+
+            OldItems = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3252DC, 0x110A),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3252DC, 0x110A)}.AsReadOnly();
+            NewItems = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x256E00, 1032),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x256E00, 1032)}.AsReadOnly();
+            PoachProbabilities = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x277024, 0x60),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x277024, 0x60)}.AsReadOnly();
+            StatusAttributes = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x276DA4, 0x280),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x276DA4, 0x280)}.AsReadOnly();
+
+            SkillSets = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x275A38, 4475),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x275A38, 4475)}.AsReadOnly();
+
+            MoveFindItems = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2707A8, 0x800),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2707A8, 0x800)}.AsReadOnly();
+
+            StoreInventories = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2DC8D0, 0x200),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2DC8D0, 0x200)}.AsReadOnly();
+
+            ENTD1 = new KnownPosition(FFTPack.Files.BATTLE_ENTD1_ENT, 0, 81920);
+            ENTD2 = new KnownPosition(FFTPack.Files.BATTLE_ENTD2_ENT, 0, 81920);
+            ENTD3 = new KnownPosition(FFTPack.Files.BATTLE_ENTD3_ENT, 0, 81920);
+            ENTD4 = new KnownPosition(FFTPack.Files.BATTLE_ENTD4_ENT, 0, 81920);
+            ENTD5 = new KnownPosition(FFTPack.Files.BATTLE_ENTD5_ENT, 0, 51200);
         }
 
 		#endregion Private Methods 

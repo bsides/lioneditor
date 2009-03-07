@@ -51,20 +51,38 @@ namespace ImageMaster
             _volumeDescriptor = new List<VolumeDescriptor>();
         }
 
-        public IsoReader(string path)
+        private IsoReader(string path)
             : this()
         {
             Initialize(path);
             openType = OpenType.File;
         }
 
-        public IsoReader(Stream stream)
+        private IsoReader(Stream stream)
             : this()
         {
             if (stream == null)
                 throw new ArgumentNullException();
-            Initialize(ImapiV2.Interop.AStream.ToIStream(stream));
+            Initialize(stream);
             openType = OpenType.Stream;
+        }
+
+        public static ImageRecord GetRecord(Stream stream)
+        {
+            IsoReader reader = new IsoReader(stream);
+            if (!reader.Open())
+            {
+                throw new IOException("Couldn't open ISO");
+            }
+            return reader._rootDirectory;
+        }
+
+        public static ImageRecord GetRecord(string filename)
+        {
+            using (FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read))
+            {
+                return GetRecord(stream);
+            }
         }
 
         public bool IsJoliet
@@ -93,7 +111,7 @@ namespace ImageMaster
 
             StartPosition = (ImageReader.PRIMARY_VOLUME_SECTOR * CurrentBlockSize);
             dataBuffer = new byte[CurrentBlockSize];
-            this.BaseStream.Seek(StartPosition, (int)SeekOrigin.Begin, IntPtr.Zero);
+            BaseStream.Seek(StartPosition, SeekOrigin.Begin);
             bool primVolDescDefined = false;
             dataBufferPosition = 0;
             _volumeDescriptor.Add(new VolumeDescriptor());
@@ -167,24 +185,6 @@ namespace ImageMaster
             ReadDir(root, 0);
             _volumename = _volumeDescriptor[MainVolDescIndex].GetString();
             return true;
-        }
-
-        public override void Close()
-        {
-            _rootDirectory.Clear();
-            _volumeDescriptor.Clear();
-            SuspSkipSize = 0;
-            _currentPosition = 0;
-            MainVolDescIndex = 0;
-            dataBufferPosition = 0;
-            bootIsDefined = false;
-            IsSusp = false;
-            dataBuffer = null;
-
-            if ( openType == OpenType.File )
-            {
-                base.Close();
-            }
         }
 
         public static bool CheckSignature(int start, char[] signature, byte[] data)
@@ -425,11 +425,11 @@ namespace ImageMaster
         private void SeekToBlock(long blockIndex)
         {
             long block = (blockIndex * _volumeDescriptor[MainVolDescIndex].LogicalBlockSize);
-            IntPtr pos = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(long)));
-            Marshal.WriteInt64(pos, 0);
-            this.BaseStream.Seek(block, (int)SeekOrigin.Begin, pos);
-            _currentPosition = Marshal.ReadInt64(pos);
-            Marshal.FreeHGlobal(pos);
+            //IntPtr pos = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(long)));
+            //Marshal.WriteInt64(pos, 0);
+            long pos = 0;
+            BaseStream.Seek(block, SeekOrigin.Begin);
+            _currentPosition = BaseStream.Position;
             if (_currentPosition != block)
                 throw new InvalidOperationException();
             dataBufferPosition = 0;

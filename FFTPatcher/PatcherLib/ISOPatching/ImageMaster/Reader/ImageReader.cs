@@ -20,11 +20,11 @@ namespace ImageMaster
         internal string _volumename;
 
         private string _filename;
-        private IStream _stream;
+        private Stream _stream;
         private long _archiveSize;
         private bool _cancel;
 
-        public IStream BaseStream
+        public Stream BaseStream
         {
             get { return _stream; }
         }
@@ -118,26 +118,15 @@ namespace ImageMaster
                 throw new FileNotFoundException();
             _filename = path;
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            Initialize(ImapiV2.Interop.AStream.ToIStream(fs));
+            Initialize(fs);
         }
 
         public void Initialize(Stream stream)
         {
             if (stream == null)
                 throw new ArgumentNullException();
-            Initialize(ImapiV2.Interop.AStream.ToIStream(stream));
-        }
-
-        public void Initialize(IStream stream)
-        {
-            if (stream == null)
-                throw new ArgumentNullException();
             _stream = stream;
-            IntPtr size = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(long)));
-            Marshal.WriteInt64(size, 0);
-            _stream.Seek(0, (int)SeekOrigin.End, size);
-            _archiveSize = Marshal.ReadInt64(size);
-            Marshal.FreeHGlobal(size);
+            _archiveSize = stream.Length;
         }
 
         public virtual bool Open()
@@ -147,20 +136,6 @@ namespace ImageMaster
             return true;
         }
 
-        public virtual void Close()
-        {
-            bootIsDefined = false;
-            _cancel = false;
-            _archiveSize = 0;
-            _filename = string.Empty;
-            _volumename = string.Empty;
-
-            if (_stream != null)
-            {
-                ((ImapiV2.Interop.AStream)_stream).Close();
-            }
-        }
-
         protected virtual int ReadStream(byte[] buffer, int size)
         {
             int processedSize = 0;
@@ -168,11 +143,7 @@ namespace ImageMaster
             {
                 int curSize = (size < CurrentBlockSize) ? size : CurrentBlockSize;
                 int bytesRead = 0;
-                IntPtr br = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(int)));
-                Marshal.WriteInt32(br, 0);
-                this.BaseStream.Read(buffer, curSize, br);
-                bytesRead = Marshal.ReadInt32(br);
-                Marshal.FreeHGlobal(br);
+                bytesRead = BaseStream.Read(buffer, 0, curSize);
                 processedSize += bytesRead;
                 size -= bytesRead;
                 if (bytesRead == 0)

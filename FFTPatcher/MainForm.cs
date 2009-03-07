@@ -249,12 +249,22 @@ namespace FFTPatcher
             }
         }
 
-        private void openPatchedPsxIso_Click( object sender, EventArgs e )
+        private void openPatchedPspItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = "ISO images|*.iso;";
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                TryAndHandle(delegate() { FFTPatch.OpenPatchedPspIso(openFileDialog.FileName); }, true);
+            }
+        }
+
+        private void openPatchedPsxIso_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "ISO images|*.iso;*.bin;*.img";
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                TryAndHandle( delegate() { FFTPatch.OpenPatchedISO( openFileDialog.FileName ); }, true );
+                TryAndHandle(delegate() { FFTPatch.OpenPatchedPsxIso(openFileDialog.FileName); }, true);
             }
         }
 
@@ -481,5 +491,7 @@ namespace FFTPatcher
         }
 
 		#endregion Private Methods 
+
+
     }
 }

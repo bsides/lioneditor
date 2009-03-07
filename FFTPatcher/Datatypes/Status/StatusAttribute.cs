@@ -20,6 +20,7 @@
 using System.Collections.Generic;
 using PatcherLib;
 using PatcherLib.Datatypes;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
@@ -268,12 +269,11 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x565E4, bytes ) );
+                result.Add(PatcherLib.Iso.PsxIso.StatusAttributes.GetPatchedByteArray(bytes));
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x276DA4, bytes ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x276DA4, bytes ) );
+                PatcherLib.Iso.PspIso.StatusAttributes.ForEach(kl => result.Add(kl.GetPatchedByteArray(bytes)));
             }
 
             return result;

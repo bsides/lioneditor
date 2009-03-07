@@ -244,12 +244,11 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x568C4, bytes ) );
+                result.Add(PatcherLib.Iso.PsxIso.JobLevels.GetPatchedByteArray(bytes));
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x277084, bytes ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x277084, bytes ) );
+                PatcherLib.Iso.PspIso.JobLevels.ForEach(kl => result.Add(kl.GetPatchedByteArray(bytes)));
             }
 
             return result;

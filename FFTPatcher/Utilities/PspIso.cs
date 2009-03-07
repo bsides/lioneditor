@@ -47,7 +47,9 @@ namespace FFTPatcher
         /// <param name="stream">The stream of the ISO to patch.</param>
         public static void PatchISO( Stream stream, BackgroundWorker worker, IGeneratePatchList patchList )
         {
-            if ( PatcherLib.Iso.PspIso.IsJP( stream ) )
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( stream );
+
+            if ( PatcherLib.Iso.PspIso.IsJP( stream, info ) )
             {
                 throw new NotSupportedException( "Unrecognized image." );
             }
@@ -65,7 +67,7 @@ namespace FFTPatcher
 
             if ( patchList.RegenECC )
             {
-                PatcherLib.Iso.PspIso.DecryptISO( stream );
+                PatcherLib.Iso.PspIso.DecryptISO( stream, info );
                 sendProgress( "Decrypting EBOOT.BIN" );
             }
 
@@ -176,7 +178,7 @@ namespace FFTPatcher
 
             foreach ( PatchedByteArray patch in patches )
             {
-                PatcherLib.Iso.PspIso.ApplyPatch( stream, patch );
+                PatcherLib.Iso.PspIso.ApplyPatch( stream, info, patch );
                 sendProgress( "Patching ISO" );
             }
         }

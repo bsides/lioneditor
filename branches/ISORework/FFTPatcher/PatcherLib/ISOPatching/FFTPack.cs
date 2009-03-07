@@ -157,7 +157,7 @@ namespace PatcherLib.Iso
 
         public static byte[] GetFileFromIso( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, Files file )
         {
-            stream.Seek( info.FileToSectorMap[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, SeekOrigin.Begin );
+            stream.Seek( info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, SeekOrigin.Begin );
             return GetFileFromFFTPack( stream, file );
         }
 
@@ -275,7 +275,7 @@ namespace PatcherLib.Iso
         {
             try
             {
-                long fftpackLocation = info.FileToSectorMap[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048;
+                long fftpackLocation = info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048;
                 stream.Seek( fftpackLocation + ( index - 1 ) * 4 + 8, SeekOrigin.Begin );
                 byte[] pointer = new byte[4];
                 stream.Read( pointer, 0, 4 );

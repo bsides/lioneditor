@@ -37,6 +37,7 @@ namespace FFTPatcher
     Raijinili: Figured out what some of the checkboxes in the ENTD editor do
     Weltall: CWCheat
     aerostar: Final Fantasy Tactics Battle Mechanics Guide
+    element109: Used some code from his ImageMaster (http://imagemaster.codeplex.com/)
 
 Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 

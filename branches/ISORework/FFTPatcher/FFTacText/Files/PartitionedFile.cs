@@ -22,7 +22,7 @@ namespace FFTPatcher.TextEditor
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
             for ( int i = 0; i < NumberOfSections; i++ )
             {
-                sections.Add( TextUtilities.ProcessList( bytes.Sub( i * PartitionSize, ( i + 1 ) * PartitionSize - 1 ), map ) );
+                sections.Add(TextUtilities.ProcessList(bytes.Sub(i * PartitionSize, (i + 1) * PartitionSize - 1), map));
                 if ( sections[i].Count < SectionLengths[i] )
                 {
                     string[] newSection = new string[SectionLengths[i]];
@@ -30,6 +30,12 @@ namespace FFTPatcher.TextEditor
                     new string[SectionLengths[i] - sections[i].Count].CopyTo( newSection, sections[i].Count );
                     sections[i] = newSection;
                 }
+                else if (sections[i].Count > SectionLengths[i])
+                {
+                    sections[i] = sections[i].Sub(0, SectionLengths[i] - 1);
+                }
+
+                System.Diagnostics.Debug.Assert(sections[i].Count == SectionLengths[i]);
             }
             Sections = sections.AsReadOnly();
             PopulateDisallowedSections();

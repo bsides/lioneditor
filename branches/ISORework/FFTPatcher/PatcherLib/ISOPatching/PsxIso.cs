@@ -2591,6 +2591,11 @@ namespace PatcherLib.Iso
                StartLocation = startLocation;
                Length = length;
             }
+
+            public PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            {
+                return new PatcherLib.Datatypes.PatchedByteArray(Sector, StartLocation, bytes);
+            }
         }
     }
 }

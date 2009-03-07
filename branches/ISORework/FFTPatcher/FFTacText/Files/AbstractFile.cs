@@ -71,15 +71,16 @@ namespace FFTPatcher.TextEditor
             }
             else if (Layout.Context == Context.US_PSP)
             {
+                PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
                 if (Layout.Sectors.ContainsKey(SectorType.BootBin))
                 {
                     KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.BootBin][0];
-                    bytes = PspIso.GetFile(iso, (PspIso.Sectors)sect.Key, sect.Value, Layout.Size);
+                    bytes = PspIso.GetFile(iso, info, (PspIso.Sectors)sect.Key, sect.Value, Layout.Size);
                 }
                 else if (Layout.Sectors.ContainsKey(SectorType.FFTPack))
                 {
                     KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.FFTPack][0];
-                    bytes = PspIso.GetFile(iso, (FFTPack.Files)sect.Key, sect.Value, Layout.Size);
+                    bytes = PspIso.GetFile(iso, info, (FFTPack.Files)sect.Key, sect.Value, Layout.Size);
                 }
                 else
                 {

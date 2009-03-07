@@ -138,12 +138,11 @@ namespace FFTPatcher.Datatypes
             var bytes = ToByteArray( context );
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x518B8, bytes ) );
+                result.Add(PatcherLib.Iso.PsxIso.Jobs.GetPatchedByteArray(bytes));
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2739DC, bytes ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2739DC, bytes ) );
+                PatcherLib.Iso.PspIso.Jobs.ForEach(kl => result.Add(kl.GetPatchedByteArray(bytes)));
             }
 
             return result;

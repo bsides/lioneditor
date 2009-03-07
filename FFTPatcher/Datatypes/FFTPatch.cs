@@ -252,33 +252,65 @@ namespace FFTPatcher.Datatypes
             FireDataChangedEvent();
         }
 
-        public static void OpenPatchedISO( string filename )
+        public static void OpenPatchedPsxIso(string filename)
         {
-            using( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.Read ) )
+            using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 Context = Context.US_PSX;
                 LoadDataFromBytes(
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.Abilities ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.AbilityEffects ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.OldItems ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.OldItemAttributes ),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.Abilities),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.AbilityEffects),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.OldItems),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.OldItemAttributes),
                     null,
                     null,
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.Jobs ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.JobLevels ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.SkillSets ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.MonsterSkills ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ActionEvents ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.StatusAttributes ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.InflictStatuses ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.PoachProbabilities ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD1 ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD2 ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD3 ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.ENTD4 ),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.Jobs),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.JobLevels),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.SkillSets),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.MonsterSkills),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.ActionEvents),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.StatusAttributes),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.InflictStatuses),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.PoachProbabilities),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.ENTD1),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.ENTD2),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.ENTD3),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.ENTD4),
                     null,
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.MoveFindItems ),
-                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.StoreInventories ) );
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.MoveFindItems),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.StoreInventories));
+                FireDataChangedEvent();
+            }
+        }
+
+        public static void OpenPatchedPspIso(string filename)
+        {
+            using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                Context = Context.US_PSP;
+                PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(stream);
+                LoadDataFromBytes(
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.Abilities[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.AbilityEffects[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.OldItems[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.OldItemAttributes[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.NewItems[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.NewItemAttributes[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.Jobs[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.JobLevels[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.SkillSets[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.MonsterSkills[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ActionEvents[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.StatusAttributes[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.InflictStatuses[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.PoachProbabilities[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD1),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD2),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD3),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD4),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD5),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.MoveFindItems[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.StoreInventories[0]));
                 FireDataChangedEvent();
             }
         }
@@ -415,17 +447,17 @@ namespace FFTPatcher.Datatypes
         }
 
         private static void LoadDataFromBytes(
-            byte[] abilities, byte[] abilityEffects,
-            byte[] oldItems, byte[] oldItemAttributes,
-            byte[] newItems, byte[] newItemAttributes,
-            byte[] jobs, byte[] jobLevels,
-            byte[] skillSets, byte[] monsterSkills,
-            byte[] actionMenus,
-            byte[] statusAttributes, byte[] inflictStatuses,
-            byte[] poach,
-            byte[] entd1, byte[] entd2, byte[] entd3, byte[] entd4, byte[] entd5,
-            byte[] moveFind,
-            byte[] inventories )
+            IList<byte> abilities, IList<byte> abilityEffects,
+            IList<byte> oldItems, IList<byte> oldItemAttributes,
+            IList<byte> newItems, IList<byte> newItemAttributes,
+            IList<byte> jobs, IList<byte> jobLevels,
+            IList<byte> skillSets, IList<byte> monsterSkills,
+            IList<byte> actionMenus,
+            IList<byte> statusAttributes, IList<byte> inflictStatuses,
+            IList<byte> poach,
+            IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4, IList<byte> entd5,
+            IList<byte> moveFind,
+            IList<byte> inventories )
         {
             try
             {

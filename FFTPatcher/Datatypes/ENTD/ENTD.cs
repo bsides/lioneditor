@@ -192,18 +192,18 @@ namespace FFTPatcher.Datatypes
 
             if ( context == Context.US_PSX )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD1_ENT, 0x00, bytes1 ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD2_ENT, 0x00, bytes2 ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD3_ENT, 0x00, bytes3 ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.BATTLE_ENTD4_ENT, 0x00, bytes4 ) );
+                result.Add(PatcherLib.Iso.PsxIso.ENTD1.GetPatchedByteArray(bytes1));
+                result.Add(PatcherLib.Iso.PsxIso.ENTD2.GetPatchedByteArray(bytes2));
+                result.Add(PatcherLib.Iso.PsxIso.ENTD3.GetPatchedByteArray(bytes3));
+                result.Add(PatcherLib.Iso.PsxIso.ENTD4.GetPatchedByteArray(bytes4));
             }
             else if ( context == Context.US_PSP )
             {
-                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD1_ENT, 0x00, bytes1 ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD2_ENT, 0x00, bytes2 ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD3_ENT, 0x00, bytes3 ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD4_ENT, 0x00, bytes4 ) );
-                result.Add( new PatchedByteArray( PatcherLib.Iso.FFTPack.Files.BATTLE_ENTD5_ENT, 0x00, PSPEventsToByteArray() ) );
+                result.Add(PatcherLib.Iso.PspIso.ENTD1.GetPatchedByteArray(bytes1));
+                result.Add(PatcherLib.Iso.PspIso.ENTD2.GetPatchedByteArray(bytes2));
+                result.Add(PatcherLib.Iso.PspIso.ENTD3.GetPatchedByteArray(bytes3));
+                result.Add(PatcherLib.Iso.PspIso.ENTD4.GetPatchedByteArray(bytes4));
+                result.Add(PatcherLib.Iso.PspIso.ENTD5.GetPatchedByteArray(PSPEventsToByteArray()));
             }
 
             return result;

@@ -135,7 +135,7 @@ namespace PatcherLib.Iso
             UInt32 start = bytes.ToUInt32();
 
             UInt32 end;
-            if( index == numFftPackFiles )
+            if ( index == numFftPackFiles )
             {
                 end = (UInt32)stream.Length;
             }
@@ -155,9 +155,9 @@ namespace PatcherLib.Iso
             return result;
         }
 
-        public static byte[] GetFileFromIso( Stream stream, Files file )
+        public static byte[] GetFileFromIso( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, Files file )
         {
-            stream.Seek( (int)PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin * 2048, SeekOrigin.Begin );
+            stream.Seek( info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, SeekOrigin.Begin );
             return GetFileFromFFTPack( stream, file );
         }
 
@@ -243,39 +243,39 @@ namespace PatcherLib.Iso
             }
         }
 
-        public static void PatchFile( string filename, int index, byte[] bytes )
+        //public static void PatchFile( string filename, int index, byte[] bytes )
+        //{
+        //    FileStream stream = null;
+        //    try
+        //    {
+        //        stream = new FileStream( filename, FileMode.Open );
+        //        PatchFile( stream, index, bytes );
+        //    }
+        //    catch( Exception )
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        if( stream != null )
+        //        {
+        //            stream.Flush();
+        //            stream.Close();
+        //            stream = null;
+        //        }
+        //    }
+        //}
+
+        //public static void PatchFile( Stream stream, int index, byte[] bytes )
+        //{
+        //    PatchFile( stream, index, 0, bytes );
+        //}
+
+        public static void PatchFile( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, int index, int offset, byte[] bytes )
         {
-            FileStream stream = null;
             try
             {
-                stream = new FileStream( filename, FileMode.Open );
-                PatchFile( stream, index, bytes );
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                    stream = null;
-                }
-            }
-        }
-
-        public static void PatchFile( Stream stream, int index, byte[] bytes )
-        {
-            PatchFile( stream, index, 0, bytes );
-        }
-
-        public static void PatchFile( Stream stream, int index, int offset, byte[] bytes )
-        {
-            try
-            {
-                const long fftpackLocation = (int)PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin * 2048;
+                long fftpackLocation = info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048;
                 stream.Seek( fftpackLocation + ( index - 1 ) * 4 + 8, SeekOrigin.Begin );
                 byte[] pointer = new byte[4];
                 stream.Read( pointer, 0, 4 );

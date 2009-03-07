@@ -121,42 +121,62 @@ namespace FFTPatcher.TextEditor
                         return;
                     }
                 }
+                if (dteFiles.Count > 0)
+                {
 
-                Set<string> pairs = DTE.GetDteGroups( this.Filetype );
-                if ( worker.CancellationPending )
-                {
-                    args.Cancel = true;
-                    return;
-                }
-                Set<KeyValuePair<string, byte>> currentPairs =
-                    new Set<KeyValuePair<string, byte>>( ( x, y ) => x.Key.Equals( y.Key ) && ( x.Value == y.Value ) ? 0 : -1 );
-                var filePreferredPairs =
-                    new Dictionary<ISerializableFile, Set<KeyValuePair<string, byte>>>( dteFiles.Count );
-                dteFiles.Sort( ( x, y ) => ( y.ToCDByteArray().Length - y.Layout.Size ).CompareTo( x.ToCDByteArray().Length - x.Layout.Size ) );
-                Stack<byte> dteBytes = DTE.GetAllowedDteBytes();
-                if ( worker.CancellationPending )
-                {
-                    args.Cancel = true;
-                    return;
-                }
-
-                foreach ( var dte in dteFiles )
-                {
-                    worker.ReportProgress( 0,
-                        new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.CalculateDte } );
-                    filePreferredPairs[dte] = dte.GetPreferredDTEPairs( pairs, currentPairs, dteBytes );
-                    currentPairs.AddRange( filePreferredPairs[dte] );
-                    if ( filePreferredPairs[dte] == null )
-                    {
-                        throw new DTE.DteException( dte );
-                    }
-                    worker.ReportProgress( 0,
-                        new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.CalculateDte } );
-                    if ( worker.CancellationPending )
+                    Set<string> pairs = DTE.GetDteGroups(this.Filetype);
+                    if (worker.CancellationPending)
                     {
                         args.Cancel = true;
                         return;
                     }
+                    Set<KeyValuePair<string, byte>> currentPairs =
+                        new Set<KeyValuePair<string, byte>>((x, y) => x.Key.Equals(y.Key) && (x.Value == y.Value) ? 0 : -1);
+                    var filePreferredPairs =
+                        new Dictionary<ISerializableFile, Set<KeyValuePair<string, byte>>>(dteFiles.Count);
+                    dteFiles.Sort((x, y) => (y.ToCDByteArray().Length - y.Layout.Size).CompareTo(x.ToCDByteArray().Length - x.Layout.Size));
+                    Stack<byte> dteBytes = DTE.GetAllowedDteBytes();
+                    if (worker.CancellationPending)
+                    {
+                        args.Cancel = true;
+                        return;
+                    }
+
+                    foreach (var dte in dteFiles)
+                    {
+                        worker.ReportProgress(0,
+                            new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.CalculateDte });
+                        filePreferredPairs[dte] = dte.GetPreferredDTEPairs(pairs, currentPairs, dteBytes);
+                        currentPairs.AddRange(filePreferredPairs[dte]);
+                        if (filePreferredPairs[dte] == null)
+                        {
+                            throw new DTE.DteException(dte);
+                        }
+                        worker.ReportProgress(0,
+                            new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.CalculateDte });
+                        if (worker.CancellationPending)
+                        {
+                            args.Cancel = true;
+                            return;
+                        }
+                    }
+
+                    foreach (var file in dteFiles)
+                    {
+                        worker.ReportProgress(0,
+                            new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.GeneratePatch });
+                        var currentFileEncoding = PatcherLib.Utilities.Utilities.DictionaryFromKVPs(filePreferredPairs[file]);
+                        patches.AddRange(file.GetDtePatches(currentFileEncoding));
+                        worker.ReportProgress(0,
+                            new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.GeneratePatch });
+                        if (worker.CancellationPending)
+                        {
+                            args.Cancel = true;
+                            return;
+                        }
+                    }
+
+                    patches.AddRange(DTE.GenerateDtePatches(this.Filetype, currentPairs));
                 }
 
                 foreach ( var file in nonDteFiles )
@@ -173,21 +193,6 @@ namespace FFTPatcher.TextEditor
                     }
                 }
 
-                foreach ( var file in dteFiles )
-                {
-                    worker.ReportProgress( 0,
-                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.GeneratePatch } );
-                    var currentFileEncoding = PatcherLib.Utilities.Utilities.DictionaryFromKVPs( filePreferredPairs[file] );
-                    patches.AddRange( file.GetDtePatches( currentFileEncoding ) );
-                    worker.ReportProgress( 0,
-                        new ProgressForm.FileProgress { File = file, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.GeneratePatch } );
-                    if ( worker.CancellationPending )
-                    {
-                        args.Cancel = true;
-                        return;
-                    }
-                }
-                patches.AddRange( DTE.GenerateDtePatches( this.Filetype, currentPairs ) );
                 if ( worker.CancellationPending )
                 {
                     args.Cancel = true;

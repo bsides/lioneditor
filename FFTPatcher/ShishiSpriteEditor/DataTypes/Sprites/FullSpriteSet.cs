@@ -112,6 +112,7 @@ namespace FFTPatcher.SpriteEditor
 
         private static FullSpriteSet DoInitPSP( Stream iso, BackgroundWorker worker )
         {
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso);
             const int numberOfPspSprites = 143;
             int tasks = numberOfPspSprites * 2 + 1;
             int tasksComplete = 0;
@@ -129,7 +130,7 @@ namespace FFTPatcher.SpriteEditor
                     string filename = file.SelectSingleNode( "@name" ).InnerText;
                     worker.ReportProgress( tasksComplete++ * 100 / tasks, "Reading " + filename );
                     filenames.Add( filename );
-                    bytes.Add( FFTPack.GetFileFromIso( iso, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), file.SelectSingleNode( "@enum" ).InnerText ) ) );
+                    bytes.Add( FFTPack.GetFileFromIso( iso, info, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), file.SelectSingleNode( "@enum" ).InnerText ) ) );
                 }
                 if ( bytes.Count > 1 )
                 {
@@ -154,7 +155,7 @@ namespace FFTPatcher.SpriteEditor
                 {
                     worker.ReportProgress( tasksComplete++ * 100 / tasks, "Reading " + node.SelectSingleNode( "Files/File/@name" ).InnerText );
                     sprites.Add( (AbstractSprite)constructor.Invoke( new object[] { node.SelectSingleNode("@name").InnerText, 
-                        FFTPack.GetFileFromIso( iso, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), node.SelectSingleNode( "Files/File/@enum" ).InnerText ))} ) );
+                        FFTPack.GetFileFromIso( iso, info, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), node.SelectSingleNode( "Files/File/@enum" ).InnerText ))} ) );
                 }
             }
 
@@ -195,11 +196,11 @@ namespace FFTPatcher.SpriteEditor
         {
             int totalTasks = patches.Count;
             int tasksComplete = 0;
-
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo(stream);
             foreach ( var patch in patches )
             {
                 worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + patch.SectorEnum.ToString() );
-                FFTPack.PatchFile( stream, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.Bytes );
+                FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.Bytes );
             }
 
         }

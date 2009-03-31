@@ -42,6 +42,32 @@ namespace PatcherLib.Utilities
 
         #region Methods (14)
 
+        public static bool TrueForAll<T>(this IList<T> list, Predicate<T> condition)
+        {
+            if (list == null) throw new ArgumentNullException("list");
+            if (condition == null) throw new ArgumentNullException("condition");
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (!condition(list[i])) return false;
+            }
+            return true;
+        }
+
+        public static void Copy<T>(this IList<T> sourceList, int sourceIndex, IList<T> destinationList, int destinationIndex, int length)
+        {
+            if (sourceList == null) throw new ArgumentNullException("sourceList");
+            if (sourceList.Count <= sourceIndex) throw new ArgumentOutOfRangeException("sourceIndex");
+            if (sourceList.Count <= sourceIndex + length) throw new ArgumentOutOfRangeException("length");
+            if (destinationList == null) throw new ArgumentNullException("destinationList");
+            if (destinationList.Count <= destinationIndex) throw new ArgumentOutOfRangeException("destinationIndex");
+            if (destinationList.Count <= destinationIndex + length) throw new ArgumentOutOfRangeException("length");
+            if (destinationList.IsReadOnly) throw new InvalidOperationException("destinationList is readonly");
+            for (int i = 0; i < length; i++)
+            {
+                destinationList[i + destinationIndex] = sourceList[i + sourceIndex];
+            }
+        }
+
         [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {

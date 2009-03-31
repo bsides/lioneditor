@@ -272,11 +272,11 @@ namespace PatcherLib.Utilities
         /// <summary>
         /// Compares two arrays of the same type.
         /// </summary>
-        public static bool CompareArrays<T>( T[] one, T[] two ) where T : IComparable, IEquatable<T>
+        public static bool CompareArrays<T>(IList<T> one, IList<T> two) where T : IComparable, IEquatable<T>
         {
-            if( one.Length != two.Length )
+            if (one.Count != two.Count)
                 return false;
-            for( long i = 0; i < one.Length; i++ )
+            for (int i = 0; i < one.Count; i++)
             {
                 if( !one[i].Equals( two[i] ) )
                     return false;

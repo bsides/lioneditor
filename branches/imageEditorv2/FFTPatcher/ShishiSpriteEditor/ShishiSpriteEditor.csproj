@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>sprite.ico</ApplicationIcon>
+    <StartupObject>FFTPatcher.SpriteEditor.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +58,7 @@
       <HintPath>..\..\utils\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -68,6 +70,11 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataTypes\AllSpriteAttributes.cs" />
+    <Compile Include="DataTypes\AllSprites.cs" />
+    <Compile Include="DataTypes\Sprite.cs" />
+    <Compile Include="DataTypes\SpriteAttributes.cs" />
+    <Compile Include="DataTypes\SpriteFileLocations.cs" />
     <Compile Include="DataTypes\Sprites\AbstractShapedSprite.cs" />
     <Compile Include="DataTypes\Sprites\AbstractCompressedSprite.cs" />
     <Compile Include="DataTypes\Sprites\ARUTE.cs" />
@@ -131,6 +138,9 @@
     <EmbeddedResource Include="SpriteViewer.resx">
       <DependentUpon>SpriteViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -306,14 +316,18 @@
     <None Include="Resources\EVENT\END3.BIN" />
     <None Include="Resources\EVENT\END4.BIN" />
     <None Include="Resources\EVENT\END5.BIN" />
-    <None Include="Resources\EVENT\EVTCHR.BIN" />
+    <None Include="Resources\EVENT\EVTCHR.BIN">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\EVENT\EVTFACE.BIN" />
     <None Include="Resources\EVENT\FRAME.BIN" />
     <None Include="Resources\EVENT\GAMEOVER.BIN" />
     <None Include="Resources\EVENT\ITEM.BIN" />
     <None Include="Resources\EVENT\MAPTITLE.BIN" />
     <None Include="Resources\EVENT\UNIT.BIN" />
-    <None Include="Resources\EVENT\WLDFACE.BIN" />
+    <None Include="Resources\EVENT\WLDFACE.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\EVENT\WLDFACE4.BIN" />
     <None Include="Resources\MENU\BK_FITR.TIM" />
     <None Include="Resources\MENU\BK_FITR2.TIM" />
@@ -359,6 +373,12 @@
     <Compile Include="DataTypes\Tile.cs" />
     <Compile Include="DataTypes\Sprites\TYPE1Sprite.cs" />
     <Compile Include="DataTypes\Sprites\TYPE2Sprite.cs" />
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.cs" />
     <Compile Include="DataTypes\WLDFACE.cs" />
   </ItemGroup>
@@ -369,6 +389,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataTypes\Sprites\MemoryLocs.txt" />
     <Content Include="Resources\PSPFiles.xml" />
     <Content Include="Resources\PSXFiles.xml" />
     <Content Include="Resources\sprite.ico" />

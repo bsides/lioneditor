@@ -37,7 +37,8 @@ namespace FFTPatcher.SpriteEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new MainForm() );
+            //Application.Run( new MainForm() );
+            Application.Run(new TestForm());
         }
 
 

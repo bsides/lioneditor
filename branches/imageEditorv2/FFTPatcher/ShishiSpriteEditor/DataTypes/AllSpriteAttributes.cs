@@ -27,7 +27,7 @@ namespace FFTPatcher.SpriteEditor
             {
                 result.AddRange(s.ToByteArray());
             }
-            return result;
+            return result.ToArray();
         }
 
         public SpriteAttributes this[int i]

@@ -425,9 +425,6 @@ namespace ImageMaster
         private void SeekToBlock(long blockIndex)
         {
             long block = (blockIndex * _volumeDescriptor[MainVolDescIndex].LogicalBlockSize);
-            //IntPtr pos = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(long)));
-            //Marshal.WriteInt64(pos, 0);
-            long pos = 0;
             BaseStream.Seek(block, SeekOrigin.Begin);
             _currentPosition = BaseStream.Position;
             if (_currentPosition != block)

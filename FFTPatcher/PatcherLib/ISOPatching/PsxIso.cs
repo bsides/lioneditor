@@ -111,6 +111,11 @@ namespace PatcherLib.Iso
             return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
         }
 
+        public static byte[] ReadFile(Stream iso, KnownPosition pos)
+        {
+            return ReadFile(iso, pos.Sector, pos.StartLocation, pos.Length);
+        }
+
 		#endregion Public Methods 
 
         public enum Sectors

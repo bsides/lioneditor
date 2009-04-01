@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using PatcherLib.Datatypes;
 
-namespace FFTPatcher.SpriteEditor.DataTypes
+namespace FFTPatcher.SpriteEditor
 {
     class AllSprites
     {

@@ -23,10 +23,41 @@ namespace FFTPatcher.SpriteEditor
         public UInt32 Sector { get { return location.Sector; } set { location.Sector = value; } }
         public UInt32 Size { get { return location.Size; } set { location.Size = value; } }
 
+        byte[] bytes;
+
         public Sprite(SpriteAttributes attributes, SpriteLocation location)
         {
             this.attributes = attributes;
             this.location = location;
+            bytes = PatcherLib.Iso.PsxIso.ReadFile( iso, (PatcherLib.Iso.PsxIso.Sectors)location.Sector, 0, (int)location.Size );
+        }
+
+        public AbstractSprite GetAbstractSpriteFromPsxIso( System.IO.Stream iso )
+        {
+            byte[] bytes = PatcherLib.Iso.PsxIso.ReadFile( iso, (PatcherLib.Iso.PsxIso.Sectors)Sector, 0, (int)Size );
+            switch ( SHP )
+            {
+                case SpriteAttributes.SpriteType.TYPE1:
+                    return new TYPE1Sprite( "butts", bytes );
+                case SpriteAttributes.SpriteType.TYPE2:
+                    return new TYPE2Sprite( "butts", bytes );
+                case SpriteAttributes.SpriteType.MON:
+                case SpriteAttributes.SpriteType.RUKA:
+                    return new MonsterSprite( "butts", new string[] { "butts" }, bytes );
+                case SpriteAttributes.SpriteType.KANZEN:
+                    return new KANZEN( bytes );
+                case SpriteAttributes.SpriteType.CYOKO:
+                    return new CYOKO( bytes );
+                case SpriteAttributes.SpriteType.ARUTE:
+                    return new ARUTE( bytes );
+                default:
+                    return null;
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format( "SHP: {0}, SEQ: {1}, Sec: {2}, Size: {3}", SHP, SEQ, Sector, Size );
         }
     }
 }

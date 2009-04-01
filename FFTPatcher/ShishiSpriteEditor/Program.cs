@@ -38,6 +38,11 @@ namespace FFTPatcher.SpriteEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
             //Application.Run( new MainForm() );
+
+            using ( System.IO.Stream iso = System.IO.File.OpenRead( @"E:\fft\virginimages\fft.bin" ) )
+            {
+                var s =  AllSprites.FromPsxIso( iso );
+            }
             Application.Run(new TestForm());
         }
 

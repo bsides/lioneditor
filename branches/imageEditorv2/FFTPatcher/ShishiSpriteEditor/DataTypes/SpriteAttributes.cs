@@ -17,7 +17,20 @@ namespace FFTPatcher.SpriteEditor
             KANZEN = 7,
         }
 
-        public SpriteType SHP { get; set; }
+        private SpriteType shp;
+
+        public SpriteType SHP 
+        {
+            get { return shp; }
+            set
+            {
+                if ( value != shp )
+                {
+                    shp = value;
+                    OnSHPChanged();
+                }
+            }
+        }
         public SpriteType SEQ { get; set; }
         public bool Flying { get; set; }
         public bool Flag1 { get; set; }
@@ -32,7 +45,7 @@ namespace FFTPatcher.SpriteEditor
         public SpriteAttributes(IList<byte> bytes)
         {
             System.Diagnostics.Debug.Assert(bytes.Count == 4);
-            SHP = (SpriteType)bytes[0];
+            shp = (SpriteType)bytes[0];
             SEQ = (SpriteType)bytes[1];
             Flying = bytes[2] != 0;
             bool[] bools = PatcherLib.Utilities.Utilities.BooleansFromByte(bytes[3]);
@@ -54,6 +67,16 @@ namespace FFTPatcher.SpriteEditor
             result[2] = Flying ? (byte)1 : (byte)0;
             result[3] = PatcherLib.Utilities.Utilities.ByteFromBooleans(Flag8, Flag7, Flag6, Flag5, Flag4, Flag3, Flag2, Flag1);
             return result;
+        }
+
+        public event EventHandler SHPChanged;
+
+        private void OnSHPChanged()
+        {
+            if ( SHPChanged != null )
+            {
+                SHPChanged( this, EventArgs.Empty );
+            }
         }
     }
 }

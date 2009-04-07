@@ -20,6 +20,7 @@ namespace FFTPatcher.SpriteEditor
         const long defaultSectorCount = 230151;
         const long expandedSectorCount = 0x000395E7;
 
+
         public Sprite this[int i]
         {
             get { return sprites[i]; }
@@ -37,8 +38,8 @@ namespace FFTPatcher.SpriteEditor
             return iso.Length > defaultIsoLength &&
                 iso.Length >= expandedIsoLength &&
                 sectors > defaultSectorCount &&
-                sectors >= expandedSectorCount;
-                
+                sectors >= expandedSectorCount &&
+                !SpriteFileLocations.IsoHasDefaultSpriteLocations( iso );
         }
 
         private AllSprites(AllSpriteAttributes attrs, SpriteFileLocations locs)

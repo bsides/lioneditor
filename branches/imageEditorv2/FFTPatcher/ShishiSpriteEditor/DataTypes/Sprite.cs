@@ -11,6 +11,7 @@ namespace FFTPatcher.SpriteEditor
         private SpriteAttributes attributes;
         private SpriteLocation location;
         private string name;
+        private AbstractSprite cachedSprite;
 
         public SpriteAttributes.SpriteType SHP { get { return attributes.SHP; } private set { attributes.SHP = value; } }
         public SpriteAttributes.SpriteType SEQ { get { return attributes.SEQ; } private set { attributes.SEQ = value; } }
@@ -31,29 +32,51 @@ namespace FFTPatcher.SpriteEditor
             this.name = name;
             this.attributes = attributes;
             this.location = location;
+            attributes.SHPChanged += new EventHandler( attributes_SHPChanged );
+        }
+
+        private void attributes_SHPChanged( object sender, EventArgs e )
+        {
+            cachedSprite = null;
+        }
+
+        public AbstractSprite GetAbstractSpriteFromPsxIso( System.IO.Stream iso, bool ignoreCache )
+        {
+            if ( cachedSprite == null || ignoreCache )
+            {
+                byte[] bytes = PatcherLib.Iso.PsxIso.ReadFile( iso, (PatcherLib.Iso.PsxIso.Sectors)Sector, 0, (int)Size );
+                switch ( SHP )
+                {
+                    case SpriteAttributes.SpriteType.TYPE1:
+                        cachedSprite = new TYPE1Sprite( bytes );
+                        break;
+                    case SpriteAttributes.SpriteType.TYPE2:
+                        cachedSprite = new TYPE2Sprite( "butts", bytes );
+                        break;
+                    case SpriteAttributes.SpriteType.MON:
+                    case SpriteAttributes.SpriteType.RUKA:
+                        cachedSprite = new MonsterSprite( bytes );
+                        break;
+                    case SpriteAttributes.SpriteType.KANZEN:
+                        cachedSprite = new KANZEN( bytes );
+                        break;
+                    case SpriteAttributes.SpriteType.CYOKO:
+                        cachedSprite = new CYOKO( bytes );
+                        break;
+                    case SpriteAttributes.SpriteType.ARUTE:
+                        cachedSprite = new ARUTE( bytes );
+                        break;
+                    default:
+                        cachedSprite = null;
+                }
+            }
+
+            return cachedSprite;
         }
 
         public AbstractSprite GetAbstractSpriteFromPsxIso( System.IO.Stream iso )
         {
-            byte[] bytes = PatcherLib.Iso.PsxIso.ReadFile( iso, (PatcherLib.Iso.PsxIso.Sectors)Sector, 0, (int)Size );
-            switch ( SHP )
-            {
-                case SpriteAttributes.SpriteType.TYPE1:
-                    return new TYPE1Sprite( bytes );
-                case SpriteAttributes.SpriteType.TYPE2:
-                    return new TYPE2Sprite( "butts", bytes );
-                case SpriteAttributes.SpriteType.MON:
-                case SpriteAttributes.SpriteType.RUKA:
-                    return new MonsterSprite( bytes );
-                case SpriteAttributes.SpriteType.KANZEN:
-                    return new KANZEN( bytes );
-                case SpriteAttributes.SpriteType.CYOKO:
-                    return new CYOKO( bytes );
-                case SpriteAttributes.SpriteType.ARUTE:
-                    return new ARUTE( bytes );
-                default:
-                    return null;
-            }
+            return GetAbstractSpriteFromPsxIso( iso, false );
         }
 
         public override string ToString()

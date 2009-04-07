@@ -18,8 +18,8 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
-        public AbstractShapedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] otherBytes )
-            : base( name, filenames, bytes, otherBytes )
+        public AbstractShapedSprite( IList<byte> bytes, params IList<byte>[] otherBytes )
+            : base( bytes, otherBytes )
         {
         }
 

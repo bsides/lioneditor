@@ -89,49 +89,6 @@ namespace FFTPatcher.SpriteEditor
         protected bool BitmapDirty { get; set; }
         protected Bitmap CachedBitmap { get; set; }
 
-        public IList<PatchedByteArray> GetPatchedByteArrays( Context context )
-        {
-            PatchedByteArray[] result = new PatchedByteArray[Filenames.Count];
-            for ( int i = 0; i < Filenames.Count; i++ )
-            {
-                result[i] = GetPatchedByteArray( context, i );
-            }
-            return result;
-        }
-
-        public PatchedByteArray GetPatchedByteArray( Context context, int index )
-        {
-            return context == Context.US_PSP ? 
-                GetPatchedByteArrayPSPInternal( index ) :
-                GetPatchedByteArrayPSXInternal( index );
-        }
-
-        private PatchedByteArray GetPatchedByteArrayPSXInternal( int index )
-        {
-            PsxIso.Sectors sector;
-            if ( PatcherLib.Utilities.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
-            {
-                return new PatchedByteArray( sector, 0, ToByteArray( index ) );
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private PatchedByteArray GetPatchedByteArrayPSPInternal( int index )
-        {
-            FFTPack.Files sector;
-            if ( PatcherLib.Utilities.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
-            {
-                return new PatchedByteArray( sector, 0, ToByteArray( index ) );
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public void DrawSprite( Bitmap b, int palette, int portraitPalette )
         {
             DrawSpriteInternal( palette, portraitPalette, ( x, y, z ) => b.SetPixel( x, y, z ) );
@@ -153,7 +110,7 @@ namespace FFTPatcher.SpriteEditor
         #region Constructors (1)
 
         internal AbstractSprite( SerializedSprite sprite )
-            : this( sprite.Name, sprite.Filenames )
+            : this()
         {
             OriginalSize = sprite.OriginalSize;
             CurrentSize = OriginalSize;
@@ -162,16 +119,14 @@ namespace FFTPatcher.SpriteEditor
             sprite.Pixels.CopyTo( Pixels, 0 );
         }
 
-        private AbstractSprite( string name, IList<string> filenames )
+        private AbstractSprite()
         {
-            Name = name;
-            Filenames = filenames.ToArray();
             ThumbnailDirty = true;
             BitmapDirty = true;
         }
 
-        protected AbstractSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
-            : this( name, filenames )
+        protected AbstractSprite( IList<byte> bytes, params IList<byte>[] extraBytes )
+            : this()
         {
             OriginalSize = bytes.Count;
             CurrentSize = OriginalSize;

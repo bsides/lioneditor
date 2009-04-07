@@ -70,6 +70,12 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="AllSpritesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AllSpritesEditor.Designer.cs">
+      <DependentUpon>AllSpritesEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataTypes\AllSpriteAttributes.cs" />
     <Compile Include="DataTypes\AllSprites.cs" />
     <Compile Include="DataTypes\Sprite.cs" />
@@ -114,6 +120,9 @@
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="AllSpritesEditor.resx">
+      <DependentUpon>AllSpritesEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FullSpriteSetEditor.resx">
       <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -134,6 +143,9 @@
     <EmbeddedResource Include="SpriteDialog.resx">
       <DependentUpon>SpriteDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpriteEditor.resx">
+      <DependentUpon>SpriteEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpriteViewer.resx">
       <DependentUpon>SpriteViewer.cs</DependentUpon>
@@ -367,6 +379,12 @@
     <Compile Include="SpriteDialog.Designer.cs">
       <DependentUpon>SpriteDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="SpriteEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpriteEditor.Designer.cs">
+      <DependentUpon>SpriteEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -383,6 +401,10 @@
     <Compile Include="DataTypes\WLDFACE.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PatcherLib.Resources\PatcherLib.Resources.csproj">
+      <Project>{E8B981CB-2A97-4901-9A04-E6E5D369F471}</Project>
+      <Name>PatcherLib.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PatcherLib\PatcherLib.csproj">
       <Project>{BB7322AD-75D3-44AF-A0BF-76015C53998F}</Project>
       <Name>PatcherLib</Name>

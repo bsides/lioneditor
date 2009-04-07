@@ -25,8 +25,8 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
-        public TYPE1Sprite( string name, IList<byte> bytes )
-            : base( name, new string[] { name + ".SPR" }, bytes )
+        public TYPE1Sprite( IList<byte> bytes )
+            : base( bytes )
         {
         }
     }

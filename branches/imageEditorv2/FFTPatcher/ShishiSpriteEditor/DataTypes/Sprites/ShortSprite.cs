@@ -35,7 +35,7 @@ namespace FFTPatcher.SpriteEditor
         }
 
         public ShortSprite( string name, IList<byte> bytes )
-            : base( name, new string[] { name + ".SPR" }, bytes )
+            : base( bytes )
         {
         }
 

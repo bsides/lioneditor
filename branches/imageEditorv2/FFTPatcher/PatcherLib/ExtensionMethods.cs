@@ -412,9 +412,6 @@ namespace PatcherLib.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Converts this into a pair of big endian bytes.
-        /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this UInt16 value )
         {
@@ -424,9 +421,6 @@ namespace PatcherLib.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Converts this into a set of four big endian bytes.
-        /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this UInt32 value )
         {
@@ -438,9 +432,6 @@ namespace PatcherLib.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Converts this into a set of eight big endian bytes.
-        /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this long value )
         {

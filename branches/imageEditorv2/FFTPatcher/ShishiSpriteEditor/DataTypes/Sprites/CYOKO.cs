@@ -17,7 +17,6 @@ namespace FFTPatcher.SpriteEditor
         protected override System.Drawing.Rectangle ThumbnailRectangle
         {
             get { return new System.Drawing.Rectangle( 110, 92, 48, 48 ); }
-            //get { return new System.Drawing.Rectangle( 10, 12, 48, 48 ); }
         }
 
         internal CYOKO( SerializedSprite sprite )
@@ -25,13 +24,8 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
-        public CYOKO( string name, IList<byte> bytes )
-            : base( name, new string[] { name + ".SPR" }, bytes )
-        {
-        }
-
         public CYOKO( IList<byte> bytes )
-            : this( "CYOKO", bytes )
+            : base( bytes )
         {
         }
     }

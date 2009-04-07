@@ -62,6 +62,9 @@ namespace PatcherLib.Iso
 
         public static KnownPosition StoreInventories { get; private set; }
 
+        public static KnownPosition NumberOfSectorsBigEndian { get; private set; }
+        public static KnownPosition NumberOfSectorsLittleEndian { get; private set; }
+
         #endregion Public Properties 
 
 		#region Constructors (1) 
@@ -86,6 +89,8 @@ namespace PatcherLib.Iso
             ENTD4 = new KnownPosition( Sectors.BATTLE_ENTD4_ENT, 0, 81920 );
             MoveFindItems = new KnownPosition( Sectors.BATTLE_BIN, 0x8EE74, 0x800 );
             StoreInventories = new KnownPosition( Sectors.WORLD_WORLD_BIN, 0xAD844, 0x200 );
+            NumberOfSectorsBigEndian = new KnownPosition((Sectors)16, 0x54, 4);
+            NumberOfSectorsLittleEndian = new KnownPosition((Sectors)16, 0x50, 4);
         }
 
 		#endregion Constructors 

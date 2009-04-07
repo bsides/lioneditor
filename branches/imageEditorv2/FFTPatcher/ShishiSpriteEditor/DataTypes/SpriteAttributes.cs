@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FFTPatcher.SpriteEditor
 {
-    class SpriteAttributes
+    public class SpriteAttributes
     {
         public enum SpriteType
         {

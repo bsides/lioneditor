@@ -28,30 +28,10 @@ namespace FFTPatcher.SpriteEditor
             sp2Count = ( sprite.Pixels.Count - ( 256 + 32 + 200 ) * 256 ) / 256 / 256;
         }
 
-        public MonsterSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] sp2Files )
-            : base( name, filenames, bytes, sp2Files )
+        public MonsterSprite( IList<byte> bytes, params IList<byte>[] sp2Files )
+            : base( bytes, sp2Files )
         {
-            System.Diagnostics.Debug.Assert( filenames.Count == 1 + sp2Files.Length );
             sp2Count = sp2Files.Length;
-        }
-
-        public void ImportSP2( IList<byte> bytes, int sp2Index )
-        {
-            if ( sp2Index >= sp2Count )
-            {
-                throw new ArgumentException( "sp2Index" );
-            }
-
-            List<byte> result = new List<byte>( bytes.Count * 2 );
-            foreach ( byte b in bytes )
-            {
-                result.Add( b.GetLowerNibble() );
-                result.Add( b.GetUpperNibble() );
-            }
-
-            int startDest = 488 * 256 + 256 * sp2Index;
-            result.CopyTo( Pixels, startDest );
-            FirePixelsChanged();
         }
 
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )

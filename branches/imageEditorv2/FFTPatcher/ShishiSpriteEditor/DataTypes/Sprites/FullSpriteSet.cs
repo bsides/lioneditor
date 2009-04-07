@@ -78,11 +78,11 @@ namespace FFTPatcher.SpriteEditor
                 }
                 if ( bytes.Count > 1 )
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0], bytes.Sub( 1 ).ToArray() ) );
+                    sprites.Add( new MonsterSprite( bytes[0], bytes.Sub( 1 ).ToArray() ) );
                 }
                 else
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0] ) );
+                    sprites.Add( new MonsterSprite( bytes[0] ) );
                 }
             }
             foreach ( Type t in new Type[] { 
@@ -134,11 +134,11 @@ namespace FFTPatcher.SpriteEditor
                 }
                 if ( bytes.Count > 1 )
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0], bytes.Sub( 1 ).ToArray() ) );
+                    sprites.Add( new MonsterSprite( bytes[0], bytes.Sub( 1 ).ToArray() ) );
                 }
                 else
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0] ) );
+                    sprites.Add( new MonsterSprite( bytes[0] ) );
                 }
             }
 

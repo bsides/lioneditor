@@ -8,7 +8,7 @@ using System.IO;
 namespace FFTPatcher.SpriteEditor
 {
     
-    class SpriteLocation
+    public class SpriteLocation
     {
         public UInt32 Sector { get; set; }
         public UInt32 Size { get; set; }

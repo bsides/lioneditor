@@ -235,7 +235,8 @@ namespace FFTPatcher.SpriteEditor
             openFileDialog.FileName = string.Empty;
             if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                ( Sprite as MonsterSprite ).ImportSP2( File.ReadAllBytes( openFileDialog.FileName ), whichSp2 );
+                //( Sprite as MonsterSprite ).ImportSP2( File.ReadAllBytes( openFileDialog.FileName ), whichSp2 );
+                MessageBox.Show("Not implemented");
             }
         }
 

@@ -62,8 +62,8 @@ namespace FFTPatcher.SpriteEditor
             CurrentSize = OriginalSize;
         }
 
-        protected AbstractCompressedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
-            : base( name, filenames, bytes, extraBytes )
+        protected AbstractCompressedSprite( IList<byte> bytes, params IList<byte>[] extraBytes )
+            : base( bytes, extraBytes )
         {
             CurrentSize = OriginalSize;
         }

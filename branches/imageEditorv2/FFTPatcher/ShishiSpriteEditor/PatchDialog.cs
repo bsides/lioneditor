@@ -56,22 +56,6 @@ namespace FFTPatcher.SpriteEditor
             okButton.Enabled = ValidateISO( isoPathTextBox.Text );
         }
 
-        public IList<PatchedByteArray> GetPatches( Context context )
-        {
-            if ( set == null )
-            {
-                return new PatchedByteArray[0];
-            }
-
-            List<PatchedByteArray> result = new List<PatchedByteArray>();
-            foreach ( var kvp in set.GetElements() )
-            {
-                result.Add( kvp.Key.GetPatchedByteArray( context, kvp.Value ) );
-            }
-
-            return result.AsReadOnly();
-        }
-
         private Set<KeyValuePair<AbstractSprite, int>> set;
 
         private ListViewItem GenerateItem( string filename, int originalSize, int maximumSize, int currentSize )

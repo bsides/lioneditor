@@ -102,16 +102,21 @@ namespace PatcherLib.Iso
             return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
         }
 
-        public static void PatchPsxIso( Stream iso, IEnumerable<PatcherLib.Datatypes.PatchedByteArray> patches )
+        public static void PatchPsxIso(Stream iso, IEnumerable<PatcherLib.Datatypes.PatchedByteArray> patches)
         {
-            foreach ( var patch in patches )
+            foreach (var patch in patches)
             {
-                IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
-                    patch.Offset, patch.Bytes, true );
+                PatchPsxIso(iso, patch);
             }
         }
 
-        public static byte[] ReadFile( Stream iso, Sectors file, int offset, int length )
+        public static void PatchPsxIso(Stream iso, PatcherLib.Datatypes.PatchedByteArray patch)
+        {
+            IsoPatch.PatchFileAtSector(IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
+                patch.Offset, patch.Bytes, true);
+        }
+
+        public static byte[] ReadFile(Stream iso, Sectors file, int offset, int length)
         {
             return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
         }

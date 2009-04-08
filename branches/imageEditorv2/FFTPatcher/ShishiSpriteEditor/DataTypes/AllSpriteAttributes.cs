@@ -15,21 +15,6 @@ namespace FFTPatcher.SpriteEditor
 
         private IList<SpriteAttributes> sprites;
 
-        public PatchedByteArray GetPatchedByteArray()
-        {
-            return pos.GetPatchedByteArray(ToByteArray());
-        }
-
-        public byte[] ToByteArray()
-        {
-            List<byte> result = new List<byte>(pos.Length);
-            foreach (SpriteAttributes s in sprites)
-            {
-                result.AddRange(s.ToByteArray());
-            }
-            return result.ToArray();
-        }
-
         public SpriteAttributes this[int i]
         {
             get
@@ -47,7 +32,9 @@ namespace FFTPatcher.SpriteEditor
             IList<SpriteAttributes> sprites = new SpriteAttributes[numSprites];
             for (int i = 0; i < numSprites; i++)
             {
-                sprites[i] = new SpriteAttributes(bytes.Sub(i * 4, (i + 1) * 4 - 1));
+                sprites[i] = SpriteAttributes.BuildPsx(
+                    new PatcherLib.Iso.PsxIso.KnownPosition(pos.Sector, pos.StartLocation + i * 4, 4),
+                    bytes.Sub(i * 4, (i + 1) * 4 - 1));
             }
             result.sprites = sprites;
             return result;

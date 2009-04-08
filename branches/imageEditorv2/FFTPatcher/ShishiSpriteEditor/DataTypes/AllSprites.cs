@@ -53,12 +53,5 @@ namespace FFTPatcher.SpriteEditor
             this.locs = locs;
         }
 
-        public IList<PatchedByteArray> GetPatches()
-        {
-            PatchedByteArray[] result = new PatchedByteArray[3];
-            result[0] = attrs.GetPatchedByteArray();
-            locs.GetPatches().CopyTo(result, 1);
-            return result;
-        }
     }
 }

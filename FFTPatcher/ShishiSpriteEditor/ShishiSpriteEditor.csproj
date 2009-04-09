@@ -352,6 +352,7 @@
     <None Include="Resources\MENU\BK_SHOP3.TIM" />
     <None Include="Resources\OPEN\OPNBK.BIN" />
     <None Include="Resources\OPEN\OPNTEX.BIN" />
+    <None Include="Resources\PatchedDummyFolder.bin" />
     <None Include="Resources\WORLD\WLDPIC.BIN" />
     <None Include="Resources\WORLD\WLDTEX.TM2" />
     <None Include="Resources\BATTLE\other\ARUTE.SHP" />

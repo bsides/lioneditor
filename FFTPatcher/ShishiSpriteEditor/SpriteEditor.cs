@@ -112,18 +112,22 @@ namespace FFTPatcher.SpriteEditor
 
         private void UpdatePictureBox()
         {
-            if ( pictureBox1.Image != null )
-            {
-                Image i = pictureBox1.Image;
-                pictureBox1.Image = null;
-                i.Dispose();
-            }
+            Image i = pictureBox1.Image;
 
-            if ( currentShape != null )
+            if (currentShape != null)
             {
                 Frame currentFrame = currentShape.Frames[(int)numericUpDown1.Value];
-                pictureBox1.Image = currentFrame.GetFrame( Sprite.GetAbstractSpriteFromPsxIso( iso ) );
-                spriteViewer1.HighlightTiles( currentFrame.Tiles );
+                pictureBox1.Image = currentFrame.GetFrame(Sprite.GetAbstractSpriteFromPsxIso(iso));
+                spriteViewer1.HighlightTiles(currentFrame.Tiles);
+            }
+            else
+            {
+                pictureBox1.Image = null;
+            }
+
+            if (i != null)
+            {
+                i.Dispose();
             }
         }
         private void numericUpDown1_ValueChanged( object sender, EventArgs e )

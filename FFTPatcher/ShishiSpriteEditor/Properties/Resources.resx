@@ -142,4 +142,7 @@
   <data name="PSPFiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\pspfiles.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="PatchedDummyFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\patcheddummyfolder.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

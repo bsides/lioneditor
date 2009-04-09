@@ -46,15 +46,25 @@ namespace FFTPatcher.SpriteEditor
                 Stream openedStream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.ReadWrite);
                 if (openedStream != null )
                 {
-                    if (currentStream != null)
+                    if (AllSprites.DetectExpansionOfPsxIso(openedStream) ||
+                        MessageBox.Show(this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        currentStream.Flush();
-                        currentStream.Close();
-                        currentStream.Dispose();
+                        if (currentStream != null)
+                        {
+                            currentStream.Flush();
+                            currentStream.Close();
+                            currentStream.Dispose();
+                        }
+                        currentStream = openedStream;
+
+                        AllSprites s = AllSprites.FromPsxIso(currentStream);
+                        allSpritesEditor1.BindTo(s, currentStream);
                     }
-                    currentStream = openedStream;
-                    AllSprites s = AllSprites.FromPsxIso(currentStream);
-                    allSpritesEditor1.BindTo(s, currentStream);
+                    else 
+                    {
+                        openedStream.Close();
+                        openedStream.Dispose();
+                    }
                 }
             }
         }

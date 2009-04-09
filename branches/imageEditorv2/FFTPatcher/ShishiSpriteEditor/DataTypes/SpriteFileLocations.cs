@@ -32,22 +32,30 @@ namespace FFTPatcher.SpriteEditor
 
     internal class SpriteFileLocations
     {
-        private static PatcherLib.Iso.PsxIso.KnownPosition SpriteLocationsPosition =
+        private static PatcherLib.Iso.PsxIso.KnownPosition spriteLocationsPosition =
             new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x2DCDC, numSprites * 8);
         private static PatcherLib.Iso.PsxIso.KnownPosition SP2LocationsPosition =
             new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x2E60C, numSp2 * 8);
 
+        public static PatcherLib.Iso.PsxIso.KnownPosition SpriteLocationsPosition
+        {
+            get
+            {
+                return new PsxIso.KnownPosition(spriteLocationsPosition.Sector, spriteLocationsPosition.StartLocation, spriteLocationsPosition.Length);
+            }
+        }
+
         public static bool IsoHasDefaultSpriteLocations(Stream iso)
         {
             return PatcherLib.Utilities.Utilities.CompareArrays( 
-                PatcherLib.Iso.PsxIso.ReadFile( iso, SpriteLocationsPosition ), 
+                PatcherLib.Iso.PsxIso.ReadFile( iso, spriteLocationsPosition ), 
                 defaultSpriteFileLocationsBytes );   
         }
 
         public static bool IsoHasPatchedSpriteLocations( Stream iso )
         {
             return PatcherLib.Utilities.Utilities.CompareArrays(
-                PatcherLib.Iso.PsxIso.ReadFile( iso, SpriteLocationsPosition ),
+                PatcherLib.Iso.PsxIso.ReadFile( iso, spriteLocationsPosition ),
                 patchedSpriteFileLocations );
         }
 
@@ -66,14 +74,14 @@ namespace FFTPatcher.SpriteEditor
         {
             SpriteFileLocations result = new SpriteFileLocations();
 
-            byte[] spriteBytes = PatcherLib.Iso.PsxIso.ReadFile(iso, SpriteLocationsPosition);
+            byte[] spriteBytes = PatcherLib.Iso.PsxIso.ReadFile(iso, spriteLocationsPosition);
             byte[] sp2Bytes = PatcherLib.Iso.PsxIso.ReadFile(iso, SP2LocationsPosition);
 
             IList<SpriteLocation> sprites = new SpriteLocation[numSprites];
             for (int i = 0; i < numSprites; i++)
             {
                 sprites[i] = SpriteLocation.BuildPsx(
-                    new PsxIso.KnownPosition(SpriteLocationsPosition.Sector, SpriteLocationsPosition.StartLocation + i * 8, 8), 
+                    new PsxIso.KnownPosition(spriteLocationsPosition.Sector, spriteLocationsPosition.StartLocation + i * 8, 8), 
                     spriteBytes.Sub(i * 8, (i + 1) * 8 - 1));
             }
             result.sprites = sprites;
@@ -112,13 +120,13 @@ namespace FFTPatcher.SpriteEditor
 
         private PatchedByteArray GetSpritePatch()
         {
-            List<byte> result = new List<byte>(SpriteLocationsPosition.Length);
+            List<byte> result = new List<byte>(spriteLocationsPosition.Length);
             foreach (SpriteLocation s in sprites)
             {
                 result.AddRange(s.Sector.ToBytes());
                 result.AddRange(s.Size.ToBytes());
             }
-            return SpriteLocationsPosition.GetPatchedByteArray(result.ToArray());
+            return spriteLocationsPosition.GetPatchedByteArray(result.ToArray());
         }
 
         public PatchedByteArray GetSp2Patch()

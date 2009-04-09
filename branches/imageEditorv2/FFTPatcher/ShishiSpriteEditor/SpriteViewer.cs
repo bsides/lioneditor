@@ -73,6 +73,7 @@ namespace FFTPatcher.SpriteEditor
             Controls.Add( pictureBox1 );
             Name = "SpriteViewer";
             Size = new Size( 256 + 10 + SystemInformation.VerticalScrollBarWidth, 50 );
+            pictureBox1.BackColor = Color.Black;
             ( pictureBox1 as System.ComponentModel.ISupportInitialize ).EndInit();
             ResumeLayout( false );
             PerformLayout();
@@ -139,6 +140,17 @@ namespace FFTPatcher.SpriteEditor
 
 
 		#endregion Methods 
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // SpriteViewer
+            // 
+            this.Name = "SpriteViewer";
+            this.ResumeLayout(false);
+
+        }
 
     }
 }

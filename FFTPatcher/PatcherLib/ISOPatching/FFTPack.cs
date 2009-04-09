@@ -243,34 +243,6 @@ namespace PatcherLib.Iso
             }
         }
 
-        //public static void PatchFile( string filename, int index, byte[] bytes )
-        //{
-        //    FileStream stream = null;
-        //    try
-        //    {
-        //        stream = new FileStream( filename, FileMode.Open );
-        //        PatchFile( stream, index, bytes );
-        //    }
-        //    catch( Exception )
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        if( stream != null )
-        //        {
-        //            stream.Flush();
-        //            stream.Close();
-        //            stream = null;
-        //        }
-        //    }
-        //}
-
-        //public static void PatchFile( Stream stream, int index, byte[] bytes )
-        //{
-        //    PatchFile( stream, index, 0, bytes );
-        //}
-
         public static void PatchFile( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, int index, int offset, byte[] bytes )
         {
             try

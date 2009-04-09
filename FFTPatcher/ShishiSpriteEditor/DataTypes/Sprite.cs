@@ -48,6 +48,15 @@ namespace FFTPatcher.SpriteEditor
             attributes.SetFlag(iso, index, flag);
         }
 
+        internal void ImportSprite( Stream iso, string filename )
+        {
+            byte[] bytes = File.ReadAllBytes( filename );
+            PatcherLib.Iso.PsxIso.PatchPsxIso( 
+                iso, 
+                new PatcherLib.Datatypes.PatchedByteArray( (PatcherLib.Iso.PsxIso.Sectors)Sector, 0, bytes ) );
+            cachedSprite = null;
+        }
+
         internal Sprite(string name, SpriteAttributes attributes, SpriteLocation location)
         {
             this.name = name;

@@ -86,7 +86,6 @@ namespace FFTPatcher.SpriteEditor
 
         public static void FixupColorPalette( ColorPalette destination, IList<Palette> palettes )
         {
-            int k = 0;
             for ( int i = 0; i < palettes.Count; i++ )
             {
                 FixupColorPalette( destination, palettes, i, i * 16 );

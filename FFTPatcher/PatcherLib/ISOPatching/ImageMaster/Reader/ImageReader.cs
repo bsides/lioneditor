@@ -16,7 +16,6 @@ namespace ImageMaster
 
         internal ImageRecord _rootDirectory;
         internal int CurrentBlockSize = SECTOR_SIZE;
-        internal bool bootIsDefined;
         internal string _volumename;
 
         private string _filename;
@@ -82,11 +81,6 @@ namespace ImageMaster
             }
 
             return null;
-        }
-
-        public bool IsBootDisc
-        {
-            get { return bootIsDefined; }
         }
 
         public long Size

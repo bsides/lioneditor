@@ -28,7 +28,30 @@ namespace FFTPatcher.SpriteEditor
 
         public static AllSprites FromPsxIso(Stream iso)
         {
-            return new AllSprites(AllSpriteAttributes.FromPsxIso(iso), SpriteFileLocations.FromPsxIso(iso));
+            if ( DetectExpansionOfPsxIso( iso ) )
+            {
+                return new AllSprites( AllSpriteAttributes.FromPsxIso( iso ), SpriteFileLocations.FromPsxIso( iso ) );
+            }
+            return null;
+        }
+
+        public static void ExpandIso( Stream iso )
+        {
+            byte[] expandedBytes = expandedIsoLength.ToBytes();
+            byte[] reverseBytes = new byte[4] { expandedBytes[3], expandedBytes[2], expandedBytes[1], expandedBytes[0] };
+            PatcherLib.Iso.PsxIso.PatchPsxIso( iso, PatcherLib.Iso.PsxIso.NumberOfSectorsLittleEndian.GetPatchedByteArray( expandedBytes ) );
+            PatcherLib.Iso.PsxIso.PatchPsxIso( iso, PatcherLib.Iso.PsxIso.NumberOfSectorsBigEndian.GetPatchedByteArray( reverseBytes ) );
+            PatcherLib.Iso.PsxIso.PatchPsxIso( iso, 
+                new PatchedByteArray( 
+                    (PatcherLib.Iso.PsxIso.Sectors)22, 
+                    0xDC, 
+                    new byte[] { 0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x38, 0x00 } ) );
+
+            // Copy old sprites to new locations
+            // Build directory entry for /DUMMY
+
+            // Expand length of ISO
+
         }
 
         public static bool DetectExpansionOfPsxIso(Stream iso)
@@ -39,7 +62,8 @@ namespace FFTPatcher.SpriteEditor
                 iso.Length >= expandedIsoLength &&
                 sectors > defaultSectorCount &&
                 sectors >= expandedSectorCount &&
-                !SpriteFileLocations.IsoHasDefaultSpriteLocations( iso );
+                //!SpriteFileLocations.IsoHasDefaultSpriteLocations( iso ) &&
+                SpriteFileLocations.IsoHasPatchedSpriteLocations( iso );
         }
 
         private AllSprites(AllSpriteAttributes attrs, SpriteFileLocations locs)

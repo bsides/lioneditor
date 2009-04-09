@@ -48,8 +48,8 @@ namespace FFTPatcher.SpriteEditor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
+            this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
@@ -62,23 +62,23 @@ namespace FFTPatcher.SpriteEditor
             // 
             // mainMenu
             // 
-            this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem1});
+            this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.menuItem1} );
             // 
             // menuItem1
             // 
             this.menuItem1.Index = 0;
-            this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem1.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.menuItem2,
             this.menuItem3,
-            this.menuItem4});
+            this.menuItem4} );
             this.menuItem1.Text = "&File";
             // 
             // menuItem2
             // 
             this.menuItem2.Index = 0;
             this.menuItem2.Text = "&Open ISO...";
-            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
+            this.menuItem2.Click += new System.EventHandler( this.menuItem2_Click );
             // 
             // menuItem3
             // 
@@ -104,29 +104,29 @@ namespace FFTPatcher.SpriteEditor
             // 
             // allSpritesEditor1
             // 
-            this.allSpritesEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.allSpritesEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
+                        | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.allSpritesEditor1.Enabled = false;
-            this.allSpritesEditor1.Location = new System.Drawing.Point(12, 2);
+            this.allSpritesEditor1.Location = new System.Drawing.Point( 12, 2 );
             this.allSpritesEditor1.Name = "allSpritesEditor1";
-            this.allSpritesEditor1.Size = new System.Drawing.Size(516, 593);
+            this.allSpritesEditor1.Size = new System.Drawing.Size( 618, 593 );
             this.allSpritesEditor1.TabIndex = 0;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 607);
-            this.Controls.Add(this.allSpritesEditor1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.ClientSize = new System.Drawing.Size( 642, 607 );
+            this.Controls.Add( this.allSpritesEditor1 );
+            this.Icon = ( (System.Drawing.Icon)( resources.GetObject( "$this.Icon" ) ) );
             this.MaximizeBox = false;
             this.Menu = this.mainMenu;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(488, 560);
+            this.MinimumSize = new System.Drawing.Size( 488, 560 );
             this.Name = "MainForm";
             this.Text = "Shishi Sprite Manager";
-            this.ResumeLayout(false);
+            this.ResumeLayout( false );
 
         }
 

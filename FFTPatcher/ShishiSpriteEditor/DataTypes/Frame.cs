@@ -41,7 +41,7 @@ namespace FFTPatcher.SpriteEditor
         /// <summary>
         /// Gets the tiles in this frame.
         /// </summary>
-        public ReadOnlyCollection<Tile> Tiles { get { return tiles.AsReadOnly(); } }
+        public IList<Tile> Tiles { get { return tiles.AsReadOnly(); } }
 
 
 		#endregion Properties 

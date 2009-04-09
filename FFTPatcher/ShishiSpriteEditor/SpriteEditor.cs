@@ -37,14 +37,42 @@ namespace FFTPatcher.SpriteEditor
             flagsCheckedListBox.SetItemChecked(6, sprite.Flag7);
             flagsCheckedListBox.SetItemChecked(7, sprite.Flag8);
             flagsCheckedListBox.EndUpdate();
+            UpdateShapes();
             Enabled = true;
             ignoreChanges = false;
+        }
+        private Shape currentShape;
+        private void UpdateShapes()
+        {
+            bool oldIgnoreChanges = ignoreChanges;
+            ignoreChanges = true;
+            if ( Shape.Shapes.ContainsKey( Sprite.SHP ) )
+            {
+                numericUpDown1.Enabled = true;
+                pictureBox1.Enabled = true;
+
+                currentShape = Shape.Shapes[Sprite.SHP];
+                numericUpDown1.Value = 1;
+                numericUpDown1.Maximum = currentShape.Frames.Count - 1;
+            }
+            else
+            {
+                numericUpDown1.Enabled = false;
+                pictureBox1.Enabled = false;
+                currentShape = null;
+            }
+            UpdatePictureBox();
+
+            ignoreChanges = oldIgnoreChanges;
         }
 
         public SpriteEditor()
         {
             InitializeComponent();
-            shpComboBox.DataSource = Enum.GetValues(typeof(SpriteType));
+            var s = new List<SpriteType>( (SpriteType[])Enum.GetValues(typeof(SpriteType)));
+            s.Remove(SpriteType.RUKA);
+
+            shpComboBox.DataSource = s.ToArray();
             seqComboBox.DataSource = Enum.GetValues(typeof(SpriteType));
             paletteSelector.SelectedIndex = 0;
         }
@@ -57,8 +85,11 @@ namespace FFTPatcher.SpriteEditor
 
         private void shpComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!ignoreChanges)
-                Sprite.SetSHP(iso, (SpriteType)shpComboBox.SelectedItem);
+            if ( !ignoreChanges )
+            {
+                Sprite.SetSHP( iso, (SpriteType)shpComboBox.SelectedItem );
+                UpdateShapes();
+            }
         }
 
         private void seqComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -77,6 +108,30 @@ namespace FFTPatcher.SpriteEditor
         {
             if (!ignoreChanges)
                 Sprite.SetFlag(iso, e.Index, e.NewValue == CheckState.Checked);
+        }
+
+        private void UpdatePictureBox()
+        {
+            if ( pictureBox1.Image != null )
+            {
+                Image i = pictureBox1.Image;
+                pictureBox1.Image = null;
+                i.Dispose();
+            }
+
+            if ( currentShape != null )
+            {
+                Frame currentFrame = currentShape.Frames[(int)numericUpDown1.Value];
+                pictureBox1.Image = currentFrame.GetFrame( Sprite.GetAbstractSpriteFromPsxIso( iso ) );
+                spriteViewer1.HighlightTiles( currentFrame.Tiles );
+            }
+        }
+        private void numericUpDown1_ValueChanged( object sender, EventArgs e )
+        {
+            if ( !ignoreChanges && currentShape != null )
+            {
+                UpdatePictureBox();
+            }
         }
 
     }

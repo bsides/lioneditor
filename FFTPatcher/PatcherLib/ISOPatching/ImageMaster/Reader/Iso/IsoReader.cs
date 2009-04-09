@@ -36,15 +36,13 @@ namespace ImageMaster
         private byte[] dataBuffer;
         private List<VolumeDescriptor> _volumeDescriptor;
         private long _currentPosition;
-        private int SuspSkipSize;
+        private int SuspSkipSize = 0;
         private int MainVolDescIndex;
         private int dataBufferPosition;
         private bool IsSusp;
         private bool _noJoliet;
         private int _version;
 
-        private enum OpenType { File, Stream }
-        private OpenType openType;
         private IsoReader()
         {
             _rootDirectory = new IsoRecord();
@@ -55,7 +53,6 @@ namespace ImageMaster
             : this()
         {
             Initialize(path);
-            openType = OpenType.File;
         }
 
         private IsoReader(Stream stream)
@@ -64,7 +61,6 @@ namespace ImageMaster
             if (stream == null)
                 throw new ArgumentNullException();
             Initialize(stream);
-            openType = OpenType.Stream;
         }
 
         public static ImageRecord GetRecord(Stream stream)

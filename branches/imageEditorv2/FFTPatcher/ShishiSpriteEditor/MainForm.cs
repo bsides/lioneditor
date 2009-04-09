@@ -37,7 +37,7 @@ namespace FFTPatcher.SpriteEditor
 
         private Stream currentStream = null;
 
-        private void menuItem2_Click(object sender, EventArgs e)
+        private void openIsoMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "ISO files (*.bin, *.iso, *.img)|*.bin;*.iso;*.img";
             openFileDialog.FileName = string.Empty;
@@ -79,6 +79,38 @@ namespace FFTPatcher.SpriteEditor
                 currentStream = null;
             }
             base.OnClosing(e);
+        }
+
+        private void importSprMenuItem_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void exportSprMenuItem_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void importBmpMenuItem_Click( object sender, EventArgs e )
+        {
+        }
+
+        private void exportBmpMenuItem_Click( object sender, EventArgs e )
+        {
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            saveFileDialog.Filter = "8bpp paletted bitmap (*.BMP)|*.bmp";
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.CreatePrompt = false;
+
+            if ( currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            {
+                currentSprite.GetAbstractSpriteFromPsxIso( currentStream ).ToBitmap().Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
+            }
+        }
+
+        private void exitMenuItem_Click( object sender, EventArgs e )
+        {
+            Application.Exit();
         }
 
     }

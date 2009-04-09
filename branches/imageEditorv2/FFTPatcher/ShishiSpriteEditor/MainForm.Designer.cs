@@ -48,47 +48,106 @@ namespace FFTPatcher.SpriteEditor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.MainMenu mainMenu;
+            System.Windows.Forms.MenuItem fileMenu;
+            System.Windows.Forms.MenuItem openIsoMenuItem;
+            System.Windows.Forms.MenuItem separator1;
+            System.Windows.Forms.MenuItem exitMenuItem;
+            System.Windows.Forms.MenuItem importSprMenuItem;
+            System.Windows.Forms.MenuItem exportSprMenuItem;
+            System.Windows.Forms.MenuItem separator2;
+            System.Windows.Forms.MenuItem importBmpMenuItem;
+            System.Windows.Forms.MenuItem exportBmpMenuItem;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
-            this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.menuItem2 = new System.Windows.Forms.MenuItem();
-            this.menuItem3 = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.spriteMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.allSpritesEditor1 = new FFTPatcher.SpriteEditor.AllSpritesEditor();
+            mainMenu = new System.Windows.Forms.MainMenu( this.components );
+            fileMenu = new System.Windows.Forms.MenuItem();
+            openIsoMenuItem = new System.Windows.Forms.MenuItem();
+            separator1 = new System.Windows.Forms.MenuItem();
+            exitMenuItem = new System.Windows.Forms.MenuItem();
+            importSprMenuItem = new System.Windows.Forms.MenuItem();
+            exportSprMenuItem = new System.Windows.Forms.MenuItem();
+            separator2 = new System.Windows.Forms.MenuItem();
+            importBmpMenuItem = new System.Windows.Forms.MenuItem();
+            exportBmpMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu
             // 
-            this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.menuItem1} );
+            mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            fileMenu,
+            this.spriteMenuItem} );
             // 
-            // menuItem1
+            // fileMenu
             // 
-            this.menuItem1.Index = 0;
-            this.menuItem1.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.menuItem2,
-            this.menuItem3,
-            this.menuItem4} );
-            this.menuItem1.Text = "&File";
+            fileMenu.Index = 0;
+            fileMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            openIsoMenuItem,
+            separator1,
+            exitMenuItem} );
+            fileMenu.Text = "&File";
             // 
-            // menuItem2
+            // openIsoMenuItem
             // 
-            this.menuItem2.Index = 0;
-            this.menuItem2.Text = "&Open ISO...";
-            this.menuItem2.Click += new System.EventHandler( this.menuItem2_Click );
+            openIsoMenuItem.Index = 0;
+            openIsoMenuItem.Text = "&Open ISO...";
+            openIsoMenuItem.Click += new System.EventHandler( this.openIsoMenuItem_Click );
             // 
-            // menuItem3
+            // separator1
             // 
-            this.menuItem3.Index = 1;
-            this.menuItem3.Text = "-";
+            separator1.Index = 1;
+            separator1.Text = "-";
             // 
-            // menuItem4
+            // exitMenuItem
             // 
-            this.menuItem4.Index = 2;
-            this.menuItem4.Text = "E&xit";
+            exitMenuItem.Index = 2;
+            exitMenuItem.Text = "E&xit";
+            exitMenuItem.Click += new System.EventHandler( this.exitMenuItem_Click );
+            // 
+            // spriteMenuItem
+            // 
+            this.spriteMenuItem.Enabled = false;
+            this.spriteMenuItem.Index = 1;
+            this.spriteMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            importSprMenuItem,
+            exportSprMenuItem,
+            separator2,
+            importBmpMenuItem,
+            exportBmpMenuItem} );
+            this.spriteMenuItem.Text = "Sprite";
+            // 
+            // importSprMenuItem
+            // 
+            importSprMenuItem.Index = 0;
+            importSprMenuItem.Text = "Import SPR...";
+            importSprMenuItem.Click += new System.EventHandler( this.importSprMenuItem_Click );
+            // 
+            // exportSprMenuItem
+            // 
+            exportSprMenuItem.Index = 1;
+            exportSprMenuItem.Text = "Export SPR...";
+            exportSprMenuItem.Click += new System.EventHandler( this.exportSprMenuItem_Click );
+            // 
+            // separator2
+            // 
+            separator2.Index = 2;
+            separator2.Text = "-";
+            // 
+            // importBmpMenuItem
+            // 
+            importBmpMenuItem.Index = 3;
+            importBmpMenuItem.Text = "Import BMP...";
+            importBmpMenuItem.Click += new System.EventHandler( this.importBmpMenuItem_Click );
+            // 
+            // exportBmpMenuItem
+            // 
+            exportBmpMenuItem.Index = 4;
+            exportBmpMenuItem.Text = "Export BMP...";
+            exportBmpMenuItem.Click += new System.EventHandler( this.exportBmpMenuItem_Click );
             // 
             // openFileDialog
             // 
@@ -121,7 +180,7 @@ namespace FFTPatcher.SpriteEditor
             this.Controls.Add( this.allSpritesEditor1 );
             this.Icon = ( (System.Drawing.Icon)( resources.GetObject( "$this.Icon" ) ) );
             this.MaximizeBox = false;
-            this.Menu = this.mainMenu;
+            this.Menu = mainMenu;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size( 488, 560 );
             this.Name = "MainForm";
@@ -132,15 +191,11 @@ namespace FFTPatcher.SpriteEditor
 
         #endregion
 
-        private System.Windows.Forms.MainMenu mainMenu;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.MenuItem menuItem1;
-        private System.Windows.Forms.MenuItem menuItem2;
-        private System.Windows.Forms.MenuItem menuItem3;
-        private System.Windows.Forms.MenuItem menuItem4;
         private AllSpritesEditor allSpritesEditor1;
+        private System.Windows.Forms.MenuItem spriteMenuItem;
     }
 }
 

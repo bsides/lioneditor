@@ -14,6 +14,11 @@ namespace FFTPatcher.SpriteEditor
         public AllSprites Sprites { get; private set; }
         private Stream iso;
 
+        public Sprite CurrentSprite
+        {
+            get { return spriteEditor1.Sprite; }
+        }
+
         public void BindTo(AllSprites allSprites, Stream iso)
         {
             if (allSprites == null)

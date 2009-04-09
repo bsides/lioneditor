@@ -22,25 +22,34 @@ namespace FFTPatcher.SpriteEditor
             ignoreChanges = true;
             this.iso = iso;
             Sprite = sprite;
-            AbstractSprite = Sprite.GetAbstractSpriteFromPsxIso(iso);
-            spriteViewer1.Sprite = AbstractSprite;
-            shpComboBox.SelectedItem = sprite.SHP;
-            seqComboBox.SelectedItem = sprite.SEQ;
-            flyingCheckbox.Checked = sprite.Flying;
-            flagsCheckedListBox.BeginUpdate();
-            flagsCheckedListBox.SetItemChecked(0, sprite.Flag1);
-            flagsCheckedListBox.SetItemChecked(1, sprite.Flag2);
-            flagsCheckedListBox.SetItemChecked(2, sprite.Flag3);
-            flagsCheckedListBox.SetItemChecked(3, sprite.Flag4);
-            flagsCheckedListBox.SetItemChecked(4, sprite.Flag5);
-            flagsCheckedListBox.SetItemChecked(5, sprite.Flag6);
-            flagsCheckedListBox.SetItemChecked(6, sprite.Flag7);
-            flagsCheckedListBox.SetItemChecked(7, sprite.Flag8);
-            flagsCheckedListBox.EndUpdate();
-            UpdateShapes();
+            ReloadSprite();
             Enabled = true;
             ignoreChanges = false;
         }
+
+        public void ReloadSprite()
+        {
+            bool oldIgnoreChanges = ignoreChanges;
+            ignoreChanges = true;
+            AbstractSprite = Sprite.GetAbstractSpriteFromPsxIso( iso );
+            spriteViewer1.Sprite = AbstractSprite;
+            shpComboBox.SelectedItem = Sprite.SHP;
+            seqComboBox.SelectedItem = Sprite.SEQ;
+            flyingCheckbox.Checked = Sprite.Flying;
+            flagsCheckedListBox.BeginUpdate();
+            flagsCheckedListBox.SetItemChecked( 0, Sprite.Flag1 );
+            flagsCheckedListBox.SetItemChecked( 1, Sprite.Flag2 );
+            flagsCheckedListBox.SetItemChecked( 2, Sprite.Flag3 );
+            flagsCheckedListBox.SetItemChecked( 3, Sprite.Flag4 );
+            flagsCheckedListBox.SetItemChecked( 4, Sprite.Flag5 );
+            flagsCheckedListBox.SetItemChecked( 5, Sprite.Flag6 );
+            flagsCheckedListBox.SetItemChecked( 6, Sprite.Flag7 );
+            flagsCheckedListBox.SetItemChecked( 7, Sprite.Flag8 );
+            flagsCheckedListBox.EndUpdate();
+            UpdateShapes();
+            ignoreChanges = oldIgnoreChanges;
+        }
+
         private Shape currentShape;
         private void UpdateShapes()
         {
@@ -69,7 +78,7 @@ namespace FFTPatcher.SpriteEditor
         public SpriteEditor()
         {
             InitializeComponent();
-            var s = new List<SpriteType>( (SpriteType[])Enum.GetValues(typeof(SpriteType)));
+            var s = new List<SpriteType>( (SpriteType[])Enum.GetValues( typeof( SpriteType ) ) );
             s.Remove(SpriteType.RUKA);
 
             shpComboBox.DataSource = s.ToArray();

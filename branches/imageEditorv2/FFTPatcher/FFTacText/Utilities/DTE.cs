@@ -125,6 +125,9 @@ namespace FFTPatcher.TextEditor
             return TextUtilities.GetGroups( charmap, charset, widths );
         }
 
+        /// <summary>
+        /// Gets a set of groups that are candidates for DTE encoding
+        /// </summary>
         public static Set<string> GetDteGroups( Context context )
         {
             return context == Context.US_PSP ? GetPspDteGroups() : GetPsxDteGroups();
@@ -141,7 +144,11 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        public static IList<PatchedByteArray> GeneratePspDtePatches( IEnumerable<KeyValuePair<string, byte>> dteEncodings )
+        /// <summary>
+        /// Generates a list of patches for PSP based on the set of DTE encodings passed.
+        /// Generates font patches and ASM patches.
+        /// </summary>
+        public static IList<PatchedByteArray> GeneratePspDtePatches(IEnumerable<KeyValuePair<string, byte>> dteEncodings)
         {
             var charSet = PSPResources.CharacterSet;
             FFTFont font = new FFTFont( PSPResources.FontBin, PSPResources.FontWidthsBin );
@@ -165,7 +172,11 @@ namespace FFTPatcher.TextEditor
                 };
         }
 
-        public static IList<PatchedByteArray> GeneratePsxDtePatches( IEnumerable<KeyValuePair<string, byte>> dteEncodings )
+        /// <summary>
+        /// Generates a list of patches for PSX based on the set of DTE encodings passed.
+        /// Generates font patches and ASM patches.
+        /// </summary>
+        public static IList<PatchedByteArray> GeneratePsxDtePatches(IEnumerable<KeyValuePair<string, byte>> dteEncodings)
         {
             // BATTLE.BIN -> 0xE7614
             // FONT.BIN -> 0
@@ -198,11 +209,18 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        public static IList<PatchedByteArray> GenerateDtePatches( Context context, IEnumerable<KeyValuePair<string, byte>> dteEncodings )
+        /// <summary>
+        /// Generates a list of patches based on the set of DTE encodings passed.
+        /// Generates font patches and ASM patches.
+        /// </summary>
+        public static IList<PatchedByteArray> GenerateDtePatches(Context context, IEnumerable<KeyValuePair<string, byte>> dteEncodings)
         {
             return context == Context.US_PSP ? GeneratePspDtePatches( dteEncodings ) : GeneratePsxDtePatches( dteEncodings );
         }
 
+        /// <summary>
+        /// Gets a collection of all the bytes that are available for DTE.
+        /// </summary>
         public static Stack<byte> GetAllowedDteBytes()
         {
             Stack<byte> result = new Stack<byte>();
@@ -245,11 +263,14 @@ namespace FFTPatcher.TextEditor
             IEnumerable<KeyValuePair<string, byte>> dteEncodings,
             IList<string> baseCharSet )
         {
+            // 2 bytes per lookup pair
             byte[] result = new byte[( maxDteByte - minDteByte + 1 ) * 2];
 
             foreach ( var kvp in dteEncodings )
             {
-                TextUtilities.PSXMap.StringToByteArray( kvp.Key ).Sub( 0, 1 ).CopyTo( result, ( kvp.Value - minDteByte ) * 2 );
+                TextUtilities.PSXMap.StringToByteArray( kvp.Key )      // Get the pair to store
+                    .Sub( 0, 1 )                                       // Get 2 bytes
+                    .CopyTo( result, ( kvp.Value - minDteByte ) * 2 ); // Store them in the DTE array
             }
 
             return result;
@@ -262,17 +283,30 @@ namespace FFTPatcher.TextEditor
             out byte[] fontBytes,
             out byte[] widthBytes )
         {
+            // Make a copy of the font
             FFTFont font =
                 new FFTFont( baseFont.ToByteArray(), baseFont.ToWidthsByteArray() );
+
             IList<string> charSet = new List<string>( baseCharSet );
 
             foreach ( var kvp in dteEncodings )
             {
-                int[] chars = new int[] { charSet.IndexOf( kvp.Key.Substring( 0, 1 ) ), charSet.IndexOf( kvp.Key.Substring( 1, 1 ) ) };
-                int[] widths = new int[] { font.Glyphs[chars[0]].Width, font.Glyphs[chars[1]].Width };
-                int newWidth = widths[0] + widths[1];
+                int[] chars = 
+                    new int[] { 
+                        charSet.IndexOf( kvp.Key.Substring( 0, 1 ) ), // Find the index of the first character in the pair
+                        charSet.IndexOf( kvp.Key.Substring( 1, 1 ) )  // Second character in the pair
+                    };
+                int[] widths = 
+                    new int[] { 
+                        font.Glyphs[chars[0]].Width, // width of first char
+                        font.Glyphs[chars[1]].Width  // width of secont char
+                    };
 
+                // The width of the concatenated character is the sum...
+                int newWidth = widths[0] + widths[1]; 
                 font.Glyphs[kvp.Value].Width = (byte)newWidth;
+
+                // Erase all the pixels of the character to replace
                 IList<FontColor> newPixels = font.Glyphs[kvp.Value].Pixels;
                 for ( int i = 0; i < newPixels.Count; i++ )
                 {
@@ -283,10 +317,12 @@ namespace FFTPatcher.TextEditor
                 const int fontWidth = 10;
 
                 int offset = 0;
+                // for each character in the pair...
                 for ( int c = 0; c < chars.Length; c++ )
                 {
                     var pix = font.Glyphs[chars[c]].Pixels;
 
+                    // ... copy the pixels to the concatenated character
                     for ( int x = 0; x < widths[c]; x++ )
                     {
                         for ( int y = 0; y < fontHeight; y++ )
@@ -299,6 +335,7 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
+            // Return the new font and widths arrays
             fontBytes = font.ToByteArray();
             widthBytes = font.ToWidthsByteArray();
         }

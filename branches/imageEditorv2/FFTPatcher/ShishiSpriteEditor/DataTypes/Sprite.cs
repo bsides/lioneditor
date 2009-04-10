@@ -48,6 +48,10 @@ namespace FFTPatcher.SpriteEditor
             attributes.SetFlag(iso, index, flag);
         }
 
+        internal void ImportBitmap(Stream iso, string filename)
+        {
+        }
+
         internal void ImportSprite( Stream iso, string filename )
         {
             byte[] bytes = File.ReadAllBytes( filename );

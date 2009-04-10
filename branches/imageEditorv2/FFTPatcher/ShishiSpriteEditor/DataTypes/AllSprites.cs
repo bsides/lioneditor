@@ -56,7 +56,7 @@ namespace FFTPatcher.SpriteEditor
                 byte newS = sec;
                 byte newMin = min;
 
-                if ( newF == 74)
+                if ( newF == 75 )
                 {
                     newF = 0;
                     newS++;
@@ -113,6 +113,8 @@ namespace FFTPatcher.SpriteEditor
             byte[] endOfFileBytes = new byte[] {
                 0x00, 0x00, 0x89, 0x00,
                 0x00, 0x00, 0x89, 0x00 };
+            //byte[] sectorBytes = new byte[8];
+            //byte[] endOfFileBytes = new byte[8];
             byte[] emptySector = new byte[2328];
             Time t = new Time(51, 9, 39);
             for (long l = 0x2040B100; l < 0x20F18D00; l += 2352)

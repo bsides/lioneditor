@@ -47,6 +47,14 @@ namespace FFTPatcher.SpriteEditor
             Enabled = false;
         }
 
+        public void ReloadCurrentSprite()
+        {
+            if (CurrentSprite != null)
+            {
+                spriteEditor1.ReloadSprite();
+            }
+        }
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Sprite sprite = (sender as ComboBox).SelectedItem as Sprite;

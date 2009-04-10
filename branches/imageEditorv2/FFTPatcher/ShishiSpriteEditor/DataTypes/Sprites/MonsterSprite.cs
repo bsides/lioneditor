@@ -44,13 +44,15 @@ namespace FFTPatcher.SpriteEditor
             }
 
             result.AddRange( Decompress( bytes.Sub( 36864 ) ) );
-
-            foreach( IList<byte> extra in extraBytes )
+            if (extraBytes != null)
             {
-                foreach( byte b in extra )
+                foreach (IList<byte> extra in extraBytes)
                 {
-                    result.Add( b.GetLowerNibble() );
-                    result.Add( b.GetUpperNibble() );
+                    foreach (byte b in extra)
+                    {
+                        result.Add(b.GetLowerNibble());
+                        result.Add(b.GetUpperNibble());
+                    }
                 }
             }
 

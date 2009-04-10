@@ -59,6 +59,7 @@ namespace FFTPatcher.SpriteEditor
 
                         AllSprites s = AllSprites.FromPsxIso(currentStream);
                         allSpritesEditor1.BindTo(s, currentStream);
+                        spriteMenuItem.Enabled = true;
                     }
                     else 
                     {
@@ -83,16 +84,47 @@ namespace FFTPatcher.SpriteEditor
 
         private void importSprMenuItem_Click( object sender, EventArgs e )
         {
-
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            openFileDialog.Filter = "FFT Sprite (*.SPR)|*.spr";
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.CheckFileExists = true;
+            if (currentSprite != null && openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                currentSprite.ImportSprite(currentStream, openFileDialog.FileName);
+                allSpritesEditor1.ReloadCurrentSprite();
+            }
         }
 
         private void exportSprMenuItem_Click( object sender, EventArgs e )
         {
-
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            saveFileDialog.Filter = "FFT Sprite (*.SPR)|*.spr";
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.CreatePrompt = false;
+            saveFileDialog.OverwritePrompt = true;
+            if (currentSprite != null && saveFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                File.WriteAllBytes(saveFileDialog.FileName, currentSprite.GetAbstractSpriteFromPsxIso(currentStream).ToByteArray(0));
+            }
         }
 
         private void importBmpMenuItem_Click( object sender, EventArgs e )
         {
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            openFileDialog.Filter = "8bpp paletted bitmap (*.BMP)|*.bmp";
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.CheckFileExists = true;
+            if (currentSprite != null && openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                MessageBox.Show("This is broken");
+                using (Stream s = File.OpenRead(openFileDialog.FileName))
+                using (Bitmap b = new Bitmap(s))
+                {
+                    bool bad = false;
+                    currentSprite.GetAbstractSpriteFromPsxIso(currentStream).ImportBitmap(b, out bad);
+                    allSpritesEditor1.ReloadCurrentSprite();
+                }
+            }
         }
 
         private void exportBmpMenuItem_Click( object sender, EventArgs e )
@@ -101,6 +133,7 @@ namespace FFTPatcher.SpriteEditor
             saveFileDialog.Filter = "8bpp paletted bitmap (*.BMP)|*.bmp";
             saveFileDialog.OverwritePrompt = true;
             saveFileDialog.CreatePrompt = false;
+            saveFileDialog.FileName = string.Empty;
 
             if ( currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {

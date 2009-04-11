@@ -25,7 +25,7 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
-        public TYPE2Sprite( string name, IList<byte> bytes )
+        public TYPE2Sprite( IList<byte> bytes )
             : base( bytes )
         {
         }

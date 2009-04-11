@@ -48,15 +48,32 @@ namespace FFTPatcher.SpriteEditor
             attributes.SetFlag(iso, index, flag);
         }
 
-        internal void ImportBitmap(Stream iso, string filename)
+        internal void ImportBitmap( Stream iso, string filename )
         {
+            using ( Stream s = File.OpenRead( filename ) )
+            using ( System.Drawing.Bitmap b = new System.Drawing.Bitmap( s ) )
+            {
+                ImportBitmap( iso, b );
+            }
+        }
+
+        internal void ImportBitmap( Stream iso, System.Drawing.Bitmap bmp )
+        {
+            bool bad = false;
+            AbstractSprite sprite = GetAbstractSpriteFromPsxIso( iso );
+            sprite.ImportBitmap( bmp, out bad );
+            ImportSprite( iso, sprite.ToByteArray( 0 ) );
         }
 
         internal void ImportSprite( Stream iso, string filename )
         {
-            byte[] bytes = File.ReadAllBytes( filename );
-            PatcherLib.Iso.PsxIso.PatchPsxIso( 
-                iso, 
+            ImportSprite( iso, File.ReadAllBytes( filename ) );
+        }
+
+        internal void ImportSprite( Stream iso, byte[] bytes )
+        {
+            PatcherLib.Iso.PsxIso.PatchPsxIso(
+                iso,
                 new PatcherLib.Datatypes.PatchedByteArray( (PatcherLib.Iso.PsxIso.Sectors)Sector, 0, bytes ) );
             cachedSprite = null;
         }
@@ -79,7 +96,7 @@ namespace FFTPatcher.SpriteEditor
                         cachedSprite = new TYPE1Sprite( bytes );
                         break;
                     case SpriteType.TYPE2:
-                        cachedSprite = new TYPE2Sprite( "butts", bytes );
+                        cachedSprite = new TYPE2Sprite( bytes );
                         break;
                     case SpriteType.MON:
                     case SpriteType.RUKA:

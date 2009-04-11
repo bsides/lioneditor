@@ -116,14 +116,8 @@ namespace FFTPatcher.SpriteEditor
             openFileDialog.CheckFileExists = true;
             if (currentSprite != null && openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                MessageBox.Show("This is broken");
-                using (Stream s = File.OpenRead(openFileDialog.FileName))
-                using (Bitmap b = new Bitmap(s))
-                {
-                    bool bad = false;
-                    currentSprite.GetAbstractSpriteFromPsxIso(currentStream).ImportBitmap(b, out bad);
-                    allSpritesEditor1.ReloadCurrentSprite();
-                }
+                currentSprite.ImportBitmap( currentStream, openFileDialog.FileName );
+                allSpritesEditor1.ReloadCurrentSprite();
             }
         }
 

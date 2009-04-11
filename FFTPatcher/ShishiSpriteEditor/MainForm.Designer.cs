@@ -58,13 +58,13 @@ namespace FFTPatcher.SpriteEditor
             System.Windows.Forms.MenuItem separator2;
             System.Windows.Forms.MenuItem importBmpMenuItem;
             System.Windows.Forms.MenuItem exportBmpMenuItem;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
             this.spriteMenuItem = new System.Windows.Forms.MenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.allSpritesEditor1 = new FFTPatcher.SpriteEditor.AllSpritesEditor();
-            mainMenu = new System.Windows.Forms.MainMenu(this.components);
+            mainMenu = new System.Windows.Forms.MainMenu( this.components );
             fileMenu = new System.Windows.Forms.MenuItem();
             openIsoMenuItem = new System.Windows.Forms.MenuItem();
             separator1 = new System.Windows.Forms.MenuItem();
@@ -78,24 +78,24 @@ namespace FFTPatcher.SpriteEditor
             // 
             // mainMenu
             // 
-            mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             fileMenu,
-            this.spriteMenuItem});
+            this.spriteMenuItem} );
             // 
             // fileMenu
             // 
             fileMenu.Index = 0;
-            fileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            fileMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             openIsoMenuItem,
             separator1,
-            exitMenuItem});
+            exitMenuItem} );
             fileMenu.Text = "&File";
             // 
             // openIsoMenuItem
             // 
             openIsoMenuItem.Index = 0;
             openIsoMenuItem.Text = "&Open ISO...";
-            openIsoMenuItem.Click += new System.EventHandler(this.openIsoMenuItem_Click);
+            openIsoMenuItem.Click += new System.EventHandler( this.openIsoMenuItem_Click );
             // 
             // separator1
             // 
@@ -106,31 +106,31 @@ namespace FFTPatcher.SpriteEditor
             // 
             exitMenuItem.Index = 2;
             exitMenuItem.Text = "E&xit";
-            exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
+            exitMenuItem.Click += new System.EventHandler( this.exitMenuItem_Click );
             // 
             // spriteMenuItem
             // 
             this.spriteMenuItem.Enabled = false;
             this.spriteMenuItem.Index = 1;
-            this.spriteMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.spriteMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             importSprMenuItem,
             exportSprMenuItem,
             separator2,
             importBmpMenuItem,
-            exportBmpMenuItem});
+            exportBmpMenuItem} );
             this.spriteMenuItem.Text = "Sprite";
             // 
             // importSprMenuItem
             // 
             importSprMenuItem.Index = 0;
             importSprMenuItem.Text = "Import SPR...";
-            importSprMenuItem.Click += new System.EventHandler(this.importSprMenuItem_Click);
+            importSprMenuItem.Click += new System.EventHandler( this.importSprMenuItem_Click );
             // 
             // exportSprMenuItem
             // 
             exportSprMenuItem.Index = 1;
             exportSprMenuItem.Text = "Export SPR...";
-            exportSprMenuItem.Click += new System.EventHandler(this.exportSprMenuItem_Click);
+            exportSprMenuItem.Click += new System.EventHandler( this.exportSprMenuItem_Click );
             // 
             // separator2
             // 
@@ -141,13 +141,13 @@ namespace FFTPatcher.SpriteEditor
             // 
             importBmpMenuItem.Index = 3;
             importBmpMenuItem.Text = "Import BMP...";
-            importBmpMenuItem.Click += new System.EventHandler(this.importBmpMenuItem_Click);
+            importBmpMenuItem.Click += new System.EventHandler( this.importBmpMenuItem_Click );
             // 
             // exportBmpMenuItem
             // 
             exportBmpMenuItem.Index = 4;
             exportBmpMenuItem.Text = "Export BMP...";
-            exportBmpMenuItem.Click += new System.EventHandler(this.exportBmpMenuItem_Click);
+            exportBmpMenuItem.Click += new System.EventHandler( this.exportBmpMenuItem_Click );
             // 
             // openFileDialog
             // 
@@ -163,29 +163,29 @@ namespace FFTPatcher.SpriteEditor
             // 
             // allSpritesEditor1
             // 
-            this.allSpritesEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.allSpritesEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
+                        | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.allSpritesEditor1.Enabled = false;
-            this.allSpritesEditor1.Location = new System.Drawing.Point(12, 2);
+            this.allSpritesEditor1.Location = new System.Drawing.Point( 12, 2 );
             this.allSpritesEditor1.Name = "allSpritesEditor1";
-            this.allSpritesEditor1.Size = new System.Drawing.Size(618, 593);
+            this.allSpritesEditor1.Size = new System.Drawing.Size( 618, 593 );
             this.allSpritesEditor1.TabIndex = 0;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(642, 607);
-            this.Controls.Add(this.allSpritesEditor1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.ClientSize = new System.Drawing.Size( 642, 607 );
+            this.Controls.Add( this.allSpritesEditor1 );
+            this.Icon = ( (System.Drawing.Icon)( resources.GetObject( "$this.Icon" ) ) );
             this.MaximizeBox = false;
             this.Menu = mainMenu;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(488, 560);
+            this.MinimumSize = new System.Drawing.Size( 488, 560 );
             this.Name = "MainForm";
             this.Text = "Shishi Sprite Manager";
-            this.ResumeLayout(false);
+            this.ResumeLayout( false );
 
         }
 

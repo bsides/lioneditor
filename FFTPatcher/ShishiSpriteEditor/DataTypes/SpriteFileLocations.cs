@@ -8,13 +8,13 @@ using PatcherLib.Iso;
 
 namespace FFTPatcher.SpriteEditor
 {
-    
+
     internal class SpriteLocation
     {
         public UInt32 Sector { get; set; }
         public UInt32 Size { get; set; }
 
-        private SpriteLocation(PsxIso.KnownPosition pos, IList<byte> bytes)
+        protected SpriteLocation(PsxIso.KnownPosition pos, IList<byte> bytes)
         {
             System.Diagnostics.Debug.Assert(bytes.Count == 8);
             Sector = bytes.Sub(0, 3).ToUInt32();
@@ -34,7 +34,7 @@ namespace FFTPatcher.SpriteEditor
     {
         private static PatcherLib.Iso.PsxIso.KnownPosition spriteLocationsPosition =
             new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x2DCDC, numSprites * 8);
-        private static PatcherLib.Iso.PsxIso.KnownPosition SP2LocationsPosition =
+        private static PatcherLib.Iso.PsxIso.KnownPosition sp2LocationsPosition =
             new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, 0x2E60C, numSp2 * 8);
 
         public static PatcherLib.Iso.PsxIso.KnownPosition SpriteLocationsPosition
@@ -42,6 +42,14 @@ namespace FFTPatcher.SpriteEditor
             get
             {
                 return new PsxIso.KnownPosition(spriteLocationsPosition.Sector, spriteLocationsPosition.StartLocation, spriteLocationsPosition.Length);
+            }
+        }
+
+        public static PatcherLib.Iso.PsxIso.KnownPosition SP2LocationsPosition
+        {
+            get
+            {
+                return new PsxIso.KnownPosition( sp2LocationsPosition.Sector, sp2LocationsPosition.StartLocation, sp2LocationsPosition.Length );
             }
         }
 
@@ -63,7 +71,7 @@ namespace FFTPatcher.SpriteEditor
         const int numSp2 = 0xD8 / 8;
 
         private IList<SpriteLocation> sprites;
-        private IList<SpriteLocation> sp2;
+        private IDictionary<byte, IList<SpriteLocation>> sp2;
 
         private SpriteFileLocations()
         {
@@ -75,7 +83,7 @@ namespace FFTPatcher.SpriteEditor
             SpriteFileLocations result = new SpriteFileLocations();
 
             byte[] spriteBytes = PatcherLib.Iso.PsxIso.ReadFile(iso, spriteLocationsPosition);
-            byte[] sp2Bytes = PatcherLib.Iso.PsxIso.ReadFile(iso, SP2LocationsPosition);
+            byte[] sp2Bytes = PatcherLib.Iso.PsxIso.ReadFile(iso, sp2LocationsPosition);
 
             IList<SpriteLocation> sprites = new SpriteLocation[numSprites];
             for (int i = 0; i < numSprites; i++)
@@ -86,13 +94,37 @@ namespace FFTPatcher.SpriteEditor
             }
             result.sprites = sprites;
 
-            IList<SpriteLocation> sp2 = new SpriteLocation[numSp2];
-            for (int i = 0; i < numSp2; i++)
+            var sp2 = new Dictionary<byte, IList<SpriteLocation>>();
+            for (byte i = 0x87; i < numSp2+0x87; i++)
             {
-                sp2[i] = SpriteLocation.BuildPsx(
-                    new PsxIso.KnownPosition(SP2LocationsPosition.Sector, SP2LocationsPosition.StartLocation, 8),
-                    sp2Bytes.Sub(i * 8, (i + 1) * 8 - 1));
+                int offset = (i-0x87)*8;
+                int startLoc = sp2LocationsPosition.StartLocation+offset;
+                var loc = 
+                    SpriteLocation.BuildPsx( new PsxIso.KnownPosition( sp2LocationsPosition.Sector, startLoc, 8 ), sp2Bytes.Sub( offset, offset + 8 - 1 ) );
+                if ( loc.Sector == 0x00000000 && loc.Size == 0x00000000 )
+                {
+                    sp2[i] = new SpriteLocation[0];
+                }
+                else
+                {
+                    List<SpriteLocation> locs = new List<SpriteLocation>( 4 );
+                    locs.Add( loc );
+                    if ( i == 0x9e )
+                    {
+                        for ( byte j = 0x9F; j <= 0xA1; j++)
+                        {
+                            int joffset = (j-0x87)*8;
+                            int jStartLoc = sp2LocationsPosition.StartLocation+joffset;
+
+                            locs.Add( SpriteLocation.BuildPsx( new PsxIso.KnownPosition( sp2LocationsPosition.Sector, jStartLoc, 8 ), sp2Bytes.Sub( joffset, joffset + 8 - 1 ) ) );
+                        }
+
+                    }
+
+                    sp2[i] = locs.AsReadOnly();
+                }
             }
+
             result.sp2 = sp2;
 
             return result;
@@ -110,65 +142,48 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        public IList<PatchedByteArray> GetPatches()
+        public IList<SpriteLocation> GetSp2( byte i )
         {
-            PatchedByteArray[] result = new PatchedByteArray[2];
-            result[0] = GetSpritePatch();
-            result[1] = GetSp2Patch();
-            return result;
-        }
-
-        private PatchedByteArray GetSpritePatch()
-        {
-            List<byte> result = new List<byte>(spriteLocationsPosition.Length);
-            foreach (SpriteLocation s in sprites)
+            if ( sp2.ContainsKey( i ) )
             {
-                result.AddRange(s.Sector.ToBytes());
-                result.AddRange(s.Size.ToBytes());
+                return sp2[i].AsReadOnly();
             }
-            return spriteLocationsPosition.GetPatchedByteArray(result.ToArray());
-        }
-
-        public PatchedByteArray GetSp2Patch()
-        {
-            List<byte> result = new List<byte>(SP2LocationsPosition.Length);
-            foreach (SpriteLocation s in sp2)
+            else
             {
-                result.AddRange(s.Sector.ToBytes());
-                result.AddRange(s.Size.ToBytes());
+                return null;
             }
-            return SP2LocationsPosition.GetPatchedByteArray(result.ToArray());
+
         }
 
         //// This data stored at offset 0x2E60C in BATTLE.BIN
         //private static IList<SpriteLocation> DefaultSp2Locations = new SpriteLocation[numSp2] {
-        //    new SpriteLocation { Sector = 0x0000EB01, Size = 0x00008000 }, // BOM2
-        //    new SpriteLocation { Sector = 0x0000EB31, Size = 0x00008000 }, // HYOU2
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // blank
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // blank
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // blank
-        //    new SpriteLocation { Sector = 0x0000EAD1, Size = 0x00008000 }, // ARLI2
-        //    new SpriteLocation { Sector = 0x0000EBA1, Size = 0x00008000 }, // TORI2
-        //    new SpriteLocation { Sector = 0x0000EBB1, Size = 0x00008000 }, // URI2
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x0000EB81, Size = 0x00008000 }, // MINOTA2
-        //    new SpriteLocation { Sector = 0x0000EB91, Size = 0x00008000 }, // MOL2
-        //    new SpriteLocation { Sector = 0x0000EAE1, Size = 0x00008000 }, // BEHI2
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x0000EB21, Size = 0x00008000 }, // DORA22
-        //    new SpriteLocation { Sector = 0x0000EAF1, Size = 0x00008000 }, // BIBU2
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x0000EB11, Size = 0x00008000 }, // DEMON2
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // BLank
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank
-        //    new SpriteLocation { Sector = 0x0000EB71, Size = 0x00008000 }, // IRON5
-        //    new SpriteLocation { Sector = 0x0000EB61, Size = 0x00008000 }, // IRON4
-        //    new SpriteLocation { Sector = 0x0000EB41, Size = 0x00008000 }, // IRON2
-        //    new SpriteLocation { Sector = 0x0000EB51, Size = 0x00008000 } // IRON3
+        //    new SpriteLocation { Sector = 0x0000EB01, Size = 0x00008000 }, // BOM2  // 0x87
+        //    new SpriteLocation { Sector = 0x0000EB31, Size = 0x00008000 }, // HYOU2 88
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // blank 89
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // blank 8a
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // blank 8b 
+        //    new SpriteLocation { Sector = 0x0000EAD1, Size = 0x00008000 }, // ARLI2 8c 
+        //    new SpriteLocation { Sector = 0x0000EBA1, Size = 0x00008000 }, // TORI2 8d
+        //    new SpriteLocation { Sector = 0x0000EBB1, Size = 0x00008000 }, // URI2 8e
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 8f
+        //    new SpriteLocation { Sector = 0x0000EB81, Size = 0x00008000 }, // MINOTA2 90
+        //    new SpriteLocation { Sector = 0x0000EB91, Size = 0x00008000 }, // MOL2 91 
+        //    new SpriteLocation { Sector = 0x0000EAE1, Size = 0x00008000 }, // BEHI2 92 
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 93
+        //    new SpriteLocation { Sector = 0x0000EB21, Size = 0x00008000 }, // DORA22 94
+        //    new SpriteLocation { Sector = 0x0000EAF1, Size = 0x00008000 }, // BIBU2 95
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 96
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 97
+        //    new SpriteLocation { Sector = 0x0000EB11, Size = 0x00008000 }, // DEMON2 98
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 99
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // BLank 9a
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 9b 
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 9c
+        //    new SpriteLocation { Sector = 0x00000000, Size = 0x00000000 }, // Blank 9d
+        //    new SpriteLocation { Sector = 0x0000EB71, Size = 0x00008000 }, // IRON5 9e
+        //    new SpriteLocation { Sector = 0x0000EB61, Size = 0x00008000 }, // IRON4 9f
+        //    new SpriteLocation { Sector = 0x0000EB41, Size = 0x00008000 }, // IRON2 a0
+        //    new SpriteLocation { Sector = 0x0000EB51, Size = 0x00008000 } // IRON3 a1
         //    }.AsReadOnly();
 
         //// This data stored at offset 0x2DCDC in BATTLE.BIN

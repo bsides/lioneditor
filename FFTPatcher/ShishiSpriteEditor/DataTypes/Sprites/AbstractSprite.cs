@@ -170,7 +170,7 @@ namespace FFTPatcher.SpriteEditor
             FirePixelsChanged();
         }
 
-        protected abstract IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes );
+        protected abstract IList<byte> BuildPixels(IList<byte> bytes, params IList<byte>[] extraBytes);
 
         protected abstract void ImportSPRInner( IList<byte> bytes );
 

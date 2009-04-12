@@ -34,25 +34,23 @@ namespace FFTPatcher.SpriteEditor
             sp2Count = sp2Files.Length;
         }
 
-        protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
+        protected override IList<byte> BuildPixels(IList<byte> bytes, params IList<byte>[] extraBytes)
         {
-            List<byte> result = new List<byte>( 36864 * 2 );
-            foreach ( byte b in bytes.Sub( 0, 36863 ) )
+            List<byte> result = new List<byte>(36864 * 2);
+            foreach (byte b in bytes.Sub(0, 36863))
             {
-                result.Add( b.GetLowerNibble() );
-                result.Add( b.GetUpperNibble() );
+                result.Add(b.GetLowerNibble());
+                result.Add(b.GetUpperNibble());
             }
 
-            result.AddRange( Decompress( bytes.Sub( 36864 ) ) );
-            if (extraBytes != null)
+            result.AddRange(Decompress(bytes.Sub(36864)));
+
+            foreach (IList<byte> extra in extraBytes)
             {
-                foreach (IList<byte> extra in extraBytes)
+                foreach (byte b in extra)
                 {
-                    foreach (byte b in extra)
-                    {
-                        result.Add(b.GetLowerNibble());
-                        result.Add(b.GetUpperNibble());
-                    }
+                    result.Add(b.GetLowerNibble());
+                    result.Add(b.GetUpperNibble());
                 }
             }
 

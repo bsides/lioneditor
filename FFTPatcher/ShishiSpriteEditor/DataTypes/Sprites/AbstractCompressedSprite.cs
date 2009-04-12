@@ -73,7 +73,7 @@ namespace FFTPatcher.SpriteEditor
             get { return new Rectangle( 80, 456, 48, 32 ); }
         }
 
-        protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
+        protected override IList<byte> BuildPixels(IList<byte> bytes, params IList<byte>[] extraBytes)
         {
             List<byte> result = new List<byte>( 36864 * 2 );
             foreach( byte b in bytes.Sub( 0, 36864 - 1 ) )

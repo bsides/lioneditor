@@ -100,7 +100,19 @@ namespace FFTPatcher.SpriteEditor
                         break;
                     case SpriteType.MON:
                     case SpriteType.RUKA:
-                        cachedSprite = new MonsterSprite( bytes );
+                        byte[][] sp2Bytes = new byte[location.SubSpriteLocations.Count][];
+                        if (location.SubSpriteLocations.Count > 0)
+                        {
+                            for (int i = 0; i < location.SubSpriteLocations.Count; i++)
+                            {
+                                sp2Bytes[i] = PatcherLib.Iso.PsxIso.ReadFile(
+                                    iso,
+                                    (PatcherLib.Iso.PsxIso.Sectors)location.SubSpriteLocations[i].Sector,
+                                    0,
+                                    (int)location.SubSpriteLocations[i].Size);
+                            }
+                        }
+                        cachedSprite = new MonsterSprite( bytes, sp2Bytes );
                         break;
                     case SpriteType.KANZEN:
                         cachedSprite = new KANZEN( bytes );

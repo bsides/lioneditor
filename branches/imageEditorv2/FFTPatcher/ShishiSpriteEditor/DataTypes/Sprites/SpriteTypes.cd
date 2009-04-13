@@ -7,15 +7,11 @@
       <Method Name="BuildPalettes" Hidden="true" />
       <Method Name="BuildPixels" Hidden="true" />
       <Property Name="CachedBitmap" Hidden="true" />
-      <Property Name="CachedThumbnail" Hidden="true" />
       <Method Name="DrawSpriteInternal" Hidden="true" />
       <Method Name="FirePixelsChanged" Hidden="true" />
-      <Method Name="GetThumbnailInner" Hidden="true" />
       <Method Name="ImportSPRInner" Hidden="true" />
       <Property Name="OriginalSize" Hidden="true" />
       <Property Name="PortraitRectangle" Hidden="true" />
-      <Property Name="ThumbnailDirty" Hidden="true" />
-      <Property Name="ThumbnailRectangle" Hidden="true" />
       <Method Name="ToBitmapInner" Hidden="true" />
     </Members>
     <NestedTypes>
@@ -90,11 +86,9 @@
     <Position X="3.5" Y="3.5" Width="2.5" />
     <Members>
       <Method Name="AbstractShapedSprite" Hidden="true" />
-      <Method Name="GetThumbnailInner" Hidden="true" />
       <Method Name="Import" Hidden="true" />
       <Method Name="ImportBitmap" Hidden="true" />
       <Method Name="ImportSPRInner" Hidden="true" />
-      <Property Name="ThumbnailFrame" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAAAEAAIAAQAgAAAIAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>

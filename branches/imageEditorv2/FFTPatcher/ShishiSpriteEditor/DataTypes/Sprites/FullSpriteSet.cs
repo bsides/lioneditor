@@ -32,8 +32,6 @@ namespace FFTPatcher.SpriteEditor
             get { return sprites.AsReadOnly(); }
         }
 
-        public ImageList Thumbnails { get; private set; }
-
         private FullSpriteSet( IList<AbstractSprite> sprites, System.ComponentModel.BackgroundWorker worker, int tasksComplete, int tasks )
         {
             bool haveWorker = worker != null;
@@ -41,15 +39,6 @@ namespace FFTPatcher.SpriteEditor
                 worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, "Sorting" );
             sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
             this.sprites = sprites;
-            Thumbnails = new ImageList();
-            Thumbnails.ImageSize = new System.Drawing.Size( 80, 48 );
-            foreach ( var sprite in sprites )
-            {
-                if ( haveWorker )
-                    worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, string.Format( "Generating thumbnail for {0}", sprite.Name ) );
-
-                Thumbnails.Images.Add( sprite.Name, sprite.GetThumbnail() );
-            }
         }
 
         private static FullSpriteSet DoInitPSX( Stream iso, BackgroundWorker worker )

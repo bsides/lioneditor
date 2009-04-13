@@ -48,28 +48,10 @@ namespace FFTPatcher.SpriteEditor
             set
             {
                 palettes = value;
-                ThumbnailDirty = true;
                 BitmapDirty = true;
              }
          }
  
-        public int CurrentSize { get; protected set; }
-
-        public int MaximumSize
-        {
-            get
-            {
-                if( OriginalSize % 2048 == 0 )
-                {
-                    return OriginalSize;
-                }
-                else
-                {
-                    return ( OriginalSize / 2048 ) * 2048 + 2048;
-                }
-            }
-        }
-
          /// <summary>
          /// Gets the pixels used to draw this sprite.
          /// </summary>
@@ -80,12 +62,9 @@ namespace FFTPatcher.SpriteEditor
         public string Name { get; private set; }
 
         protected abstract Rectangle PortraitRectangle { get; }
-        protected abstract Rectangle ThumbnailRectangle { get; }
-
+        
         public virtual Shape Shape { get { return null; } }
 
-        protected bool ThumbnailDirty { get; set; }
-        protected Image CachedThumbnail { get; set; }
         protected bool BitmapDirty { get; set; }
         protected Bitmap CachedBitmap { get; set; }
 
@@ -113,7 +92,6 @@ namespace FFTPatcher.SpriteEditor
             : this()
         {
             OriginalSize = sprite.OriginalSize;
-            CurrentSize = OriginalSize;
             Palettes = BuildPalettes( sprite.Palettes );
             Pixels = new byte[sprite.Pixels.Count];
             sprite.Pixels.CopyTo( Pixels, 0 );
@@ -121,7 +99,6 @@ namespace FFTPatcher.SpriteEditor
 
         private AbstractSprite()
         {
-            ThumbnailDirty = true;
             BitmapDirty = true;
         }
 
@@ -129,7 +106,6 @@ namespace FFTPatcher.SpriteEditor
             : this()
         {
             OriginalSize = bytes.Count;
-            CurrentSize = OriginalSize;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             Pixels = BuildPixels( bytes.Sub( 16 * 32 ), extraBytes );
         }
@@ -137,19 +113,6 @@ namespace FFTPatcher.SpriteEditor
         #endregion Constructors
 
         #region Methods (11)
-
-        protected abstract Image GetThumbnailInner();
-
-        public Image GetThumbnail()
-        {
-            if ( ThumbnailDirty )
-            {
-                CachedThumbnail = GetThumbnailInner();
-                ThumbnailDirty = false;
-            }
-
-            return CachedThumbnail;
-        }
 
         public event EventHandler PixelsChanged;
 
@@ -164,7 +127,6 @@ namespace FFTPatcher.SpriteEditor
         public void ImportSPR( IList<byte> bytes )
         {
             BitmapDirty = true;
-            ThumbnailDirty = true;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             ImportSPRInner( bytes.Sub( 16 * 32 ) );
             FirePixelsChanged();
@@ -221,7 +183,6 @@ namespace FFTPatcher.SpriteEditor
 
             bmp.UnlockBits( bmd );
 
-            ThumbnailDirty = true;
             BitmapDirty = true;
 
             FirePixelsChanged();
@@ -239,7 +200,6 @@ namespace FFTPatcher.SpriteEditor
                 throw new ArgumentException( "file must be Bitmap", "file" );
             }
 
-            ThumbnailDirty = true;
             BitmapDirty = true;
         }
 

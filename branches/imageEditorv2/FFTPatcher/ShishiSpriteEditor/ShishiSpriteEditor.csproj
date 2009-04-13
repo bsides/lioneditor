@@ -90,15 +90,6 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="DataTypes\Frame.cs" />
     <Compile Include="DataTypes\Sprites\KANZEN.cs" />
-    <Compile Include="FlickerFreeListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FullSpriteSetEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FullSpriteSetEditor.Designer.cs">
-      <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,14 +97,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataTypes\Sprites\MonsterSprite.cs" />
-    <Compile Include="DataTypes\OPNBK.cs" />
     <Compile Include="DataTypes\Palette.cs" />
-    <Compile Include="PatchDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PatchDialog.Designer.cs">
-      <DependentUpon>PatchDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
@@ -123,25 +107,13 @@
     <EmbeddedResource Include="AllSpritesEditor.resx">
       <DependentUpon>AllSpritesEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FullSpriteSetEditor.resx">
-      <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PatchDialog.resx">
-      <DependentUpon>PatchDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SpriteDialog.resx">
-      <DependentUpon>SpriteDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SpriteEditor.resx">
@@ -374,12 +346,6 @@
     <Compile Include="DataTypes\Shape.cs" />
     <Compile Include="DataTypes\Sprites\AbstractSprite.cs" />
     <Compile Include="DataTypes\Sprites\ShortSprite.cs" />
-    <Compile Include="SpriteDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SpriteDialog.Designer.cs">
-      <DependentUpon>SpriteDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="SpriteEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -399,7 +365,6 @@
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities.cs" />
-    <Compile Include="DataTypes\WLDFACE.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PatcherLib.Resources\PatcherLib.Resources.csproj">

@@ -9,17 +9,6 @@ namespace FFTPatcher.SpriteEditor
             get { return Shape.TYPE1; }
         }
 
-        public override int ThumbnailFrame
-        {
-            get { return 2; }
-        }
-
-        protected override System.Drawing.Rectangle ThumbnailRectangle
-        {
-            get { return new System.Drawing.Rectangle( 107, 88, 48, 48 ); }
-            //get { return new System.Drawing.Rectangle( 1, 3, 48, 48 ); }
-        }
-
         internal TYPE1Sprite( SerializedSprite sprite )
             : base( sprite )
         {

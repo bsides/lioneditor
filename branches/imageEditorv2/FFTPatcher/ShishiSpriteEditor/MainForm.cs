@@ -143,7 +143,7 @@ namespace FFTPatcher.SpriteEditor
 
         private void importSp2MenuItem_Click( object sender, EventArgs e )
         {
-            int index = Int32.Parse( ( sender as Control ).Tag.ToString() );
+            int index = Int32.Parse( ( sender as Menu ).Tag.ToString() );
             MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
             if ( sprite != null )
             {
@@ -152,7 +152,7 @@ namespace FFTPatcher.SpriteEditor
                 openFileDialog.CheckFileExists = true;
                 if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
                 {
-                    allSpritesEditor1.CurrentSprite.ImportSp2( currentStream, openFileDialog.FileName, index );
+                    allSpritesEditor1.CurrentSprite.ImportSp2( currentStream, openFileDialog.FileName, index - 1);
                     allSpritesEditor1.ReloadCurrentSprite();
                 }
             }
@@ -160,7 +160,7 @@ namespace FFTPatcher.SpriteEditor
 
         private void exportSp2MenuItem_Click( object sender, EventArgs e )
         {
-            int index = Int32.Parse( ( sender as Control ).Tag.ToString() );
+            int index = Int32.Parse((sender as Menu).Tag.ToString());
             MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
             if ( sprite != null )
             {
@@ -170,7 +170,7 @@ namespace FFTPatcher.SpriteEditor
                 saveFileDialog.OverwritePrompt = true;
                 if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
                 {
-                    File.WriteAllBytes( saveFileDialog.FileName, sprite.ToByteArray( index + 1 ) );
+                    File.WriteAllBytes( saveFileDialog.FileName, sprite.ToByteArray( index ) );
                 }
             }
         }

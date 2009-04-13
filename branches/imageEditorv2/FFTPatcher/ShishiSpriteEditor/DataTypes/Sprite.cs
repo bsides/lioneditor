@@ -32,7 +32,15 @@ namespace FFTPatcher.SpriteEditor
 
         internal void SetSHP(Stream iso, SpriteType shp)
         {
-            attributes.SetSHP(iso, shp);
+            if (SHP != shp)
+            {
+                if (SHP == SpriteType.MON || shp == SpriteType.MON)
+                {
+                    cachedSprite = null;
+                }
+
+                attributes.SetSHP(iso, shp);
+            }
         }
 
         internal void SetSEQ(Stream iso, SpriteType seq)
@@ -119,8 +127,10 @@ namespace FFTPatcher.SpriteEditor
                     case SpriteType.TYPE2:
                         cachedSprite = new TYPE2Sprite( bytes );
                         break;
-                    case SpriteType.MON:
                     case SpriteType.RUKA:
+                        cachedSprite = new MonsterSprite(bytes);
+                        break;
+                    case SpriteType.MON:
                         byte[][] sp2Bytes = new byte[location.SubSpriteLocations.Count][];
                         if (location.SubSpriteLocations.Count > 0)
                         {
@@ -133,7 +143,7 @@ namespace FFTPatcher.SpriteEditor
                                     (int)location.SubSpriteLocations[i].Size);
                             }
                         }
-                        cachedSprite = new MonsterSprite( bytes, sp2Bytes );
+                        cachedSprite = new MonsterSprite(bytes, sp2Bytes);
                         break;
                     case SpriteType.KANZEN:
                         cachedSprite = new KANZEN( bytes );

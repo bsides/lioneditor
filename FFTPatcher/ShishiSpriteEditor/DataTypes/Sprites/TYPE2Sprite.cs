@@ -10,16 +10,6 @@ namespace FFTPatcher.SpriteEditor
             get { return Shape.TYPE2; }
         }
 
-        public override int ThumbnailFrame
-        {
-            get { return 2; }
-        }
-
-        protected override System.Drawing.Rectangle ThumbnailRectangle
-        {
-            get { return new Rectangle( 107, 88, 48, 48 ); }
-        }
-
         internal TYPE2Sprite( SerializedSprite sprite )
             : base( sprite )
         {

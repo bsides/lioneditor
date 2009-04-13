@@ -9,16 +9,6 @@ namespace FFTPatcher.SpriteEditor
             get { return Shape.KANZEN; }
         }
 
-        public override int ThumbnailFrame
-        {
-            get { return 1; }
-        }
-
-        protected override System.Drawing.Rectangle ThumbnailRectangle
-        {
-            get { return new System.Drawing.Rectangle( 105, 10, 48, 48 ); }
-        }
-
         internal KANZEN( SerializedSprite sprite )
             : base( sprite )
         {

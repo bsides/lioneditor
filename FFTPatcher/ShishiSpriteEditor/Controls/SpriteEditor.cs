@@ -97,7 +97,7 @@ namespace FFTPatcher.SpriteEditor
             if ( !ignoreChanges )
             {
                 Sprite.SetSHP( iso, (SpriteType)shpComboBox.SelectedItem );
-                UpdateShapes();
+                ReloadSprite();
             }
         }
 

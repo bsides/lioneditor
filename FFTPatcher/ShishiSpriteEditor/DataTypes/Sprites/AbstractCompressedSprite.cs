@@ -293,8 +293,7 @@ namespace FFTPatcher.SpriteEditor
                     }
 
                     j++;
-                    for( int k = 0; k < l; k++ )
-                        result.Add( 0x00 );
+                    result.AddRange(new byte[l]);
                 }
 
                 j++;

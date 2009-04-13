@@ -70,11 +70,29 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="AllSpritesEditor.cs">
+    <Compile Include="Controls\AllSpritesEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AllSpritesEditor.Designer.cs">
+    <Compile Include="Controls\AllSpritesEditor.Designer.cs">
       <DependentUpon>AllSpritesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPicker.designer.cs">
+      <DependentUpon>Office2007ColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPlate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPlate.designer.cs">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007MenuHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007MenuHelper.designer.cs">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="DataTypes\AllSpriteAttributes.cs" />
     <Compile Include="DataTypes\AllSprites.cs" />
@@ -104,8 +122,14 @@
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AllSpritesEditor.resx">
+    <EmbeddedResource Include="Controls\AllSpritesEditor.resx">
       <DependentUpon>AllSpritesEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPlate.resx">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007MenuHelper.resx">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -116,10 +140,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpriteEditor.resx">
+    <EmbeddedResource Include="Controls\SpriteEditor.resx">
       <DependentUpon>SpriteEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpriteViewer.resx">
+    <EmbeddedResource Include="Controls\SpriteViewer.resx">
       <DependentUpon>SpriteViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -346,13 +370,13 @@
     <Compile Include="DataTypes\Shape.cs" />
     <Compile Include="DataTypes\Sprites\AbstractSprite.cs" />
     <Compile Include="DataTypes\Sprites\ShortSprite.cs" />
-    <Compile Include="SpriteEditor.cs">
+    <Compile Include="Controls\SpriteEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SpriteEditor.Designer.cs">
+    <Compile Include="Controls\SpriteEditor.Designer.cs">
       <DependentUpon>SpriteEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpriteViewer.cs">
+    <Compile Include="Controls\SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DataTypes\Tile.cs" />

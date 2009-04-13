@@ -142,15 +142,15 @@ namespace FFTPatcher.SpriteEditor
             // Copy old sprites to new locations
             List<byte> posBytes = new List<byte>(NumSprites * 8);
             long startSector = 0x2040B100 / 2352;
-            for (int i = 0; i < NumSprites; i++)
+            for ( int i = 0; i < NumSprites; i++ )
             {
-                uint sector = (uint)(startSector+i*65536/2048);
+                uint sector = (uint)( startSector + i * 65536 / 2048 );
                 byte[] bytes = oldSprites[i];
                 byte[] realBytes = new byte[65536];
-                bytes.CopyTo(realBytes, 0);
-                PatcherLib.Iso.PsxIso.PatchPsxIso(iso, new PatchedByteArray((int)sector, 0, realBytes));
-                posBytes.AddRange(sector.ToBytes());
-                posBytes.AddRange(((uint)bytes.Length).ToBytes());
+                bytes.CopyTo( realBytes, 0 );
+                PatcherLib.Iso.PsxIso.PatchPsxIso( iso, new PatchedByteArray( (int)sector, 0, realBytes ) );
+                posBytes.AddRange( sector.ToBytes() );
+                posBytes.AddRange( ( (uint)bytes.Length ).ToBytes() );
             }
 
             // Update battle.bin
@@ -160,6 +160,47 @@ namespace FFTPatcher.SpriteEditor
         public static bool DetectExpansionOfPsxIso(Stream iso)
         {
             UInt32 sectors = PatcherLib.Iso.PsxIso.ReadFile(iso, PatcherLib.Iso.PsxIso.NumberOfSectorsLittleEndian).ToUInt32();
+
+            //38 // length of record
+            //00 // nothing
+            //D6 E9 00 00 00 00 E9 D6 // sector
+            //01 92 00 00 00 00 92 01 // size
+            //61 // year
+            //05 // month
+            //10 // day
+            //12 // hour
+            //15 // minutes
+            //1E // seconds
+            //24 // GMT offset
+            //01 // hidden file
+            //00 00 
+            //01 00 00 01 
+            //09 // name length
+            //31 30 4D 2E 53 50 52 3B 31 // name 10M.SPR;1
+
+            //2A 00 2A 00 // owner id
+            //08 01 // attributes
+            //58 41  // X A
+            //00  // file number
+            //00  00 00  00 00 // reserved 
+
+            //30 
+            //00 
+            //90 82 03 00 00 03 82 90 
+            //00 00 01 00 00 01 00 00 
+            //61 
+            //0A 
+            //11 
+            //12 
+            //25 
+            //15 
+            //24 
+            //00 
+            //00 00 
+            //01 00 00 01 
+            //0E 
+            //53 50 52 49 54 45 30 30 2E 53 50 52 3B 31 
+            //00 
 
             return iso.Length > defaultIsoLength &&
                 iso.Length >= expandedIsoLength &&

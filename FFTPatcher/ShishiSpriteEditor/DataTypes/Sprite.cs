@@ -28,6 +28,8 @@ namespace FFTPatcher.SpriteEditor
         public UInt32 Sector { get { return location.Sector; } }
         public UInt32 Size { get { return location.Size; } }
 
+        public int NumChildren { get { return location.SubSpriteLocations.Count; } }
+
         internal void SetSHP(Stream iso, SpriteType shp)
         {
             attributes.SetSHP(iso, shp);
@@ -63,6 +65,25 @@ namespace FFTPatcher.SpriteEditor
             AbstractSprite sprite = GetAbstractSpriteFromPsxIso( iso );
             sprite.ImportBitmap( bmp, out bad );
             ImportSprite( iso, sprite.ToByteArray( 0 ) );
+        }
+
+        internal void ImportSp2( Stream iso, string filename, int index )
+        {
+            ImportSp2( iso, File.ReadAllBytes( filename ), index );
+        }
+
+        internal void ImportSp2( Stream iso, byte[] bytes, int index )
+        {
+            if ( index >= NumChildren )
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            var loc = location.SubSpriteLocations[index];
+            PatcherLib.Iso.PsxIso.PatchPsxIso(
+                iso,
+                new PatcherLib.Datatypes.PatchedByteArray( (PatcherLib.Iso.PsxIso.Sectors)loc.Sector, 0, bytes ) );
+            cachedSprite = null;
         }
 
         internal void ImportSprite( Stream iso, string filename )

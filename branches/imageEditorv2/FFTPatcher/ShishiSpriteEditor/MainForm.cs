@@ -60,6 +60,7 @@ namespace FFTPatcher.SpriteEditor
                         AllSprites s = AllSprites.FromPsxIso(currentStream);
                         allSpritesEditor1.BindTo(s, currentStream);
                         spriteMenuItem.Enabled = true;
+                        sp2Menu.Enabled = true;
                     }
                     else 
                     {
@@ -138,6 +139,58 @@ namespace FFTPatcher.SpriteEditor
         private void exitMenuItem_Click( object sender, EventArgs e )
         {
             Application.Exit();
+        }
+
+        private void importSp2MenuItem_Click( object sender, EventArgs e )
+        {
+            int index = Int32.Parse( ( sender as Control ).Tag.ToString() );
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
+            if ( sprite != null )
+            {
+                openFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
+                openFileDialog.FileName = string.Empty;
+                openFileDialog.CheckFileExists = true;
+                if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+                {
+                    allSpritesEditor1.CurrentSprite.ImportSp2( currentStream, openFileDialog.FileName, index );
+                    allSpritesEditor1.ReloadCurrentSprite();
+                }
+            }
+        }
+
+        private void exportSp2MenuItem_Click( object sender, EventArgs e )
+        {
+            int index = Int32.Parse( ( sender as Control ).Tag.ToString() );
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
+            if ( sprite != null )
+            {
+                saveFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
+                saveFileDialog.FileName = string.Empty;
+                saveFileDialog.CreatePrompt = false;
+                saveFileDialog.OverwritePrompt = true;
+                if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+                {
+                    File.WriteAllBytes( saveFileDialog.FileName, sprite.ToByteArray( index + 1 ) );
+                }
+            }
+        }
+
+        private void sp2Menu_Popup( object sender, EventArgs e )
+        {
+            foreach ( MenuItem mi in sp2Menu.MenuItems )
+            {
+                mi.Enabled = false;
+            }
+
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
+            if ( sprite != null )
+            {
+                for ( int i = 0; i < allSpritesEditor1.CurrentSprite.NumChildren; i++ )
+                {
+                    sp2Menu.MenuItems[i * 3].Enabled = true;
+                    sp2Menu.MenuItems[i * 3 + 1].Enabled = true;
+                }
+            }
         }
 
     }

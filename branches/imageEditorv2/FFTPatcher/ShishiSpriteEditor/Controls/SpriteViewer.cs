@@ -33,12 +33,13 @@ namespace FFTPatcher.SpriteEditor
         private int portraitPalette = 8;
         private AbstractSprite sprite = null;
         private PictureBox pictureBox1;
+        private Owf.Controls.Office2007ColorPicker office2007ColorPicker1;
+        private System.ComponentModel.IContainer components;
         private IList<Tile> tiles;
 
 		#endregion Fields 
 
 		#region Properties (2) 
-
 
         public AbstractSprite Sprite
         {
@@ -64,19 +65,39 @@ namespace FFTPatcher.SpriteEditor
             pictureBox1 = new PictureBox();
             ( pictureBox1 as System.ComponentModel.ISupportInitialize ).BeginInit();
             SuspendLayout();
+            Panel panel1 = new Panel();
             pictureBox1.Location = new Point( 0, 0 );
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size( 256, 50 );
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.TabStop = false;
-            AutoScroll = true;
-            Controls.Add( pictureBox1 );
+            AutoScroll = false;
             Name = "SpriteViewer";
-            Size = new Size( 256 + 10 + SystemInformation.VerticalScrollBarWidth, 50 );
+            Size = new Size( 256 + 10 + SystemInformation.VerticalScrollBarWidth, 100 );
+
+            office2007ColorPicker1 = new Owf.Controls.Office2007ColorPicker();
+            Controls.Add( office2007ColorPicker1 );
+            office2007ColorPicker1.Color = Color.Black;
+            office2007ColorPicker1.Location = new Point( 3, Height - office2007ColorPicker1.Height - 3 );
+            office2007ColorPicker1.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            panel1.Bounds = new Rectangle( 0, 0, Size.Width, office2007ColorPicker1.Location.Y - 3 );
+            panel1.AutoScroll = true;
+            panel1.BackColor = Color.Black;
+            panel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+            panel1.Controls.Add( pictureBox1 );
+            Controls.Add( panel1 );
+
             pictureBox1.BackColor = Color.Black;
             ( pictureBox1 as System.ComponentModel.ISupportInitialize ).EndInit();
             ResumeLayout( false );
             PerformLayout();
+            office2007ColorPicker1.SelectedColorChanged += new System.EventHandler(office2007ColorPicker1_SelectedColorChanged);
+        }
+
+        void office2007ColorPicker1_SelectedColorChanged( object sender, System.EventArgs e )
+        {
+            pictureBox1.Parent.BackColor = office2007ColorPicker1.Color;
+            pictureBox1.BackColor = office2007ColorPicker1.Color;
         }
 
 		#endregion Constructors 
@@ -148,8 +169,6 @@ namespace FFTPatcher.SpriteEditor
             // SpriteViewer
             // 
             this.Name = "SpriteViewer";
-            this.ResumeLayout(false);
-
         }
 
     }

@@ -83,8 +83,12 @@ namespace FFTPatcher.Editors
 
         private void itemAttributeEditor_DataChanged( object sender, EventArgs e )
         {
+            offsetListBox.BeginUpdate();
+            int top = offsetListBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
             cm.Refresh();
+            offsetListBox.TopIndex = top;
+            offsetListBox.EndUpdate();
         }
 
         void offsetListBox_MouseDown( object sender, MouseEventArgs e )

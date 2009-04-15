@@ -58,8 +58,12 @@ namespace FFTPatcher.Editors
 
         private void statusAttributeEditor_DataChanged( object sender, EventArgs e )
         {
+            listBox.BeginUpdate();
+            var top = listBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[listBox.DataSource];
             cm.Refresh();
+            listBox.TopIndex = top;
+            listBox.EndUpdate();
         }
 
 		#endregion Private Methods 

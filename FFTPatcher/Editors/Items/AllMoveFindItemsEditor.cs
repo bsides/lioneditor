@@ -58,8 +58,12 @@ namespace FFTPatcher.Editors
 
         void mapMoveFindItemEditor1_DataChanged( object sender, EventArgs e )
         {
+            mapListBox.BeginUpdate();
+            var top = mapListBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[mapListBox.DataSource];
             cm.Refresh();
+            mapListBox.TopIndex = top;
+            mapListBox.EndUpdate();
         }
 
 		#endregion Private Methods 

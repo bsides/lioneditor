@@ -69,6 +69,11 @@ namespace PatcherLib.Utilities
             return result;
         }
 
+        public static void SortList(IList list, Comparison<object> comparer)
+        {
+            QuickSort(list, 0, list.Count - 1, comparer);
+        }
+
         public static void SortList<T>( IList<T> list ) where T : IComparable<T>
         {
             QuickSort( list, 0, list.Count - 1, ( a, b ) => a.CompareTo( b ) );
@@ -79,7 +84,7 @@ namespace PatcherLib.Utilities
             QuickSort( list, 0, list.Count - 1, comparer );
         }
 
-        private static int QuickSortPivot<T>( IList<T> list, int beginning, int end, Comparison<T> comparer )
+        private static int QuickSortPivot<T>(IList<T> list, int beginning, int end, Comparison<T> comparer)
         {
             T pivot = list[beginning];
             int m = beginning;
@@ -88,13 +93,13 @@ namespace PatcherLib.Utilities
             do
             {
                 m += 1;
-            } while( comparer( list[m], pivot ) <= 0 && m < end );
+            } while (comparer(list[m], pivot) <= 0 && m < end);
             do
             {
                 n -= 1;
-            } while( comparer( list[n], pivot ) > 0 );
+            } while (comparer(list[n], pivot) > 0);
 
-            while( m < n )
+            while (m < n)
             {
                 T temp = list[m];
                 list[m] = list[n];
@@ -103,11 +108,11 @@ namespace PatcherLib.Utilities
                 do
                 {
                     m += 1;
-                } while( comparer( list[m], pivot ) <= 0 );
+                } while (comparer(list[m], pivot) <= 0);
                 do
                 {
                     n -= 1;
-                } while( comparer( list[n], pivot ) > 0 );
+                } while (comparer(list[n], pivot) > 0);
             }
 
             T temp2 = list[n];
@@ -116,15 +121,52 @@ namespace PatcherLib.Utilities
             return n;
         }
 
-        private static void SelectionSort<T>( IList<T> list, int beginning, int end, Comparison<T> comparer )
+        private static int QuickSortPivot(IList list, int beginning, int end, Comparison<object> comparer)
         {
-            for( int i = beginning; i < end; i++ )
+            object pivot = list[beginning];
+            int m = beginning;
+            int n = end + 1;
+
+            do
+            {
+                m += 1;
+            } while (comparer(list[m], pivot) <= 0 && m < end);
+            do
+            {
+                n -= 1;
+            } while (comparer(list[n], pivot) > 0);
+
+            while (m < n)
+            {
+                object temp = list[m];
+                list[m] = list[n];
+                list[n] = temp;
+
+                do
+                {
+                    m += 1;
+                } while (comparer(list[m], pivot) <= 0);
+                do
+                {
+                    n -= 1;
+                } while (comparer(list[n], pivot) > 0);
+            }
+
+            object temp2 = list[n];
+            list[n] = list[beginning];
+            list[beginning] = temp2;
+            return n;
+        }
+
+        private static void SelectionSort<T>(IList<T> list, int beginning, int end, Comparison<T> comparer)
+        {
+            for (int i = beginning; i < end; i++)
             {
                 int minj = i;
                 T minx = list[i];
-                for( int j = i + 1; j <= end; j++ )
+                for (int j = i + 1; j <= end; j++)
                 {
-                    if( comparer( list[j], minx ) < 0 )
+                    if (comparer(list[j], minx) < 0)
                     {
                         minj = j;
                         minx = list[j];
@@ -133,6 +175,41 @@ namespace PatcherLib.Utilities
 
                 list[minj] = list[i];
                 list[i] = minx;
+            }
+        }
+
+        private static void SelectionSort(IList list, int beginning, int end, Comparison<object> comparer)
+        {
+            for (int i = beginning; i < end; i++)
+            {
+                int minj = i;
+                object minx = list[i];
+                for (int j = i + 1; j <= end; j++)
+                {
+                    if (comparer(list[j], minx) < 0)
+                    {
+                        minj = j;
+                        minx = list[j];
+                    }
+                }
+
+                list[minj] = list[i];
+                list[i] = minx;
+            }
+        }
+
+        private static void QuickSort(IList list, int beginning, int end, Comparison<object> comparer)
+        {
+            if (end == beginning) return;
+            if ((end - beginning) < 9)
+            {
+                SelectionSort(list, beginning, end, comparer);
+            }
+            else
+            {
+                int l = QuickSortPivot(list, beginning, end, comparer);
+                QuickSort(list, beginning, l - 1, comparer);
+                QuickSort(list, l + 1, end, comparer);
             }
         }
 

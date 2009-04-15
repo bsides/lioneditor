@@ -96,8 +96,12 @@ namespace FFTPatcher.Editors
 
         private void skillSetEditor_DataChanged( object sender, EventArgs e )
         {
+            skillSetListBox.BeginUpdate();
+            var top = skillSetListBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[skillSetListBox.DataSource];
             cm.Refresh();
+            skillSetListBox.TopIndex = top;
+            skillSetListBox.EndUpdate();
         }
 
         void skillSetListBox_MouseDown( object sender, MouseEventArgs e )

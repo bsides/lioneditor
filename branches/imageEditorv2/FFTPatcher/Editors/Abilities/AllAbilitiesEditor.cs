@@ -91,8 +91,14 @@ namespace FFTPatcher.Editors
 
         private void abilityEditor_DataChanged( object sender, EventArgs e )
         {
+            abilitiesListBox.BeginUpdate();
+            int top = abilitiesListBox.TopIndex;
+
             CurrencyManager cm = (CurrencyManager)BindingContext[abilitiesListBox.DataSource];
             cm.Refresh();
+
+            abilitiesListBox.TopIndex = top;
+            abilitiesListBox.EndUpdate();
         }
 
         private void abilityEditor_InflictStatusLabelClicked( object sender, LabelClickedEventArgs e )

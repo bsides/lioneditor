@@ -55,8 +55,12 @@ namespace FFTPatcher.Editors
 
         private void itemEditor_DataChanged( object sender, EventArgs e )
         {
+            itemListBox.BeginUpdate();
+            int top = itemListBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[itemListBox.DataSource];
             cm.Refresh();
+            itemListBox.TopIndex = top;
+            itemListBox.EndUpdate();
         }
 
         private void itemEditor_InflictStatusClicked( object sender, LabelClickedEventArgs e )

@@ -19,12 +19,15 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System;
+using PatcherLib.Utilities;
+using PatcherLib.Datatypes;
 
 namespace PatcherLib.Iso
 {
     public static class PsxIso
     {
-		#region Public Properties (19) 
+        #region Public Properties (19)
 
         public static KnownPosition Abilities { get; private set; }
 
@@ -65,41 +68,41 @@ namespace PatcherLib.Iso
         public static KnownPosition NumberOfSectorsBigEndian { get; private set; }
         public static KnownPosition NumberOfSectorsLittleEndian { get; private set; }
 
-        #endregion Public Properties 
+        #endregion Public Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         static PsxIso()
         {
-            Abilities = new KnownPosition( Sectors.SCUS_942_21, 0x4F3F0, 9414 );
-            AbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0 );
-            ActionEvents = new KnownPosition( Sectors.SCUS_942_21, 0x564B4, 224 );
-            InflictStatuses = new KnownPosition( Sectors.SCUS_942_21, 0x547C4, 0x300 );
-            Jobs = new KnownPosition( Sectors.SCUS_942_21, 0x518B8, 0x1E00 );
-            JobLevels = new KnownPosition( Sectors.SCUS_942_21, 0x568C4, 0xD0 );
-            MonsterSkills = new KnownPosition( Sectors.SCUS_942_21, 0x563C4, 0xF0 );
-            OldItemAttributes = new KnownPosition( Sectors.SCUS_942_21, 0x54AC4, 0x7D0 );
-            OldItems = new KnownPosition( Sectors.SCUS_942_21, 0x536B8, 0x110A );
-            PoachProbabilities = new KnownPosition( Sectors.SCUS_942_21, 0x56864, 0x60 );
-            StatusAttributes = new KnownPosition( Sectors.SCUS_942_21, 0x565E4, 0x280 );
-            SkillSets = new KnownPosition( Sectors.SCUS_942_21, 0x55294, 0x1130 );
-            ENTD1 = new KnownPosition( Sectors.BATTLE_ENTD1_ENT, 0, 81920 );
-            ENTD2 = new KnownPosition( Sectors.BATTLE_ENTD2_ENT, 0, 81920 );
-            ENTD3 = new KnownPosition( Sectors.BATTLE_ENTD3_ENT, 0, 81920 );
-            ENTD4 = new KnownPosition( Sectors.BATTLE_ENTD4_ENT, 0, 81920 );
-            MoveFindItems = new KnownPosition( Sectors.BATTLE_BIN, 0x8EE74, 0x800 );
-            StoreInventories = new KnownPosition( Sectors.WORLD_WORLD_BIN, 0xAD844, 0x200 );
+            Abilities = new KnownPosition(Sectors.SCUS_942_21, 0x4F3F0, 9414);
+            AbilityEffects = new KnownPosition(Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0);
+            ActionEvents = new KnownPosition(Sectors.SCUS_942_21, 0x564B4, 224);
+            InflictStatuses = new KnownPosition(Sectors.SCUS_942_21, 0x547C4, 0x300);
+            Jobs = new KnownPosition(Sectors.SCUS_942_21, 0x518B8, 0x1E00);
+            JobLevels = new KnownPosition(Sectors.SCUS_942_21, 0x568C4, 0xD0);
+            MonsterSkills = new KnownPosition(Sectors.SCUS_942_21, 0x563C4, 0xF0);
+            OldItemAttributes = new KnownPosition(Sectors.SCUS_942_21, 0x54AC4, 0x7D0);
+            OldItems = new KnownPosition(Sectors.SCUS_942_21, 0x536B8, 0x110A);
+            PoachProbabilities = new KnownPosition(Sectors.SCUS_942_21, 0x56864, 0x60);
+            StatusAttributes = new KnownPosition(Sectors.SCUS_942_21, 0x565E4, 0x280);
+            SkillSets = new KnownPosition(Sectors.SCUS_942_21, 0x55294, 0x1130);
+            ENTD1 = new KnownPosition(Sectors.BATTLE_ENTD1_ENT, 0, 81920);
+            ENTD2 = new KnownPosition(Sectors.BATTLE_ENTD2_ENT, 0, 81920);
+            ENTD3 = new KnownPosition(Sectors.BATTLE_ENTD3_ENT, 0, 81920);
+            ENTD4 = new KnownPosition(Sectors.BATTLE_ENTD4_ENT, 0, 81920);
+            MoveFindItems = new KnownPosition(Sectors.BATTLE_BIN, 0x8EE74, 0x800);
+            StoreInventories = new KnownPosition(Sectors.WORLD_WORLD_BIN, 0xAD844, 0x200);
             NumberOfSectorsBigEndian = new KnownPosition((Sectors)16, 0x54, 4);
             NumberOfSectorsLittleEndian = new KnownPosition((Sectors)16, 0x50, 4);
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Public Methods (3) 
+        #region Public Methods (3)
 
-        public static byte[] GetBlock( Stream iso, KnownPosition knownPositions ) 
+        public static byte[] GetBlock(Stream iso, KnownPosition knownPositions)
         {
-            return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
+            return ReadFile(iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length);
         }
 
         public static void PatchPsxIso(Stream iso, IEnumerable<PatcherLib.Datatypes.PatchedByteArray> patches)
@@ -118,7 +121,7 @@ namespace PatcherLib.Iso
 
         public static byte[] ReadFile(Stream iso, Sectors file, int offset, int length)
         {
-            return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
+            return IsoPatch.ReadFile(IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length);
         }
 
         public static byte[] ReadFile(Stream iso, KnownPosition pos)
@@ -126,7 +129,8 @@ namespace PatcherLib.Iso
             return ReadFile(iso, pos.Sector, pos.StartLocation, pos.Length);
         }
 
-		#endregion Public Methods 
+
+        #endregion Public Methods
 
         public enum Sectors
         {
@@ -2600,17 +2604,131 @@ namespace PatcherLib.Iso
             public Sectors Sector { get; private set; }
             public int StartLocation { get; private set; }
             public int Length { get; private set; }
-            public KnownPosition( Sectors sector, int startLocation, int length )
+            public KnownPosition(Sectors sector, int startLocation, int length)
             {
-               Sector = sector;
-               StartLocation = startLocation;
-               Length = length;
+                Sector = sector;
+                StartLocation = startLocation;
+                Length = length;
             }
 
             public PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
             {
                 return new PatcherLib.Datatypes.PatchedByteArray(Sector, StartLocation, bytes);
             }
+        }
+
+        [System.Diagnostics.DebuggerDisplay("{Filename} - {Sector} - {Size} - {Timestamp}")]
+        public class DirectoryEntry
+        {
+            public static IList<DirectoryEntry> GetBattleBinEntries(Stream iso)
+            {
+                List<DirectoryEntry> result = new List<DirectoryEntry>();
+                const int sector = 56436;
+                const int length = 6;
+                byte[] bytes = PsxIso.GetBlock(iso, new KnownPosition((Sectors)sector, 0, length * 2048));
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    if (bytes[i] == 0) continue;
+
+                    IList<byte> entry = bytes.Sub(i, i + bytes[i] - 1);
+                    result.Add(new DirectoryEntry(entry));
+                    i += bytes[i];
+                    i--;
+                }
+                return result;
+            }
+
+            public string Filename { get; set; }
+            public UInt32 Size { get; set; }
+            public UInt32 Sector { get; set; }
+            public DateTime Timestamp { get; set; }
+            public byte[] MiddleBytes { get; private set; }
+            public byte[] ExtendedBytes { get; private set; }
+            public byte GMTOffset { get; set; }
+
+            public DirectoryEntry(UInt32 sector, UInt32 size, DateTime timestamp, byte gmtOffset, IList<byte> middleBytes, string filename, IList<byte> extendedBytes)
+            {
+                if (middleBytes.Count != 7)
+                    throw new ArgumentException("middleBytes");
+                if (extendedBytes.Count != 0x0e)
+                    throw new ArgumentException("extendedBytes");
+                Sector = sector;
+                Size = size;
+                Timestamp = timestamp;
+                GMTOffset = gmtOffset;
+                MiddleBytes = middleBytes.ToArray();
+                ExtendedBytes = extendedBytes.ToArray();
+                Filename = filename;
+            }
+
+            public DirectoryEntry(IList<byte> bytes)
+            {
+                System.Diagnostics.Debug.Assert(bytes[0] == bytes.Count);
+                Sector = bytes.Sub(2, 2 + 4 - 1).ToUInt32();
+                Size = bytes.Sub(10, 10 + 4 - 1).ToUInt32();
+                Timestamp = new DateTime(bytes[18] + 1900, bytes[19], bytes[20], bytes[21], bytes[22], bytes[23]);
+                GMTOffset = bytes[24];
+                MiddleBytes = bytes.Sub(25, 25 + 7 - 1).ToArray();
+                byte nameLength = bytes[32];
+                Filename = System.Text.Encoding.ASCII.GetString(bytes.Sub(33, 33 + nameLength - 1).ToArray());
+                byte padding = (byte)(((nameLength % 2) == 0) ? 1 : 0);
+                ExtendedBytes = bytes.Sub(33 + nameLength + padding, bytes[0] - 1).ToArray();
+            }
+
+            public byte[] ToByteArray()
+            {
+                List<byte> result = new List<byte>();
+                result.Add(0x00);
+                byte[] sectorBytes = Sector.ToBytes();
+                result.AddRange(sectorBytes);
+                result.AddRange(new byte[] { sectorBytes[3], sectorBytes[2], sectorBytes[1], sectorBytes[0] });
+                byte[] sizeBytes = Size.ToBytes();
+                result.AddRange(sizeBytes);
+                result.AddRange(new byte[] { sizeBytes[3], sizeBytes[2], sizeBytes[1], sizeBytes[0] });
+                result.Add((byte)(Timestamp.Year - 1900));
+                result.Add((byte)Timestamp.Month);
+                result.Add((byte)Timestamp.Day);
+                result.Add((byte)Timestamp.Hour);
+                result.Add((byte)Timestamp.Minute);
+                result.Add((byte)Timestamp.Second);
+                result.Add(GMTOffset);
+                result.AddRange(MiddleBytes);
+                byte[] nameBytes = Filename.ToByteArray();
+                result.Add((byte)nameBytes.Length);
+                result.AddRange(nameBytes);
+                if (((byte)nameBytes.Length) % 2 == 0)
+                {
+                    result.Add(0x00);
+                }
+                result.AddRange(ExtendedBytes);
+                byte length = (byte)(result.Count + 1);
+                result.Insert(0, length);
+
+                return result.ToArray();
+            }
+
+            //38 // length of record
+            //00 // nothing
+            //D6 E9 00 00 00 00 E9 D6 // sector
+            //01 92 00 00 00 00 92 01 // size
+            //61 // year
+            //05 // month
+            //10 // day
+            //12 // hour
+            //15 // minutes
+            //1E // seconds
+            //24 // GMT offset
+            //01 // hidden file
+            //00 00 
+            //01 00 00 01 
+            //09 // name length
+            //31 30 4D 2E 53 50 52 3B 31 // name 10M.SPR;1
+
+            //2A 00 2A 00 // owner id
+            //08 01 // attributes
+            //58 41  // X A
+            //00  // file number
+            //00  00 00  00 00 // reserved         }
         }
     }
 }

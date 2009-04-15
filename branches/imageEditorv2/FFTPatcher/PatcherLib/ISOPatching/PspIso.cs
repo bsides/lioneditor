@@ -32,8 +32,15 @@ namespace PatcherLib.Iso
             private delegate void MyFunc( string path, Sectors sector );
 
             private IDictionary<Sectors, long> fileToSectorMap;
+            private IDictionary<Sectors, long> fileToSizeMap;
+
             private PspIsoInfo() { }
             public long this[PspIso.Sectors file] { get { return fileToSectorMap[file]; } }
+
+            public long GetFileSize(PspIso.Sectors file)
+            {
+                return fileToSizeMap[file];
+            }
 
             public static PspIsoInfo GetPspIsoInfo(Stream iso)
             {
@@ -44,6 +51,7 @@ namespace PatcherLib.Iso
             {
                 ImageMaster.ImageRecord myRecord = null;
                 var myDict = new Dictionary<Sectors, long>();
+                var myOtherDict = new Dictionary<Sectors, long>();
                 MyFunc func =
                     delegate( string path, Sectors sector )
                     {
@@ -51,6 +59,7 @@ namespace PatcherLib.Iso
                         if (myRecord != null)
                         {
                             myDict[sector] = myRecord.Location;
+                            myOtherDict[sector] = myRecord.Size;
                         }
                         else
                         {
@@ -83,6 +92,7 @@ namespace PatcherLib.Iso
                 func( "UMD_DATA.BIN", Sectors.UMD_DATA_BIN );
                 PspIsoInfo result = new PspIsoInfo();
                 result.fileToSectorMap = myDict;
+                result.fileToSizeMap = myOtherDict;
                 return result;
             }
 

@@ -13,20 +13,37 @@ namespace FFTPatcher.SpriteEditor
         public UInt32 Sector { get; set; }
         public UInt32 Size { get; set; }
 
-        protected SpriteLocation(PsxIso.KnownPosition pos, IList<byte> bytes, params SpriteLocation[] subSpriteLocations)
+        private SpriteLocation(IList<byte> bytes, params SpriteLocation[] subSpriteLocations)
         {
             System.Diagnostics.Debug.Assert(bytes.Count == 8);
             Sector = bytes.Sub(0, 3).ToUInt32();
             Size = bytes.Sub(4).ToUInt32();
-            psxPos = pos;
             SubSpriteLocations = subSpriteLocations.AsReadOnly();
+        }
+
+        private SpriteLocation(PsxIso.KnownPosition pos, IList<byte> bytes, params SpriteLocation[] subSpriteLocations)
+            : this(bytes, subSpriteLocations)
+        {
+            psxPos = pos;
+        }
+
+        private SpriteLocation(PspIso.KnownPosition pos, IList<byte> bytes, params SpriteLocation[] subSpriteLocations)
+            : this(bytes, subSpriteLocations)
+        {
+            pspPos = pos;
         }
 
         public IList<SpriteLocation> SubSpriteLocations { get; private set; }
 
         private PsxIso.KnownPosition psxPos = null;
+        private PspIso.KnownPosition pspPos = null;
 
         public static SpriteLocation BuildPsx(PsxIso.KnownPosition pos, IList<byte> bytes, params SpriteLocation[] subSpriteLocations)
+        {
+            return new SpriteLocation(pos, bytes, subSpriteLocations);
+        }
+
+        public static SpriteLocation BuildPsp(PspIso.KnownPosition pos, IList<byte> bytes, params SpriteLocation[] subSpriteLocations)
         {
             return new SpriteLocation(pos, bytes, subSpriteLocations);
         }
@@ -81,6 +98,60 @@ namespace FFTPatcher.SpriteEditor
 
         public IList<byte> DefaultSpriteFileLocationsBytes { get { return defaultSpriteFileLocationsBytes; } }
 
+        public static SpriteFileLocations FromPspIso(Stream iso)
+        {
+            const int numPspSp2 = 0x130 / 8;
+            const int numPspSprites = 0x4d0 / 8 + 0x58 / 8;
+            PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo(iso);
+            IList<byte> spriteBytes = new List<byte>();
+            spriteBytes.AddRange(PspIso.GetBlock(iso, info, new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x324824, 0x4d0)));
+            spriteBytes.AddRange(PspIso.GetBlock(iso, info, new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x324D14, 0x58)));
+            spriteBytes = spriteBytes.ToArray();
+            byte[] sp2Bytes = PspIso.GetBlock(iso, info, new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3251ac, 0x130)).ToArray();
+            var sp2 = new Dictionary<byte, SpriteLocation>();
+            for (byte i = 0; i < numPspSp2; i++)
+            {
+                const byte offset = 0x87;
+                sp2[(byte)(i + offset)] = SpriteLocation.BuildPsp(
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3251ac + i * 8, 8),
+                    sp2Bytes.Sub(i * 8, (i + 1) * 8 - 1));
+            }
+
+            IList<SpriteLocation> sprites = new SpriteLocation[numPspSprites];
+            for (byte i = 0; i < numPspSprites; i++)
+            {
+                if (pspSp2toSpriteMapping.ContainsKey(i))
+                {
+                    IList<byte> values = pspSp2toSpriteMapping[i];
+                    SpriteLocation[] sp2s = new SpriteLocation[values.Count];
+                    for (int j = 0; j < values.Count; j++)
+                    {
+                        sp2s[j] = sp2[values[j]];
+                    }
+                    sprites[i] = SpriteLocation.BuildPsp(
+                        new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN,
+                            i <= 0x99 ? (0x324824 + i * 8) : (0x324d14 + (i - 0x99 - 1) * 8),
+                            8),
+                            spriteBytes.Sub(i * 8, (i + 1) * 8 - 1),
+                            sp2s);
+                }
+                else
+                {
+                    sprites[i] = SpriteLocation.BuildPsp(
+                        new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN,
+                            i <= 0x99 ? (0x324824 + i * 8) : (0x324d14 + (i - 0x99 - 1) * 8),
+                            8),
+                            spriteBytes.Sub(i * 8, (i + 1) * 8 - 1));
+                }
+            }
+
+            SpriteFileLocations result = new SpriteFileLocations();
+            result.sprites = sprites;
+            result.sp2 = sp2;
+
+            return result;
+        }
+
         public static SpriteFileLocations FromPsxIso(Stream iso)
         {
             SpriteFileLocations result = new SpriteFileLocations();
@@ -101,9 +172,9 @@ namespace FFTPatcher.SpriteEditor
             IList<SpriteLocation> sprites = new SpriteLocation[numSprites];
             for (byte i = 0; i < numSprites; i++)
             {
-                if (sp2toSpriteMapping.ContainsKey(i))
+                if (psxSp2toSpriteMapping.ContainsKey(i))
                 {
-                    IList<byte> values = sp2toSpriteMapping[i];
+                    IList<byte> values = psxSp2toSpriteMapping[i];
                     SpriteLocation[] sp2s = new SpriteLocation[values.Count];
                     for (int j = 0; j < values.Count; j++)
                     {
@@ -132,15 +203,15 @@ namespace FFTPatcher.SpriteEditor
         {
             get
             {
-                if (i >= numSprites)
+                if (i >= sprites.Count)
                 {
-                    throw new IndexOutOfRangeException(string.Format("max index is {0}", numSprites - 1));
+                    throw new IndexOutOfRangeException(string.Format("max index is {0}", sprites.Count - 1));
                 }
                 return sprites[i];
             }
         }
 
-        static IDictionary<byte, IList<byte>> sp2toSpriteMapping = new Dictionary<byte, IList<byte>> {
+        static IDictionary<byte, IList<byte>> psxSp2toSpriteMapping = new Dictionary<byte, IList<byte>> {
             { 0x87, new byte[] { 0x87 } },
             { 0x88, new byte[] { 0x88 } },
             { 0x8c, new byte[] { 0x8c } },
@@ -154,6 +225,21 @@ namespace FFTPatcher.SpriteEditor
             { 0x98, new byte[] { 0x98 } },
             { 0x99, new byte[] { 0x9e, 0x9f, 0xa0, 0xa1 } }
         };
+
+        static IDictionary<byte, IList<byte>> pspSp2toSpriteMapping = new Dictionary<byte, IList<byte>> {
+            { 0x87, new byte[] { 0x87 } },
+            { 0x88, new byte[] { 0x88 } },
+            { 0x8c, new byte[] { 0x8c } },
+            { 0x8d, new byte[] { 0x8d } },
+            { 0x8e, new byte[] { 0x8e } },
+            { 0x90, new byte[] { 0x90 } },
+            { 0x91, new byte[] { 0x91 } },
+            { 0x92, new byte[] { 0x92 } },
+            { 0x94, new byte[] { 0x94 } },
+            { 0x95, new byte[] { 0x95 } },
+            { 0x98, new byte[] { 0x98 } },
+            { 0x99, new byte[] { 0xa9, 0xaa, 0xa1, 0xa2 } } };
+
         //// This data stored at offset 0x2E60C in BATTLE.BIN
         //private static IList<SpriteLocation> DefaultSp2Locations = new SpriteLocation[numSp2] {
         //    new SpriteLocation { Sector = 0x0000EB01, Size = 0x00008000 }, // BOM2  // 0x87

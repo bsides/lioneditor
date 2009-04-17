@@ -76,6 +76,8 @@ namespace FFTPatcher.SpriteEditor
             destination.UnlockBits( bmdDest );
         }
 
+        private delegate int CalcOffset( int rowOrColumn );
+
         /// <summary>
         /// Copies the rectangle to point.
         /// </summary>
@@ -84,39 +86,33 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="destination">The destination.</param>
         /// <param name="destinationPoint">The destination point.</param>
         /// <param name="flip">if set to <c>true</c> [flip].</param>
-        public static void CopyRectangleToPoint( this Bitmap source, Rectangle sourceRectangle, Bitmap destination, Point destinationPoint, Palette palette, bool flip )
+        public static void CopyRectangleToPoint( this Bitmap source, Rectangle sourceRectangle, Bitmap destination, Point destinationPoint, Palette palette, bool reverseX, bool reverseY )
         {
             BitmapData bmdSource = source.LockBits( new Rectangle( 0, 0, source.Width, source.Height ), ImageLockMode.ReadOnly, source.PixelFormat );
             BitmapData bmdDest = destination.LockBits( new Rectangle( 0, 0, destination.Width, destination.Height ), ImageLockMode.WriteOnly, destination.PixelFormat );
-            if( flip )
+
+            int width = sourceRectangle.Width;
+            int height = sourceRectangle.Height;
+            int x = destinationPoint.X;
+            int y = destinationPoint.Y;
+            CalcOffset calcX = reverseX ?
+                (CalcOffset)(col => (width - col - 1)) :
+                (CalcOffset)(col => col);
+            CalcOffset calcY = reverseY ?
+                (CalcOffset)(row => (height - row - 1)) :
+                (CalcOffset)(row => row);
+
+            for( int col = 0; col < sourceRectangle.Width; col++ )
             {
-                for( int col = 0; col < sourceRectangle.Width; col++ )
+                for( int row = 0; row < sourceRectangle.Height; row++ )
                 {
-                    for( int row = 0; row < sourceRectangle.Height; row++ )
+                    int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
+                    if (palette.Colors[index % 16].A != 0)
                     {
-                        int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
-                        if( palette.Colors[index % 16].A != 0 )
-                        {
-                            bmdDest.SetPixel8bpp(
-                                destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row,
-                                index );
-                        }
-                    }
-                }
-            }
-            else
-            {
-                for( int col = 0; col < sourceRectangle.Width; col++ )
-                {
-                    for( int row = 0; row < sourceRectangle.Height; row++ )
-                    {
-                        int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
-                        if( palette.Colors[index % 16].A != 0 )
-                        {
-                            bmdDest.SetPixel8bpp(
-                                destinationPoint.X + col, destinationPoint.Y + row,
-                                index );
-                        }
+                        bmdDest.SetPixel8bpp(
+                            x + calcX(col),
+                            y + calcY(row),
+                            index);
                     }
                 }
             }

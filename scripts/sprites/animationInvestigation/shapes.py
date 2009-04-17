@@ -249,35 +249,9 @@ def innerGetFrames(bytes, imageIn, secondHalf, thirdHalf, start, startingFrameNu
 				height=4
 			tileX = (flags&0x001F) * 8
 			tileY = ((flags>>5)&0x001F) * 8 + getOffsetBasedOnCount(frameNumber-startingFrameNumber, second=secondHalf, mon=False)
-			# if (tileY+256+232+height) >= imageIn.size[1]:
-				# tileY = imageIn.size[1]-1-height
-			# else:
-				# tileY+=256+232
-			# if (frameNumber-startingFrameNumber) >= secondHalf:
-				# tileY+=256
-			# if (frameNumber-startingFrameNumber) >= secondHalf+thirdHalf:
-				# tileY+=256
-			# if (frameNumber-startingFrameNumber) >= secondHalf+thirdHalf+16:
-				# tileY-= 232
-			# if (frameNumber-startingFrameNumber) >= secondHalf+thirdHalf+16+83:
-				# tileY-=256
-			#if (frameNumber==25):
 			goods.append(counter)
-			#logInfo(counter, bytes[frameStart+0x02+tileNumber*0x04:frameStart+0x02+tileNumber*0x04+4])
 
 
-			# big = Image.open("dongs.png")
-			# draw = ImageDraw.Draw(big)
-			# topY = ((flags>>5)&0x001F) * 8
-			# midY = ((flags>>5)&0x001F) * 8 + 256
-			# botY = ((flags>>5)&0x001F) * 8 + 488
-			# draw.rectangle([(tileX, topY), (tileX+width,topY+height)], outline=(255,255,0))
-			# draw.rectangle([(tileX, midY), (tileX+width,midY+height)], outline=(255,255,0))
-			# draw.rectangle([(tileX, botY), (tileX+width,botY+height)], outline=(255,255,0))
-			# big.save("big%04d.png"%counter, "png")
-
-
-			#print "%02X %02X %d %d %d %d %d %d" % (xbyte, ybyte, xbyte, ybyte, width, height, (flags&0x8000)>>15, (flags&0x4000)>>14)
 			print x,y
 			rects.append((imageIn, tileX, tileY, width, height, im, x, y, mirror))
 		rects.reverse()
@@ -350,7 +324,7 @@ def main(argv=None):
 	fn = argv[1]
 	print fn
 	print argv[2]
-	data = open(fn).read()
+	data = open(fn,'rb').read()
 
 	compress_start = 0x9200
 	if fn == "KASANEK.SPR" or fn == "KASANEM.SPR":
@@ -367,7 +341,7 @@ def main(argv=None):
 	others=""
 	if SP2.has_key(os.path.split(fn)[-1]):
 		for sp2 in SP2[os.path.split(fn)[-1]]:
-			others += open(os.path.join(os.path.split(fn)[0],sp2)).read()
+			others += open(os.path.join(os.path.split(fn)[0],sp2),'rb').read()
 			h += 256
 
 	bytes=data[16*32:compress_start]
@@ -386,7 +360,7 @@ def main(argv=None):
 	drawPixelsWithPaletteOnImage(pixels, buildPalette(data[0:32]), im)
 
 	im2=splitImage(im)
-	shp=charsToInts(open(argv[2]).read())
+	shp=charsToInts(open(argv[2],'rb').read())
 
 	im3=im2.copy()
 	replaceTransparentWithBlack(im3)
@@ -399,7 +373,7 @@ def main(argv=None):
 
 	print "dongs"
 	if len(argv)>3:
-		seq=charsToInts(open(argv[3]).read())
+		seq=charsToInts(open(argv[3],'rb').read())
 		readSequence(seq, frames, buildPalette(data[0:32]))
 
 if __name__ == "__main__":

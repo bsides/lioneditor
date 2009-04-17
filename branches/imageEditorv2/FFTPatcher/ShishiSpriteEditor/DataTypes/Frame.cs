@@ -70,14 +70,14 @@ namespace FFTPatcher.SpriteEditor
         /// </summary>
         public Bitmap GetFrame( AbstractSprite source )
         {
-            Bitmap result = new Bitmap( 210, 160, System.Drawing.Imaging.PixelFormat.Format8bppIndexed );
+            Bitmap result = new Bitmap( 185, 250, System.Drawing.Imaging.PixelFormat.Format8bppIndexed );
 
             Bitmap sourceBmp = source.ToBitmap();
             result.Palette = sourceBmp.Palette;
 
             foreach ( Tile t in tiles )
             {
-                sourceBmp.CopyRectangleToPoint( t.Rectangle, result, t.Location, source.Palettes[0], t.Reverse );
+                sourceBmp.CopyRectangleToPoint( t.Rectangle, result, t.Location, source.Palettes[0], t.ReverseX, t.ReverseY );
             }
 
             return result;

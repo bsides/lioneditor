@@ -79,6 +79,7 @@ namespace FFTPatcher.SpriteEditor
 
         public static void ExpandPspIso(Stream iso)
         {
+            return;
             string tempPath = Path.GetTempPath();
             string guid = Path.GetRandomFileName();
             string tempDirPath = Path.Combine(tempPath, guid);
@@ -90,10 +91,6 @@ namespace FFTPatcher.SpriteEditor
 
             PatcherLib.Iso.FFTPack.DumpToDirectory(iso, tempDirPath, info.GetFileSize(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin), null);
             PatcherLib.Iso.PspIso.DecryptISO(iso, info);
-
-            string effectDirPath = Path.Combine(tempDirPath, "EFFECT");
-            string[] effectFiles = Directory.GetFiles(effectDirPath, "E???.BIN", SearchOption.TopDirectoryOnly);
-            effectFiles.ForEach(f => File.Delete(Path.Combine(effectDirPath, f)));
 
             string battleDirPath = Path.Combine(tempDirPath, "BATTLE");
 
@@ -118,6 +115,7 @@ namespace FFTPatcher.SpriteEditor
             const int numPspSprites = 0x4d0/8+0x58/8;
             byte[][] oldSpriteBytes = new byte[numPspSprites][];
 
+            // Save the old sprites
             var locs = SpriteFileLocations.FromPspIso(iso);
             for (int i = 0; i < numPspSprites; i++)
             {
@@ -128,21 +126,18 @@ namespace FFTPatcher.SpriteEditor
 
             byte[] emptyByteArray = new byte[0];
             // Replace old sprites
-            for (int i = 78; i <= 213; i++)
-            {
-                string currentFile = Path.Combine(tempDirPath, PatcherLib.Iso.FFTPack.FFTPackFiles[i]);
-                File.Delete(currentFile);
-                File.WriteAllBytes(currentFile, emptyByteArray);
-            }
-            // 234-745
-            for (int i = 234; i <= 745; i++)
-            {
-                File.WriteAllBytes(Path.Combine(tempDirPath, string.Format("unknown/fftpack.{0}", i)), emptyByteArray);
-            }
+            //for (int i = 78; i <= 213; i++)
+            //{
+            //    string currentFile = Path.Combine(tempDirPath, PatcherLib.Iso.FFTPack.FFTPackFiles[i]);
+            //    File.Delete(currentFile);
+            //    File.WriteAllBytes(currentFile, emptyByteArray);
+            //}
+
             for (int i = 0; i < numPspSprites; i++)
             {
-                File.WriteAllBytes(Path.Combine(tempDirPath, string.Format("unknown/fftpack.{0}", i + 234)), oldSpriteBytes[i]);
-                locs[i].Sector = fftPackToSectorMap[i + 234];
+                File.Delete(Path.Combine(tempDirPath, string.Format("unknown/fftpack.{0}.dummy", i + 1340)));
+                File.WriteAllBytes(Path.Combine(tempDirPath, string.Format("unknown/fftpack.{0}", i + 1340)), oldSpriteBytes[i]);
+                locs[i].Sector = fftPackToSectorMap[i + 1340];
                 locs[i].Size = 65536;
             }
 
@@ -163,8 +158,21 @@ namespace FFTPatcher.SpriteEditor
             string outputPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             PatcherLib.Iso.FFTPack.MergeDumpedFiles(tempDirPath, outputPath, null);
 
+            long oldFftPackSize = info.GetFileSize(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin);
+            byte[] oldFftPackSizeBytes = oldFftPackSize.ToBytes();
+            oldFftPackSizeBytes = new byte[8] { 
+                oldFftPackSizeBytes[0], oldFftPackSizeBytes[1], oldFftPackSizeBytes[2], oldFftPackSizeBytes[3], 
+                oldFftPackSizeBytes[3], oldFftPackSizeBytes[2], oldFftPackSizeBytes[1], oldFftPackSizeBytes[0] };
+            
             using (Stream newFftPack = File.OpenRead(outputPath))
             {
+                long newFftPackSize = newFftPack.Length;
+                byte[] newFftPackSizeBytes = newFftPackSize.ToBytes();
+                newFftPackSizeBytes = new byte[8] { 
+                    newFftPackSizeBytes[0], newFftPackSizeBytes[1], newFftPackSizeBytes[2], newFftPackSizeBytes[3], 
+                    newFftPackSizeBytes[3], newFftPackSizeBytes[2], newFftPackSizeBytes[1], newFftPackSizeBytes[0] };
+
+                ReplaceBytesInStream(iso, oldFftPackSizeBytes, newFftPackSizeBytes);
                 CopyStream(newFftPack,0,iso,info[PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin]*2048,newFftPack.Length);
                 long oldLength = info.GetFileSize(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin);
                 if (newFftPack.Length < oldLength)
@@ -179,6 +187,28 @@ namespace FFTPatcher.SpriteEditor
                 new PatchedByteArray(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x324824, newSpriteLocationsArray),
                 new PatchedByteArray(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x324824, newSpriteLocationsArray)});
 
+        }
+
+        private static void ReplaceBytesInStream(Stream stream, byte[] bytesToReplace, byte[] newBytes)
+        {
+            System.Diagnostics.Debug.Assert(bytesToReplace.Length == newBytes.Length);
+            byte[] buffer = new byte[bytesToReplace.Length];
+            stream.Seek(0, SeekOrigin.Begin);
+            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+            while (bytesRead == buffer.Length)
+            {
+                if (PatcherLib.Utilities.Utilities.CompareArrays(buffer, bytesToReplace))
+                {
+                    stream.Seek(-buffer.Length, SeekOrigin.Current);
+                    stream.Write(newBytes, 0, newBytes.Length);
+                    break;
+                }
+                else
+                {
+                    stream.Seek(-(buffer.Length - 1), SeekOrigin.Current);
+                    bytesRead = stream.Read(buffer, 0, buffer.Length);
+                }
+            }
         }
 
         private static void CopyStream(Stream source, long sourcePosition, Stream destination, long destinationPosition, long count)

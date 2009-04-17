@@ -390,9 +390,15 @@ namespace PatcherLib.Iso
 
         public static IList<KnownPosition> StoreInventories { get; private set; }
 
+        public static IList<KnownPosition> AbilityAnimations { get; private set; }
+
 
         static PspIso()
         {
+            AbilityAnimations = new KnownPosition[] { 
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x32394C, 0x600),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x32394C, 0x600) }.AsReadOnly();
+
             Abilities = new KnownPosition[] { 
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x271514, 0x24C6),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x271514, 0x24C6) }.AsReadOnly();

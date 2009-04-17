@@ -351,6 +351,8 @@ namespace PatcherLib
 
         public static byte[] AbilitiesBin { get { return dict[Paths.Binaries.Abilities] as byte[]; } }
 
+        public static byte[] AbilityAnimationsBin { get { return dict[Paths.Binaries.AbilityAnimations] as byte[]; } }
+
         public static string AbilitiesStrings { get { return dict[Paths.AbilitiesStringsXML] as string; } }
 
         public static string[] AbilityAI
@@ -547,6 +549,7 @@ namespace PatcherLib
             dict[Resources.Paths.PSX.Binaries.ENTD4] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD4];
             dict[Resources.Paths.PSX.Binaries.MoveFind] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MoveFind];
             dict[Resources.Paths.PSX.Binaries.Abilities] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Abilities];
+            dict[Resources.Paths.PSX.Binaries.AbilityAnimations] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityAnimations];
             dict[Resources.Paths.PSX.Binaries.AbilityEffects] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityEffects];
             dict[Resources.Paths.PSX.Binaries.ActionEvents] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ActionEvents];
             dict[Resources.Paths.PSX.Binaries.Font] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Font];

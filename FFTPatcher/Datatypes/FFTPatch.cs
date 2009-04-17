@@ -260,7 +260,8 @@ namespace FFTPatcher.Datatypes
                 LoadDataFromBytes(
                     PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.Abilities),
                     PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.AbilityEffects),
-                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.OldItems),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.AbilityAnimations ),
+                    PatcherLib.Iso.PsxIso.GetBlock( stream, PatcherLib.Iso.PsxIso.OldItems ),
                     PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.OldItemAttributes),
                     null,
                     null,
@@ -292,6 +293,7 @@ namespace FFTPatcher.Datatypes
                 LoadDataFromBytes(
                     PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.Abilities[0]),
                     PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.AbilityEffects[0]),
+                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.AbilityAnimations[0]),
                     PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.OldItems[0]),
                     PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.OldItemAttributes[0]),
                     PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.NewItems[0]),
@@ -344,7 +346,7 @@ namespace FFTPatcher.Datatypes
             switch( Context )
             {
                 case Context.US_PSP:
-                    Abilities = new AllAbilities( PSPResources.AbilitiesBin, PSPResources.AbilityEffectsBin );
+                    Abilities = new AllAbilities( PSPResources.AbilitiesBin, PSPResources.AbilityEffectsBin, PSPResources.AbilityAnimationsBin );
                     Items = new AllItems(
                         PSPResources.OldItemsBin,
                         PSPResources.NewItemsBin );
@@ -366,7 +368,7 @@ namespace FFTPatcher.Datatypes
                     StoreInventories = new AllStoreInventories( Context, PSPResources.StoreInventoriesBin, PSPResources.StoreInventoriesBin );
                     break;
                 case Context.US_PSX:
-                    Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
+                    Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin, PSXResources.AbilityAnimationsBin );
                     Items = new AllItems( PSXResources.OldItemsBin, null );
                     ItemAttributes = new AllItemAttributes( PSXResources.OldItemAttributesBin, null );
                     Jobs = new AllJobs( Context, PSXResources.JobsBin );
@@ -447,7 +449,7 @@ namespace FFTPatcher.Datatypes
         }
 
         private static void LoadDataFromBytes(
-            IList<byte> abilities, IList<byte> abilityEffects,
+            IList<byte> abilities, IList<byte> abilityEffects, IList<byte> abilityAnimations,
             IList<byte> oldItems, IList<byte> oldItemAttributes,
             IList<byte> newItems, IList<byte> newItemAttributes,
             IList<byte> jobs, IList<byte> jobLevels,
@@ -462,7 +464,7 @@ namespace FFTPatcher.Datatypes
             try
             {
                 bool psp = Context == Context.US_PSP;
-                var Abilities = new AllAbilities( abilities, abilityEffects );
+                var Abilities = new AllAbilities( abilities, abilityEffects, abilityAnimations );
                 var Items = new AllItems( oldItems, newItems != null ? newItems : null );
                 var ItemAttributes = new AllItemAttributes( oldItemAttributes, newItemAttributes != null ? newItemAttributes : null );
                 var Jobs = new AllJobs( Context, jobs );
@@ -512,6 +514,7 @@ namespace FFTPatcher.Datatypes
                 LoadDataFromBytes(
                     GetZipEntry( file, elementNames[ElementName.Abilities], false ) ?? defaults[ElementName.Abilities],
                     GetZipEntry( file, elementNames[ElementName.AbilityEffects], false ) ?? defaults[ElementName.AbilityEffects],
+                    GetZipEntry(file, elementNames[ElementName.AbilityAnimations], false)?? defaults[ElementName.AbilityAnimations],
                     GetZipEntry( file, elementNames[ElementName.Items], false ) ?? defaults[ElementName.Items],
                     GetZipEntry( file, elementNames[ElementName.ItemAttributes], false ) ?? defaults[ElementName.ItemAttributes],
                     psp ? ( GetZipEntry( file, elementNames[ElementName.PSPItems], false ) ?? defaults[ElementName.PSPItems] ) : null,
@@ -543,7 +546,7 @@ namespace FFTPatcher.Datatypes
 
             byte[] abilities = GetFromNodeOrReturnDefault( rootNode, "abilities", psp ? PSPResources.AbilitiesBin : PSXResources.AbilitiesBin );
             byte[] abilityEffects = GetFromNodeOrReturnDefault( rootNode, "abilityEffects", psp ? PSPResources.AbilityEffectsBin : PSXResources.AbilityEffectsBin );
-
+            byte[] abilityAnimations = GetFromNodeOrReturnDefault( rootNode, "abilityAnimations", psp ? PSPResources.AbilityAnimationsBin : PSXResources.AbilityAnimationsBin );
             byte[] oldItems = GetFromNodeOrReturnDefault( rootNode, "items", psp ? PSPResources.OldItemsBin : PSXResources.OldItemsBin );
             byte[] oldItemAttributes = GetFromNodeOrReturnDefault( rootNode, "itemAttributes", psp ? PSPResources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
             byte[] newItems = psp ? GetFromNodeOrReturnDefault( rootNode, "pspItems", PSPResources.NewItemsBin ) : null;
@@ -564,7 +567,8 @@ namespace FFTPatcher.Datatypes
             byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? PSPResources.MoveFind : PSXResources.MoveFind );
             byte[] inventories = GetFromNodeOrReturnDefault( rootNode, "storeInventories", psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
 
-            LoadDataFromBytes( abilities, abilityEffects, oldItems, oldItemAttributes, newItems, newItemAttributes,
+            LoadDataFromBytes( abilities, abilityEffects, abilityAnimations,
+                oldItems, oldItemAttributes, newItems, newItemAttributes,
                 jobs, jobLevels, skillSets, monsterSkills, actionMenus, statusAttributes,
                 inflictStatuses, poach, entd1, entd2, entd3, entd4, entd5,
                 moveFind, inventories );
@@ -631,6 +635,7 @@ namespace FFTPatcher.Datatypes
         private static IDictionary<ElementName,byte[]> DefaultPsxElements = new Dictionary<ElementName, byte[]> {
             { ElementName.Abilities, PSXResources.AbilitiesBin },
             { ElementName.AbilityEffects, PSXResources.AbilityEffectsBin },
+            { ElementName.AbilityAnimations, PSXResources.AbilityAnimationsBin },
             { ElementName.Items, PSXResources.OldItemsBin },
             { ElementName.ItemAttributes, PSXResources.OldItemAttributesBin },
             { ElementName.PSPItems, null },
@@ -653,6 +658,7 @@ namespace FFTPatcher.Datatypes
         private static IDictionary<ElementName,byte[]> DefaultPspElements = new Dictionary<ElementName, byte[]> {
             { ElementName.Abilities, PSPResources.AbilitiesBin },
             { ElementName.AbilityEffects, PSPResources.AbilityEffectsBin },
+            { ElementName.AbilityAnimations, PSPResources.AbilityAnimationsBin },
             { ElementName.Items, PSPResources.OldItemsBin },
             { ElementName.ItemAttributes, PSPResources.OldItemAttributesBin },
             { ElementName.PSPItems, PSPResources.NewItemsBin },
@@ -677,6 +683,7 @@ namespace FFTPatcher.Datatypes
         {
             Abilities,
             AbilityEffects,
+            AbilityAnimations,
             Items,
             ItemAttributes,
             PSPItems,

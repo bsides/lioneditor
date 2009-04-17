@@ -188,11 +188,11 @@ namespace FFTPatcher.Datatypes
 
         }
 
-        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
+        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes, IList<byte> animationsBytes )
         {
             AllEffects = new AllAbilityEffects( this );
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilitiesBin : PSXResources.AbilitiesBin;
-            Dictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
+            IDictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
             byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
 
             Abilities = new Ability[512];

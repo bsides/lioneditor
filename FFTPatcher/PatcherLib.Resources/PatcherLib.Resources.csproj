@@ -85,6 +85,7 @@
     <None Include="Resources\ENTD3.ENT" />
     <None Include="Resources\ENTD4.ENT" />
     <None Include="Resources\MoveFind.bin" />
+    <None Include="Resources\PSP\bin\AbilityAnimations.bin" />
     <None Include="Resources\PSP\bin\AbilityEffects.bin" />
     <None Include="Resources\PSP\bin\ActionEvents.bin" />
     <None Include="Resources\PSP\bin\ENTD5.bin" />
@@ -103,6 +104,7 @@
     <None Include="Resources\PSP\bin\SkillSetsBin.bin" />
     <None Include="Resources\PSP\bin\StatusAttributes.bin" />
     <None Include="Resources\PSX-US\bin\Abilities.bin" />
+    <None Include="Resources\PSX-US\bin\AbilityAnimations.bin" />
     <None Include="Resources\PSX-US\bin\AbilityEffects.bin" />
     <None Include="Resources\PSX-US\bin\ActionEvents.bin" />
     <None Include="Resources\PSX-US\bin\font.bin" />

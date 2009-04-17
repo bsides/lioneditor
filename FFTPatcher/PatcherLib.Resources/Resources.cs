@@ -168,6 +168,7 @@ namespace PatcherLib
                     public const string ENTD5 = "PSP/bin/ENTD5.bin";
                     public const string MoveFind = Paths.MoveFindBin;
                     public const string Abilities = "PSP/bin/Abilities.bin";
+                    public const string AbilityAnimations = "PSP/bin/AbilityAnimations.bin";
                     public const string AbilityEffects = "PSP/bin/AbilityEffects.bin";
                     public const string ActionEvents = "PSP/bin/ActionEvents.bin";
                     public const string Font = "PSP/bin/font.bin";
@@ -213,6 +214,7 @@ namespace PatcherLib
                     public const string ENTD4 = Paths.ENTD4;
                     public const string MoveFind = Paths.MoveFindBin;
                     public const string Abilities = "PSX-US/bin/Abilities.bin";
+                    public const string AbilityAnimations = "PSX-US/bin/AbilityAnimations.bin";
                     public const string AbilityEffects = "PSX-US/bin/AbilityEffects.bin";
                     public const string ActionEvents = "PSX-US/bin/ActionEvents.bin";
                     public const string Font = "PSX-US/bin/font.bin";

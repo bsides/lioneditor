@@ -199,6 +199,8 @@ namespace PatcherLib
 
         public static byte[] AbilitiesBin { get { return dict[Paths.Binaries.Abilities] as byte[]; } }
 
+        public static byte[] AbilityAnimationsBin { get { return dict[Paths.Binaries.AbilityAnimations] as byte[]; } }
+
         public static string AbilitiesStrings { get { return dict[Paths.AbilitiesStringsXML] as string; } }
 
         public static string[] AbilityAI
@@ -411,6 +413,7 @@ namespace PatcherLib
             dict[Resources.Paths.PSP.Binaries.ENTD5] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD5];
             dict[Resources.Paths.PSP.Binaries.MoveFind] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.MoveFind];
             dict[Resources.Paths.PSP.Binaries.Abilities] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.Abilities];
+            dict[Resources.Paths.PSP.Binaries.AbilityAnimations] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.AbilityAnimations];
             dict[Resources.Paths.PSP.Binaries.AbilityEffects] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.AbilityEffects];
             dict[Resources.Paths.PSP.Binaries.ActionEvents] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ActionEvents];
             dict[Resources.Paths.PSP.Binaries.Font] = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.Font];

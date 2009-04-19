@@ -312,7 +312,7 @@ namespace FFTPatcher.SpriteEditor
 
             // Copy old sprites to new locations
             List<byte> posBytes = new List<byte>(NumSprites * 8);
-            long startSector = 0x2040B100 / 2352;
+            const long startSector = 0x2040B100 / 2352;
             for ( int i = 0; i < NumSprites; i++ )
             {
                 uint sector = (uint)( startSector + i * 65536 / 2048 );
@@ -321,7 +321,7 @@ namespace FFTPatcher.SpriteEditor
                 bytes.CopyTo( realBytes, 0 );
                 PatcherLib.Iso.PsxIso.PatchPsxIso( iso, new PatchedByteArray( (int)sector, 0, realBytes ) );
                 posBytes.AddRange( sector.ToBytes() );
-                posBytes.AddRange( ( (uint)bytes.Length ).ToBytes() );
+                posBytes.AddRange(((uint)realBytes.Length).ToBytes());
 
                 battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(sector, 65536, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                     string.Format("{0:X2}.SPR;1", i), battleDir[2].ExtendedBytes));

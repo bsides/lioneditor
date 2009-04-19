@@ -67,6 +67,8 @@ namespace FFTPatcher.Datatypes
 
         public static AllAbilities Abilities { get; private set; }
 
+        public static AllAnimations AbilityAnimations { get; private set; }
+
         public static AllActionMenus ActionMenus { get; private set; }
 
         public static Context Context { get; private set; }
@@ -346,7 +348,8 @@ namespace FFTPatcher.Datatypes
             switch( Context )
             {
                 case Context.US_PSP:
-                    Abilities = new AllAbilities( PSPResources.AbilitiesBin, PSPResources.AbilityEffectsBin, PSPResources.AbilityAnimationsBin );
+                    Abilities = new AllAbilities( PSPResources.AbilitiesBin, PSPResources.AbilityEffectsBin );
+                    AbilityAnimations = new AllAnimations(Context, PSPResources.AbilityAnimationsBin, PSPResources.AbilityAnimationsBin);
                     Items = new AllItems(
                         PSPResources.OldItemsBin,
                         PSPResources.NewItemsBin );
@@ -368,7 +371,8 @@ namespace FFTPatcher.Datatypes
                     StoreInventories = new AllStoreInventories( Context, PSPResources.StoreInventoriesBin, PSPResources.StoreInventoriesBin );
                     break;
                 case Context.US_PSX:
-                    Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin, PSXResources.AbilityAnimationsBin );
+                    Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
+                    AbilityAnimations = new AllAnimations(Context, PSXResources.AbilityAnimationsBin, PSXResources.AbilityAnimationsBin);
                     Items = new AllItems( PSXResources.OldItemsBin, null );
                     ItemAttributes = new AllItemAttributes( PSXResources.OldItemAttributesBin, null );
                     Jobs = new AllJobs( Context, PSXResources.JobsBin );
@@ -464,7 +468,8 @@ namespace FFTPatcher.Datatypes
             try
             {
                 bool psp = Context == Context.US_PSP;
-                var Abilities = new AllAbilities( abilities, abilityEffects, abilityAnimations );
+                var Abilities = new AllAbilities( abilities, abilityEffects );
+                var AbilityAnimations = new AllAnimations(Context, abilityAnimations, psp ? PSPResources.AbilityAnimationsBin : PSXResources.AbilityAnimationsBin);
                 var Items = new AllItems( oldItems, newItems != null ? newItems : null );
                 var ItemAttributes = new AllItemAttributes( oldItemAttributes, newItemAttributes != null ? newItemAttributes : null );
                 var Jobs = new AllJobs( Context, jobs );
@@ -481,6 +486,7 @@ namespace FFTPatcher.Datatypes
                 var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.MoveFind : PSXResources.MoveFind ) );
                 var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
                 FFTPatch.Abilities = Abilities;
+                FFTPatch.AbilityAnimations = AbilityAnimations;
                 FFTPatch.Items = Items;
                 FFTPatch.ItemAttributes = ItemAttributes;
                 FFTPatch.Jobs = Jobs;
@@ -598,6 +604,7 @@ namespace FFTPatcher.Datatypes
                 WriteFileToZip( stream, "type", Encoding.UTF8.GetBytes( destinationContext.ToString() ) );
 
                 WriteFileToZip( stream, elementNames[ElementName.Abilities], Abilities.ToByteArray( destinationContext ) );
+                WriteFileToZip(stream, elementNames[ElementName.AbilityAnimations], AbilityAnimations.ToByteArray());
                 WriteFileToZip( stream, elementNames[ElementName.AbilityEffects], Abilities.ToEffectsByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.Items], Items.ToFirstByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.ItemAttributes], ItemAttributes.ToFirstByteArray() );

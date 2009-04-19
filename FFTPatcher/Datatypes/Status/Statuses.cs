@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
-    public class Statuses : ISupportDigest
+    public class Statuses : ISupportDigest, ISupportDefault<Statuses>
     {
 		#region Instance Variables (41) 
 

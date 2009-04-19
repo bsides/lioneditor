@@ -35,7 +35,7 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
-            using (System.IO.Stream s = System.IO.File.Open(@"N:\dev\fft\images\fflw-usa - Copy.iso", System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite))
+            using (System.IO.Stream s = System.IO.File.Open(@"N:\dev\fft\images\fflw-usa.rearranged - Copy.iso", System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite))
             {
                 AllSprites.ExpandPspIso(s);
             }

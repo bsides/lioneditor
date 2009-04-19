@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
     /// </summary>
-    public class JobLevels : PatchableFile, IXmlDigest
+    public class JobLevels : PatchableFile, IXmlDigest, ISupportDefault<JobLevels>
     {
 		#region Instance Variables (4) 
 
@@ -317,7 +317,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the prerequisites to unlock a job.
     /// </summary>
-    public class Requirements : IChangeable, IEquatable<Requirements>
+    public class Requirements : IChangeable, IEquatable<Requirements>, ISupportDefault<Requirements>
     {
         private static readonly string[] fields = new string[24] {
             "Squire", "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner",

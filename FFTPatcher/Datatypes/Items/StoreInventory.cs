@@ -6,7 +6,7 @@ using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
-    public class StoreInventory : IChangeable, ISupportDigest
+    public class StoreInventory : IChangeable, ISupportDigest, ISupportDefault<StoreInventory>
     {
         private Dictionary<Item, bool> items = new Dictionary<Item, bool>();
         private IList<Item> itemsList;
@@ -99,7 +99,7 @@ namespace FFTPatcher.Datatypes
         public event EventHandler DataChanged;
     }
 
-    public class AllStoreInventories : PatchableFile
+    public class AllStoreInventories : PatchableFile, ISupportDefault<AllStoreInventories>
     {
         public AllStoreInventories Default { get; private set; }
         private Context ourContext;

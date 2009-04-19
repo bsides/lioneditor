@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents statuses an <see cref="Ability"/> inflicts or cancels on its target.
     /// </summary>
-    public class InflictStatus : ISupportDigest
+    public class InflictStatus : ISupportDigest, ISupportDefault<InflictStatus>
     {
 		#region Instance Variables (9) 
 

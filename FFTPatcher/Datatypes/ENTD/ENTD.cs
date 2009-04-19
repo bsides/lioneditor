@@ -26,7 +26,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all Events in the game.
     /// </summary>
-    public class ENTD : IChangeable
+    public class ENTD : IChangeable, ISupportDefault<ENTD>
     {
 		#region Public Properties (3) 
 

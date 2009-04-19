@@ -24,7 +24,7 @@ using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
-    public class MoveFindItem : IChangeable, ISupportDigest
+    public class MoveFindItem : IChangeable, ISupportDigest, ISupportDefault<MoveFindItem>
     {
 		#region Instance Variables (1) 
 
@@ -134,7 +134,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class MapMoveFindItems : IChangeable, IXmlDigest
+    public class MapMoveFindItems : IChangeable, IXmlDigest, ISupportDefault<MapMoveFindItems>
     {
 		#region Public Properties (4) 
 
@@ -224,7 +224,7 @@ namespace FFTPatcher.Datatypes
         #endregion
     }
 
-    public class AllMoveFindItems : PatchableFile, IChangeable, IXmlDigest
+    public class AllMoveFindItems : PatchableFile, IChangeable, IXmlDigest, ISupportDefault<AllMoveFindItems>
     {
 		#region Public Properties (3) 
 

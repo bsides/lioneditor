@@ -190,7 +190,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a character's Job and its abilities and attributes.
     /// </summary>
-    public class Job : IChangeable, ISupportDigest
+    public class Job : IChangeable, ISupportDigest, ISupportDefault<Job>
     {
 		#region Instance Variables (1) 
 

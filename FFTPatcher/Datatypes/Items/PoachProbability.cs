@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represent's the common and uncommon items that can be poached from a monster.
     /// </summary>
-    public class PoachProbability : IChangeable, ISupportDigest
+    public class PoachProbability : IChangeable, ISupportDigest, ISupportDefault<PoachProbability>
     {
 		#region Instance Variables (1) 
 

@@ -30,6 +30,8 @@ namespace FFTPatcher.SpriteEditor
     public partial class MainForm : Form
     {
 
+        const string titleFormatString = "Shishi Sprite Manager - {0}";
+
         public MainForm()
         {
             InitializeComponent();
@@ -61,6 +63,7 @@ namespace FFTPatcher.SpriteEditor
                         allSpritesEditor1.BindTo(s, currentStream);
                         spriteMenuItem.Enabled = true;
                         sp2Menu.Enabled = true;
+                        Text = string.Format(titleFormatString, Path.GetFileName(openFileDialog.FileName));
                     }
                     else 
                     {

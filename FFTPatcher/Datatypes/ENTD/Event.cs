@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an Event in the game
     /// </summary>
-    public class Event : IEquatable<Event>, IChangeable, IXmlDigest
+    public class Event : IEquatable<Event>, IChangeable, IXmlDigest, ISupportDefault<Event>
     {
 		#region Instance Variables (2) 
 

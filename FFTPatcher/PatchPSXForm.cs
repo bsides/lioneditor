@@ -53,6 +53,11 @@ namespace FFTPatcher
             get { return battlePatchable[(int)BATTLEPatchable.AbilityEffects]; }
             set { battlePatchable[(int)BATTLEPatchable.AbilityEffects] = value; }
         }
+        public bool AbilityAnimations
+        {
+            get { return battlePatchable[(int)BATTLEPatchable.AbilityAnimations]; }
+            set { battlePatchable[(int)BATTLEPatchable.AbilityAnimations] = value; }
+        }
 
         public bool ActionMenus
         {
@@ -142,7 +147,8 @@ namespace FFTPatcher
                 ENTD.ForEach( b => result += b ? 1 : 0 );
                 bool[] bb = new bool[] { RegenECC, Abilities, AbilityEffects, MoveFindItems,
                     Items, ItemAttributes, Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
-                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange, StoreInventory};
+                    StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange, StoreInventory, 
+                    AbilityAnimations};
                 bb.ForEach( b => result += b ? 1 : 0 );
                 return result;
             }
@@ -207,8 +213,9 @@ namespace FFTPatcher
             scusCheckedListBox.SetItemChecked( (int)SCUSPatchable.Skillsets, FFTPatch.SkillSets.HasChanged );
             scusCheckedListBox.SetItemChecked( (int)SCUSPatchable.StatusAttributes, FFTPatch.StatusAttributes.HasChanged );
 
-            battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged );
-            battleCheckedListBox.SetItemChecked( (int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged );
+            battleCheckedListBox.SetItemChecked((int)BATTLEPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged);
+            battleCheckedListBox.SetItemChecked((int)BATTLEPatchable.AbilityAnimations, FFTPatch.AbilityAnimations.HasChanged);
+            battleCheckedListBox.SetItemChecked((int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged);
 
             storeInventoryCheckBox.Checked = FFTPatch.StoreInventories.HasChanged;
 
@@ -369,7 +376,7 @@ private void UpdateNextEnabled()
                 ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
                   StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
-                  AbilityEffects || MoveFindItems || StoreInventory );
+                  AbilityEffects || MoveFindItems || StoreInventory || AbilityAnimations );
 
             okButton.Enabled = enabled;
         }
@@ -423,6 +430,7 @@ private void UpdateNextEnabled()
         private enum BATTLEPatchable
         {
             AbilityEffects,
+            AbilityAnimations,
             MoveFindItems
         }
 

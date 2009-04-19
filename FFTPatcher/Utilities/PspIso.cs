@@ -79,6 +79,13 @@ namespace FFTPatcher
                 sendProgress( "Getting Abilities patches" );
             }
 
+            if (patchList.AbilityAnimations)
+            {
+                patches.AddRange(FFTPatch.AbilityAnimations.GetPatches(context));
+                sendProgress("Getting Ability Animations patches");
+                sendProgress("Getting Ability Animations patches");
+            }
+
             if ( patchList.AbilityEffects )
             {
                 patches.AddRange( FFTPatch.Abilities.AllEffects.GetPatches( context ) );

@@ -9,6 +9,7 @@ namespace PatcherLib.Datatypes
         string FileName { get; }
         bool Abilities { get; }
         bool AbilityEffects { get; }
+        bool AbilityAnimations { get; }
         bool MoveFindItems { get; }
         bool Items { get; }
         bool ItemAttributes { get; }

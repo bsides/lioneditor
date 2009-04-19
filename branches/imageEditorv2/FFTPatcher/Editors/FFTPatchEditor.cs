@@ -71,6 +71,7 @@ namespace FFTPatcher.Editors
             entdEditor1.UpdateView( FFTPatch.ENTDs );
             allMoveFindItemsEditor1.UpdateView( FFTPatch.MoveFind );
             allStoreInventoryEditor1.UpdateView( FFTPatch.StoreInventories );
+            allAnimationsEditor1.UpdateView(FFTPatch.AbilityAnimations);
             codeCreator1.UpdateView();
             codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
         }

@@ -95,6 +95,7 @@ namespace FFTPatcher
             this.bootBinCheckedListBox.FormattingEnabled = true;
             this.bootBinCheckedListBox.Items.AddRange(new object[] {
             "Abilities",
+            "Ability Animations",
             "Ability Effects",
             "Items",
             "Item Attributes",

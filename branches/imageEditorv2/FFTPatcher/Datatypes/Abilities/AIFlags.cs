@@ -24,7 +24,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an <see cref="Ability"/>'s AI behavior.
     /// </summary>
-    public class AIFlags : ISupportDigest
+    public class AIFlags : ISupportDigest, ISupportDefault<AIFlags>
     {
 		#region Instance Variables (25) 
 

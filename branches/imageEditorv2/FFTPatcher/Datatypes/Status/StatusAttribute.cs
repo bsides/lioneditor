@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents attributes of a specific Status ailment/effect.
     /// </summary>
-    public class StatusAttribute : ISupportDigest
+    public class StatusAttribute : ISupportDigest, ISupportDefault<StatusAttribute>
     {
 		#region Instance Variables (17) 
 

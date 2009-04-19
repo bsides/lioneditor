@@ -129,7 +129,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class ActionMenu : ISupportDigest
+    public class ActionMenu : ISupportDigest, ISupportDefault<ActionMenu>
     {
 		#region Instance Variables (1) 
 

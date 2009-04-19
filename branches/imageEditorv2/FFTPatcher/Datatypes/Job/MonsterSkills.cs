@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the <see cref="Ability"/>s a monster can use.
     /// </summary>
-    public class MonsterSkill : IChangeable, ISupportDigest
+    public class MonsterSkill : IChangeable, ISupportDigest, ISupportDefault<MonsterSkill>
     {
 		#region Instance Variables (1) 
 

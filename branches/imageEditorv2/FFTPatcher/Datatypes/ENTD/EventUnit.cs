@@ -102,7 +102,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a unit that participates in an <see cref="Event"/>.
     /// </summary>
-    public class EventUnit : IEquatable<EventUnit>, PatcherLib.Datatypes.IChangeable, ISupportDigest
+    public class EventUnit : IEquatable<EventUnit>, PatcherLib.Datatypes.IChangeable, ISupportDigest, ISupportDefault<EventUnit>
     {
 		#region Instance Variables (17) 
 

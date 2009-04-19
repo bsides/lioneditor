@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the set of <see cref="Ability"/> a <see cref="Job"/> can use.
     /// </summary>
-    public class SkillSet : IChangeable, ISupportDigest
+    public class SkillSet : IChangeable, ISupportDigest, ISupportDefault<SkillSet>
     {
 		#region Instance Variables (3) 
 

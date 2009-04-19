@@ -38,7 +38,15 @@ namespace FFTPatcher.Datatypes
 
         public override bool HasChanged
         {
-            get { return owner.Abilities.Exists( ability => ability.Effect != null && ability.Default != null && ability.Default.Effect != null && ability.Effect.Value != ability.Default.Effect.Value ); }
+            get 
+            { 
+                return owner.Abilities.Exists( 
+                    ability => 
+                        ability.Effect != null && 
+                        ability.Default != null && 
+                        ability.Default.Effect != null && 
+                        ability.Effect.Value != ability.Default.Effect.Value );
+            }
         }
 
 		#endregion Public Properties 
@@ -188,7 +196,7 @@ namespace FFTPatcher.Datatypes
 
         }
 
-        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes, IList<byte> animationsBytes )
+        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
         {
             AllEffects = new AllAbilityEffects( this );
             byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilitiesBin : PSXResources.AbilitiesBin;

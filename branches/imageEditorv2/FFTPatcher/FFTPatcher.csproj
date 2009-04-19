@@ -59,6 +59,7 @@
       <HintPath>..\utils\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -89,8 +90,17 @@
     <Compile Include="Controls\VerticalLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Datatypes\Abilities\AllAnimations.cs" />
+    <Compile Include="Datatypes\Abilities\Animation.cs" />
     <Compile Include="Datatypes\FFTPatch.cs" />
+    <Compile Include="Datatypes\ISupportDefault.cs" />
     <Compile Include="Datatypes\Items\StoreInventory.cs" />
+    <Compile Include="Editors\Abilities\AllAnimationsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Abilities\AllAnimationsEditor.Designer.cs">
+      <DependentUpon>AllAnimationsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\Items\AllStoreInventoryEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -358,6 +368,9 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Abilities\AllAnimationsEditor.resx">
+      <DependentUpon>AllAnimationsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\Items\AllStoreInventoryEditor.resx">
       <DependentUpon>AllStoreInventoryEditor.cs</DependentUpon>

@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace FFTPatcher.Datatypes
 {
-    public class Elements : IEquatable<Elements>, ISupportDigest
+    public class Elements : IEquatable<Elements>, ISupportDigest, ISupportDefault<Elements>
     {
 		#region Instance Variables (1) 
 

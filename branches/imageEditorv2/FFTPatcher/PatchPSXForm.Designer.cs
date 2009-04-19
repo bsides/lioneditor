@@ -62,6 +62,7 @@ namespace FFTPatcher
             this.dontChangeSceapRadioButton = new System.Windows.Forms.RadioButton();
             this.scusCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.battleCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.storeInventoryCheckBox = new System.Windows.Forms.CheckBox();
             this.sceapOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.entd1CheckBox = new System.Windows.Forms.CheckBox();
             this.entd2CheckBox = new System.Windows.Forms.CheckBox();
@@ -71,7 +72,6 @@ namespace FFTPatcher
             this.okButton = new System.Windows.Forms.Button();
             this.patchIsoDialog = new System.Windows.Forms.SaveFileDialog();
             this.isoPathTextBox = new System.Windows.Forms.TextBox();
-            this.storeInventoryCheckBox = new System.Windows.Forms.CheckBox();
             sceapGroupBox = new System.Windows.Forms.GroupBox();
             scusGroupBox = new System.Windows.Forms.GroupBox();
             battleBinGroupBox = new System.Windows.Forms.GroupBox();
@@ -220,6 +220,7 @@ namespace FFTPatcher
             this.battleCheckedListBox.FormattingEnabled = true;
             this.battleCheckedListBox.Items.AddRange(new object[] {
             "Ability Effects",
+            "Ability Animations",
             "Move-Find Items"});
             this.battleCheckedListBox.Location = new System.Drawing.Point(6, 19);
             this.battleCheckedListBox.Name = "battleCheckedListBox";
@@ -258,6 +259,27 @@ namespace FFTPatcher
             isoLabel.Size = new System.Drawing.Size(25, 13);
             isoLabel.TabIndex = 13;
             isoLabel.Text = "ISO";
+            // 
+            // worldBinGroupBox
+            // 
+            worldBinGroupBox.Controls.Add(this.storeInventoryCheckBox);
+            worldBinGroupBox.Location = new System.Drawing.Point(310, 12);
+            worldBinGroupBox.Name = "worldBinGroupBox";
+            worldBinGroupBox.Size = new System.Drawing.Size(136, 88);
+            worldBinGroupBox.TabIndex = 14;
+            worldBinGroupBox.TabStop = false;
+            worldBinGroupBox.Text = "WORLD.BIN";
+            // 
+            // storeInventoryCheckBox
+            // 
+            this.storeInventoryCheckBox.AutoSize = true;
+            this.storeInventoryCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.storeInventoryCheckBox.Name = "storeInventoryCheckBox";
+            this.storeInventoryCheckBox.Size = new System.Drawing.Size(98, 17);
+            this.storeInventoryCheckBox.TabIndex = 0;
+            this.storeInventoryCheckBox.Tag = "StoreInventory";
+            this.storeInventoryCheckBox.Text = "Store Inventory";
+            this.storeInventoryCheckBox.UseVisualStyleBackColor = true;
             // 
             // sceapOpenFileDialog
             // 
@@ -351,27 +373,6 @@ namespace FFTPatcher
             this.isoPathTextBox.ReadOnly = true;
             this.isoPathTextBox.Size = new System.Drawing.Size(273, 20);
             this.isoPathTextBox.TabIndex = 10;
-            // 
-            // worldBinGroupBox
-            // 
-            worldBinGroupBox.Controls.Add(this.storeInventoryCheckBox);
-            worldBinGroupBox.Location = new System.Drawing.Point(310, 12);
-            worldBinGroupBox.Name = "worldBinGroupBox";
-            worldBinGroupBox.Size = new System.Drawing.Size(136, 88);
-            worldBinGroupBox.TabIndex = 14;
-            worldBinGroupBox.TabStop = false;
-            worldBinGroupBox.Text = "WORLD.BIN";
-            // 
-            // storeInventoryCheckBox
-            // 
-            this.storeInventoryCheckBox.AutoSize = true;
-            this.storeInventoryCheckBox.Location = new System.Drawing.Point(6, 19);
-            this.storeInventoryCheckBox.Name = "storeInventoryCheckBox";
-            this.storeInventoryCheckBox.Size = new System.Drawing.Size(98, 17);
-            this.storeInventoryCheckBox.TabIndex = 0;
-            this.storeInventoryCheckBox.Tag = "StoreInventory";
-            this.storeInventoryCheckBox.Text = "Store Inventory";
-            this.storeInventoryCheckBox.UseVisualStyleBackColor = true;
             // 
             // PatchPSXForm
             // 

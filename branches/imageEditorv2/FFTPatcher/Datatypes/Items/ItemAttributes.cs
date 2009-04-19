@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an item's attributes.
     /// </summary>
-    public class ItemAttributes : IChangeable, ISupportDigest
+    public class ItemAttributes : IChangeable, ISupportDigest, ISupportDefault<ItemAttributes>
     {
 		#region Instance Variables (1) 
 

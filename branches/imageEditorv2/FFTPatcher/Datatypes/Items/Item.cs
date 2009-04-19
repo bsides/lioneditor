@@ -29,7 +29,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a generic item.
     /// </summary>
-    public class Item : IChangeable, ISupportDigest
+    public class Item : IChangeable, ISupportDigest, ISupportDefault<Item>
     {
 		#region Instance Variables (11) 
 

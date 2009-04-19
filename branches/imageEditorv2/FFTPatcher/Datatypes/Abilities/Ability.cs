@@ -51,7 +51,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an ability and its attributes.
     /// </summary>
-    public class Ability : IChangeable, IXmlDigest, ISupportDigest
+    public class Ability : IChangeable, IXmlDigest, ISupportDigest, ISupportDefault<Ability>
     {
 		#region Instance Variables (13) 
 

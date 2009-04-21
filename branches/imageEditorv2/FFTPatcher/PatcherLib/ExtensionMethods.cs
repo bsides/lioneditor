@@ -285,7 +285,7 @@ namespace PatcherLib.Utilities
         /// <param name="groupName">What to name each group.</param>
         /// <param name="lines">Lines to add</param>
         [System.Diagnostics.DebuggerStepThrough]
-        public static void AddGroups( this StringBuilder sb, int groupSize, string groupName, List<string> lines )
+        public static void AddGroups( this StringBuilder sb, int groupSize, string groupName, IList<string> lines )
         {
             if( lines.Count == 0 )
             {

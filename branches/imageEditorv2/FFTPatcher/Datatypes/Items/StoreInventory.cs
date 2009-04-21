@@ -226,6 +226,18 @@ namespace FFTPatcher.Datatypes
             return result.AsReadOnly();
         }
 
+        public IList<string> GenerateCodes()
+        {
+            if (ourContext == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.StoreInventoriesBin, this.ToByteArray(), 0x2e087c);
+            }
+            else
+            {
+                return new string[0];
+                //return Codes.GenerateCodes(Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray(Context.US_PSX), 0x0660C4);
+            }
+        }
         public override bool HasChanged
         {
             get { return Stores.Exists( s => s.HasChanged ); }

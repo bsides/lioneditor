@@ -59,9 +59,9 @@ namespace FFTPatcher.Editors
                 }
                 else if( attributes != value )
                 {
-                    this.Enabled = true;
                     attributes = value;
                     UpdateView();
+                    this.Enabled = true;
                 }
             }
         }

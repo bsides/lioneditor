@@ -139,7 +139,10 @@ private void ContextMenu_Popup( object sender, EventArgs e )
             if( TypesMatch() )
             {
                 cbAbility.CopyAllTo( abilitiesListBox.SelectedItem as Ability );
-                abilityEditor.UpdateView();
+                abilityEditor.Ability = null;
+                abilityEditor.Ability = abilitiesListBox.SelectedItem as Ability;
+                abilityEditor.Invalidate(true);
+                //abilityEditor.UpdateView();
                 abilityEditor_DataChanged( abilityEditor, EventArgs.Empty );
             }
         }

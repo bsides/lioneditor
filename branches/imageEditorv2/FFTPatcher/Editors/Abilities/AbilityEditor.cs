@@ -48,10 +48,18 @@ namespace FFTPatcher.Editors
             get { return ability; }
             set
             {
-                if( ability != value )
+                if (value == null)
+                {
+                    ability = value;
+                    abilityAttributesEditor.Attributes = null;
+                    commonAbilitiesEditor.Ability = null;
+                    Enabled = false;
+                }
+                else if( ability != value )
                 {
                     ability = value;
                     UpdateView();
+                    Enabled = true;
                 }
             }
         }

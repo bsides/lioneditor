@@ -48,8 +48,8 @@ namespace FFTPatcher.Editors
                 else if( value != attributes )
                 {
                     attributes = value;
-                    this.Enabled = true;
                     UpdateView();
+                    this.Enabled = true;
                 }
             }
         }
@@ -101,7 +101,10 @@ namespace FFTPatcher.Editors
                     ReflectionHelpers.GetFieldOrProperty<byte>( attributes, spinner.Tag.ToString() ),
                     ReflectionHelpers.GetFieldOrProperty<byte>( attributes.Default, spinner.Tag.ToString() ) );
             }
-            
+
+            statusImmunityEditor.Statuses = null;
+            startingStatusesEditor.Statuses = null;
+            permanentStatusesEditor.Statuses = null;
             statusImmunityEditor.Statuses = attributes.StatusImmunity;
             startingStatusesEditor.Statuses = attributes.StartingStatuses;
             permanentStatusesEditor.Statuses = attributes.PermanentStatuses;

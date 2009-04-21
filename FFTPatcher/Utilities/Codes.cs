@@ -112,7 +112,14 @@ namespace FFTPatcher
             {
                 sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Move/Find Items" : "", FFTPatch.MoveFind.GenerateCodes() );
             }
-
+            if (FFTPatch.AbilityAnimations != null)
+            {
+                sb.AddGroups(25, FFTPatch.Context == Context.US_PSP ? "_C0 Ability Animations" : "", FFTPatch.AbilityAnimations.GenerateCodes());
+            }
+            if (FFTPatch.StoreInventories != null)
+            {
+                sb.AddGroups(25, FFTPatch.Context == Context.US_PSP ? "_C0 Store Inventories" : "", FFTPatch.StoreInventories.GenerateCodes());
+            }
             return sb.ToString();
         }
 

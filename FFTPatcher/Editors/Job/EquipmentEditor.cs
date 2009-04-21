@@ -59,9 +59,9 @@ namespace FFTPatcher.Editors
                 }
                 else if (value != equipment)
                 {
-                    this.Enabled = true;
                     equipment = value;
                     UpdateView();
+                    this.Enabled = true;
                 }
             }
         }

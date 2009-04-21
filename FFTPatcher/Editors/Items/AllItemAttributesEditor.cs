@@ -111,7 +111,8 @@ namespace FFTPatcher.Editors
                 ClipBoardAttributes.CopyTo( offsetListBox.SelectedItem as ItemAttributes );
                 itemAttributeEditor.ItemAttributes = null;
                 itemAttributeEditor.ItemAttributes = offsetListBox.SelectedItem as ItemAttributes;
-                itemAttributeEditor.UpdateView();
+                itemAttributeEditor.Invalidate(true);
+                //itemAttributeEditor.UpdateView();
                 itemAttributeEditor_DataChanged( itemAttributeEditor, System.EventArgs.Empty );
                 itemAttributeEditor.PerformLayout();
             }

@@ -89,6 +89,12 @@ namespace FFTPatcher.Controls
             }
         }
 
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            SetColors();
+            base.OnEnabledChanged(e);
+        }
+
 		#endregion Private Methods 
 
 		#region Protected Methods (3) 

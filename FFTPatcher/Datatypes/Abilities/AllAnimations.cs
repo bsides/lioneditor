@@ -11,6 +11,7 @@ namespace FFTPatcher.Datatypes
     {
         private Animation[] animations;
         private IList<Animation> readOnlyAnimations;
+        private Context context;
 
         public Animation this[int i]
         {
@@ -31,6 +32,7 @@ namespace FFTPatcher.Datatypes
 
         public AllAnimations(Context context, IList<byte> bytes, IList<byte> defaultBytes)
         {
+            this.context = context;
             IList<string> names = context == Context.US_PSP ? AllAbilities.PSPNames : AllAbilities.PSXNames;
 
             animations = new Animation[512];
@@ -74,6 +76,19 @@ namespace FFTPatcher.Datatypes
         public void WriteXml(System.Xml.XmlWriter writer)
         {
             throw new NotImplementedException();
+        }
+
+        public IList<string> GenerateCodes()
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.AbilityAnimationsBin, this.ToByteArray(), 0x3278F8);
+            }
+            else
+            {
+                return new string[0];
+                //return Codes.GenerateCodes(Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray(Context.US_PSX), 0x0660C4);
+            }
         }
 
     }

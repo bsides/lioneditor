@@ -49,22 +49,22 @@ namespace PatcherLib.Datatypes
         {
             List<IList<T>> result = new List<IList<T>>();
 
-            int start = 0;
-            int stop = 0;
+            uint start = 0;
+            uint stop = 0;
 
             for( int i = 0; i < members.Count; i++ )
             {
                 if( members[i].Equals( value ) )
                 {
-                    stop = i;
+                    stop = (uint)i;
                     result.Add( members.Sub( start, stop ) );
-                    start = i + 1;
+                    start = (uint)i + 1;
                 }
             }
 
             if( !members[members.Count - 1].Equals( value ) )
             {
-                result.Add( members.Sub( start, members.Count - 1 ) );
+                result.Add( members.Sub( start, (uint)(members.Count - 1) ) );
             }
 
             return result;
@@ -73,13 +73,25 @@ namespace PatcherLib.Datatypes
         [DebuggerStepThrough]
         public static IList<T> Sub<T>( this IList<T> list, int start )
         {
-            return new SubArray<T>( list, start );
+            return new SubArray<T>( list, (uint)start );
         }
 
         [DebuggerStepThrough]
         public static IList<T> Sub<T>( this IList<T> list, int start, int stop )
         {
+            return new SubArray<T>( list, (uint)start, (uint)stop );
+        }
+
+        [DebuggerStepThrough]
+        public static IList<T> Sub<T>( this IList<T> list, uint start, uint stop )
+        {
             return new SubArray<T>( list, start, stop );
+        }
+
+        [DebuggerStepThrough]
+        public static IList<T> Sub<T>( this IList<T> list, uint start )
+        {
+            return new SubArray<T>( list, start );
         }
 
 		#endregion Public Methods 
@@ -130,8 +142,8 @@ namespace PatcherLib.Datatypes
 		#region Instance Variables (3) 
 
         private IList<T> baseArray;
-        private int start;
-        private int stop;
+        private uint start;
+        private uint stop;
 
 		#endregion Instance Variables 
 
@@ -139,7 +151,7 @@ namespace PatcherLib.Datatypes
 
         public int Count
         {
-            get { return stop - start + 1; }
+            get { return (int)( stop - start + 1 ); }
         }
 
         public bool IsReadOnly
@@ -152,12 +164,26 @@ namespace PatcherLib.Datatypes
             get
             {
                 CheckIndex( index );
-                return baseArray[index + start];
+                return baseArray[index + (int)start];
             }
             set
             {
                 CheckIndex( index );
-                baseArray[index + start] = value;
+                baseArray[index + (int)start] = value;
+            }
+        }
+
+        public T this[uint index]
+        {
+            get
+            {
+                CheckIndex( (int)index );
+                return baseArray[(int)(index + start)];
+            }
+            set
+            {
+                CheckIndex( (int)index );
+                baseArray[(int)(index + start)] = value;
             }
         }
 
@@ -170,17 +196,17 @@ namespace PatcherLib.Datatypes
         {
         }
 
-        public SubArray( IList<T> baseArray, int start )
-            : this( baseArray, start, baseArray.Count - 1 )
+        public SubArray( IList<T> baseArray, uint start )
+            : this( baseArray, start, (uint)(baseArray.Count - 1 ) )
         {
         }
 
-        public SubArray( SubArray<T> baseArray, int start, int stop )
-            : this( baseArray.baseArray, start + baseArray.start, stop + baseArray.start )
+        public SubArray( SubArray<T> baseArray, uint start, uint stop )
+            : this( baseArray.baseArray, (uint)(start + baseArray.start), (uint)(stop + baseArray.start) )
         {
         }
 
-        public SubArray( IList<T> baseArray, int start, int stop )
+        public SubArray( IList<T> baseArray, uint start, uint stop )
         {
             if( stop < start )
             {
@@ -226,7 +252,7 @@ namespace PatcherLib.Datatypes
         {
             for( int i = 0; i < Count; i++ )
             {
-                array[i + arrayIndex] = baseArray[start + i];
+                array[i + arrayIndex] = baseArray[(int)start + i];
             }
         }
 

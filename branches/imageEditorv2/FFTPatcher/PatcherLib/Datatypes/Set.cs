@@ -74,8 +74,8 @@ namespace PatcherLib.Datatypes
             if ( !backing.ContainsKey( item ) )
             {
                 backingList.Add( item );
+                backing[item] = true;
             }
-            backing[item] = true;
         }
 
         public void AddRange( IEnumerable<T> items )

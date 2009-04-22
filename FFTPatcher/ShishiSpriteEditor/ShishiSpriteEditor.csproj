@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="DataTypes\AllSpriteAttributes.cs" />
     <Compile Include="DataTypes\AllSprites.cs" />
+    <Compile Include="DataTypes\Sequence.cs" />
     <Compile Include="DataTypes\Sprite.cs" />
     <Compile Include="DataTypes\SpriteAttributes.cs" />
     <Compile Include="DataTypes\SpriteFileLocations.cs" />
@@ -349,6 +350,8 @@
     <None Include="Resources\OPEN\OPNBK.BIN" />
     <None Include="Resources\OPEN\OPNTEX.BIN" />
     <None Include="Resources\PatchedDummyFolder.bin" />
+    <None Include="Resources\TYPE1.SEQ" />
+    <None Include="Resources\TYPE2.SEQ" />
     <None Include="Resources\WORLD\WLDPIC.BIN" />
     <None Include="Resources\WORLD\WLDTEX.TM2" />
     <None Include="Resources\BATTLE\other\ARUTE.SHP" />

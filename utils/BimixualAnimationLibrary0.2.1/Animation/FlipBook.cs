@@ -76,19 +76,56 @@ namespace Animation
 
             p_bitmap = bitmaps[curFrame];
 
-            if (DateTime.Now.Ticks - lastTick > times[curFrame] * 10000000)
+            if ( !Paused )
             {
-                curFrame++;
-                lastTick = DateTime.Now.Ticks;
-            }
+                if ( DateTime.Now.Ticks - lastTick > times[curFrame] * 10000000 )
+                {
+                    curFrame++;
+                    lastTick = DateTime.Now.Ticks;
+                }
 
-            if (curFrame == bitmaps.Count)
-            {
-                if (loop)
-                    curFrame = 0;
-                else
-                    curFrame--;
+                if ( curFrame == bitmaps.Count )
+                {
+                    if ( loop )
+                        curFrame = 0;
+                    else
+                        curFrame--;
+                }
             }
+        }
+
+        public void BackOneFrame()
+        {
+            curFrame = Math.Max( 0, curFrame - 1 );
+        }
+
+        public void ForwardOneFrame()
+        {
+            curFrame++;
+
+            if ( curFrame == bitmaps.Count )
+            {
+                if ( loop )
+                {
+                    curFrame = 0;
+                }
+                else
+                {
+                    curFrame--;
+                }
+            }
+        }
+
+        public bool Paused { get; set; }
+        
+        public void Pause()
+        {
+            Paused = true;
+        }
+
+        public void Unpause()
+        {
+            Paused = false;
         }
     }
 }

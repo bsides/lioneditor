@@ -19,7 +19,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Animation
+namespace Bimixual.Animation
 {	
     /// <summary>
     /// Controls the main loop of the app and it is always going.

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C9DA081-E6D9-44A1-B84E-BE232C645AA8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -76,10 +76,6 @@
     <EmbeddedResource Include="Resources\fireball.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AnimationTests\AnimationTests.csproj">
-      <Project>{B703EBCC-03CA-4E0C-B230-A4E1EE825350}</Project>
-      <Name>AnimationTests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Animation\Animation.csproj">
       <Project>{BAA828FD-2BDE-4E86-9231-7AE9C354505A}</Project>
       <Name>Animation</Name>

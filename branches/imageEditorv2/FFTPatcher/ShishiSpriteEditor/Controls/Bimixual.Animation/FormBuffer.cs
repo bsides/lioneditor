@@ -20,7 +20,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Animation
+namespace Bimixual.Animation
 {
     /// <summary>
     /// Represents a screen double buffer matched to the form passed in the constructor.

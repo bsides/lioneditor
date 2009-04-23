@@ -160,6 +160,92 @@
     </JobRequirements>
   </QuickEdit>
   <Files>
+
+
+    <OneShotFile>
+      <DisplayName>TUTO1.MES</DisplayName>
+      <Guid>{8A643A2D-CAD2-4AD6-B9F8-F9AC2CA80316}</Guid>
+      <Size>4096</Size>
+      <Sectors>
+        <FFTPack index="MENU_TUTO1_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="17" empty="true" dte="true" name=""/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO2.MES</DisplayName>
+      <Guid>{D919EC74-C369-4017-9ACE-837891028E29}</Guid>
+      <Size>8192</Size>
+      <Sectors>
+        <FFTPack index="MENU_TUTO2_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="24" empty="true" dte="true" name=""/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO3.MES</DisplayName>
+      <Guid>{5DD88D77-7B05-4978-B050-9A055EBD6A53}</Guid>
+      <Size>8192</Size>
+      <Sectors>
+        <FFTPack index="MENU_TUTO3_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="51" empty="true" dte="true" name=""/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO4.MES</DisplayName>
+      <Guid>{138199D1-E5AF-4112-B962-A92EB2EBBB4E}</Guid>
+      <Size>4096</Size>
+      <Sectors>
+        <FFTPack index="MENU_TUTO4_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="11" empty="true" dte="true" name=""/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO5.MES</DisplayName>
+      <Guid>{4DACA8D3-0553-4529-958E-6233993124AE}</Guid>
+      <Size>6144</Size>
+      <Sectors>
+        <FFTPack index="MENU_TUTO5_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="24" empty="true" dte="true" name=""/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO6.MES</DisplayName>
+      <Guid>{AAFD4846-2416-4057-A049-B7F0BD0A4D9E}</Guid>
+      <Size>4096</Size>
+      <Sectors>
+        <FFTPack index="MENU_TUTO6_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="8" empty="true" dte="true" name=""/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO7.MES</DisplayName>
+      <Guid>{7D4FE1BD-B635-4882-A0AD-5EC4E72F3618}</Guid>
+      <Size>2048</Size>
+      <Sectors>
+        <FFTPack index="MENU_TUTO7_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="6" empty="true" dte="true" name=""/>
+      </Sections>
+    </OneShotFile>
+
     <SectionedFile>
       <DisplayName>ATCHELP.LZW</DisplayName>
       <Guid>{B66C9774-1EA0-422C-9148-B5019301EAB4}</Guid>

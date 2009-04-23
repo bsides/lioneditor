@@ -1771,6 +1771,90 @@
     </OneShotFile>
 
     <OneShotFile>
+      <DisplayName>TUTO1.MES</DisplayName>
+      <Guid>{FCE3E502-3376-46F3-8125-4EDB249FF357}</Guid>
+      <Size>2186</Size>
+      <Sectors>
+        <Sector filename="MENU_TUTO1_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="17" empty="true" name="" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO2.MES</DisplayName>
+      <Guid>{670BEC0B-133F-4827-A804-377CCEB6E739}</Guid>
+      <Size>5052</Size>
+      <Sectors>
+        <Sector filename="MENU_TUTO2_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="24" empty="true" name="" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO3.MES</DisplayName>
+      <Guid>{D6B7BD17-E5F8-486F-B9BD-16D8E6C5E491}</Guid>
+      <Size>5406</Size>
+      <Sectors>
+        <Sector filename="MENU_TUTO3_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="51" empty="true" name="" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO4.MES</DisplayName>
+      <Guid>{D0FCE958-0809-4700-82E4-D6FEC8B41789}</Guid>
+      <Size>3103</Size>
+      <Sectors>
+        <Sector filename="MENU_TUTO4_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="11" empty="true" name="" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO5.MES</DisplayName>
+      <Guid>{DC145D80-91F6-430F-9841-B4679CF814DC}</Guid>
+      <Size>4815</Size>
+      <Sectors>
+        <Sector filename="MENU_TUTO5_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="24" empty="true" name="" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO6.MES</DisplayName>
+      <Guid>{BAAFFAFB-F5F7-4316-9B90-BE6C1FB7969B}</Guid>
+      <Size>1924</Size>
+      <Sectors>
+        <Sector filename="MENU_TUTO6_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="8" empty="true" name="" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>TUTO7.MES</DisplayName>
+      <Guid>{63E43E07-AD69-4A49-BC3D-767E44638A25}</Guid>
+      <Size>725</Size>
+      <Sectors>
+        <Sector filename="MENU_TUTO7_MES" offset="0"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="6" empty="true" name="" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
       <DisplayName>WORLD.BIN 1</DisplayName>
       <Guid>{908FEAF1-B00F-4201-B574-DB1E5E5AAF3A}</Guid>
       <Size>1103</Size>

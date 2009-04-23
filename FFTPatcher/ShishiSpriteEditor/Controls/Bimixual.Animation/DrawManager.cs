@@ -18,7 +18,7 @@ using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-namespace Animation
+namespace Bimixual.Animation
 {
     /// <summary>
     /// Draw all things a screen may need based including backgrounds, animations and foregrounds.
@@ -26,7 +26,7 @@ namespace Animation
 	public class DrawManager
 	{
         private FormBuffer formBuffer;  // draw on this double buffer
-		private LinkedList<Drawable> drawables; // list of things to draw
+		private LinkedList<IDrawable> drawables; // list of things to draw
         private FpsTimer fpsTimer;   // rate at which to draw
         private bool selfTiming; public bool SelfTiming { get { return selfTiming; } }
 
@@ -61,7 +61,7 @@ namespace Animation
         {
             fpsTimer = p_fps;
             formBuffer = new FormBuffer(p_form);
-            drawables = new LinkedList<Drawable>();
+            drawables = new LinkedList<IDrawable>();
             fpsTimer.Start();
 			selfTiming = false;
 		}
@@ -79,7 +79,7 @@ namespace Animation
         /// Adds a drawable item to the list of things the card game will draw.
         /// </summary>
         /// <param name="p">A thing that will be drawn</param>
-        public void AddDrawable(Drawable p_)
+        public void AddDrawable(IDrawable p_)
         {
             drawables.AddLast(p_);
         }
@@ -88,7 +88,7 @@ namespace Animation
         /// Remove drawable item from list
         /// </summary>
         /// <param name="p_">Item to remove</param>
-        public void RemoveDrawable(Drawable p_)
+        public void RemoveDrawable(IDrawable p_)
         {
             drawables.Remove(p_);
         }
@@ -106,7 +106,7 @@ namespace Animation
                 fpsTimer.Start();
             }
 
-            foreach (Drawable cgd in drawables)
+            foreach (IDrawable cgd in drawables)
                 cgd.Draw(formBuffer.Graphics);
             formBuffer.Render();
         }

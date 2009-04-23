@@ -42,6 +42,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -76,6 +77,36 @@
     <Compile Include="Controls\AllSpritesEditor.Designer.cs">
       <DependentUpon>AllSpritesEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AnimationViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AnimationViewer.Designer.cs">
+      <DependentUpon>AnimationViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\IAlteration.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AnimationFinished.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\BezierSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Drawable\IDrawable.cs" />
+    <Compile Include="Controls\Bimixual.Animation\DrawManager.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Flip.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\FlipBook.cs" />
+    <Compile Include="Controls\Bimixual.Animation\FormBuffer.cs" />
+    <Compile Include="Controls\Bimixual.Animation\FpsTimer.cs" />
+    <Compile Include="Controls\Bimixual.Animation\GeometricsInterface.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\JustSitThereSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\LoopControl.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\MatrixAlteration.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\Oriented.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\RevolutionSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\Rotate.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\RotateSpan.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\RotateToNormal.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\RotateToTangent.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\Rotation.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\Sprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Drawable\SpriteManager.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\StraightLineSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Translation.cs" />
     <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPicker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -125,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\AllSpritesEditor.resx">
       <DependentUpon>AllSpritesEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AnimationViewer.resx">
+      <DependentUpon>AnimationViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPlate.resx">
       <DependentUpon>Office2007ColorPlate.cs</DependentUpon>

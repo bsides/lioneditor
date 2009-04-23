@@ -45,14 +45,19 @@ namespace TestApplication
         {
             InitializeComponent();
             this.ClientSize = new Size( 800, 600 );
+            Control c = new Control();
+            c.Size = new Size(800, 600);
+            c.Location = new Point(0, 0);
+            Controls.Add(c);
+
             fpsTimer = new FpsTimer( 48 );	// frames per second
 
-            LoopControl.SetAction( this, this.Go );
+            LoopControl.SetAction( c, this.Go );
             LoopControl.FpsTimer = fpsTimer;
-            drawManager = new DrawManager( this, fpsTimer );
+            drawManager = new DrawManager( c, fpsTimer );
             animationScript = new AnimationScript( drawManager );
 
-            this.MouseClick += delegate
+            c.MouseClick += delegate
             {
                 animationScript.Click();
             };

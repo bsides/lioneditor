@@ -147,5 +147,23 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var s = Sequence.BuildSequences(Properties.Resources.TYPE1);
+            IList<Bitmap> bmps;
+            IList<double> delays;
+
+            s[6].BuildAnimation(spriteViewer1.Sprite, out bmps, out delays);
+            using (Form f = new Form())
+            using (FFTPatcher.SpriteEditor.AnimationViewer viewer = new AnimationViewer())
+            {
+                f.Controls.Add(viewer);
+                viewer.Dock = DockStyle.Fill;
+                viewer.ShowAnimation(bmps, delays);
+                f.ShowDialog();
+            }
+            
+        }
+
     }
 }

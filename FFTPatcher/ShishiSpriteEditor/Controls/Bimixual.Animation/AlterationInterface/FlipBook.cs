@@ -18,16 +18,16 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Animation
+namespace Bimixual.Animation
 {
     /// <summary>
     /// Change the sprite image over time. The image can change at set time intervals.
     /// </summary>
-    public class FlipBook : AlterationInterface
+    public class FlipBook : IAlteration
     {
-        List<Bitmap> bitmaps;   // bitmaps to flip through
-        List<double> times;     // each item indicates how long (in seconds) to display each bitmap
-        bool loop; public bool Loop { get { return loop; } set { loop = value; } }
+        IList<Bitmap> bitmaps;   // bitmaps to flip through
+        IList<double> times;     // each item indicates how long (in seconds) to display each bitmap
+        public bool Loop { get; set; }
         long lastTick;  // timer for how long each individual pic should show
 
         public int CurrentFrame { get; private set; }
@@ -37,11 +37,15 @@ namespace Animation
         /// </summary>
         /// <param name="p_bitmaps">List&lt;Bitmap&gt; of bitmaps to flip through</param>
         /// <param name="p_times">List&lt;double&gt; of times each bitmap should show. This list must be the same length as list of bitmaps</param>
-        public FlipBook(List<Bitmap> p_bitmaps, List<double> p_times)
+        public FlipBook(IList<Bitmap> p_bitmaps, IList<double> p_times)
         {
-            bitmaps = p_bitmaps;
-            times = p_times;
-            loop = false;
+            if (p_bitmaps.Count != p_times.Count)
+            {
+                throw new ArgumentException("p_bitmaps must be same length as p_times");
+            }
+            bitmaps = new List<Bitmap>(p_bitmaps);
+            times = new List<double>(p_times);
+            Loop = false;
             CurrentFrame = 0;
         }
 
@@ -50,11 +54,11 @@ namespace Animation
         /// </summary>
         /// <param name="p_bitmaps">List&lt;Bitmap&gt; of bitmaps to flip through</param>
         /// <param name="p_perFrame">How long to show each bitmap - ie: all the same amount of time</param>
-        public FlipBook(List<Bitmap> p_bitmaps, double p_perFrame)
+        public FlipBook(IList<Bitmap> p_bitmaps, double p_perFrame)
         {
-            bitmaps = p_bitmaps;
+            bitmaps = new List<Bitmap>(p_bitmaps);
             times = null;
-            loop = false;
+            Loop = false;
             CurrentFrame = 0;
 
             // make a list with all the same times in it so we can use the same methodology as if they
@@ -73,6 +77,7 @@ namespace Animation
         /// <param name="p_bitmap">ref Bitmap that we change to point to a bitmap of the given list of bitmaps</param>
         public void ApplyAlteration(Graphics p_g, Point p_point, ref Bitmap p_bitmap)
         {
+            int startingFrame = CurrentFrame;
             if (bitmaps.Count == 0) return;
 
             p_bitmap = bitmaps[CurrentFrame];
@@ -87,26 +92,52 @@ namespace Animation
 
                 if ( CurrentFrame == bitmaps.Count )
                 {
-                    if ( loop )
+                    if ( Loop )
                         CurrentFrame = 0;
                     else
                         CurrentFrame--;
                 }
             }
+
+            if (startingFrame != CurrentFrame)
+            {
+                OnFrameChanged();
+            }
+        }
+
+        private void OnFrameChanged()
+        {
+            if (FrameChanged != null)
+            {
+                FrameChanged(this, EventArgs.Empty);
+            }
+        }
+        public event EventHandler FrameChanged;
+
+        public void SetFrame(int frame)
+        {
+            if (frame < bitmaps.Count)
+            {
+                CurrentFrame = frame;
+            }
         }
 
         public void BackOneFrame()
         {
-            CurrentFrame = Math.Max( 0, CurrentFrame - 1 );
+            int startingFrame = CurrentFrame;
+            CurrentFrame = Math.Max(0, CurrentFrame - 1);
+            if (startingFrame != CurrentFrame)
+                OnFrameChanged();
         }
 
         public void ForwardOneFrame()
         {
+            int startingFrame = CurrentFrame;
             CurrentFrame++;
 
             if ( CurrentFrame == bitmaps.Count )
             {
-                if ( loop )
+                if ( Loop )
                 {
                     CurrentFrame = 0;
                 }
@@ -115,6 +146,9 @@ namespace Animation
                     CurrentFrame--;
                 }
             }
+
+            if (startingFrame != CurrentFrame)
+                OnFrameChanged();
         }
 
         public bool Paused { get; set; }

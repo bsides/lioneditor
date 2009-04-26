@@ -20,14 +20,14 @@ using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Bimixual.Animation
-{	
+{
     /// <summary>
     /// Controls the main loop of the app and it is always going.
     /// Apps using this class should call SetAction() so the loop
     /// can do something useful at each iteration.
     /// </summary>
-	public class LoopControl
-	{
+    public class LoopControl
+    {
         struct MSG
         {
             IntPtr hwnd;//HWND hwnd;
@@ -39,19 +39,19 @@ namespace Bimixual.Animation
         };
         // DllImports are useful for .net and for mono+windows		
         //[System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("user32", CharSet = CharSet.Auto)]
-        private static extern bool PeekMessage(out MSG msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport( "user32", CharSet = CharSet.Auto )]
+        private static extern bool PeekMessage( out MSG msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags );
+        [DllImport( "user32.dll", SetLastError = true )]
         private static extern int GetMessage(
                                        ref MSG lpMsg,
                                    Int32 hwnd,
                            Int32 wMsgFilterMin,
-                           Int32 wMsgFilterMax);
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool TranslateMessage(ref MSG lpMsg);
+                           Int32 wMsgFilterMax );
+        [DllImport( "user32.dll", SetLastError = true )]
+        private static extern bool TranslateMessage( ref MSG lpMsg );
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern Int32 DispatchMessage(ref MSG lpMsg);
+        [DllImport( "user32.dll", SetLastError = true )]
+        private static extern Int32 DispatchMessage( ref MSG lpMsg );
 
         private enum PeekMessageOption
         {
@@ -63,28 +63,38 @@ namespace Bimixual.Animation
 
         private static Control control;   // The form connected to this controller
 
-		/// <summary>
+        /// <summary>
         /// time remaining before next frame
         /// </summary>
         private static int remaingTime;
-		
-		/// <summary>
-		/// If assigned, then program will sleep between frames instead of looping 
-		/// </summary>
-		private static FpsTimer fpsTimer; public static FpsTimer FpsTimer { set { fpsTimer = value; } }
+
+        /// <summary>
+        /// If assigned, then program will sleep between frames instead of looping 
+        /// </summary>
+        private static FpsTimer fpsTimer; public static FpsTimer FpsTimer { set { fpsTimer = value; } }
 
 
         /// <summary>
         /// Constructor sets Application.Idle handler
         /// </summary>
-		static LoopControl()
+        static LoopControl()
         {
-            Application.Idle +=new EventHandler(Application_Idle);
             loopAction = DefaultAction;
-			fpsTimer = null;
+            fpsTimer = null;
         }
 
-		/// <summary>
+        public static void Stop()
+        {
+            Application.Idle -= Application_Idle;
+        }
+
+        public static void Start()
+        {
+            Application.Idle += new EventHandler( Application_Idle );
+            loopAction = loopAction ?? DefaultAction;
+        }
+
+        /// <summary>
         /// Determine if there are messages in the queue for the current app
         /// </summary>
         static bool AppStillIdle
@@ -92,7 +102,7 @@ namespace Bimixual.Animation
             get
             {
                 MSG msg;
-                return !PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
+                return !PeekMessage( out msg, IntPtr.Zero, 0, 0, 0 );
             }
         }
 
@@ -101,46 +111,50 @@ namespace Bimixual.Animation
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">not used</param>
-        static void Application_Idle(object sender, EventArgs e)
+        static void Application_Idle( object sender, EventArgs e )
         {
             // See explanation of AppStillIdle
             // https://blogs.msdn.com/tmiller/archive/2005/05/05/415008.aspx
-            if (IsRunningOnMono() == false)
+            if ( control != null && !control.Disposing && loopAction != null )
             {
-                while (AppStillIdle)
+                if ( IsRunningOnMono() == false )
+                {
+                    while ( AppStillIdle )
+                        CallLoopAction();
+                }
+                else
                     CallLoopAction();
             }
-            else
-                CallLoopAction();
         }
 
-		/// <summary>
-		/// Implements a thread sleep after the action so we don't use up
-		/// 100% CPU 
-		/// </summary>
-		static void CallLoopAction()
-		{
+        /// <summary>
+        /// Implements a thread sleep after the action so we don't use up
+        /// 100% CPU 
+        /// </summary>
+        static void CallLoopAction()
+        {
             try
             {
-			    if (fpsTimer != null && fpsTimer.Next() == false) return;
+                if ( fpsTimer != null && fpsTimer.Next() == false ) return;
 
-			    long startTicks = DateTime.Now.Ticks;
-			    loopAction();
-			    long diffTicks = DateTime.Now.Ticks - startTicks;
-			    if (fpsTimer != null && fpsTimer.WaitCount > diffTicks)			{
-				    Thread.Sleep((int)
-				        (
-					    (int)Math.Round((double)(fpsTimer.WaitCount - diffTicks)/10000))
-				        );
-			    }
+                long startTicks = DateTime.Now.Ticks;
+                loopAction();
+                long diffTicks = DateTime.Now.Ticks - startTicks;
+                if ( fpsTimer != null && fpsTimer.WaitCount > diffTicks )
+                {
+                    Thread.Sleep( (int)
+                        (
+                       (int)Math.Round( (double)( fpsTimer.WaitCount - diffTicks ) / 10000 ) )
+                        );
+                }
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
-                System.Console.WriteLine(e.Message);
+                System.Console.WriteLine( e.Message );
                 throw e;
             }
 
-		}
+        }
 
         /// <summary>
         /// A do-nothing method that is the default thing to do if loopAction
@@ -156,7 +170,7 @@ namespace Bimixual.Animation
         /// <returns>true if running Mono</returns>
         static public bool IsRunningOnMono()
         {
-            return Type.GetType("Mono.Runtime") != null;
+            return Type.GetType( "Mono.Runtime" ) != null;
         }
 
         /// <summary>
@@ -168,7 +182,7 @@ namespace Bimixual.Animation
             bool rtn;
 
             int p = (int)Environment.OSVersion.Platform;
-            if ((p == 4) || (p == 6) || (p == 128))
+            if ( ( p == 4 ) || ( p == 6 ) || ( p == 128 ) )
             {
                 rtn = true;
             }
@@ -185,10 +199,24 @@ namespace Bimixual.Animation
         /// to do.
         /// </summary>
         /// <param name="p_la">LoopAction method to run at each iteration</param>
-        static public void SetAction(Control control, LoopAction p_la)
+        static public void SetAndStartAction( Control control, LoopAction p_la )
+        {
+            SetAction( control, p_la );
+            Start();
+        }
+
+        static public void SetAction( Control control, LoopAction p_la )
         {
             LoopControl.control = control;
+            control.Disposed += control_Disposed;
             loopAction = p_la;
+        }
+
+        static void control_Disposed( object sender, EventArgs e )
+        {
+            control.Disposed -= control_Disposed;
+            control = null;
+            Stop();
         }
     }
 }

@@ -16,7 +16,26 @@ namespace FFTPatcher.SpriteEditor
 
         private Set<int> uniqueFrames;
 
-        public static IList<Sequence> BuildSequences( IList<byte> bytes )
+        public static IDictionary<SpriteType, IList<Sequence>> Sequences { get; private set; }
+
+        static Sequence()
+        {
+            Dictionary<SpriteType, IList<Sequence>> sequences = new Dictionary<SpriteType,IList<Sequence>>();
+
+            sequences[SpriteType.TYPE1] =
+                BuildSequences( Properties.Resources.TYPE1_SEQ, new string[218].SetAll( string.Empty ) );
+            sequences[SpriteType.TYPE2] =
+                BuildSequences( Properties.Resources.TYPE2_SEQ, new string[208].SetAll( string.Empty ) );
+            sequences[SpriteType.CYOKO] =
+                BuildSequences( Properties.Resources.CYOKO_SEQ, new string[104].SetAll( string.Empty ) );
+            sequences[SpriteType.KANZEN] =
+                BuildSequences( Properties.Resources.KANZEN_SEQ, new string[79].SetAll( string.Empty ) );
+            sequences[SpriteType.ARUTE] =
+                BuildSequences( Properties.Resources.ARUTE_SEQ, new string[79].SetAll( string.Empty ) );
+            Sequences = new ReadOnlyDictionary<SpriteType, IList<Sequence>>( sequences );
+        }
+
+        public static IList<Sequence> BuildSequences( IList<byte> bytes, IList<string> names )
         {
             List<UInt32> offsets = new List<uint>();
             for ( int i = 0; i < 0x100; i++ )
@@ -37,19 +56,22 @@ namespace FFTPatcher.SpriteEditor
             {
                 if ( offsets[i] == offsets[i + 1] )
                     continue;
-                var seq = BuildSequence( bytes.Sub( animationStart + offsets[i], animationStart + offsets[i + 1] - 1 ), i );
+                var seq = BuildSequence( bytes.Sub( animationStart + offsets[i], animationStart + offsets[i + 1] - 1 ), i, names[result.Count] );
                 if ( seq != null )
                     result.Add( seq );
             }
 
-            var seq2 = BuildSequence( bytes.Sub( animationStart + offsets[offsets.Count - 1] ), offsets.Count - 1 );
+            var seq2 = BuildSequence( bytes.Sub( animationStart + offsets[offsets.Count - 1] ), offsets.Count - 1, names[result.Count] );
             if ( seq2 != null )
                 result.Add( seq2 );
             return result.AsReadOnly();
         }
 
-        private Sequence( IList<AnimationFrame> frames )
+        public string Name { get; private set; }
+
+        private Sequence( IList<AnimationFrame> frames, string name )
         {
+            Name = name;
             this.frames = frames;
             uniqueFrames = new Set<int>();
             foreach ( var frame in frames )
@@ -69,7 +91,7 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private static Sequence BuildSequence( IList<byte> bytes, int index )
+        private static Sequence BuildSequence( IList<byte> bytes, int index, string name )
         {
             var frames =
                 ProcessSequence( bytes, index );
@@ -77,7 +99,7 @@ namespace FFTPatcher.SpriteEditor
                 return null;
             else
             {
-                return new Sequence( frames );
+                return new Sequence( frames, name );
             }
         }
 

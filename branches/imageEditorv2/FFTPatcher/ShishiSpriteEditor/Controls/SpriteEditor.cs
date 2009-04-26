@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -84,6 +85,9 @@ namespace FFTPatcher.SpriteEditor
             shpComboBox.DataSource = s.ToArray();
             seqComboBox.DataSource = Enum.GetValues(typeof(SpriteType));
             paletteSelector.SelectedIndex = 0;
+            //pictureBox1.MinimumSize = Frame.DefaultFrameSize + pictureBox1.Padding.Size;
+            //animationViewer1.MinimumSize = Frame.DefaultFrameSize + animationViewer1.Padding.Size + new Size( 0, 40 );
+            comboBox1.SelectedIndexChanged += new EventHandler( comboBox1_SelectedIndexChanged );
         }
 
         private void PaletteChanged(object sender, EventArgs e)
@@ -98,13 +102,17 @@ namespace FFTPatcher.SpriteEditor
             {
                 Sprite.SetSHP( iso, (SpriteType)shpComboBox.SelectedItem );
                 ReloadSprite();
+                UpdateAnimationTab();
             }
         }
 
         private void seqComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!ignoreChanges)
-                Sprite.SetSEQ(iso, (SpriteType)seqComboBox.SelectedItem);
+            if ( !ignoreChanges )
+            {
+                Sprite.SetSEQ( iso, (SpriteType)seqComboBox.SelectedItem );
+                UpdateAnimationTab();
+            }
         }
 
         private void flyingCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -122,7 +130,6 @@ namespace FFTPatcher.SpriteEditor
         private void UpdatePictureBox()
         {
             Image i = pictureBox1.Image;
-
             if (currentShape != null)
             {
                 Frame currentFrame = currentShape.Frames[(int)numericUpDown1.Value];
@@ -139,30 +146,42 @@ namespace FFTPatcher.SpriteEditor
                 i.Dispose();
             }
         }
+
+        void comboBox1_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            Sequence seq = comboBox1.SelectedItem as Sequence;
+            IList<Bitmap> bmps;
+            IList<double> delays;
+            seq.BuildAnimation( spriteViewer1.Sprite, out bmps, out delays );
+            animationViewer1.ShowAnimation( bmps, delays );
+        }
+
+        private void UpdateAnimationTab()
+        {
+            if ( Sequence.Sequences.ContainsKey( (SpriteType)seqComboBox.SelectedItem ) )
+            {
+                IList<Sequence> sequences = Sequence.Sequences[(SpriteType)seqComboBox.SelectedItem];
+                comboBox1.BeginUpdate();
+                comboBox1.Items.Clear();
+                comboBox1.Items.AddRange( sequences.ToArray() );
+                comboBox1.DisplayMember = "Name";
+                comboBox1.EndUpdate();
+
+
+            }
+            else
+            {
+                animationViewer1.Enabled = false;
+                comboBox1.Enabled = false;
+            }
+        }
+
         private void numericUpDown1_ValueChanged( object sender, EventArgs e )
         {
             if ( !ignoreChanges && currentShape != null )
             {
                 UpdatePictureBox();
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var s = Sequence.BuildSequences(Properties.Resources.TYPE1);
-            IList<Bitmap> bmps;
-            IList<double> delays;
-
-            s[6].BuildAnimation(spriteViewer1.Sprite, out bmps, out delays);
-            using (Form f = new Form())
-            using (FFTPatcher.SpriteEditor.AnimationViewer viewer = new AnimationViewer())
-            {
-                f.Controls.Add(viewer);
-                viewer.Dock = DockStyle.Fill;
-                viewer.ShowAnimation(bmps, delays);
-                f.ShowDialog();
-            }
-            
         }
 
     }

@@ -164,9 +164,20 @@ namespace FFTPatcher.SpriteEditor
             }
 
             Palettes = new Palette[16];
+
             for( int i = 0; i < 16; i++ )
             {
-                Palettes[i] = new Palette( bmp.Palette.Entries.Sub( 16 * i, 16 * (i + 1) - 1 ) );
+                Palettes[i] = Palette.EmptyPalette;
+            }
+
+            for ( int i = 0; i < bmp.Palette.Entries.Length; i++ )
+            {
+                Color c = bmp.Palette.Entries[i];
+                Palettes[i / 16][i % 16] = Color.FromArgb( c.R & 0xF8, c.G & 0xF8, c.B & 0xF8 );
+                if ( i % 16 == 0 && c.ToArgb() == Color.Black.ToArgb() )
+                {
+                    Palettes[i / 16][i % 16] = Color.Transparent;
+                }
             }
 
             Pixels.InitializeElements();

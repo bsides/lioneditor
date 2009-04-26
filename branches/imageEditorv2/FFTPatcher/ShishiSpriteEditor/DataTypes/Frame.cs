@@ -28,6 +28,8 @@ namespace FFTPatcher.SpriteEditor
     [Serializable]
     public class Frame
     {
+        private static readonly Size defaultFrameSize = new Size(185,250);
+        public static Size DefaultFrameSize { get { return new Size( defaultFrameSize.Width, defaultFrameSize.Height ); } }
 
 		#region Fields (1) 
 
@@ -70,7 +72,7 @@ namespace FFTPatcher.SpriteEditor
         /// </summary>
         public Bitmap GetFrame( AbstractSprite source )
         {
-            Bitmap result = new Bitmap( 185, 250, System.Drawing.Imaging.PixelFormat.Format8bppIndexed );
+            Bitmap result = new Bitmap( defaultFrameSize.Width, defaultFrameSize.Height, System.Drawing.Imaging.PixelFormat.Format8bppIndexed );
 
             Bitmap sourceBmp = source.ToBitmap();
             result.Palette = sourceBmp.Palette;

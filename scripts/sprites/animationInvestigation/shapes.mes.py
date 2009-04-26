@@ -230,18 +230,27 @@ def innerGetFrames(bytes, imageIn, secondHalf, thirdHalf, start, startingFrameNu
     rects = []
     for tileNumber in xrange(0,numberOfTile+1):
       counter += 1
+      #1c0c 6000
+#xbyte = 0x1c
+#ybyte = 0x0c
+#x= 28
+#y = 12
       xbyte=bytes[frameStart+0x02+tileNumber*0x04]
       ybyte=bytes[frameStart+0x02+tileNumber*0x04+1];
 
       x=xbyte if ((xbyte & 0x80)==0) else (-(((xbyte)^0xff)+1))
       y=ybyte if ((ybyte & 0x80)==0) else (-(((ybyte)^0xff)+1))
       flags = bytesToInt(bytes[frameStart+0x02+tileNumber*4+2:frameStart+0x02+tileNumber*4+2+2] + [0,0])
+      #flags = 96
       if frameNumber == 131:
-        print '%d\t%d\t%d\t%04x' % (tileNumber,x,y,flags)
+        print '%d\t%d\t%d\t%04x' % (tileNumber,x,y,flags) 
+      #mirror = false
+      #mirror2 = false
       mirror = flags & 0x4000
       mirror2 = flags & 0x8000
       f = (flags>>10) & 0xF
-      
+      #f = 0
+      #(width, height) = (8,8)
       if fToSize.has_key(f):
         (width, height) = fToSize[f]
       else:
@@ -249,6 +258,8 @@ def innerGetFrames(bytes, imageIn, secondHalf, thirdHalf, start, startingFrameNu
         #continue
         width=4
         height=4
+      #tileX = 8
+      #tileY = 24
       tileX = (flags&0x001F) * 8
       tileY = ((flags>>5)&0x001F) * 8 + getOffsetBasedOnCount(frameNumber-startingFrameNumber, second=secondHalf, mon=False)
       goods.append(counter)

@@ -145,10 +145,19 @@
   <data name="PatchedDummyFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\patcheddummyfolder.bin;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TYPE1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="TYPE1_SEQ" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TYPE1.SEQ;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TYPE2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="TYPE2_SEQ" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TYPE2.SEQ;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARUTE_SEQ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ARUTE.SEQ;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CYOKO_SEQ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CYOKO.SEQ;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KANZEN_SEQ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\KANZEN.SEQ;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

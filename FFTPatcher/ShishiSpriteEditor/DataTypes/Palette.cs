@@ -80,6 +80,18 @@ namespace FFTPatcher.SpriteEditor
 
 		#region Constructors (3) 
 
+        public static Palette EmptyPalette
+        {
+            get
+            {
+                return new Palette( new Color[16] {
+                    Color.Black, Color.Black, Color.Black, Color.Black, 
+                    Color.Black, Color.Black, Color.Black, Color.Black, 
+                    Color.Black, Color.Black, Color.Black, Color.Black, 
+                    Color.Black, Color.Black, Color.Black, Color.Black } );
+            }
+        }
+
         private Palette()
         {
         }

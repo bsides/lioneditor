@@ -107,7 +107,7 @@ namespace Animation
             // https://blogs.msdn.com/tmiller/archive/2005/05/05/415008.aspx
             if (IsRunningOnMono() == false)
             {
-                while (AppStillIdle)
+                while (AppStillIdle && control != null && loopAction!=null)
                     CallLoopAction();
             }
             else
@@ -188,7 +188,14 @@ namespace Animation
         static public void SetAction(Control control, LoopAction p_la)
         {
             LoopControl.control = control;
+            control.Disposed += new EventHandler( control_Disposed );
             loopAction = p_la;
+        }
+
+        static void control_Disposed( object sender, EventArgs e )
+        {
+            control = null;
+            loopAction = null;
         }
     }
 }

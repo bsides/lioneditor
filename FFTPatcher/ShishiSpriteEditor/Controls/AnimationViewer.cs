@@ -22,6 +22,11 @@ namespace FFTPatcher.SpriteEditor
 
         }
 
+        protected override void OnHandleDestroyed( EventArgs e )
+        {
+            base.OnHandleDestroyed( e );
+        }
+
         private void Go()
         {
             if (drawManager != null)
@@ -37,7 +42,7 @@ namespace FFTPatcher.SpriteEditor
             fpsTimer = new FpsTimer(60);
 
             LoopControl.FpsTimer = fpsTimer;
-            LoopControl.SetAction(control1, Go);
+            LoopControl.SetAndStartAction(control1, Go);
             drawManager = null;
             var myDrawManager = new DrawManager(control1, fpsTimer);
 

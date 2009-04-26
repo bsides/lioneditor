@@ -68,6 +68,15 @@ namespace PatcherLib.Utilities
             }
         }
 
+        public static IList<T> SetAll<T>( this IList<T> list, T value )
+        {
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                list[i] = value;
+            }
+            return list;
+        }
+
         [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {

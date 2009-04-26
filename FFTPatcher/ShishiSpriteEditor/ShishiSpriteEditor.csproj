@@ -195,6 +195,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\ARUTE.SEQ" />
     <None Include="Resources\BATTLE\other_unknown\10M.SPR" />
     <None Include="Resources\BATTLE\other_unknown\10W.SPR" />
     <None Include="Resources\BATTLE\other_unknown\20M.SPR" />
@@ -350,6 +351,7 @@
     <None Include="Resources\BATTLE\MON\ZARUE.SPR" />
     <None Include="Resources\BATTLE\TYPE2\ZARUMOU.SPR" />
     <None Include="Resources\BATTLE\ZODIAC.BIN" />
+    <None Include="Resources\CYOKO.SEQ" />
     <None Include="Resources\EVENT\CHAPTER1.BIN" />
     <None Include="Resources\EVENT\CHAPTER2.BIN" />
     <None Include="Resources\EVENT\CHAPTER3.BIN" />
@@ -372,6 +374,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\EVENT\WLDFACE4.BIN" />
+    <None Include="Resources\KANZEN.SEQ" />
     <None Include="Resources\MENU\BK_FITR.TIM" />
     <None Include="Resources\MENU\BK_FITR2.TIM" />
     <None Include="Resources\MENU\BK_FITR3.TIM" />

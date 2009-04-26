@@ -60,6 +60,13 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
+        internal static byte[] ARUTE_SEQ {
+            get {
+                object obj = ResourceManager.GetObject("ARUTE_SEQ", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] ARUTE_SHP {
             get {
                 object obj = ResourceManager.GetObject("ARUTE_SHP", resourceCulture);
@@ -67,9 +74,23 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
+        internal static byte[] CYOKO_SEQ {
+            get {
+                object obj = ResourceManager.GetObject("CYOKO_SEQ", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] CYOKO_SHP {
             get {
                 object obj = ResourceManager.GetObject("CYOKO_SHP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] KANZEN_SEQ {
+            get {
+                object obj = ResourceManager.GetObject("KANZEN_SEQ", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -137,9 +158,9 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
-        internal static byte[] TYPE1 {
+        internal static byte[] TYPE1_SEQ {
             get {
-                object obj = ResourceManager.GetObject("TYPE1", resourceCulture);
+                object obj = ResourceManager.GetObject("TYPE1_SEQ", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -151,9 +172,9 @@ namespace FFTPatcher.SpriteEditor.Properties {
             }
         }
         
-        internal static byte[] TYPE2 {
+        internal static byte[] TYPE2_SEQ {
             get {
-                object obj = ResourceManager.GetObject("TYPE2", resourceCulture);
+                object obj = ResourceManager.GetObject("TYPE2_SEQ", resourceCulture);
                 return ((byte[])(obj));
             }
         }

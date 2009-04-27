@@ -633,7 +633,9 @@ namespace FFTPatcher.Datatypes
 
         private static void WriteFileToZip( ZipOutputStream stream, string filename, byte[] bytes )
         {
-            stream.PutNextEntry( new ZipEntry( filename ) );
+            ZipEntry ze = new ZipEntry(filename);
+            ze.Size = bytes.Length;
+            stream.PutNextEntry( ze );
             stream.Write( bytes, 0, bytes.Length );
         }
 

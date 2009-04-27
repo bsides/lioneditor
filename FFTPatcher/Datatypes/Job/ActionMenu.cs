@@ -156,7 +156,12 @@ namespace FFTPatcher.Datatypes
             get { return Default != null && MenuAction.MenuAction != Default.MenuAction.MenuAction; }
         }
 
-        public ActionMenuEntry MenuAction { get; set; }
+        private ActionMenuEntry menuAction;
+        public ActionMenuEntry MenuAction 
+        {
+            get { return menuAction; }
+            set { menuAction = value; }
+        }
 
         public string Name { get; private set; }
 

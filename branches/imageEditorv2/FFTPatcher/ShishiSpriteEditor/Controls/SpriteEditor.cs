@@ -48,6 +48,7 @@ namespace FFTPatcher.SpriteEditor
             flagsCheckedListBox.SetItemChecked( 7, Sprite.Flag8 );
             flagsCheckedListBox.EndUpdate();
             UpdateShapes();
+            UpdateAnimationTab();
             ignoreChanges = oldIgnoreChanges;
         }
 
@@ -88,6 +89,21 @@ namespace FFTPatcher.SpriteEditor
             //pictureBox1.MinimumSize = Frame.DefaultFrameSize + pictureBox1.Padding.Size;
             //animationViewer1.MinimumSize = Frame.DefaultFrameSize + animationViewer1.Padding.Size + new Size( 0, 40 );
             comboBox1.SelectedIndexChanged += new EventHandler( comboBox1_SelectedIndexChanged );
+            tabControl1.SelectedIndexChanged += new EventHandler(tabControl1_SelectedIndexChanged);
+        }
+
+        void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == animationTabPage && Sequence.Sequences.ContainsKey((SpriteType)seqComboBox.SelectedItem))
+            {
+                animationViewer1.Play();
+                spriteViewer1.HighlightTiles(new Tile[0]);
+            }
+            else
+            {
+                animationViewer1.Pause();
+                UpdatePictureBox();
+            }
         }
 
         private void PaletteChanged(object sender, EventArgs e)
@@ -134,7 +150,14 @@ namespace FFTPatcher.SpriteEditor
             {
                 Frame currentFrame = currentShape.Frames[(int)numericUpDown1.Value];
                 pictureBox1.Image = currentFrame.GetFrame(Sprite.GetAbstractSpriteFromPsxIso(iso));
-                spriteViewer1.HighlightTiles(currentFrame.Tiles);
+                if (tabControl1.SelectedTab == framesTabPage)
+                {
+                    spriteViewer1.HighlightTiles(currentFrame.Tiles);
+                }
+                else
+                {
+                    spriteViewer1.HighlightTiles(new Tile[0]);
+                }
             }
             else
             {
@@ -153,7 +176,7 @@ namespace FFTPatcher.SpriteEditor
             IList<Bitmap> bmps;
             IList<double> delays;
             seq.BuildAnimation( spriteViewer1.Sprite, out bmps, out delays );
-            animationViewer1.ShowAnimation( bmps, delays );
+            animationViewer1.ShowAnimation(bmps, delays, tabControl1.SelectedTab == animationTabPage);
         }
 
         private void UpdateAnimationTab()
@@ -166,11 +189,13 @@ namespace FFTPatcher.SpriteEditor
                 comboBox1.Items.AddRange( sequences.ToArray() );
                 comboBox1.DisplayMember = "Name";
                 comboBox1.EndUpdate();
-
-
+                comboBox1.SelectedIndex = 0;
+                comboBox1.Enabled = true;
+                animationViewer1.Enabled = true;
             }
             else
             {
+                animationViewer1.Pause();
                 animationViewer1.Enabled = false;
                 comboBox1.Enabled = false;
             }

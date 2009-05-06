@@ -37,7 +37,7 @@ namespace FFTPatcher.SpriteEditor
 
         JustSitThereSprite sprite;
         FlipBook flipBook;
-        public void ShowAnimation(IList<Bitmap> bitmaps, IList<double> delays)
+        public void ShowAnimation(IList<Bitmap> bitmaps, IList<double> delays, bool startPlaying)
         {
             fpsTimer = new FpsTimer(60);
 
@@ -48,6 +48,11 @@ namespace FFTPatcher.SpriteEditor
 
             if (bitmaps.Count != delays.Count)
                 throw new ArgumentException("must have same number of bitmaps as delays");
+            IList<Bitmap> oldBitmaps = null;
+            if (flipBook != null )
+            {
+                oldBitmaps = flipBook.Bitmaps;
+            }
 
             spriteManager = new SpriteManager(fpsTimer);
             sprite = new JustSitThereSprite(new Point(0, 0));
@@ -71,6 +76,17 @@ namespace FFTPatcher.SpriteEditor
             trackBar1.Minimum = 0;
             trackBar1.Maximum = bitmaps.Count - 1;
             trackBar1.Value = 0;
+
+            if (startPlaying)
+                Play();
+
+            if (oldBitmaps != null)
+            {
+                foreach (Bitmap b in oldBitmaps)
+                {
+                    b.Dispose();
+                }
+            }
         }
 
         void flipBook_FrameChanged(object sender, EventArgs e)
@@ -78,32 +94,22 @@ namespace FFTPatcher.SpriteEditor
             trackBar1.Value = flipBook.CurrentFrame;
         }
 
-        public void ShowAnimation(IList<Bitmap> bitmaps, double delay)
+        public void ShowAnimation(IList<Bitmap> bitmaps, double delay, bool startPlaying)
         {
             double[] delays = new double[bitmaps.Count];
             for (int i = 0; i < bitmaps.Count; i++)
                 delays[i] = delay;
-            ShowAnimation(bitmaps, delays);
+            ShowAnimation(bitmaps, delays, startPlaying);
         }
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            playButton.Enabled = false;
-            pauseButton.Enabled = true;
-            forwardButton.Enabled = false;
-            backButton.Enabled = false;
-            trackBar1.Enabled = false;
-            flipBook.Unpause();
+            Play();
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
-            pauseButton.Enabled = false;
-            playButton.Enabled = true;
-            forwardButton.Enabled = true;
-            backButton.Enabled = true;
-            trackBar1.Enabled = true;
-            flipBook.Pause();
+            Pause();
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -119,6 +125,26 @@ namespace FFTPatcher.SpriteEditor
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             flipBook.SetFrame(trackBar1.Value);
+        }
+
+        public void Pause()
+        {
+            pauseButton.Enabled = false;
+            playButton.Enabled = true;
+            forwardButton.Enabled = true;
+            backButton.Enabled = true;
+            trackBar1.Enabled = true;
+            flipBook.Pause();
+        }
+
+        public void Play()
+        {
+            playButton.Enabled = false;
+            pauseButton.Enabled = true;
+            forwardButton.Enabled = false;
+            backButton.Enabled = false;
+            trackBar1.Enabled = false;
+            flipBook.Unpause();
         }
     }
 }

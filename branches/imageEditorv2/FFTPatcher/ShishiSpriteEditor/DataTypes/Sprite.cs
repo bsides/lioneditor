@@ -67,15 +67,19 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        internal void ImportBitmap( Stream iso, System.Drawing.Bitmap bmp )
+        internal void ImportBitmap(Stream iso, System.Drawing.Bitmap bmp)
         {
             bool bad = false;
-            AbstractSprite sprite = GetAbstractSpriteFromPsxIso( iso );
-            sprite.ImportBitmap( bmp, out bad );
-            ImportSprite( iso, sprite.ToByteArray( 0 ) );
+            AbstractSprite sprite = GetAbstractSpriteFromPsxIso(iso);
+            sprite.ImportBitmap(bmp, out bad);
+            ImportSprite(iso, sprite.ToByteArray(0));
+            for (int i = 0; i < NumChildren; i++)
+            {
+                ImportSp2(iso, sprite.ToByteArray(i + 1), i);
+            }
         }
 
-        internal void ImportSp2( Stream iso, string filename, int index )
+        internal void ImportSp2(Stream iso, string filename, int index)
         {
             ImportSp2( iso, File.ReadAllBytes( filename ), index );
         }

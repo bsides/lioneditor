@@ -152,6 +152,7 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        const int numWep = 3;
         public static SpriteFileLocations FromPsxIso(Stream iso)
         {
             SpriteFileLocations result = new SpriteFileLocations();
@@ -192,6 +193,7 @@ namespace FFTPatcher.SpriteEditor
                         spriteBytes.Sub(i * 8, (i + 1) * 8 - 1));
                 }
             }
+
             result.sprites = sprites;
 
             result.sp2 = sp2;

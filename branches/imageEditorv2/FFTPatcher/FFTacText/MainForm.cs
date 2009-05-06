@@ -47,6 +47,13 @@ namespace FFTPatcher.TextEditor
             menuItem2.Click += new EventHandler( menuItem2_Click );
             importPspIsoCustomMenuItem.Click += new EventHandler( importPspIsoCustomMenuItem_Click );
             importPsxIsoCustomMenuItem.Click += new EventHandler( importPsxIsoCustomMenuItem_Click );
+            fileMenuItem.Popup += new EventHandler(menuItem_Popup);
+            isoMenuItem.Popup += new EventHandler(menuItem_Popup);
+        }
+
+        void menuItem_Popup(object sender, EventArgs e)
+        {
+            fileEditor1.Validate(false);
         }
 
         void menuItem2_Click( object sender, EventArgs e )

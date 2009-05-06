@@ -157,6 +157,64 @@ namespace FFTPatcher.TextEditor
 
         public string LastError { get; private set; }
 
+        public IList<UInt32> GetEachEncodedCharacter( string s )
+        {
+            List<UInt32> result = new List<uint>();
+            for ( int i = 0; i < s.Length; i++ )
+            {
+                int val = 0;
+                if ( s[i] == '{' )
+                {
+                    int j = s.IndexOf( '}', i );
+                    if ( j == -1 )
+                        return null;
+
+                    string key = s.Substring( i, j - i + 1 );
+                    if ( Reverse.ContainsKey( key ) )
+                    {
+                        val = Reverse[key];
+                    }
+                    else
+                    {
+                        Match match = regex.Match( key );
+                        if ( match.Success )
+                        {
+                            result.Add( Convert.ToUInt32( match.Groups[1].Value, 16 ) );
+                            val = -1;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    i = j;
+                }
+                else if ( s[i] == '\r' || s[i] == '\n' )
+                {
+                    // ignore
+                    val = -1;
+                }
+                else
+                {
+                    string t = s[i].ToString();
+                    if ( Reverse.ContainsKey( t ) )
+                    {
+                        val = Reverse[t];
+                    }
+                    else
+                        return null;
+                }
+
+                if ( val >= 0 )
+                {
+                    result.Add( (UInt32)val );
+                }
+            }
+
+            return result;
+        }
+
+
         public bool TryStringToByteArray( string s, out byte[] bytes )
         {
             List<byte> result = new List<byte>( s.Length );
@@ -255,6 +313,43 @@ namespace FFTPatcher.TextEditor
 
         #endregion Methods
 
+        private int GetWidthForEncodedCharacter( UInt32 c, PatcherLib.Datatypes.FFTFont font )
+        {
+            if ( c == 0xFA )
+            {
+                return 2;
+            }
+            else if ( c <= 0xCF )
+            {
+                return font.Glyphs[(int)c].Width;
+            }
+            else if ( ( c & 0xFF00 ) >= 0xD100 && ( c & 0xFF00 ) <= 0xDA00 && ( c & 0x00FF ) <= 0xCF &&
+                      ( ( c & 0xFF00 ) != 0xDA00 || ( c & 0x00FF ) <= 0x77 ) )
+            {
+                return font.Glyphs[(int)( ( ( ( c & 0xFF00 ) >> 8 ) - 0xD0 ) * 0xD0 + ( c & 0x00FF ) )].Width;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int MeasureStringInFont( string s, PatcherLib.Datatypes.FFTFont font )
+        {
+            string[] strings = s.Split( new string[] { "{Newline}" }, StringSplitOptions.RemoveEmptyEntries );
+            int width = int.MinValue;
+            foreach ( string ss in strings )
+            {
+                IList<UInt32> everyChar = GetEachEncodedCharacter( ss );
+                int sum = 0;
+                foreach ( UInt32 c in everyChar )
+                {
+                    sum += GetWidthForEncodedCharacter( c, font );
+                }
+                width = Math.Max( width, sum );
+            }
+            return width;
+        }
     }
 
     /// <summary>

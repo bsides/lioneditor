@@ -153,12 +153,8 @@ namespace PatcherLib
             private const string ENTD4 = "ENTD4.ENT";
             private const string MoveFindBin = "MoveFind.bin";
 
-
-
             public static class PSP
             {
-
-
                 public static class Binaries
                 {
                     public const string ENTD1 = Paths.ENTD1;
@@ -191,6 +187,7 @@ namespace PatcherLib
                 public const string FFTPackFilesXML = "PSP/FFTPackFiles.xml";
                 public const string JobsXML = "PSP/Jobs.xml";
                 public const string SkillSetsXML = "PSP/SkillSets.xml";
+                public const string MapNamesXML = "PSP/MapNames.xml";
                 public const string SpecialNamesXML = "PSP/SpecialNames.xml";
                 public const string SpriteSetsXML = "PSP/SpriteSets.xml";
                 public const string StatusNamesXML = "PSP/StatusNames.xml";
@@ -200,6 +197,7 @@ namespace PatcherLib
                 public const string ItemAttributesXML = "PSP/Items/ItemAttributes.xml";
                 public const string ItemsXML = "PSP/Items/Items.xml";
                 public const string ItemsStringsXML = "PSP/Items/Strings.xml";
+                public const string ShopNamesXML = "PSP/ShopNames.xml";
             }
 
             public static class PSX
@@ -244,6 +242,8 @@ namespace PatcherLib
                 public const string ItemAttributesXML = "PSX-US/Items/ItemAttributes.xml";
                 public const string ItemsXML = "PSX-US/Items/Items.xml";
                 public const string ItemsStringsXML = "PSX-US/Items/Strings.xml";
+                public const string ShopNamesXML = "PSX-US/ShopNames.xml";
+                public const string MapNamesXML = "PSX-US/MapNames.xml";
             }
         }
     }

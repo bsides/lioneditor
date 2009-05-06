@@ -1305,12 +1305,12 @@
         <Sector filename="WORLD_SNPLMES_BIN" offset="0"/>
       </Sectors>
       <Sections count="6">
-        <Section value="0" entries="204" empty="true" dte="true"/>
-        <Section value="1" entries="168" empty="true" dte="true"/>
-        <Section value="2" entries="186" empty="true" dte="true"/>
-        <Section value="3" entries="217" empty="true" dte="true"/>
+        <Section value="0" entries="204" empty="true" dte="true" name="M-Fiction Novel"/>
+        <Section value="1" entries="168" empty="true" dte="true" name="Diary of Nanai"/>
+        <Section value="2" entries="186" empty="true" dte="true" name="Wyuvle"/>
+        <Section value="3" entries="217" empty="true" dte="true" name="Book of Enavia"/>
         <Section value="4" entries="39" empty="true" name="Germonik Scriptures" dte="false"/>
-        <Section value="5" entries="14" empty="true" dte="false"/>
+        <Section value="5" entries="14" empty="true" dte="false" name="Test book"/>
       </Sections>
     </PartitionedFile>
 
@@ -1763,6 +1763,10 @@
       <Sectors>
         <Sector filename="EVENT_SPELL_MES" offset="0"/>
       </Sectors>
+      <Terminators>
+        <Terminator>FE</Terminator>
+        <Terminator>FF</Terminator>
+      </Terminators>
       <Sections count="1">
         <Section value="0" entries="512" empty="false" name="Spell Quotes" dte="false">
           <include name="AbilityNames" start="0" end="511" offset="0"/>
@@ -2018,53 +2022,53 @@
 </Files>
   <Templates>
     <TerrainNames>
-      <entry value="0" name=""/>
-      <entry value="1" name=""/>
-      <entry value="2" name=""/>
-      <entry value="3" name=""/>
-      <entry value="4" name=""/>
-      <entry value="5" name=""/>
-      <entry value="6" name=""/>
-      <entry value="7" name=""/>
-      <entry value="8" name=""/>
-      <entry value="9" name=""/>
-      <entry value="10" name=""/>
-      <entry value="11" name=""/>
-      <entry value="12" name=""/>
-      <entry value="13" name=""/>
-      <entry value="14" name=""/>
-      <entry value="15" name=""/>
-      <entry value="16" name=""/>
-      <entry value="17" name=""/>
-      <entry value="18" name=""/>
-      <entry value="19" name=""/>
-      <entry value="20" name=""/>
-      <entry value="21" name=""/>
-      <entry value="22" name=""/>
-      <entry value="23" name=""/>
-      <entry value="24" name=""/>
-      <entry value="25" name=""/>
-      <entry value="26" name=""/>
-      <entry value="27" name=""/>
-      <entry value="28" name=""/>
-      <entry value="29" name=""/>
-      <entry value="30" name=""/>
-      <entry value="31" name=""/>
-      <entry value="32" name=""/>
-      <entry value="33" name=""/>
-      <entry value="34" name=""/>
-      <entry value="35" name=""/>
-      <entry value="36" name=""/>
-      <entry value="37" name=""/>
-      <entry value="38" name=""/>
-      <entry value="39" name=""/>
-      <entry value="40" name=""/>
-      <entry value="41" name=""/>
-      <entry value="42" name=""/>
-      <entry value="43" name=""/>
-      <entry value="44" name=""/>
-      <entry value="45" name=""/>
-      <entry value="46" name=""/>
+      <entry value="0" name="Natural Surface"/>
+      <entry value="1" name="Sand area"/>
+      <entry value="2" name="Stalactite"/>
+      <entry value="3" name="Grassland"/>
+      <entry value="4" name="Thicket"/>
+      <entry value="5" name="Snow"/>
+      <entry value="6" name="Rocky cliff"/>
+      <entry value="7" name="Gravel"/>
+      <entry value="8" name="Wasteland"/>
+      <entry value="9" name="Swamp"/>
+      <entry value="10" name="Marsh"/>
+      <entry value="11" name="Poisoned marsh"/>
+      <entry value="12" name="Lava rocks"/>
+      <entry value="13" name="Ice"/>
+      <entry value="14" name="Waterway"/>
+      <entry value="15" name="River"/>
+      <entry value="16" name="Lake"/>
+      <entry value="17" name="Sea"/>
+      <entry value="18" name="Lava"/>
+      <entry value="19" name="Road"/>
+      <entry value="20" name="Wooden floor"/>
+      <entry value="21" name="Stone floor"/>
+      <entry value="22" name="Roof"/>
+      <entry value="23" name="Stone wall"/>
+      <entry value="24" name="Sky"/>
+      <entry value="25" name="Darkness"/>
+      <entry value="26" name="Salt"/>
+      <entry value="27" name="Book"/>
+      <entry value="28" name="Obstacle"/>
+      <entry value="29" name="Rug"/>
+      <entry value="30" name="Tree"/>
+      <entry value="31" name="Box"/>
+      <entry value="32" name="Brick"/>
+      <entry value="33" name="Chimney"/>
+      <entry value="34" name="Mud wall"/>
+      <entry value="35" name="Bridge"/>
+      <entry value="36" name="Water plant"/>
+      <entry value="37" name="Stairs"/>
+      <entry value="38" name="Furniture"/>
+      <entry value="39" name="Ivy"/>
+      <entry value="40" name="Deck"/>
+      <entry value="41" name="Machine"/>
+      <entry value="42" name="Iron plate"/>
+      <entry value="43" name="Moss"/>
+      <entry value="44" name="Tombstone"/>
+      <entry value="45" name="Waterfall"/>
+      <entry value="46" name="Coffin"/>
       <entry value="47" name=""/>
       <entry value="48" name=""/>
       <entry value="49" name=""/>
@@ -2081,7 +2085,7 @@
       <entry value="60" name=""/>
       <entry value="61" name=""/>
       <entry value="62" name=""/>
-      <entry value="63" name=""/>
+      <entry value="63" name="Cross section"/>
     </TerrainNames>
     <Help1>
       <entry value="0" name="Unit #"/>

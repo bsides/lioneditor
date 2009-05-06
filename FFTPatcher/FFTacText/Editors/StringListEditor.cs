@@ -60,6 +60,7 @@ namespace FFTPatcher.TextEditor
         private void dataGridView_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
         {
             if ( !ignoreChanges &&
+                e.ColumnIndex == TextColumnIndex &&
                 CellValidating != null )
             {
                 CellValidating( this, e );

@@ -194,151 +194,9 @@ namespace PatcherLib
             "Demon",
             "Steel Giant"
         }.AsReadOnly();
-        private static Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>
-        {
-            { Shops.Bervenia, "Bervenia Free City" },
-            { Shops.Dorter, "Dorter Trade City" },
-            { Shops.Gariland, "Gariland Magic City" },
-            { Shops.Goland, "Goland Coal City" },
-            { Shops.Goug, "Goug Machine City" },
-            { Shops.Igros, "Igros Castle" },
-            { Shops.Lesalia, "Lesalia Imperial Castle" },
-            { Shops.Limberry, "Limberry Castle" },
-            { Shops.Lionel, "Lionel Castle" },
-            { Shops.None, "Unknown" },
-            { Shops.Riovanes, "Riovanes Castle" },
-            { Shops.Warjilis, "Warjilis Trade City" },
-            { Shops.Yardrow, "Yardow Fort City" },
-            { Shops.Zaland, "Zaland Fort City" },
-            { Shops.Zarghidas, "Zarghidas Trade City" },
-            { Shops.Zeltennia, "Zeltennia Castle" }
-        };
+
         private static IDictionary<Shops, string> readOnlyStoreNames;
 
-        private static string[] mapNames = new string[128] {
-            "(No name)",
-            "At main gate of Igros Castle",
-            "Back gate of Lesalia Castle",
-            "Hall of St. Murond Temple",
-            "Office of Lesalia Castle",
-            "Roof of Riovanes Castle",
-            "At the gate of Riovanes Castle",
-            "Inside of Riovanes Castle",
-            "Riovanes Castle",
-            "Citadel of Igros Castle",
-            "Inside of Igros Castle",
-            "Office of Igros Castle",
-            "At the gate of Lionel Castle",
-            "Inside of Lionel Castle",
-            "Office of Lionel Castle",
-            "At the gate of Limberry Castle",
-            "Inside of Limberry Castle",
-            "Underground cemetery of Limberry Castle",
-            "Office of Limberry Castle",
-            "At the gate of Limberry Castle",
-            "Inside of Zeltennia Castle",
-            "Zeltennia Castle",
-            "Magic City Gariland",
-            "Beoulve residence",
-            "Military Academy's Auditorium",
-            "Yardow Fort City",
-            "Weapon storage of Yardow",
-            "Goland Coal City",
-            "Colliery underground First floor",
-            "Colliery underground Second floor",
-            "Colliery underground Third floor",
-            "Dorter Trade City",
-            "Slums in Dorter",
-            "Hospital in slums",
-            "Cellar of Sand Mouse",
-            "Zaland Fort City",
-            "Church outside the town",
-            "Ruins outside Zaland",
-            "Goug Machine City",
-            "Underground passage in Goland",
-            "Slums in Goug",
-            "Besrodio's house",
-            "Warjilis Trade City",
-            "Port of Warjilis",
-            "Bervenia Free City",
-            "Ruins of Zeltennia Castle's church",
-            "Cemetery of Heavenly Knight, Balbanes",
-            "Zarghidas Trade City",
-            "Slums of Zarghidas",
-            "Fort Zeakden",
-            "St. Murond Temple",
-            "St. Murond Temple",
-            "Chapel of St. Murond Temple",
-            "Entrance to Death City",
-            "Lost Sacred Precincts",
-            "Graveyard of Airships",
-            "Orbonne Monastery",
-            "Underground Book Storage First Floor",
-            "Underground Book Storage Second Floor",
-            "Underground Book Storage Third Floor",
-            "Underground Book Storage Fourth Floor",
-            "Underground Book Storage Fifth Floor",
-            "Chapel of Orbonne Monastery",
-            "Golgorand Execution Site",
-            "In front of Bethla Garrison's Sluice",
-            "Granary of Bethla Garrison",
-            "South Wall of Bethla Garrison",
-            "North Wall of Bethla Garrison",
-            "Bethla Garrison",
-            "Murond Death City",
-            "Nelveska Temple",
-            "Dolbodar Swamp",
-            "Fovoham Plains",
-            "Inside of windmill Shed",
-            "Sweegy Woods",
-            "Bervenia Volcano",
-            "Zeklaus Desert",
-            "Lenalia Plateau",
-            "Zigolis Swamp",
-            "Yuguo Woods",
-            "Araguay Woods",
-            "Grog Hill",
-            "Bed Desert",
-            "Zirekile Falls",
-            "Bariaus Hill",
-            "Mandalia Plains",
-            "Doguola Pass",
-            "Bariaus Valley",
-            "Finath River",
-            "Poeskas Lake",
-            "Germinas Peak",
-            "Thieves Fort",
-            "Igros·Beoulve residence",
-            "Broke down shed·Wooden building",
-            "Broke down shed·Stone building",
-            "Church",
-            "Pub",
-            "Inside castle gate in Lesalia",
-            "Outside castle gate in Lesalia",
-            "Main street of Lesalia",
-            "Public cemetary",
-            "For tutorial 1",
-            "For tutorial 2",
-            "Windmill shed",
-            "A room of Beoulve residence",
-            "terminate",
-            "delta",
-            "nogias",
-            "voyage",
-            "bridge",
-            "valkyries",
-            "mlapan",
-            "tiger",
-            "horror",
-            "end",
-            "Banished fort",
-            "(No name) -- Battle Arena",
-            "(No name) -- Checkerboard Wall",
-            "(No name) -- Checkerboard Wall ???",
-            "(No name) -- Checkerboard Wall Waterland",
-            "(Garbled name) -- Sloped Checkerboard",
-            "","","","","","",""
-            };
         private static ReadOnlyCollection<string> mapNamesReadOnly;
         private static string[] shopAvailabilities;
         private static string[] statuses;
@@ -455,7 +313,11 @@ namespace PatcherLib
             {
                 if ( mapNamesReadOnly == null )
                 {
-                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
+                    var names = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        dict[Paths.MapNamesXML] as string,
+                        "/MapNames/Map[@value='{0}']",
+                        128 );
+                    mapNamesReadOnly = new ReadOnlyCollection<string>( names );
                 }
 
                 return mapNamesReadOnly;
@@ -468,6 +330,16 @@ namespace PatcherLib
             {
                 if( readOnlyStoreNames == null )
                 {
+                    Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>();
+                    System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                    doc.LoadXml( (string)PSXResources.dict[Resources.Paths.PSX.ShopNamesXML] );
+
+                    foreach ( System.Xml.XmlNode node in doc.SelectNodes( "/ShopNames/Shop" ) )
+                    {
+                        storeNames[(Shops)System.Enum.Parse( typeof( Shops ), node.Attributes["value"].Value )] =
+                            node.Attributes["name"].Value;
+                    }
+
                     readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>( storeNames );
                 }
 
@@ -575,7 +447,10 @@ namespace PatcherLib
             dict[Resources.Paths.PSX.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemAttributesXML].ToUTF8String();
             dict[Resources.Paths.PSX.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String();
             dict[Resources.Paths.PSX.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String();
+            dict[Resources.Paths.PSX.ShopNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ShopNamesXML].ToUTF8String();
             dict[Resources.Paths.PSX.Binaries.SCEAP] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
+            dict[Paths.MapNamesXML] = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String();
+
             CharacterSet = new ReadOnlyCollection<string>( new string[77000 / 14 / 10 * 4] {
                 "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F", 
                 "G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V", 
@@ -592,8 +467,18 @@ namespace PatcherLib
                 "バ","パ","ヒ","ビ","ピ","フ","ブ","プ","ヘ","ベ","ペ","ホ","ボ","ポ","マ","ミ", 
                 "ム","メ","モ","ャ","ヤ","ュ","ユ","ョ","ヨ","ラ","リ","ル","レ","ロ","ヮ","ワ", 
                 "☇","*","ヲ","ン","ヴ","ヵ","ヶ","—","「","、","！","⋯",".","-","＋","×", 
-                "÷","∩","∪","＝","≠","＞","＜","≧","≦","*","*","*","*","*","*","*", 
-                "*","*","*","剣","一","乙","七","丁","九","了","憎","人","入","八","刀","力", 
+                "÷","∩","∪","＝","≠","＞","＜","≧","≦",
+                "*",
+                "*",
+                "{r }",
+                "*",
+                "*",
+                "*",
+                "*", 
+                "*",
+                "*",
+                "*",
+                "剣","一","乙","七","丁","九","了","憎","人","入","八","刀","力", 
                 "十","下","三","上","丈","万","与","久","丸","乞","也","亡","凡","刃","千","飯", 
                 "土","士","夕","大","女","子","寸","小","山","川","工","己","干","弓","々","油", 
                 "祭","奇","跡","演","不","中","了","五","互","井","介","仇","今","仁","内","元", 

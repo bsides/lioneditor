@@ -198,7 +198,8 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        public Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
+
+        public virtual Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
         {
             // Clone the sections
             var secs = GetCopyOfSections();

@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-
+using PatcherLib.Utilities;
 namespace Bimixual.Animation
 {
     /// <summary>
@@ -31,7 +31,7 @@ namespace Bimixual.Animation
         long lastTick;  // timer for how long each individual pic should show
 
         public int CurrentFrame { get; private set; }
-
+        public IList<Bitmap> Bitmaps { get { return bitmaps.AsReadOnly(); } }
         /// <summary>
         /// Create a FlipBook alteration which changes the sprite image at given time intervals
         /// </summary>

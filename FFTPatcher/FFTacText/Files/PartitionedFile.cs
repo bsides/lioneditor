@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PatcherLib.Datatypes;
 using PatcherLib.Utilities;
+using System.Text;
 
 namespace FFTPatcher.TextEditor
 {
@@ -39,6 +40,71 @@ namespace FFTPatcher.TextEditor
             }
             Sections = sections.AsReadOnly();
             PopulateDisallowedSections();
+        }
+
+        private Set<KeyValuePair<string, byte>> GetPreferredDTEPairsForSection(IList<IList<string>> allSections, int index, Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes)
+        {
+            var secs = allSections;
+            var  bytes = GetSectionByteArrays(secs, CharMap, CompressionAllowed);
+            IList<byte> ourBytes = bytes[index];
+
+            Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
+
+            int bytesNeeded = ourBytes.Count - this.PartitionSize;
+            if (bytesNeeded <= 0)
+            {
+                return result;
+            }
+
+            StringBuilder sb = new StringBuilder(PartitionSize);
+            if (DteAllowed[index])
+            {
+                secs[index].ForEach(t => sb.Append(t).Append("{0xFE}"));
+            }
+
+            var dict = TextUtilities.GetPairAndTripleCounts(sb.ToString(), replacements);
+
+            var l = new List<KeyValuePair<string, int>>(dict);
+            l.Sort((a, b) => b.Value.CompareTo(a.Value));
+
+            while (bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0)
+            {
+                result.Add(new KeyValuePair<string, byte>(l[0].Key, dteBytes.Pop()));
+                TextUtilities.DoDTEEncoding(secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs(result));
+                bytes = GetSectionByteArrays(secs, CharMap, CompressionAllowed);
+                ourBytes = bytes[index];
+                bytesNeeded = ourBytes.Count - PartitionSize;
+
+                if (bytesNeeded > 0)
+                {
+                    StringBuilder sb2 = new StringBuilder(PartitionSize);
+                    if (DteAllowed[index])
+                    {
+                        secs[index].ForEach(t => sb2.Append(t).Append("{0xFE}"));
+                    }
+                    l = new List<KeyValuePair<string, int>>(TextUtilities.GetPairAndTripleCounts(sb2.ToString(), replacements));
+                    l.Sort((a, b) => b.Value.CompareTo(a.Value));
+                }
+            }
+
+
+            if (bytesNeeded > 0)
+            {
+                return null;
+            }
+            return result;
+        }
+
+        public override Set<KeyValuePair<string, byte>> GetPreferredDTEPairs(Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes)
+        {
+            Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
+            Set<KeyValuePair<string, byte>> ourCurrentPairs = new Set<KeyValuePair<string, byte>>(currentPairs);
+            for (int i = 0; i < Sections.Count; i++)
+            {
+                result.AddRange(GetPreferredDTEPairsForSection(GetCopyOfSections(), i, replacements, ourCurrentPairs, dteBytes));
+                ourCurrentPairs.AddRange(result);
+            }
+            return result;
         }
 
         protected override IList<byte> ToByteArray()

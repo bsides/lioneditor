@@ -36,6 +36,7 @@ namespace FFTPatcher.Datatypes
 
         private static IDictionary<ElementName, string> elementNames = PatcherLib.Utilities.Utilities.BuildDictionary<ElementName, string>( new object[] {
             ElementName.Abilities, "abilities",
+            ElementName.AbilityAnimations, "abilityAnimations",
             ElementName.AbilityEffects, "abilityEffects", 
             ElementName.Items, "items", 
             ElementName.ItemAttributes, "itemAttributes", 
@@ -57,7 +58,7 @@ namespace FFTPatcher.Datatypes
             ElementName.MoveFindItems, "moveFindItems",
             ElementName.StoreInventories, "storeInventories" } );
         private static string[] elementNameStrings = new string[] {
-            "abilities", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
+            "abilities", "abilityAnimations", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
             "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
             "entd1", "entd2", "entd3", "entd4", "entd5", "moveFindItems", "storeInventories" };
 
@@ -604,7 +605,7 @@ namespace FFTPatcher.Datatypes
                 WriteFileToZip( stream, "type", Encoding.UTF8.GetBytes( destinationContext.ToString() ) );
 
                 WriteFileToZip( stream, elementNames[ElementName.Abilities], Abilities.ToByteArray( destinationContext ) );
-                WriteFileToZip(stream, elementNames[ElementName.AbilityAnimations], AbilityAnimations.ToByteArray());
+                WriteFileToZip( stream, elementNames[ElementName.AbilityAnimations], AbilityAnimations.ToByteArray());
                 WriteFileToZip( stream, elementNames[ElementName.AbilityEffects], Abilities.ToEffectsByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.Items], Items.ToFirstByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.ItemAttributes], ItemAttributes.ToFirstByteArray() );

@@ -37,156 +37,7 @@ namespace PatcherLib
         private static string[] abilityEffects;
         private static string[] abilityTypes;
         static Dictionary<string, object> dict = new Dictionary<string, object>();
-        private static Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>
-        {
-            { Shops.Bervenia, "Free City of Bervenia" },
-            { Shops.Dorter, "Merchant City of Dorter" },
-            { Shops.Gariland, "Magick City of Gariland" },
-            { Shops.Goland, "Mining Town of Gollund" },
-            { Shops.Goug, "Clockwork City of Goug" },
-            { Shops.Igros, "Eagrose Castle" },
-            { Shops.Lesalia, "Royal Capital of Lesalia" },
-            { Shops.Limberry, "Limberry Castle" },
-            { Shops.Lionel, "Lionel Castle" },
-            { Shops.None, "Unknown" },
-            { Shops.Riovanes, "Riovanes Castle" },
-            { Shops.Warjilis, "Port City of Warjilis" },
-            { Shops.Yardrow, "Walled City of Yardrow" },
-            { Shops.Zaland, "Castle City of Zaland" },
-            { Shops.Zarghidas, "Trade City of Sal Ghidos" },
-            { Shops.Zeltennia, "Zeltennia Castle" }
-        };
         private static IDictionary<Shops, string> readOnlyStoreNames;
-        private static string[] mapNames = new string[128] {
-            "",
-            "Eagrose Castle Gate",
-            "Lesalia Castle Postern",
-            "Mullonde Cathedral Nave",
-            "Office of Lesalia Castle",
-            "Riovanes Castle Roof",
-            "Riovanes Castle Gate",
-            "Riovanes Castle Keep",
-            "Riovanes Castle",
-            "Citadel of Igros Castle",
-            "Eagrose Castle Keep",
-            "Eagrose Castle Solar",
-            "Lionel Castle Gate",
-            "Lionel Castle Oratory",
-            "Lionel Castle Parlor",
-            "Limberry Castle Gate",
-            "Limberry Castle Keep",
-            "Limberry Castle Undercroft",
-            "Limberry Castle Parlor",
-            "Limberry Castle Gate",
-            "Zeltennia Castle Keep",
-            "Zeltennia Castle",
-            "Gariland",
-            "The Beoulve Manse",
-            "The Royal Military Akademy At Gariland",
-            "Yardrow",
-            "Yardrow Armory",
-            "Gollund",
-            "Gollund Colliery Ridge",
-            "Gollund Colliery Slope",
-            "Gollund Colliery Floor",
-            "Dorter",
-            "Dorter Slums",
-            "Hospital in Slums",
-            "The Sand Rat's Sietch",
-            "Zaland",
-            "Outlying Church",
-            "Ruins outside Zaland",
-            "Goug",
-            "Golland Coal Shaft",
-            "Goug Lowtown",
-            "Bunansa Residence",
-            "Warjilis",
-            "Warjilis Harbor",
-            "Bervenia",
-            "Zeltennia Castle Chapel Ruins",
-            "The Tomb of Barbaneth Beoulve",
-            "Sal Ghidos",
-            "Sal Ghidos Slumtown",
-            "Ziekden Fortress",
-            "Mullonde Cathedral",
-            "Mullonde Cathedral",
-            "Mullonde Cathedral Sanctuary",
-            "The Necrohol Gate",
-            "Lost Halidom",
-            "Airship Graveyard",
-            "Orbonne Monastery",
-            "Monastery Vaults: First Level",
-            "Monastery Vaults: Second Level",
-            "Monastery Vaults: Third Level",
-            "Monastery Vaults: Fourth Level",
-            "Monastery Vaults: Fifth Level",
-            "Orbonne Monastery",
-            "Golgollada Gallows",
-            "Fort Besselat Sluice",
-            "Fort Besselat Granary",
-            "Fort Besselat: South Wall",
-            "Fort Besselat: North Wall",
-            "Fort Besselat",
-            "The Necrohol of Mullonde",
-            "Nelveska Temple",
-            "Dorvauldar Marsh",
-            "Fovoham Windflats",
-            "Mill Interior",
-            "The Siedge Weald",
-            "Mount Bervenia",
-            "Zeklaus Desert",
-            "Lenalian Plateau",
-            "Tchigolith Fenlands",
-            "The Yuguewood",
-            "Araguay Woods",
-            "Grogh Heights",
-            "Beddha Sandwaste",
-            "Zeirchele Falls",
-            "Balias Tor",
-            "Mandalia Plain",
-            "Dugeura Pass",
-            "Balias Swale",
-            "Finnath Creek",
-            "Lake Poeskas",
-            "Mount Germinas",
-            "Brigands' Den",
-            "Igros·Beoulve residence",
-            "Broke down shed·Wooden building",
-            "Broke down shed·Stone building",
-            "Church",
-            "Pub",
-            "Inside castle gate in Lesalia",
-            "Outside castle gate in Lesalia",
-            "Main street of Lesalia",
-            "Public cemetary",
-            "For tutorial 1",
-            "For tutorial 2",
-            "Windflat Mill",
-            "The Beoulve Manse: In the waning days of the Fifty Years' War",
-            "The Stair",
-            "The Hollow",
-            "The Cravasse",
-            "The Switchback",
-            "The Crossing",
-            "The Catacombs",
-            "The Oubliette",
-            "The Palings",
-            "The Interstice",
-            "Terminus",
-            "Abandoned Watchtower",
-            "(No name) -- Battle Arena",
-            "(No name) -- Checkerboard Wall",
-            "(No name) -- Checkerboard Wall ???",
-            "(No name) -- Checkerboard Wall Waterland",
-            "(Garbled name) -- Sloped Checkerboard",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "Zeltennia Castle Postern",
-            "Limberry Castle: Inner Court"
-            };
         private static ReadOnlyCollection<string> mapNamesReadOnly;
         private static string[] shopAvailabilities;
         private static string[] statuses;
@@ -223,8 +74,18 @@ namespace PatcherLib
         {
             get
             {
-                if( readOnlyStoreNames == null )
+                if ( readOnlyStoreNames == null )
                 {
+                    Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>();
+                    System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                    doc.LoadXml( (string)PSPResources.dict[Resources.Paths.PSP.ShopNamesXML] );
+
+                    foreach ( System.Xml.XmlNode node in doc.SelectNodes( "/ShopNames/Shop" ) )
+                    {
+                        storeNames[(Shops)System.Enum.Parse( typeof( Shops ), node.Attributes["value"].Value )] =
+                            node.Attributes["name"].Value;
+                    }
+
                     readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>( storeNames );
                 }
 
@@ -331,7 +192,11 @@ namespace PatcherLib
             {
                 if( mapNamesReadOnly == null )
                 {
-                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
+                    var names = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        dict[Paths.MapNamesXML] as string,
+                        "/MapNames/Map[@value='{0}']",
+                        128 );
+                    mapNamesReadOnly = new ReadOnlyCollection<string>( names );
                 }
 
                 return mapNamesReadOnly;
@@ -442,7 +307,8 @@ namespace PatcherLib
             dict[Resources.Paths.PSP.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemAttributesXML].ToUTF8String();
             dict[Resources.Paths.PSP.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsXML].ToUTF8String();
             dict[Resources.Paths.PSP.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemsStringsXML].ToUTF8String();
-
+            dict[Resources.Paths.PSP.ShopNamesXML] = Resources.ZipFileContents[Resources.Paths.PSP.ShopNamesXML].ToUTF8String();
+            dict[Resources.Paths.PSP.MapNamesXML] = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String();
             string[] characterSet = new string[2200];
             PSXResources.CharacterSet.CopyTo( characterSet, 0 );
             characterSet[0x95] = " ";

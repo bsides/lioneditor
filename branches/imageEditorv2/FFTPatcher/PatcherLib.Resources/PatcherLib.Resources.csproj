@@ -61,6 +61,8 @@
     <Content Include="Resources\PSP\Items\Items.xml" />
     <Content Include="Resources\PSP\Items\Strings.xml" />
     <Content Include="Resources\PSP\Jobs.xml" />
+    <Content Include="Resources\PSP\MapNames.xml" />
+    <Content Include="Resources\PSP\ShopNames.xml" />
     <Content Include="Resources\PSP\SkillSets.xml" />
     <Content Include="Resources\PSP\SpecialNames.xml" />
     <Content Include="Resources\PSP\SpriteSets.xml" />
@@ -74,6 +76,8 @@
     <Content Include="Resources\PSX-US\Items\Items.xml" />
     <Content Include="Resources\PSX-US\Items\Strings.xml" />
     <Content Include="Resources\PSX-US\Jobs.xml" />
+    <Content Include="Resources\PSX-US\MapNames.xml" />
+    <Content Include="Resources\PSX-US\ShopNames.xml" />
     <Content Include="Resources\PSX-US\SkillSets.xml" />
     <Content Include="Resources\PSX-US\SpecialNames.xml" />
     <Content Include="Resources\PSX-US\SpriteSets.xml" />

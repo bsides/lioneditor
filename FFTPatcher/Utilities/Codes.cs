@@ -40,18 +40,22 @@ namespace FFTPatcher
 		#endregion Instance Variables 
 
 		#region Public Methods (3) 
+        public static List<string> GenerateCodes(Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset)
+        {
+            return GenerateCodes(context, oldBytes, newBytes, offset, CodeEnabledOnlyWhen.Any);
+        }
 
         /// <summary>
         /// Generates codes based on context.
         /// </summary>
-        public static List<string> GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        public static List<string> GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset, CodeEnabledOnlyWhen when )
         {
             switch( context )
             {
                 case Context.US_PSP:
                     return GeneratePSPCodes( oldBytes, newBytes, offset );
                 case Context.US_PSX:
-                    return GeneratePSXCodes( oldBytes, newBytes, offset );
+                    return GeneratePSXCodes( oldBytes, newBytes, offset, when );
             }
 
             return new List<string>();
@@ -224,40 +228,67 @@ namespace FFTPatcher
             return codes;
         }
 
-        private static List<string> GeneratePSXCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        public enum CodeEnabledOnlyWhen
         {
+            Any = 0,
+            Battle = 1,
+            World = 2
+        }
+
+        private static List<string> GeneratePSXCodes(byte[] oldBytes, byte[] newBytes, UInt32 offset, CodeEnabledOnlyWhen when)
+        {
+            const string worldConditional = "7013B900 F400";
+            const string battleConditional = "7014E61C F400";
+
             List<string> codes = new List<string>();
             bool[] patched = new bool[newBytes.Length];
-            for( uint i = offset % 2; i < newBytes.Length; i += 2 )
+            for (uint i = offset % 2; i < newBytes.Length; i += 2)
             {
-                if( ((i + 1) < newBytes.Length) &&
+                if (((i + 1) < newBytes.Length) &&
                     ((newBytes[i] != oldBytes[i]) &&
                     (newBytes[i + 1] != oldBytes[i + 1])) &&
-                    (!patched[i]) && (!patched[i + 1]) )
+                    (!patched[i]) && (!patched[i + 1]))
                 {
                     UInt32 addy = (UInt32)(offset + i);
-                    string code = string.Format( "80{0:X6} {2:X2}{1:X2}",
-                        addy, newBytes[i], newBytes[i + 1] );
-                    codes.Add( code );
+                    string code = string.Format("80{0:X6} {2:X2}{1:X2}",
+                        addy, newBytes[i], newBytes[i + 1]);
+                    codes.Add(code);
                     patched[i] = true;
                     patched[i + 1] = true;
                 }
             }
-            for( int i = 0; i < newBytes.Length; i++ )
+            for (int i = 0; i < newBytes.Length; i++)
             {
-                if( (newBytes[i] != oldBytes[i]) && (!patched[i]) )
+                if ((newBytes[i] != oldBytes[i]) && (!patched[i]))
                 {
                     UInt32 addy = (UInt32)(offset + i);
-                    string code = string.Format( "30{0:X6} 00{1:X2}",
-                        addy, newBytes[i] );
-                    codes.Add( code );
+                    string code = string.Format("30{0:X6} 00{1:X2}",
+                        addy, newBytes[i]);
+                    codes.Add(code);
                     patched[i] = true;
                 }
             }
 
-            codes.Sort( ( s, t ) => s.Substring( 2 ).CompareTo( t.Substring( 2 ) ) );
+            codes.Sort((s, t) => s.Substring(2).CompareTo(t.Substring(2)));
 
+            if (when != CodeEnabledOnlyWhen.Any)
+            {
+                string conditional =
+                    when == CodeEnabledOnlyWhen.Battle ? battleConditional : worldConditional;
+                List<string> realCodes = new List<string>(codes.Count * 2);
+                foreach (string code in codes)
+                {
+                    realCodes.Add(conditional);
+                    realCodes.Add(code);
+                }
+                codes = realCodes;
+            }
             return codes;
+        }
+
+        private static List<string> GeneratePSXCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        {
+            return GeneratePSXCodes(oldBytes, newBytes, offset, CodeEnabledOnlyWhen.Any);
         }
 
 		#endregion Private Methods 

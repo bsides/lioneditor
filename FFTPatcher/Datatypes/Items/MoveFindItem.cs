@@ -282,7 +282,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return new List<string>();
+                return Codes.GenerateCodes(Context.US_PSX, PSXResources.MoveFind, this.ToByteArray(), 0xF5E74, Codes.CodeEnabledOnlyWhen.Battle);
             }
         }
 

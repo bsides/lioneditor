@@ -234,8 +234,7 @@ namespace FFTPatcher.Datatypes
             }
             else
             {
-                return new string[0];
-                //return Codes.GenerateCodes(Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray(Context.US_PSX), 0x0660C4);
+                return Codes.GenerateCodes(Context.US_PSX, PatcherLib.PSXResources.StoreInventoriesBin, this.ToByteArray(), 0x18D840, Codes.CodeEnabledOnlyWhen.World);
             }
         }
         public override bool HasChanged

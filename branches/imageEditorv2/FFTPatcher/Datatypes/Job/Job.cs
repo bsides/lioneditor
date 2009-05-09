@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all <see cref="Job"/>s in memory.
     /// </summary>
-    public class AllJobs : PatchableFile, IXmlDigest
+    public class AllJobs : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Instance Variables (2) 
 
@@ -119,18 +119,6 @@ namespace FFTPatcher.Datatypes
 
 		#region Public Methods (5) 
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.JobsBin, this.ToByteArray(), 0x277988 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobsBin, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
-            }
-        }
-
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
             var result = new List<PatchedByteArray>( 2 );
@@ -185,6 +173,27 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Jobs" : "\"Jobs";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PSPResources.JobsBin, this.ToByteArray(), 0x277988);
+            }
+            else
+            {
+                return Codes.GenerateCodes(Context.US_PSX, PSXResources.JobsBin, this.ToByteArray(Context.US_PSX), 0x0610B8);
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>

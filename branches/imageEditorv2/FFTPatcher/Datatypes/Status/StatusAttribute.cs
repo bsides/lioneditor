@@ -204,7 +204,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class AllStatusAttributes : PatchableFile, IXmlDigest
+    public class AllStatusAttributes : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Public Properties (2) 
 
@@ -249,18 +249,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (5) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.StatusAttributesBin, this.ToByteArray(), 0x27AD50 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -317,5 +305,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Status Effects" : "\"Status Effects";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PSPResources.StatusAttributesBin, this.ToByteArray(), 0x27AD50);
+            }
+            else
+            {
+                return Codes.GenerateCodes(Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4);
+            }
+        }
+
+        #endregion
     }
 }

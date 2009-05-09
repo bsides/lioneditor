@@ -7,7 +7,7 @@ using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
-    public class AllAnimations : PatchableFile, IXmlDigest, ISupportDefault<AllAnimations>
+    public class AllAnimations : PatchableFile, IXmlDigest, ISupportDefault<AllAnimations>, IGenerateCodes
     {
         private Animation[] animations;
         private IList<Animation> readOnlyAnimations;
@@ -78,7 +78,14 @@ namespace FFTPatcher.Datatypes
             throw new NotImplementedException();
         }
 
-        public IList<string> GenerateCodes()
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Ability Animations" : "\"Ability Animations";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
         {
             if (context == Context.US_PSP)
             {
@@ -90,5 +97,6 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        #endregion
     }
 }

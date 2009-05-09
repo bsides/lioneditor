@@ -288,42 +288,6 @@ namespace PatcherLib.Utilities
         }
 
         /// <summary>
-        /// Adds lines of text in groups of a specified size to the StringBuilder.
-        /// </summary>
-        /// <param name="groupSize">Number of strings in each group</param>
-        /// <param name="groupName">What to name each group.</param>
-        /// <param name="lines">Lines to add</param>
-        [System.Diagnostics.DebuggerStepThrough]
-        public static void AddGroups( this StringBuilder sb, int groupSize, string groupName, IList<string> lines )
-        {
-            if( lines.Count == 0 )
-            {
-                return;
-            }
-            else if( lines.Count <= groupSize )
-            {
-                if( groupName != string.Empty )
-                    sb.Append( groupName + "\n" );
-                sb.AppendLines( lines );
-            }
-            else
-            {
-                int i = 0;
-                int j = 1;
-                for( i = 0; (i + 1) * groupSize < lines.Count; i++ )
-                {
-                    if( groupName != string.Empty )
-                        sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
-                    sb.AppendLines( lines.Sub( i * groupSize, (i + 1) * groupSize - 1 ) );
-                }
-
-                if( groupName != string.Empty )
-                    sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
-                sb.AppendLines( lines.Sub( i * groupSize, lines.Count - 1 ) );
-            }
-        }
-
-        /// <summary>
         /// Adds a collection of values to the list.
         /// </summary>
         /// <param name="items">The items to add</param>

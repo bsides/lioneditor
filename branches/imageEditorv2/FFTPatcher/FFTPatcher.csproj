@@ -93,6 +93,7 @@
     <Compile Include="Datatypes\Abilities\AllAnimations.cs" />
     <Compile Include="Datatypes\Abilities\Animation.cs" />
     <Compile Include="Datatypes\FFTPatch.cs" />
+    <Compile Include="Datatypes\IGenerateCodes.cs" />
     <Compile Include="Datatypes\ISupportDefault.cs" />
     <Compile Include="Datatypes\Items\StoreInventory.cs" />
     <Compile Include="Editors\Abilities\AllAnimationsEditor.cs">

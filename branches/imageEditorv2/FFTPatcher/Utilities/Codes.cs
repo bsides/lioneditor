@@ -40,7 +40,7 @@ namespace FFTPatcher
 		#endregion Instance Variables 
 
 		#region Public Methods (3) 
-        public static List<string> GenerateCodes(Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset)
+        public static IList<string> GenerateCodes(Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset)
         {
             return GenerateCodes(context, oldBytes, newBytes, offset, CodeEnabledOnlyWhen.Any);
         }
@@ -48,7 +48,7 @@ namespace FFTPatcher
         /// <summary>
         /// Generates codes based on context.
         /// </summary>
-        public static List<string> GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset, CodeEnabledOnlyWhen when )
+        public static IList<string> GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset, CodeEnabledOnlyWhen when )
         {
             switch( context )
             {
@@ -68,64 +68,68 @@ namespace FFTPatcher
         {
             StringBuilder sb = new StringBuilder();
 
-            if( FFTPatch.Abilities != null )
+            Context context = FFTPatch.Context;
+
+            IGenerateCodes[] generators = new IGenerateCodes[] {
+                FFTPatch.Abilities,
+                FFTPatch.Jobs,
+                FFTPatch.SkillSets,
+                FFTPatch.MonsterSkills,
+                FFTPatch.ActionMenus,
+                FFTPatch.StatusAttributes,
+                FFTPatch.PoachProbabilities,
+                FFTPatch.JobLevels,
+                FFTPatch.Items,
+                FFTPatch.ItemAttributes,
+                FFTPatch.InflictStatuses,
+                FFTPatch.MoveFind,
+                FFTPatch.AbilityAnimations,
+                FFTPatch.StoreInventories };
+            foreach ( var gen in generators )
             {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Abilities" : "", FFTPatch.Abilities.GenerateCodes() );
-            }
-            if( FFTPatch.Jobs != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Jobs" : "", FFTPatch.Jobs.GenerateCodes() );
-            }
-            if( FFTPatch.SkillSets != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Skill Sets" : "", FFTPatch.SkillSets.GenerateCodes() );
-            }
-            if( FFTPatch.MonsterSkills != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Monster Skill Sets" : "", FFTPatch.MonsterSkills.GenerateCodes() );
-            }
-            if( FFTPatch.ActionMenus != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Action Menus" : "", FFTPatch.ActionMenus.GenerateCodes() );
-            }
-            if( FFTPatch.StatusAttributes != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Status Effects" : "", FFTPatch.StatusAttributes.GenerateCodes() );
-            }
-            if( FFTPatch.PoachProbabilities != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Poaching" : "", FFTPatch.PoachProbabilities.GenerateCodes() );
-            }
-            if( FFTPatch.JobLevels != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Job Levels" : "", FFTPatch.JobLevels.GenerateCodes() );
-            }
-            if( FFTPatch.Items != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Items" : "", FFTPatch.Items.GenerateCodes() );
-            }
-            if( FFTPatch.ItemAttributes != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Item Attributes" : "", FFTPatch.ItemAttributes.GenerateCodes() );
-            }
-            if( FFTPatch.InflictStatuses != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Inflict Statuses" : "", FFTPatch.InflictStatuses.GenerateCodes() );
-            }
-            if( FFTPatch.MoveFind != null )
-            {
-                sb.AddGroups( 25, FFTPatch.Context == Context.US_PSP ? "_C0 Move/Find Items" : "", FFTPatch.MoveFind.GenerateCodes() );
-            }
-            if (FFTPatch.AbilityAnimations != null)
-            {
-                sb.AddGroups(25, FFTPatch.Context == Context.US_PSP ? "_C0 Ability Animations" : "", FFTPatch.AbilityAnimations.GenerateCodes());
-            }
-            if (FFTPatch.StoreInventories != null)
-            {
-                sb.AddGroups(25, FFTPatch.Context == Context.US_PSP ? "_C0 Store Inventories" : "", FFTPatch.StoreInventories.GenerateCodes());
+                if ( gen != null )
+                {
+                    AddGroups( sb, 24, gen.GetCodeHeader( context ), gen.GenerateCodes( context ) );
+                }
             }
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Adds lines of text in groups of a specified size to the StringBuilder.
+        /// </summary>
+        /// <param name="groupSize">Number of strings in each group</param>
+        /// <param name="groupName">What to name each group.</param>
+        /// <param name="lines">Lines to add</param>
+        private static void AddGroups(StringBuilder sb, int groupSize, string groupName, IList<string> lines)
+        {
+            if (lines.Count == 0)
+            {
+                return;
+            }
+            else if (lines.Count <= groupSize)
+            {
+                if (groupName != string.Empty)
+                    sb.Append(groupName + "\n");
+                sb.AppendLines(lines);
+            }
+            else
+            {
+                int i = 0;
+                int j = 1;
+                for (i = 0; (i + 1) * groupSize < lines.Count; i++)
+                {
+                    if (groupName != string.Empty)
+                        sb.Append(string.Format("{0}\\(part {1})\n", groupName, j++));
+                    sb.AppendLines(lines.Sub(i * groupSize, (i + 1) * groupSize - 1));
+                }
+
+                if (groupName != string.Empty)
+                    sb.Append(string.Format("{0}\\(part {1})\n", groupName, j++));
+                sb.AppendLines(lines.Sub(i * groupSize, lines.Count - 1));
+            }
+        }
+
 
         /// <summary>
         /// Saves CWCheat codes to a file.
@@ -133,27 +137,13 @@ namespace FFTPatcher
         public static void SaveToFile( string path )
         {
             string codes = GetAllCodes();
-            StreamWriter stream = null;
-            try
+            using (StreamWriter stream = new StreamWriter(path, false))
             {
-                stream = new StreamWriter( path, false );
                 stream.NewLine = "\n";
-                stream.WriteLine( usHeader );
-                stream.WriteLine( codes );
-                stream.WriteLine( euHeader );
-                stream.WriteLine( codes );
-            }
-            catch( Exception )
-            {
-                throw;
-            }
-            finally
-            {
-                if( stream != null )
-                {
-                    stream.Flush();
-                    stream.Close();
-                }
+                stream.WriteLine(usHeader);
+                stream.WriteLine(codes);
+                stream.WriteLine(euHeader);
+                stream.WriteLine(codes);
             }
         }
 
@@ -161,20 +151,21 @@ namespace FFTPatcher
 
 		#region Private Methods (2) 
 
-        private static List<string> GeneratePSPCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        private static IList<string> GeneratePSPCodes(IList<byte> oldBytes, IList<byte> newBytes, UInt32 offset)
         {
             List<string> codes = new List<string>();
-            bool[] patched = new bool[newBytes.Length];
+            bool[] patched = new bool[newBytes.Count];
 
-            uint i = 0;
+            int i = 0;
             if( offset % 4 > 0 )
             {
-                i = 4 - (offset % 4);
+                i = (int)(4 - (offset % 4));
             }
 
-            for( ; i < newBytes.Length; i += 4 )
+            // Generate 32bit codes
+            for( ; i < newBytes.Count; i += 4 )
             {
-                if( ((i + 3) < newBytes.Length) &&
+                if( ((i + 3) < newBytes.Count) &&
                     ((newBytes[i] != oldBytes[i]) &&
                     (newBytes[i + 1] != oldBytes[i + 1]) &&
                     (newBytes[i + 2] != oldBytes[i + 2]) &&
@@ -195,9 +186,10 @@ namespace FFTPatcher
                 }
             }
 
-            for( i = offset % 2; i < newBytes.Length; i += 2 )
+            // Generate 16bit codes
+            for( i = (int)(offset % 2); i < newBytes.Count; i += 2 )
             {
-                if( ((i + 1) < newBytes.Length) &&
+                if( ((i + 1) < newBytes.Count) &&
                     ((newBytes[i] != oldBytes[i]) &&
                     (newBytes[i + 1] != oldBytes[i + 1])) &&
                     (!patched[i]) && (!patched[i + 1]) )
@@ -211,7 +203,8 @@ namespace FFTPatcher
                 }
             }
 
-            for( i = 0; i < newBytes.Length; i++ )
+            // Generate 8bit codes
+            for( i = 0; i < newBytes.Count; i++ )
             {
                 if( (newBytes[i] != oldBytes[i]) && (!patched[i]) )
                 {
@@ -223,9 +216,10 @@ namespace FFTPatcher
                 }
             }
 
+            // Sort them
             codes.Sort( ( s, t ) => s.Substring( 6 ).CompareTo( t.Substring( 6 ) ) );
 
-            return codes;
+            return codes.AsReadOnly();
         }
 
         public enum CodeEnabledOnlyWhen
@@ -235,16 +229,15 @@ namespace FFTPatcher
             World = 2
         }
 
-        private static List<string> GeneratePSXCodes(byte[] oldBytes, byte[] newBytes, UInt32 offset, CodeEnabledOnlyWhen when)
+        private static IList<string> GeneratePSXCodes(IList<byte> oldBytes, IList<byte> newBytes, UInt32 offset, CodeEnabledOnlyWhen when)
         {
-            const string worldConditional = "7013B900 F400";
-            const string battleConditional = "7014E61C F400";
-
             List<string> codes = new List<string>();
-            bool[] patched = new bool[newBytes.Length];
-            for (uint i = offset % 2; i < newBytes.Length; i += 2)
+            bool[] patched = new bool[newBytes.Count];
+
+            // Generate 80h codes
+            for (int i = (int)(offset % 2); i < newBytes.Count; i += 2)
             {
-                if (((i + 1) < newBytes.Length) &&
+                if (((i + 1) < newBytes.Count) &&
                     ((newBytes[i] != oldBytes[i]) &&
                     (newBytes[i + 1] != oldBytes[i + 1])) &&
                     (!patched[i]) && (!patched[i + 1]))
@@ -257,7 +250,9 @@ namespace FFTPatcher
                     patched[i + 1] = true;
                 }
             }
-            for (int i = 0; i < newBytes.Length; i++)
+
+            // Generate 40h codes
+            for (int i = 0; i < newBytes.Count; i++)
             {
                 if ((newBytes[i] != oldBytes[i]) && (!patched[i]))
                 {
@@ -269,7 +264,12 @@ namespace FFTPatcher
                 }
             }
 
+            // Sort them
             codes.Sort((s, t) => s.Substring(2).CompareTo(t.Substring(2)));
+
+            // Insert conditionals if necessary
+            const string worldConditional = "7013B900 F400";
+            const string battleConditional = "7014E61C F400";
 
             if (when != CodeEnabledOnlyWhen.Any)
             {
@@ -283,10 +283,10 @@ namespace FFTPatcher
                 }
                 codes = realCodes;
             }
-            return codes;
+            return codes.AsReadOnly();
         }
 
-        private static List<string> GeneratePSXCodes( byte[] oldBytes, byte[] newBytes, UInt32 offset )
+        private static IList<string> GeneratePSXCodes(IList<byte> oldBytes, IList<byte> newBytes, UInt32 offset)
         {
             return GeneratePSXCodes(oldBytes, newBytes, offset, CodeEnabledOnlyWhen.Any);
         }

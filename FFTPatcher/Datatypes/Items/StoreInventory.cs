@@ -99,7 +99,7 @@ namespace FFTPatcher.Datatypes
         public event EventHandler DataChanged;
     }
 
-    public class AllStoreInventories : PatchableFile, ISupportDefault<AllStoreInventories>
+    public class AllStoreInventories : PatchableFile, ISupportDefault<AllStoreInventories>, IGenerateCodes
     {
         public AllStoreInventories Default { get; private set; }
         private Context ourContext;
@@ -226,17 +226,6 @@ namespace FFTPatcher.Datatypes
             return result.AsReadOnly();
         }
 
-        public IList<string> GenerateCodes()
-        {
-            if (ourContext == Context.US_PSP)
-            {
-                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.StoreInventoriesBin, this.ToByteArray(), 0x2e087c);
-            }
-            else
-            {
-                return Codes.GenerateCodes(Context.US_PSX, PatcherLib.PSXResources.StoreInventoriesBin, this.ToByteArray(), 0x18D840, Codes.CodeEnabledOnlyWhen.World);
-            }
-        }
         public override bool HasChanged
         {
             get { return Stores.Exists( s => s.HasChanged ); }
@@ -251,6 +240,27 @@ namespace FFTPatcher.Datatypes
         }
 
         public event EventHandler DataChanged;
+
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Store Inventories" : "\"Store Inventories";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.StoreInventoriesBin, this.ToByteArray(), 0x2e087c);
+            }
+            else
+            {
+                return Codes.GenerateCodes(Context.US_PSX, PatcherLib.PSXResources.StoreInventoriesBin, this.ToByteArray(), 0x18D840, Codes.CodeEnabledOnlyWhen.World);
+            }
+        }
+
+        #endregion
     }
 
 }

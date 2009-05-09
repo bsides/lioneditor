@@ -98,7 +98,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class AllPoachProbabilities : PatchableFile, IXmlDigest
+    public class AllPoachProbabilities : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Public Properties (2) 
 
@@ -141,18 +141,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (5) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -207,5 +195,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Poaching" : "\"Poaching";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PSPResources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0);
+            }
+            else
+            {
+                return Codes.GenerateCodes(Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064);
+            }
+        }
+
+        #endregion
     }
 }

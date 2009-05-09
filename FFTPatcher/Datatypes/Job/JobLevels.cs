@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
     /// </summary>
-    public class JobLevels : PatchableFile, IXmlDigest, ISupportDefault<JobLevels>
+    public class JobLevels : PatchableFile, IXmlDigest, ISupportDefault<JobLevels>, IGenerateCodes
     {
 		#region Instance Variables (4) 
 
@@ -225,18 +225,6 @@ namespace FFTPatcher.Datatypes
 
 		#region Public Methods (5) 
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
-            }
-        }
-
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
             var result = new List<PatchedByteArray>( 2 );
@@ -312,6 +300,27 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Job Levels" : "\"Job Levels";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PSPResources.JobLevelsBin, this.ToByteArray(), 0x27B030);
+            }
+            else
+            {
+                return Codes.GenerateCodes(Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray(Context.US_PSX), 0x0660C4);
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>

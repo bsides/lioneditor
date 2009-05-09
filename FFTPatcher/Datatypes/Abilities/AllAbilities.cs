@@ -85,7 +85,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
-    public class AllAbilities : PatchableFile, IXmlDigest
+    public class AllAbilities : PatchableFile, IXmlDigest, IGenerateCodes
     {
 
         #region Static Fields (2)
@@ -265,19 +265,25 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (5)
 
-
-        public List<string> GenerateCodes()
+        string IGenerateCodes.GetCodeHeader( Context context )
         {
-            if( FFTPatch.Context == Context.US_PSP )
+            const string PSPHeader = "_C0 Abilities";
+            const string PSXHeader = "\"Abilities";
+            return context == Context.US_PSP ? PSPHeader : PSXHeader;
+        }
+
+        public IList<string> GenerateCodes( Context context )
+        {
+            if ( context == Context.US_PSP )
             {
                 List<string> result = new List<string>();
                 result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
                 result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
-                return result;
+                return result.AsReadOnly();
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 ).AsReadOnly();
             }
         }
 

@@ -189,7 +189,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
     }
 
-    public class AllActionMenus : PatchableFile, IXmlDigest
+    public class AllActionMenus : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Public Properties (2) 
 
@@ -244,18 +244,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (5) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.ActionEventsBin, this.ToByteArray(), 0x065CB4 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -314,5 +302,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        public string GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Action Menus" : "\"Action Menus";
+        }
+
+        public IList<string> GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PSPResources.ActionEventsBin, this.ToByteArray(), 0x27AC50);
+            }
+            else
+            {
+                return Codes.GenerateCodes(Context.US_PSX, PSXResources.ActionEventsBin, this.ToByteArray(), 0x065CB4);
+            }
+        }
+
+        #endregion
     }
 }

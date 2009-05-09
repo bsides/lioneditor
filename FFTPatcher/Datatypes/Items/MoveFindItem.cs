@@ -224,7 +224,7 @@ namespace FFTPatcher.Datatypes
         #endregion
     }
 
-    public class AllMoveFindItems : PatchableFile, IChangeable, IXmlDigest, ISupportDefault<AllMoveFindItems>
+    public class AllMoveFindItems : PatchableFile, IChangeable, IXmlDigest, ISupportDefault<AllMoveFindItems>, IGenerateCodes
     {
 		#region Public Properties (3) 
 
@@ -274,18 +274,6 @@ namespace FFTPatcher.Datatypes
 
 		#region Public Methods (4) 
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.MoveFind, this.ToByteArray(), 0x274754 );
-            }
-            else
-            {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.MoveFind, this.ToByteArray(), 0xF5E74, Codes.CodeEnabledOnlyWhen.Battle);
-            }
-        }
-
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
             List<PatchedByteArray> result = new List<PatchedByteArray>();
@@ -330,5 +318,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Move/Find Items" : "\"Move/Find Items";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PSPResources.MoveFind, this.ToByteArray(), 0x274754);
+            }
+            else
+            {
+                return Codes.GenerateCodes(Context.US_PSX, PSXResources.MoveFind, this.ToByteArray(), 0xF5E74, Codes.CodeEnabledOnlyWhen.Battle);
+            }
+        }
+
+        #endregion
     }
 }

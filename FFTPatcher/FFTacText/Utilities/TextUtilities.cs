@@ -64,6 +64,21 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public static PSXCharMap PSXMap { get; private set; }
 
+        public static FFTFont PSXFont
+        {
+            get
+            {
+                return new FFTFont(PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin);
+            }
+        }
+
+        public static FFTFont PSPFont
+        {
+            get
+            {
+                return new FFTFont(PatcherLib.PSPResources.FontBin, PatcherLib.PSPResources.FontWidthsBin);
+            }
+        }
 
         #endregion Static Properties
 

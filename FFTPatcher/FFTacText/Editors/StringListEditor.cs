@@ -33,7 +33,11 @@ namespace FFTPatcher.TextEditor
         private int boundSection;
 
         private bool ignoreChanges = false;
+#if MEASURESTRINGS
+        public int TextColumnIndex { get { return textColumn.Index; } }
+#else
         public const int TextColumnIndex = 2;
+#endif
 
         /// <summary>
         /// Gets the current row.
@@ -55,6 +59,9 @@ namespace FFTPatcher.TextEditor
             dataGridView.CellValidating += new DataGridViewCellValidatingEventHandler( dataGridView_CellValidating );
             dataGridView.CellValidated += new DataGridViewCellEventHandler( dataGridView_CellValidated );
             textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
+#if !MEASURESTRINGS
+            dataGridView.Columns.Remove(widthColumn);
+#endif
         }
 
         private void dataGridView_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
@@ -118,8 +125,6 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Binds this editor to a list of strings.
         /// </summary>
-        /// <param name="names">The names.</param>
-        /// <param name="values">The values.</param>
         public void BindTo( IList<string> names, IFile file, int section )
         {
             int count = file.SectionLengths[section];
@@ -133,10 +138,17 @@ namespace FFTPatcher.TextEditor
 
             DataGridViewRow[] rows = new DataGridViewRow[count];
             dataGridView.SuspendLayout();
+
+            PatcherLib.Datatypes.FFTFont font = file.Context == PatcherLib.Datatypes.Context.US_PSP ? TextUtilities.PSPFont : TextUtilities.PSXFont;
+
             for( int i = 0; i < count; i++ )
             {
                 DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells( dataGridView, i, ourNames[i], file[section, i] );
+#if MEASURESTRINGS
+                row.CreateCells( dataGridView, i, ourNames[i], file.CharMap.MeasureStringInFont(file[section,i], font), file[section, i] );
+#else
+                row.CreateCells(dataGridView, i, ourNames[i], file[section, i]);
+#endif
                 row.ReadOnly = disallowed != null && disallowed.Count > 0 && disallowed.Contains( i );
                 rows[i] = row;
             }

@@ -33,9 +33,11 @@ namespace FFTPatcher.TextEditor.Files
         private Dictionary<SectionType, IList<QuickEditEntry>> lookup;
         private IList<SectionType> sectionTypes;
         private Dictionary<Guid, ISerializableFile> files;
+        public PatcherLib.Datatypes.Context Context { get; private set; }
 
-        public QuickEdit( IDictionary<Guid, ISerializableFile> files, IDictionary<SectionType, IList<QuickEditEntry>> sections )
+        public QuickEdit( PatcherLib.Datatypes.Context context, IDictionary<Guid, ISerializableFile> files, IDictionary<SectionType, IList<QuickEditEntry>> sections )
         {
+            Context = context;
             this.files = new Dictionary<Guid, ISerializableFile>( files );
             lookup = new Dictionary<SectionType, IList<QuickEditEntry>>( sections );
 

@@ -51,6 +51,7 @@ namespace FFTPatcher.TextEditor
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.widthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -61,13 +62,14 @@ namespace FFTPatcher.TextEditor
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Columns.AddRange( new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numberColumn,
             this.nameColumn,
-            this.textColumn} );
+            this.widthColumn,
+            this.textColumn});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font( "Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)) );
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -75,9 +77,9 @@ namespace FFTPatcher.TextEditor
             this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dataGridView.Location = new System.Drawing.Point( 0, 0 );
+            this.dataGridView.Location = new System.Drawing.Point(0, 0);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size( 563, 467 );
+            this.dataGridView.Size = new System.Drawing.Size(563, 467);
             this.dataGridView.TabIndex = 0;
             // 
             // numberColumn
@@ -93,11 +95,22 @@ namespace FFTPatcher.TextEditor
             // nameColumn
             // 
             this.nameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.nameColumn.Frozen = true;
             this.nameColumn.HeaderText = "Name";
             this.nameColumn.Name = "nameColumn";
             this.nameColumn.ReadOnly = true;
             this.nameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.nameColumn.Width = 60;
+            // 
+            // widthColumn
+            // 
+            this.widthColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.widthColumn.Frozen = true;
+            this.widthColumn.HeaderText = "Width";
+            this.widthColumn.Name = "widthColumn";
+            this.widthColumn.ReadOnly = true;
+            this.widthColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.widthColumn.Width = 60;
             // 
             // textColumn
             // 
@@ -107,13 +120,13 @@ namespace FFTPatcher.TextEditor
             // 
             // StringListEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( this.dataGridView );
+            this.Controls.Add(this.dataGridView);
             this.Name = "StringListEditor";
-            this.Size = new System.Drawing.Size( 563, 467 );
+            this.Size = new System.Drawing.Size(563, 467);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-            this.ResumeLayout( false );
+            this.ResumeLayout(false);
 
         }
 
@@ -122,6 +135,7 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn numberColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn widthColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn textColumn;
 
     }

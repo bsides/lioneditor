@@ -35,6 +35,8 @@ namespace FFTPatcher.TextEditor
             PopulateDisallowedSections();
         }
 
+        
+
         protected void PopulateDisallowedSections()
         {
             for ( int i = 0; i < Layout.DisallowedEntries.Count; i++ )
@@ -155,6 +157,8 @@ namespace FFTPatcher.TextEditor
         }
 
         public FFTPatcher.TextEditor.FFTTextFactory.FileInfo Layout { get; private set; }
+
+        public Context Context { get { return Layout.Context; } }
 
         public GenericCharMap CharMap { get; private set; }
 

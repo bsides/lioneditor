@@ -303,7 +303,7 @@ namespace FFTPatcher.TextEditor
             if ( files == null || worker.CancellationPending )
                 return null;
 
-            var quickEdit = new QuickEdit( files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ), worker ) );
+            var quickEdit = new QuickEdit( context, files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ), worker ) );
             if ( quickEdit == null || worker.CancellationPending )
                 return null;
 
@@ -341,7 +341,7 @@ namespace FFTPatcher.TextEditor
                     return null;
             }
 
-            var quickEdit = new QuickEdit( result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
+            var quickEdit = new QuickEdit( context, result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
             if ( quickEdit == null || worker.CancellationPending )
             {
                 return null;

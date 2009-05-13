@@ -11,5 +11,6 @@ namespace FFTPatcher.TextEditor
         string this[int section, int entry] { get; set; }
         IList<int> SectionLengths { get; }
         string DisplayName { get; }
+        PatcherLib.Datatypes.Context Context { get; }
     }
 }

@@ -67,9 +67,6 @@
     <Compile Include="Editors\StringListEditor.Designer.cs">
       <DependentUpon>StringListEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\TextPropertyGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Files\CompressibleOneShotFile.cs" />
     <Compile Include="Files\IFile.cs" />
     <Compile Include="Files\ISerializableFile.cs" />

@@ -334,9 +334,10 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+#if MEASURESTRINGS
         public int MeasureStringInFont( string s, PatcherLib.Datatypes.FFTFont font )
         {
-            string[] strings = s.Split( new string[] { "{Newline}" }, StringSplitOptions.RemoveEmptyEntries );
+            string[] strings = s.Split( new string[] { "{Newline}", "{Close}" }, StringSplitOptions.RemoveEmptyEntries );
             int width = int.MinValue;
             foreach ( string ss in strings )
             {
@@ -348,8 +349,10 @@ namespace FFTPatcher.TextEditor
                 }
                 width = Math.Max( width, sum );
             }
+            if (strings.Length == 0) width = 0;
             return width;
         }
+#endif
     }
 
     /// <summary>

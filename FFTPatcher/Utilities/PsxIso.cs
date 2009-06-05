@@ -123,7 +123,7 @@ namespace FFTPatcher
                 foreach ( PatchedByteArray patch in patches )
                 {
                     IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector,
-                        patch.Offset, patch.Bytes, true );
+                        patch.Offset, patch.GetBytes(), true);
                     sendProgress( "Patching ISO" );
                 }
 

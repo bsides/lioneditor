@@ -236,11 +236,11 @@ namespace PatcherLib.Iso
             {
                 if ( patch.SectorEnum.GetType() == typeof( PspIso.Sectors ) )
                 {
-                    stream.WriteArrayToPosition( patch.Bytes, (int)( info[(PspIso.Sectors)patch.SectorEnum] * 2048 ) + patch.Offset );
+                    stream.WriteArrayToPosition( patch.GetBytes(), (int)( info[(PspIso.Sectors)patch.SectorEnum] * 2048 ) + patch.Offset );
                 }
                 else if ( patch.SectorEnum.GetType() == typeof( FFTPack.Files ) )
                 {
-                    FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.Bytes );
+                    FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.GetBytes() );
                 }
                 else
                 {

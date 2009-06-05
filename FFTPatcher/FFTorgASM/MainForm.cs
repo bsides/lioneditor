@@ -39,7 +39,7 @@ namespace FFTorgASM
         {
             if ( !ignoreChanges )
             {
-                variableSpinner.Value = ( checkedListBox1.SelectedItem as AsmPatch ).Variables[variableComboBox.SelectedIndex].Value.Bytes[0];
+                variableSpinner.Value = ( checkedListBox1.SelectedItem as AsmPatch ).Variables[variableComboBox.SelectedIndex].Value.GetBytes()[0];
             }
         }
 
@@ -47,7 +47,7 @@ namespace FFTorgASM
         {
             if ( !ignoreChanges )
             {
-                ( checkedListBox1.SelectedItem as AsmPatch ).Variables[variableComboBox.SelectedIndex].Value.Bytes[0] = (byte)variableSpinner.Value;
+                (checkedListBox1.SelectedItem as AsmPatch).Variables[variableComboBox.SelectedIndex].Value.GetBytes()[0] = (byte)variableSpinner.Value;
             }
         }
 
@@ -61,7 +61,7 @@ namespace FFTorgASM
                 variableComboBox.Items.Clear();
                 p.Variables.ForEach( kvp => variableComboBox.Items.Add( kvp.Key ) );
                 variableComboBox.SelectedIndex = 0;
-                variableSpinner.Value = p.Variables[0].Value.Bytes[0];
+                variableSpinner.Value = p.Variables[0].Value.GetBytes()[0];
                 ignoreChanges = false;
                 variableSpinner.Visible = true;
                 variableComboBox.Visible = true;

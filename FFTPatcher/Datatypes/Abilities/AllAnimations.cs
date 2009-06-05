@@ -65,7 +65,18 @@ namespace FFTPatcher.Datatypes
 
         public override IList<PatcherLib.Datatypes.PatchedByteArray> GetPatches(PatcherLib.Datatypes.Context context)
         {
-            throw new NotImplementedException();
+            List<PatchedByteArray> result = new List<PatchedByteArray>();
+            byte[] bytes = ToByteArray();
+            if (context == Context.US_PSP)
+            {
+                PatcherLib.Iso.PspIso.AbilityAnimations.ForEach(kp => result.Add(kp.GetPatchedByteArray(bytes)));
+            }
+            else if (context == Context.US_PSX)
+            {
+                result.Add(PatcherLib.Iso.PsxIso.AbilityAnimations.GetPatchedByteArray(bytes));
+            }
+
+            return result;
         }
 
         public override bool HasChanged

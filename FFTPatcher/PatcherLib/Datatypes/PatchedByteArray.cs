@@ -19,20 +19,97 @@
 
 using System;
 using PatcherLib.Iso;
+using System.IO;
 
 namespace PatcherLib.Datatypes
 {
+    public class STRPatchedByteArray : LazyLoadedPatchedByteArray 
+    {
+        public override byte[] GetBytes()
+        {
+            return base.GetBytes();
+        }
+
+        public STRPatchedByteArray(PsxIso.Sectors sector, string filename)
+            : base(sector, 0, filename)
+        {
+        }
+    }
+
+    public class LazyLoadedPatchedByteArray : PatchedByteArray
+    {
+        protected string Filename { get; private set; }
+
+        public override byte[] GetBytes()
+        {
+            return File.ReadAllBytes(Filename);
+        }
+
+        public LazyLoadedPatchedByteArray(PsxIso.Sectors sector, long offset, string filename)
+            : this((int)sector, offset, filename)
+        {
+            SectorEnum = sector;
+        }
+
+        public LazyLoadedPatchedByteArray(PspIso.Sectors sector, long offset, string filename)
+            : this((int)sector, offset, filename)
+        {
+            SectorEnum = sector;
+        }
+
+        public LazyLoadedPatchedByteArray(FFTPack.Files file, long offset, string filename)
+            : this((int)file, offset, filename)
+        {
+            SectorEnum = file;
+        }
+
+        public LazyLoadedPatchedByteArray(Enum fileOrSector, long offset, string filename)
+            : this(-1, offset, filename)
+        {
+            SectorEnum = fileOrSector;
+            Type t = fileOrSector.GetType();
+            if (t == typeof(PspIso.Sectors))
+            {
+                Sector = (int)((PspIso.Sectors)fileOrSector);
+            }
+            else if (t == typeof(FFTPack.Files))
+            {
+                Sector = (int)((FFTPack.Files)fileOrSector);
+            }
+            else if (t == typeof(PsxIso.Sectors))
+            {
+                Sector = (int)((PsxIso.Sectors)fileOrSector);
+            }
+            else
+            {
+                throw new ArgumentException("fileOrSector has incorrect type");
+            }
+        }
+
+        public LazyLoadedPatchedByteArray(int sector, long offset, string filename)
+            : base(sector, offset)
+        {
+            this.Filename = Path.GetFullPath(filename);
+        }
+
+    }
+
     public class PatchedByteArray
     {
 		#region Public Properties (4) 
 
-        public byte[] Bytes { get; private set; }
+        public virtual byte[] GetBytes()
+        {
+            return bytes;
+        }
 
-        public long Offset { get; private set; }
+        private byte[] bytes;
 
-        public int Sector { get; private set; }
+        public long Offset { get; protected set; }
 
-        public Enum SectorEnum { get; private set; }
+        public int Sector { get; protected set; }
+
+        public Enum SectorEnum { get; protected set; }
 
 		#endregion Public Properties 
 
@@ -79,11 +156,16 @@ namespace PatcherLib.Datatypes
             }
         }
 
-        public PatchedByteArray( int sector, long offset, byte[] bytes )
+        public PatchedByteArray(int sector, long offset, byte[] bytes)
+            : this(sector, offset)
+        {
+            this.bytes = bytes;
+        }
+
+        protected PatchedByteArray(int sector, long offset)
         {
             Sector = sector;
             Offset = offset;
-            Bytes = bytes;
         }
 
 		#endregion Constructors 

@@ -24,6 +24,7 @@ using System.Drawing.Imaging;
 using PatcherLib.Datatypes;
 using PatcherLib.Iso;
 using PatcherLib.Utilities;
+using System.Text;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -256,6 +257,18 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        public string GetPaletteForPaintDotNet()
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (Palette p in Palettes)
+            {
+                foreach (Color c in p.Colors)
+                {
+                    result.AppendFormat("{0:X2}{1:X2}{2:X2}{3:X2}" + Environment.NewLine, c.A, c.R, c.G, c.B);
+                }
+            }
+            return result.ToString();
+        }
     
         protected abstract void ToBitmapInner( Bitmap bmp, BitmapData bmd );
 

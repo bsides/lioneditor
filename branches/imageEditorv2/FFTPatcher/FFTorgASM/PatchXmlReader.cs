@@ -48,6 +48,15 @@ namespace FFTorgASM
                 patches.Add( new PatchedByteArray( sector, offset, bytes ) );
             }
 
+            currentLocs = node.SelectNodes("STRLocation");
+            foreach (XmlNode location in currentLocs)
+            {
+                PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse(typeof(PsxIso.Sectors), location.Attributes["file"].InnerText);
+                string filename = location.Attributes["input"].InnerText;
+
+                patches.Add(new STRPatchedByteArray(sector, filename));
+            }
+
             staticPatches = patches.AsReadOnly();
         }
 

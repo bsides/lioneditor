@@ -20,7 +20,7 @@ namespace FFTPatcher.TextEditor
 
             public DteException( IFile failedFile )
             {
-                message = string.Format( "DTE for {0} failed.", failedFile.DisplayName );
+                message = string.Format("DTE for {0} failed." + Environment.NewLine + "The ISO has NOT been modified.", failedFile.DisplayName);
             }
         }
 

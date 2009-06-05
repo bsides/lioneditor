@@ -119,8 +119,20 @@ namespace PatcherLib.Iso
 
         public static void PatchPsxIso(Stream iso, PatcherLib.Datatypes.PatchedByteArray patch)
         {
-            IsoPatch.PatchFileAtSector(IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
-                patch.Offset, patch.Bytes, true);
+            if (patch is STRPatchedByteArray)
+            {
+                PatchPsxIso(iso, (STRPatchedByteArray)patch);
+            }
+            else
+            {
+                IsoPatch.PatchFileAtSector(IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
+                    patch.Offset, patch.GetBytes(), true);
+            }
+        }
+
+        public static void PatchPsxIso(Stream iso, PatcherLib.Datatypes.STRPatchedByteArray patch)
+        {
+            ReplaceStrFile(iso, (Sectors)patch.Sector, patch.GetBytes());
         }
 
         public static byte[] ReadFile(Stream iso, Sectors file, int offset, int length)
@@ -133,6 +145,32 @@ namespace PatcherLib.Iso
             return ReadFile(iso, pos.Sector, pos.StartLocation, pos.Length);
         }
 
+        public static void ReplaceStrFile(Stream iso, Sectors file, IList<byte> bytes)
+        {
+            const int bytesPerSector = 2336;
+            if (bytes.Count % bytesPerSector  != 0)
+            {
+                throw new ArgumentException(string.Format("new STR file length must be a multiple of {0}",bytesPerSector));
+            }
+
+            int numSectors = bytes.Count/bytesPerSector;
+
+            byte[] tempSector = new byte[2352];
+
+            int startSector = (int)file;
+
+            for (int i = 0; i < numSectors; i++)
+            {
+                int outputSector = startSector + i;
+                iso.Seek(outputSector * 2352, SeekOrigin.Begin);
+                iso.Read(tempSector, 0, 16);
+                bytes.Sub(i * bytesPerSector, (i + 1) * bytesPerSector - 1).CopyTo(tempSector, 16);
+                IsoPatch.GenerateEccEdc(tempSector, IsoPatch.IsoType.Mode2Form1);
+
+                iso.Seek(outputSector * 2352, SeekOrigin.Begin);
+                iso.Write(tempSector, 0, 2352);
+            }
+        }
 
         #endregion Public Methods
 

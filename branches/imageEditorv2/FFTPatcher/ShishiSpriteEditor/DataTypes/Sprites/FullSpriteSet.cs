@@ -172,7 +172,7 @@ namespace FFTPatcher.SpriteEditor
                 if ( patch != null )
                 {
                     worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + patch.SectorEnum.ToString() );
-                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true );
+                    IsoPatch.PatchFileAtSector(IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.GetBytes(), true);
                 }
                 else
                 {
@@ -189,7 +189,7 @@ namespace FFTPatcher.SpriteEditor
             foreach ( var patch in patches )
             {
                 worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + patch.SectorEnum.ToString() );
-                FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.Bytes );
+                FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.GetBytes() );
             }
 
         }

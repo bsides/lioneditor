@@ -147,11 +147,11 @@ namespace FFTPatcher.TextEditor
                         worker.ReportProgress(0,
                             new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.CalculateDte });
                         filePreferredPairs[dte] = dte.GetPreferredDTEPairs(pairs, currentPairs, dteBytes);
-                        currentPairs.AddRange(filePreferredPairs[dte]);
                         if (filePreferredPairs[dte] == null)
                         {
                             throw new DTE.DteException(dte);
                         }
+                        currentPairs.AddRange(filePreferredPairs[dte]);
                         worker.ReportProgress(0,
                             new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Done, Task = ProgressForm.Task.CalculateDte });
                         if (worker.CancellationPending)
@@ -216,7 +216,10 @@ namespace FFTPatcher.TextEditor
             List<IFile> filesList = new List<IFile>( files.Count + 1 );
             files.ForEach( kvp => filesList.Add( kvp.Value ) );
             filesList.Sort( ( a, b ) => a.DisplayName.CompareTo( b.DisplayName ) );
-            filesList.Add( quickEdit );
+            if ( quickEdit != null )
+            {
+                filesList.Add( quickEdit );
+            }
             Files = filesList.AsReadOnly();
             CharMap = filesList[0].CharMap;
         }

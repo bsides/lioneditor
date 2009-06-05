@@ -344,7 +344,7 @@ namespace PatcherLib.Iso
             }
         }
 
-        private static void GenerateEccEdc( IList<byte> sector, IsoType isoType )
+        public static void GenerateEccEdc( IList<byte> sector, IsoType isoType )
         {
             switch( isoType )
             {

@@ -28,7 +28,6 @@ namespace PatcherLib
 
     public static class PSPResources
     {
-		#region Instance Variables (10) 
 
         public static IList<string> CharacterSet { get; private set; }
 
@@ -41,10 +40,175 @@ namespace PatcherLib
         private static ReadOnlyCollection<string> mapNamesReadOnly;
         private static string[] shopAvailabilities;
         private static string[] statuses;
+        private static IList<string> spriteFiles = new List<string>
+        {
+            "Ramza Chapter 1",
+            "Ramza Chapter 2/3",
+            "Ramza Chapter 4",
+            "Delita Chapter 1",
+            "Delita Chapter 2/3",
+            "Delita Chapter 4",
+            "Argath",
+            "Zalbaag",
+            "Dycedarg",
+            "Larg",
+            "Goltanna",
+            "Ovelia",
+            "Orlandeau",
+            "Funebris",
+            "Reis (Human)",
+            "Zalmour",
+            "Gaffgarion (Enemy)",
+            "Marach (Dead, Used once)",
+            "Simon",
+            "Alma (Battle)",
+            "Orran",
+            "Mustadio (Join)",
+            "Gaffgarion (Guest)",
+            "Delacroix",
+            "Rapha (Guest)",
+            "Marach (Enemy & Join)",
+            "Elmdore",
+            "Tietra",
+            "Barrington",
+            "Agrias (Join)",
+            "Beowulf",
+            "Wiegraf Chapter 1",
+            "Valmafra",
+            "Mustadio (Guest)",
+            "Ludovich",
+            "Folmarv",
+            "Loffrey",
+            "Isilud",
+            "Cletienne",
+            "Wiegraf Chapter 2/3",
+            "Rapha (Join)",
+            "Meliadoul (Join)",
+            "Barich",
+            "Alma (Dead)",
+            "Celia",
+            "Lettie",
+            "Meliadoul (Enemy)",
+            "Alma (Events)",
+            "Ajora",
+            "Cloud",
+            "Zalbaag (Zombie)",
+            "Agrias (Guest)",
+            "Female Chemist",
+            "Female White Mage",
+            "Male Black Mage",
+            "Male Mystic",
+            "Male Squire",
+            "Celia (Never Used)",
+            "Lettie (Never Used)",
+            "Belias",
+            "Male Knight",
+            "Zalera",
+            "Male Archer",
+            "Hashmal",
+            "Altima (First Form)",
+            "Male Black Mage",
+            "Cuchulainn",
+            "Female Time Mage",
+            "Adrammelech",
+            "Male Mystic",
+            "Female Summoner",
+            "Reis (Dragon Form)",
+            "Altima (Second Form)",
+            "10 Year Old Male",
+            "10 Year Old Woman",
+            "20 Year Old Male",
+            "20 Year Old Woman",
+            "40 Year Old Male",
+            "40 Year Old Woman",
+            "60 Year Old Male",
+            "60 Year Old Woman",
+            "Old Funeral Man",
+            "Old Funeral Woman",
+            "Funeral Man",
+            "Funeral Woman",
+            "Funeral Priest",
+            "Male Squire",
+            "Male Squire",
+            "Male Squire",
+            "Male Squire",
+            "Male Squire",
+            "Male Squire",
+            "???",
+            "???",
+            "???",
+            "Male Squire",
+            "Female Squire",
+            "Male Chemist",
+            "Female Chemist",
+            "Male Knight",
+            "Female Knight",
+            "Male Archer",
+            "Female Archer",
+            "Male Monk",
+            "Female Monk",
+            "Male White Mage",
+            "Female White Mage",
+            "Male Black Mage",
+            "Female Black Mage",
+            "Male Time Mage",
+            "Female Time Mage",
+            "Male Summoner",
+            "Female Summoner",
+            "Male Thief",
+            "Female Thief",
+            "Male Orator",
+            "Female Orator",
+            "Male Mystic",
+            "Female Mystic",
+            "Male Geomancer",
+            "Female Geomancer",
+            "Male Dragoon",
+            "Female Dragoon",
+            "Male Samurai",
+            "Female Samurai",
+            "Male Ninja",
+            "Female Ninja",
+            "Male Arithmetician",
+            "Female Arithmetician",
+            "Male Bard",
+            "Female Dancer",
+            "Male Mime",
+            "Female Mime",
+            "Chocobo",
+            "Goblin",
+            "Bomb",
+            "Coeurl",
+            "Squid",
+            "Skeleton",
+            "Ghost",
+            "Ahriman",
+            "Cockatrice",
+            "Pig",
+            "Treant",
+            "Minotaur",
+            "Malboro",
+            "Behemoth",
+            "Dragon",
+            "Tiamat",
+            "Apanda/Byblos",
+            "Elidibus",
+            "Dragon",
+            "Demon",
+            "Automaton",
+            "Male Dark Knight",
+            "Female Dark Knight",
+            "Male Onion Knight",
+            "Female Onion Knight",
+            "Balthier",
+            "Luso",
+            "Argath (Death Knight)",
+            "Aliste",
+            "Bremondt",
+            "Bremondt (Dark Dragon)",
+            "???"
+        }.AsReadOnly();
 
-		#endregion Instance Variables 
-
-		#region Public Properties (42) 
 
         public static string Abilities { get { return dict[Paths.AbilitiesNamesXML] as string; } }
 
@@ -54,17 +218,19 @@ namespace PatcherLib
 
         public static string AbilitiesStrings { get { return dict[Paths.AbilitiesStringsXML] as string; } }
 
+        public static IList<string> SpriteFiles { get { return spriteFiles; } }
+
         public static string[] AbilityAI
         {
             get
             {
-                if( abilityAI == null )
+                if (abilityAI == null)
                 {
                     abilityAI =
                         Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             AbilitiesStrings,
                             "/AbilityStrings/AI/string[@value='{0}']/@name",
-                            24 );
+                            24);
                 }
                 return abilityAI;
             }
@@ -74,19 +240,19 @@ namespace PatcherLib
         {
             get
             {
-                if ( readOnlyStoreNames == null )
+                if (readOnlyStoreNames == null)
                 {
                     Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>();
                     System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                    doc.LoadXml( (string)PSPResources.dict[Resources.Paths.PSP.ShopNamesXML] );
+                    doc.LoadXml((string)PSPResources.dict[Resources.Paths.PSP.ShopNamesXML]);
 
-                    foreach ( System.Xml.XmlNode node in doc.SelectNodes( "/ShopNames/Shop" ) )
+                    foreach (System.Xml.XmlNode node in doc.SelectNodes("/ShopNames/Shop"))
                     {
-                        storeNames[(Shops)System.Enum.Parse( typeof( Shops ), node.Attributes["value"].Value )] =
+                        storeNames[(Shops)System.Enum.Parse(typeof(Shops), node.Attributes["value"].Value)] =
                             node.Attributes["name"].Value;
                     }
 
-                    readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>( storeNames );
+                    readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>(storeNames);
                 }
 
                 return readOnlyStoreNames;
@@ -97,13 +263,13 @@ namespace PatcherLib
         {
             get
             {
-                if( abilityAttributes == null )
+                if (abilityAttributes == null)
                 {
                     abilityAttributes =
                         Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             AbilitiesStrings,
                             "/AbilityStrings/Attributes/string[@value='{0}']/@name",
-                            32 );
+                            32);
                 }
                 return abilityAttributes;
             }
@@ -113,12 +279,12 @@ namespace PatcherLib
         {
             get
             {
-                if( abilityEffects == null )
+                if (abilityEffects == null)
                 {
                     abilityEffects = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                         dict[Paths.AbilityEffectsXML] as string,
                         "/Effects/Effect[@value='{0:X3}']/@name",
-                        512 );
+                        512);
                 }
 
                 return abilityEffects;
@@ -131,13 +297,13 @@ namespace PatcherLib
         {
             get
             {
-                if( abilityTypes == null )
+                if (abilityTypes == null)
                 {
                     abilityTypes =
                         Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             AbilitiesStrings,
                             "/AbilityStrings/Types/string[@value='{0}']/@name",
-                            16 );
+                            16);
                 }
                 return abilityTypes;
             }
@@ -167,9 +333,9 @@ namespace PatcherLib
         {
             get
             {
-                using( System.IO.MemoryStream stream = new System.IO.MemoryStream( ICON0, false ) )
+                using (System.IO.MemoryStream stream = new System.IO.MemoryStream(ICON0, false))
                 {
-                    return System.Drawing.Image.FromStream( stream );
+                    return System.Drawing.Image.FromStream(stream);
                 }
             }
         }
@@ -190,13 +356,13 @@ namespace PatcherLib
         {
             get
             {
-                if( mapNamesReadOnly == null )
+                if (mapNamesReadOnly == null)
                 {
                     var names = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                         dict[Paths.MapNamesXML] as string,
                         "/MapNames/Map[@value='{0}']",
-                        128 );
-                    mapNamesReadOnly = new ReadOnlyCollection<string>( names );
+                        128);
+                    mapNamesReadOnly = new ReadOnlyCollection<string>(names);
                 }
 
                 return mapNamesReadOnly;
@@ -221,13 +387,13 @@ namespace PatcherLib
         {
             get
             {
-                if( shopAvailabilities == null )
+                if (shopAvailabilities == null)
                 {
                     shopAvailabilities =
                         Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                             ItemsStrings,
                             "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
-                            21 );
+                            21);
                 }
 
                 return shopAvailabilities;
@@ -248,12 +414,12 @@ namespace PatcherLib
         {
             get
             {
-                if( statuses == null )
+                if (statuses == null)
                 {
                     statuses = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
                         StatusNames,
                         "/Statuses/Status[@offset='{0}']/@name",
-                        40 );
+                        40);
                 }
 
                 return statuses;
@@ -264,9 +430,6 @@ namespace PatcherLib
 
         public static byte[] StoreInventoriesBin { get { return dict[Paths.Binaries.StoreInventories] as byte[]; } }
 
-		#endregion Public Properties 
-
-		#region Constructors (1) 
 
         static PSPResources()
         {
@@ -312,18 +475,17 @@ namespace PatcherLib
             string[] characterSet = new string[2200];
             PSXResources.CharacterSet.CopyTo( characterSet, 0 );
             characterSet[0x95] = " ";
-            characterSet[0x880] = "á";
-            characterSet[0x881] = "à";
-            characterSet[0x882] = "é";
-            characterSet[0x883] = "è";
-            characterSet[0x884] = "í";
-            characterSet[0x885] = "ú";
-            characterSet[0x886] = "ù";
+            characterSet[0x880] = "Ã¡";
+            characterSet[0x881] = "Ã ";
+            characterSet[0x882] = "Ã©";
+            characterSet[0x883] = "Ã¨";
+            characterSet[0x884] = "Ã­";
+            characterSet[0x885] = "Ãº";
+            characterSet[0x886] = "Ã¹";
             characterSet[0x887] = "-";
-            characterSet[0x888] = "—";
+            characterSet[0x888] = "â€”";
             CharacterSet = characterSet.AsReadOnly();
         }
 
-		#endregion Constructors 
     }
 }

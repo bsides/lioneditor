@@ -38,6 +38,23 @@ namespace PatcherLib.Iso
         private const int fullSectorSize = 2352;    
         private static readonly int[] sectorSizes = new int[3] { 2048, fullSectorSize, fullSectorSize };
 
+        private static IDictionary<IsoType, int> sectorSizeDict;
+        public static IDictionary<IsoType, int> SectorSizes
+        {
+            get
+            {
+                if (sectorSizeDict == null)
+                {
+                    sectorSizeDict = new ReadOnlyDictionary<IsoType, int>(
+                        new Dictionary<IsoType, int>{
+                            { IsoType.Mode1, 2048 },
+                            { IsoType.Mode2Form1, 2352 },
+                            { IsoType.Mode2Form2, 2352 } });
+                }
+                return sectorSizeDict;
+            }
+        }
+
 		#endregion Instance Variables 
 
 		#region Constructors (1) 

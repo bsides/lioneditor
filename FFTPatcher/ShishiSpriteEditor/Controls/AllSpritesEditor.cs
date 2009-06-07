@@ -33,7 +33,7 @@ namespace FFTPatcher.SpriteEditor
             Enabled = true;
             comboBox1.BeginUpdate();
             comboBox1.Items.Clear();
-            for (int i = 0; i < AllSprites.NumSprites; i++)
+            for (int i = 0; i < allSprites.Count; i++)
             {
                 comboBox1.Items.Add(Sprites[i]);
             }
@@ -60,7 +60,7 @@ namespace FFTPatcher.SpriteEditor
             Sprite sprite = (sender as ComboBox).SelectedItem as Sprite;
             if (sprite != null)
             {
-                spriteEditor1.BindTo(sprite, iso);
+                spriteEditor1.BindTo(sprite, Sprites.SharedSPRs[sprite], iso);
             }
         }
     }

@@ -257,10 +257,14 @@ namespace PatcherLib.Iso
             return result;
         }
 
-        public static IList<byte> GetFile( Stream stream, PspIsoInfo info, FFTPack.Files file, int start, int length )
+        public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file, int start, int length)
         {
-            byte[] result = FFTPack.GetFileFromIso( stream, info, file );
-            return result.Sub( start, start + length - 1 );
+            return GetFile(stream, info, file).Sub(start, start + length - 1);
+        }
+
+        public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file)
+        {
+            return FFTPack.GetFileFromIso(stream, info, file);
         }
 
         public static IList<byte> GetBlock(Stream iso, PspIsoInfo info, KnownPosition pos)

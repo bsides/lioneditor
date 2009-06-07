@@ -58,10 +58,17 @@ namespace FFTPatcher.SpriteEditor
 
         private void UpdateIso(Stream iso)
         {
-            PsxIso.PatchPsxIso(iso, psxPos.GetPatchedByteArray(ToByteArray()));
+            if (psxPos != null)
+            {
+                PsxIso.PatchPsxIso(iso, psxPos.GetPatchedByteArray(ToByteArray()));
+            }
+            else if (pspPos != null)
+            {
+                PspIso.ApplyPatch(iso, pspInfo, pspPos.GetPatchedByteArray(ToByteArray()));
+            }
         }
 
-        private SpriteAttributes(PsxIso.KnownPosition pos, IList<byte> bytes)
+        private SpriteAttributes(IList<byte> bytes)
         {
             System.Diagnostics.Debug.Assert(bytes.Count == 4);
             SHP = (SpriteType)bytes[0];
@@ -76,14 +83,32 @@ namespace FFTPatcher.SpriteEditor
             Flag6 = bools[5];
             Flag7 = bools[6];
             Flag8 = bools[7];
+        }
+
+        private SpriteAttributes(PsxIso.KnownPosition pos, IList<byte> bytes):this(bytes)
+        {
             psxPos = pos;
         }
 
+        private SpriteAttributes(PspIso.KnownPosition pos, PspIso.PspIsoInfo info, IList<byte> bytes)
+            : this(bytes)
+        {
+            pspPos = pos;
+            pspInfo = info;
+        }
+
         private PsxIso.KnownPosition psxPos;
+        private PspIso.KnownPosition pspPos;
+        private PspIso.PspIsoInfo pspInfo;
 
         public static SpriteAttributes BuildPsx(PsxIso.KnownPosition pos, IList<byte> bytes)
         {
             return new SpriteAttributes(pos, bytes);
+        }
+
+        public static SpriteAttributes BuildPsp(PspIso.KnownPosition pos, PspIso.PspIsoInfo info, IList<byte> bytes)
+        {
+            return new SpriteAttributes(pos, info, bytes);
         }
 
         private byte[] ToByteArray()

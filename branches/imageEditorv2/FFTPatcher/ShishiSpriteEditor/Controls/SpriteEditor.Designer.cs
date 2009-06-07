@@ -43,6 +43,8 @@
             this.framesTabPage = new System.Windows.Forms.TabPage();
             this.animationTabPage = new System.Windows.Forms.TabPage();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.maxSizeLabel = new System.Windows.Forms.Label();
+            this.sharedLabel = new System.Windows.Forms.Label();
             this.animationViewer1 = new FFTPatcher.SpriteEditor.AnimationViewer();
             this.spriteViewer1 = new FFTPatcher.SpriteEditor.SpriteViewer();
             paletteGroupBox = new System.Windows.Forms.GroupBox();
@@ -108,7 +110,6 @@
             // 
             // shpComboBox
             // 
-            this.shpComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.shpComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.shpComboBox.FormattingEnabled = true;
             this.shpComboBox.Location = new System.Drawing.Point(361, 503);
@@ -119,7 +120,6 @@
             // 
             // seqComboBox
             // 
-            this.seqComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.seqComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.seqComboBox.FormattingEnabled = true;
             this.seqComboBox.Location = new System.Drawing.Point(361, 530);
@@ -130,7 +130,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(323, 506);
             this.label1.Name = "label1";
@@ -140,7 +139,6 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(323, 533);
             this.label2.Name = "label2";
@@ -150,7 +148,6 @@
             // 
             // flyingCheckbox
             // 
-            this.flyingCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.flyingCheckbox.AutoSize = true;
             this.flyingCheckbox.Location = new System.Drawing.Point(323, 557);
             this.flyingCheckbox.Name = "flyingCheckbox";
@@ -162,7 +159,6 @@
             // 
             // flagsCheckedListBox
             // 
-            this.flagsCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.flagsCheckedListBox.FormattingEnabled = true;
             this.flagsCheckedListBox.Items.AddRange(new object[] {
             "Flag 1",
@@ -244,6 +240,28 @@
             this.comboBox1.Size = new System.Drawing.Size(265, 21);
             this.comboBox1.TabIndex = 0;
             // 
+            // maxSizeLabel
+            // 
+            this.maxSizeLabel.AutoSize = true;
+            this.maxSizeLabel.Location = new System.Drawing.Point(514, 12);
+            this.maxSizeLabel.Name = "maxSizeLabel";
+            this.maxSizeLabel.Size = new System.Drawing.Size(59, 26);
+            this.maxSizeLabel.TabIndex = 16;
+            this.maxSizeLabel.Text = "Max size:\r\n1234 bytes";
+            this.maxSizeLabel.Visible = false;
+            // 
+            // sharedLabel
+            // 
+            this.sharedLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sharedLabel.AutoSize = true;
+            this.sharedLabel.ForeColor = System.Drawing.Color.Red;
+            this.sharedLabel.Location = new System.Drawing.Point(3, 606);
+            this.sharedLabel.Name = "sharedLabel";
+            this.sharedLabel.Size = new System.Drawing.Size(35, 13);
+            this.sharedLabel.TabIndex = 17;
+            this.sharedLabel.Text = "label3";
+            this.sharedLabel.Visible = false;
+            // 
             // animationViewer1
             // 
             this.animationViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -272,6 +290,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.sharedLabel);
+            this.Controls.Add(this.maxSizeLabel);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.flagsCheckedListBox);
             this.Controls.Add(this.flyingCheckbox);
@@ -312,5 +332,7 @@
         private System.Windows.Forms.TabPage animationTabPage;
         private AnimationViewer animationViewer1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label maxSizeLabel;
+        private System.Windows.Forms.Label sharedLabel;
     }
 }

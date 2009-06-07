@@ -14,16 +14,37 @@ namespace FFTPatcher.SpriteEditor
         private AllSpriteAttributes attrs;
         private SpriteFileLocations locs;
 
-        public const int NumSprites = 154;
+        public const int NumPsxSprites = 154;
         const long defaultIsoLength = 541315152;
         const long expandedIsoLength = 0x20F18D00;
         const long defaultSectorCount = 230151;
         const long expandedSectorCount = 0x20F18D00/2352;
 
+        public int Count { get; private set; }
 
         public Sprite this[int i]
         {
             get { return sprites[i]; }
+        }
+
+        public IDictionary<Sprite, IList<int>> SharedSPRs { get; private set; }
+        
+        public static AllSprites FromIso(Stream iso)
+        {
+            if (iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0)
+            {
+                // assume psx
+                return FromPsxIso(iso);
+            }
+            else if (iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0)
+            {
+                // assume psp
+                return FromPspIso(iso);
+            }
+            else
+            {
+                throw new ArgumentException("iso");
+            }
         }
 
         public static AllSprites FromPsxIso(Stream iso)
@@ -32,7 +53,13 @@ namespace FFTPatcher.SpriteEditor
             {
                 ExpandPsxIso(iso);
             }
-            return new AllSprites(AllSpriteAttributes.FromPsxIso(iso), SpriteFileLocations.FromPsxIso(iso));
+            return new AllSprites(Context.US_PSX, AllSpriteAttributes.FromPsxIso(iso), SpriteFileLocations.FromPsxIso(iso));
+        }
+
+        public static AllSprites FromPspIso(Stream iso)
+        {
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso);
+            return new AllSprites(Context.US_PSP, AllSpriteAttributes.FromPspIso(iso, info), SpriteFileLocations.FromPspIso(iso, info));
         }
 
         struct Time
@@ -77,8 +104,9 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        public static void ExpandPspIso(Stream iso)
+        private static void ExpandPspIso(Stream iso)
         {
+            throw new InvalidOperationException("This method doesn't work.");
             return;
             string tempPath = Path.GetTempPath();
             string guid = Path.GetRandomFileName();
@@ -89,11 +117,13 @@ namespace FFTPatcher.SpriteEditor
             long fftpackSector = info[PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin];
             iso.Seek(2048 * fftpackSector, SeekOrigin.Begin);
 
+            // Dump the fftpack
             PatcherLib.Iso.FFTPack.DumpToDirectory(iso, tempDirPath, info.GetFileSize(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin), null);
+
+            // Decrypt the ISO  while we have it open...
             PatcherLib.Iso.PspIso.DecryptISO(iso, info);
 
             string battleDirPath = Path.Combine(tempDirPath, "BATTLE");
-
 
             // Read the sector -> fftpack map
             IList<byte> fftpackMap = 
@@ -102,6 +132,7 @@ namespace FFTPatcher.SpriteEditor
                     info, 
                     new PatcherLib.Iso.PspIso.KnownPosition(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x252f34, 0x3e00));
 
+            // Convert the fake "Sectors" into FFTPack indices
             Dictionary<uint, int> sectorToFftPackMap = new Dictionary<uint, int>();
             Dictionary<int, uint> fftPackToSectorMap = new Dictionary<int, uint>();
             for (int i = 3; i < PatcherLib.Iso.FFTPack.NumFftPackFiles - 1; i++)
@@ -116,7 +147,7 @@ namespace FFTPatcher.SpriteEditor
             byte[][] oldSpriteBytes = new byte[numPspSprites][];
 
             // Save the old sprites
-            var locs = SpriteFileLocations.FromPspIso(iso);
+            var locs = SpriteFileLocations.FromPspIso(iso, PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso));
             for (int i = 0; i < numPspSprites; i++)
             {
                 oldSpriteBytes[i] = new byte[65536];
@@ -244,8 +275,8 @@ namespace FFTPatcher.SpriteEditor
 
             // Read old sprites
             var locs = SpriteFileLocations.FromPsxIso(iso);
-            byte[][] oldSprites = new byte[NumSprites][];
-            for (int i = 0; i < NumSprites; i++)
+            byte[][] oldSprites = new byte[NumPsxSprites][];
+            for (int i = 0; i < NumPsxSprites; i++)
             {
                 var loc = locs[i];
                 oldSprites[i] = PatcherLib.Iso.PsxIso.ReadFile(iso, (PatcherLib.Iso.PsxIso.Sectors)loc.Sector, 0, (int)loc.Size);
@@ -311,9 +342,9 @@ namespace FFTPatcher.SpriteEditor
 
 
             // Copy old sprites to new locations
-            List<byte> posBytes = new List<byte>(NumSprites * 8);
+            List<byte> posBytes = new List<byte>(NumPsxSprites * 8);
             const long startSector = 0x2040B100 / 2352;
-            for ( int i = 0; i < NumSprites; i++ )
+            for ( int i = 0; i < NumPsxSprites; i++ )
             {
                 uint sector = (uint)( startSector + i * 65536 / 2048 );
                 byte[] bytes = oldSprites[i];
@@ -474,16 +505,43 @@ namespace FFTPatcher.SpriteEditor
                 SpriteFileLocations.IsoHasPatchedSpriteLocations( iso );
         }
 
-        private AllSprites(AllSpriteAttributes attrs, SpriteFileLocations locs)
+        private AllSprites(Context context, AllSpriteAttributes attrs, SpriteFileLocations locs)
         {
-
-            sprites = new Sprite[NumSprites];
-            for (int i = 0; i < NumSprites; i++)
+            Count = attrs.Count;
+            sprites = new Sprite[Count];
+            IList<string> spriteNames = context == Context.US_PSP ? PSPResources.SpriteFiles : PSXResources.SpriteFiles;
+            for (int i = 0; i < Count; i++)
             {
-                sprites[i] = new Sprite(string.Format("{0:X2} - {1}", i, PSXResources.SpriteFiles[i]), attrs[i], locs[i]);
+                sprites[i] = new Sprite(context, string.Format("{0:X2} - {1}", i, spriteNames[i]), attrs[i], locs[i]);
             }
             this.attrs = attrs;
             this.locs = locs;
+
+            Dictionary<Sprite, IList<int>> sharedSPRs = new Dictionary<Sprite, IList<int>>();
+            for (int i = 0; i < sprites.Count; i++)
+            {
+                sharedSPRs.Add(sprites[i], new List<int>());
+            }
+
+            for (int i = 0; i < sprites.Count; i++)
+            {
+                for (int j = i+1; j < sprites.Count; j++)
+                {
+                    if (locs[i].Sector == locs[j].Sector)
+                    {
+                        sharedSPRs[sprites[i]].Add(j);
+                        sharedSPRs[sprites[j]].Add(i);
+                    }
+                }
+            }
+
+            for (int i = 0; i < sprites.Count; i++)
+            {
+                sharedSPRs[sprites[i]].Sort();
+                sharedSPRs[sprites[i]] = sharedSPRs[sprites[i]].AsReadOnly();
+            }
+
+            SharedSPRs = new ReadOnlyDictionary<Sprite, IList<int>>(sharedSPRs);
         }
 
     }

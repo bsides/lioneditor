@@ -59,14 +59,27 @@ namespace PatcherLib.Iso
         {
             get
             {
-                if ( fftPackFiles == null )
+                if (fftPackFiles == null)
                 {
-                    fftPackFiles = new Dictionary<int, string>();
-
-                    XmlNodeList nodes = resourcesDoc.SelectNodes( "/files/file" );
-                    foreach ( XmlNode node in nodes )
+                    try
                     {
-                        fftPackFiles.Add( Convert.ToInt32( node.Attributes["entry"].InnerText ), node.Attributes["name"].InnerText );
+                        fftPackFiles = new Dictionary<int, string>();
+
+                        XmlNodeList nodes = resourcesDoc.SelectNodes("/files/file");
+                        foreach (XmlNode node in nodes)
+                        {
+                            int key = Convert.ToInt32(node.Attributes["entry"].InnerText);
+                            if (fftPackFiles.ContainsKey(key))
+                            {
+                                throw new Exception();
+                            }
+                            fftPackFiles.Add(Convert.ToInt32(node.Attributes["entry"].InnerText), node.Attributes["name"].InnerText);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        fftPackFiles = null;
+                        throw;
                     }
                 }
 

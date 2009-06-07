@@ -18,12 +18,28 @@ namespace FFTPatcher.SpriteEditor
         bool ignoreChanges = true;
 
         private Stream iso;
-        public void BindTo(Sprite sprite, Stream iso)
+        public void BindTo(Sprite sprite, IList<int> sharedSPRs, Stream iso)
         {
             ignoreChanges = true;
             this.iso = iso;
             Sprite = sprite;
             ReloadSprite();
+
+            if (sharedSPRs.Count > 0)
+            {
+                StringBuilder sb = new StringBuilder("WARNING: This sprite shares an SPR with: ");
+                foreach (int i in sharedSPRs)
+                {
+                    sb.AppendFormat("{0:X2} ", i);
+                }
+                sharedLabel.Text = sb.ToString();
+                sharedLabel.Visible = true;
+            }
+            else
+            {
+                sharedLabel.Visible = false;
+            }
+
             Enabled = true;
             ignoreChanges = false;
         }
@@ -32,7 +48,7 @@ namespace FFTPatcher.SpriteEditor
         {
             bool oldIgnoreChanges = ignoreChanges;
             ignoreChanges = true;
-            AbstractSprite = Sprite.GetAbstractSpriteFromPsxIso( iso );
+            AbstractSprite = Sprite.GetAbstractSpriteFromIso( iso );
             spriteViewer1.Sprite = AbstractSprite;
             shpComboBox.SelectedItem = Sprite.SHP;
             seqComboBox.SelectedItem = Sprite.SEQ;
@@ -49,6 +65,8 @@ namespace FFTPatcher.SpriteEditor
             flagsCheckedListBox.EndUpdate();
             UpdateShapes();
             UpdateAnimationTab();
+            maxSizeLabel.Visible = true;
+            maxSizeLabel.Text = string.Format("Max SPR size:" + Environment.NewLine + "{0} bytes", Sprite.Size);
             ignoreChanges = oldIgnoreChanges;
         }
 
@@ -149,7 +167,7 @@ namespace FFTPatcher.SpriteEditor
             if (currentShape != null)
             {
                 Frame currentFrame = currentShape.Frames[(int)numericUpDown1.Value];
-                pictureBox1.Image = currentFrame.GetFrame(Sprite.GetAbstractSpriteFromPsxIso(iso));
+                pictureBox1.Image = currentFrame.GetFrame(Sprite.GetAbstractSpriteFromIso(iso));
                 if (tabControl1.SelectedTab == framesTabPage)
                 {
                     spriteViewer1.HighlightTiles(currentFrame.Tiles);

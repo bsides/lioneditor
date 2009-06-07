@@ -46,10 +46,12 @@ namespace FFTPatcher.SpriteEditor
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 Stream openedStream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.ReadWrite);
-                if (openedStream != null )
+                if (openedStream != null)
                 {
-                    if (AllSprites.DetectExpansionOfPsxIso(openedStream) ||
-                        MessageBox.Show(this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    if (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0 ||
+                         (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0 &&
+                          (AllSprites.DetectExpansionOfPsxIso(openedStream) ||
+                            MessageBox.Show(this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.OKCancel) == DialogResult.OK)))
                     {
                         if (currentStream != null)
                         {
@@ -59,13 +61,13 @@ namespace FFTPatcher.SpriteEditor
                         }
                         currentStream = openedStream;
 
-                        AllSprites s = AllSprites.FromPsxIso(currentStream);
+                        AllSprites s = AllSprites.FromIso(currentStream);
                         allSpritesEditor1.BindTo(s, currentStream);
                         spriteMenuItem.Enabled = true;
                         sp2Menu.Enabled = true;
                         Text = string.Format(titleFormatString, Path.GetFileName(openFileDialog.FileName));
                     }
-                    else 
+                    else
                     {
                         openedStream.Close();
                         openedStream.Dispose();
@@ -94,8 +96,15 @@ namespace FFTPatcher.SpriteEditor
             openFileDialog.CheckFileExists = true;
             if (currentSprite != null && openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                currentSprite.ImportSprite(currentStream, openFileDialog.FileName);
-                allSpritesEditor1.ReloadCurrentSprite();
+                try
+                {
+                    currentSprite.ImportSprite(currentStream, openFileDialog.FileName);
+                    allSpritesEditor1.ReloadCurrentSprite();
+                }
+                catch (SpriteTooLargeException ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Error");
+                }
             }
         }
 
@@ -108,7 +117,7 @@ namespace FFTPatcher.SpriteEditor
             saveFileDialog.OverwritePrompt = true;
             if (currentSprite != null && saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                File.WriteAllBytes(saveFileDialog.FileName, currentSprite.GetAbstractSpriteFromPsxIso(currentStream).ToByteArray(0));
+                File.WriteAllBytes(saveFileDialog.FileName, currentSprite.GetAbstractSpriteFromIso(currentStream).ToByteArray(0));
             }
         }
 
@@ -135,7 +144,7 @@ namespace FFTPatcher.SpriteEditor
 
             if ( currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
-                currentSprite.GetAbstractSpriteFromPsxIso( currentStream ).ToBitmap().Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
+                currentSprite.GetAbstractSpriteFromIso( currentStream ).ToBitmap().Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
             }
         }
 
@@ -147,7 +156,7 @@ namespace FFTPatcher.SpriteEditor
         private void importSp2MenuItem_Click( object sender, EventArgs e )
         {
             int index = Int32.Parse( ( sender as Menu ).Tag.ToString() );
-            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
             if ( sprite != null )
             {
                 openFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
@@ -164,7 +173,7 @@ namespace FFTPatcher.SpriteEditor
         private void exportSp2MenuItem_Click( object sender, EventArgs e )
         {
             int index = Int32.Parse((sender as Menu).Tag.ToString());
-            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
             if ( sprite != null )
             {
                 saveFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
@@ -185,7 +194,7 @@ namespace FFTPatcher.SpriteEditor
                 mi.Enabled = false;
             }
 
-            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromPsxIso( currentStream ) as MonsterSprite;
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
             if ( sprite != null )
             {
                 for ( int i = 0; i < allSpritesEditor1.CurrentSprite.NumChildren; i++ )

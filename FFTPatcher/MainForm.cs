@@ -261,7 +261,7 @@ namespace FFTPatcher
 
         private void openPatchedPsxIso_Click(object sender, EventArgs e)
         {
-            openFileDialog.Filter = "ISO images|*.iso;*.bin;*.img";
+            openFileDialog.Filter = "ISO images (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
             if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
             {
                 TryAndHandle(delegate() { FFTPatch.OpenPatchedPsxIso(openFileDialog.FileName); }, true);

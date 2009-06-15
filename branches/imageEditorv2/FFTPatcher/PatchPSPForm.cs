@@ -352,6 +352,7 @@ private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
             {
                 icon0FileNameTextBox.Enabled = false;
                 icon0BrowseButton.Enabled = false;
+                PSPResources.ICON0.CopyTo(ICON0_PNG, 0);
                 BuildICON0Preview( PSPResources.ICON0_PNG );
             }
 

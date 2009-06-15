@@ -105,6 +105,8 @@ namespace FFTorgASM
 
         void patchButton_Click( object sender, EventArgs e )
         {
+            saveFileDialog1.Filter = "ISO files (*.bin, *.iso, *.img)|*.bin;*.iso;*.img";
+            saveFileDialog1.FileName = string.Empty;
             if ( saveFileDialog1.ShowDialog( this ) == DialogResult.OK )
             {
                 using ( Stream file = File.Open( saveFileDialog1.FileName, FileMode.Open, FileAccess.ReadWrite ) )

@@ -2810,7 +2810,7 @@ namespace PatcherLib.Iso
             BATTLE_99_4_SP2 = 60225,
             BATTLE_99_5_SP2 = 60241,
         }
-        public class KnownPosition
+        public class KnownPosition : PatcherLib.Iso.KnownPosition
         {
             public Sectors Sector { get; private set; }
             public int StartLocation { get; private set; }
@@ -2825,6 +2825,16 @@ namespace PatcherLib.Iso
             public PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
             {
                 return new PatcherLib.Datatypes.PatchedByteArray(Sector, StartLocation, bytes);
+            }
+
+            public override IList<byte> ReadIso(Stream iso)
+            {
+                return PsxIso.ReadFile(iso, this);
+            }
+
+            public override void PatchIso(Stream iso, IList<byte> bytes)
+            {
+                PsxIso.PatchPsxIso(iso, GetPatchedByteArray(bytes.ToArray()));
             }
         }
 

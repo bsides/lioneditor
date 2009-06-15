@@ -308,7 +308,7 @@ namespace PatcherLib.Iso
             }
         }
 
-        public class KnownPosition
+        public class KnownPosition : PatcherLib.Iso.KnownPosition
         {
             public Enum SectorEnum { get; private set; }
             public Sectors? Sector { get; private set; }
@@ -350,6 +350,16 @@ namespace PatcherLib.Iso
                 {
                     throw new Exception();
                 }
+            }
+
+            public override IList<byte> ReadIso(Stream iso)
+            {
+                return PspIso.GetBlock(iso, PspIsoInfo.GetPspIsoInfo(iso), this);
+            }
+
+            public override void PatchIso(Stream iso, IList<byte> bytes)
+            {
+                PspIso.ApplyPatch(iso, PspIsoInfo.GetPspIsoInfo(iso), GetPatchedByteArray(bytes.ToArray()));
             }
         }
 

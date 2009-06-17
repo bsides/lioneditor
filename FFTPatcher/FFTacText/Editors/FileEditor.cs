@@ -8,16 +8,29 @@ namespace FFTPatcher.TextEditor.Editors
     partial class FileEditor : UserControl
     {
         private IFile boundFile;
+        private Dictionary<int, int> localToFileIndexMapping;
 
         bool ignoreChanges;
         public void BindTo( IFile file )
         {
             ignoreChanges = true;
+            localToFileIndexMapping = new Dictionary<int, int>();
+
             IList<string> sectionNames = file.SectionNames;
             sectionComboBox.Items.Clear();
-            sectionNames.ForEach( n => sectionComboBox.Items.Add( n ) );
+            int localIndex = 0;
+            for ( int i = 0; i < sectionNames.Count; i++ )
+            {
+                if ( !file.HiddenEntries[i] )
+                {
+                    localToFileIndexMapping[localIndex++] = i;
+                    sectionComboBox.Items.Add( sectionNames[i] );
+                }
+            }
+
             sectionComboBox.SelectedIndex = 0;
-            stringListEditor1.BindTo( file.EntryNames[0], file, 0 );
+
+            stringListEditor1.BindTo( file.EntryNames[localToFileIndexMapping[0]], file, localToFileIndexMapping[0] );
             boundFile = file;
             restoreButton.Visible = boundFile is ISerializableFile;
             ignoreChanges = false;
@@ -48,7 +61,10 @@ namespace FFTPatcher.TextEditor.Editors
         {
             if ( !ignoreChanges && boundFile != null )
             {
-                stringListEditor1.BindTo( boundFile.EntryNames[sectionComboBox.SelectedIndex], boundFile, sectionComboBox.SelectedIndex );
+                stringListEditor1.BindTo( 
+                    boundFile.EntryNames[localToFileIndexMapping[sectionComboBox.SelectedIndex]], 
+                    boundFile, 
+                    localToFileIndexMapping[sectionComboBox.SelectedIndex] );
             }
         }
 

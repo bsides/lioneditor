@@ -23,6 +23,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using FFTPatcher.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {

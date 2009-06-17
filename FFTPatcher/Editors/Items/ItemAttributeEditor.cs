@@ -20,6 +20,7 @@
 using System;
 using FFTPatcher.Controls;
 using FFTPatcher.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {

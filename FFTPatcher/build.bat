@@ -28,25 +28,25 @@ echo Building solution
 devenv /build release FFTPatcher.sln > nul
 
 echo Copying FFTPatcher.exe
-copy /y bin\Release\FFTPatcher.exe %OUTPUTDIR% > nul
+copy /y bin\x86\Release\FFTPatcher.exe %OUTPUTDIR% > nul
 echo Copying FFTactext.exe
-copy /y FFTacText\bin\Release\FFTactext.exe %OUTPUTDIR% > nul
+copy /y FFTacText\bin\x86\Release\FFTactext.exe %OUTPUTDIR% > nul
 echo Copying FFTorgASM.exe
-copy /y FFTorgASM\bin\Release\FFTorgASM.exe %OUTPUTDIR% > nul
+copy /y FFTorgASM\bin\x86\Release\FFTorgASM.exe %OUTPUTDIR% > nul
 echo Copying Example.xml
-copy /y FFTorgASM\bin\Release\Example.xml %OUTPUTDIR% > nul
+copy /y FFTorgASM\bin\x86\Release\Example.xml %OUTPUTDIR% > nul
 echo Copying Razele.xml
-copy /y FFTorgASM\bin\Release\Razele.xml %OUTPUTDIR% > nul
+copy /y FFTorgASM\bin\x86\Release\Razele.xml %OUTPUTDIR% > nul
 echo Copying Zodiac.xml
-copy /y FFTorgASM\bin\Release\Zodiac.xml %OUTPUTDIR% > nul
+copy /y FFTorgASM\bin\x86\Release\Zodiac.xml %OUTPUTDIR% > nul
 echo Copying nates1984.xml
-copy /y FFTorgASM\bin\Release\nates1984.xml %OUTPUTDIR% > nul
+copy /y FFTorgASM\bin\x86\Release\nates1984.xml %OUTPUTDIR% > nul
 echo Copying PatcherLib.dll
-copy /y PatcherLib\bin\Release\PatcherLib.dll %OUTPUTDIR% > nul
+copy /y PatcherLib\bin\x86\Release\PatcherLib.dll %OUTPUTDIR% > nul
 echo Copying PatcherLib.Resources.dll
-copy /y PatcherLib.Resources\bin\Release\PatcherLib.Resources.dll %OUTPUTDIR% > nul
+copy /y PatcherLib.Resources\bin\x86\Release\PatcherLib.Resources.dll %OUTPUTDIR% > nul
 echo Copying ShishiSpriteEditor.exe
-copy /y ShishiSpriteEditor\bin\Release\ShishiSpriteEditor.exe %OUTPUTDIR% > nul
+copy /y ShishiSpriteEditor\bin\x86\Release\ShishiSpriteEditor.exe %OUTPUTDIR% > nul
 echo Copying ICSharpCode.SharpZipLib.dll
 copy /y ..\utils\ICSharpCode.SharpZipLib.dll %OUTPUTDIR% > nul
 echo Copying FFTTextCompression.dll

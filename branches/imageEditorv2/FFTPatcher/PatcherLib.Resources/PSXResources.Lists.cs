@@ -29,7 +29,7 @@ namespace PatcherLib
                 {
                     if ( monsterNames == null )
                     {
-                        var temp = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.jobsDoc,
                             "/Jobs/Job[@offset='{0:X2}']/@name",
                             48,
@@ -48,7 +48,7 @@ namespace PatcherLib
                 {
                     if ( skillsetNames == null )
                     {
-                        var temp = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.skillSetsDoc,
                             "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
                             0xE0 );
@@ -64,7 +64,7 @@ namespace PatcherLib
                 {
                     if ( jobNames == null )
                     {
-                        var temp = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.jobsDoc,
                             "/Jobs/Job[@offset='{0:X2}']/@name",
                             0xA0 );
@@ -81,7 +81,7 @@ namespace PatcherLib
                 {
                     if ( eventNames == null )
                     {
-                        var temp = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.eventNamesDoc,
                             "/Events/Event[@value='{0:X3}']/@name",
                             0x200 );
@@ -99,7 +99,7 @@ namespace PatcherLib
                 {
                     if ( items == null )
                     {
-                        var temp = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.itemsDoc,
                             "/Items/Item[@offset='{0}']/@name",
                             256 );
@@ -115,7 +115,7 @@ namespace PatcherLib
                 {
                     if ( abilityNames == null )
                     {
-                        string[] tempNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var tempNames = Resources.GetStringsFromNumberedXmlNodes(
                             abilitiesDoc,
                             "/Abilities/Ability[@value='{0}']/@name",
                             512 );
@@ -133,7 +133,7 @@ namespace PatcherLib
                     if ( abilityAI == null )
                     {
                         var temp =
-                            Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                            Resources.GetStringsFromNumberedXmlNodes(
                                 abilitiesStringsDoc,
                                 "/AbilityStrings/AI/string[@value='{0}']/@name",
                                 24 );
@@ -150,7 +150,7 @@ namespace PatcherLib
                     if ( abilityAttributes == null )
                     {
                         var temp =
-                            Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                            Resources.GetStringsFromNumberedXmlNodes(
                                 abilitiesStringsDoc,
                                 "/AbilityStrings/Attributes/string[@value='{0}']/@name",
                                 32 );
@@ -166,7 +166,7 @@ namespace PatcherLib
                 {
                     if ( abilityEffects == null )
                     {
-                        var temp = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             abilityEffectsDoc,
                             "/Effects/Effect[@value='{0:X3}']/@name",
                             512 );
@@ -184,7 +184,7 @@ namespace PatcherLib
                     if ( abilityTypes == null )
                     {
                         var temp =
-                            Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                            Resources.GetStringsFromNumberedXmlNodes(
                                 abilitiesStringsDoc,
                                 "/AbilityStrings/Types/string[@value='{0}']/@name",
                                 16 );
@@ -200,7 +200,7 @@ namespace PatcherLib
                 {
                     if ( mapNamesReadOnly == null )
                     {
-                        var names = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var names = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.mapNamesDoc,
                             "/MapNames/Map[@value='{0}']",
                             128 );
@@ -217,7 +217,7 @@ namespace PatcherLib
                     if ( shopAvailabilities == null )
                     {
                         var temp =
-                            Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                            Resources.GetStringsFromNumberedXmlNodes(
                                 PSXResources.itemsStringsDoc,
                                 "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
                                 21 );
@@ -236,7 +236,7 @@ namespace PatcherLib
                 {
                     if ( statuses == null )
                     {
-                        var temp = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             statusNamesDoc,
                             "/Statuses/Status[@offset='{0}']/@name",
                             40 );
@@ -276,7 +276,7 @@ namespace PatcherLib
                 {
                     if ( specialNames == null )
                     {
-                        var temp = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.specialNamesDoc,
                             "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
                             256 );
@@ -293,7 +293,7 @@ namespace PatcherLib
                 {
                     if ( spriteSets == null )
                     {
-                        var temp = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                        var temp = Resources.GetStringsFromNumberedXmlNodes(
                             PSXResources.spriteSetsDoc,
                             "/Sprites/Sprite[@byte='{0:X2}']/@name",
                             256 );

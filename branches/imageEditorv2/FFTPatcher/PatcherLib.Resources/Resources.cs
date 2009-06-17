@@ -28,54 +28,70 @@ using ICSharpCode.SharpZipLib.Zip;
 namespace PatcherLib
 {
     using PatcherLib.Utilities;
+    using System.Xml;
     public static class Resources
     {
-		#region Instance Variables (1) 
 
-        private static Dictionary<byte, string> abilityFormulas;
+        /// <summary>
+        /// Iterates through an XML document, getting the string values of certain nodes.
+        /// </summary>
+        public static IList<string> GetStringsFromNumberedXmlNodes(string xmlDoc, string xPath, int length, int startIndex)
+        {
+            string[] result = new string[length];
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlDoc);
+            for (int i = startIndex; i < (length + startIndex); i++)
+            {
+                XmlNode node = doc.SelectSingleNode(string.Format(xPath, i));
+                result[i - startIndex] = node == null ? string.Empty : node.InnerText;
+            }
 
-		#endregion Instance Variables 
+            return result;
+        }
 
-		#region Public Properties (2) 
+        /// <summary>
+        /// Iterates through an XML document, getting the string values of certain nodes.
+        /// </summary>
+        public static IList<string> GetStringsFromNumberedXmlNodes(string xmlDoc, string xPath, int length)
+        {
+            return GetStringsFromNumberedXmlNodes(xmlDoc, xPath, length, 0);
+        }
 
-        public static Dictionary<byte, string> AbilityFormulas
+
+        private static IDictionary<byte, string> abilityFormulas;
+
+        public static IDictionary<byte, string> AbilityFormulas
         {
             get
             {
                 if( abilityFormulas == null )
                 {
-                    abilityFormulas = new Dictionary<byte, string>();
-                    string[] formulaNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
+                    var temp = new Dictionary<byte, string>();
+                    var formulaNames = Resources.GetStringsFromNumberedXmlNodes(
                         ZipFileContents[Paths.AbilityFormulasXML].ToUTF8String(),
                         "/AbilityFormulas/Ability[@value='{0:X2}']",
                         256 );
                     for( int i = 0; i < 256; i++ )
                     {
-                        abilityFormulas.Add( (byte)i, formulaNames[i] );
+                        temp.Add((byte)i, formulaNames[i]);
                     }
+
+                    abilityFormulas = new PatcherLib.Datatypes.ReadOnlyDictionary<byte, string>(temp);
                 }
 
                 return abilityFormulas;
             }
         }
 
-        public static Dictionary<string, byte[]> ZipFileContents
+        public static IDictionary<string, IList<byte>> ZipFileContents
         {
             get; private set;
         }
 
-		#endregion Public Properties 
-
-		#region Private Properties (1) 
-
-        private static Dictionary<string, byte[]> DefaultZipFileContents
+        private static IDictionary<string, IList<byte>> DefaultZipFileContents
         {
             get; set;
         }
-
-		#endregion Private Properties 
-
-		#region Constructors (1) 
 
         static Resources()
         {
@@ -83,7 +99,7 @@ namespace PatcherLib
             using( GZipInputStream gzStream = new GZipInputStream( memStream ) )
             using( TarInputStream tarStream = new TarInputStream( gzStream ) )
             {
-                DefaultZipFileContents = new Dictionary<string, byte[]>();
+                var tempDefault = new Dictionary<string, IList<byte>>();
                 TarEntry entry;
                 entry = tarStream.GetNextEntry();
                 while( entry != null )
@@ -92,21 +108,24 @@ namespace PatcherLib
                     {
                         byte[] bytes = new byte[entry.Size];
                         StreamUtils.ReadFully( tarStream, bytes );
-                        DefaultZipFileContents[entry.Name] = bytes;
+                        tempDefault[entry.Name] = bytes.AsReadOnly();
                     }
                     entry = tarStream.GetNextEntry();
                 }
+
+                DefaultZipFileContents = new PatcherLib.Datatypes.ReadOnlyDictionary<string, IList<byte>>(tempDefault);
             }
 
             string defaultsFile = Path.Combine( Path.GetDirectoryName( System.Windows.Forms.Application.ExecutablePath ), "Resources.zip" );
+
             if( File.Exists( defaultsFile ) )
             {
+                var tempContents = new Dictionary<string, IList<byte>>();
                 try
                 {
                     using( FileStream file = File.Open( defaultsFile, FileMode.Open, FileAccess.Read ) )
                     using( ZipInputStream zipStream = new ZipInputStream( file ) )
                     {
-                        ZipFileContents = new Dictionary<string, byte[]>();
                         ZipEntry entry = zipStream.GetNextEntry();
                         while( entry != null )
                         {
@@ -114,19 +133,21 @@ namespace PatcherLib
                             {
                                 byte[] bytes = new byte[entry.Size];
                                 StreamUtils.ReadFully( zipStream, bytes );
-                                ZipFileContents[entry.Name] = bytes;
+                                tempContents[entry.Name] = bytes.AsReadOnly();
                             }
                             entry = zipStream.GetNextEntry();
                         }
 
-                        foreach( KeyValuePair<string, byte[]> kvp in DefaultZipFileContents )
+                        foreach (KeyValuePair<string, IList<byte>> kvp in DefaultZipFileContents)
                         {
-                            if( !ZipFileContents.ContainsKey( kvp.Key ) )
+                            if (!tempContents.ContainsKey(kvp.Key))
                             {
-                                ZipFileContents[kvp.Key] = kvp.Value;
+                                tempContents[kvp.Key] = kvp.Value;
                             }
                         }
                     }
+
+                    ZipFileContents = new PatcherLib.Datatypes.ReadOnlyDictionary<string, IList<byte>>(tempContents);
                 }
                 catch( Exception )
                 {
@@ -140,11 +161,45 @@ namespace PatcherLib
 
         }
 
-		#endregion Constructors 
-
+        public static void GenerateDefaultResourcesZip(string filename)
+        {
+            using (FileStream stream = File.Open(filename, FileMode.Create, FileAccess.ReadWrite))
+            using (ZipOutputStream output = new ZipOutputStream(stream))
+            {
+                foreach (string path in Paths.AllPaths)
+                {
+                    ZipEntry ze = new ZipEntry(path);
+                    IList<byte> bytes = DefaultZipFileContents[path];
+                    ze.Size = bytes.Count;
+                    output.PutNextEntry(ze);
+                    output.Write(bytes.ToArray(), 0, bytes.Count);
+                }
+            }
+        }
 
         public static class Paths
         {
+            internal static IList<string> AllPaths = new string[] {
+                AbilityFormulasXML, DigestTransform, ENTD1, ENTD2, ENTD3, ENTD4, MoveFindBin,
+
+                PSP.Binaries.ENTD5, PSP.Binaries.Abilities, PSP.Binaries.AbilityEffects, PSP.Binaries.AbilityAnimations,
+                PSP.Binaries.ActionEvents, PSP.Binaries.Font, PSP.Binaries.FontWidths, PSP.Binaries.ICON0, 
+                PSP.Binaries.InflictStatuses, PSP.Binaries.JobLevels, PSP.Binaries.Jobs, PSP.Binaries.MonsterSkills,
+                PSP.Binaries.NewItemAttributes, PSP.Binaries.NewItems, PSP.Binaries.OldItemAttributes, PSP.Binaries.OldItems,
+                PSP.Binaries.PoachProbabilities, PSP.Binaries.SkillSets, PSP.Binaries.StatusAttributes,
+                PSP.Binaries.StoreInventories, PSP.EventNamesXML, PSP.FFTPackFilesXML, PSP.JobsXML, PSP.SkillSetsXML,
+                PSP.SpecialNamesXML, PSP.SpriteSetsXML, PSP.StatusNamesXML, PSP.AbilitiesNamesXML, PSP.AbilitiesStringsXML,
+                PSP.AbilityEffectsXML, PSP.ItemAttributesXML, PSP.ItemsXML, PSP.ItemsStringsXML, PSP.ShopNamesXML,
+
+                PSX.Binaries.Abilities, PSX.Binaries.AbilityAnimations, PSX.Binaries.AbilityEffects, PSX.Binaries.ActionEvents,
+                PSX.Binaries.Font, PSX.Binaries.FontWidths, PSX.Binaries.SCEAP, PSX.Binaries.InflictStatuses,
+                PSX.Binaries.JobLevels, PSX.Binaries.Jobs, PSX.Binaries.MonsterSkills, PSX.Binaries.OldItemAttributes,
+                PSX.Binaries.OldItems, PSX.Binaries.PoachProbabilities, PSX.Binaries.SkillSets, 
+                PSX.Binaries.StatusAttributes, PSX.Binaries.StoreInventories, PSX.EventNamesXML, PSX.FileList,
+                PSX.JobsXML, PSX.SkillSetsXML, PSX.SpecialNamesXML, PSX.SpriteSetsXML, PSX.StatusNamesXML,
+                PSX.AbilitiesNamesXML, PSX.AbilitiesStringsXML, PSX.AbilityEffectsXML, PSX.ItemAttributesXML,
+                PSX.ItemsXML, PSX.ItemsStringsXML, PSX.ShopNamesXML, PSX.MapNamesXML }.AsReadOnly();
+
             public const string AbilityFormulasXML = "AbilityFormulas.xml";
             public const string DigestTransform = "digestTransform.xsl";
             private const string ENTD1 = "ENTD1.ENT";

@@ -214,7 +214,7 @@ namespace FFTPatcher.Datatypes
 #endif
 
             settings.ConformanceLevel = ConformanceLevel.Fragment;
-            using( MemoryStream memoryStream = new MemoryStream( Resources.ZipFileContents[Resources.Paths.DigestTransform] ) )
+            using( MemoryStream memoryStream = new MemoryStream( Resources.ZipFileContents[Resources.Paths.DigestTransform].ToArray() ) )
             using( XmlReader transformXmlReader = XmlReader.Create( memoryStream ) )
             using( StringReader inputReader = new StringReader( sb.ToString() ) )
             using( XmlReader inputXmlReader = XmlReader.Create( inputReader ) )

@@ -416,31 +416,6 @@ namespace PatcherLib.Utilities
         }
 
         /// <summary>
-        /// Iterates through an XML document, getting the string values of certain nodes.
-        /// </summary>
-        public static string[] GetStringsFromNumberedXmlNodes( string xmlDoc, string xPath, int length, int startIndex )
-        {
-            string[] result = new string[length];
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml( xmlDoc );
-            for( int i = startIndex; i < (length + startIndex); i++ )
-            {
-                XmlNode node = doc.SelectSingleNode( string.Format( xPath, i ) );
-                result[i - startIndex] = node == null ? string.Empty : node.InnerText;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Iterates through an XML document, getting the string values of certain nodes.
-        /// </summary>
-        public static string[] GetStringsFromNumberedXmlNodes( string xmlDoc, string xPath, int length )
-        {
-            return GetStringsFromNumberedXmlNodes( xmlDoc, xPath, length, 0 );
-        }
-
-        /// <summary>
         /// Copies the numbers to the upper and lower nibbles of a byte.
         /// </summary>
         public static byte MoveToUpperAndLowerNibbles( int upper, int lower )

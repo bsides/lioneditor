@@ -446,15 +446,15 @@ namespace PatcherLib.Utilities
         /// Converts this to a string.
         /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
-        public static string ToUTF8String( this byte[] bytes )
+        public static string ToUTF8String( this IList<byte> bytes )
         {
             if( (bytes[0] == 0xef) && (bytes[1] == 0xbb) && (bytes[2] == 0xbf) )
             {
-                return Encoding.UTF8.GetString( bytes, 3, bytes.Length - 3 );
+                return Encoding.UTF8.GetString( bytes.ToArray(), 3, bytes.Count - 3 );
             }
             else
             {
-                return Encoding.UTF8.GetString( bytes );
+                return Encoding.UTF8.GetString( bytes.ToArray() );
             }
         }
 

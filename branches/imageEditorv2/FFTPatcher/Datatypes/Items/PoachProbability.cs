@@ -128,7 +128,7 @@ namespace FFTPatcher.Datatypes
 
         public AllPoachProbabilities( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin;
+            IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.PoachProbabilities : PSXResources.Binaries.PoachProbabilities;
 
             PoachProbabilities = new PoachProbability[48];
             for( int i = 0; i < 48; i++ )
@@ -207,11 +207,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PSPResources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0);
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.PoachProbabilities, this.ToByteArray(), 0x27AFD0 );
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.PoachProbabilities, this.ToByteArray(), 0x066064 );
             }
         }
 

@@ -141,11 +141,11 @@ namespace FFTPatcher.Datatypes
 
         public string Name { get; private set; }
 
-        public static string[] PSPNames { get; private set; }
+        public static IList<string> PSPNames { get; private set; }
 
         public static SkillSet[] PSPSkills { get; private set; }
 
-        public static string[] PSXNames { get; private set; }
+        public static IList<string> PSXNames { get; private set; }
 
         public static SkillSet[] PSXSkills { get; private set; }
 
@@ -174,14 +174,9 @@ namespace FFTPatcher.Datatypes
             PSPSkills = new SkillSet[0xE3];
             pspEventSkills = new SortedDictionary<byte, SkillSet>();
 
-            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.SkillSets,
-                "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
-                0xE3 );
-            PSXNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.SkillSets,
-                "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
-                0xE0 );
+            PSPNames = PSPResources.Lists.SkillSets;
+            PSXNames = PSXResources.Lists.SkillSets;
+
             for( int i = 0; i < 0xE3; i++ )
             {
                 string n = PSPNames[i];
@@ -339,7 +334,7 @@ namespace FFTPatcher.Datatypes
 		#region Constructors (3) 
 
         public AllSkillSets( IList<byte> bytes )
-            : this( Context.US_PSP, bytes, PSPResources.SkillSetsBin )
+            : this( Context.US_PSP, bytes, PSPResources.Binaries.SkillSets )
         {
         }
 
@@ -446,11 +441,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PSPResources.SkillSetsBin, this.ToByteArray(), 0x2799E4);
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.SkillSets, this.ToByteArray(), 0x2799E4 );
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.SkillSetsBin, this.ToByteArray(Context.US_PSX), 0x064A94);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.SkillSets, this.ToByteArray( Context.US_PSX ), 0x064A94 );
             }
         }
 

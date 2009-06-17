@@ -68,7 +68,7 @@ namespace FFTPatcher.TextEditor
         {
             get
             {
-                return new FFTFont(PatcherLib.PSXResources.FontBin, PatcherLib.PSXResources.FontWidthsBin);
+                return new FFTFont( PatcherLib.PSXResources.Binaries.Font, PatcherLib.PSXResources.Binaries.FontWidths );
             }
         }
 
@@ -76,7 +76,7 @@ namespace FFTPatcher.TextEditor
         {
             get
             {
-                return new FFTFont(PatcherLib.PSPResources.FontBin, PatcherLib.PSPResources.FontWidthsBin);
+                return new FFTFont( PatcherLib.PSPResources.Binaries.Font, PatcherLib.PSPResources.Binaries.FontWidths );
             }
         }
 

@@ -21,6 +21,7 @@ using System;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 using PatcherLib;
+using PatcherLib.Utilities;
 using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
@@ -143,8 +144,8 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 aiCheckedListBox.Items.Clear();
-                aiCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.AbilityAI : PSXResources.AbilityAI );
-                abilityTypeComboBox.DataSource = ourContext == Context.US_PSP ? PSPResources.AbilityTypes : PSXResources.AbilityTypes;
+                aiCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.Lists.AbilityAI.ToArray() : PSXResources.Lists.AbilityAI.ToArray() );
+                abilityTypeComboBox.DataSource = ourContext == Context.US_PSP ? PSPResources.Lists.AbilityTypes : PSXResources.Lists.AbilityTypes;
             }
 
             jpCostSpinner.SetValueAndDefault( ability.JPCost, ability.Default.JPCost );

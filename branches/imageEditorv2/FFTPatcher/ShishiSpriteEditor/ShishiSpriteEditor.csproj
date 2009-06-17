@@ -137,9 +137,9 @@
     <Compile Include="DataTypes\Sprites\CYOKO.cs" />
     <Compile Include="DataTypes\Sprites\FullSpriteSet.cs" />
     <Compile Include="DataTypes\Sprites\SerializedSprite.cs" />
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="DataTypes\Frame.cs" />
     <Compile Include="DataTypes\Sprites\KANZEN.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

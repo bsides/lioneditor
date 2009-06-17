@@ -314,7 +314,7 @@ namespace FFTPatcher.Editors
                 storeInventoryCheckedListBox.Items.Clear();
                 foreach ( Shops shop in shops )
                 {
-                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSXResources.ShopNames[shop] );
+                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSXResources.Lists.ShopNames[shop] );
                 }
                 storeInventoryCheckedListBox.EndUpdate();
 

@@ -26,430 +26,77 @@ namespace PatcherLib
     using PatcherLib.Utilities;
     using Paths = Resources.Paths.PSX;
 
-    public static class PSXResources
+    public static partial class PSXResources
     {
-		#region Instance Variables (9) 
+        private static IDictionary<Shops, string> readOnlyStoreNames;
+        private static string statusNamesDoc;
+            
+
+        private static string abilitiesDoc;
+
+        private static string abilitiesStringsDoc;
 
         public static IList<string> CharacterSet { get; private set; }
 
-        private static string[] abilityAI;
-        private static string[] abilityAttributes;
-        private static string[] abilityEffects;
-        private static string[] abilityTypes;
-        static Dictionary<string, object> dict = new Dictionary<string, object>();
-        private static IList<string> spriteFiles = new List<string>
-        {
-            "Ramza Chapter 1",
-            "Ramza Chapter 2/3",
-            "Ramza Chapter 4",
-            "Delita Chapter 1",
-            "Delita Chapter 2/3",
-            "Delita Chapter 4",
-            "Algus",
-            "Zalbag",
-            "Dycedarg",
-            "Larg",
-            "Goltana",
-            "Ovelia",
-            "Orlandu",
-            "Funeral",
-            "Reis (Human)",
-            "Zalmo",
-            "Gafgarion (Enemy)",
-            "Malak (Dead, Used once)",
-            "Simon",
-            "Alma (Battle)",
-            "Olan",
-            "Mustadio (Join)",
-            "Gafgarion (Guest)",
-            "Draclau",
-            "Rafa (Guest)",
-            "Malak (Enemy & Join)",
-            "Elmdor",
-            "Teta",
-            "Barinten",
-            "Agrias (Join)",
-            "Beowulf",
-            "Wiegraf Chapter 1",
-            "Balmafula",
-            "Mustadio (Guest)",
-            "Rudvich",
-            "Vormav",
-            "Rofel",
-            "Izlude",
-            "Kletian",
-            "Wiegraf Chapter 2/3",
-            "Rafa (Join)",
-            "Meliadoul (Join)",
-            "Balk",
-            "Alma (Dead)",
-            "Celia",
-            "Lede",
-            "Meliadoul (Enemy)",
-            "Alma (Events)",
-            "Ajora",
-            "Cloud",
-            "Zalbag (Zombie)",
-            "Agrias (Guest)",
-            "Female Chemist",
-            "Female Priest",
-            "Male Wizard",
-            "Male Oracle",
-            "Male Squire",
-            "Celia (Never Used)",
-            "Lede (Never Used)",
-            "Velius",
-            "Male Knight",
-            "Zalera",
-            "Male Archer",
-            "Hashmalum",
-            "Altima (First Form)",
-            "Male Wizard",
-            "Queklain",
-            "Female Time Mage",
-            "Adramelk",
-            "Male Oracle",
-            "Female Summoner",
-            "Reis (Dragon Form)",
-            "Altima (Second Form)",
-            "10 Year Old Male",
-            "10 Year Old Woman",
-            "20 Year Old Male",
-            "20 Year Old Woman",
-            "40 Year Old Male",
-            "40 Year Old Woman",
-            "60 Year Old Male",
-            "60 Year Old Woman",
-            "Old Funeral Man",
-            "Old Funeral Woman",
-            "Funeral Man",
-            "Funeral Woman",
-            "Funeral Priest",
-            "Male Squire",
-            "Male Squire",
-            "Male Squire",
-            "Male Squire",
-            "Male Squire",
-            "Male Squire",
-            "???",
-            "???",
-            "???",
-            "Male Squire",
-            "Female Squire",
-            "Male Chemist",
-            "Female Chemist",
-            "Male Knight",
-            "Female Knight",
-            "Male Archer",
-            "Female Archer",
-            "Male Monk",
-            "Female Monk",
-            "Male Priest",
-            "Female Priest",
-            "Male Wizard",
-            "Female Wizard",
-            "Male Time Mage",
-            "Female Time Mage",
-            "Male Summoner",
-            "Female Summoner",
-            "Male Thief",
-            "Female Thief",
-            "Male Mediator",
-            "Female Mediator",
-            "Male Oracle",
-            "Female Oracle",
-            "Male Geomancer",
-            "Female Geomancer",
-            "Male Lancer",
-            "Female Lancer",
-            "Male Samurai",
-            "Female Samurai",
-            "Male Ninja",
-            "Female Ninja",
-            "Male Calculator",
-            "Female Calculator",
-            "Male Bard",
-            "Female Dancer",
-            "Male Mime",
-            "Female Mime",
-            "Chocobo",
-            "Goblin",
-            "Bomb",
-            "Coeurl",
-            "Squid",
-            "Skeleton",
-            "Ghost",
-            "Ahriman",
-            "Cockatrice",
-            "Uribo",
-            "Treant",
-            "Minotaur",
-            "Malboro",
-            "Behemoth",
-            "Dragon",
-            "Tiamat",
-            "Apanda/Byblos",
-            "Elidibs",
-            "Dragon",
-            "Demon",
-            "Steel Giant"
-        }.AsReadOnly();
+        private static string itemsDoc;
 
-        private static IDictionary<Shops, string> readOnlyStoreNames;
+        private static string itemsStringsDoc;
 
-        private static ReadOnlyCollection<string> mapNamesReadOnly;
-        private static string[] shopAvailabilities;
-        private static string[] statuses;
+        private static string jobsDoc;
 
-		#endregion Instance Variables 
+        private static string skillSetsDoc;
+        private static string specialNamesDoc;
+        private static string spriteSetsDoc;
 
-		#region Public Properties (37) 
+        private static string shopNamesDoc;
 
-        public static string Abilities { get { return dict[Paths.AbilitiesNamesXML] as string; } }
-
-        public static byte[] AbilitiesBin { get { return dict[Paths.Binaries.Abilities] as byte[]; } }
-
-        public static byte[] AbilityAnimationsBin { get { return dict[Paths.Binaries.AbilityAnimations] as byte[]; } }
-
-        public static string AbilitiesStrings { get { return dict[Paths.AbilitiesStringsXML] as string; } }
-
-        public static string[] AbilityAI
-        {
-            get
-            {
-                if( abilityAI == null )
-                {
-                    abilityAI =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/AI/string[@value='{0}']/@name",
-                            24 );
-                }
-                return abilityAI;
-            }
-        }
-
-        public static string[] AbilityAttributes
-        {
-            get
-            {
-                if( abilityAttributes == null )
-                {
-                    abilityAttributes =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings, 
-                            "/AbilityStrings/Attributes/string[@value='{0}']/@name", 
-                            32 );
-                }
-                return abilityAttributes;
-            }
-        }
-
-        public static string[] AbilityEffects
-        {
-            get
-            {
-                if( abilityEffects == null )
-                {
-                    abilityEffects = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                        dict[Paths.AbilityEffectsXML] as string,
-                        "/Effects/Effect[@value='{0:X3}']/@name",
-                        512 );
-                }
-
-                return abilityEffects;
-            }
-        }
-
-        public static byte[] AbilityEffectsBin { get { return dict[Paths.Binaries.AbilityEffects] as byte[]; } }
-
-        public static string[] AbilityTypes
-        {
-            get
-            {
-                if( abilityTypes == null )
-                {
-                    abilityTypes =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/Types/string[@value='{0}']/@name",
-                            16 );
-                }
-                return abilityTypes;
-            }
-        }
-
-        public static byte[] ActionEventsBin { get { return dict[Paths.Binaries.ActionEvents] as byte[]; } }
-
-        public static byte[] ENTD1 { get { return dict[Paths.Binaries.ENTD1] as byte[]; } }
-
-        public static byte[] ENTD2 { get { return dict[Paths.Binaries.ENTD2] as byte[]; } }
-
-        public static byte[] ENTD3 { get { return dict[Paths.Binaries.ENTD3] as byte[]; } }
-
-        public static byte[] ENTD4 { get { return dict[Paths.Binaries.ENTD4] as byte[]; } }
-
-        public static string EventNames { get { return dict[Paths.EventNamesXML] as string; } }
-
-        public static byte[] FontBin { get { return dict[Paths.Binaries.Font] as byte[]; } }
-
-        public static byte[] FontWidthsBin { get { return dict[Paths.Binaries.FontWidths] as byte[]; } }
-
-        public static byte[] InflictStatusesBin { get { return dict[Paths.Binaries.InflictStatuses] as byte[]; } }
-
-        public static string Items { get { return dict[Paths.ItemsXML] as string; } }
-
-        public static string ItemsStrings { get { return dict[Paths.ItemsStringsXML] as string; } }
-
-        public static byte[] JobLevelsBin { get { return dict[Paths.Binaries.JobLevels] as byte[]; } }
-
-        public static string Jobs { get { return dict[Paths.JobsXML] as string; } }
-
-        public static byte[] JobsBin { get { return dict[Paths.Binaries.Jobs] as byte[]; } }
-
-        public static ReadOnlyCollection<string> MapNames
-        {
-            get
-            {
-                if ( mapNamesReadOnly == null )
-                {
-                    var names = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                        dict[Paths.MapNamesXML] as string,
-                        "/MapNames/Map[@value='{0}']",
-                        128 );
-                    mapNamesReadOnly = new ReadOnlyCollection<string>( names );
-                }
-
-                return mapNamesReadOnly;
-            }
-        }
-
-        public static IDictionary<Shops, string> ShopNames
-        {
-            get
-            {
-                if( readOnlyStoreNames == null )
-                {
-                    Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>();
-                    System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                    doc.LoadXml( (string)PSXResources.dict[Resources.Paths.PSX.ShopNamesXML] );
-
-                    foreach ( System.Xml.XmlNode node in doc.SelectNodes( "/ShopNames/Shop" ) )
-                    {
-                        storeNames[(Shops)System.Enum.Parse( typeof( Shops ), node.Attributes["value"].Value )] =
-                            node.Attributes["name"].Value;
-                    }
-
-                    readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>( storeNames );
-                }
-
-                return readOnlyStoreNames;
-            }
-        }
-
-        public static byte[] MonsterSkillsBin { get { return dict[Paths.Binaries.MonsterSkills] as byte[]; } }
-
-        public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
-
-        public static byte[] OldItemAttributesBin { get { return dict[Paths.Binaries.OldItemAttributes] as byte[]; } }
-
-        public static byte[] OldItemsBin { get { return dict[Paths.Binaries.OldItems] as byte[]; } }
-
-        public static byte[] PoachProbabilitiesBin { get { return dict[Paths.Binaries.PoachProbabilities] as byte[]; } }
-
-        public static byte[] SCEAPDAT { get { return dict[Paths.Binaries.SCEAP] as byte[]; } }
-
-        public static string[] ShopAvailabilities
-        {
-            get
-            {
-                if( shopAvailabilities == null )
-                {
-                    shopAvailabilities =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            ItemsStrings,
-                            "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
-                            21 );
-                }
-
-                return shopAvailabilities;
-            }
-        }
-
-        public static string SkillSets { get { return dict[Paths.SkillSetsXML] as string; } }
-
-        public static byte[] SkillSetsBin { get { return dict[Paths.Binaries.SkillSets] as byte[]; } }
-
-        public static string SpecialNames { get { return dict[Paths.SpecialNamesXML] as string; } }
-
-        public static string SpriteSets { get { return dict[Paths.SpriteSetsXML] as string; } }
-
-        public static IList<string> SpriteFiles { get { return spriteFiles; } }
-
-        public static byte[] StatusAttributesBin { get { return dict[Paths.Binaries.StatusAttributes] as byte[]; } }
-
-        public static string[] Statuses
-        {
-            get
-            {
-                if( statuses == null )
-                {
-                    statuses = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                        StatusNames,
-                        "/Statuses/Status[@offset='{0}']/@name",
-                        40 );
-                }
-
-                return statuses;
-            }
-        }
-
-        public static string StatusNames { get { return dict[Paths.StatusNamesXML] as string; } }
-
-        public static byte[] StoreInventoriesBin { get { return dict[Paths.Binaries.StoreInventories] as byte[]; } }
-
-        #endregion Public Properties 
-
-		#region Constructors (1) 
+        private static string eventNamesDoc;
+        private static string abilityEffectsDoc;
+        private static string mapNamesDoc;
 
         static PSXResources()
         {
-            dict[Resources.Paths.PSX.Binaries.StoreInventories] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories];
-            dict[Resources.Paths.PSX.Binaries.ENTD1] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1];
-            dict[Resources.Paths.PSX.Binaries.ENTD2] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD2];
-            dict[Resources.Paths.PSX.Binaries.ENTD3] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD3];
-            dict[Resources.Paths.PSX.Binaries.ENTD4] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD4];
-            dict[Resources.Paths.PSX.Binaries.MoveFind] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MoveFind];
-            dict[Resources.Paths.PSX.Binaries.Abilities] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Abilities];
-            dict[Resources.Paths.PSX.Binaries.AbilityAnimations] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityAnimations];
-            dict[Resources.Paths.PSX.Binaries.AbilityEffects] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityEffects];
-            dict[Resources.Paths.PSX.Binaries.ActionEvents] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ActionEvents];
-            dict[Resources.Paths.PSX.Binaries.Font] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Font];
-            dict[Resources.Paths.PSX.Binaries.FontWidths] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.FontWidths];
-            dict[Resources.Paths.PSX.Binaries.InflictStatuses] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.InflictStatuses];
-            dict[Resources.Paths.PSX.Binaries.JobLevels] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.JobLevels];
-            dict[Resources.Paths.PSX.Binaries.Jobs] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Jobs];
-            dict[Resources.Paths.PSX.Binaries.MonsterSkills] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MonsterSkills];
-            dict[Resources.Paths.PSX.Binaries.OldItemAttributes] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItemAttributes];
-            dict[Resources.Paths.PSX.Binaries.OldItems] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItems];
-            dict[Resources.Paths.PSX.Binaries.PoachProbabilities] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.PoachProbabilities];
-            dict[Resources.Paths.PSX.Binaries.SkillSets] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SkillSets];
-            dict[Resources.Paths.PSX.Binaries.StatusAttributes] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StatusAttributes];
-            dict[Resources.Paths.PSX.EventNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.JobsXML] = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.SkillSetsXML] = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.SpecialNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.SpecialNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.SpriteSetsXML] = Resources.ZipFileContents[Resources.Paths.PSX.SpriteSetsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.StatusNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.AbilitiesNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.AbilitiesStringsXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesStringsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.AbilityEffectsXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilityEffectsXML].ToUTF8String();
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+
+            Binaries.StoreInventories = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories].AsReadOnly();
+            Binaries.ENTD1 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1].AsReadOnly();
+            Binaries.ENTD2 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD2].AsReadOnly();
+            Binaries.ENTD3 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD3].AsReadOnly();
+            Binaries.ENTD4 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD4].AsReadOnly();
+            Binaries.MoveFind = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MoveFind].AsReadOnly();
+            Binaries.Abilities = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Abilities].AsReadOnly();
+            Binaries.AbilityAnimations = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityAnimations].AsReadOnly();
+            Binaries.AbilityEffects = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityEffects].AsReadOnly();
+            Binaries.ActionEvents = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ActionEvents].AsReadOnly();
+            Binaries.Font = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Font].AsReadOnly();
+            Binaries.FontWidths = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.FontWidths].AsReadOnly();
+            Binaries.InflictStatuses = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.InflictStatuses].AsReadOnly();
+            Binaries.JobLevels = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.JobLevels].AsReadOnly();
+            Binaries.Jobs = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Jobs].AsReadOnly();
+            Binaries.MonsterSkills = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MonsterSkills].AsReadOnly();
+            Binaries.OldItemAttributes = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItemAttributes].AsReadOnly();
+            Binaries.OldItems = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItems].AsReadOnly();
+            Binaries.PoachProbabilities = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.PoachProbabilities].AsReadOnly();
+            Binaries.SkillSets = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SkillSets].AsReadOnly();
+            Binaries.StatusAttributes = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StatusAttributes].AsReadOnly();
+            Binaries.SCEAPDAT = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
+
+            eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String();
+            jobsDoc = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String();
+            skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String();
+            specialNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpecialNamesXML].ToUTF8String();
+            spriteSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpriteSetsXML].ToUTF8String();
+            abilitiesStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesStringsXML].ToUTF8String();
+            abilityEffectsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilityEffectsXML].ToUTF8String();
+            itemsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String();
+            itemsStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String();
+            shopNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.ShopNamesXML].ToUTF8String();
+            mapNamesDoc = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String();
+
+            statusNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String();
+            abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String();
+
             dict[Resources.Paths.PSX.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemAttributesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.ShopNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ShopNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.Binaries.SCEAP] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
-            dict[Paths.MapNamesXML] = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String();
 
             CharacterSet = new ReadOnlyCollection<string>( new string[77000 / 14 / 10 * 4] {
                 "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F", 
@@ -601,7 +248,5 @@ namespace PatcherLib
                 "醒","譚","裸","傀","儡","詔","勅","滞","搾","症","睛","旦","忙","眷","抹","{Unknown}", 
                 "=","$","¥","{SP}",",",";","'","\"" } );
         }
-
-		#endregion Constructors 
     }
 }

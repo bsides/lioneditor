@@ -1,4 +1,4 @@
-﻿/*
+/*
     Copyright 2007, Joe Davidson <joedavidson@gmail.com>
 
     This file is part of FFTPatcher.
@@ -21,12 +21,22 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
+
+namespace System.Runtime.CompilerServices
+{
+    public class ExtensionAttribute : Attribute
+    {
+
+    }
+
+}
+
 namespace FFTPatcher.SpriteEditor
 {
     /// <summary>
     /// Extension methods for various types.
     /// </summary>
-    public static partial class ExtensionMethods
+    public static class ExtensionMethods
     {
 
         #region Static Fields (1)

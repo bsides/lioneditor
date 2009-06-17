@@ -235,9 +235,9 @@ namespace FFTPatcher.Datatypes
         public AllStatusAttributes( IList<byte> bytes )
         {
             StatusAttributes = new StatusAttribute[40];
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.StatusAttributesBin : PSXResources.StatusAttributesBin;
+            IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.StatusAttributes : PSXResources.Binaries.StatusAttributes;
 
-            string[] names = FFTPatch.Context == Context.US_PSP ? PSPResources.Statuses : PSXResources.Statuses;
+            IList<string> names = FFTPatch.Context == Context.US_PSP ? PSPResources.Lists.Statuses : PSXResources.Lists.StatusNames;
             for( int i = 0; i < 40; i++ )
             {
                 StatusAttributes[i] =
@@ -317,11 +317,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PSPResources.StatusAttributesBin, this.ToByteArray(), 0x27AD50);
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.StatusAttributes, this.ToByteArray(), 0x27AD50 );
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.StatusAttributesBin, this.ToByteArray(), 0x065DE4);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.StatusAttributes, this.ToByteArray(), 0x065DE4 );
             }
         }
 

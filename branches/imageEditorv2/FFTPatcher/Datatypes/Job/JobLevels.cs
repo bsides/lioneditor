@@ -312,11 +312,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PSPResources.JobLevelsBin, this.ToByteArray(), 0x27B030);
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.JobLevels, this.ToByteArray(), 0x27B030 );
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray(Context.US_PSX), 0x0660C4);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.JobLevels, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
             }
         }
 

@@ -2838,25 +2838,72 @@ namespace PatcherLib.Iso
             }
         }
 
+        public const int BattleDirectoryEntrySector = 56436;
+
         [System.Diagnostics.DebuggerDisplay("{Filename} - {Sector} - {Size} - {Timestamp}")]
         public class DirectoryEntry
         {
-            public static IList<DirectoryEntry> GetBattleBinEntries(Stream iso)
+            public static IList<DirectoryEntry> GetDirectoryEntries( Stream iso, int sectorOfParentEntry, int numSectors )
             {
+                int sector = sectorOfParentEntry;
+                int length = numSectors;
                 List<DirectoryEntry> result = new List<DirectoryEntry>();
-                const int sector = 56436;
-                const int length = 6;
-                byte[] bytes = PsxIso.GetBlock(iso, new KnownPosition((Sectors)sector, 0, length * 2048));
-                for (int i = 0; i < bytes.Length; i++)
+                byte[] bytes = PsxIso.GetBlock( iso, new KnownPosition( (Sectors)sector, 0, length * 2048 ) );
+                for ( int i = 0; i < bytes.Length; i++ )
                 {
-                    if (bytes[i] == 0) continue;
+                    if ( bytes[i] == 0 ) continue;
 
-                    IList<byte> entry = bytes.Sub(i, i + bytes[i] - 1);
-                    result.Add(new DirectoryEntry(entry));
+                    IList<byte> entry = bytes.Sub( i, i + bytes[i] - 1 );
+                    result.Add( new DirectoryEntry( entry ) );
                     i += bytes[i];
                     i--;
                 }
                 return result;
+            }
+
+            public static IList<DirectoryEntry> GetBattleEntries(Stream iso)
+            {
+                const int sector = BattleDirectoryEntrySector;
+                const int length = 6;
+                return GetDirectoryEntries( iso, sector, length );
+            }
+
+            public static void WriteDirectoryEntries( Stream iso, int sector, int numSectors, IList<DirectoryEntry> entries )
+            {
+                byte[][] dirEntryBytes = new byte[entries.Count][];
+                for ( int i = 0; i < entries.Count; i++ )
+                {
+                    dirEntryBytes[i] = entries[i].ToByteArray();
+                }
+
+                List<byte>[] sectors = new List<byte>[entries.Count];
+                for ( int i = 0; i < sectors.Length; i++ )
+                    sectors[i] = new List<byte>( 2048 );
+                int currentSector = 0;
+                foreach ( byte[] entry in dirEntryBytes )
+                {
+                    if ( sectors[currentSector].Count + entry.Length > 2048 )
+                    {
+                        currentSector++;
+                    }
+                    if ( currentSector >= numSectors )
+                        throw new InvalidOperationException( "not enough sectors for all directory entries" );
+                    sectors[currentSector].AddRange( entry );
+                }
+                foreach ( List<byte> sec in sectors )
+                {
+                    sec.AddRange( new byte[2048 - sec.Count] );
+                }
+
+                for ( int i = 0; i < numSectors; i++ )
+                {
+                    PatcherLib.Iso.PsxIso.PatchPsxIso( iso,
+                        new PatchedByteArray(
+                            (PatcherLib.Iso.PsxIso.Sectors)( sector + i ),
+                            0,
+                            sectors[i].ToArray() ) );
+
+                }
             }
 
             public string Filename { get; set; }

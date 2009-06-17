@@ -217,7 +217,7 @@ namespace FFTPatcher.Datatypes
 
         public AllInflictStatuses( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.InflictStatusesBin : PSXResources.InflictStatusesBin;
+            IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.InflictStatuses : PSXResources.Binaries.InflictStatuses;
             InflictStatuses = new InflictStatus[0x80];
             for( int i = 0; i < 0x80; i++ )
             {
@@ -294,11 +294,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PSPResources.InflictStatusesBin, this.ToByteArray(), 0x32A394);
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.InflictStatuses, this.ToByteArray(), 0x32A394 );
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.InflictStatusesBin, this.ToByteArray(), 0x063FC4);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.InflictStatuses, this.ToByteArray(), 0x063FC4 );
             }
         }
 

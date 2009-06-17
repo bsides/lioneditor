@@ -135,12 +135,12 @@ namespace FFTPatcher.TextEditor
 
         private static Set<string> GetPsxDteGroups()
         {
-            return GetDteGroups( new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin ), TextUtilities.PSXMap, PSXResources.CharacterSet );
+            return GetDteGroups( new FFTFont( PSXResources.Binaries.Font, PSXResources.Binaries.FontWidths ), TextUtilities.PSXMap, PSXResources.CharacterSet );
         }
 
         private static Set<string> GetPspDteGroups()
         {
-            return GetDteGroups( new FFTFont( PSPResources.FontBin, PSXResources.FontWidthsBin ), TextUtilities.PSPMap, PSPResources.CharacterSet );
+            return GetDteGroups( new FFTFont( PSPResources.Binaries.Font, PSXResources.Binaries.FontWidths ), TextUtilities.PSPMap, PSPResources.CharacterSet );
         }
 
 
@@ -151,7 +151,7 @@ namespace FFTPatcher.TextEditor
         public static IList<PatchedByteArray> GeneratePspDtePatches(IEnumerable<KeyValuePair<string, byte>> dteEncodings)
         {
             var charSet = PSPResources.CharacterSet;
-            FFTFont font = new FFTFont( PSPResources.FontBin, PSPResources.FontWidthsBin );
+            FFTFont font = new FFTFont( PSPResources.Binaries.Font, PSPResources.Binaries.FontWidths );
 
             byte[] fontBytes;
             byte[] widthBytes;
@@ -183,7 +183,7 @@ namespace FFTPatcher.TextEditor
             // WORLD.BIN -> 0x5B8F8
 
             var charSet = PSXResources.CharacterSet;
-            FFTFont font = new FFTFont( PSXResources.FontBin, PSXResources.FontWidthsBin );
+            FFTFont font = new FFTFont( PSXResources.Binaries.Font, PSXResources.Binaries.FontWidths );
 
             byte[] fontBytes;
             byte[] widthBytes;

@@ -226,8 +226,8 @@ namespace FFTPatcher.Datatypes
         public AllItemAttributes( IList<byte> first, IList<byte> second )
         {
             List<ItemAttributes> temp = new List<ItemAttributes>( 0x65 );
-            byte[] defaultFirst = second == null ? PSXResources.OldItemAttributesBin : PSPResources.OldItemAttributesBin;
-            byte[] defaultSecond = second == null ? null : PSPResources.NewItemAttributesBin;
+            IList<byte> defaultFirst = second == null ? PSXResources.Binaries.OldItemAttributes : PSPResources.Binaries.OldItemAttributes;
+            IList<byte> defaultSecond = second == null ? null : PSPResources.Binaries.NewItemAttributes;
 
             for( byte i = 0; i < 0x50; i++ )
             {
@@ -324,13 +324,13 @@ namespace FFTPatcher.Datatypes
             if (context == Context.US_PSP)
             {
                 List<string> strings = new List<string>();
-                strings.AddRange(Codes.GenerateCodes(Context.US_PSP, PSPResources.NewItemAttributesBin, this.ToSecondByteArray(), 0x25B1B8));
-                strings.AddRange(Codes.GenerateCodes(Context.US_PSP, PSPResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x32A694));
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.NewItemAttributes, this.ToSecondByteArray(), 0x25B1B8 ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.OldItemAttributes, this.ToFirstByteArray(), 0x32A694 ) );
                 return strings;
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.OldItemAttributesBin, this.ToFirstByteArray(), 0x0642C4);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.OldItemAttributes, this.ToFirstByteArray(), 0x0642C4 );
             }
         }
 

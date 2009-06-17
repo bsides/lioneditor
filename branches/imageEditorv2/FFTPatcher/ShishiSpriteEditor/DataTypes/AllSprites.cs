@@ -297,7 +297,7 @@ namespace FFTPatcher.SpriteEditor
                 "TYPE3.SEQ;1",                "TYPE4.SEQ;1",                "WEP.SPR;1",                "WEP1.SEQ;1",
                 "WEP1.SHP;1",                "WEP2.SEQ;1",                "WEP2.SHP;1",                "ZODIAC.BIN;1"});
             
-            List<PatcherLib.Iso.PsxIso.DirectoryEntry> battleDir = new List<PatcherLib.Iso.PsxIso.DirectoryEntry>(PatcherLib.Iso.PsxIso.DirectoryEntry.GetBattleBinEntries(iso));
+            List<PatcherLib.Iso.PsxIso.DirectoryEntry> battleDir = new List<PatcherLib.Iso.PsxIso.DirectoryEntry>(PatcherLib.Iso.PsxIso.DirectoryEntry.GetBattleEntries(iso));
             byte[] extBytes = battleDir[2].ExtendedBytes;
             System.Diagnostics.Debug.Assert(battleDir.Sub(2).TrueForAll(ent => PatcherLib.Utilities.Utilities.CompareArrays(extBytes, ent.ExtendedBytes)));
             byte[] midBytes = battleDir[2].MiddleBytes;
@@ -421,32 +421,13 @@ namespace FFTPatcher.SpriteEditor
                 //"UR2.SP2;1", // 0x8e
 
             battleDir.Sort((a, b) => a.Filename.CompareTo(b.Filename));
-            byte[][] dirEntryBytes = new byte[battleDir.Count][];
-            for (int i = 0; i < battleDir.Count; i++)
-            {
-                dirEntryBytes[i] = battleDir[i].ToByteArray();
-            }
 
-            List<byte>[] sectors = new List<byte>[6] { new List<byte>(2048), new List<byte>(2048), new List<byte>(2048),
-                new List<byte>(2048), new List<byte>(2048), new List<byte>(2048) };
-            int currentSector = 0;
-            foreach (byte[] entry in dirEntryBytes)
-            {
-                if (sectors[currentSector].Count + entry.Length > 2048)
-                {
-                    currentSector++;
-                }
-                sectors[currentSector].AddRange(entry);
-            }
-            foreach (List<byte> sec in sectors)
-            {
-                sec.AddRange(new byte[2048 - sec.Count]);
-            }
-
-            for (int i = 0; i < 6; i++)
-            {
-                PatcherLib.Iso.PsxIso.PatchPsxIso(iso, new PatchedByteArray((PatcherLib.Iso.PsxIso.Sectors)(56436 + i), 0, sectors[i].ToArray()));
-            }
+            // Patch direntry
+            PatcherLib.Iso.PsxIso.DirectoryEntry.WriteDirectoryEntries(
+                iso,
+                PatcherLib.Iso.PsxIso.BattleDirectoryEntrySector,
+                6,
+                battleDir );
 
             // Update battle.bin
             PatcherLib.Iso.PsxIso.PatchPsxIso(iso, SpriteFileLocations.SpriteLocationsPosition.GetPatchedByteArray(posBytes.ToArray()));
@@ -509,7 +490,7 @@ namespace FFTPatcher.SpriteEditor
         {
             Count = attrs.Count;
             sprites = new Sprite[Count];
-            IList<string> spriteNames = context == Context.US_PSP ? PSPResources.SpriteFiles : PSXResources.SpriteFiles;
+            IList<string> spriteNames = context == Context.US_PSP ? PSPResources.Lists.SpriteFiles : PSXResources.Lists.SpriteFiles;
             for (int i = 0; i < Count; i++)
             {
                 sprites[i] = new Sprite(context, string.Format("{0:X2} - {1}", i, spriteNames[i]), attrs[i], locs[i]);

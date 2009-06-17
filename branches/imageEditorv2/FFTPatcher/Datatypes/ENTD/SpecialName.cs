@@ -19,6 +19,7 @@
 
 using PatcherLib;
 using PatcherLib.Datatypes;
+using System.Collections.Generic;
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
@@ -50,14 +51,9 @@ namespace FFTPatcher.Datatypes
 
         static SpecialName()
         {
-            string[] pspStrings = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.SpecialNames,
-                "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
-                256 );
-            string[] psxStrings = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.SpecialNames,
-                "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
-                256 );
+            IList<string> pspStrings = PSPResources.Lists.SpecialNames;
+            IList<string> psxStrings = PSXResources.Lists.SpecialNames;
+
             for( int i = 0; i < 256; i++ )
             {
                 pspNames[i] = new SpecialName( (byte)i, pspStrings[i] );

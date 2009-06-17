@@ -11,6 +11,7 @@ namespace FFTPatcher.TextEditor
     {
         private bool dirty = true;
         private IList<byte> cachedBytes;
+        private IList<IList<byte>> entryTerminators;
 
         protected AbstractFile( GenericCharMap charmap, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, bool compressible )
             : this( charmap, layout, compressible )
@@ -180,6 +181,8 @@ namespace FFTPatcher.TextEditor
         public string DisplayName { get; private set; }
 
         protected virtual int DataStart { get { return 0; } }
+
+        public IList<IList<byte>> EntryTerminators { get; protected set; }
 
         protected abstract IList<byte> ToByteArray();
         protected abstract IList<byte> ToByteArray( IDictionary<string, byte> dteTable );

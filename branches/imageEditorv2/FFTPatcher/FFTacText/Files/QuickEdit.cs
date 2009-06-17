@@ -8,6 +8,7 @@ namespace FFTPatcher.TextEditor.Files
     {
         public IList<string> SectionNames { get; private set; }
         public IList<IList<string>> EntryNames { get; private set; }
+        public IList<bool> HiddenEntries { get; private set; }
 
         public GenericCharMap CharMap { get; private set; }
 
@@ -46,6 +47,8 @@ namespace FFTPatcher.TextEditor.Files
             List<SectionType> sectionTypes = new List<SectionType>( sections.Count );
             List<int> sectionLengths = new List<int>( sections.Count );
             List<string> sectionNames = new List<string>();
+            HiddenEntries = new bool[sections.Count].AsReadOnly();
+
             foreach ( KeyValuePair<SectionType, IList<QuickEditEntry>> kvp in sections )
             {
                 CharMap = CharMap ?? files[kvp.Value[0].Guid].CharMap;

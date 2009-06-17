@@ -46,6 +46,7 @@ namespace FFTPatcher.TextEditor
             public KeyValuePair<Enum, int> PrimaryFile { get; set; }
             public IList<bool> DteAllowed { get; set; }
             public IList<bool> CompressionAllowed { get; set; }
+            public IList<bool> Hidden { get; set; }
         }
 
         delegate IList<byte> BytesFromIso( Stream iso, Enum file, int offset, int size );
@@ -89,10 +90,17 @@ namespace FFTPatcher.TextEditor
             int[] sectionLengths = new int[sectionCount];
             bool[] dteAllowed = new bool[sectionCount];
             bool[] compressionAllowed = new bool[sectionCount];
+            bool[] hidden = new bool[sectionCount];
 
             for ( int i = 0; i < sectionCount; i++ )
             {
                 XmlNode sectionNode = node.SelectSingleNode( string.Format( "Sections/Section[@value='{0}']", i ) );
+
+                XmlAttribute hideAttribute = sectionNode.Attributes["hide"];
+                if ( hideAttribute != null )
+                {
+                    hidden[i] = Boolean.Parse( hideAttribute.InnerText );
+                }
 
                 sectionLengths[i] = Int32.Parse( sectionNode.Attributes["entries"].InnerText );
                 dteAllowed[i] = Boolean.Parse( sectionNode.Attributes["dte"].InnerText );
@@ -179,6 +187,7 @@ namespace FFTPatcher.TextEditor
                 EntryNames = entryNames.AsReadOnly(),
                 FileType = filetype,
                 Guid = guid,
+                Hidden = hidden.AsReadOnly(),
                 SectionLengths = sectionLengths.AsReadOnly(),
                 Sectors = new ReadOnlyDictionary<SectorType, IList<KeyValuePair<Enum, int>>>( dict ),
                 SectionNames = sectionNames,
@@ -466,6 +475,8 @@ namespace FFTPatcher.TextEditor
             staticEntries = ourStatic.AsReadOnly();
         }
 
+        static Dictionary<string, IList<string>> cachedResources = new Dictionary<string, IList<string>>();
+
         private static IList<IList<string>> GetEntryNames( XmlNode sectionsNode, XmlNode templatesNode )
         {
             int sectionCount = Int32.Parse( sectionsNode.Attributes["count"].InnerText );
@@ -489,6 +500,27 @@ namespace FFTPatcher.TextEditor
                         int index = Int32.Parse( entryNode.Attributes["value"].InnerText );
                         currentSection[index] = entryNode.Attributes["name"].InnerText;
                     }
+
+                    foreach ( XmlNode includeNode in currentNode.SelectNodes( "includeResource" ) )
+                    {
+                        int start = Int32.Parse( includeNode.Attributes["start"].InnerText );
+                        int end = Int32.Parse( includeNode.Attributes["end"].InnerText );
+                        int offset = Int32.Parse( includeNode.Attributes["offset"].InnerText );
+                        string fullName = includeNode.Attributes["name"].InnerText;
+                        
+                        if ( !cachedResources.ContainsKey( fullName ) )
+                        {
+                            cachedResources[fullName] = PatcherLib.Resources.GetResourceByName( fullName );
+                        }
+
+                        IList<string> resourceList = cachedResources[fullName];
+                        
+                        for ( int j = start; j <= end; j++ )
+                        {
+                            currentSection[j + offset] = resourceList[j];
+                        }
+                    }
+
                     foreach ( XmlNode includeNode in currentNode.SelectNodes( "include" ) )
                     {
                         XmlNode included = templatesNode.SelectSingleNode( includeNode.Attributes["name"].InnerText );

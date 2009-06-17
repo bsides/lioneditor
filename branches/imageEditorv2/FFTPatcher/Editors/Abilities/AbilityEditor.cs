@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using FFTPatcher.Controls;
 using FFTPatcher.Datatypes;
 using PatcherLib.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {

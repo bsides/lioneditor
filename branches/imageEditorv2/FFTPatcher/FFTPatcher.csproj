@@ -13,26 +13,6 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'asd|AnyCPU' ">
-    <OutputPath>bin\asd\</OutputPath>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -113,6 +93,12 @@
     </Compile>
     <Compile Include="Editors\Items\StoreInventoryEditor.Designer.cs">
       <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PatchPSPForm.cs">
       <SubType>Form</SubType>
@@ -352,12 +338,6 @@
     <Compile Include="Editors\Status\StatusesEditor.Designer.cs">
       <DependentUpon>StatusesEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="PatchPSXForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -380,6 +360,9 @@
     <EmbeddedResource Include="Editors\Items\StoreInventoryEditor.resx">
       <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatchPSPForm.resx">
       <DependentUpon>PatchPSPForm.cs</DependentUpon>
@@ -513,10 +496,6 @@
       <DependentUpon>StatusesEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="PatchPSXForm.resx">
       <DependentUpon>PatchPSXForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -526,7 +505,6 @@
     <Compile Include="Utilities\DigestGenerator.cs" />
     <Compile Include="Utilities\PspIso.cs" />
     <Compile Include="Utilities\PsxIso.cs" />
-    <Compile Include="Utilities\ReflectionHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PatcherLib.Resources\PatcherLib.Resources.csproj">

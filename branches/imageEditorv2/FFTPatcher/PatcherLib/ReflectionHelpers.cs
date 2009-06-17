@@ -20,7 +20,7 @@
 using System;
 using System.Reflection;
 
-namespace FFTPatcher
+namespace PatcherLib
 {
     /// <summary>
     /// Utilities to help with Reflection.
@@ -80,6 +80,29 @@ namespace FFTPatcher
             {
                 return default( T );
             }
+        }
+
+        public static T GetPublicStaticFieldOrProperty<T>( Type sourceType, string name, bool throwOnError )
+        {
+            PropertyInfo pi = sourceType.GetProperty( name, BindingFlags.Static | BindingFlags.Public );
+            FieldInfo fi = sourceType.GetField( name, BindingFlags.Static | BindingFlags.Public );
+            if ( pi != null )
+            {
+                return (T)pi.GetValue( null, null );
+            }
+            else if ( fi != null )
+            {
+                return (T)fi.GetValue( null );
+            }
+            else if ( throwOnError )
+            {
+                throw new ArgumentException();
+            }
+            else
+            {
+                return default( T );
+            }
+
         }
 
         /// <summary>

@@ -31,6 +31,15 @@ namespace PatcherLib
     using System.Xml;
     public static class Resources
     {
+        public static IList<string> GetResourceByName( string fullName )
+        {
+            int lastDotIndex = fullName.LastIndexOf( Type.Delimiter );
+            string typeName = fullName.Substring( 0, lastDotIndex );
+            string fieldName = fullName.Substring( lastDotIndex + 1 );
+            return
+                PatcherLib.ReflectionHelpers.GetPublicStaticFieldOrProperty<IList<string>>(
+                   Type.GetType( typeName ), fieldName, false );
+        }
 
         /// <summary>
         /// Iterates through an XML document, getting the string values of certain nodes.
@@ -166,40 +175,19 @@ namespace PatcherLib
             using (FileStream stream = File.Open(filename, FileMode.Create, FileAccess.ReadWrite))
             using (ZipOutputStream output = new ZipOutputStream(stream))
             {
-                foreach (string path in Paths.AllPaths)
+                foreach ( var kvp in DefaultZipFileContents )
                 {
-                    ZipEntry ze = new ZipEntry(path);
-                    IList<byte> bytes = DefaultZipFileContents[path];
+                    ZipEntry ze = new ZipEntry( kvp.Key );
+                    IList<byte> bytes = kvp.Value;
                     ze.Size = bytes.Count;
-                    output.PutNextEntry(ze);
-                    output.Write(bytes.ToArray(), 0, bytes.Count);
+                    output.PutNextEntry( ze );
+                    output.Write( bytes.ToArray(), 0, bytes.Count );
                 }
             }
         }
 
         public static class Paths
         {
-            internal static IList<string> AllPaths = new string[] {
-                AbilityFormulasXML, DigestTransform, ENTD1, ENTD2, ENTD3, ENTD4, MoveFindBin,
-
-                PSP.Binaries.ENTD5, PSP.Binaries.Abilities, PSP.Binaries.AbilityEffects, PSP.Binaries.AbilityAnimations,
-                PSP.Binaries.ActionEvents, PSP.Binaries.Font, PSP.Binaries.FontWidths, PSP.Binaries.ICON0, 
-                PSP.Binaries.InflictStatuses, PSP.Binaries.JobLevels, PSP.Binaries.Jobs, PSP.Binaries.MonsterSkills,
-                PSP.Binaries.NewItemAttributes, PSP.Binaries.NewItems, PSP.Binaries.OldItemAttributes, PSP.Binaries.OldItems,
-                PSP.Binaries.PoachProbabilities, PSP.Binaries.SkillSets, PSP.Binaries.StatusAttributes,
-                PSP.Binaries.StoreInventories, PSP.EventNamesXML, PSP.FFTPackFilesXML, PSP.JobsXML, PSP.SkillSetsXML,
-                PSP.SpecialNamesXML, PSP.SpriteSetsXML, PSP.StatusNamesXML, PSP.AbilitiesNamesXML, PSP.AbilitiesStringsXML,
-                PSP.AbilityEffectsXML, PSP.ItemAttributesXML, PSP.ItemsXML, PSP.ItemsStringsXML, PSP.ShopNamesXML,
-
-                PSX.Binaries.Abilities, PSX.Binaries.AbilityAnimations, PSX.Binaries.AbilityEffects, PSX.Binaries.ActionEvents,
-                PSX.Binaries.Font, PSX.Binaries.FontWidths, PSX.Binaries.SCEAP, PSX.Binaries.InflictStatuses,
-                PSX.Binaries.JobLevels, PSX.Binaries.Jobs, PSX.Binaries.MonsterSkills, PSX.Binaries.OldItemAttributes,
-                PSX.Binaries.OldItems, PSX.Binaries.PoachProbabilities, PSX.Binaries.SkillSets, 
-                PSX.Binaries.StatusAttributes, PSX.Binaries.StoreInventories, PSX.EventNamesXML, PSX.FileList,
-                PSX.JobsXML, PSX.SkillSetsXML, PSX.SpecialNamesXML, PSX.SpriteSetsXML, PSX.StatusNamesXML,
-                PSX.AbilitiesNamesXML, PSX.AbilitiesStringsXML, PSX.AbilityEffectsXML, PSX.ItemAttributesXML,
-                PSX.ItemsXML, PSX.ItemsStringsXML, PSX.ShopNamesXML, PSX.MapNamesXML }.AsReadOnly();
-
             public const string AbilityFormulasXML = "AbilityFormulas.xml";
             public const string DigestTransform = "digestTransform.xsl";
             private const string ENTD1 = "ENTD1.ENT";
@@ -239,7 +227,6 @@ namespace PatcherLib
                     public const string StoreInventories = "StoreInventories.bin";
                 }
                 public const string EventNamesXML = "PSP/EventNames.xml";
-                public const string FFTPackFilesXML = "PSP/FFTPackFiles.xml";
                 public const string JobsXML = "PSP/Jobs.xml";
                 public const string SkillSetsXML = "PSP/SkillSets.xml";
                 public const string MapNamesXML = "PSP/MapNames.xml";

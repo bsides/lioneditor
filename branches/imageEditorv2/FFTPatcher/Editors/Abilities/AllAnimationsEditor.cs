@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {

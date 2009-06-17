@@ -13,6 +13,8 @@ namespace FFTPatcher.TextEditor
         private IList<byte> cachedBytes;
         private IList<IList<byte>> entryTerminators;
 
+        public IList<bool> HiddenEntries { get; private set; }
+
         protected AbstractFile( GenericCharMap charmap, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, bool compressible )
             : this( charmap, layout, compressible )
         {
@@ -58,6 +60,7 @@ namespace FFTPatcher.TextEditor
             EntryNames = layout.EntryNames.AsReadOnly();
             SectionLengths = layout.SectionLengths.AsReadOnly();
             SectionNames = layout.SectionNames.AsReadOnly();
+            HiddenEntries = layout.Hidden.AsReadOnly();
             DisplayName = layout.DisplayName;
             Compressible = compressible;
             CompressionAllowed = layout.CompressionAllowed.AsReadOnly();

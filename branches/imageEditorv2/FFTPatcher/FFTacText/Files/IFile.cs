@@ -6,6 +6,7 @@ namespace FFTPatcher.TextEditor
     {
         IList<string> SectionNames { get; }
         IList<IList<string>> EntryNames { get; }
+        IList<bool> HiddenEntries { get; }
         GenericCharMap CharMap { get; }
         int NumberOfSections { get; }
         string this[int section, int entry] { get; set; }

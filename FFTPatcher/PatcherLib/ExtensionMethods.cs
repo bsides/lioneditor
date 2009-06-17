@@ -42,13 +42,24 @@ namespace PatcherLib.Utilities
 
         #region Methods (14)
 
-        public static bool TrueForAll<T>(this IList<T> list, Predicate<T> condition)
+        public static bool TrueForAll<T>( this IList<T> list, Predicate<T> condition )
         {
-            if (list == null) throw new ArgumentNullException("list");
-            if (condition == null) throw new ArgumentNullException("condition");
-            for (int i = 0; i < list.Count; i++)
+            if ( list == null ) throw new ArgumentNullException( "list" );
+            if ( condition == null ) throw new ArgumentNullException( "condition" );
+            for ( int i = 0; i < list.Count; i++ )
             {
-                if (!condition(list[i])) return false;
+                if ( !condition( list[i] ) ) return false;
+            }
+            return true;
+        }
+
+        public static bool TrueForAll<T>( this IEnumerable<T> list, Predicate<T> condition )
+        {
+            if ( list == null ) throw new ArgumentNullException( "list" );
+            if ( condition == null ) throw new ArgumentNullException( "condition" );
+            foreach ( T item in list )
+            {
+                if (!condition(item)) return false;
             }
             return true;
         }

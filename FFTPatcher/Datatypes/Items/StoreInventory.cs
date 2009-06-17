@@ -46,7 +46,7 @@ namespace FFTPatcher.Datatypes
                 UInt16 currentShort = (UInt16)( bytes[i * 2] * 256 + bytes[i * 2 + 1] );
                 items[itemsList[i]] = ( currentShort & (int)whichStore ) > 0;
             }
-            name = context == Context.US_PSP ? PSPResources.ShopNames[whichStore] : PSXResources.ShopNames[whichStore];
+            name = context == Context.US_PSP ? PSPResources.ShopNames[whichStore] : PSXResources.Lists.ShopNames[whichStore];
         }
 
         public void UpdateByteArray( IList<byte> bytes )
@@ -252,11 +252,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.StoreInventoriesBin, this.ToByteArray(), 0x2e087c);
+                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.Binaries.StoreInventories, this.ToByteArray(), 0x2e087c);
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PatcherLib.PSXResources.StoreInventoriesBin, this.ToByteArray(), 0x18D840, Codes.CodeEnabledOnlyWhen.World);
+                return Codes.GenerateCodes( Context.US_PSX, PatcherLib.PSXResources.Binaries.StoreInventories, this.ToByteArray(), 0x18D840, Codes.CodeEnabledOnlyWhen.World );
             }
         }
 

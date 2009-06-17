@@ -57,14 +57,14 @@ namespace FFTPatcher.Datatypes
 
         public Job[] Jobs { get; private set; }
 
-        public static string[] Names
+        public static IList<string> Names
         {
             get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; }
         }
 
-        public static string[] PSPNames { get; private set; }
+        public static IList<string> PSPNames { get; private set; }
 
-        public static string[] PSXNames { get; private set; }
+        public static IList<string> PSXNames { get; private set; }
 
 		#endregion Public Properties 
 
@@ -75,16 +75,10 @@ namespace FFTPatcher.Datatypes
             pspJobs = new Job[0xAA];
             psxJobs = new Job[0xA0];
 
-            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.Jobs,
-                "/Jobs/Job[@offset='{0:X2}']/@name",
-                0xAA );
-            List<string> psxNames = new List<string>( PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.Jobs,
-                "/Jobs/Job[@offset='{0:X2}']/@name",
-                0xA0 ) );
+            PSPNames = PSPResources.Lists.JobNames;
+            List<string> psxNames = new List<string>( PSXResources.Lists.JobNames );
             psxNames.AddRange( new string[9] { "", "", "", "", "", "", "", "", "" } );
-            PSXNames = psxNames.ToArray();
+            PSXNames = psxNames.AsReadOnly(); ;
 
             for( int i = 0; i < 0xAA; i++ )
             {
@@ -106,7 +100,7 @@ namespace FFTPatcher.Datatypes
         {
             int numJobs = context == Context.US_PSP ? 0xA9 : 0xA0;
             int jobLength = context == Context.US_PSP ? 49 : 48;
-            byte[] defaultBytes = context == Context.US_PSP ? PSPResources.JobsBin : PSXResources.JobsBin;
+            IList<byte> defaultBytes = context == Context.US_PSP ? PSPResources.Binaries.Jobs : PSXResources.Binaries.Jobs;
             Jobs = new Job[numJobs];
             for( int i = 0; i < numJobs; i++ )
             {
@@ -185,11 +179,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PSPResources.JobsBin, this.ToByteArray(), 0x277988);
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.Jobs, this.ToByteArray(), 0x277988 );
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PSXResources.JobsBin, this.ToByteArray(Context.US_PSX), 0x0610B8);
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.Jobs, this.ToByteArray( Context.US_PSX ), 0x0610B8 );
             }
         }
 

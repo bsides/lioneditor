@@ -19,6 +19,7 @@
 
 using PatcherLib;
 using PatcherLib.Datatypes;
+using System.Collections.Generic;
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
@@ -50,14 +51,8 @@ namespace FFTPatcher.Datatypes
 
         static SpriteSet()
         {
-            string[] pspSpriteNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.SpriteSets,
-                "/Sprites/Sprite[@byte='{0:X2}']/@name",
-                256 );
-            string[] psxSpriteNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.SpriteSets,
-                "/Sprites/Sprite[@byte='{0:X2}']/@name",
-                256 );
+            IList<string> pspSpriteNames = PSPResources.Lists.SpriteSets;
+            IList<string> psxSpriteNames = PSXResources.Lists.SpriteSets;
 
             for( int i = 0; i < 256; i++ )
             {

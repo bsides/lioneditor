@@ -130,7 +130,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="PSPResources.Binaries.cs" />
+    <Compile Include="PSPResources.Lists.cs" />
+    <Compile Include="PSXResources.Lists.cs" />
     <Compile Include="Resources\PSP\bin\Abilities.bin" />
+    <Compile Include="PSXResources.Binaries.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PatcherLib\PatcherLib.csproj">

@@ -22,22 +22,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using PatcherLib.Datatypes;
 
-namespace System.Runtime.CompilerServices
-{
-    public class ExtensionAttribute : Attribute
-    {
-
-    }
-}
 namespace FFTPatcher.SpriteEditor
 {
-    public static partial class ExtensionMethods
+    /// <summary>
+    /// A palette for a FFT sprite.
+    /// </summary>
+    public class Palette
     {
-
-		#region Methods (1) 
-
-
-        public static byte[] ToPALFile( this IList<Palette> palettes )
+        public static byte[] PalletesToPALFile( IList<Palette> palettes )
         {
             List<byte> result = new List<byte>( 0x418 );
             result.AddRange( new byte[] { 
@@ -46,24 +38,13 @@ namespace FFTPatcher.SpriteEditor
                 0x50, 0x41, 0x4C, 0x20, 0x64, 0x61, 0x74, 0x61,  // PAL data
                 0x04, 0x04, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01 } ); // filesize of sommat
 
-            foreach( Palette p in palettes )
+            foreach ( Palette p in palettes )
             {
                 result.AddRange( p.ToPALByteArray() );
             }
 
             return result.ToArray();
         }
-
-
-		#endregion Methods 
-
-    }
-
-    /// <summary>
-    /// A palette for a FFT sprite.
-    /// </summary>
-    public class Palette
-    {
 
 		#region Properties (1) 
 

@@ -120,12 +120,12 @@ namespace FFTPatcher.Datatypes
             if( fileList["type"].ToUTF8String() == Context.US_PSX.ToString() )
             {
                 List<byte> amBytes = new List<byte>( fileList["actionMenus"] );
-                amBytes.AddRange( PSPResources.ActionEventsBin.Sub( 0xE0, 0xE2 ) );
+                amBytes.AddRange( PSPResources.Binaries.ActionEvents.Sub( 0xE0, 0xE2 ) );
                 fileList["actionMenus"] = amBytes.ToArray();
 
                 AllJobs aj = new AllJobs( Context.US_PSX, fileList["jobs"] );
                 List<Job> jobs = new List<Job>( aj.Jobs );
-                AllJobs defaultPspJobs = new AllJobs( Context.US_PSP, PSPResources.JobsBin );
+                AllJobs defaultPspJobs = new AllJobs( Context.US_PSP, PSPResources.Binaries.Jobs );
                 for( int i = 0; i < jobs.Count; i++ )
                 {
                     jobs[i].Equipment.Unknown1 = defaultPspJobs.Jobs[i].Equipment.Unknown1;
@@ -145,7 +145,7 @@ namespace FFTPatcher.Datatypes
                 fileList["jobs"] = aj.ToByteArray( Context.US_PSP );
 
                 JobLevels jl = new JobLevels( Context.US_PSX, fileList["jobLevels"] );
-                JobLevels pspJobLevels = new JobLevels( Context.US_PSP, PSPResources.JobLevelsBin );
+                JobLevels pspJobLevels = new JobLevels( Context.US_PSP, PSPResources.Binaries.JobLevels );
                 foreach( string jobName in new string[19] { "Archer", "Arithmetician", "Bard", "BlackMage", "Chemist", "Dancer", "Dragoon", "Geomancer",
                             "Knight", "Mime", "Monk", "Mystic", "Ninja", "Orator", "Samurai", "Summoner", "Thief", "TimeMage", "WhiteMage" } )
                 {
@@ -162,17 +162,17 @@ namespace FFTPatcher.Datatypes
                 fileList["jobLevels"] = jl.ToByteArray( Context.US_PSP );
 
                 List<byte> ssBytes = new List<byte>( fileList["skillSets"] );
-                ssBytes.AddRange( PSPResources.SkillSetsBin.Sub( ssBytes.Count ) );
+                ssBytes.AddRange( PSPResources.Binaries.SkillSets.Sub( ssBytes.Count ) );
                 fileList["skillSets"] = ssBytes.ToArray();
 
-                fileList["entd5"] = PSPResources.ENTD5;
+                fileList["entd5"] = PSPResources.Binaries.ENTD5.ToArray();
 
 
 
                 fileList["type"] = Encoding.UTF8.GetBytes( Context.US_PSP.ToString() );
 
-                fileList["pspItemAttributes"] = PSPResources.NewItemAttributesBin;
-                fileList["pspItems"] = PSPResources.NewItemsBin;
+                fileList["pspItemAttributes"] = PSPResources.Binaries.NewItemAttributes.ToArray();
+                fileList["pspItems"] = PSPResources.Binaries.NewItems.ToArray();
             }
 
             using( FileStream outFile = new FileStream( filename, FileMode.Create, FileAccess.ReadWrite ) )
@@ -349,46 +349,46 @@ namespace FFTPatcher.Datatypes
             switch( Context )
             {
                 case Context.US_PSP:
-                    Abilities = new AllAbilities( PSPResources.AbilitiesBin, PSPResources.AbilityEffectsBin );
-                    AbilityAnimations = new AllAnimations(Context, PSPResources.AbilityAnimationsBin, PSPResources.AbilityAnimationsBin);
+                    Abilities = new AllAbilities( PSPResources.Binaries.Abilities, PSPResources.Binaries.AbilityEffects );
+                    AbilityAnimations = new AllAnimations( Context, PSPResources.Binaries.AbilityAnimations, PSPResources.Binaries.AbilityAnimations );
                     Items = new AllItems(
-                        PSPResources.OldItemsBin,
-                        PSPResources.NewItemsBin );
+                        PSPResources.Binaries.OldItems,
+                        PSPResources.Binaries.NewItems );
                     ItemAttributes = new AllItemAttributes(
-                        PSPResources.OldItemAttributesBin,
-                        PSPResources.NewItemAttributesBin );
-                    Jobs = new AllJobs( Context, PSPResources.JobsBin );
-                    JobLevels = new JobLevels( Context, PSPResources.JobLevelsBin,
-                        new JobLevels( Context, PSPResources.JobLevelsBin ) );
-                    SkillSets = new AllSkillSets( Context, PSPResources.SkillSetsBin,
-                        PSPResources.SkillSetsBin );
-                    MonsterSkills = new AllMonsterSkills( PSPResources.MonsterSkillsBin );
-                    ActionMenus = new AllActionMenus( PSPResources.ActionEventsBin, Context );
-                    StatusAttributes = new AllStatusAttributes( PSPResources.StatusAttributesBin );
-                    InflictStatuses = new AllInflictStatuses( PSPResources.InflictStatusesBin );
-                    PoachProbabilities = new AllPoachProbabilities( PSPResources.PoachProbabilitiesBin );
-                    ENTDs = new AllENTDs( PSPResources.ENTD1, PSPResources.ENTD2, PSPResources.ENTD3, PSPResources.ENTD4, PSPResources.ENTD5 );
-                    MoveFind = new AllMoveFindItems( Context, PSPResources.MoveFind, new AllMoveFindItems( Context, PSPResources.MoveFind ) );
-                    StoreInventories = new AllStoreInventories( Context, PSPResources.StoreInventoriesBin, PSPResources.StoreInventoriesBin );
+                        PSPResources.Binaries.OldItemAttributes,
+                        PSPResources.Binaries.NewItemAttributes );
+                    Jobs = new AllJobs( Context, PSPResources.Binaries.Jobs );
+                    JobLevels = new JobLevels( Context, PSPResources.Binaries.JobLevels,
+                        new JobLevels( Context, PSPResources.Binaries.JobLevels ) );
+                    SkillSets = new AllSkillSets( Context, PSPResources.Binaries.SkillSets,
+                        PSPResources.Binaries.SkillSets );
+                    MonsterSkills = new AllMonsterSkills( PSPResources.Binaries.MonsterSkills );
+                    ActionMenus = new AllActionMenus( PSPResources.Binaries.ActionEvents, Context );
+                    StatusAttributes = new AllStatusAttributes( PSPResources.Binaries.StatusAttributes );
+                    InflictStatuses = new AllInflictStatuses( PSPResources.Binaries.InflictStatuses );
+                    PoachProbabilities = new AllPoachProbabilities( PSPResources.Binaries.PoachProbabilities );
+                    ENTDs = new AllENTDs( PSPResources.Binaries.ENTD1, PSPResources.Binaries.ENTD2, PSPResources.Binaries.ENTD3, PSPResources.Binaries.ENTD4, PSPResources.Binaries.ENTD5 );
+                    MoveFind = new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind ) );
+                    StoreInventories = new AllStoreInventories( Context, PSPResources.Binaries.StoreInventories, PSPResources.Binaries.StoreInventories );
                     break;
                 case Context.US_PSX:
-                    Abilities = new AllAbilities( PSXResources.AbilitiesBin, PSXResources.AbilityEffectsBin );
-                    AbilityAnimations = new AllAnimations(Context, PSXResources.AbilityAnimationsBin, PSXResources.AbilityAnimationsBin);
-                    Items = new AllItems( PSXResources.OldItemsBin, null );
-                    ItemAttributes = new AllItemAttributes( PSXResources.OldItemAttributesBin, null );
-                    Jobs = new AllJobs( Context, PSXResources.JobsBin );
-                    JobLevels = new JobLevels( Context, PSXResources.JobLevelsBin,
-                        new JobLevels( Context, PSXResources.JobLevelsBin ) );
-                    SkillSets = new AllSkillSets( Context, PSXResources.SkillSetsBin,
-                        PSXResources.SkillSetsBin );
-                    MonsterSkills = new AllMonsterSkills( PSXResources.MonsterSkillsBin );
-                    ActionMenus = new AllActionMenus( PSXResources.ActionEventsBin, Context );
-                    StatusAttributes = new AllStatusAttributes( PSXResources.StatusAttributesBin );
-                    InflictStatuses = new AllInflictStatuses( PSXResources.InflictStatusesBin );
-                    PoachProbabilities = new AllPoachProbabilities( PSXResources.PoachProbabilitiesBin );
-                    ENTDs = new AllENTDs( PSXResources.ENTD1, PSXResources.ENTD2, PSXResources.ENTD3, PSXResources.ENTD4 );
-                    MoveFind = new AllMoveFindItems( Context, PSXResources.MoveFind, new AllMoveFindItems( Context, PSXResources.MoveFind ) );
-                    StoreInventories = new AllStoreInventories( Context, PSXResources.StoreInventoriesBin, PSXResources.StoreInventoriesBin );
+                    Abilities = new AllAbilities( PSXResources.Binaries.Abilities, PSXResources.Binaries.AbilityEffects );
+                    AbilityAnimations = new AllAnimations( Context, PSXResources.Binaries.AbilityAnimations, PSXResources.Binaries.AbilityAnimations );
+                    Items = new AllItems( PSXResources.Binaries.OldItems, null );
+                    ItemAttributes = new AllItemAttributes( PSXResources.Binaries.OldItemAttributes, null );
+                    Jobs = new AllJobs( Context, PSXResources.Binaries.Jobs );
+                    JobLevels = new JobLevels( Context, PSXResources.Binaries.JobLevels,
+                        new JobLevels( Context, PSXResources.Binaries.JobLevels ) );
+                    SkillSets = new AllSkillSets( Context, PSXResources.Binaries.SkillSets,
+                        PSXResources.Binaries.SkillSets );
+                    MonsterSkills = new AllMonsterSkills( PSXResources.Binaries.MonsterSkills );
+                    ActionMenus = new AllActionMenus( PSXResources.Binaries.ActionEvents, Context );
+                    StatusAttributes = new AllStatusAttributes( PSXResources.Binaries.StatusAttributes );
+                    InflictStatuses = new AllInflictStatuses( PSXResources.Binaries.InflictStatuses );
+                    PoachProbabilities = new AllPoachProbabilities( PSXResources.Binaries.PoachProbabilities );
+                    ENTDs = new AllENTDs( PSXResources.Binaries.ENTD1, PSXResources.Binaries.ENTD2, PSXResources.Binaries.ENTD3, PSXResources.Binaries.ENTD4 );
+                    MoveFind = new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind ) );
+                    StoreInventories = new AllStoreInventories( Context, PSXResources.Binaries.StoreInventories, PSXResources.Binaries.StoreInventories );
                     break;
                 default:
                     throw new ArgumentException();
@@ -412,7 +412,7 @@ namespace FFTPatcher.Datatypes
             return null;
         }
 
-        private static byte[] GetFromNodeOrReturnDefault( XmlNode node, string name, byte[] def )
+        private static IList<byte> GetFromNodeOrReturnDefault( XmlNode node, string name, IList<byte> def )
         {
             XmlNode n = node.SelectSingleNode( name );
             if( n != null )
@@ -470,22 +470,22 @@ namespace FFTPatcher.Datatypes
             {
                 bool psp = Context == Context.US_PSP;
                 var Abilities = new AllAbilities( abilities, abilityEffects );
-                var AbilityAnimations = new AllAnimations(Context, abilityAnimations, psp ? PSPResources.AbilityAnimationsBin : PSXResources.AbilityAnimationsBin);
+                var AbilityAnimations = new AllAnimations( Context, abilityAnimations, psp ? PSPResources.Binaries.AbilityAnimations : PSXResources.Binaries.AbilityAnimations );
                 var Items = new AllItems( oldItems, newItems != null ? newItems : null );
                 var ItemAttributes = new AllItemAttributes( oldItemAttributes, newItemAttributes != null ? newItemAttributes : null );
                 var Jobs = new AllJobs( Context, jobs );
                 var JobLevels = new JobLevels( Context, jobLevels,
-                    new JobLevels( Context, Context == Context.US_PSP ? PSPResources.JobLevelsBin : PSXResources.JobLevelsBin ) );
+                    new JobLevels( Context, Context == Context.US_PSP ? PSPResources.Binaries.JobLevels : PSXResources.Binaries.JobLevels ) );
                 var SkillSets = new AllSkillSets( Context, skillSets,
-                    Context == Context.US_PSP ? PSPResources.SkillSetsBin : PSXResources.SkillSetsBin );
+                    Context == Context.US_PSP ? PSPResources.Binaries.SkillSets : PSXResources.Binaries.SkillSets );
                 var MonsterSkills = new AllMonsterSkills( monsterSkills );
                 var ActionMenus = new AllActionMenus( actionMenus, Context );
                 var StatusAttributes = new AllStatusAttributes( statusAttributes );
                 var InflictStatuses = new AllInflictStatuses( inflictStatuses );
                 var PoachProbabilities = new AllPoachProbabilities( poach );
                 var ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
-                var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.MoveFind : PSXResources.MoveFind ) );
-                var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
+                var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.Binaries.MoveFind : PSXResources.Binaries.MoveFind ) );
+                var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.Binaries.StoreInventories : PSXResources.Binaries.StoreInventories );
                 FFTPatch.Abilities = Abilities;
                 FFTPatch.AbilityAnimations = AbilityAnimations;
                 FFTPatch.Items = Items;
@@ -516,7 +516,7 @@ namespace FFTPatcher.Datatypes
                 Context = (Context)Enum.Parse( typeof( Context ), Encoding.UTF8.GetString( GetZipEntry( file, "type", true ) ) );
                 bool psp = Context == Context.US_PSP;
 
-                IDictionary<ElementName, byte[]> defaults = psp ? DefaultPspElements : DefaultPsxElements;
+                IDictionary<ElementName, IList<byte>> defaults = psp ? DefaultPspElements : DefaultPsxElements;
 
                 LoadDataFromBytes(
                     GetZipEntry( file, elementNames[ElementName.Abilities], false ) ?? defaults[ElementName.Abilities],
@@ -551,28 +551,28 @@ namespace FFTPatcher.Datatypes
             Context = (Context)Enum.Parse( typeof( Context ), type );
             bool psp = Context == Context.US_PSP;
 
-            byte[] abilities = GetFromNodeOrReturnDefault( rootNode, "abilities", psp ? PSPResources.AbilitiesBin : PSXResources.AbilitiesBin );
-            byte[] abilityEffects = GetFromNodeOrReturnDefault( rootNode, "abilityEffects", psp ? PSPResources.AbilityEffectsBin : PSXResources.AbilityEffectsBin );
-            byte[] abilityAnimations = GetFromNodeOrReturnDefault( rootNode, "abilityAnimations", psp ? PSPResources.AbilityAnimationsBin : PSXResources.AbilityAnimationsBin );
-            byte[] oldItems = GetFromNodeOrReturnDefault( rootNode, "items", psp ? PSPResources.OldItemsBin : PSXResources.OldItemsBin );
-            byte[] oldItemAttributes = GetFromNodeOrReturnDefault( rootNode, "itemAttributes", psp ? PSPResources.OldItemAttributesBin : PSXResources.OldItemAttributesBin );
-            byte[] newItems = psp ? GetFromNodeOrReturnDefault( rootNode, "pspItems", PSPResources.NewItemsBin ) : null;
-            byte[] newItemAttributes = psp ? GetFromNodeOrReturnDefault( rootNode, "pspItemAttributes", PSPResources.NewItemAttributesBin ) : null;
-            byte[] jobs = GetFromNodeOrReturnDefault( rootNode, "jobs", psp ? PSPResources.JobsBin : PSXResources.JobsBin );
-            byte[] jobLevels = GetFromNodeOrReturnDefault( rootNode, "jobLevels", psp ? PSPResources.JobLevelsBin : PSXResources.JobLevelsBin );
-            byte[] skillSets = GetFromNodeOrReturnDefault( rootNode, "skillSets", psp ? PSPResources.SkillSetsBin : PSXResources.SkillSetsBin );
-            byte[] monsterSkills = GetFromNodeOrReturnDefault( rootNode, "monsterSkills", psp ? PSPResources.MonsterSkillsBin : PSXResources.MonsterSkillsBin );
-            byte[] actionMenus = GetFromNodeOrReturnDefault( rootNode, "actionMenus", psp ? PSPResources.ActionEventsBin : PSXResources.ActionEventsBin );
-            byte[] statusAttributes = GetFromNodeOrReturnDefault( rootNode, "statusAttributes", psp ? PSPResources.StatusAttributesBin : PSXResources.StatusAttributesBin );
-            byte[] inflictStatuses = GetFromNodeOrReturnDefault( rootNode, "inflictStatuses", psp ? PSPResources.InflictStatusesBin : PSXResources.InflictStatusesBin );
-            byte[] poach = GetFromNodeOrReturnDefault( rootNode, "poaching", psp ? PSPResources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin );
-            byte[] entd1 = GetFromNodeOrReturnDefault( rootNode, "entd1", PSPResources.ENTD1 );
-            byte[] entd2 = GetFromNodeOrReturnDefault( rootNode, "entd2", PSPResources.ENTD2 );
-            byte[] entd3 = GetFromNodeOrReturnDefault( rootNode, "entd3", PSPResources.ENTD3 );
-            byte[] entd4 = GetFromNodeOrReturnDefault( rootNode, "entd4", PSPResources.ENTD4 );
-            byte[] entd5 = GetFromNodeOrReturnDefault( rootNode, "entd5", PSPResources.ENTD5 );
-            byte[] moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? PSPResources.MoveFind : PSXResources.MoveFind );
-            byte[] inventories = GetFromNodeOrReturnDefault( rootNode, "storeInventories", psp ? PSPResources.StoreInventoriesBin : PSXResources.StoreInventoriesBin );
+            IList<byte> abilities = GetFromNodeOrReturnDefault( rootNode, "abilities", psp ? PSPResources.Binaries.Abilities : PSXResources.Binaries.Abilities );
+            IList<byte> abilityEffects = GetFromNodeOrReturnDefault( rootNode, "abilityEffects", psp ? PSPResources.Binaries.AbilityEffects : PSXResources.Binaries.AbilityEffects );
+            IList<byte> abilityAnimations = GetFromNodeOrReturnDefault( rootNode, "abilityAnimations", psp ? PSPResources.Binaries.AbilityAnimations : PSXResources.Binaries.AbilityAnimations );
+            IList<byte> oldItems = GetFromNodeOrReturnDefault( rootNode, "items", psp ? PSPResources.Binaries.OldItems : PSXResources.Binaries.OldItems );
+            IList<byte> oldItemAttributes = GetFromNodeOrReturnDefault( rootNode, "itemAttributes", psp ? PSPResources.Binaries.OldItemAttributes : PSXResources.Binaries.OldItemAttributes );
+            IList<byte> newItems = psp ? GetFromNodeOrReturnDefault( rootNode, "pspItems", PSPResources.Binaries.NewItems ) : null;
+            IList<byte> newItemAttributes = psp ? GetFromNodeOrReturnDefault( rootNode, "pspItemAttributes", PSPResources.Binaries.NewItemAttributes ) : null;
+            IList<byte> jobs = GetFromNodeOrReturnDefault( rootNode, "jobs", psp ? PSPResources.Binaries.Jobs : PSXResources.Binaries.Jobs );
+            IList<byte> jobLevels = GetFromNodeOrReturnDefault( rootNode, "jobLevels", psp ? PSPResources.Binaries.JobLevels : PSXResources.Binaries.JobLevels );
+            IList<byte> skillSets = GetFromNodeOrReturnDefault( rootNode, "skillSets", psp ? PSPResources.Binaries.SkillSets : PSXResources.Binaries.SkillSets );
+            IList<byte> monsterSkills = GetFromNodeOrReturnDefault( rootNode, "monsterSkills", psp ? PSPResources.Binaries.MonsterSkills : PSXResources.Binaries.MonsterSkills );
+            IList<byte> actionMenus = GetFromNodeOrReturnDefault( rootNode, "actionMenus", psp ? PSPResources.Binaries.ActionEvents : PSXResources.Binaries.ActionEvents );
+            IList<byte> statusAttributes = GetFromNodeOrReturnDefault( rootNode, "statusAttributes", psp ? PSPResources.Binaries.StatusAttributes : PSXResources.Binaries.StatusAttributes );
+            IList<byte> inflictStatuses = GetFromNodeOrReturnDefault( rootNode, "inflictStatuses", psp ? PSPResources.Binaries.InflictStatuses : PSXResources.Binaries.InflictStatuses );
+            IList<byte> poach = GetFromNodeOrReturnDefault( rootNode, "poaching", psp ? PSPResources.Binaries.PoachProbabilities : PSXResources.Binaries.PoachProbabilities );
+            IList<byte> entd1 = GetFromNodeOrReturnDefault( rootNode, "entd1", PSPResources.Binaries.ENTD1 );
+            IList<byte> entd2 = GetFromNodeOrReturnDefault( rootNode, "entd2", PSPResources.Binaries.ENTD2 );
+            IList<byte> entd3 = GetFromNodeOrReturnDefault( rootNode, "entd3", PSPResources.Binaries.ENTD3 );
+            IList<byte> entd4 = GetFromNodeOrReturnDefault( rootNode, "entd4", PSPResources.Binaries.ENTD4 );
+            IList<byte> entd5 = GetFromNodeOrReturnDefault( rootNode, "entd5", PSPResources.Binaries.ENTD5 );
+            IList<byte> moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? PSPResources.Binaries.MoveFind : PSXResources.Binaries.MoveFind );
+            IList<byte> inventories = GetFromNodeOrReturnDefault( rootNode, "storeInventories", psp ? PSPResources.Binaries.StoreInventories : PSXResources.Binaries.StoreInventories );
 
             LoadDataFromBytes( abilities, abilityEffects, abilityAnimations,
                 oldItems, oldItemAttributes, newItems, newItemAttributes,
@@ -642,52 +642,52 @@ namespace FFTPatcher.Datatypes
 
 		#endregion Private Methods 
 
-        private static IDictionary<ElementName,byte[]> DefaultPsxElements = new Dictionary<ElementName, byte[]> {
-            { ElementName.Abilities, PSXResources.AbilitiesBin },
-            { ElementName.AbilityEffects, PSXResources.AbilityEffectsBin },
-            { ElementName.AbilityAnimations, PSXResources.AbilityAnimationsBin },
-            { ElementName.Items, PSXResources.OldItemsBin },
-            { ElementName.ItemAttributes, PSXResources.OldItemAttributesBin },
+        private static IDictionary<ElementName, IList<byte>> DefaultPsxElements = new Dictionary<ElementName, IList<byte>> {
+            { ElementName.Abilities, PSXResources.Binaries.Abilities },
+            { ElementName.AbilityEffects, PSXResources.Binaries.AbilityEffects },
+            { ElementName.AbilityAnimations, PSXResources.Binaries.AbilityAnimations },
+            { ElementName.Items, PSXResources.Binaries.OldItems },
+            { ElementName.ItemAttributes, PSXResources.Binaries.OldItemAttributes },
             { ElementName.PSPItems, null },
             { ElementName.PSPItemAttributes, null },
-            { ElementName.Jobs, PSXResources.JobsBin },
-            { ElementName.JobLevels, PSXResources.JobLevelsBin},
-            { ElementName.SkillSets, PSXResources.SkillSetsBin },
-            { ElementName.MonsterSkills, PSXResources.MonsterSkillsBin},
-            { ElementName.ActionMenus, PSXResources.ActionEventsBin},
-            { ElementName.InflictStatuses, PSXResources.InflictStatusesBin },
-            { ElementName.StatusAttributes, PSXResources.StatusAttributesBin },
-            { ElementName.Poaching, PSXResources.PoachProbabilitiesBin },
-            { ElementName.ENTD1, PSXResources.ENTD1 },
-            { ElementName.ENTD2, PSXResources.ENTD2},
-            { ElementName.ENTD3, PSXResources.ENTD3},
-            { ElementName.ENTD4, PSXResources.ENTD4},
+            { ElementName.Jobs, PSXResources.Binaries.Jobs },
+            { ElementName.JobLevels, PSXResources.Binaries.JobLevels},
+            { ElementName.SkillSets, PSXResources.Binaries.SkillSets },
+            { ElementName.MonsterSkills, PSXResources.Binaries.MonsterSkills},
+            { ElementName.ActionMenus, PSXResources.Binaries.ActionEvents},
+            { ElementName.InflictStatuses, PSXResources.Binaries.InflictStatuses },
+            { ElementName.StatusAttributes, PSXResources.Binaries.StatusAttributes },
+            { ElementName.Poaching, PSXResources.Binaries.PoachProbabilities },
+            { ElementName.ENTD1, PSXResources.Binaries.ENTD1 },
+            { ElementName.ENTD2, PSXResources.Binaries.ENTD2},
+            { ElementName.ENTD3, PSXResources.Binaries.ENTD3},
+            { ElementName.ENTD4, PSXResources.Binaries.ENTD4},
             { ElementName.ENTD5, null},
-            { ElementName.MoveFindItems, PSXResources.MoveFind},
-            { ElementName.StoreInventories, PSXResources.StoreInventoriesBin} };
-        private static IDictionary<ElementName,byte[]> DefaultPspElements = new Dictionary<ElementName, byte[]> {
-            { ElementName.Abilities, PSPResources.AbilitiesBin },
-            { ElementName.AbilityEffects, PSPResources.AbilityEffectsBin },
-            { ElementName.AbilityAnimations, PSPResources.AbilityAnimationsBin },
-            { ElementName.Items, PSPResources.OldItemsBin },
-            { ElementName.ItemAttributes, PSPResources.OldItemAttributesBin },
-            { ElementName.PSPItems, PSPResources.NewItemsBin },
-            { ElementName.PSPItemAttributes, PSPResources.NewItemAttributesBin },
-            { ElementName.Jobs, PSPResources.JobsBin },
-            { ElementName.JobLevels, PSPResources.JobLevelsBin},
-            { ElementName.SkillSets, PSPResources.SkillSetsBin },
-            { ElementName.MonsterSkills, PSPResources.MonsterSkillsBin},
-            { ElementName.ActionMenus, PSPResources.ActionEventsBin},
-            { ElementName.InflictStatuses, PSPResources.InflictStatusesBin },
-            { ElementName.StatusAttributes, PSPResources.StatusAttributesBin },
-            { ElementName.Poaching, PSPResources.PoachProbabilitiesBin },
-            { ElementName.ENTD1, PSPResources.ENTD1 },
-            { ElementName.ENTD2, PSPResources.ENTD2},
-            { ElementName.ENTD3, PSPResources.ENTD3},
-            { ElementName.ENTD4, PSPResources.ENTD4},
-            { ElementName.ENTD5, PSPResources.ENTD5},
-            { ElementName.MoveFindItems, PSPResources.MoveFind},
-            { ElementName.StoreInventories, PSPResources.StoreInventoriesBin} };
+            { ElementName.MoveFindItems, PSXResources.Binaries.MoveFind},
+            { ElementName.StoreInventories, PSXResources.Binaries.StoreInventories} };
+        private static IDictionary<ElementName,IList<byte>> DefaultPspElements = new Dictionary<ElementName, IList<byte>> {
+            { ElementName.Abilities, PSPResources.Binaries.Abilities },
+            { ElementName.AbilityEffects, PSPResources.Binaries.AbilityEffects },
+            { ElementName.AbilityAnimations, PSPResources.Binaries.AbilityAnimations },
+            { ElementName.Items, PSPResources.Binaries.OldItems },
+            { ElementName.ItemAttributes, PSPResources.Binaries.OldItemAttributes },
+            { ElementName.PSPItems, PSPResources.Binaries.NewItems },
+            { ElementName.PSPItemAttributes, PSPResources.Binaries.NewItemAttributes },
+            { ElementName.Jobs, PSPResources.Binaries.Jobs },
+            { ElementName.JobLevels, PSPResources.Binaries.JobLevels},
+            { ElementName.SkillSets, PSPResources.Binaries.SkillSets },
+            { ElementName.MonsterSkills, PSPResources.Binaries.MonsterSkills},
+            { ElementName.ActionMenus, PSPResources.Binaries.ActionEvents},
+            { ElementName.InflictStatuses, PSPResources.Binaries.InflictStatuses },
+            { ElementName.StatusAttributes, PSPResources.Binaries.StatusAttributes },
+            { ElementName.Poaching, PSPResources.Binaries.PoachProbabilities },
+            { ElementName.ENTD1, PSPResources.Binaries.ENTD1 },
+            { ElementName.ENTD2, PSPResources.Binaries.ENTD2},
+            { ElementName.ENTD3, PSPResources.Binaries.ENTD3},
+            { ElementName.ENTD4, PSPResources.Binaries.ENTD4},
+            { ElementName.ENTD5, PSPResources.Binaries.ENTD5},
+            { ElementName.MoveFindItems, PSPResources.Binaries.MoveFind},
+            { ElementName.StoreInventories, PSPResources.Binaries.StoreInventories} };
 
         private enum ElementName
         {

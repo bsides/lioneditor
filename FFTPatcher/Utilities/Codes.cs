@@ -40,7 +40,7 @@ namespace FFTPatcher
 		#endregion Instance Variables 
 
 		#region Public Methods (3) 
-        public static IList<string> GenerateCodes(Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset)
+        public static IList<string> GenerateCodes( Context context, IList<byte> oldBytes, IList<byte> newBytes, UInt32 offset )
         {
             return GenerateCodes(context, oldBytes, newBytes, offset, CodeEnabledOnlyWhen.Any);
         }
@@ -48,7 +48,7 @@ namespace FFTPatcher
         /// <summary>
         /// Generates codes based on context.
         /// </summary>
-        public static IList<string> GenerateCodes( Context context, byte[] oldBytes, byte[] newBytes, UInt32 offset, CodeEnabledOnlyWhen when )
+        public static IList<string> GenerateCodes( Context context, IList<byte> oldBytes, IList<byte> newBytes, UInt32 offset, CodeEnabledOnlyWhen when )
         {
             switch( context )
             {

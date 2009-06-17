@@ -358,7 +358,7 @@ namespace FFTPatcher
             {
                 sceapFileNameTextBox.Enabled = false;
                 sceapBrowseButton.Enabled = false;
-                PSXResources.SCEAPDAT.CopyTo( SCEAP_DAT, 0 );
+                PSXResources.Binaries.SCEAPDAT.CopyTo( SCEAP_DAT, 0 );
                 BuildSCEAPPreview();
             }
 

@@ -100,11 +100,11 @@ namespace FFTPatcher.Datatypes
         {
             if (context == Context.US_PSP)
             {
-                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.AbilityAnimationsBin, this.ToByteArray(), 0x3278F8);
+                return Codes.GenerateCodes( Context.US_PSP, PatcherLib.PSPResources.Binaries.AbilityAnimations, this.ToByteArray(), 0x3278F8 );
             }
             else
             {
-                return Codes.GenerateCodes(Context.US_PSX, PatcherLib.PSXResources.AbilityAnimationsBin, this.ToByteArray(), 0x93E10, Codes.CodeEnabledOnlyWhen.Battle);
+                return Codes.GenerateCodes( Context.US_PSX, PatcherLib.PSXResources.Binaries.AbilityAnimations, this.ToByteArray(), 0x93E10, Codes.CodeEnabledOnlyWhen.Battle );
             }
         }
 

@@ -40,6 +40,7 @@ namespace FFTPatcher.TextEditor
             public IDictionary<SectorType, IList<KeyValuePair<Enum, int>>> Sectors { get; set; }
             public IList<string> SectionNames { get; set; }
             public IList<IList<string>> EntryNames { get; set; }
+            public IList<byte> AllowedTerminators { get; set; }
             public IList<IList<int>> DisallowedEntries { get; set; }
             public IList<IDictionary<int,string>> StaticEntries { get; set; }
             public KeyValuePair<Enum, int> PrimaryFile { get; set; }
@@ -148,6 +149,26 @@ namespace FFTPatcher.TextEditor
             IList<IList<int>> disallowedEntries;
             IList<IDictionary<int,string>> staticEntries;
             GetDisallowedEntries( node, sectionLengths.Length, out disallowedEntries, out staticEntries );
+            IList<byte> terminators;
+            XmlNode terminatorNode = node.SelectSingleNode( "Terminators" );
+            if ( terminatorNode != null )
+            {
+                terminators = new List<byte>();
+                foreach ( XmlNode nnn in terminatorNode.SelectNodes( "Terminator" ) )
+                {
+                    terminators.Add(
+                        byte.Parse( nnn.InnerText, System.Globalization.NumberStyles.HexNumber ) );
+                }
+            }
+            else
+            {
+                terminators = new byte[] { 0xFE };
+            }
+
+            if ( terminators.Count == 0 )
+            {
+                terminators.Add( 0xFE );
+            }
 
             FileInfo fi = new FileInfo
             {
@@ -161,6 +182,7 @@ namespace FFTPatcher.TextEditor
                 SectionLengths = sectionLengths.AsReadOnly(),
                 Sectors = new ReadOnlyDictionary<SectorType, IList<KeyValuePair<Enum, int>>>( dict ),
                 SectionNames = sectionNames,
+                AllowedTerminators = terminators.AsReadOnly(),
                 Size = size,
                 PrimaryFile = primaryFile,
                 CompressionAllowed = compressionAllowed,
@@ -310,6 +332,15 @@ namespace FFTPatcher.TextEditor
             return new FFTText( context, files, quickEdit );
         }
 
+        private static Set<Guid> GetGuidsNeededForQuickEdit( XmlNode quickEditNode )
+        {
+            Set<Guid> result = new Set<Guid>();
+            foreach ( XmlNode guidNode in quickEditNode.SelectNodes( "*/File/Guid" ) )
+            {
+                result.Add( new Guid( guidNode.InnerText ) );
+            }
+            return result;
+        }
 
         public static FFTText GetFilesXml( string filename, BackgroundWorker worker )
         {
@@ -341,10 +372,16 @@ namespace FFTPatcher.TextEditor
                     return null;
             }
 
-            var quickEdit = new QuickEdit( context, result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
-            if ( quickEdit == null || worker.CancellationPending )
+            XmlNode quickEditNode = layoutDoc.SelectSingleNode( "//QuickEdit" );
+            Set<Guid> guids = GetGuidsNeededForQuickEdit( quickEditNode );
+            QuickEdit quickEdit = null;
+            if ( guids.TrueForAll( g => result.ContainsKey( g ) ) )
             {
-                return null;
+                quickEdit = new QuickEdit( context, result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
+                if ( quickEdit == null || worker.CancellationPending )
+                {
+                    return null;
+                }
             }
 
             return new FFTText( context, result, quickEdit );

@@ -237,7 +237,7 @@ namespace FFTPatcher.Datatypes
             StatusAttributes = new StatusAttribute[40];
             IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.StatusAttributes : PSXResources.Binaries.StatusAttributes;
 
-            IList<string> names = FFTPatch.Context == Context.US_PSP ? PSPResources.Lists.Statuses : PSXResources.Lists.StatusNames;
+            IList<string> names = FFTPatch.Context == Context.US_PSP ? PSPResources.Lists.StatusNames : PSXResources.Lists.StatusNames;
             for( int i = 0; i < 40; i++ )
             {
                 StatusAttributes[i] =

@@ -25,34 +25,37 @@ namespace PatcherLib
     using PatcherLib.Datatypes;
     using PatcherLib.Utilities;
     using Paths = Resources.Paths.PSX;
+    using System.Xml;
 
     public static partial class PSXResources
     {
         private static IDictionary<Shops, string> readOnlyStoreNames;
-        private static string statusNamesDoc;
-            
+        private static XmlDocument statusNamesDoc;
 
-        private static string abilitiesDoc;
 
-        private static string abilitiesStringsDoc;
+        private static XmlDocument abilitiesDoc;
+
+        private static XmlDocument abilitiesStringsDoc;
 
         public static IList<string> CharacterSet { get; private set; }
 
-        private static string itemsDoc;
+        private static XmlDocument itemsDoc;
 
-        private static string itemsStringsDoc;
+        private static XmlDocument itemsStringsDoc;
 
-        private static string jobsDoc;
+        private static XmlDocument jobsDoc;
 
-        private static string skillSetsDoc;
-        private static string specialNamesDoc;
-        private static string spriteSetsDoc;
+        private static XmlDocument skillSetsDoc;
+        private static XmlDocument specialNamesDoc;
+        private static XmlDocument spriteSetsDoc;
 
-        private static string shopNamesDoc;
+        private static XmlDocument shopNamesDoc;
 
-        private static string eventNamesDoc;
-        private static string abilityEffectsDoc;
-        private static string mapNamesDoc;
+        private static XmlDocument eventNamesDoc;
+        private static XmlDocument abilityEffectsDoc;
+        private static XmlDocument mapNamesDoc;
+        private static XmlDocument unitNamesDoc;
+        private static XmlDocument spriteFilesDoc;
 
         static PSXResources()
         {
@@ -81,20 +84,21 @@ namespace PatcherLib
             Binaries.StatusAttributes = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StatusAttributes].AsReadOnly();
             Binaries.SCEAPDAT = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
 
-            eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String();
-            jobsDoc = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String();
-            skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String();
-            specialNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpecialNamesXML].ToUTF8String();
-            spriteSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpriteSetsXML].ToUTF8String();
-            abilitiesStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesStringsXML].ToUTF8String();
-            abilityEffectsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilityEffectsXML].ToUTF8String();
-            itemsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String();
-            itemsStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String();
-            shopNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.ShopNamesXML].ToUTF8String();
-            mapNamesDoc = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String();
-
-            statusNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String();
-            abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String();
+            eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String().ToXmlDocument();
+            jobsDoc = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String().ToXmlDocument();
+            skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String().ToXmlDocument();
+            specialNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpecialNamesXML].ToUTF8String().ToXmlDocument();
+            spriteSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpriteSetsXML].ToUTF8String().ToXmlDocument();
+            abilitiesStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesStringsXML].ToUTF8String().ToXmlDocument();
+            abilityEffectsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilityEffectsXML].ToUTF8String().ToXmlDocument();
+            itemsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String().ToXmlDocument();
+            itemsStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String().ToXmlDocument();
+            shopNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.ShopNamesXML].ToUTF8String().ToXmlDocument();
+            mapNamesDoc = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String().ToXmlDocument();
+            unitNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.UnitNamesXML].ToUTF8String().ToXmlDocument();
+            spriteFilesDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpriteFilesXML].ToUTF8String().ToXmlDocument();
+            statusNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String().ToXmlDocument();
+            abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String().ToXmlDocument();
 
             dict[Resources.Paths.PSX.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemAttributesXML].ToUTF8String();
 

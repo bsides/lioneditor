@@ -31,6 +31,35 @@ namespace PatcherLib
     using System.Xml;
     public static class Resources
     {
+        internal enum ListType
+        {
+            SpriteFiles,
+            AbilityAI,
+            AbilityAttributes,
+            AbilityEffects,
+            AbilityTypes,
+            EventNames,
+            MapNames,
+            ShopAvailabilities,
+            StatusNames,
+            SkillSetNames,
+            ItemNames,
+            AbilityNames,
+            MonsterNames,
+            JobNames,
+            UnitNames,
+            SpecialNames,
+            SpriteSets,
+        }
+
+        internal struct ResourceListInfo
+        {
+            public XmlDocument Doc { get; set; }
+            public string XPath { get; set; }
+            public int Length { get; set; }
+            public int StartIndex { get; set; }
+        }
+
         public static IList<string> GetResourceByName( string fullName )
         {
             int lastDotIndex = fullName.LastIndexOf( Type.Delimiter );
@@ -41,32 +70,19 @@ namespace PatcherLib
                    Type.GetType( typeName ), fieldName, false );
         }
 
-        /// <summary>
-        /// Iterates through an XML document, getting the string values of certain nodes.
-        /// </summary>
-        public static IList<string> GetStringsFromNumberedXmlNodes(string xmlDoc, string xPath, int length, int startIndex)
+        internal static IList<string> GetStringsFromNumberedXmlNodes( ResourceListInfo info )
         {
-            string[] result = new string[length];
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xmlDoc);
-            for (int i = startIndex; i < (length + startIndex); i++)
+            string[] result = new string[info.Length];
+            for ( int i = info.StartIndex; i < ( info.Length + info.StartIndex ); i++ )
             {
-                XmlNode node = doc.SelectSingleNode(string.Format(xPath, i));
-                result[i - startIndex] = node == null ? string.Empty : node.InnerText;
+                XmlNode node = info.Doc.SelectSingleNode( string.Format( info.XPath, i ) );
+                result[i - info.StartIndex] = node == null ? string.Empty : node.InnerText;
             }
 
             return result;
         }
 
-        /// <summary>
-        /// Iterates through an XML document, getting the string values of certain nodes.
-        /// </summary>
-        public static IList<string> GetStringsFromNumberedXmlNodes(string xmlDoc, string xPath, int length)
-        {
-            return GetStringsFromNumberedXmlNodes(xmlDoc, xPath, length, 0);
-        }
-
-
+        private static XmlDocument abilityFormulasDoc;
         private static IDictionary<byte, string> abilityFormulas;
 
         public static IDictionary<byte, string> AbilityFormulas
@@ -77,9 +93,11 @@ namespace PatcherLib
                 {
                     var temp = new Dictionary<byte, string>();
                     var formulaNames = Resources.GetStringsFromNumberedXmlNodes(
-                        ZipFileContents[Paths.AbilityFormulasXML].ToUTF8String(),
-                        "/AbilityFormulas/Ability[@value='{0:X2}']",
-                        256 );
+                        new ResourceListInfo { 
+                            Doc = abilityFormulasDoc,
+                            XPath = "/AbilityFormulas/Ability[@value='{0:X2}']",
+                            Length = 256,
+                            StartIndex = 0 } );
                     for( int i = 0; i < 256; i++ )
                     {
                         temp.Add((byte)i, formulaNames[i]);
@@ -168,6 +186,7 @@ namespace PatcherLib
                 ZipFileContents = DefaultZipFileContents;
             }
 
+            abilityFormulasDoc = ZipFileContents[Paths.AbilityFormulasXML].ToUTF8String().ToXmlDocument();
         }
 
         public static void GenerateDefaultResourcesZip(string filename)
@@ -226,6 +245,7 @@ namespace PatcherLib
                     public const string StatusAttributes = "PSP/bin/StatusAttributes.bin";
                     public const string StoreInventories = "StoreInventories.bin";
                 }
+                public const string UnitNamesXML = "PSP/UnitNames.xml";
                 public const string EventNamesXML = "PSP/EventNames.xml";
                 public const string JobsXML = "PSP/Jobs.xml";
                 public const string SkillSetsXML = "PSP/SkillSets.xml";
@@ -240,6 +260,7 @@ namespace PatcherLib
                 public const string ItemsXML = "PSP/Items/Items.xml";
                 public const string ItemsStringsXML = "PSP/Items/Strings.xml";
                 public const string ShopNamesXML = "PSP/ShopNames.xml";
+                public const string SpriteFilesXML = "PSP/SpriteFiles.xml";
             }
 
             public static class PSX
@@ -271,6 +292,7 @@ namespace PatcherLib
                     public const string StatusAttributes = "PSX-US/bin/StatusAttributes.bin";
                     public const string StoreInventories = "StoreInventories.bin";
                 }
+                public const string UnitNamesXML = "PSX-US/UnitNames.xml";
                 public const string EventNamesXML = "PSX-US/EventNames.xml";
                 public const string FileList = "PSX-US/FileList.txt";
                 public const string JobsXML = "PSX-US/Jobs.xml";
@@ -286,6 +308,7 @@ namespace PatcherLib
                 public const string ItemsStringsXML = "PSX-US/Items/Strings.xml";
                 public const string ShopNamesXML = "PSX-US/ShopNames.xml";
                 public const string MapNamesXML = "PSX-US/MapNames.xml";
+                public const string SpriteFilesXML = "PSX-US/SpriteFiles.xml";
             }
         }
     }

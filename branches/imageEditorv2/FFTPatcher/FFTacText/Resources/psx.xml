@@ -1267,7 +1267,9 @@
         <Section value="19" entries="188" empty="false" name="Skillset descriptions" compressible="true" dte="true">
           <includeResource name="PatcherLib.PSXResources+Lists.SkillSets" start="0" end="187" offset="0"/>
         </Section>
-        <Section value="20" entries="768" empty="true" name="Unit quotes" compressible="true" dte="true"/>
+        <Section value="20" entries="768" empty="false" name="Unit quotes" compressible="true" dte="true">
+          <includeResource name="PatcherLib.PSXResources+Lists.UnitNames" start="0" end="767" offset="0"/>
+        </Section>
       </Sections>
     </CompressedFile>
 
@@ -1963,7 +1965,34 @@
         <Sector filename="EVENT_CARD_OUT" offset="38588"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="26" empty="true" dte="true"/>
+        <Section value="0" entries="26" empty="false" dte="true" name="Misc. save screen text">
+          <entry value="0" name=""/>
+          <entry value="1" name="January"/>
+          <entry value="2" name="February"/>
+          <entry value="3" name="March"/>
+          <entry value="4" name="April"/>
+          <entry value="5" name="May"/>
+          <entry value="6" name="June"/>
+          <entry value="7" name="July"/>
+          <entry value="8" name="August"/>
+          <entry value="9" name="September"/>
+          <entry value="10" name="October"/>
+          <entry value="11" name="November"/>
+          <entry value="12" name="December"/>
+          <entry value="13" name="Level"/>
+          <entry value="14" name="Empty?"/>
+          <entry value="15" name=""/>
+          <entry value="16" name="Yes/No"/>
+          <entry value="17" name=""/>
+          <entry value="18" name="Saving"/>
+          <entry value="19" name="Loading"/>
+          <entry value="20" name="Formatting"/>
+          <entry value="21" name="Checking card"/>
+          <entry value="22" name="Slot 1/2"/>
+          <entry value="23" name="Save/Load"/>
+          <entry value="24" name="Load?"/>
+          <entry value="25" name="Select card"/>
+        </Section>
       </Sections>
     </OneShotFile>
 
@@ -1975,7 +2004,39 @@
         <Sector filename="EVENT_CARD_OUT" offset="38836"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="31" empty="true" dte="true"/>
+        <Section value="0" entries="31" empty="false" name="Error/Confirmation messages" dte="true">
+          <entry value="0" name="No items"/>
+          <entry value="1" name="Item out of stock"/>
+          <entry value="2" name="No more shields"/>
+          <entry value="3" name="No unequipped items"/>
+          <entry value="4" name="Set number to dispose"/>
+          <entry value="5" name="Cancel equip?"/>
+          <entry value="6" name="No ability learned"/>
+          <entry value="7" name="Learned all abilities"/>
+          <entry value="8" name="Is __ OK?"/>
+          <entry value="9" name="Insufficient JP"/>
+          <entry value="10" name="Remove __?"/>
+          <entry value="11" name=""/>
+          <entry value="12" name=""/>
+          <entry value="13" name=""/>
+          <entry value="14" name="No memory card"/>
+          <entry value="15" name="No saves"/>
+          <entry value="16" name="No room on memory card"/>
+          <entry value="17" name="Save?"/>
+          <entry value="18" name="Can't remove unit"/>
+          <entry value="19" name="Format memory card?"/>
+          <entry value="20" name=""/>
+          <entry value="21" name="Input name"/>
+          <entry value="22" name=""/>
+          <entry value="23" name=""/>
+          <entry value="24" name=""/>
+          <entry value="25" name=""/>
+          <entry value="26" name="Is __ OK?"/>
+          <entry value="27" name="Destroy egg?"/>
+          <entry value="28" name="Save error"/>
+          <entry value="29" name="Load error"/>
+          <entry value="30" name="Save?"/>
+        </Section>
       </Sections>
     </OneShotFile>
 
@@ -1987,7 +2048,9 @@
         <Sector filename="EVENT_CARD_OUT" offset="40428"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="155" empty="true" name="Job names" dte="true"/>
+        <Section value="0" entries="155" name="Job names" dte="true">
+          <includeResource name="PatcherLib.PSXResources+Lists.JobNames" start="0" end="154" offset="0"/>
+        </Section>
       </Sections>
     </OneShotFile>
 

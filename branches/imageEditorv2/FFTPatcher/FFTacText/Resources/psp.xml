@@ -1005,7 +1005,9 @@
         <Section value="19" entries="227" empty="false" dte="true" compressible="true" name="Skillset descriptions">
           <includeResource name="PatcherLib.PSPResources+Lists.SkillSets" start="0" end="226" offset="0"/>
         </Section>
-        <Section value="20" entries="768" empty="true" dte="true" name="Unit quotes" compressible="true"/>
+        <Section value="20" entries="768" empty="false" dte="true" name="Unit quotes" compressible="true">
+          <includeResource name="PatcherLib.PSPResources+Lists.UnitNames" start="0" end="767" offset="0"/>
+        </Section>
       </Sections>
     </CompressedFile>
 

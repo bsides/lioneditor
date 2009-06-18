@@ -301,7 +301,7 @@ namespace FFTPatcher.Editors
                 storeInventoryCheckedListBox.Items.Clear();
                 foreach ( Shops shop in shops )
                 {
-                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSPResources.ShopNames[shop] );
+                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSPResources.Lists.ShopNames[shop] );
                 }
 
                 ourContext = Context.US_PSP;

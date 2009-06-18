@@ -68,8 +68,10 @@
     <Content Include="Resources\PSP\ShopNames.xml" />
     <Content Include="Resources\PSP\SkillSets.xml" />
     <Content Include="Resources\PSP\SpecialNames.xml" />
+    <Content Include="Resources\PSP\SpriteFiles.xml" />
     <Content Include="Resources\PSP\SpriteSets.xml" />
     <Content Include="Resources\PSP\StatusNames.xml" />
+    <Content Include="Resources\PSP\UnitNames.xml" />
     <Content Include="Resources\PSX-US\Abilities\Abilities.xml" />
     <Content Include="Resources\PSX-US\Abilities\Effects.xml" />
     <Content Include="Resources\PSX-US\Abilities\Strings.xml" />
@@ -83,8 +85,10 @@
     <Content Include="Resources\PSX-US\ShopNames.xml" />
     <Content Include="Resources\PSX-US\SkillSets.xml" />
     <Content Include="Resources\PSX-US\SpecialNames.xml" />
+    <Content Include="Resources\PSX-US\SpriteFiles.xml" />
     <Content Include="Resources\PSX-US\SpriteSets.xml" />
     <Content Include="Resources\PSX-US\StatusNames.xml" />
+    <Content Include="Resources\PSX-US\UnitNames.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ENTD1.ENT" />

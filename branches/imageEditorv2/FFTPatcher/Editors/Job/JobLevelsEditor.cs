@@ -32,6 +32,8 @@ namespace FFTPatcher.Editors
 		#region Instance Variables (1) 
 
         private JobLevels levels;
+        Label[] labels;
+        VerticalLabel[] verticalLabels;
 
 		#endregion Instance Variables 
 
@@ -41,6 +43,20 @@ namespace FFTPatcher.Editors
         {
             InitializeComponent();
             requirementsEditor1.DataChanged += OnDataChanged;
+            labels = new Label[19] { 
+                chemistLabel, knightLabel, archerLabel, monkLabel, 
+                whiteLabel, blackLabel, timeLabel, summonerLabel, 
+                thiefLabel, oratorLabel, mysticLabel, geomancerLabel, 
+                dragoonLabel, samuraiLabel, ninjaLabel, calcLabel, 
+                bardLabel, dancerLabel, mimeLabel };
+            verticalLabels = new VerticalLabel[20] {
+                verticalSquireLabel, verticalChemistLabel, verticalKnightLabel, 
+                verticalArcherLabel, verticalMonkLabel, verticalWhiteLabel, 
+                verticalBlackLabel, verticalTimeLabel, verticalSummonerLabel,
+                verticalThiefLabel, verticalOratorLabel, verticalMysticLabel, 
+                verticalGeomancerLabel, verticalDragoonLabel, 
+                verticalSamuraiLabel, verticalNinjaLabel, verticalCalcLabel,
+                verticalBardLabel, verticalDancerLabel, verticalMimeLabel };
         }
 
 		#endregion Constructors 
@@ -75,13 +91,31 @@ namespace FFTPatcher.Editors
                 reqs.Add( levels.OnionKnight );
                 reqs.Add( levels.Unknown );
             }
-            darkKnightSideLabel.Visible = FFTPatch.Context == Context.US_PSP;
-            darkKnightTopLabel.Visible = FFTPatch.Context == Context.US_PSP;
-            unknown1TopLabel.Visible = FFTPatch.Context == Context.US_PSP;
-            unknown2TopLabel.Visible = FFTPatch.Context == Context.US_PSP;
-            unknownSideLabel.Visible = FFTPatch.Context == Context.US_PSP;
-            onionKnightSideLabel.Visible = FFTPatch.Context == Context.US_PSP;
-            onionKnightTopLabel.Visible = FFTPatch.Context == Context.US_PSP;
+            IList<string> names = FFTPatch.Context == Context.US_PSP ? PSPResources.Lists.JobNames : PSXResources.Lists.JobNames;
+            IList<string> sideNames = names.Sub( 0x4B, 0x5D );
+            IList<string> topNames = names.Sub( 0x4A, 0x5D );
+            for ( int i = 0; i < sideNames.Count; i++ )
+            {
+                labels[i].Text = sideNames[i];
+                verticalLabels[i].Text = topNames[i];
+            }
+            verticalLabels[topNames.Count - 1].Text = topNames[topNames.Count - 1];
+
+            bool psp = FFTPatch.Context == Context.US_PSP;
+            if ( psp )
+            {
+                darkKnightLabel.Text = names[0xA0];
+                darkKnightVerticalLabel.Text = names[0xA0];
+                onionKnightLabel.Text = names[0xA4];
+                onionKnightVerticalLabel.Text = names[0xA4];
+            }
+            darkKnightLabel.Visible = psp;
+            darkKnightVerticalLabel.Visible = psp;
+            unknown1VerticalLabel.Visible = psp;
+            unknown2VerticalLabel.Visible = psp;
+            unknownLabel.Visible = psp;
+            onionKnightLabel.Visible = psp;
+            onionKnightVerticalLabel.Visible = psp;
 
             requirementsEditor1.Requirements = reqs;
         }

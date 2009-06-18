@@ -46,7 +46,7 @@ namespace FFTPatcher.Datatypes
                 UInt16 currentShort = (UInt16)( bytes[i * 2] * 256 + bytes[i * 2 + 1] );
                 items[itemsList[i]] = ( currentShort & (int)whichStore ) > 0;
             }
-            name = context == Context.US_PSP ? PSPResources.ShopNames[whichStore] : PSXResources.Lists.ShopNames[whichStore];
+            name = context == Context.US_PSP ? PSPResources.Lists.ShopNames[whichStore] : PSXResources.Lists.ShopNames[whichStore];
         }
 
         public void UpdateByteArray( IList<byte> bytes )

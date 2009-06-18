@@ -6,140 +6,76 @@ namespace PatcherLib
     using PatcherLib.Datatypes;
     using PatcherLib.Utilities;
     using Paths = Resources.Paths.PSX;
+    using ResourceListInfo = Resources.ResourceListInfo;
+    using ListType = Resources.ListType;
+using System.Xml;
 
     public static partial class PSXResources
     {
         public static class Lists
         {
-            private static IList<string> abilityAI;
-            private static IList<string> abilityAttributes;
-            private static IList<string> abilityEffects;
-            private static IList<string> abilityTypes;
-            private static ReadOnlyCollection<string> mapNamesReadOnly;
-            private static IList<string> shopAvailabilities;
-            private static IList<string> statuses;
-            private static IList<string> abilityNames;
 
-            private static IList<string> monsterNames;
-            private static IList<string> jobNames;
 
-            public static IList<string> MonsterNames
+            private static IDictionary<ListType, IList<string>> typeToStringDict = new Dictionary<ListType, IList<string>>();
+
+            private static IList<string> GetListForType( ListType type )
+            {
+                if ( !typeToStringDict.ContainsKey( type ) )
+                {
+                    typeToStringDict[type] = 
+                        Resources.GetStringsFromNumberedXmlNodes( typeInfo[type] ).AsReadOnly();
+                }
+                return typeToStringDict[type];
+            }
+
+            public static IList<string> StatusNames
             {
                 get
                 {
-                    if ( monsterNames == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.jobsDoc,
-                            "/Jobs/Job[@offset='{0:X2}']/@name",
-                            48,
-                            0x5E );
-                        monsterNames = temp.AsReadOnly();
-                    }
-                    return monsterNames;
+                    return GetListForType( ListType.StatusNames );
                 }
             }
-            
-            private static IList<string> skillsetNames;
 
             public static IList<string> SkillSets
             {
-                get
-                {
-                    if ( skillsetNames == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.skillSetsDoc,
-                            "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
-                            0xE0 );
-                        skillsetNames = temp.AsReadOnly();
-                    }
-                    return skillsetNames;
-                }
+                get { return GetListForType( ListType.SkillSetNames ); }
             }
 
             public static IList<string> JobNames
             {
-                get
-                {
-                    if ( jobNames == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.jobsDoc,
-                            "/Jobs/Job[@offset='{0:X2}']/@name",
-                            0xA0 );
-                        jobNames = temp.AsReadOnly();
-                    }
-                    return jobNames;
-                }
+                get { return GetListForType( ListType.JobNames ); }
             }
 
-            private static IList<string> eventNames;
+            public static IList<string> UnitNames
+            {
+                get { return GetListForType( ListType.UnitNames ); }
+            }
+
+            public static IList<string> MonsterNames
+            {
+                get { return GetListForType( ListType.MonsterNames ); }
+            }
+
             public static IList<string> EventNames
             {
-                get
-                {
-                    if ( eventNames == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.eventNamesDoc,
-                            "/Events/Event[@value='{0:X3}']/@name",
-                            0x200 );
-                        eventNames = temp.AsReadOnly();
-                    }
-
-                    return eventNames;
-                }
+                get { return GetListForType( ListType.EventNames ); }
             }
 
-            private static IList<string> items;
             public static IList<string> Items
             {
-                get
-                {
-                    if ( items == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.itemsDoc,
-                            "/Items/Item[@offset='{0}']/@name",
-                            256 );
-                        items = temp.AsReadOnly();
-                    }
-                    return items;
-                }
+                get { return GetListForType( ListType.ItemNames ); }
             }
 
             public static IList<string> AbilityNames
             {
-                get
-                {
-                    if ( abilityNames == null )
-                    {
-                        var tempNames = Resources.GetStringsFromNumberedXmlNodes(
-                            abilitiesDoc,
-                            "/Abilities/Ability[@value='{0}']/@name",
-                            512 );
-                        abilityNames = tempNames.AsReadOnly();
-                    }
-
-                    return abilityNames;
-                }
+                get { return GetListForType( ListType.AbilityNames ); }
             }
 
             public static IList<string> AbilityAI
             {
                 get
                 {
-                    if ( abilityAI == null )
-                    {
-                        var temp =
-                            Resources.GetStringsFromNumberedXmlNodes(
-                                abilitiesStringsDoc,
-                                "/AbilityStrings/AI/string[@value='{0}']/@name",
-                                24 );
-                        abilityAI = temp.AsReadOnly();
-                    }
-                    return abilityAI;
+                    return GetListForType( ListType.AbilityAI );
                 }
             }
 
@@ -147,50 +83,16 @@ namespace PatcherLib
             {
                 get
                 {
-                    if ( abilityAttributes == null )
-                    {
-                        var temp =
-                            Resources.GetStringsFromNumberedXmlNodes(
-                                abilitiesStringsDoc,
-                                "/AbilityStrings/Attributes/string[@value='{0}']/@name",
-                                32 );
-                        abilityAttributes = temp.AsReadOnly();
-                    }
-                    return abilityAttributes;
+                    return GetListForType( ListType.AbilityAttributes );
                 }
             }
 
-            public static IList<string> AbilityEffects
-            {
-                get
-                {
-                    if ( abilityEffects == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            abilityEffectsDoc,
-                            "/Effects/Effect[@value='{0:X3}']/@name",
-                            512 );
-                        abilityEffects = temp.AsReadOnly();
-                    }
-
-                    return abilityEffects;
-                }
-            }
 
             public static IList<string> AbilityTypes
             {
                 get
                 {
-                    if ( abilityTypes == null )
-                    {
-                        var temp =
-                            Resources.GetStringsFromNumberedXmlNodes(
-                                abilitiesStringsDoc,
-                                "/AbilityStrings/Types/string[@value='{0}']/@name",
-                                16 );
-                        abilityTypes = temp.AsReadOnly();
-                    }
-                    return abilityTypes;
+                    return GetListForType( ListType.AbilityTypes );
                 }
             }
 
@@ -198,54 +100,147 @@ namespace PatcherLib
             {
                 get
                 {
-                    if ( mapNamesReadOnly == null )
-                    {
-                        var names = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.mapNamesDoc,
-                            "/MapNames/Map[@value='{0}']",
-                            128 );
-                        mapNamesReadOnly = new ReadOnlyCollection<string>( names );
-                    }
-
-                    return mapNamesReadOnly;
+                    return GetListForType(ListType.MapNames);
                 }
             }
             public static IList<string> ShopAvailabilities
             {
                 get
                 {
-                    if ( shopAvailabilities == null )
-                    {
-                        var temp =
-                            Resources.GetStringsFromNumberedXmlNodes(
-                                PSXResources.itemsStringsDoc,
-                                "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
-                                21 );
-                        shopAvailabilities = temp.AsReadOnly();
-                    }
-
-                    return shopAvailabilities;
+                    return GetListForType(ListType.ShopAvailabilities);
                 }
             }
 
-            public static IList<string> SpriteFiles { get { return spriteFiles; } }
-
-            public static IList<string> StatusNames
+            public static IList<string> AbilityEffects
             {
                 get
                 {
-                    if ( statuses == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            statusNamesDoc,
-                            "/Statuses/Status[@offset='{0}']/@name",
-                            40 );
-                        statuses = temp.AsReadOnly();
-                    }
-
-                    return statuses;
+                    return GetListForType( ListType.AbilityEffects );
                 }
             }
+            public static IList<string> SpriteFiles { get { return GetListForType( ListType.SpriteFiles ); } }
+
+
+            public static IList<string> SpecialNames
+            {
+                get
+                {
+                    return GetListForType( ListType.SpecialNames );
+                }
+            }
+
+            public static IList<string> SpriteSets
+            {
+                get
+                {
+                    return GetListForType( ListType.SpriteSets );
+                }
+            }
+            private static IDictionary<ListType, ResourceListInfo> typeInfo = new Dictionary<ListType, ResourceListInfo> {
+                { ListType.AbilityAI, 
+                    new ResourceListInfo { 
+                        Doc = abilitiesStringsDoc, 
+                        XPath = "/AbilityStrings/AI/string[@value='{0}']/@name",
+                        Length = 24, 
+                        StartIndex = 0 } },
+                { ListType.AbilityAttributes, 
+                    new ResourceListInfo { 
+                        Doc = abilitiesStringsDoc, 
+                        XPath = "/AbilityStrings/Attributes/string[@value='{0}']/@name",
+                        Length = 32,
+                        StartIndex = 0 } },
+                { ListType.AbilityEffects, 
+                    new ResourceListInfo {
+                        Doc = abilityEffectsDoc,
+                        XPath = "/Effects/Effect[@value='{0:X3}']/@name",
+                        Length = 512,
+                        StartIndex = 0 } },
+                { ListType.UnitNames, 
+                    new ResourceListInfo {
+                        Doc = PSXResources.unitNamesDoc,
+                        XPath = "/Names/n[@id='{0}']",
+                        Length = 768,
+                        StartIndex = 0 } },
+                { ListType.MonsterNames,
+                    new ResourceListInfo {
+                        Doc = PSXResources.jobsDoc,
+                        XPath = "/Jobs/Job[@offset='{0:X2}']/@name",
+                        Length = 48,
+                        StartIndex = 0x5E } },
+                { ListType.SkillSetNames,
+                    new ResourceListInfo {
+                        Doc = PSXResources.skillSetsDoc,
+                        XPath = "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
+                        Length = 0xE0,
+                        StartIndex = 0 } },
+                { ListType.JobNames,
+                    new ResourceListInfo {
+                        Doc = PSXResources.jobsDoc,
+                        XPath = "/Jobs/Job[@offset='{0:X2}']/@name",
+                        Length = 0xA0,
+                        StartIndex = 0 } },
+                { ListType.EventNames, 
+                    new ResourceListInfo {
+                        Doc = PSXResources.eventNamesDoc,
+                        XPath = "/Events/Event[@value='{0:X3}']/@name",
+                        Length = 0x200,
+                        StartIndex = 0 } },
+                { ListType.ItemNames,
+                    new ResourceListInfo {
+                        Doc = PSXResources.itemsDoc,
+                        XPath = "/Items/Item[@offset='{0}']/@name",
+                        Length = 256,
+                        StartIndex = 0 } },
+                { ListType.AbilityNames,
+                    new ResourceListInfo {
+                        Doc = abilitiesDoc,
+                        XPath = "/Abilities/Ability[@value='{0}']/@name",
+                        Length = 512,
+                        StartIndex = 0 } },
+                { ListType.AbilityTypes,
+                    new ResourceListInfo {
+                        Doc = abilitiesStringsDoc,
+                        XPath = "/AbilityStrings/Types/string[@value='{0}']/@name",
+                        Length = 16,
+                        StartIndex = 0 } },
+                { ListType.MapNames,
+                    new ResourceListInfo {
+                        Doc = PSXResources.mapNamesDoc,
+                        XPath = "/MapNames/Map[@value='{0}']",
+                        Length = 128,
+                        StartIndex = 0 } },
+                { ListType.ShopAvailabilities,
+                    new ResourceListInfo {
+                        Doc = PSXResources.itemsStringsDoc,
+                        XPath = "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
+                        Length = 21,
+                        StartIndex = 0 } },
+                { ListType.StatusNames,
+                    new ResourceListInfo {
+                        Doc = PSXResources.statusNamesDoc,
+                        XPath = "/Statuses/Status[@offset='{0}']/@name",
+                        Length = 40,
+                        StartIndex = 0 } },
+                { ListType.SpecialNames,
+                    new ResourceListInfo {
+                        Doc = PSXResources.specialNamesDoc,
+                        XPath = "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
+                        Length = 256,
+                        StartIndex = 0 } },
+                { ListType.SpriteSets,
+                    new ResourceListInfo {
+                        Doc = PSXResources.spriteSetsDoc,
+                        XPath = "/Sprites/Sprite[@byte='{0:X2}']/@name",
+                        Length = 256,
+                        StartIndex = 0 } },
+                { ListType.SpriteFiles,
+                    new ResourceListInfo {
+                        Doc = PSXResources.spriteFilesDoc,
+                        XPath = "/sprites/s[@n='{0:X2}']",
+                        Length = 0x9A,
+                        StartIndex = 0 } } };
+
+
 
             public static IDictionary<Shops, string> ShopNames
             {
@@ -254,8 +249,7 @@ namespace PatcherLib
                     if ( readOnlyStoreNames == null )
                     {
                         Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>();
-                        System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                        doc.LoadXml( PSXResources.shopNamesDoc );
+                        System.Xml.XmlDocument doc = PSXResources.shopNamesDoc;
 
                         foreach ( System.Xml.XmlNode node in doc.SelectNodes( "/ShopNames/Shop" ) )
                         {
@@ -268,197 +262,6 @@ namespace PatcherLib
                     return readOnlyStoreNames;
                 }
             }
-
-            private static IList<string> specialNames;
-            public static IList<string> SpecialNames
-            {
-                get
-                {
-                    if ( specialNames == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.specialNamesDoc,
-                            "/SpecialNames/SpecialName[@byte='{0:X2}']/@name",
-                            256 );
-                        specialNames = temp.AsReadOnly();
-                    }
-                    return specialNames;
-                }
-            }
-            
-            private static IList<string> spriteSets;
-            public static IList<string> SpriteSets
-            {
-                get
-                {
-                    if ( spriteSets == null )
-                    {
-                        var temp = Resources.GetStringsFromNumberedXmlNodes(
-                            PSXResources.spriteSetsDoc,
-                            "/Sprites/Sprite[@byte='{0:X2}']/@name",
-                            256 );
-                        spriteSets = temp.AsReadOnly();
-                    }
-                    return spriteSets;
-                }
-            }
-            private static IList<string> spriteFiles = new List<string>
-            {
-                "Ramza Chapter 1",
-                "Ramza Chapter 2/3",
-                "Ramza Chapter 4",
-                "Delita Chapter 1",
-                "Delita Chapter 2/3",
-                "Delita Chapter 4",
-                "Algus",
-                "Zalbag",
-                "Dycedarg",
-                "Larg",
-                "Goltana",
-                "Ovelia",
-                "Orlandu",
-                "Funeral",
-                "Reis (Human)",
-                "Zalmo",
-                "Gafgarion (Enemy)",
-                "Malak (Dead, Used once)",
-                "Simon",
-                "Alma (Battle)",
-                "Olan",
-                "Mustadio (Join)",
-                "Gafgarion (Guest)",
-                "Draclau",
-                "Rafa (Guest)",
-                "Malak (Enemy & Join)",
-                "Elmdor",
-                "Teta",
-                "Barinten",
-                "Agrias (Join)",
-                "Beowulf",
-                "Wiegraf Chapter 1",
-                "Balmafula",
-                "Mustadio (Guest)",
-                "Rudvich",
-                "Vormav",
-                "Rofel",
-                "Izlude",
-                "Kletian",
-                "Wiegraf Chapter 2/3",
-                "Rafa (Join)",
-                "Meliadoul (Join)",
-                "Balk",
-                "Alma (Dead)",
-                "Celia",
-                "Lede",
-                "Meliadoul (Enemy)",
-                "Alma (Events)",
-                "Ajora",
-                "Cloud",
-                "Zalbag (Zombie)",
-                "Agrias (Guest)",
-                "Female Chemist",
-                "Female Priest",
-                "Male Wizard",
-                "Male Oracle",
-                "Male Squire",
-                "Celia (Never Used)",
-                "Lede (Never Used)",
-                "Velius",
-                "Male Knight",
-                "Zalera",
-                "Male Archer",
-                "Hashmalum",
-                "Altima (First Form)",
-                "Male Wizard",
-                "Queklain",
-                "Female Time Mage",
-                "Adramelk",
-                "Male Oracle",
-                "Female Summoner",
-                "Reis (Dragon Form)",
-                "Altima (Second Form)",
-                "10 Year Old Male",
-                "10 Year Old Woman",
-                "20 Year Old Male",
-                "20 Year Old Woman",
-                "40 Year Old Male",
-                "40 Year Old Woman",
-                "60 Year Old Male",
-                "60 Year Old Woman",
-                "Old Funeral Man",
-                "Old Funeral Woman",
-                "Funeral Man",
-                "Funeral Woman",
-                "Funeral Priest",
-                "Male Squire",
-                "Male Squire",
-                "Male Squire",
-                "Male Squire",
-                "Male Squire",
-                "Male Squire",
-                "???",
-                "???",
-                "???",
-                "Male Squire",
-                "Female Squire",
-                "Male Chemist",
-                "Female Chemist",
-                "Male Knight",
-                "Female Knight",
-                "Male Archer",
-                "Female Archer",
-                "Male Monk",
-                "Female Monk",
-                "Male Priest",
-                "Female Priest",
-                "Male Wizard",
-                "Female Wizard",
-                "Male Time Mage",
-                "Female Time Mage",
-                "Male Summoner",
-                "Female Summoner",
-                "Male Thief",
-                "Female Thief",
-                "Male Mediator",
-                "Female Mediator",
-                "Male Oracle",
-                "Female Oracle",
-                "Male Geomancer",
-                "Female Geomancer",
-                "Male Lancer",
-                "Female Lancer",
-                "Male Samurai",
-                "Female Samurai",
-                "Male Ninja",
-                "Female Ninja",
-                "Male Calculator",
-                "Female Calculator",
-                "Male Bard",
-                "Female Dancer",
-                "Male Mime",
-                "Female Mime",
-                "Chocobo",
-                "Goblin",
-                "Bomb",
-                "Coeurl",
-                "Squid",
-                "Skeleton",
-                "Ghost",
-                "Ahriman",
-                "Cockatrice",
-                "Uribo",
-                "Treant",
-                "Minotaur",
-                "Malboro",
-                "Behemoth",
-                "Dragon",
-                "Tiamat",
-                "Apanda/Byblos",
-                "Elidibs",
-                "Dragon",
-                "Demon",
-                "Steel Giant"
-            }.AsReadOnly();
 
 
 

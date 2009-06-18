@@ -25,54 +25,34 @@ namespace PatcherLib
     using PatcherLib.Datatypes;
     using PatcherLib.Utilities;
     using Paths = Resources.Paths.PSP;
+    using System.Xml;
 
     public static partial class PSPResources
     {
-        private static string eventNamesDoc;
+        private static XmlDocument eventNamesDoc;
 
-        private static string abilityEffectsDoc;
-        private static string itemsDoc;
-        private static string jobsDoc;
-        private static string skillSetsDoc;
-        private static string specialNamesDoc;
-        private static string spriteSetsDoc;
-        private static string statusNamesDoc;
+        private static XmlDocument abilityEffectsDoc;
+        private static XmlDocument itemsDoc;
+        private static XmlDocument jobsDoc;
+        private static XmlDocument skillSetsDoc;
+        private static XmlDocument specialNamesDoc;
+        private static XmlDocument spriteSetsDoc;
+        private static XmlDocument statusNamesDoc;
 
-        private static string itemsStringsDoc;
-        private static string mapNamesDoc;
-        private static string abilitiesDoc;
+        private static XmlDocument itemsStringsDoc;
+        private static XmlDocument mapNamesDoc;
+        private static XmlDocument abilitiesDoc;
 
-        private static string abilitiesStringsDoc;
+        private static XmlDocument abilitiesStringsDoc;
 
-        private static string shopNamesDoc;
+        private static XmlDocument shopNamesDoc;
+        private static XmlDocument unitNamesDoc;
+
+        private static XmlDocument spriteFilesDoc;
 
         public static IList<string> CharacterSet { get; private set; }
 
         //static Dictionary<string, object> dict = new Dictionary<string, object>();
-        private static IDictionary<Shops, string> readOnlyStoreNames;
-
-        public static IDictionary<Shops, string> ShopNames
-        {
-            get
-            {
-                if (readOnlyStoreNames == null)
-                {
-                    Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>();
-                    System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                    doc.LoadXml(shopNamesDoc);
-
-                    foreach (System.Xml.XmlNode node in doc.SelectNodes("/ShopNames/Shop"))
-                    {
-                        storeNames[(Shops)System.Enum.Parse(typeof(Shops), node.Attributes["value"].Value)] =
-                            node.Attributes["name"].Value;
-                    }
-
-                    readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>(storeNames);
-                }
-
-                return readOnlyStoreNames;
-            }
-        }
 
         public static System.Drawing.Image ICON0_PNG
         {
@@ -115,21 +95,23 @@ namespace PatcherLib
             Binaries.StatusAttributes = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.StatusAttributes].AsReadOnly();
 
 
-            eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.EventNamesXML].ToUTF8String();
-            jobsDoc = Resources.ZipFileContents[Resources.Paths.PSP.JobsXML].ToUTF8String();
-            skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSP.SkillSetsXML].ToUTF8String();
-            specialNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.SpecialNamesXML].ToUTF8String();
-            spriteSetsDoc = Resources.ZipFileContents[Resources.Paths.PSP.SpriteSetsXML].ToUTF8String();
-            statusNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.StatusNamesXML].ToUTF8String();
-            abilitiesStringsDoc = Resources.ZipFileContents[Resources.Paths.PSP.AbilitiesStringsXML].ToUTF8String();
-            abilityEffectsDoc = Resources.ZipFileContents[Resources.Paths.PSP.AbilityEffectsXML].ToUTF8String();
+            eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.EventNamesXML].ToUTF8String().ToXmlDocument();
+            jobsDoc = Resources.ZipFileContents[Resources.Paths.PSP.JobsXML].ToUTF8String().ToXmlDocument();
+            skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSP.SkillSetsXML].ToUTF8String().ToXmlDocument();
+            specialNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.SpecialNamesXML].ToUTF8String().ToXmlDocument();
+            spriteSetsDoc = Resources.ZipFileContents[Resources.Paths.PSP.SpriteSetsXML].ToUTF8String().ToXmlDocument();
+            statusNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.StatusNamesXML].ToUTF8String().ToXmlDocument();
+            abilitiesStringsDoc = Resources.ZipFileContents[Resources.Paths.PSP.AbilitiesStringsXML].ToUTF8String().ToXmlDocument();
+            abilityEffectsDoc = Resources.ZipFileContents[Resources.Paths.PSP.AbilityEffectsXML].ToUTF8String().ToXmlDocument();
             //dict[Resources.Paths.PSP.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSP.ItemAttributesXML].ToUTF8String();
-            itemsDoc = Resources.ZipFileContents[Resources.Paths.PSP.ItemsXML].ToUTF8String();
-            itemsStringsDoc = Resources.ZipFileContents[Resources.Paths.PSP.ItemsStringsXML].ToUTF8String();
-            shopNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.ShopNamesXML].ToUTF8String();
-            mapNamesDoc = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String();
+            itemsDoc = Resources.ZipFileContents[Resources.Paths.PSP.ItemsXML].ToUTF8String().ToXmlDocument();
+            itemsStringsDoc = Resources.ZipFileContents[Resources.Paths.PSP.ItemsStringsXML].ToUTF8String().ToXmlDocument();
+            shopNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.ShopNamesXML].ToUTF8String().ToXmlDocument();
+            mapNamesDoc = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String().ToXmlDocument();
 
-            abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSP.AbilitiesNamesXML].ToUTF8String();
+            abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSP.AbilitiesNamesXML].ToUTF8String().ToXmlDocument();
+            unitNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.UnitNamesXML].ToUTF8String().ToXmlDocument();
+            spriteFilesDoc = Resources.ZipFileContents[Resources.Paths.PSP.SpriteFilesXML].ToUTF8String().ToXmlDocument();
 
             string[] characterSet = new string[2200];
             PSXResources.CharacterSet.CopyTo( characterSet, 0 );

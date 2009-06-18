@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Xml;
 using System.Text;
 using PatcherLib.Datatypes;
 
@@ -41,6 +42,13 @@ namespace PatcherLib.Utilities
     {
 
         #region Methods (14)
+
+        public static XmlDocument ToXmlDocument(this string s)
+        {
+            XmlDocument result = new XmlDocument();
+            result.LoadXml(s);
+            return result;
+        }
 
         public static bool TrueForAll<T>( this IList<T> list, Predicate<T> condition )
         {
@@ -91,7 +99,8 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {
-            return new ReadOnlyCollection<T>( list );
+            if ( list is ReadOnlyCollection<T> ) return list as ReadOnlyCollection<T>;
+            else return new ReadOnlyCollection<T>( list );
         }
 
         [System.Diagnostics.DebuggerStepThrough]
@@ -197,7 +206,7 @@ namespace PatcherLib.Utilities
         }
 
         [System.Diagnostics.DebuggerStepThrough]
-        public static List<T> FindAll<T>( this IList<T> list, Predicate<T> match )
+        public static IList<T> FindAll<T>( this IList<T> list, Predicate<T> match )
         {
             List<T> result = new List<T>( list.Count );
             for ( int i = 0; i < list.Count; i++ )
@@ -205,7 +214,7 @@ namespace PatcherLib.Utilities
                 if ( match( list[i] ) )
                     result.Add( list[i] );
             }
-            return result;
+            return result.AsReadOnly();
         }
 
         [System.Diagnostics.DebuggerStepThrough]
@@ -234,7 +243,7 @@ namespace PatcherLib.Utilities
                 }
             }
 
-            return result;
+            return result.AsReadOnly();
         }
 
         /// <summary>

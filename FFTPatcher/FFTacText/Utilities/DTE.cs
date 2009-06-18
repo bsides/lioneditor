@@ -158,13 +158,13 @@ namespace FFTPatcher.TextEditor
 
             GenerateFontBinPatches( dteEncodings, font, charSet, out fontBytes, out widthBytes );
 
-            fontBytes = fontBytes.Sub( minDteByte * characterSize, ( maxDteByte + 1 ) * characterSize - 1 ).ToArray();
+            fontBytes = fontBytes.Sub( MinDteByte * characterSize, ( MaxDteByte + 1 ) * characterSize - 1 ).ToArray();
             return
                 new PatchedByteArray[] {
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27b80c+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2f73b8+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27b80c+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2f73b8+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27b80c+MinDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2f73b8+MinDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27b80c+MinDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2f73b8+MinDteByte*characterSize, fontBytes),
                     new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293f40, widthBytes),
                     new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x30fac0, widthBytes),
                     new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293f40, widthBytes),
@@ -190,7 +190,7 @@ namespace FFTPatcher.TextEditor
 
             GenerateFontBinPatches( dteEncodings, font, charSet, out fontBytes, out widthBytes );
 
-            fontBytes = fontBytes.Sub( minDteByte * characterSize, ( maxDteByte + 1 ) * characterSize - 1 ).ToArray();
+            fontBytes = fontBytes.Sub( MinDteByte * characterSize, ( MaxDteByte + 1 ) * characterSize - 1 ).ToArray();
             // widths:
             // 0x363234 => 1510 = BATTLE.BIN
             // 0xBD84908 => 84497 = WORLD.BIN
@@ -198,9 +198,9 @@ namespace FFTPatcher.TextEditor
             var result = new List<PatchedByteArray>();
             result.AddRange( psxDtePatches );
             result.AddRange( new PatchedByteArray[] {
-                    new PatchedByteArray(PsxIso.Sectors.BATTLE_BIN, 0xE7614+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PsxIso.Sectors.EVENT_FONT_BIN, 0x00+minDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x5B8f8+minDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PsxIso.Sectors.BATTLE_BIN, 0xE7614+MinDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PsxIso.Sectors.EVENT_FONT_BIN, 0x00+MinDteByte*characterSize, fontBytes),
+                    new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x5B8f8+MinDteByte*characterSize, fontBytes),
                     new PatchedByteArray(PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, widthBytes),
                     new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x733E0, widthBytes),
                     new PatchedByteArray(PsxIso.Sectors.SCUS_942_21, 0x228e0, GeneratePsxLookupTable(dteEncodings, charSet).ToArray())
@@ -225,7 +225,7 @@ namespace FFTPatcher.TextEditor
         {
             Stack<byte> result = new Stack<byte>();
 
-            for ( byte b = maxDteByte; b >= 0xB6; b-- )
+            for ( byte b = MaxDteByte; b >= 0xB6; b-- )
             {
                 result.Push( b );
             }
@@ -243,7 +243,7 @@ namespace FFTPatcher.TextEditor
             {
                 result.Push( b );
             }
-            for ( byte b = 0x5E; b >= minDteByte; b-- )
+            for ( byte b = 0x5E; b >= MinDteByte; b-- )
             {
                 result.Push( b );
             }
@@ -256,21 +256,21 @@ namespace FFTPatcher.TextEditor
         }
 
         const int characterSize = ( 14 * 10 ) / 4;
-        const byte minDteByte = 0x56;
-        const byte maxDteByte = 0xcf;
+        public const byte MinDteByte = 0x56;
+        public const byte MaxDteByte = 0xcf;
 
         private static IList<byte> GeneratePsxLookupTable(
             IEnumerable<KeyValuePair<string, byte>> dteEncodings,
             IList<string> baseCharSet )
         {
             // 2 bytes per lookup pair
-            byte[] result = new byte[( maxDteByte - minDteByte + 1 ) * 2];
+            byte[] result = new byte[( MaxDteByte - MinDteByte + 1 ) * 2];
 
             foreach ( var kvp in dteEncodings )
             {
                 TextUtilities.PSXMap.StringToByteArray( kvp.Key )      // Get the pair to store
                     .Sub( 0, 1 )                                       // Get 2 bytes
-                    .CopyTo( result, ( kvp.Value - minDteByte ) * 2 ); // Store them in the DTE array
+                    .CopyTo( result, ( kvp.Value - MinDteByte ) * 2 ); // Store them in the DTE array
             }
 
             return result;

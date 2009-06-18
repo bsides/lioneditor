@@ -35,6 +35,7 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
+            MessageBox.Show( "ADD WEP.SPR" );
             //using (System.IO.Stream s = System.IO.File.Open(@"N:\dev\fft\images\fflw-usa.rearranged - Copy.iso", System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite))
             //{
             //    AllSprites.ExpandPspIso(s);

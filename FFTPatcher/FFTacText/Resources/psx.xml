@@ -1619,11 +1619,11 @@
         <Section value="9" entries="256" empty="true" name="Character Bios" dte="false"/>
 
         <Section value="10" entries="96" empty="true" name="Errand Completion Notes" dte="false"/>
-        <Section value="11" entries="24" empty="true" name="" dte="false"/>
-        <Section value="12" entries="1" empty="true" name="" dte="false"/>
-        <Section value="13" entries="1" empty="true" name="" dte="false"/>
-        <Section value="14" entries="1" empty="true" name="" dte="false"/>
-        <Section value="15" entries="1" empty="true" name="" dte="false"/>
+        <Section value="11" entries="24" empty="true" name="" dte="false" hide="true"/>
+        <Section value="12" entries="1" empty="true" name="" dte="false" hide="true"/>
+        <Section value="13" entries="1" empty="true" name="" dte="false" hide="true"/>
+        <Section value="14" entries="1" empty="true" name="" dte="false" hide="true"/>
+        <Section value="15" entries="1" empty="true" name="" dte="false" hide="true"/>
         <Section value="16" entries="168" empty="true" name="" dte="false"/>
         <Section value="17" entries="168" empty="true" name="" dte="false" />
         <Section value="18" entries="168" empty="true" name="" dte="false" />

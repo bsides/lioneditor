@@ -1215,11 +1215,11 @@
         <Section value="16" entries="128" empty="true" dte="true"/>
         <Section value="17" entries="48" empty="true" dte="true"/>
         <Section value="18" entries="48" empty="true" dte="true"/>
-        <Section value="19" entries="24" empty="true" dte="true"/>
-        <Section value="20" entries="1" empty="true" dte="true"/>
-        <Section value="21" entries="1" empty="true" dte="true"/>
-        <Section value="22" entries="1" empty="true" dte="true"/>
-        <Section value="23" entries="1" empty="true" dte="true"/>
+        <Section value="19" entries="24" empty="true" dte="true" hide="true"/>
+        <Section value="20" entries="1" empty="true" dte="true" hide="true"/>
+        <Section value="21" entries="1" empty="true" dte="true" hide="true"/>
+        <Section value="22" entries="1" empty="true" dte="true" hide="true"/>
+        <Section value="23" entries="1" empty="true" dte="true" hide="true"/>
         <Section value="24" entries="168" empty="true" dte="true"/>
         <Section value="25" entries="168" empty="true" dte="true"/>
         <Section value="26" entries="168" empty="true" dte="true"/>

@@ -86,11 +86,16 @@ namespace FFTPatcher.TextEditor
 
         static TextUtilities()
         {
-            PSXMap = new PSXCharMap();
-            PSPMap = new PSPCharMap();
-            BuildVersion1Charmap( PSXMap, PSPMap );
-            BuildVersion2Charmap( PSXMap, PSPMap );
-            BuildVersion3Charmap( PSXMap, PSPMap );
+            //PSXMap = new PSXCharMap();
+            //PSPMap = new PSPCharMap();
+            var psx = new Dictionary<int, string>();
+            var psp = new Dictionary<int, string>();
+            BuildVersion1Charmap( psx, psp );
+            BuildVersion2Charmap( psx, psp );
+            BuildVersion3Charmap( psx, psp );
+
+            PSXMap = new PSXCharMap(psx);
+            PSPMap = new PSPCharMap(psp);
         }
 
         #endregion Constructors
@@ -107,7 +112,7 @@ namespace FFTPatcher.TextEditor
         #region Methods (12)
 
 
-        private static void BuildVersion1Charmap( PSXCharMap psx, PSPCharMap psp )
+        private static void BuildVersion1Charmap(IDictionary<int, string> psx, IDictionary<int, string> psp)
         {
             for( int i = (int)'a'; i <= (int)'z'; i++ )
             {
@@ -342,9 +347,9 @@ namespace FFTPatcher.TextEditor
             psp.Add( 0xDA66, "\xF9" );
         }
 
-        private static void BuildVersion2Charmap( PSXCharMap psx, PSPCharMap psp )
+        private static void BuildVersion2Charmap(IDictionary<int, string> psx, IDictionary<int, string> psp)
         {
-            foreach( GenericCharMap map in new GenericCharMap[] { psx, psp } )
+            foreach (IDictionary<int, string> map in new IDictionary<int, string>[] { psx, psp })
             {
                 map.Add( 0xD133, "\u5263" );
                 map.Add( 0xD134, "\u4E00" );
@@ -505,7 +510,7 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private static void BuildVersion3Charmap( PSXCharMap PSXMap, PSPCharMap PSPMap )
+        private static void BuildVersion3Charmap(IDictionary<int, string> PSXMap, IDictionary<int, string> PSPMap)
         {
             IList<string> psxChars = PatcherLib.PSXResources.CharacterSet;
             IList<string> pspChars = PatcherLib.PSPResources.CharacterSet;

@@ -26,7 +26,7 @@ namespace FFTPatcher.TextEditor
     /// <summary>
     /// A map between FFT text and UTF8.
     /// </summary>
-    public abstract class GenericCharMap : Dictionary<int, string>
+    public abstract class GenericCharMap : PatcherLib.Datatypes.ReadOnlyDictionary<int, string>
     {
 
         #region Static Fields (1)
@@ -214,6 +214,11 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        public GenericCharMap(IDictionary<int, string> dict)
+            : base(dict, true)
+        {
+        }
+
 
         public bool TryStringToByteArray( string s, out byte[] bytes )
         {
@@ -360,6 +365,10 @@ namespace FFTPatcher.TextEditor
     /// </summary>
     public class PSPCharMap : GenericCharMap
     {
+        public PSPCharMap(IDictionary<int, string> source)
+            : base(source)
+        {
+        }
     }
 
     /// <summary>
@@ -367,9 +376,17 @@ namespace FFTPatcher.TextEditor
     /// </summary>
     public class PSXCharMap : GenericCharMap
     {
+        public PSXCharMap(IDictionary<int, string> source)
+            : base(source)
+        {
+        }
     }
 
     public class NonDefaultCharMap : GenericCharMap
     {
+        public NonDefaultCharMap(IDictionary<int, string> source)
+            : base(source)
+        {
+        }
     }
 }

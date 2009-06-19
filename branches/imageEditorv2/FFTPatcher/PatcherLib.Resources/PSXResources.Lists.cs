@@ -8,7 +8,7 @@ namespace PatcherLib
     using Paths = Resources.Paths.PSX;
     using ResourceListInfo = Resources.ResourceListInfo;
     using ListType = Resources.ListType;
-using System.Xml;
+    using System.Xml;
 
     public static partial class PSXResources
     {

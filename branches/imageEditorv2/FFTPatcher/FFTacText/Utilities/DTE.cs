@@ -8,7 +8,7 @@ using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
-    static class DTE
+    static partial class DTE
     {
         public class DteException : Exception
         {
@@ -116,6 +116,22 @@ namespace FFTPatcher.TextEditor
             new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x229F0, scus1.ToArray() ),
             new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x22a30, scus2.ToArray() ),
             new PatchedByteArray( PsxIso.Sectors.SCUS_942_21, 0x22848, scus3.ToArray() ) }.AsReadOnly();
+
+        public static bool DoesPsxIsoHaveDtePatches(System.IO.Stream iso)
+        {
+            foreach (var pba in psxDtePatches)
+            {
+                byte[] patchBytes = pba.GetBytes();
+                byte[] streambytes = 
+                    PsxIso.GetBlock(iso, new PsxIso.KnownPosition((PsxIso.Sectors)pba.Sector, (int)pba.Offset, patchBytes.Length));
+                if (!Utilities.CompareArrays(patchBytes, streambytes))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         private static Set<string> GetDteGroups( FFTFont font, GenericCharMap charmap, IList<string> charset )
         {
@@ -362,13 +378,16 @@ namespace FFTPatcher.TextEditor
             return e.GetBytes( result.ToString() );
         }
 
-        public static GenericCharMap GenerateCharMap( IEnumerable<KeyValuePair<int, string>> table )
+        public static GenericCharMap GenerateCharMap(IEnumerable<KeyValuePair<int, string>> table)
         {
-            GenericCharMap map = new NonDefaultCharMap();
-            foreach ( var kvp in table )
+            Dictionary<int, string> b = new Dictionary<int, string>();
+            foreach (var kvp in table)
             {
-                map[kvp.Key] = kvp.Value;
+                b[kvp.Key] = kvp.Value;
             }
+
+            GenericCharMap map = new NonDefaultCharMap(b);
+
             return map;
         }
 

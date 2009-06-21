@@ -219,10 +219,19 @@ namespace FFTPatcher.TextEditor
                     new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x5B8f8+MinDteByte*characterSize, fontBytes),
                     new PatchedByteArray(PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, widthBytes),
                     new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x733E0, widthBytes),
-                    new PatchedByteArray(PsxIso.Sectors.SCUS_942_21, 0x228e0, GeneratePsxLookupTable(dteEncodings, charSet).ToArray())
+                    PsxDteTable.GetPatchedByteArray(GeneratePsxLookupTable(dteEncodings, charSet).ToArray())
                 } );
-
+            
             return result;
+        }
+
+
+        public static PsxIso.KnownPosition PsxDteTable
+        {
+            get
+            {
+                return new PsxIso.KnownPosition( PsxIso.Sectors.SCUS_942_21, 0x228E0, ( MaxDteByte - MinDteByte + 1 ) * 2 );
+            }
         }
 
         /// <summary>

@@ -324,7 +324,13 @@ namespace FFTPatcher.TextEditor
 
         public static FFTText GetPsxText( Stream iso, BackgroundWorker worker )
         {
-            return GetPsxText( iso, TextUtilities.PSXMap, worker );
+            GenericCharMap charmap = TextUtilities.PSXMap;
+            if ( DTE.DoesPsxIsoHaveDtePatches( iso ) )
+            {
+                charmap = DTE.DTEAnalyzer.PSX.GetCharMap( iso );
+            }
+
+            return GetPsxText( iso, charmap, worker );
         }
 
 

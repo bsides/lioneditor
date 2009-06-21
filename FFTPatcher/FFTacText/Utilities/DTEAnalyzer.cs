@@ -4,19 +4,27 @@ using System.Text;
 using PatcherLib.Datatypes;
 using PatcherLib;
 using PatcherLib.Utilities;
+using System.IO;
+using PatcherLib.Iso;
 
 namespace FFTPatcher.TextEditor
 {
     static partial class DTE
     {
-        static class DTEAnalyzer
+        public static class DTEAnalyzer
         {
-            static class PSX
+            public static class PSX
             {
                 static FFTFont defaultFont = TextUtilities.PSXFont;
                 static GenericCharMap defaultMap = TextUtilities.PSXMap;
 
-                static GenericCharMap GetCharMap(IList<byte> fontBytes, IList<byte> widthBytes, IList<byte> dteTable)
+                public static GenericCharMap GetCharMap( Stream iso )
+                {
+                    IList<byte> dteBytes = PsxIso.ReadFile( iso, DTE.PsxDteTable );
+                    return GetCharMap( dteBytes );
+                }
+
+                public static GenericCharMap GetCharMap( IList<byte> dteTable )
                 {
                     Dictionary<int, string> myCharMap = new Dictionary<int, string>(defaultMap);
 

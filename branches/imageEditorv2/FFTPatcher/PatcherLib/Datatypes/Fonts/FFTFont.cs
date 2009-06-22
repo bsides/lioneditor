@@ -77,6 +77,10 @@ namespace PatcherLib.Datatypes
     /// </summary>
     public class FFTFont : IPatchableFile
     {
+
+        public const int CharacterWidth = 10;
+        public const int CharacterHeight = 14;
+
         #region Public Properties (3) 
 
         public Glyph[] Glyphs { get; private set; }

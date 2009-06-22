@@ -57,6 +57,108 @@ namespace FFTPatcher.TextEditor
 
             static class PSP
             {
+                static FFTFont defaultFont = TextUtilities.PSPFont;
+                static GenericCharMap defaultMap = TextUtilities.PSPMap;
+
+                public static GenericCharMap GetCharMap(Stream iso)
+                {
+                    PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo(iso);
+                    IList<byte> fontBytes = PspIso.GetBlock(iso, info, DTE.PspFontDteSection[0]);
+                    IList<byte> widthBytes = PspIso.GetBlock(iso, info, DTE.PspFontWidths[0]);
+
+                    return GetCharMap(fontBytes, widthBytes, info);
+                }
+
+                private static Glyph DetermineSecondCharacter(IList<Glyph> glyphs, IList<byte> matchBytes, int totalWidth, int firstWidth)
+                {
+                    Glyph newGlyph = new Glyph((byte)totalWidth, matchBytes);
+                    foreach (Glyph g in glyphs)
+                    {
+                        if (g.Width > (totalWidth - firstWidth)) continue;
+                        for (int x = 0; x < g.Width; x++)
+                        {
+                            for (int y = 0;y<FFTFont.CharacterHeight; y++)
+                            {
+                                if (g.Pixels[y*FFTFont.CharacterWidth+x]!=newGlyph.Pixels[y*FFTFont.CharacterWidth+x+firstWidth])
+                                {
+                                    goto mainloop;
+                                }
+                            }
+                        }
+
+                        // All pixels matched
+                        return g;
+
+                        mainloop: continue;
+                    }
+
+                    return null;
+                }
+
+                private static Glyph DetermineFirstCharacter(IList<Glyph> glyphs, IList<byte> matchBytes, int width)
+                {
+                    Glyph newGlyph = new Glyph((byte)width, matchBytes);
+                    foreach (Glyph g in glyphs)
+                    {
+                        if (g.Width > width) continue;
+
+                        for (int x = 0; x < g.Width; x++)
+                        {
+                            for (int y = 0; y < FFTFont.CharacterHeight; y++)
+                            {
+                                if (g.Pixels[y * FFTFont.CharacterWidth + x] != newGlyph.Pixels[y * FFTFont.CharacterWidth + x])
+                                {
+                                    goto mainloop;
+                                }
+                            }
+                        }
+
+                        // All pixels matched
+                        return g;
+
+                    mainloop: continue;
+                    }
+
+                    return null;
+                }
+
+                public static GenericCharMap GetCharMap(IList<byte> fontBytes, IList<byte> widthBytes, PspIso.PspIsoInfo info)
+                {
+                    Dictionary<int, string> myCharMap = new Dictionary<int, string>(defaultMap);
+
+                    List<Glyph> glyphs = new List<Glyph>(defaultFont.Glyphs);
+                    glyphs.Sort((a, b) => b.Width.CompareTo(a.Width));
+
+                    for (int i = MinDteByte; i < (DTE.MaxDteByte - DTE.MinDteByte + 1); i++)
+                    {
+                        IList<byte> bytes = fontBytes.Sub(i * DTE.characterSize, (i + 1) * DTE.characterSize - 1);
+                        Glyph first = DetermineFirstCharacter(glyphs, bytes, widthBytes[i]);
+                        if (first != null)
+                        {
+                            Glyph second = DetermineSecondCharacter(glyphs, bytes, widthBytes[i], first.Width);
+                            if (second != null)
+                            {
+                                int firstIndex = defaultFont.Glyphs.IndexOf(first);
+                                int secondIndex = defaultFont.Glyphs.IndexOf(second);
+                                myCharMap[i] = defaultMap[firstIndex] + defaultMap[secondIndex];
+                            }
+                        }
+                    }
+
+                    // For each glyph in new font:
+                    //   Determine if it's different from default
+                    //   Determine the two characters that make it up 
+                    //     Sort original font characters DECREASING by WIDTH
+                    //     For each character in the original font
+                    //       Compare pixels to left side of new font
+                    //         look for match -> first character
+                    //     After finding first character, subtract character width from current width
+                    //     For each character in original font
+                    //       Compare pixels to right side of new font
+                    //         look for match -> second character
+
+                    return null;
+                }
             }
         }
     }

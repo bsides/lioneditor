@@ -1,5 +1,32 @@
-FFTPatcher - v0.388
+FFTPatcher - v0.438
 
+Changes since v0.388 (unreleased):
+  Reworked how PSP ISOs are handled internally
+  Fixed handling of "Partitioned" and fixed-length files in FFTacText
+  Reworked sprite editor (again):
+    Operates directly on a PSP or PSX ISO - ALL CHANGES YOU MAKE IN SHISHI
+      SPRITE MANAGER WILL BE IMMEDIATELY APPLIED TO THE ISO
+    When opening a freshly-ripped PSX ISO, it will ask you to restructure.
+      You must select Yes to continue. This will allow you to use all 0x99
+      sprite slots
+    Added an animation viewer - thanks to mes on #ffh for decoding the .SEQ
+      file format
+    Added ability to modify the SHP and SEQ files the game will use to 
+      draw the sprite
+    Added ability to modify other unknown flags for each sprite
+  Fixed bug in FFTPatcher where changing a value causes the listbox to change
+    position
+  Added ability animations tab to FFTPatcher
+  Added tutorial text to text editor
+  Text editor: Fix DTE handling on PSX audio books
+  FFTPatcher: added gameshark code generation for animations, move/find items, 
+    shop inventories
+  Fixed ICON0.PNG functionality when patching a PSP ISO 
+  Added ability to generate a "Resources.zip" file. You can edit the contents
+    of this file if you want to change what FFTPatcher/other programs
+    consider to be the "default" values (or text display)
+  Unused text sections are automatically hidden in FFTacText
+    
 Changes since v0.352:
   Added Store Inventories to FFTPatcher
   Removed Font from FFTPatcher

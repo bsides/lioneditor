@@ -5,10 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTPatcher", "FFTPatcher.cs
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0762D3C8-AAD4-4EF3-AF00-F2A2B0AD964D}"
 	ProjectSection(SolutionItems) = preProject
+		build.bat = build.bat
 		changelog.txt = changelog.txt
 		COPYING = COPYING
 		gzip.exe = gzip.exe
 		readme.txt = readme.txt
+		resources.txt = resources.txt
 		sprites.txt = sprites.txt
 		tar.exe = tar.exe
 		text.txt = text.txt

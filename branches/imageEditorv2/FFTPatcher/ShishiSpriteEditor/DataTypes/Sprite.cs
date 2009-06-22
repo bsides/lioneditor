@@ -89,8 +89,44 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        private enum SpriteAlignment
+        {
+            Legacy,
+            Correct,
+            Unknown
+        }
+
+        private static int DeterminePercentageOfBlackPixels(System.Drawing.Bitmap bmp, System.Drawing.Rectangle rect)
+        {
+            System.Diagnostics.Debug.Assert(bmp.PixelFormat == System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
+            System.Drawing.Imaging.BitmapData bmd = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
+            int xOffset = rect.X;
+            int yOffset = rect.Y;
+            int count = 0;
+            for (int x = 0; x < rect.Width; x++)
+            {
+                for (int y = 0; y < rect.Height; y++)
+                {
+                    int pix = bmd.GetPixel(x, y);
+                    if (pix == 0) count++;
+                }
+            }
+            bmp.UnlockBits(bmd);
+            return (count * 100 / (rect.Width * rect.Height));
+        }
+
+        private SpriteAlignment DetermineSpriteAlignment(System.Drawing.Bitmap bmp)
+        {
+            int legacyPercentage =
+                DeterminePercentageOfBlackPixels(bmp, new System.Drawing.Rectangle(80, 256, 50, 32));
+            int correctPercentage =
+                DeterminePercentageOfBlackPixels(bmp, new System.Drawing.Rectangle(80, 256+200, 50, 32));
+            return legacyPercentage > correctPercentage ? SpriteAlignment.Correct : SpriteAlignment.Legacy;
+        }
+
         internal void ImportBitmap(Stream iso, System.Drawing.Bitmap bmp)
         {
+            SpriteAlignment alignment = DetermineSpriteAlignment(bmp);
             bool bad = false;
             AbstractSprite sprite = GetAbstractSpriteFromIso(iso);
             sprite.ImportBitmap(bmp, out bad);

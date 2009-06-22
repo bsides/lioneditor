@@ -56,6 +56,8 @@ echo Copying COPYING
 copy /y COPYING %outputdir% > nul
 echo Copying changelog.txt
 copy /y changelog.txt  %OUTPUTDIR% > nul
+echo Copying resources.txt
+copy /y resources.txt  %OUTPUTDIR% > nul
 echo Copying readme.txt
 copy /y readme.txt  %OUTPUTDIR% > nul
 echo Copying sprites.txt

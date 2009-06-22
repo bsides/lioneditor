@@ -106,7 +106,7 @@ namespace FFTPatcher.SpriteEditor
             paletteSelector.SelectedIndex = 0;
             //pictureBox1.MinimumSize = Frame.DefaultFrameSize + pictureBox1.Padding.Size;
             //animationViewer1.MinimumSize = Frame.DefaultFrameSize + animationViewer1.Padding.Size + new Size( 0, 40 );
-            comboBox1.SelectedIndexChanged += new EventHandler( comboBox1_SelectedIndexChanged );
+            numericUpDown2.ValueChanged += numericUpDown2_SelectedIndexChanged;
             tabControl1.SelectedIndexChanged += new EventHandler(tabControl1_SelectedIndexChanged);
         }
 
@@ -114,6 +114,7 @@ namespace FFTPatcher.SpriteEditor
         {
             if (tabControl1.SelectedTab == animationTabPage && Sequence.Sequences.ContainsKey((SpriteType)seqComboBox.SelectedItem))
             {
+                numericUpDown2_SelectedIndexChanged(null, EventArgs.Empty);
                 animationViewer1.Play();
                 spriteViewer1.HighlightTiles(new Tile[0]);
             }
@@ -188,34 +189,34 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        void comboBox1_SelectedIndexChanged( object sender, EventArgs e )
+        void numericUpDown2_SelectedIndexChanged( object sender, EventArgs e )
         {
-            Sequence seq = comboBox1.SelectedItem as Sequence;
+            Sequence seq = currentSequences[(int)numericUpDown2.Value];
             IList<Bitmap> bmps;
             IList<double> delays;
             seq.BuildAnimation( spriteViewer1.Sprite, out bmps, out delays );
             animationViewer1.ShowAnimation(bmps, delays, tabControl1.SelectedTab == animationTabPage);
         }
 
+        private IList<Sequence> currentSequences;
+
         private void UpdateAnimationTab()
         {
             if ( Sequence.Sequences.ContainsKey( (SpriteType)seqComboBox.SelectedItem ) )
             {
                 IList<Sequence> sequences = Sequence.Sequences[(SpriteType)seqComboBox.SelectedItem];
-                comboBox1.BeginUpdate();
-                comboBox1.Items.Clear();
-                comboBox1.Items.AddRange( sequences.ToArray() );
-                comboBox1.DisplayMember = "Name";
-                comboBox1.EndUpdate();
-                comboBox1.SelectedIndex = 0;
-                comboBox1.Enabled = true;
+                currentSequences = sequences;
+                numericUpDown2.Minimum = 0;
+                numericUpDown2.Maximum = sequences.Count - 1;
+                numericUpDown2.Value = 0;
+                numericUpDown2.Enabled = true;
                 animationViewer1.Enabled = true;
             }
             else
             {
                 animationViewer1.Pause();
                 animationViewer1.Enabled = false;
-                comboBox1.Enabled = false;
+                numericUpDown2.Enabled = false;
             }
         }
 

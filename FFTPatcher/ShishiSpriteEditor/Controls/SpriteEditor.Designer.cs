@@ -42,11 +42,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.framesTabPage = new System.Windows.Forms.TabPage();
             this.animationTabPage = new System.Windows.Forms.TabPage();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.animationViewer1 = new FFTPatcher.SpriteEditor.AnimationViewer();
             this.maxSizeLabel = new System.Windows.Forms.Label();
             this.sharedLabel = new System.Windows.Forms.Label();
-            this.animationViewer1 = new FFTPatcher.SpriteEditor.AnimationViewer();
             this.spriteViewer1 = new FFTPatcher.SpriteEditor.SpriteViewer();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             paletteGroupBox = new System.Windows.Forms.GroupBox();
             paletteGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -54,6 +54,7 @@
             this.tabControl1.SuspendLayout();
             this.framesTabPage.SuspendLayout();
             this.animationTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // paletteGroupBox
@@ -219,8 +220,8 @@
             // 
             // animationTabPage
             // 
+            this.animationTabPage.Controls.Add(this.numericUpDown2);
             this.animationTabPage.Controls.Add(this.animationViewer1);
-            this.animationTabPage.Controls.Add(this.comboBox1);
             this.animationTabPage.Location = new System.Drawing.Point(4, 22);
             this.animationTabPage.Name = "animationTabPage";
             this.animationTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -229,16 +230,15 @@
             this.animationTabPage.Text = "Animation";
             this.animationTabPage.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // animationViewer1
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.animationViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(265, 21);
-            this.comboBox1.TabIndex = 0;
+            this.animationViewer1.Location = new System.Drawing.Point(6, 33);
+            this.animationViewer1.Name = "animationViewer1";
+            this.animationViewer1.Size = new System.Drawing.Size(268, 317);
+            this.animationViewer1.TabIndex = 1;
             // 
             // maxSizeLabel
             // 
@@ -262,16 +262,6 @@
             this.sharedLabel.Text = "label3";
             this.sharedLabel.Visible = false;
             // 
-            // animationViewer1
-            // 
-            this.animationViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.animationViewer1.Location = new System.Drawing.Point(6, 33);
-            this.animationViewer1.Name = "animationViewer1";
-            this.animationViewer1.Size = new System.Drawing.Size(268, 317);
-            this.animationViewer1.TabIndex = 1;
-            // 
             // spriteViewer1
             // 
             this.spriteViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -283,6 +273,16 @@
             this.spriteViewer1.Size = new System.Drawing.Size(314, 600);
             this.spriteViewer1.Sprite = null;
             this.spriteViewer1.TabIndex = 0;
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown2.Location = new System.Drawing.Point(6, 7);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(265, 20);
+            this.numericUpDown2.TabIndex = 2;
+            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // SpriteEditor
             // 
@@ -309,6 +309,7 @@
             this.tabControl1.ResumeLayout(false);
             this.framesTabPage.ResumeLayout(false);
             this.animationTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,8 +332,8 @@
         private System.Windows.Forms.TabPage framesTabPage;
         private System.Windows.Forms.TabPage animationTabPage;
         private AnimationViewer animationViewer1;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label maxSizeLabel;
         private System.Windows.Forms.Label sharedLabel;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }

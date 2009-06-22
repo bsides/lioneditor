@@ -50,7 +50,16 @@ namespace PatcherLib.Utilities
             return result;
         }
 
-        public static bool TrueForAll<T>( this IList<T> list, Predicate<T> condition )
+        public static int IndexOf<T>(this IList<T> list, T item)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Equals(item)) return i;
+            }
+            return -1;
+        }
+
+        public static bool TrueForAll<T>(this IList<T> list, Predicate<T> condition)
         {
             if ( list == null ) throw new ArgumentNullException( "list" );
             if ( condition == null ) throw new ArgumentNullException( "condition" );

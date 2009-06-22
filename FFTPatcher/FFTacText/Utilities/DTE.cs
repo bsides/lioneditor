@@ -175,17 +175,40 @@ namespace FFTPatcher.TextEditor
             GenerateFontBinPatches( dteEncodings, font, charSet, out fontBytes, out widthBytes );
 
             fontBytes = fontBytes.Sub( MinDteByte * characterSize, ( MaxDteByte + 1 ) * characterSize - 1 ).ToArray();
+            var widths = PspFontWidths;
+            var fontDteSection = PspFontDteSection;
             return
                 new PatchedByteArray[] {
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27b80c+MinDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2f73b8+MinDteByte*characterSize, fontBytes),
+                    fontDteSection[0].GetPatchedByteArray(fontBytes),
+                    fontDteSection[1].GetPatchedByteArray(fontBytes),
                     new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27b80c+MinDteByte*characterSize, fontBytes),
                     new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2f73b8+MinDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293f40, widthBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x30fac0, widthBytes),
+                    widths[0].GetPatchedByteArray(widthBytes),
+                    widths[1].GetPatchedByteArray(widthBytes),
                     new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293f40, widthBytes),
                     new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x30fac0, widthBytes)
                 };
+        }
+
+        public static IList<PspIso.KnownPosition> PspFontDteSection
+        {
+            get
+            {
+                return new PspIso.KnownPosition[] {
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27B80C+MinDteByte*characterSize, (MaxDteByte-MinDteByte+1)*characterSize),
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2F73B8+MinDteByte*characterSize, (MaxDteByte-MinDteByte+1)*characterSize) };
+            }
+        }
+
+        public static IList<PspIso.KnownPosition> PspFontWidths
+        {
+            get 
+            {
+                return new PspIso.KnownPosition[] {
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, 2200),
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x30FAC0, 2200) };
+
+            }
         }
 
         /// <summary>

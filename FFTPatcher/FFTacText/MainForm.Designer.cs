@@ -157,6 +157,7 @@ namespace FFTPatcher.TextEditor
             // 
             this.importPsxIsoCustomMenuItem.Index = 1;
             this.importPsxIsoCustomMenuItem.Text = "Import PSX ISO (custom tbl)...";
+            this.importPsxIsoCustomMenuItem.Visible = false;
             // 
             // importPspIsoMenuItem
             // 
@@ -167,6 +168,7 @@ namespace FFTPatcher.TextEditor
             // 
             this.importPspIsoCustomMenuItem.Index = 4;
             this.importPspIsoCustomMenuItem.Text = "Import PSP ISO (custom tbl)...";
+            this.importPspIsoCustomMenuItem.Visible = false;
             // 
             // menuItem2
             // 
@@ -212,7 +214,7 @@ namespace FFTPatcher.TextEditor
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.fileEditor1.Location = new System.Drawing.Point(13, 13);
             this.fileEditor1.Name = "fileEditor1";
-            this.fileEditor1.Size = new System.Drawing.Size(753, 523);
+            this.fileEditor1.Size = new System.Drawing.Size(753, 334);
             this.fileEditor1.TabIndex = 4;
             // 
             // progressBar
@@ -221,7 +223,7 @@ namespace FFTPatcher.TextEditor
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.BackColor = System.Drawing.Color.White;
             this.progressBar.ForeColor = System.Drawing.Color.Blue;
-            this.progressBar.Location = new System.Drawing.Point(12, 513);
+            this.progressBar.Location = new System.Drawing.Point(12, 324);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(754, 23);
             this.progressBar.TabIndex = 3;
@@ -231,7 +233,7 @@ namespace FFTPatcher.TextEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 548);
+            this.ClientSize = new System.Drawing.Size(778, 359);
             this.Controls.Add(this.fileEditor1);
             this.Controls.Add(this.progressBar);
             this.Menu = this.mainMenu;

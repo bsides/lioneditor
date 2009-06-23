@@ -18,6 +18,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Jobs>
+  <!-- This list is used by the Jobs, Job Levels, Monster Skills, 
+       Poaching, and ENTD pages -->
   <Job offset="00" name="Blank"/>
   <Job offset="01" name="Squire"/>
   <Job offset="02" name="Squire"/>

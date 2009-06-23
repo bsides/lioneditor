@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ShopNames>
+  <!-- This list is used by the Items and Shop Inventories pages -->
   <Shop value="Bervenia"   name="Free City of Bervenia"/>
   <Shop value="Dorter"     name="Merchant City of Dorter"/>
   <Shop value="Gariland"   name="Magick City of Gariland"/>

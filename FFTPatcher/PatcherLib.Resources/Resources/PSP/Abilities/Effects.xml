@@ -18,6 +18,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Effects>
+  <!-- This list is used by the Abilities page -->
   <Effect value="000" name="Crashes Game"/>
   <Effect value="001" name="Cure"/>
   <Effect value="002" name="Cura"/>

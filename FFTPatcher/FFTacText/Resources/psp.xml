@@ -728,7 +728,7 @@
           <entry value="19" name="Silence"/>
         </Section>
         <Section value="17" entries="40" empty="false" dte="true" compressible="false" name="Status names">
-          <includeResource name="PatcherLib.PSPResources+Lists.Statuses" start="0" end="39" offset="0"/>
+          <includeResource name="PatcherLib.PSPResources+Lists.StatusNames" start="0" end="39" offset="0"/>
         </Section>
         <Section value="18" entries="76" empty="true" dte="false" compressible="false" name="Misc. messages"/>
         <Section value="19" entries="1" empty="true" dte="true" compressible="true" hide="true"/>
@@ -1060,7 +1060,7 @@
           <includeResource name="PatcherLib.PSPResources+Lists.SkillSets" start="0" end="226" offset="0"/>
         </Section>
         <Section value="20" entries="40" empty="false" dte="true" compressible="true" name="Status messages">
-          <includeResource name="PatcherLib.PSPResources+Lists.Statuses" start="0" end="39" offset="0"/>
+          <includeResource name="PatcherLib.PSPResources+Lists.StatusNames" start="0" end="39" offset="0"/>
         </Section>
       </Sections>
     </CompressedFile>

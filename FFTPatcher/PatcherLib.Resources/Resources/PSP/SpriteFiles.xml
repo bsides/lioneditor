@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <sprites>
+  <!-- This list is used by the Sprite editor -->
   <s n="00">Ramza Chapter 1</s>
   <s n="01">Ramza Chapter 2/3</s>
   <s n="02">Ramza Chapter 4</s>

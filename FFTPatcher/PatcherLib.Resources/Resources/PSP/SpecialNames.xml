@@ -18,6 +18,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <SpecialNames>
+  <!-- This list is used by the ENTD page -->
   <SpecialName byte="00" name="None"/>
   <SpecialName byte="01" name="Ramza"/>
   <SpecialName byte="02" name="Ramza"/>

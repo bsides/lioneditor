@@ -18,6 +18,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Sprites>
+  <!-- This list is used by the ENTD page -->
   <Sprite byte="00" name="None"/>
   <Sprite byte="01" name="Ramza, chapter 1"/>
   <Sprite byte="02" name="Ramza, chapter 2 &amp; 3"/>

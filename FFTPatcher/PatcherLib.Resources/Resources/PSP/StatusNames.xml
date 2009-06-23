@@ -18,6 +18,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Statuses>
+  <!-- This list is used by the Status Effects, Item Attributes, 
+       Jobs, and Inflict Statuses pages -->
   <Status offset="0" name=""/>
   <Status offset="1" name="Crystal"/>
   <Status offset="2" name="Dead"/>

@@ -57,10 +57,6 @@ namespace FFTPatcher.Datatypes
             ElementName.ENTD5, "entd5", 
             ElementName.MoveFindItems, "moveFindItems",
             ElementName.StoreInventories, "storeInventories" } );
-        private static string[] elementNameStrings = new string[] {
-            "abilities", "abilityAnimations", "abilityEffects", "items", "itemAttributes", "pspItems", "pspItemAttributes", "jobs", "jobLevels",
-            "skillSets", "monsterSkills", "actionMenus", "inflictStatuses", "statusAttributes", "poaching",
-            "entd1", "entd2", "entd3", "entd4", "entd5", "moveFindItems", "storeInventories" };
 
 		#endregion Instance Variables 
 

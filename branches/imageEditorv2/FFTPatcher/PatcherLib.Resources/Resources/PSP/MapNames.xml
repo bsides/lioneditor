@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MapNames>
+  <!-- This list is used by the Move/Find items page -->
   <Map value="0"></Map>
   <Map value="1">Eagrose Castle Gate</Map>
   <Map value="2">Lesalia Castle Postern</Map>

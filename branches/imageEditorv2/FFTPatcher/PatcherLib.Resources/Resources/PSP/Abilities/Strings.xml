@@ -19,6 +19,7 @@
 -->
 <AbilityStrings>
   <AI>
+    <!-- This list is used by the Abilities page -->
     <string value="0" name="HP"/>
     <string value="1" name="MP"/>
     <string value="2" name="Cancel Status"/>
@@ -45,6 +46,7 @@
     <string value="23" name="Defense Up"/>
   </AI>
   <Attributes>
+    <!-- This list is used by the Abilities page -->
     <string value="0" name=""/>
     <string value="1" name=""/>
     <string value="2" name="Ranged Weapon"/>
@@ -79,6 +81,7 @@
     <string value="31" name="Targeting"/>
   </Attributes>
   <Types>
+    <!-- This list is used by the Abilities page -->
     <string value="0" name="Blank"/>
     <string value="1" name="Normal"/>
     <string value="2" name="Item"/>

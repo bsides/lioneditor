@@ -19,6 +19,7 @@
 -->
 <ItemStrings>
   <ItemSubTypes>
+    <!-- This list is used by the Items and Jobs pages -->
     <string value="0" name="Nothing"/>
     <string value="1" name="Knife"/>
     <string value="2" name="Ninja Blade"/>
@@ -58,6 +59,7 @@
     <string value="36" name="Lip Rouge"/>
   </ItemSubTypes>
   <ShopAvailabilities>
+    <!-- This list is used by the Items page -->
     <string value="0" name="&lt;Blank&gt;"/>
     <string value="1" name="Chapter 1 - Start"/>
     <string value="2" name="Chapter 1 - Enter Eagrose"/>

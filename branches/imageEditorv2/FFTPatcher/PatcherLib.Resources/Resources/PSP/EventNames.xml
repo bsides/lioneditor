@@ -18,7 +18,7 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Events>
-
+  <!-- This list is used by the ENTD page -->
   <Event value="001" name="Dorvauldar Marsh East 1"/>
   <Event value="002" name="Dorvauldar Marsh East 2"/>
   <Event value="003" name="Dorvauldar Marsh East 3"/>

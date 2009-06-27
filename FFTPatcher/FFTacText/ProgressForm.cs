@@ -7,7 +7,7 @@ using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
-    public partial class ProgressForm : Form
+    internal partial class ProgressForm : Form
     {
         public enum Task
         {

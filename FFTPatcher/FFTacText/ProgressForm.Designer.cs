@@ -1,6 +1,6 @@
 ﻿namespace FFTPatcher.TextEditor
 {
-    partial class ProgressForm
+    internal partial class ProgressForm
     {
         /// <summary>
         /// Required designer variable.

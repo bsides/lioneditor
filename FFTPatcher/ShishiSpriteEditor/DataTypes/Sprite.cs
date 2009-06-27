@@ -27,58 +27,18 @@ namespace FFTPatcher.SpriteEditor
         }
     }
 
-    [System.Diagnostics.DebuggerDisplay("SHP: {SHP}, SEQ: {SEQ}, Sec: {Sector}, Size: {Size}")]
-    public class Sprite
+    [System.Diagnostics.DebuggerDisplay("SHP: {SHP}, SEQ: {SEQ}, Size: {Size}")]
+    public abstract class Sprite
     {
-        private SpriteAttributes attributes;
-        private SpriteLocation location;
         private string name;
-        private AbstractSprite cachedSprite;
-        private const int sp2MaxLength = 256*256/2;
+        protected AbstractSprite CachedSprite { get; set; }
 
-        public SpriteType SHP { get { return attributes.SHP; } }
-        public SpriteType SEQ { get { return attributes.SEQ; } }
-        public bool Flag1 { get { return attributes.Flag1; } }
-        public bool Flag2 { get { return attributes.Flag2; } }
-        public bool Flag3 { get { return attributes.Flag3; } }
-        public bool Flag4 { get { return attributes.Flag4; } }
-        public bool Flag5 { get { return attributes.Flag5; } }
-        public bool Flag6 { get { return attributes.Flag6; } }
-        public bool Flag7 { get { return attributes.Flag7; } }
-        public bool Flag8 { get { return attributes.Flag8; } }
-        public bool Flying { get { return attributes.Flying; } }
-        public UInt32 Sector { get { return location.Sector; } }
-        public UInt32 Size { get { return location.Size; } }
+        //private UInt32 Sector { get { return location.Sector; } }
+        public virtual UInt32 Size { get; private set; }
+
+        protected PatcherLib.Iso.KnownPosition Position { get; set; }
+
         public PatcherLib.Datatypes.Context Context { get; private set; }
-        public int NumChildren { get { return location.SubSpriteLocations.Count; } }
-
-        internal void SetSHP(Stream iso, SpriteType shp)
-        {
-            if (SHP != shp)
-            {
-                if (SHP == SpriteType.MON || shp == SpriteType.MON)
-                {
-                    cachedSprite = null;
-                }
-
-                attributes.SetSHP(iso, shp);
-            }
-        }
-
-        internal void SetSEQ(Stream iso, SpriteType seq)
-        {
-            attributes.SetSEQ(iso, seq);
-        }
-
-        internal void SetFlying(Stream iso, bool flying)
-        {
-            attributes.SetFlying(iso, flying);
-        }
-
-        internal void SetFlag(Stream iso, int index, bool flag)
-        {
-            attributes.SetFlag(iso, index, flag);
-        }
 
         internal void ImportBitmap( Stream iso, string filename )
         {
@@ -89,14 +49,7 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private enum SpriteAlignment
-        {
-            Legacy,
-            Correct,
-            Unknown
-        }
-
-        private static int DeterminePercentageOfBlackPixels(System.Drawing.Bitmap bmp, System.Drawing.Rectangle rect)
+        protected static int DeterminePercentageOfBlackPixels(System.Drawing.Bitmap bmp, System.Drawing.Rectangle rect)
         {
             System.Diagnostics.Debug.Assert(bmp.PixelFormat == System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
             System.Drawing.Imaging.BitmapData bmd = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
@@ -115,18 +68,8 @@ namespace FFTPatcher.SpriteEditor
             return (count * 100 / (rect.Width * rect.Height));
         }
 
-        private SpriteAlignment DetermineSpriteAlignment(System.Drawing.Bitmap bmp)
+        internal virtual void ImportBitmap(Stream iso, System.Drawing.Bitmap bmp)
         {
-            int legacyPercentage =
-                DeterminePercentageOfBlackPixels(bmp, new System.Drawing.Rectangle(80, 256, 50, 32));
-            int correctPercentage =
-                DeterminePercentageOfBlackPixels(bmp, new System.Drawing.Rectangle(80, 256+200, 50, 32));
-            return legacyPercentage > correctPercentage ? SpriteAlignment.Correct : SpriteAlignment.Legacy;
-        }
-
-        internal void ImportBitmap(Stream iso, System.Drawing.Bitmap bmp)
-        {
-            SpriteAlignment alignment = DetermineSpriteAlignment(bmp);
             bool bad = false;
             AbstractSprite sprite = GetAbstractSpriteFromIso(iso);
             sprite.ImportBitmap(bmp, out bad);
@@ -137,48 +80,6 @@ namespace FFTPatcher.SpriteEditor
             }
 
             ImportSprite(iso, sprBytes);
-            for (int i = 0; i < NumChildren; i++)
-            {
-                ImportSp2(iso, sprite.ToByteArray(i + 1), i);
-            }
-        }
-
-        internal void ImportSp2(Stream iso, string filename, int index)
-        {
-            ImportSp2( iso, File.ReadAllBytes( filename ), index );
-        }
-
-        internal void ImportSp2( Stream iso, byte[] bytes, int index )
-        {
-            if ( index >= NumChildren )
-            {
-                throw new IndexOutOfRangeException();
-            }
-
-            if (bytes.Length > sp2MaxLength)
-            {
-                throw new ArgumentOutOfRangeException("bytes", "SP2 file is too large");
-            }
-
-            var loc = location.SubSpriteLocations[index];
-            if (Context == PatcherLib.Datatypes.Context.US_PSX)
-            {
-                PatcherLib.Iso.PsxIso.PatchPsxIso(
-                    iso,
-                    new PatcherLib.Datatypes.PatchedByteArray((PatcherLib.Iso.PsxIso.Sectors)loc.Sector, 0, bytes));
-            }
-            else if (Context == PatcherLib.Datatypes.Context.US_PSP)
-            {
-                PatcherLib.Iso.PspIso.ApplyPatch(
-                    iso,
-                    PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso),
-                    new PatcherLib.Datatypes.PatchedByteArray((PatcherLib.Iso.FFTPack.Files)loc.Sector, 0, bytes));
-            }
-            else
-            {
-                throw new InvalidOperationException();
-            }
-            cachedSprite = null;
         }
 
         internal void ImportSprite( Stream iso, string filename )
@@ -196,28 +97,28 @@ namespace FFTPatcher.SpriteEditor
             {
                 PatcherLib.Iso.PsxIso.PatchPsxIso(
                     iso,
-                    new PatcherLib.Datatypes.PatchedByteArray((PatcherLib.Iso.PsxIso.Sectors)Sector, 0, bytes));
+                    Position.GetPatchedByteArray(bytes));
             }
             else if (Context == PatcherLib.Datatypes.Context.US_PSP)
             {
                 PatcherLib.Iso.PspIso.ApplyPatch(
                     iso,
                     PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso),
-                    new PatcherLib.Datatypes.PatchedByteArray((PatcherLib.Iso.FFTPack.Files)Sector, 0, bytes));
+                    Position.GetPatchedByteArray(bytes));
             }
             else
             {
                 throw new InvalidOperationException();
             }
-            cachedSprite = null;
+            CachedSprite = null;
         }
 
-        internal Sprite(PatcherLib.Datatypes.Context context, string name, SpriteAttributes attributes, SpriteLocation location)
+        internal Sprite(PatcherLib.Datatypes.Context context, string name, PatcherLib.Iso.KnownPosition pos )
         {
             this.Context = context;
             this.name = name;
-            this.attributes = attributes;
-            this.location = location;
+            Position = pos;
+            Size = (uint)pos.Length;
         }
 
         public AbstractSprite GetAbstractSpriteFromIso(System.IO.Stream iso)
@@ -241,105 +142,9 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private AbstractSprite GetAbstractSpriteFromPspIso(System.IO.Stream iso, PatcherLib.Iso.PspIso.PspIsoInfo info, bool ignoreCache)
-        {
-            if (cachedSprite == null || ignoreCache)
-            {
-                IList<byte> bytes = PatcherLib.Iso.PspIso.GetFile(iso, info, (PatcherLib.Iso.FFTPack.Files)Sector);
-                System.Diagnostics.Debug.Assert(bytes.Count == this.Size);
-                switch (SHP)
-                {
-                    case SpriteType.TYPE1:
-                        cachedSprite = new TYPE1Sprite(bytes);
-                        break;
-                    case SpriteType.TYPE2:
-                        cachedSprite = new TYPE2Sprite(bytes);
-                        break;
-                    case SpriteType.RUKA:
-                        cachedSprite = new MonsterSprite(bytes);
-                        break;
-                    case SpriteType.MON:
-                        byte[][] sp2Bytes = new byte[location.SubSpriteLocations.Count][];
-                        if (location.SubSpriteLocations.Count > 0)
-                        {
-                            for (int i = 0; i < location.SubSpriteLocations.Count; i++)
-                            {
-                                sp2Bytes[i] = PatcherLib.Iso.PspIso.GetFile(
-                                    iso,
-                                    info,
-                                    (PatcherLib.Iso.FFTPack.Files)location.SubSpriteLocations[i].Sector,
-                                    0,
-                                    (int)location.SubSpriteLocations[i].Size).ToArray();
-                            }
-                        }
-                        cachedSprite = new MonsterSprite(bytes, sp2Bytes);
-                        break;
-                    case SpriteType.KANZEN:
-                        cachedSprite = new KANZEN(bytes);
-                        break;
-                    case SpriteType.CYOKO:
-                        cachedSprite = new CYOKO(bytes);
-                        break;
-                    case SpriteType.ARUTE:
-                        cachedSprite = new ARUTE(bytes);
-                        break;
-                    default:
-                        cachedSprite = null;
-                        break;
-                }
-            }
+        protected abstract AbstractSprite GetAbstractSpriteFromPspIso(System.IO.Stream iso, PatcherLib.Iso.PspIso.PspIsoInfo info, bool ignoreCache);
 
-            return cachedSprite;
-        }
-
-        private AbstractSprite GetAbstractSpriteFromPsxIso( System.IO.Stream iso, bool ignoreCache )
-        {
-            if ( cachedSprite == null || ignoreCache )
-            {
-                byte[] bytes = PatcherLib.Iso.PsxIso.ReadFile( iso, (PatcherLib.Iso.PsxIso.Sectors)Sector, 0, (int)Size );
-                switch ( SHP )
-                {
-                    case SpriteType.TYPE1:
-                        cachedSprite = new TYPE1Sprite( bytes );
-                        break;
-                    case SpriteType.TYPE2:
-                        cachedSprite = new TYPE2Sprite( bytes );
-                        break;
-                    case SpriteType.RUKA:
-                        cachedSprite = new MonsterSprite(bytes);
-                        break;
-                    case SpriteType.MON:
-                        byte[][] sp2Bytes = new byte[location.SubSpriteLocations.Count][];
-                        if (location.SubSpriteLocations.Count > 0)
-                        {
-                            for (int i = 0; i < location.SubSpriteLocations.Count; i++)
-                            {
-                                sp2Bytes[i] = PatcherLib.Iso.PsxIso.ReadFile(
-                                    iso,
-                                    (PatcherLib.Iso.PsxIso.Sectors)location.SubSpriteLocations[i].Sector,
-                                    0,
-                                    (int)location.SubSpriteLocations[i].Size);
-                            }
-                        }
-                        cachedSprite = new MonsterSprite(bytes, sp2Bytes);
-                        break;
-                    case SpriteType.KANZEN:
-                        cachedSprite = new KANZEN( bytes );
-                        break;
-                    case SpriteType.CYOKO:
-                        cachedSprite = new CYOKO( bytes );
-                        break;
-                    case SpriteType.ARUTE:
-                        cachedSprite = new ARUTE( bytes );
-                        break;
-                    default:
-                        cachedSprite = null;
-                        break;
-                }
-            }
-
-            return cachedSprite;
-        }
+        protected abstract AbstractSprite GetAbstractSpriteFromPsxIso(System.IO.Stream iso, bool ignoreCache);
 
         private AbstractSprite GetAbstractSpriteFromPsxIso( System.IO.Stream iso )
         {

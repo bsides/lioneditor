@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="DataTypes\AllSpriteAttributes.cs" />
     <Compile Include="DataTypes\AllSprites.cs" />
+    <Compile Include="DataTypes\CharacterSprite.cs" />
     <Compile Include="DataTypes\Sequence.cs" />
     <Compile Include="DataTypes\Sprite.cs" />
     <Compile Include="DataTypes\SpriteAttributes.cs" />
@@ -120,6 +121,9 @@
     <Compile Include="DataTypes\Sprites\SerializedSprite.cs" />
     <Compile Include="DataTypes\Frame.cs" />
     <Compile Include="DataTypes\Sprites\KANZEN.cs" />
+    <Compile Include="DataTypes\Sprites\WEP3Sprite.cs" />
+    <Compile Include="DataTypes\Sprites\WEPSprite.cs" />
+    <Compile Include="DataTypes\WepSprite.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

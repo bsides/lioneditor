@@ -64,11 +64,6 @@ namespace Bimixual.Animation
         private static Control control;   // The form connected to this controller
 
         /// <summary>
-        /// time remaining before next frame
-        /// </summary>
-        private static int remaingTime;
-
-        /// <summary>
         /// If assigned, then program will sleep between frames instead of looping 
         /// </summary>
         private static FpsTimer fpsTimer; public static FpsTimer FpsTimer { set { fpsTimer = value; } }

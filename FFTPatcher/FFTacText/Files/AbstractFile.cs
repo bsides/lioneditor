@@ -111,14 +111,11 @@ namespace FFTPatcher.TextEditor
             {
                 case FileType.CompressedFile:
                     return new SectionedFile( charmap, layout, bytes, true );
-                    break;
                 case FileType.SectionedFile:
                     return new SectionedFile( charmap, layout, bytes, false );
-                    break;
                 case FileType.OneShotFile:
                 case FileType.PartitionedFile:
                     return new PartitionedFile( charmap, layout, bytes );
-                    break;
             }
             return null;
         }
@@ -129,17 +126,13 @@ namespace FFTPatcher.TextEditor
             {
                 case FileType.CompressedFile:
                     return new SectionedFile( charmap, layout, strings, true );
-                    break;
                 case FileType.SectionedFile:
                     return new SectionedFile( charmap, layout, strings, false );
-                    break;
                 case FileType.CompressibleOneShotFile:
                     return new CompressibleOneShotFile( charmap, layout, strings );
-                    break;
                 case FileType.OneShotFile:
                 case FileType.PartitionedFile:
                     return new PartitionedFile( charmap, layout, strings );
-                    break;
             }
             return null;
         }

@@ -204,7 +204,7 @@ namespace FFTPatcher.SpriteEditor
                     sp2Bytes.Sub(i * 8, (i + 1) * 8 - 1));
             }
 
-            IList<SpriteLocation> sprites = new SpriteLocation[numSprites];
+            IList<SpriteLocation> sprites = new SpriteLocation[numSprites + numWep];
             for (byte i = 0; i < numSprites; i++)
             {
                 if (psxSp2toSpriteMapping.ContainsKey(i))
@@ -227,6 +227,13 @@ namespace FFTPatcher.SpriteEditor
                         spriteBytes.Sub(i * 8, (i + 1) * 8 - 1));
                 }
             }
+
+            //byte[] wep1Bytes = PatcherLib.Iso.PsxIso.ReadFile(iso, new PatcherLib.Iso.PsxIso.KnownPosition(
+            //    PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR, 0, 256 * 256 / 2 + 0x200));
+            //byte[] wep2Bytes = PatcherLib.Iso.PsxIso.ReadFile(iso, new PatcherLib.Iso.PsxIso.KnownPosition(
+            //    PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR, 256 * 256 / 2 + 0x200, 256 * 256 / 2 + 0x200));
+            //byte[] wep3Bytes = PatcherLib.Iso.PsxIso.ReadFile(iso, new PatcherLib.Iso.PsxIso.KnownPosition(
+            //    PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR, (256 * 256 / 2 + 0x200) * 2, 256 * 144 / 2 + 0x200));
 
             result.sprites = sprites;
 

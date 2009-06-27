@@ -20,7 +20,7 @@ namespace FFTPatcher.TextEditor
         CompressibleOneShotFile
     }
 
-    public enum SectorType
+    internal enum SectorType
     {
         Sector,
         BootBin,
@@ -113,7 +113,6 @@ namespace FFTPatcher.TextEditor
             XmlNodeList sectors = node.SelectNodes( "Sectors/*" );
             Dictionary<SectorType, IList<KeyValuePair<Enum, int>>> dict = new Dictionary<SectorType, IList<KeyValuePair<Enum, int>>>( 3 );
             bool first = true;
-            IList<byte> bytes = null;
             KeyValuePair<Enum, int> primaryFile = new KeyValuePair<Enum, int>();
             foreach ( XmlNode sectorNode in sectors )
             {

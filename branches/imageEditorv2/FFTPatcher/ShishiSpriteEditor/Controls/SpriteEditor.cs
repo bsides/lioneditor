@@ -44,54 +44,89 @@ namespace FFTPatcher.SpriteEditor
             ignoreChanges = false;
         }
 
+        private void UpdateCheckBoxesEtc(CharacterSprite charSprite)
+        {
+            if (charSprite == null)
+            {
+                shpComboBox.Enabled = false;
+                shpComboBox.SelectedItem = null;
+                seqComboBox.Enabled = false;
+                seqComboBox.SelectedItem = null;
+                flyingCheckbox.Enabled = false;
+                flyingCheckbox.Checked = false;
+                flagsCheckedListBox.Enabled = false;
+                flagsCheckedListBox.BeginUpdate();
+                for (int i = 0; i < flagsCheckedListBox.Items.Count; i++)
+                {
+                    flagsCheckedListBox.SetItemChecked(i, false);
+                }
+                flagsCheckedListBox.EndUpdate();
+            }
+            else
+            {
+                shpComboBox.Enabled = true;
+                shpComboBox.SelectedItem = charSprite.SHP;
+                seqComboBox.Enabled = true;
+                seqComboBox.SelectedItem = charSprite.SEQ;
+                flyingCheckbox.Enabled = true;
+                flyingCheckbox.Checked = charSprite.Flying;
+                flagsCheckedListBox.Enabled = true;
+                var flags = new bool[] { 
+                    charSprite.Flag1, charSprite.Flag2, charSprite.Flag3, charSprite.Flag4,
+                    charSprite.Flag5, charSprite.Flag6, charSprite.Flag7, charSprite.Flag8 };
+                flagsCheckedListBox.BeginUpdate();
+                for (int i = 0; i < flagsCheckedListBox.Items.Count; i++)
+                {
+                    flagsCheckedListBox.SetItemChecked(i, flags[i]);
+                }
+                flagsCheckedListBox.EndUpdate();
+            }
+        }
+
         public void ReloadSprite()
         {
             bool oldIgnoreChanges = ignoreChanges;
             ignoreChanges = true;
             AbstractSprite = Sprite.GetAbstractSpriteFromIso( iso );
             spriteViewer1.Sprite = AbstractSprite;
-            shpComboBox.SelectedItem = Sprite.SHP;
-            seqComboBox.SelectedItem = Sprite.SEQ;
-            flyingCheckbox.Checked = Sprite.Flying;
-            flagsCheckedListBox.BeginUpdate();
-            flagsCheckedListBox.SetItemChecked( 0, Sprite.Flag1 );
-            flagsCheckedListBox.SetItemChecked( 1, Sprite.Flag2 );
-            flagsCheckedListBox.SetItemChecked( 2, Sprite.Flag3 );
-            flagsCheckedListBox.SetItemChecked( 3, Sprite.Flag4 );
-            flagsCheckedListBox.SetItemChecked( 4, Sprite.Flag5 );
-            flagsCheckedListBox.SetItemChecked( 5, Sprite.Flag6 );
-            flagsCheckedListBox.SetItemChecked( 6, Sprite.Flag7 );
-            flagsCheckedListBox.SetItemChecked( 7, Sprite.Flag8 );
-            flagsCheckedListBox.EndUpdate();
-            UpdateShapes();
-            UpdateAnimationTab();
+
+            UpdateCheckBoxesEtc(Sprite as CharacterSprite);
+            UpdateShapes(Sprite as CharacterSprite);
+            UpdateAnimationTab(Sprite as CharacterSprite);
             maxSizeLabel.Visible = true;
             maxSizeLabel.Text = string.Format("Max SPR size:" + Environment.NewLine + "{0} bytes", Sprite.Size);
             ignoreChanges = oldIgnoreChanges;
         }
 
         private Shape currentShape;
-        private void UpdateShapes()
+        private void UpdateShapes(CharacterSprite charSprite)
         {
             bool oldIgnoreChanges = ignoreChanges;
             ignoreChanges = true;
-            if ( Shape.Shapes.ContainsKey( Sprite.SHP ) )
+            if (charSprite == null)
             {
-                numericUpDown1.Enabled = true;
-                pictureBox1.Enabled = true;
-
-                currentShape = Shape.Shapes[Sprite.SHP];
-                numericUpDown1.Value = 1;
-                numericUpDown1.Maximum = currentShape.Frames.Count - 1;
+                tabControl1.Enabled = false;
             }
             else
             {
-                numericUpDown1.Enabled = false;
-                pictureBox1.Enabled = false;
-                currentShape = null;
-            }
-            UpdatePictureBox();
+                tabControl1.Enabled = true;
+                if (Shape.Shapes.ContainsKey(charSprite.SHP))
+                {
+                    numericUpDown1.Enabled = true;
+                    pictureBox1.Enabled = true;
 
+                    currentShape = Shape.Shapes[charSprite.SHP];
+                    numericUpDown1.Value = 1;
+                    numericUpDown1.Maximum = currentShape.Frames.Count - 1;
+                }
+                else
+                {
+                    numericUpDown1.Enabled = false;
+                    pictureBox1.Enabled = false;
+                    currentShape = null;
+                }
+                UpdatePictureBox();
+            }
             ignoreChanges = oldIgnoreChanges;
         }
 
@@ -135,9 +170,9 @@ namespace FFTPatcher.SpriteEditor
         {
             if ( !ignoreChanges )
             {
-                Sprite.SetSHP( iso, (SpriteType)shpComboBox.SelectedItem );
+                (Sprite as CharacterSprite).SetSHP( iso, (SpriteType)shpComboBox.SelectedItem );
                 ReloadSprite();
-                UpdateAnimationTab();
+                UpdateAnimationTab(Sprite as CharacterSprite);
             }
         }
 
@@ -145,21 +180,21 @@ namespace FFTPatcher.SpriteEditor
         {
             if ( !ignoreChanges )
             {
-                Sprite.SetSEQ( iso, (SpriteType)seqComboBox.SelectedItem );
-                UpdateAnimationTab();
+                (Sprite as CharacterSprite).SetSEQ(iso, (SpriteType)seqComboBox.SelectedItem);
+                UpdateAnimationTab(Sprite as CharacterSprite);
             }
         }
 
         private void flyingCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             if (!ignoreChanges)
-                Sprite.SetFlying(iso, flyingCheckbox.Checked);
+                (Sprite as CharacterSprite).SetFlying(iso, flyingCheckbox.Checked);
         }
 
         private void flagsCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (!ignoreChanges)
-                Sprite.SetFlag(iso, e.Index, e.NewValue == CheckState.Checked);
+                (Sprite as CharacterSprite).SetFlag(iso, e.Index, e.NewValue == CheckState.Checked);
         }
 
         private void UpdatePictureBox()
@@ -200,23 +235,27 @@ namespace FFTPatcher.SpriteEditor
 
         private IList<Sequence> currentSequences;
 
-        private void UpdateAnimationTab()
+        private void UpdateAnimationTab(CharacterSprite charSprite)
         {
-            if ( Sequence.Sequences.ContainsKey( (SpriteType)seqComboBox.SelectedItem ) )
+            if (charSprite != null &&
+                seqComboBox.SelectedItem != null)
             {
-                IList<Sequence> sequences = Sequence.Sequences[(SpriteType)seqComboBox.SelectedItem];
-                currentSequences = sequences;
-                numericUpDown2.Minimum = 0;
-                numericUpDown2.Maximum = sequences.Count - 1;
-                numericUpDown2.Value = 0;
-                numericUpDown2.Enabled = true;
-                animationViewer1.Enabled = true;
-            }
-            else
-            {
-                animationViewer1.Pause();
-                animationViewer1.Enabled = false;
-                numericUpDown2.Enabled = false;
+                if (Sequence.Sequences.ContainsKey((SpriteType)seqComboBox.SelectedItem))
+                {
+                    IList<Sequence> sequences = Sequence.Sequences[(SpriteType)seqComboBox.SelectedItem];
+                    currentSequences = sequences;
+                    numericUpDown2.Minimum = 0;
+                    numericUpDown2.Maximum = sequences.Count - 1;
+                    numericUpDown2.Value = 0;
+                    numericUpDown2.Enabled = true;
+                    animationViewer1.Enabled = true;
+                }
+                else
+                {
+                    animationViewer1.Pause();
+                    animationViewer1.Enabled = false;
+                    numericUpDown2.Enabled = false;
+                }
             }
         }
 

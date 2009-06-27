@@ -164,7 +164,7 @@ namespace FFTPatcher.SpriteEditor
                 openFileDialog.CheckFileExists = true;
                 if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
                 {
-                    allSpritesEditor1.CurrentSprite.ImportSp2( currentStream, openFileDialog.FileName, index - 1);
+                    (allSpritesEditor1.CurrentSprite as CharacterSprite).ImportSp2( currentStream, openFileDialog.FileName, index - 1);
                     allSpritesEditor1.ReloadCurrentSprite();
                 }
             }
@@ -195,9 +195,10 @@ namespace FFTPatcher.SpriteEditor
             }
 
             MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
-            if ( sprite != null )
+            if ( sprite != null && allSpritesEditor1.CurrentSprite is CharacterSprite)
             {
-                for ( int i = 0; i < allSpritesEditor1.CurrentSprite.NumChildren; i++ )
+                int numChildren = (allSpritesEditor1.CurrentSprite as CharacterSprite).NumChildren;
+                for ( int i = 0; i < numChildren; i++ )
                 {
                     sp2Menu.MenuItems[i * 3].Enabled = true;
                     sp2Menu.MenuItems[i * 3 + 1].Enabled = true;

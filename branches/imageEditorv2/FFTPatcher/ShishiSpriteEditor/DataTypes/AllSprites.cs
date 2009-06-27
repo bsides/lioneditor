@@ -53,13 +53,24 @@ namespace FFTPatcher.SpriteEditor
             {
                 ExpandPsxIso(iso);
             }
-            return new AllSprites(Context.US_PSX, AllSpriteAttributes.FromPsxIso(iso), SpriteFileLocations.FromPsxIso(iso));
+            return new AllSprites(Context.US_PSX, AllSpriteAttributes.FromPsxIso(iso), SpriteFileLocations.FromPsxIso(iso),
+                new Sprite[] {
+                    new WepSprite(Context.US_PSX, WepSprite.Wep.WEP1, "WEP1", new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR,0,256*256/2+0x200)),
+                    new WepSprite(Context.US_PSX, WepSprite.Wep.WEP2, "WEP2", new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR,256*256/2+0x200,256*256/2+0x200)),
+                    new WepSprite(Context.US_PSX, WepSprite.Wep.WEP3, "WEP3", new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR,(256*256/2+0x200)*2,144*256/2+0x200)) }
+                );
+
         }
 
         public static AllSprites FromPspIso(Stream iso)
         {
             PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso);
-            return new AllSprites(Context.US_PSP, AllSpriteAttributes.FromPspIso(iso, info), SpriteFileLocations.FromPspIso(iso, info));
+            return new AllSprites(Context.US_PSP, AllSpriteAttributes.FromPspIso(iso, info), SpriteFileLocations.FromPspIso(iso, info),
+                new Sprite[] {
+                    new WepSprite(Context.US_PSP, WepSprite.Wep.WEP1, "WEP1", new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.BATTLE_WEP_SPR,0,256*256/2+0x200)),
+                    new WepSprite(Context.US_PSP, WepSprite.Wep.WEP2, "WEP2", new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.BATTLE_WEP_SPR,256*256/2+0x200,256*256/2+0x200)),
+                    new WepSprite(Context.US_PSP, WepSprite.Wep.WEP3, "WEP3", new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.BATTLE_WEP_SPR,(256*256/2+0x200)*2,144*256/2+0x200)) }
+                );
         }
 
         struct Time
@@ -486,15 +497,21 @@ namespace FFTPatcher.SpriteEditor
                 SpriteFileLocations.IsoHasPatchedSpriteLocations( iso );
         }
 
-        private AllSprites(Context context, AllSpriteAttributes attrs, SpriteFileLocations locs)
+        private AllSprites(Context context, AllSpriteAttributes attrs, SpriteFileLocations locs, IList<Sprite> otherSprites)
         {
-            Count = attrs.Count;
+            Count = attrs.Count + otherSprites.Count;
             sprites = new Sprite[Count];
             IList<string> spriteNames = context == Context.US_PSP ? PSPResources.Lists.SpriteFiles : PSXResources.Lists.SpriteFiles;
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < attrs.Count; i++)
             {
-                sprites[i] = new Sprite(context, string.Format("{0:X2} - {1}", i, spriteNames[i]), attrs[i], locs[i]);
+                sprites[i] = new CharacterSprite(
+                    context, 
+                    string.Format("{0:X2} - {1}", i, spriteNames[i]), 
+                    attrs[i], 
+                    locs[i]);
             }
+            otherSprites.CopyTo(sprites, attrs.Count);
+
             this.attrs = attrs;
             this.locs = locs;
 
@@ -504,9 +521,9 @@ namespace FFTPatcher.SpriteEditor
                 sharedSPRs.Add(sprites[i], new List<int>());
             }
 
-            for (int i = 0; i < sprites.Count; i++)
+            for (int i = 0; i < attrs.Count; i++)
             {
-                for (int j = i+1; j < sprites.Count; j++)
+                for (int j = i + 1; j < attrs.Count; j++)
                 {
                     if (locs[i].Sector == locs[j].Sector)
                     {

@@ -34,7 +34,6 @@ namespace FFTPatcher.SpriteEditor
         private AbstractSprite sprite = null;
         private PictureBox pictureBox1;
         private Owf.Controls.Office2007ColorPicker office2007ColorPicker1;
-        private System.ComponentModel.IContainer components;
         private IList<Tile> tiles;
 
 		#endregion Fields 

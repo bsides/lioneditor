@@ -315,13 +315,17 @@ namespace PatcherLib.Iso
             public FFTPack.Files? FFTPack { get; private set; }
 
             public int StartLocation { get; private set; }
-            public int Length { get; private set; }
+            private int length;
+            public override int Length
+            {
+                get { return length; }
+            }
 
             private KnownPosition(Enum sector, int startLocation, int length)
             {
                 SectorEnum = sector;
                 StartLocation = startLocation;
-                Length = length;
+                this.length  = length;
             }
 
             public KnownPosition(Sectors sector, int startLocation, int length)
@@ -336,7 +340,7 @@ namespace PatcherLib.Iso
                 FFTPack = sector;
             }
 
-            public PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            public override PatchedByteArray GetPatchedByteArray(byte[] bytes)
             {
                 if (Sector.HasValue)
                 {
@@ -354,7 +358,12 @@ namespace PatcherLib.Iso
 
             public override IList<byte> ReadIso(Stream iso)
             {
-                return PspIso.GetBlock(iso, PspIsoInfo.GetPspIsoInfo(iso), this);
+                return ReadIso(iso, PspIsoInfo.GetPspIsoInfo(iso));
+            }
+
+            public IList<byte> ReadIso(Stream iso, PspIsoInfo info)
+            {
+                return PspIso.GetBlock(iso, info, this);
             }
 
             public override void PatchIso(Stream iso, IList<byte> bytes)

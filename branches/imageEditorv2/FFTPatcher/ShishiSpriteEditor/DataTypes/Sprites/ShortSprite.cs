@@ -34,7 +34,7 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
-        public ShortSprite( string name, IList<byte> bytes )
+        public ShortSprite( IList<byte> bytes )
             : base( bytes )
         {
         }
@@ -72,13 +72,14 @@ namespace FFTPatcher.SpriteEditor
 
         protected override void ImportSPRInner( IList<byte> bytes )
         {
-            BuildPixels( bytes, null ).Sub( 0, 288 * 256 ).CopyTo( Pixels, 0 );
+            BuildPixels( bytes, null ).Sub( 0, Height * Width - 1 ).CopyTo( Pixels, 0 );
         }
         
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
         {
-            byte[] result = new byte[36864 * 2];
-            for( int i = 0; i < 36864; i++ )
+            int length = Width * Height;
+            byte[] result = new byte[length];
+            for( int i = 0; i < length/2; i++ )
             {
                 result[i * 2] = bytes[i].GetLowerNibble();
                 result[i * 2 + 1] = bytes[i].GetUpperNibble();

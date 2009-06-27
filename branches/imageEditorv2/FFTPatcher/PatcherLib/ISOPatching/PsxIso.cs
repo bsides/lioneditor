@@ -2814,15 +2814,20 @@ namespace PatcherLib.Iso
         {
             public Sectors Sector { get; private set; }
             public int StartLocation { get; private set; }
-            public int Length { get; private set; }
+            //public int Length { get; private set; }
+            private int length;
+            public override int Length
+            {
+                get { return length; }
+            }
             public KnownPosition(Sectors sector, int startLocation, int length)
             {
                 Sector = sector;
                 StartLocation = startLocation;
-                Length = length;
+                this.length = length;
             }
 
-            public PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            public override PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
             {
                 return new PatcherLib.Datatypes.PatchedByteArray(Sector, StartLocation, bytes);
             }

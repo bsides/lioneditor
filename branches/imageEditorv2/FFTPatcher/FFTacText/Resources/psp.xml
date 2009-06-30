@@ -940,7 +940,7 @@
         <Section value="16" entries="76" empty="true" dte="true" compressible="true" name="Tutorial menus"/>
         <Section value="17" entries="1" empty="true" dte="true" compressible="false" hide="true"/>
         <Section value="18" entries="44" empty="true" dte="true" compressible="false" name="Location names"/>
-        <Section value="19" entries="24" empty="true" dte="true" compressible="false" name="Empty" hide="true"/>
+        <Section value="19" entries="24" empty="true" dte="true" compressible="false" name="Facts"/>
         <Section value="20" entries="1" empty="true" dte="true" compressible="false" name="Map menu text"/>
         <Section value="21" entries="115" empty="true" dte="true" compressible="true" name="Event names"/>
         <Section value="22" entries="227" empty="false" dte="true" compressible="true" name="Skillset names">
@@ -1215,7 +1215,7 @@
         <Section value="16" entries="128" empty="true" dte="true"/>
         <Section value="17" entries="48" empty="true" dte="true"/>
         <Section value="18" entries="48" empty="true" dte="true"/>
-        <Section value="19" entries="24" empty="true" dte="true" hide="true"/>
+        <Section value="19" entries="24" empty="true" dte="true" name="Facts"/>
         <Section value="20" entries="1" empty="true" dte="true" hide="true"/>
         <Section value="21" entries="1" empty="true" dte="true" hide="true"/>
         <Section value="22" entries="1" empty="true" dte="true" hide="true"/>

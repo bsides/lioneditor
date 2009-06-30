@@ -79,7 +79,11 @@ namespace FFTPatcher.TextEditor
             if ( !ignoreChanges && 
                  e.ColumnIndex == TextColumnIndex )
             {
-                boundFile[boundSection, CurrentRow] = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value;
+                string s = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value;
+                boundFile[boundSection, CurrentRow] = s;
+#if MEASURESTRINGS
+                dataGridView[widthColumn.Index, e.RowIndex].Value = boundFile.CharMap.MeasureStringInFont(s, font);
+#endif
             }
         }
 
@@ -121,6 +125,9 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+#if MEASURESTRINGS
+        PatcherLib.Datatypes.FFTFont font;
+#endif
         
         /// <summary>
         /// Binds this editor to a list of strings.
@@ -138,8 +145,9 @@ namespace FFTPatcher.TextEditor
 
             DataGridViewRow[] rows = new DataGridViewRow[count];
             dataGridView.SuspendLayout();
-
-            PatcherLib.Datatypes.FFTFont font = file.Context == PatcherLib.Datatypes.Context.US_PSP ? TextUtilities.PSPFont : TextUtilities.PSXFont;
+#if MEASURESTRINGS
+            font = file.Context == PatcherLib.Datatypes.Context.US_PSP ? TextUtilities.PSPFont : TextUtilities.PSXFont;
+#endif
 
             for( int i = 0; i < count; i++ )
             {

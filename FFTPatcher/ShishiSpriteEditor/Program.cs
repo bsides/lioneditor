@@ -35,31 +35,30 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
-            //using (System.IO.Stream s = System.IO.File.Open(@"N:\dev\fft\images\fflw-usa.rearranged - Copy.iso", System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite))
-            //{
-            //    AllSprites.ExpandPspIso(s);
-            //}
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new MainForm() );
-
-            //using (System.IO.Stream iso = System.IO.File.OpenRead(@"N:\dev\fft\images\fft-usa - Copy.bin"))
-            //using (System.IO.Stream iso = System.IO.File.Open(@"N:\dev\fft\images\fft-usa - Copy.bin", System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite))
-            //{
-            //    var s =  AllSprites.FromPsxIso( iso );
-            //    //foreach (int i in new int[] { 230000, 230001, 230002, 230003, 230004, 230005, 230006 })
-            //    //{
-            //    //    PatcherLib.Iso.PsxIso.KnownPosition kp = new PatcherLib.Iso.PsxIso.KnownPosition((PatcherLib.Iso.PsxIso.Sectors)i, 0, 2048);
-            //    //    byte[] bytes = PatcherLib.Iso.PsxIso.ReadFile(iso, kp);
-            //    //    PatcherLib.Datatypes.PatchedByteArray pba = new PatcherLib.Datatypes.PatchedByteArray(i, 0, bytes);
-            //    //    PatcherLib.Iso.PsxIso.PatchPsxIso(iso, new PatcherLib.Datatypes.PatchedByteArray[] { pba });
-            //    //}
-
-            //}
-            //Application.Run(new TestForm());
+            try
+            {
+                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.ThreadException += Application_ThreadException;
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+                Application.ThreadException -= Application_ThreadException;
+            }
+            catch (Exception e)
+            {
+                HandleException(e);
+            }
         }
 
+        static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            HandleException(e.Exception);
+        }
+
+        static void HandleException(Exception e)
+        {
+            MessageBox.Show(e.ToString(), "Error");
+        }
 
 		#endregion Methods 
 

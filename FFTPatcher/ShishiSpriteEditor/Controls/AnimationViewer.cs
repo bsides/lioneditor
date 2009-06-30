@@ -91,7 +91,8 @@ namespace FFTPatcher.SpriteEditor
 
         void flipBook_FrameChanged(object sender, EventArgs e)
         {
-            trackBar1.Value = flipBook.CurrentFrame;
+            if (flipBook != null)
+                trackBar1.Value = flipBook.CurrentFrame;
         }
 
         public void ShowAnimation(IList<Bitmap> bitmaps, double delay, bool startPlaying)
@@ -114,17 +115,20 @@ namespace FFTPatcher.SpriteEditor
 
         private void backButton_Click(object sender, EventArgs e)
         {
-            flipBook.BackOneFrame();
+            if (flipBook != null)
+                flipBook.BackOneFrame();
         }
 
         private void forwardButton_Click(object sender, EventArgs e)
         {
-            flipBook.ForwardOneFrame();
+            if (flipBook != null)
+                flipBook.ForwardOneFrame();
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            flipBook.SetFrame(trackBar1.Value);
+            if (flipBook != null)
+                flipBook.SetFrame(trackBar1.Value);
         }
 
         public void Pause()
@@ -134,7 +138,8 @@ namespace FFTPatcher.SpriteEditor
             forwardButton.Enabled = true;
             backButton.Enabled = true;
             trackBar1.Enabled = true;
-            flipBook.Pause();
+            if (flipBook != null)
+                flipBook.Pause();
         }
 
         public void Play()
@@ -144,7 +149,8 @@ namespace FFTPatcher.SpriteEditor
             forwardButton.Enabled = false;
             backButton.Enabled = false;
             trackBar1.Enabled = false;
-            flipBook.Unpause();
+            if (flipBook != null)
+                flipBook.Unpause();
         }
     }
 }

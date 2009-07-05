@@ -316,7 +316,7 @@ namespace FFTPatcher.TextEditor
 
             foreach ( var kvp in dteEncodings )
             {
-                TextUtilities.PSXMap.StringToByteArray( kvp.Key )      // Get the pair to store
+                TextUtilities.PSXMap.StringToByteArray( kvp.Key, 0xFE )      // Get the pair to store
                     .Sub( 0, 1 )                                       // Get 2 bytes
                     .CopyTo( result, ( kvp.Value - MinDteByte ) * 2 ); // Store them in the DTE array
             }

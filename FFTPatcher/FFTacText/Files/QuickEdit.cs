@@ -6,6 +6,7 @@ namespace FFTPatcher.TextEditor.Files
 {
     class QuickEdit : IFile
     {
+        byte IFile.SelectedTerminator { get { return 0xFE; } }
         public IList<string> SectionNames { get; private set; }
         public IList<IList<string>> EntryNames { get; private set; }
         public IList<bool> HiddenEntries { get; private set; }

@@ -44,7 +44,7 @@ namespace FFTPatcher.TextEditor
                 {
                     thisSection = TextUtilities.Decompress( bytes, thisSection, (int)( start + DataStart ) );
                 }
-                sections.Add( TextUtilities.ProcessList( thisSection, CharMap ) );
+                sections.Add( TextUtilities.ProcessList( thisSection, layout.AllowedTerminators[0], CharMap ) );
             }
             Sections = sections.AsReadOnly();
             PopulateDisallowedSections();
@@ -111,7 +111,7 @@ namespace FFTPatcher.TextEditor
                 List<byte> result = new List<byte>();
                 result.AddRange( new byte[] { 0x00, 0x00, 0x00, 0x00 } );
                 int old = 0;
-                IList<IList<byte>> bytes = GetUncompressedSectionBytes( GetDteStrings( dteTable ), CharMap );
+                IList<IList<byte>> bytes = GetUncompressedSectionBytes( GetDteStrings( dteTable ), SelectedTerminator, CharMap );
                 for ( int i = 0; i < numberOfSections - 1; i++ )
                 {
                     result.AddRange( ( (UInt32)( bytes[i].Count + old ) ).ToBytes() );

@@ -23,7 +23,34 @@ namespace FFTPatcher.TextEditor
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
             for ( int i = 0; i < NumberOfSections; i++ )
             {
-                sections.Add(TextUtilities.ProcessList(bytes.Sub(i * PartitionSize, (i + 1) * PartitionSize - 1), map));
+                int terminatorCount = layout.AllowedTerminators.Count;
+                IList<string>[] stringsFromEachTerminator = new IList<string>[terminatorCount];
+                for ( int t = 0; t < terminatorCount; t++ )
+                {
+                    stringsFromEachTerminator[t] =
+                        TextUtilities.ProcessList( 
+                            bytes.Sub( i * PartitionSize, ( i + 1 ) * PartitionSize - 1 ), 
+                            layout.AllowedTerminators[t], 
+                            map );
+                }
+
+                // Determine best fit terminator
+                IList<string> best = stringsFromEachTerminator[0];
+                for ( int t = 1; t < terminatorCount; t++ )
+                {
+                    if ( ( best.Count < SectionLengths[i] && stringsFromEachTerminator[t].Count < SectionLengths[i] &&
+                           ( SectionLengths[i] - stringsFromEachTerminator[t].Count ) < ( SectionLengths[i] - best.Count ) ) ||
+                         ( best.Count != SectionLengths[i] && stringsFromEachTerminator[t].Count == SectionLengths[i] ) ||
+                         ( best.Count > SectionLengths[i] && stringsFromEachTerminator[t].Count > SectionLengths[i] &&
+                           ( stringsFromEachTerminator[t].Count - SectionLengths[i] ) < ( best.Count - SectionLengths[i] ) )
+                        )
+                    {
+                        best = stringsFromEachTerminator[t];
+                    }
+                }
+
+                sections.Add( best );
+
                 if ( sections[i].Count < SectionLengths[i] )
                 {
                     string[] newSection = new string[SectionLengths[i]];
@@ -45,7 +72,7 @@ namespace FFTPatcher.TextEditor
         private Set<KeyValuePair<string, byte>> GetPreferredDTEPairsForSection(IList<IList<string>> allSections, int index, Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes)
         {
             var secs = allSections;
-            var  bytes = GetSectionByteArrays(secs, CharMap, CompressionAllowed);
+            var  bytes = GetSectionByteArrays(secs, SelectedTerminator, CharMap, CompressionAllowed);
             IList<byte> ourBytes = bytes[index];
 
             Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
@@ -55,11 +82,12 @@ namespace FFTPatcher.TextEditor
             {
                 return result;
             }
+            string terminatorString = string.Format( @"{0x" + "{0:2X}" + "}", SelectedTerminator );
 
             StringBuilder sb = new StringBuilder(PartitionSize);
             if (DteAllowed[index])
             {
-                secs[index].ForEach(t => sb.Append(t).Append("{0xFE}"));
+                secs[index].ForEach(t => sb.Append(t).Append(terminatorString));
             }
 
             var dict = TextUtilities.GetPairAndTripleCounts(sb.ToString(), replacements);
@@ -71,7 +99,7 @@ namespace FFTPatcher.TextEditor
             {
                 result.Add(new KeyValuePair<string, byte>(l[0].Key, dteBytes.Pop()));
                 TextUtilities.DoDTEEncoding(secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs(result));
-                bytes = GetSectionByteArrays(secs, CharMap, CompressionAllowed);
+                bytes = GetSectionByteArrays(secs, SelectedTerminator, CharMap, CompressionAllowed);
                 ourBytes = bytes[index];
                 bytesNeeded = ourBytes.Count - PartitionSize;
 
@@ -80,7 +108,7 @@ namespace FFTPatcher.TextEditor
                     StringBuilder sb2 = new StringBuilder(PartitionSize);
                     if (DteAllowed[index])
                     {
-                        secs[index].ForEach(t => sb2.Append(t).Append("{0xFE}"));
+                        secs[index].ForEach(t => sb2.Append(t).Append(terminatorString));
                     }
                     l = new List<KeyValuePair<string, int>>(TextUtilities.GetPairAndTripleCounts(sb2.ToString(), replacements));
                     l.Sort((a, b) => b.Value.CompareTo(a.Value));
@@ -113,7 +141,7 @@ namespace FFTPatcher.TextEditor
             foreach ( IList<string> section in Sections )
             {
                 List<byte> currentPart = new List<byte>( PartitionSize );
-                section.ForEach( s => currentPart.AddRange( CharMap.StringToByteArray( s ) ) );
+                section.ForEach( s => currentPart.AddRange( CharMap.StringToByteArray( s, SelectedTerminator ) ) );
                 currentPart.AddRange( new byte[Math.Max( PartitionSize - currentPart.Count, 0 )] );
                 result.AddRange( currentPart );
             }
@@ -130,7 +158,7 @@ namespace FFTPatcher.TextEditor
             foreach (IList<string> section in secs)
             {
                 List<byte> currentPart = new List<byte>(PartitionSize);
-                section.ForEach(s => currentPart.AddRange(CharMap.StringToByteArray(s)));
+                section.ForEach(s => currentPart.AddRange(CharMap.StringToByteArray(s, SelectedTerminator)));
                 if (currentPart.Count > PartitionSize)
                 {
                     return null;

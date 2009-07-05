@@ -6,6 +6,13 @@ namespace PatcherLib.Datatypes
 {
     public class Set<T> : IEnumerable<T>
     {
+        private bool readOnly = false;
+
+        public bool ReadOnly
+        {
+            get { return readOnly; }
+        }
+
         public class SetEqualityComparer<U> : IEqualityComparer<U>
         {
             private Comparison<U> comparison;
@@ -28,6 +35,19 @@ namespace PatcherLib.Datatypes
         List<T> backingList;
         Dictionary<T, bool> backing;
         IEqualityComparer<T> comparer;
+
+        private Set( Set<T> backingSet, bool readOnly )
+            : this()
+        {
+            this.comparer = backingSet.comparer;
+            AddRange( backingSet );
+            this.readOnly = readOnly;
+        }
+
+        public Set<T> AsReadOnly()
+        {
+            return new Set<T>( this, true );
+        }
 
         public Set()
         {
@@ -71,6 +91,11 @@ namespace PatcherLib.Datatypes
 
         public void Add( T item )
         {
+            if ( ReadOnly )
+            {
+                throw new InvalidOperationException( "set is read-only" );
+            }
+
             if ( !backing.ContainsKey( item ) )
             {
                 backingList.Add( item );
@@ -85,6 +110,11 @@ namespace PatcherLib.Datatypes
 
         public void Remove( T item )
         {
+            if ( ReadOnly )
+            {
+                throw new InvalidOperationException( "set is read-only" );
+            }
+
             if ( Contains( item ) )
             {
                 backing.Remove( item );

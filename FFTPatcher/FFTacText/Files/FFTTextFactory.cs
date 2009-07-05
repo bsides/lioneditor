@@ -40,7 +40,7 @@ namespace FFTPatcher.TextEditor
             public IDictionary<SectorType, IList<KeyValuePair<Enum, int>>> Sectors { get; set; }
             public IList<string> SectionNames { get; set; }
             public IList<IList<string>> EntryNames { get; set; }
-            public IList<byte> AllowedTerminators { get; set; }
+            public Set<byte> AllowedTerminators { get; set; }
             public IList<IList<int>> DisallowedEntries { get; set; }
             public IList<IDictionary<int,string>> StaticEntries { get; set; }
             public KeyValuePair<Enum, int> PrimaryFile { get; set; }
@@ -156,25 +156,15 @@ namespace FFTPatcher.TextEditor
             IList<IList<int>> disallowedEntries;
             IList<IDictionary<int,string>> staticEntries;
             GetDisallowedEntries( node, sectionLengths.Length, out disallowedEntries, out staticEntries );
-            IList<byte> terminators;
+            Set<byte> terminators = new Set<byte>( new byte[] { 0xFE } );
             XmlNode terminatorNode = node.SelectSingleNode( "Terminators" );
             if ( terminatorNode != null )
             {
-                terminators = new List<byte>();
                 foreach ( XmlNode nnn in terminatorNode.SelectNodes( "Terminator" ) )
                 {
                     terminators.Add(
                         byte.Parse( nnn.InnerText, System.Globalization.NumberStyles.HexNumber ) );
                 }
-            }
-            else
-            {
-                terminators = new byte[] { 0xFE };
-            }
-
-            if ( terminators.Count == 0 )
-            {
-                terminators.Add( 0xFE );
             }
 
             FileInfo fi = new FileInfo
@@ -512,6 +502,8 @@ namespace FFTPatcher.TextEditor
                         int end = Int32.Parse( includeNode.Attributes["end"].InnerText );
                         int offset = Int32.Parse( includeNode.Attributes["offset"].InnerText );
                         string fullName = includeNode.Attributes["name"].InnerText;
+                        XmlAttribute formatNode = includeNode.Attributes["format"];
+                        string format = formatNode != null ? formatNode.InnerText.Replace( "\\n", Environment.NewLine ) : "{0}";
                         
                         if ( !cachedResources.ContainsKey( fullName ) )
                         {
@@ -519,10 +511,16 @@ namespace FFTPatcher.TextEditor
                         }
 
                         IList<string> resourceList = cachedResources[fullName];
-                        
                         for ( int j = start; j <= end; j++ )
                         {
-                            currentSection[j + offset] = resourceList[j];
+                            if ( string.IsNullOrEmpty( resourceList[j] ) )
+                            {
+                                currentSection[j + offset] = string.Empty;
+                            }
+                            else
+                            {
+                                currentSection[j + offset] = string.Format( format, resourceList[j] );
+                            }
                         }
                     }
 

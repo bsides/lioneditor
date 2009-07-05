@@ -145,12 +145,12 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Converts a collection of FFTacText strings into a FFT text byte array.
         /// </summary>
-        public byte[] StringsToByteArray( IList<string> strings )
+        public byte[] StringsToByteArray( IList<string> strings, byte terminator )
         {
             List<byte> result = new List<byte>();
             foreach( string s in strings )
             {
-                result.AddRange( StringToByteArray( s ) );
+                result.AddRange( StringToByteArray( s, terminator ) );
             }
             return result.ToArray();
         }
@@ -220,7 +220,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        public bool TryStringToByteArray( string s, out byte[] bytes )
+        public bool TryStringToByteArray( string s, byte terminator, out byte[] bytes )
         {
             List<byte> result = new List<byte>( s.Length );
             for ( int i = 0; i < s.Length; i++ )
@@ -284,7 +284,7 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
-            result.Add( 0xFE );
+            result.Add( terminator );
 
             bytes = result.ToArray();
             return true;
@@ -293,10 +293,10 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Converts a FFTacText string into a FFT text byte array.
         /// </summary>
-        public byte[] StringToByteArray( string s )
+        public byte[] StringToByteArray( string s, byte terminator )
         {
             byte[] result;
-            if ( TryStringToByteArray( s ?? string.Empty, out result ) )
+            if ( TryStringToByteArray( s ?? string.Empty, terminator, out result ) )
             {
                 return result;
             }
@@ -309,10 +309,10 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Validates the string with this charmap;
         /// </summary>
-        public bool ValidateString( string s )
+        public bool ValidateString( string s, byte terminator )
         {
             byte[] dummy;
-            return TryStringToByteArray( s, out dummy );
+            return TryStringToByteArray( s, terminator, out dummy );
         }
 
 

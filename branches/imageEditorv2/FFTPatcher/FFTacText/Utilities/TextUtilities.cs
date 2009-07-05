@@ -578,10 +578,10 @@ namespace FFTPatcher.TextEditor
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
         /// <param name="callback">The progress callback.</param>
-        public static CompressionResult Compress( IList<IList<string>> sections, GenericCharMap charmap, IList<bool> allowedSections )
+        public static CompressionResult Compress( IList<IList<string>> sections, byte terminator, GenericCharMap charmap, IList<bool> allowedSections )
         {
             int length = 0;
-            sections.ForEach( s => length += charmap.StringsToByteArray( s ).Length );
+            sections.ForEach( s => length += charmap.StringsToByteArray( s, terminator ).Length );
 
             byte[] result = new byte[length];
             int[] lengths = new int[sections.Count];
@@ -593,11 +593,11 @@ namespace FFTPatcher.TextEditor
 
                 if ( allowedSections == null || allowedSections[section] )
                 {
-                    CompressSection( charmap.StringsToByteArray( sections[section] ), result, ref pos );
+                    CompressSection( charmap.StringsToByteArray( sections[section], terminator ), result, ref pos );
                 }
                 else
                 {
-                    byte[] secResult = charmap.StringsToByteArray( sections[section] );
+                    byte[] secResult = charmap.StringsToByteArray( sections[section], terminator );
                     secResult.CopyTo( result, pos );
                     pos += secResult.Length;
                 }
@@ -650,9 +650,9 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         /// <param name="bytes">The bytes to process</param>
         /// <param name="charmap">The charmap to use</param>
-        public static IList<string> ProcessList( IList<byte> bytes, GenericCharMap charmap )
+        public static IList<string> ProcessList( IList<byte> bytes, byte terminator, GenericCharMap charmap )
         {
-            IList<IList<byte>> words = bytes.Split( (byte)0xFE );
+            IList<IList<byte>> words = bytes.Split( terminator );
 
             List<string> result = new List<string>( words.Count );
 
@@ -660,7 +660,7 @@ namespace FFTPatcher.TextEditor
             {
                 StringBuilder sb = new StringBuilder();
                 int pos = 0;
-                while ( pos < ( word.Count - 1 ) || ( pos == ( word.Count - 1 ) && word[pos] != 0xFE ) )
+                while ( pos < ( word.Count - 1 ) || ( pos == ( word.Count - 1 ) && word[pos] != terminator ) )
                 {
                     sb.Append( charmap.GetNextChar( word, ref pos ) );
                 }

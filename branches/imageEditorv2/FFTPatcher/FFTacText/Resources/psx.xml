@@ -1,226 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PSX>
   <!--
-Text- Unit kicking Messages 25-76 World.bin (Unit Leaving Quotes) (The exact same for Join.LZW (4))
-1 Ramza
-2 Ramza
-3 Ramza
-4 Delita (Guest Delita)
-5 Delita (Guest Delita?)
-6 Delita
-7 Algus (Guest Algus)
-8 Zalbag
-9 Dycedarg
-A Larg
-B Goltana
-C Ovelia (Guest Ovelia)
-D Orlandu
-E Funeral
-F Reis
-10 Zalmo
-11 Gafgarion
-12 Malak
-13 Simon
-14 Alma
-15 Olan
-16 Mustadio
-17 Gafgarion (Guest Gafgarion)
-18 Draclau
-19 Rafa (Guest Rafa)
-1A Malak
-1B Elmdor
-1C Teta
-1D Barinten
-1E Agrias
-1F Beowulf (Both Beowulfs?)
-20 Wiegraf
-21 Balmafula
-22 Mustadio (Guest Mustadio)
-23 Rudvich
-24 Vormav
-25 Rofel
-26 Izlude
-27 Kletian
-28 Wiegraf
-29 Rafa
-2A Meliadoul
-2B Balk
-2C Alma (Guest Alma?)
-2D Celia
-2E Lede
-2F Meliadoul (Guest and Enemy Meliadoul)
-30 Alma (Guest Alma)
-31 Ajora
-32 Cloud
-33 Zombie Zalbag
-34 Agrias (Guest Agrias)
-
-
-
-Text - Forced staying Messages 100 - 150 in World.bin (Unit Leaving Quotes)  (The exact same for Join.LZW (4))
-1 Ramza
-2 Ramza
-3 Ramza
-4 Delita (Guest Delita)
-5 Delita (Guest Delita?)
-6 Delita
-7 Algus (Guest Algus)
-8 Zalbag
-9 Dycedarg
-A Larg
-B Goltana
-C Ovelia (Guest Ovelia)
-D Orlandu
-E Funeral
-F Reis
-10 Zalmo
-11 Gafgarion
-12 Malak
-13 Simon
-14 Alma
-15 Olan
-16 Mustadio
-17 Gafgarion (Guest Gafgarion)
-18 Draclau
-19 Rafa (Guest Rafa)
-1A Malak
-1B Elmdor
-1C Teta
-1D Barinten
-1E Agrias
-1F Beowulf (Guest Beowulf?)
-20 Wiegraf
-21 Balmafula
-22 Mustadio (Guest Mustadio)
-23 Rudvich
-24 Vormav
-25 Rofel
-26 Izlude
-27 Kletian
-28 Wiegraf
-29 Rafa
-2A Meliadoul
-2B Balk
-2C Alma (Dead Alma leaving quote?)
-2D Celia
-2E Lede
-2F Meliadoul
-30 Alma (Guest Alma)
-31 Ajora
-32 Cloud
-33 Zombie Zalbag
-34 Agrias (Guest Agrias)
-
-Text - Units with Low Brave and High Faith 1-24 Join.LZW (2)
-Generics
-
-Text - Units with Low Brave 25-76 Join.LZW (2)
-1 Ramza
-2 Ramza
-3 Ramza
-4 Delita (Guest Delita)
-5 Delita (Guest Delita?)
-6 Delita
-7 Algus (Guest Algus)
-8 Zalbag
-9 Dycedarg
-A Larg
-B Goltana
-C Ovelia (Guest Ovelia)
-D Orlandu
-E Funeral
-F Reis
-10 Zalmo
-11 Gafgarion
-12 Malak (Dead Version)
-13 Simon
-14 Alma
-15 Olan
-16 Mustadio
-17 Gafgarion (Guest Gafgarion)
-18 Draclau
-19 Rafa (Guest Rafa)
-1A Malak
-1B Elmdor
-1C Teta
-1D Barinten
-1E Agrias
-1F Beowulf (Guest Beowulf?)
-20 Wiegraf
-21 Balmafula
-22 Mustadio (Guest Mustadio)
-23 Rudvich
-24 Vormav
-25 Rofel
-26 Izlude
-27 Kletian
-28 Wiegraf
-29 Rafa
-2A Meliadoul
-2B Balk
-2C Alma (Dead Alma leaving quote?)
-2D Celia
-2E Lede
-2F Meliadoul
-30 Alma (Guest Alma)
-31 Ajora
-32 Cloud
-33 Zombie Zalbag
-34 Agrias (Guest Agrias)
-
-Text - Units with High Faith 99 - 150 Join.LZW (2)
-1 Ramza
-2 Ramza
-3 Ramza
-4 Delita (Guest Delita)
-5 Delita (Guest Delita?)
-6 Delita
-7 Algus (Guest Algus)
-8 Zalbag
-9 Dycedarg
-A Larg
-B Goltana
-C Ovelia (Guest Ovelia)
-D Orlandu
-E Funeral
-F Reis
-10 Zalmo
-11 Gafgarion
-12 Malak
-13 Simon
-14 Alma
-15 Olan
-16 Mustadio
-17 Gafgarion (Guest Gafgarion)
-18 Draclau
-19 Rafa (Guest Rafa)
-1A Malak
-1B Elmdor
-1C Teta
-1D Barinten
-1E Agrias
-1F Beowulf (Guest Beowulf?)
-20 Wiegraf
-21 Balmafula
-22 Mustadio (Guest Mustadio)
-23 Rudvich
-24 Vormav
-25 Rofel
-26 Izlude
-27 Kletian
-28 Wiegraf
-29 Rafa
-2A Meliadoul
-2B Balk
-2C Alma (Dead Alma leaving quote?)
-2D Celia
-2E Lede
-2F Meliadoul
-30 Alma (Guest Alma)
-31 Ajora
-32 Cloud
-33 Zombie Zalbag
-34 Agrias (Guest Agrias)
 
 Text - Units Leaving because of Low Brave or High Faith 1 - 24 Join.LZW (3)
 Generics
@@ -933,11 +713,17 @@ F Reis
       </Sectors>
       <Sections count="5">
         <Section value="0" entries="1" empty="true" compressible="false" dte="true" hide="true"/>
-        <Section value="1" entries="172" empty="true" name="Faith/Brave quotes" compressible="true" dte="false"/>
-        <Section value="2" entries="172" empty="true" name="Faith/Brave quotes" compressible="true" dte="false"/>
+        <Section value="1" entries="172" name="Faith/Brave Warning quotes" compressible="true" dte="false">
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="23" format="{0}\nLow Brave"/>
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="97" format="{0}\nHigh Faith"/>
+        </Section>
+        <Section value="2" entries="172" name="Faith/Brave Leaving quotes" compressible="true" dte="false">
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="23" format="{0}\nLow Brave\n(Leaving)"/>
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="97" format="{0}\nHigh Faith\n(Leaving)"/>
+        </Section>
         <Section value="3" entries="172" empty="false" name="Dismiss quotes" compressible="true" dte="false">
-          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="0" end="73" offset="23"/>
-          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="0" end="73" offset="97"/>
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="23" format="Dismissed\n{0}"/>
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="97" format="{0}\nforced to stay"/>
         </Section>
         <Section value="4" entries="155" empty="false" name="Job names" compressible="false" dte="true">
           <includeResource name="PatcherLib.PSXResources+Lists.JobNames" start="0" end="154" offset="0"/>
@@ -2290,7 +2076,8 @@ F Reis
       </Sectors>
       <Sections count="1">
         <Section value="0" entries="172" name="Dismiss quotes" compressible="true" dte="false">
-          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="0" end="73" offset="97"/>
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="23" format="Dismissed\n{0}"/>
+          <includeResource name="PatcherLib.PSXResources+Lists.SpriteSets" start="1" end="73" offset="97" format="{0}\nforced to stay"/>
         </Section>
       </Sections>
     </CompressibleOneShotFile>

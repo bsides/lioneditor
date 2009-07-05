@@ -45,7 +45,7 @@ namespace FFTPatcher.TextEditor.Editors
 
         private void stringListEditor1_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
         {
-            e.Cancel = !boundFile.CharMap.ValidateString( e.FormattedValue.ToString() );
+            e.Cancel = !boundFile.CharMap.ValidateString( e.FormattedValue.ToString(), boundFile.SelectedTerminator );
             if ( e.Cancel )
             {
                 errorLabel.Text = boundFile.CharMap.LastError;

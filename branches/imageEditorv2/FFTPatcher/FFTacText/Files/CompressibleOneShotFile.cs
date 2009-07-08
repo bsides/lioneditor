@@ -16,7 +16,7 @@ namespace FFTPatcher.TextEditor
             System.Diagnostics.Debug.Assert( NumberOfSections == 1 );
             for ( int i = 0; i < NumberOfSections; i++ )
             {
-                sections.Add( TextUtilities.ProcessList( TextUtilities.Decompress( bytes, bytes, 0 ), layout.AllowedTerminators[0], map ) );
+                sections.Add( TextUtilities.ProcessList( TextUtilities.Decompress( bytes, bytes, 0 ), layout.AllowedTerminators, map ) );
                 if ( sections[i].Count < SectionLengths[i] )
                 {
                     string[] newSection = new string[SectionLengths[i]];

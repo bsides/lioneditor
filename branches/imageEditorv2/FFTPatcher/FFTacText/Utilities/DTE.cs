@@ -133,6 +133,18 @@ namespace FFTPatcher.TextEditor
             return true;
         }
 
+        public static bool DoesPspIsoHaveNonDefaultFont( System.IO.Stream iso, PatcherLib.Iso.PspIso.PspIsoInfo info )
+        {
+            IList<byte> fontBytes = PspIso.GetBlock( iso, info, DTE.PspFontSection[0] );
+            IList<byte> widthBytes = PspIso.GetBlock( iso, info, DTE.PspFontWidths[0] );
+            IList<byte> defaultFontBytes = TextUtilities.PSPFont.ToByteArray();
+            IList<byte> defaultWidthBytes = TextUtilities.PSPFont.ToWidthsByteArray();
+
+            return 
+                Utilities.CompareArrays( fontBytes, defaultFontBytes ) &&
+                Utilities.CompareArrays( widthBytes, defaultWidthBytes );
+        }
+
         private static Set<string> GetDteGroups( FFTFont font, GenericCharMap charmap, IList<string> charset )
         {
             var f = new FFTFont( font.ToByteArray(), font.ToWidthsByteArray() );
@@ -190,6 +202,16 @@ namespace FFTPatcher.TextEditor
                 };
         }
 
+        public static IList<PspIso.KnownPosition> PspFontSection
+        {
+            get
+            {
+                return new PspIso.KnownPosition[] {
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x27B80C, 2200*characterSize),
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2F73B8, 2200*characterSize) };
+            }
+        }
+        
         public static IList<PspIso.KnownPosition> PspFontDteSection
         {
             get

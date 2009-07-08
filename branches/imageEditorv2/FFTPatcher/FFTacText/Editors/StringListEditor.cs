@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -134,6 +135,8 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public void BindTo( IList<string> names, IFile file, int section )
         {
+            ignoreChanges = true;
+            SuspendLayout();
             int count = file.SectionLengths[section];
             List<string> ourNames = new List<string>( names );
             for ( int i = names.Count; i < count; i++ )
@@ -164,8 +167,33 @@ namespace FFTPatcher.TextEditor
             dataGridView.Rows.AddRange( rows );
             dataGridView.ResumeLayout();
 
+            bool showSeparatorChoices = file is ISerializableFile && (file as ISerializableFile).Layout.AllowedTerminators.Count > 1;
+            separatorComboBox.Visible = showSeparatorChoices;
+            separatorComboBox.Enabled = showSeparatorChoices;
+            separatorLabel.Visible = showSeparatorChoices;
+            if (showSeparatorChoices)
+            {
+                PatcherLib.Datatypes.Set<byte> seps = (file as ISerializableFile).Layout.AllowedTerminators;
+                separatorComboBox.BeginUpdate();
+                separatorComboBox.Items.Clear();
+                separatorComboBox.FormatString = "X2";
+                seps.ForEach(b => separatorComboBox.Items.Add(b));
+                separatorComboBox.SelectedItem = file.SelectedTerminator;
+                separatorComboBox.EndUpdate();
+            }
+
             boundFile = file;
             boundSection = section;
+            ignoreChanges = false;
+            ResumeLayout();
+        }
+
+        private void separatorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (separatorComboBox.Enabled && separatorComboBox.Visible && !ignoreChanges)
+            {
+                boundFile.SelectedTerminator = (byte)separatorComboBox.SelectedItem;
+            }
         }
 
     }

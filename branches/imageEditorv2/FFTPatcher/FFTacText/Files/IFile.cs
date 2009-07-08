@@ -4,7 +4,7 @@ namespace FFTPatcher.TextEditor
 {
     public interface IFile
     {
-        byte SelectedTerminator { get; }
+        byte SelectedTerminator { get; set; }
         IList<string> SectionNames { get; }
         IList<IList<string>> EntryNames { get; }
         IList<bool> HiddenEntries { get; }

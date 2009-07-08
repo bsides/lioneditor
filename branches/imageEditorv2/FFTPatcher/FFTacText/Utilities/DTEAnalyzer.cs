@@ -55,31 +55,37 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
-            static class PSP
+            public static class PSP
             {
                 static FFTFont defaultFont = TextUtilities.PSPFont;
                 static GenericCharMap defaultMap = TextUtilities.PSPMap;
 
-                public static GenericCharMap GetCharMap(Stream iso)
+                public static GenericCharMap GetCharMap( Stream iso )
                 {
-                    PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo(iso);
-                    IList<byte> fontBytes = PspIso.GetBlock(iso, info, DTE.PspFontDteSection[0]);
-                    IList<byte> widthBytes = PspIso.GetBlock(iso, info, DTE.PspFontWidths[0]);
+                    PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo( iso );
 
-                    return GetCharMap(fontBytes, widthBytes, info);
+                    return GetCharMap( iso, info );
                 }
 
-                private static Glyph DetermineSecondCharacter(IList<Glyph> glyphs, IList<byte> matchBytes, int totalWidth, int firstWidth)
+                public static GenericCharMap GetCharMap( Stream iso, PatcherLib.Iso.PspIso.PspIsoInfo info )
                 {
-                    Glyph newGlyph = new Glyph((byte)totalWidth, matchBytes);
+                    IList<byte> fontBytes = PspIso.GetBlock( iso, info, DTE.PspFontSection[0] );
+                    IList<byte> widthBytes = PspIso.GetBlock( iso, info, DTE.PspFontWidths[0] );
+
+                    return GetCharMap( fontBytes, widthBytes, info );
+                }
+
+                private static Glyph DetermineSecondCharacter( IList<Glyph> glyphs, IList<byte> matchBytes, int totalWidth, int firstWidth )
+                {
+                    Glyph newGlyph = new Glyph( (byte)totalWidth, matchBytes );
                     foreach (Glyph g in glyphs)
                     {
                         if (g.Width > (totalWidth - firstWidth)) continue;
                         for (int x = 0; x < g.Width; x++)
                         {
-                            for (int y = 0;y<FFTFont.CharacterHeight; y++)
+                            for (int y = 0; y < FFTFont.CharacterHeight; y++)
                             {
-                                if (g.Pixels[y*FFTFont.CharacterWidth+x]!=newGlyph.Pixels[y*FFTFont.CharacterWidth+x+firstWidth])
+                                if (g.Pixels[y * FFTFont.CharacterWidth + x] != newGlyph.Pixels[y * FFTFont.CharacterWidth + x + firstWidth])
                                 {
                                     goto mainloop;
                                 }
@@ -89,7 +95,7 @@ namespace FFTPatcher.TextEditor
                         // All pixels matched
                         return g;
 
-                        mainloop: continue;
+mainloop: continue;
                     }
 
                     return null;
@@ -145,6 +151,7 @@ namespace FFTPatcher.TextEditor
                         }
                     }
 
+                    return new NonDefaultCharMap( myCharMap );
                     // For each glyph in new font:
                     //   Determine if it's different from default
                     //   Determine the two characters that make it up 
@@ -156,8 +163,6 @@ namespace FFTPatcher.TextEditor
                     //     For each character in original font
                     //       Compare pixels to right side of new font
                     //         look for match -> second character
-
-                    return null;
                 }
             }
         }

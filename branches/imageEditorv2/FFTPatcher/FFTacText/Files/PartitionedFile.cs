@@ -23,33 +23,7 @@ namespace FFTPatcher.TextEditor
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
             for ( int i = 0; i < NumberOfSections; i++ )
             {
-                int terminatorCount = layout.AllowedTerminators.Count;
-                IList<string>[] stringsFromEachTerminator = new IList<string>[terminatorCount];
-                for ( int t = 0; t < terminatorCount; t++ )
-                {
-                    stringsFromEachTerminator[t] =
-                        TextUtilities.ProcessList( 
-                            bytes.Sub( i * PartitionSize, ( i + 1 ) * PartitionSize - 1 ), 
-                            layout.AllowedTerminators[t], 
-                            map );
-                }
-
-                // Determine best fit terminator
-                IList<string> best = stringsFromEachTerminator[0];
-                for ( int t = 1; t < terminatorCount; t++ )
-                {
-                    if ( ( best.Count < SectionLengths[i] && stringsFromEachTerminator[t].Count < SectionLengths[i] &&
-                           ( SectionLengths[i] - stringsFromEachTerminator[t].Count ) < ( SectionLengths[i] - best.Count ) ) ||
-                         ( best.Count != SectionLengths[i] && stringsFromEachTerminator[t].Count == SectionLengths[i] ) ||
-                         ( best.Count > SectionLengths[i] && stringsFromEachTerminator[t].Count > SectionLengths[i] &&
-                           ( stringsFromEachTerminator[t].Count - SectionLengths[i] ) < ( best.Count - SectionLengths[i] ) )
-                        )
-                    {
-                        best = stringsFromEachTerminator[t];
-                    }
-                }
-
-                sections.Add( best );
+                sections.Add(TextUtilities.ProcessList(bytes.Sub(i * PartitionSize, (i + 1) * PartitionSize - 1), layout.AllowedTerminators, map));
 
                 if ( sections[i].Count < SectionLengths[i] )
                 {
@@ -61,6 +35,17 @@ namespace FFTPatcher.TextEditor
                 else if (sections[i].Count > SectionLengths[i])
                 {
                     sections[i] = sections[i].Sub(0, SectionLengths[i] - 1);
+                }
+
+                if (layout.AllowedTerminators.Count > 1)
+                {
+                    Dictionary<byte, int> counts = new Dictionary<byte, int>();
+                    layout.AllowedTerminators.ForEach(b => counts[b] = 0);
+
+                    bytes.FindAll(b => layout.AllowedTerminators.Contains(b)).ForEach(b => counts[b]++);
+                    List<KeyValuePair<byte, int>> countList = new List<KeyValuePair<byte, int>>(counts);
+                    countList.Sort((a, b) => b.Value.CompareTo(a.Value));
+                    this.SelectedTerminator = countList[0].Key;
                 }
 
                 System.Diagnostics.Debug.Assert(sections[i].Count == SectionLengths[i]);
@@ -82,7 +67,7 @@ namespace FFTPatcher.TextEditor
             {
                 return result;
             }
-            string terminatorString = string.Format( @"{0x" + "{0:2X}" + "}", SelectedTerminator );
+            string terminatorString = string.Format( "{{0x{0:X2}", SelectedTerminator ) + "}";
 
             StringBuilder sb = new StringBuilder(PartitionSize);
             if (DteAllowed[index])

@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using PatcherLib.Utilities;
 
 namespace PatcherLib.Datatypes
 {
@@ -45,7 +46,33 @@ namespace PatcherLib.Datatypes
             return -1;
         }
 
-        public static IList<IList<T>> Split<T>( this IList<T> members, T value ) where T : IEquatable<T>
+        public static IList<IList<T>> Split<T>(this IList<T> members, Set<T> values) where T : IEquatable<T>
+        {
+            if (values.Count == 1)
+                return Split(members, values[0]);
+
+            List<IList<T>> result = new List<IList<T>>();
+            uint start = 0;
+            uint stop = 0;
+            for (int i = 0; i < members.Count; i++)
+            {
+                if (values.Contains(members[i]))
+                {
+                    stop = (uint)i;
+                    result.Add(members.Sub(start, stop).AsReadOnly());
+                    start = (uint)i + 1;
+                }
+            }
+
+            if (!values.Contains(members[members.Count - 1]))
+            {
+                result.Add(members.Sub(start, (uint)(members.Count - 1)).AsReadOnly());
+            }
+
+            return result.AsReadOnly();
+        }
+
+        public static IList<IList<T>> Split<T>(this IList<T> members, T value) where T : IEquatable<T>
         {
             List<IList<T>> result = new List<IList<T>>();
 
@@ -57,17 +84,17 @@ namespace PatcherLib.Datatypes
                 if( members[i].Equals( value ) )
                 {
                     stop = (uint)i;
-                    result.Add( members.Sub( start, stop ) );
+                    result.Add( members.Sub( start, stop ).AsReadOnly() );
                     start = (uint)i + 1;
                 }
             }
 
             if( !members[members.Count - 1].Equals( value ) )
             {
-                result.Add( members.Sub( start, (uint)(members.Count - 1) ) );
+                result.Add( members.Sub( start, (uint)(members.Count - 1) ).AsReadOnly() );
             }
 
-            return result;
+            return result.AsReadOnly();
         }
 
         [DebuggerStepThrough]

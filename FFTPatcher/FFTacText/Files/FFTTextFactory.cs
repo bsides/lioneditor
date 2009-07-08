@@ -303,7 +303,15 @@ namespace FFTPatcher.TextEditor
 
         public static FFTText GetPspText( Stream iso, BackgroundWorker worker )
         {
-            return GetPspText( iso, TextUtilities.PSPMap, worker );
+            GenericCharMap charmap = TextUtilities.PSPMap;
+            pspIsoInfo = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
+            if (!DTE.DoesPspIsoHaveNonDefaultFont( iso, pspIsoInfo ))
+            {
+                charmap = DTE.DTEAnalyzer.PSP.GetCharMap( iso, pspIsoInfo );
+            }
+
+            pspIsoInfo = null;
+            return GetPspText( iso, charmap, worker );
         }
 
         public static FFTText GetPsxText( Stream iso, GenericCharMap charmap, BackgroundWorker worker )
@@ -546,12 +554,15 @@ namespace FFTPatcher.TextEditor
         private static void WriteFileXml( ISerializableFile file, XmlWriter writer )
         {
             writer.WriteStartElement( "File" );
+            writer.WriteComment( "DisplayName: " + file.DisplayName );
             writer.WriteElementString( "Guid", file.Layout.Guid.ToString( "B" ).ToUpper() );
             writer.WriteStartElement( "Sections" );
             int numSections = file.NumberOfSections;
             for ( int i = 0; i < numSections; i++ )
             {
                 writer.WriteStartElement( "Section" );
+                if (!string.IsNullOrEmpty( file.SectionNames[i] )) writer.WriteComment( file.SectionNames[i] );
+
                 int length = file.SectionLengths[i];
                 for ( int j = 0; j < length; j++ )
                 {

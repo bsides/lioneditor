@@ -54,7 +54,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.stringListEditor1.Location = new System.Drawing.Point(3, 31);
             this.stringListEditor1.Name = "stringListEditor1";
-            this.stringListEditor1.Size = new System.Drawing.Size(844, 467);
+            this.stringListEditor1.Size = new System.Drawing.Size(844, 564);
             this.stringListEditor1.TabIndex = 0;
             // 
             // sectionComboBox
@@ -72,9 +72,9 @@
             // 
             this.errorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.errorLabel.Location = new System.Drawing.Point(4, 505);
+            this.errorLabel.Location = new System.Drawing.Point(4, 594);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(843, 122);
+            this.errorLabel.Size = new System.Drawing.Size(843, 33);
             this.errorLabel.TabIndex = 2;
             this.errorLabel.Visible = false;
             // 

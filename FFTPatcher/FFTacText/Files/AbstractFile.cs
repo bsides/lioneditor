@@ -18,13 +18,13 @@ namespace FFTPatcher.TextEditor
             : this( charmap, layout, compressible )
         {
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
-            for ( int i = 0; i < NumberOfSections; i++ )
+            for (int i = 0; i < NumberOfSections; i++)
             {
                 string[] thisSection = new string[strings[i].Count];
                 strings[i].CopyTo( thisSection, 0 );
-                for ( int j = 0; j < thisSection.Length; j++ )
+                for (int j = 0; j < thisSection.Length; j++)
                 {
-                    if ( !CharMap.ValidateString( thisSection[j], layout.AllowedTerminators[0] ) )
+                    if (!CharMap.ValidateString( thisSection[j], layout.AllowedTerminators[0] ))
                     {
                         throw new InvalidStringException( layout.Guid.ToString(), i, j, thisSection[j] );
                     }
@@ -37,13 +37,13 @@ namespace FFTPatcher.TextEditor
             PopulateDisallowedSections();
         }
 
-        
+
 
         protected void PopulateDisallowedSections()
         {
-            for ( int i = 0; i < Layout.DisallowedEntries.Count; i++ )
+            for (int i = 0; i < Layout.DisallowedEntries.Count; i++)
             {
-                for ( int j = 0; j < Layout.DisallowedEntries[i].Count; j++ )
+                for (int j = 0; j < Layout.DisallowedEntries[i].Count; j++)
                 {
                     int index = Layout.DisallowedEntries[i][j];
                     Sections[i][index] = Layout.StaticEntries[i][index];
@@ -67,26 +67,26 @@ namespace FFTPatcher.TextEditor
             DteAllowed = layout.DteAllowed.AsReadOnly();
         }
 
-        public void RestoreFile(System.IO.Stream iso)
+        public void RestoreFile( System.IO.Stream iso )
         {
             IList<byte> bytes = null;
             if (Layout.Context == Context.US_PSX)
             {
                 KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.Sector][0];
-                bytes = PsxIso.ReadFile(iso, (PsxIso.Sectors)sect.Key, sect.Value, Layout.Size);
+                bytes = PsxIso.ReadFile( iso, (PsxIso.Sectors)sect.Key, sect.Value, Layout.Size );
             }
             else if (Layout.Context == Context.US_PSP)
             {
                 PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
-                if (Layout.Sectors.ContainsKey(SectorType.BootBin))
+                if (Layout.Sectors.ContainsKey( SectorType.BootBin ))
                 {
                     KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.BootBin][0];
-                    bytes = PspIso.GetFile(iso, info, (PspIso.Sectors)sect.Key, sect.Value, Layout.Size);
+                    bytes = PspIso.GetFile( iso, info, (PspIso.Sectors)sect.Key, sect.Value, Layout.Size );
                 }
-                else if (Layout.Sectors.ContainsKey(SectorType.FFTPack))
+                else if (Layout.Sectors.ContainsKey( SectorType.FFTPack ))
                 {
                     KeyValuePair<Enum, int> sect = Layout.Sectors[SectorType.FFTPack][0];
-                    bytes = PspIso.GetFile(iso, info, (FFTPack.Files)sect.Key, sect.Value, Layout.Size);
+                    bytes = PspIso.GetFile( iso, info, (FFTPack.Files)sect.Key, sect.Value, Layout.Size );
                 }
                 else
                 {
@@ -101,13 +101,13 @@ namespace FFTPatcher.TextEditor
                 Layout.FileType,
                 CharMap,
                 Layout,
-                bytes);
+                bytes );
             this.Sections = tempFile.Sections;
         }
 
         public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
         {
-            switch ( type )
+            switch (type)
             {
                 case FileType.CompressedFile:
                     return new SectionedFile( charmap, layout, bytes, true );
@@ -122,7 +122,7 @@ namespace FFTPatcher.TextEditor
 
         public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
         {
-            switch ( type )
+            switch (type)
             {
                 case FileType.CompressedFile:
                     return new SectionedFile( charmap, layout, strings, true );
@@ -140,12 +140,12 @@ namespace FFTPatcher.TextEditor
         public virtual string this[int section, int entry]
         {
             get { return Sections[section][entry]; }
-            set 
+            set
             {
-                if ( section < SectionLengths.Count && 
-                     entry < SectionLengths[section] && 
+                if (section < SectionLengths.Count &&
+                     entry < SectionLengths[section] &&
                      !Layout.DisallowedEntries[section].Contains( entry ) &&
-                     Sections[section][entry] != value )
+                     Sections[section][entry] != value)
                 {
                     dirty = true;
                     Sections[section][entry] = value;
@@ -185,7 +185,7 @@ namespace FFTPatcher.TextEditor
             get { return selectedTerminator; }
             set
             {
-                if ( Layout.AllowedTerminators.Contains( value ) )
+                if (Layout.AllowedTerminators.Contains( value ))
                 {
                     selectedTerminator = value;
                 }
@@ -206,7 +206,7 @@ namespace FFTPatcher.TextEditor
 
         public byte[] ToCDByteArray()
         {
-            if ( dirty )
+            if (dirty)
             {
                 cachedBytes = ToByteArray();
                 dirty = false;
@@ -227,9 +227,9 @@ namespace FFTPatcher.TextEditor
             Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
 
             // Determine if we even need to do DTE at all
-            int bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
+            int bytesNeeded = bytes.Count - (Layout.Size - DataStart);
 
-            if ( bytesNeeded <= 0 )
+            if (bytesNeeded <= 0)
             {
                 return result;
             }
@@ -240,18 +240,18 @@ namespace FFTPatcher.TextEditor
             bytes = GetSectionByteArrays( secs, SelectedTerminator, CharMap, CompressionAllowed ).Join();
 
             // If enough bytes were saved with the existing pairs, no need to look further
-            bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
+            bytesNeeded = bytes.Count - (Layout.Size - DataStart);
 
-            if ( bytesNeeded <= 0 )
+            if (bytesNeeded <= 0)
             {
                 return result;
             }
-            string terminatorString = string.Format( @"{0x" + "{0:2X}" + "}", selectedTerminator );
+            string terminatorString = string.Format( "{{0x{0:X2}", selectedTerminator ) + "}";
             // Otherwise, get all the strings that can be DTE encoded
             StringBuilder sb = new StringBuilder( Layout.Size );
-            for ( int i = 0; i < secs.Count; i++ )
+            for (int i = 0; i < secs.Count; i++)
             {
-                if ( DteAllowed[i] )
+                if (DteAllowed[i])
                 {
                     secs[i].ForEach( t => sb.Append( t ).Append( terminatorString ) );
                 }
@@ -265,19 +265,19 @@ namespace FFTPatcher.TextEditor
             l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
 
             // Go through each one, encode the file with it, and see if we're below the limit
-            while ( bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0 )
+            while (bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0)
             {
                 result.Add( new KeyValuePair<string, byte>( l[0].Key, dteBytes.Pop() ) );
                 TextUtilities.DoDTEEncoding( secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs( result ) );
                 bytes = GetSectionByteArrays( secs, SelectedTerminator, CharMap, CompressionAllowed ).Join();
-                bytesNeeded = bytes.Count - ( Layout.Size - DataStart );
+                bytesNeeded = bytes.Count - (Layout.Size - DataStart);
 
-                if ( bytesNeeded > 0 )
+                if (bytesNeeded > 0)
                 {
                     StringBuilder sb2 = new StringBuilder( Layout.Size );
-                    for ( int i = 0; i < secs.Count; i++ )
+                    for (int i = 0; i < secs.Count; i++)
                     {
-                        if ( DteAllowed[i] )
+                        if (DteAllowed[i])
                         {
                             secs[i].ForEach( t => sb2.Append( t ).Append( terminatorString ) );
                         }
@@ -288,7 +288,7 @@ namespace FFTPatcher.TextEditor
             }
 
             // Ran out of available pairs and still don't have enough space --> error
-            if ( bytesNeeded > 0 )
+            if (bytesNeeded > 0)
             {
                 return null;
             }
@@ -299,7 +299,7 @@ namespace FFTPatcher.TextEditor
         protected IList<IList<string>> GetCopyOfSections()
         {
             string[][] result = new string[Sections.Count][];
-            for ( int i = 0; i < Sections.Count; i++ )
+            for (int i = 0; i < Sections.Count; i++)
             {
                 result[i] = new string[Sections[i].Count];
                 Sections[i].CopyTo( result[i], 0 );
@@ -313,7 +313,7 @@ namespace FFTPatcher.TextEditor
             offsets = new List<UInt32>( 32 );
             offsets.Add( 0 );
             int pos = 0;
-            for ( int i = 0; i < r.SectionLengths.Count; i++ )
+            for (int i = 0; i < r.SectionLengths.Count; i++)
             {
                 pos += r.SectionLengths[i];
                 offsets.Add( (UInt32)pos );
@@ -340,7 +340,7 @@ namespace FFTPatcher.TextEditor
         protected static IList<IList<byte>> GetUncompressedSectionBytes( IList<IList<string>> strings, byte terminator, GenericCharMap charmap )
         {
             IList<IList<byte>> result = new List<IList<byte>>( strings.Count );
-            foreach ( IList<string> section in strings )
+            foreach (IList<string> section in strings)
             {
                 List<byte> bytes = new List<byte>();
                 section.ForEach( s => bytes.AddRange( charmap.StringToByteArray( s, terminator ) ) );
@@ -357,7 +357,7 @@ namespace FFTPatcher.TextEditor
             IList<byte> compression = Compress( sections, terminator, out offsets, charmap, compressibleSections );
             offsets = new List<UInt32>( offsets );
             offsets.Add( (uint)compression.Count );
-            for ( int i = 0; i < sections.Count; i++ )
+            for (int i = 0; i < sections.Count; i++)
             {
                 result[i] = compression.Sub( (int)offsets[i], (int)offsets[i + 1] - 1 );
             }
@@ -366,7 +366,7 @@ namespace FFTPatcher.TextEditor
 
         protected static IList<IList<byte>> GetSectionByteArrays( IList<IList<string>> strings, byte terminator, GenericCharMap charmap, IList<bool> compressibleSections )
         {
-            if ( compressibleSections.Contains( true ) )
+            if (compressibleSections.Contains( true ))
             {
                 return GetCompressedSectionByteArrays( strings, terminator, charmap, compressibleSections );
             }
@@ -384,7 +384,7 @@ namespace FFTPatcher.TextEditor
         protected IList<IList<string>> GetDteStrings( IDictionary<string, byte> dteTable )
         {
             IList<IList<string>> result = new List<IList<string>>( Sections.Count );
-            foreach ( IList<string> sec in Sections )
+            foreach (IList<string> sec in Sections)
             {
                 IList<string> s = new List<string>( sec );
                 TextUtilities.DoDTEEncoding( s, dteTable );
@@ -412,12 +412,12 @@ namespace FFTPatcher.TextEditor
         private IList<PatchedByteArray> GetPatches( byte[] bytes )
         {
             List<PatchedByteArray> result = new List<PatchedByteArray>();
-            foreach ( var kvp in Layout.Sectors )
+            foreach (var kvp in Layout.Sectors)
             {
                 SectorType type = kvp.Key;
-                foreach ( var kvp2 in kvp.Value )
+                foreach (var kvp2 in kvp.Value)
                 {
-                    switch ( type )
+                    switch (type)
                     {
                         case SectorType.BootBin:
                             result.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, kvp2.Value, bytes ) );

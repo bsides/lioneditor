@@ -201,7 +201,8 @@ namespace FFTPatcher.TextEditor
 
         public byte[] ToCDByteArray( IDictionary<string, byte> dteTable )
         {
-            return ToByteArray( dteTable ).ToArray();
+            var result = ToByteArray( dteTable ).ToArray();
+            return result;
         }
 
         public byte[] ToCDByteArray()
@@ -214,6 +215,7 @@ namespace FFTPatcher.TextEditor
 
             byte[] result = new byte[cachedBytes.Count];
             cachedBytes.CopyTo( result, 0 );
+
             return result;
         }
 
@@ -284,6 +286,8 @@ namespace FFTPatcher.TextEditor
                     }
                     l = new List<KeyValuePair<string, int>>( TextUtilities.GetPairAndTripleCounts( sb2.ToString(), replacements ) );
                     l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
+
+                    secs = GetCopyOfSections();
                 }
             }
 
@@ -383,15 +387,9 @@ namespace FFTPatcher.TextEditor
 
         protected IList<IList<string>> GetDteStrings( IDictionary<string, byte> dteTable )
         {
-            IList<IList<string>> result = new List<IList<string>>( Sections.Count );
-            foreach (IList<string> sec in Sections)
-            {
-                IList<string> s = new List<string>( sec );
-                TextUtilities.DoDTEEncoding( s, dteTable );
-                result.Add( s.AsReadOnly() );
-            }
-
-            return result.AsReadOnly();
+            IList<IList<string>> secs = GetCopyOfSections();
+            TextUtilities.DoDTEEncoding( secs, DteAllowed, dteTable );
+            return secs.AsReadOnly();
         }
 
         public bool IsDteNeeded()
@@ -401,12 +399,20 @@ namespace FFTPatcher.TextEditor
 
         public IList<PatchedByteArray> GetNonDtePatches()
         {
-            return GetPatches( ToCDByteArray() );
+            var bytes = ToCDByteArray();
+
+            System.Diagnostics.Debug.Assert( bytes.Length <= this.Layout.Size );
+
+            return GetPatches( bytes );
         }
 
         public IList<PatchedByteArray> GetDtePatches( IDictionary<string, byte> dteBytes )
         {
-            return GetPatches( ToCDByteArray( dteBytes ) );
+            var bytes = ToCDByteArray( dteBytes );
+
+            System.Diagnostics.Debug.Assert( bytes.Length <= this.Layout.Size );
+
+            return GetPatches( bytes );
         }
 
         private IList<PatchedByteArray> GetPatches( byte[] bytes )

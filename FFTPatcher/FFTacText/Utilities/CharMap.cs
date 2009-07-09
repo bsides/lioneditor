@@ -318,6 +318,7 @@ namespace FFTPatcher.TextEditor
 
         #endregion Methods
 
+#if MEASURESTRINGS
         private int GetWidthForEncodedCharacter( UInt32 c, PatcherLib.Datatypes.FFTFont font )
         {
             if ( c == 0xFA )
@@ -339,7 +340,6 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-#if MEASURESTRINGS
         public int MeasureStringInFont( string s, PatcherLib.Datatypes.FFTFont font )
         {
             string[] strings = s.Split( new string[] { "{Newline}", "{Close}" }, StringSplitOptions.RemoveEmptyEntries );

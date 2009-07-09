@@ -42,6 +42,30 @@ namespace PatcherLib.Utilities
     {
 
         #region Methods (14)
+        public static void WriteValueElement( this XmlWriter writer, string name, UInt16 value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value );
+            writer.WriteEndElement();
+        }
+        public static void WriteValueElement( this XmlWriter writer, string name, byte value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value );
+            writer.WriteEndElement();
+        }
+        public static void WriteValueElement( this XmlWriter writer, string name, Enum value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value.ToString() );
+            writer.WriteEndElement();
+        }
+        public static void WriteValueElement( this XmlWriter writer, string name, bool value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value );
+            writer.WriteEndElement();
+        }
 
         public static XmlDocument ToXmlDocument(this string s)
         {
@@ -57,6 +81,19 @@ namespace PatcherLib.Utilities
                 if (list[i].Equals(item)) return i;
             }
             return -1;
+        }
+
+        public static T[] ToArray<T>( this IEnumerable<T> collection )
+        {
+            return collection.ToList().ToArray();
+        }
+
+        public static IList<T> ToList<T>( this IEnumerable<T> collection )
+        {
+            if ( collection is IList<T> )
+                return new ReadOnlyCollection<T>( collection as IList<T> );
+
+            return new List<T>( collection ).AsReadOnly();
         }
 
         public static bool TrueForAll<T>(this IList<T> list, Predicate<T> condition)

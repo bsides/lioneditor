@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using PatcherLib.Utilities;
+using System.Diagnostics;
 
 namespace PatcherLib.Datatypes
 {
+    [DebuggerTypeProxy( typeof( CollectionDebugView<> ) )]
+    [DebuggerDisplay( "Count = {Count}" )]
+    [DebuggerStepThrough]
     public class Set<T> : IEnumerable<T>
     {
         private bool readOnly = false;

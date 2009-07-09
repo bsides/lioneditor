@@ -141,8 +141,8 @@ namespace FFTPatcher.TextEditor
             IList<byte> defaultWidthBytes = TextUtilities.PSPFont.ToWidthsByteArray();
 
             return 
-                Utilities.CompareArrays( fontBytes, defaultFontBytes ) &&
-                Utilities.CompareArrays( widthBytes, defaultWidthBytes );
+                !Utilities.CompareArrays( fontBytes, defaultFontBytes ) ||
+                !Utilities.CompareArrays( widthBytes, defaultWidthBytes );
         }
 
         private static Set<string> GetDteGroups( FFTFont font, GenericCharMap charmap, IList<string> charset )

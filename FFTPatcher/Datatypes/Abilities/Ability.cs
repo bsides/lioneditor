@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Xml;
 using PatcherLib.Datatypes;
 using PatcherLib.Utilities;
+using System.Xml.Serialization;
 
 namespace FFTPatcher.Datatypes
 {
@@ -51,7 +52,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an ability and its attributes.
     /// </summary>
-    public class Ability : IChangeable, IXmlDigest, ISupportDigest, ISupportDefault<Ability>
+    public class Ability : BaseDataType, IChangeable, IXmlDigest, ISupportDigest, ISupportDefault<Ability>
     {
 		#region Instance Variables (13) 
 
@@ -61,10 +62,31 @@ namespace FFTPatcher.Datatypes
         private bool blank3;
         private bool blank4;
         private bool blank5;
+
+        private static class Strings
+        {
+            public const string JPCost = "JPCost";
+            public const string LearnRate = "LearnRate";
+            public const string AbilityType = "AbilityType";
+            public const string LearnWithJP = "LearnWithJP";
+            public const string Action = "Action";
+
+            public const string LearnOnHit = "LearnOnHit";
+            public const string Blank1 = "Blank1";
+            public const string Unknown1 = "Unknown1";
+            public const string Unknown2 = "Unknown2";
+            public const string Unknown3 = "Unknown3";
+
+            public const string Blank2 = "Blank2";
+            public const string Blank3 = "Blank3";
+            public const string Blank4 = "Blank4";
+            public const string Blank5 = "Blank5";
+            public const string Unknown4 = "Unknown4";
+        }
         private static readonly string[] digestableProperties = new string[] {
-            "JPCost", "LearnRate", "AbilityType", "LearnWithJP", "Action",
-            "LearnOnHit", "Blank1", "Unknown1", "Unknown2", "Unknown3",
-            "Blank2", "Blank3", "Blank4", "Blank5", "Unknown4"};
+            Strings.JPCost, Strings.LearnRate, Strings.AbilityType, Strings.LearnWithJP, Strings.Action,
+            Strings.LearnOnHit, Strings.Blank1, Strings.Unknown1, Strings.Unknown2, Strings.Unknown3,
+            Strings.Blank2, Strings.Blank3, Strings.Blank4, Strings.Blank5, Strings.Unknown4};
         private bool learnOnHit;
         private bool learnWithJP;
         private bool unknown1;
@@ -511,7 +533,7 @@ namespace FFTPatcher.Datatypes
             return (HasChanged ? "*" : "") + Name;
         }
 
-        public void WriteXml( XmlWriter writer )
+        public void WriteXmlDigest( XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -573,5 +595,173 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+
+        protected override void WriteXml( XmlWriter writer )
+        {
+            writer.WriteAttributeString( "Name", Name );
+            writer.WriteStartAttribute( "Offset" );
+            writer.WriteValue( Offset );
+            writer.WriteEndAttribute();
+
+            writer.WriteValueElement( Strings.JPCost, JPCost );
+            writer.WriteValueElement( Strings.LearnRate, LearnRate );
+            writer.WriteValueElement( Strings.AbilityType, AbilityType );
+            writer.WriteValueElement( Strings.LearnWithJP, LearnWithJP );
+            writer.WriteValueElement( Strings.Action, Action );
+            writer.WriteValueElement( Strings.LearnOnHit, LearnOnHit );
+            writer.WriteValueElement( Strings.Blank1, Blank1 );
+            writer.WriteValueElement( Strings.Unknown1, Unknown1 );
+            writer.WriteValueElement( Strings.Unknown2, Unknown2 );
+            writer.WriteValueElement( Strings.Unknown3, Unknown3 );
+            writer.WriteValueElement( Strings.Blank2, Blank2 );
+            writer.WriteValueElement( Strings.Blank3, Blank3 );
+            writer.WriteValueElement( Strings.Blank4, Blank4 );
+            writer.WriteValueElement( Strings.Blank5, Blank5 );
+            writer.WriteValueElement( Strings.Unknown4, Unknown4 );
+
+            writer.WriteStartElement( "AI" );
+            ((IXmlSerializable)AIFlags).WriteXml( writer );
+            writer.WriteEndElement();
+
+            if ( IsNormal )
+            {
+                writer.WriteStartElement( "Attributes" );
+                ((IXmlSerializable)Attributes).WriteXml( writer );
+                writer.WriteEndElement();
+                writer.WriteStartElement( "Effect" );
+                writer.WriteStartAttribute( "value" );
+                writer.WriteValue( Effect.Value );
+                writer.WriteEndAttribute();
+                writer.WriteAttributeString( "name", Effect.Name );
+            }
+            else if ( IsItem )
+            {
+                writer.WriteStartElement( "ItemOffset" );
+                writer.WriteValue( ItemOffset );
+            }
+            else if ( IsThrowing )
+            {
+                writer.WriteStartElement( "Throwing" );
+                writer.WriteValue( Throwing.ToString() );
+            }
+            else if ( IsJumping )
+            {
+                writer.WriteStartElement( "Jumping" );
+                writer.WriteValueElement( "JumpHorizontal", JumpHorizontal );
+                writer.WriteValueElement( "JumpVertical", JumpVertical );
+            }
+            else if ( IsCharging )
+            {
+                writer.WriteStartElement( "Charging" );
+                writer.WriteValueElement( "ChargeCT", ChargeCT );
+                writer.WriteValueElement( "ChargeBonus", ChargeBonus );
+            }
+            else if ( IsArithmetick )
+            {
+                writer.WriteStartElement( "ArithmetickSkill" );
+                writer.WriteValue( ArithmetickSkill );
+            }
+            else if ( IsOther )
+            {
+                writer.WriteStartElement( "OtherID" );
+                writer.WriteValue( OtherID );
+            }
+            else
+            {
+                throw new InvalidOperationException( "Invalid item type" );
+            }
+            writer.WriteEndElement();
+
+        }
+
+        protected override void ReadXml( XmlReader reader )
+        {
+            reader.MoveToAttribute( "Name" );
+            Name = reader.ReadContentAsString();
+            reader.MoveToAttribute( "Offset" );
+            Offset = (UInt16)reader.ReadContentAsInt();
+            reader.MoveToElement();
+            reader.ReadStartElement();
+
+            JPCost = (ushort)reader.ReadElementContentAsInt();
+            LearnRate = (byte)reader.ReadElementContentAsInt();
+            AbilityType = (AbilityType)Enum.Parse( typeof( AbilityType ), reader.ReadElementContentAsString(), true );
+            LearnWithJP = reader.ReadElementContentAsBoolean();
+            Action = reader.ReadElementContentAsBoolean();
+            LearnOnHit= reader.ReadElementContentAsBoolean();
+            Blank1 = reader.ReadElementContentAsBoolean();
+            Unknown1 = reader.ReadElementContentAsBoolean();
+            Unknown2 = reader.ReadElementContentAsBoolean();
+            Unknown3 = reader.ReadElementContentAsBoolean();
+            Blank2 = reader.ReadElementContentAsBoolean();
+            Blank3 = reader.ReadElementContentAsBoolean();
+            Blank4 = reader.ReadElementContentAsBoolean();
+            Blank5 = reader.ReadElementContentAsBoolean();
+            Unknown4 = reader.ReadElementContentAsBoolean();
+
+            AIFlags = new AIFlags();
+            ( (IXmlSerializable)AIFlags ).ReadXml( reader );
+
+            bool IsNormal = ( ( Offset >= 0x000 ) && ( Offset <= 0x16F ) );
+            bool IsItem = ( ( Offset >= 0x170 ) && ( Offset <= 0x17D ) );
+            bool IsThrowing = ( ( Offset >= 0x17E ) && ( Offset <= 0x189 ) );
+            bool IsJumping = ( ( Offset >= 0x18A ) && ( Offset <= 0x195 ) );
+            bool IsCharging = ( ( Offset >= 0x196 ) && ( Offset <= 0x19D ) );
+            bool IsArithmetick = ( ( Offset >= 0x19E ) && ( Offset <= 0x1A5 ) );
+            bool IsOther = ( Offset >= 0x1A6 );
+
+            if ( IsNormal )
+            {
+                Attributes = new AbilityAttributes();
+                ( (IXmlSerializable)Attributes ).ReadXml( reader );
+
+                reader.MoveToAttribute( "value" );
+                ushort effectIndex = (ushort)reader.ReadElementContentAsInt();
+                reader.MoveToElement();
+                reader.ReadStartElement();
+                reader.ReadEndElement();
+
+                Effect = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects[effectIndex] : Effect.PSXEffects[effectIndex];
+            }
+            else if ( IsItem )
+            {
+                ItemOffset = (ushort)reader.ReadElementContentAsInt();
+            }
+            else if ( IsThrowing )
+            {
+                Throwing = (ItemSubType)Enum.Parse( typeof( ItemSubType ),
+                    reader.ReadElementContentAsString(), true );
+            }
+            else if ( IsJumping )
+            {
+                reader.ReadStartElement();
+                JumpHorizontal = (byte)reader.ReadElementContentAsInt();
+                JumpVertical = (byte)reader.ReadElementContentAsInt();
+                reader.ReadEndElement();
+            }
+            else if ( IsCharging )
+            {
+                reader.ReadStartElement();
+                ChargeCT = (byte)reader.ReadElementContentAsInt();
+                ChargeBonus = (byte)reader.ReadElementContentAsInt();
+                reader.ReadEndElement();
+            }
+            else if ( IsArithmetick )
+            {
+                ArithmetickSkill = (byte)reader.ReadElementContentAsInt();
+            }
+            else if ( IsOther )
+            {
+                OtherID = (byte)reader.ReadElementContentAsInt();
+            }
+            else
+            {
+                throw new InvalidOperationException( "Invalid item type" );
+            }
+
+
+            reader.ReadEndElement();
+        }
+
     }
 }

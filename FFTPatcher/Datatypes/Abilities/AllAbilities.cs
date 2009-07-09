@@ -318,7 +318,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( XmlWriter writer )
+        public void WriteXmlDigest( XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -326,7 +326,7 @@ namespace FFTPatcher.Datatypes
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( Ability a in Abilities )
                 {
-                    a.WriteXml( writer );
+                    a.WriteXmlDigest( writer );
                 }
                 writer.WriteEndElement();
             }

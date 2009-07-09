@@ -205,7 +205,7 @@ namespace FFTPatcher.Datatypes
 
         #region IXmlDigest Members
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -303,7 +303,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -311,7 +311,7 @@ namespace FFTPatcher.Datatypes
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( MapMoveFindItems m in MoveFindItems )
                 {
-                    m.WriteXml( writer );
+                    m.WriteXmlDigest( writer );
                 }
                 writer.WriteEndElement();
             }

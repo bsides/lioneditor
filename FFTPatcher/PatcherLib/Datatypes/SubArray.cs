@@ -125,41 +125,35 @@ namespace PatcherLib.Datatypes
     }
 }
 
+internal class CollectionDebugView<T>
+{
+    private IEnumerable<T> collection;
+
+    [DebuggerBrowsable( DebuggerBrowsableState.RootHidden )]
+    public T[] Items
+    {
+        get { return collection.ToArray(); }
+    }
+
+    public CollectionDebugView( IList<T> collection )
+        : this( collection as IEnumerable<T> )
+    {
+    }
+
+    public CollectionDebugView( IEnumerable<T> collection )
+    {
+        if ( collection == null )
+        {
+            throw new ArgumentNullException( "collection" );
+        }
+
+        this.collection = collection;
+    }
+}
+
 namespace PatcherLib.Datatypes
 {
     using PatcherLib.Utilities;
-    internal class CollectionDebugView<T>
-    {
-		#region Instance Variables (1) 
-
-        private IList<T> collection;
-
-		#endregion Instance Variables 
-
-		#region Public Properties (1) 
-
-        [DebuggerBrowsable( DebuggerBrowsableState.RootHidden )]
-        public T[] Items
-        {
-            get { return collection.ToArray(); }
-        }
-
-		#endregion Public Properties 
-
-		#region Constructors (1) 
-
-        public CollectionDebugView( IList<T> collection )
-        {
-            if( collection == null )
-            {
-                throw new ArgumentNullException( "collection" );
-            }
-
-            this.collection = collection;
-        }
-
-		#endregion Constructors 
-    }
 
     [DebuggerTypeProxy( typeof( CollectionDebugView<> ) )]
     [DebuggerDisplay( "Count = {Count}" )]

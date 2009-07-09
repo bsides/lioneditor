@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48BE23D0-2943-44EF-A3A6-8537D7695B37}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Datatypes\Abilities\AllAnimations.cs" />
     <Compile Include="Datatypes\Abilities\Animation.cs" />
+    <Compile Include="Datatypes\BaseDataType.cs" />
     <Compile Include="Datatypes\FFTPatch.cs" />
     <Compile Include="Datatypes\IGenerateCodes.cs" />
     <Compile Include="Datatypes\ISupportDefault.cs" />

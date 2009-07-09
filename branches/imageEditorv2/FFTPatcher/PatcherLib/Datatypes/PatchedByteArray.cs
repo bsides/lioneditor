@@ -25,46 +25,87 @@ namespace PatcherLib.Datatypes
 {
     public class STRPatchedByteArray : LazyLoadedPatchedByteArray 
     {
+        public string Filename { get; private set; }
+
         public override byte[] GetBytes()
         {
-            return base.GetBytes();
+            return File.ReadAllBytes( Filename );
         }
 
         public STRPatchedByteArray(PsxIso.Sectors sector, string filename)
-            : base(sector, 0, filename)
+            : base(sector, 0 )
         {
+            this.Filename = Path.GetFileName( filename );
         }
     }
 
-    public class LazyLoadedPatchedByteArray : PatchedByteArray
+    public class InputFilePatch : LazyLoadedPatchedByteArray
     {
-        protected string Filename { get; private set; }
+        public string Filename { get; private set; }
+
+        public uint ExpectedLength { get; private set; }
+
+        public void SetFilename( string filename )
+        {
+            string myfile = Path.GetFullPath( filename );
+            if ( !File.Exists( myfile ) )
+            {
+                Filename = null;
+                throw new FileNotFoundException();
+            }
+            else if ( new FileInfo( filename ).Length != ExpectedLength )
+            {
+                throw new ArgumentException( "file is wrong length" );
+            }
+            else
+            {
+                Filename = filename;
+            }
+        }
 
         public override byte[] GetBytes()
         {
-            return File.ReadAllBytes(Filename);
+            if ( string.IsNullOrEmpty( Filename ) )
+            {
+                throw new InvalidOperationException( "Filename not yet set" );
+            }
+            else
+            {
+                return File.ReadAllBytes( Filename );
+            }
         }
 
-        public LazyLoadedPatchedByteArray(PsxIso.Sectors sector, long offset, string filename)
-            : this((int)sector, offset, filename)
+        public InputFilePatch( PsxIso.Sectors sector, uint offset, uint expectedLength )
+            : base( sector, offset )
+        {
+            ExpectedLength = expectedLength;
+        }
+    }
+
+    public abstract class LazyLoadedPatchedByteArray : PatchedByteArray
+    {
+        public override abstract byte[] GetBytes();
+
+        public LazyLoadedPatchedByteArray(PsxIso.Sectors sector, long offset )
+            : this((int)sector, offset )
         {
             SectorEnum = sector;
         }
 
-        public LazyLoadedPatchedByteArray(PspIso.Sectors sector, long offset, string filename)
-            : this((int)sector, offset, filename)
+        public LazyLoadedPatchedByteArray(PspIso.Sectors sector, long offset )
+            : this((int)sector, offset )
         {
             SectorEnum = sector;
         }
 
-        public LazyLoadedPatchedByteArray(FFTPack.Files file, long offset, string filename)
-            : this((int)file, offset, filename)
+        public LazyLoadedPatchedByteArray(FFTPack.Files file, long offset )
+            : this((int)file, offset )
         {
             SectorEnum = file;
         }
 
-        public LazyLoadedPatchedByteArray(Enum fileOrSector, long offset, string filename)
-            : this(-1, offset, filename)
+        public LazyLoadedPatchedByteArray(Enum fileOrSector, long offset )
+            : this(-1, offset )
         {
             SectorEnum = fileOrSector;
             Type t = fileOrSector.GetType();
@@ -86,10 +127,9 @@ namespace PatcherLib.Datatypes
             }
         }
 
-        public LazyLoadedPatchedByteArray(int sector, long offset, string filename)
+        public LazyLoadedPatchedByteArray(int sector, long offset )
             : base(sector, offset)
         {
-            this.Filename = Path.GetFullPath(filename);
         }
 
     }

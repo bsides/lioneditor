@@ -31,5 +31,13 @@
 
     <!-- Variables are always 1 byte -->
     <Variable file="BATTLE_BIN" offset="11F468" name="X"/>
+
   </Patch>
+  
+  <ImportFilePatch name="Patch name" ignore="false">
+    <!-- This type of patch will force you to select a file to read
+         before patching -->
+    <!-- The "file" attribute here is which file on the CD should be replaced -->
+    <ImportFile file="EVENT_FRAME_BIN" offset="0" expectedLength="92C0"/>
+  </ImportFilePatch>
 </Patches>

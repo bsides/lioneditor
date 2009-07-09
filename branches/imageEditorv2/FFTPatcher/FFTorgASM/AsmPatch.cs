@@ -4,6 +4,78 @@ using PatcherLib.Datatypes;
 
 namespace FFTorgASM
 {
+    class FileAsmPatch : AsmPatch
+    {
+        private static System.Windows.Forms.OpenFileDialog ofd;
+
+        private static System.Windows.Forms.OpenFileDialog OpenFileDialog
+        {
+            get
+            {
+                if ( ofd == null )
+                {
+                    ofd = new System.Windows.Forms.OpenFileDialog();
+                    ofd.CheckFileExists = true;
+                    ofd.CheckPathExists = true;
+                    ofd.FileName = string.Empty;
+                    ofd.Filter = "All files (*.*)|*.*";
+                    ofd.Multiselect = false;
+                    ofd.ShowHelp = false;
+                    ofd.ShowReadOnly = true;
+                }
+                return ofd;
+            }
+                
+        }
+
+        private InputFilePatch patch;
+        public FileAsmPatch( string name, string description, InputFilePatch patch )
+            : base( name, description, new PatchedByteArray[] { patch } )
+        {
+            this.patch = patch;
+        }
+
+        public void SetFilename( string filename )
+        {
+            patch.SetFilename( filename );
+        }
+
+        public override bool ValidatePatch()
+        {
+            bool result = false;
+            System.Windows.Forms.MethodInvoker mi = delegate()
+            {
+                if ( !string.IsNullOrEmpty( patch.Filename ) )
+                {
+                    OpenFileDialog.InitialDirectory = System.IO.Path.GetDirectoryName( patch.Filename );
+                    OpenFileDialog.FileName = System.IO.Path.GetFileName( patch.Filename );
+                }
+
+                if ( OpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK )
+                {
+                    try
+                    {
+                        SetFilename( OpenFileDialog.FileName );
+                        result = true;
+                    }
+                    catch
+                    {
+                        result = false;
+                    }
+                }
+                else
+                {
+                    result = false;
+                }
+            };
+
+            mi();
+
+            return result;
+        }
+
+    }
+
     class AsmPatch : IList<PatchedByteArray>
     {
         List<PatchedByteArray> innerList;
@@ -11,6 +83,11 @@ namespace FFTorgASM
         public string Description { get; private set; }
         public IList<KeyValuePair<string,PatchedByteArray>> Variables { get; private set; }
         private IEnumerator<PatchedByteArray> enumerator;
+
+        public virtual bool ValidatePatch()
+        {
+            return true;
+        }
 
         public AsmPatch( string name, string description, IEnumerable<PatchedByteArray> patches )
         {

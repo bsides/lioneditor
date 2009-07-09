@@ -99,6 +99,12 @@ namespace FFTorgASM
 
         void checkedListBox1_ItemCheck( object sender, ItemCheckEventArgs e )
         {
+            if ( e.CurrentValue == CheckState.Unchecked && e.NewValue == CheckState.Checked &&
+                !( checkedListBox1.Items[e.Index] as AsmPatch ).ValidatePatch() )
+            {
+                e.NewValue = CheckState.Unchecked;
+            }
+
             patchButton.Enabled = ( checkedListBox1.CheckedItems.Count > 0 || e.NewValue == CheckState.Checked ) &&
                                   !( checkedListBox1.CheckedItems.Count == 1 && e.NewValue == CheckState.Unchecked );
         }

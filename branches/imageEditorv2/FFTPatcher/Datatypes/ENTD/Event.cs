@@ -128,7 +128,7 @@ namespace FFTPatcher.Datatypes
             return (HasChanged ? "*" : "") + string.Format( "{0:X3} {1}", Value, Name );
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {

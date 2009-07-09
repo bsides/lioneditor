@@ -305,7 +305,7 @@ namespace FFTPatcher.TextEditor
         {
             GenericCharMap charmap = TextUtilities.PSPMap;
             pspIsoInfo = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
-            if (!DTE.DoesPspIsoHaveNonDefaultFont( iso, pspIsoInfo ))
+            if (DTE.DoesPspIsoHaveNonDefaultFont( iso, pspIsoInfo ))
             {
                 charmap = DTE.DTEAnalyzer.PSP.GetCharMap( iso, pspIsoInfo );
             }

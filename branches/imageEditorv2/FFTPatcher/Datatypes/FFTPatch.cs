@@ -195,7 +195,7 @@ namespace FFTPatcher.Datatypes
                     InflictStatuses, PoachProbabilities, ENTDs, MoveFind };
                 foreach( IXmlDigest digest in digestable )
                 {
-                    digest.WriteXml( writer );
+                    digest.WriteXmlDigest( writer );
                 }
                 writer.WriteEndElement();
             }

@@ -210,7 +210,7 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if ( HasChanged )
             {

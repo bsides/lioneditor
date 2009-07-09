@@ -406,7 +406,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {

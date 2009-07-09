@@ -224,7 +224,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -232,7 +232,7 @@ namespace FFTPatcher.Datatypes
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( Event e in Events )
                 {
-                    e.WriteXml( writer );
+                    e.WriteXmlDigest( writer );
                 }
                 writer.WriteEndElement();
             }

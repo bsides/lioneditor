@@ -97,6 +97,8 @@ namespace FFTPatcher.TextEditor
                     }
                     l = new List<KeyValuePair<string, int>>(TextUtilities.GetPairAndTripleCounts(sb2.ToString(), replacements));
                     l.Sort((a, b) => b.Value.CompareTo(a.Value));
+
+                    secs = GetCopyOfSections();
                 }
             }
 
@@ -156,6 +158,7 @@ namespace FFTPatcher.TextEditor
             {
                 return null;
             }
+
             return result.AsReadOnly();
         }
     }

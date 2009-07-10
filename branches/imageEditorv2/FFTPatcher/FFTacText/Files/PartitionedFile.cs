@@ -56,8 +56,10 @@ namespace FFTPatcher.TextEditor
 
         private Set<KeyValuePair<string, byte>> GetPreferredDTEPairsForSection(IList<IList<string>> allSections, int index, Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes)
         {
-            var secs = allSections;
-            var  bytes = GetSectionByteArrays(secs, SelectedTerminator, CharMap, CompressionAllowed);
+            IList<IList<string>> secs = new List<IList<string>>();
+            allSections.ForEach( ls => secs.Add( new List<string>( ls ) ) );
+
+            var bytes = GetSectionByteArrays( secs, SelectedTerminator, CharMap, CompressionAllowed );
             IList<byte> ourBytes = bytes[index];
 
             Set<KeyValuePair<string, byte>> result = new Set<KeyValuePair<string, byte>>();
@@ -67,12 +69,25 @@ namespace FFTPatcher.TextEditor
             {
                 return result;
             }
+
+            result.AddRange( currentPairs );
+
+            TextUtilities.DoDTEEncoding( secs[index], Utilities.DictionaryFromKVPs( currentPairs ) );
+            bytes = GetSectionByteArrays( secs, SelectedTerminator, CharMap, CompressionAllowed );
+            ourBytes = bytes[index];
+            bytesNeeded = ourBytes.Count - this.PartitionSize;
+            if (bytesNeeded <= 0)
+            {
+                return result;
+            }
+
             string terminatorString = string.Format( "{{0x{0:X2}", SelectedTerminator ) + "}";
 
-            StringBuilder sb = new StringBuilder(PartitionSize);
+            // Get the pair counts for the string AS IT EXISTS AFTER ENCODING WITH currentPairs
+            StringBuilder sb = new StringBuilder( PartitionSize );
             if (DteAllowed[index])
             {
-                secs[index].ForEach(t => sb.Append(t).Append(terminatorString));
+                secs[index].ForEach( t => sb.Append( t ).Append( terminatorString ) );
             }
 
             var dict = TextUtilities.GetPairAndTripleCounts(sb.ToString(), replacements);
@@ -80,16 +95,25 @@ namespace FFTPatcher.TextEditor
             var l = new List<KeyValuePair<string, int>>(dict);
             l.Sort((a, b) => b.Value.CompareTo(a.Value));
 
+
+
             while (bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0)
             {
-                result.Add(new KeyValuePair<string, byte>(l[0].Key, dteBytes.Pop()));
+                // Start with a fresh set of strings for DTE
+                secs = new List<IList<string>>();
+                allSections.ForEach( ls => secs.Add( new List<string>( ls ) ) );
+
+                result.Add( new KeyValuePair<string, byte>( l[0].Key, dteBytes.Pop() ) );
                 TextUtilities.DoDTEEncoding(secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs(result));
+
                 bytes = GetSectionByteArrays(secs, SelectedTerminator, CharMap, CompressionAllowed);
+
                 ourBytes = bytes[index];
                 bytesNeeded = ourBytes.Count - PartitionSize;
 
                 if (bytesNeeded > 0)
                 {
+                    // Get the pair counts for the string AS IT EXISTS AFTER ENCODING WITH currentPairs
                     StringBuilder sb2 = new StringBuilder(PartitionSize);
                     if (DteAllowed[index])
                     {
@@ -97,8 +121,6 @@ namespace FFTPatcher.TextEditor
                     }
                     l = new List<KeyValuePair<string, int>>(TextUtilities.GetPairAndTripleCounts(sb2.ToString(), replacements));
                     l.Sort((a, b) => b.Value.CompareTo(a.Value));
-
-                    secs = GetCopyOfSections();
                 }
             }
 

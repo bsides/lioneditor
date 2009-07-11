@@ -2012,7 +2012,7 @@ F Reis
     </OneShotFile>
 
     <OneShotFile>
-      <DisplayName>WORLD.BIN 1</DisplayName>
+      <DisplayName>WORLD.BIN 01</DisplayName>
       <Guid>{908FEAF1-B00F-4201-B574-DB1E5E5AAF3A}</Guid>
       <Size>1103</Size>
       <Sectors>
@@ -2026,7 +2026,7 @@ F Reis
     </OneShotFile>
 
     <OneShotFile>
-      <DisplayName>WORLD.BIN 2</DisplayName>
+      <DisplayName>WORLD.BIN 02</DisplayName>
       <Guid>{4EF37678-0F94-4F24-B383-43638C137302}</Guid>
       <Size>1410</Size>
       <Sectors>
@@ -2040,7 +2040,7 @@ F Reis
     </OneShotFile>
 
     <OneShotFile>
-      <DisplayName>WORLD.BIN 3</DisplayName>
+      <DisplayName>WORLD.BIN 03</DisplayName>
       <Guid>{DFD34E73-17DD-4416-AB4F-2F03FCE3FA2D}</Guid>
       <Size>4915</Size>
       <Sectors>
@@ -2056,7 +2056,7 @@ F Reis
 
 
     <CompressibleOneShotFile>
-      <DisplayName>WORLD.BIN 4</DisplayName>
+      <DisplayName>WORLD.BIN 04</DisplayName>
       <Guid>{140908D5-11FF-4B72-9826-DA2142D76A23}</Guid>
       <Size>903</Size>
       <Sectors>
@@ -2068,7 +2068,7 @@ F Reis
     </CompressibleOneShotFile>
 
     <CompressibleOneShotFile>
-      <DisplayName>WORLD.BIN 5</DisplayName>
+      <DisplayName>WORLD.BIN 05</DisplayName>
       <Guid>{162DC5BF-983B-4E04-972E-C51B51EE1DCA}</Guid>
       <Size>4053</Size>
       <Sectors>
@@ -2084,7 +2084,7 @@ F Reis
 
 
     <OneShotFile>
-      <DisplayName>WORLD.BIN 6</DisplayName>
+      <DisplayName>WORLD.BIN 06</DisplayName>
       <Guid>{248AAA33-B58B-4072-AFBD-BBC5ED5B5DB7}</Guid>
       <Size>6717</Size>
       <Sectors>
@@ -2097,22 +2097,23 @@ F Reis
         </Section>
       </Sections>
     </OneShotFile>
-
-    <!--
+    
+<!--
   <OneShotFile>
-    <DisplayName>WORLD.BIN 7</DisplayName>
+    <DisplayName>WORLD.BIN 07</DisplayName>
+    <Guid>{F639B72F-3656-43D3-B348-EC466EED889E}</Guid>
     <Size>274</Size>
     <Sectors>
       <Sector filename="WORLD_WORLD_BIN" offset="733072"/>
     </Sectors>
     <Sections count="1">
-      <Section value="0" entries="10" empty="true" name="Name entry"/>
+      <Section value="0" entries="9" empty="true" name="Name entry" dte="false" compressible="false"/>
     </Sections>
-  </OneShotFile>
-  -->
+  </OneShotFile> -->
+
     <!--TODO-->
     <CompressibleOneShotFile>
-      <DisplayName>WORLD.BIN 8</DisplayName>
+      <DisplayName>WORLD.BIN 08</DisplayName>
       <Guid>{CE15EBFC-E888-43D2-B79B-211148F74409}</Guid>
       <Size>2934</Size>
       <Sectors>
@@ -2124,7 +2125,7 @@ F Reis
     </CompressibleOneShotFile>
 
     <OneShotFile>
-      <DisplayName>WORLD.BIN 9</DisplayName>
+      <DisplayName>WORLD.BIN 09</DisplayName>
       <Guid>{AD068B24-812B-4DFD-893E-DA321A6F7EA6}</Guid>
       <Size>683</Size>
       <Sectors>
@@ -2133,6 +2134,18 @@ F Reis
       </Sectors>
       <Sections count="1">
         <Section value="0" entries="44" empty="true" name="Map locations" dte="true"/>
+      </Sections>
+    </OneShotFile>
+
+    <OneShotFile>
+      <DisplayName>WORLD.BIN 10</DisplayName>
+      <Guid>{DC61A2C7-A43B-464E-8431-40401636A218}</Guid>
+      <Size>402</Size>
+      <Sectors>
+        <Sector filename="WORLD_WORLD_BIN" offset="702064"/>
+      </Sectors>
+      <Sections count="1">
+        <Section value="0" entries="31" empty="true" name="" dte="false" compressible="false"/>
       </Sections>
     </OneShotFile>
 

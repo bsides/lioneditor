@@ -80,7 +80,7 @@ namespace FFTPatcher.TextEditor
             if ( !ignoreChanges && 
                  e.ColumnIndex == TextColumnIndex )
             {
-                string s = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value;
+                string s = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value ?? string.Empty;
                 boundFile[boundSection, CurrentRow] = s;
 #if MEASURESTRINGS
                 dataGridView[widthColumn.Index, e.RowIndex].Value = boundFile.CharMap.MeasureStringInFont(s, font);
@@ -156,7 +156,7 @@ namespace FFTPatcher.TextEditor
             {
                 DataGridViewRow row = new DataGridViewRow();
 #if MEASURESTRINGS
-                row.CreateCells( dataGridView, i, ourNames[i], file.CharMap.MeasureStringInFont(file[section,i], font), file[section, i] );
+                row.CreateCells( dataGridView, i, ourNames[i], file.CharMap.MeasureStringInFont( file[section, i] ?? string.Empty, font ), file[section, i] );
 #else
                 row.CreateCells(dataGridView, i, ourNames[i], file[section, i]);
 #endif

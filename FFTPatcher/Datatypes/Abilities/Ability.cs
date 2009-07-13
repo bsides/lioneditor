@@ -232,7 +232,8 @@ namespace FFTPatcher.Datatypes
                     (IsCharging && (ChargeBonus != Default.ChargeBonus || ChargeCT != Default.ChargeCT)) ||
                     (IsItem && ItemOffset != Default.ItemOffset) ||
                     (IsJumping && (JumpHorizontal != Default.JumpHorizontal || JumpVertical != Default.JumpVertical)) ||
-                    (IsNormal && (Attributes.HasChanged || Effect.Value != Default.Effect.Value)) ||
+                    (IsNormal && Attributes.HasChanged) ||
+                    (Effect != null && Default.Effect != null && Effect.Value != Default.Effect.Value) ||
                     (IsOther && OtherID != Default.OtherID) ||
                     (IsThrowing && Throwing != Default.Throwing));
             }
@@ -431,7 +432,6 @@ namespace FFTPatcher.Datatypes
             if( destination.IsNormal )
             {
                 source.Attributes.CopyTo( destination.Attributes );
-                destination.Effect = source.Effect;
             }
             if( destination.IsItem )
             {
@@ -458,6 +458,11 @@ namespace FFTPatcher.Datatypes
             if( destination.IsOther )
             {
                 destination.OtherID = source.OtherID;
+            }
+
+            if (source.Effect != null && destination.Effect != null)
+            {
+                destination.Effect = source.Effect;
             }
         }
 
@@ -543,9 +548,13 @@ namespace FFTPatcher.Datatypes
                 DigestGenerator.WriteXmlDigest( this, writer, false, false );
                 DigestGenerator.WriteXmlDigest( AIFlags, writer, true, true );
 
-                if( IsNormal )
+                if (Effect != null && Default.Effect != null)
                 {
                     DigestGenerator.WriteDigestEntry( writer, "Effect", Default.Effect, Effect );
+                }
+
+                if( IsNormal )
+                {
                     DigestGenerator.WriteXmlDigest( Attributes, writer, true, true );
                     if( Attributes.Formula.Value == 0x02 &&
                         (Attributes.Formula.Value != Attributes.Default.Formula.Value || Attributes.InflictStatus != Attributes.Default.InflictStatus) )
@@ -623,16 +632,20 @@ namespace FFTPatcher.Datatypes
             ((IXmlSerializable)AIFlags).WriteXml( writer );
             writer.WriteEndElement();
 
-            if ( IsNormal )
+            if (Effect != null)
             {
-                writer.WriteStartElement( "Attributes" );
-                ((IXmlSerializable)Attributes).WriteXml( writer );
-                writer.WriteEndElement();
                 writer.WriteStartElement( "Effect" );
                 writer.WriteStartAttribute( "value" );
                 writer.WriteValue( Effect.Value );
                 writer.WriteEndAttribute();
                 writer.WriteAttributeString( "name", Effect.Name );
+            }
+
+            if ( IsNormal )
+            {
+                writer.WriteStartElement( "Attributes" );
+                ((IXmlSerializable)Attributes).WriteXml( writer );
+                writer.WriteEndElement();
             }
             else if ( IsItem )
             {
@@ -702,19 +715,17 @@ namespace FFTPatcher.Datatypes
             AIFlags = new AIFlags();
             ( (IXmlSerializable)AIFlags ).ReadXml( reader );
 
-            bool IsNormal = ( ( Offset >= 0x000 ) && ( Offset <= 0x16F ) );
-            bool IsItem = ( ( Offset >= 0x170 ) && ( Offset <= 0x17D ) );
-            bool IsThrowing = ( ( Offset >= 0x17E ) && ( Offset <= 0x189 ) );
-            bool IsJumping = ( ( Offset >= 0x18A ) && ( Offset <= 0x195 ) );
-            bool IsCharging = ( ( Offset >= 0x196 ) && ( Offset <= 0x19D ) );
-            bool IsArithmetick = ( ( Offset >= 0x19E ) && ( Offset <= 0x1A5 ) );
-            bool IsOther = ( Offset >= 0x1A6 );
+            IsNormal = ( ( Offset >= 0x000 ) && ( Offset <= 0x16F ) );
+            IsItem = ( ( Offset >= 0x170 ) && ( Offset <= 0x17D ) );
+            IsThrowing = ( ( Offset >= 0x17E ) && ( Offset <= 0x189 ) );
+            IsJumping = ( ( Offset >= 0x18A ) && ( Offset <= 0x195 ) );
+            IsCharging = ( ( Offset >= 0x196 ) && ( Offset <= 0x19D ) );
+            IsArithmetick = ( ( Offset >= 0x19E ) && ( Offset <= 0x1A5 ) );
+            IsOther = ( Offset >= 0x1A6 );
+            bool IsReaction = Offset >= 422 && Offset <= 453;
 
-            if ( IsNormal )
+            if (IsNormal || IsReaction)
             {
-                Attributes = new AbilityAttributes();
-                ( (IXmlSerializable)Attributes ).ReadXml( reader );
-
                 reader.MoveToAttribute( "value" );
                 ushort effectIndex = (ushort)reader.ReadElementContentAsInt();
                 reader.MoveToElement();
@@ -722,6 +733,13 @@ namespace FFTPatcher.Datatypes
                 reader.ReadEndElement();
 
                 Effect = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects[effectIndex] : Effect.PSXEffects[effectIndex];
+            }
+
+            if ( IsNormal )
+            {
+                Attributes = new AbilityAttributes();
+                ( (IXmlSerializable)Attributes ).ReadXml( reader );
+
             }
             else if ( IsItem )
             {

@@ -61,6 +61,7 @@ namespace PatcherLib
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
 
+            Binaries.ReactionAbilityEffects = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ReactionAbilityEffects].AsReadOnly();
             Binaries.StoreInventories = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories].AsReadOnly();
             Binaries.ENTD1 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1].AsReadOnly();
             Binaries.ENTD2 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD2].AsReadOnly();

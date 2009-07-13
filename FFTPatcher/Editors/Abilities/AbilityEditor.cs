@@ -127,8 +127,9 @@ namespace FFTPatcher.Editors
             commonAbilitiesEditor.Ability = ability;
 
             abilityAttributesEditor.Visible = ability.IsNormal;
-            effectComboBox.Visible = ability.IsNormal;
-            effectLabel.Visible = ability.IsNormal;
+            bool showEffect = ability.Effect != null && ability.Default.Effect != null;
+            effectComboBox.Visible = showEffect;
+            effectLabel.Visible = showEffect;
             abilityAttributesEditor.Attributes = ability.Attributes;
 
             foreach( NumericUpDownWithDefault spinner in spinners )
@@ -164,7 +165,7 @@ namespace FFTPatcher.Editors
                 throwingComboBox.DataSource = psxItemTypes;
             }
 
-            if( ability.IsNormal )
+            if (showEffect)
             {
                 effectComboBox.SetValueAndDefault( ability.Effect, ability.Default.Effect );
             }
@@ -217,5 +218,13 @@ namespace FFTPatcher.Editors
 		#endregion Private Methods 
 
         public event EventHandler<LabelClickedEventArgs> InflictStatusLabelClicked;
+
+        private void effectComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if (!ignoreChanges)
+            {
+                ability.Effect = effectComboBox.SelectedItem as Effect;
+            }
+        }
     }
 }

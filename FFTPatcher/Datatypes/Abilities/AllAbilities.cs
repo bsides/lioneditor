@@ -65,15 +65,20 @@ namespace FFTPatcher.Datatypes
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
             byte[] effects = owner.ToEffectsByteArray();
+            byte[] otherEffects = owner.ToReactionEffectsByteArray();
+
             List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
             if (context == Context.US_PSX)
             {
                 result.Add(PatcherLib.Iso.PsxIso.AbilityEffects.GetPatchedByteArray(effects));
+                result.Add( PatcherLib.Iso.PsxIso.ReactionAbilityEffects.GetPatchedByteArray( otherEffects ) );
             }
             else if (context == Context.US_PSP)
             {
                 PatcherLib.Iso.PspIso.AbilityEffects.ForEach(
-                    kl => result.Add(kl.GetPatchedByteArray(effects)));
+                    kl => result.Add( kl.GetPatchedByteArray( effects ) ) );
+                PatcherLib.Iso.PspIso.ReactionAbilityEffects.ForEach(
+                    kl => result.Add( kl.GetPatchedByteArray( otherEffects ) ) );
             }
 
             return result;
@@ -150,14 +155,7 @@ namespace FFTPatcher.Datatypes
         {
             get
             {
-                foreach( Ability a in Abilities )
-                {
-                    if( a.HasChanged )
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                return defaultBytes != null && !Utilities.CompareArrays( ToByteArray(), defaultBytes );
             }
         }
 
@@ -191,12 +189,16 @@ namespace FFTPatcher.Datatypes
 
         }
 
-        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
+        private IList<byte> defaultBytes;
+
+        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes, IList<byte> reactionEffects )
         {
             AllEffects = new AllAbilityEffects( this );
-            IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.Abilities : PSXResources.Binaries.Abilities;
+            this.defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.Abilities : PSXResources.Binaries.Abilities;
+            
             IDictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
             IList<byte> defaultEffects = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.AbilityEffects : PSXResources.Binaries.AbilityEffects;
+            IList<byte> defaultReaction = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.ReactionAbilityEffects : PSXResources.Binaries.ReactionAbilityEffects;
 
             Abilities = new Ability[512];
             DefaultAbilities = new Ability[512];
@@ -243,12 +245,17 @@ namespace FFTPatcher.Datatypes
                 }
                 else
                 {
+                    if (i >= 422 && i <= 453)
+                    {
+                        effect = effects[PatcherLib.Utilities.Utilities.BytesToUShort( reactionEffects[(i - 422) * 2], reactionEffects[(i - 422) * 2 + 1] )];
+                        defaultEffect = effects[PatcherLib.Utilities.Utilities.BytesToUShort( defaultReaction[(i - 422) * 2], defaultReaction[(i - 422) * 2 + 1] )];
+                    }
                     second = bytes.Sub( 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
                     defaultSecond = defaultBytes.Sub( 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
                 }
 
                 Abilities[i] = new Ability( Names[i], i, first, second, new Ability( Names[i], i, defaultFirst, defaultSecond ) );
-                if( i <= 0x16F )
+                if( effect != null && defaultEffect != null )
                 {
                     Abilities[i].Effect = effect;
                     Abilities[i].Default.Effect = defaultEffect;
@@ -269,17 +276,20 @@ namespace FFTPatcher.Datatypes
 
         public IList<string> GenerateCodes( Context context )
         {
-            if ( context == Context.US_PSP )
+            List<string> result = new List<string>();
+            if (context == Context.US_PSP)
             {
-                List<string> result = new List<string>();
                 result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.Abilities, this.ToByteArray(), 0x2754C0 ) );
                 result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.AbilityEffects, this.ToEffectsByteArray(), 0x31B760 ) );
-                return result.AsReadOnly();
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.ReactionAbilityEffects, this.ToReactionEffectsByteArray(), 0x31B760 + 0x34C ) );
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.Abilities, this.ToByteArray(), 0x05EBF0 ).AsReadOnly();
+                result.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.AbilityEffects, this.ToEffectsByteArray(), 0x1B63F0, Codes.CodeEnabledOnlyWhen.Battle ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.ReactionAbilityEffects, this.ToReactionEffectsByteArray(), 0x1B673C, Codes.CodeEnabledOnlyWhen.Battle ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.Abilities, this.ToByteArray(), 0x05EBF0 ) );
             }
+            return result.AsReadOnly();
         }
 
         public byte[] ToByteArray()
@@ -307,9 +317,23 @@ namespace FFTPatcher.Datatypes
         public byte[] ToEffectsByteArray()
         {
             List<byte> result = new List<byte>( 0x2E0 );
-            foreach( Ability a in Abilities )
+            foreach (Ability a in Abilities)
             {
-                if( a.IsNormal )
+                if (a.IsNormal)
+                {
+                    result.AddRange( a.Effect.Value.ToBytes() );
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        public byte[] ToReactionEffectsByteArray()
+        {
+            List<byte> result = new List<byte>( 0x40 );
+            foreach (Ability a in Abilities)
+            {
+                if (!a.IsNormal && a.Effect != null)
                 {
                     result.AddRange( a.Effect.Value.ToBytes() );
                 }

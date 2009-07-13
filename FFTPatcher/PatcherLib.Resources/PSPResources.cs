@@ -78,6 +78,7 @@ namespace PatcherLib
             Binaries.Abilities = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.Abilities].AsReadOnly();
             Binaries.AbilityAnimations = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.AbilityAnimations].AsReadOnly();
             Binaries.AbilityEffects = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.AbilityEffects].AsReadOnly();
+            Binaries.ReactionAbilityEffects = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ReactionAbilityEffects].AsReadOnly();
             Binaries.ActionEvents = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ActionEvents].AsReadOnly();
             Binaries.Font = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.Font].AsReadOnly();
             Binaries.FontWidths = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.FontWidths].AsReadOnly();

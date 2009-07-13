@@ -14,8 +14,8 @@ namespace FFTPatcher.TextEditor
 
         public IList<bool> HiddenEntries { get; private set; }
 
-        protected AbstractFile( GenericCharMap charmap, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, bool compressible )
-            : this( charmap, layout, compressible )
+        protected AbstractFile( GenericCharMap charmap, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, string fileComments, IList<string> sectionComments, bool compressible )
+            : this( charmap, layout, fileComments, sectionComments, compressible )
         {
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
             for (int i = 0; i < NumberOfSections; i++)
@@ -51,8 +51,13 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        protected AbstractFile( GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, bool compressible )
+        protected AbstractFile( GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, string fileComments, IList<string> sectionComments, bool compressible )
         {
+            System.Diagnostics.Debug.Assert( sectionComments.Count == layout.SectionNames.Count );
+            FileComments = fileComments ?? string.Empty;
+            SectionComments = new string[sectionComments.Count];
+            sectionComments.CopyTo( SectionComments, 0 );
+
             NumberOfSections = layout.SectionLengths.Count;
             Layout = layout;
             CharMap = charmap;
@@ -110,29 +115,29 @@ namespace FFTPatcher.TextEditor
             switch (type)
             {
                 case FileType.CompressedFile:
-                    return new SectionedFile( charmap, layout, bytes, true );
+                    return new SectionedFile( charmap, layout, bytes, string.Empty, new string[layout.SectionNames.Count], true );
                 case FileType.SectionedFile:
-                    return new SectionedFile( charmap, layout, bytes, false );
+                    return new SectionedFile( charmap, layout, bytes, string.Empty, new string[layout.SectionNames.Count], false );
                 case FileType.OneShotFile:
                 case FileType.PartitionedFile:
-                    return new PartitionedFile( charmap, layout, bytes );
+                    return new PartitionedFile( charmap, layout, bytes, string.Empty, new string[layout.SectionNames.Count] );
             }
             return null;
         }
 
-        public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
+        public static AbstractFile ConstructFile( FileType type, GenericCharMap charmap, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<IList<string>> strings, string fileComments, IList<string> sectionComments )
         {
             switch (type)
             {
                 case FileType.CompressedFile:
-                    return new SectionedFile( charmap, layout, strings, true );
+                    return new SectionedFile( charmap, layout, strings, fileComments, sectionComments, true );
                 case FileType.SectionedFile:
-                    return new SectionedFile( charmap, layout, strings, false );
+                    return new SectionedFile( charmap, layout, strings, fileComments, sectionComments, false );
                 case FileType.CompressibleOneShotFile:
-                    return new CompressibleOneShotFile( charmap, layout, strings );
+                    return new CompressibleOneShotFile( charmap, layout, strings, fileComments, sectionComments );
                 case FileType.OneShotFile:
                 case FileType.PartitionedFile:
-                    return new PartitionedFile( charmap, layout, strings );
+                    return new PartitionedFile( charmap, layout, strings, fileComments, sectionComments );
             }
             return null;
         }
@@ -440,6 +445,18 @@ namespace FFTPatcher.TextEditor
             }
 
             return result;
+        }
+
+
+        public IList<string> SectionComments
+        {
+            get;
+            private set;
+        }
+
+        public string FileComments
+        {
+            get; set;
         }
     }
 }

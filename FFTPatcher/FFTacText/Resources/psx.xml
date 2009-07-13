@@ -2145,7 +2145,7 @@ F Reis
         <Sector filename="WORLD_WORLD_BIN" offset="702064"/>
       </Sectors>
       <Sections count="1">
-        <Section value="0" entries="31" empty="true" name="" dte="false" compressible="false"/>
+        <Section value="0" entries="31" empty="true" name="" dte="true" compressible="false"/>
       </Sections>
     </OneShotFile>
 

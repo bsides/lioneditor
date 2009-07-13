@@ -29,10 +29,14 @@ namespace FFTPatcher.TextEditor.Editors
             }
 
             sectionComboBox.SelectedIndex = 0;
+            sectionComboBox.Enabled = file.NumberOfSections > 1;
+            sectionNotesTextbox.Text = file.SectionComments[localToFileIndexMapping[sectionComboBox.SelectedIndex]] ?? string.Empty;
+            fileNotesTextBox.Text = file.FileComments ?? string.Empty;
 
             stringListEditor1.BindTo( file.EntryNames[localToFileIndexMapping[0]], file, localToFileIndexMapping[0] );
             boundFile = file;
             restoreButton.Visible = boundFile is ISerializableFile;
+            commentsTable.Enabled = boundFile is ISerializableFile;
             ignoreChanges = false;
         }
 
@@ -65,6 +69,7 @@ namespace FFTPatcher.TextEditor.Editors
                     boundFile.EntryNames[localToFileIndexMapping[sectionComboBox.SelectedIndex]], 
                     boundFile, 
                     localToFileIndexMapping[sectionComboBox.SelectedIndex] );
+                sectionNotesTextbox.Text = boundFile.SectionComments[localToFileIndexMapping[sectionComboBox.SelectedIndex]] ?? string.Empty;
             }
         }
 
@@ -80,6 +85,23 @@ namespace FFTPatcher.TextEditor.Editors
                 }
                 BindTo(boundFile);
                 //AbstractFile.ConstructFile(f.Layout.FileType, f.CharMap, f.Layout, 
+            }
+        }
+
+        private void fileNotesTextBox_TextChanged( object sender, EventArgs e )
+        {
+            if (!ignoreChanges)
+            {
+                boundFile.FileComments = fileNotesTextBox.Text;
+            }
+        }
+
+        private void sectionNotesTextbox_TextChanged( object sender, EventArgs e )
+        {
+            if (!ignoreChanges)
+            {
+                boundFile.SectionComments[localToFileIndexMapping[sectionComboBox.SelectedIndex]] = 
+                    sectionNotesTextbox.Text;
             }
         }
     }

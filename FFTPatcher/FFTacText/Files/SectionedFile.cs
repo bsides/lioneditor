@@ -11,23 +11,23 @@ namespace FFTPatcher.TextEditor
 
         protected override int DataStart { get { return dataStart; } }
 
-        public SectionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
-            : this( map, layout, strings, false )
+        public SectionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, string fileComments, IList<string> sectionComments )
+            : this( map, layout, strings, fileComments, sectionComments, false )
         {
         }
 
-        public SectionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, bool compressed ) :
-            base( map, layout, strings, compressed )
+        public SectionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, string fileComments, IList<string> sectionComments, bool compressed ) :
+            base( map, layout, strings, fileComments, sectionComments, compressed )
         {
         }
 
-        public SectionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
-            : this( map, layout, bytes, false )
+        public SectionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes, string fileComments, IList<string> sectionComments )
+            : this( map, layout, bytes, fileComments, sectionComments, false )
         {
         }
 
-        public SectionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes, bool compressible )
-            : base( map, layout, compressible )
+        public SectionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes, string fileComments, IList<string> sectionComments, bool compressible )
+            : base( map, layout, fileComments, sectionComments, compressible )
         {
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
 

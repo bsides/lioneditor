@@ -214,6 +214,7 @@ namespace PatcherLib
             private const string ENTD3 = "ENTD3.ENT";
             private const string ENTD4 = "ENTD4.ENT";
             private const string MoveFindBin = "MoveFind.bin";
+            private const string ReactionEffects = "ReactionEffects.bin";
 
             public static class PSP
             {
@@ -228,6 +229,7 @@ namespace PatcherLib
                     public const string Abilities = "PSP/bin/Abilities.bin";
                     public const string AbilityAnimations = "PSP/bin/AbilityAnimations.bin";
                     public const string AbilityEffects = "PSP/bin/AbilityEffects.bin";
+                    public const string ReactionAbilityEffects = Paths.ReactionEffects;
                     public const string ActionEvents = "PSP/bin/ActionEvents.bin";
                     public const string Font = "PSP/bin/font.bin";
                     public const string FontWidths = "PSP/bin/FontWidths.bin";
@@ -277,6 +279,7 @@ namespace PatcherLib
                     public const string Abilities = "PSX-US/bin/Abilities.bin";
                     public const string AbilityAnimations = "PSX-US/bin/AbilityAnimations.bin";
                     public const string AbilityEffects = "PSX-US/bin/AbilityEffects.bin";
+                    public const string ReactionAbilityEffects = Paths.ReactionEffects;
                     public const string ActionEvents = "PSX-US/bin/ActionEvents.bin";
                     public const string Font = "PSX-US/bin/font.bin";
                     public const string FontWidths = "PSX-US/bin/FontWidths.bin";

@@ -32,6 +32,7 @@ namespace PatcherLib.Iso
         public static KnownPosition Abilities { get; private set; }
 
         public static KnownPosition AbilityEffects { get; private set; }
+        public static KnownPosition ReactionAbilityEffects { get; private set; }
 
         public static KnownPosition ActionEvents { get; private set; }
 
@@ -79,6 +80,7 @@ namespace PatcherLib.Iso
         {
             Abilities = new KnownPosition(Sectors.SCUS_942_21, 0x4F3F0, 9414);
             AbilityEffects = new KnownPosition(Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0);
+            ReactionAbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x014F73C, 0x40 );
             ActionEvents = new KnownPosition(Sectors.SCUS_942_21, 0x564B4, 224);
             InflictStatuses = new KnownPosition(Sectors.SCUS_942_21, 0x547C4, 0x300);
             Jobs = new KnownPosition(Sectors.SCUS_942_21, 0x518B8, 0x1E00);

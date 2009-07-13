@@ -375,6 +375,7 @@ namespace PatcherLib.Iso
         public static IList<KnownPosition> Abilities { get; private set; }
 
         public static IList<KnownPosition> AbilityEffects { get; private set; }
+        public static IList<KnownPosition> ReactionAbilityEffects { get; private set; }
 
         public static IList<KnownPosition> ActionEvents { get; private set; }
 
@@ -428,6 +429,9 @@ namespace PatcherLib.Iso
             AbilityEffects = new KnownPosition[] {
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3177B4, 0x2E0),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3177B4, 0x2E0)}.AsReadOnly();
+            ReactionAbilityEffects = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x317B00, 0x40),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x317B00, 0x40)}.AsReadOnly();
             ActionEvents = new KnownPosition[] {
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x276CA4, 227),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x276CA4, 227)}.AsReadOnly();

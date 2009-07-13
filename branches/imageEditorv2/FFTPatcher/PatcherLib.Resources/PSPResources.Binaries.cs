@@ -15,6 +15,7 @@ namespace PatcherLib
             public static IList<byte> Abilities { get; internal set; }
             public static IList<byte> AbilityAnimations { get; internal set; }
             public static IList<byte> AbilityEffects { get; internal set; }
+            public static IList<byte> ReactionAbilityEffects { get; internal set; }
             public static IList<byte> ActionEvents { get; internal set; }
             public static IList<byte> ENTD1 { get; internal set; }
             public static IList<byte> ENTD2 { get; internal set; }

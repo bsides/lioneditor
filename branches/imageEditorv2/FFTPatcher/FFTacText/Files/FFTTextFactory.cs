@@ -211,17 +211,17 @@ namespace FFTPatcher.TextEditor
                 switch ( fi.FileType )
                 {
                     case FileType.CompressedFile:
-                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, true ) );
+                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count], true ) );
                         break;
                     case FileType.SectionedFile:
-                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );
                         break;
                     case FileType.CompressibleOneShotFile:
-                        files.Add( fi.Guid, new CompressibleOneShotFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new CompressibleOneShotFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );
                         break;
                     case FileType.OneShotFile:
                     case FileType.PartitionedFile:
-                        files.Add( fi.Guid, new PartitionedFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new PartitionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );
                         break;
                 }
 
@@ -337,7 +337,8 @@ namespace FFTPatcher.TextEditor
             if ( files == null || worker.CancellationPending )
                 return null;
 
-            var quickEdit = new QuickEdit( context, files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ), worker ) );
+            var quickEditLookup = GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ), worker );
+            var quickEdit = new QuickEdit( context, files, quickEditLookup );
             if ( quickEdit == null || worker.CancellationPending )
                 return null;
 
@@ -375,11 +376,13 @@ namespace FFTPatcher.TextEditor
                 if ( worker.CancellationPending )
                     return null;
                 FileInfo fi = GetFileInfo( context, layoutDoc.SelectSingleNode( string.Format( "//Files/*[Guid='{0}']", guidText ) ) );
+                string fileComment = GetFileComment( doc.SelectSingleNode(string.Format( "//FFTText/*[Guid='{0}']", guidText )) );
                 if ( worker.CancellationPending )
                     return null;
+                XmlNode sectionsNode = fileNode.SelectSingleNode("Sections");
                 result.Add(
                     guid,
-                    AbstractFile.ConstructFile( fi.FileType, charmap, fi, GetStrings( fileNode.SelectSingleNode( "Sections" ) ) ) );
+                    AbstractFile.ConstructFile( fi.FileType, charmap, fi, GetStrings( sectionsNode ), fileComment, GetSectionComments( sectionsNode ) ) );
                 if ( worker.CancellationPending )
                     return null;
             }
@@ -398,6 +401,29 @@ namespace FFTPatcher.TextEditor
 
             return new FFTText( context, result, quickEdit );
 
+        }
+
+        private static IList<string> GetSectionComments( XmlNode sectionsNode )
+        {
+            XmlNodeList sectionNodes = sectionsNode.SelectNodes( "Section" );
+            string[] result = new string[sectionNodes.Count];
+            for (int i = 0; i < sectionNodes.Count; i++)
+            {
+                result[i] = GetCommentNode( sectionNodes[i] );
+            }
+            return result;
+        }
+
+        private static string GetCommentNode( XmlNode parentNode )
+        {
+            XmlNode commentNode = parentNode.SelectSingleNode( "Comment" );
+            if (commentNode != null) return commentNode.InnerText;
+            else return string.Empty;
+        }
+
+        private static string GetFileComment( XmlNode fileNode )
+        {
+            return GetCommentNode( fileNode );
         }
 
         private static IList<IList<string>> GetStrings( XmlNode sectionsNode )
@@ -556,15 +582,20 @@ namespace FFTPatcher.TextEditor
             writer.WriteStartElement( "File" );
             writer.WriteComment( "DisplayName: " + file.DisplayName );
             writer.WriteElementString( "Guid", file.Layout.Guid.ToString( "B" ).ToUpper() );
+            if (!string.IsNullOrEmpty(file.FileComments))
+                writer.WriteElementString( "Comment", file.FileComments );
+
             writer.WriteStartElement( "Sections" );
             int numSections = file.NumberOfSections;
-            for ( int i = 0; i < numSections; i++ )
+            for (int i = 0; i < numSections; i++)
             {
                 writer.WriteStartElement( "Section" );
                 if (!string.IsNullOrEmpty( file.SectionNames[i] )) writer.WriteComment( file.SectionNames[i] );
+                if (file.SectionComments != null && file.SectionComments.Count > i && !string.IsNullOrEmpty( file.SectionComments[i] ))
+                    writer.WriteElementString( "Comment", file.SectionComments[i] );
 
                 int length = file.SectionLengths[i];
-                for ( int j = 0; j < length; j++ )
+                for (int j = 0; j < length; j++)
                 {
                     writer.WriteElementString( "Entry", file[i, j] );
                 }

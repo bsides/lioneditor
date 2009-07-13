@@ -10,14 +10,14 @@ namespace FFTPatcher.TextEditor
     {
         public int PartitionSize { get; private set; }
 
-        public PartitionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
-            : base( map, layout, strings, false )
+        public PartitionedFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, string fileComments, IList<string> sectionComments )
+            : base( map, layout, strings, fileComments, sectionComments, false )
         {
             PartitionSize = layout.Size / NumberOfSections;
         }
 
-        public PartitionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
-            : base( map, layout, false )
+        public PartitionedFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes, string fileComments, IList<string> sectionComments )
+            : base( map, layout, fileComments, sectionComments, false )
         {
             PartitionSize = layout.Size / NumberOfSections;
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );

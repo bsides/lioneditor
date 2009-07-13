@@ -22,7 +22,7 @@ namespace FFTPatcher.TextEditor.Files
             {
                 sections[section][entry] = value;
                 IList<QuickEditEntry> needToUpdate = lookup[sectionTypes[section]];
-                foreach ( var v in needToUpdate )
+                foreach (var v in needToUpdate)
                 {
                     files[v.Guid][v.Section, entry] = value;
                 }
@@ -50,7 +50,7 @@ namespace FFTPatcher.TextEditor.Files
             List<string> sectionNames = new List<string>();
             HiddenEntries = new bool[sections.Count].AsReadOnly();
 
-            foreach ( KeyValuePair<SectionType, IList<QuickEditEntry>> kvp in sections )
+            foreach (KeyValuePair<SectionType, IList<QuickEditEntry>> kvp in sections)
             {
                 CharMap = CharMap ?? files[kvp.Value[0].Guid].CharMap;
 
@@ -60,7 +60,7 @@ namespace FFTPatcher.TextEditor.Files
                 int entryCount = mainEntry.Length;
                 List<string> names = new List<string>( entryCount );
                 List<string> values = new List<string>( entryCount );
-                for ( int i = mainEntry.Offset; i < ( mainEntry.Offset + entryCount ); i++ )
+                for (int i = mainEntry.Offset; i < (mainEntry.Offset + entryCount); i++)
                 {
                     names.Add( mainFile.EntryNames[mainEntry.Section][i] );
                     values.Add( mainFile[mainEntry.Section, i] );
@@ -93,6 +93,87 @@ namespace FFTPatcher.TextEditor.Files
         public string DisplayName
         {
             get { return "QuickEdit"; }
+        }
+
+
+        IList<string> IFile.SectionComments
+        {
+            get { return new DummyList<string>(); }
+        }
+
+        string IFile.FileComments
+        {
+            get { return string.Empty; }
+            set { }
+        }
+
+        private class DummyList<T> : IList<T>
+        {
+            public int IndexOf( T item )
+            {
+                return -1;
+            }
+
+            public void Insert( int index, T item )
+            {
+            }
+
+            public void RemoveAt( int index )
+            {
+            }
+
+            public T this[int index]
+            {
+                get
+                {
+                    return default( T );
+                }
+                set
+                {
+                }
+            }
+
+            public void Add( T item )
+            {
+            }
+
+            public void Clear()
+            {
+            }
+
+            public bool Contains( T item )
+            {
+                return false;
+            }
+
+            public void CopyTo( T[] array, int arrayIndex )
+            {
+            }
+
+            public int Count
+            {
+                get { return 0; }
+            }
+
+            public bool IsReadOnly
+            {
+                get { return true; }
+            }
+
+            public bool Remove( T item )
+            {
+                return false;
+            }
+
+            public IEnumerator<T> GetEnumerator()
+            {
+                return (new T[0] as IList<T>).GetEnumerator();
+            }
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return (System.Collections.IEnumerator)GetEnumerator();
+            }
         }
     }
 }

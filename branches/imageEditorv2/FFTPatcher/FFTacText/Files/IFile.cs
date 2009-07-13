@@ -14,5 +14,7 @@ namespace FFTPatcher.TextEditor
         IList<int> SectionLengths { get; }
         string DisplayName { get; }
         PatcherLib.Datatypes.Context Context { get; }
+        IList<string> SectionComments { get; }
+        string FileComments { get; set; }
     }
 }

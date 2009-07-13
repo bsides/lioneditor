@@ -209,8 +209,11 @@ namespace Bimixual.Animation
 
         static void control_Disposed( object sender, EventArgs e )
         {
-            control.Disposed -= control_Disposed;
-            control = null;
+            if (control != null)
+            {
+                control.Disposed -= control_Disposed;
+                control = null;
+            }
             Stop();
         }
     }

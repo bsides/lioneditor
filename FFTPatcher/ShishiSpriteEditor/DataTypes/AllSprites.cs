@@ -437,11 +437,19 @@ namespace FFTPatcher.SpriteEditor
             PatcherLib.Iso.PsxIso.DirectoryEntry.WriteDirectoryEntries(
                 iso,
                 PatcherLib.Iso.PsxIso.BattleDirectoryEntrySector,
-                6,
+                PatcherLib.Iso.PsxIso.BattleDirectoryEntryLength,
                 battleDir );
+
+            // Erase the dummy directory, just to be sure
+            PatcherLib.Iso.PsxIso.DirectoryEntry.WriteDirectoryEntries(
+                iso,
+                PatcherLib.Iso.PsxIso.DummyDirectoryEntrySector,
+                PatcherLib.Iso.PsxIso.DummyDirectoryEntryLength,
+                new PatcherLib.Iso.PsxIso.DirectoryEntry[0]);
 
             // Update battle.bin
             PatcherLib.Iso.PsxIso.PatchPsxIso(iso, SpriteFileLocations.SpriteLocationsPosition.GetPatchedByteArray(posBytes.ToArray()));
+
         }
 
         public static bool DetectExpansionOfPsxIso(Stream iso)

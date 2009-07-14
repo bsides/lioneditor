@@ -2846,6 +2846,9 @@ namespace PatcherLib.Iso
         }
 
         public const int BattleDirectoryEntrySector = 56436;
+        public const int BattleDirectoryEntryLength = 6;
+        public const int DummyDirectoryEntrySector = 230000;
+        public const int DummyDirectoryEntryLength = 1;
 
         [System.Diagnostics.DebuggerDisplay("{Filename} - {Sector} - {Size} - {Timestamp}")]
         public class DirectoryEntry
@@ -2871,7 +2874,14 @@ namespace PatcherLib.Iso
             public static IList<DirectoryEntry> GetBattleEntries(Stream iso)
             {
                 const int sector = BattleDirectoryEntrySector;
-                const int length = 6;
+                const int length = BattleDirectoryEntryLength;
+                return GetDirectoryEntries( iso, sector, length );
+            }
+
+            public static IList<DirectoryEntry> GetDummyEntries( Stream iso )
+            {
+                const int sector = DummyDirectoryEntrySector;
+                const int length = DummyDirectoryEntryLength;
                 return GetDirectoryEntries( iso, sector, length );
             }
 

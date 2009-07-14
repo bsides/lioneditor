@@ -19,6 +19,7 @@
 
 using System;
 using System.Windows.Forms;
+using System.IO;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -26,8 +27,10 @@ namespace FFTPatcher.SpriteEditor
     {
 
 
-		#region Methods (1) 
+        #region Methods (1)
 
+
+        static MainForm mainForm;
 
         /// <summary>
         /// The main entry point for the application.
@@ -37,30 +40,44 @@ namespace FFTPatcher.SpriteEditor
         {
             try
             {
-                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                Application.SetUnhandledExceptionMode( UnhandledExceptionMode.CatchException );
                 Application.ThreadException += Application_ThreadException;
                 Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+                Application.SetCompatibleTextRenderingDefault( false );
+                mainForm = new MainForm();
+                Application.Run( mainForm );
                 Application.ThreadException -= Application_ThreadException;
             }
             catch (Exception e)
             {
-                HandleException(e);
+                HandleException( e );
             }
         }
 
-        static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        static void Application_ThreadException( object sender, System.Threading.ThreadExceptionEventArgs e )
         {
-            HandleException(e.Exception);
+            HandleException( e.Exception );
         }
 
-        static void HandleException(Exception e)
+        static void HandleException( Exception e )
         {
-            MessageBox.Show(e.ToString(), "Error");
+            if (mainForm != null)
+            {
+                System.Reflection.FieldInfo fi = typeof( MainForm ).GetField( "currentStream", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance );
+                if (fi != null)
+                {
+                    Stream stream = fi.GetValue( mainForm ) as Stream;
+                    if (stream != null)
+                    {
+                        stream.Flush();
+                    }
+                }
+
+            }
+            MessageBox.Show( e.ToString(), "Error" );
         }
 
-		#endregion Methods 
+        #endregion Methods
 
     }
 }

@@ -39,19 +39,19 @@ namespace FFTPatcher.SpriteEditor
 
         private Stream currentStream = null;
 
-        private void openIsoMenuItem_Click(object sender, EventArgs e)
+        private void openIsoMenuItem_Click( object sender, EventArgs e )
         {
             openFileDialog.Filter = "ISO files (*.bin, *.iso, *.img)|*.bin;*.iso;*.img";
             openFileDialog.FileName = string.Empty;
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
-                Stream openedStream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.ReadWrite);
+                Stream openedStream = File.Open( openFileDialog.FileName, FileMode.Open, FileAccess.ReadWrite );
                 if (openedStream != null)
                 {
                     if (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0 ||
                          (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0 &&
-                          (AllSprites.DetectExpansionOfPsxIso(openedStream) ||
-                            MessageBox.Show(this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.OKCancel) == DialogResult.OK)))
+                          (AllSprites.DetectExpansionOfPsxIso( openedStream ) ||
+                            MessageBox.Show( this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.OKCancel ) == DialogResult.OK)))
                     {
                         if (currentStream != null)
                         {
@@ -61,11 +61,16 @@ namespace FFTPatcher.SpriteEditor
                         }
                         currentStream = openedStream;
 
-                        AllSprites s = AllSprites.FromIso(currentStream);
-                        allSpritesEditor1.BindTo(s, currentStream);
+                        AllSprites s = AllSprites.FromIso( currentStream );
+                        allSpritesEditor1.BindTo( s, currentStream );
+                        tabControl1.Enabled = true;
                         spriteMenuItem.Enabled = true;
                         sp2Menu.Enabled = true;
-                        Text = string.Format(titleFormatString, Path.GetFileName(openFileDialog.FileName));
+
+                        var otherImages = AllOtherImages.FromIso( currentStream );
+                        allOtherImagesEditor1.BindTo( otherImages, currentStream );
+
+                        Text = string.Format( titleFormatString, Path.GetFileName( openFileDialog.FileName ) );
                     }
                     else
                     {
@@ -76,7 +81,7 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override void OnClosing( CancelEventArgs e )
         {
             if (currentStream != null)
             {
@@ -85,7 +90,7 @@ namespace FFTPatcher.SpriteEditor
                 currentStream.Dispose();
                 currentStream = null;
             }
-            base.OnClosing(e);
+            base.OnClosing( e );
         }
 
         private void importSprMenuItem_Click( object sender, EventArgs e )
@@ -94,16 +99,16 @@ namespace FFTPatcher.SpriteEditor
             openFileDialog.Filter = "FFT Sprite (*.SPR)|*.spr";
             openFileDialog.FileName = string.Empty;
             openFileDialog.CheckFileExists = true;
-            if (currentSprite != null && openFileDialog.ShowDialog(this) == DialogResult.OK)
+            if (currentSprite != null && openFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 try
                 {
-                    currentSprite.ImportSprite(currentStream, openFileDialog.FileName);
+                    currentSprite.ImportSprite( currentStream, openFileDialog.FileName );
                     allSpritesEditor1.ReloadCurrentSprite();
                 }
                 catch (SpriteTooLargeException ex)
                 {
-                    MessageBox.Show(this, ex.Message, "Error");
+                    MessageBox.Show( this, ex.Message, "Error" );
                 }
             }
         }
@@ -115,9 +120,9 @@ namespace FFTPatcher.SpriteEditor
             saveFileDialog.FileName = string.Empty;
             saveFileDialog.CreatePrompt = false;
             saveFileDialog.OverwritePrompt = true;
-            if (currentSprite != null && saveFileDialog.ShowDialog(this) == DialogResult.OK)
+            if (currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
-                File.WriteAllBytes(saveFileDialog.FileName, currentSprite.GetAbstractSpriteFromIso(currentStream).ToByteArray(0));
+                File.WriteAllBytes( saveFileDialog.FileName, currentSprite.GetAbstractSpriteFromIso( currentStream ).ToByteArray( 0 ) );
             }
         }
 
@@ -127,7 +132,7 @@ namespace FFTPatcher.SpriteEditor
             openFileDialog.Filter = "8bpp paletted bitmap (*.BMP)|*.bmp";
             openFileDialog.FileName = string.Empty;
             openFileDialog.CheckFileExists = true;
-            if (currentSprite != null && openFileDialog.ShowDialog(this) == DialogResult.OK)
+            if (currentSprite != null && openFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 currentSprite.ImportBitmap( currentStream, openFileDialog.FileName );
                 allSpritesEditor1.ReloadCurrentSprite();
@@ -142,7 +147,7 @@ namespace FFTPatcher.SpriteEditor
             saveFileDialog.CreatePrompt = false;
             saveFileDialog.FileName = string.Empty;
 
-            if ( currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if (currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 currentSprite.GetAbstractSpriteFromIso( currentStream ).ToBitmap().Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
             }
@@ -155,16 +160,16 @@ namespace FFTPatcher.SpriteEditor
 
         private void importSp2MenuItem_Click( object sender, EventArgs e )
         {
-            int index = Int32.Parse( ( sender as Menu ).Tag.ToString() );
+            int index = Int32.Parse( (sender as Menu).Tag.ToString() );
             MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
-            if ( sprite != null )
+            if (sprite != null)
             {
                 openFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
                 openFileDialog.FileName = string.Empty;
                 openFileDialog.CheckFileExists = true;
-                if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+                if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
                 {
-                    (allSpritesEditor1.CurrentSprite as CharacterSprite).ImportSp2( currentStream, openFileDialog.FileName, index - 1);
+                    (allSpritesEditor1.CurrentSprite as CharacterSprite).ImportSp2( currentStream, openFileDialog.FileName, index - 1 );
                     allSpritesEditor1.ReloadCurrentSprite();
                 }
             }
@@ -172,15 +177,15 @@ namespace FFTPatcher.SpriteEditor
 
         private void exportSp2MenuItem_Click( object sender, EventArgs e )
         {
-            int index = Int32.Parse((sender as Menu).Tag.ToString());
+            int index = Int32.Parse( (sender as Menu).Tag.ToString() );
             MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
-            if ( sprite != null )
+            if (sprite != null)
             {
                 saveFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
                 saveFileDialog.FileName = string.Empty;
                 saveFileDialog.CreatePrompt = false;
                 saveFileDialog.OverwritePrompt = true;
-                if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+                if (saveFileDialog.ShowDialog( this ) == DialogResult.OK)
                 {
                     File.WriteAllBytes( saveFileDialog.FileName, sprite.ToByteArray( index ) );
                 }
@@ -189,20 +194,56 @@ namespace FFTPatcher.SpriteEditor
 
         private void sp2Menu_Popup( object sender, EventArgs e )
         {
-            foreach ( MenuItem mi in sp2Menu.MenuItems )
+            foreach (MenuItem mi in sp2Menu.MenuItems)
             {
                 mi.Enabled = false;
             }
 
             MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
-            if ( sprite != null && allSpritesEditor1.CurrentSprite is CharacterSprite)
+            if (sprite != null && allSpritesEditor1.CurrentSprite is CharacterSprite)
             {
                 int numChildren = (allSpritesEditor1.CurrentSprite as CharacterSprite).NumChildren;
-                for ( int i = 0; i < numChildren; i++ )
+                for (int i = 0; i < numChildren; i++)
                 {
                     sp2Menu.MenuItems[i * 3].Enabled = true;
                     sp2Menu.MenuItems[i * 3 + 1].Enabled = true;
                 }
+            }
+        }
+
+        private void importImageMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.Filter = "PNG files (*.png)|*.png";
+            if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                allOtherImagesEditor1.LoadToCurrentImage( openFileDialog.FileName );
+            }
+        }
+
+        private void exportImageMenuItem_Click( object sender, EventArgs e )
+        {
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.Filter = "PNG files (*.png)|*.png";
+
+            if (saveFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                allOtherImagesEditor1.SaveCurrentImage( saveFileDialog.FileName );
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            spriteMenuItem.Enabled = false;
+            imageMenuItem.Enabled = false;
+            if (tabControl1.SelectedTab == otherTabPage)
+            {
+                imageMenuItem.Enabled = true;
+            }
+
+            if (tabControl1.SelectedTab == spriteTabPage)
+            {
+                spriteMenuItem.Enabled = true;
             }
         }
 

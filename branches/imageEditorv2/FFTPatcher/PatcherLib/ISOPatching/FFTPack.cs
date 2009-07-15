@@ -1210,6 +1210,7 @@ namespace PatcherLib.Iso
             SOUND_MUSIC_97_SMD = 878,
             SOUND_MUSIC_98_SMD = 879,
             SOUND_MUSIC_99_SMD = 880,
+            OPEN_OPNBK_BIN = 883,
             BATTLE_MaleDarkKnight_SPR = 885,
             BATTLE_FemaleDarkKnight_SPR = 886,
             BATTLE_MaleOnionKnight_SPR = 887,

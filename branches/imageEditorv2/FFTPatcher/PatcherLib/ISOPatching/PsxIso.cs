@@ -2893,7 +2893,7 @@ namespace PatcherLib.Iso
                     dirEntryBytes[i] = entries[i].ToByteArray();
                 }
 
-                List<byte>[] sectors = new List<byte>[entries.Count];
+                List<byte>[] sectors = new List<byte>[numSectors];
                 for ( int i = 0; i < sectors.Length; i++ )
                     sectors[i] = new List<byte>( 2048 );
                 int currentSector = 0;

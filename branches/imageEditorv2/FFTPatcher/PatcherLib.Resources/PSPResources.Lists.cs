@@ -30,6 +30,18 @@ namespace PatcherLib
 
 
             private static IDictionary<ListType, ResourceListInfo> typeInfo = new Dictionary<ListType, ResourceListInfo> {
+                { ListType.Treasures,
+                    new ResourceListInfo {
+                        Doc = PSPResources.chronicleDoc,
+                        XPath = "/Chron/Artefacts/Entry[@value='{0}']",
+                        Length = 45,
+                        StartIndex = 0 } },
+                { ListType.UnexploredLands,
+                    new ResourceListInfo {
+                        Doc = PSPResources.chronicleDoc,
+                        XPath = "/Chron/Wonders/Entry[@value='{0}']",
+                        Length = 16,
+                        StartIndex = 0 } },
                 { ListType.AbilityAI, 
                     new ResourceListInfo { 
                         Doc = PSPResources.abilitiesStringsDoc, 
@@ -271,6 +283,23 @@ namespace PatcherLib
                     return GetListForType( ListType.SpriteSets );
                 }
             }
+
+            public static IList<string> Wonders
+            {
+                get
+                {
+                    return GetListForType( ListType.UnexploredLands );
+                }
+            }
+
+            public static IList<string> Artefacts
+            {
+                get
+                {
+                    return GetListForType( ListType.Treasures );
+                }
+            }
+
 
 
         }

@@ -294,5 +294,6 @@ namespace FFTPatcher.SpriteEditor
 
         #endregion Methods
 
+
     }
 }

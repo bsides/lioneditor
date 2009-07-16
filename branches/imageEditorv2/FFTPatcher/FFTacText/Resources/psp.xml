@@ -945,7 +945,10 @@
         <Section value="14" entries="512" empty="false" dte="true" compressible="false" name="Ability names">
           <includeResource name="PatcherLib.PSPResources+Lists.AbilityNames" start="0" end="511" offset="0"/>
         </Section>
-        <Section value="15" entries="77" empty="true" dte="true" compressible="true" name="Feat rewards"/>
+          <Section value="15" entries="77" empty="false" dte="true" compressible="true" name="Feat rewards">
+              <includeResource name="PatcherLib.PSPResources+Lists.Artefacts" start="0" end="30" offset="46"/>
+              <includeResource name="PatcherLib.PSPResources+Lists.Wonders" start="0" end="15" offset="27"/>
+          </Section>
         <Section value="16" entries="76" empty="true" dte="true" compressible="true" name="Tutorial menus"/>
         <Section value="17" entries="1" empty="true" dte="true" compressible="false" hide="true"/>
         <Section value="18" entries="44" empty="true" dte="true" compressible="false" name="Location names"/>
@@ -959,8 +962,15 @@
         <Section value="24" entries="32" empty="true" dte="true" compressible="true" name="Tutorial menus"/>
         <Section value="25" entries="185" empty="true" dte="true" compressible="true" name="Rumors/Multiplayer text"/>
         <Section value="26" entries="96" empty="true" dte="true" compressible="true" name="Feats names"/>
-        <Section value="27" entries="16" empty="true" dte="true" compressible="true" name="Wonders names"/>
-        <Section value="28" entries="47" empty="true" dte="true" compressible="true" name="Artefacts names"/>
+          <Section value="27" entries="16" empty="false" dte="true" compressible="true" name="Wonders names">
+              <includeResource name="PatcherLib.PSPResources+Lists.Wonders" start="0" end="15" offset="0"/>
+          </Section>
+          <Section value="28" entries="47" empty="false" dte="true" compressible="true" name="Artefacts names">
+              <includeResource name="PatcherLib.PSPResources+Lists.Artefacts" start="0" end="31" offset="0"/>
+              <entry value="32" name=""/>
+              <entry value="33" name=""/>
+              <includeResource name="PatcherLib.PSPResources+Lists.Artefacts" start="32" end="44" offset="2"/>
+          </Section>
         <Section value="29" entries="78" empty="true" dte="true" compressible="true" name="Events names"/>
         <Section value="30" entries="1024" empty="true" dte="false" compressible="false" name="Personae names"/>
         <Section value="31" entries="96" empty="true" dte="true"  compressible="true" name="Feats descriptions"/>
@@ -1222,8 +1232,15 @@
       <Sections count="121">
         <Section value="0" entries="68" empty="true" dte="true"/>
         <Section value="1" entries="96" empty="true" dte="true"/>
-        <Section value="2" entries="16" empty="true" dte="true"/>
-        <Section value="3" entries="47" empty="true" dte="true"/>
+          <Section value="2" entries="16" empty="false" dte="true">
+              <includeResource name="PatcherLib.PSPResources+Lists.Wonders" start="0" end="15" offset="0"/>
+          </Section>
+          <Section value="3" entries="47" empty="false" dte="true">
+              <includeResource name="PatcherLib.PSPResources+Lists.Artefacts" start="0" end="31" offset="0"/>
+              <entry value="32" name=""/>
+              <entry value="33" name=""/>
+              <includeResource name="PatcherLib.PSPResources+Lists.Artefacts" start="32" end="44" offset="2"/>
+          </Section>
         <Section value="4" entries="48" empty="true" dte="true"/>
         <Section value="5" entries="30" empty="true" dte="true"/>
         <Section value="6" entries="24" empty="true" dte="true"/>

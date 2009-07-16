@@ -8,9 +8,9 @@ using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor
 {
-    public class PalettedImage : AbstractImage
+    public class PalettedImage4bpp : AbstractImage
     {
-        public PalettedImage( 
+        public PalettedImage4bpp( 
             string name, 
             int width, int height, 
             int numPalettes,
@@ -19,6 +19,7 @@ namespace FFTPatcher.SpriteEditor
             : base( name, width, height, imagePosition )
         {
             this.palettePosition = palettePosition;
+            System.Diagnostics.Debug.Assert( palettePosition.Length == 16 * 2 );
         }
 
         private PatcherLib.Iso.KnownPosition palettePosition;
@@ -34,18 +35,12 @@ namespace FFTPatcher.SpriteEditor
                 splitBytes.Add( b.GetUpperNibble() );
             }
 
-            Bitmap result = new Bitmap( Width, Height, System.Drawing.Imaging.PixelFormat.Format4bppIndexed );
-            ColorPalette palette = result.Palette;
-            Palette.FixupColorPalette( palette, new Palette[] { p } );
-            result.Palette = palette;
-
-            BitmapData bmd = result.LockBits( new Rectangle( 0, 0, Width, Height ), ImageLockMode.WriteOnly, result.PixelFormat );
+            Bitmap result = new Bitmap( Width, Height );
 
             for (int i = 0; i < Width * Height; i++)
             {
-                bmd.SetPixel8bpp( i % Width, i / Width, splitBytes[i] );
+                result.SetPixel( i % Width, i / Width, p[splitBytes[i]] );
             }
-            result.UnlockBits( bmd );
 
             return result;
         }

@@ -33,6 +33,8 @@ namespace PatcherLib
     {
         internal enum ListType
         {
+            Treasures,
+            UnexploredLands,
             SpriteFiles,
             AbilityAI,
             AbilityAttributes,
@@ -247,6 +249,7 @@ namespace PatcherLib
                     public const string StatusAttributes = "PSP/bin/StatusAttributes.bin";
                     public const string StoreInventories = "StoreInventories.bin";
                 }
+                public const string ChroniclesXML = "PSP/Chronicle.xml";
                 public const string UnitNamesXML = "PSP/UnitNames.xml";
                 public const string EventNamesXML = "PSP/EventNames.xml";
                 public const string JobsXML = "PSP/Jobs.xml";
@@ -295,6 +298,7 @@ namespace PatcherLib
                     public const string StatusAttributes = "PSX-US/bin/StatusAttributes.bin";
                     public const string StoreInventories = "StoreInventories.bin";
                 }
+                public const string BraveStoryXML = "PSX-US/BraveStory.xml";
                 public const string UnitNamesXML = "PSX-US/UnitNames.xml";
                 public const string EventNamesXML = "PSX-US/EventNames.xml";
                 public const string FileList = "PSX-US/FileList.txt";

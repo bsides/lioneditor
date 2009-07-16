@@ -49,6 +49,7 @@ namespace PatcherLib
         private static XmlDocument unitNamesDoc;
 
         private static XmlDocument spriteFilesDoc;
+        private static XmlDocument chronicleDoc;
 
         public static IList<string> CharacterSet { get; private set; }
 
@@ -113,6 +114,7 @@ namespace PatcherLib
             abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSP.AbilitiesNamesXML].ToUTF8String().ToXmlDocument();
             unitNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.UnitNamesXML].ToUTF8String().ToXmlDocument();
             spriteFilesDoc = Resources.ZipFileContents[Resources.Paths.PSP.SpriteFilesXML].ToUTF8String().ToXmlDocument();
+            chronicleDoc = Resources.ZipFileContents[Resources.Paths.PSP.ChroniclesXML].ToUTF8String().ToXmlDocument();
 
             string[] characterSet = new string[2200];
             PSXResources.CharacterSet.CopyTo( characterSet, 0 );

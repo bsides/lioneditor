@@ -56,11 +56,11 @@ namespace PatcherLib
         private static XmlDocument mapNamesDoc;
         private static XmlDocument unitNamesDoc;
         private static XmlDocument spriteFilesDoc;
+        private static XmlDocument braveStoryDoc;
 
         static PSXResources()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
-
             Binaries.ReactionAbilityEffects = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ReactionAbilityEffects].AsReadOnly();
             Binaries.StoreInventories = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories].AsReadOnly();
             Binaries.ENTD1 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1].AsReadOnly();
@@ -100,6 +100,7 @@ namespace PatcherLib
             spriteFilesDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpriteFilesXML].ToUTF8String().ToXmlDocument();
             statusNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String().ToXmlDocument();
             abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String().ToXmlDocument();
+            braveStoryDoc = Resources.ZipFileContents[Resources.Paths.PSX.BraveStoryXML].ToUTF8String().ToXmlDocument();
 
             dict[Resources.Paths.PSX.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemAttributesXML].ToUTF8String();
 

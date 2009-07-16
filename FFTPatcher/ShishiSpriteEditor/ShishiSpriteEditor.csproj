@@ -117,7 +117,8 @@
     <Compile Include="DataTypes\CharacterSprite.cs" />
     <Compile Include="DataTypes\OtherImages\AbstractImage.cs" />
     <Compile Include="DataTypes\OtherImages\AllOtherImages.cs" />
-    <Compile Include="DataTypes\OtherImages\PalettedImage.cs" />
+    <Compile Include="DataTypes\OtherImages\PalettedImage4bpp.cs" />
+    <Compile Include="DataTypes\OtherImages\PalettedImage8bpp.cs" />
     <Compile Include="DataTypes\OtherImages\Raw16BitImage.cs" />
     <Compile Include="DataTypes\Sequence.cs" />
     <Compile Include="DataTypes\Sprite.cs" />

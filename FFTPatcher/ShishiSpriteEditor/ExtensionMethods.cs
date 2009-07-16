@@ -51,15 +51,15 @@ namespace FFTPatcher.SpriteEditor
         {
             BitmapData bmdSource = source.LockBits( new Rectangle( 0, 0, source.Width, source.Height ), ImageLockMode.ReadOnly, source.PixelFormat );
             BitmapData bmdDest = destination.LockBits( new Rectangle( 0, 0, destination.Width, destination.Height ), ImageLockMode.WriteOnly, destination.PixelFormat );
-            if( flip )
+            if (flip)
             {
-                for( int col = 0; col < sourceRectangle.Width; col++ )
+                for (int col = 0; col < sourceRectangle.Width; col++)
                 {
-                    for( int row = 0; row < sourceRectangle.Height; row++ )
+                    for (int row = 0; row < sourceRectangle.Height; row++)
                     {
                         int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
                         Color c = sourcePalette.Colors[index % 16];
-                        if( c.A != 0 )
+                        if (c.A != 0)
                         {
                             bmdDest.SetPixel32bpp( destinationPoint.X + (sourceRectangle.Width - col - 1), destinationPoint.Y + row, c );
                         }
@@ -68,14 +68,14 @@ namespace FFTPatcher.SpriteEditor
             }
             else
             {
-                for( int col = 0; col < sourceRectangle.Width; col++ )
+                for (int col = 0; col < sourceRectangle.Width; col++)
                 {
-                    for( int row = 0; row < sourceRectangle.Height; row++ )
+                    for (int row = 0; row < sourceRectangle.Height; row++)
                     {
                         int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
                         Color c = sourcePalette.Colors[index % 16];
 
-                        if( c.A != 0 )
+                        if (c.A != 0)
                         {
                             bmdDest.SetPixel32bpp( destinationPoint.X + col, destinationPoint.Y + row, c );
                         }
@@ -112,17 +112,17 @@ namespace FFTPatcher.SpriteEditor
                 (CalcOffset)(row => (height - row - 1)) :
                 (CalcOffset)(row => row);
 
-            for( int col = 0; col < sourceRectangle.Width; col++ )
+            for (int col = 0; col < sourceRectangle.Width; col++)
             {
-                for( int row = 0; row < sourceRectangle.Height; row++ )
+                for (int row = 0; row < sourceRectangle.Height; row++)
                 {
                     int index = bmdSource.GetPixel( col + sourceRectangle.X, row + sourceRectangle.Y );
                     if (palette.Colors[index % 16].A != 0)
                     {
                         bmdDest.SetPixel8bpp(
-                            x + calcX(col),
-                            y + calcY(row),
-                            index);
+                            x + calcX( col ),
+                            y + calcY( row ),
+                            index );
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace FFTPatcher.SpriteEditor
         /// <param name="g">The <see cref="Graphics"/> object to draw on.</param>
         public static void DrawSprite( this Graphics g, AbstractSprite s, int palette, int portrait )
         {
-            using ( Bitmap b = new Bitmap( s.Width, s.Height ) )
+            using (Bitmap b = new Bitmap( s.Width, s.Height ))
             {
                 b.DrawSprite( s, palette, portrait );
                 g.DrawImage( b, 0, 0 );
@@ -185,15 +185,15 @@ namespace FFTPatcher.SpriteEditor
             int offset = y * bmd.Stride + x / 2;
             byte* p = (byte*)bmd.Scan0.ToPointer();
             byte currentByte = p[offset];
-            if ( ( x & 1 ) == 1 )
+            if ((x & 1) == 1)
             {
                 currentByte &= 0xF0;
-                currentByte |= (byte)( index & 0x0F );
+                currentByte |= (byte)(index & 0x0F);
             }
             else
             {
                 currentByte &= 0x0F;
-                currentByte |= (byte)( ( index & 0x0F ) << 4 );
+                currentByte |= (byte)((index & 0x0F) << 4);
             }
 
             p[offset] = currentByte;
@@ -224,9 +224,9 @@ namespace FFTPatcher.SpriteEditor
         public static Image ToImage( this IList<IList<Color>> colors )
         {
             Bitmap b = new Bitmap( colors.Count, colors[0].Count );
-            for ( int x = 0; x < b.Width; x++ )
+            for (int x = 0; x < b.Width; x++)
             {
-                for ( int y = 0; y < b.Height; y++ )
+                for (int y = 0; y < b.Height; y++)
                 {
                     b.SetPixel( x, y, colors[x][y] );
                 }

@@ -136,7 +136,36 @@ namespace PatcherLib
                     return GetListForType( ListType.SpriteSets );
                 }
             }
+
+            public static IList<string> Treasures
+            {
+                get
+                {
+                    return GetListForType( ListType.Treasures );
+                }
+            }
+
+            public static IList<string> UnexploredLands
+            {
+                get
+                {
+                    return GetListForType( ListType.UnexploredLands );
+                }
+            }
+
             private static IDictionary<ListType, ResourceListInfo> typeInfo = new Dictionary<ListType, ResourceListInfo> {
+                { ListType.Treasures,
+                    new ResourceListInfo {
+                        Doc = braveStoryDoc,
+                        XPath = "/BS/Treasures/entry[@value='{0}']/@name",
+                        Length = 45,
+                        StartIndex = 0 } },
+                { ListType.UnexploredLands,
+                    new ResourceListInfo {
+                        Doc = braveStoryDoc,
+                        XPath = "/BS/UnexploredLands/entry[@value='{0}']/@name",
+                        Length = 16,
+                        StartIndex = 0 } },
                 { ListType.AbilityAI, 
                     new ResourceListInfo { 
                         Doc = abilitiesStringsDoc, 

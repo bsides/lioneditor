@@ -18,7 +18,7 @@ namespace FFTPatcher.SpriteEditor
         const long defaultIsoLength = 541315152;
         const long expandedIsoLength = 0x20F18D00;
         const long defaultSectorCount = 230151;
-        const long expandedSectorCount = 0x20F18D00/2352;
+        const long expandedSectorCount = 0x20F18D00 / 2352;
 
         public int Count { get; private set; }
 
@@ -28,32 +28,33 @@ namespace FFTPatcher.SpriteEditor
         }
 
         public IDictionary<Sprite, IList<int>> SharedSPRs { get; private set; }
-        
-        public static AllSprites FromIso(Stream iso)
+
+        public static AllSprites FromIso( Stream iso )
         {
             if (iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0)
             {
                 // assume psx
-                return FromPsxIso(iso);
+                return FromPsxIso( iso );
             }
             else if (iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0)
             {
                 // assume psp
-                return FromPspIso(iso);
+                return FromPspIso( iso );
             }
             else
             {
-                throw new ArgumentException("iso");
+                throw new ArgumentException( "iso" );
             }
         }
 
-        public static AllSprites FromPsxIso(Stream iso)
+        public static AllSprites FromPsxIso( Stream iso )
         {
-            if (!DetectExpansionOfPsxIso(iso))
+            if (!DetectExpansionOfPsxIso( iso ))
             {
-                ExpandPsxIso(iso);
+                ExpandPsxIso( iso );
             }
-            return new AllSprites(Context.US_PSX, AllSpriteAttributes.FromPsxIso(iso), SpriteFileLocations.FromPsxIso(iso),
+
+            return new AllSprites( Context.US_PSX, AllSpriteAttributes.FromPsxIso( iso ), SpriteFileLocations.FromPsxIso( iso ),
                 new Sprite[] {
                     new WepSprite(Context.US_PSX, WepSprite.Wep.WEP1, "WEP1", new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR,0,256*256/2+0x200)),
                     new WepSprite(Context.US_PSX, WepSprite.Wep.WEP2, "WEP2", new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.BATTLE_WEP_SPR,256*256/2+0x200,256*256/2+0x200)),
@@ -62,10 +63,11 @@ namespace FFTPatcher.SpriteEditor
 
         }
 
-        public static AllSprites FromPspIso(Stream iso)
+        public static AllSprites FromPspIso( Stream iso )
         {
-            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso);
-            return new AllSprites(Context.US_PSP, AllSpriteAttributes.FromPspIso(iso, info), SpriteFileLocations.FromPspIso(iso, info),
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
+
+            return new AllSprites( Context.US_PSP, AllSpriteAttributes.FromPspIso( iso, info ), SpriteFileLocations.FromPspIso( iso, info ),
                 new Sprite[] {
                     new WepSprite(Context.US_PSP, WepSprite.Wep.WEP1, "WEP1", new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.BATTLE_WEP_SPR,0,256*256/2+0x200)),
                     new WepSprite(Context.US_PSP, WepSprite.Wep.WEP2, "WEP2", new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.BATTLE_WEP_SPR,256*256/2+0x200,256*256/2+0x200)),
@@ -81,7 +83,7 @@ namespace FFTPatcher.SpriteEditor
             public byte Minutes { get { return min; } }
             public byte Seconds { get { return sec; } }
             public byte Frames { get { return f; } }
-            public Time(byte m, byte s, byte f) 
+            public Time( byte m, byte s, byte f )
             {
                 min = m;
                 sec = s;
@@ -94,7 +96,7 @@ namespace FFTPatcher.SpriteEditor
                 byte newS = sec;
                 byte newMin = min;
 
-                if ( newF == 75 )
+                if (newF == 75)
                 {
                     newF = 0;
                     newS++;
@@ -104,7 +106,7 @@ namespace FFTPatcher.SpriteEditor
                         newMin++;
                     }
                 }
-                return new Time(newMin, newS, newF);
+                return new Time( newMin, newS, newF );
             }
             public byte[] ToBCD()
             {
@@ -115,55 +117,55 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        private static void ExpandPspIso(Stream iso)
+        private static void ExpandPspIso( Stream iso )
         {
-            throw new InvalidOperationException("This method doesn't work.");
+            throw new InvalidOperationException( "This method doesn't work." );
             return;
             string tempPath = Path.GetTempPath();
             string guid = Path.GetRandomFileName();
-            string tempDirPath = Path.Combine(tempPath, guid);
-            DirectoryInfo temp = Directory.CreateDirectory(tempDirPath);
+            string tempDirPath = Path.Combine( tempPath, guid );
+            DirectoryInfo temp = Directory.CreateDirectory( tempDirPath );
 
-            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso);
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
             long fftpackSector = info[PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin];
-            iso.Seek(2048 * fftpackSector, SeekOrigin.Begin);
+            iso.Seek( 2048 * fftpackSector, SeekOrigin.Begin );
 
             // Dump the fftpack
-            PatcherLib.Iso.FFTPack.DumpToDirectory(iso, tempDirPath, info.GetFileSize(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin), null);
+            PatcherLib.Iso.FFTPack.DumpToDirectory( iso, tempDirPath, info.GetFileSize( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin ), null );
 
             // Decrypt the ISO  while we have it open...
-            PatcherLib.Iso.PspIso.DecryptISO(iso, info);
+            PatcherLib.Iso.PspIso.DecryptISO( iso, info );
 
-            string battleDirPath = Path.Combine(tempDirPath, "BATTLE");
+            string battleDirPath = Path.Combine( tempDirPath, "BATTLE" );
 
             // Read the sector -> fftpack map
-            IList<byte> fftpackMap = 
+            IList<byte> fftpackMap =
                 PatcherLib.Iso.PspIso.GetBlock(
-                    iso, 
-                    info, 
-                    new PatcherLib.Iso.PspIso.KnownPosition(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x252f34, 0x3e00));
+                    iso,
+                    info,
+                    new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x252f34, 0x3e00 ) );
 
             // Convert the fake "Sectors" into FFTPack indices
             Dictionary<uint, int> sectorToFftPackMap = new Dictionary<uint, int>();
             Dictionary<int, uint> fftPackToSectorMap = new Dictionary<int, uint>();
             for (int i = 3; i < PatcherLib.Iso.FFTPack.NumFftPackFiles - 1; i++)
             {
-                UInt32 sector = fftpackMap.Sub((i-3)*4,(i-3)*4+4-1).ToUInt32();
-                sectorToFftPackMap.Add(sector, i);
-                fftPackToSectorMap.Add(i, sector);
+                UInt32 sector = fftpackMap.Sub( (i - 3) * 4, (i - 3) * 4 + 4 - 1 ).ToUInt32();
+                sectorToFftPackMap.Add( sector, i );
+                fftPackToSectorMap.Add( i, sector );
             }
 
-            const int numPspSp2 = 0x130/8;
-            const int numPspSprites = 0x4d0/8+0x58/8;
+            const int numPspSp2 = 0x130 / 8;
+            const int numPspSprites = 0x4d0 / 8 + 0x58 / 8;
             byte[][] oldSpriteBytes = new byte[numPspSprites][];
 
             // Save the old sprites
-            var locs = SpriteFileLocations.FromPspIso(iso, PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso));
+            var locs = SpriteFileLocations.FromPspIso( iso, PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso ) );
             for (int i = 0; i < numPspSprites; i++)
             {
                 oldSpriteBytes[i] = new byte[65536];
 
-                PatcherLib.Iso.FFTPack.GetFileFromIso(iso, info, (PatcherLib.Iso.FFTPack.Files)sectorToFftPackMap[locs[i].Sector]).CopyTo(oldSpriteBytes[i], 0);
+                PatcherLib.Iso.FFTPack.GetFileFromIso( iso, info, (PatcherLib.Iso.FFTPack.Files)sectorToFftPackMap[locs[i].Sector] ).CopyTo( oldSpriteBytes[i], 0 );
             }
 
             byte[] emptyByteArray = new byte[0];
@@ -177,8 +179,8 @@ namespace FFTPatcher.SpriteEditor
 
             for (int i = 0; i < numPspSprites; i++)
             {
-                File.Delete(Path.Combine(tempDirPath, string.Format("unknown/fftpack.{0}.dummy", i + 1340)));
-                File.WriteAllBytes(Path.Combine(tempDirPath, string.Format("unknown/fftpack.{0}", i + 1340)), oldSpriteBytes[i]);
+                File.Delete( Path.Combine( tempDirPath, string.Format( "unknown/fftpack.{0}.dummy", i + 1340 ) ) );
+                File.WriteAllBytes( Path.Combine( tempDirPath, string.Format( "unknown/fftpack.{0}", i + 1340 ) ), oldSpriteBytes[i] );
                 locs[i].Sector = fftPackToSectorMap[i + 1340];
                 locs[i].Size = 65536;
             }
@@ -186,27 +188,27 @@ namespace FFTPatcher.SpriteEditor
             List<byte> newSpriteLocations = new List<byte>();
             for (int i = 0; i < 154; i++)
             {
-                newSpriteLocations.AddRange(locs[i].Sector.ToBytes());
-                newSpriteLocations.AddRange(locs[i].Size.ToBytes());
+                newSpriteLocations.AddRange( locs[i].Sector.ToBytes() );
+                newSpriteLocations.AddRange( locs[i].Size.ToBytes() );
             }
-            newSpriteLocations.AddRange(new byte[32]);
+            newSpriteLocations.AddRange( new byte[32] );
             for (int i = 154; i < numPspSprites; i++)
             {
-                newSpriteLocations.AddRange(locs[i].Sector.ToBytes());
-                newSpriteLocations.AddRange(locs[i].Size.ToBytes());
+                newSpriteLocations.AddRange( locs[i].Sector.ToBytes() );
+                newSpriteLocations.AddRange( locs[i].Size.ToBytes() );
             }
 
             byte[] newSpriteLocationsArray = newSpriteLocations.ToArray();
-            string outputPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-            PatcherLib.Iso.FFTPack.MergeDumpedFiles(tempDirPath, outputPath, null);
+            string outputPath = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName() );
+            PatcherLib.Iso.FFTPack.MergeDumpedFiles( tempDirPath, outputPath, null );
 
-            long oldFftPackSize = info.GetFileSize(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin);
+            long oldFftPackSize = info.GetFileSize( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin );
             byte[] oldFftPackSizeBytes = oldFftPackSize.ToBytes();
             oldFftPackSizeBytes = new byte[8] { 
                 oldFftPackSizeBytes[0], oldFftPackSizeBytes[1], oldFftPackSizeBytes[2], oldFftPackSizeBytes[3], 
                 oldFftPackSizeBytes[3], oldFftPackSizeBytes[2], oldFftPackSizeBytes[1], oldFftPackSizeBytes[0] };
-            
-            using (Stream newFftPack = File.OpenRead(outputPath))
+
+            using (Stream newFftPack = File.OpenRead( outputPath ))
             {
                 long newFftPackSize = newFftPack.Length;
                 byte[] newFftPackSizeBytes = newFftPackSize.ToBytes();
@@ -214,61 +216,61 @@ namespace FFTPatcher.SpriteEditor
                     newFftPackSizeBytes[0], newFftPackSizeBytes[1], newFftPackSizeBytes[2], newFftPackSizeBytes[3], 
                     newFftPackSizeBytes[3], newFftPackSizeBytes[2], newFftPackSizeBytes[1], newFftPackSizeBytes[0] };
 
-                ReplaceBytesInStream(iso, oldFftPackSizeBytes, newFftPackSizeBytes);
-                CopyStream(newFftPack,0,iso,info[PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin]*2048,newFftPack.Length);
-                long oldLength = info.GetFileSize(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin);
+                ReplaceBytesInStream( iso, oldFftPackSizeBytes, newFftPackSizeBytes );
+                CopyStream( newFftPack, 0, iso, info[PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, newFftPack.Length );
+                long oldLength = info.GetFileSize( PatcherLib.Iso.PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin );
                 if (newFftPack.Length < oldLength)
                 {
-                    iso.Write(new byte[oldLength - newFftPack.Length], 0, (int)(oldLength - newFftPack.Length));
+                    iso.Write( new byte[oldLength - newFftPack.Length], 0, (int)(oldLength - newFftPack.Length) );
                 }
             }
-            Directory.Delete(tempDirPath, true);
-            File.Delete(outputPath);
+            Directory.Delete( tempDirPath, true );
+            File.Delete( outputPath );
 
-            PatcherLib.Iso.PspIso.PatchISO(iso, new PatchedByteArray[] { 
+            PatcherLib.Iso.PspIso.PatchISO( iso, new PatchedByteArray[] { 
                 new PatchedByteArray(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x324824, newSpriteLocationsArray),
-                new PatchedByteArray(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x324824, newSpriteLocationsArray)});
+                new PatchedByteArray(PatcherLib.Iso.PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x324824, newSpriteLocationsArray)} );
 
         }
 
-        private static void ReplaceBytesInStream(Stream stream, byte[] bytesToReplace, byte[] newBytes)
+        private static void ReplaceBytesInStream( Stream stream, byte[] bytesToReplace, byte[] newBytes )
         {
-            System.Diagnostics.Debug.Assert(bytesToReplace.Length == newBytes.Length);
+            System.Diagnostics.Debug.Assert( bytesToReplace.Length == newBytes.Length );
             byte[] buffer = new byte[bytesToReplace.Length];
-            stream.Seek(0, SeekOrigin.Begin);
-            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+            stream.Seek( 0, SeekOrigin.Begin );
+            int bytesRead = stream.Read( buffer, 0, buffer.Length );
             while (bytesRead == buffer.Length)
             {
-                if (PatcherLib.Utilities.Utilities.CompareArrays(buffer, bytesToReplace))
+                if (PatcherLib.Utilities.Utilities.CompareArrays( buffer, bytesToReplace ))
                 {
-                    stream.Seek(-buffer.Length, SeekOrigin.Current);
-                    stream.Write(newBytes, 0, newBytes.Length);
+                    stream.Seek( -buffer.Length, SeekOrigin.Current );
+                    stream.Write( newBytes, 0, newBytes.Length );
                     break;
                 }
                 else
                 {
-                    stream.Seek(-(buffer.Length - 1), SeekOrigin.Current);
-                    bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    stream.Seek( -(buffer.Length - 1), SeekOrigin.Current );
+                    bytesRead = stream.Read( buffer, 0, buffer.Length );
                 }
             }
         }
 
-        private static void CopyStream(Stream source, long sourcePosition, Stream destination, long destinationPosition, long count)
+        private static void CopyStream( Stream source, long sourcePosition, Stream destination, long destinationPosition, long count )
         {
             long copied = 0;
             byte[] buffer = new byte[2048];
-            source.Seek(sourcePosition, SeekOrigin.Begin);
-            destination.Seek(destinationPosition, SeekOrigin.Begin);
+            source.Seek( sourcePosition, SeekOrigin.Begin );
+            destination.Seek( destinationPosition, SeekOrigin.Begin );
 
-            while(copied < count)
+            while (copied < count)
             {
-                int bytesCopied = source.Read(buffer, 0, 2048);
-                destination.Write(buffer, 0, bytesCopied);
+                int bytesCopied = source.Read( buffer, 0, 2048 );
+                destination.Write( buffer, 0, bytesCopied );
                 copied += bytesCopied;
             }
         }
 
-        public static void ExpandPsxIso(Stream iso)
+        public static void ExpandPsxIso( Stream iso )
         {
             byte[] expandedBytes = expandedSectorCount.ToBytes();
             byte[] reverseBytes = new byte[4] { expandedBytes[3], expandedBytes[2], expandedBytes[1], expandedBytes[0] };
@@ -285,12 +287,12 @@ namespace FFTPatcher.SpriteEditor
             //iso.Write(Properties.Resources.PatchedDummyFolder, 0, Properties.Resources.PatchedDummyFolder.Length);
 
             // Read old sprites
-            var locs = SpriteFileLocations.FromPsxIso(iso);
+            var locs = SpriteFileLocations.FromPsxIso( iso );
             byte[][] oldSprites = new byte[NumPsxSprites][];
             for (int i = 0; i < NumPsxSprites; i++)
             {
                 var loc = locs[i];
-                oldSprites[i] = PatcherLib.Iso.PsxIso.ReadFile(iso, (PatcherLib.Iso.PsxIso.Sectors)loc.Sector, 0, (int)loc.Size);
+                oldSprites[i] = PatcherLib.Iso.PsxIso.ReadFile( iso, (PatcherLib.Iso.PsxIso.Sectors)loc.Sector, 0, (int)loc.Size );
             }
 
             Set<string> allowedEntries = new Set<string>( new string[] {
@@ -306,14 +308,14 @@ namespace FFTPatcher.SpriteEditor
                 "OTHER.SEQ;1",                "OTHER.SHP;1",                "OTHER.SPR;1",                "RUKA.SEQ;1",
                 "TYPE1.SEQ;1",                "TYPE1.SHP;1",                "TYPE2.SEQ;1",                "TYPE2.SHP;1",
                 "TYPE3.SEQ;1",                "TYPE4.SEQ;1",                "WEP.SPR;1",                "WEP1.SEQ;1",
-                "WEP1.SHP;1",                "WEP2.SEQ;1",                "WEP2.SHP;1",                "ZODIAC.BIN;1"});
-            
-            List<PatcherLib.Iso.PsxIso.DirectoryEntry> battleDir = new List<PatcherLib.Iso.PsxIso.DirectoryEntry>(PatcherLib.Iso.PsxIso.DirectoryEntry.GetBattleEntries(iso));
+                "WEP1.SHP;1",                "WEP2.SEQ;1",                "WEP2.SHP;1",                "ZODIAC.BIN;1"} );
+
+            List<PatcherLib.Iso.PsxIso.DirectoryEntry> battleDir = new List<PatcherLib.Iso.PsxIso.DirectoryEntry>( PatcherLib.Iso.PsxIso.DirectoryEntry.GetBattleEntries( iso ) );
             byte[] extBytes = battleDir[2].ExtendedBytes;
-            System.Diagnostics.Debug.Assert(battleDir.Sub(2).TrueForAll(ent => PatcherLib.Utilities.Utilities.CompareArrays(extBytes, ent.ExtendedBytes)));
+            System.Diagnostics.Debug.Assert( battleDir.Sub( 2 ).TrueForAll( ent => PatcherLib.Utilities.Utilities.CompareArrays( extBytes, ent.ExtendedBytes ) ) );
             byte[] midBytes = battleDir[2].MiddleBytes;
-            System.Diagnostics.Debug.Assert(battleDir.Sub(2).TrueForAll(ent => PatcherLib.Utilities.Utilities.CompareArrays(midBytes, ent.MiddleBytes)));
-            battleDir.RemoveAll(dirent => !allowedEntries.Contains(dirent.Filename));
+            System.Diagnostics.Debug.Assert( battleDir.Sub( 2 ).TrueForAll( ent => PatcherLib.Utilities.Utilities.CompareArrays( midBytes, ent.MiddleBytes ) ) );
+            battleDir.RemoveAll( dirent => !allowedEntries.Contains( dirent.Filename ) );
 
             // Expand length of ISO
             byte[] anchorBytes = new byte[] { 
@@ -329,109 +331,109 @@ namespace FFTPatcher.SpriteEditor
             //byte[] sectorBytes = new byte[8];
             //byte[] endOfFileBytes = new byte[8];
             byte[] emptySector = new byte[2328];
-            Time t = new Time(51, 9, 39);
+            Time t = new Time( 51, 9, 39 );
             for (long l = 0x2040B100; l < 0x20F18D00; l += 2352)
             {
                 // write 0x00FFFFFF FFFFFFFF FFFFFF00 MM SS FF 02
-                  // write 0x00000800 00000800 for sector of file
-                  // write 0x00008900 00008900 for last sector of file
-                iso.Seek(l, SeekOrigin.Begin);
-                iso.Write(anchorBytes,0, anchorBytes.Length);
-                iso.Write(t.ToBCD(), 0, 3);
+                // write 0x00000800 00000800 for sector of file
+                // write 0x00008900 00008900 for last sector of file
+                iso.Seek( l, SeekOrigin.Begin );
+                iso.Write( anchorBytes, 0, anchorBytes.Length );
+                iso.Write( t.ToBCD(), 0, 3 );
                 t = t.AddFrame();
-                iso.WriteByte(0x02);
-                if ((l - 0x2040B100+2352) % 0x12600 != 0)
+                iso.WriteByte( 0x02 );
+                if ((l - 0x2040B100 + 2352) % 0x12600 != 0)
                 {
-                    iso.Write(sectorBytes, 0, 8);
+                    iso.Write( sectorBytes, 0, 8 );
                 }
                 else
                 {
-                    iso.Write(endOfFileBytes, 0, 8);
+                    iso.Write( endOfFileBytes, 0, 8 );
                 }
-                iso.Write(emptySector, 0, 2328);
+                iso.Write( emptySector, 0, 2328 );
             }
 
 
             // Copy old sprites to new locations
-            List<byte> posBytes = new List<byte>(NumPsxSprites * 8);
+            List<byte> posBytes = new List<byte>( NumPsxSprites * 8 );
             const long startSector = 0x2040B100 / 2352;
-            for ( int i = 0; i < NumPsxSprites; i++ )
+            for (int i = 0; i < NumPsxSprites; i++)
             {
-                uint sector = (uint)( startSector + i * 65536 / 2048 );
+                uint sector = (uint)(startSector + i * 65536 / 2048);
                 byte[] bytes = oldSprites[i];
                 byte[] realBytes = new byte[65536];
                 bytes.CopyTo( realBytes, 0 );
                 PatcherLib.Iso.PsxIso.PatchPsxIso( iso, new PatchedByteArray( (int)sector, 0, realBytes ) );
                 posBytes.AddRange( sector.ToBytes() );
-                posBytes.AddRange(((uint)realBytes.Length).ToBytes());
+                posBytes.AddRange( ((uint)realBytes.Length).ToBytes() );
 
-                battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(sector, 65536, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                    string.Format("{0:X2}.SPR;1", i), battleDir[2].ExtendedBytes));
+                battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry( sector, 65536, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
+                    string.Format( "{0:X2}.SPR;1", i ), battleDir[2].ExtendedBytes ) );
             }
 
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_ARLI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "8C.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "8C.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIBU2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "95.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "95.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_BOM2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "87.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "87.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_BEHI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "92.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "92.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_DEMON2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "98.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "98.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_DORA22_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "94.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "94.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_HYOU2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "88.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "88.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON5_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "99_2.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "99_2.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON4_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "99_3.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "99_3.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "99_4.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "99_4.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON3_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "99_5.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "99_5.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_MINOTA2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "90.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "90.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_MOL2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "91.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "91.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_TORI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "8D.SP2;1", battleDir[2].ExtendedBytes));
-            battleDir.Add(new PatcherLib.Iso.PsxIso.DirectoryEntry(
+                "8D.SP2;1", battleDir[2].ExtendedBytes ) );
+            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_URI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
-                "8E.SP2;1", battleDir[2].ExtendedBytes));
+                "8E.SP2;1", battleDir[2].ExtendedBytes ) );
 
             //"ARLI2.SP2;1",  // 0x8c     
-                //"BIBU2.SP2;1", // 0x95
-                //"BOM2.SP2;1", // 0x87
-                //"BEHI2.SP2;1", // 0x92
-                //"DEMON2.SP2;1", // 0x98         
-                //"DORA22.SP2;1", // 0x94
-                //"HYOU2.SP2;1",  // 0x88
-                //"IRON5.SP2;1",                
-                //"IRON4.SP2;1",                
-                //"IRON2.SP2;1",                
-                //"IRON3.SP2;1",
-                //"MINOTA2.SP2;1", // 0x90         
-                //"MOL2.SP2;1",  // 0x91  
-                //"TORI2.SP2;1", // 0x8d
-                //"UR2.SP2;1", // 0x8e
+            //"BIBU2.SP2;1", // 0x95
+            //"BOM2.SP2;1", // 0x87
+            //"BEHI2.SP2;1", // 0x92
+            //"DEMON2.SP2;1", // 0x98         
+            //"DORA22.SP2;1", // 0x94
+            //"HYOU2.SP2;1",  // 0x88
+            //"IRON5.SP2;1",                
+            //"IRON4.SP2;1",                
+            //"IRON2.SP2;1",                
+            //"IRON3.SP2;1",
+            //"MINOTA2.SP2;1", // 0x90         
+            //"MOL2.SP2;1",  // 0x91  
+            //"TORI2.SP2;1", // 0x8d
+            //"UR2.SP2;1", // 0x8e
 
-            battleDir.Sort((a, b) => a.Filename.CompareTo(b.Filename));
+            battleDir.Sort( ( a, b ) => a.Filename.CompareTo( b.Filename ) );
 
             // Patch direntry
             PatcherLib.Iso.PsxIso.DirectoryEntry.WriteDirectoryEntries(
@@ -445,16 +447,16 @@ namespace FFTPatcher.SpriteEditor
                 iso,
                 PatcherLib.Iso.PsxIso.DummyDirectoryEntrySector,
                 PatcherLib.Iso.PsxIso.DummyDirectoryEntryLength,
-                new PatcherLib.Iso.PsxIso.DirectoryEntry[0]);
+                new PatcherLib.Iso.PsxIso.DirectoryEntry[0] );
 
             // Update battle.bin
-            PatcherLib.Iso.PsxIso.PatchPsxIso(iso, SpriteFileLocations.SpriteLocationsPosition.GetPatchedByteArray(posBytes.ToArray()));
+            PatcherLib.Iso.PsxIso.PatchPsxIso( iso, SpriteFileLocations.SpriteLocationsPosition.GetPatchedByteArray( posBytes.ToArray() ) );
 
         }
 
-        public static bool DetectExpansionOfPsxIso(Stream iso)
+        public static bool DetectExpansionOfPsxIso( Stream iso )
         {
-            UInt32 sectors = PatcherLib.Iso.PsxIso.ReadFile(iso, PatcherLib.Iso.PsxIso.NumberOfSectorsLittleEndian).ToUInt32();
+            UInt32 sectors = PatcherLib.Iso.PsxIso.ReadFile( iso, PatcherLib.Iso.PsxIso.NumberOfSectorsLittleEndian ).ToUInt32();
 
             //38 // length of record
             //00 // nothing
@@ -505,7 +507,7 @@ namespace FFTPatcher.SpriteEditor
                 SpriteFileLocations.IsoHasPatchedSpriteLocations( iso );
         }
 
-        private AllSprites(Context context, AllSpriteAttributes attrs, SpriteFileLocations locs, IList<Sprite> otherSprites)
+        private AllSprites( Context context, AllSpriteAttributes attrs, SpriteFileLocations locs, IList<Sprite> otherSprites )
         {
             Count = attrs.Count + otherSprites.Count;
             sprites = new Sprite[Count];
@@ -513,12 +515,12 @@ namespace FFTPatcher.SpriteEditor
             for (int i = 0; i < attrs.Count; i++)
             {
                 sprites[i] = new CharacterSprite(
-                    context, 
-                    string.Format("{0:X2} - {1}", i, spriteNames[i]), 
-                    attrs[i], 
-                    locs[i]);
+                    context,
+                    string.Format( "{0:X2} - {1}", i, spriteNames[i] ),
+                    attrs[i],
+                    locs[i] );
             }
-            otherSprites.CopyTo(sprites, attrs.Count);
+            otherSprites.CopyTo( sprites, attrs.Count );
 
             this.attrs = attrs;
             this.locs = locs;
@@ -526,7 +528,7 @@ namespace FFTPatcher.SpriteEditor
             Dictionary<Sprite, IList<int>> sharedSPRs = new Dictionary<Sprite, IList<int>>();
             for (int i = 0; i < sprites.Count; i++)
             {
-                sharedSPRs.Add(sprites[i], new List<int>());
+                sharedSPRs.Add( sprites[i], new List<int>() );
             }
 
             for (int i = 0; i < attrs.Count; i++)
@@ -535,8 +537,8 @@ namespace FFTPatcher.SpriteEditor
                 {
                     if (locs[i].Sector == locs[j].Sector)
                     {
-                        sharedSPRs[sprites[i]].Add(j);
-                        sharedSPRs[sprites[j]].Add(i);
+                        sharedSPRs[sprites[i]].Add( j );
+                        sharedSPRs[sprites[j]].Add( i );
                     }
                 }
             }
@@ -547,7 +549,7 @@ namespace FFTPatcher.SpriteEditor
                 sharedSPRs[sprites[i]] = sharedSPRs[sprites[i]].AsReadOnly();
             }
 
-            SharedSPRs = new ReadOnlyDictionary<Sprite, IList<int>>(sharedSPRs);
+            SharedSPRs = new ReadOnlyDictionary<Sprite, IList<int>>( sharedSPRs );
         }
 
     }

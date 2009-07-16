@@ -99,25 +99,64 @@ namespace FFTPatcher.SpriteEditor
                 }
             }
         }
-
-        public Palette( IList<byte> bytes )
+        public enum ColorDepth
         {
-            Colors = new Color[16];
-            for( int i = 0; i < 16; i++ )
+            _16bit = 2,
+            _32bit = 4
+        }
+
+
+        public Palette( IList<byte> bytes, ColorDepth depth )
+        {
+            switch (depth)
+            {
+                case ColorDepth._16bit:
+                    Build16BitPalette( bytes );
+                    break;
+                case ColorDepth._32bit:
+                    Build32BitPalette( bytes );
+                    break;
+            }
+        }
+
+        private void Build32BitPalette( IList<byte> bytes )
+        {
+            int count = bytes.Count / 4;
+            Colors = new Color[count];
+            for (int i = 0; i < count; i++)
+            {
+                Colors[i] = Color.FromArgb( 
+                    bytes[i * 4 + 3], 
+                    bytes[i * 4], 
+                    bytes[i * 4 + 1], 
+                    bytes[i * 4 + 2] );
+            }
+        }
+
+        private void Build16BitPalette( IList<byte> bytes )
+        {
+            int count = bytes.Count / 2;
+            Colors = new Color[count];
+            for (int i = 0; i < count; i++)
             {
                 Colors[i] = BytesToColor( bytes[i * 2], bytes[i * 2 + 1] );
             }
 
-            if( Colors[0].ToArgb() == Color.Black.ToArgb() )
+            if (Colors[0].ToArgb() == Color.Black.ToArgb())
             {
                 Colors[0] = Color.Transparent;
             }
         }
 
+        public Palette( IList<byte> bytes )
+            : this( bytes, ColorDepth._16bit )
+        {
+        }
+
         public Palette( IList<Color> colors )
         {
-            Colors = new Color[16];
-            for( int i = 0; i < 16; i++ )
+            Colors = new Color[colors.Count];
+            for (int i = 0; i < colors.Count; i++)
             {
                 Colors[i] = Color.FromArgb( colors[i].R & 0xF8, colors[i].G & 0xF8, colors[i].B & 0xF8 );
             }

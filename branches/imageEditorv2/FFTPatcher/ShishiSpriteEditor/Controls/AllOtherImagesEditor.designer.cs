@@ -28,17 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new FFTPatcher.SpriteEditor.SeparatorComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.panel1.SuspendLayout();
+            this.imageSizeLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comboBox1
             // 
             this.comboBox1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left )
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.comboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point( 3, 3 );
@@ -64,15 +66,25 @@
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add( this.pictureBox1 );
-            this.panel1.Location = new System.Drawing.Point( 3, 30 );
+            this.panel1.Location = new System.Drawing.Point( 3, 43 );
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size( 412, 355 );
+            this.panel1.Size = new System.Drawing.Size( 412, 342 );
             this.panel1.TabIndex = 2;
+            //
+            // imageSizeLabel
+            //
+            this.imageSizeLabel.AutoSize = true;
+            this.imageSizeLabel.Location = new System.Drawing.Point( 3, 27 );
+            this.imageSizeLabel.Name = "imageSizeLabel";
+            this.imageSizeLabel.Size = new System.Drawing.Size( 35, 13 );
+            this.imageSizeLabel.TabIndex = 3;
+            this.imageSizeLabel.Text = "label1";
             // 
             // AllOtherImagesEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add( this.imageSizeLabel );
             this.Controls.Add( this.panel1 );
             this.Controls.Add( this.comboBox1 );
             this.Enabled = false;
@@ -82,13 +94,15 @@
             this.panel1.ResumeLayout( false );
             this.panel1.PerformLayout();
             this.ResumeLayout( false );
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
+        private FFTPatcher.SpriteEditor.SeparatorComboBox comboBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label imageSizeLabel;
     }
 }

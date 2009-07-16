@@ -63,6 +63,9 @@ namespace FFTPatcher.SpriteEditor
             System.Windows.Forms.MenuItem separator5;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
             this.spriteMenuItem = new System.Windows.Forms.MenuItem();
+            this.imageMenuItem = new System.Windows.Forms.MenuItem();
+            this.importImageMenuItem = new System.Windows.Forms.MenuItem();
+            this.exportImageMenuItem = new System.Windows.Forms.MenuItem();
             this.sp2Menu = new System.Windows.Forms.MenuItem();
             this.importFirstMenuItem = new System.Windows.Forms.MenuItem();
             this.exportFirstMenuItem = new System.Windows.Forms.MenuItem();
@@ -78,11 +81,8 @@ namespace FFTPatcher.SpriteEditor
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.spriteTabPage = new System.Windows.Forms.TabPage();
             this.otherTabPage = new System.Windows.Forms.TabPage();
-            this.imageMenuItem = new System.Windows.Forms.MenuItem();
-            this.exportImageMenuItem = new System.Windows.Forms.MenuItem();
-            this.importImageMenuItem = new System.Windows.Forms.MenuItem();
             this.allSpritesEditor1 = new FFTPatcher.SpriteEditor.AllSpritesEditor();
-            this.allOtherImagesEditor1 = new FFTPatcher.SpriteEditor.Controls.AllOtherImagesEditor();
+            this.allOtherImagesEditor1 = new FFTPatcher.SpriteEditor.AllOtherImagesEditor();
             mainMenu = new System.Windows.Forms.MainMenu( this.components );
             fileMenu = new System.Windows.Forms.MenuItem();
             openIsoMenuItem = new System.Windows.Forms.MenuItem();
@@ -175,6 +175,27 @@ namespace FFTPatcher.SpriteEditor
             exportBmpMenuItem.Index = 4;
             exportBmpMenuItem.Text = "Export BMP...";
             exportBmpMenuItem.Click += new System.EventHandler( this.exportBmpMenuItem_Click );
+            // 
+            // imageMenuItem
+            // 
+            this.imageMenuItem.Enabled = false;
+            this.imageMenuItem.Index = 2;
+            this.imageMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.importImageMenuItem,
+            this.exportImageMenuItem} );
+            this.imageMenuItem.Text = "Image";
+            // 
+            // importImageMenuItem
+            // 
+            this.importImageMenuItem.Index = 0;
+            this.importImageMenuItem.Text = "Import...";
+            this.importImageMenuItem.Click += new System.EventHandler( this.importImageMenuItem_Click );
+            // 
+            // exportImageMenuItem
+            // 
+            this.exportImageMenuItem.Index = 1;
+            this.exportImageMenuItem.Text = "Export...";
+            this.exportImageMenuItem.Click += new System.EventHandler( this.exportImageMenuItem_Click );
             // 
             // sp2Menu
             // 
@@ -288,16 +309,16 @@ namespace FFTPatcher.SpriteEditor
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
+                        | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.tabControl1.Controls.Add( this.spriteTabPage );
             this.tabControl1.Controls.Add( this.otherTabPage );
             this.tabControl1.Enabled = false;
             this.tabControl1.Location = new System.Drawing.Point( 2, 4 );
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size( 643, 679 );
+            this.tabControl1.Size = new System.Drawing.Size( 643, 689 );
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler( this.tabControl1_SelectedIndexChanged );
             // 
@@ -307,7 +328,7 @@ namespace FFTPatcher.SpriteEditor
             this.spriteTabPage.Location = new System.Drawing.Point( 4, 22 );
             this.spriteTabPage.Name = "spriteTabPage";
             this.spriteTabPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.spriteTabPage.Size = new System.Drawing.Size( 635, 653 );
+            this.spriteTabPage.Size = new System.Drawing.Size( 635, 663 );
             this.spriteTabPage.TabIndex = 0;
             this.spriteTabPage.Text = "Sprites";
             this.spriteTabPage.UseVisualStyleBackColor = true;
@@ -318,41 +339,20 @@ namespace FFTPatcher.SpriteEditor
             this.otherTabPage.Location = new System.Drawing.Point( 4, 22 );
             this.otherTabPage.Name = "otherTabPage";
             this.otherTabPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.otherTabPage.Size = new System.Drawing.Size( 635, 653 );
+            this.otherTabPage.Size = new System.Drawing.Size( 635, 632 );
             this.otherTabPage.TabIndex = 1;
             this.otherTabPage.Text = "Other Images";
             this.otherTabPage.UseVisualStyleBackColor = true;
             // 
-            // imageMenuItem
-            // 
-            this.imageMenuItem.Enabled = false;
-            this.imageMenuItem.Index = 2;
-            this.imageMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
-            this.importImageMenuItem,
-            this.exportImageMenuItem} );
-            this.imageMenuItem.Text = "Image";
-            // 
-            // exportImageMenuItem
-            // 
-            this.exportImageMenuItem.Index = 1;
-            this.exportImageMenuItem.Text = "Export...";
-            this.exportImageMenuItem.Click += new System.EventHandler( this.exportImageMenuItem_Click );
-            // 
-            // importImageMenuItem
-            // 
-            this.importImageMenuItem.Index = 0;
-            this.importImageMenuItem.Text = "Import...";
-            this.importImageMenuItem.Click += new System.EventHandler( this.importImageMenuItem_Click );
-            // 
             // allSpritesEditor1
             // 
-            this.allSpritesEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.allSpritesEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
+                        | System.Windows.Forms.AnchorStyles.Left )
+                        | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.allSpritesEditor1.Enabled = false;
             this.allSpritesEditor1.Location = new System.Drawing.Point( 0, 0 );
             this.allSpritesEditor1.Name = "allSpritesEditor1";
-            this.allSpritesEditor1.Size = new System.Drawing.Size( 635, 653 );
+            this.allSpritesEditor1.Size = new System.Drawing.Size( 635, 663 );
             this.allSpritesEditor1.TabIndex = 0;
             // 
             // allOtherImagesEditor1
@@ -361,17 +361,17 @@ namespace FFTPatcher.SpriteEditor
             this.allOtherImagesEditor1.Enabled = false;
             this.allOtherImagesEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allOtherImagesEditor1.Name = "allOtherImagesEditor1";
-            this.allOtherImagesEditor1.Size = new System.Drawing.Size( 629, 647 );
+            this.allOtherImagesEditor1.Size = new System.Drawing.Size( 629, 626 );
             this.allOtherImagesEditor1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 647, 664 );
+            this.ClientSize = new System.Drawing.Size( 647, 697 );
             this.Controls.Add( this.tabControl1 );
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject( "$this.Icon" )));
+            this.Icon = ( (System.Drawing.Icon)( resources.GetObject( "$this.Icon" ) ) );
             this.MaximizeBox = false;
             this.Menu = mainMenu;
             this.MinimumSize = new System.Drawing.Size( 653, 713 );
@@ -404,7 +404,7 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage spriteTabPage;
         private System.Windows.Forms.TabPage otherTabPage;
-        private FFTPatcher.SpriteEditor.Controls.AllOtherImagesEditor allOtherImagesEditor1;
+        private FFTPatcher.SpriteEditor.AllOtherImagesEditor allOtherImagesEditor1;
         private System.Windows.Forms.MenuItem imageMenuItem;
         private System.Windows.Forms.MenuItem importImageMenuItem;
         private System.Windows.Forms.MenuItem exportImageMenuItem;

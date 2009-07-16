@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FFTPatcher.SpriteEditor.Controls
+namespace FFTPatcher.SpriteEditor
 {
     public partial class AllOtherImagesEditor : UserControl
     {
@@ -23,8 +23,25 @@ namespace FFTPatcher.SpriteEditor.Controls
             ignoreChanges = true;
             comboBox1.SelectedIndex = -1;
             comboBox1.BeginUpdate();
-            comboBox1.DataSource = new List<AbstractImage>( images );
-            comboBox1.DisplayMember = "Name";
+
+            List<object> imageList = new List<object>();
+            for ( int i = 0; i < images.ListCount; i++ )
+            {
+                var l = images[i];
+                for ( int j = 0; j < l.Count; j++ )
+                {
+                    if ( j == l.Count - 1 && i != images.ListCount - 1 )
+                    {
+                        imageList.Add( new SeparatorComboBox.SeparatorItem( l[j] ) );
+                    }
+                    else
+                    {
+                        imageList.Add( l[j] );
+                    }
+                }
+            }
+
+            comboBox1.DataSource = imageList;
             comboBox1.EndUpdate();
             this.iso = iso;
             Enabled = true;
@@ -34,10 +51,19 @@ namespace FFTPatcher.SpriteEditor.Controls
             RefreshPictureBox();
         }
 
+        public string GetCurrentImageFileFilter()
+        {
+            AbstractImage im = comboBox1.SelectedItem as AbstractImage;
+            return im.FilenameFilter;
+        }
+
         public void SaveCurrentImage( string path )
         {
             AbstractImage im = comboBox1.SelectedItem as AbstractImage;
-            im.GetImageFromIso( iso ).Save( path, System.Drawing.Imaging.ImageFormat.Png );
+            using ( System.IO.Stream s = System.IO.File.Open( path, System.IO.FileMode.Create ) )
+            {
+                im.SaveImage( iso, s );
+            }
         }
 
         public void LoadToCurrentImage( string path )
@@ -64,12 +90,34 @@ namespace FFTPatcher.SpriteEditor.Controls
         {
             DestroyPictureBoxImage();
             pictureBox1.Image = newImage;
+            panel1.SuspendLayout();
+            panel1.BackColor = Color.Black;
+            if ( pictureBox1.Width < panel1.ClientSize.Width && pictureBox1.Height < panel1.ClientSize.Height )
+            {
+                pictureBox1.BorderStyle = BorderStyle.Fixed3D;
+                pictureBox1.Location = new Point( 
+                    ( panel1.ClientRectangle.Width - pictureBox1.Width ) / 2 + panel1.ClientRectangle.X, 
+                    ( panel1.ClientRectangle.Height - pictureBox1.Height ) / 2 + panel1.ClientRectangle.Y );
+            }
+            else
+            {
+                pictureBox1.BorderStyle = BorderStyle.None;
+                pictureBox1.Location = panel1.ClientRectangle.Location;
+            }
+            panel1.ResumeLayout();
         }
 
         private void RefreshPictureBox()
         {
-            AbstractImage im = comboBox1.SelectedItem as AbstractImage;
+            object item = comboBox1.SelectedItem;
+            if ( item is SeparatorComboBox.SeparatorItem )
+            {
+                item = ( item as SeparatorComboBox.SeparatorItem ).Data;
+            }
+
+            AbstractImage im = item as AbstractImage;
             AssignNewPictureBoxImage( im.GetImageFromIso( iso ) );
+            imageSizeLabel.Text = string.Format( "Image dimensions: {0}x{1}", im.Width, im.Height );
         }
 
         private void comboBox1_SelectedIndexChanged( object sender, EventArgs e )

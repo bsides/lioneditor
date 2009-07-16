@@ -197,6 +197,11 @@ namespace FFTPatcher.SpriteEditor
             result[0] = (byte)(((g & 0x07) << 5) | r);
             result[1] = (byte)((b << 2) | ((g & 0x18) >> 3));
 
+            if ( c.A == 0 )
+            {
+                result[1] |= 0x80;
+            }
+
             return result;
         }
 

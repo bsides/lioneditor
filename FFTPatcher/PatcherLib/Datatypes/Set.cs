@@ -36,8 +36,9 @@ namespace PatcherLib.Datatypes
             }
         }
 
+        int count = 0;
         List<T> backingList;
-        Dictionary<T, bool> backing;
+        Dictionary<T, int> backing;
         IEqualityComparer<T> comparer;
 
         private Set( Set<T> backingSet, bool readOnly )
@@ -55,13 +56,13 @@ namespace PatcherLib.Datatypes
 
         public Set()
         {
-            backing = new Dictionary<T, bool>();
+            backing = new Dictionary<T, int>();
             backingList = new List<T>();
         }
 
         public Set( IEqualityComparer<T> comparer )
         {
-            backing = new Dictionary<T, bool>( comparer );
+            backing = new Dictionary<T, int>( comparer );
             backingList = new List<T>();
             this.comparer = comparer;
         }
@@ -103,7 +104,7 @@ namespace PatcherLib.Datatypes
             if ( !backing.ContainsKey( item ) )
             {
                 backingList.Add( item );
-                backing[item] = true;
+                backing[item] = count++;
             }
         }
 
@@ -145,13 +146,21 @@ namespace PatcherLib.Datatypes
 
         public int IndexOf( T item )
         {
-            if ( comparer != null )
+            if ( ReadOnly )
             {
-                return backingList.FindIndex( x => comparer.Equals( x, item ) );
+                // Guaranteed to be no gaps in the indices
+                return backing[item];
             }
             else
             {
-                return backingList.IndexOf( item );
+                if ( comparer != null )
+                {
+                    return backingList.FindIndex( x => comparer.Equals( x, item ) );
+                }
+                else
+                {
+                    return backingList.IndexOf( item );
+                }
             }
         }
 

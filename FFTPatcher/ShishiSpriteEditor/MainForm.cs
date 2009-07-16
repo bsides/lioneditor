@@ -214,7 +214,14 @@ namespace FFTPatcher.SpriteEditor
         private void importImageMenuItem_Click( object sender, EventArgs e )
         {
             openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "PNG files (*.png)|*.png";
+            const string allImagesFilter = "All images (*.png, *.gif, *.jpg, *.bmp, *.tiff)|*.png;*.gif;*.jpg;*.jpeg;*.bmp;*.tiff;*.tif";
+            const string pngFilter = "PNG images (*.png)|*.png";
+            const string gifFilter = "GIF images (*.gif)|*.gif";
+            const string jpgFilter = "JPEG images (*.jpg)|*.jpg;*.jpeg";
+            const string bmpFilter = "Bitmap images (*.bmp)|*.bmp";
+            const string tifFilter = "TIFF images (*.tiff)|*.tif;*.tiff";
+            openFileDialog.Filter = string.Join( "|", new string[] { allImagesFilter, pngFilter, gifFilter, jpgFilter, bmpFilter, tifFilter } );
+
             if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 allOtherImagesEditor1.LoadToCurrentImage( openFileDialog.FileName );
@@ -224,7 +231,7 @@ namespace FFTPatcher.SpriteEditor
         private void exportImageMenuItem_Click( object sender, EventArgs e )
         {
             saveFileDialog.FileName = string.Empty;
-            saveFileDialog.Filter = "PNG files (*.png)|*.png";
+            saveFileDialog.Filter = allOtherImagesEditor1.GetCurrentImageFileFilter();
 
             if (saveFileDialog.ShowDialog( this ) == DialogResult.OK)
             {

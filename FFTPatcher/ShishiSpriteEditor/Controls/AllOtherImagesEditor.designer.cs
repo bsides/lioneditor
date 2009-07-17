@@ -1,4 +1,4 @@
-﻿namespace FFTPatcher.SpriteEditor.Controls
+﻿namespace FFTPatcher.SpriteEditor
 {
     partial class AllOtherImagesEditor
     {
@@ -31,18 +31,20 @@
             this.comboBox1 = new FFTPatcher.SpriteEditor.SeparatorComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
-            this.panel1.SuspendLayout();
             this.imageSizeLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
             // 
-            this.comboBox1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left )
-                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.comboBox1.DropDownHeight = 212;
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.IntegralHeight = false;
             this.comboBox1.Location = new System.Drawing.Point( 3, 3 );
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size( 412, 21 );
@@ -60,9 +62,9 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
-                        | System.Windows.Forms.AnchorStyles.Left )
-                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add( this.pictureBox1 );
@@ -70,9 +72,9 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size( 412, 342 );
             this.panel1.TabIndex = 2;
-            //
+            // 
             // imageSizeLabel
-            //
+            // 
             this.imageSizeLabel.AutoSize = true;
             this.imageSizeLabel.Location = new System.Drawing.Point( 3, 27 );
             this.imageSizeLabel.Name = "imageSizeLabel";
@@ -90,7 +92,7 @@
             this.Enabled = false;
             this.Name = "AllOtherImagesEditor";
             this.Size = new System.Drawing.Size( 418, 388 );
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout( false );
             this.panel1.PerformLayout();
             this.ResumeLayout( false );

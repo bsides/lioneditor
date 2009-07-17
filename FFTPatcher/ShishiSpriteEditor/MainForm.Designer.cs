@@ -80,9 +80,12 @@ namespace FFTPatcher.SpriteEditor
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.spriteTabPage = new System.Windows.Forms.TabPage();
-            this.otherTabPage = new System.Windows.Forms.TabPage();
             this.allSpritesEditor1 = new FFTPatcher.SpriteEditor.AllSpritesEditor();
+            this.otherTabPage = new System.Windows.Forms.TabPage();
             this.allOtherImagesEditor1 = new FFTPatcher.SpriteEditor.AllOtherImagesEditor();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.dumpAllImagesMenuItem = new System.Windows.Forms.MenuItem();
+            this.importAllImagesMenuItem = new System.Windows.Forms.MenuItem();
             mainMenu = new System.Windows.Forms.MainMenu( this.components );
             fileMenu = new System.Windows.Forms.MenuItem();
             openIsoMenuItem = new System.Windows.Forms.MenuItem();
@@ -182,7 +185,10 @@ namespace FFTPatcher.SpriteEditor
             this.imageMenuItem.Index = 2;
             this.imageMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.importImageMenuItem,
-            this.exportImageMenuItem} );
+            this.exportImageMenuItem,
+            this.menuItem1,
+            this.importAllImagesMenuItem,
+            this.dumpAllImagesMenuItem} );
             this.imageMenuItem.Text = "Image";
             // 
             // importImageMenuItem
@@ -333,17 +339,6 @@ namespace FFTPatcher.SpriteEditor
             this.spriteTabPage.Text = "Sprites";
             this.spriteTabPage.UseVisualStyleBackColor = true;
             // 
-            // otherTabPage
-            // 
-            this.otherTabPage.Controls.Add( this.allOtherImagesEditor1 );
-            this.otherTabPage.Location = new System.Drawing.Point( 4, 22 );
-            this.otherTabPage.Name = "otherTabPage";
-            this.otherTabPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.otherTabPage.Size = new System.Drawing.Size( 635, 632 );
-            this.otherTabPage.TabIndex = 1;
-            this.otherTabPage.Text = "Other Images";
-            this.otherTabPage.UseVisualStyleBackColor = true;
-            // 
             // allSpritesEditor1
             // 
             this.allSpritesEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
@@ -355,14 +350,42 @@ namespace FFTPatcher.SpriteEditor
             this.allSpritesEditor1.Size = new System.Drawing.Size( 635, 663 );
             this.allSpritesEditor1.TabIndex = 0;
             // 
+            // otherTabPage
+            // 
+            this.otherTabPage.Controls.Add( this.allOtherImagesEditor1 );
+            this.otherTabPage.Location = new System.Drawing.Point( 4, 22 );
+            this.otherTabPage.Name = "otherTabPage";
+            this.otherTabPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.otherTabPage.Size = new System.Drawing.Size( 635, 663 );
+            this.otherTabPage.TabIndex = 1;
+            this.otherTabPage.Text = "Other Images";
+            this.otherTabPage.UseVisualStyleBackColor = true;
+            // 
             // allOtherImagesEditor1
             // 
             this.allOtherImagesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.allOtherImagesEditor1.Enabled = false;
             this.allOtherImagesEditor1.Location = new System.Drawing.Point( 3, 3 );
             this.allOtherImagesEditor1.Name = "allOtherImagesEditor1";
-            this.allOtherImagesEditor1.Size = new System.Drawing.Size( 629, 626 );
+            this.allOtherImagesEditor1.Size = new System.Drawing.Size( 629, 657 );
             this.allOtherImagesEditor1.TabIndex = 0;
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 2;
+            this.menuItem1.Text = "-";
+            // 
+            // dumpAllImagesMenuItem
+            // 
+            this.dumpAllImagesMenuItem.Index = 4;
+            this.dumpAllImagesMenuItem.Text = "Dump all images...";
+            this.dumpAllImagesMenuItem.Click += new System.EventHandler( this.dumpAllImagesMenuItem_Click );
+            // 
+            // importAllImagesMenuItem
+            // 
+            this.importAllImagesMenuItem.Index = 3;
+            this.importAllImagesMenuItem.Text = "Import all images...";
+            this.importAllImagesMenuItem.Click += new System.EventHandler( this.importAllImagesMenuItem_Click );
             // 
             // MainForm
             // 
@@ -408,6 +431,9 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.MenuItem imageMenuItem;
         private System.Windows.Forms.MenuItem importImageMenuItem;
         private System.Windows.Forms.MenuItem exportImageMenuItem;
+        private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.MenuItem importAllImagesMenuItem;
+        private System.Windows.Forms.MenuItem dumpAllImagesMenuItem;
     }
 }
 

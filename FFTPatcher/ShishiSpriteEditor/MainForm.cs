@@ -254,5 +254,39 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        private void importAllImagesMenuItem_Click( object sender, EventArgs e )
+        {
+            using ( Ionic.Utils.FolderBrowserDialogEx fbd = new Ionic.Utils.FolderBrowserDialogEx() )
+            {
+                fbd.ShowNewFolderButton = true;
+                fbd.ShowFullPathInEditBox = true;
+                fbd.ShowEditBox = true;
+                fbd.ShowBothFilesAndFolders = false;
+                fbd.RootFolder = Environment.SpecialFolder.Desktop;
+                fbd.NewStyle = true;
+                if ( fbd.ShowDialog( this ) == DialogResult.OK )
+                {
+                    allOtherImagesEditor1.AllOtherImages.LoadAllImages( currentStream, fbd.SelectedPath );
+                }
+            }
+        }
+
+        private void dumpAllImagesMenuItem_Click( object sender, EventArgs e )
+        {
+            using ( Ionic.Utils.FolderBrowserDialogEx fbd = new Ionic.Utils.FolderBrowserDialogEx() )
+            {
+                fbd.ShowNewFolderButton = true;
+                fbd.ShowFullPathInEditBox = true;
+                fbd.ShowEditBox = true;
+                fbd.ShowBothFilesAndFolders = false;
+                fbd.RootFolder = Environment.SpecialFolder.Desktop;
+                fbd.NewStyle = true;
+                if ( fbd.ShowDialog( this ) == DialogResult.OK )
+                {
+                    allOtherImagesEditor1.AllOtherImages.DumpAllImages( currentStream, fbd.SelectedPath );
+                }
+            }
+        }
+
     }
 }

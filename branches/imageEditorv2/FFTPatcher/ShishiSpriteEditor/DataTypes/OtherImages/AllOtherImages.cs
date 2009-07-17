@@ -10,6 +10,63 @@ namespace FFTPatcher.SpriteEditor
 {
     public class AllOtherImages
     {
+        public void LoadAllImages( Stream iso, string path )
+        {
+            foreach ( var imgList in images )
+            {
+                foreach ( var img in imgList )
+                {
+                    string name = string.Empty;
+                    if ( img.Position is PatcherLib.Iso.PsxIso.KnownPosition )
+                    {
+                        var pos = img.Position as PatcherLib.Iso.PsxIso.KnownPosition;
+                        name = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
+                    }
+                    else if ( img.Position is PatcherLib.Iso.PspIso.KnownPosition )
+                    {
+                        var pos = img.Position as PatcherLib.Iso.PspIso.KnownPosition;
+                        name = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
+                    }
+                    name = Path.Combine( path, name );
+                    if ( File.Exists( name ) )
+                    {
+                        img.WriteImageToIso( iso, name );
+                    }
+                }
+            }
+        }
+
+        public void DumpAllImages( Stream iso, string path )
+        {
+            if ( !Directory.Exists( path ) )
+            {
+                Directory.CreateDirectory( path );
+            }
+            foreach ( var imgList in images )
+            {
+                foreach ( var img in imgList )
+                {
+                    string name = string.Empty;
+                    if ( img.Position is PatcherLib.Iso.PsxIso.KnownPosition )
+                    {
+                        var pos = img.Position as PatcherLib.Iso.PsxIso.KnownPosition;
+                        name = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
+                    }
+                    else if ( img.Position is PatcherLib.Iso.PspIso.KnownPosition )
+                    {
+                        var pos = img.Position as PatcherLib.Iso.PspIso.KnownPosition;
+                        name = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
+                    }
+
+                    if ( !string.IsNullOrEmpty( name ) )
+                    {
+                        Bitmap bmp = img.GetImageFromIso( iso );
+                        bmp.Save( Path.Combine( path, name ), System.Drawing.Imaging.ImageFormat.Png );
+                    }
+                }
+            }
+        }
+
         private static IList<IList<AbstractImage>> BuildPspImages()
         {
             List<IList<AbstractImage>> result = new List<IList<AbstractImage>>();
@@ -19,6 +76,14 @@ namespace FFTPatcher.SpriteEditor
                 //    new PatcherLib.Iso.PspIso.KnownPosition((PatcherLib.Iso.FFTPack.Files)770, 0xC, 0x200)),
 
             //} );
+            IList<AbstractImage> bonusPics = new AbstractImage[71];
+            for ( int i = 0; i < 71; i++ )
+            {
+                bonusPics[i] = new PalettedImage4bpp( string.Format( "BONUS{0}", i ), 256, 50, 1,
+                    new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.EVENT_BONUS_BIN, 0x6800 * i + 135 * 256 / 2, 256 * 50 / 2 ),
+                    new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.EVENT_BONUS_BIN, 0x6800 * i + 0x6400 + 0x20 * 2, 0x20 ) );
+            }
+            result.Add( bonusPics.AsReadOnly() );
             result.Add( new AbstractImage[] {
                 new PalettedImage8bpp("OPNTEX1", 128,256, 1, Palette.ColorDepth._16bit,
                     new PatcherLib.Iso.PspIso.KnownPosition(PatcherLib.Iso.FFTPack.Files.OPEN_OPNTEX_BIN, 34816+0x220, 128*256),
@@ -290,8 +355,16 @@ namespace FFTPatcher.SpriteEditor
 
         private static IList<IList<AbstractImage>> BuildPsxImages()
         {
+            // 0, 135
             List<IList<AbstractImage>> result = new List<IList<AbstractImage>>();
-
+            IList<AbstractImage> bonusPics = new AbstractImage[36];
+            for ( int i = 0; i < 36; i++ )
+            {
+                bonusPics[i] = new PalettedImage4bpp( string.Format("BONUS{0}",i), 256, 50, 1,
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_BONUS_BIN, 0x6800 * i + 135 * 256 / 2, 256 * 250 / 2 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_BONUS_BIN, 0x6800 * i + 0x6400 + 0x20 * 2, 0x20 ) );
+            }
+            result.Add( bonusPics.AsReadOnly() );
             result.Add( new AbstractImage[] {
                 new PalettedImage8bpp("OPNTEX1", 128,256, 1, Palette.ColorDepth._16bit,
                     new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 34816+0x220, 128*256),

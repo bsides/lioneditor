@@ -364,6 +364,7 @@ namespace PatcherLib.Iso
             EVENT_CHAPTER3_OUT = 28,
             EVENT_CHAPTER4_OUT = 29,
             EVENT_GAMEOVER_BIN = 30,
+            EVENT_BONUS_BIN = 31,
             EVENT_WIN001_BIN = 32,
             EVENT_WLDFACE4_BIN = 34,
             EVENT_WLDFACE_BIN = 35,

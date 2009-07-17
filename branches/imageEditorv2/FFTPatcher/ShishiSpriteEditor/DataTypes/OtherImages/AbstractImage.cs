@@ -13,8 +13,11 @@ namespace FFTPatcher.SpriteEditor
         protected abstract System.Drawing.Bitmap GetImageFromIsoInner( System.IO.Stream iso );
         public virtual string FilenameFilter { get { return "PNG image (*.png)|*.png"; } }
 
+        public int NumPalettes { get; private set; }
+
         System.Drawing.Bitmap cachedImage;
         bool cachedImageDirty = true;
+
         public System.Drawing.Bitmap GetImageFromIso( System.IO.Stream iso )
         {
             if (cachedImageDirty && cachedImage != null)
@@ -66,7 +69,7 @@ namespace FFTPatcher.SpriteEditor
             cachedImageDirty = true;
         }
 
-        protected PatcherLib.Iso.KnownPosition Position { get; private set; }
+        public PatcherLib.Iso.KnownPosition Position { get; private set; }
 
         public string Name { get; private set; }
 
@@ -90,13 +93,18 @@ namespace FFTPatcher.SpriteEditor
             return GetColors( bmp );
         }
 
+        protected AbstractImage( string name, int width, int height, PatcherLib.Iso.KnownPosition position )
+            : this( name, width, height, 0, position )
+        {
+        }
 
-        public AbstractImage( string name, int width, int height, PatcherLib.Iso.KnownPosition position )
+        protected AbstractImage( string name, int width, int height, int numPalettes, PatcherLib.Iso.KnownPosition position )
         {
             Name = name;
             Position = position;
             Width = width;
             Height = height;
+            NumPalettes = numPalettes;
         }
 
         public override string ToString()

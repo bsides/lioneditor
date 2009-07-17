@@ -18,9 +18,12 @@ namespace FFTPatcher.SpriteEditor
         private bool ignoreChanges = false;
         private System.IO.Stream iso = null;
 
+        public AllOtherImages AllOtherImages { get; private set; }
+
         public void BindTo( AllOtherImages images, System.IO.Stream iso )
         {
             ignoreChanges = true;
+            AllOtherImages = images;
             comboBox1.SelectedIndex = -1;
             comboBox1.BeginUpdate();
 
@@ -51,15 +54,26 @@ namespace FFTPatcher.SpriteEditor
             RefreshPictureBox();
         }
 
+        private AbstractImage GetImageFromComboBoxItem()
+        {
+            AbstractImage data = comboBox1.SelectedItem as AbstractImage;
+            if (data == null)
+            {
+                data = (comboBox1.SelectedItem as SeparatorComboBox.SeparatorItem).Data as AbstractImage;
+            }
+
+            return data;
+        }
+
         public string GetCurrentImageFileFilter()
         {
-            AbstractImage im = comboBox1.SelectedItem as AbstractImage;
+            AbstractImage im = GetImageFromComboBoxItem();
             return im.FilenameFilter;
         }
 
         public void SaveCurrentImage( string path )
         {
-            AbstractImage im = comboBox1.SelectedItem as AbstractImage;
+            AbstractImage im = GetImageFromComboBoxItem();
             using ( System.IO.Stream s = System.IO.File.Open( path, System.IO.FileMode.Create ) )
             {
                 im.SaveImage( iso, s );
@@ -70,7 +84,7 @@ namespace FFTPatcher.SpriteEditor
         {
             using (Image im = Image.FromFile( path ))
             {
-                AbstractImage abIm = comboBox1.SelectedItem as AbstractImage;
+                AbstractImage abIm = GetImageFromComboBoxItem();
                 abIm.WriteImageToIso( iso, im );
             }
             RefreshPictureBox();
@@ -109,13 +123,7 @@ namespace FFTPatcher.SpriteEditor
 
         private void RefreshPictureBox()
         {
-            object item = comboBox1.SelectedItem;
-            if ( item is SeparatorComboBox.SeparatorItem )
-            {
-                item = ( item as SeparatorComboBox.SeparatorItem ).Data;
-            }
-
-            AbstractImage im = item as AbstractImage;
+            AbstractImage im = GetImageFromComboBoxItem();
             AssignNewPictureBoxImage( im.GetImageFromIso( iso ) );
             imageSizeLabel.Text = string.Format( "Image dimensions: {0}x{1}", im.Width, im.Height );
         }

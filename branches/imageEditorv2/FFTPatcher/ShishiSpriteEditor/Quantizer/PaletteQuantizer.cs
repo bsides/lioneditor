@@ -25,13 +25,22 @@ namespace ImageQuantization
 		/// <remarks>
 		/// Palette quantization only requires a single quantization step
 		/// </remarks>
-		public PaletteQuantizer ( ArrayList palette ) : base ( true )
+		public PaletteQuantizer ( ArrayList palette ) : this(palette.Count)
 		{
-			_colorMap = new Hashtable ( ) ;
-
-			_colors = new Color[palette.Count] ;
 			palette.CopyTo ( _colors ) ;
 		}
+
+        private PaletteQuantizer(int count) : base(true)
+        {
+            _colors = new Color[count];
+            _colorMap = new Hashtable();
+        }
+
+        public PaletteQuantizer( System.Collections.Generic.IList<Color> palette )
+            : this( palette.Count )
+        {
+            palette.CopyTo( _colors, 0 );
+        }
 
 		/// <summary>
 		/// Override this to process the pixel in the second pass of the algorithm

@@ -37,6 +37,10 @@ namespace FFTPatcher.SpriteEditor
             {
                 object item = Items[e.Index];
                 string text = GetDisplayText( e.Index );
+                if (string.IsNullOrEmpty( text ))
+                {
+                    text = "WHOAH";
+                }
                 System.Drawing.Size textSize = TextRenderer.MeasureText(text, Font );
                 e.ItemHeight = textSize.Height + verticalItemPadding;
                 e.ItemWidth = textSize.Width;

@@ -362,38 +362,91 @@ namespace FFTPatcher.TextEditor
             return GetFilesXml( doc, worker );
         }
 
-        public static FFTText GetFilesXml( XmlNode doc, BackgroundWorker worker )
+        public static Set<Guid> DetectMissingGuids( string filename )
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load( filename );
+            return DetectMissingGuids( doc );
+        }
+
+        public static Set<Guid> DetectMissingGuids( XmlNode doc )
         {
             Context context = (Context)Enum.Parse( typeof( Context ), doc.SelectSingleNode( "/FFTText/@context" ).InnerText );
             XmlNode layoutDoc = context == Context.US_PSP ? Resources.PSP : Resources.PSX;
-            GenericCharMap charmap = ( context == Context.US_PSP ) ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
+            XmlNodeList guids = doc.SelectNodes( "//File/Guid" );
+            Set<Guid> myGuids = new Set<Guid>();
+            foreach (XmlNode node in guids)
+            {
+                myGuids.Add( new Guid( node.InnerText ) );
+            }
+
+            Set<Guid> layoutGuids = new Set<Guid>();
+            guids = layoutDoc.SelectNodes( "//Files/*/Guid" );
+            foreach (XmlNode node in guids)
+            {
+                layoutGuids.Add( new Guid( node.InnerText ) );
+            }
+
+            return new Set<Guid>( layoutGuids.GetElements().FindAll( g => !myGuids.Contains( g ) ) ).AsReadOnly();
+        }
+
+        public static FFTText GetFilesXml( string filename, BackgroundWorker worker, Set<Guid> guidsToLoadFromIso, Stream iso )
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load( filename );
+            return GetFilesXml( doc, worker, guidsToLoadFromIso, iso );
+        }
+
+        public static FFTText GetFilesXml( XmlNode doc, BackgroundWorker worker, Set<Guid> guidsToLoadFromIso, Stream iso )
+        {
+            Context context = (Context)Enum.Parse( typeof( Context ), doc.SelectSingleNode( "/FFTText/@context" ).InnerText );
+            XmlNode layoutDoc = context == Context.US_PSP ? Resources.PSP : Resources.PSX;
+            GenericCharMap charmap = (context == Context.US_PSP) ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
 
             Dictionary<Guid, ISerializableFile> result = new Dictionary<Guid, ISerializableFile>();
-            foreach ( XmlNode fileNode in doc.SelectNodes( "//File" ) )
+            foreach (XmlNode fileNode in doc.SelectNodes( "//File" ))
             {
                 string guidText = fileNode.SelectSingleNode( "Guid" ).InnerText;
                 Guid guid = new Guid( guidText );
-                if ( worker.CancellationPending )
+                if (worker.CancellationPending)
                     return null;
                 FileInfo fi = GetFileInfo( context, layoutDoc.SelectSingleNode( string.Format( "//Files/*[Guid='{0}']", guidText ) ) );
-                string fileComment = GetFileComment( doc.SelectSingleNode(string.Format( "//FFTText/*[Guid='{0}']", guidText )) );
-                if ( worker.CancellationPending )
+                string fileComment = GetFileComment( doc.SelectSingleNode( string.Format( "//FFTText/*[Guid='{0}']", guidText ) ) );
+                if (worker.CancellationPending)
                     return null;
-                XmlNode sectionsNode = fileNode.SelectSingleNode("Sections");
+                XmlNode sectionsNode = fileNode.SelectSingleNode( "Sections" );
                 result.Add(
                     guid,
                     AbstractFile.ConstructFile( fi.FileType, charmap, fi, GetStrings( sectionsNode ), fileComment, GetSectionComments( sectionsNode ) ) );
-                if ( worker.CancellationPending )
+                if (worker.CancellationPending)
                     return null;
+            }
+
+            if (guidsToLoadFromIso != null && guidsToLoadFromIso.Count > 0 && iso != null)
+            {
+                FFTText tempText = null;
+                if (context == Context.US_PSP)
+                {
+                    tempText = GetPspText( iso, worker );
+                }
+                else if (context == Context.US_PSX)
+                {
+                    tempText = GetPsxText( iso, worker );
+                }
+
+                Set<IFile> isoFiles =
+                    new Set<IFile>(
+                        tempText.Files.FindAll( f => f is ISerializableFile ).FindAll( g => guidsToLoadFromIso.Contains( (g as ISerializableFile).Layout.Guid ) ) );
+                isoFiles.ForEach( f => result.Add( (f as ISerializableFile).Layout.Guid, f as ISerializableFile ) );
             }
 
             XmlNode quickEditNode = layoutDoc.SelectSingleNode( "//QuickEdit" );
             Set<Guid> guids = GetGuidsNeededForQuickEdit( quickEditNode );
             QuickEdit quickEdit = null;
-            if ( guids.TrueForAll( g => result.ContainsKey( g ) ) )
+            if (guids.TrueForAll( g => result.ContainsKey( g ) ))
             {
                 quickEdit = new QuickEdit( context, result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
-                if ( quickEdit == null || worker.CancellationPending )
+                if (quickEdit == null || worker.CancellationPending)
                 {
                     return null;
                 }
@@ -401,6 +454,11 @@ namespace FFTPatcher.TextEditor
 
             return new FFTText( context, result, quickEdit );
 
+        }
+
+        public static FFTText GetFilesXml( XmlNode doc, BackgroundWorker worker )
+        {
+            return GetFilesXml( doc, worker, new Set<Guid>().AsReadOnly(), null );
         }
 
         private static IList<string> GetSectionComments( XmlNode sectionsNode )

@@ -259,7 +259,7 @@ namespace PatcherLib.Iso
 
         public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file, int start, int length)
         {
-            return GetFile(stream, info, file).Sub(start, start + length - 1);
+            return FFTPack.GetFileFromIso( stream, info, file, start, length );
         }
 
         public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file)

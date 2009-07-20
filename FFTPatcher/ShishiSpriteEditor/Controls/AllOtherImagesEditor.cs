@@ -54,7 +54,7 @@ namespace FFTPatcher.SpriteEditor
             RefreshPictureBox();
         }
 
-        private AbstractImage GetImageFromComboBoxItem()
+        public AbstractImage GetImageFromComboBoxItem()
         {
             AbstractImage data = comboBox1.SelectedItem as AbstractImage;
             if (data == null)
@@ -133,6 +133,34 @@ namespace FFTPatcher.SpriteEditor
             if ( !ignoreChanges )
             {
                 RefreshPictureBox();
+            }
+        }
+
+        private void panel1_DragEnter( object sender, DragEventArgs e )
+        {
+            if (e.Data.GetDataPresent( DataFormats.FileDrop ) )
+            {
+                string[] files = (string[])e.Data.GetData( DataFormats.FileDrop );
+                if (files.Length == 1 && System.IO.File.Exists( files[0] ))
+                    e.Effect = DragDropEffects.Copy;
+                else
+                    e.Effect = DragDropEffects.None;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void panel1_DragDrop( object sender, DragEventArgs e )
+        {
+            if (e.Data.GetDataPresent( DataFormats.FileDrop ))
+            {
+                string[] paths = (string[])e.Data.GetData( DataFormats.FileDrop );
+                if (paths.Length == 1 && System.IO.File.Exists(paths[0]))
+                {
+                    LoadToCurrentImage( paths[0] );
+                }
             }
         }
     }

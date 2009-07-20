@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,453..output
- PRODUCTVERSION 1,0,0,453..output
+ FILEVERSION 1,0,0,457..output
+ PRODUCTVERSION 1,0,0,457..output
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,11 +70,11 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "FFTTextCompression Dynamic Link Library"
-            VALUE "FileVersion", "1.0.0.453..output"
+            VALUE "FileVersion", "1.0.0.457..output"
             VALUE "InternalName", "FFTTextCompression"
             VALUE "LegalCopyright", "Copyright Joe Davidson (C) 2009"
             VALUE "OriginalFilename", "FFTTextCompression.dll"
-            VALUE "ProductVersion", "1.0.0.453..output"
+            VALUE "ProductVersion", "1.0.0.457..output"
         END
     END
     BLOCK "VarFileInfo"

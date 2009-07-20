@@ -241,17 +241,10 @@ namespace FFTPatcher.SpriteEditor
 
         private void tabControl1_SelectedIndexChanged( object sender, EventArgs e )
         {
-            spriteMenuItem.Enabled = false;
-            imageMenuItem.Enabled = false;
-            if (tabControl1.SelectedTab == otherTabPage)
-            {
-                imageMenuItem.Enabled = true;
-            }
-
-            if (tabControl1.SelectedTab == spriteTabPage)
-            {
-                spriteMenuItem.Enabled = true;
-            }
+            bool image = tabControl1.SelectedTab == otherTabPage;
+            spriteMenuItem.Visible = !image;
+            sp2Menu.Visible = !image;
+            imageMenuItem.Visible = image;
         }
 
         private void importAllImagesMenuItem_Click( object sender, EventArgs e )
@@ -264,9 +257,48 @@ namespace FFTPatcher.SpriteEditor
                 fbd.ShowBothFilesAndFolders = false;
                 fbd.RootFolder = Environment.SpecialFolder.Desktop;
                 fbd.NewStyle = true;
-                if ( fbd.ShowDialog( this ) == DialogResult.OK )
+                Cursor oldCursor = Cursor;
+
+                ProgressChangedEventHandler progressHandler = delegate( object sender2, ProgressChangedEventArgs args2 )
                 {
-                    allOtherImagesEditor1.AllOtherImages.LoadAllImages( currentStream, fbd.SelectedPath );
+                    MethodInvoker mi = (() => progressBar1.Value = args2.ProgressPercentage);
+                    if (progressBar1.InvokeRequired)
+                        progressBar1.Invoke( mi );
+                    else mi();
+                };
+
+                RunWorkerCompletedEventHandler completeHandler = null;
+
+                completeHandler = delegate( object sender1, RunWorkerCompletedEventArgs args1 )
+                {
+                    MethodInvoker mi = delegate()
+                    {
+                        var result = args1.Result as AllOtherImages.AllImagesDoWorkResult;
+                        tabControl1.Enabled = true;
+                        progressBar1.Visible = false;
+                        if (oldCursor != null) Cursor = oldCursor;
+                        backgroundWorker1.RunWorkerCompleted -= completeHandler;
+                        backgroundWorker1.ProgressChanged -= progressHandler;
+                        backgroundWorker1.DoWork -= allOtherImagesEditor1.AllOtherImages.LoadAllImages;
+                        MessageBox.Show( this, string.Format( "{0} images imported", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
+                    };
+                    if (InvokeRequired) Invoke( mi );
+                    else mi();
+                };
+
+                if (fbd.ShowDialog( this ) == DialogResult.OK)
+                {
+                    progressBar1.Bounds = new Rectangle( ClientRectangle.Left + 10, (ClientRectangle.Height - progressBar1.Height) / 2, ClientRectangle.Width - 20, progressBar1.Height );
+                    progressBar1.Value = 0;
+                    progressBar1.Visible = true;
+                    backgroundWorker1.DoWork += allOtherImagesEditor1.AllOtherImages.LoadAllImages;
+                    backgroundWorker1.ProgressChanged += progressHandler;
+                    backgroundWorker1.RunWorkerCompleted += completeHandler;
+                    backgroundWorker1.WorkerReportsProgress = true;
+                    tabControl1.Enabled = false;
+                    Cursor = Cursors.WaitCursor;
+                    progressBar1.BringToFront();
+                    backgroundWorker1.RunWorkerAsync( new AllOtherImages.AllImagesDoWorkData( currentStream, fbd.SelectedPath ) );
                 }
             }
         }
@@ -281,9 +313,51 @@ namespace FFTPatcher.SpriteEditor
                 fbd.ShowBothFilesAndFolders = false;
                 fbd.RootFolder = Environment.SpecialFolder.Desktop;
                 fbd.NewStyle = true;
-                if ( fbd.ShowDialog( this ) == DialogResult.OK )
+                Cursor oldCursor = Cursor;
+
+                ProgressChangedEventHandler progressHandler = delegate( object sender2, ProgressChangedEventArgs args2 )
                 {
-                    allOtherImagesEditor1.AllOtherImages.DumpAllImages( currentStream, fbd.SelectedPath );
+                    MethodInvoker mi = (() => progressBar1.Value = args2.ProgressPercentage);
+                    if (progressBar1.InvokeRequired)
+                        progressBar1.Invoke( mi );
+                    else mi();
+                };
+
+                RunWorkerCompletedEventHandler completeHandler = null;
+
+                completeHandler = delegate( object sender1, RunWorkerCompletedEventArgs args1 )
+                {
+                    MethodInvoker mi = delegate()
+                    {
+                        var result = args1.Result as AllOtherImages.AllImagesDoWorkResult;
+                        tabControl1.Enabled = true;
+                        progressBar1.Visible = false;
+                        if (oldCursor != null) Cursor = oldCursor;
+                        backgroundWorker1.RunWorkerCompleted -= completeHandler;
+                        backgroundWorker1.ProgressChanged -= progressHandler;
+                        backgroundWorker1.DoWork -= allOtherImagesEditor1.AllOtherImages.DumpAllImages;
+                        MessageBox.Show(this, string.Format( "{0} images saved", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
+                    };
+                    if (InvokeRequired) Invoke( mi );
+                    else mi();
+                };
+
+                if (fbd.ShowDialog( this ) == DialogResult.OK)
+                {
+                    progressBar1.Bounds = new Rectangle( ClientRectangle.Left+10, (ClientRectangle.Height - progressBar1.Height) / 2, ClientRectangle.Width-20, progressBar1.Height );
+                    progressBar1.Value = 0;
+                    progressBar1.Visible = true;
+                    backgroundWorker1.DoWork += allOtherImagesEditor1.AllOtherImages.DumpAllImages;
+                    backgroundWorker1.ProgressChanged += progressHandler;
+                    backgroundWorker1.RunWorkerCompleted += completeHandler;
+                    backgroundWorker1.WorkerReportsProgress = true;
+                    tabControl1.Enabled = false;
+                    Cursor = Cursors.WaitCursor;
+                    progressBar1.BringToFront();
+                    backgroundWorker1.RunWorkerAsync( new AllOtherImages.AllImagesDoWorkData( currentStream, fbd.SelectedPath ) );
+                    //backgroundWorker1.RunWorkerCompleted
+
+                    //allOtherImagesEditor1.AllOtherImages.DumpAllImages( currentStream, fbd.SelectedPath );
                 }
             }
         }

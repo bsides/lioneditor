@@ -10,61 +10,151 @@ namespace FFTPatcher.SpriteEditor
 {
     public class AllOtherImages
     {
-        public void LoadAllImages( Stream iso, string path )
+        private AllImagesDoWorkResult LoadAllImages( Stream iso, string path, Action<int> progressReporter )
         {
-            foreach ( var imgList in images )
+            bool progress = progressReporter != null;
+            int total = 0;
+            int complete = 0;
+            int imagesProcessed = 0;
+
+            if (progress)
             {
-                foreach ( var img in imgList )
+                images.ForEach( i => total += i.Count );
+            }
+
+            foreach (var imgList in images)
+            {
+                foreach (var img in imgList)
                 {
                     string name = string.Empty;
-                    if ( img.Position is PatcherLib.Iso.PsxIso.KnownPosition )
+                    if (img.Position is PatcherLib.Iso.PsxIso.KnownPosition)
                     {
                         var pos = img.Position as PatcherLib.Iso.PsxIso.KnownPosition;
                         name = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
                     }
-                    else if ( img.Position is PatcherLib.Iso.PspIso.KnownPosition )
+                    else if (img.Position is PatcherLib.Iso.PspIso.KnownPosition)
                     {
                         var pos = img.Position as PatcherLib.Iso.PspIso.KnownPosition;
                         name = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
                     }
                     name = Path.Combine( path, name );
-                    if ( File.Exists( name ) )
+                    if (File.Exists( name ))
                     {
                         img.WriteImageToIso( iso, name );
+                        imagesProcessed++;
+                    }
+                    if (progress)
+                    {
+                        progressReporter( (100 * (complete++)) / total );
                     }
                 }
             }
+
+            return new AllImagesDoWorkResult( AllImagesDoWorkResult.Result.Success, imagesProcessed );
         }
 
-        public void DumpAllImages( Stream iso, string path )
+        public void LoadAllImages( Stream iso, string path )
         {
-            if ( !Directory.Exists( path ) )
+            LoadAllImages( iso, path, null );
+        }
+
+        public class AllImagesDoWorkData
+        {
+            public Stream ISO { get; private set; }
+            public string Path { get; private set; }
+            public AllImagesDoWorkData( Stream iso, string path )
+            {
+                ISO = iso;
+                Path = path;
+            }
+        }
+
+        public class AllImagesDoWorkResult
+        {
+            public enum Result
+            {
+                Success,
+                Failure,
+            }
+
+            public Result DoWorkResult { get; private set; }
+            public int ImagesProcessed { get; private set; }
+            public AllImagesDoWorkResult( Result result, int images )
+            {
+                DoWorkResult = result;
+                ImagesProcessed = images;
+            }
+
+        }
+
+        internal void LoadAllImages( object sender, System.ComponentModel.DoWorkEventArgs e )
+        {
+            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
+            AllImagesDoWorkData data = e.Argument as AllImagesDoWorkData;
+            if (data == null)
+                return;
+            e.Result = LoadAllImages( data.ISO, data.Path, worker.WorkerReportsProgress ? (Action<int>)worker.ReportProgress : null );
+        }
+
+        internal void DumpAllImages( object sender, System.ComponentModel.DoWorkEventArgs e )
+        {
+            System.ComponentModel.BackgroundWorker worker = sender as System.ComponentModel.BackgroundWorker;
+            AllImagesDoWorkData data = e.Argument as AllImagesDoWorkData;
+            if (data == null)
+                return;
+            var result = DumpAllImages( data.ISO, data.Path, worker.WorkerReportsProgress ? (Action<int>)worker.ReportProgress : null );
+            e.Result = result;
+        }
+
+        private AllImagesDoWorkResult DumpAllImages( Stream iso, string path, Action<int> progressReporter )
+        {
+            bool progress = progressReporter != null;
+            int total = 0;
+            int complete = 0;
+            int imagesProcessed = 0;
+            if (progress)
+                images.ForEach( i => total += i.Count );
+
+            if (!Directory.Exists( path ))
             {
                 Directory.CreateDirectory( path );
             }
-            foreach ( var imgList in images )
+            foreach (var imgList in images)
             {
-                foreach ( var img in imgList )
+                foreach (var img in imgList)
                 {
                     string name = string.Empty;
-                    if ( img.Position is PatcherLib.Iso.PsxIso.KnownPosition )
+                    if (img.Position is PatcherLib.Iso.PsxIso.KnownPosition)
                     {
                         var pos = img.Position as PatcherLib.Iso.PsxIso.KnownPosition;
                         name = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
                     }
-                    else if ( img.Position is PatcherLib.Iso.PspIso.KnownPosition )
+                    else if (img.Position is PatcherLib.Iso.PspIso.KnownPosition)
                     {
                         var pos = img.Position as PatcherLib.Iso.PspIso.KnownPosition;
                         name = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
                     }
 
-                    if ( !string.IsNullOrEmpty( name ) )
+                    if (!string.IsNullOrEmpty( name ))
                     {
                         Bitmap bmp = img.GetImageFromIso( iso );
                         bmp.Save( Path.Combine( path, name ), System.Drawing.Imaging.ImageFormat.Png );
+                        imagesProcessed++;
+                    }
+
+                    if (progress)
+                    {
+                        progressReporter( (100 * (complete++)) / total );
                     }
                 }
             }
+
+            return new AllImagesDoWorkResult( AllImagesDoWorkResult.Result.Success, imagesProcessed );
+        }
+
+        public void DumpAllImages( Stream iso, string path )
+        {
+            DumpAllImages( iso, path, null );
         }
 
         private static IList<IList<AbstractImage>> BuildPspImages()

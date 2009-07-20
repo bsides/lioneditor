@@ -148,32 +148,75 @@ namespace PatcherLib.Iso
             return GetFileFromFFTPack(stream, (Files)index, fftPackLength);
         }
 
+        public static byte[] GetFileFromIso( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, Files file, int start, int length )
+        {
+            stream.Seek( info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, SeekOrigin.Begin );
+            return GetFileFromFFTPack( stream, file, info.GetFileSize( PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin ), start, length );
+        }
+
         public static byte[] GetFileFromIso( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, Files file )
         {
             stream.Seek( info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, SeekOrigin.Begin );
             return GetFileFromFFTPack(stream, file, info.GetFileSize(PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin));
         }
 
-        public static byte[] GetFileFromFFTPack( Stream stream, Files file, long fftpackLength )
+        private static UInt32 GetStartPosition( Stream stream, Files file, long fftpackLength )
         {
             long pos = stream.Position;
             byte[] loc = new byte[4];
-
             int index = (int)file;
             stream.Seek( index * 4 + 4 + pos, SeekOrigin.Begin );
             stream.Read( loc, 0, 4 );
-            UInt32 start = loc.ToUInt32();
+            UInt32 result = loc.ToUInt32();
+            stream.Seek( pos, SeekOrigin.Begin );
+            return result;
+        }
 
+        private static UInt32 GetEndPosition( Stream stream, Files file, long fftpackLength )
+        {
+            long pos = stream.Position;
+            byte[] loc = new byte[4];
+            int index = (int)file;
             UInt32 end;
-            if ( index >= NumFftPackFiles )
+            if (index >= NumFftPackFiles)
             {
                 end = (uint)fftpackLength;
             }
             else
             {
+                stream.Seek( index * 4 + 4 + pos + 4, SeekOrigin.Begin );
                 stream.Read( loc, 0, 4 );
                 end = loc.ToUInt32();
+                stream.Seek( pos, SeekOrigin.Begin );
             }
+            return end;
+        }
+
+        private static byte[] GetFileFromFFTPack( Stream stream, Files file, long fftpackLength, int start, int length )
+        {
+            long pos = stream.Position;
+            UInt32 fileStart = GetStartPosition( stream, file, fftpackLength );
+            
+            UInt32 fileEnd = GetEndPosition( stream, file, fftpackLength );
+
+            UInt32 fileLength = fileEnd - fileStart;
+            if (start > fileLength) throw new ArgumentOutOfRangeException( "start", "start longer than file length" );
+            if (length > fileLength) throw new ArgumentOutOfRangeException( "length", "length longer than file length" );
+
+            byte[] result = new byte[length];
+            stream.Seek( fileStart + start + pos, SeekOrigin.Begin );
+            stream.Read( result, 0, length );
+            stream.Seek( pos, SeekOrigin.Begin );
+
+            return result;
+        }
+
+        public static byte[] GetFileFromFFTPack( Stream stream, Files file, long fftpackLength )
+        {
+            long pos = stream.Position;
+            UInt32 start = GetStartPosition( stream, file, fftpackLength );
+
+            UInt32 end = GetEndPosition( stream, file, fftpackLength );
 
             UInt32 length = end - start;
             byte[] result = new byte[length];

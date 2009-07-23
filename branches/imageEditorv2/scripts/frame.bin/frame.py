@@ -1,5 +1,6 @@
 import Image
 import ImageDraw
+import sys
 
 def upper(b): return (b&0xF0) >> 4
 def lower(b): return b&0x0F
@@ -28,11 +29,17 @@ def buildPixels(bytes):
 
 def drawPixelsWithPaletteOnImage(pixels, palette, im):
   imArray = im.load()
-  for i in range(len(pixels)):
+  for i in xrange(len(pixels)):
     try: imArray[i%256,i/256] = palette[pixels[i]]
     except: e=0
   return True
-  
+
+def drawPixelsWithPaletteOnImageRect(pixels, palette, im, x, y, width, height):
+  imArray = im.load()
+  for myx in xrange(width):
+    for myy in xrange(height):
+      imArray[myx,myy] = palette[pixels[(myx+x)+(myy+y)*256]]
+
 def replaceTransparentWithBlack(im):
   imArray = im.load()
   for row in xrange(im.size[1]):
@@ -45,9 +52,12 @@ def charsToInts(chars):
   for i in range(len(chars)):
     result[i] = ord(chars[i])
   return result
+
+fn = "FRAME.BIN"  
+if (len(sys.argv) > 5):
+  fn = sys.argv[1]
   
-  
-f=open("FRAME.BIN","rb")
+f=open(fn,"rb")
 bytes=f.read()
 f.close()
 bytes = charsToInts(bytes)
@@ -63,14 +73,15 @@ bottom_size = (256,256)
 bottom_slice = pixels[256*32:]
 entire_size = (256,288)
 
-for i in xrange(len(palettes)):
-  im = Image.new("RGBA", top_size, (0,0,0,0))
-  drawPixelsWithPaletteOnImage(top_slice, palettes[i], im)
-  im.save("FRAME.BIN.top.%02d.png" % (i), "PNG")
-for i in xrange(len(palettes)):
-  im = Image.new("RGBA", bottom_size, (0,0,0,0))
-  drawPixelsWithPaletteOnImage(bottom_slice, palettes[i], im)
-  im.save("FRAME.BIN.bottom.%02d.png" % (i), "PNG")
+def dump_images():
+  for i in xrange(len(palettes)):
+    im = Image.new("RGBA", top_size, (0,0,0,0))
+    drawPixelsWithPaletteOnImage(top_slice, palettes[i], im)
+    im.save("FRAME.BIN.top.%02d.png" % (i), "PNG")
+  for i in xrange(len(palettes)):
+    im = Image.new("RGBA", bottom_size, (0,0,0,0))
+    drawPixelsWithPaletteOnImage(bottom_slice, palettes[i], im)
+    im.save("FRAME.BIN.bottom.%02d.png" % (i), "PNG")
 
 layout="""00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 42 00 6A 00 1C 00 08 00 40 00 F0 00 15 00 08 00 40 00 52 00 22 00 08 00 62 00 52 00 26 00 08 00 70 00 5A 00 1A 00 08 00 60 00 62 00 28 00 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 96 00 70 00 0A 00 08 00 A8 00 55 00 15 00 08 00 00 00 62 00 1C 00 08 00 00 00 6A 00 2E 00 08 00 8A 00 55 00 1E 00 08 00 00 00 00 00 00 00 00 00 7E 00 20 00 13 00 09 00 00 00 00 00 00 00 00 00 00 00 52 00 1A 00 08 00 5E 00 6A 00 16 00 08 00 96 00 68 00 1F 00 08 00 00 00 5A 00 12 00 08 00 12 00 5A 00 16 00 08 00 28 00 5A 00 13 00 08 00 2E 00 6A 00 13 00 08 00 00 00 00 00 00 00 00 00 3C 00 5A 00 13 00 08 00 4F 00 5A 00 20 00 08 00 1C 00 62 00 18 00 08 00 A4 00 5D 00 14 00 08 00 38 00 62 00 28 00 08 00 24 00 D2 00 20 00 08 00 9C 00 CC 00 1C 00 08 00 74 00 6A 00 22 00 0E 00"""
 layout=''.join(layout.split())
@@ -120,15 +131,25 @@ for i in xrange(len(battlebinlayout)/4):
 nice_palette = palettes[10]
 
 #for i in xrange(len(rectangles)):
-for i in xrange(len(bbin_rectangles)):
-  #r = rectangles[i]
-  r = bbin_rectangles[i]
-  im = Image.new("RGBA", bottom_size, (0,0,0,0))
-  drawPixelsWithPaletteOnImage(bottom_slice, nice_palette, im)
-  if (r[2]==0 and r[3] == 0): 
-    continue
-  print ("(%d,%d) %dx%d"%( r[0],r[1],r[2],r[3]))
-  draw = ImageDraw.Draw(im)
-  draw.rectangle([(r[0],r[1]),(r[2]+r[0],r[3]+r[1])], outline=(255,0,0))
-  del draw
-  im.save("FRAME.BIN.rectangles.%02d.png"%(i),"PNG")
+def dump_rectangles():
+  for i in xrange(len(bbin_rectangles)):
+    #r = rectangles[i]
+    r = bbin_rectangles[i]
+    im = Image.new("RGBA", bottom_size, (0,0,0,0))
+    drawPixelsWithPaletteOnImage(bottom_slice, nice_palette, im)
+    if (r[2]==0 and r[3] == 0): 
+      continue
+    print ("(%d,%d) %dx%d"%( r[0],r[1],r[2],r[3]))
+    draw = ImageDraw.Draw(im)
+    draw.rectangle([(r[0],r[1]),(r[2]+r[0],r[3]+r[1])], outline=(255,0,0))
+    del draw
+    im.save("FRAME.BIN.rectangles.%02d.png"%(i),"PNG")
+    
+if __name__ == "__main__":
+  myx = int(sys.argv[2],16)
+  myy = int(sys.argv[3],16)
+  mywidth=int(sys.argv[4],16)
+  myheight=int(sys.argv[5],16)
+  im = Image.new("RGBA", (mywidth,myheight),(0,0,0,0))
+  drawPixelsWithPaletteOnImageRect(bottom_slice, nice_palette, im, myx, myy, mywidth, myheight)
+  im.save("out.png","PNG")

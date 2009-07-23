@@ -27,16 +27,8 @@ namespace FFTPatcher.SpriteEditor
                 foreach (var img in imgList)
                 {
                     string name = string.Empty;
-                    if (img.Position is PatcherLib.Iso.PsxIso.KnownPosition)
-                    {
-                        var pos = img.Position as PatcherLib.Iso.PsxIso.KnownPosition;
-                        name = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
-                    }
-                    else if (img.Position is PatcherLib.Iso.PspIso.KnownPosition)
-                    {
-                        var pos = img.Position as PatcherLib.Iso.PspIso.KnownPosition;
-                        name = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
-                    }
+                    name = img.GetSaveFileName();
+
                     name = Path.Combine( path, name );
                     if (File.Exists( name ))
                     {
@@ -124,16 +116,17 @@ namespace FFTPatcher.SpriteEditor
                 foreach (var img in imgList)
                 {
                     string name = string.Empty;
-                    if (img.Position is PatcherLib.Iso.PsxIso.KnownPosition)
-                    {
-                        var pos = img.Position as PatcherLib.Iso.PsxIso.KnownPosition;
-                        name = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
-                    }
-                    else if (img.Position is PatcherLib.Iso.PspIso.KnownPosition)
-                    {
-                        var pos = img.Position as PatcherLib.Iso.PspIso.KnownPosition;
-                        name = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
-                    }
+                    name = img.GetSaveFileName();
+                    //if (img.Context == Context.US_PSX )
+                    //{
+                    //    var pos = img.Position as PatcherLib.Iso.PsxIso.KnownPosition;
+                    //    name = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
+                    //}
+                    //else if (img.Position is PatcherLib.Iso.PspIso.KnownPosition)
+                    //{
+                    //    var pos = img.Position as PatcherLib.Iso.PspIso.KnownPosition;
+                    //    name = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
+                    //}
 
                     if (!string.IsNullOrEmpty( name ))
                     {
@@ -447,6 +440,111 @@ namespace FFTPatcher.SpriteEditor
         {
             // 0, 135
             List<IList<AbstractImage>> result = new List<IList<AbstractImage>>();
+            result.Add( new AbstractImage[] {
+                new PSXWorldMap(),
+                new StupidTM2Image( "???", 128, 256,
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 190476, 256 * 2 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 190996, 192404 - 190996 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 192412, 192512 - 192412 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 192524, 192552 - 192524 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 192560, 194480 - 192560 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 194488, 194560 - 194488 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 194572, 194628 - 194572 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 194636, 196556 - 194636 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 196564, 196608 - 196564 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 196620, 196704 - 196620 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 196712, 198632 - 196712 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 198640, 198656 - 198640 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 198668, 198780 - 198668 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 198788, 200580 - 198788 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 200588, 200704 - 200588 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 200716, 200728 - 200716 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 200736, 202656 - 200736 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 202664, 202752 - 202664 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 202764, 202804 - 202764 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 202812, 204732 - 202812 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 204740, 204800 - 204740 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 204812, 204880 - 204812 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 204888, 206808 - 204888 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 206816, 206848 - 206816 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 206860, 206956 - 206860 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 206964, 208884 - 206964 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 208892, 208896 - 208892 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 208908, 209032 - 208908 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 209040, 210832 - 209040 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 210840, 210944 - 210840 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 210956, 210980 - 210956 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 210988, 212908 - 210988 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 212916, 212992 - 212916 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 213004, 213056 - 213004 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 213064, 214984 - 213064 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 214992, 215040 - 214992 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 215052, 215132 - 215052 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 215140, 217060 - 215140 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 217068, 217088 - 217068 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 217100, 217208 - 217100 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 217216, 219008 - 217216 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 219016, 219136 - 219016 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 219148, 219156 - 219148 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 219164, 221084 - 219164 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 221092, 221184 - 221092 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 221196, 221232 - 221196 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 221240, 223160 - 221240 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 223168, 223232 - 223168 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 223244, 223308 - 223244 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 223316, 224212 - 223316 ) ),
+                new StupidTM2Image4bpp( "???", 256, 256,
+                    //new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 237580, 238092 - 237580 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 239628, 239660 - 239628 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 239668, 241588 - 239668 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 241596, 241664 - 241596 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 241676, 241736 - 241676 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 241744, 243664 - 241744 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 243672, 243712 - 243672 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 243724, 243812 - 243724 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 243820, 245740 - 243820 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 245748, 245760 - 245748 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 245772, 245888 - 245772 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 245896, 247688 - 245896 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 247696, 247808 - 247696 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 247820, 247836 - 247820 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 247844, 249764 - 247844 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 249772, 249856 - 249772 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 249868, 249912 - 249868 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 249920, 251840 - 249920 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 251848, 251904 - 251848 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 251916, 251988 - 251916 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 251996, 253916 - 251996 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 253924, 253952 - 253924 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 253964, 254064 - 253964 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 254072, 255992 - 254072 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 256012, 257932 - 256012 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 257940, 258048 - 257940 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 258060, 258080 - 258060 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 258088, 260008 - 258088 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 260016, 260096 - 260016 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 260108, 260156 - 260108 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 260164, 262084 - 260164 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 262092, 262144 - 262092 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 262156, 262232 - 262156 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 262240, 264160 - 262240 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 264168, 264192 - 264168 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 264204, 264308 - 264204 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 264316, 266236 - 264316 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 266252, 268172 - 266252 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 268180, 268288 - 268180 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 268300, 268320 - 268300 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 268328, 270248 - 268328 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 270256, 270336 - 270256 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 270348, 270396 - 270348 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 270404, 272324 - 270404 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 272332, 272384 - 272332 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 272396, 272472 - 272396 ),
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDTEX_TM2, 272480, 272864 - 272480 ) )
+            } );
+
+
+
             IList<AbstractImage> bonusPics = new AbstractImage[36];
             for ( int i = 0; i < 36; i++ )
             {

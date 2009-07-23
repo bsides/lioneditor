@@ -7,14 +7,33 @@ namespace FFTPatcher.SpriteEditor
 {
     class Raw16BitImage : AbstractImage
     {
+        private PatcherLib.Iso.KnownPosition position;
+
         public Raw16BitImage( string name, int width, int height, PatcherLib.Iso.KnownPosition position )
-            : base( name, width, height, position )
+            : base( name, width, height )
         {
+            this.position = position;
+            if ( position is PatcherLib.Iso.PsxIso.KnownPosition )
+            {
+                var pos = position as PatcherLib.Iso.PsxIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
+            }
+            else if ( position is PatcherLib.Iso.PspIso.KnownPosition )
+            {
+                var pos = position as PatcherLib.Iso.PspIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
+            }
+        }
+
+        private string saveFileName;
+        protected override string SaveFileName
+        {
+            get { return saveFileName; }
         }
 
         protected override System.Drawing.Bitmap GetImageFromIsoInner( System.IO.Stream iso )
         {
-            IList<byte> bytes = Position.ReadIso( iso );
+            IList<byte> bytes = position.ReadIso( iso );
             IList<Color> pixels = new Color[bytes.Count / 2];
             for ( int i = 0; i < pixels.Count; i++ )
             {
@@ -54,7 +73,7 @@ namespace FFTPatcher.SpriteEditor
                 result[i * 2 + 1] = bytes[1];
             }
 
-            Position.PatchIso( iso, result );
+            position.PatchIso( iso, result );
         }
     }
 }

@@ -35,6 +35,38 @@ namespace FFTPatcher.SpriteEditor
             return cachedImage;
         }
 
+        protected IList<byte> GetPaletteBytes( Set<Color> colors, Palette.ColorDepth depth )
+        {
+            List<byte> result = new List<byte>();
+            if ( depth == Palette.ColorDepth._16bit )
+            {
+                foreach ( Color c in colors )
+                {
+                    result.AddRange( Palette.ColorToBytes( c ) );
+                }
+            }
+            else if ( depth == Palette.ColorDepth._32bit )
+            {
+                foreach ( Color c in colors )
+                {
+                    result.Add( c.R );
+                    result.Add( c.G );
+                    result.Add( c.B );
+                    result.Add( c.A );
+                }
+            }
+
+            result.AddRange( new byte[Math.Max( 0, (int)depth * 256 - result.Count )] );
+            return result;
+        }
+
+        protected abstract string SaveFileName { get; }
+
+        public string GetSaveFileName()
+        {
+            return SaveFileName;
+        }
+
         protected abstract void WriteImageToIsoInner( System.IO.Stream iso, System.Drawing.Image image );
 
         public virtual void SaveImage( System.IO.Stream iso, System.IO.Stream output )
@@ -70,8 +102,6 @@ namespace FFTPatcher.SpriteEditor
             cachedImageDirty = true;
         }
 
-        public PatcherLib.Iso.KnownPosition Position { get; private set; }
-
         public string Name { get; private set; }
 
         protected static Set<Color> GetColors( Bitmap bmp )
@@ -94,15 +124,14 @@ namespace FFTPatcher.SpriteEditor
             return GetColors( bmp );
         }
 
-        protected AbstractImage( string name, int width, int height, PatcherLib.Iso.KnownPosition position )
-            : this( name, width, height, 0, position )
+        protected AbstractImage( string name, int width, int height )
+            : this( name, width, height, 0 )
         {
         }
 
-        protected AbstractImage( string name, int width, int height, int numPalettes, PatcherLib.Iso.KnownPosition position )
+        protected AbstractImage( string name, int width, int height, int numPalettes )
         {
             Name = name;
-            Position = position;
             Width = width;
             Height = height;
             NumPalettes = numPalettes;

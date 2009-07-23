@@ -8,17 +8,36 @@ namespace FFTPatcher.SpriteEditor
 {
     class PalettedImage8bpp : AbstractImage
     {
+        private PatcherLib.Iso.KnownPosition position;
+
         public PalettedImage8bpp( 
             string name, 
             int width, int height, 
             int numPalettes, Palette.ColorDepth depth,
             PatcherLib.Iso.KnownPosition imagePosition, 
             PatcherLib.Iso.KnownPosition palettePosition )
-            : base( name, width, height, imagePosition )
+            : base( name, width, height )
         {
+            this.position = imagePosition;
             this.palettePosition = palettePosition;
             this.depth = depth;
             System.Diagnostics.Debug.Assert( palettePosition.Length == 256 * (int)depth * numPalettes );
+            if ( position is PatcherLib.Iso.PsxIso.KnownPosition )
+            {
+                var pos = position as PatcherLib.Iso.PsxIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
+            }
+            else if ( position is PatcherLib.Iso.PspIso.KnownPosition )
+            {
+                var pos = position as PatcherLib.Iso.PspIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
+            }
+        }
+
+        private string saveFileName;
+        protected override string SaveFileName
+        {
+            get { return saveFileName; }
         }
 
         private FFTPatcher.SpriteEditor.Palette.ColorDepth depth;
@@ -27,7 +46,7 @@ namespace FFTPatcher.SpriteEditor
         protected override System.Drawing.Bitmap GetImageFromIsoInner( System.IO.Stream iso )
         {
             Palette p = new Palette( palettePosition.ReadIso( iso ), depth );
-            IList<byte> bytes = Position.ReadIso( iso );
+            IList<byte> bytes = position.ReadIso( iso );
 
             Bitmap result = new Bitmap( Width, Height );
 
@@ -87,7 +106,7 @@ namespace FFTPatcher.SpriteEditor
                 Set<Color> colors = GetColors( bmp );
                 if ( colors.Count > 256 )
                 {
-                    ImageQuantization.OctreeQuantizer q = new ImageQuantization.OctreeQuantizer( 256, depth == Palette.ColorDepth._16bit ? 5 : 8 );
+                    ImageQuantization.OctreeQuantizer q = new ImageQuantization.OctreeQuantizer( 256,  8 );
                     using ( var newBmp = q.Quantize( bmp ) )
                     {
                         WriteImageToIsoInner( iso, newBmp );
@@ -95,9 +114,9 @@ namespace FFTPatcher.SpriteEditor
                 }
                 else
                 {
-                    var paletteBytes = GetPaletteBytes( colors );
+                    var paletteBytes = GetPaletteBytes( colors, depth );
                     var imageBytes = GetImageBytes( bmp, colors );
-                    Position.PatchIso( iso, imageBytes );
+                    position.PatchIso( iso, imageBytes );
                     palettePosition.PatchIso( iso, paletteBytes );
                 }
             }
@@ -116,29 +135,5 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
-        private IList<byte> GetPaletteBytes( Set<Color> colors )
-        {
-            List<byte> result = new List<byte>();
-            if ( depth == Palette.ColorDepth._16bit )
-            {
-                foreach ( Color c in colors )
-                {
-                    result.AddRange( Palette.ColorToBytes( c ) );
-                }
-            }
-            else if ( depth == Palette.ColorDepth._32bit )
-            {
-                foreach ( Color c in colors )
-                {
-                    result.Add( c.R );
-                    result.Add( c.G );
-                    result.Add( c.B );
-                    result.Add( c.A );
-                }
-            }
-
-            result.AddRange( new byte[Math.Max( 0, (int)depth * 256 - result.Count )] );
-            return result;
-        }
     }
 }

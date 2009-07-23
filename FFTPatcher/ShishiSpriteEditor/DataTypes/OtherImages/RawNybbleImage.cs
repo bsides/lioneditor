@@ -7,14 +7,32 @@ namespace FFTPatcher.SpriteEditor
 {
     class RawNybbleImage : AbstractImage
     {
+        private PatcherLib.Iso.KnownPosition position;
         public RawNybbleImage( string name, int width, int height, PatcherLib.Iso.KnownPosition position )
-            : base( name, width, height, position )
+            : base( name, width, height )
         {
+            this.position = position;
+            if ( position is PatcherLib.Iso.PsxIso.KnownPosition )
+            {
+                var pos = position as PatcherLib.Iso.PsxIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
+            }
+            else if ( position is PatcherLib.Iso.PspIso.KnownPosition )
+            {
+                var pos = position as PatcherLib.Iso.PspIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
+            }
+        }
+
+        private string saveFileName;
+        protected override string SaveFileName
+        {
+            get { return saveFileName; }
         }
 
         protected override System.Drawing.Bitmap GetImageFromIsoInner( System.IO.Stream iso )
         {
-            var bytes = Position.ReadIso( iso );
+            var bytes = position.ReadIso( iso );
             var pixels = new List<byte>( bytes.Count * 2 );
             foreach (byte b in bytes)
             {
@@ -77,7 +95,7 @@ namespace FFTPatcher.SpriteEditor
                 {
                     bytes.Add( (byte)(((pixels[i + 1] & 0x0F) << 4) | (pixels[i] & 0x0F)) );
                 }
-                Position.PatchIso( iso, bytes );
+                position.PatchIso( iso, bytes );
             }
         }
     }

@@ -15,11 +15,6 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        protected override System.Drawing.Rectangle ThumbnailRectangle
-        {
-            get { return new System.Drawing.Rectangle( 0, 0, 48, 48 ); }
-        }
-
         private int sp2Count;
 
         internal MonsterSprite( SerializedSprite sprite )
@@ -28,49 +23,29 @@ namespace FFTPatcher.SpriteEditor
             sp2Count = ( sprite.Pixels.Count - ( 256 + 32 + 200 ) * 256 ) / 256 / 256;
         }
 
-        public MonsterSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] sp2Files )
-            : base( name, filenames, bytes, sp2Files )
+        public MonsterSprite( IList<byte> bytes, params IList<byte>[] sp2Files )
+            : base( bytes, sp2Files )
         {
-            System.Diagnostics.Debug.Assert( filenames.Count == 1 + sp2Files.Length );
             sp2Count = sp2Files.Length;
         }
 
-        public void ImportSP2( IList<byte> bytes, int sp2Index )
+        protected override IList<byte> BuildPixels(IList<byte> bytes, params IList<byte>[] extraBytes)
         {
-            if ( sp2Index >= sp2Count )
+            List<byte> result = new List<byte>(36864 * 2);
+            foreach (byte b in bytes.Sub(0, 36863))
             {
-                throw new ArgumentException( "sp2Index" );
+                result.Add(b.GetLowerNibble());
+                result.Add(b.GetUpperNibble());
             }
 
-            List<byte> result = new List<byte>( bytes.Count * 2 );
-            foreach ( byte b in bytes )
+            result.AddRange(Decompress(bytes.Sub(36864)));
+
+            foreach (IList<byte> extra in extraBytes)
             {
-                result.Add( b.GetLowerNibble() );
-                result.Add( b.GetUpperNibble() );
-            }
-
-            int startDest = 488 * 256 + 256 * sp2Index;
-            result.CopyTo( Pixels, startDest );
-            FirePixelsChanged();
-        }
-
-        protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
-        {
-            List<byte> result = new List<byte>( 36864 * 2 );
-            foreach ( byte b in bytes.Sub( 0, 36863 ) )
-            {
-                result.Add( b.GetLowerNibble() );
-                result.Add( b.GetUpperNibble() );
-            }
-
-            result.AddRange( Decompress( bytes.Sub( 36864 ) ) );
-
-            foreach( IList<byte> extra in extraBytes )
-            {
-                foreach( byte b in extra )
+                foreach (byte b in extra)
                 {
-                    result.Add( b.GetLowerNibble() );
-                    result.Add( b.GetUpperNibble() );
+                    result.Add(b.GetLowerNibble());
+                    result.Add(b.GetUpperNibble());
                 }
             }
 

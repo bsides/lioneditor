@@ -47,12 +47,23 @@ namespace FFTPatcher.SpriteEditor
         public static Shape ARUTE { get { return arute; } }
         public static Shape CYOKO { get { return cyoko; } }
 
+        private static IDictionary<SpriteType, Shape> shapes =
+            new ReadOnlyDictionary<SpriteType, Shape>(
+            new Dictionary<SpriteType, Shape> {
+                    { SpriteType.TYPE1, type1 },
+                    {SpriteType.TYPE2, type2},
+                    {SpriteType.KANZEN, kanzen},
+                    {SpriteType.ARUTE, arute},
+                    {SpriteType.CYOKO, cyoko} } );
+
+        public static IDictionary<SpriteType, Shape> Shapes { get { return shapes; } }
+
 		#endregion Fields 
 
 		#region Properties (2) 
 
 
-        public ReadOnlyCollection<Frame> Frames { get { return frames.AsReadOnly(); } }
+        public IList<Frame> Frames { get { return frames.AsReadOnly(); } }
 
         public string Name 
         {

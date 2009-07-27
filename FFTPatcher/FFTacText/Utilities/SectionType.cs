@@ -19,7 +19,7 @@
 
 namespace FFTPatcher.TextEditor
 {
-    public enum SectionType
+    internal enum SectionType
     {
         AbilityNames = 0,
         AbilityDescriptions = 1,

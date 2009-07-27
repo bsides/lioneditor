@@ -18,6 +18,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <SkillSets>
+  <!-- This list is used by the Jobs, Skill Sets, Action Menus,
+       and ENTD pages -->
   <SkillSet byte="00" name="&lt;Nothing&gt;"/>
   <SkillSet byte="01" name="Attack"/>
   <SkillSet byte="02" name="Defend"/>

@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using FFTPatcher.Controls;
 using FFTPatcher.Datatypes;
 using PatcherLib;
+using PatcherLib.Utilities;
 using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
@@ -59,9 +60,9 @@ namespace FFTPatcher.Editors
                 }
                 else if( attributes != value )
                 {
-                    this.Enabled = true;
                     attributes = value;
                     UpdateView();
+                    this.Enabled = true;
                 }
             }
         }
@@ -146,7 +147,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 flagsCheckedListBox.Items.Clear();
-                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.AbilityAttributes : PSXResources.AbilityAttributes );
+                flagsCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.Lists.AbilityAttributes.ToArray() : PSXResources.Lists.AbilityAttributes.ToArray() );
                 formulaComboBox.DataSource = ourContext == Context.US_PSP ? AbilityFormula.PSPAbilityFormulas : AbilityFormula.PSXAbilityFormulas;
             }
 

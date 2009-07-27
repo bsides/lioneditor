@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Animation", "Animation\Animation.csproj", "{BAA828FD-2BDE-4E86-9231-7AE9C354505A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimationTests", "AnimationTests\AnimationTests.csproj", "{B703EBCC-03CA-4E0C-B230-A4E1EE825350}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication", "TestApplication\TestApplication.csproj", "{4C9DA081-E6D9-44A1-B84E-BE232C645AA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilerTests", "ProfilerTests\ProfilerTests.csproj", "{78822A29-25E4-4087-959D-C769A132935A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmallTest", "SmallTest\SmallTest.csproj", "{9D6E8E1A-C84F-4231-8479-5D942FEA9403}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAA828FD-2BDE-4E86-9231-7AE9C354505A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA828FD-2BDE-4E86-9231-7AE9C354505A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA828FD-2BDE-4E86-9231-7AE9C354505A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA828FD-2BDE-4E86-9231-7AE9C354505A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B703EBCC-03CA-4E0C-B230-A4E1EE825350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B703EBCC-03CA-4E0C-B230-A4E1EE825350}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B703EBCC-03CA-4E0C-B230-A4E1EE825350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B703EBCC-03CA-4E0C-B230-A4E1EE825350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9DA081-E6D9-44A1-B84E-BE232C645AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9DA081-E6D9-44A1-B84E-BE232C645AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9DA081-E6D9-44A1-B84E-BE232C645AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9DA081-E6D9-44A1-B84E-BE232C645AA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78822A29-25E4-4087-959D-C769A132935A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78822A29-25E4-4087-959D-C769A132935A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78822A29-25E4-4087-959D-C769A132935A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78822A29-25E4-4087-959D-C769A132935A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D6E8E1A-C84F-4231-8479-5D942FEA9403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D6E8E1A-C84F-4231-8479-5D942FEA9403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D6E8E1A-C84F-4231-8479-5D942FEA9403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D6E8E1A-C84F-4231-8479-5D942FEA9403}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		description = Bimixual Animation Library v0.2
+		version = 0.2
+		StartupItem = TestApplication\TestApplication.csproj
+		name = Animation
+		MonoDevelop.ChangeLogAddIn.ChangeLogInfo = $0
+		$0.policy = UpdateNearestChangeLog
+	EndGlobalSection
+EndGlobal

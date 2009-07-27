@@ -55,7 +55,7 @@ namespace FFTPatcher.TextEditor
             System.Windows.Forms.MenuItem separator3;
             System.Windows.Forms.MenuItem separator4;
             System.Windows.Forms.MenuItem separator5;
-            this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
+            this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.fileMenuItem = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
@@ -73,8 +73,8 @@ namespace FFTPatcher.TextEditor
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.patchPsxBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.fileEditor1 = new FFTPatcher.TextEditor.Editors.FileEditor();
             this.progressBar = new PatcherLib.Controls.ProgressBarWithText();
+            this.fileEditor1 = new FFTPatcher.TextEditor.Editors.FileEditor();
             separator2 = new System.Windows.Forms.MenuItem();
             separator3 = new System.Windows.Forms.MenuItem();
             separator4 = new System.Windows.Forms.MenuItem();
@@ -103,20 +103,20 @@ namespace FFTPatcher.TextEditor
             // 
             // mainMenu
             // 
-            this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.fileMenuItem,
             this.isoMenuItem,
             this.textMenuItem,
-            this.helpMenuItem} );
+            this.helpMenuItem});
             // 
             // fileMenuItem
             // 
             this.fileMenuItem.Index = 0;
-            this.fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.fileMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.openMenuItem,
             this.saveMenuItem,
             separator2,
-            this.exitMenuItem} );
+            this.exitMenuItem});
             this.fileMenuItem.Text = "File";
             // 
             // openMenuItem
@@ -138,14 +138,14 @@ namespace FFTPatcher.TextEditor
             // isoMenuItem
             // 
             this.isoMenuItem.Index = 1;
-            this.isoMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.isoMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.importPsxIsoMenuItem,
             this.importPsxIsoCustomMenuItem,
             separator4,
             this.importPspIsoMenuItem,
             this.importPspIsoCustomMenuItem,
             separator5,
-            this.menuItem2} );
+            this.menuItem2});
             this.isoMenuItem.Text = "ISO";
             // 
             // importPsxIsoMenuItem
@@ -157,6 +157,7 @@ namespace FFTPatcher.TextEditor
             // 
             this.importPsxIsoCustomMenuItem.Index = 1;
             this.importPsxIsoCustomMenuItem.Text = "Import PSX ISO (custom tbl)...";
+            this.importPsxIsoCustomMenuItem.Visible = false;
             // 
             // importPspIsoMenuItem
             // 
@@ -167,6 +168,7 @@ namespace FFTPatcher.TextEditor
             // 
             this.importPspIsoCustomMenuItem.Index = 4;
             this.importPspIsoCustomMenuItem.Text = "Import PSP ISO (custom tbl)...";
+            this.importPspIsoCustomMenuItem.Visible = false;
             // 
             // menuItem2
             // 
@@ -183,10 +185,10 @@ namespace FFTPatcher.TextEditor
             // helpMenuItem
             // 
             this.helpMenuItem.Index = 3;
-            this.helpMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
+            this.helpMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.allowedSymbolsMenuItem,
             separator3,
-            this.aboutMenuItem} );
+            this.aboutMenuItem});
             this.helpMenuItem.Text = "Help";
             // 
             // allowedSymbolsMenuItem
@@ -205,39 +207,39 @@ namespace FFTPatcher.TextEditor
             this.patchPsxBackgroundWorker.WorkerReportsProgress = true;
             this.patchPsxBackgroundWorker.WorkerSupportsCancellation = true;
             // 
-            // fileEditor1
-            // 
-            this.fileEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
-                        | System.Windows.Forms.AnchorStyles.Left )
-                        | System.Windows.Forms.AnchorStyles.Right ) ) );
-            this.fileEditor1.Location = new System.Drawing.Point( 13, 13 );
-            this.fileEditor1.Name = "fileEditor1";
-            this.fileEditor1.Size = new System.Drawing.Size( 753, 523 );
-            this.fileEditor1.TabIndex = 4;
-            // 
             // progressBar
             // 
-            this.progressBar.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left )
-                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.BackColor = System.Drawing.Color.White;
             this.progressBar.ForeColor = System.Drawing.Color.Blue;
-            this.progressBar.Location = new System.Drawing.Point( 12, 513 );
+            this.progressBar.Location = new System.Drawing.Point(12, 451);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size( 754, 23 );
+            this.progressBar.Size = new System.Drawing.Size(754, 23);
             this.progressBar.TabIndex = 3;
             this.progressBar.Visible = false;
             // 
+            // fileEditor1
+            // 
+            this.fileEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.fileEditor1.Location = new System.Drawing.Point(13, 13);
+            this.fileEditor1.Name = "fileEditor1";
+            this.fileEditor1.Size = new System.Drawing.Size(753, 461);
+            this.fileEditor1.TabIndex = 4;
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 778, 548 );
-            this.Controls.Add( this.fileEditor1 );
-            this.Controls.Add( this.progressBar );
+            this.ClientSize = new System.Drawing.Size(778, 486);
+            this.Controls.Add(this.fileEditor1);
+            this.Controls.Add(this.progressBar);
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTacText Editor";
-            this.ResumeLayout( false );
+            this.ResumeLayout(false);
 
         }
 

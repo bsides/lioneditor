@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E8B981CB-2A97-4901-9A04-E6E5D369F471}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -15,22 +15,25 @@
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
@@ -56,28 +59,38 @@
     <Content Include="Resources\PSP\Abilities\Abilities.xml" />
     <Content Include="Resources\PSP\Abilities\Effects.xml" />
     <Content Include="Resources\PSP\Abilities\Strings.xml" />
+    <Content Include="Resources\PSP\Chronicle.xml" />
     <Content Include="Resources\PSP\EventNames.xml" />
     <Content Include="Resources\PSP\Items\ItemAttributes.xml" />
     <Content Include="Resources\PSP\Items\Items.xml" />
     <Content Include="Resources\PSP\Items\Strings.xml" />
     <Content Include="Resources\PSP\Jobs.xml" />
+    <Content Include="Resources\PSP\MapNames.xml" />
+    <Content Include="Resources\PSP\ShopNames.xml" />
     <Content Include="Resources\PSP\SkillSets.xml" />
     <Content Include="Resources\PSP\SpecialNames.xml" />
+    <Content Include="Resources\PSP\SpriteFiles.xml" />
     <Content Include="Resources\PSP\SpriteSets.xml" />
     <Content Include="Resources\PSP\StatusNames.xml" />
+    <Content Include="Resources\PSP\UnitNames.xml" />
     <Content Include="Resources\PSX-US\Abilities\Abilities.xml" />
     <Content Include="Resources\PSX-US\Abilities\Effects.xml" />
     <Content Include="Resources\PSX-US\Abilities\Strings.xml" />
+    <Content Include="Resources\PSX-US\BraveStory.xml" />
     <Content Include="Resources\PSX-US\EventNames.xml" />
     <Content Include="Resources\PSX-US\FileList.txt" />
     <Content Include="Resources\PSX-US\Items\ItemAttributes.xml" />
     <Content Include="Resources\PSX-US\Items\Items.xml" />
     <Content Include="Resources\PSX-US\Items\Strings.xml" />
     <Content Include="Resources\PSX-US\Jobs.xml" />
+    <Content Include="Resources\PSX-US\MapNames.xml" />
+    <Content Include="Resources\PSX-US\ShopNames.xml" />
     <Content Include="Resources\PSX-US\SkillSets.xml" />
     <Content Include="Resources\PSX-US\SpecialNames.xml" />
+    <Content Include="Resources\PSX-US\SpriteFiles.xml" />
     <Content Include="Resources\PSX-US\SpriteSets.xml" />
     <Content Include="Resources\PSX-US\StatusNames.xml" />
+    <Content Include="Resources\PSX-US\UnitNames.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ENTD1.ENT" />
@@ -85,6 +98,7 @@
     <None Include="Resources\ENTD3.ENT" />
     <None Include="Resources\ENTD4.ENT" />
     <None Include="Resources\MoveFind.bin" />
+    <None Include="Resources\PSP\bin\AbilityAnimations.bin" />
     <None Include="Resources\PSP\bin\AbilityEffects.bin" />
     <None Include="Resources\PSP\bin\ActionEvents.bin" />
     <None Include="Resources\PSP\bin\ENTD5.bin" />
@@ -103,6 +117,7 @@
     <None Include="Resources\PSP\bin\SkillSetsBin.bin" />
     <None Include="Resources\PSP\bin\StatusAttributes.bin" />
     <None Include="Resources\PSX-US\bin\Abilities.bin" />
+    <None Include="Resources\PSX-US\bin\AbilityAnimations.bin" />
     <None Include="Resources\PSX-US\bin\AbilityEffects.bin" />
     <None Include="Resources\PSX-US\bin\ActionEvents.bin" />
     <None Include="Resources\PSX-US\bin\font.bin" />
@@ -114,6 +129,7 @@
     <None Include="Resources\PSX-US\bin\OldItemAttributes.bin" />
     <None Include="Resources\PSX-US\bin\OldItems.bin" />
     <None Include="Resources\PSX-US\bin\PoachProbabilities.bin" />
+    <None Include="Resources\ReactionEffects.bin" />
     <None Include="Resources\PSX-US\bin\SCEAP.DAT.patched.bin" />
     <None Include="Resources\PSX-US\bin\SkillSetsBin.bin" />
     <None Include="Resources\PSX-US\bin\StatusAttributes.bin" />
@@ -124,6 +140,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="PSPResources.Binaries.cs" />
+    <Compile Include="PSPResources.Lists.cs" />
+    <Compile Include="PSXResources.Binaries.cs" />
+    <Compile Include="PSXResources.Lists.cs" />
     <Compile Include="Resources\PSP\bin\Abilities.bin" />
   </ItemGroup>
   <ItemGroup>

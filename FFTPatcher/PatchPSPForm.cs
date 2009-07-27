@@ -48,6 +48,13 @@ namespace FFTPatcher
             set { bootBinPatchable[(int)BootBinPatchable.Abilities] = value; }
         }
 
+
+        public bool AbilityAnimations
+        {
+            get { return bootBinPatchable[(int)BootBinPatchable.AbilityAnimations]; }
+            set { bootBinPatchable[(int)BootBinPatchable.AbilityAnimations] = value; }
+        }
+
         public bool AbilityEffects
         {
             get { return bootBinPatchable[(int)BootBinPatchable.AbilityEffects]; }
@@ -158,7 +165,7 @@ public string CustomICON0FileName
                 ENTD.ForEach( b => result += b ? 1 : 0 );
                 new bool[] { Abilities, AbilityEffects, MoveFindItems,
                     Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
-                    StatusAttributes, InflictStatus, Poach, StoreInventory }.ForEach( b => result += b ? 2 : 0 );
+                    StatusAttributes, InflictStatus, Poach, StoreInventory, AbilityAnimations }.ForEach( b => result += b ? 2 : 0 );
                 if( RegenECC ) result++;
                 if( ICON0 != CustomICON0.NoChange ) result++;
                 if( ItemAttributes ) result += 4;
@@ -223,6 +230,7 @@ public string CustomICON0FileName
             bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged );
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged);
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.StoreInventory, FFTPatch.StoreInventories.HasChanged);
+            bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.AbilityAnimations, FFTPatch.AbilityAnimations.HasChanged);
 
             dontChangeIcon0RadioButton.Checked = true;
 
@@ -344,6 +352,7 @@ private void entd2CheckBox_CheckedChanged( object sender, EventArgs e )
             {
                 icon0FileNameTextBox.Enabled = false;
                 icon0BrowseButton.Enabled = false;
+                PSPResources.Binaries.ICON0.CopyTo( ICON0_PNG, 0 );
                 BuildICON0Preview( PSPResources.ICON0_PNG );
             }
 
@@ -369,10 +378,10 @@ private void UpdateNextEnabled()
                  ValidateICON0( icon0FileNameTextBox.Text ) );
             enabled = enabled && ValidateISO( isoPathTextBox.Text );
             enabled = enabled &&
-                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || ENTD5 || RegenECC || Abilities || Items ||
+                (ENTD1 || ENTD2 || ENTD3 || ENTD4 || ENTD5 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
-                  StatusAttributes || InflictStatus || Poach || ( ICON0 != CustomICON0.NoChange ) ||
-                  AbilityEffects || MoveFindItems || StoreInventory );
+                  StatusAttributes || InflictStatus || Poach || (ICON0 != CustomICON0.NoChange) ||
+                  AbilityEffects || MoveFindItems || StoreInventory || AbilityAnimations);
 
             okButton.Enabled = enabled;
         }
@@ -424,6 +433,7 @@ private enum Checkboxes
 private enum BootBinPatchable
         {
             Abilities,
+            AbilityAnimations,
             AbilityEffects,
             Items,
             ItemAttributes,

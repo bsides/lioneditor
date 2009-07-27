@@ -19,16 +19,29 @@
 
 using System;
 using System.Collections.Generic;
+using PatcherLib;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
-    public class Elements : IEquatable<Elements>, ISupportDigest
+    public class Elements : BaseDataType, IEquatable<Elements>, ISupportDigest, ISupportDefault<Elements>
     {
 		#region Instance Variables (1) 
 
+        private static class Strings
+        {
+            public const string Fire = "Fire";
+            public const string Lightning = "Lightning";
+            public const string Ice = "Ice";
+            public const string Wind = "Wind";
+            public const string Earth = "Earth";
+            public const string Water = "Water";
+            public const string Holy = "Holy";
+            public const string Dark = "Dark";
+        }
         private static readonly string[] elementNames = new string[8] {
-            "Fire", "Lightning", "Ice", "Wind", 
-            "Earth", "Water", "Holy", "Dark" };
+            Strings.Fire, Strings.Lightning, Strings.Ice, Strings.Wind,
+            Strings.Earth, Strings.Water, Strings.Holy, Strings.Dark };
 
 		#endregion Instance Variables 
 
@@ -68,15 +81,24 @@ namespace FFTPatcher.Datatypes
 
         public Elements( byte b )
         {
-            bool[] flags = PatcherLib.Utilities.Utilities.BooleansFromByte( b );
-            Fire = flags[7];
-            Lightning = flags[6];
-            Ice = flags[5];
-            Wind = flags[4];
-            Earth = flags[3];
-            Water = flags[2];
-            Holy = flags[1];
-            Dark = flags[0];
+            PopulateFromBools( PatcherLib.Utilities.Utilities.BooleansFromByte( b ) );
+        }
+
+        internal Elements()
+        {
+        }
+
+        private void PopulateFromBools( IList<bool> bools )
+        {
+            System.Diagnostics.Debug.Assert( bools.Count == 8 );
+            Fire = bools[7];
+            Lightning = bools[6];
+            Ice = bools[5];
+            Wind = bools[4];
+            Earth = bools[3];
+            Water = bools[2];
+            Holy = bools[1];
+            Dark = bools[0];
         }
 
 		#endregion Constructors 
@@ -156,5 +178,27 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        protected override void WriteXml( System.Xml.XmlWriter writer )
+        {
+            bool[] bools = ToBoolArray();
+            System.Diagnostics.Debug.Assert( bools.Length == DigestableProperties.Count );
+            for ( int i = 0; i < bools.Length; i++ )
+            {
+                writer.WriteValueElement( DigestableProperties[i], bools[i] );
+            }
+        }
+
+        protected override void ReadXml( System.Xml.XmlReader reader )
+        {
+            reader.ReadStartElement();
+            bool[] bools = new bool[8];
+            for ( int i = 0; i < bools.Length; i++ )
+            {
+                bools[i] = reader.ReadElementContentAsBoolean();
+            }
+            PopulateFromBools( bools );
+            reader.ReadEndElement();
+        }
     }
 }

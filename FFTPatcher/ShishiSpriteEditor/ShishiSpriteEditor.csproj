@@ -13,25 +13,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>sprite.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <StartupObject>FFTPatcher.SpriteEditor.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +23,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -57,6 +40,7 @@
       <HintPath>..\..\utils\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -68,24 +52,98 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AllOtherImagesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AllOtherImagesEditor.designer.cs">
+      <DependentUpon>AllOtherImagesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AllSpritesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AllSpritesEditor.Designer.cs">
+      <DependentUpon>AllSpritesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnimationViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AnimationViewer.Designer.cs">
+      <DependentUpon>AnimationViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\IAlteration.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AnimationFinished.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\BezierSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Drawable\IDrawable.cs" />
+    <Compile Include="Controls\Bimixual.Animation\DrawManager.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Flip.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\FlipBook.cs" />
+    <Compile Include="Controls\Bimixual.Animation\FormBuffer.cs" />
+    <Compile Include="Controls\Bimixual.Animation\FpsTimer.cs" />
+    <Compile Include="Controls\Bimixual.Animation\GeometricsInterface.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\JustSitThereSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\LoopControl.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\MatrixAlteration.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\Oriented.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\RevolutionSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\Rotate.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\RotateSpan.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\RotateToNormal.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\RotateToTangent.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Rotate\Rotation.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\Sprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Drawable\SpriteManager.cs" />
+    <Compile Include="Controls\Bimixual.Animation\Sprite\StraightLineSprite.cs" />
+    <Compile Include="Controls\Bimixual.Animation\AlterationInterface\Translation.cs" />
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPicker.designer.cs">
+      <DependentUpon>Office2007ColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPlate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPlate.designer.cs">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007MenuHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007MenuHelper.designer.cs">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SeparatorComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataTypes\AllSpriteAttributes.cs" />
+    <Compile Include="DataTypes\AllSprites.cs" />
+    <Compile Include="DataTypes\CharacterSprite.cs" />
+    <Compile Include="DataTypes\OtherImages\AbstractImage.cs" />
+    <Compile Include="DataTypes\OtherImages\AllOtherImages.cs" />
+    <Compile Include="DataTypes\OtherImages\StupidTM2Image4bpp.cs" />
+    <Compile Include="DataTypes\OtherImages\PalettedImage4bpp.cs" />
+    <Compile Include="DataTypes\OtherImages\PalettedImage8bpp.cs" />
+    <Compile Include="DataTypes\OtherImages\PSXWorldMap.cs" />
+    <Compile Include="DataTypes\OtherImages\Raw16BitImage.cs" />
+    <Compile Include="DataTypes\OtherImages\RawNybbleImage.cs" />
+    <Compile Include="DataTypes\OtherImages\StupidTM2Image.cs" />
+    <Compile Include="DataTypes\OtherImages\WldTex2.cs" />
+    <Compile Include="DataTypes\Sequence.cs" />
+    <Compile Include="DataTypes\Sprite.cs" />
+    <Compile Include="DataTypes\SpriteAttributes.cs" />
+    <Compile Include="DataTypes\SpriteFileLocations.cs" />
     <Compile Include="DataTypes\Sprites\AbstractShapedSprite.cs" />
     <Compile Include="DataTypes\Sprites\AbstractCompressedSprite.cs" />
     <Compile Include="DataTypes\Sprites\ARUTE.cs" />
     <Compile Include="DataTypes\Sprites\CYOKO.cs" />
     <Compile Include="DataTypes\Sprites\FullSpriteSet.cs" />
     <Compile Include="DataTypes\Sprites\SerializedSprite.cs" />
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="DataTypes\Frame.cs" />
     <Compile Include="DataTypes\Sprites\KANZEN.cs" />
-    <Compile Include="FlickerFreeListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FullSpriteSetEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="FullSpriteSetEditor.Designer.cs">
-      <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
-    </Compile>
+    <Compile Include="DataTypes\Sprites\WEP3Sprite.cs" />
+    <Compile Include="DataTypes\Sprites\WEPSprite.cs" />
+    <Compile Include="DataTypes\WepSprite.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,30 +151,35 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataTypes\Sprites\MonsterSprite.cs" />
-    <Compile Include="DataTypes\OPNBK.cs" />
     <Compile Include="DataTypes\Palette.cs" />
-    <Compile Include="PatchDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PatchDialog.Designer.cs">
-      <DependentUpon>PatchDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FullSpriteSetEditor.resx">
-      <DependentUpon>FullSpriteSetEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AllOtherImagesEditor.resx">
+      <DependentUpon>AllOtherImagesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AllSpritesEditor.resx">
+      <DependentUpon>AllSpritesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AnimationViewer.resx">
+      <DependentUpon>AnimationViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007ColorPlate.resx">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Owf.Controls.Office2007ColorPicker\Office2007MenuHelper.resx">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PatchDialog.resx">
-      <DependentUpon>PatchDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -124,12 +187,16 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpriteDialog.resx">
-      <DependentUpon>SpriteDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\SpriteEditor.resx">
+      <DependentUpon>SpriteEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpriteViewer.resx">
+    <EmbeddedResource Include="Controls\SpriteViewer.resx">
       <DependentUpon>SpriteViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -142,6 +209,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\ARUTE.SEQ" />
     <None Include="Resources\BATTLE\other_unknown\10M.SPR" />
     <None Include="Resources\BATTLE\other_unknown\10W.SPR" />
     <None Include="Resources\BATTLE\other_unknown\20M.SPR" />
@@ -297,6 +365,7 @@
     <None Include="Resources\BATTLE\MON\ZARUE.SPR" />
     <None Include="Resources\BATTLE\TYPE2\ZARUMOU.SPR" />
     <None Include="Resources\BATTLE\ZODIAC.BIN" />
+    <None Include="Resources\CYOKO.SEQ" />
     <None Include="Resources\EVENT\CHAPTER1.BIN" />
     <None Include="Resources\EVENT\CHAPTER2.BIN" />
     <None Include="Resources\EVENT\CHAPTER3.BIN" />
@@ -306,15 +375,20 @@
     <None Include="Resources\EVENT\END3.BIN" />
     <None Include="Resources\EVENT\END4.BIN" />
     <None Include="Resources\EVENT\END5.BIN" />
-    <None Include="Resources\EVENT\EVTCHR.BIN" />
+    <None Include="Resources\EVENT\EVTCHR.BIN">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\EVENT\EVTFACE.BIN" />
     <None Include="Resources\EVENT\FRAME.BIN" />
     <None Include="Resources\EVENT\GAMEOVER.BIN" />
     <None Include="Resources\EVENT\ITEM.BIN" />
     <None Include="Resources\EVENT\MAPTITLE.BIN" />
     <None Include="Resources\EVENT\UNIT.BIN" />
-    <None Include="Resources\EVENT\WLDFACE.BIN" />
+    <None Include="Resources\EVENT\WLDFACE.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\EVENT\WLDFACE4.BIN" />
+    <None Include="Resources\KANZEN.SEQ" />
     <None Include="Resources\MENU\BK_FITR.TIM" />
     <None Include="Resources\MENU\BK_FITR2.TIM" />
     <None Include="Resources\MENU\BK_FITR3.TIM" />
@@ -326,6 +400,9 @@
     <None Include="Resources\MENU\BK_SHOP3.TIM" />
     <None Include="Resources\OPEN\OPNBK.BIN" />
     <None Include="Resources\OPEN\OPNTEX.BIN" />
+    <None Include="Resources\PatchedDummyFolder.bin" />
+    <None Include="Resources\TYPE1.SEQ" />
+    <None Include="Resources\TYPE2.SEQ" />
     <None Include="Resources\WORLD\WLDPIC.BIN" />
     <None Include="Resources\WORLD\WLDTEX.TM2" />
     <None Include="Resources\BATTLE\other\ARUTE.SHP" />
@@ -347,28 +424,44 @@
     <Compile Include="DataTypes\Shape.cs" />
     <Compile Include="DataTypes\Sprites\AbstractSprite.cs" />
     <Compile Include="DataTypes\Sprites\ShortSprite.cs" />
-    <Compile Include="SpriteDialog.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Controls\SpriteEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SpriteDialog.Designer.cs">
-      <DependentUpon>SpriteDialog.cs</DependentUpon>
+    <Compile Include="Controls\SpriteEditor.Designer.cs">
+      <DependentUpon>SpriteEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpriteViewer.cs">
+    <Compile Include="Controls\SpriteViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DataTypes\Tile.cs" />
     <Compile Include="DataTypes\Sprites\TYPE1Sprite.cs" />
     <Compile Include="DataTypes\Sprites\TYPE2Sprite.cs" />
-    <Compile Include="Utilities.cs" />
-    <Compile Include="DataTypes\WLDFACE.cs" />
+    <Compile Include="Quantizer\BitmapFilter.cs" />
+    <Compile Include="Quantizer\ConvMatrix.cs" />
+    <Compile Include="Quantizer\GrayscaleQuantizer.cs" />
+    <Compile Include="Quantizer\OctreeQuantizer.cs" />
+    <Compile Include="Quantizer\PaletteQuantizer.cs" />
+    <Compile Include="Quantizer\Quantizer.cs" />
+    <Compile Include="Quantizer\ThumbnailGenerator.cs" />
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PatcherLib.Resources\PatcherLib.Resources.csproj">
+      <Project>{E8B981CB-2A97-4901-9A04-E6E5D369F471}</Project>
+      <Name>PatcherLib.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PatcherLib\PatcherLib.csproj">
       <Project>{BB7322AD-75D3-44AF-A0BF-76015C53998F}</Project>
       <Name>PatcherLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataTypes\Sprites\MemoryLocs.txt" />
     <Content Include="Resources\PSPFiles.xml" />
     <Content Include="Resources\PSXFiles.xml" />
     <Content Include="Resources\sprite.ico" />

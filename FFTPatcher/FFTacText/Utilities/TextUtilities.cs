@@ -64,6 +64,21 @@ namespace FFTPatcher.TextEditor
         /// </summary>
         public static PSXCharMap PSXMap { get; private set; }
 
+        public static FFTFont PSXFont
+        {
+            get
+            {
+                return new FFTFont( PatcherLib.PSXResources.Binaries.Font, PatcherLib.PSXResources.Binaries.FontWidths );
+            }
+        }
+
+        public static FFTFont PSPFont
+        {
+            get
+            {
+                return new FFTFont( PatcherLib.PSPResources.Binaries.Font, PatcherLib.PSPResources.Binaries.FontWidths );
+            }
+        }
 
         #endregion Static Properties
 
@@ -71,11 +86,16 @@ namespace FFTPatcher.TextEditor
 
         static TextUtilities()
         {
-            PSXMap = new PSXCharMap();
-            PSPMap = new PSPCharMap();
-            BuildVersion1Charmap( PSXMap, PSPMap );
-            BuildVersion2Charmap( PSXMap, PSPMap );
-            BuildVersion3Charmap( PSXMap, PSPMap );
+            //PSXMap = new PSXCharMap();
+            //PSPMap = new PSPCharMap();
+            var psx = new Dictionary<int, string>();
+            var psp = new Dictionary<int, string>();
+            BuildVersion1Charmap( psx, psp );
+            BuildVersion2Charmap( psx, psp );
+            BuildVersion3Charmap( psx, psp );
+
+            PSXMap = new PSXCharMap(psx);
+            PSPMap = new PSPCharMap(psp);
         }
 
         #endregion Constructors
@@ -92,7 +112,7 @@ namespace FFTPatcher.TextEditor
         #region Methods (12)
 
 
-        private static void BuildVersion1Charmap( PSXCharMap psx, PSPCharMap psp )
+        private static void BuildVersion1Charmap(IDictionary<int, string> psx, IDictionary<int, string> psp)
         {
             for( int i = (int)'a'; i <= (int)'z'; i++ )
             {
@@ -327,9 +347,9 @@ namespace FFTPatcher.TextEditor
             psp.Add( 0xDA66, "\xF9" );
         }
 
-        private static void BuildVersion2Charmap( PSXCharMap psx, PSPCharMap psp )
+        private static void BuildVersion2Charmap(IDictionary<int, string> psx, IDictionary<int, string> psp)
         {
-            foreach( GenericCharMap map in new GenericCharMap[] { psx, psp } )
+            foreach (IDictionary<int, string> map in new IDictionary<int, string>[] { psx, psp })
             {
                 map.Add( 0xD133, "\u5263" );
                 map.Add( 0xD134, "\u4E00" );
@@ -490,7 +510,7 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        private static void BuildVersion3Charmap( PSXCharMap PSXMap, PSPCharMap PSPMap )
+        private static void BuildVersion3Charmap(IDictionary<int, string> PSXMap, IDictionary<int, string> PSPMap)
         {
             IList<string> psxChars = PatcherLib.PSXResources.CharacterSet;
             IList<string> pspChars = PatcherLib.PSPResources.CharacterSet;
@@ -558,10 +578,10 @@ namespace FFTPatcher.TextEditor
         /// <param name="ignoreSections">A dictionary indicating which entries to not compress, with each key being the section that contains the ignored
         /// entries and each item in the value being an entry to ignore</param>
         /// <param name="callback">The progress callback.</param>
-        public static CompressionResult Compress( IList<IList<string>> sections, GenericCharMap charmap, IList<bool> allowedSections )
+        public static CompressionResult Compress( IList<IList<string>> sections, byte terminator, GenericCharMap charmap, IList<bool> allowedSections )
         {
             int length = 0;
-            sections.ForEach( s => length += charmap.StringsToByteArray( s ).Length );
+            sections.ForEach( s => length += charmap.StringsToByteArray( s, terminator ).Length );
 
             byte[] result = new byte[length];
             int[] lengths = new int[sections.Count];
@@ -573,11 +593,11 @@ namespace FFTPatcher.TextEditor
 
                 if ( allowedSections == null || allowedSections[section] )
                 {
-                    CompressSection( charmap.StringsToByteArray( sections[section] ), result, ref pos );
+                    CompressSection( charmap.StringsToByteArray( sections[section], terminator ), result, ref pos );
                 }
                 else
                 {
-                    byte[] secResult = charmap.StringsToByteArray( sections[section] );
+                    byte[] secResult = charmap.StringsToByteArray( sections[section], terminator );
                     secResult.CopyTo( result, pos );
                     pos += secResult.Length;
                 }
@@ -625,14 +645,40 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        public static IList<string> ProcessList(IList<byte> bytes, Set<byte> terminators, GenericCharMap charmap)
+        {
+            if (terminators.Count == 1)
+                return ProcessList(bytes, terminators[0], charmap);
+
+            IList<IList<byte>> words = bytes.Split(terminators);
+
+            List<string> result = new List<string>(words.Count);
+
+            foreach (IList<byte> word in words)
+            {
+                StringBuilder sb = new StringBuilder();
+                int pos = 0;
+                while (pos < (word.Count - 1) || (pos == (word.Count - 1) && !terminators.Contains(word[pos])))
+                {
+                    sb.Append(charmap.GetNextChar(word, ref pos));
+                }
+
+                sb.Replace(@"{Newline}", @"{Newline}" + Environment.NewLine);
+
+                result.Add(sb.ToString());
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Processes a list of FFT text bytes into a list of FFTacText strings.
         /// </summary>
         /// <param name="bytes">The bytes to process</param>
         /// <param name="charmap">The charmap to use</param>
-        public static IList<string> ProcessList( IList<byte> bytes, GenericCharMap charmap )
+        public static IList<string> ProcessList( IList<byte> bytes, byte terminator, GenericCharMap charmap )
         {
-            IList<IList<byte>> words = bytes.Split( (byte)0xFE );
+            IList<IList<byte>> words = bytes.Split( terminator );
 
             List<string> result = new List<string>( words.Count );
 
@@ -640,7 +686,7 @@ namespace FFTPatcher.TextEditor
             {
                 StringBuilder sb = new StringBuilder();
                 int pos = 0;
-                while ( pos < ( word.Count - 1 ) || ( pos == ( word.Count - 1 ) && word[pos] != 0xFE ) )
+                while ( pos < ( word.Count - 1 ) || ( pos == ( word.Count - 1 ) && word[pos] != terminator ) )
                 {
                     sb.Append( charmap.GetNextChar( word, ref pos ) );
                 }

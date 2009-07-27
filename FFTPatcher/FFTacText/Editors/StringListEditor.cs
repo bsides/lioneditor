@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -33,7 +34,11 @@ namespace FFTPatcher.TextEditor
         private int boundSection;
 
         private bool ignoreChanges = false;
+#if MEASURESTRINGS
+        public int TextColumnIndex { get { return textColumn.Index; } }
+#else
         public const int TextColumnIndex = 2;
+#endif
 
         /// <summary>
         /// Gets the current row.
@@ -55,11 +60,15 @@ namespace FFTPatcher.TextEditor
             dataGridView.CellValidating += new DataGridViewCellValidatingEventHandler( dataGridView_CellValidating );
             dataGridView.CellValidated += new DataGridViewCellEventHandler( dataGridView_CellValidated );
             textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
+#if !MEASURESTRINGS
+            dataGridView.Columns.Remove(widthColumn);
+#endif
         }
 
         private void dataGridView_CellValidating( object sender, DataGridViewCellValidatingEventArgs e )
         {
             if ( !ignoreChanges &&
+                e.ColumnIndex == TextColumnIndex &&
                 CellValidating != null )
             {
                 CellValidating( this, e );
@@ -71,7 +80,11 @@ namespace FFTPatcher.TextEditor
             if ( !ignoreChanges && 
                  e.ColumnIndex == TextColumnIndex )
             {
-                boundFile[boundSection, CurrentRow] = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value;
+                string s = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value ?? string.Empty;
+                boundFile[boundSection, CurrentRow] = s;
+#if MEASURESTRINGS
+                dataGridView[widthColumn.Index, e.RowIndex].Value = boundFile.CharMap.MeasureStringInFont(s, font);
+#endif
             }
         }
 
@@ -113,14 +126,17 @@ namespace FFTPatcher.TextEditor
             }
         }
 
+#if MEASURESTRINGS
+        PatcherLib.Datatypes.FFTFont font;
+#endif
         
         /// <summary>
         /// Binds this editor to a list of strings.
         /// </summary>
-        /// <param name="names">The names.</param>
-        /// <param name="values">The values.</param>
         public void BindTo( IList<string> names, IFile file, int section )
         {
+            ignoreChanges = true;
+            SuspendLayout();
             int count = file.SectionLengths[section];
             List<string> ourNames = new List<string>( names );
             for ( int i = names.Count; i < count; i++ )
@@ -132,10 +148,18 @@ namespace FFTPatcher.TextEditor
 
             DataGridViewRow[] rows = new DataGridViewRow[count];
             dataGridView.SuspendLayout();
+#if MEASURESTRINGS
+            font = file.Context == PatcherLib.Datatypes.Context.US_PSP ? TextUtilities.PSPFont : TextUtilities.PSXFont;
+#endif
+
             for( int i = 0; i < count; i++ )
             {
                 DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells( dataGridView, i, ourNames[i], file[section, i] );
+#if MEASURESTRINGS
+                row.CreateCells( dataGridView, i, ourNames[i], file.CharMap.MeasureStringInFont( file[section, i] ?? string.Empty, font ), file[section, i] );
+#else
+                row.CreateCells(dataGridView, i, ourNames[i], file[section, i]);
+#endif
                 row.ReadOnly = disallowed != null && disallowed.Count > 0 && disallowed.Contains( i );
                 rows[i] = row;
             }
@@ -143,8 +167,33 @@ namespace FFTPatcher.TextEditor
             dataGridView.Rows.AddRange( rows );
             dataGridView.ResumeLayout();
 
+            bool showSeparatorChoices = file is ISerializableFile && (file as ISerializableFile).Layout.AllowedTerminators.Count > 1;
+            separatorComboBox.Visible = showSeparatorChoices;
+            separatorComboBox.Enabled = showSeparatorChoices;
+            separatorLabel.Visible = showSeparatorChoices;
+            if (showSeparatorChoices)
+            {
+                PatcherLib.Datatypes.Set<byte> seps = (file as ISerializableFile).Layout.AllowedTerminators;
+                separatorComboBox.BeginUpdate();
+                separatorComboBox.Items.Clear();
+                separatorComboBox.FormatString = "X2";
+                seps.ForEach(b => separatorComboBox.Items.Add(b));
+                separatorComboBox.SelectedItem = file.SelectedTerminator;
+                separatorComboBox.EndUpdate();
+            }
+
             boundFile = file;
             boundSection = section;
+            ignoreChanges = false;
+            ResumeLayout();
+        }
+
+        private void separatorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (separatorComboBox.Enabled && separatorComboBox.Visible && !ignoreChanges)
+            {
+                boundFile.SelectedTerminator = (byte)separatorComboBox.SelectedItem;
+            }
         }
 
     }

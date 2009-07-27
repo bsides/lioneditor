@@ -24,7 +24,7 @@ using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
-    public class MoveFindItem : IChangeable, ISupportDigest
+    public class MoveFindItem : IChangeable, ISupportDigest, ISupportDefault<MoveFindItem>
     {
 		#region Instance Variables (1) 
 
@@ -134,7 +134,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class MapMoveFindItems : IChangeable, IXmlDigest
+    public class MapMoveFindItems : IChangeable, IXmlDigest, ISupportDefault<MapMoveFindItems>
     {
 		#region Public Properties (4) 
 
@@ -205,7 +205,7 @@ namespace FFTPatcher.Datatypes
 
         #region IXmlDigest Members
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -224,7 +224,7 @@ namespace FFTPatcher.Datatypes
         #endregion
     }
 
-    public class AllMoveFindItems : PatchableFile, IChangeable, IXmlDigest
+    public class AllMoveFindItems : PatchableFile, IChangeable, IXmlDigest, ISupportDefault<AllMoveFindItems>, IGenerateCodes
     {
 		#region Public Properties (3) 
 
@@ -250,7 +250,7 @@ namespace FFTPatcher.Datatypes
         {
             Default = def;
             const int numMaps = 128;
-            IList<string> names = context == Context.US_PSP ? PSPResources.MapNames : PSXResources.MapNames;
+            IList<string> names = context == Context.US_PSP ? PSPResources.Lists.MapNames : PSXResources.Lists.MapNames;
 
             List<MapMoveFindItems> moveFindItems = new List<MapMoveFindItems>( numMaps * 4 );
             if ( Default == null )
@@ -273,18 +273,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (4) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.MoveFind, this.ToByteArray(), 0x274754 );
-            }
-            else
-            {
-                return new List<string>();
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -315,7 +303,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -323,12 +311,33 @@ namespace FFTPatcher.Datatypes
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( MapMoveFindItems m in MoveFindItems )
                 {
-                    m.WriteXml( writer );
+                    m.WriteXmlDigest( writer );
                 }
                 writer.WriteEndElement();
             }
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Move/Find Items" : "\"Move/Find Items";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.MoveFind, this.ToByteArray(), 0x274754 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.MoveFind, this.ToByteArray(), 0xF5E74, Codes.CodeEnabledOnlyWhen.Battle );
+            }
+        }
+
+        #endregion
     }
 }

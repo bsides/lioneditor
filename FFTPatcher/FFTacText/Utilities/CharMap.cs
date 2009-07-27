@@ -26,7 +26,7 @@ namespace FFTPatcher.TextEditor
     /// <summary>
     /// A map between FFT text and UTF8.
     /// </summary>
-    public abstract class GenericCharMap : Dictionary<int, string>
+    public abstract class GenericCharMap : PatcherLib.Datatypes.ReadOnlyDictionary<int, string>
     {
 
         #region Static Fields (1)
@@ -145,19 +145,82 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Converts a collection of FFTacText strings into a FFT text byte array.
         /// </summary>
-        public byte[] StringsToByteArray( IList<string> strings )
+        public byte[] StringsToByteArray( IList<string> strings, byte terminator )
         {
             List<byte> result = new List<byte>();
             foreach( string s in strings )
             {
-                result.AddRange( StringToByteArray( s ) );
+                result.AddRange( StringToByteArray( s, terminator ) );
             }
             return result.ToArray();
         }
 
         public string LastError { get; private set; }
 
-        public bool TryStringToByteArray( string s, out byte[] bytes )
+        public IList<UInt32> GetEachEncodedCharacter( string s )
+        {
+            List<UInt32> result = new List<uint>();
+            for ( int i = 0; i < s.Length; i++ )
+            {
+                int val = 0;
+                if ( s[i] == '{' )
+                {
+                    int j = s.IndexOf( '}', i );
+                    if ( j == -1 )
+                        return null;
+
+                    string key = s.Substring( i, j - i + 1 );
+                    if ( Reverse.ContainsKey( key ) )
+                    {
+                        val = Reverse[key];
+                    }
+                    else
+                    {
+                        Match match = regex.Match( key );
+                        if ( match.Success )
+                        {
+                            result.Add( Convert.ToUInt32( match.Groups[1].Value, 16 ) );
+                            val = -1;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    i = j;
+                }
+                else if ( s[i] == '\r' || s[i] == '\n' )
+                {
+                    // ignore
+                    val = -1;
+                }
+                else
+                {
+                    string t = s[i].ToString();
+                    if ( Reverse.ContainsKey( t ) )
+                    {
+                        val = Reverse[t];
+                    }
+                    else
+                        return null;
+                }
+
+                if ( val >= 0 )
+                {
+                    result.Add( (UInt32)val );
+                }
+            }
+
+            return result;
+        }
+
+        public GenericCharMap(IDictionary<int, string> dict)
+            : base(dict, true)
+        {
+        }
+
+
+        public bool TryStringToByteArray( string s, byte terminator, out byte[] bytes )
         {
             List<byte> result = new List<byte>( s.Length );
             for ( int i = 0; i < s.Length; i++ )
@@ -221,7 +284,7 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
-            result.Add( 0xFE );
+            result.Add( terminator );
 
             bytes = result.ToArray();
             return true;
@@ -230,10 +293,10 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Converts a FFTacText string into a FFT text byte array.
         /// </summary>
-        public byte[] StringToByteArray( string s )
+        public byte[] StringToByteArray( string s, byte terminator )
         {
             byte[] result;
-            if ( TryStringToByteArray( s ?? string.Empty, out result ) )
+            if ( TryStringToByteArray( s ?? string.Empty, terminator, out result ) )
             {
                 return result;
             }
@@ -246,15 +309,55 @@ namespace FFTPatcher.TextEditor
         /// <summary>
         /// Validates the string with this charmap;
         /// </summary>
-        public bool ValidateString( string s )
+        public bool ValidateString( string s, byte terminator )
         {
             byte[] dummy;
-            return TryStringToByteArray( s, out dummy );
+            return TryStringToByteArray( s, terminator, out dummy );
         }
 
 
         #endregion Methods
 
+#if MEASURESTRINGS
+        private int GetWidthForEncodedCharacter( UInt32 c, PatcherLib.Datatypes.FFTFont font )
+        {
+            if ( c == 0xFA )
+            {
+                return 2;
+            }
+            else if ( c <= 0xCF )
+            {
+                return font.Glyphs[(int)c].Width;
+            }
+            else if ( ( c & 0xFF00 ) >= 0xD100 && ( c & 0xFF00 ) <= 0xDA00 && ( c & 0x00FF ) <= 0xCF &&
+                      ( ( c & 0xFF00 ) != 0xDA00 || ( c & 0x00FF ) <= 0x77 ) )
+            {
+                return font.Glyphs[(int)( ( ( ( c & 0xFF00 ) >> 8 ) - 0xD0 ) * 0xD0 + ( c & 0x00FF ) )].Width;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int MeasureStringInFont( string s, PatcherLib.Datatypes.FFTFont font )
+        {
+            string[] strings = s.Split( new string[] { "{Newline}", "{Close}" }, StringSplitOptions.RemoveEmptyEntries );
+            int width = int.MinValue;
+            foreach ( string ss in strings )
+            {
+                IList<UInt32> everyChar = GetEachEncodedCharacter( ss );
+                int sum = 0;
+                foreach ( UInt32 c in everyChar )
+                {
+                    sum += GetWidthForEncodedCharacter( c, font );
+                }
+                width = Math.Max( width, sum );
+            }
+            if (strings.Length == 0) width = 0;
+            return width;
+        }
+#endif
     }
 
     /// <summary>
@@ -262,6 +365,10 @@ namespace FFTPatcher.TextEditor
     /// </summary>
     public class PSPCharMap : GenericCharMap
     {
+        public PSPCharMap(IDictionary<int, string> source)
+            : base(source)
+        {
+        }
     }
 
     /// <summary>
@@ -269,9 +376,17 @@ namespace FFTPatcher.TextEditor
     /// </summary>
     public class PSXCharMap : GenericCharMap
     {
+        public PSXCharMap(IDictionary<int, string> source)
+            : base(source)
+        {
+        }
     }
 
     public class NonDefaultCharMap : GenericCharMap
     {
+        public NonDefaultCharMap(IDictionary<int, string> source)
+            : base(source)
+        {
+        }
     }
 }

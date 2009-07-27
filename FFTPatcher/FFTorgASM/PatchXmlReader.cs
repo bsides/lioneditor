@@ -27,7 +27,7 @@ namespace FFTorgASM
             }
         }
 
-        private static void GetPatch( XmlNode node, out string name, out string description, out IList<PatchedByteArray> staticPatches )
+        private static void GetPatchNameAndDesription( XmlNode node, out string name, out string description )
         {
             name = node.Attributes["name"].InnerText;
             XmlNode descriptionNode = node.SelectSingleNode( "Description" );
@@ -36,6 +36,12 @@ namespace FFTorgASM
             {
                 description = descriptionNode.InnerText;
             }
+
+        }
+
+        private static void GetPatch( XmlNode node, out string name, out string description, out IList<PatchedByteArray> staticPatches )
+        {
+            GetPatchNameAndDesription( node, out name, out description );
 
             XmlNodeList currentLocs = node.SelectNodes( "Location" );
             List<PatchedByteArray> patches = new List<PatchedByteArray>( currentLocs.Count );
@@ -46,6 +52,15 @@ namespace FFTorgASM
                 PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), location.Attributes["file"].InnerText );
                 byte[] bytes = GetBytes( location.InnerText );
                 patches.Add( new PatchedByteArray( sector, offset, bytes ) );
+            }
+
+            currentLocs = node.SelectNodes("STRLocation");
+            foreach (XmlNode location in currentLocs)
+            {
+                PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse(typeof(PsxIso.Sectors), location.Attributes["file"].InnerText);
+                string filename = location.Attributes["input"].InnerText;
+
+                patches.Add(new STRPatchedByteArray(sector, filename));
             }
 
             staticPatches = patches.AsReadOnly();
@@ -82,7 +97,30 @@ namespace FFTorgASM
                 }
                 result.Add( new AsmPatch( name, description, staticPatches, variables ) );
             }
+
+            patchNodes = rootNode.SelectNodes( "ImportFilePatch" );
+            foreach ( XmlNode node in patchNodes )
+            {
+                string name;
+                string description;
+
+                GetPatchNameAndDesription(node, out name, out description);
+
+                XmlNodeList fileNodes = node.SelectNodes( "ImportFile" );
+                if ( fileNodes.Count != 1 ) continue;
+
+                XmlNode theRealNode = fileNodes[0];
+
+                PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), theRealNode.Attributes["file"].InnerText );
+                UInt32 offset = UInt32.Parse( theRealNode.Attributes["offset"].InnerText, System.Globalization.NumberStyles.HexNumber );
+                UInt32 expectedLength = UInt32.Parse( theRealNode.Attributes["expectedLength"].InnerText, System.Globalization.NumberStyles.HexNumber );
+
+                result.Add( new FileAsmPatch( name, description, new InputFilePatch( sector, offset, expectedLength ) ) );
+
+            }
+
             return result.AsReadOnly();
+
         }
 
         private static byte[] GetBytes( string byteText )

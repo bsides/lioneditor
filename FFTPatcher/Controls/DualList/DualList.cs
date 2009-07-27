@@ -255,7 +255,7 @@ namespace FFTPatcher.Controls
                 {
                     i = listBoxFrom.Items.Count - 1;
                 }
-                if ( i > -1 )
+                if ( i > -1 && listBoxFrom.Items.Count > i )
                 {
                     listBoxFrom.SetSelected( i, true );
                 }

@@ -10,32 +10,6 @@ namespace FFTPatcher.SpriteEditor
     public abstract class AbstractCompressedSprite : AbstractSprite
     {
 
-        protected override System.Drawing.Image GetThumbnailInner()
-        {
-            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format32bppArgb );
-
-            using( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
-            {
-                Bitmap wholeImage = ToBitmap();
-                wholeImage.CopyRectangleToPointNonIndexed(
-                    ThumbnailRectangle,
-                    result,
-                    new Point( ( 48 - ThumbnailRectangle.Width ) / 2, ( 48 - ThumbnailRectangle.Height ) / 2 ),
-                    Palettes[0],
-                    false );
-
-                ColorPalette palette2 = portrait.Palette;
-                Palette.FixupColorPalette( palette2, Palettes );
-                portrait.Palette = palette2;
-                wholeImage.CopyRectangleToPoint( PortraitRectangle, portrait, Point.Empty, Palettes[8], false );
-                portrait.RotateFlip( RotateFlipType.Rotate270FlipNone );
-
-                portrait.CopyRectangleToPointNonIndexed( new Rectangle( 0, 0, 32, 48 ), result, new Point( 48, 0 ), Palettes[8], false );
-            }
-
-            return result;
-        }
-
         public override void ImportBitmap( Bitmap bmp, out bool foundBadPixels )
         {
             base.ImportBitmap( bmp, out foundBadPixels );
@@ -43,10 +17,7 @@ namespace FFTPatcher.SpriteEditor
             byte[] compressedArea = Pixels.Sub( Width * topHeight, Width * ( topHeight + compressedHeight ) - 1 ).ToArray();
             portraitArea.CopyTo( Pixels, Width * topHeight );
             compressedArea.CopyTo( Pixels, Width * ( topHeight + portraintHeight ) );
-            ThumbnailDirty = true;
             BitmapDirty = true;
-
-            UpdateCurrentSize();
 
             FirePixelsChanged();
         }
@@ -59,13 +30,11 @@ namespace FFTPatcher.SpriteEditor
         internal AbstractCompressedSprite( SerializedSprite sprite )
             : base( sprite )
         {
-            CurrentSize = OriginalSize;
         }
 
-        protected AbstractCompressedSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
-            : base( name, filenames, bytes, extraBytes )
+        protected AbstractCompressedSprite( IList<byte> bytes, params IList<byte>[] extraBytes )
+            : base( bytes, extraBytes )
         {
-            CurrentSize = OriginalSize;
         }
 
         protected override Rectangle PortraitRectangle
@@ -73,7 +42,7 @@ namespace FFTPatcher.SpriteEditor
             get { return new Rectangle( 80, 456, 48, 32 ); }
         }
 
-        protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
+        protected override IList<byte> BuildPixels(IList<byte> bytes, params IList<byte>[] extraBytes)
         {
             List<byte> result = new List<byte>( 36864 * 2 );
             foreach( byte b in bytes.Sub( 0, 36864 - 1 ) )
@@ -91,7 +60,6 @@ namespace FFTPatcher.SpriteEditor
         protected override void ImportSPRInner( IList<byte> bytes )
         {
             BuildPixels( bytes, null ).Sub( 0, 488 * 256 - 1 ).CopyTo( Pixels, 0 );
-            UpdateCurrentSize();
         }
 
         protected override void DrawSpriteInternal( int palette, int portraitPalette, SetPixel setPixel )
@@ -123,14 +91,6 @@ namespace FFTPatcher.SpriteEditor
                     setPixel( x, y, Palettes[portraitPalette].Colors[Pixels[x + ( y - compressedHeight ) * Width] % 16] );
                 }
             }
-        }
-
-        private void UpdateCurrentSize()
-        {
-            CurrentSize =
-                512 + // palettes
-                36864 + // uncompressed
-                Recompress( Pixels.Sub( 2 * 36864, 2 * 36864 + 200 * 256 - 1 ) ).Length;
         }
 
         private static byte[] Recompress( IList<byte> bytes )
@@ -333,8 +293,7 @@ namespace FFTPatcher.SpriteEditor
                     }
 
                     j++;
-                    for( int k = 0; k < l; k++ )
-                        result.Add( 0x00 );
+                    result.AddRange(new byte[l]);
                 }
 
                 j++;

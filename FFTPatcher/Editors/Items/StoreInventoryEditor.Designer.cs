@@ -44,26 +44,26 @@
             System.Windows.Forms.GroupBox shieldsGroupBox;
             System.Windows.Forms.GroupBox accessoriesGroupBox;
             System.Windows.Forms.GroupBox armorGroupBox;
-            this.weaponsToListBox = new System.Windows.Forms.ListBox();
-            this.weaponsFromListBox = new System.Windows.Forms.ListBox();
-            this.itemsFromListBox = new System.Windows.Forms.ListBox();
-            this.itemsToListBox = new System.Windows.Forms.ListBox();
-            this.shieldsFromListBox = new System.Windows.Forms.ListBox();
-            this.shieldsToListBox = new System.Windows.Forms.ListBox();
-            this.accessoriesFromListBox = new System.Windows.Forms.ListBox();
-            this.accessoriesToListBox = new System.Windows.Forms.ListBox();
-            this.armorFromListBox = new System.Windows.Forms.ListBox();
-            this.armorToListBox = new System.Windows.Forms.ListBox();
-            this.weaponsAddDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.weaponsRemoveDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.shieldsAddDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.shieldsRemoveDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.armorAddDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.armorRemoveDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.accessoriesAddDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.accessoriesRemoveDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.itemsAddDualList = new FFTPatcher.Controls.DualList( this.components );
-            this.itemsRemoveDualList = new FFTPatcher.Controls.DualList( this.components );
+            this.weaponsToListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.weaponsFromListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.itemsFromListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.itemsToListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.shieldsFromListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.shieldsToListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.accessoriesFromListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.accessoriesToListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.armorFromListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.armorToListBox = new FFTPatcher.Editors.StoreInventoryEditor.CustomSortedItemListBox();
+            this.weaponsAddDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.weaponsRemoveDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.shieldsAddDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.shieldsRemoveDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.armorAddDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.armorRemoveDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.accessoriesAddDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.accessoriesRemoveDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.itemsAddDualList = new FFTPatcher.Controls.DualList(this.components);
+            this.itemsRemoveDualList = new FFTPatcher.Controls.DualList(this.components);
             weaponsAddButton = new System.Windows.Forms.Button();
             weaponsRemoveButton = new System.Windows.Forms.Button();
             shieldsRemoveButton = new System.Windows.Forms.Button();
@@ -88,90 +88,90 @@
             // 
             // weaponsAddButton
             // 
-            weaponsAddButton.Location = new System.Drawing.Point( 164, 79 );
+            weaponsAddButton.Location = new System.Drawing.Point(164, 79);
             weaponsAddButton.Name = "weaponsAddButton";
-            weaponsAddButton.Size = new System.Drawing.Size( 75, 23 );
+            weaponsAddButton.Size = new System.Drawing.Size(75, 23);
             weaponsAddButton.TabIndex = 1;
             weaponsAddButton.Text = "Add ->";
             weaponsAddButton.UseVisualStyleBackColor = true;
             // 
             // weaponsRemoveButton
             // 
-            weaponsRemoveButton.Location = new System.Drawing.Point( 164, 108 );
+            weaponsRemoveButton.Location = new System.Drawing.Point(164, 108);
             weaponsRemoveButton.Name = "weaponsRemoveButton";
-            weaponsRemoveButton.Size = new System.Drawing.Size( 75, 23 );
+            weaponsRemoveButton.Size = new System.Drawing.Size(75, 23);
             weaponsRemoveButton.TabIndex = 2;
             weaponsRemoveButton.Text = "<- Remove";
             weaponsRemoveButton.UseVisualStyleBackColor = true;
             // 
             // shieldsRemoveButton
             // 
-            shieldsRemoveButton.Location = new System.Drawing.Point( 164, 76 );
+            shieldsRemoveButton.Location = new System.Drawing.Point(164, 76);
             shieldsRemoveButton.Name = "shieldsRemoveButton";
-            shieldsRemoveButton.Size = new System.Drawing.Size( 75, 23 );
+            shieldsRemoveButton.Size = new System.Drawing.Size(75, 23);
             shieldsRemoveButton.TabIndex = 6;
             shieldsRemoveButton.Text = "<- Remove";
             shieldsRemoveButton.UseVisualStyleBackColor = true;
             // 
             // shieldsAddButton
             // 
-            shieldsAddButton.Location = new System.Drawing.Point( 164, 47 );
+            shieldsAddButton.Location = new System.Drawing.Point(164, 47);
             shieldsAddButton.Name = "shieldsAddButton";
-            shieldsAddButton.Size = new System.Drawing.Size( 75, 23 );
+            shieldsAddButton.Size = new System.Drawing.Size(75, 23);
             shieldsAddButton.TabIndex = 5;
             shieldsAddButton.Text = "Add ->";
             shieldsAddButton.UseVisualStyleBackColor = true;
             // 
             // armorRemoveButton
             // 
-            armorRemoveButton.Location = new System.Drawing.Point( 164, 76 );
+            armorRemoveButton.Location = new System.Drawing.Point(164, 76);
             armorRemoveButton.Name = "armorRemoveButton";
-            armorRemoveButton.Size = new System.Drawing.Size( 75, 23 );
+            armorRemoveButton.Size = new System.Drawing.Size(75, 23);
             armorRemoveButton.TabIndex = 10;
             armorRemoveButton.Text = "<- Remove";
             armorRemoveButton.UseVisualStyleBackColor = true;
             // 
             // armorAddButton
             // 
-            armorAddButton.Location = new System.Drawing.Point( 164, 47 );
+            armorAddButton.Location = new System.Drawing.Point(164, 47);
             armorAddButton.Name = "armorAddButton";
-            armorAddButton.Size = new System.Drawing.Size( 75, 23 );
+            armorAddButton.Size = new System.Drawing.Size(75, 23);
             armorAddButton.TabIndex = 9;
             armorAddButton.Text = "Add ->";
             armorAddButton.UseVisualStyleBackColor = true;
             // 
             // accessoriesRemoveButton
             // 
-            accessoriesRemoveButton.Location = new System.Drawing.Point( 164, 76 );
+            accessoriesRemoveButton.Location = new System.Drawing.Point(164, 76);
             accessoriesRemoveButton.Name = "accessoriesRemoveButton";
-            accessoriesRemoveButton.Size = new System.Drawing.Size( 75, 23 );
+            accessoriesRemoveButton.Size = new System.Drawing.Size(75, 23);
             accessoriesRemoveButton.TabIndex = 14;
             accessoriesRemoveButton.Text = "<- Remove";
             accessoriesRemoveButton.UseVisualStyleBackColor = true;
             // 
             // accessoriesAddButton
             // 
-            accessoriesAddButton.Location = new System.Drawing.Point( 164, 47 );
+            accessoriesAddButton.Location = new System.Drawing.Point(164, 47);
             accessoriesAddButton.Name = "accessoriesAddButton";
-            accessoriesAddButton.Size = new System.Drawing.Size( 75, 23 );
+            accessoriesAddButton.Size = new System.Drawing.Size(75, 23);
             accessoriesAddButton.TabIndex = 13;
             accessoriesAddButton.Text = "Add ->";
             accessoriesAddButton.UseVisualStyleBackColor = true;
             // 
             // itemsRemoveButton
             // 
-            itemsRemoveButton.Location = new System.Drawing.Point( 164, 76 );
+            itemsRemoveButton.Location = new System.Drawing.Point(164, 76);
             itemsRemoveButton.Name = "itemsRemoveButton";
-            itemsRemoveButton.Size = new System.Drawing.Size( 75, 23 );
+            itemsRemoveButton.Size = new System.Drawing.Size(75, 23);
             itemsRemoveButton.TabIndex = 18;
             itemsRemoveButton.Text = "<- Remove";
             itemsRemoveButton.UseVisualStyleBackColor = true;
             // 
             // itemsAddButton
             // 
-            itemsAddButton.Location = new System.Drawing.Point( 164, 47 );
+            itemsAddButton.Location = new System.Drawing.Point(164, 47);
             itemsAddButton.Name = "itemsAddButton";
-            itemsAddButton.Size = new System.Drawing.Size( 75, 23 );
+            itemsAddButton.Size = new System.Drawing.Size(75, 23);
             itemsAddButton.TabIndex = 17;
             itemsAddButton.Text = "Add ->";
             itemsAddButton.UseVisualStyleBackColor = true;
@@ -180,13 +180,13 @@
             // 
             weaponsGroupBox.AutoSize = true;
             weaponsGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            weaponsGroupBox.Controls.Add( this.weaponsToListBox );
-            weaponsGroupBox.Controls.Add( this.weaponsFromListBox );
-            weaponsGroupBox.Controls.Add( weaponsAddButton );
-            weaponsGroupBox.Controls.Add( weaponsRemoveButton );
-            weaponsGroupBox.Location = new System.Drawing.Point( 4, 4 );
+            weaponsGroupBox.Controls.Add(this.weaponsToListBox);
+            weaponsGroupBox.Controls.Add(this.weaponsFromListBox);
+            weaponsGroupBox.Controls.Add(weaponsAddButton);
+            weaponsGroupBox.Controls.Add(weaponsRemoveButton);
+            weaponsGroupBox.Location = new System.Drawing.Point(4, 4);
             weaponsGroupBox.Name = "weaponsGroupBox";
-            weaponsGroupBox.Size = new System.Drawing.Size( 402, 211 );
+            weaponsGroupBox.Size = new System.Drawing.Size(402, 211);
             weaponsGroupBox.TabIndex = 20;
             weaponsGroupBox.TabStop = false;
             weaponsGroupBox.Text = "Weapons";
@@ -194,20 +194,20 @@
             // weaponsToListBox
             // 
             this.weaponsToListBox.FormattingEnabled = true;
-            this.weaponsToListBox.Location = new System.Drawing.Point( 258, 18 );
+            this.weaponsToListBox.Location = new System.Drawing.Point(258, 18);
             this.weaponsToListBox.Name = "weaponsToListBox";
             this.weaponsToListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.weaponsToListBox.Size = new System.Drawing.Size( 138, 173 );
+            this.weaponsToListBox.Size = new System.Drawing.Size(138, 173);
             this.weaponsToListBox.Sorted = true;
             this.weaponsToListBox.TabIndex = 3;
             // 
             // weaponsFromListBox
             // 
             this.weaponsFromListBox.FormattingEnabled = true;
-            this.weaponsFromListBox.Location = new System.Drawing.Point( 6, 19 );
+            this.weaponsFromListBox.Location = new System.Drawing.Point(6, 19);
             this.weaponsFromListBox.Name = "weaponsFromListBox";
             this.weaponsFromListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.weaponsFromListBox.Size = new System.Drawing.Size( 138, 173 );
+            this.weaponsFromListBox.Size = new System.Drawing.Size(138, 173);
             this.weaponsFromListBox.Sorted = true;
             this.weaponsFromListBox.TabIndex = 0;
             // 
@@ -215,13 +215,13 @@
             // 
             itemsGroupBox.AutoSize = true;
             itemsGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            itemsGroupBox.Controls.Add( this.itemsFromListBox );
-            itemsGroupBox.Controls.Add( this.itemsToListBox );
-            itemsGroupBox.Controls.Add( itemsRemoveButton );
-            itemsGroupBox.Controls.Add( itemsAddButton );
-            itemsGroupBox.Location = new System.Drawing.Point( 4, 677 );
+            itemsGroupBox.Controls.Add(this.itemsFromListBox);
+            itemsGroupBox.Controls.Add(this.itemsToListBox);
+            itemsGroupBox.Controls.Add(itemsRemoveButton);
+            itemsGroupBox.Controls.Add(itemsAddButton);
+            itemsGroupBox.Location = new System.Drawing.Point(4, 677);
             itemsGroupBox.Name = "itemsGroupBox";
-            itemsGroupBox.Size = new System.Drawing.Size( 402, 146 );
+            itemsGroupBox.Size = new System.Drawing.Size(402, 146);
             itemsGroupBox.TabIndex = 21;
             itemsGroupBox.TabStop = false;
             itemsGroupBox.Text = "Chemist Items";
@@ -229,20 +229,20 @@
             // itemsFromListBox
             // 
             this.itemsFromListBox.FormattingEnabled = true;
-            this.itemsFromListBox.Location = new System.Drawing.Point( 6, 19 );
+            this.itemsFromListBox.Location = new System.Drawing.Point(6, 19);
             this.itemsFromListBox.Name = "itemsFromListBox";
             this.itemsFromListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.itemsFromListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.itemsFromListBox.Size = new System.Drawing.Size(138, 108);
             this.itemsFromListBox.Sorted = true;
             this.itemsFromListBox.TabIndex = 16;
             // 
             // itemsToListBox
             // 
             this.itemsToListBox.FormattingEnabled = true;
-            this.itemsToListBox.Location = new System.Drawing.Point( 258, 18 );
+            this.itemsToListBox.Location = new System.Drawing.Point(258, 18);
             this.itemsToListBox.Name = "itemsToListBox";
             this.itemsToListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.itemsToListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.itemsToListBox.Size = new System.Drawing.Size(138, 108);
             this.itemsToListBox.Sorted = true;
             this.itemsToListBox.TabIndex = 19;
             // 
@@ -250,13 +250,13 @@
             // 
             shieldsGroupBox.AutoSize = true;
             shieldsGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            shieldsGroupBox.Controls.Add( this.shieldsFromListBox );
-            shieldsGroupBox.Controls.Add( this.shieldsToListBox );
-            shieldsGroupBox.Controls.Add( shieldsAddButton );
-            shieldsGroupBox.Controls.Add( shieldsRemoveButton );
-            shieldsGroupBox.Location = new System.Drawing.Point( 4, 221 );
+            shieldsGroupBox.Controls.Add(this.shieldsFromListBox);
+            shieldsGroupBox.Controls.Add(this.shieldsToListBox);
+            shieldsGroupBox.Controls.Add(shieldsAddButton);
+            shieldsGroupBox.Controls.Add(shieldsRemoveButton);
+            shieldsGroupBox.Location = new System.Drawing.Point(4, 221);
             shieldsGroupBox.Name = "shieldsGroupBox";
-            shieldsGroupBox.Size = new System.Drawing.Size( 402, 146 );
+            shieldsGroupBox.Size = new System.Drawing.Size(402, 146);
             shieldsGroupBox.TabIndex = 22;
             shieldsGroupBox.TabStop = false;
             shieldsGroupBox.Text = "Shields";
@@ -264,20 +264,20 @@
             // shieldsFromListBox
             // 
             this.shieldsFromListBox.FormattingEnabled = true;
-            this.shieldsFromListBox.Location = new System.Drawing.Point( 6, 19 );
+            this.shieldsFromListBox.Location = new System.Drawing.Point(6, 19);
             this.shieldsFromListBox.Name = "shieldsFromListBox";
             this.shieldsFromListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.shieldsFromListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.shieldsFromListBox.Size = new System.Drawing.Size(138, 108);
             this.shieldsFromListBox.Sorted = true;
             this.shieldsFromListBox.TabIndex = 4;
             // 
             // shieldsToListBox
             // 
             this.shieldsToListBox.FormattingEnabled = true;
-            this.shieldsToListBox.Location = new System.Drawing.Point( 258, 18 );
+            this.shieldsToListBox.Location = new System.Drawing.Point(258, 18);
             this.shieldsToListBox.Name = "shieldsToListBox";
             this.shieldsToListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.shieldsToListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.shieldsToListBox.Size = new System.Drawing.Size(138, 108);
             this.shieldsToListBox.Sorted = true;
             this.shieldsToListBox.TabIndex = 7;
             // 
@@ -285,13 +285,13 @@
             // 
             accessoriesGroupBox.AutoSize = true;
             accessoriesGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            accessoriesGroupBox.Controls.Add( this.accessoriesFromListBox );
-            accessoriesGroupBox.Controls.Add( this.accessoriesToListBox );
-            accessoriesGroupBox.Controls.Add( accessoriesAddButton );
-            accessoriesGroupBox.Controls.Add( accessoriesRemoveButton );
-            accessoriesGroupBox.Location = new System.Drawing.Point( 4, 525 );
+            accessoriesGroupBox.Controls.Add(this.accessoriesFromListBox);
+            accessoriesGroupBox.Controls.Add(this.accessoriesToListBox);
+            accessoriesGroupBox.Controls.Add(accessoriesAddButton);
+            accessoriesGroupBox.Controls.Add(accessoriesRemoveButton);
+            accessoriesGroupBox.Location = new System.Drawing.Point(4, 525);
             accessoriesGroupBox.Name = "accessoriesGroupBox";
-            accessoriesGroupBox.Size = new System.Drawing.Size( 402, 146 );
+            accessoriesGroupBox.Size = new System.Drawing.Size(402, 146);
             accessoriesGroupBox.TabIndex = 22;
             accessoriesGroupBox.TabStop = false;
             accessoriesGroupBox.Text = "Accessories";
@@ -299,20 +299,20 @@
             // accessoriesFromListBox
             // 
             this.accessoriesFromListBox.FormattingEnabled = true;
-            this.accessoriesFromListBox.Location = new System.Drawing.Point( 6, 19 );
+            this.accessoriesFromListBox.Location = new System.Drawing.Point(6, 19);
             this.accessoriesFromListBox.Name = "accessoriesFromListBox";
             this.accessoriesFromListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.accessoriesFromListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.accessoriesFromListBox.Size = new System.Drawing.Size(138, 108);
             this.accessoriesFromListBox.Sorted = true;
             this.accessoriesFromListBox.TabIndex = 12;
             // 
             // accessoriesToListBox
             // 
             this.accessoriesToListBox.FormattingEnabled = true;
-            this.accessoriesToListBox.Location = new System.Drawing.Point( 258, 18 );
+            this.accessoriesToListBox.Location = new System.Drawing.Point(258, 18);
             this.accessoriesToListBox.Name = "accessoriesToListBox";
             this.accessoriesToListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.accessoriesToListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.accessoriesToListBox.Size = new System.Drawing.Size(138, 108);
             this.accessoriesToListBox.Sorted = true;
             this.accessoriesToListBox.TabIndex = 15;
             // 
@@ -320,13 +320,13 @@
             // 
             armorGroupBox.AutoSize = true;
             armorGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            armorGroupBox.Controls.Add( this.armorFromListBox );
-            armorGroupBox.Controls.Add( this.armorToListBox );
-            armorGroupBox.Controls.Add( armorAddButton );
-            armorGroupBox.Controls.Add( armorRemoveButton );
-            armorGroupBox.Location = new System.Drawing.Point( 4, 373 );
+            armorGroupBox.Controls.Add(this.armorFromListBox);
+            armorGroupBox.Controls.Add(this.armorToListBox);
+            armorGroupBox.Controls.Add(armorAddButton);
+            armorGroupBox.Controls.Add(armorRemoveButton);
+            armorGroupBox.Location = new System.Drawing.Point(4, 373);
             armorGroupBox.Name = "armorGroupBox";
-            armorGroupBox.Size = new System.Drawing.Size( 402, 146 );
+            armorGroupBox.Size = new System.Drawing.Size(402, 146);
             armorGroupBox.TabIndex = 22;
             armorGroupBox.TabStop = false;
             armorGroupBox.Text = "Armor";
@@ -334,20 +334,20 @@
             // armorFromListBox
             // 
             this.armorFromListBox.FormattingEnabled = true;
-            this.armorFromListBox.Location = new System.Drawing.Point( 6, 19 );
+            this.armorFromListBox.Location = new System.Drawing.Point(6, 19);
             this.armorFromListBox.Name = "armorFromListBox";
             this.armorFromListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.armorFromListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.armorFromListBox.Size = new System.Drawing.Size(138, 108);
             this.armorFromListBox.Sorted = true;
             this.armorFromListBox.TabIndex = 8;
             // 
             // armorToListBox
             // 
             this.armorToListBox.FormattingEnabled = true;
-            this.armorToListBox.Location = new System.Drawing.Point( 258, 18 );
+            this.armorToListBox.Location = new System.Drawing.Point(258, 18);
             this.armorToListBox.Name = "armorToListBox";
             this.armorToListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.armorToListBox.Size = new System.Drawing.Size( 138, 108 );
+            this.armorToListBox.Size = new System.Drawing.Size(138, 108);
             this.armorToListBox.Sorted = true;
             this.armorToListBox.TabIndex = 11;
             // 
@@ -358,7 +358,8 @@
             this.weaponsAddDualList.DoubleClickSupport = true;
             this.weaponsAddDualList.ListBoxFrom = this.weaponsFromListBox;
             this.weaponsAddDualList.ListBoxTo = this.weaponsToListBox;
-            this.weaponsAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.addDualList_AfterAction );
+            this.weaponsAddDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.addDualList_BeforeAction);
+            this.weaponsAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // weaponsRemoveDualList
             // 
@@ -367,7 +368,8 @@
             this.weaponsRemoveDualList.DoubleClickSupport = true;
             this.weaponsRemoveDualList.ListBoxFrom = this.weaponsToListBox;
             this.weaponsRemoveDualList.ListBoxTo = this.weaponsFromListBox;
-            this.weaponsRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.removeDualList_AfterAction );
+            this.weaponsRemoveDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.removeDualList_BeforeAction);
+            this.weaponsRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // shieldsAddDualList
             // 
@@ -376,7 +378,8 @@
             this.shieldsAddDualList.DoubleClickSupport = true;
             this.shieldsAddDualList.ListBoxFrom = this.shieldsFromListBox;
             this.shieldsAddDualList.ListBoxTo = this.shieldsToListBox;
-            this.shieldsAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.addDualList_AfterAction );
+            this.shieldsAddDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.addDualList_BeforeAction);
+            this.shieldsAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // shieldsRemoveDualList
             // 
@@ -385,7 +388,8 @@
             this.shieldsRemoveDualList.DoubleClickSupport = true;
             this.shieldsRemoveDualList.ListBoxFrom = this.shieldsToListBox;
             this.shieldsRemoveDualList.ListBoxTo = this.shieldsFromListBox;
-            this.shieldsRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.removeDualList_AfterAction );
+            this.shieldsRemoveDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.removeDualList_BeforeAction);
+            this.shieldsRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // armorAddDualList
             // 
@@ -394,7 +398,8 @@
             this.armorAddDualList.DoubleClickSupport = true;
             this.armorAddDualList.ListBoxFrom = this.armorFromListBox;
             this.armorAddDualList.ListBoxTo = this.armorToListBox;
-            this.armorAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.addDualList_AfterAction );
+            this.armorAddDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.addDualList_BeforeAction);
+            this.armorAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // armorRemoveDualList
             // 
@@ -403,7 +408,8 @@
             this.armorRemoveDualList.DoubleClickSupport = true;
             this.armorRemoveDualList.ListBoxFrom = this.armorToListBox;
             this.armorRemoveDualList.ListBoxTo = this.armorFromListBox;
-            this.armorRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.removeDualList_AfterAction );
+            this.armorRemoveDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.removeDualList_BeforeAction);
+            this.armorRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // accessoriesAddDualList
             // 
@@ -412,7 +418,8 @@
             this.accessoriesAddDualList.DoubleClickSupport = true;
             this.accessoriesAddDualList.ListBoxFrom = this.accessoriesFromListBox;
             this.accessoriesAddDualList.ListBoxTo = this.accessoriesToListBox;
-            this.accessoriesAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.addDualList_AfterAction );
+            this.accessoriesAddDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.addDualList_BeforeAction);
+            this.accessoriesAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // accessoriesRemoveDualList
             // 
@@ -421,7 +428,8 @@
             this.accessoriesRemoveDualList.DoubleClickSupport = true;
             this.accessoriesRemoveDualList.ListBoxFrom = this.accessoriesToListBox;
             this.accessoriesRemoveDualList.ListBoxTo = this.accessoriesFromListBox;
-            this.accessoriesRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.removeDualList_AfterAction );
+            this.accessoriesRemoveDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.removeDualList_BeforeAction);
+            this.accessoriesRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // itemsAddDualList
             // 
@@ -430,7 +438,8 @@
             this.itemsAddDualList.DoubleClickSupport = true;
             this.itemsAddDualList.ListBoxFrom = this.itemsFromListBox;
             this.itemsAddDualList.ListBoxTo = this.itemsToListBox;
-            this.itemsAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.addDualList_AfterAction );
+            this.itemsAddDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.addDualList_BeforeAction);
+            this.itemsAddDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // itemsRemoveDualList
             // 
@@ -439,41 +448,42 @@
             this.itemsRemoveDualList.DoubleClickSupport = true;
             this.itemsRemoveDualList.ListBoxFrom = this.itemsToListBox;
             this.itemsRemoveDualList.ListBoxTo = this.itemsFromListBox;
-            this.itemsRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler( this.removeDualList_AfterAction );
+            this.itemsRemoveDualList.BeforeAction += new FFTPatcher.Controls.BeforeActionEventHandler(this.removeDualList_BeforeAction);
+            this.itemsRemoveDualList.AfterAction += new FFTPatcher.Controls.AfterActionEventHandler(this.dualList_AfterAction);
             // 
             // StoreInventoryEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add( armorGroupBox );
-            this.Controls.Add( itemsGroupBox );
-            this.Controls.Add( weaponsGroupBox );
-            this.Controls.Add( shieldsGroupBox );
-            this.Controls.Add( accessoriesGroupBox );
+            this.Controls.Add(armorGroupBox);
+            this.Controls.Add(itemsGroupBox);
+            this.Controls.Add(weaponsGroupBox);
+            this.Controls.Add(shieldsGroupBox);
+            this.Controls.Add(accessoriesGroupBox);
             this.Name = "StoreInventoryEditor";
-            this.Size = new System.Drawing.Size( 438, 829 );
-            weaponsGroupBox.ResumeLayout( false );
-            itemsGroupBox.ResumeLayout( false );
-            shieldsGroupBox.ResumeLayout( false );
-            accessoriesGroupBox.ResumeLayout( false );
-            armorGroupBox.ResumeLayout( false );
-            this.ResumeLayout( false );
+            this.Size = new System.Drawing.Size(438, 829);
+            weaponsGroupBox.ResumeLayout(false);
+            itemsGroupBox.ResumeLayout(false);
+            shieldsGroupBox.ResumeLayout(false);
+            accessoriesGroupBox.ResumeLayout(false);
+            armorGroupBox.ResumeLayout(false);
+            this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox weaponsFromListBox;
-        private System.Windows.Forms.ListBox weaponsToListBox;
-        private System.Windows.Forms.ListBox shieldsToListBox;
-        private System.Windows.Forms.ListBox shieldsFromListBox;
-        private System.Windows.Forms.ListBox armorToListBox;
-        private System.Windows.Forms.ListBox armorFromListBox;
-        private System.Windows.Forms.ListBox accessoriesToListBox;
-        private System.Windows.Forms.ListBox accessoriesFromListBox;
-        private System.Windows.Forms.ListBox itemsToListBox;
-        private System.Windows.Forms.ListBox itemsFromListBox;
+        private CustomSortedItemListBox weaponsFromListBox;
+        private CustomSortedItemListBox weaponsToListBox;
+        private CustomSortedItemListBox shieldsToListBox;
+        private CustomSortedItemListBox shieldsFromListBox;
+        private CustomSortedItemListBox armorToListBox;
+        private CustomSortedItemListBox armorFromListBox;
+        private CustomSortedItemListBox accessoriesToListBox;
+        private CustomSortedItemListBox accessoriesFromListBox;
+        private CustomSortedItemListBox itemsToListBox;
+        private CustomSortedItemListBox itemsFromListBox;
         private FFTPatcher.Controls.DualList shieldsAddDualList;
         private FFTPatcher.Controls.DualList shieldsRemoveDualList;
         private FFTPatcher.Controls.DualList armorAddDualList;

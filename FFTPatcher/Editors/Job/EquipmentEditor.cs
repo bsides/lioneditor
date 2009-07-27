@@ -20,6 +20,7 @@
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 using PatcherLib.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {
@@ -59,9 +60,9 @@ namespace FFTPatcher.Editors
                 }
                 else if (value != equipment)
                 {
-                    this.Enabled = true;
                     equipment = value;
                     UpdateView();
+                    this.Enabled = true;
                 }
             }
         }

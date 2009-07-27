@@ -20,6 +20,7 @@
 using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 using PatcherLib;
+using PatcherLib.Utilities;
 using PatcherLib.Datatypes;
 
 namespace FFTPatcher.Editors
@@ -50,9 +51,9 @@ namespace FFTPatcher.Editors
                 }
                 else if( statuses != value )
                 {
-                    this.Enabled = true;
                     statuses = value;
                     UpdateView();
+                    this.Enabled = true;
                 }
             }
         }
@@ -91,7 +92,7 @@ namespace FFTPatcher.Editors
             {
                 ourContext = FFTPatch.Context;
                 statusesCheckedListBox.Items.Clear();
-                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.Statuses : PSXResources.Statuses );
+                statusesCheckedListBox.Items.AddRange( ourContext == Context.US_PSP ? PSPResources.Lists.StatusNames.ToArray() : PSXResources.Lists.StatusNames.ToArray() );
             }
         
             if( statuses.Default != null )

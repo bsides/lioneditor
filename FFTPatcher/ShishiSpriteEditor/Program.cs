@@ -19,6 +19,7 @@
 
 using System;
 using System.Windows.Forms;
+using System.IO;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -26,8 +27,10 @@ namespace FFTPatcher.SpriteEditor
     {
 
 
-		#region Methods (1) 
+        #region Methods (1)
 
+
+        static MainForm mainForm;
 
         /// <summary>
         /// The main entry point for the application.
@@ -35,13 +38,46 @@ namespace FFTPatcher.SpriteEditor
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new MainForm() );
+            try
+            {
+                Application.SetUnhandledExceptionMode( UnhandledExceptionMode.CatchException );
+                Application.ThreadException += Application_ThreadException;
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault( false );
+                mainForm = new MainForm();
+                Application.Run( mainForm );
+                Application.ThreadException -= Application_ThreadException;
+            }
+            catch (Exception e)
+            {
+                HandleException( e );
+            }
         }
 
+        static void Application_ThreadException( object sender, System.Threading.ThreadExceptionEventArgs e )
+        {
+            HandleException( e.Exception );
+        }
 
-		#endregion Methods 
+        static void HandleException( Exception e )
+        {
+            if (mainForm != null)
+            {
+                System.Reflection.FieldInfo fi = typeof( MainForm ).GetField( "currentStream", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance );
+                if (fi != null)
+                {
+                    Stream stream = fi.GetValue( mainForm ) as Stream;
+                    if (stream != null)
+                    {
+                        stream.Flush();
+                    }
+                }
+
+            }
+            MessageBox.Show( e.ToString(), "Error" );
+        }
+
+        #endregion Methods
 
     }
 }

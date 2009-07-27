@@ -129,7 +129,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class ActionMenu : ISupportDigest
+    public class ActionMenu : ISupportDigest, ISupportDefault<ActionMenu>
     {
 		#region Instance Variables (1) 
 
@@ -156,7 +156,12 @@ namespace FFTPatcher.Datatypes
             get { return Default != null && MenuAction.MenuAction != Default.MenuAction.MenuAction; }
         }
 
-        public ActionMenuEntry MenuAction { get; set; }
+        private ActionMenuEntry menuAction;
+        public ActionMenuEntry MenuAction 
+        {
+            get { return menuAction; }
+            set { menuAction = value; }
+        }
 
         public string Name { get; private set; }
 
@@ -184,7 +189,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
     }
 
-    public class AllActionMenus : PatchableFile, IXmlDigest
+    public class AllActionMenus : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Public Properties (2) 
 
@@ -214,7 +219,7 @@ namespace FFTPatcher.Datatypes
 
         public AllActionMenus( IList<byte> bytes, Context context )
         {
-            byte[] defaultBytes = context == Context.US_PSP ? PSPResources.ActionEventsBin : PSXResources.ActionEventsBin;
+            IList<byte> defaultBytes = context == Context.US_PSP ? PSPResources.Binaries.ActionEvents : PSXResources.Binaries.ActionEvents;
 
             List<ActionMenu> tempActions = new List<ActionMenu>();
 
@@ -239,18 +244,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (5) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.ActionEventsBin, this.ToByteArray(), 0x27AC50 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.ActionEventsBin, this.ToByteArray(), 0x065CB4 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -287,7 +280,7 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -309,5 +302,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        public string GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Action Menus" : "\"Action Menus";
+        }
+
+        public IList<string> GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.ActionEvents, this.ToByteArray(), 0x27AC50 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.ActionEvents, this.ToByteArray(), 0x065CB4 );
+            }
+        }
+
+        #endregion
     }
 }

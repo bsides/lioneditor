@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the <see cref="Ability"/>s a monster can use.
     /// </summary>
-    public class MonsterSkill : IChangeable, ISupportDigest
+    public class MonsterSkill : IChangeable, ISupportDigest, ISupportDefault<MonsterSkill>
     {
 		#region Instance Variables (1) 
 
@@ -128,17 +128,17 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class AllMonsterSkills : PatchableFile, IXmlDigest
+    public class AllMonsterSkills : PatchableFile, IXmlDigest, IGenerateCodes
     {
 
         #region Static Properties (3)
 
 
-        public static string[] Names { get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; } }
+        public static IList<string> Names { get { return FFTPatch.Context == Context.US_PSP ? PSPNames : PSXNames; } }
 
-        public static string[] PSPNames { get; private set; }
+        public static IList<string> PSPNames { get; private set; }
 
-        public static string[] PSXNames { get; private set; }
+        public static IList<string> PSXNames { get; private set; }
 
 
         #endregion Static Properties
@@ -173,21 +173,13 @@ namespace FFTPatcher.Datatypes
 
         static AllMonsterSkills()
         {
-            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.Jobs,
-                "/Jobs/Job[@offset='{0:X2}']/@name",
-                48,
-                0x5E );
-            PSXNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.Jobs,
-                "/Jobs/Job[@offset='{0:X2}']/@name",
-                48,
-                0x5E );
+            PSPNames = PSPResources.Lists.MonsterNames;
+            PSXNames = PSXResources.Lists.MonsterNames;
         }
 
         public AllMonsterSkills( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.MonsterSkillsBin : PSXResources.MonsterSkillsBin;
+            IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.MonsterSkills : PSXResources.Binaries.MonsterSkills;
 
             MonsterSkills = new MonsterSkill[48];
             for ( int i = 0; i < 48; i++ )
@@ -201,18 +193,6 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (5)
 
-
-        public List<string> GenerateCodes()
-        {
-            if ( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.MonsterSkillsBin, this.ToByteArray(), 0x27AB60 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.MonsterSkillsBin, this.ToByteArray(), 0x065BC4 );
-            }
-        }
 
         public byte[] ToByteArray()
         {
@@ -230,7 +210,7 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if ( HasChanged )
             {
@@ -269,5 +249,26 @@ namespace FFTPatcher.Datatypes
 
             return result;
         }
+
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Monster Skill Sets" : "\"Monster Skill Sets";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.MonsterSkills, this.ToByteArray(), 0x27AB60 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.MonsterSkills, this.ToByteArray(), 0x065BC4 );
+            }
+        }
+
+        #endregion
     }
 }

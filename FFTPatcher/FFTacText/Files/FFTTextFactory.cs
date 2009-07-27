@@ -20,7 +20,7 @@ namespace FFTPatcher.TextEditor
         CompressibleOneShotFile
     }
 
-    public enum SectorType
+    internal enum SectorType
     {
         Sector,
         BootBin,
@@ -40,11 +40,13 @@ namespace FFTPatcher.TextEditor
             public IDictionary<SectorType, IList<KeyValuePair<Enum, int>>> Sectors { get; set; }
             public IList<string> SectionNames { get; set; }
             public IList<IList<string>> EntryNames { get; set; }
+            public Set<byte> AllowedTerminators { get; set; }
             public IList<IList<int>> DisallowedEntries { get; set; }
             public IList<IDictionary<int,string>> StaticEntries { get; set; }
             public KeyValuePair<Enum, int> PrimaryFile { get; set; }
             public IList<bool> DteAllowed { get; set; }
             public IList<bool> CompressionAllowed { get; set; }
+            public IList<bool> Hidden { get; set; }
         }
 
         delegate IList<byte> BytesFromIso( Stream iso, Enum file, int offset, int size );
@@ -88,10 +90,17 @@ namespace FFTPatcher.TextEditor
             int[] sectionLengths = new int[sectionCount];
             bool[] dteAllowed = new bool[sectionCount];
             bool[] compressionAllowed = new bool[sectionCount];
+            bool[] hidden = new bool[sectionCount];
 
             for ( int i = 0; i < sectionCount; i++ )
             {
                 XmlNode sectionNode = node.SelectSingleNode( string.Format( "Sections/Section[@value='{0}']", i ) );
+
+                XmlAttribute hideAttribute = sectionNode.Attributes["hide"];
+                if ( hideAttribute != null )
+                {
+                    hidden[i] = Boolean.Parse( hideAttribute.InnerText );
+                }
 
                 sectionLengths[i] = Int32.Parse( sectionNode.Attributes["entries"].InnerText );
                 dteAllowed[i] = Boolean.Parse( sectionNode.Attributes["dte"].InnerText );
@@ -104,7 +113,6 @@ namespace FFTPatcher.TextEditor
             XmlNodeList sectors = node.SelectNodes( "Sectors/*" );
             Dictionary<SectorType, IList<KeyValuePair<Enum, int>>> dict = new Dictionary<SectorType, IList<KeyValuePair<Enum, int>>>( 3 );
             bool first = true;
-            IList<byte> bytes = null;
             KeyValuePair<Enum, int> primaryFile = new KeyValuePair<Enum, int>();
             foreach ( XmlNode sectorNode in sectors )
             {
@@ -148,6 +156,16 @@ namespace FFTPatcher.TextEditor
             IList<IList<int>> disallowedEntries;
             IList<IDictionary<int,string>> staticEntries;
             GetDisallowedEntries( node, sectionLengths.Length, out disallowedEntries, out staticEntries );
+            Set<byte> terminators = new Set<byte>( new byte[] { 0xFE } );
+            XmlNode terminatorNode = node.SelectSingleNode( "Terminators" );
+            if ( terminatorNode != null )
+            {
+                foreach ( XmlNode nnn in terminatorNode.SelectNodes( "Terminator" ) )
+                {
+                    terminators.Add(
+                        byte.Parse( nnn.InnerText, System.Globalization.NumberStyles.HexNumber ) );
+                }
+            }
 
             FileInfo fi = new FileInfo
             {
@@ -158,9 +176,11 @@ namespace FFTPatcher.TextEditor
                 EntryNames = entryNames.AsReadOnly(),
                 FileType = filetype,
                 Guid = guid,
+                Hidden = hidden.AsReadOnly(),
                 SectionLengths = sectionLengths.AsReadOnly(),
                 Sectors = new ReadOnlyDictionary<SectorType, IList<KeyValuePair<Enum, int>>>( dict ),
                 SectionNames = sectionNames,
+                AllowedTerminators = terminators.AsReadOnly(),
                 Size = size,
                 PrimaryFile = primaryFile,
                 CompressionAllowed = compressionAllowed,
@@ -191,17 +211,17 @@ namespace FFTPatcher.TextEditor
                 switch ( fi.FileType )
                 {
                     case FileType.CompressedFile:
-                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, true ) );
+                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count], true ) );
                         break;
                     case FileType.SectionedFile:
-                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );
                         break;
                     case FileType.CompressibleOneShotFile:
-                        files.Add( fi.Guid, new CompressibleOneShotFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new CompressibleOneShotFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );
                         break;
                     case FileType.OneShotFile:
                     case FileType.PartitionedFile:
-                        files.Add( fi.Guid, new PartitionedFile( charmap, fi, bytes ) );
+                        files.Add( fi.Guid, new PartitionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );
                         break;
                 }
 
@@ -283,7 +303,15 @@ namespace FFTPatcher.TextEditor
 
         public static FFTText GetPspText( Stream iso, BackgroundWorker worker )
         {
-            return GetPspText( iso, TextUtilities.PSPMap, worker );
+            GenericCharMap charmap = TextUtilities.PSPMap;
+            pspIsoInfo = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
+            if (DTE.DoesPspIsoHaveNonDefaultFont( iso, pspIsoInfo ))
+            {
+                charmap = DTE.DTEAnalyzer.PSP.GetCharMap( iso, pspIsoInfo );
+            }
+
+            pspIsoInfo = null;
+            return GetPspText( iso, charmap, worker );
         }
 
         public static FFTText GetPsxText( Stream iso, GenericCharMap charmap, BackgroundWorker worker )
@@ -293,7 +321,13 @@ namespace FFTPatcher.TextEditor
 
         public static FFTText GetPsxText( Stream iso, BackgroundWorker worker )
         {
-            return GetPsxText( iso, TextUtilities.PSXMap, worker );
+            GenericCharMap charmap = TextUtilities.PSXMap;
+            if ( DTE.DoesPsxIsoHaveDtePatches( iso ) )
+            {
+                charmap = DTE.DTEAnalyzer.PSX.GetCharMap( iso );
+            }
+
+            return GetPsxText( iso, charmap, worker );
         }
 
 
@@ -303,13 +337,23 @@ namespace FFTPatcher.TextEditor
             if ( files == null || worker.CancellationPending )
                 return null;
 
-            var quickEdit = new QuickEdit( files, GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ), worker ) );
+            var quickEditLookup = GetQuickEditLookup( doc.SelectSingleNode( "//QuickEdit" ), worker );
+            var quickEdit = new QuickEdit( context, files, quickEditLookup );
             if ( quickEdit == null || worker.CancellationPending )
                 return null;
 
             return new FFTText( context, files, quickEdit );
         }
 
+        private static Set<Guid> GetGuidsNeededForQuickEdit( XmlNode quickEditNode )
+        {
+            Set<Guid> result = new Set<Guid>();
+            foreach ( XmlNode guidNode in quickEditNode.SelectNodes( "*/File/Guid" ) )
+            {
+                result.Add( new Guid( guidNode.InnerText ) );
+            }
+            return result;
+        }
 
         public static FFTText GetFilesXml( string filename, BackgroundWorker worker )
         {
@@ -318,37 +362,126 @@ namespace FFTPatcher.TextEditor
             return GetFilesXml( doc, worker );
         }
 
-        public static FFTText GetFilesXml( XmlNode doc, BackgroundWorker worker )
+        public static Set<Guid> DetectMissingGuids( string filename )
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load( filename );
+            return DetectMissingGuids( doc );
+        }
+
+        public static Set<Guid> DetectMissingGuids( XmlNode doc )
         {
             Context context = (Context)Enum.Parse( typeof( Context ), doc.SelectSingleNode( "/FFTText/@context" ).InnerText );
             XmlNode layoutDoc = context == Context.US_PSP ? Resources.PSP : Resources.PSX;
-            GenericCharMap charmap = ( context == Context.US_PSP ) ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
+            XmlNodeList guids = doc.SelectNodes( "//File/Guid" );
+            Set<Guid> myGuids = new Set<Guid>();
+            foreach (XmlNode node in guids)
+            {
+                myGuids.Add( new Guid( node.InnerText ) );
+            }
+
+            Set<Guid> layoutGuids = new Set<Guid>();
+            guids = layoutDoc.SelectNodes( "//Files/*/Guid" );
+            foreach (XmlNode node in guids)
+            {
+                layoutGuids.Add( new Guid( node.InnerText ) );
+            }
+
+            return new Set<Guid>( layoutGuids.GetElements().FindAll( g => !myGuids.Contains( g ) ) ).AsReadOnly();
+        }
+
+        public static FFTText GetFilesXml( string filename, BackgroundWorker worker, Set<Guid> guidsToLoadFromIso, Stream iso )
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load( filename );
+            return GetFilesXml( doc, worker, guidsToLoadFromIso, iso );
+        }
+
+        public static FFTText GetFilesXml( XmlNode doc, BackgroundWorker worker, Set<Guid> guidsToLoadFromIso, Stream iso )
+        {
+            Context context = (Context)Enum.Parse( typeof( Context ), doc.SelectSingleNode( "/FFTText/@context" ).InnerText );
+            XmlNode layoutDoc = context == Context.US_PSP ? Resources.PSP : Resources.PSX;
+            GenericCharMap charmap = (context == Context.US_PSP) ? (GenericCharMap)TextUtilities.PSPMap : (GenericCharMap)TextUtilities.PSXMap;
 
             Dictionary<Guid, ISerializableFile> result = new Dictionary<Guid, ISerializableFile>();
-            foreach ( XmlNode fileNode in doc.SelectNodes( "//File" ) )
+            foreach (XmlNode fileNode in doc.SelectNodes( "//File" ))
             {
                 string guidText = fileNode.SelectSingleNode( "Guid" ).InnerText;
                 Guid guid = new Guid( guidText );
-                if ( worker.CancellationPending )
+                if (worker.CancellationPending)
                     return null;
                 FileInfo fi = GetFileInfo( context, layoutDoc.SelectSingleNode( string.Format( "//Files/*[Guid='{0}']", guidText ) ) );
-                if ( worker.CancellationPending )
+                string fileComment = GetFileComment( doc.SelectSingleNode( string.Format( "//FFTText/*[Guid='{0}']", guidText ) ) );
+                if (worker.CancellationPending)
                     return null;
+                XmlNode sectionsNode = fileNode.SelectSingleNode( "Sections" );
                 result.Add(
                     guid,
-                    AbstractFile.ConstructFile( fi.FileType, charmap, fi, GetStrings( fileNode.SelectSingleNode( "Sections" ) ) ) );
-                if ( worker.CancellationPending )
+                    AbstractFile.ConstructFile( fi.FileType, charmap, fi, GetStrings( sectionsNode ), fileComment, GetSectionComments( sectionsNode ) ) );
+                if (worker.CancellationPending)
                     return null;
             }
 
-            var quickEdit = new QuickEdit( result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
-            if ( quickEdit == null || worker.CancellationPending )
+            if (guidsToLoadFromIso != null && guidsToLoadFromIso.Count > 0 && iso != null)
             {
-                return null;
+                FFTText tempText = null;
+                if (context == Context.US_PSP)
+                {
+                    tempText = GetPspText( iso, worker );
+                }
+                else if (context == Context.US_PSX)
+                {
+                    tempText = GetPsxText( iso, worker );
+                }
+
+                Set<IFile> isoFiles =
+                    new Set<IFile>(
+                        tempText.Files.FindAll( f => f is ISerializableFile ).FindAll( g => guidsToLoadFromIso.Contains( (g as ISerializableFile).Layout.Guid ) ) );
+                isoFiles.ForEach( f => result.Add( (f as ISerializableFile).Layout.Guid, f as ISerializableFile ) );
+            }
+
+            XmlNode quickEditNode = layoutDoc.SelectSingleNode( "//QuickEdit" );
+            Set<Guid> guids = GetGuidsNeededForQuickEdit( quickEditNode );
+            QuickEdit quickEdit = null;
+            if (guids.TrueForAll( g => result.ContainsKey( g ) ))
+            {
+                quickEdit = new QuickEdit( context, result, GetQuickEditLookup( layoutDoc.SelectSingleNode( "//QuickEdit" ), worker ) );
+                if (quickEdit == null || worker.CancellationPending)
+                {
+                    return null;
+                }
             }
 
             return new FFTText( context, result, quickEdit );
 
+        }
+
+        public static FFTText GetFilesXml( XmlNode doc, BackgroundWorker worker )
+        {
+            return GetFilesXml( doc, worker, new Set<Guid>().AsReadOnly(), null );
+        }
+
+        private static IList<string> GetSectionComments( XmlNode sectionsNode )
+        {
+            XmlNodeList sectionNodes = sectionsNode.SelectNodes( "Section" );
+            string[] result = new string[sectionNodes.Count];
+            for (int i = 0; i < sectionNodes.Count; i++)
+            {
+                result[i] = GetCommentNode( sectionNodes[i] );
+            }
+            return result;
+        }
+
+        private static string GetCommentNode( XmlNode parentNode )
+        {
+            XmlNode commentNode = parentNode.SelectSingleNode( "Comment" );
+            if (commentNode != null) return commentNode.InnerText;
+            else return string.Empty;
+        }
+
+        private static string GetFileComment( XmlNode fileNode )
+        {
+            return GetCommentNode( fileNode );
         }
 
         private static IList<IList<string>> GetStrings( XmlNode sectionsNode )
@@ -429,6 +562,8 @@ namespace FFTPatcher.TextEditor
             staticEntries = ourStatic.AsReadOnly();
         }
 
+        static Dictionary<string, IList<string>> cachedResources = new Dictionary<string, IList<string>>();
+
         private static IList<IList<string>> GetEntryNames( XmlNode sectionsNode, XmlNode templatesNode )
         {
             int sectionCount = Int32.Parse( sectionsNode.Attributes["count"].InnerText );
@@ -452,6 +587,35 @@ namespace FFTPatcher.TextEditor
                         int index = Int32.Parse( entryNode.Attributes["value"].InnerText );
                         currentSection[index] = entryNode.Attributes["name"].InnerText;
                     }
+
+                    foreach ( XmlNode includeNode in currentNode.SelectNodes( "includeResource" ) )
+                    {
+                        int start = Int32.Parse( includeNode.Attributes["start"].InnerText );
+                        int end = Int32.Parse( includeNode.Attributes["end"].InnerText );
+                        int offset = Int32.Parse( includeNode.Attributes["offset"].InnerText );
+                        string fullName = includeNode.Attributes["name"].InnerText;
+                        XmlAttribute formatNode = includeNode.Attributes["format"];
+                        string format = formatNode != null ? formatNode.InnerText.Replace( "\\n", Environment.NewLine ) : "{0}";
+                        
+                        if ( !cachedResources.ContainsKey( fullName ) )
+                        {
+                            cachedResources[fullName] = PatcherLib.Resources.GetResourceByName( fullName );
+                        }
+
+                        IList<string> resourceList = cachedResources[fullName];
+                        for ( int j = start; j <= end; j++ )
+                        {
+                            if ( string.IsNullOrEmpty( resourceList[j] ) )
+                            {
+                                currentSection[j + offset] = string.Empty;
+                            }
+                            else
+                            {
+                                currentSection[j + offset] = string.Format( format, resourceList[j] );
+                            }
+                        }
+                    }
+
                     foreach ( XmlNode includeNode in currentNode.SelectNodes( "include" ) )
                     {
                         XmlNode included = templatesNode.SelectSingleNode( includeNode.Attributes["name"].InnerText );
@@ -474,14 +638,22 @@ namespace FFTPatcher.TextEditor
         private static void WriteFileXml( ISerializableFile file, XmlWriter writer )
         {
             writer.WriteStartElement( "File" );
+            writer.WriteComment( "DisplayName: " + file.DisplayName );
             writer.WriteElementString( "Guid", file.Layout.Guid.ToString( "B" ).ToUpper() );
+            if (!string.IsNullOrEmpty(file.FileComments))
+                writer.WriteElementString( "Comment", file.FileComments );
+
             writer.WriteStartElement( "Sections" );
             int numSections = file.NumberOfSections;
-            for ( int i = 0; i < numSections; i++ )
+            for (int i = 0; i < numSections; i++)
             {
                 writer.WriteStartElement( "Section" );
+                if (!string.IsNullOrEmpty( file.SectionNames[i] )) writer.WriteComment( file.SectionNames[i] );
+                if (file.SectionComments != null && file.SectionComments.Count > i && !string.IsNullOrEmpty( file.SectionComments[i] ))
+                    writer.WriteElementString( "Comment", file.SectionComments[i] );
+
                 int length = file.SectionLengths[i];
-                for ( int j = 0; j < length; j++ )
+                for (int j = 0; j < length; j++)
                 {
                     writer.WriteElementString( "Entry", file[i, j] );
                 }

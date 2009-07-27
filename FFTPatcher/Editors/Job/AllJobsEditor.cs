@@ -81,8 +81,12 @@ namespace FFTPatcher.Editors
 
         private void jobEditor_DataChanged( object sender, EventArgs e )
         {
+            jobsListBox.BeginUpdate();
+            var top = jobsListBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[jobsListBox.DataSource];
             cm.Refresh();
+            jobsListBox.TopIndex = top;
+            jobsListBox.EndUpdate();
         }
 
         private void jobEditor_SkillSetClicked( object sender, LabelClickedEventArgs e )

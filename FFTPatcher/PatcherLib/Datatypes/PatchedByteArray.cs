@@ -19,20 +19,137 @@
 
 using System;
 using PatcherLib.Iso;
+using System.IO;
 
 namespace PatcherLib.Datatypes
 {
+    public class STRPatchedByteArray : LazyLoadedPatchedByteArray 
+    {
+        public string Filename { get; private set; }
+
+        public override byte[] GetBytes()
+        {
+            return File.ReadAllBytes( Filename );
+        }
+
+        public STRPatchedByteArray(PsxIso.Sectors sector, string filename)
+            : base(sector, 0 )
+        {
+            this.Filename = Path.GetFileName( filename );
+        }
+    }
+
+    public class InputFilePatch : LazyLoadedPatchedByteArray
+    {
+        public string Filename { get; private set; }
+
+        public uint ExpectedLength { get; private set; }
+
+        public void SetFilename( string filename )
+        {
+            string myfile = Path.GetFullPath( filename );
+            if ( !File.Exists( myfile ) )
+            {
+                Filename = null;
+                throw new FileNotFoundException();
+            }
+            else if ( new FileInfo( filename ).Length != ExpectedLength )
+            {
+                throw new ArgumentException( "file is wrong length" );
+            }
+            else
+            {
+                Filename = filename;
+            }
+        }
+
+        public override byte[] GetBytes()
+        {
+            if ( string.IsNullOrEmpty( Filename ) )
+            {
+                throw new InvalidOperationException( "Filename not yet set" );
+            }
+            else
+            {
+                return File.ReadAllBytes( Filename );
+            }
+        }
+
+        public InputFilePatch( PsxIso.Sectors sector, uint offset, uint expectedLength )
+            : base( sector, offset )
+        {
+            ExpectedLength = expectedLength;
+        }
+    }
+
+    public abstract class LazyLoadedPatchedByteArray : PatchedByteArray
+    {
+        public override abstract byte[] GetBytes();
+
+        public LazyLoadedPatchedByteArray(PsxIso.Sectors sector, long offset )
+            : this((int)sector, offset )
+        {
+            SectorEnum = sector;
+        }
+
+        public LazyLoadedPatchedByteArray(PspIso.Sectors sector, long offset )
+            : this((int)sector, offset )
+        {
+            SectorEnum = sector;
+        }
+
+        public LazyLoadedPatchedByteArray(FFTPack.Files file, long offset )
+            : this((int)file, offset )
+        {
+            SectorEnum = file;
+        }
+
+        public LazyLoadedPatchedByteArray(Enum fileOrSector, long offset )
+            : this(-1, offset )
+        {
+            SectorEnum = fileOrSector;
+            Type t = fileOrSector.GetType();
+            if (t == typeof(PspIso.Sectors))
+            {
+                Sector = (int)((PspIso.Sectors)fileOrSector);
+            }
+            else if (t == typeof(FFTPack.Files))
+            {
+                Sector = (int)((FFTPack.Files)fileOrSector);
+            }
+            else if (t == typeof(PsxIso.Sectors))
+            {
+                Sector = (int)((PsxIso.Sectors)fileOrSector);
+            }
+            else
+            {
+                throw new ArgumentException("fileOrSector has incorrect type");
+            }
+        }
+
+        public LazyLoadedPatchedByteArray(int sector, long offset )
+            : base(sector, offset)
+        {
+        }
+
+    }
+
     public class PatchedByteArray
     {
 		#region Public Properties (4) 
 
-        public byte[] Bytes { get; private set; }
+        public virtual byte[] GetBytes()
+        {
+            return bytes;
+        }
 
-        public long Offset { get; private set; }
+        private byte[] bytes;
 
-        public int Sector { get; private set; }
+        public long Offset { get; protected set; }
 
-        public Enum SectorEnum { get; private set; }
+        public int Sector { get; protected set; }
+
+        public Enum SectorEnum { get; protected set; }
 
 		#endregion Public Properties 
 
@@ -79,11 +196,16 @@ namespace PatcherLib.Datatypes
             }
         }
 
-        public PatchedByteArray( int sector, long offset, byte[] bytes )
+        public PatchedByteArray(int sector, long offset, byte[] bytes)
+            : this(sector, offset)
+        {
+            this.bytes = bytes;
+        }
+
+        protected PatchedByteArray(int sector, long offset)
         {
             Sector = sector;
             Offset = offset;
-            Bytes = bytes;
         }
 
 		#endregion Constructors 

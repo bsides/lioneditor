@@ -32,8 +32,6 @@ namespace FFTPatcher.SpriteEditor
             get { return sprites.AsReadOnly(); }
         }
 
-        public ImageList Thumbnails { get; private set; }
-
         private FullSpriteSet( IList<AbstractSprite> sprites, System.ComponentModel.BackgroundWorker worker, int tasksComplete, int tasks )
         {
             bool haveWorker = worker != null;
@@ -41,15 +39,6 @@ namespace FFTPatcher.SpriteEditor
                 worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, "Sorting" );
             sprites.Sort( ( a, b ) => a.Name.CompareTo( b.Name ) );
             this.sprites = sprites;
-            Thumbnails = new ImageList();
-            Thumbnails.ImageSize = new System.Drawing.Size( 80, 48 );
-            foreach ( var sprite in sprites )
-            {
-                if ( haveWorker )
-                    worker.ReportProgress( ( tasksComplete++ * 100 ) / tasks, string.Format( "Generating thumbnail for {0}", sprite.Name ) );
-
-                Thumbnails.Images.Add( sprite.Name, sprite.GetThumbnail() );
-            }
         }
 
         private static FullSpriteSet DoInitPSX( Stream iso, BackgroundWorker worker )
@@ -78,11 +67,11 @@ namespace FFTPatcher.SpriteEditor
                 }
                 if ( bytes.Count > 1 )
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0], bytes.Sub( 1 ).ToArray() ) );
+                    sprites.Add( new MonsterSprite( bytes[0], bytes.Sub( 1 ).ToArray() ) );
                 }
                 else
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0] ) );
+                    sprites.Add( new MonsterSprite( bytes[0] ) );
                 }
             }
             foreach ( Type t in new Type[] { 
@@ -112,6 +101,7 @@ namespace FFTPatcher.SpriteEditor
 
         private static FullSpriteSet DoInitPSP( Stream iso, BackgroundWorker worker )
         {
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(iso);
             const int numberOfPspSprites = 143;
             int tasks = numberOfPspSprites * 2 + 1;
             int tasksComplete = 0;
@@ -129,15 +119,15 @@ namespace FFTPatcher.SpriteEditor
                     string filename = file.SelectSingleNode( "@name" ).InnerText;
                     worker.ReportProgress( tasksComplete++ * 100 / tasks, "Reading " + filename );
                     filenames.Add( filename );
-                    bytes.Add( FFTPack.GetFileFromIso( iso, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), file.SelectSingleNode( "@enum" ).InnerText ) ) );
+                    bytes.Add( FFTPack.GetFileFromIso( iso, info, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), file.SelectSingleNode( "@enum" ).InnerText ) ) );
                 }
                 if ( bytes.Count > 1 )
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0], bytes.Sub( 1 ).ToArray() ) );
+                    sprites.Add( new MonsterSprite( bytes[0], bytes.Sub( 1 ).ToArray() ) );
                 }
                 else
                 {
-                    sprites.Add( new MonsterSprite( name, filenames, bytes[0] ) );
+                    sprites.Add( new MonsterSprite( bytes[0] ) );
                 }
             }
 
@@ -154,7 +144,7 @@ namespace FFTPatcher.SpriteEditor
                 {
                     worker.ReportProgress( tasksComplete++ * 100 / tasks, "Reading " + node.SelectSingleNode( "Files/File/@name" ).InnerText );
                     sprites.Add( (AbstractSprite)constructor.Invoke( new object[] { node.SelectSingleNode("@name").InnerText, 
-                        FFTPack.GetFileFromIso( iso, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), node.SelectSingleNode( "Files/File/@enum" ).InnerText ))} ) );
+                        FFTPack.GetFileFromIso( iso, info, (FFTPack.Files)Enum.Parse( typeof( FFTPack.Files ), node.SelectSingleNode( "Files/File/@enum" ).InnerText ))} ) );
                 }
             }
 
@@ -182,7 +172,7 @@ namespace FFTPatcher.SpriteEditor
                 if ( patch != null )
                 {
                     worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + patch.SectorEnum.ToString() );
-                    IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.Bytes, true );
+                    IsoPatch.PatchFileAtSector(IsoPatch.IsoType.Mode2Form1, stream, true, patch.Sector, patch.Offset, patch.GetBytes(), true);
                 }
                 else
                 {
@@ -195,11 +185,11 @@ namespace FFTPatcher.SpriteEditor
         {
             int totalTasks = patches.Count;
             int tasksComplete = 0;
-
+            PatcherLib.Iso.PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo(stream);
             foreach ( var patch in patches )
             {
                 worker.ReportProgress( tasksComplete++ * 100 / totalTasks, "Patching " + patch.SectorEnum.ToString() );
-                FFTPack.PatchFile( stream, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.Bytes );
+                FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.GetBytes() );
             }
 
         }

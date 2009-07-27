@@ -19,13 +19,15 @@
 
 using System;
 using System.Collections.Generic;
+using PatcherLib.Utilities;
+using System.Xml.Serialization;
 
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
     /// Represents an <see cref="Ability"/>'s attributes.
     /// </summary>
-    public class AbilityAttributes : PatcherLib.Datatypes.IChangeable, ISupportDigest
+    public class AbilityAttributes : BaseDataType, PatcherLib.Datatypes.IChangeable, ISupportDigest, ISupportDefault<AbilityAttributes>
     {
 		#region Instance Variables (42) 
 
@@ -64,13 +66,58 @@ namespace FFTPatcher.Datatypes
         public bool Targeting;
         public bool TargetSelf;
         public bool ThreeDirections;
+        private static class Strings
+        {
+            public const string AnimateMiss = "AnimateMiss";
+            public const string Arithmetick = "Arithmetick";
+            public const string Auto = "Auto";
+            public const string Blank6 = "Blank6";
+            public const string Blank7 = "Blank7";
+            public const string Blank8 = "Blank8";
+            public const string CounterFlood = "CounterFlood";
+            public const string CounterMagic = "CounterMagic";
+            public const string CT = "CT";
+            public const string Direct = "Direct";
+            public const string Effect = "Effect";
+            public const string Evadeable = "Evadeable";
+            public const string FollowTarget = "FollowTarget";
+            public const string HitAllies = "HitAllies";
+            public const string HitCaster = "HitCaster";
+            public const string HitEnemies = "HitEnemies";
+            public const string InflictStatus = "InflictStatus";
+            public const string LinearAttack = "LinearAttack";
+            public const string Mimic = "Mimic";
+            public const string MPCost = "MPCost";
+            public const string NormalAttack = "NormalAttack";
+            public const string Perservere = "Perservere";
+            public const string RandomFire = "RandomFire";
+            public const string Range = "Range";
+            public const string Reflect = "Reflect";
+            public const string RequiresMateriaBlade = "RequiresMateriaBlade";
+            public const string RequiresSword = "RequiresSword";
+            public const string Shirahadori = "Shirahadori";
+            public const string ShowQuote = "ShowQuote";
+            public const string Silence = "Silence";
+            public const string Targeting = "Targeting";
+            public const string TargetSelf = "TargetSelf";
+            public const string ThreeDirections = "ThreeDirections";
+            public const string Vertical = "Vertical";
+            public const string VerticalFixed = "VerticalFixed";
+            public const string VerticalTolerance = "VerticalTolerance";
+            public const string WeaponRange = "WeaponRange";
+            public const string WeaponStrike = "WeaponStrike";
+            public const string X = "X";
+            public const string Y = "Y";
+            public const string Elements = "Elements";
+            public const string Formula = "Formula";
+        }
         private static readonly string[] valuesToSerialize = new string[] {
-            "AnimateMiss","Arithmetick","Auto","Blank6","Blank7","Blank8","CounterFlood","CounterMagic",
-            "CT","Direct","Effect","Evadeable","FollowTarget","HitAllies","HitCaster","HitEnemies",
-            "InflictStatus","LinearAttack","Mimic","MPCost","NormalAttack","Perservere","RandomFire",
-            "Range","Reflect","RequiresMateriaBlade","RequiresSword","Shirahadori","ShowQuote","Silence",
-            "Targeting","TargetSelf","ThreeDirections","Vertical","VerticalFixed","VerticalTolerance",
-            "WeaponRange","WeaponStrike","X","Y", "Elements", "Formula" };
+            Strings.AnimateMiss,Strings.Arithmetick,Strings.Auto,Strings.Blank6,Strings.Blank7,Strings.Blank8,Strings.CounterFlood,Strings.CounterMagic,
+            Strings.CT,Strings.Direct,Strings.Effect,Strings.Evadeable,Strings.FollowTarget,Strings.HitAllies,Strings.HitCaster,Strings.HitEnemies,
+            Strings.InflictStatus,Strings.LinearAttack,Strings.Mimic,Strings.MPCost,Strings.NormalAttack,Strings.Perservere,Strings.RandomFire,
+            Strings.Range,Strings.Reflect,Strings.RequiresMateriaBlade,Strings.RequiresSword,Strings.Shirahadori,Strings.ShowQuote,Strings.Silence,
+            Strings.Targeting,Strings.TargetSelf,Strings.ThreeDirections,Strings.Vertical,Strings.VerticalFixed,Strings.VerticalTolerance,
+            Strings.WeaponRange,Strings.WeaponStrike,Strings.X,Strings.Y, Strings.Elements, Strings.Formula };
         public byte Vertical;
         public bool VerticalFixed;
         public bool VerticalTolerance;
@@ -169,6 +216,10 @@ namespace FFTPatcher.Datatypes
             }
         }
 
+        internal AbilityAttributes()
+        {
+        }
+
 		#endregion Constructors 
 
 		#region Public Methods (4) 
@@ -258,5 +309,129 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        protected override void ReadXml( System.Xml.XmlReader reader )
+        {
+            reader.ReadStartElement();
+
+            Range = (byte)reader.ReadElementContentAsInt();
+            Effect = (byte)reader.ReadElementContentAsInt();
+            Vertical = (byte)reader.ReadElementContentAsInt();
+            InflictStatus = (byte)reader.ReadElementContentAsInt();
+            CT = (byte)reader.ReadElementContentAsInt();
+            MPCost = (byte)reader.ReadElementContentAsInt();
+
+            Elements = new Elements();
+            ( (IXmlSerializable)Elements ).ReadXml( reader );
+
+            reader.MoveToAttribute( "value" );
+            byte formulaValue = (byte)reader.ReadContentAsInt();
+            Formula = FFTPatch.Context == PatcherLib.Datatypes.Context.US_PSP ? 
+                AbilityFormula.PSPAbilityFormulaHash[formulaValue] : 
+                AbilityFormula.PSXAbilityFormulaHash[formulaValue];
+            reader.MoveToElement();
+            reader.ReadStartElement();
+            reader.ReadEndElement();
+
+            Blank6 = reader.ReadElementContentAsBoolean();
+            Blank7 = reader.ReadElementContentAsBoolean();
+            WeaponRange = reader.ReadElementContentAsBoolean();
+            VerticalFixed = reader.ReadElementContentAsBoolean();
+            VerticalTolerance = reader.ReadElementContentAsBoolean();
+            WeaponStrike = reader.ReadElementContentAsBoolean();
+            Auto = reader.ReadElementContentAsBoolean();
+            TargetSelf = reader.ReadElementContentAsBoolean();
+
+            HitEnemies = reader.ReadElementContentAsBoolean();
+            HitAllies = reader.ReadElementContentAsBoolean();
+            Blank8 = reader.ReadElementContentAsBoolean();
+            FollowTarget = reader.ReadElementContentAsBoolean();
+            RandomFire = reader.ReadElementContentAsBoolean();
+            LinearAttack = reader.ReadElementContentAsBoolean();
+            ThreeDirections = reader.ReadElementContentAsBoolean();
+            HitCaster = reader.ReadElementContentAsBoolean();
+
+            Reflect = reader.ReadElementContentAsBoolean();
+            Arithmetick = reader.ReadElementContentAsBoolean();
+            Silence = reader.ReadElementContentAsBoolean();
+            Mimic = reader.ReadElementContentAsBoolean();
+            NormalAttack = reader.ReadElementContentAsBoolean();
+            Perservere = reader.ReadElementContentAsBoolean();
+            ShowQuote = reader.ReadElementContentAsBoolean();
+            AnimateMiss = reader.ReadElementContentAsBoolean();
+
+            CounterFlood = reader.ReadElementContentAsBoolean();
+            CounterMagic = reader.ReadElementContentAsBoolean();
+            Direct = reader.ReadElementContentAsBoolean();
+            Shirahadori = reader.ReadElementContentAsBoolean();
+            RequiresSword = reader.ReadElementContentAsBoolean();
+            RequiresMateriaBlade = reader.ReadElementContentAsBoolean();
+            Evadeable = reader.ReadElementContentAsBoolean();
+            Targeting = reader.ReadElementContentAsBoolean();
+
+            reader.ReadEndElement();
+        }
+
+        protected override void WriteXml( System.Xml.XmlWriter writer )
+        {
+            writer.WriteValueElement( Strings.Range, Range );
+            writer.WriteValueElement( Strings.Effect, Effect );
+            writer.WriteValueElement( Strings.Vertical, Vertical );
+            writer.WriteValueElement( Strings.InflictStatus, InflictStatus );
+            writer.WriteValueElement( Strings.CT, CT );
+            writer.WriteValueElement( Strings.MPCost, MPCost );
+
+            writer.WriteStartElement( Strings.Elements );
+            ((IXmlSerializable)Elements).WriteXml( writer );
+            writer.WriteEndElement();
+
+            writer.WriteStartElement( Strings.Formula );
+            writer.WriteStartAttribute( "value" );
+            writer.WriteValue( Formula.Value );
+            writer.WriteEndAttribute();
+
+            writer.WriteStartAttribute( "name" );
+            writer.WriteString( Formula.Formula );
+            writer.WriteEndAttribute();
+            writer.WriteEndElement();
+
+            writer.WriteValueElement( Strings.Blank6, Blank6 );
+            writer.WriteValueElement( Strings.Blank7, Blank7 );
+            writer.WriteValueElement( Strings.WeaponRange, WeaponRange );
+            writer.WriteValueElement( Strings.VerticalFixed, VerticalFixed );
+            writer.WriteValueElement( Strings.VerticalTolerance, VerticalTolerance );
+            writer.WriteValueElement( Strings.WeaponStrike, WeaponStrike );
+            writer.WriteValueElement( Strings.Auto, Auto );
+            writer.WriteValueElement( Strings.TargetSelf, TargetSelf );
+
+            writer.WriteValueElement( Strings.HitEnemies, HitEnemies );
+            writer.WriteValueElement( Strings.HitAllies, HitAllies );
+            writer.WriteValueElement( Strings.Blank8, Blank8 );
+            writer.WriteValueElement( Strings.FollowTarget, FollowTarget );
+            writer.WriteValueElement( Strings.RandomFire, RandomFire );
+            writer.WriteValueElement( Strings.LinearAttack, LinearAttack );
+            writer.WriteValueElement( Strings.ThreeDirections, ThreeDirections );
+            writer.WriteValueElement( Strings.HitCaster, HitCaster );
+
+            writer.WriteValueElement( Strings.Reflect, Reflect );
+            writer.WriteValueElement( Strings.Arithmetick, Arithmetick );
+            writer.WriteValueElement( Strings.Silence, Silence );
+            writer.WriteValueElement( Strings.Mimic, Mimic );
+            writer.WriteValueElement( Strings.NormalAttack, NormalAttack );
+            writer.WriteValueElement( Strings.Perservere, Perservere );
+            writer.WriteValueElement( Strings.ShowQuote, ShowQuote );
+            writer.WriteValueElement( Strings.AnimateMiss, AnimateMiss );
+
+            writer.WriteValueElement( Strings.CounterFlood, CounterFlood );
+            writer.WriteValueElement( Strings.CounterMagic, CounterMagic );
+            writer.WriteValueElement( Strings.Direct, Direct );
+            writer.WriteValueElement( Strings.Shirahadori, Shirahadori );
+            writer.WriteValueElement( Strings.RequiresSword, RequiresSword );
+            writer.WriteValueElement( Strings.RequiresMateriaBlade, RequiresMateriaBlade );
+            writer.WriteValueElement( Strings.Evadeable, Evadeable );
+            writer.WriteValueElement( Strings.Targeting, Targeting );
+
+
+        }
     }
 }

@@ -23,70 +23,134 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using PatcherLib.Datatypes;
+using System.IO;
 
 namespace FFTPatcher.SpriteEditor
 {
     public partial class MainForm : Form
     {
 
-        #region Fields (3)
-
-        string filename = string.Empty;
-        private List<Shape> shapes;
-        private SpriteDialog dialog = new SpriteDialog();
-
-        PatcherLib.Controls.ProgressBarWithText progressBar = new PatcherLib.Controls.ProgressBarWithText();
-        #endregion Fields
-
-        #region Constructors (1)
+        const string titleFormatString = "Shishi Sprite Manager - {0}";
 
         public MainForm()
         {
             InitializeComponent();
-            
-            openMenuItem.Click += openMenuItem_Click;
-            saveMenuItem.Click += saveMenuItem_Click;
-
-            progressBar.Visible = false;
-            progressBar.Enabled = false;
-            progressBar.ProgressBarBlockSpace = 0;
-            progressBar.ProgressBarBlockWidth = 1;
-            progressBar.ProgressBarFillColor = Color.Blue;
-            progressBar.ForeColor = Color.White;
-            Controls.Add( progressBar );
-
-            aboutMenuItem.Click += aboutMenuItem_Click;
-            exitMenuItem.Click += exitMenuItem_Click;
-            importPspMenuItem.Click += new EventHandler( importPspMenuItem_Click );
-            importPsxMenuItem.Click += new EventHandler( importPsxMenuItem_Click );
-
-            fullSpriteSetEditor1.ImageActivated += new EventHandler<FullSpriteSetEditor.ImageEventArgs>( fullSpriteSetEditor1_ImageActivated );
-            BuildShapes();
         }
 
-        void fullSpriteSetEditor1_ImageActivated( object sender, FullSpriteSetEditor.ImageEventArgs e )
+        private Stream currentStream = null;
+
+        private void openIsoMenuItem_Click( object sender, EventArgs e )
         {
-            dialog.ShowDialog( e.Sprite, this );
+            openFileDialog.Filter = "ISO files (*.bin, *.iso, *.img)|*.bin;*.iso;*.img";
+            openFileDialog.FileName = string.Empty;
+            if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                Stream openedStream = File.Open( openFileDialog.FileName, FileMode.Open, FileAccess.ReadWrite );
+                if (openedStream != null)
+                {
+                    if (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0 ||
+                         (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0 &&
+                          (AllSprites.DetectExpansionOfPsxIso( openedStream ) ||
+                            MessageBox.Show( this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.OKCancel ) == DialogResult.OK)))
+                    {
+                        if (currentStream != null)
+                        {
+                            currentStream.Flush();
+                            currentStream.Close();
+                            currentStream.Dispose();
+                        }
+                        currentStream = openedStream;
+
+                        AllSprites s = AllSprites.FromIso( currentStream );
+                        allSpritesEditor1.BindTo( s, currentStream );
+                        tabControl1.Enabled = true;
+                        spriteMenuItem.Enabled = true;
+                        sp2Menu.Enabled = true;
+
+                        var otherImages = AllOtherImages.FromIso( currentStream );
+                        allOtherImagesEditor1.BindTo( otherImages, currentStream );
+
+                        Text = string.Format( titleFormatString, Path.GetFileName( openFileDialog.FileName ) );
+                    }
+                    else
+                    {
+                        openedStream.Close();
+                        openedStream.Dispose();
+                    }
+                }
+            }
         }
 
-        #endregion Constructors
-
-        #region Methods (19)
-
-
-        private void aboutMenuItem_Click( object sender, EventArgs e )
+        protected override void OnClosing( CancelEventArgs e )
         {
-            new About().ShowDialog( this );
+            if (currentStream != null)
+            {
+                currentStream.Flush();
+                currentStream.Close();
+                currentStream.Dispose();
+                currentStream = null;
+            }
+            base.OnClosing( e );
         }
 
-        private void BuildShapes()
+        private void importSprMenuItem_Click( object sender, EventArgs e )
         {
-            shapes = new List<Shape>();
-            shapes.Add( Shape.ARUTE );
-            shapes.Add( Shape.TYPE1 );
-            shapes.Add( Shape.TYPE2 );
-            shapes.Add( Shape.CYOKO );
-            shapes.Add( Shape.KANZEN );
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            openFileDialog.Filter = "FFT Sprite (*.SPR)|*.spr";
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.CheckFileExists = true;
+            if (currentSprite != null && openFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                try
+                {
+                    currentSprite.ImportSprite( currentStream, openFileDialog.FileName );
+                    allSpritesEditor1.ReloadCurrentSprite();
+                }
+                catch (SpriteTooLargeException ex)
+                {
+                    MessageBox.Show( this, ex.Message, "Error" );
+                }
+            }
+        }
+
+        private void exportSprMenuItem_Click( object sender, EventArgs e )
+        {
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            saveFileDialog.Filter = "FFT Sprite (*.SPR)|*.spr";
+            saveFileDialog.FileName = string.Empty;
+            saveFileDialog.CreatePrompt = false;
+            saveFileDialog.OverwritePrompt = true;
+            if (currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                File.WriteAllBytes( saveFileDialog.FileName, currentSprite.GetAbstractSpriteFromIso( currentStream ).ToByteArray( 0 ) );
+            }
+        }
+
+        private void importBmpMenuItem_Click( object sender, EventArgs e )
+        {
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            openFileDialog.Filter = "8bpp paletted bitmap (*.BMP)|*.bmp";
+            openFileDialog.FileName = string.Empty;
+            openFileDialog.CheckFileExists = true;
+            if (currentSprite != null && openFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                currentSprite.ImportBitmap( currentStream, openFileDialog.FileName );
+                allSpritesEditor1.ReloadCurrentSprite();
+            }
+        }
+
+        private void exportBmpMenuItem_Click( object sender, EventArgs e )
+        {
+            Sprite currentSprite = allSpritesEditor1.CurrentSprite;
+            saveFileDialog.Filter = "8bpp paletted bitmap (*.BMP)|*.bmp";
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.CreatePrompt = false;
+            saveFileDialog.FileName = string.Empty;
+
+            if (currentSprite != null && saveFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                currentSprite.GetAbstractSpriteFromIso( currentStream ).ToBitmap().Save( saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp );
+            }
         }
 
         private void exitMenuItem_Click( object sender, EventArgs e )
@@ -94,187 +158,209 @@ namespace FFTPatcher.SpriteEditor
             Application.Exit();
         }
 
-        void importPsxMenuItem_Click( object sender, EventArgs e )
+        private void importSp2MenuItem_Click( object sender, EventArgs e )
         {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "PSX ISO files (*.iso, *.img, *.bin)|*.iso;*.img;*.bin";
-            openFileDialog.FilterIndex = 0;
-
-            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            int index = Int32.Parse( (sender as Menu).Tag.ToString() );
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
+            if (sprite != null)
             {
-                DoBackgroundTask(
-                    delegate( object o, DoWorkEventArgs args )
-                    {
-                        FullSpriteSet set = FullSpriteSet.FromPsxISO( openFileDialog.FileName, o as BackgroundWorker );
-                        if ( fullSpriteSetEditor1.InvokeRequired )
-                        {
-                            fullSpriteSetEditor1.Invoke( new MethodInvoker( delegate() { fullSpriteSetEditor1.LoadFullSpriteSet( set ); } ) );
-                        }
-                        else
-                        {
-                            fullSpriteSetEditor1.LoadFullSpriteSet( set );
-                        }
-                    } );
-            }
-        }
-
-        void importPspMenuItem_Click( object sender, EventArgs e )
-        {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "PSP ISO files (*.iso)|*.iso";
-            openFileDialog.FilterIndex = 0;
-
-            if ( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                DoBackgroundTask(
-                    delegate( object o, DoWorkEventArgs args )
-                    {
-                        FullSpriteSet set = FullSpriteSet.FromPspISO( openFileDialog.FileName, o as BackgroundWorker );
-                        if ( fullSpriteSetEditor1.InvokeRequired )
-                        {
-                            fullSpriteSetEditor1.Invoke( new MethodInvoker( delegate() { fullSpriteSetEditor1.LoadFullSpriteSet( set ); } ) );
-                        }
-                        else
-                        {
-                            fullSpriteSetEditor1.LoadFullSpriteSet( set );
-                        }
-                    } );
-            }
-        }
-
-        public delegate void ProgressReport( int percent, string message );
-
-        private void DoBackgroundTask( DoWorkEventHandler work )
-        {
-            DoWorkEventHandler doWork = work;
-            ProgressChangedEventHandler changed =
-                delegate( object o3, ProgressChangedEventArgs args3 )
+                openFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
+                openFileDialog.FileName = string.Empty;
+                openFileDialog.CheckFileExists = true;
+                if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
                 {
-                    progressBar.Value = args3.ProgressPercentage;
-                    progressBar.ProgressBarText = args3.UserState as string;
-                };
-            RunWorkerCompletedEventHandler completed = null;
-            completed =
-                delegate( object o2, RunWorkerCompletedEventArgs args2 )
-                {
-                    backgroundWorker1.DoWork -= doWork;
-                    backgroundWorker1.ProgressChanged -= changed;
-                    backgroundWorker1.RunWorkerCompleted -= completed;
-                    progressBar.Visible = false;
-                    progressBar.Enabled = false;
-                    Enabled = true;
-                    Cursor = Cursors.Arrow;
-                };
-            Enabled = false;
-            progressBar.Bounds =
-                new Rectangle(
-                    ClientRectangle.Left + 10,
-                    ( ClientRectangle.Height - progressBar.Height ) / 2,
-                    ClientRectangle.Width - 20,
-                    progressBar.Height );
-            progressBar.Enabled = false;
-            progressBar.Value = 0;
-            progressBar.ProgressBarText = string.Empty;
-            progressBar.Visible = true;
-            progressBar.BringToFront();
-
-            backgroundWorker1.DoWork += doWork;
-            backgroundWorker1.ProgressChanged += changed;
-            backgroundWorker1.RunWorkerCompleted += completed;
-            backgroundWorker1.RunWorkerAsync();
-            Cursor = Cursors.WaitCursor;
-        }
-
-        private void openMenuItem_Click( object sender, System.EventArgs e )
-        {
-            openFileDialog.FileName = string.Empty;
-            openFileDialog.Filter = "Shishi Sprite Manager files (*.shishi)|*.shishi";
-            openFileDialog.FilterIndex = 0;
-
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
-            {
-                DoBackgroundTask(
-                    delegate( object o, DoWorkEventArgs args )
-                    {
-                        FullSpriteSet set = FullSpriteSet.FromShishiFile( openFileDialog.FileName, o as BackgroundWorker );
-                        if ( fullSpriteSetEditor1.InvokeRequired )
-                        {
-                            fullSpriteSetEditor1.Invoke( new MethodInvoker( delegate() { fullSpriteSetEditor1.LoadFullSpriteSet( set ); } ) );
-                        }
-                        else
-                        {
-                            fullSpriteSetEditor1.LoadFullSpriteSet( set );
-                        }
-                    } );
+                    (allSpritesEditor1.CurrentSprite as CharacterSprite).ImportSp2( currentStream, openFileDialog.FileName, index - 1 );
+                    allSpritesEditor1.ReloadCurrentSprite();
+                }
             }
         }
 
-        private void saveMenuItem_Click( object sender, EventArgs e )
+        private void exportSp2MenuItem_Click( object sender, EventArgs e )
+        {
+            int index = Int32.Parse( (sender as Menu).Tag.ToString() );
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
+            if (sprite != null)
+            {
+                saveFileDialog.Filter = "SP2 files (*.SP2)|*.sp2";
+                saveFileDialog.FileName = string.Empty;
+                saveFileDialog.CreatePrompt = false;
+                saveFileDialog.OverwritePrompt = true;
+                if (saveFileDialog.ShowDialog( this ) == DialogResult.OK)
+                {
+                    File.WriteAllBytes( saveFileDialog.FileName, sprite.ToByteArray( index ) );
+                }
+            }
+        }
+
+        private void sp2Menu_Popup( object sender, EventArgs e )
+        {
+            foreach (MenuItem mi in sp2Menu.MenuItems)
+            {
+                mi.Enabled = false;
+            }
+
+            MonsterSprite sprite = allSpritesEditor1.CurrentSprite.GetAbstractSpriteFromIso( currentStream ) as MonsterSprite;
+            if (sprite != null && allSpritesEditor1.CurrentSprite is CharacterSprite)
+            {
+                int numChildren = (allSpritesEditor1.CurrentSprite as CharacterSprite).NumChildren;
+                for (int i = 0; i < numChildren; i++)
+                {
+                    sp2Menu.MenuItems[i * 3].Enabled = true;
+                    sp2Menu.MenuItems[i * 3 + 1].Enabled = true;
+                }
+            }
+        }
+
+        private void importImageMenuItem_Click( object sender, EventArgs e )
+        {
+            openFileDialog.FileName = string.Empty;
+            const string allImagesFilter = "All images (*.png, *.gif, *.jpg, *.bmp, *.tiff)|*.png;*.gif;*.jpg;*.jpeg;*.bmp;*.tiff;*.tif";
+            const string pngFilter = "PNG images (*.png)|*.png";
+            const string gifFilter = "GIF images (*.gif)|*.gif";
+            const string jpgFilter = "JPEG images (*.jpg)|*.jpg;*.jpeg";
+            const string bmpFilter = "Bitmap images (*.bmp)|*.bmp";
+            const string tifFilter = "TIFF images (*.tiff)|*.tif;*.tiff";
+            openFileDialog.Filter = string.Join( "|", new string[] { allImagesFilter, pngFilter, gifFilter, jpgFilter, bmpFilter, tifFilter } );
+
+            if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
+            {
+                allOtherImagesEditor1.LoadToCurrentImage( openFileDialog.FileName );
+            }
+        }
+
+        private void exportImageMenuItem_Click( object sender, EventArgs e )
         {
             saveFileDialog.FileName = string.Empty;
-            saveFileDialog.Filter = "Shishi Sprite Manager files (*.shishi)|*.shishi";
-            saveFileDialog.FilterIndex = 0;
-            if ( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            saveFileDialog.Filter = allOtherImagesEditor1.GetCurrentImageFileFilter();
+
+            if (saveFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
-                DoBackgroundTask( ( o, w ) => fullSpriteSetEditor1.FullSpriteSet.SaveShishiFile( saveFileDialog.FileName ) );
+                allOtherImagesEditor1.SaveCurrentImage( saveFileDialog.FileName );
             }
         }
 
-        #endregion Methods
-
-        private void fileMenu_Popup( object sender, EventArgs e )
+        private void tabControl1_SelectedIndexChanged( object sender, EventArgs e )
         {
-            openMenuItem.Enabled = true;
-            saveMenuItem.Enabled = fullSpriteSetEditor1.FullSpriteSet != null;
+            bool image = tabControl1.SelectedTab == otherTabPage;
+            spriteMenuItem.Visible = !image;
+            sp2Menu.Visible = !image;
+            imageMenuItem.Visible = image;
         }
 
-        private void pspMenuItem_Popup( object sender, EventArgs e )
+        private void importAllImagesMenuItem_Click( object sender, EventArgs e )
         {
-            patchPspMenuItem.Enabled = fullSpriteSetEditor1.FullSpriteSet != null;
-            importPspMenuItem.Enabled = true;
-        }
-
-        private void psxMenuItem_Popup( object sender, EventArgs e )
-        {
-            patchPsxMenuItem.Enabled = fullSpriteSetEditor1.FullSpriteSet != null;
-            importPsxMenuItem.Enabled = true;
-        }
-
-        private void patchPspMenuItem_Click( object sender, EventArgs e )
-        {
-            patchDialog.LoadFullSpriteSet( fullSpriteSetEditor1.FullSpriteSet );
-            if ( patchDialog.ShowDialog( this ) == DialogResult.OK )
+            using ( Ionic.Utils.FolderBrowserDialogEx fbd = new Ionic.Utils.FolderBrowserDialogEx() )
             {
-                DoBackgroundTask(
-                    delegate( object o, DoWorkEventArgs args )
+                fbd.ShowNewFolderButton = true;
+                fbd.ShowFullPathInEditBox = true;
+                fbd.ShowEditBox = true;
+                fbd.ShowBothFilesAndFolders = false;
+                fbd.RootFolder = Environment.SpecialFolder.Desktop;
+                fbd.NewStyle = true;
+                Cursor oldCursor = Cursor;
+
+                ProgressChangedEventHandler progressHandler = delegate( object sender2, ProgressChangedEventArgs args2 )
+                {
+                    MethodInvoker mi = (() => progressBar1.Value = args2.ProgressPercentage);
+                    if (progressBar1.InvokeRequired)
+                        progressBar1.Invoke( mi );
+                    else mi();
+                };
+
+                RunWorkerCompletedEventHandler completeHandler = null;
+
+                completeHandler = delegate( object sender1, RunWorkerCompletedEventArgs args1 )
+                {
+                    MethodInvoker mi = delegate()
                     {
-                        ( o as BackgroundWorker ).ReportProgress( 0, "Building sprites" );
+                        var result = args1.Result as AllOtherImages.AllImagesDoWorkResult;
+                        tabControl1.Enabled = true;
+                        progressBar1.Visible = false;
+                        if (oldCursor != null) Cursor = oldCursor;
+                        backgroundWorker1.RunWorkerCompleted -= completeHandler;
+                        backgroundWorker1.ProgressChanged -= progressHandler;
+                        backgroundWorker1.DoWork -= allOtherImagesEditor1.AllOtherImages.LoadAllImages;
+                        MessageBox.Show( this, string.Format( "{0} images imported", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
+                    };
+                    if (InvokeRequired) Invoke( mi );
+                    else mi();
+                };
 
-                        fullSpriteSetEditor1.FullSpriteSet.PatchPspISO(
-                            patchDialog.Filename,
-                            o as BackgroundWorker,
-                            patchDialog.GetPatches( Context.US_PSP ) );
-                    } );
+                if (fbd.ShowDialog( this ) == DialogResult.OK)
+                {
+                    progressBar1.Bounds = new Rectangle( ClientRectangle.Left + 10, (ClientRectangle.Height - progressBar1.Height) / 2, ClientRectangle.Width - 20, progressBar1.Height );
+                    progressBar1.Value = 0;
+                    progressBar1.Visible = true;
+                    backgroundWorker1.DoWork += allOtherImagesEditor1.AllOtherImages.LoadAllImages;
+                    backgroundWorker1.ProgressChanged += progressHandler;
+                    backgroundWorker1.RunWorkerCompleted += completeHandler;
+                    backgroundWorker1.WorkerReportsProgress = true;
+                    tabControl1.Enabled = false;
+                    Cursor = Cursors.WaitCursor;
+                    progressBar1.BringToFront();
+                    backgroundWorker1.RunWorkerAsync( new AllOtherImages.AllImagesDoWorkData( currentStream, fbd.SelectedPath ) );
+                }
             }
         }
 
-        PatchDialog patchDialog = new PatchDialog();
-        private void patchPsxMenuItem_Click(object sender, EventArgs e)
+        private void dumpAllImagesMenuItem_Click( object sender, EventArgs e )
         {
-            patchDialog.LoadFullSpriteSet( fullSpriteSetEditor1.FullSpriteSet );
-            if ( patchDialog.ShowDialog( this ) == DialogResult.OK )
+            using ( Ionic.Utils.FolderBrowserDialogEx fbd = new Ionic.Utils.FolderBrowserDialogEx() )
             {
-                DoBackgroundTask(
-                    delegate( object o, DoWorkEventArgs args )
-                    {
-                        ( o as BackgroundWorker ).ReportProgress( 0, "Building sprites" );
+                fbd.ShowNewFolderButton = true;
+                fbd.ShowFullPathInEditBox = true;
+                fbd.ShowEditBox = true;
+                fbd.ShowBothFilesAndFolders = false;
+                fbd.RootFolder = Environment.SpecialFolder.Desktop;
+                fbd.NewStyle = true;
+                Cursor oldCursor = Cursor;
 
-                        fullSpriteSetEditor1.FullSpriteSet.PatchPsxISO(
-                            patchDialog.Filename,
-                            o as BackgroundWorker,
-                            patchDialog.GetPatches( Context.US_PSX ) );
-                    } );
+                ProgressChangedEventHandler progressHandler = delegate( object sender2, ProgressChangedEventArgs args2 )
+                {
+                    MethodInvoker mi = (() => progressBar1.Value = args2.ProgressPercentage);
+                    if (progressBar1.InvokeRequired)
+                        progressBar1.Invoke( mi );
+                    else mi();
+                };
+
+                RunWorkerCompletedEventHandler completeHandler = null;
+
+                completeHandler = delegate( object sender1, RunWorkerCompletedEventArgs args1 )
+                {
+                    MethodInvoker mi = delegate()
+                    {
+                        var result = args1.Result as AllOtherImages.AllImagesDoWorkResult;
+                        tabControl1.Enabled = true;
+                        progressBar1.Visible = false;
+                        if (oldCursor != null) Cursor = oldCursor;
+                        backgroundWorker1.RunWorkerCompleted -= completeHandler;
+                        backgroundWorker1.ProgressChanged -= progressHandler;
+                        backgroundWorker1.DoWork -= allOtherImagesEditor1.AllOtherImages.DumpAllImages;
+                        MessageBox.Show(this, string.Format( "{0} images saved", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
+                    };
+                    if (InvokeRequired) Invoke( mi );
+                    else mi();
+                };
+
+                if (fbd.ShowDialog( this ) == DialogResult.OK)
+                {
+                    progressBar1.Bounds = new Rectangle( ClientRectangle.Left+10, (ClientRectangle.Height - progressBar1.Height) / 2, ClientRectangle.Width-20, progressBar1.Height );
+                    progressBar1.Value = 0;
+                    progressBar1.Visible = true;
+                    backgroundWorker1.DoWork += allOtherImagesEditor1.AllOtherImages.DumpAllImages;
+                    backgroundWorker1.ProgressChanged += progressHandler;
+                    backgroundWorker1.RunWorkerCompleted += completeHandler;
+                    backgroundWorker1.WorkerReportsProgress = true;
+                    tabControl1.Enabled = false;
+                    Cursor = Cursors.WaitCursor;
+                    progressBar1.BringToFront();
+                    backgroundWorker1.RunWorkerAsync( new AllOtherImages.AllImagesDoWorkData( currentStream, fbd.SelectedPath ) );
+                    //backgroundWorker1.RunWorkerCompleted
+
+                    //allOtherImagesEditor1.AllOtherImages.DumpAllImages( currentStream, fbd.SelectedPath );
+                }
             }
         }
+
     }
 }

@@ -58,8 +58,12 @@ namespace FFTPatcher.Editors
 
         private void inflictStatusEditor_DataChanged( object sender, EventArgs e )
         {
+            offsetListBox.BeginUpdate();
+            var top = offsetListBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[offsetListBox.DataSource];
             cm.Refresh();
+            offsetListBox.TopIndex = top;
+            offsetListBox.EndUpdate();
         }
 
         private void offsetListBox_SelectedIndexChanged( object sender, EventArgs e )

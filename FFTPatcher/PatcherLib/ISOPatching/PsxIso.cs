@@ -19,16 +19,20 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System;
+using PatcherLib.Utilities;
+using PatcherLib.Datatypes;
 
 namespace PatcherLib.Iso
 {
     public static class PsxIso
     {
-		#region Public Properties (19) 
+        #region Public Properties (19)
 
         public static KnownPosition Abilities { get; private set; }
 
         public static KnownPosition AbilityEffects { get; private set; }
+        public static KnownPosition ReactionAbilityEffects { get; private set; }
 
         public static KnownPosition ActionEvents { get; private set; }
 
@@ -62,56 +66,115 @@ namespace PatcherLib.Iso
 
         public static KnownPosition StoreInventories { get; private set; }
 
-        #endregion Public Properties 
+        public static KnownPosition NumberOfSectorsBigEndian { get; private set; }
+        public static KnownPosition NumberOfSectorsLittleEndian { get; private set; }
 
-		#region Constructors (1) 
+
+        public static KnownPosition AbilityAnimations { get; private set; }
+
+        #endregion Public Properties
+
+        #region Constructors (1)
 
         static PsxIso()
         {
-            Abilities = new KnownPosition( Sectors.SCUS_942_21, 0x4F3F0, 9414 );
-            AbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0 );
-            ActionEvents = new KnownPosition( Sectors.SCUS_942_21, 0x564B4, 224 );
-            InflictStatuses = new KnownPosition( Sectors.SCUS_942_21, 0x547C4, 0x300 );
-            Jobs = new KnownPosition( Sectors.SCUS_942_21, 0x518B8, 0x1E00 );
-            JobLevels = new KnownPosition( Sectors.SCUS_942_21, 0x568C4, 0xD0 );
-            MonsterSkills = new KnownPosition( Sectors.SCUS_942_21, 0x563C4, 0xF0 );
-            OldItemAttributes = new KnownPosition( Sectors.SCUS_942_21, 0x54AC4, 0x7D0 );
-            OldItems = new KnownPosition( Sectors.SCUS_942_21, 0x536B8, 0x110A );
-            PoachProbabilities = new KnownPosition( Sectors.SCUS_942_21, 0x56864, 0x60 );
-            StatusAttributes = new KnownPosition( Sectors.SCUS_942_21, 0x565E4, 0x280 );
-            SkillSets = new KnownPosition( Sectors.SCUS_942_21, 0x55294, 0x1130 );
-            ENTD1 = new KnownPosition( Sectors.BATTLE_ENTD1_ENT, 0, 81920 );
-            ENTD2 = new KnownPosition( Sectors.BATTLE_ENTD2_ENT, 0, 81920 );
-            ENTD3 = new KnownPosition( Sectors.BATTLE_ENTD3_ENT, 0, 81920 );
-            ENTD4 = new KnownPosition( Sectors.BATTLE_ENTD4_ENT, 0, 81920 );
-            MoveFindItems = new KnownPosition( Sectors.BATTLE_BIN, 0x8EE74, 0x800 );
-            StoreInventories = new KnownPosition( Sectors.WORLD_WORLD_BIN, 0xAD844, 0x200 );
+            Abilities = new KnownPosition(Sectors.SCUS_942_21, 0x4F3F0, 9414);
+            AbilityEffects = new KnownPosition(Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0);
+            ReactionAbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x014F73C, 0x40 );
+            ActionEvents = new KnownPosition(Sectors.SCUS_942_21, 0x564B4, 224);
+            InflictStatuses = new KnownPosition(Sectors.SCUS_942_21, 0x547C4, 0x300);
+            Jobs = new KnownPosition(Sectors.SCUS_942_21, 0x518B8, 0x1E00);
+            JobLevels = new KnownPosition(Sectors.SCUS_942_21, 0x568C4, 0xD0);
+            MonsterSkills = new KnownPosition(Sectors.SCUS_942_21, 0x563C4, 0xF0);
+            OldItemAttributes = new KnownPosition(Sectors.SCUS_942_21, 0x54AC4, 0x7D0);
+            OldItems = new KnownPosition(Sectors.SCUS_942_21, 0x536B8, 0x110A);
+            PoachProbabilities = new KnownPosition(Sectors.SCUS_942_21, 0x56864, 0x60);
+            StatusAttributes = new KnownPosition(Sectors.SCUS_942_21, 0x565E4, 0x280);
+            SkillSets = new KnownPosition(Sectors.SCUS_942_21, 0x55294, 0x1130);
+            ENTD1 = new KnownPosition(Sectors.BATTLE_ENTD1_ENT, 0, 81920);
+            ENTD2 = new KnownPosition(Sectors.BATTLE_ENTD2_ENT, 0, 81920);
+            ENTD3 = new KnownPosition(Sectors.BATTLE_ENTD3_ENT, 0, 81920);
+            ENTD4 = new KnownPosition(Sectors.BATTLE_ENTD4_ENT, 0, 81920);
+            MoveFindItems = new KnownPosition(Sectors.BATTLE_BIN, 0x8EE74, 0x800);
+            StoreInventories = new KnownPosition(Sectors.WORLD_WORLD_BIN, 0xAD844, 0x200);
+            NumberOfSectorsBigEndian = new KnownPosition((Sectors)16, 0x54, 4);
+            NumberOfSectorsLittleEndian = new KnownPosition((Sectors)16, 0x50, 4);
+            AbilityAnimations = new KnownPosition( Sectors.BATTLE_BIN, 0x2CE10, 0x600 );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Public Methods (3) 
+        #region Public Methods (3)
 
-        public static byte[] GetBlock( Stream iso, KnownPosition knownPositions ) 
+        public static byte[] GetBlock(Stream iso, KnownPosition knownPositions)
         {
-            return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
+            return ReadFile(iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length);
         }
 
-        public static void PatchPsxIso( Stream iso, IEnumerable<PatcherLib.Datatypes.PatchedByteArray> patches )
+        public static void PatchPsxIso(Stream iso, IEnumerable<PatcherLib.Datatypes.PatchedByteArray> patches)
         {
-            foreach ( var patch in patches )
+            foreach (var patch in patches)
             {
-                IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
-                    patch.Offset, patch.Bytes, true );
+                PatchPsxIso(iso, patch);
             }
         }
 
-        public static byte[] ReadFile( Stream iso, Sectors file, int offset, int length )
+        public static void PatchPsxIso(Stream iso, PatcherLib.Datatypes.PatchedByteArray patch)
         {
-            return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
+            if (patch is STRPatchedByteArray)
+            {
+                PatchPsxIso(iso, (STRPatchedByteArray)patch);
+            }
+            else
+            {
+                IsoPatch.PatchFileAtSector(IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
+                    patch.Offset, patch.GetBytes(), true);
+            }
         }
 
-		#endregion Public Methods 
+        public static void PatchPsxIso(Stream iso, PatcherLib.Datatypes.STRPatchedByteArray patch)
+        {
+            ReplaceStrFile(iso, (Sectors)patch.Sector, patch.GetBytes());
+        }
+
+        public static byte[] ReadFile(Stream iso, Sectors file, int offset, int length)
+        {
+            return IsoPatch.ReadFile(IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length);
+        }
+
+        public static byte[] ReadFile(Stream iso, KnownPosition pos)
+        {
+            return ReadFile(iso, pos.Sector, pos.StartLocation, pos.Length);
+        }
+
+        public static void ReplaceStrFile(Stream iso, Sectors file, IList<byte> bytes)
+        {
+            const int bytesPerSector = 2336;
+            if (bytes.Count % bytesPerSector  != 0)
+            {
+                throw new ArgumentException(string.Format("new STR file length must be a multiple of {0}",bytesPerSector));
+            }
+
+            int numSectors = bytes.Count/bytesPerSector;
+
+            byte[] tempSector = new byte[2352];
+
+            int startSector = (int)file;
+
+            for (int i = 0; i < numSectors; i++)
+            {
+                int outputSector = startSector + i;
+                iso.Seek(outputSector * 2352, SeekOrigin.Begin);
+                iso.Read(tempSector, 0, 16);
+                bytes.Sub(i * bytesPerSector, (i + 1) * bytesPerSector - 1).CopyTo(tempSector, 16);
+                IsoPatch.GenerateEccEdc(tempSector, IsoPatch.IsoType.Mode2Form1);
+
+                iso.Seek(outputSector * 2352, SeekOrigin.Begin);
+                iso.Write(tempSector, 0, 2352);
+            }
+        }
+
+        #endregion Public Methods
 
         public enum Sectors
         {
@@ -2579,23 +2642,378 @@ namespace PatcherLib.Iso
             SCEAP_DAT = 198,
             SCUS_942_21 = 24,
             SYSTEM_CNF = 23,
+            BATTLE_00_SPR = 230064,
+            BATTLE_01_SPR = 230096,
+            BATTLE_02_SPR = 230128,
+            BATTLE_03_SPR = 230160,
+            BATTLE_04_SPR = 230192,
+            BATTLE_05_SPR = 230224,
+            BATTLE_06_SPR = 230256,
+            BATTLE_07_SPR = 230288,
+            BATTLE_08_SPR = 230320,
+            BATTLE_09_SPR = 230352,
+            BATTLE_0A_SPR = 230384,
+            BATTLE_0B_SPR = 230416,
+            BATTLE_0C_SPR = 230448,
+            BATTLE_0D_SPR = 230480,
+            BATTLE_0E_SPR = 230512,
+            BATTLE_0F_SPR = 230544,
+            BATTLE_10_SPR = 230576,
+            BATTLE_11_SPR = 230608,
+            BATTLE_12_SPR = 230640,
+            BATTLE_13_SPR = 230672,
+            BATTLE_14_SPR = 230704,
+            BATTLE_15_SPR = 230736,
+            BATTLE_16_SPR = 230768,
+            BATTLE_17_SPR = 230800,
+            BATTLE_18_SPR = 230832,
+            BATTLE_19_SPR = 230864,
+            BATTLE_1A_SPR = 230896,
+            BATTLE_1B_SPR = 230928,
+            BATTLE_1C_SPR = 230960,
+            BATTLE_1D_SPR = 230992,
+            BATTLE_1E_SPR = 231024,
+            BATTLE_1F_SPR = 231056,
+            BATTLE_20_SPR = 231088,
+            BATTLE_21_SPR = 231120,
+            BATTLE_22_SPR = 231152,
+            BATTLE_23_SPR = 231184,
+            BATTLE_24_SPR = 231216,
+            BATTLE_25_SPR = 231248,
+            BATTLE_26_SPR = 231280,
+            BATTLE_27_SPR = 231312,
+            BATTLE_28_SPR = 231344,
+            BATTLE_29_SPR = 231376,
+            BATTLE_2A_SPR = 231408,
+            BATTLE_2B_SPR = 231440,
+            BATTLE_2C_SPR = 231472,
+            BATTLE_2D_SPR = 231504,
+            BATTLE_2E_SPR = 231536,
+            BATTLE_2F_SPR = 231568,
+            BATTLE_30_SPR = 231600,
+            BATTLE_31_SPR = 231632,
+            BATTLE_32_SPR = 231664,
+            BATTLE_33_SPR = 231696,
+            BATTLE_34_SPR = 231728,
+            BATTLE_35_SPR = 231760,
+            BATTLE_36_SPR = 231792,
+            BATTLE_37_SPR = 231824,
+            BATTLE_38_SPR = 231856,
+            BATTLE_39_SPR = 231888,
+            BATTLE_3A_SPR = 231920,
+            BATTLE_3B_SPR = 231952,
+            BATTLE_3C_SPR = 231984,
+            BATTLE_3D_SPR = 232016,
+            BATTLE_3E_SPR = 232048,
+            BATTLE_3F_SPR = 232080,
+            BATTLE_40_SPR = 232112,
+            BATTLE_41_SPR = 232144,
+            BATTLE_42_SPR = 232176,
+            BATTLE_43_SPR = 232208,
+            BATTLE_44_SPR = 232240,
+            BATTLE_45_SPR = 232272,
+            BATTLE_46_SPR = 232304,
+            BATTLE_47_SPR = 232336,
+            BATTLE_48_SPR = 232368,
+            BATTLE_49_SPR = 232400,
+            BATTLE_4A_SPR = 232432,
+            BATTLE_4B_SPR = 232464,
+            BATTLE_4C_SPR = 232496,
+            BATTLE_4D_SPR = 232528,
+            BATTLE_4E_SPR = 232560,
+            BATTLE_4F_SPR = 232592,
+            BATTLE_50_SPR = 232624,
+            BATTLE_51_SPR = 232656,
+            BATTLE_52_SPR = 232688,
+            BATTLE_53_SPR = 232720,
+            BATTLE_54_SPR = 232752,
+            BATTLE_55_SPR = 232784,
+            BATTLE_56_SPR = 232816,
+            BATTLE_57_SPR = 232848,
+            BATTLE_58_SPR = 232880,
+            BATTLE_59_SPR = 232912,
+            BATTLE_5A_SPR = 232944,
+            BATTLE_5B_SPR = 232976,
+            BATTLE_5C_SPR = 233008,
+            BATTLE_5D_SPR = 233040,
+            BATTLE_5E_SPR = 233072,
+            BATTLE_5F_SPR = 233104,
+            BATTLE_60_SPR = 233136,
+            BATTLE_61_SPR = 233168,
+            BATTLE_62_SPR = 233200,
+            BATTLE_63_SPR = 233232,
+            BATTLE_64_SPR = 233264,
+            BATTLE_65_SPR = 233296,
+            BATTLE_66_SPR = 233328,
+            BATTLE_67_SPR = 233360,
+            BATTLE_68_SPR = 233392,
+            BATTLE_69_SPR = 233424,
+            BATTLE_6A_SPR = 233456,
+            BATTLE_6B_SPR = 233488,
+            BATTLE_6C_SPR = 233520,
+            BATTLE_6D_SPR = 233552,
+            BATTLE_6E_SPR = 233584,
+            BATTLE_6F_SPR = 233616,
+            BATTLE_70_SPR = 233648,
+            BATTLE_71_SPR = 233680,
+            BATTLE_72_SPR = 233712,
+            BATTLE_73_SPR = 233744,
+            BATTLE_74_SPR = 233776,
+            BATTLE_75_SPR = 233808,
+            BATTLE_76_SPR = 233840,
+            BATTLE_77_SPR = 233872,
+            BATTLE_78_SPR = 233904,
+            BATTLE_79_SPR = 233936,
+            BATTLE_7A_SPR = 233968,
+            BATTLE_7B_SPR = 234000,
+            BATTLE_7C_SPR = 234032,
+            BATTLE_7D_SPR = 234064,
+            BATTLE_7E_SPR = 234096,
+            BATTLE_7F_SPR = 234128,
+            BATTLE_80_SPR = 234160,
+            BATTLE_81_SPR = 234192,
+            BATTLE_82_SPR = 234224,
+            BATTLE_83_SPR = 234256,
+            BATTLE_84_SPR = 234288,
+            BATTLE_85_SPR = 234320,
+            BATTLE_86_SPR = 234352,
+            BATTLE_87_SPR = 234384,
+            BATTLE_87_SP2 = 60161,
+            BATTLE_88_SPR = 234416,
+            BATTLE_88_SP2 = 60209,
+            BATTLE_89_SPR = 234448,
+            BATTLE_8A_SPR = 234480,
+            BATTLE_8B_SPR = 234512,
+            BATTLE_8C_SPR = 234544,
+            BATTLE_8C_SP2 = 60113,
+            BATTLE_8D_SPR = 234576,
+            BATTLE_8D_SP2 = 60321,
+            BATTLE_8E_SPR = 234608,
+            BATTLE_8E_SP2 = 60337,
+            BATTLE_8F_SPR = 234640,
+            BATTLE_90_SPR = 234672,
+            BATTLE_90_SP2 = 60289,
+            BATTLE_91_SPR = 234704,
+            BATTLE_91_SP2 = 60305,
+            BATTLE_92_SPR = 234736,
+            BATTLE_92_SP2 = 60129,
+            BATTLE_93_SPR = 234768,
+            BATTLE_94_SPR = 234800,
+            BATTLE_94_SP2 = 60193,
+            BATTLE_95_SPR = 234832,
+            BATTLE_95_SP2 = 60145,
+            BATTLE_96_SPR = 234864,
+            BATTLE_97_SPR = 234896,
+            BATTLE_98_SPR = 234928,
+            BATTLE_98_SP2 = 60177,
+            BATTLE_99_SPR = 234960,
+            BATTLE_99_2_SP2 = 60273,
+            BATTLE_99_3_SP2 = 60257,
+            BATTLE_99_4_SP2 = 60225,
+            BATTLE_99_5_SP2 = 60241,
         }
-        public class KnownPosition
+        public class KnownPosition : PatcherLib.Iso.KnownPosition
         {
             public Sectors Sector { get; private set; }
             public int StartLocation { get; private set; }
-            public int Length { get; private set; }
-            public KnownPosition( Sectors sector, int startLocation, int length )
+            //public int Length { get; private set; }
+            private int length;
+            public override int Length
             {
-               Sector = sector;
-               StartLocation = startLocation;
-               Length = length;
+                get { return length; }
+            }
+            public KnownPosition(Sectors sector, int startLocation, int length)
+            {
+                Sector = sector;
+                StartLocation = startLocation;
+                this.length = length;
             }
 
-            public PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            public override PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
             {
                 return new PatcherLib.Datatypes.PatchedByteArray(Sector, StartLocation, bytes);
             }
+
+            public override IList<byte> ReadIso(Stream iso)
+            {
+                return PsxIso.ReadFile(iso, this);
+            }
+
+            public override void PatchIso(Stream iso, IList<byte> bytes)
+            {
+                PsxIso.PatchPsxIso(iso, GetPatchedByteArray(bytes.ToArray()));
+            }
+        }
+
+        public const int BattleDirectoryEntrySector = 56436;
+        public const int BattleDirectoryEntryLength = 6;
+        public const int DummyDirectoryEntrySector = 230000;
+        public const int DummyDirectoryEntryLength = 1;
+
+        [System.Diagnostics.DebuggerDisplay("{Filename} - {Sector} - {Size} - {Timestamp}")]
+        public class DirectoryEntry
+        {
+            public static IList<DirectoryEntry> GetDirectoryEntries( Stream iso, int sectorOfParentEntry, int numSectors )
+            {
+                int sector = sectorOfParentEntry;
+                int length = numSectors;
+                List<DirectoryEntry> result = new List<DirectoryEntry>();
+                byte[] bytes = PsxIso.GetBlock( iso, new KnownPosition( (Sectors)sector, 0, length * 2048 ) );
+                for ( int i = 0; i < bytes.Length; i++ )
+                {
+                    if ( bytes[i] == 0 ) continue;
+
+                    IList<byte> entry = bytes.Sub( i, i + bytes[i] - 1 );
+                    result.Add( new DirectoryEntry( entry ) );
+                    i += bytes[i];
+                    i--;
+                }
+                return result;
+            }
+
+            public static IList<DirectoryEntry> GetBattleEntries(Stream iso)
+            {
+                const int sector = BattleDirectoryEntrySector;
+                const int length = BattleDirectoryEntryLength;
+                return GetDirectoryEntries( iso, sector, length );
+            }
+
+            public static IList<DirectoryEntry> GetDummyEntries( Stream iso )
+            {
+                const int sector = DummyDirectoryEntrySector;
+                const int length = DummyDirectoryEntryLength;
+                return GetDirectoryEntries( iso, sector, length );
+            }
+
+            public static void WriteDirectoryEntries( Stream iso, int sector, int numSectors, IList<DirectoryEntry> entries )
+            {
+                byte[][] dirEntryBytes = new byte[entries.Count][];
+                for ( int i = 0; i < entries.Count; i++ )
+                {
+                    dirEntryBytes[i] = entries[i].ToByteArray();
+                }
+
+                List<byte>[] sectors = new List<byte>[numSectors];
+                for ( int i = 0; i < sectors.Length; i++ )
+                    sectors[i] = new List<byte>( 2048 );
+                int currentSector = 0;
+                foreach ( byte[] entry in dirEntryBytes )
+                {
+                    if ( sectors[currentSector].Count + entry.Length > 2048 )
+                    {
+                        currentSector++;
+                    }
+                    if ( currentSector >= numSectors )
+                        throw new InvalidOperationException( "not enough sectors for all directory entries" );
+                    sectors[currentSector].AddRange( entry );
+                }
+                foreach ( List<byte> sec in sectors )
+                {
+                    sec.AddRange( new byte[2048 - sec.Count] );
+                }
+
+                for ( int i = 0; i < numSectors; i++ )
+                {
+                    PatcherLib.Iso.PsxIso.PatchPsxIso( iso,
+                        new PatchedByteArray(
+                            (PatcherLib.Iso.PsxIso.Sectors)( sector + i ),
+                            0,
+                            sectors[i].ToArray() ) );
+
+                }
+            }
+
+            public string Filename { get; set; }
+            public UInt32 Size { get; set; }
+            public UInt32 Sector { get; set; }
+            public DateTime Timestamp { get; set; }
+            public byte[] MiddleBytes { get; private set; }
+            public byte[] ExtendedBytes { get; private set; }
+            public byte GMTOffset { get; set; }
+
+            public DirectoryEntry(UInt32 sector, UInt32 size, DateTime timestamp, byte gmtOffset, IList<byte> middleBytes, string filename, IList<byte> extendedBytes)
+            {
+                if (middleBytes.Count != 7)
+                    throw new ArgumentException("middleBytes");
+                if (extendedBytes.Count != 0x0e)
+                    throw new ArgumentException("extendedBytes");
+                Sector = sector;
+                Size = size;
+                Timestamp = timestamp;
+                GMTOffset = gmtOffset;
+                MiddleBytes = middleBytes.ToArray();
+                ExtendedBytes = extendedBytes.ToArray();
+                Filename = filename;
+            }
+
+            public DirectoryEntry(IList<byte> bytes)
+            {
+                System.Diagnostics.Debug.Assert(bytes[0] == bytes.Count);
+                Sector = bytes.Sub(2, 2 + 4 - 1).ToUInt32();
+                Size = bytes.Sub(10, 10 + 4 - 1).ToUInt32();
+                Timestamp = new DateTime(bytes[18] + 1900, bytes[19], bytes[20], bytes[21], bytes[22], bytes[23]);
+                GMTOffset = bytes[24];
+                MiddleBytes = bytes.Sub(25, 25 + 7 - 1).ToArray();
+                byte nameLength = bytes[32];
+                Filename = System.Text.Encoding.ASCII.GetString(bytes.Sub(33, 33 + nameLength - 1).ToArray());
+                byte padding = (byte)(((nameLength % 2) == 0) ? 1 : 0);
+                ExtendedBytes = bytes.Sub(33 + nameLength + padding, bytes[0] - 1).ToArray();
+            }
+
+            public byte[] ToByteArray()
+            {
+                List<byte> result = new List<byte>();
+                result.Add(0x00);
+                byte[] sectorBytes = Sector.ToBytes();
+                result.AddRange(sectorBytes);
+                result.AddRange(new byte[] { sectorBytes[3], sectorBytes[2], sectorBytes[1], sectorBytes[0] });
+                byte[] sizeBytes = Size.ToBytes();
+                result.AddRange(sizeBytes);
+                result.AddRange(new byte[] { sizeBytes[3], sizeBytes[2], sizeBytes[1], sizeBytes[0] });
+                result.Add((byte)(Timestamp.Year - 1900));
+                result.Add((byte)Timestamp.Month);
+                result.Add((byte)Timestamp.Day);
+                result.Add((byte)Timestamp.Hour);
+                result.Add((byte)Timestamp.Minute);
+                result.Add((byte)Timestamp.Second);
+                result.Add(GMTOffset);
+                result.AddRange(MiddleBytes);
+                byte[] nameBytes = Filename.ToByteArray();
+                result.Add((byte)nameBytes.Length);
+                result.AddRange(nameBytes);
+                if (((byte)nameBytes.Length) % 2 == 0)
+                {
+                    result.Add(0x00);
+                }
+                result.AddRange(ExtendedBytes);
+                byte length = (byte)(result.Count + 1);
+                result.Insert(0, length);
+
+                return result.ToArray();
+            }
+
+            //38 // length of record
+            //00 // nothing
+            //D6 E9 00 00 00 00 E9 D6 // sector
+            //01 92 00 00 00 00 92 01 // size
+            //61 // year
+            //05 // month
+            //10 // day
+            //12 // hour
+            //15 // minutes
+            //1E // seconds
+            //24 // GMT offset
+            //01 // hidden file
+            //00 00 
+            //01 00 00 01 
+            //09 // name length
+            //31 30 4D 2E 53 50 52 3B 31 // name 10M.SPR;1
+
+            //2A 00 2A 00 // owner id
+            //08 01 // attributes
+            //58 41  // X A
+            //00  // file number
+            //00  00 00  00 00 // reserved         }
         }
     }
 }

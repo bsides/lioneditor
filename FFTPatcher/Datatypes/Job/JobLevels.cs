@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the JP needed to grow in a job level as well as the prerequisites for unlocking jobs.
     /// </summary>
-    public class JobLevels : PatchableFile, IXmlDigest
+    public class JobLevels : PatchableFile, IXmlDigest, ISupportDefault<JobLevels>, IGenerateCodes
     {
 		#region Instance Variables (4) 
 
@@ -225,18 +225,6 @@ namespace FFTPatcher.Datatypes
 
 		#region Public Methods (5) 
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.JobLevelsBin, this.ToByteArray(), 0x27B030 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.JobLevelsBin, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
-            }
-        }
-
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
             var result = new List<PatchedByteArray>( 2 );
@@ -281,7 +269,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             writer.WriteStartElement( GetType().Name );
             writer.WriteAttributeString( "changed", HasChanged.ToString() );
@@ -312,12 +300,33 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Job Levels" : "\"Job Levels";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.JobLevels, this.ToByteArray(), 0x27B030 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.JobLevels, this.ToByteArray( Context.US_PSX ), 0x0660C4 );
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// Represents the prerequisites to unlock a job.
     /// </summary>
-    public class Requirements : IChangeable, IEquatable<Requirements>
+    public class Requirements : IChangeable, IEquatable<Requirements>, ISupportDefault<Requirements>
     {
         private static readonly string[] fields = new string[24] {
             "Squire", "Chemist", "Knight", "Archer", "Monk", "WhiteMage", "BlackMage", "TimeMage", "Summoner",

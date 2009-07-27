@@ -18,13 +18,14 @@
 */
 
 using System.Collections.Generic;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
     /// Represents an <see cref="Ability"/>'s AI behavior.
     /// </summary>
-    public class AIFlags : ISupportDigest
+    public class AIFlags : BaseDataType, ISupportDigest, ISupportDefault<AIFlags>
     {
 		#region Instance Variables (25) 
 
@@ -32,11 +33,6 @@ namespace FFTPatcher.Datatypes
         public bool Blank;
         public bool CancelStatus;
         public bool DefenseUp;
-        private static readonly string[] digestableProperties = new string[] {
-            "AddStatus","Blank","CancelStatus","DefenseUp","DirectAttack","HP","IgnoreRange","LineAttack",
-            "MagicDefenseUp","MP","RandomHits","Reflectable","Silence","Stats","TargetAllies","TargetEnemies",
-            "TripleAttack","TripleBracelet","UndeadReverse","Unequip","Unknown1","Unknown2","Unknown3",
-            "VerticalIncrease" };
         public bool DirectAttack;
         public bool HP;
         public bool IgnoreRange;
@@ -77,6 +73,10 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Properties 
 
 		#region Constructors (2) 
+
+        internal AIFlags()
+        {
+        }
 
         public AIFlags( IList<byte> bytes )
             : this( bytes, null )
@@ -136,6 +136,12 @@ namespace FFTPatcher.Datatypes
             Copy( this, destination );
         }
 
+        private static readonly string[] digestableProperties = new string[] {
+            "HP","MP","CancelStatus","AddStatus","Stats","Unequip","TargetEnemies","TargetAllies",
+            "IgnoreRange","Reflectable","UndeadReverse","Unknown1","RandomHits","Unknown2","Unknown3",
+            "Silence","Blank","DirectAttack","LineAttack","VerticalIncrease","TripleAttack",
+            "TripleBracelet","MagicDefenseUp","DefenseUp" };
+
         public bool[] ToBoolArray()
         {
             return new bool[24] { 
@@ -154,5 +160,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        protected override void ReadXml( System.Xml.XmlReader reader )
+        {
+            reader.ReadStartElement();
+            for ( int i = 0; i < DigestableProperties.Count; i++ )
+            {
+                PatcherLib.ReflectionHelpers.SetFieldOrProperty(
+                    this, DigestableProperties[i], reader.ReadElementContentAsBoolean() );
+            }
+            reader.ReadEndElement();
+        }
+
+        protected override void WriteXml( System.Xml.XmlWriter writer )
+        {
+            bool[] bools = ToBoolArray();
+            System.Diagnostics.Debug.Assert( bools.Length == digestableProperties.Length );
+            for ( int i = 0; i < bools.Length; i++ )
+            {
+                writer.WriteValueElement( digestableProperties[i], bools[i] );
+            }
+        }
     }
 }

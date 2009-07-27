@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using FFTPatcher.Controls;
 using FFTPatcher.Datatypes;
 using PatcherLib.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {
@@ -300,7 +301,7 @@ namespace FFTPatcher.Editors
                 storeInventoryCheckedListBox.Items.Clear();
                 foreach ( Shops shop in shops )
                 {
-                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSPResources.ShopNames[shop] );
+                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSPResources.Lists.ShopNames[shop] );
                 }
 
                 ourContext = Context.US_PSP;
@@ -314,7 +315,7 @@ namespace FFTPatcher.Editors
                 storeInventoryCheckedListBox.Items.Clear();
                 foreach ( Shops shop in shops )
                 {
-                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSXResources.ShopNames[shop] );
+                    storeInventoryCheckedListBox.Items.Add( PatcherLib.PSXResources.Lists.ShopNames[shop] );
                 }
                 storeInventoryCheckedListBox.EndUpdate();
 

@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Xml;
 using System.Text;
 using PatcherLib.Datatypes;
 
@@ -41,11 +42,111 @@ namespace PatcherLib.Utilities
     {
 
         #region Methods (14)
+        public static void WriteValueElement( this XmlWriter writer, string name, UInt16 value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value );
+            writer.WriteEndElement();
+        }
+        public static void WriteValueElement( this XmlWriter writer, string name, byte value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value );
+            writer.WriteEndElement();
+        }
+        public static void WriteValueElement( this XmlWriter writer, string name, Enum value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value.ToString() );
+            writer.WriteEndElement();
+        }
+        public static void WriteValueElement( this XmlWriter writer, string name, bool value )
+        {
+            writer.WriteStartElement( name );
+            writer.WriteValue( value );
+            writer.WriteEndElement();
+        }
+
+        public static XmlDocument ToXmlDocument(this string s)
+        {
+            XmlDocument result = new XmlDocument();
+            result.LoadXml(s);
+            return result;
+        }
+
+        public static int IndexOf<T>(this IList<T> list, T item)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Equals(item)) return i;
+            }
+            return -1;
+        }
+
+        public static T[] ToArray<T>( this IEnumerable<T> collection )
+        {
+            return collection.ToList().ToArray();
+        }
+
+        public static IList<T> ToList<T>( this IEnumerable<T> collection )
+        {
+            if ( collection is IList<T> )
+                return new ReadOnlyCollection<T>( collection as IList<T> );
+
+            return new List<T>( collection ).AsReadOnly();
+        }
+
+        public static bool TrueForAll<T>(this IList<T> list, Predicate<T> condition)
+        {
+            if ( list == null ) throw new ArgumentNullException( "list" );
+            if ( condition == null ) throw new ArgumentNullException( "condition" );
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                if ( !condition( list[i] ) ) return false;
+            }
+            return true;
+        }
+
+        public static bool TrueForAll<T>( this IEnumerable<T> list, Predicate<T> condition )
+        {
+            if ( list == null ) throw new ArgumentNullException( "list" );
+            if ( condition == null ) throw new ArgumentNullException( "condition" );
+            foreach ( T item in list )
+            {
+                if (!condition(item)) return false;
+            }
+            return true;
+        }
+
+        public static void Copy<T>(this IList<T> sourceList, int sourceIndex, IList<T> destinationList, int destinationIndex, int length)
+        {
+            if (sourceList == null) throw new ArgumentNullException("sourceList");
+            if (sourceList.Count <= sourceIndex) throw new ArgumentOutOfRangeException("sourceIndex");
+            if (sourceList.Count <= sourceIndex + length) throw new ArgumentOutOfRangeException("length");
+            if (destinationList == null) throw new ArgumentNullException("destinationList");
+            if (destinationList.Count <= destinationIndex) throw new ArgumentOutOfRangeException("destinationIndex");
+            if (destinationList.Count <= destinationIndex + length) throw new ArgumentOutOfRangeException("length");
+            if (destinationList.IsReadOnly) throw new InvalidOperationException("destinationList is readonly");
+            for (int i = 0; i < length; i++)
+            {
+                destinationList[i + destinationIndex] = sourceList[i + sourceIndex];
+            }
+        }
+
+        public static IList<T> SetAll<T>( this IList<T> list, T value )
+        {
+            for ( int i = 0; i < list.Count; i++ )
+            {
+                list[i] = value;
+            }
+            return list;
+        }
 
         [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {
-            return new ReadOnlyCollection<T>( list );
+            if ( list is ReadOnlyCollection<T> ) return list as ReadOnlyCollection<T>;
+            else return new ReadOnlyCollection<T>( list );
         }
 
         [System.Diagnostics.DebuggerStepThrough]
@@ -151,7 +252,7 @@ namespace PatcherLib.Utilities
         }
 
         [System.Diagnostics.DebuggerStepThrough]
-        public static List<T> FindAll<T>( this IList<T> list, Predicate<T> match )
+        public static IList<T> FindAll<T>( this IList<T> list, Predicate<T> match )
         {
             List<T> result = new List<T>( list.Count );
             for ( int i = 0; i < list.Count; i++ )
@@ -159,7 +260,7 @@ namespace PatcherLib.Utilities
                 if ( match( list[i] ) )
                     result.Add( list[i] );
             }
-            return result;
+            return result.AsReadOnly();
         }
 
         [System.Diagnostics.DebuggerStepThrough]
@@ -188,7 +289,7 @@ namespace PatcherLib.Utilities
                 }
             }
 
-            return result;
+            return result.AsReadOnly();
         }
 
         /// <summary>
@@ -250,42 +351,6 @@ namespace PatcherLib.Utilities
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Adds lines of text in groups of a specified size to the StringBuilder.
-        /// </summary>
-        /// <param name="groupSize">Number of strings in each group</param>
-        /// <param name="groupName">What to name each group.</param>
-        /// <param name="lines">Lines to add</param>
-        [System.Diagnostics.DebuggerStepThrough]
-        public static void AddGroups( this StringBuilder sb, int groupSize, string groupName, List<string> lines )
-        {
-            if( lines.Count == 0 )
-            {
-                return;
-            }
-            else if( lines.Count <= groupSize )
-            {
-                if( groupName != string.Empty )
-                    sb.Append( groupName + "\n" );
-                sb.AppendLines( lines );
-            }
-            else
-            {
-                int i = 0;
-                int j = 1;
-                for( i = 0; (i + 1) * groupSize < lines.Count; i++ )
-                {
-                    if( groupName != string.Empty )
-                        sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
-                    sb.AppendLines( lines.Sub( i * groupSize, (i + 1) * groupSize - 1 ) );
-                }
-
-                if( groupName != string.Empty )
-                    sb.Append( string.Format( "{0} (part {1})\n", groupName, j++ ) );
-                sb.AppendLines( lines.Sub( i * groupSize, lines.Count - 1 ) );
-            }
         }
 
         /// <summary>
@@ -386,9 +451,6 @@ namespace PatcherLib.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Converts this into a pair of big endian bytes.
-        /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this UInt16 value )
         {
@@ -398,9 +460,6 @@ namespace PatcherLib.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Converts this into a set of four big endian bytes.
-        /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this UInt32 value )
         {
@@ -412,9 +471,6 @@ namespace PatcherLib.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Converts this into a set of eight big endian bytes.
-        /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
         public static byte[] ToBytes( this long value )
         {
@@ -445,15 +501,15 @@ namespace PatcherLib.Utilities
         /// Converts this to a string.
         /// </summary>
         [System.Diagnostics.DebuggerStepThrough]
-        public static string ToUTF8String( this byte[] bytes )
+        public static string ToUTF8String( this IList<byte> bytes )
         {
             if( (bytes[0] == 0xef) && (bytes[1] == 0xbb) && (bytes[2] == 0xbf) )
             {
-                return Encoding.UTF8.GetString( bytes, 3, bytes.Length - 3 );
+                return Encoding.UTF8.GetString( bytes.ToArray(), 3, bytes.Count - 3 );
             }
             else
             {
-                return Encoding.UTF8.GetString( bytes );
+                return Encoding.UTF8.GetString( bytes.ToArray() );
             }
         }
 

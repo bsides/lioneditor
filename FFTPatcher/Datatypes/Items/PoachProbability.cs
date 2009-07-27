@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represent's the common and uncommon items that can be poached from a monster.
     /// </summary>
-    public class PoachProbability : IChangeable, ISupportDigest
+    public class PoachProbability : IChangeable, ISupportDigest, ISupportDefault<PoachProbability>
     {
 		#region Instance Variables (1) 
 
@@ -98,7 +98,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class AllPoachProbabilities : PatchableFile, IXmlDigest
+    public class AllPoachProbabilities : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Public Properties (2) 
 
@@ -128,7 +128,7 @@ namespace FFTPatcher.Datatypes
 
         public AllPoachProbabilities( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.PoachProbabilitiesBin : PSXResources.PoachProbabilitiesBin;
+            IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.PoachProbabilities : PSXResources.Binaries.PoachProbabilities;
 
             PoachProbabilities = new PoachProbability[48];
             for( int i = 0; i < 48; i++ )
@@ -141,18 +141,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (5) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.PoachProbabilitiesBin, this.ToByteArray(), 0x27AFD0 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.PoachProbabilitiesBin, this.ToByteArray(), 0x066064 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -187,7 +175,7 @@ namespace FFTPatcher.Datatypes
             return ToByteArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -207,5 +195,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Poaching" : "\"Poaching";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.PoachProbabilities, this.ToByteArray(), 0x27AFD0 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.PoachProbabilities, this.ToByteArray(), 0x066064 );
+            }
+        }
+
+        #endregion
     }
 }

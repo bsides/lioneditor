@@ -1,11 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using PatcherLib.Utilities;
+using System.Diagnostics;
 
 namespace PatcherLib.Datatypes
 {
+    [DebuggerTypeProxy( typeof( CollectionDebugView<> ) )]
+    [DebuggerDisplay( "Count = {Count}" )]
+    [DebuggerStepThrough]
     public class Set<T> : IEnumerable<T>
     {
+        private bool readOnly = false;
+
+        public bool ReadOnly
+        {
+            get { return readOnly; }
+        }
+
         public class SetEqualityComparer<U> : IEqualityComparer<U>
         {
             private Comparison<U> comparison;
@@ -25,19 +36,33 @@ namespace PatcherLib.Datatypes
             }
         }
 
+        int count = 0;
         List<T> backingList;
-        Dictionary<T, bool> backing;
+        Dictionary<T, int> backing;
         IEqualityComparer<T> comparer;
+
+        private Set( Set<T> backingSet, bool readOnly )
+            : this()
+        {
+            this.comparer = backingSet.comparer;
+            AddRange( backingSet );
+            this.readOnly = readOnly;
+        }
+
+        public Set<T> AsReadOnly()
+        {
+            return new Set<T>( this, true );
+        }
 
         public Set()
         {
-            backing = new Dictionary<T, bool>();
+            backing = new Dictionary<T, int>();
             backingList = new List<T>();
         }
 
         public Set( IEqualityComparer<T> comparer )
         {
-            backing = new Dictionary<T, bool>( comparer );
+            backing = new Dictionary<T, int>( comparer );
             backingList = new List<T>();
             this.comparer = comparer;
         }
@@ -71,11 +96,16 @@ namespace PatcherLib.Datatypes
 
         public void Add( T item )
         {
+            if ( ReadOnly )
+            {
+                throw new InvalidOperationException( "set is read-only" );
+            }
+
             if ( !backing.ContainsKey( item ) )
             {
                 backingList.Add( item );
+                backing[item] = count++;
             }
-            backing[item] = true;
         }
 
         public void AddRange( IEnumerable<T> items )
@@ -85,6 +115,11 @@ namespace PatcherLib.Datatypes
 
         public void Remove( T item )
         {
+            if ( ReadOnly )
+            {
+                throw new InvalidOperationException( "set is read-only" );
+            }
+
             if ( Contains( item ) )
             {
                 backing.Remove( item );
@@ -111,13 +146,21 @@ namespace PatcherLib.Datatypes
 
         public int IndexOf( T item )
         {
-            if ( comparer != null )
+            if ( ReadOnly )
             {
-                return backingList.FindIndex( x => comparer.Equals( x, item ) );
+                // Guaranteed to be no gaps in the indices
+                return backing[item];
             }
             else
             {
-                return backingList.IndexOf( item );
+                if ( comparer != null )
+                {
+                    return backingList.FindIndex( x => comparer.Equals( x, item ) );
+                }
+                else
+                {
+                    return backingList.IndexOf( item );
+                }
             }
         }
 

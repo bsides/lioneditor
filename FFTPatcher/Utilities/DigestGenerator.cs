@@ -19,6 +19,7 @@
 
 using System.Xml;
 using FFTPatcher.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher
 {

@@ -34,19 +34,14 @@ namespace FFTPatcher.SpriteEditor
         {
         }
 
-        public ShortSprite( string name, IList<byte> bytes )
-            : base( name, new string[] { name + ".SPR" }, bytes )
+        public ShortSprite( IList<byte> bytes )
+            : base( bytes )
         {
         }
 
         protected override Rectangle PortraitRectangle
         {
             get { return new Rectangle( 80, 256, 48, 32 ); }
-        }
-
-        protected override Rectangle ThumbnailRectangle
-        {
-            get { return new Rectangle( 32, 0, 32, 40 ); }
         }
 
         protected override void DrawSpriteInternal( int palette, int portraitPalette, SetPixel setPixel )
@@ -75,41 +70,16 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        protected override Image GetThumbnailInner()
-        {
-            Bitmap result = new Bitmap( 80, 48, PixelFormat.Format32bppArgb );
-
-            using( Bitmap portrait = new Bitmap( 48, 32, PixelFormat.Format8bppIndexed ) )
-            {
-                Bitmap wholeImage = ToBitmap();
-                wholeImage.CopyRectangleToPointNonIndexed(
-                    ThumbnailRectangle,
-                    result,
-                    new Point( (48 - ThumbnailRectangle.Width) / 2, (48 - ThumbnailRectangle.Height) / 2 ),
-                    Palettes[0],
-                    false );
-
-                ColorPalette palette2 = portrait.Palette;
-                Palette.FixupColorPalette( palette2, Palettes );
-                portrait.Palette = palette2;
-                wholeImage.CopyRectangleToPoint( PortraitRectangle, portrait, Point.Empty, Palettes[8], false );
-                portrait.RotateFlip( RotateFlipType.Rotate270FlipNone );
-
-                portrait.CopyRectangleToPointNonIndexed( new Rectangle( 0, 0, 32, 48 ), result, new Point( 48, 0 ), Palettes[8], false );
-            }
-
-            return result;
-        }
-
         protected override void ImportSPRInner( IList<byte> bytes )
         {
-            BuildPixels( bytes, null ).Sub( 0, 288 * 256 ).CopyTo( Pixels, 0 );
+            BuildPixels( bytes, null ).Sub( 0, Height * Width - 1 ).CopyTo( Pixels, 0 );
         }
         
         protected override IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes )
         {
-            byte[] result = new byte[36864 * 2];
-            for( int i = 0; i < 36864; i++ )
+            int length = Width * Height;
+            byte[] result = new byte[length];
+            for( int i = 0; i < length/2; i++ )
             {
                 result[i * 2] = bytes[i].GetLowerNibble();
                 result[i * 2 + 1] = bytes[i].GetUpperNibble();

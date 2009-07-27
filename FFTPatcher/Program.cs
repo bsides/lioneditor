@@ -40,8 +40,8 @@ namespace FFTPatcher
 
             // Access some class members to force the static constructors to run.
             object dummy = AllAbilities.PSPNames;
-            dummy = PSPResources.AbilityAttributes;
-            dummy = PSXResources.AbilityAttributes;
+            dummy = PSPResources.Lists.AbilityAttributes;
+            dummy = PSXResources.Lists.AbilityAttributes;
             dummy = FFTPatchEditor.ToolTip;
             dummy = SkillSet.DummySkillSets;
             dummy = AllMonsterSkills.PSXNames;

@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents statuses an <see cref="Ability"/> inflicts or cancels on its target.
     /// </summary>
-    public class InflictStatus : ISupportDigest
+    public class InflictStatus : ISupportDigest, ISupportDefault<InflictStatus>
     {
 		#region Instance Variables (9) 
 
@@ -187,7 +187,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class AllInflictStatuses : PatchableFile, IXmlDigest
+    public class AllInflictStatuses : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Public Properties (2) 
 
@@ -217,7 +217,7 @@ namespace FFTPatcher.Datatypes
 
         public AllInflictStatuses( IList<byte> bytes )
         {
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.InflictStatusesBin : PSXResources.InflictStatusesBin;
+            IList<byte> defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.InflictStatuses : PSXResources.Binaries.InflictStatuses;
             InflictStatuses = new InflictStatus[0x80];
             for( int i = 0; i < 0x80; i++ )
             {
@@ -229,18 +229,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (4) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.InflictStatusesBin, this.ToByteArray(), 0x32A394 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.InflictStatusesBin, this.ToByteArray(), 0x063FC4 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -270,7 +258,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -294,5 +282,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Inflict Statuses" : "\"Inflict Statuses";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.InflictStatuses, this.ToByteArray(), 0x32A394 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.InflictStatuses, this.ToByteArray(), 0x063FC4 );
+            }
+        }
+
+        #endregion
     }
 }

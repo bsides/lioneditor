@@ -28,7 +28,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all items in memory.
     /// </summary>
-    public class AllItems : PatchableFile, IXmlDigest
+    public class AllItems : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Instance Variables (1) 
 
@@ -70,8 +70,8 @@ namespace FFTPatcher.Datatypes
         public AllItems( IList<byte> first, IList<byte> second )
         {
             Items = new List<Item>();
-            byte[] defaultFirst = second == null ? PSXResources.OldItemsBin : PSPResources.OldItemsBin;
-            byte[] defaultSecond = second == null ? null : PSPResources.NewItemsBin;
+            IList<byte> defaultFirst = second == null ? PSXResources.Binaries.OldItems : PSPResources.Binaries.OldItems;
+            IList<byte> defaultSecond = second == null ? null : PSPResources.Binaries.NewItems;
 
             for( UInt16 i = 0; i < 0x80; i++ )
             {
@@ -185,20 +185,6 @@ namespace FFTPatcher.Datatypes
 
 		#region Public Methods (5) 
 
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                List<string> strings = new List<string>();
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.NewItemsBin, this.ToSecondByteArray(), 0x25ADAC ) );
-                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.OldItemsBin, this.ToFirstByteArray(), 0x329288 ) );
-                return strings;
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.OldItemsBin, this.ToFirstByteArray(), 0x062EB8 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -250,7 +236,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -291,5 +277,29 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Items" : "\"Items";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                List<string> strings = new List<string>();
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.NewItems, this.ToSecondByteArray(), 0x25ADAC ) );
+                strings.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.OldItems, this.ToFirstByteArray(), 0x329288 ) );
+                return strings;
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.OldItems, this.ToFirstByteArray(), 0x062EB8 );
+            }
+        }
+
+        #endregion
     }
 }

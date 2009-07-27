@@ -22,22 +22,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using PatcherLib.Datatypes;
 
-namespace System.Runtime.CompilerServices
-{
-    public class ExtensionAttribute : Attribute
-    {
-
-    }
-}
 namespace FFTPatcher.SpriteEditor
 {
-    public static partial class ExtensionMethods
+    /// <summary>
+    /// A palette for a FFT sprite.
+    /// </summary>
+    public class Palette
     {
-
-		#region Methods (1) 
-
-
-        public static byte[] ToPALFile( this IList<Palette> palettes )
+        public static byte[] PalletesToPALFile( IList<Palette> palettes )
         {
             List<byte> result = new List<byte>( 0x418 );
             result.AddRange( new byte[] { 
@@ -46,24 +38,13 @@ namespace FFTPatcher.SpriteEditor
                 0x50, 0x41, 0x4C, 0x20, 0x64, 0x61, 0x74, 0x61,  // PAL data
                 0x04, 0x04, 0x00, 0x00, 0x00, 0x03, 0x00, 0x01 } ); // filesize of sommat
 
-            foreach( Palette p in palettes )
+            foreach ( Palette p in palettes )
             {
                 result.AddRange( p.ToPALByteArray() );
             }
 
             return result.ToArray();
         }
-
-
-		#endregion Methods 
-
-    }
-
-    /// <summary>
-    /// A palette for a FFT sprite.
-    /// </summary>
-    public class Palette
-    {
 
 		#region Properties (1) 
 
@@ -80,13 +61,24 @@ namespace FFTPatcher.SpriteEditor
 
 		#region Constructors (3) 
 
+        public static Palette EmptyPalette
+        {
+            get
+            {
+                return new Palette( new Color[16] {
+                    Color.Black, Color.Black, Color.Black, Color.Black, 
+                    Color.Black, Color.Black, Color.Black, Color.Black, 
+                    Color.Black, Color.Black, Color.Black, Color.Black, 
+                    Color.Black, Color.Black, Color.Black, Color.Black } );
+            }
+        }
+
         private Palette()
         {
         }
 
         public static void FixupColorPalette( ColorPalette destination, IList<Palette> palettes )
         {
-            int k = 0;
             for ( int i = 0; i < palettes.Count; i++ )
             {
                 FixupColorPalette( destination, palettes, i, i * 16 );
@@ -107,25 +99,64 @@ namespace FFTPatcher.SpriteEditor
                 }
             }
         }
-
-        public Palette( IList<byte> bytes )
+        public enum ColorDepth
         {
-            Colors = new Color[16];
-            for( int i = 0; i < 16; i++ )
+            _16bit = 2,
+            _32bit = 4
+        }
+
+
+        public Palette( IList<byte> bytes, ColorDepth depth )
+        {
+            switch (depth)
+            {
+                case ColorDepth._16bit:
+                    Build16BitPalette( bytes );
+                    break;
+                case ColorDepth._32bit:
+                    Build32BitPalette( bytes );
+                    break;
+            }
+        }
+
+        private void Build32BitPalette( IList<byte> bytes )
+        {
+            int count = bytes.Count / 4;
+            Colors = new Color[count];
+            for (int i = 0; i < count; i++)
+            {
+                Colors[i] = Color.FromArgb( 
+                    bytes[i * 4 + 3], 
+                    bytes[i * 4], 
+                    bytes[i * 4 + 1], 
+                    bytes[i * 4 + 2] );
+            }
+        }
+
+        private void Build16BitPalette( IList<byte> bytes )
+        {
+            int count = bytes.Count / 2;
+            Colors = new Color[count];
+            for (int i = 0; i < count; i++)
             {
                 Colors[i] = BytesToColor( bytes[i * 2], bytes[i * 2 + 1] );
             }
 
-            if( Colors[0].ToArgb() == Color.Black.ToArgb() )
+            if (Colors[0].ToArgb() == Color.Black.ToArgb())
             {
                 Colors[0] = Color.Transparent;
             }
         }
 
+        public Palette( IList<byte> bytes )
+            : this( bytes, ColorDepth._16bit )
+        {
+        }
+
         public Palette( IList<Color> colors )
         {
-            Colors = new Color[16];
-            for( int i = 0; i < 16; i++ )
+            Colors = new Color[colors.Count];
+            for (int i = 0; i < colors.Count; i++)
             {
                 Colors[i] = Color.FromArgb( colors[i].R & 0xF8, colors[i].G & 0xF8, colors[i].B & 0xF8 );
             }
@@ -165,6 +196,11 @@ namespace FFTPatcher.SpriteEditor
             byte[] result = new byte[2];
             result[0] = (byte)(((g & 0x07) << 5) | r);
             result[1] = (byte)((b << 2) | ((g & 0x18) >> 3));
+
+            if ( c.A == 0 )
+            {
+                result[1] |= 0x80;
+            }
 
             return result;
         }

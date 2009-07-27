@@ -21,6 +21,7 @@ using System;
 using FFTPatcher.Controls;
 using FFTPatcher.Datatypes;
 using PatcherLib.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {
@@ -51,8 +52,8 @@ namespace FFTPatcher.Editors
                 else if( job != value )
                 {
                     job = value;
-                    this.Enabled = true;
                     UpdateView();
+                    this.Enabled = true;
                 }
             }
         }
@@ -141,7 +142,12 @@ namespace FFTPatcher.Editors
             cancelElementsEditor.SetValueAndDefaults( job.CancelElement, job.Default.CancelElement);
             weakElementsEditor.SetValueAndDefaults( job.WeakElement, job.Default.WeakElement );
 
+            equipmentEditor.Equipment = null;
             equipmentEditor.Equipment = job.Equipment;
+
+            innateStatusesEditor.Statuses = null;
+            startingStatusesEditor.Statuses = null;
+            statusImmunityEditor.Statuses = null;
             innateStatusesEditor.Statuses = job.PermanentStatus;
             statusImmunityEditor.Statuses = job.StatusImmunity;
             startingStatusesEditor.Statuses = job.StartingStatus;

@@ -24,6 +24,7 @@ using System.Drawing.Imaging;
 using PatcherLib.Datatypes;
 using PatcherLib.Iso;
 using PatcherLib.Utilities;
+using System.Text;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -48,28 +49,10 @@ namespace FFTPatcher.SpriteEditor
             set
             {
                 palettes = value;
-                ThumbnailDirty = true;
                 BitmapDirty = true;
              }
          }
  
-        public int CurrentSize { get; protected set; }
-
-        public int MaximumSize
-        {
-            get
-            {
-                if( OriginalSize % 2048 == 0 )
-                {
-                    return OriginalSize;
-                }
-                else
-                {
-                    return ( OriginalSize / 2048 ) * 2048 + 2048;
-                }
-            }
-        }
-
          /// <summary>
          /// Gets the pixels used to draw this sprite.
          /// </summary>
@@ -80,57 +63,11 @@ namespace FFTPatcher.SpriteEditor
         public string Name { get; private set; }
 
         protected abstract Rectangle PortraitRectangle { get; }
-        protected abstract Rectangle ThumbnailRectangle { get; }
-
+        
         public virtual Shape Shape { get { return null; } }
 
-        protected bool ThumbnailDirty { get; set; }
-        protected Image CachedThumbnail { get; set; }
         protected bool BitmapDirty { get; set; }
         protected Bitmap CachedBitmap { get; set; }
-
-        public IList<PatchedByteArray> GetPatchedByteArrays( Context context )
-        {
-            PatchedByteArray[] result = new PatchedByteArray[Filenames.Count];
-            for ( int i = 0; i < Filenames.Count; i++ )
-            {
-                result[i] = GetPatchedByteArray( context, i );
-            }
-            return result;
-        }
-
-        public PatchedByteArray GetPatchedByteArray( Context context, int index )
-        {
-            return context == Context.US_PSP ? 
-                GetPatchedByteArrayPSPInternal( index ) :
-                GetPatchedByteArrayPSXInternal( index );
-        }
-
-        private PatchedByteArray GetPatchedByteArrayPSXInternal( int index )
-        {
-            PsxIso.Sectors sector;
-            if ( PatcherLib.Utilities.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
-            {
-                return new PatchedByteArray( sector, 0, ToByteArray( index ) );
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private PatchedByteArray GetPatchedByteArrayPSPInternal( int index )
-        {
-            FFTPack.Files sector;
-            if ( PatcherLib.Utilities.Utilities.TryParseEnum( "BATTLE_" + Filenames[index].Replace( '.', '_' ), out sector ) )
-            {
-                return new PatchedByteArray( sector, 0, ToByteArray( index ) );
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         public void DrawSprite( Bitmap b, int palette, int portraitPalette )
         {
@@ -153,28 +90,23 @@ namespace FFTPatcher.SpriteEditor
         #region Constructors (1)
 
         internal AbstractSprite( SerializedSprite sprite )
-            : this( sprite.Name, sprite.Filenames )
+            : this()
         {
             OriginalSize = sprite.OriginalSize;
-            CurrentSize = OriginalSize;
             Palettes = BuildPalettes( sprite.Palettes );
             Pixels = new byte[sprite.Pixels.Count];
             sprite.Pixels.CopyTo( Pixels, 0 );
         }
 
-        private AbstractSprite( string name, IList<string> filenames )
+        private AbstractSprite()
         {
-            Name = name;
-            Filenames = filenames.ToArray();
-            ThumbnailDirty = true;
             BitmapDirty = true;
         }
 
-        protected AbstractSprite( string name, IList<string> filenames, IList<byte> bytes, params IList<byte>[] extraBytes )
-            : this( name, filenames )
+        protected AbstractSprite( IList<byte> bytes, params IList<byte>[] extraBytes )
+            : this()
         {
             OriginalSize = bytes.Count;
-            CurrentSize = OriginalSize;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             Pixels = BuildPixels( bytes.Sub( 16 * 32 ), extraBytes );
         }
@@ -182,19 +114,6 @@ namespace FFTPatcher.SpriteEditor
         #endregion Constructors
 
         #region Methods (11)
-
-        protected abstract Image GetThumbnailInner();
-
-        public Image GetThumbnail()
-        {
-            if ( ThumbnailDirty )
-            {
-                CachedThumbnail = GetThumbnailInner();
-                ThumbnailDirty = false;
-            }
-
-            return CachedThumbnail;
-        }
 
         public event EventHandler PixelsChanged;
 
@@ -209,13 +128,12 @@ namespace FFTPatcher.SpriteEditor
         public void ImportSPR( IList<byte> bytes )
         {
             BitmapDirty = true;
-            ThumbnailDirty = true;
             Palettes = BuildPalettes( bytes.Sub( 0, 16 * 32 - 1 ) );
             ImportSPRInner( bytes.Sub( 16 * 32 ) );
             FirePixelsChanged();
         }
 
-        protected abstract IList<byte> BuildPixels( IList<byte> bytes, IList<byte>[] extraBytes );
+        protected abstract IList<byte> BuildPixels(IList<byte> bytes, params IList<byte>[] extraBytes);
 
         protected abstract void ImportSPRInner( IList<byte> bytes );
 
@@ -247,9 +165,20 @@ namespace FFTPatcher.SpriteEditor
             }
 
             Palettes = new Palette[16];
+
             for( int i = 0; i < 16; i++ )
             {
-                Palettes[i] = new Palette( bmp.Palette.Entries.Sub( 16 * i, 16 * (i + 1) - 1 ) );
+                Palettes[i] = Palette.EmptyPalette;
+            }
+
+            for ( int i = 0; i < bmp.Palette.Entries.Length; i++ )
+            {
+                Color c = bmp.Palette.Entries[i];
+                Palettes[i / 16][i % 16] = Color.FromArgb( c.R & 0xF8, c.G & 0xF8, c.B & 0xF8 );
+                if ( i % 16 == 0 && c.ToArgb() == Color.Black.ToArgb() )
+                {
+                    Palettes[i / 16][i % 16] = Color.Transparent;
+                }
             }
 
             Pixels.InitializeElements();
@@ -266,7 +195,6 @@ namespace FFTPatcher.SpriteEditor
 
             bmp.UnlockBits( bmd );
 
-            ThumbnailDirty = true;
             BitmapDirty = true;
 
             FirePixelsChanged();
@@ -284,7 +212,6 @@ namespace FFTPatcher.SpriteEditor
                 throw new ArgumentException( "file must be Bitmap", "file" );
             }
 
-            ThumbnailDirty = true;
             BitmapDirty = true;
         }
 
@@ -330,6 +257,18 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
+        public string GetPaletteForPaintDotNet()
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (Palette p in Palettes)
+            {
+                foreach (Color c in p.Colors)
+                {
+                    result.AppendFormat("{0:X2}{1:X2}{2:X2}{3:X2}" + Environment.NewLine, c.A, c.R, c.G, c.B);
+                }
+            }
+            return result.ToString();
+        }
     
         protected abstract void ToBitmapInner( Bitmap bmp, BitmapData bmd );
 
@@ -354,6 +293,7 @@ namespace FFTPatcher.SpriteEditor
         public abstract byte[] ToByteArray( int index );
 
         #endregion Methods
+
 
     }
 }

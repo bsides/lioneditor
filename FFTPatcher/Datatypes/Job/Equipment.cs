@@ -19,13 +19,14 @@
 
 using System.Collections.Generic;
 using PatcherLib.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Datatypes
 {
     /// <summary>
     /// The types of equipment a <see cref="Job"/> can use.
     /// </summary>
-    public class Equipment : IChangeable, ISupportDigest
+    public class Equipment : IChangeable, ISupportDigest, ISupportDefault<Equipment>
     {
 		#region Instance Variables (42) 
 

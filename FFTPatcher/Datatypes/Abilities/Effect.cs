@@ -29,9 +29,9 @@ namespace FFTPatcher.Datatypes
 
         public string Name { get; private set; }
 
-        public static Dictionary<UInt16, Effect> PSPEffects { get; private set; }
+        public static IDictionary<UInt16, Effect> PSPEffects { get; private set; }
 
-        public static Dictionary<UInt16, Effect> PSXEffects { get; private set; }
+        public static IDictionary<UInt16, Effect> PSXEffects { get; private set; }
 
         public UInt16 Value { get; private set; }
 
@@ -46,12 +46,15 @@ namespace FFTPatcher.Datatypes
 
             for( UInt16 i = 0; i < 512; i++ )
             {
-                PSPEffects[i] = new Effect( i, PSPResources.AbilityEffects[i] );
-                PSXEffects[i] = new Effect( i, PSXResources.AbilityEffects[i] );
+                PSPEffects[i] = new Effect( i, PSPResources.Lists.AbilityEffects[i] );
+                PSXEffects[i] = new Effect( i, PSXResources.Lists.AbilityEffects[i] );
             }
 
             PSPEffects[0xFFFF] = new Effect( 0xFFFF, "" );
             PSXEffects[0xFFFF] = new Effect( 0xFFFF, "" );
+
+            PSPEffects = new PatcherLib.Datatypes.ReadOnlyDictionary<UInt16, Effect>( PSPEffects );
+            PSXEffects = new PatcherLib.Datatypes.ReadOnlyDictionary<UInt16, Effect>( PSXEffects );
         }
 
         private Effect( UInt16 value, string name )

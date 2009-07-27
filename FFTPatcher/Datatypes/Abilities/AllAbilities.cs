@@ -38,7 +38,15 @@ namespace FFTPatcher.Datatypes
 
         public override bool HasChanged
         {
-            get { return owner.Abilities.Exists( ability => ability.Effect != null && ability.Default != null && ability.Default.Effect != null && ability.Effect.Value != ability.Default.Effect.Value ); }
+            get 
+            { 
+                return owner.Abilities.Exists( 
+                    ability => 
+                        ability.Effect != null && 
+                        ability.Default != null && 
+                        ability.Default.Effect != null && 
+                        ability.Effect.Value != ability.Default.Effect.Value );
+            }
         }
 
 		#endregion Public Properties 
@@ -57,15 +65,20 @@ namespace FFTPatcher.Datatypes
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
             byte[] effects = owner.ToEffectsByteArray();
+            byte[] otherEffects = owner.ToReactionEffectsByteArray();
+
             List<PatchedByteArray> result = new List<PatchedByteArray>( 2 );
             if (context == Context.US_PSX)
             {
                 result.Add(PatcherLib.Iso.PsxIso.AbilityEffects.GetPatchedByteArray(effects));
+                result.Add( PatcherLib.Iso.PsxIso.ReactionAbilityEffects.GetPatchedByteArray( otherEffects ) );
             }
             else if (context == Context.US_PSP)
             {
                 PatcherLib.Iso.PspIso.AbilityEffects.ForEach(
-                    kl => result.Add(kl.GetPatchedByteArray(effects)));
+                    kl => result.Add( kl.GetPatchedByteArray( effects ) ) );
+                PatcherLib.Iso.PspIso.ReactionAbilityEffects.ForEach(
+                    kl => result.Add( kl.GetPatchedByteArray( otherEffects ) ) );
             }
 
             return result;
@@ -77,7 +90,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents all of the Abilities in this file.
     /// </summary>
-    public class AllAbilities : PatchableFile, IXmlDigest
+    public class AllAbilities : PatchableFile, IXmlDigest, IGenerateCodes
     {
 
         #region Static Fields (2)
@@ -106,7 +119,7 @@ namespace FFTPatcher.Datatypes
         /// <summary>
         /// Gets the names of all abilities, based on the current Context.
         /// </summary>
-        public static string[] Names
+        public static IList<string> Names
         {
             get
             {
@@ -116,11 +129,11 @@ namespace FFTPatcher.Datatypes
 
         public static Ability[] PSPAbilities { get; private set; }
 
-        public static string[] PSPNames { get; private set; }
+        public static IList<string> PSPNames { get; private set; }
 
         public static Ability[] PSXAbilities { get; private set; }
 
-        public static string[] PSXNames { get; private set; }
+        public static IList<string> PSXNames { get; private set; }
 
 
         #endregion Static Properties
@@ -142,14 +155,7 @@ namespace FFTPatcher.Datatypes
         {
             get
             {
-                foreach( Ability a in Abilities )
-                {
-                    if( a.HasChanged )
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                return defaultBytes != null && !Utilities.CompareArrays( ToByteArray(), defaultBytes );
             }
         }
 
@@ -165,14 +171,9 @@ namespace FFTPatcher.Datatypes
             psxEventAbilites = new Ability[512];
             pspEventAbilites = new Ability[512];
 
-            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.Abilities,
-                "/Abilities/Ability[@value='{0}']/@name",
-                512 );
-            PSXNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.Abilities,
-                "/Abilities/Ability[@value='{0}']/@name",
-                512 );
+            PSPNames = PatcherLib.PSPResources.Lists.AbilityNames;
+            PSXNames = PatcherLib.PSXResources.Lists.AbilityNames;
+
             for( int i = 0; i < 512; i++ )
             {
                 PSPAbilities[i] = new Ability( PSPNames[i], (UInt16)i );
@@ -188,12 +189,16 @@ namespace FFTPatcher.Datatypes
 
         }
 
-        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes )
+        private IList<byte> defaultBytes;
+
+        public AllAbilities( IList<byte> bytes, IList<byte> effectsBytes, IList<byte> reactionEffects )
         {
             AllEffects = new AllAbilityEffects( this );
-            byte[] defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilitiesBin : PSXResources.AbilitiesBin;
-            Dictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
-            byte[] defaultEffects = FFTPatch.Context == Context.US_PSP ? PSPResources.AbilityEffectsBin : PSXResources.AbilityEffectsBin;
+            this.defaultBytes = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.Abilities : PSXResources.Binaries.Abilities;
+            
+            IDictionary<UInt16, Effect> effects = FFTPatch.Context == Context.US_PSP ? Effect.PSPEffects : Effect.PSXEffects;
+            IList<byte> defaultEffects = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.AbilityEffects : PSXResources.Binaries.AbilityEffects;
+            IList<byte> defaultReaction = FFTPatch.Context == Context.US_PSP ? PSPResources.Binaries.ReactionAbilityEffects : PSXResources.Binaries.ReactionAbilityEffects;
 
             Abilities = new Ability[512];
             DefaultAbilities = new Ability[512];
@@ -240,12 +245,17 @@ namespace FFTPatcher.Datatypes
                 }
                 else
                 {
+                    if (i >= 422 && i <= 453)
+                    {
+                        effect = effects[PatcherLib.Utilities.Utilities.BytesToUShort( reactionEffects[(i - 422) * 2], reactionEffects[(i - 422) * 2 + 1] )];
+                        defaultEffect = effects[PatcherLib.Utilities.Utilities.BytesToUShort( defaultReaction[(i - 422) * 2], defaultReaction[(i - 422) * 2 + 1] )];
+                    }
                     second = bytes.Sub( 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
                     defaultSecond = defaultBytes.Sub( 0x246C + i - 0x1A6, 0x246C + i - 0x1A6 );
                 }
 
                 Abilities[i] = new Ability( Names[i], i, first, second, new Ability( Names[i], i, defaultFirst, defaultSecond ) );
-                if( i <= 0x16F )
+                if( effect != null && defaultEffect != null )
                 {
                     Abilities[i].Effect = effect;
                     Abilities[i].Default.Effect = defaultEffect;
@@ -257,20 +267,29 @@ namespace FFTPatcher.Datatypes
 
         #region Methods (5)
 
-
-        public List<string> GenerateCodes()
+        string IGenerateCodes.GetCodeHeader( Context context )
         {
-            if( FFTPatch.Context == Context.US_PSP )
+            const string PSPHeader = "_C0 Abilities";
+            const string PSXHeader = "\"Abilities";
+            return context == Context.US_PSP ? PSPHeader : PSXHeader;
+        }
+
+        public IList<string> GenerateCodes( Context context )
+        {
+            List<string> result = new List<string>();
+            if (context == Context.US_PSP)
             {
-                List<string> result = new List<string>();
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilitiesBin, this.ToByteArray(), 0x2754C0 ) );
-                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.AbilityEffectsBin, this.ToEffectsByteArray(), 0x31B760 ) );
-                return result;
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.Abilities, this.ToByteArray(), 0x2754C0 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.AbilityEffects, this.ToEffectsByteArray(), 0x31B760 ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.ReactionAbilityEffects, this.ToReactionEffectsByteArray(), 0x31B760 + 0x34C ) );
             }
             else
             {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.AbilitiesBin, this.ToByteArray(), 0x05EBF0 );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.AbilityEffects, this.ToEffectsByteArray(), 0x1B63F0, Codes.CodeEnabledOnlyWhen.Battle ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.ReactionAbilityEffects, this.ToReactionEffectsByteArray(), 0x1B673C, Codes.CodeEnabledOnlyWhen.Battle ) );
+                result.AddRange( Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.Abilities, this.ToByteArray(), 0x05EBF0 ) );
             }
+            return result.AsReadOnly();
         }
 
         public byte[] ToByteArray()
@@ -298,9 +317,9 @@ namespace FFTPatcher.Datatypes
         public byte[] ToEffectsByteArray()
         {
             List<byte> result = new List<byte>( 0x2E0 );
-            foreach( Ability a in Abilities )
+            foreach (Ability a in Abilities)
             {
-                if( a.IsNormal )
+                if (a.IsNormal)
                 {
                     result.AddRange( a.Effect.Value.ToBytes() );
                 }
@@ -309,7 +328,21 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( XmlWriter writer )
+        public byte[] ToReactionEffectsByteArray()
+        {
+            List<byte> result = new List<byte>( 0x40 );
+            foreach (Ability a in Abilities)
+            {
+                if (!a.IsNormal && a.Effect != null)
+                {
+                    result.AddRange( a.Effect.Value.ToBytes() );
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        public void WriteXmlDigest( XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -317,7 +350,7 @@ namespace FFTPatcher.Datatypes
                 writer.WriteAttributeString( "changed", HasChanged.ToString() );
                 foreach( Ability a in Abilities )
                 {
-                    a.WriteXml( writer );
+                    a.WriteXmlDigest( writer );
                 }
                 writer.WriteEndElement();
             }

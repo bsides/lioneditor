@@ -102,11 +102,18 @@ namespace FFTPatcher.Controls
                     SetItemChecked( i, values[i] );
                 }
             }
+            Invalidate();
         }
 
 		#endregion Public Methods 
 
 		#region Protected Methods (3) 
+
+        protected override void OnEnabledChanged(System.EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            Invalidate();
+        }
 
         protected override void OnDrawItem( DrawItemEventArgs e )
         {

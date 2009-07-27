@@ -19,7 +19,9 @@ Editing text
 ------------
 Edit each entry in the grid. Some special codes allowed:
 {Color XX} - Changes the text to a certain color. XX must be 00-FF (uppercase)
-{Delay XX} - Delays for a certain amount of time. XX must be 00-FF (uppercase)
+{Delay XX} - Changes the delay that is used after each character of text.
+             If you want text to be slow, set this very high.
+             XX must be 00-FF (uppercase)
 {Tab XX} - PSP only. Moves the text output to a certain tab-stop on the screen
 {Serpentarius} - The Serpentarius Zodiac symbol
 {Ramza} - The main character's name
@@ -28,8 +30,8 @@ Edit each entry in the grid. Some special codes allowed:
 {0xE1} - Sometimes you'll see something like "Allow {0xE1} to join your party?"
          The game will substitute the unit's name (or whatever) where it says {0xE1}
 {0xXX}     - You can insert your own custom binary data into the text stream.
-{0xXXXX}   - 1, 2, or 3 bytes are allowed
-{0xXXXXXX} - This probably shouldn't be used.
+{0xXXXX}     1, 2, or 3 bytes are allowed
+{0xXXXXXX}   This probably shouldn't be used.
 {Newline} - Inserts a new line.
 
 The program uses the "Arial Unicode MS" font. If you don't have it, you should
@@ -91,7 +93,8 @@ It rereads a specific file off of your ISO.
 Problems
 --------
 Problem: Diagonal lines show up through the text
-Solution: I don't know how to fix it.
+Solution: This usually happens of a line of text is too "wide" to fit on screen.
+          Try adding some {Newline} to the text.
 
 P: The screen flashes and then all my text gets replaced with katakana and kanji
 S: This usually happens of a line of text is too "wide" to fit on screen.

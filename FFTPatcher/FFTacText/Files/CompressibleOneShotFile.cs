@@ -4,19 +4,19 @@ namespace FFTPatcher.TextEditor
 {
     class CompressibleOneShotFile : AbstractFile
     {
-        public CompressibleOneShotFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings )
-            : base( map, layout, strings, true )
+        public CompressibleOneShotFile( GenericCharMap map, FFTTextFactory.FileInfo layout, IList<IList<string>> strings, string fileComments, IList<string> sectionComments )
+            : base( map, layout, strings, fileComments, sectionComments, true )
         {
         }
 
-        public CompressibleOneShotFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes )
-            : base( map, layout, true )
+        public CompressibleOneShotFile( GenericCharMap map, FFTPatcher.TextEditor.FFTTextFactory.FileInfo layout, IList<byte> bytes, string fileComments, IList<string> sectionComments )
+            : base( map, layout, fileComments, sectionComments, true )
         {
             List<IList<string>> sections = new List<IList<string>>( NumberOfSections );
             System.Diagnostics.Debug.Assert( NumberOfSections == 1 );
             for ( int i = 0; i < NumberOfSections; i++ )
             {
-                sections.Add( TextUtilities.ProcessList( TextUtilities.Decompress( bytes, bytes, 0 ), map ) );
+                sections.Add( TextUtilities.ProcessList( TextUtilities.Decompress( bytes, bytes, 0 ), layout.AllowedTerminators, map ) );
                 if ( sections[i].Count < SectionLengths[i] )
                 {
                     string[] newSection = new string[SectionLengths[i]];

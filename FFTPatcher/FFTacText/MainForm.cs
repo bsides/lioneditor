@@ -47,6 +47,13 @@ namespace FFTPatcher.TextEditor
             menuItem2.Click += new EventHandler( menuItem2_Click );
             importPspIsoCustomMenuItem.Click += new EventHandler( importPspIsoCustomMenuItem_Click );
             importPsxIsoCustomMenuItem.Click += new EventHandler( importPsxIsoCustomMenuItem_Click );
+            fileMenuItem.Popup += new EventHandler(menuItem_Popup);
+            isoMenuItem.Popup += new EventHandler(menuItem_Popup);
+        }
+
+        void menuItem_Popup(object sender, EventArgs e)
+        {
+            fileEditor1.Validate(false);
         }
 
         void menuItem2_Click( object sender, EventArgs e )
@@ -105,6 +112,27 @@ namespace FFTPatcher.TextEditor
             BackgroundWorker worker = new BackgroundWorker();
             worker.WorkerSupportsCancellation = true;
             worker.WorkerReportsProgress = true;
+            DialogResult missingFilesResult = DialogResult.No;
+            string missingFilesIsoFilename = null;
+            MethodInvoker missingPrompt = null;
+            missingPrompt = delegate()
+                {
+                    var res = MessageBox.Show( this, "Some files are missing." + Environment.NewLine + "Load missing files from ISO?", "Files missing", MessageBoxButtons.YesNoCancel );
+                    if (res == DialogResult.Yes)
+                    {
+                        openFileDialog.Filter = "ISO files (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
+                        openFileDialog.FileName = string.Empty;
+                        if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
+                        {
+                            missingFilesIsoFilename = openFileDialog.FileName;
+                        }
+                        else
+                        {
+                            missingPrompt();
+                        }
+                    }
+                    missingFilesResult = res;
+                };
             worker.DoWork +=
                 delegate( object sender, DoWorkEventArgs args )
                 {
@@ -112,7 +140,31 @@ namespace FFTPatcher.TextEditor
                     switch ( loadType )
                     {
                         case LoadType.Open:
-                            text = FFTTextFactory.GetFilesXml( filename, worker );
+                            Set<Guid> missing = FFTTextFactory.DetectMissingGuids( filename );
+                            if (missing.Count > 0)
+                            {
+                                if (InvokeRequired) Invoke( missingPrompt );
+                                else missingPrompt();
+                                if (missingFilesResult == DialogResult.Yes)
+                                {
+                                    using (Stream missingStream = File.OpenRead( missingFilesIsoFilename ))
+                                    {
+                                        text = FFTTextFactory.GetFilesXml( filename, worker, missing, missingStream );
+                                    }
+                                }
+                                else if (missingFilesResult == DialogResult.Cancel)
+                                {
+                                    text = null;
+                                }
+                                else if (missingFilesResult == DialogResult.No)
+                                {
+                                    text = FFTTextFactory.GetFilesXml( filename, worker );
+                                }
+                            }
+                            else
+                            {
+                                text = FFTTextFactory.GetFilesXml( filename, worker );
+                            }
                             break;
                         case LoadType.PspFilename:
                             text = FFTText.ReadPSPIso( filename, worker );

@@ -91,6 +91,7 @@ namespace FFTPatcher.Controls
         {
             //base.New();
             InitializeComponent();
+            SetStyle(System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, true);
         }
 
 		#endregion Constructors 
@@ -130,40 +131,42 @@ namespace FFTPatcher.Controls
             float sngTransformX;
             float sngTransformY;
             Color labelColor = this.BackColor;
-            Pen labelBorderPen = new Pen( labelColor, 0 );
-            SolidBrush labelBackColorBrush = new SolidBrush( labelColor );
-            SolidBrush labelForeColorBrush = new SolidBrush( base.ForeColor );
-            base.OnPaint( e );
-            sngControlWidth = this.Size.Width;
-            sngControlHeight = this.Size.Height;
-            e.Graphics.DrawRectangle( labelBorderPen, 0, 0, sngControlWidth, sngControlHeight );
-            e.Graphics.FillRectangle( labelBackColorBrush, 0, 0, sngControlWidth, sngControlHeight );
-            sngTransformX = 0;
-            sngTransformY = sngControlHeight;
-            e.Graphics.TranslateTransform( sngTransformX, sngTransformY );
-            e.Graphics.RotateTransform( 270 );
-
-            //default to left alignment
-            float leftOffset = 0;
-
-            //handle center alignment
-            if( (this.labelTextAlign == System.Drawing.ContentAlignment.BottomCenter) ||
-                (this.labelTextAlign == System.Drawing.ContentAlignment.MiddleCenter) ||
-                (this.labelTextAlign == System.Drawing.ContentAlignment.TopCenter) )
+            using (Pen labelBorderPen = new Pen( labelColor, 0 ))
+            using (SolidBrush labelBackColorBrush = new SolidBrush( labelColor ))
+            using (SolidBrush labelForeColorBrush = new SolidBrush(base.ForeColor))
             {
-                System.Drawing.SizeF sf = e.Graphics.MeasureString( this.labelText, Font );
-                leftOffset = (this.Size.Height - sf.Width) / 2;
-            }
-            //handle right alignment
-            if( (this.labelTextAlign == System.Drawing.ContentAlignment.BottomRight) ||
-                (this.labelTextAlign == System.Drawing.ContentAlignment.MiddleRight) ||
-                (this.labelTextAlign == System.Drawing.ContentAlignment.TopRight) )
-            {
-                System.Drawing.SizeF sf = e.Graphics.MeasureString( this.labelText, Font );
-                leftOffset = this.Size.Height - sf.Width;
-            }
+                base.OnPaint(e);
+                sngControlWidth = this.Size.Width;
+                sngControlHeight = this.Size.Height;
+                e.Graphics.DrawRectangle(labelBorderPen, 0, 0, sngControlWidth, sngControlHeight);
+                e.Graphics.FillRectangle(labelBackColorBrush, 0, 0, sngControlWidth, sngControlHeight);
+                sngTransformX = 0;
+                sngTransformY = sngControlHeight;
+                e.Graphics.TranslateTransform(sngTransformX, sngTransformY);
+                e.Graphics.RotateTransform(270);
 
-            e.Graphics.DrawString( labelText, Font, labelForeColorBrush, leftOffset, 0 );
+                //default to left alignment
+                float leftOffset = 0;
+
+                //handle center alignment
+                if ((this.labelTextAlign == System.Drawing.ContentAlignment.BottomCenter) ||
+                    (this.labelTextAlign == System.Drawing.ContentAlignment.MiddleCenter) ||
+                    (this.labelTextAlign == System.Drawing.ContentAlignment.TopCenter))
+                {
+                    System.Drawing.SizeF sf = e.Graphics.MeasureString(this.labelText, Font);
+                    leftOffset = (this.Size.Height - sf.Width) / 2;
+                }
+                //handle right alignment
+                if ((this.labelTextAlign == System.Drawing.ContentAlignment.BottomRight) ||
+                    (this.labelTextAlign == System.Drawing.ContentAlignment.MiddleRight) ||
+                    (this.labelTextAlign == System.Drawing.ContentAlignment.TopRight))
+                {
+                    System.Drawing.SizeF sf = e.Graphics.MeasureString(this.labelText, Font);
+                    leftOffset = this.Size.Height - sf.Width;
+                }
+
+                e.Graphics.DrawString(labelText, Font, labelForeColorBrush, leftOffset, 0);
+            }
         }
 
         /// 

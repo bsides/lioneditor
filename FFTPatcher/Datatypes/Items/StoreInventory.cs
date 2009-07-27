@@ -6,7 +6,7 @@ using PatcherLib.Utilities;
 
 namespace FFTPatcher.Datatypes
 {
-    public class StoreInventory : IChangeable, ISupportDigest
+    public class StoreInventory : IChangeable, ISupportDigest, ISupportDefault<StoreInventory>
     {
         private Dictionary<Item, bool> items = new Dictionary<Item, bool>();
         private IList<Item> itemsList;
@@ -46,7 +46,7 @@ namespace FFTPatcher.Datatypes
                 UInt16 currentShort = (UInt16)( bytes[i * 2] * 256 + bytes[i * 2 + 1] );
                 items[itemsList[i]] = ( currentShort & (int)whichStore ) > 0;
             }
-            name = context == Context.US_PSP ? PSPResources.ShopNames[whichStore] : PSXResources.ShopNames[whichStore];
+            name = context == Context.US_PSP ? PSPResources.Lists.ShopNames[whichStore] : PSXResources.Lists.ShopNames[whichStore];
         }
 
         public void UpdateByteArray( IList<byte> bytes )
@@ -99,7 +99,7 @@ namespace FFTPatcher.Datatypes
         public event EventHandler DataChanged;
     }
 
-    public class AllStoreInventories : PatchableFile
+    public class AllStoreInventories : PatchableFile, ISupportDefault<AllStoreInventories>, IGenerateCodes
     {
         public AllStoreInventories Default { get; private set; }
         private Context ourContext;
@@ -240,6 +240,27 @@ namespace FFTPatcher.Datatypes
         }
 
         public event EventHandler DataChanged;
+
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Store Inventories" : "\"Store Inventories";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes(Context.US_PSP, PatcherLib.PSPResources.Binaries.StoreInventories, this.ToByteArray(), 0x2e087c);
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PatcherLib.PSXResources.Binaries.StoreInventories, this.ToByteArray(), 0x18D840, Codes.CodeEnabledOnlyWhen.World );
+            }
+        }
+
+        #endregion
     }
 
 }

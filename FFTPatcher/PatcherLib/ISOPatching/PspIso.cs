@@ -32,8 +32,15 @@ namespace PatcherLib.Iso
             private delegate void MyFunc( string path, Sectors sector );
 
             private IDictionary<Sectors, long> fileToSectorMap;
+            private IDictionary<Sectors, long> fileToSizeMap;
+
             private PspIsoInfo() { }
             public long this[PspIso.Sectors file] { get { return fileToSectorMap[file]; } }
+
+            public long GetFileSize(PspIso.Sectors file)
+            {
+                return fileToSizeMap[file];
+            }
 
             public static PspIsoInfo GetPspIsoInfo(Stream iso)
             {
@@ -44,6 +51,7 @@ namespace PatcherLib.Iso
             {
                 ImageMaster.ImageRecord myRecord = null;
                 var myDict = new Dictionary<Sectors, long>();
+                var myOtherDict = new Dictionary<Sectors, long>();
                 MyFunc func =
                     delegate( string path, Sectors sector )
                     {
@@ -51,6 +59,7 @@ namespace PatcherLib.Iso
                         if (myRecord != null)
                         {
                             myDict[sector] = myRecord.Location;
+                            myOtherDict[sector] = myRecord.Size;
                         }
                         else
                         {
@@ -83,6 +92,7 @@ namespace PatcherLib.Iso
                 func( "UMD_DATA.BIN", Sectors.UMD_DATA_BIN );
                 PspIsoInfo result = new PspIsoInfo();
                 result.fileToSectorMap = myDict;
+                result.fileToSizeMap = myOtherDict;
                 return result;
             }
 
@@ -226,11 +236,11 @@ namespace PatcherLib.Iso
             {
                 if ( patch.SectorEnum.GetType() == typeof( PspIso.Sectors ) )
                 {
-                    stream.WriteArrayToPosition( patch.Bytes, (int)( info[(PspIso.Sectors)patch.SectorEnum] * 2048 ) + patch.Offset );
+                    stream.WriteArrayToPosition( patch.GetBytes(), (int)( info[(PspIso.Sectors)patch.SectorEnum] * 2048 ) + patch.Offset );
                 }
                 else if ( patch.SectorEnum.GetType() == typeof( FFTPack.Files ) )
                 {
-                    FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.Bytes );
+                    FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.GetBytes() );
                 }
                 else
                 {
@@ -247,10 +257,14 @@ namespace PatcherLib.Iso
             return result;
         }
 
-        public static IList<byte> GetFile( Stream stream, PspIsoInfo info, FFTPack.Files file, int start, int length )
+        public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file, int start, int length)
         {
-            byte[] result = FFTPack.GetFileFromIso( stream, info, file );
-            return result.Sub( start, start + length - 1 );
+            return FFTPack.GetFileFromIso( stream, info, file, start, length );
+        }
+
+        public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file)
+        {
+            return FFTPack.GetFileFromIso(stream, info, file);
         }
 
         public static IList<byte> GetBlock(Stream iso, PspIsoInfo info, KnownPosition pos)
@@ -294,20 +308,24 @@ namespace PatcherLib.Iso
             }
         }
 
-        public class KnownPosition
+        public class KnownPosition : PatcherLib.Iso.KnownPosition
         {
             public Enum SectorEnum { get; private set; }
             public Sectors? Sector { get; private set; }
             public FFTPack.Files? FFTPack { get; private set; }
 
             public int StartLocation { get; private set; }
-            public int Length { get; private set; }
+            private int length;
+            public override int Length
+            {
+                get { return length; }
+            }
 
             private KnownPosition(Enum sector, int startLocation, int length)
             {
                 SectorEnum = sector;
                 StartLocation = startLocation;
-                Length = length;
+                this.length  = length;
             }
 
             public KnownPosition(Sectors sector, int startLocation, int length)
@@ -322,7 +340,7 @@ namespace PatcherLib.Iso
                 FFTPack = sector;
             }
 
-            public PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            public override PatchedByteArray GetPatchedByteArray(byte[] bytes)
             {
                 if (Sector.HasValue)
                 {
@@ -337,11 +355,27 @@ namespace PatcherLib.Iso
                     throw new Exception();
                 }
             }
+
+            public override IList<byte> ReadIso(Stream iso)
+            {
+                return ReadIso(iso, PspIsoInfo.GetPspIsoInfo(iso));
+            }
+
+            public IList<byte> ReadIso(Stream iso, PspIsoInfo info)
+            {
+                return PspIso.GetBlock(iso, info, this);
+            }
+
+            public override void PatchIso(Stream iso, IList<byte> bytes)
+            {
+                PspIso.ApplyPatch(iso, PspIsoInfo.GetPspIsoInfo(iso), GetPatchedByteArray(bytes.ToArray()));
+            }
         }
 
         public static IList<KnownPosition> Abilities { get; private set; }
 
         public static IList<KnownPosition> AbilityEffects { get; private set; }
+        public static IList<KnownPosition> ReactionAbilityEffects { get; private set; }
 
         public static IList<KnownPosition> ActionEvents { get; private set; }
 
@@ -380,15 +414,24 @@ namespace PatcherLib.Iso
 
         public static IList<KnownPosition> StoreInventories { get; private set; }
 
+        public static IList<KnownPosition> AbilityAnimations { get; private set; }
+
 
         static PspIso()
         {
+            AbilityAnimations = new KnownPosition[] { 
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x32394C, 0x600),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x32394C, 0x600) }.AsReadOnly();
+
             Abilities = new KnownPosition[] { 
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x271514, 0x24C6),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x271514, 0x24C6) }.AsReadOnly();
             AbilityEffects = new KnownPosition[] {
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x3177B4, 0x2E0),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x3177B4, 0x2E0)}.AsReadOnly();
+            ReactionAbilityEffects = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x317B00, 0x40),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x317B00, 0x40)}.AsReadOnly();
             ActionEvents = new KnownPosition[] {
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x276CA4, 227),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x276CA4, 227)}.AsReadOnly();

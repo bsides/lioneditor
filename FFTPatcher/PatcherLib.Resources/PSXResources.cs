@@ -25,396 +25,85 @@ namespace PatcherLib
     using PatcherLib.Datatypes;
     using PatcherLib.Utilities;
     using Paths = Resources.Paths.PSX;
+    using System.Xml;
 
-    public static class PSXResources
+    public static partial class PSXResources
     {
-		#region Instance Variables (9) 
+        private static IDictionary<Shops, string> readOnlyStoreNames;
+        private static XmlDocument statusNamesDoc;
+
+
+        private static XmlDocument abilitiesDoc;
+
+        private static XmlDocument abilitiesStringsDoc;
 
         public static IList<string> CharacterSet { get; private set; }
 
-        private static string[] abilityAI;
-        private static string[] abilityAttributes;
-        private static string[] abilityEffects;
-        private static string[] abilityTypes;
-        static Dictionary<string, object> dict = new Dictionary<string, object>();
+        private static XmlDocument itemsDoc;
 
-        private static Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>
-        {
-            { Shops.Bervenia, "Bervenia Free City" },
-            { Shops.Dorter, "Dorter Trade City" },
-            { Shops.Gariland, "Gariland Magic City" },
-            { Shops.Goland, "Goland Coal City" },
-            { Shops.Goug, "Goug Machine City" },
-            { Shops.Igros, "Igros Castle" },
-            { Shops.Lesalia, "Lesalia Imperial Castle" },
-            { Shops.Limberry, "Limberry Castle" },
-            { Shops.Lionel, "Lionel Castle" },
-            { Shops.None, "Unknown" },
-            { Shops.Riovanes, "Riovanes Castle" },
-            { Shops.Warjilis, "Warjilis Trade City" },
-            { Shops.Yardrow, "Yardow Fort City" },
-            { Shops.Zaland, "Zaland Fort City" },
-            { Shops.Zarghidas, "Zarghidas Trade City" },
-            { Shops.Zeltennia, "Zeltennia Castle" }
-        };
-        private static IDictionary<Shops, string> readOnlyStoreNames;
+        private static XmlDocument itemsStringsDoc;
 
-        private static string[] mapNames = new string[128] {
-            "(No name)",
-            "At main gate of Igros Castle",
-            "Back gate of Lesalia Castle",
-            "Hall of St. Murond Temple",
-            "Office of Lesalia Castle",
-            "Roof of Riovanes Castle",
-            "At the gate of Riovanes Castle",
-            "Inside of Riovanes Castle",
-            "Riovanes Castle",
-            "Citadel of Igros Castle",
-            "Inside of Igros Castle",
-            "Office of Igros Castle",
-            "At the gate of Lionel Castle",
-            "Inside of Lionel Castle",
-            "Office of Lionel Castle",
-            "At the gate of Limberry Castle",
-            "Inside of Limberry Castle",
-            "Underground cemetery of Limberry Castle",
-            "Office of Limberry Castle",
-            "At the gate of Limberry Castle",
-            "Inside of Zeltennia Castle",
-            "Zeltennia Castle",
-            "Magic City Gariland",
-            "Beoulve residence",
-            "Military Academy's Auditorium",
-            "Yardow Fort City",
-            "Weapon storage of Yardow",
-            "Goland Coal City",
-            "Colliery underground First floor",
-            "Colliery underground Second floor",
-            "Colliery underground Third floor",
-            "Dorter Trade City",
-            "Slums in Dorter",
-            "Hospital in slums",
-            "Cellar of Sand Mouse",
-            "Zaland Fort City",
-            "Church outside the town",
-            "Ruins outside Zaland",
-            "Goug Machine City",
-            "Underground passage in Goland",
-            "Slums in Goug",
-            "Besrodio's house",
-            "Warjilis Trade City",
-            "Port of Warjilis",
-            "Bervenia Free City",
-            "Ruins of Zeltennia Castle's church",
-            "Cemetery of Heavenly Knight, Balbanes",
-            "Zarghidas Trade City",
-            "Slums of Zarghidas",
-            "Fort Zeakden",
-            "St. Murond Temple",
-            "St. Murond Temple",
-            "Chapel of St. Murond Temple",
-            "Entrance to Death City",
-            "Lost Sacred Precincts",
-            "Graveyard of Airships",
-            "Orbonne Monastery",
-            "Underground Book Storage First Floor",
-            "Underground Book Storage Second Floor",
-            "Underground Book Storage Third Floor",
-            "Underground Book Storage Fourth Floor",
-            "Underground Book Storage Fifth Floor",
-            "Chapel of Orbonne Monastery",
-            "Golgorand Execution Site",
-            "In front of Bethla Garrison's Sluice",
-            "Granary of Bethla Garrison",
-            "South Wall of Bethla Garrison",
-            "North Wall of Bethla Garrison",
-            "Bethla Garrison",
-            "Murond Death City",
-            "Nelveska Temple",
-            "Dolbodar Swamp",
-            "Fovoham Plains",
-            "Inside of windmill Shed",
-            "Sweegy Woods",
-            "Bervenia Volcano",
-            "Zeklaus Desert",
-            "Lenalia Plateau",
-            "Zigolis Swamp",
-            "Yuguo Woods",
-            "Araguay Woods",
-            "Grog Hill",
-            "Bed Desert",
-            "Zirekile Falls",
-            "Bariaus Hill",
-            "Mandalia Plains",
-            "Doguola Pass",
-            "Bariaus Valley",
-            "Finath River",
-            "Poeskas Lake",
-            "Germinas Peak",
-            "Thieves Fort",
-            "Igros·Beoulve residence",
-            "Broke down shed·Wooden building",
-            "Broke down shed·Stone building",
-            "Church",
-            "Pub",
-            "Inside castle gate in Lesalia",
-            "Outside castle gate in Lesalia",
-            "Main street of Lesalia",
-            "Public cemetary",
-            "For tutorial 1",
-            "For tutorial 2",
-            "Windmill shed",
-            "A room of Beoulve residence",
-            "terminate",
-            "delta",
-            "nogias",
-            "voyage",
-            "bridge",
-            "valkyries",
-            "mlapan",
-            "tiger",
-            "horror",
-            "end",
-            "Banished fort",
-            "(No name) -- Battle Arena",
-            "(No name) -- Checkerboard Wall",
-            "(No name) -- Checkerboard Wall ???",
-            "(No name) -- Checkerboard Wall Waterland",
-            "(Garbled name) -- Sloped Checkerboard",
-            "","","","","","",""
-            };
-        private static ReadOnlyCollection<string> mapNamesReadOnly;
-        private static string[] shopAvailabilities;
-        private static string[] statuses;
+        private static XmlDocument jobsDoc;
 
-		#endregion Instance Variables 
+        private static XmlDocument skillSetsDoc;
+        private static XmlDocument specialNamesDoc;
+        private static XmlDocument spriteSetsDoc;
 
-		#region Public Properties (37) 
+        private static XmlDocument shopNamesDoc;
 
-        public static string Abilities { get { return dict[Paths.AbilitiesNamesXML] as string; } }
-
-        public static byte[] AbilitiesBin { get { return dict[Paths.Binaries.Abilities] as byte[]; } }
-
-        public static string AbilitiesStrings { get { return dict[Paths.AbilitiesStringsXML] as string; } }
-
-        public static string[] AbilityAI
-        {
-            get
-            {
-                if( abilityAI == null )
-                {
-                    abilityAI =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/AI/string[@value='{0}']/@name",
-                            24 );
-                }
-                return abilityAI;
-            }
-        }
-
-        public static string[] AbilityAttributes
-        {
-            get
-            {
-                if( abilityAttributes == null )
-                {
-                    abilityAttributes =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings, 
-                            "/AbilityStrings/Attributes/string[@value='{0}']/@name", 
-                            32 );
-                }
-                return abilityAttributes;
-            }
-        }
-
-        public static string[] AbilityEffects
-        {
-            get
-            {
-                if( abilityEffects == null )
-                {
-                    abilityEffects = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                        dict[Paths.AbilityEffectsXML] as string,
-                        "/Effects/Effect[@value='{0:X3}']/@name",
-                        512 );
-                }
-
-                return abilityEffects;
-            }
-        }
-
-        public static byte[] AbilityEffectsBin { get { return dict[Paths.Binaries.AbilityEffects] as byte[]; } }
-
-        public static string[] AbilityTypes
-        {
-            get
-            {
-                if( abilityTypes == null )
-                {
-                    abilityTypes =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            AbilitiesStrings,
-                            "/AbilityStrings/Types/string[@value='{0}']/@name",
-                            16 );
-                }
-                return abilityTypes;
-            }
-        }
-
-        public static byte[] ActionEventsBin { get { return dict[Paths.Binaries.ActionEvents] as byte[]; } }
-
-        public static byte[] ENTD1 { get { return dict[Paths.Binaries.ENTD1] as byte[]; } }
-
-        public static byte[] ENTD2 { get { return dict[Paths.Binaries.ENTD2] as byte[]; } }
-
-        public static byte[] ENTD3 { get { return dict[Paths.Binaries.ENTD3] as byte[]; } }
-
-        public static byte[] ENTD4 { get { return dict[Paths.Binaries.ENTD4] as byte[]; } }
-
-        public static string EventNames { get { return dict[Paths.EventNamesXML] as string; } }
-
-        public static byte[] FontBin { get { return dict[Paths.Binaries.Font] as byte[]; } }
-
-        public static byte[] FontWidthsBin { get { return dict[Paths.Binaries.FontWidths] as byte[]; } }
-
-        public static byte[] InflictStatusesBin { get { return dict[Paths.Binaries.InflictStatuses] as byte[]; } }
-
-        public static string Items { get { return dict[Paths.ItemsXML] as string; } }
-
-        public static string ItemsStrings { get { return dict[Paths.ItemsStringsXML] as string; } }
-
-        public static byte[] JobLevelsBin { get { return dict[Paths.Binaries.JobLevels] as byte[]; } }
-
-        public static string Jobs { get { return dict[Paths.JobsXML] as string; } }
-
-        public static byte[] JobsBin { get { return dict[Paths.Binaries.Jobs] as byte[]; } }
-
-        public static ReadOnlyCollection<string> MapNames
-        {
-            get
-            {
-                if ( mapNamesReadOnly == null )
-                {
-                    mapNamesReadOnly = new ReadOnlyCollection<string>( mapNames );
-                }
-
-                return mapNamesReadOnly;
-            }
-        }
-
-        public static IDictionary<Shops, string> ShopNames
-        {
-            get
-            {
-                if( readOnlyStoreNames == null )
-                {
-                    readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>( storeNames );
-                }
-
-                return readOnlyStoreNames;
-            }
-        }
-
-        public static byte[] MonsterSkillsBin { get { return dict[Paths.Binaries.MonsterSkills] as byte[]; } }
-
-        public static byte[] MoveFind { get { return dict[Paths.Binaries.MoveFind] as byte[]; } }
-
-        public static byte[] OldItemAttributesBin { get { return dict[Paths.Binaries.OldItemAttributes] as byte[]; } }
-
-        public static byte[] OldItemsBin { get { return dict[Paths.Binaries.OldItems] as byte[]; } }
-
-        public static byte[] PoachProbabilitiesBin { get { return dict[Paths.Binaries.PoachProbabilities] as byte[]; } }
-
-        public static byte[] SCEAPDAT { get { return dict[Paths.Binaries.SCEAP] as byte[]; } }
-
-        public static string[] ShopAvailabilities
-        {
-            get
-            {
-                if( shopAvailabilities == null )
-                {
-                    shopAvailabilities =
-                        Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                            ItemsStrings,
-                            "/ItemStrings/ShopAvailabilities/string[@value='{0}']/@name",
-                            21 );
-                }
-
-                return shopAvailabilities;
-            }
-        }
-
-        public static string SkillSets { get { return dict[Paths.SkillSetsXML] as string; } }
-
-        public static byte[] SkillSetsBin { get { return dict[Paths.Binaries.SkillSets] as byte[]; } }
-
-        public static string SpecialNames { get { return dict[Paths.SpecialNamesXML] as string; } }
-
-        public static string SpriteSets { get { return dict[Paths.SpriteSetsXML] as string; } }
-
-        public static byte[] StatusAttributesBin { get { return dict[Paths.Binaries.StatusAttributes] as byte[]; } }
-
-        public static string[] Statuses
-        {
-            get
-            {
-                if( statuses == null )
-                {
-                    statuses = Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                        StatusNames,
-                        "/Statuses/Status[@offset='{0}']/@name",
-                        40 );
-                }
-
-                return statuses;
-            }
-        }
-
-        public static string StatusNames { get { return dict[Paths.StatusNamesXML] as string; } }
-
-        public static byte[] StoreInventoriesBin { get { return dict[Paths.Binaries.StoreInventories] as byte[]; } }
-
-        #endregion Public Properties 
-
-		#region Constructors (1) 
+        private static XmlDocument eventNamesDoc;
+        private static XmlDocument abilityEffectsDoc;
+        private static XmlDocument mapNamesDoc;
+        private static XmlDocument unitNamesDoc;
+        private static XmlDocument spriteFilesDoc;
+        private static XmlDocument braveStoryDoc;
 
         static PSXResources()
         {
-            dict[Resources.Paths.PSX.Binaries.StoreInventories] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories];
-            dict[Resources.Paths.PSX.Binaries.ENTD1] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1];
-            dict[Resources.Paths.PSX.Binaries.ENTD2] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD2];
-            dict[Resources.Paths.PSX.Binaries.ENTD3] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD3];
-            dict[Resources.Paths.PSX.Binaries.ENTD4] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD4];
-            dict[Resources.Paths.PSX.Binaries.MoveFind] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MoveFind];
-            dict[Resources.Paths.PSX.Binaries.Abilities] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Abilities];
-            dict[Resources.Paths.PSX.Binaries.AbilityEffects] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityEffects];
-            dict[Resources.Paths.PSX.Binaries.ActionEvents] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ActionEvents];
-            dict[Resources.Paths.PSX.Binaries.Font] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Font];
-            dict[Resources.Paths.PSX.Binaries.FontWidths] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.FontWidths];
-            dict[Resources.Paths.PSX.Binaries.InflictStatuses] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.InflictStatuses];
-            dict[Resources.Paths.PSX.Binaries.JobLevels] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.JobLevels];
-            dict[Resources.Paths.PSX.Binaries.Jobs] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Jobs];
-            dict[Resources.Paths.PSX.Binaries.MonsterSkills] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MonsterSkills];
-            dict[Resources.Paths.PSX.Binaries.OldItemAttributes] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItemAttributes];
-            dict[Resources.Paths.PSX.Binaries.OldItems] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItems];
-            dict[Resources.Paths.PSX.Binaries.PoachProbabilities] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.PoachProbabilities];
-            dict[Resources.Paths.PSX.Binaries.SkillSets] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SkillSets];
-            dict[Resources.Paths.PSX.Binaries.StatusAttributes] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StatusAttributes];
-            dict[Resources.Paths.PSX.EventNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.JobsXML] = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.SkillSetsXML] = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.SpecialNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.SpecialNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.SpriteSetsXML] = Resources.ZipFileContents[Resources.Paths.PSX.SpriteSetsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.StatusNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.AbilitiesNamesXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.AbilitiesStringsXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesStringsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.AbilityEffectsXML] = Resources.ZipFileContents[Resources.Paths.PSX.AbilityEffectsXML].ToUTF8String();
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            Binaries.ReactionAbilityEffects = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ReactionAbilityEffects].AsReadOnly();
+            Binaries.StoreInventories = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories].AsReadOnly();
+            Binaries.ENTD1 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1].AsReadOnly();
+            Binaries.ENTD2 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD2].AsReadOnly();
+            Binaries.ENTD3 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD3].AsReadOnly();
+            Binaries.ENTD4 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD4].AsReadOnly();
+            Binaries.MoveFind = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MoveFind].AsReadOnly();
+            Binaries.Abilities = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Abilities].AsReadOnly();
+            Binaries.AbilityAnimations = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityAnimations].AsReadOnly();
+            Binaries.AbilityEffects = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.AbilityEffects].AsReadOnly();
+            Binaries.ActionEvents = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ActionEvents].AsReadOnly();
+            Binaries.Font = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Font].AsReadOnly();
+            Binaries.FontWidths = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.FontWidths].AsReadOnly();
+            Binaries.InflictStatuses = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.InflictStatuses].AsReadOnly();
+            Binaries.JobLevels = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.JobLevels].AsReadOnly();
+            Binaries.Jobs = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.Jobs].AsReadOnly();
+            Binaries.MonsterSkills = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.MonsterSkills].AsReadOnly();
+            Binaries.OldItemAttributes = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItemAttributes].AsReadOnly();
+            Binaries.OldItems = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.OldItems].AsReadOnly();
+            Binaries.PoachProbabilities = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.PoachProbabilities].AsReadOnly();
+            Binaries.SkillSets = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SkillSets].AsReadOnly();
+            Binaries.StatusAttributes = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StatusAttributes].AsReadOnly();
+            Binaries.SCEAPDAT = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
+
+            eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String().ToXmlDocument();
+            jobsDoc = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String().ToXmlDocument();
+            skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String().ToXmlDocument();
+            specialNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpecialNamesXML].ToUTF8String().ToXmlDocument();
+            spriteSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpriteSetsXML].ToUTF8String().ToXmlDocument();
+            abilitiesStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesStringsXML].ToUTF8String().ToXmlDocument();
+            abilityEffectsDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilityEffectsXML].ToUTF8String().ToXmlDocument();
+            itemsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String().ToXmlDocument();
+            itemsStringsDoc = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String().ToXmlDocument();
+            shopNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.ShopNamesXML].ToUTF8String().ToXmlDocument();
+            mapNamesDoc = Resources.ZipFileContents[Paths.MapNamesXML].ToUTF8String().ToXmlDocument();
+            unitNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.UnitNamesXML].ToUTF8String().ToXmlDocument();
+            spriteFilesDoc = Resources.ZipFileContents[Resources.Paths.PSX.SpriteFilesXML].ToUTF8String().ToXmlDocument();
+            statusNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.StatusNamesXML].ToUTF8String().ToXmlDocument();
+            abilitiesDoc = Resources.ZipFileContents[Resources.Paths.PSX.AbilitiesNamesXML].ToUTF8String().ToXmlDocument();
+            braveStoryDoc = Resources.ZipFileContents[Resources.Paths.PSX.BraveStoryXML].ToUTF8String().ToXmlDocument();
+
             dict[Resources.Paths.PSX.ItemAttributesXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemAttributesXML].ToUTF8String();
-            dict[Resources.Paths.PSX.ItemsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.ItemsStringsXML] = Resources.ZipFileContents[Resources.Paths.PSX.ItemsStringsXML].ToUTF8String();
-            dict[Resources.Paths.PSX.Binaries.SCEAP] = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
+
             CharacterSet = new ReadOnlyCollection<string>( new string[77000 / 14 / 10 * 4] {
                 "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F", 
                 "G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V", 
@@ -431,8 +120,18 @@ namespace PatcherLib
                 "バ","パ","ヒ","ビ","ピ","フ","ブ","プ","ヘ","ベ","ペ","ホ","ボ","ポ","マ","ミ", 
                 "ム","メ","モ","ャ","ヤ","ュ","ユ","ョ","ヨ","ラ","リ","ル","レ","ロ","ヮ","ワ", 
                 "☇","*","ヲ","ン","ヴ","ヵ","ヶ","—","「","、","！","⋯",".","-","＋","×", 
-                "÷","∩","∪","＝","≠","＞","＜","≧","≦","*","*","*","*","*","*","*", 
-                "*","*","*","剣","一","乙","七","丁","九","了","憎","人","入","八","刀","力", 
+                "÷","∩","∪","＝","≠","＞","＜","≧","≦",
+                "*",
+                "*",
+                "{r }",
+                "*",
+                "*",
+                "*",
+                "*", 
+                "*",
+                "*",
+                "*",
+                "剣","一","乙","七","丁","九","了","憎","人","入","八","刀","力", 
                 "十","下","三","上","丈","万","与","久","丸","乞","也","亡","凡","刃","千","飯", 
                 "土","士","夕","大","女","子","寸","小","山","川","工","己","干","弓","々","油", 
                 "祭","奇","跡","演","不","中","了","五","互","井","介","仇","今","仁","内","元", 
@@ -555,7 +254,5 @@ namespace PatcherLib
                 "醒","譚","裸","傀","儡","詔","勅","滞","搾","症","睛","旦","忙","眷","抹","{Unknown}", 
                 "=","$","¥","{SP}",",",";","'","\"" } );
         }
-
-		#endregion Constructors 
     }
 }

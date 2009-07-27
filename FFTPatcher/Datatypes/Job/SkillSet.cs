@@ -27,7 +27,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents the set of <see cref="Ability"/> a <see cref="Job"/> can use.
     /// </summary>
-    public class SkillSet : IChangeable, ISupportDigest
+    public class SkillSet : IChangeable, ISupportDigest, ISupportDefault<SkillSet>
     {
 		#region Instance Variables (3) 
 
@@ -141,11 +141,11 @@ namespace FFTPatcher.Datatypes
 
         public string Name { get; private set; }
 
-        public static string[] PSPNames { get; private set; }
+        public static IList<string> PSPNames { get; private set; }
 
         public static SkillSet[] PSPSkills { get; private set; }
 
-        public static string[] PSXNames { get; private set; }
+        public static IList<string> PSXNames { get; private set; }
 
         public static SkillSet[] PSXSkills { get; private set; }
 
@@ -174,14 +174,9 @@ namespace FFTPatcher.Datatypes
             PSPSkills = new SkillSet[0xE3];
             pspEventSkills = new SortedDictionary<byte, SkillSet>();
 
-            PSPNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.SkillSets,
-                "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
-                0xE3 );
-            PSXNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.SkillSets,
-                "/SkillSets/SkillSet[@byte='{0:X2}']/@name",
-                0xE0 );
+            PSPNames = PSPResources.Lists.SkillSets;
+            PSXNames = PSXResources.Lists.SkillSets;
+
             for( int i = 0; i < 0xE3; i++ )
             {
                 string n = PSPNames[i];
@@ -310,7 +305,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Public Methods 
     }
 
-    public class AllSkillSets : PatchableFile, IXmlDigest
+    public class AllSkillSets : PatchableFile, IXmlDigest, IGenerateCodes
     {
 		#region Public Properties (2) 
 
@@ -339,7 +334,7 @@ namespace FFTPatcher.Datatypes
 		#region Constructors (3) 
 
         public AllSkillSets( IList<byte> bytes )
-            : this( Context.US_PSP, bytes, PSPResources.SkillSetsBin )
+            : this( Context.US_PSP, bytes, PSPResources.Binaries.SkillSets )
         {
         }
 
@@ -372,18 +367,6 @@ namespace FFTPatcher.Datatypes
 		#endregion Constructors 
 
 		#region Public Methods (5) 
-
-        public List<string> GenerateCodes()
-        {
-            if( FFTPatch.Context == Context.US_PSP )
-            {
-                return Codes.GenerateCodes( Context.US_PSP, PSPResources.SkillSetsBin, this.ToByteArray(), 0x2799E4 );
-            }
-            else
-            {
-                return Codes.GenerateCodes( Context.US_PSX, PSXResources.SkillSetsBin, this.ToByteArray( Context.US_PSX ), 0x064A94 );
-            }
-        }
 
         public override IList<PatchedByteArray> GetPatches( Context context )
         {
@@ -423,7 +406,7 @@ namespace FFTPatcher.Datatypes
             return result.ToArray();
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {
@@ -446,5 +429,26 @@ namespace FFTPatcher.Datatypes
         }
 
 		#endregion Public Methods 
+    
+        #region IGenerateCodes Members
+
+        string IGenerateCodes.GetCodeHeader(Context context)
+        {
+            return context == Context.US_PSP ? "_C0 Skill Sets" : "\"Skill Sets";
+        }
+
+        IList<string> IGenerateCodes.GenerateCodes(Context context)
+        {
+            if (context == Context.US_PSP)
+            {
+                return Codes.GenerateCodes( Context.US_PSP, PSPResources.Binaries.SkillSets, this.ToByteArray(), 0x2799E4 );
+            }
+            else
+            {
+                return Codes.GenerateCodes( Context.US_PSX, PSXResources.Binaries.SkillSets, this.ToByteArray( Context.US_PSX ), 0x064A94 );
+            }
+        }
+
+        #endregion
     }
 }

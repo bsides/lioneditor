@@ -29,7 +29,7 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents a generic item.
     /// </summary>
-    public class Item : IChangeable, ISupportDigest
+    public class Item : IChangeable, ISupportDigest, ISupportDefault<Item>
     {
 		#region Instance Variables (11) 
 
@@ -116,7 +116,7 @@ namespace FFTPatcher.Datatypes
 
         public bool Head { get { return head; } set { head = value; } }
 
-        public static List<string> ItemNames
+        public static IList<string> ItemNames
         {
             get
             {
@@ -137,11 +137,11 @@ namespace FFTPatcher.Datatypes
 
         public static List<Item> PSPDummies { get; private set; }
 
-        public static List<string> PSPNames { get; private set; }
+        public static IList<string> PSPNames { get; private set; }
 
         public static List<Item> PSXDummies { get; private set; }
 
-        public static List<string> PSXNames { get; private set; }
+        public static IList<string> PSXNames { get; private set; }
 
         public bool Rare { get { return rare; } set { rare = value; } }
 
@@ -173,14 +173,8 @@ namespace FFTPatcher.Datatypes
             pspEventItems = new List<Item>( 256 );
             psxEventItems = new List<Item>( 256 );
 
-            PSPNames = new List<string>( PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.Items,
-                "/Items/Item[@offset='{0}']/@name",
-                316 ) );
-            PSXNames = new List<string>( PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.Items,
-                "/Items/Item[@offset='{0}']/@name",
-                256 ) );
+            PSPNames = PSPResources.Lists.Items;
+            PSXNames = PSXResources.Lists.Items;
 
             for( int i = 0; i < 316; i++ )
             {
@@ -390,15 +384,15 @@ namespace FFTPatcher.Datatypes
                 if( all == null )
                 {
                     all = new List<ShopAvailability>( 256 );
-                    for( byte i = 0; i < PSPResources.ShopAvailabilities.Length; i++ )
+                    for ( byte i = 0; i < PSPResources.Lists.ShopAvailabilities.Count; i++ )
                     {
                         ShopAvailability a = new ShopAvailability();
                         a.b = i;
-                        a.name = PSPResources.ShopAvailabilities[i];
-                        a.psxName = PSXResources.ShopAvailabilities[i];
+                        a.name = PSPResources.Lists.ShopAvailabilities[i];
+                        a.psxName = PSXResources.Lists.ShopAvailabilities[i];
                         all.Add( a );
                     }
-                    for( int i = PSPResources.ShopAvailabilities.Length; i <= 0xFF; i++ )
+                    for ( int i = PSPResources.Lists.ShopAvailabilities.Count; i <= 0xFF; i++ )
                     {
                         ShopAvailability a = new ShopAvailability();
                         a.b = (byte)i;

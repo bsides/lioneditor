@@ -27,12 +27,12 @@ namespace FFTPatcher.Datatypes
     /// <summary>
     /// Represents an Event in the game
     /// </summary>
-    public class Event : IEquatable<Event>, IChangeable, IXmlDigest
+    public class Event : IEquatable<Event>, IChangeable, IXmlDigest, ISupportDefault<Event>
     {
 		#region Instance Variables (2) 
 
-        private static string[] pspEventNames;
-        private static string[] psxEventNames;
+        private static IList<string> pspEventNames;
+        private static IList<string> psxEventNames;
 
 		#endregion Instance Variables 
 
@@ -40,7 +40,7 @@ namespace FFTPatcher.Datatypes
 
         public Event Default { get; private set; }
 
-        public static string[] EventNames
+        public static IList<string> EventNames
         {
             get { return FFTPatch.Context == Context.US_PSP ? pspEventNames : psxEventNames; }
         }
@@ -66,14 +66,8 @@ namespace FFTPatcher.Datatypes
 
         static Event()
         {
-            pspEventNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSPResources.EventNames,
-                "/Events/Event[@value='{0:X3}']/@name",
-                0x200 + 77 );
-            psxEventNames = PatcherLib.Utilities.Utilities.GetStringsFromNumberedXmlNodes(
-                PSXResources.EventNames,
-                "/Events/Event[@value='{0:X3}']/@name",
-                0x200 );
+            pspEventNames = PSPResources.Lists.EventNames;
+            psxEventNames = PSXResources.Lists.EventNames;
         }
 
         public Event( int value, IList<byte> bytes, Event defaults )
@@ -134,7 +128,7 @@ namespace FFTPatcher.Datatypes
             return (HasChanged ? "*" : "") + string.Format( "{0:X3} {1}", Value, Name );
         }
 
-        public void WriteXml( System.Xml.XmlWriter writer )
+        public void WriteXmlDigest( System.Xml.XmlWriter writer )
         {
             if( HasChanged )
             {

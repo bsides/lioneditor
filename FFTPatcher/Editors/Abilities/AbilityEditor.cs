@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using FFTPatcher.Controls;
 using FFTPatcher.Datatypes;
 using PatcherLib.Datatypes;
+using PatcherLib;
 
 namespace FFTPatcher.Editors
 {
@@ -48,10 +49,18 @@ namespace FFTPatcher.Editors
             get { return ability; }
             set
             {
-                if( ability != value )
+                if (value == null)
+                {
+                    ability = value;
+                    abilityAttributesEditor.Attributes = null;
+                    commonAbilitiesEditor.Ability = null;
+                    Enabled = false;
+                }
+                else if( ability != value )
                 {
                     ability = value;
                     UpdateView();
+                    Enabled = true;
                 }
             }
         }
@@ -118,8 +127,9 @@ namespace FFTPatcher.Editors
             commonAbilitiesEditor.Ability = ability;
 
             abilityAttributesEditor.Visible = ability.IsNormal;
-            effectComboBox.Visible = ability.IsNormal;
-            effectLabel.Visible = ability.IsNormal;
+            bool showEffect = ability.Effect != null && ability.Default.Effect != null;
+            effectComboBox.Visible = showEffect;
+            effectLabel.Visible = showEffect;
             abilityAttributesEditor.Attributes = ability.Attributes;
 
             foreach( NumericUpDownWithDefault spinner in spinners )
@@ -155,7 +165,7 @@ namespace FFTPatcher.Editors
                 throwingComboBox.DataSource = psxItemTypes;
             }
 
-            if( ability.IsNormal )
+            if (showEffect)
             {
                 effectComboBox.SetValueAndDefault( ability.Effect, ability.Default.Effect );
             }
@@ -208,5 +218,13 @@ namespace FFTPatcher.Editors
 		#endregion Private Methods 
 
         public event EventHandler<LabelClickedEventArgs> InflictStatusLabelClicked;
+
+        private void effectComboBox_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if (!ignoreChanges)
+            {
+                ability.Effect = effectComboBox.SelectedItem as Effect;
+            }
+        }
     }
 }

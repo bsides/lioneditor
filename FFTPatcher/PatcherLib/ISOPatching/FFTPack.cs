@@ -32,7 +32,7 @@ namespace PatcherLib.Iso
     {
 		#region Public Methods (7) 
         static XmlNode resourcesDoc;
-        const int numFftPackFiles = 3970;
+        public const int NumFftPackFiles = 3970;
 
         static FFTPack()
         {
@@ -59,14 +59,27 @@ namespace PatcherLib.Iso
         {
             get
             {
-                if ( fftPackFiles == null )
+                if (fftPackFiles == null)
                 {
-                    fftPackFiles = new Dictionary<int, string>();
-
-                    XmlNodeList nodes = resourcesDoc.SelectNodes( "/files/file" );
-                    foreach ( XmlNode node in nodes )
+                    try
                     {
-                        fftPackFiles.Add( Convert.ToInt32( node.Attributes["entry"].InnerText ), node.Attributes["name"].InnerText );
+                        fftPackFiles = new Dictionary<int, string>();
+
+                        XmlNodeList nodes = resourcesDoc.SelectNodes("/files/file");
+                        foreach (XmlNode node in nodes)
+                        {
+                            int key = Convert.ToInt32(node.Attributes["entry"].InnerText);
+                            if (fftPackFiles.ContainsKey(key))
+                            {
+                                throw new Exception();
+                            }
+                            fftPackFiles.Add(Convert.ToInt32(node.Attributes["entry"].InnerText), node.Attributes["name"].InnerText);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        fftPackFiles = null;
+                        throw;
                     }
                 }
 
@@ -82,7 +95,7 @@ namespace PatcherLib.Iso
             try
             {
                 stream = new FileStream( filename, FileMode.Open, FileAccess.Read );
-                DumpToDirectory( stream, path, worker );
+                DumpToDirectory(stream, path, stream.Length, worker);
             }
             catch( Exception )
             {
@@ -97,12 +110,12 @@ namespace PatcherLib.Iso
             }
         }
 
-        public static void DumpToDirectory( FileStream stream, string path, BackgroundWorker worker )
+        public static void DumpToDirectory( Stream stream, string path, long fftpackLength, BackgroundWorker worker )
         {
             MakeDirectories( path, "BATTLE", "EFFECT", "EVENT", "MAP", "MENU", "SOUND", "WORLD", "SAVEIMAGE", "unknown", "OPEN" );
-            for( int i = 1; i <= numFftPackFiles; i++ )
+            for( int i = 1; i <= NumFftPackFiles; i++ )
             {
-                byte[] bytes = GetFile( stream, i );
+                byte[] bytes = GetFile( stream, i, fftpackLength );
                 string filename = string.Empty;
 
                 if( FFTPackFiles.ContainsKey( i ) )
@@ -118,7 +131,10 @@ namespace PatcherLib.Iso
                     filename = string.Format( "unknown/fftpack.{0}", i );
                 }
 
-                worker.ReportProgress( ( i * 100 ) / numFftPackFiles, string.Format( "Extracting {0}", filename ) );
+                if (worker != null)
+                {
+                    worker.ReportProgress((i * 100) / NumFftPackFiles, string.Format("Extracting {0}", filename));
+                }
 
                 filename = Path.Combine( path, filename );
 
@@ -127,65 +143,86 @@ namespace PatcherLib.Iso
             }
         }
 
-        public static byte[] GetFile( Stream stream, int index )
+        public static byte[] GetFile( Stream stream, int index, long fftPackLength )
         {
-            byte[] bytes = new byte[4];
-            stream.Seek( index * 4 + 4, SeekOrigin.Begin );
-            stream.Read( bytes, 0, 4 );
-            UInt32 start = bytes.ToUInt32();
+            return GetFileFromFFTPack(stream, (Files)index, fftPackLength);
+        }
 
-            UInt32 end;
-            if ( index == numFftPackFiles )
-            {
-                end = (UInt32)stream.Length;
-            }
-            else
-            {
-                stream.Read( bytes, 0, 4 );
-                end = bytes.ToUInt32();
-            }
-
-            UInt32 length = end - start;
-
-            byte[] result = new byte[length];
-
-            stream.Seek( start, SeekOrigin.Begin );
-            stream.Read( result, 0, (int)length );
-
-            return result;
+        public static byte[] GetFileFromIso( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, Files file, int start, int length )
+        {
+            stream.Seek( info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, SeekOrigin.Begin );
+            return GetFileFromFFTPack( stream, file, info.GetFileSize( PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin ), start, length );
         }
 
         public static byte[] GetFileFromIso( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, Files file )
         {
             stream.Seek( info[PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin] * 2048, SeekOrigin.Begin );
-            return GetFileFromFFTPack( stream, file );
+            return GetFileFromFFTPack(stream, file, info.GetFileSize(PspIso.Sectors.PSP_GAME_USRDIR_fftpack_bin));
         }
 
-        public static byte[] GetFileFromFFTPack( Stream stream, Files file )
+        private static UInt32 GetStartPosition( Stream stream, Files file, long fftpackLength )
         {
             long pos = stream.Position;
             byte[] loc = new byte[4];
-
             int index = (int)file;
             stream.Seek( index * 4 + 4 + pos, SeekOrigin.Begin );
             stream.Read( loc, 0, 4 );
-            UInt32 start = loc.ToUInt32();
+            UInt32 result = loc.ToUInt32();
+            stream.Seek( pos, SeekOrigin.Begin );
+            return result;
+        }
 
+        private static UInt32 GetEndPosition( Stream stream, Files file, long fftpackLength )
+        {
+            long pos = stream.Position;
+            byte[] loc = new byte[4];
+            int index = (int)file;
             UInt32 end;
-            if ( index >= numFftPackFiles )
+            if (index >= NumFftPackFiles)
             {
-                throw new ArgumentException( "file" );
+                end = (uint)fftpackLength;
             }
             else
             {
+                stream.Seek( index * 4 + 4 + pos + 4, SeekOrigin.Begin );
                 stream.Read( loc, 0, 4 );
                 end = loc.ToUInt32();
+                stream.Seek( pos, SeekOrigin.Begin );
             }
+            return end;
+        }
+
+        private static byte[] GetFileFromFFTPack( Stream stream, Files file, long fftpackLength, int start, int length )
+        {
+            long pos = stream.Position;
+            UInt32 fileStart = GetStartPosition( stream, file, fftpackLength );
+            
+            UInt32 fileEnd = GetEndPosition( stream, file, fftpackLength );
+
+            UInt32 fileLength = fileEnd - fileStart;
+            if (start > fileLength) throw new ArgumentOutOfRangeException( "start", "start longer than file length" );
+            if (length > fileLength) throw new ArgumentOutOfRangeException( "length", "length longer than file length" );
+
+            byte[] result = new byte[length];
+            stream.Seek( fileStart + start + pos, SeekOrigin.Begin );
+            stream.Read( result, 0, length );
+            stream.Seek( pos, SeekOrigin.Begin );
+
+            return result;
+        }
+
+        public static byte[] GetFileFromFFTPack( Stream stream, Files file, long fftpackLength )
+        {
+            long pos = stream.Position;
+            UInt32 start = GetStartPosition( stream, file, fftpackLength );
+
+            UInt32 end = GetEndPosition( stream, file, fftpackLength );
 
             UInt32 length = end - start;
             byte[] result = new byte[length];
             stream.Seek( start + pos, SeekOrigin.Begin );
             stream.Read( result, 0, (int)length );
+            stream.Seek(pos, SeekOrigin.Begin);
 
             return result;
         }
@@ -209,7 +246,7 @@ namespace PatcherLib.Iso
                 UInt32 end = (UInt32)stream.Position;
                 UInt32 start = 8;
 
-                for( int i = 1; i <= numFftPackFiles; i++ )
+                for( int i = 1; i <= NumFftPackFiles; i++ )
                 {
                     stream.Seek( start, SeekOrigin.Begin );
                     stream.Write( end.ToBytes(), 0, 4 );
@@ -224,8 +261,8 @@ namespace PatcherLib.Iso
                     }
 
                     end = (UInt32)stream.Position;
-
-                    worker.ReportProgress( (i * 100) / numFftPackFiles );
+                    if (worker != null)
+                        worker.ReportProgress( (i * 100) / NumFftPackFiles );
                 }
             }
             catch( Exception )
@@ -242,34 +279,6 @@ namespace PatcherLib.Iso
                 }
             }
         }
-
-        //public static void PatchFile( string filename, int index, byte[] bytes )
-        //{
-        //    FileStream stream = null;
-        //    try
-        //    {
-        //        stream = new FileStream( filename, FileMode.Open );
-        //        PatchFile( stream, index, bytes );
-        //    }
-        //    catch( Exception )
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        if( stream != null )
-        //        {
-        //            stream.Flush();
-        //            stream.Close();
-        //            stream = null;
-        //        }
-        //    }
-        //}
-
-        //public static void PatchFile( Stream stream, int index, byte[] bytes )
-        //{
-        //    PatchFile( stream, index, 0, bytes );
-        //}
 
         public static void PatchFile( Stream stream, PatcherLib.Iso.PspIso.PspIsoInfo info, int index, int offset, byte[] bytes )
         {
@@ -386,6 +395,7 @@ namespace PatcherLib.Iso
             EVENT_CARD_OUT = 16,
             EVENT_BUNIT_OUT = 17,
             EVENT_EVTOOL_OUT = 18,
+            EVENT_MAPTITLE_BIN = 19,
             EVENT_FONT_BIN = 20,
             EVENT_FRAME_BIN = 21,
             EVENT_TEST_EVT = 22,
@@ -397,6 +407,7 @@ namespace PatcherLib.Iso
             EVENT_CHAPTER3_OUT = 28,
             EVENT_CHAPTER4_OUT = 29,
             EVENT_GAMEOVER_BIN = 30,
+            EVENT_BONUS_BIN = 31,
             EVENT_WIN001_BIN = 32,
             EVENT_WLDFACE4_BIN = 34,
             EVENT_WLDFACE_BIN = 35,
@@ -1244,6 +1255,8 @@ namespace PatcherLib.Iso
             SOUND_MUSIC_97_SMD = 878,
             SOUND_MUSIC_98_SMD = 879,
             SOUND_MUSIC_99_SMD = 880,
+            OPEN_OPNTEX_BIN = 882,
+            OPEN_OPNBK_BIN = 883,
             BATTLE_MaleDarkKnight_SPR = 885,
             BATTLE_FemaleDarkKnight_SPR = 886,
             BATTLE_MaleOnionKnight_SPR = 887,

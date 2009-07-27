@@ -18,6 +18,8 @@
     along with FFTPatcher.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <Items>
+  <!-- This is used by the Items, Abilities, Poaching, ENTD, Move/Find Item,
+       and Shop Inventories pages -->
   <Item offset="0" name="&lt;Nothing&gt; "/> <!-- leave trailing space -->
   <Item offset="1" name="Dagger"/>
   <Item offset="2" name="Mythril Knife"/>

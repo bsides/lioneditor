@@ -81,8 +81,12 @@ namespace FFTPatcher.Editors
 
         private void eventEditor1_DataChanged( object sender, System.EventArgs e )
         {
+            eventListBox.BeginUpdate();
+            var top = eventListBox.TopIndex;
             CurrencyManager cm = (CurrencyManager)BindingContext[eventListBox.DataSource];
             cm.Refresh();
+            eventListBox.TopIndex = top;
+            eventListBox.EndUpdate();
         }
 
         private void eventListBox_MouseDown( object sender, MouseEventArgs e )

@@ -137,7 +137,114 @@ namespace PatcherLib.Iso
             ReplaceStrFile(iso, (Sectors)patch.Sector, patch.GetBytes());
         }
 
-        public static byte[] ReadFile(Stream iso, Sectors file, int offset, int length)
+        public enum FrameBinType
+        {
+            Unknown,
+            Lv,
+            Exp,
+            Hp,
+            Mp,
+            Ct,
+
+            Brave,
+            Faith,
+            Move,
+            Jump,
+            Speed,
+            WeapPower,
+
+            Sword,
+            Staff,
+            SwordAndStaff,
+            SwordAndStaffOutline,
+
+            CDash,
+            SDash,
+            ADash,
+
+            GIL, 
+
+            EV,
+            AT,
+            R,
+            L,
+
+            SidewaysArrowThing,
+            Bar,
+
+            Eqp,
+            Ability,
+            RightHand,
+            RightHandOutline,
+            LeftHand,
+            LeftHandOutline,
+            Helmet,
+            HelmetOutline,
+            Armor,
+            ArmorOutline,
+            Accessory,
+            AccessoryOutline,
+            TwoHanded,
+
+            ActionAbility,
+            ReactionAbility,
+            SupportAbility,
+            MovementAbility,
+
+            DoubleStar,
+
+            Guest,
+            Enemy,
+            Auto,
+            Menu,
+            Check,
+            Effect,
+            Turn,
+            Ref,
+            Stock,
+
+            Orb,
+
+
+
+            Dead,
+            Undead,
+            Petrify,
+            Invite,
+            Darkness,
+            Confusion,
+            Silence,
+            BloodSuck,
+            Oil,
+            Float,
+            Reraise,
+            Transparent,
+            Berserk,
+            Poison,
+            Regen,
+            Protect,
+            Shell,
+            Haste,
+            Slow,
+            Stop,
+            FaithStatus,
+            Innocent,
+            Charm,
+            Sleep,
+            DontMove,
+            DontAct,
+            Reflect,
+            DeathSentence,
+            Frog,
+
+
+            Stolen,
+            Broken,
+
+
+        }
+
+        public static byte[] ReadFile( Stream iso, Sectors file, int offset, int length )
         {
             return IsoPatch.ReadFile(IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length);
         }

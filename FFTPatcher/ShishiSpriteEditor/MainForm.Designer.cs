@@ -83,9 +83,7 @@ namespace FFTPatcher.SpriteEditor
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.spriteTabPage = new System.Windows.Forms.TabPage();
-            this.allSpritesEditor1 = new FFTPatcher.SpriteEditor.AllSpritesEditor();
             this.otherTabPage = new System.Windows.Forms.TabPage();
-            this.allOtherImagesEditor1 = new FFTPatcher.SpriteEditor.AllOtherImagesEditor();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -112,6 +110,10 @@ namespace FFTPatcher.SpriteEditor
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this._8BitAltRadioButton = new System.Windows.Forms.RadioButton();
+            this.allSpritesEditor1 = new FFTPatcher.SpriteEditor.AllSpritesEditor();
+            this.allOtherImagesEditor1 = new FFTPatcher.SpriteEditor.AllOtherImagesEditor();
+            this.paletteSpinner = new System.Windows.Forms.NumericUpDown();
             mainMenu = new System.Windows.Forms.MainMenu( this.components );
             fileMenu = new System.Windows.Forms.MenuItem();
             openIsoMenuItem = new System.Windows.Forms.MenuItem();
@@ -130,15 +132,16 @@ namespace FFTPatcher.SpriteEditor
             this.spriteTabPage.SuspendLayout();
             this.otherTabPage.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ( (System.ComponentModel.ISupportInitialize)( this.numericUpDown2 ) ).BeginInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.numericUpDown1 ) ).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox2 ) ).BeginInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.heightSpinner ) ).BeginInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.widthSpinner ) ).BeginInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.ySpinner ) ).BeginInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.xSpinner ) ).BeginInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.widthSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xSpinner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -369,9 +372,9 @@ namespace FFTPatcher.SpriteEditor
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
-                        | System.Windows.Forms.AnchorStyles.Left )
-                        | System.Windows.Forms.AnchorStyles.Right ) ) );
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add( this.spriteTabPage );
             this.tabControl1.Controls.Add( this.otherTabPage );
             this.tabControl1.Controls.Add( this.tabPage1 );
@@ -379,7 +382,7 @@ namespace FFTPatcher.SpriteEditor
             this.tabControl1.Location = new System.Drawing.Point( 2, 4 );
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size( 738, 663 );
+            this.tabControl1.Size = new System.Drawing.Size( 738, 640 );
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler( this.tabControl1_SelectedIndexChanged );
             // 
@@ -389,21 +392,10 @@ namespace FFTPatcher.SpriteEditor
             this.spriteTabPage.Location = new System.Drawing.Point( 4, 22 );
             this.spriteTabPage.Name = "spriteTabPage";
             this.spriteTabPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.spriteTabPage.Size = new System.Drawing.Size( 730, 637 );
+            this.spriteTabPage.Size = new System.Drawing.Size( 730, 614 );
             this.spriteTabPage.TabIndex = 0;
             this.spriteTabPage.Text = "Sprites";
             this.spriteTabPage.UseVisualStyleBackColor = true;
-            // 
-            // allSpritesEditor1
-            // 
-            this.allSpritesEditor1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
-                        | System.Windows.Forms.AnchorStyles.Left )
-                        | System.Windows.Forms.AnchorStyles.Right ) ) );
-            this.allSpritesEditor1.Enabled = false;
-            this.allSpritesEditor1.Location = new System.Drawing.Point( 0, 0 );
-            this.allSpritesEditor1.Name = "allSpritesEditor1";
-            this.allSpritesEditor1.Size = new System.Drawing.Size( 730, 634 );
-            this.allSpritesEditor1.TabIndex = 0;
             // 
             // otherTabPage
             // 
@@ -411,22 +403,14 @@ namespace FFTPatcher.SpriteEditor
             this.otherTabPage.Location = new System.Drawing.Point( 4, 22 );
             this.otherTabPage.Name = "otherTabPage";
             this.otherTabPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.otherTabPage.Size = new System.Drawing.Size( 634, 637 );
+            this.otherTabPage.Size = new System.Drawing.Size( 730, 614 );
             this.otherTabPage.TabIndex = 1;
             this.otherTabPage.Text = "Other Images";
             this.otherTabPage.UseVisualStyleBackColor = true;
             // 
-            // allOtherImagesEditor1
-            // 
-            this.allOtherImagesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allOtherImagesEditor1.Enabled = false;
-            this.allOtherImagesEditor1.Location = new System.Drawing.Point( 3, 3 );
-            this.allOtherImagesEditor1.Name = "allOtherImagesEditor1";
-            this.allOtherImagesEditor1.Size = new System.Drawing.Size( 628, 631 );
-            this.allOtherImagesEditor1.TabIndex = 0;
-            // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add( this.paletteSpinner );
             this.tabPage1.Controls.Add( this.numericUpDown2 );
             this.tabPage1.Controls.Add( this.textBox1 );
             this.tabPage1.Controls.Add( this.listBox1 );
@@ -452,7 +436,7 @@ namespace FFTPatcher.SpriteEditor
             this.tabPage1.Location = new System.Drawing.Point( 4, 22 );
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding( 3 );
-            this.tabPage1.Size = new System.Drawing.Size( 730, 637 );
+            this.tabPage1.Size = new System.Drawing.Size( 730, 614 );
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -482,7 +466,7 @@ namespace FFTPatcher.SpriteEditor
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font( "Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
+            this.textBox1.Font = new System.Drawing.Font( "Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)) );
             this.textBox1.Location = new System.Drawing.Point( 300, 491 );
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -534,7 +518,7 @@ namespace FFTPatcher.SpriteEditor
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point( 12, 551 );
+            this.comboBox1.Location = new System.Drawing.Point( 12, 570 );
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size( 121, 21 );
             this.comboBox1.TabIndex = 14;
@@ -573,7 +557,7 @@ namespace FFTPatcher.SpriteEditor
             // numericUpDown1
             // 
             this.numericUpDown1.Hexadecimal = true;
-            this.numericUpDown1.Location = new System.Drawing.Point( 12, 525 );
+            this.numericUpDown1.Location = new System.Drawing.Point( 12, 544 );
             this.numericUpDown1.Maximum = new decimal( new int[] {
             -1,
             0,
@@ -587,11 +571,12 @@ namespace FFTPatcher.SpriteEditor
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add( this._8BitAltRadioButton );
             this.groupBox1.Controls.Add( this._8bitRadioButton );
             this.groupBox1.Controls.Add( this._16BitRadioButton );
             this.groupBox1.Location = new System.Drawing.Point( 12, 439 );
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size( 75, 80 );
+            this.groupBox1.Size = new System.Drawing.Size( 99, 98 );
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -601,9 +586,9 @@ namespace FFTPatcher.SpriteEditor
             this._8bitRadioButton.AutoSize = true;
             this._8bitRadioButton.Location = new System.Drawing.Point( 6, 42 );
             this._8bitRadioButton.Name = "_8bitRadioButton";
-            this._8bitRadioButton.Size = new System.Drawing.Size( 45, 17 );
+            this._8bitRadioButton.Size = new System.Drawing.Size( 90, 17 );
             this._8bitRadioButton.TabIndex = 11;
-            this._8bitRadioButton.Text = "8-bit";
+            this._8bitRadioButton.Text = "8-bit X-Y-W-H";
             this._8bitRadioButton.UseVisualStyleBackColor = true;
             this._8bitRadioButton.CheckedChanged += new System.EventHandler( this._8bitRadioButton_CheckedChanged );
             // 
@@ -698,7 +683,7 @@ namespace FFTPatcher.SpriteEditor
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point( 96, 467 );
+            this.label2.Location = new System.Drawing.Point( 117, 467 );
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size( 14, 13 );
             this.label2.TabIndex = 3;
@@ -723,7 +708,7 @@ namespace FFTPatcher.SpriteEditor
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point( 96, 441 );
+            this.label1.Location = new System.Drawing.Point( 117, 441 );
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size( 14, 13 );
             this.label1.TabIndex = 1;
@@ -746,15 +731,60 @@ namespace FFTPatcher.SpriteEditor
             this.progressBar1.TabIndex = 1;
             this.progressBar1.Visible = false;
             // 
+            // _8BitAltRadioButton
+            // 
+            this._8BitAltRadioButton.AutoSize = true;
+            this._8BitAltRadioButton.Location = new System.Drawing.Point( 6, 65 );
+            this._8BitAltRadioButton.Name = "_8BitAltRadioButton";
+            this._8BitAltRadioButton.Size = new System.Drawing.Size( 90, 17 );
+            this._8BitAltRadioButton.TabIndex = 21;
+            this._8BitAltRadioButton.TabStop = true;
+            this._8BitAltRadioButton.Text = "8-bit W-H-X-Y";
+            this._8BitAltRadioButton.UseVisualStyleBackColor = true;
+            this._8BitAltRadioButton.CheckedChanged += new System.EventHandler( this._8BitAltRadioButton_CheckedChanged );
+            // 
+            // allSpritesEditor1
+            // 
+            this.allSpritesEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.allSpritesEditor1.Enabled = false;
+            this.allSpritesEditor1.Location = new System.Drawing.Point( 0, 0 );
+            this.allSpritesEditor1.Name = "allSpritesEditor1";
+            this.allSpritesEditor1.Size = new System.Drawing.Size( 730, 611 );
+            this.allSpritesEditor1.TabIndex = 0;
+            // 
+            // allOtherImagesEditor1
+            // 
+            this.allOtherImagesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allOtherImagesEditor1.Enabled = false;
+            this.allOtherImagesEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.allOtherImagesEditor1.Name = "allOtherImagesEditor1";
+            this.allOtherImagesEditor1.Size = new System.Drawing.Size( 724, 608 );
+            this.allOtherImagesEditor1.TabIndex = 0;
+            // 
+            // paletteSpinner
+            // 
+            this.paletteSpinner.Location = new System.Drawing.Point( 350, 6 );
+            this.paletteSpinner.Maximum = new decimal( new int[] {
+            21,
+            0,
+            0,
+            0} );
+            this.paletteSpinner.Name = "paletteSpinner";
+            this.paletteSpinner.Size = new System.Drawing.Size( 120, 20 );
+            this.paletteSpinner.TabIndex = 21;
+            this.paletteSpinner.ValueChanged += new System.EventHandler( this.paletteSpinner_ValueChanged );
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 743, 687 );
+            this.ClientSize = new System.Drawing.Size( 743, 664 );
             this.Controls.Add( this.progressBar1 );
             this.Controls.Add( this.tabControl1 );
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ( (System.Drawing.Icon)( resources.GetObject( "$this.Icon" ) ) );
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject( "$this.Icon" )));
             this.MaximizeBox = false;
             this.Menu = mainMenu;
             this.MinimumSize = new System.Drawing.Size( 653, 713 );
@@ -766,16 +796,17 @@ namespace FFTPatcher.SpriteEditor
             this.otherTabPage.ResumeLayout( false );
             this.tabPage1.ResumeLayout( false );
             this.tabPage1.PerformLayout();
-            ( (System.ComponentModel.ISupportInitialize)( this.numericUpDown2 ) ).EndInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.numericUpDown1 ) ).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout( false );
             this.groupBox1.PerformLayout();
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox2 ) ).EndInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.heightSpinner ) ).EndInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.widthSpinner ) ).EndInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.ySpinner ) ).EndInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.xSpinner ) ).EndInit();
-            ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.widthSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ySpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xSpinner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paletteSpinner)).EndInit();
             this.ResumeLayout( false );
 
         }
@@ -831,6 +862,8 @@ namespace FFTPatcher.SpriteEditor
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.RadioButton _8BitAltRadioButton;
+        private System.Windows.Forms.NumericUpDown paletteSpinner;
     }
 }
 

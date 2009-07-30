@@ -1464,6 +1464,9 @@ namespace FFTPatcher.SpriteEditor
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._16BitXYWH, Offset = 0xB9FC - 0xB308 + 0xAAD80+3*12, Type = PatcherLib.Iso.PsxIso.FrameBinType.ADash},
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._16BitXYWH, Offset = 0xBA2C - 0xB308 + 0xAAD80+3*12, Type = PatcherLib.Iso.PsxIso.FrameBinType.SwordAndStaffOutline },
 
+            new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._16BitXYWH, Offset = 0x74e14, Type = PatcherLib.Iso.PsxIso.FrameBinType.Depth },
+            new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIN, Layout = FrameBinRectangle.ByteLayout._16BitXYWH, Offset = 0x100988, Type = PatcherLib.Iso.PsxIso.FrameBinType.Depth },
+
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC7E2, Type = PatcherLib.Iso.PsxIso.FrameBinType.Hp },
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC7E8, Type = PatcherLib.Iso.PsxIso.FrameBinType.Mp },
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC7EE, Type = PatcherLib.Iso.PsxIso.FrameBinType.Ct },
@@ -1472,6 +1475,9 @@ namespace FFTPatcher.SpriteEditor
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC800, Type = PatcherLib.Iso.PsxIso.FrameBinType.Br },
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC806, Type = PatcherLib.Iso.PsxIso.FrameBinType.Dot },
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC80C, Type = PatcherLib.Iso.PsxIso.FrameBinType.Fa },
+
+            new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAD248, Type = PatcherLib.Iso.PsxIso.FrameBinType.Master },
+            new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAD384, Type = PatcherLib.Iso.PsxIso.FrameBinType.Master },
 
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC812, Type = PatcherLib.Iso.PsxIso.FrameBinType.Hp },
             new FrameBinRectangle { File = PatcherLib.Iso.PsxIso.Sectors.WORLD_WORLD_BIN, Layout = FrameBinRectangle.ByteLayout._8BitWHXY, Offset = 0xAC818, Type = PatcherLib.Iso.PsxIso.FrameBinType.Mp },
@@ -1811,7 +1817,13 @@ namespace FFTPatcher.SpriteEditor
                         { PatcherLib.Iso.PsxIso.FrameBinType.Float, new Rectangle(65,240,21,8)},
                         { PatcherLib.Iso.PsxIso.FrameBinType.Undead, new Rectangle(142,110,26,8)},
                         { PatcherLib.Iso.PsxIso.FrameBinType.Silence, new Rectangle(75,108,26,8)},
-                        { PatcherLib.Iso.PsxIso.FrameBinType.Brave, new Rectangle(124,101,32,9)},
+                        //{ PatcherLib.Iso.PsxIso.FrameBinType.Brave, new Rectangle(124,101,32,9)},
+		{ PatcherLib.Iso.PsxIso.FrameBinType.AT, new Rectangle(96,8,21,8)},
+		{ PatcherLib.Iso.PsxIso.FrameBinType.WeapPower, new Rectangle(0,24,51,8)},
+        { PatcherLib.Iso.PsxIso.FrameBinType.Depth, new Rectangle(0,218,21,10)},
+		{ PatcherLib.Iso.PsxIso.FrameBinType.day, new Rectangle(191,87,20,9)},
+		{ PatcherLib.Iso.PsxIso.FrameBinType.Master, new Rectangle(216,120,39,9)},
+
                     };
 
                     var NoXPosition = new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.SCUS_942_21, 0x31508, 1 );
@@ -1912,7 +1924,7 @@ namespace FFTPatcher.SpriteEditor
                         {
                             var rectList = new List<FrameBinRectangle>( rects );
                             var currentRect = rectList.FindAll( fbr => fbr.Type == kvp.Key );
-                            Console.Out.WriteLine( "<Patch name=\"Update instructions for {0}\">", kvp.Key );
+                            Console.Out.WriteLine( "  <Patch name=\"Update instructions for {0}\">", kvp.Key );
 
                             foreach (var r in currentRect)
                             {
@@ -1946,12 +1958,13 @@ namespace FFTPatcher.SpriteEditor
 
                                 PatcherLib.Iso.PsxIso.PatchPsxIso( currentStream,
                                     new PatchedByteArray( r.File, r.Offset, pbyte ) );
-                                Console.Out.WriteLine( "<Location file=\"{0}\" offset=\"{1:X2}\">", r.File, r.Offset );
+                                Console.Out.WriteLine( "    <Location file=\"{0}\" offset=\"{1:X2}\">", r.File, r.Offset );
+                                Console.Out.Write( "      " );
                                 foreach (byte b in pbyte)
                                     Console.Out.Write("{0:X2}",b);
-                                Console.Out.WriteLine( Environment.NewLine + "</Location>" );
+                                Console.Out.WriteLine( Environment.NewLine + "    </Location>" );
                             }
-                            Console.Out.WriteLine( "</Patch>" );
+                            Console.Out.WriteLine( "  </Patch>" );
                         }
                         //frameBin.
                     }

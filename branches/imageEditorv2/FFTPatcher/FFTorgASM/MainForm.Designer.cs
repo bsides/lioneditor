@@ -36,24 +36,29 @@
             this.variableSpinner = new System.Windows.Forms.NumericUpDown();
             this.variableComboBox = new System.Windows.Forms.ComboBox();
             this.versionLabel = new System.Windows.Forms.Label();
+            this.toggleButton = new System.Windows.Forms.Button();
+            this.checkAllButton = new System.Windows.Forms.Button();
             ( (System.ComponentModel.ISupportInitialize)( this.variableSpinner ) ).BeginInit();
             this.SuspendLayout();
             // 
             // checkedListBox1
             // 
+            this.checkedListBox1.AllowDrop = true;
             this.checkedListBox1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom )
                         | System.Windows.Forms.AnchorStyles.Left )
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point( 12, 12 );
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size( 441, 304 );
+            this.checkedListBox1.Size = new System.Drawing.Size( 441, 319 );
             this.checkedListBox1.TabIndex = 0;
+            this.checkedListBox1.DragDrop += new System.Windows.Forms.DragEventHandler( this.checkedListBox1_DragDrop );
+            this.checkedListBox1.DragEnter += new System.Windows.Forms.DragEventHandler( this.checkedListBox1_DragEnter );
             // 
             // patchButton
             // 
             this.patchButton.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right ) ) );
-            this.patchButton.Location = new System.Drawing.Point( 378, 431 );
+            this.patchButton.Location = new System.Drawing.Point( 378, 479 );
             this.patchButton.Name = "patchButton";
             this.patchButton.Size = new System.Drawing.Size( 75, 23 );
             this.patchButton.TabIndex = 1;
@@ -68,7 +73,7 @@
             // reloadButton
             // 
             this.reloadButton.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left ) ) );
-            this.reloadButton.Location = new System.Drawing.Point( 12, 431 );
+            this.reloadButton.Location = new System.Drawing.Point( 12, 479 );
             this.reloadButton.Name = "reloadButton";
             this.reloadButton.Size = new System.Drawing.Size( 75, 23 );
             this.reloadButton.TabIndex = 2;
@@ -79,7 +84,7 @@
             // 
             this.textBox1.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left )
                         | System.Windows.Forms.AnchorStyles.Right ) ) );
-            this.textBox1.Location = new System.Drawing.Point( 12, 322 );
+            this.textBox1.Location = new System.Drawing.Point( 12, 366 );
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -90,7 +95,7 @@
             // 
             this.variableSpinner.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left ) ) );
             this.variableSpinner.Hexadecimal = true;
-            this.variableSpinner.Location = new System.Drawing.Point( 179, 403 );
+            this.variableSpinner.Location = new System.Drawing.Point( 179, 451 );
             this.variableSpinner.Maximum = new decimal( new int[] {
             255,
             0,
@@ -107,7 +112,7 @@
             this.variableComboBox.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left ) ) );
             this.variableComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.variableComboBox.FormattingEnabled = true;
-            this.variableComboBox.Location = new System.Drawing.Point( 12, 402 );
+            this.variableComboBox.Location = new System.Drawing.Point( 12, 450 );
             this.variableComboBox.Name = "variableComboBox";
             this.variableComboBox.Size = new System.Drawing.Size( 161, 21 );
             this.variableComboBox.TabIndex = 6;
@@ -117,17 +122,39 @@
             // 
             this.versionLabel.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right ) ) );
             this.versionLabel.AutoSize = true;
-            this.versionLabel.Location = new System.Drawing.Point( 418, 405 );
+            this.versionLabel.Location = new System.Drawing.Point( 418, 453 );
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size( 35, 13 );
             this.versionLabel.TabIndex = 7;
             this.versionLabel.Text = "label1";
             // 
+            // toggleButton
+            // 
+            this.toggleButton.Location = new System.Drawing.Point( 378, 337 );
+            this.toggleButton.Name = "toggleButton";
+            this.toggleButton.Size = new System.Drawing.Size( 75, 23 );
+            this.toggleButton.TabIndex = 8;
+            this.toggleButton.Text = "Toggle all";
+            this.toggleButton.UseVisualStyleBackColor = true;
+            this.toggleButton.Click += new System.EventHandler( this.toggleButton_Click );
+            // 
+            // checkAllButton
+            // 
+            this.checkAllButton.Location = new System.Drawing.Point( 297, 337 );
+            this.checkAllButton.Name = "checkAllButton";
+            this.checkAllButton.Size = new System.Drawing.Size( 75, 23 );
+            this.checkAllButton.TabIndex = 9;
+            this.checkAllButton.Text = "Check all";
+            this.checkAllButton.UseVisualStyleBackColor = true;
+            this.checkAllButton.Click += new System.EventHandler( this.checkAllButton_Click );
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 465, 466 );
+            this.ClientSize = new System.Drawing.Size( 465, 514 );
+            this.Controls.Add( this.checkAllButton );
+            this.Controls.Add( this.toggleButton );
             this.Controls.Add( this.versionLabel );
             this.Controls.Add( this.variableComboBox );
             this.Controls.Add( this.variableSpinner );
@@ -153,6 +180,8 @@
         private System.Windows.Forms.NumericUpDown variableSpinner;
         private System.Windows.Forms.ComboBox variableComboBox;
         private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.Button toggleButton;
+        private System.Windows.Forms.Button checkAllButton;
     }
 }
 

@@ -82,10 +82,9 @@ namespace FFTorgASM
             patchButton.Enabled = false;
         }
 
-        void reloadButton_Click( object sender, EventArgs e )
+        private void LoadFiles( IList<string> files )
         {
             List<AsmPatch> result = new List<AsmPatch>();
-            string[] files = Directory.GetFiles( Application.StartupPath, "*.xml", SearchOption.TopDirectoryOnly );
             foreach ( string file in files )
             {
                 IList<AsmPatch> tryPatches;
@@ -95,6 +94,12 @@ namespace FFTorgASM
                 }
             }
             LoadPatches( result );
+        }
+
+        void reloadButton_Click( object sender, EventArgs e )
+        {
+            string[] files = Directory.GetFiles( Application.StartupPath, "*.xml", SearchOption.TopDirectoryOnly );
+            LoadFiles( files );
         }
 
         void checkedListBox1_ItemCheck( object sender, ItemCheckEventArgs e )
@@ -122,6 +127,52 @@ namespace FFTorgASM
                         PatcherLib.Iso.PsxIso.PatchPsxIso( file, patch );
                     }
                 }
+            }
+        }
+
+        private void checkedListBox1_DragEnter( object sender, DragEventArgs e )
+        {
+            if ( e.Data.GetDataPresent( DataFormats.FileDrop ) )
+            {
+                string[] files = (string[])e.Data.GetData( DataFormats.FileDrop );
+                if ( files.Length >= 1 && System.IO.File.Exists( files[0] ) )
+                    e.Effect = DragDropEffects.Copy;
+                else
+                    e.Effect = DragDropEffects.None;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void checkedListBox1_DragDrop( object sender, DragEventArgs e )
+        {
+            if ( e.Data.GetDataPresent( DataFormats.FileDrop ) )
+            {
+                string[] paths = (string[])e.Data.GetData( DataFormats.FileDrop );
+                var filesToLoad = paths.FindAll( s => System.IO.File.Exists( s ) );
+                LoadFiles( filesToLoad );
+            }
+        }
+
+        private void checkAllButton_Click( object sender, EventArgs e )
+        {
+            for ( int i = 0; i < checkedListBox1.Items.Count; i++ )
+            {
+                // never check a FileAsmPatch
+                if ( !( checkedListBox1.Items[i] is FileAsmPatch ) )
+                    checkedListBox1.SetItemChecked( i, true );
+            }
+        }
+
+        private void toggleButton_Click( object sender, EventArgs e )
+        {
+            for ( int i = 0; i < checkedListBox1.Items.Count; i++ )
+            {
+                // never check a FileAsmPatch
+                if ( !( checkedListBox1.Items[i] is FileAsmPatch ) || checkedListBox1.GetItemChecked( i ) )
+                    checkedListBox1.SetItemChecked( i, !checkedListBox1.GetItemChecked( i ) );
             }
         }
     }

@@ -35,6 +35,7 @@ namespace FFTPatcher.Datatypes
 		#region Instance Variables (2) 
 
         private static IDictionary<ElementName, string> elementNames = PatcherLib.Utilities.Utilities.BuildDictionary<ElementName, string>( new object[] {
+            ElementName.Propositions, "propositions",
             ElementName.Abilities, "abilities",
             ElementName.AbilityAnimations, "abilityAnimations",
             ElementName.AbilityEffects, "abilityEffects", 
@@ -94,6 +95,7 @@ namespace FFTPatcher.Datatypes
         public static AllStatusAttributes StatusAttributes { get; private set; }
 
         public static AllStoreInventories StoreInventories { get; private set; }
+        public static AllPropositions Propositions { get; private set; }
 
 		#endregion Public Properties 
 
@@ -280,7 +282,8 @@ namespace FFTPatcher.Datatypes
                     PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.ENTD4),
                     null,
                     PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.MoveFindItems),
-                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.StoreInventories));
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.StoreInventories),
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.Propositions));
                 FireDataChangedEvent();
             }
         }
@@ -292,29 +295,30 @@ namespace FFTPatcher.Datatypes
                 Context = Context.US_PSP;
                 PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo(stream);
                 LoadDataFromBytes(
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.Abilities[0]),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.Abilities[0] ),
                     PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.AbilityEffects[0] ),
                     PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ReactionAbilityEffects[0] ),
                     PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.AbilityAnimations[0] ),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.OldItems[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.OldItemAttributes[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.NewItems[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.NewItemAttributes[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.Jobs[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.JobLevels[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.SkillSets[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.MonsterSkills[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ActionEvents[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.StatusAttributes[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.InflictStatuses[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.PoachProbabilities[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD1),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD2),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD3),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD4),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.ENTD5),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.MoveFindItems[0]),
-                    PatcherLib.Iso.PspIso.GetBlock(stream, info, PatcherLib.Iso.PspIso.StoreInventories[0]));
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.OldItems[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.OldItemAttributes[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.NewItems[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.NewItemAttributes[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.Jobs[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.JobLevels[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.SkillSets[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.MonsterSkills[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ActionEvents[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.StatusAttributes[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.InflictStatuses[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.PoachProbabilities[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ENTD1 ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ENTD2 ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ENTD3 ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ENTD4 ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ENTD5 ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.MoveFindItems[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.StoreInventories[0] ),
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.Propositions[0] ) );
                 FireDataChangedEvent();
             }
         }
@@ -369,6 +373,7 @@ namespace FFTPatcher.Datatypes
                     ENTDs = new AllENTDs( PSPResources.Binaries.ENTD1, PSPResources.Binaries.ENTD2, PSPResources.Binaries.ENTD3, PSPResources.Binaries.ENTD4, PSPResources.Binaries.ENTD5 );
                     MoveFind = new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSPResources.Binaries.StoreInventories, PSPResources.Binaries.StoreInventories );
+                    Propositions = new AllPropositions( PSPResources.Binaries.Propositions, PSPResources.Binaries.Propositions );
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( PSXResources.Binaries.Abilities, PSXResources.Binaries.AbilityEffects, PSXResources.Binaries.ReactionAbilityEffects );
@@ -388,6 +393,7 @@ namespace FFTPatcher.Datatypes
                     ENTDs = new AllENTDs( PSXResources.Binaries.ENTD1, PSXResources.Binaries.ENTD2, PSXResources.Binaries.ENTD3, PSXResources.Binaries.ENTD4 );
                     MoveFind = new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSXResources.Binaries.StoreInventories, PSXResources.Binaries.StoreInventories );
+                    Propositions = new AllPropositions( PSXResources.Binaries.Propositions, PSXResources.Binaries.Propositions );
                     break;
                 default:
                     throw new ArgumentException();
@@ -463,7 +469,8 @@ namespace FFTPatcher.Datatypes
             IList<byte> poach,
             IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4, IList<byte> entd5,
             IList<byte> moveFind,
-            IList<byte> inventories )
+            IList<byte> inventories, 
+            IList<byte> propositions )
         {
             try
             {
@@ -485,6 +492,8 @@ namespace FFTPatcher.Datatypes
                 var ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
                 var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.Binaries.MoveFind : PSXResources.Binaries.MoveFind ) );
                 var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.Binaries.StoreInventories : PSXResources.Binaries.StoreInventories );
+                var Propositions = new AllPropositions( propositions, psp ? PSPResources.Binaries.Propositions : PSXResources.Binaries.Propositions );
+
                 FFTPatch.Abilities = Abilities;
                 FFTPatch.AbilityAnimations = AbilityAnimations;
                 FFTPatch.Items = Items;
@@ -500,6 +509,7 @@ namespace FFTPatcher.Datatypes
                 FFTPatch.ENTDs = ENTDs;
                 FFTPatch.MoveFind = MoveFind;
                 FFTPatch.StoreInventories = StoreInventories;
+                FFTPatch.Propositions = Propositions;
             }
             catch( Exception )
             {
@@ -540,7 +550,8 @@ namespace FFTPatcher.Datatypes
                     GetZipEntry( file, elementNames[ElementName.ENTD4], false ) ?? defaults[ElementName.ENTD4],
                     psp ? ( GetZipEntry( file, elementNames[ElementName.ENTD5], false ) ?? defaults[ElementName.ENTD5] ) : null,
                     GetZipEntry( file, elementNames[ElementName.MoveFindItems], false ) ?? defaults[ElementName.MoveFindItems],
-                    GetZipEntry( file, elementNames[ElementName.StoreInventories], false ) ?? defaults[ElementName.StoreInventories] );
+                    GetZipEntry( file, elementNames[ElementName.StoreInventories], false ) ?? defaults[ElementName.StoreInventories],
+                    GetZipEntry( file, elementNames[ElementName.Propositions], false) ?? defaults[ElementName.Propositions] );
             }
         }
 
@@ -574,12 +585,13 @@ namespace FFTPatcher.Datatypes
             IList<byte> entd5 = GetFromNodeOrReturnDefault( rootNode, "entd5", PSPResources.Binaries.ENTD5 );
             IList<byte> moveFind = GetFromNodeOrReturnDefault( rootNode, "moveFindItems", psp ? PSPResources.Binaries.MoveFind : PSXResources.Binaries.MoveFind );
             IList<byte> inventories = GetFromNodeOrReturnDefault( rootNode, "storeInventories", psp ? PSPResources.Binaries.StoreInventories : PSXResources.Binaries.StoreInventories );
+            IList<byte> propositions = GetFromNodeOrReturnDefault( rootNode, "propositions", psp ? PSPResources.Binaries.Propositions : PSXResources.Binaries.Propositions );
 
             LoadDataFromBytes( abilities, abilityEffects, reactionAbilityEffects, abilityAnimations,
                 oldItems, oldItemAttributes, newItems, newItemAttributes,
                 jobs, jobLevels, skillSets, monsterSkills, actionMenus, statusAttributes,
                 inflictStatuses, poach, entd1, entd2, entd3, entd4, entd5,
-                moveFind, inventories );
+                moveFind, inventories, propositions );
         }
 
         private static string ReadString( FileStream stream, int length )
@@ -631,6 +643,7 @@ namespace FFTPatcher.Datatypes
                 WriteFileToZip( stream, elementNames[ElementName.ENTD4], ENTDs.ENTDs[3].ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.MoveFindItems], MoveFind.ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.StoreInventories], StoreInventories.ToByteArray() );
+                WriteFileToZip( stream, elementNames[ElementName.Propositions], Propositions.ToByteArray() );
             }
         }
 
@@ -645,6 +658,7 @@ namespace FFTPatcher.Datatypes
 		#endregion Private Methods 
 
         private static IDictionary<ElementName, IList<byte>> DefaultPsxElements = new Dictionary<ElementName, IList<byte>> {
+            { ElementName.Propositions, PSXResources.Binaries.Propositions },
             { ElementName.Abilities, PSXResources.Binaries.Abilities },
             { ElementName.ReactionAbilityEffects, PSXResources.Binaries.ReactionAbilityEffects },
             { ElementName.AbilityEffects, PSXResources.Binaries.AbilityEffects },
@@ -669,6 +683,7 @@ namespace FFTPatcher.Datatypes
             { ElementName.MoveFindItems, PSXResources.Binaries.MoveFind},
             { ElementName.StoreInventories, PSXResources.Binaries.StoreInventories} };
         private static IDictionary<ElementName,IList<byte>> DefaultPspElements = new Dictionary<ElementName, IList<byte>> {
+            { ElementName.Propositions, PSPResources.Binaries.Propositions },
             { ElementName.Abilities, PSPResources.Binaries.Abilities },
             { ElementName.AbilityEffects, PSPResources.Binaries.AbilityEffects },
             { ElementName.ReactionAbilityEffects, PSPResources.Binaries.ReactionAbilityEffects },
@@ -695,6 +710,7 @@ namespace FFTPatcher.Datatypes
 
         private enum ElementName
         {
+            Propositions,
             Abilities,
             ReactionAbilityEffects,
             AbilityEffects,

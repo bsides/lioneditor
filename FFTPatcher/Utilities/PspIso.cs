@@ -183,6 +183,20 @@ namespace FFTPatcher
                 sendProgress( "Getting Status attributes patches" );
             }
 
+            if (patchList.StoreInventory)
+            {
+                patches.AddRange( FFTPatch.StoreInventories.GetPatches( context ) );
+                sendProgress( "Getting store inventories patches" );
+                sendProgress( "Getting store inventories patches" );
+            }
+
+            if (patchList.Propositions)
+            {
+                patches.AddRange( FFTPatch.Propositions.GetPatches( context ) );
+                sendProgress( "Getting errands patches" );
+                sendProgress( "Getting errands patches" );
+            }
+
             foreach ( PatchedByteArray patch in patches )
             {
                 PatcherLib.Iso.PspIso.ApplyPatch( stream, info, patch );

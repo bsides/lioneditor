@@ -50,6 +50,7 @@ namespace PatcherLib
 
         private static XmlDocument spriteFilesDoc;
         private static XmlDocument chronicleDoc;
+        private static XmlDocument propositionsDoc;
 
         public static IList<string> CharacterSet { get; private set; }
 
@@ -69,6 +70,7 @@ namespace PatcherLib
 
         static PSPResources()
         {
+            Binaries.Propositions = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.Propositions].AsReadOnly();
             Binaries.StoreInventories = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.StoreInventories].AsReadOnly();
             Binaries.ENTD1 = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD1].AsReadOnly();
             Binaries.ENTD2 = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD2].AsReadOnly();
@@ -97,6 +99,7 @@ namespace PatcherLib
             Binaries.StatusAttributes = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.StatusAttributes].AsReadOnly();
 
 
+            propositionsDoc = Resources.ZipFileContents[Resources.Paths.PSP.PropositionsXML].ToUTF8String().ToXmlDocument();
             eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSP.EventNamesXML].ToUTF8String().ToXmlDocument();
             jobsDoc = Resources.ZipFileContents[Resources.Paths.PSP.JobsXML].ToUTF8String().ToXmlDocument();
             skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSP.SkillSetsXML].ToUTF8String().ToXmlDocument();

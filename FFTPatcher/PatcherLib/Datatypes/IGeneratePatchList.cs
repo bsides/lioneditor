@@ -22,6 +22,7 @@ namespace PatcherLib.Datatypes
         bool InflictStatus { get; }
         bool Poach { get; }
         bool StoreInventory { get; }
+        bool Propositions { get; }
         IList<PatchedByteArray> OtherPatches { get; }
         int PatchCount { get; }
     }

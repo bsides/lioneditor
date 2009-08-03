@@ -195,6 +195,12 @@ public string CustomICON0FileName
             set { bootBinPatchable[(int)BootBinPatchable.StatusAttributes] = value; }
         }
 
+        public bool Propositions
+        {
+            get { return bootBinPatchable[(int)BootBinPatchable.Errands]; }
+            set { bootBinPatchable[(int)BootBinPatchable.Errands] = value; }
+        }
+
         public bool StoreInventory
         {
             get { return bootBinPatchable[(int)BootBinPatchable.StoreInventory];}
@@ -231,6 +237,7 @@ public string CustomICON0FileName
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged);
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.StoreInventory, FFTPatch.StoreInventories.HasChanged);
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.AbilityAnimations, FFTPatch.AbilityAnimations.HasChanged);
+            bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.Errands, FFTPatch.Propositions.HasChanged );
 
             dontChangeIcon0RadioButton.Checked = true;
 
@@ -381,7 +388,7 @@ private void UpdateNextEnabled()
                 (ENTD1 || ENTD2 || ENTD3 || ENTD4 || ENTD5 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
                   StatusAttributes || InflictStatus || Poach || (ICON0 != CustomICON0.NoChange) ||
-                  AbilityEffects || MoveFindItems || StoreInventory || AbilityAnimations);
+                  AbilityEffects || MoveFindItems || StoreInventory || AbilityAnimations || Propositions);
 
             okButton.Enabled = enabled;
         }
@@ -446,7 +453,9 @@ private enum BootBinPatchable
             InflictStatus,
             PoachProbabilities,
             MoveFindItems,
-            StoreInventory
+            StoreInventory,
+            Errands
         }
+
     }
 }

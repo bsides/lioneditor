@@ -14,7 +14,7 @@ namespace FFTPatcher.Datatypes
 
         private Context ourContext = Context.Default;
 
-        public Shops WhichStore { get; private set; }
+        public ShopsFlags WhichStore { get; private set; }
 
         public bool this[int index]
         {
@@ -30,13 +30,13 @@ namespace FFTPatcher.Datatypes
 
         public StoreInventory Default { get; private set; }
 
-        public StoreInventory( Context context, Shops whichStore, IList<byte> bytes, IList<byte> defaultBytes )
+        public StoreInventory( Context context, ShopsFlags whichStore, IList<byte> bytes, IList<byte> defaultBytes )
             : this( context, whichStore, bytes )
         {
             Default = new StoreInventory( context, whichStore, defaultBytes );
         }
 
-        public StoreInventory( Context context, Shops whichStore, IList<byte> bytes )
+        public StoreInventory( Context context, ShopsFlags whichStore, IList<byte> bytes )
         {
             WhichStore = whichStore;
             ourContext = context;
@@ -105,13 +105,13 @@ namespace FFTPatcher.Datatypes
         private Context ourContext;
 
         public IList<StoreInventory> Stores { get; private set; }
-        public IDictionary<Shops, StoreInventory> StoresDict { get; private set; }
+        public IDictionary<ShopsFlags, StoreInventory> StoresDict { get; private set; }
 
-        public Shops this[Item i]
+        public ShopsFlags this[Item i]
         {
             get
             {
-                Shops result = Shops.Empty;
+                ShopsFlags result = ShopsFlags.Empty;
                 foreach( var s in Stores )
                 {
                     if( s[i.Offset] )
@@ -130,7 +130,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public void RemoveFromInventory( Shops shop, Item i )
+        public void RemoveFromInventory( ShopsFlags shop, Item i )
         {
             foreach ( var s in shops )
             {
@@ -141,7 +141,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public void AddToInventory( Shops shop, Item i )
+        public void AddToInventory( ShopsFlags shop, Item i )
         {
             foreach ( var s in shops )
             {
@@ -152,7 +152,7 @@ namespace FFTPatcher.Datatypes
             }
         }
 
-        public bool[] IsItemInShops( Item item, IList<Shops> shopsToCheck )
+        public bool[] IsItemInShops( Item item, IList<ShopsFlags> shopsToCheck )
         {
             bool[] result = new bool[shopsToCheck.Count];
             for ( int i = 0; i < shopsToCheck.Count; i++ )
@@ -162,9 +162,9 @@ namespace FFTPatcher.Datatypes
             return result;
         }
 
-        private Shops[] shops = new Shops[16] { Shops.Bervenia, Shops.Dorter, Shops.Gariland, Shops.Goland, Shops.Goug, Shops.Igros, 
-                                    Shops.Lesalia,Shops.Limberry, Shops.Lionel, Shops.None, Shops.Riovanes, Shops.Warjilis, 
-                                    Shops.Yardrow, Shops.Zaland, Shops.Zarghidas, Shops.Zeltennia };
+        private ShopsFlags[] shops = new ShopsFlags[16] { ShopsFlags.Bervenia, ShopsFlags.Dorter, ShopsFlags.Gariland, ShopsFlags.Goland, ShopsFlags.Goug, ShopsFlags.Igros, 
+                                    ShopsFlags.Lesalia,ShopsFlags.Limberry, ShopsFlags.Lionel, ShopsFlags.None, ShopsFlags.Riovanes, ShopsFlags.Warjilis, 
+                                    ShopsFlags.Yardrow, ShopsFlags.Zaland, ShopsFlags.Zarghidas, ShopsFlags.Zeltennia };
 
         public AllStoreInventories( Context context, IList<byte> bytes, IList<byte> defaultBytes )
         {
@@ -175,8 +175,8 @@ namespace FFTPatcher.Datatypes
 
             ourContext = context;
             List<StoreInventory> stores = new List<StoreInventory>( shops.Length );
-            Dictionary<Shops, StoreInventory> storesDict = new Dictionary<Shops, StoreInventory>( shops.Length );
-            foreach ( Shops s in shops )
+            Dictionary<ShopsFlags, StoreInventory> storesDict = new Dictionary<ShopsFlags, StoreInventory>( shops.Length );
+            foreach ( ShopsFlags s in shops )
             {
                 StoreInventory si = null;
                 if ( defaultBytes != null )
@@ -193,7 +193,7 @@ namespace FFTPatcher.Datatypes
             }
 
             Stores = stores.AsReadOnly();
-            StoresDict = new ReadOnlyDictionary<Shops, StoreInventory>( storesDict, false );
+            StoresDict = new ReadOnlyDictionary<ShopsFlags, StoreInventory>( storesDict, false );
         }
 
         public AllStoreInventories( Context context, IList<byte> bytes )

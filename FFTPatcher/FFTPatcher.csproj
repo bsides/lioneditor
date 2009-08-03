@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48BE23D0-2943-44EF-A3A6-8537D7695B37}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -77,6 +77,8 @@
     <Compile Include="Datatypes\IGenerateCodes.cs" />
     <Compile Include="Datatypes\ISupportDefault.cs" />
     <Compile Include="Datatypes\Items\StoreInventory.cs" />
+    <Compile Include="Datatypes\Propositions\AllPropositions.cs" />
+    <Compile Include="Datatypes\Propositions\Proposition.cs" />
     <Compile Include="Editors\Abilities\AllAnimationsEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -94,6 +96,18 @@
     </Compile>
     <Compile Include="Editors\Items\StoreInventoryEditor.Designer.cs">
       <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Propositions\AllPropositionsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Propositions\AllPropositionsEditor.Designer.cs">
+      <DependentUpon>AllPropositionsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Propositions\PropositionEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Propositions\PropositionEditor.Designer.cs">
+      <DependentUpon>PropositionEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -361,6 +375,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\Items\StoreInventoryEditor.resx">
       <DependentUpon>StoreInventoryEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Propositions\AllPropositionsEditor.resx">
+      <DependentUpon>AllPropositionsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Propositions\PropositionEditor.resx">
+      <DependentUpon>PropositionEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

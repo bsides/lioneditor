@@ -3,7 +3,7 @@
 namespace PatcherLib.Datatypes
 {
     [Flags]
-    public enum Shops
+    public enum ShopsFlags
     {
         Lesalia = 0x8000,
         Riovanes = 0x4000,
@@ -22,5 +22,24 @@ namespace PatcherLib.Datatypes
         Zarghidas = 0x0002,
         None = 0x0001,
         Empty = 0
+    }
+
+    public enum Town
+    {
+        Lesalia = 1,
+        Riovanes = 2,
+        Igros = 3,
+        Lionel = 4,
+        Limberry = 5,
+        Zeltennia = 6,
+        Gariland = 7,
+        Yardrow = 8,
+        Goland = 9,
+        Dorter = 0x0A,
+        Zaland = 0x0B,
+        Goug = 0x0C,
+        Warjilis = 0x0D,
+        Bervenia = 0x0E,
+        Zarghidas = 0x0F,
     }
 }

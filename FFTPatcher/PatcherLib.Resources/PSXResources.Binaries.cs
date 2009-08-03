@@ -12,6 +12,7 @@ namespace PatcherLib
     {
         public static class Binaries
         {
+            public static IList<byte> Propositions { get; internal set; }
             public static IList<byte> Abilities { get; internal set; }
             public static IList<byte> AbilityAnimations { get; internal set; }
             public static IList<byte> AbilityEffects { get; internal set; }

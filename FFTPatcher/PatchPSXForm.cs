@@ -148,7 +148,7 @@ namespace FFTPatcher
                 bool[] bb = new bool[] { RegenECC, Abilities, AbilityEffects, MoveFindItems,
                     Items, ItemAttributes, Jobs, JobLevels, Skillsets, MonsterSkills, ActionMenus,
                     StatusAttributes,InflictStatus,Poach, SCEAP != CustomSCEAP.NoChange, StoreInventory, 
-                    AbilityAnimations};
+                    AbilityAnimations, Propositions};
                 bb.ForEach( b => result += b ? 1 : 0 );
                 return result;
             }
@@ -218,6 +218,7 @@ namespace FFTPatcher
             battleCheckedListBox.SetItemChecked((int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged);
 
             storeInventoryCheckBox.Checked = FFTPatch.StoreInventories.HasChanged;
+            propositionsCheckBox.Checked = FFTPatch.Propositions.HasChanged;
 
             dontChangeSceapRadioButton.Checked = true;
 
@@ -298,6 +299,9 @@ namespace FFTPatcher
                 case Checkboxes.StoreInventory:
                     StoreInventory = box.Checked;
                     break;
+                case Checkboxes.Propositions:
+                    Propositions = box.Checked;
+                    break;
                 default:
                     break;
             }
@@ -373,10 +377,10 @@ private void UpdateNextEnabled()
                  ValidateSCEAP( sceapFileNameTextBox.Text ) );
             enabled = enabled && ValidateISO( isoPathTextBox.Text );
             enabled = enabled &&
-                ( ENTD1 || ENTD2 || ENTD3 || ENTD4 || RegenECC || Abilities || Items ||
+                (ENTD1 || ENTD2 || ENTD3 || ENTD4 || RegenECC || Abilities || Items ||
                   ItemAttributes || Jobs || JobLevels || Skillsets || MonsterSkills || ActionMenus ||
-                  StatusAttributes || InflictStatus || Poach || ( SCEAP != CustomSCEAP.NoChange ) ||
-                  AbilityEffects || MoveFindItems || StoreInventory || AbilityAnimations );
+                  StatusAttributes || InflictStatus || Poach || (SCEAP != CustomSCEAP.NoChange) ||
+                  AbilityEffects || MoveFindItems || StoreInventory || AbilityAnimations || Propositions);
 
             okButton.Enabled = enabled;
         }
@@ -411,7 +415,8 @@ private void UpdateNextEnabled()
             ENTD3,
             ENTD4,
             RegenECC,
-            StoreInventory
+            StoreInventory,
+            Propositions
         }
         private enum SCUSPatchable
         {
@@ -441,6 +446,8 @@ private void UpdateNextEnabled()
         {
             get; private set;
         }
+
+        public bool Propositions { get; private set; }
 
         #endregion
     }

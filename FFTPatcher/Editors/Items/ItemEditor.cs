@@ -48,12 +48,12 @@ namespace FFTPatcher.Editors
             "Striking", "Lunging", "Direct", "Arc",
             "TwoSwords", "TwoHands", "Blank", "Force2Hands" };
         private static List<string> weaponCastSpellItems;
-        private Shops[] shops = new Shops[16] { 
-            Shops.None,
-            Shops.Lesalia, Shops.Riovanes, Shops.Igros, Shops.Lionel,
-            Shops.Limberry, Shops.Zeltennia, Shops.Gariland, Shops.Yardrow,
-            Shops.Goland, Shops.Dorter, Shops.Zaland, Shops.Goug,
-            Shops.Warjilis, Shops.Bervenia, Shops.Zarghidas };
+        private ShopsFlags[] shops = new ShopsFlags[16] { 
+            ShopsFlags.None,
+            ShopsFlags.Lesalia, ShopsFlags.Riovanes, ShopsFlags.Igros, ShopsFlags.Lionel,
+            ShopsFlags.Limberry, ShopsFlags.Zeltennia, ShopsFlags.Gariland, ShopsFlags.Yardrow,
+            ShopsFlags.Goland, ShopsFlags.Dorter, ShopsFlags.Zaland, ShopsFlags.Goug,
+            ShopsFlags.Warjilis, ShopsFlags.Bervenia, ShopsFlags.Zarghidas };
 
 		#endregion Instance Variables 
 
@@ -299,7 +299,7 @@ namespace FFTPatcher.Editors
                 itemTypeComboBox.DataSource = pspItemTypes;
                 weaponFormulaComboBox.DataSource = AbilityFormula.PSPAbilityFormulas;
                 storeInventoryCheckedListBox.Items.Clear();
-                foreach ( Shops shop in shops )
+                foreach ( ShopsFlags shop in shops )
                 {
                     storeInventoryCheckedListBox.Items.Add( PatcherLib.PSPResources.Lists.ShopNames[shop] );
                 }
@@ -313,7 +313,7 @@ namespace FFTPatcher.Editors
                 weaponFormulaComboBox.DataSource = AbilityFormula.PSXAbilityFormulas;
                 storeInventoryCheckedListBox.BeginUpdate();
                 storeInventoryCheckedListBox.Items.Clear();
-                foreach ( Shops shop in shops )
+                foreach ( ShopsFlags shop in shops )
                 {
                     storeInventoryCheckedListBox.Items.Add( PatcherLib.PSXResources.Lists.ShopNames[shop] );
                 }

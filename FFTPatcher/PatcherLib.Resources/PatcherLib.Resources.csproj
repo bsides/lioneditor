@@ -66,6 +66,7 @@
     <Content Include="Resources\PSP\Items\Strings.xml" />
     <Content Include="Resources\PSP\Jobs.xml" />
     <Content Include="Resources\PSP\MapNames.xml" />
+    <Content Include="Resources\PSP\Errands.xml" />
     <Content Include="Resources\PSP\ShopNames.xml" />
     <Content Include="Resources\PSP\SkillSets.xml" />
     <Content Include="Resources\PSP\SpecialNames.xml" />
@@ -84,6 +85,7 @@
     <Content Include="Resources\PSX-US\Items\Strings.xml" />
     <Content Include="Resources\PSX-US\Jobs.xml" />
     <Content Include="Resources\PSX-US\MapNames.xml" />
+    <Content Include="Resources\PSX-US\Propositions.xml" />
     <Content Include="Resources\PSX-US\ShopNames.xml" />
     <Content Include="Resources\PSX-US\SkillSets.xml" />
     <Content Include="Resources\PSX-US\SpecialNames.xml" />
@@ -98,6 +100,7 @@
     <None Include="Resources\ENTD3.ENT" />
     <None Include="Resources\ENTD4.ENT" />
     <None Include="Resources\MoveFind.bin" />
+    <None Include="Resources\Propositions.bin" />
     <None Include="Resources\PSP\bin\AbilityAnimations.bin" />
     <None Include="Resources\PSP\bin\AbilityEffects.bin" />
     <None Include="Resources\PSP\bin\ActionEvents.bin" />

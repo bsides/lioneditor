@@ -33,6 +33,7 @@ namespace PatcherLib
     {
         internal enum ListType
         {
+            Propositions,
             Treasures,
             UnexploredLands,
             SpriteFiles,
@@ -217,6 +218,7 @@ namespace PatcherLib
             private const string ENTD4 = "ENTD4.ENT";
             private const string MoveFindBin = "MoveFind.bin";
             private const string ReactionEffects = "ReactionEffects.bin";
+            private const string Propositions = "Propositions.bin";
 
             public static class PSP
             {
@@ -228,6 +230,7 @@ namespace PatcherLib
                     public const string ENTD4 = Paths.ENTD4;
                     public const string ENTD5 = "PSP/bin/ENTD5.bin";
                     public const string MoveFind = Paths.MoveFindBin;
+                    public const string Propositions = Paths.Propositions;
                     public const string Abilities = "PSP/bin/Abilities.bin";
                     public const string AbilityAnimations = "PSP/bin/AbilityAnimations.bin";
                     public const string AbilityEffects = "PSP/bin/AbilityEffects.bin";
@@ -249,6 +252,7 @@ namespace PatcherLib
                     public const string StatusAttributes = "PSP/bin/StatusAttributes.bin";
                     public const string StoreInventories = "StoreInventories.bin";
                 }
+                public const string PropositionsXML = "PSP/Errands.xml";
                 public const string ChroniclesXML = "PSP/Chronicle.xml";
                 public const string UnitNamesXML = "PSP/UnitNames.xml";
                 public const string EventNamesXML = "PSP/EventNames.xml";
@@ -278,6 +282,7 @@ namespace PatcherLib
                     public const string ENTD2 = Paths.ENTD2;
                     public const string ENTD3 = Paths.ENTD3;
                     public const string ENTD4 = Paths.ENTD4;
+                    public const string Propositions = Paths.Propositions;
                     public const string MoveFind = Paths.MoveFindBin;
                     public const string Abilities = "PSX-US/bin/Abilities.bin";
                     public const string AbilityAnimations = "PSX-US/bin/AbilityAnimations.bin";
@@ -298,6 +303,7 @@ namespace PatcherLib
                     public const string StatusAttributes = "PSX-US/bin/StatusAttributes.bin";
                     public const string StoreInventories = "StoreInventories.bin";
                 }
+                public const string PropositionsXML = "PSX-US/Propositions.xml";
                 public const string BraveStoryXML = "PSX-US/BraveStory.xml";
                 public const string UnitNamesXML = "PSX-US/UnitNames.xml";
                 public const string EventNamesXML = "PSX-US/EventNames.xml";

@@ -72,8 +72,11 @@ namespace FFTPatcher.Editors
             allMoveFindItemsEditor1.UpdateView( FFTPatch.MoveFind );
             allStoreInventoryEditor1.UpdateView( FFTPatch.StoreInventories );
             allAnimationsEditor1.UpdateView(FFTPatch.AbilityAnimations);
+            allPropositionsEditor1.UpdateView( FFTPatch.Propositions );
+
             codeCreator1.UpdateView();
             codesTab.Text = FFTPatch.Context == Context.US_PSP ? "CWCheat" : "Gameshark";
+            propositionsTabPage.Text = FFTPatch.Context == Context.US_PSP ? "Errands" : "Propositions";
         }
 
         private void InflictStatusClicked( object sender, LabelClickedEventArgs e )

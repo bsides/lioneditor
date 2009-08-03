@@ -143,6 +143,13 @@ namespace PatcherLib.Utilities
         }
 
         [System.Diagnostics.DebuggerStepThrough]
+        public static IDictionary<TKey, TValue> AsReadOnly<TKey, TValue>( this IDictionary<TKey, TValue> dict )
+        {
+            if (dict.IsReadOnly) return dict;
+            else return new ReadOnlyDictionary<TKey, TValue>( dict, true );
+        }
+
+        [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {
             if ( list is ReadOnlyCollection<T> ) return list as ReadOnlyCollection<T>;

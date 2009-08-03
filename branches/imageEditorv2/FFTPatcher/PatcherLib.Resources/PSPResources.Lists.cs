@@ -30,6 +30,12 @@ namespace PatcherLib
 
 
             private static IDictionary<ListType, ResourceListInfo> typeInfo = new Dictionary<ListType, ResourceListInfo> {
+                { ListType.Propositions,
+                    new ResourceListInfo {
+                        Doc = PSPResources.propositionsDoc,
+                        XPath = "/Errands/entry[@value='{0}']/@name",
+                        Length = 96,
+                        StartIndex = 0 } },
                 { ListType.Treasures,
                     new ResourceListInfo {
                         Doc = PSPResources.chronicleDoc,
@@ -147,27 +153,52 @@ namespace PatcherLib
 
 
 
+            private static IDictionary<Town, string> readOnlyTownNames;
 
+            public static IDictionary<Town, string> TownNames
+            {
+                get
+                {
+                    if (readOnlyTownNames == null)
+                    {
+                        Dictionary<Town, string> storeNames = new Dictionary<Town, string>();
+                        System.Xml.XmlDocument doc = shopNamesDoc;
 
+                        foreach (System.Xml.XmlNode node in doc.SelectNodes( "/ShopNames/Shop" ))
+                        {
+                            string val = node.Attributes["value"].Value;
+                            if (System.Enum.IsDefined( typeof( Town ), val ))
+                            {
+                                storeNames[(Town)System.Enum.Parse( typeof( Town ), node.Attributes["value"].Value )] =
+                                    node.Attributes["name"].Value;
+                            }
+                        }
 
-            private static IDictionary<Shops, string> readOnlyStoreNames;
+                        readOnlyTownNames = new ReadOnlyDictionary<Town, string>( storeNames );
+                    }
 
-            public static IDictionary<Shops, string> ShopNames
+                    return readOnlyTownNames;
+                }
+            }
+
+            private static IDictionary<ShopsFlags, string> readOnlyStoreNames;
+
+            public static IDictionary<ShopsFlags, string> ShopNames
             {
                 get
                 {
                     if ( readOnlyStoreNames == null )
                     {
-                        Dictionary<Shops, string> storeNames = new Dictionary<Shops, string>();
+                        Dictionary<ShopsFlags, string> storeNames = new Dictionary<ShopsFlags, string>();
                         System.Xml.XmlDocument doc = shopNamesDoc;
 
                         foreach ( System.Xml.XmlNode node in doc.SelectNodes( "/ShopNames/Shop" ) )
                         {
-                            storeNames[(Shops)System.Enum.Parse( typeof( Shops ), node.Attributes["value"].Value )] =
+                            storeNames[(ShopsFlags)System.Enum.Parse( typeof( ShopsFlags ), node.Attributes["value"].Value )] =
                                 node.Attributes["name"].Value;
                         }
 
-                        readOnlyStoreNames = new ReadOnlyDictionary<Shops, string>( storeNames );
+                        readOnlyStoreNames = new ReadOnlyDictionary<ShopsFlags, string>( storeNames );
                     }
 
                     return readOnlyStoreNames;
@@ -186,6 +217,11 @@ namespace PatcherLib
             public static IList<string> SkillSets
             {
                 get { return GetListForType( ListType.SkillSetNames ); }
+            }
+
+            public static IList<string> Propositions
+            {
+                get { return GetListForType( ListType.Propositions ); }
             }
 
             public static IList<string> JobNames

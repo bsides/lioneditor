@@ -416,9 +416,15 @@ namespace PatcherLib.Iso
 
         public static IList<KnownPosition> AbilityAnimations { get; private set; }
 
+        public static IList<KnownPosition> Propositions { get; private set; }
 
         static PspIso()
         {
+            Propositions = new KnownPosition[] {
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2E5688,0xA54),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2E5688, 0xA54),
+            }.AsReadOnly();
+
             AbilityAnimations = new KnownPosition[] { 
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x32394C, 0x600),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x32394C, 0x600) }.AsReadOnly();

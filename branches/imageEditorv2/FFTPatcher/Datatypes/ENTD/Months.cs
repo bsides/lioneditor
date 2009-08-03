@@ -19,6 +19,22 @@
 
 namespace FFTPatcher.Datatypes
 {
+    public enum Zodiac
+    {
+        Aries = 1,
+        Taurus = 2,
+        Gemini = 3,
+        Cancer = 4,
+        Leo = 5,
+        Virgo = 6,
+        Libra = 7,
+        Scorpio = 8,
+        Sagittarius = 9,
+        Capricorn = 0x0a,
+        Aquarius = 0x0b,
+        Pisces = 0x0c,
+    }
+
     public enum Month
     {
         Unknown = 0,

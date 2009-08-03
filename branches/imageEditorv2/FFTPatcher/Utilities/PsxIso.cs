@@ -118,6 +118,19 @@ namespace FFTPatcher
                 sendProgress( "Getting Status attributes patches" );
             }
 
+            if (patchList.StoreInventory)
+            {
+                patches.AddRange( FFTPatch.StoreInventories.GetPatches( context ) );
+                sendProgress( "Getting store inventories patches" );
+            }
+
+            if (patchList.Propositions)
+            {
+                patches.AddRange( FFTPatch.Propositions.GetPatches( context ) );
+                sendProgress( "Getting errands patches" );
+            }
+
+
             using ( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.ReadWrite ) )
             {
                 foreach ( PatchedByteArray patch in patches )

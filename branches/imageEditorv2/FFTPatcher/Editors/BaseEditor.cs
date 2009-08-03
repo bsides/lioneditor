@@ -34,6 +34,11 @@ namespace FFTPatcher.Editors
             }
         }
 
+        protected void FireDataChanged()
+        {
+            OnDataChanged( this, EventArgs.Empty );
+        }
+
 		#endregion Protected Methods 
 
         /// <summary>

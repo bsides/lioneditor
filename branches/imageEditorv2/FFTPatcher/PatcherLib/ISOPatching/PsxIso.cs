@@ -71,13 +71,14 @@ namespace PatcherLib.Iso
 
 
         public static KnownPosition AbilityAnimations { get; private set; }
-
+        public static KnownPosition Propositions { get; private set; }
         #endregion Public Properties
 
         #region Constructors (1)
 
         static PsxIso()
         {
+            Propositions = new KnownPosition( Sectors.WORLD_WLDCORE_BIN, 0x36380, 0xA54 );
             Abilities = new KnownPosition(Sectors.SCUS_942_21, 0x4F3F0, 9414);
             AbilityEffects = new KnownPosition(Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0);
             ReactionAbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x014F73C, 0x40 );
@@ -150,27 +151,49 @@ namespace PatcherLib.Iso
         public static void ReplaceStrFile(Stream iso, Sectors file, IList<byte> bytes)
         {
             const int bytesPerSector = 2336;
-            if (bytes.Count % bytesPerSector  != 0)
+            const int bytesPerSectorM2 = 2352;
+            if (bytes.Count % bytesPerSector != 0)
             {
-                throw new ArgumentException(string.Format("new STR file length must be a multiple of {0}",bytesPerSector));
+                throw new ArgumentException( string.Format( "new STR file length must be a multiple of {0}", bytesPerSector ) );
             }
 
             int numSectors = bytes.Count/bytesPerSector;
 
-            byte[] tempSector = new byte[2352];
+            byte[] tempSector = new byte[bytesPerSectorM2];
 
             int startSector = (int)file;
 
             for (int i = 0; i < numSectors; i++)
             {
                 int outputSector = startSector + i;
-                iso.Seek(outputSector * 2352, SeekOrigin.Begin);
-                iso.Read(tempSector, 0, 16);
-                bytes.Sub(i * bytesPerSector, (i + 1) * bytesPerSector - 1).CopyTo(tempSector, 16);
-                IsoPatch.GenerateEccEdc(tempSector, IsoPatch.IsoType.Mode2Form1);
+                iso.Seek( outputSector * bytesPerSectorM2, SeekOrigin.Begin );
 
-                iso.Seek(outputSector * 2352, SeekOrigin.Begin);
-                iso.Write(tempSector, 0, 2352);
+                // Keep the first 16 bytes from the original image
+                // It contains  the 00FFFFFF FFFFFFFF FFFFFF00 and MM:SS:FF bytes
+                iso.Read( tempSector, 0, (bytesPerSectorM2 - bytesPerSector) );
+
+                // Copy the 2336 bytes from the input file to the buffer
+                bytes.Sub( i * bytesPerSector, (i + 1) * bytesPerSector - 1 ).CopyTo( tempSector, (bytesPerSectorM2 - bytesPerSector) );
+                
+                // The output from MC32.EXE doesn't have these bytes set properly:
+                tempSector[16] = 0x01;
+                tempSector[20] = 0x01;
+
+                if ((tempSector[18] & 0x4) == 0)
+                {
+                    // Video or Data
+                    // NOT audio, so need to update the 280 byte ecc/edc block
+                    IsoPatch.GenerateEccEdc( tempSector, IsoPatch.IsoType.Mode2Form1 );
+                }
+                else
+                {
+                    // CDXA M2F2
+                    IsoPatch.GenerateEccEdc( tempSector, IsoPatch.IsoType.Mode2Form2 );
+                }
+
+                // Finished mucking with the sector, write it back to the ISO
+                iso.Seek( outputSector * bytesPerSectorM2, SeekOrigin.Begin );
+                iso.Write( tempSector, 0, bytesPerSectorM2 );
             }
         }
 

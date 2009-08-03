@@ -71,6 +71,11 @@ namespace FFTPatcher.Controls
 
 		#region Public Methods (1) 
 
+        public void SetIndexAndDefault( int index, int defaultIndex )
+        {
+            SetValueAndDefault( Items[index], Items[defaultIndex] );
+        }
+
         /// <summary>
         /// Sets the SelectedItem and its default value.
         /// </summary>

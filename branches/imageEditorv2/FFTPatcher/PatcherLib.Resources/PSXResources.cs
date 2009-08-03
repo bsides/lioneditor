@@ -29,7 +29,7 @@ namespace PatcherLib
 
     public static partial class PSXResources
     {
-        private static IDictionary<Shops, string> readOnlyStoreNames;
+        private static IDictionary<ShopsFlags, string> readOnlyStoreNames;
         private static XmlDocument statusNamesDoc;
 
 
@@ -57,10 +57,12 @@ namespace PatcherLib
         private static XmlDocument unitNamesDoc;
         private static XmlDocument spriteFilesDoc;
         private static XmlDocument braveStoryDoc;
+        private static XmlDocument propositionsDoc;
 
         static PSXResources()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
+            Binaries.Propositions = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.Propositions].AsReadOnly();
             Binaries.ReactionAbilityEffects = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ReactionAbilityEffects].AsReadOnly();
             Binaries.StoreInventories = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StoreInventories].AsReadOnly();
             Binaries.ENTD1 = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.ENTD1].AsReadOnly();
@@ -85,6 +87,7 @@ namespace PatcherLib
             Binaries.StatusAttributes = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.StatusAttributes].AsReadOnly();
             Binaries.SCEAPDAT = Resources.ZipFileContents[Resources.Paths.PSX.Binaries.SCEAP];
 
+            propositionsDoc = Resources.ZipFileContents[Resources.Paths.PSX.PropositionsXML].ToUTF8String().ToXmlDocument();
             eventNamesDoc = Resources.ZipFileContents[Resources.Paths.PSX.EventNamesXML].ToUTF8String().ToXmlDocument();
             jobsDoc = Resources.ZipFileContents[Resources.Paths.PSX.JobsXML].ToUTF8String().ToXmlDocument();
             skillSetsDoc = Resources.ZipFileContents[Resources.Paths.PSX.SkillSetsXML].ToUTF8String().ToXmlDocument();

@@ -768,82 +768,80 @@ namespace FFTPatcher.TextEditor
         public static Set<string> GetGroups( GenericCharMap charmap, IList<string> characterSet, IList<int> characterWidths )
         {
             const bool alphaNumOnly = true;
-            const string allowedAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,=/";
-            System.Diagnostics.Debug.Assert( allowedAlphaNum.Length == 10 + 26 + 26 + 10 );
+            const string allowedAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' ./";
+            System.Diagnostics.Debug.Assert( allowedAlphaNum.Length == 10 + 26 + 26 + 8 );
             Dictionary<string,string> allowedPairs = new Dictionary<string,string> {
-              { "0", "0123456789 .,/" }, // 0
-              { "1", "0123456789!? .,/" }, // 1
-              { "2", "0123456789!? .,/" }, // 2
-              { "3", "0123456789!? .,/" },
-              { "4", "0123456789!? .,/" },
-              { "5", "0123456789 .,/" },
-              { "6", "0123456789 .,/" },
-              { "7", "0123456789 .,/" },
-              { "8", "0123456789 .,/" },
-              { "9", "0123456789 .,/" }, // 9
-              { "A", "bcdfghijklmnpqrstuvwxyz!?\"' .,=/" }, // A
-              { "B", "aeilmorsuy!?\"' .,=/" },
-              { "C", "aehiklorstu!?\"' .,=/" },
-              { "D", "aeghilnorstuwy!?\"' .,=/" }, // D
-              { "E", "abcdefghijklmnopqrstuvwxyz!?\"' .,=/" },
-              { "F", "aeiorstuy!?\"' .,=/" },
-              { "G", "adehilnorsu!?\"' .,=/" },
-              { "H", "aeiou!?\"' .,=/" },
-              { "I", "cdefghjklmnopqrstuvwxyz!?\"' .,=/" },
-              { "J", "aeious!?\"' .,=/" }, // J
-              { "K", "aeilostuy!?\"' .,=/" },
-              { "L", "aehiou!?\"' .,=/" },
-              { "M", "aeiou!?\"' .,=/" },
-              { "N", "aeiou!?\"' .,=/" },
-              { "O", "abcdefghijklmnprstuvwxyz!?\"' .,=/" },
-              { "P", "aehioruy!?\"' .,=/" }, // P
-              { "Q", "u!?\"' .,=/" },
-              { "R", "aehiouwy!?\"' .,=/" },
-              { "S", "acdefghiklmnopqrtuwyz!?\"' .,=/" },
-              { "T", "aehiouwy!?\"' .,=/" },
-              { "U", "ghlmnoprst!?\"' .,=/" },
-              { "V", "aeiouy!?\"' .,=/" }, // V
-              { "W", "aehiouy!?\"' .,=/" },
-              { "X", "aeiou!?\"' .,=/" },
-              { "Y", "aeiou!?\"' .,=/" },
-              { "Z", "aeiou!?\"' .,=/" }, // Z
-              { "a", "bcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // a
-              { "b", "abeilmorsuy!?:\"' .,=/" },
-              { "c", "acehiklorstu!?:\"' .,=/" },
-              { "d", "adeghilnorstuwy!?:\"' .,=/" }, // d
-              { "e", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "f", "aefiorstuy!?:\"' .,=/" },
-              { "g", "adeghilnorsu!?:\"' .,=/" },
-              { "h", "acdegilmnoprstuw!?:\"' .,=/" },
-              { "i", "abcdefghjklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "j", "aeiosuy!?:\"' .,=/" }, // j
-              { "k", "aeiklorsuwy!?:\"' .,=/" },
-              { "l", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "m", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "n", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "o", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "p", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // p
-              { "q", "u!?:\"'.,=/" },
-              { "r", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "s", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "t", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "u", "abcdefghijklmnopqrstvwxyz!?:\"' .,=/" },
-              { "v", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // v
-              { "w", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "x", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "y", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" },
-              { "z", "abcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }, // z
+              { "0", "0123456789 ./" }, // 0
+              { "1", "0123456789!? ./" }, // 1
+              { "2", "0123456789!? ./" }, // 2
+              { "3", "0123456789!? ./" },
+              { "4", "0123456789!? ./" },
+              { "5", "0123456789 ./" },
+              { "6", "0123456789 ./" },
+              { "7", "0123456789 ./" },
+              { "8", "0123456789 ./" },
+              { "9", "0123456789 ./" }, // 9
+              { "A", "bcdfghijklmnpqrstuvwxyz!?\"' ./" }, // A
+              { "B", "aeilmorsuy!?\"' ./" },
+              { "C", "aehiklorstu!?\"' ./" },
+              { "D", "aeghilnorstuwy!?\"' ./" }, // D
+              { "E", "abcdefghijklmnopqrstuvwxyz!?\"' ./" },
+              { "F", "aeiorstuy!?\"' ./" },
+              { "G", "adehilnorsu!?\"' ./" },
+              { "H", "aeiou!?\"' ./" },
+              { "I", "cdefghjklmnopqrstuvwxyz!?\"' ./" },
+              { "J", "aeious!?\"' ./" }, // J
+              { "K", "aeilostuy!?\"' ./" },
+              { "L", "aehiou!?\"' ./" },
+              { "M", "aeiou!?\"' ./" },
+              { "N", "aeiou!?\"' ./" },
+              { "O", "abcdefghijklmnprstuvwxyz!?\"' ./" },
+              { "P", "aehioruy!?\"' ./" }, // P
+              { "Q", "u!?\"' ./" },
+              { "R", "aehiouwy!?\"' ./" },
+              { "S", "acdefghiklmnopqrtuwyz!?\"' ./" },
+              { "T", "aehiouwy!?\"' ./" },
+              { "U", "ghlmnoprst!?\"' ./" },
+              { "V", "aeiouy!?\"' ./" }, // V
+              { "W", "aehiouy!?\"' ./" },
+              { "X", "aeiou!?\"' ./" },
+              { "Y", "aeiou!?\"' ./" },
+              { "Z", "aeiou!?\"' ./" }, // Z
+              { "a", "bcdefghijklmnopqrstuvwxyz!?:\"' ./" }, // a
+              { "b", "abeilmorsuy!?:\"' ./" },
+              { "c", "acehiklorstu!?:\"' ./" },
+              { "d", "adeghilnorstuwy!?:\"' ./" }, // d
+              { "e", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "f", "aefiorstuy!?:\"' ./" },
+              { "g", "adeghilnorsu!?:\"' ./" },
+              { "h", "acdegilmnoprstuw!?:\"' ./" },
+              { "i", "abcdefghjklmnopqrstuvwxyz!?:\"' ./" },
+              { "j", "aeiosuy!?:\"' ./" }, // j
+              { "k", "aeiklorsuwy!?:\"' ./" },
+              { "l", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "m", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "n", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "o", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "p", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" }, // p
+              { "q", "u!?:\"'./" },
+              { "r", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "s", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "t", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "u", "abcdefghijklmnopqrstvwxyz!?:\"' ./" },
+              { "v", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" }, // v
+              { "w", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "x", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "y", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" },
+              { "z", "abcdefghijklmnopqrstuvwxyz!?:\"' ./" }, // z
 
-              { "!", "!?\" =/" }, // !
-              { "?", "!?\" =/" }, // ?
+              { "!", "!?\" /" }, // !
+              { "?", "!?\" /" }, // ?
               { ":", "!?\" /" }, // :
-              { "\"", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?: .,=/" }, // "
+              { "\"", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?: .,/" }, // "
               { "'", "dlrstv /" }, // '
-              { " ", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =/" }, //  
-              { ".", "!?\"' .=/" }, // .
-              { ",", "\"' =/" }, // ,
-              { "=", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz =/" }, // =
-              { "/", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,=/" }
+              { " ", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz /" }, //  
+              { ".", "!?\"' ./" }, // .
+              { "/", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:\"' .,/" }
             };
             
             List<string> allowed = new List<string>( allowedAlphaNum.Length );

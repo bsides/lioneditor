@@ -9,6 +9,7 @@ namespace FFTPatcher.TextEditor
         byte[] ToCDByteArray();
         byte[] ToCDByteArray( IDictionary<string, byte> dteTable );
         Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes );
+        Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes, System.ComponentModel.BackgroundWorker worker );
 
         bool IsDteNeeded();
 

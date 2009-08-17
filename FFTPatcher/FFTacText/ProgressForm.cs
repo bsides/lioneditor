@@ -29,6 +29,7 @@ namespace FFTPatcher.TextEditor
             public ISerializableFile File { get; set; }
             public Task Task { get; set; }
             public TaskState State { get; set; }
+            public int BytesLeft { get; set; }
         }
 
         public ProgressForm()
@@ -133,6 +134,11 @@ namespace FFTPatcher.TextEditor
                         {
                             childNode.Parent.EnsureVisible();
                         }
+
+                        if (state.Task == Task.CalculateDte && state.BytesLeft >= 0)
+                        {
+                            childNode.Text = string.Format( "Calculating DTE - {0} bytes left", state.BytesLeft );
+                        }
                     }
                     else if ( state.State == TaskState.Done )
                     {
@@ -143,6 +149,10 @@ namespace FFTPatcher.TextEditor
                         if ( childNode != patchnode )
                         {
                             childNode.Parent.EnsureVisible();
+                        }
+                        if (state.Task == Task.CalculateDte)
+                        {
+                            childNode.Text = "Calculating DTE - 0 bytes left";
                         }
                     }
 

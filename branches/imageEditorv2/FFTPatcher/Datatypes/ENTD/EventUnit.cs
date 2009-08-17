@@ -79,10 +79,10 @@ namespace FFTPatcher.Datatypes
 
     public enum Facing
     {
-        Southeast = 0,
-        Southwest = 1,
-        Northwest = 2,
-        Northeast = 3,
+        South = 0,
+        West = 1,
+        North = 2,
+        East = 3,
         //Unknown0x80 = 128,
         //Unknown0x81 = 129,
         //Unknown0x82 = 130,

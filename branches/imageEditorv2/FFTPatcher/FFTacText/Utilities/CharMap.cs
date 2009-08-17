@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using PatcherLib.Utilities;
 
 namespace FFTPatcher.TextEditor
 {
@@ -323,7 +324,7 @@ namespace FFTPatcher.TextEditor
         {
             if ( c == 0xFA )
             {
-                return 2;
+                return 4;
             }
             else if ( c <= 0xCF )
             {
@@ -340,21 +341,35 @@ namespace FFTPatcher.TextEditor
             }
         }
 
-        public int MeasureStringInFont( string s, PatcherLib.Datatypes.FFTFont font )
+        public IList<int> MeasureEachLineInFont( string s, PatcherLib.Datatypes.FFTFont font )
         {
             string[] strings = s.Split( new string[] { "{Newline}", "{Close}" }, StringSplitOptions.RemoveEmptyEntries );
-            int width = int.MinValue;
-            foreach ( string ss in strings )
+            int[] result = new int[strings.Length];
+            for (int i = 0; i < strings.Length; i++)
             {
-                IList<UInt32> everyChar = GetEachEncodedCharacter( ss );
-                int sum = 0;
-                foreach ( UInt32 c in everyChar )
-                {
-                    sum += GetWidthForEncodedCharacter( c, font );
-                }
-                width = Math.Max( width, sum );
+                result[i] = 
+                    strings[i].Length == 0 ? 0 : 
+                                             MeasureSingleLineInFont( strings[i], font );
             }
-            if (strings.Length == 0) width = 0;
+            return result.AsReadOnly();
+        }
+
+        private int MeasureSingleLineInFont( string s, PatcherLib.Datatypes.FFTFont font )
+        {
+            IList<UInt32> everyChar = GetEachEncodedCharacter( s );
+            int sum = 0;
+            foreach (UInt32 c in everyChar)
+            {
+                sum += GetWidthForEncodedCharacter( c, font );
+            }
+            return sum;
+        }
+
+        public int MeasureStringInFont( string s, PatcherLib.Datatypes.FFTFont font )
+        {
+            var widths = MeasureEachLineInFont( s, font );
+            int width = int.MinValue;
+            widths.ForEach( w => width = Math.Max( width, w ) );
             return width;
         }
 #endif

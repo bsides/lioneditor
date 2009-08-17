@@ -150,7 +150,10 @@ namespace FFTPatcher.TextEditor
             var f = new FFTFont( font.ToByteArray(), font.ToWidthsByteArray() );
             List<int> widths = new List<int>( 2200 );
             f.Glyphs.ForEach( g => widths.Add( g.Width ) );
-            return TextUtilities.GetGroups( charmap, charset, widths );
+            List<string> realCharSet = new List<string>( charset );
+            realCharSet.Add( " " );
+            widths.Add( 4 );
+            return TextUtilities.GetGroups( charmap, realCharSet, widths );
         }
 
         /// <summary>
@@ -338,9 +341,9 @@ namespace FFTPatcher.TextEditor
 
             foreach ( var kvp in dteEncodings )
             {
-                TextUtilities.PSXMap.StringToByteArray( kvp.Key, 0xFE )      // Get the pair to store
-                    .Sub( 0, 1 )                                       // Get 2 bytes
-                    .CopyTo( result, ( kvp.Value - MinDteByte ) * 2 ); // Store them in the DTE array
+                var b = TextUtilities.PSXMap.StringToByteArray( kvp.Key, 0xFE )      // Get the pair to store
+                    .Sub( 0, 1 );                                       // Get 2 bytes
+                b.CopyTo( result, ( kvp.Value - MinDteByte ) * 2 ); // Store them in the DTE array
             }
 
             return result;
@@ -358,6 +361,9 @@ namespace FFTPatcher.TextEditor
                 new FFTFont( baseFont.ToByteArray(), baseFont.ToWidthsByteArray() );
 
             IList<string> charSet = new List<string>( baseCharSet );
+            charSet.Add( " " );
+            var myGlyphs = new List<Glyph>( font.Glyphs );
+            myGlyphs.Add( new Glyph( 4, new byte[14 * 10 / 4] ) );
 
             foreach ( var kvp in dteEncodings )
             {
@@ -368,16 +374,16 @@ namespace FFTPatcher.TextEditor
                     };
                 int[] widths = 
                     new int[] { 
-                        font.Glyphs[chars[0]].Width, // width of first char
-                        font.Glyphs[chars[1]].Width  // width of secont char
+                        myGlyphs[chars[0]].Width, // width of first char
+                        myGlyphs[chars[1]].Width  // width of secont char
                     };
 
                 // The width of the concatenated character is the sum...
-                int newWidth = widths[0] + widths[1]; 
-                font.Glyphs[kvp.Value].Width = (byte)newWidth;
+                int newWidth = widths[0] + widths[1];
+                myGlyphs[kvp.Value].Width = (byte)newWidth;
 
                 // Erase all the pixels of the character to replace
-                IList<FontColor> newPixels = font.Glyphs[kvp.Value].Pixels;
+                IList<FontColor> newPixels = myGlyphs[kvp.Value].Pixels;
                 for ( int i = 0; i < newPixels.Count; i++ )
                 {
                     newPixels[i] = FontColor.Transparent;
@@ -390,7 +396,7 @@ namespace FFTPatcher.TextEditor
                 // for each character in the pair...
                 for ( int c = 0; c < chars.Length; c++ )
                 {
-                    var pix = font.Glyphs[chars[c]].Pixels;
+                    var pix = myGlyphs[chars[c]].Pixels;
 
                     // ... copy the pixels to the concatenated character
                     for ( int x = 0; x < widths[c]; x++ )

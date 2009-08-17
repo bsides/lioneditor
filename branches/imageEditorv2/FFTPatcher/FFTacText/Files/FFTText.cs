@@ -102,7 +102,7 @@ namespace FFTPatcher.TextEditor
             {
                 worker.ReportProgress( 0,
                     new ProgressForm.FileProgress { File = dte, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.CalculateDte } );
-                filePreferredPairs[dte] = dte.GetPreferredDTEPairs( pairs, currentPairs, dteBytes );
+                filePreferredPairs[dte] = dte.GetPreferredDTEPairs( pairs, currentPairs, dteBytes, worker);
                 if ( filePreferredPairs[dte] == null )
                 {
                     dtePairs = null;

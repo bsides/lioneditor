@@ -225,7 +225,7 @@ namespace FFTPatcher.TextEditor
         }
 
 
-        public virtual Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
+        public virtual Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes, System.ComponentModel.BackgroundWorker worker )
         {
             // Clone the sections
             var secs = GetCopyOfSections();
@@ -253,6 +253,7 @@ namespace FFTPatcher.TextEditor
             {
                 return result;
             }
+
             string terminatorString = string.Format( "{{0x{0:X2}", selectedTerminator ) + "}";
             // Otherwise, get all the strings that can be DTE encoded
             StringBuilder sb = new StringBuilder( Layout.Size );
@@ -274,6 +275,46 @@ namespace FFTPatcher.TextEditor
             // Go through each one, encode the file with it, and see if we're below the limit
             while (bytesNeeded > 0 && l.Count > 0 && dteBytes.Count > 0)
             {
+                /*
+                byte currentDteByte = dteBytes.Pop();
+                for (int j = 0; j < l.Count; j++)
+                {
+                    var tempResult = new Set<KeyValuePair<string, byte>>( result );
+                    tempResult.Add( new KeyValuePair<string, byte>( l[j].Key, currentDteByte ) );
+
+                    var oldBytesNeeded = bytesNeeded;
+                    TextUtilities.DoDTEEncoding( secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs( tempResult ) );
+                    bytes = GetSectionByteArrays( secs, SelectedTerminator, CharMap, CompressionAllowed ).Join();
+
+                    var newBytesNeeded = bytes.Count - (Layout.Size - DataStart);
+                    if (newBytesNeeded < oldBytesNeeded)
+                    {
+                        bytesNeeded = newBytesNeeded;
+                        result.Add( new KeyValuePair<string, byte>( l[j].Key, currentDteByte ) );
+                        TextUtilities.DoDTEEncoding( secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs( result ) );
+                        //bytes = GetSectionByteArrays( secs, SelectedTerminator, CharMap, CompressionAllowed ).Join();
+                        //bytesNeeded = bytes.Count - (Layout.Size - DataStart);
+
+                        if (newBytesNeeded > 0)
+                        {
+                            StringBuilder sb2 = new StringBuilder( Layout.Size );
+                            for (int i = 0; i < secs.Count; i++)
+                            {
+                                if (DteAllowed[i])
+                                {
+                                    secs[i].ForEach( t => sb2.Append( t ).Append( terminatorString ) );
+                                }
+                            }
+                            l = new List<KeyValuePair<string, int>>( TextUtilities.GetPairAndTripleCounts( sb2.ToString(), replacements ) );
+                            l.Sort( ( a, b ) => b.Value.CompareTo( a.Value ) );
+
+                            secs = GetCopyOfSections();
+                        }
+
+                        break;
+                    }
+                }
+                */
                 result.Add( new KeyValuePair<string, byte>( l[0].Key, dteBytes.Pop() ) );
                 TextUtilities.DoDTEEncoding( secs, DteAllowed, PatcherLib.Utilities.Utilities.DictionaryFromKVPs( result ) );
                 bytes = GetSectionByteArrays( secs, SelectedTerminator, CharMap, CompressionAllowed ).Join();
@@ -281,6 +322,8 @@ namespace FFTPatcher.TextEditor
 
                 if (bytesNeeded > 0)
                 {
+                    if (worker != null) worker.ReportProgress(0,
+                        new ProgressForm.FileProgress { File = this, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.CalculateDte, BytesLeft = bytesNeeded } );
                     StringBuilder sb2 = new StringBuilder( Layout.Size );
                     for (int i = 0; i < secs.Count; i++)
                     {
@@ -303,6 +346,11 @@ namespace FFTPatcher.TextEditor
             }
 
             return result;
+        }
+
+        public virtual Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes )
+        {
+            return GetPreferredDTEPairs( replacements, currentPairs, dteBytes, null );
         }
 
         protected IList<IList<string>> GetCopyOfSections()

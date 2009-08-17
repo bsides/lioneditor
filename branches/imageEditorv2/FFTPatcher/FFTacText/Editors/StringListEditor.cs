@@ -62,6 +62,8 @@ namespace FFTPatcher.TextEditor
             textColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
 #if !MEASURESTRINGS
             dataGridView.Columns.Remove(widthColumn);
+#else
+            widthColumn.DefaultCellStyle.Font = new Font( "Arial Unicode MS", 9 );
 #endif
         }
 
@@ -83,11 +85,22 @@ namespace FFTPatcher.TextEditor
                 string s = (string)dataGridView[e.ColumnIndex, e.RowIndex].Value ?? string.Empty;
                 boundFile[boundSection, CurrentRow] = s;
 #if MEASURESTRINGS
-                dataGridView[widthColumn.Index, e.RowIndex].Value = boundFile.CharMap.MeasureStringInFont(s, font);
+                dataGridView[widthColumn.Index, e.RowIndex].Value = GetWidthColumnString( s );
 #endif
             }
         }
 
+#if MEASURESTRINGS
+        private string GetWidthColumnString( string s )
+        {
+            var widths = boundFile.CharMap.MeasureEachLineInFont( s, font );
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            var widthStrings = new List<string>( widths.Count );
+
+            widths.ForEach( w => widthStrings.Add( string.Format( "{0}", w ) ) );
+            return string.Join( Environment.NewLine, widthStrings.ToArray() );
+        }
+#endif
 
         public event DataGridViewCellValidatingEventHandler CellValidating;
 
@@ -151,12 +164,15 @@ namespace FFTPatcher.TextEditor
 #if MEASURESTRINGS
             font = file.Context == PatcherLib.Datatypes.Context.US_PSP ? TextUtilities.PSPFont : TextUtilities.PSXFont;
 #endif
+            boundFile = file;
 
             for( int i = 0; i < count; i++ )
             {
                 DataGridViewRow row = new DataGridViewRow();
 #if MEASURESTRINGS
-                row.CreateCells( dataGridView, i, ourNames[i], file.CharMap.MeasureStringInFont( file[section, i] ?? string.Empty, font ), file[section, i] );
+                row.CreateCells( dataGridView, i, ourNames[i],
+                    GetWidthColumnString( file[section, i] ?? string.Empty ), file[section, i] );
+
 #else
                 row.CreateCells(dataGridView, i, ourNames[i], file[section, i]);
 #endif
@@ -182,7 +198,6 @@ namespace FFTPatcher.TextEditor
                 separatorComboBox.EndUpdate();
             }
 
-            boundFile = file;
             boundSection = section;
             ignoreChanges = false;
             ResumeLayout();

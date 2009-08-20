@@ -5,5 +5,5 @@ del *.tar.gz
 del *.gz
 rem del Resources.7z
 rem %1\..\7z a -r -mx9 -x!_svn -x!.svn Resources.7z *
-..\..\tar -c -v -f Resources.tar --exclude *[._]svn *.xml
+..\..\tar -c -v -f Resources.tar --exclude *[._]svn *.xml *.dll
 %1\..\gzip -9 Resources.tar

@@ -24,25 +24,26 @@ using System.Windows.Forms;
 using FFTPatcher.Datatypes;
 using PatcherLib.Datatypes;
 using PatcherLib.Iso;
+using PatcherLib;
 
 namespace FFTPatcher
 {
     public partial class MainForm : Form
     {
-		#region Instance Variables (2) 
+        #region Instance Variables (2)
 
         private PatchPSPForm patchPspForm = null;
         private PatchPSXForm patchPsxForm = null;
 
-		#endregion Instance Variables 
+        #endregion Instance Variables
 
-		#region Private Properties (2) 
+        #region Private Properties (2)
 
         private PatchPSPForm PatchPSPForm
         {
             get
             {
-                if( patchPspForm == null )
+                if (patchPspForm == null)
                 {
                     patchPspForm = new PatchPSPForm();
                 }
@@ -54,7 +55,7 @@ namespace FFTPatcher
         {
             get
             {
-                if( patchPsxForm == null )
+                if (patchPsxForm == null)
                 {
                     patchPsxForm = new PatchPSXForm();
                 }
@@ -62,9 +63,9 @@ namespace FFTPatcher
             }
         }
 
-		#endregion Private Properties 
+        #endregion Private Properties
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public MainForm()
         {
@@ -93,41 +94,41 @@ namespace FFTPatcher
             pspMenu.Popup += new EventHandler( pspMenu_Popup );
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Public Methods (1) 
+        #region Public Methods (1)
 
         public void HandleException( Exception e )
         {
             string message = string.Empty;
-            if ( e is FFTPatcher.Datatypes.FFTPatch.LoadPatchException )
+            if (e is FFTPatcher.Datatypes.FFTPatch.LoadPatchException)
             {
                 message = "Could not load patch";
             }
-            else if( e is ArgumentNullException )
+            else if (e is ArgumentNullException)
             {
                 message = "Argument was null";
             }
-            else if( e is ArgumentException )
+            else if (e is ArgumentException)
             {
                 message = "Bad argument";
             }
-            else if( e is FileNotFoundException )
+            else if (e is FileNotFoundException)
             {
             }
-            else if( e is IOException )
+            else if (e is IOException)
             {
                 message = "IO error occurred";
             }
-            else if( e is System.Security.SecurityException )
+            else if (e is System.Security.SecurityException)
             {
                 message = "Security access";
             }
-            else if( e is DirectoryNotFoundException )
+            else if (e is DirectoryNotFoundException)
             {
                 message = "Folder not found";
             }
-            else if( e is UnauthorizedAccessException )
+            else if (e is UnauthorizedAccessException)
             {
                 message = "Incorrect permissions";
             }
@@ -136,12 +137,12 @@ namespace FFTPatcher
                 message = e.ToString();
             }
 
-            MessageBox.Show( string.Format( "An error of type {0} occurred:\n{1}", e.GetType(), message ), "Error", MessageBoxButtons.OK );
+            MyMessageBox.Show( this, string.Format( "An error of type {0} occurred:\n{1}", e.GetType(), message ), "Error", MessageBoxButtons.OK );
         }
 
-		#endregion Public Methods 
+        #endregion Public Methods
 
-		#region Private Methods (20) 
+        #region Private Methods (20)
 
         private void aboutMenuItem_Click( object sender, EventArgs e )
         {
@@ -153,7 +154,7 @@ namespace FFTPatcher
         {
             saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "CWCheat DB files|cheat.db";
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if (saveFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName( saveFileDialog.FileName );
 
@@ -164,7 +165,7 @@ namespace FFTPatcher
         private void decryptMenuItem_Click( object sender, EventArgs e )
         {
             applyPatchOpenFileDialog.Filter = "War of the Lions ISO images (*.iso)|*.iso";
-            if( applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if (applyPatchOpenFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName( applyPatchOpenFileDialog.FileName );
                 TryAndHandle( delegate() { PatcherLib.Iso.PspIso.DecryptISO( applyPatchOpenFileDialog.FileName ); }, false );
@@ -178,7 +179,7 @@ namespace FFTPatcher
 
         private void extractFFTPackMenuItem_Click( object sender, EventArgs e )
         {
-            using ( Ionic.Utils.FolderBrowserDialogEx folderBrowserDialog = new Ionic.Utils.FolderBrowserDialogEx() )
+            using (Ionic.Utils.FolderBrowserDialogEx folderBrowserDialog = new Ionic.Utils.FolderBrowserDialogEx())
             {
                 DoWorkEventHandler doWork =
                     delegate( object sender1, DoWorkEventArgs args )
@@ -200,9 +201,9 @@ namespace FFTPatcher
                         patchPsxBackgroundWorker.ProgressChanged -= progress;
                         patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
                         patchPsxBackgroundWorker.DoWork -= doWork;
-                        if ( args.Error is Exception )
+                        if (args.Error is Exception)
                         {
-                            MessageBox.Show(
+                            MyMessageBox.Show( this,
                                 "Could not extract file.\n" +
                                 "Make sure you chose the correct file and that there \n" +
                                 "enough room in the destination directory.",
@@ -221,7 +222,7 @@ namespace FFTPatcher
                 folderBrowserDialog.ShowNewFolderButton = true;
                 folderBrowserDialog.Description = "Where should the files be extracted?";
 
-                if ( ( openFileDialog.ShowDialog( this ) == DialogResult.OK ) && ( folderBrowserDialog.ShowDialog( this ) == DialogResult.OK ) )
+                if ((openFileDialog.ShowDialog( this ) == DialogResult.OK) && (folderBrowserDialog.ShowDialog( this ) == DialogResult.OK))
                 {
                     patchPsxBackgroundWorker.ProgressChanged += progress;
                     patchPsxBackgroundWorker.RunWorkerCompleted += completed;
@@ -258,7 +259,7 @@ namespace FFTPatcher
         private void openMenuItem_Click( object sender, System.EventArgs e )
         {
             openFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName( openFileDialog.FileName );
 
@@ -266,22 +267,22 @@ namespace FFTPatcher
             }
         }
 
-        private void openPatchedPspItem_Click(object sender, EventArgs e)
+        private void openPatchedPspItem_Click( object sender, EventArgs e )
         {
             openFileDialog.FileName = string.Empty;
             openFileDialog.Filter = "ISO images|*.iso;";
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName( openFileDialog.FileName );
 
-                TryAndHandle(delegate() { FFTPatch.OpenPatchedPspIso(openFileDialog.FileName); }, true);
+                TryAndHandle( delegate() { FFTPatch.OpenPatchedPspIso( openFileDialog.FileName ); }, true );
             }
         }
 
-        private void openPatchedPsxIso_Click(object sender, EventArgs e)
+        private void openPatchedPsxIso_Click( object sender, EventArgs e )
         {
             openFileDialog.Filter = "ISO images (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
-            if( openFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if (openFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName( openFileDialog.FileName );
                 TryAndHandle( delegate() { FFTPatch.OpenPatchedPsxIso( openFileDialog.FileName ); }, true );
@@ -299,7 +300,7 @@ namespace FFTPatcher
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Visible = true;
-                    progressBar.Value = args.ProgressPercentage;
+                    progressBar.Value = Math.Max( progressBar.Minimum, Math.Min( args.ProgressPercentage, progressBar.Maximum ) );
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =
@@ -310,17 +311,17 @@ namespace FFTPatcher
                     patchPsxBackgroundWorker.ProgressChanged -= progress;
                     patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
                     patchPsxBackgroundWorker.DoWork -= doWork;
-                    if( args.Error is NotSupportedException )
+                    if (args.Error is NotSupportedException)
                     {
-                        MessageBox.Show( "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
+                        MyMessageBox.Show( this, "File is not a recognized War of the Lions ISO image.", "Error", MessageBoxButtons.OK );
                     }
-                    else if( args.Error != null )
+                    else if (args.Error != null)
                     {
                         HandleException( args.Error );
                     }
                 };
 
-            if( PatchPSPForm.CustomShowDialog( this ) == DialogResult.OK )
+            if (PatchPSPForm.CustomShowDialog( this ) == DialogResult.OK)
             {
                 patchPsxBackgroundWorker.ProgressChanged += progress;
                 patchPsxBackgroundWorker.RunWorkerCompleted += completed;
@@ -346,7 +347,7 @@ namespace FFTPatcher
                 delegate( object sender2, ProgressChangedEventArgs args )
                 {
                     progressBar.Visible = true;
-                    progressBar.Value = args.ProgressPercentage;
+                    progressBar.Value = Math.Max( progressBar.Minimum, Math.Min( args.ProgressPercentage, progressBar.Maximum ) );
                 };
             RunWorkerCompletedEventHandler completed = null;
             completed =
@@ -357,20 +358,20 @@ namespace FFTPatcher
                     patchPsxBackgroundWorker.ProgressChanged -= progress;
                     patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
                     patchPsxBackgroundWorker.DoWork -= doWork;
-                    
-                    if ( args.Error != null )
+
+                    if (args.Error != null)
                     {
                         HandleException( args.Error );
                     }
                 };
 
-            
-            if ( PatchPSXForm.CustomShowDialog( this ) == DialogResult.OK )
+
+            if (PatchPSXForm.CustomShowDialog( this ) == DialogResult.OK)
             {
                 patchPsxBackgroundWorker.ProgressChanged += progress;
                 patchPsxBackgroundWorker.RunWorkerCompleted += completed;
                 patchPsxBackgroundWorker.DoWork += doWork;
-                
+
                 Enabled = false;
 
                 progressBar.Value = 0;
@@ -394,7 +395,7 @@ namespace FFTPatcher
 
         private void rebuildFFTPackMenuItem_Click( object sender, EventArgs e )
         {
-            using ( Ionic.Utils.FolderBrowserDialogEx folderBrowserDialog = new Ionic.Utils.FolderBrowserDialogEx() )
+            using (Ionic.Utils.FolderBrowserDialogEx folderBrowserDialog = new Ionic.Utils.FolderBrowserDialogEx())
             {
                 DoWorkEventHandler doWork =
                     delegate( object sender1, DoWorkEventArgs args )
@@ -416,9 +417,9 @@ namespace FFTPatcher
                         patchPsxBackgroundWorker.ProgressChanged -= progress;
                         patchPsxBackgroundWorker.RunWorkerCompleted -= completed;
                         patchPsxBackgroundWorker.DoWork -= doWork;
-                        if ( args.Error is Exception )
+                        if (args.Error is Exception)
                         {
-                            MessageBox.Show(
+                            MyMessageBox.Show( this,
                                 "Could not merge files.\n" +
                                 "Make sure you chose the correct file and that there is\n" +
                                 "enough room in the destination directory.",
@@ -438,7 +439,7 @@ namespace FFTPatcher
                 folderBrowserDialog.ShowFullPathInEditBox = false;
                 folderBrowserDialog.ShowNewFolderButton = false;
 
-                if ( ( folderBrowserDialog.ShowDialog( this ) == DialogResult.OK ) && ( saveFileDialog.ShowDialog( this ) == DialogResult.OK ) )
+                if ((folderBrowserDialog.ShowDialog( this ) == DialogResult.OK) && (saveFileDialog.ShowDialog( this ) == DialogResult.OK))
                 {
                     patchPsxBackgroundWorker.ProgressChanged += progress;
                     patchPsxBackgroundWorker.RunWorkerCompleted += completed;
@@ -457,10 +458,10 @@ namespace FFTPatcher
         private void saveAsPspMenuItem_Click( object sender, EventArgs e )
         {
             string fn = SavePatch( false );
-            if( !string.IsNullOrEmpty( fn ) )
+            if (!string.IsNullOrEmpty( fn ))
             {
                 // HACK
-                if( FFTPatch.Context != Context.US_PSP )
+                if (FFTPatch.Context != Context.US_PSP)
                 {
                     FFTPatch.ConvertPsxPatchToPsp( fn );
                     FFTPatch.LoadPatch( fn );
@@ -477,7 +478,7 @@ namespace FFTPatcher
         {
             saveFileDialog.OverwritePrompt = true;
             saveFileDialog.Filter = "FFTPatcher files (*.fftpatch)|*.fftpatch";
-            if( saveFileDialog.ShowDialog( this ) == DialogResult.OK )
+            if (saveFileDialog.ShowDialog( this ) == DialogResult.OK)
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName( saveFileDialog.FileName );
                 try
@@ -485,9 +486,9 @@ namespace FFTPatcher
                     TryAndHandle( delegate() { FFTPatch.SavePatchToFile( saveFileDialog.FileName, FFTPatch.Context, digest ); }, false, true );
                     return saveFileDialog.FileName;
                 }
-                catch( Exception )
+                catch (Exception)
                 {
-                    MessageBox.Show( "Could not open file.", "File not found", MessageBoxButtons.OK );
+                    MyMessageBox.Show( this, "Could not open file.", "File not found", MessageBoxButtons.OK );
                 }
             }
             return string.Empty;
@@ -499,13 +500,13 @@ namespace FFTPatcher
             {
                 action();
             }
-            catch( Exception e )
+            catch (Exception e)
             {
-                if( disableOnFail )
+                if (disableOnFail)
                 {
                     fftPatchEditor1.Enabled = false;
                 }
-                if( rethrow )
+                if (rethrow)
                 {
                     throw;
                 }
@@ -521,11 +522,11 @@ namespace FFTPatcher
             TryAndHandle( action, disableOnFail, false );
         }
 
-		#endregion Private Methods 
+        #endregion Private Methods
 
         private void generateResourcesMenuItem_Click( object sender, EventArgs e )
         {
-            using ( Ionic.Utils.FolderBrowserDialogEx fbd = new Ionic.Utils.FolderBrowserDialogEx() )
+            using (Ionic.Utils.FolderBrowserDialogEx fbd = new Ionic.Utils.FolderBrowserDialogEx())
             {
                 fbd.Description = "Where to save Resources.zip:";
                 fbd.NewStyle = true;
@@ -535,7 +536,7 @@ namespace FFTPatcher
                 fbd.ShowEditBox = true;
                 fbd.ShowFullPathInEditBox = false;
                 fbd.ShowNewFolderButton = true;
-                if ( fbd.ShowDialog( this ) == DialogResult.OK )
+                if (fbd.ShowDialog( this ) == DialogResult.OK)
                 {
                     PatcherLib.Resources.GenerateDefaultResourcesZip( Path.Combine( fbd.SelectedPath, "Resources.zip" ) );
                 }

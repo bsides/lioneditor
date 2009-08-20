@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using PatcherLib.Utilities;
+using PatcherLib;
 
 namespace FFTPatcher.TextEditor
 {
@@ -98,15 +99,15 @@ namespace FFTPatcher.TextEditor
         {
             if ( !e.Cancelled && e.Error == null )
             {
-                MessageBox.Show( this, "Success", "Success", MessageBoxButtons.OK );
+                MyMessageBox.Show( this, "Success", "Success", MessageBoxButtons.OK );
             }
             else if ( e.Error != null )
             {
-                MessageBox.Show( this, e.Error.Message, "Error", MessageBoxButtons.OK );
+                MyMessageBox.Show( this, e.Error.Message, "Error", MessageBoxButtons.OK );
             }
             else if ( e.Cancelled )
             {
-                MessageBox.Show( this, "Cancelled", "Cancelled", MessageBoxButtons.OK );
+                MyMessageBox.Show( this, "Cancelled", "Cancelled", MessageBoxButtons.OK );
             }
             worker.ProgressChanged -= worker_ProgressChanged;
             worker.RunWorkerCompleted -= worker_RunWorkerCompleted;

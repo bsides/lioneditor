@@ -331,9 +331,54 @@ namespace FFTPatcher.TextEditor
         }
 
 
+
+        private static void RemoveUnnecessaryColors( ISerializableFile file )
+        {
+            return;
+            for (int section = 0; section < file.NumberOfSections; section++)
+            {
+                for (int entry = 0; entry < file.SectionLengths[section]; entry++)
+                {
+                    string mystring = file[section, entry];
+                    var allIndices = IndexOfEvery( mystring, "{Color " );
+                    List<int> indicesToRemove = new List<int>();
+                    for (int i = 0; i < allIndices.Count - 1; i++)
+                    {
+                        string firstByte = mystring.Substring( allIndices[i] + 7, 2 );
+                        string secondByte = mystring.Substring( allIndices[i+1] + 7, 2 );
+                        if (firstByte == secondByte)
+                        {
+                            indicesToRemove.Add( allIndices[i + 1] );
+                        }
+                    }
+
+                    indicesToRemove.Reverse();
+                    foreach (int i in indicesToRemove)
+                    {
+                        mystring = mystring.Remove( i, 10 );
+                    }
+
+                    file[section, entry] = mystring;
+                }
+            }
+        }
+
+        private static IList<int> IndexOfEvery( string s, string substring )
+        {
+            List<int> result = new List<int>();
+            int i = 0;
+            while ((i = s.IndexOf( substring, i )) >= 0)
+            {
+                result.Add( i );
+                i += 10;
+            }
+            return result;
+        }
+
         private static FFTText GetText( Stream iso, Context context, XmlNode doc, BytesFromIso reader, GenericCharMap charmap, BackgroundWorker worker )
         {
             IDictionary<Guid, ISerializableFile> files = GetFiles( iso, context, doc, reader, charmap, worker );
+
             if ( files == null || worker.CancellationPending )
                 return null;
 
@@ -439,6 +484,8 @@ namespace FFTPatcher.TextEditor
                         tempText.Files.FindAll( f => f is ISerializableFile ).FindAll( g => guidsToLoadFromIso.Contains( (g as ISerializableFile).Layout.Guid ) ) );
                 isoFiles.ForEach( f => result.Add( (f as ISerializableFile).Layout.Guid, f as ISerializableFile ) );
             }
+
+            //result.Values.ForEach( f => RemoveUnnecessaryColors( f ) );
 
             XmlNode quickEditNode = layoutDoc.SelectSingleNode( "//QuickEdit" );
             Set<Guid> guids = GetGuidsNeededForQuickEdit( quickEditNode );

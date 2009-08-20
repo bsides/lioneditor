@@ -37,14 +37,22 @@ namespace PatcherLib.Iso
             private PspIsoInfo() { }
             public long this[PspIso.Sectors file] { get { return fileToSectorMap[file]; } }
 
-            public long GetFileSize(PspIso.Sectors file)
+            public long GetFileSize( PspIso.Sectors file )
             {
                 return fileToSizeMap[file];
             }
 
-            public static PspIsoInfo GetPspIsoInfo(Stream iso)
+
+            static IDictionary<int, PspIsoInfo> hashCodeToInfoMap = new Dictionary<int, PspIsoInfo>();
+
+            public static PspIsoInfo GetPspIsoInfo( Stream iso )
             {
-                return GetPspIsoInfo(ImageMaster.IsoReader.GetRecord(iso));
+                int hashCode = iso.GetHashCode();
+                if (!hashCodeToInfoMap.ContainsKey( hashCode ))
+                {
+                    hashCodeToInfoMap[hashCode] = GetPspIsoInfo( ImageMaster.IsoReader.GetRecord( iso ) );
+                }
+                return hashCodeToInfoMap[hashCode];
             }
 
             private static PspIsoInfo GetPspIsoInfo( ImageMaster.ImageRecord record )
@@ -97,14 +105,14 @@ namespace PatcherLib.Iso
             }
 
 
-            public static PspIsoInfo GetPspIsoInfo(string iso)
+            public static PspIsoInfo GetPspIsoInfo( string iso )
             {
-                return GetPspIsoInfo(ImageMaster.IsoReader.GetRecord(iso));
+                return GetPspIsoInfo( ImageMaster.IsoReader.GetRecord( iso ) );
             }
         }
-        
 
-		#region Instance Variables (6) 
+
+        #region Instance Variables (6)
 
         private static readonly long[] bootBinLocations = { 0x10000, 0x0FED8000 };
         private static byte[] buffer = new byte[1024];
@@ -113,9 +121,9 @@ namespace PatcherLib.Iso
         //public const long FFTPackLocation = 0x02C20000;
         private static byte[] jpSizes = new byte[] { 0xE4, 0xD9, 0x37, 0x00, 0x00, 0x37, 0xD9, 0xE4 };
 
-		#endregion Instance Variables 
+        #endregion Instance Variables
 
-		#region Public Methods (10) 
+        #region Public Methods (10)
 
         /// <summary>
         /// Decrypts the ISO.
@@ -130,13 +138,13 @@ namespace PatcherLib.Iso
                 PspIsoInfo info = PspIsoInfo.GetPspIsoInfo( stream );
                 DecryptISO( stream, info );
             }
-            catch ( NotSupportedException )
+            catch (NotSupportedException)
             {
                 throw;
             }
             finally
             {
-                if ( stream != null )
+                if (stream != null)
                 {
                     stream.Flush();
                     stream.Close();
@@ -151,11 +159,11 @@ namespace PatcherLib.Iso
         /// <param name="stream">The stream of the ISO to decrypt.</param>
         public static void DecryptISO( Stream stream, PspIsoInfo info )
         {
-            if ( IsJP( stream, info ) )
+            if (IsJP( stream, info ))
             {
                 CopyBytes( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048, 0x37D9E4, info[Sectors.PSP_GAME_SYSDIR_EBOOT_BIN] * 2048, 0x37DB40 );
             }
-            else if ( IsUS( stream, info ) || IsEU( stream, info ) )
+            else if (IsUS( stream, info ) || IsEU( stream, info ))
             {
                 CopyBytes( stream, info[Sectors.PSP_GAME_SYSDIR_BOOT_BIN] * 2048, 0x3A84A4, info[Sectors.PSP_GAME_SYSDIR_EBOOT_BIN] * 2048, 0x3A8600 );
             }
@@ -226,21 +234,21 @@ namespace PatcherLib.Iso
             patches.ForEach( p => ApplyPatch( file, info, p ) );
         }
 
-		#endregion Public Methods 
+        #endregion Public Methods
 
-		#region Private Methods (3) 
+        #region Private Methods (3)
 
         public static void ApplyPatch( Stream stream, PspIsoInfo info, PatcherLib.Datatypes.PatchedByteArray patch )
         {
-            if ( patch.SectorEnum != null )
+            if (patch.SectorEnum != null)
             {
-                if ( patch.SectorEnum.GetType() == typeof( PspIso.Sectors ) )
+                if (patch.SectorEnum.GetType() == typeof( PspIso.Sectors ))
                 {
-                    stream.WriteArrayToPosition( patch.GetBytes(), (int)( info[(PspIso.Sectors)patch.SectorEnum] * 2048 ) + patch.Offset );
+                    stream.WriteArrayToPosition( patch.GetBytes(), (int)(info[(PspIso.Sectors)patch.SectorEnum] * 2048) + patch.Offset );
                 }
-                else if ( patch.SectorEnum.GetType() == typeof( FFTPack.Files ) )
+                else if (patch.SectorEnum.GetType() == typeof( FFTPack.Files ))
                 {
-                    FFTPack.PatchFile( stream, info, (int)( (FFTPack.Files)patch.SectorEnum ), (int)patch.Offset, patch.GetBytes() );
+                    FFTPack.PatchFile( stream, info, (int)((FFTPack.Files)patch.SectorEnum), (int)patch.Offset, patch.GetBytes() );
                 }
                 else
                 {
@@ -257,25 +265,25 @@ namespace PatcherLib.Iso
             return result;
         }
 
-        public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file, int start, int length)
+        public static IList<byte> GetFile( Stream stream, PspIsoInfo info, FFTPack.Files file, int start, int length )
         {
             return FFTPack.GetFileFromIso( stream, info, file, start, length );
         }
 
-        public static IList<byte> GetFile(Stream stream, PspIsoInfo info, FFTPack.Files file)
+        public static IList<byte> GetFile( Stream stream, PspIsoInfo info, FFTPack.Files file )
         {
-            return FFTPack.GetFileFromIso(stream, info, file);
+            return FFTPack.GetFileFromIso( stream, info, file );
         }
 
-        public static IList<byte> GetBlock(Stream iso, PspIsoInfo info, KnownPosition pos)
+        public static IList<byte> GetBlock( Stream iso, PspIsoInfo info, KnownPosition pos )
         {
             if (pos.FFTPack.HasValue)
             {
-                return GetFile(iso, info, pos.FFTPack.Value, pos.StartLocation, pos.Length);
+                return GetFile( iso, info, pos.FFTPack.Value, pos.StartLocation, pos.Length );
             }
             else if (pos.Sector.HasValue)
             {
-                return GetFile(iso, info, pos.Sector.Value, pos.StartLocation, pos.Length);
+                return GetFile( iso, info, pos.Sector.Value, pos.StartLocation, pos.Length );
             }
             else
             {
@@ -286,7 +294,7 @@ namespace PatcherLib.Iso
         private static void CopyBytes( Stream stream, long src, long srcSize, long dest, long destOldSize )
         {
             long bytesRead = 0;
-            while ( ( bytesRead + bufferSize ) < srcSize )
+            while ((bytesRead + bufferSize) < srcSize)
             {
                 stream.Seek( src + bytesRead, SeekOrigin.Begin );
                 stream.Read( buffer, 0, bufferSize );
@@ -296,15 +304,15 @@ namespace PatcherLib.Iso
             }
 
             stream.Seek( src + bytesRead, SeekOrigin.Begin );
-            stream.Read( buffer, 0, (int)( srcSize - bytesRead ) );
+            stream.Read( buffer, 0, (int)(srcSize - bytesRead) );
             stream.Seek( dest + bytesRead, SeekOrigin.Begin );
-            stream.Write( buffer, 0, (int)( srcSize - bytesRead ) );
+            stream.Write( buffer, 0, (int)(srcSize - bytesRead) );
 
-            if ( destOldSize > srcSize )
+            if (destOldSize > srcSize)
             {
                 buffer = new byte[bufferSize];
                 stream.Seek( dest + srcSize, SeekOrigin.Begin );
-                stream.Write( buffer, 0, (int)( destOldSize - srcSize ) );
+                stream.Write( buffer, 0, (int)(destOldSize - srcSize) );
             }
         }
 
@@ -321,34 +329,34 @@ namespace PatcherLib.Iso
                 get { return length; }
             }
 
-            private KnownPosition(Enum sector, int startLocation, int length)
+            private KnownPosition( Enum sector, int startLocation, int length )
             {
                 SectorEnum = sector;
                 StartLocation = startLocation;
-                this.length  = length;
+                this.length = length;
             }
 
-            public KnownPosition(Sectors sector, int startLocation, int length)
-                : this((Enum)sector, startLocation, length)
+            public KnownPosition( Sectors sector, int startLocation, int length )
+                : this( (Enum)sector, startLocation, length )
             {
                 Sector = sector;
             }
 
-            public KnownPosition(FFTPack.Files sector, int startLocation, int length)
-                : this((Enum)sector, startLocation, length)
+            public KnownPosition( FFTPack.Files sector, int startLocation, int length )
+                : this( (Enum)sector, startLocation, length )
             {
                 FFTPack = sector;
             }
 
-            public override PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            public override PatchedByteArray GetPatchedByteArray( byte[] bytes )
             {
                 if (Sector.HasValue)
                 {
-                    return new PatchedByteArray(Sector, StartLocation, bytes);
+                    return new PatchedByteArray( Sector, StartLocation, bytes );
                 }
                 else if (FFTPack.HasValue)
                 {
-                    return new PatchedByteArray(FFTPack, StartLocation, bytes);
+                    return new PatchedByteArray( FFTPack, StartLocation, bytes );
                 }
                 else
                 {
@@ -356,19 +364,19 @@ namespace PatcherLib.Iso
                 }
             }
 
-            public override IList<byte> ReadIso(Stream iso)
+            public override IList<byte> ReadIso( Stream iso )
             {
-                return ReadIso(iso, PspIsoInfo.GetPspIsoInfo(iso));
+                return ReadIso( iso, PspIsoInfo.GetPspIsoInfo( iso ) );
             }
 
-            public IList<byte> ReadIso(Stream iso, PspIsoInfo info)
+            public IList<byte> ReadIso( Stream iso, PspIsoInfo info )
             {
-                return PspIso.GetBlock(iso, info, this);
+                return PspIso.GetBlock( iso, info, this );
             }
 
-            public override void PatchIso(Stream iso, IList<byte> bytes)
+            public override void PatchIso( Stream iso, IList<byte> bytes )
             {
-                PspIso.ApplyPatch(iso, PspIsoInfo.GetPspIsoInfo(iso), GetPatchedByteArray(bytes.ToArray()));
+                PspIso.ApplyPatch( iso, PspIsoInfo.GetPspIsoInfo( iso ), GetPatchedByteArray( bytes.ToArray() ) );
             }
         }
 
@@ -485,14 +493,14 @@ namespace PatcherLib.Iso
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2DC8D0, 0x200),
                 new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2DC8D0, 0x200)}.AsReadOnly();
 
-            ENTD1 = new KnownPosition(FFTPack.Files.BATTLE_ENTD1_ENT, 0, 81920);
-            ENTD2 = new KnownPosition(FFTPack.Files.BATTLE_ENTD2_ENT, 0, 81920);
-            ENTD3 = new KnownPosition(FFTPack.Files.BATTLE_ENTD3_ENT, 0, 81920);
-            ENTD4 = new KnownPosition(FFTPack.Files.BATTLE_ENTD4_ENT, 0, 81920);
-            ENTD5 = new KnownPosition(FFTPack.Files.BATTLE_ENTD5_ENT, 0, 51200);
+            ENTD1 = new KnownPosition( FFTPack.Files.BATTLE_ENTD1_ENT, 0, 81920 );
+            ENTD2 = new KnownPosition( FFTPack.Files.BATTLE_ENTD2_ENT, 0, 81920 );
+            ENTD3 = new KnownPosition( FFTPack.Files.BATTLE_ENTD3_ENT, 0, 81920 );
+            ENTD4 = new KnownPosition( FFTPack.Files.BATTLE_ENTD4_ENT, 0, 81920 );
+            ENTD5 = new KnownPosition( FFTPack.Files.BATTLE_ENTD5_ENT, 0, 51200 );
         }
 
-		#endregion Private Methods 
+        #endregion Private Methods
 
         public enum Sectors
         {

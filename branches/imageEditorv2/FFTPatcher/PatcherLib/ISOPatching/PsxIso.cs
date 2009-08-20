@@ -79,27 +79,27 @@ namespace PatcherLib.Iso
         static PsxIso()
         {
             Propositions = new KnownPosition( Sectors.WORLD_WLDCORE_BIN, 0x36380, 0xA54 );
-            Abilities = new KnownPosition(Sectors.SCUS_942_21, 0x4F3F0, 9414);
-            AbilityEffects = new KnownPosition(Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0);
+            Abilities = new KnownPosition( Sectors.SCUS_942_21, 0x4F3F0, 9414 );
+            AbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0 );
             ReactionAbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x014F73C, 0x40 );
-            ActionEvents = new KnownPosition(Sectors.SCUS_942_21, 0x564B4, 224);
-            InflictStatuses = new KnownPosition(Sectors.SCUS_942_21, 0x547C4, 0x300);
-            Jobs = new KnownPosition(Sectors.SCUS_942_21, 0x518B8, 0x1E00);
-            JobLevels = new KnownPosition(Sectors.SCUS_942_21, 0x568C4, 0xD0);
-            MonsterSkills = new KnownPosition(Sectors.SCUS_942_21, 0x563C4, 0xF0);
-            OldItemAttributes = new KnownPosition(Sectors.SCUS_942_21, 0x54AC4, 0x7D0);
-            OldItems = new KnownPosition(Sectors.SCUS_942_21, 0x536B8, 0x110A);
-            PoachProbabilities = new KnownPosition(Sectors.SCUS_942_21, 0x56864, 0x60);
-            StatusAttributes = new KnownPosition(Sectors.SCUS_942_21, 0x565E4, 0x280);
-            SkillSets = new KnownPosition(Sectors.SCUS_942_21, 0x55294, 0x1130);
-            ENTD1 = new KnownPosition(Sectors.BATTLE_ENTD1_ENT, 0, 81920);
-            ENTD2 = new KnownPosition(Sectors.BATTLE_ENTD2_ENT, 0, 81920);
-            ENTD3 = new KnownPosition(Sectors.BATTLE_ENTD3_ENT, 0, 81920);
-            ENTD4 = new KnownPosition(Sectors.BATTLE_ENTD4_ENT, 0, 81920);
-            MoveFindItems = new KnownPosition(Sectors.BATTLE_BIN, 0x8EE74, 0x800);
-            StoreInventories = new KnownPosition(Sectors.WORLD_WORLD_BIN, 0xAD844, 0x200);
-            NumberOfSectorsBigEndian = new KnownPosition((Sectors)16, 0x54, 4);
-            NumberOfSectorsLittleEndian = new KnownPosition((Sectors)16, 0x50, 4);
+            ActionEvents = new KnownPosition( Sectors.SCUS_942_21, 0x564B4, 224 );
+            InflictStatuses = new KnownPosition( Sectors.SCUS_942_21, 0x547C4, 0x300 );
+            Jobs = new KnownPosition( Sectors.SCUS_942_21, 0x518B8, 0x1E00 );
+            JobLevels = new KnownPosition( Sectors.SCUS_942_21, 0x568C4, 0xD0 );
+            MonsterSkills = new KnownPosition( Sectors.SCUS_942_21, 0x563C4, 0xF0 );
+            OldItemAttributes = new KnownPosition( Sectors.SCUS_942_21, 0x54AC4, 0x7D0 );
+            OldItems = new KnownPosition( Sectors.SCUS_942_21, 0x536B8, 0x110A );
+            PoachProbabilities = new KnownPosition( Sectors.SCUS_942_21, 0x56864, 0x60 );
+            StatusAttributes = new KnownPosition( Sectors.SCUS_942_21, 0x565E4, 0x280 );
+            SkillSets = new KnownPosition( Sectors.SCUS_942_21, 0x55294, 0x1130 );
+            ENTD1 = new KnownPosition( Sectors.BATTLE_ENTD1_ENT, 0, 81920 );
+            ENTD2 = new KnownPosition( Sectors.BATTLE_ENTD2_ENT, 0, 81920 );
+            ENTD3 = new KnownPosition( Sectors.BATTLE_ENTD3_ENT, 0, 81920 );
+            ENTD4 = new KnownPosition( Sectors.BATTLE_ENTD4_ENT, 0, 81920 );
+            MoveFindItems = new KnownPosition( Sectors.BATTLE_BIN, 0x8EE74, 0x800 );
+            StoreInventories = new KnownPosition( Sectors.WORLD_WORLD_BIN, 0xAD844, 0x200 );
+            NumberOfSectorsBigEndian = new KnownPosition( (Sectors)16, 0x54, 4 );
+            NumberOfSectorsLittleEndian = new KnownPosition( (Sectors)16, 0x50, 4 );
             AbilityAnimations = new KnownPosition( Sectors.BATTLE_BIN, 0x2CE10, 0x600 );
         }
 
@@ -107,48 +107,48 @@ namespace PatcherLib.Iso
 
         #region Public Methods (3)
 
-        public static byte[] GetBlock(Stream iso, KnownPosition knownPositions)
+        public static byte[] GetBlock( Stream iso, KnownPosition knownPositions )
         {
-            return ReadFile(iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length);
+            return ReadFile( iso, knownPositions.Sector, knownPositions.StartLocation, knownPositions.Length );
         }
 
-        public static void PatchPsxIso(Stream iso, IEnumerable<PatcherLib.Datatypes.PatchedByteArray> patches)
+        public static void PatchPsxIso( Stream iso, IEnumerable<PatcherLib.Datatypes.PatchedByteArray> patches )
         {
             foreach (var patch in patches)
             {
-                PatchPsxIso(iso, patch);
+                PatchPsxIso( iso, patch );
             }
         }
 
-        public static void PatchPsxIso(Stream iso, PatcherLib.Datatypes.PatchedByteArray patch)
+        public static void PatchPsxIso( Stream iso, PatcherLib.Datatypes.PatchedByteArray patch )
         {
             if (patch is STRPatchedByteArray)
             {
-                PatchPsxIso(iso, (STRPatchedByteArray)patch);
+                PatchPsxIso( iso, (STRPatchedByteArray)patch );
             }
             else
             {
-                IsoPatch.PatchFileAtSector(IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
-                    patch.Offset, patch.GetBytes(), true);
+                IsoPatch.PatchFileAtSector( IsoPatch.IsoType.Mode2Form1, iso, true, patch.Sector,
+                    patch.Offset, patch.GetBytes(), true );
             }
         }
 
-        public static void PatchPsxIso(Stream iso, PatcherLib.Datatypes.STRPatchedByteArray patch)
+        public static void PatchPsxIso( Stream iso, PatcherLib.Datatypes.STRPatchedByteArray patch )
         {
-            ReplaceStrFile(iso, (Sectors)patch.Sector, patch.GetBytes());
+            ReplaceStrFile( iso, (Sectors)patch.Sector, patch.GetBytes() );
         }
 
-        public static byte[] ReadFile(Stream iso, Sectors file, int offset, int length)
+        public static byte[] ReadFile( Stream iso, Sectors file, int offset, int length )
         {
-            return IsoPatch.ReadFile(IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length);
+            return IsoPatch.ReadFile( IsoPatch.IsoType.Mode2Form1, iso, (int)file, offset, length );
         }
 
-        public static byte[] ReadFile(Stream iso, KnownPosition pos)
+        public static byte[] ReadFile( Stream iso, KnownPosition pos )
         {
-            return ReadFile(iso, pos.Sector, pos.StartLocation, pos.Length);
+            return ReadFile( iso, pos.Sector, pos.StartLocation, pos.Length );
         }
 
-        public static void ReplaceStrFile(Stream iso, Sectors file, IList<byte> bytes)
+        public static void ReplaceStrFile( Stream iso, Sectors file, IList<byte> bytes )
         {
             const int bytesPerSector = 2336;
             const int bytesPerSectorM2 = 2352;
@@ -157,7 +157,7 @@ namespace PatcherLib.Iso
                 throw new ArgumentException( string.Format( "new STR file length must be a multiple of {0}", bytesPerSector ) );
             }
 
-            int numSectors = bytes.Count/bytesPerSector;
+            int numSectors = bytes.Count / bytesPerSector;
 
             byte[] tempSector = new byte[bytesPerSectorM2];
 
@@ -174,7 +174,7 @@ namespace PatcherLib.Iso
 
                 // Copy the 2336 bytes from the input file to the buffer
                 bytes.Sub( i * bytesPerSector, (i + 1) * bytesPerSector - 1 ).CopyTo( tempSector, (bytesPerSectorM2 - bytesPerSector) );
-                
+
                 // The output from MC32.EXE doesn't have these bytes set properly:
                 tempSector[16] = 0x01;
                 tempSector[20] = 0x01;
@@ -2845,26 +2845,26 @@ namespace PatcherLib.Iso
             {
                 get { return length; }
             }
-            public KnownPosition(Sectors sector, int startLocation, int length)
+            public KnownPosition( Sectors sector, int startLocation, int length )
             {
                 Sector = sector;
                 StartLocation = startLocation;
                 this.length = length;
             }
 
-            public override PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes)
+            public override PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray( byte[] bytes )
             {
-                return new PatcherLib.Datatypes.PatchedByteArray(Sector, StartLocation, bytes);
+                return new PatcherLib.Datatypes.PatchedByteArray( Sector, StartLocation, bytes );
             }
 
-            public override IList<byte> ReadIso(Stream iso)
+            public override IList<byte> ReadIso( Stream iso )
             {
-                return PsxIso.ReadFile(iso, this);
+                return PsxIso.ReadFile( iso, this );
             }
 
-            public override void PatchIso(Stream iso, IList<byte> bytes)
+            public override void PatchIso( Stream iso, IList<byte> bytes )
             {
-                PsxIso.PatchPsxIso(iso, GetPatchedByteArray(bytes.ToArray()));
+                PsxIso.PatchPsxIso( iso, GetPatchedByteArray( bytes.ToArray() ) );
             }
         }
 
@@ -2873,7 +2873,7 @@ namespace PatcherLib.Iso
         public const int DummyDirectoryEntrySector = 230000;
         public const int DummyDirectoryEntryLength = 1;
 
-        [System.Diagnostics.DebuggerDisplay("{Filename} - {Sector} - {Size} - {Timestamp}")]
+        [System.Diagnostics.DebuggerDisplay( "{Filename} - {Sector} - {Size} - {Timestamp}" )]
         public class DirectoryEntry
         {
             public static IList<DirectoryEntry> GetDirectoryEntries( Stream iso, int sectorOfParentEntry, int numSectors )
@@ -2882,9 +2882,9 @@ namespace PatcherLib.Iso
                 int length = numSectors;
                 List<DirectoryEntry> result = new List<DirectoryEntry>();
                 byte[] bytes = PsxIso.GetBlock( iso, new KnownPosition( (Sectors)sector, 0, length * 2048 ) );
-                for ( int i = 0; i < bytes.Length; i++ )
+                for (int i = 0; i < bytes.Length; i++)
                 {
-                    if ( bytes[i] == 0 ) continue;
+                    if (bytes[i] == 0) continue;
 
                     IList<byte> entry = bytes.Sub( i, i + bytes[i] - 1 );
                     result.Add( new DirectoryEntry( entry ) );
@@ -2894,7 +2894,7 @@ namespace PatcherLib.Iso
                 return result;
             }
 
-            public static IList<DirectoryEntry> GetBattleEntries(Stream iso)
+            public static IList<DirectoryEntry> GetBattleEntries( Stream iso )
             {
                 const int sector = BattleDirectoryEntrySector;
                 const int length = BattleDirectoryEntryLength;
@@ -2908,42 +2908,50 @@ namespace PatcherLib.Iso
                 return GetDirectoryEntries( iso, sector, length );
             }
 
-            public static void WriteDirectoryEntries( Stream iso, int sector, int numSectors, IList<DirectoryEntry> entries )
+            public static IList<PatchedByteArray> GetDirectoryEntryPatches( int sector, int numSectors, IList<DirectoryEntry> entries )
             {
                 byte[][] dirEntryBytes = new byte[entries.Count][];
-                for ( int i = 0; i < entries.Count; i++ )
+                for (int i = 0; i < entries.Count; i++)
                 {
                     dirEntryBytes[i] = entries[i].ToByteArray();
                 }
 
                 List<byte>[] sectors = new List<byte>[numSectors];
-                for ( int i = 0; i < sectors.Length; i++ )
+                for (int i = 0; i < sectors.Length; i++)
                     sectors[i] = new List<byte>( 2048 );
                 int currentSector = 0;
-                foreach ( byte[] entry in dirEntryBytes )
+                foreach (byte[] entry in dirEntryBytes)
                 {
-                    if ( sectors[currentSector].Count + entry.Length > 2048 )
+                    if (sectors[currentSector].Count + entry.Length > 2048)
                     {
                         currentSector++;
                     }
-                    if ( currentSector >= numSectors )
+                    if (currentSector >= numSectors)
                         throw new InvalidOperationException( "not enough sectors for all directory entries" );
                     sectors[currentSector].AddRange( entry );
                 }
-                foreach ( List<byte> sec in sectors )
+                foreach (List<byte> sec in sectors)
                 {
                     sec.AddRange( new byte[2048 - sec.Count] );
                 }
 
-                for ( int i = 0; i < numSectors; i++ )
+                List<PatchedByteArray> result = new List<PatchedByteArray>();
+                for (int i = 0; i < numSectors; i++)
                 {
-                    PatcherLib.Iso.PsxIso.PatchPsxIso( iso,
+                    result.Add(
                         new PatchedByteArray(
-                            (PatcherLib.Iso.PsxIso.Sectors)( sector + i ),
+                            (PatcherLib.Iso.PsxIso.Sectors)(sector + i),
                             0,
                             sectors[i].ToArray() ) );
 
                 }
+                return result;
+            }
+
+            public static void WriteDirectoryEntries( Stream iso, int sector, int numSectors, IList<DirectoryEntry> entries )
+            {
+                var patches = GetDirectoryEntryPatches( sector, numSectors, entries );
+                patches.ForEach( p => PsxIso.PatchPsxIso( iso, patches ) );
             }
 
             public string Filename { get; set; }
@@ -2954,12 +2962,12 @@ namespace PatcherLib.Iso
             public byte[] ExtendedBytes { get; private set; }
             public byte GMTOffset { get; set; }
 
-            public DirectoryEntry(UInt32 sector, UInt32 size, DateTime timestamp, byte gmtOffset, IList<byte> middleBytes, string filename, IList<byte> extendedBytes)
+            public DirectoryEntry( UInt32 sector, UInt32 size, DateTime timestamp, byte gmtOffset, IList<byte> middleBytes, string filename, IList<byte> extendedBytes )
             {
                 if (middleBytes.Count != 7)
-                    throw new ArgumentException("middleBytes");
+                    throw new ArgumentException( "middleBytes" );
                 if (extendedBytes.Count != 0x0e)
-                    throw new ArgumentException("extendedBytes");
+                    throw new ArgumentException( "extendedBytes" );
                 Sector = sector;
                 Size = size;
                 Timestamp = timestamp;
@@ -2969,48 +2977,48 @@ namespace PatcherLib.Iso
                 Filename = filename;
             }
 
-            public DirectoryEntry(IList<byte> bytes)
+            public DirectoryEntry( IList<byte> bytes )
             {
-                System.Diagnostics.Debug.Assert(bytes[0] == bytes.Count);
-                Sector = bytes.Sub(2, 2 + 4 - 1).ToUInt32();
-                Size = bytes.Sub(10, 10 + 4 - 1).ToUInt32();
-                Timestamp = new DateTime(bytes[18] + 1900, bytes[19], bytes[20], bytes[21], bytes[22], bytes[23]);
+                System.Diagnostics.Debug.Assert( bytes[0] == bytes.Count );
+                Sector = bytes.Sub( 2, 2 + 4 - 1 ).ToUInt32();
+                Size = bytes.Sub( 10, 10 + 4 - 1 ).ToUInt32();
+                Timestamp = new DateTime( bytes[18] + 1900, bytes[19], bytes[20], bytes[21], bytes[22], bytes[23] );
                 GMTOffset = bytes[24];
-                MiddleBytes = bytes.Sub(25, 25 + 7 - 1).ToArray();
+                MiddleBytes = bytes.Sub( 25, 25 + 7 - 1 ).ToArray();
                 byte nameLength = bytes[32];
-                Filename = System.Text.Encoding.ASCII.GetString(bytes.Sub(33, 33 + nameLength - 1).ToArray());
+                Filename = System.Text.Encoding.ASCII.GetString( bytes.Sub( 33, 33 + nameLength - 1 ).ToArray() );
                 byte padding = (byte)(((nameLength % 2) == 0) ? 1 : 0);
-                ExtendedBytes = bytes.Sub(33 + nameLength + padding, bytes[0] - 1).ToArray();
+                ExtendedBytes = bytes.Sub( 33 + nameLength + padding, bytes[0] - 1 ).ToArray();
             }
 
             public byte[] ToByteArray()
             {
                 List<byte> result = new List<byte>();
-                result.Add(0x00);
+                result.Add( 0x00 );
                 byte[] sectorBytes = Sector.ToBytes();
-                result.AddRange(sectorBytes);
-                result.AddRange(new byte[] { sectorBytes[3], sectorBytes[2], sectorBytes[1], sectorBytes[0] });
+                result.AddRange( sectorBytes );
+                result.AddRange( new byte[] { sectorBytes[3], sectorBytes[2], sectorBytes[1], sectorBytes[0] } );
                 byte[] sizeBytes = Size.ToBytes();
-                result.AddRange(sizeBytes);
-                result.AddRange(new byte[] { sizeBytes[3], sizeBytes[2], sizeBytes[1], sizeBytes[0] });
-                result.Add((byte)(Timestamp.Year - 1900));
-                result.Add((byte)Timestamp.Month);
-                result.Add((byte)Timestamp.Day);
-                result.Add((byte)Timestamp.Hour);
-                result.Add((byte)Timestamp.Minute);
-                result.Add((byte)Timestamp.Second);
-                result.Add(GMTOffset);
-                result.AddRange(MiddleBytes);
+                result.AddRange( sizeBytes );
+                result.AddRange( new byte[] { sizeBytes[3], sizeBytes[2], sizeBytes[1], sizeBytes[0] } );
+                result.Add( (byte)(Timestamp.Year - 1900) );
+                result.Add( (byte)Timestamp.Month );
+                result.Add( (byte)Timestamp.Day );
+                result.Add( (byte)Timestamp.Hour );
+                result.Add( (byte)Timestamp.Minute );
+                result.Add( (byte)Timestamp.Second );
+                result.Add( GMTOffset );
+                result.AddRange( MiddleBytes );
                 byte[] nameBytes = Filename.ToByteArray();
-                result.Add((byte)nameBytes.Length);
-                result.AddRange(nameBytes);
+                result.Add( (byte)nameBytes.Length );
+                result.AddRange( nameBytes );
                 if (((byte)nameBytes.Length) % 2 == 0)
                 {
-                    result.Add(0x00);
+                    result.Add( 0x00 );
                 }
-                result.AddRange(ExtendedBytes);
+                result.AddRange( ExtendedBytes );
                 byte length = (byte)(result.Count + 1);
-                result.Insert(0, length);
+                result.Insert( 0, length );
 
                 return result.ToArray();
             }

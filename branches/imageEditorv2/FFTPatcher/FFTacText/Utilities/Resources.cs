@@ -34,13 +34,14 @@ namespace FFTPatcher.TextEditor
         #region Static Fields (1)
 
         private static Dictionary<string, XmlNode> resourceMapping = new Dictionary<string, XmlNode>();
-
+        private static Dictionary<string, byte[]> otherResources = new Dictionary<string, byte[]>();
         #endregion Static Fields
 
         #region Static Properties (1)
 
         public static XmlNode PSX { get { return resourceMapping["psx.xml"]; } }
         public static XmlNode PSP { get { return resourceMapping["psp.xml"]; } }
+        public static byte[] FFTTextCompression { get { return otherResources["FFTTextCompression.dll"]; } }
 
         #endregion Static Properties
 
@@ -58,10 +59,20 @@ namespace FFTPatcher.TextEditor
                 {
                     if ( entry.Size != 0 && !string.IsNullOrEmpty( entry.Name ) )
                     {
-                        XmlDocument doc = new XmlDocument();
-                        doc.Load( tarStream );
-                        resourceMapping[entry.Name] = doc;
+                        if (entry.Name.EndsWith( ".xml" ))
+                        {
+                            XmlDocument doc = new XmlDocument();
+                            doc.Load( tarStream );
+                            resourceMapping[entry.Name] = doc;
+                        }
+                        else
+                        {
+                            byte[] bytes = new byte[entry.Size];
+                            ICSharpCode.SharpZipLib.Core.StreamUtils.ReadFully( tarStream, bytes );
+                            otherResources[entry.Name] = bytes;
+                        }
                     }
+
                     entry = tarStream.GetNextEntry();
                 }
 

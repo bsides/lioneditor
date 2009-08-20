@@ -18,28 +18,65 @@ namespace FFTPatcher.TextEditor
                 static FFTFont defaultFont = TextUtilities.PSXFont;
                 static GenericCharMap defaultMap = TextUtilities.PSXMap;
 
+                private static GenericCharMap BuildCharMapFromIso( Stream iso )
+                {
+                    var rootDirEnt = PsxIso.DirectoryEntry.GetDirectoryEntries( iso, FFTText.RootDirEntSector, 1 );
+                    var charMapEntry = rootDirEnt.Find( d => d.Filename == FFTText.CharmapFileName );
+
+                    System.Diagnostics.Debug.Assert( charMapEntry.Sector == FFTText.CharmapSector );
+                    var charmapBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.CharmapSector, 0,
+                        (int)charMapEntry.Size ) );
+                    Dictionary<int, string> myCharmap = new Dictionary<int, string>();
+                    using (MemoryStream memStream = new MemoryStream( charmapBytes ))
+                    using (TextReader reader = new StreamReader( memStream, Encoding.UTF8 ))
+                    {
+                        // Get header line
+                        reader.ReadLine();
+                        string currentLine = string.Empty;
+                        while ((currentLine = reader.ReadLine()) != null)
+                        {
+                            string[] cols = currentLine.Split( '\t' );
+                            int index = int.Parse( cols[0], System.Globalization.NumberStyles.HexNumber );
+                            myCharmap[index] = cols[1];
+                        }
+                    }
+
+                    return new NonDefaultCharMap( myCharmap );
+                }
+
                 public static GenericCharMap GetCharMap( Stream iso )
                 {
-                    IList<byte> dteBytes = PsxIso.ReadFile( iso, DTE.PsxDteTable );
-                    return GetCharMap( dteBytes );
+                    var matchBytes = Encoding.UTF8.GetBytes( FFTText.CharmapHeader );
+                    var isoBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.CharmapSector, 0,
+                        matchBytes.Length ) );
+
+                    if (Utilities.CompareArrays( matchBytes, isoBytes ))
+                    {
+                        return BuildCharMapFromIso( iso );
+                    }
+                    else
+                    {
+                        IList<byte> dteBytes = PsxIso.ReadFile( iso, DTE.PsxDteTable );
+                        return GetCharMap( dteBytes );
+                    }
                 }
 
                 public static GenericCharMap GetCharMap( IList<byte> dteTable )
                 {
-                    Dictionary<int, string> myCharMap = new Dictionary<int, string>(defaultMap);
+                    Dictionary<int, string> myCharMap = new Dictionary<int, string>( defaultMap );
 
-                    IList<string> dtePairs = GetDtePairs(dteTable);
+                    IList<string> dtePairs = GetDtePairs( dteTable );
                     for (int i = 0; i < dtePairs.Count; i++)
                     {
-                        if (string.IsNullOrEmpty(dtePairs[i])) continue;
+                        if (string.IsNullOrEmpty( dtePairs[i] )) continue;
 
                         myCharMap[i + DTE.MinDteByte] = dtePairs[i];
                     }
 
-                    return new NonDefaultCharMap(myCharMap);
+                    return new NonDefaultCharMap( myCharMap );
                 }
 
-                static IList<string> GetDtePairs(IList<byte> dteTable)
+                static IList<string> GetDtePairs( IList<byte> dteTable )
                 {
                     string[] result = new string[dteTable.Count / 2];
                     for (int i = 0; i < dteTable.Count; i += 2)
@@ -101,9 +138,9 @@ mainloop: continue;
                     return null;
                 }
 
-                private static Glyph DetermineFirstCharacter(IList<Glyph> glyphs, IList<byte> matchBytes, int width)
+                private static Glyph DetermineFirstCharacter( IList<Glyph> glyphs, IList<byte> matchBytes, int width )
                 {
-                    Glyph newGlyph = new Glyph((byte)width, matchBytes);
+                    Glyph newGlyph = new Glyph( (byte)width, matchBytes );
                     foreach (Glyph g in glyphs)
                     {
                         if (g.Width > width) continue;
@@ -122,30 +159,30 @@ mainloop: continue;
                         // All pixels matched
                         return g;
 
-                    mainloop: continue;
+mainloop: continue;
                     }
 
                     return null;
                 }
 
-                public static GenericCharMap GetCharMap(IList<byte> fontBytes, IList<byte> widthBytes, PspIso.PspIsoInfo info)
+                public static GenericCharMap GetCharMap( IList<byte> fontBytes, IList<byte> widthBytes, PspIso.PspIsoInfo info )
                 {
-                    Dictionary<int, string> myCharMap = new Dictionary<int, string>(defaultMap);
+                    Dictionary<int, string> myCharMap = new Dictionary<int, string>( defaultMap );
 
-                    List<Glyph> glyphs = new List<Glyph>(defaultFont.Glyphs);
-                    glyphs.Sort((a, b) => b.Width.CompareTo(a.Width));
+                    List<Glyph> glyphs = new List<Glyph>( defaultFont.Glyphs );
+                    glyphs.Sort( ( a, b ) => b.Width.CompareTo( a.Width ) );
 
                     for (int i = MinDteByte; i < (DTE.MaxDteByte - DTE.MinDteByte + 1); i++)
                     {
-                        IList<byte> bytes = fontBytes.Sub(i * DTE.characterSize, (i + 1) * DTE.characterSize - 1);
-                        Glyph first = DetermineFirstCharacter(glyphs, bytes, widthBytes[i]);
+                        IList<byte> bytes = fontBytes.Sub( i * DTE.characterSize, (i + 1) * DTE.characterSize - 1 );
+                        Glyph first = DetermineFirstCharacter( glyphs, bytes, widthBytes[i] );
                         if (first != null)
                         {
-                            Glyph second = DetermineSecondCharacter(glyphs, bytes, widthBytes[i], first.Width);
+                            Glyph second = DetermineSecondCharacter( glyphs, bytes, widthBytes[i], first.Width );
                             if (second != null)
                             {
-                                int firstIndex = defaultFont.Glyphs.IndexOf(first);
-                                int secondIndex = defaultFont.Glyphs.IndexOf(second);
+                                int firstIndex = defaultFont.Glyphs.IndexOf( first );
+                                int secondIndex = defaultFont.Glyphs.IndexOf( second );
                                 myCharMap[i] = defaultMap[firstIndex] + defaultMap[secondIndex];
                             }
                         }

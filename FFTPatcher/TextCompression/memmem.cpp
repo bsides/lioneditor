@@ -39,7 +39,7 @@ unsigned char* boyermoore_horspool_memmem(
     size_t scan = 0;
  
     /* Sanity checks on the parameters */
-    if (nlen <= 0 || !haystack || !needle)
+    if (nlen <= 0 || hlen <= 0 || nlen > hlen || !haystack || !needle)
         return NULL;
  
     /* Initialize the table to default values */

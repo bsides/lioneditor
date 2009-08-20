@@ -19,6 +19,7 @@ cd %solutiondir%
 cd TextCompression
 vcbuild /clean TextCompression.vcproj Release > nul
 vcbuild TextCompression.vcproj Release > nul
+copy /y %solutiondir%\TextCompression\Release\FFTTextCompression.dll %solutiondir%\FFTacText\Resources
 
 rem build solution
 cd ..
@@ -49,8 +50,8 @@ echo Copying ShishiSpriteEditor.exe
 copy /y ShishiSpriteEditor\bin\x86\Release\ShishiSpriteEditor.exe %OUTPUTDIR% > nul
 echo Copying ICSharpCode.SharpZipLib.dll
 copy /y ..\utils\ICSharpCode.SharpZipLib.dll %OUTPUTDIR% > nul
-echo Copying FFTTextCompression.dll
-copy /y TextCompression\Release\FFTTextCompression.dll %OUTPUTDIR% > nul
+rem echo Copying FFTTextCompression.dll
+rem copy /y TextCompression\Release\FFTTextCompression.dll %OUTPUTDIR% > nul
 
 echo Copying COPYING
 copy /y COPYING %outputdir% > nul

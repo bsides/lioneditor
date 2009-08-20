@@ -22,11 +22,15 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <set>
-#include "CompressionJumps.h"
 
 #define MIN(x,y) (((x)<(y))?(x):(y))
 #define MAX(x,y) (((x)>(y))?(x):(y))
 #define MIN_NEEDLE_LENGTH 4
+#define MAX_NEEDLE_LENGTH 35
+#define MAX_HAYSTACK_LENGTH 3792
+
+#include "CompressionJumps.h"
+
 
 #ifdef _MANAGED
 #pragma managed(push, off)
@@ -39,9 +43,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 {
     return TRUE;
 }
-
-
-TCHAR szReturn[MAX_PATH];
 
 int FindByte(unsigned char byteToFind, unsigned char* whereToLook, int whereToStart, int whereToEnd)
 {
@@ -86,6 +87,38 @@ void AddJump(unsigned char* destination, int jump, int length)
 
 typedef void (__stdcall *callback_t)(int);
 
+int ShouldSkip(unsigned char input)
+{
+    if (input == 0xFE ||
+        input == 0xE0 ||
+        input == 0xFB ||
+        input == 0xFC ||
+        input == 0xFF )
+        return 1;
+    else if ((input & 0xF0) == 0xD0 ||
+             (input & 0xF0) == 0xE0)
+        return 2;
+    else
+        return -1;
+}
+
+int GetNeedleLength(unsigned char* buffer, int whereToStart, int whereToEnd)
+{
+    int needleLength = 0;
+    for(int i = whereToStart; i < whereToEnd; i++)
+    {
+        unsigned char b = buffer[i];
+        if (b > 0xCF &&
+             b != 0xFA &&
+             b != 0xF8)
+        {
+             break;
+        }
+        needleLength++;
+    }
+    return needleLength;
+}
+
 __declspec(dllexport) void CompressSection(unsigned char* input, int inputLength, unsigned char* output, int* outputPosition)
 {
     int loc = 0;
@@ -93,19 +126,24 @@ __declspec(dllexport) void CompressSection(unsigned char* input, int inputLength
 
     for (int i = 0; i < inputLength; i++)
     {
-        if (input[i] == 0xFE)
+        int skip = -1;
+        if ((skip = ShouldSkip(input[i])) != -1)
         {
-			output[*outputPosition] = input[i];
-			(*outputPosition) += 1;
+            for(int j = 0; j < skip; j++)
+            {
+                output[*outputPosition+j] = input[i+j];
+            }
+
+            (*outputPosition) += skip;
+            i += skip - 1;
             continue;
         }
 
-        int fe = FindByte(0xFE, input, i, i+MIN(35, inputLength-i)-1);
-        if (fe == -1) fe = i + 35;
+        int fe = i + GetNeedleLength(input, i, i+MIN(MAX_NEEDLE_LENGTH, inputLength-i)-1);
 
         if (GetPositionOfMaxSubArray(
-               output+MAX(0,*outputPosition-3792),
-               MIN(*outputPosition, 3792),
+               output+MAX(0,*outputPosition-MAX_HAYSTACK_LENGTH),
+               MIN(*outputPosition, MAX_HAYSTACK_LENGTH),
                input+i,
                fe - i,
                &loc,
@@ -113,12 +151,12 @@ __declspec(dllexport) void CompressSection(unsigned char* input, int inputLength
         {
             AddJump(output+*outputPosition, loc, size);
             (*outputPosition) += 3;
-            i += size -1;
+            i += size - 1;
         }
         else
         {
-			output[*outputPosition] = input[i];
-			(*outputPosition) += 1;
+            output[*outputPosition] = input[i];
+            (*outputPosition) += 1;
             continue;
         }
     }

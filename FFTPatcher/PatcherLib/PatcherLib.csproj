@@ -82,6 +82,7 @@
     <Compile Include="ISOPatching\ImageMaster\Reader\Iso\IsoRecordDateTime.cs" />
     <Compile Include="ISOPatching\ImageMaster\Reader\Iso\VolumeDescriptor.cs" />
     <Compile Include="ISOPatching\KnownPosition.cs" />
+    <Compile Include="MyMessageBox.cs" />
     <Compile Include="ProgressBarWithText.cs">
       <SubType>Component</SubType>
     </Compile>

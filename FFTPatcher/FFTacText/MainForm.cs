@@ -24,6 +24,7 @@ using System.IO;
 using System.Windows.Forms;
 using PatcherLib.Datatypes;
 using PatcherLib.Utilities;
+using PatcherLib;
 
 namespace FFTPatcher.TextEditor
 {
@@ -117,7 +118,7 @@ namespace FFTPatcher.TextEditor
             MethodInvoker missingPrompt = null;
             missingPrompt = delegate()
                 {
-                    var res = MessageBox.Show( this, "Some files are missing." + Environment.NewLine + "Load missing files from ISO?", "Files missing", MessageBoxButtons.YesNoCancel );
+                    var res = MyMessageBox.Show( this, "Some files are missing." + Environment.NewLine + "Load missing files from ISO?", "Files missing", MessageBoxButtons.YesNoCancel );
                     if (res == DialogResult.Yes)
                     {
                         openFileDialog.Filter = "ISO files (*.iso, *.bin, *.img)|*.iso;*.bin;*.img";
@@ -202,7 +203,7 @@ namespace FFTPatcher.TextEditor
                 {
                     if ( args.Error != null )
                     {
-                        MessageBox.Show( this, "Error loading file: " + args.Error.Message, "Error", MessageBoxButtons.OK );
+                        MyMessageBox.Show( this, "Error loading file: " + args.Error.Message, "Error", MessageBoxButtons.OK );
                     }
                     if ( InvokeRequired )
                     {

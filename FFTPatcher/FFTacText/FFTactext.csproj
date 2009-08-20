@@ -158,6 +158,7 @@
     <Content Include="Files\PSP\FileContents.txt" />
     <Content Include="Files\PSX\FileContents.txt" />
     <Content Include="notes.txt" />
+    <Content Include="Resources\FFTTextCompression.dll" />
     <Content Include="Resources\psx.xml" />
     <Content Include="Resources\psp.xml" />
   </ItemGroup>

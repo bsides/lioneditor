@@ -24,6 +24,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using PatcherLib.Datatypes;
 using PatcherLib.Utilities;
+using System.IO;
+using System.Windows.Forms;
 
 namespace FFTPatcher.TextEditor
 {
@@ -84,6 +86,12 @@ namespace FFTPatcher.TextEditor
 
         #region Constructors (1)
 
+        [DllImport( "kernel32" )]
+        private static extern IntPtr LoadLibrary( string lpFileName );
+
+        [DllImport( "kernel32.dll", SetLastError = true )]
+        private static extern bool FreeLibrary( IntPtr hModule );
+
         static TextUtilities()
         {
             //PSXMap = new PSXCharMap();
@@ -94,8 +102,32 @@ namespace FFTPatcher.TextEditor
             BuildVersion2Charmap( psx, psp );
             BuildVersion3Charmap( psx, psp );
 
-            PSXMap = new PSXCharMap(psx);
-            PSPMap = new PSPCharMap(psp);
+            PSXMap = new PSXCharMap( psx );
+            PSPMap = new PSPCharMap( psp );
+
+            // Extract the DLL to the temp folder
+            string dir = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName() );
+            Directory.CreateDirectory( dir );
+
+            string path = Path.Combine( dir, "FFTTextCompression.dll" );
+            File.WriteAllBytes( path, Resources.FFTTextCompression );
+
+            IntPtr h = LoadLibrary( path );
+            System.Diagnostics.Debug.Assert( h != IntPtr.Zero, "Unable to load library " + path );
+
+            Application.ApplicationExit +=
+                delegate( object sender, EventArgs args )
+                {
+                    if (FreeLibrary( h ) && File.Exists( path ) && Directory.Exists( dir ))
+                    {
+                        try
+                        {
+                            File.Delete( path );
+                            Directory.Delete( dir );
+                        }
+                        catch { }
+                    }
+                };
         }
 
         #endregion Constructors

@@ -73,6 +73,7 @@
     <Compile Include="DotNetZip\FolderBrowserDialogEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ISOPatching\DirectoryEntry.cs" />
     <Compile Include="ISOPatching\ImageMaster\Reader\IImageRecord.cs" />
     <Compile Include="ISOPatching\ImageMaster\Reader\ImageReader.cs" />
     <Compile Include="ISOPatching\ImageMaster\Reader\ImageRecord.cs" />

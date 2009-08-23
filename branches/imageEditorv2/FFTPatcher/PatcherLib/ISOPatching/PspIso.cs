@@ -29,13 +29,74 @@ namespace PatcherLib.Iso
     {
         public class PspIsoInfo
         {
-            private delegate void MyFunc( string path, Sectors sector );
+            private delegate void MyFunc( string path, Sectors sector, bool throwWhenNotFound );
 
             private IDictionary<Sectors, long> fileToSectorMap;
             private IDictionary<Sectors, long> fileToSizeMap;
 
             private PspIsoInfo() { }
             public long this[PspIso.Sectors file] { get { return fileToSectorMap[file]; } }
+
+            [System.Diagnostics.DebuggerDisplay( "Start: {StartSector} - End: {EndSector} - {Size}" )]
+            private struct FileSpaceInfo
+            {
+                public long StartSector { get; set; }
+                public long EndSector { get; set; }
+                public long Size { get; set; }
+                public long NumSectors { get { return EndSector - StartSector + 1; } }
+            }
+
+            public bool ContainsKey( Sectors sector )
+            {
+                return fileToSectorMap.ContainsKey( sector );
+            }
+
+            public int GetSectorWithFreeSpace( int freeSpaceNeeded )
+            {
+                int sectorsNeeded = (freeSpaceNeeded - 1) / 2048 + 1;
+                    
+                List<FileSpaceInfo> allFiles = new List<FileSpaceInfo>();
+
+                foreach (var key in fileToSectorMap.Keys)
+                {
+                    allFiles.Add( new FileSpaceInfo
+                    {
+                        StartSector = fileToSectorMap[key],
+                        Size = fileToSizeMap[key],
+                        EndSector = fileToSectorMap[key] + (fileToSizeMap[key] - 1) / 2048
+                    } );
+                }
+
+                allFiles.Sort( ( a, b ) => a.StartSector.CompareTo( b.StartSector ) );
+
+                for (int i = 0; i < allFiles.Count - 1; i++)
+                {
+                    if (allFiles[i + 1].StartSector - allFiles[i].EndSector - 1 >= sectorsNeeded)
+                    {
+                        return (int)allFiles[i].EndSector + 1;
+                    }
+                }
+
+                return -1;
+            }
+
+            public void AddFile( PspIso.Sectors file, int sector, int size )
+            {
+                fileToSectorMap[file] = sector;
+                fileToSizeMap[file] = size;
+            }
+
+            public void RemoveFile( PspIso.Sectors file )
+            {
+                if (fileToSectorMap.ContainsKey( file ))
+                {
+                    fileToSectorMap.Remove( file );
+                }
+                if (fileToSizeMap.ContainsKey( file ))
+                {
+                    fileToSizeMap.Remove( file );
+                }
+            }
 
             public long GetFileSize( PspIso.Sectors file )
             {
@@ -61,7 +122,7 @@ namespace PatcherLib.Iso
                 var myDict = new Dictionary<Sectors, long>();
                 var myOtherDict = new Dictionary<Sectors, long>();
                 MyFunc func =
-                    delegate( string path, Sectors sector )
+                    delegate( string path, Sectors sector, bool throwOnError )
                     {
                         myRecord = record.GetItemPath( path );
                         if (myRecord != null)
@@ -69,35 +130,43 @@ namespace PatcherLib.Iso
                             myDict[sector] = myRecord.Location;
                             myOtherDict[sector] = myRecord.Size;
                         }
-                        else
+                        else if (throwOnError)
                         {
                             throw new FileNotFoundException( "couldn't find file in ISO", path );
                         }
                     };
-                func( "PSP_GAME/ICON0.PNG", Sectors.PSP_GAME_ICON0_PNG );
-                func( "PSP_GAME/PARAM.SFO", Sectors.PSP_GAME_PARAM_SFO );
-                func( "PSP_GAME/PIC0.PNG", Sectors.PSP_GAME_PIC0_PNG );
-                func( "PSP_GAME/PIC1.PNG", Sectors.PSP_GAME_PIC1_PNG );
-                func( "PSP_GAME/SYSDIR/BOOT.BIN", Sectors.PSP_GAME_SYSDIR_BOOT_BIN );
-                func( "PSP_GAME/SYSDIR/EBOOT.BIN", Sectors.PSP_GAME_SYSDIR_EBOOT_BIN );
-                func( "PSP_GAME/SYSDIR/UPDATE/DATA.BIN", Sectors.PSP_GAME_SYSDIR_UPDATE_DATA_BIN );
-                func( "PSP_GAME/SYSDIR/UPDATE/EBOOT.BIN", Sectors.PSP_GAME_SYSDIR_UPDATE_EBOOT_BIN );
-                func( "PSP_GAME/SYSDIR/UPDATE/PARAM.SFO", Sectors.PSP_GAME_SYSDIR_UPDATE_PARAM_SFO );
-                func( "PSP_GAME/USRDIR/fftpack.bin", Sectors.PSP_GAME_USRDIR_fftpack_bin );
-                func( "PSP_GAME/USRDIR/movie/001_HolyStone.pmf", Sectors.PSP_GAME_USRDIR_movie_001_HolyStone_pmf );
-                func( "PSP_GAME/USRDIR/movie/002_Opening.pmf", Sectors.PSP_GAME_USRDIR_movie_002_Opening_pmf );
-                func( "PSP_GAME/USRDIR/movie/003_Abduction.pmf", Sectors.PSP_GAME_USRDIR_movie_003_Abduction_pmf );
-                func( "PSP_GAME/USRDIR/movie/004_Kusabue.pmf", Sectors.PSP_GAME_USRDIR_movie_004_Kusabue_pmf );
-                func( "PSP_GAME/USRDIR/movie/005_Get_away.pmf", Sectors.PSP_GAME_USRDIR_movie_005_Get_away_pmf );
-                func( "PSP_GAME/USRDIR/movie/006_Reassume_Dilita.pmf", Sectors.PSP_GAME_USRDIR_movie_006_Reassume_Dilita_pmf );
-                func( "PSP_GAME/USRDIR/movie/007_Dilita_Advice.pmf", Sectors.PSP_GAME_USRDIR_movie_007_Dilita_Advice_pmf );
-                func( "PSP_GAME/USRDIR/movie/008_Ovelia_and_Dilita.pmf", Sectors.PSP_GAME_USRDIR_movie_008_Ovelia_and_Dilita_pmf );
-                func( "PSP_GAME/USRDIR/movie/009_Dilita_Musing.pmf", Sectors.PSP_GAME_USRDIR_movie_009_Dilita_Musing_pmf );
-                func( "PSP_GAME/USRDIR/movie/010_Ending.pmf", Sectors.PSP_GAME_USRDIR_movie_010_Ending_pmf );
-                func( "PSP_GAME/USRDIR/movie/011_Russo.pmf", Sectors.PSP_GAME_USRDIR_movie_011_Russo_pmf );
-                func( "PSP_GAME/USRDIR/movie/012_Valuhurea.pmf", Sectors.PSP_GAME_USRDIR_movie_012_Valuhurea_pmf );
-                func( "PSP_GAME/USRDIR/movie/013_StaffRoll.pmf", Sectors.PSP_GAME_USRDIR_movie_013_StaffRoll_pmf );
-                func( "UMD_DATA.BIN", Sectors.UMD_DATA_BIN );
+                myDict[Sectors.Root] = 22;
+                myOtherDict[Sectors.Root] = 0x800;
+                func( "PSP_GAME", Sectors.PSP_GAME, true );
+                func( "PSP_GAME/ICON0.PNG", Sectors.PSP_GAME_ICON0_PNG, true );
+                func( "PSP_GAME/PARAM.SFO", Sectors.PSP_GAME_PARAM_SFO, true );
+                func( "PSP_GAME/PIC0.PNG", Sectors.PSP_GAME_PIC0_PNG, true );
+                func( "PSP_GAME/PIC1.PNG", Sectors.PSP_GAME_PIC1_PNG, true );
+                func( "PSP_GAME/SYSDIR", Sectors.PSP_GAME_SYSDIR, true );
+                func( "PSP_GAME/SYSDIR/BOOT.BIN", Sectors.PSP_GAME_SYSDIR_BOOT_BIN, true );
+                func( "PSP_GAME/SYSDIR/EBOOT.BIN", Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, true );
+                func( "PSP_GAME/SYSDIR/UPDATE", Sectors.PSP_GAME_SYSDIR_UPDATE, true );
+                func( "PSP_GAME/SYSDIR/UPDATE/DATA.BIN", Sectors.PSP_GAME_SYSDIR_UPDATE_DATA_BIN, true );
+                func( "PSP_GAME/SYSDIR/UPDATE/EBOOT.BIN", Sectors.PSP_GAME_SYSDIR_UPDATE_EBOOT_BIN, true );
+                func( "PSP_GAME/SYSDIR/UPDATE/PARAM.SFO", Sectors.PSP_GAME_SYSDIR_UPDATE_PARAM_SFO, true );
+                func( "PSP_GAME/USRDIR", Sectors.PSP_GAME_USRDIR, true );
+                func( "PSP_GAME/USRDIR/fftpack.bin", Sectors.PSP_GAME_USRDIR_fftpack_bin, true );
+                func( "PSP_GAME/USRDIR/movie", Sectors.PSP_GAME_USRDIR_movie, true );
+                func( "PSP_GAME/USRDIR/movie/001_HolyStone.pmf", Sectors.PSP_GAME_USRDIR_movie_001_HolyStone_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/002_Opening.pmf", Sectors.PSP_GAME_USRDIR_movie_002_Opening_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/003_Abduction.pmf", Sectors.PSP_GAME_USRDIR_movie_003_Abduction_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/004_Kusabue.pmf", Sectors.PSP_GAME_USRDIR_movie_004_Kusabue_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/005_Get_away.pmf", Sectors.PSP_GAME_USRDIR_movie_005_Get_away_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/006_Reassume_Dilita.pmf", Sectors.PSP_GAME_USRDIR_movie_006_Reassume_Dilita_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/007_Dilita_Advice.pmf", Sectors.PSP_GAME_USRDIR_movie_007_Dilita_Advice_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/008_Ovelia_and_Dilita.pmf", Sectors.PSP_GAME_USRDIR_movie_008_Ovelia_and_Dilita_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/009_Dilita_Musing.pmf", Sectors.PSP_GAME_USRDIR_movie_009_Dilita_Musing_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/010_Ending.pmf", Sectors.PSP_GAME_USRDIR_movie_010_Ending_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/011_Russo.pmf", Sectors.PSP_GAME_USRDIR_movie_011_Russo_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/012_Valuhurea.pmf", Sectors.PSP_GAME_USRDIR_movie_012_Valuhurea_pmf, true );
+                func( "PSP_GAME/USRDIR/movie/013_StaffRoll.pmf", Sectors.PSP_GAME_USRDIR_movie_013_StaffRoll_pmf, true );
+                func( "UMD_DATA.BIN", Sectors.UMD_DATA_BIN, true );
+                func( "PSP_GAME/USRDIR/CHARMAP", Sectors.PSP_GAME_USRDIR_CHARMAP, false );
                 PspIsoInfo result = new PspIsoInfo();
                 result.fileToSectorMap = myDict;
                 result.fileToSizeMap = myOtherDict;
@@ -504,6 +573,11 @@ namespace PatcherLib.Iso
 
         public enum Sectors
         {
+            Root = 22,
+            PSP_GAME = 23,
+            PSP_GAME_SYSDIR = 24,
+            PSP_GAME_SYSDIR_UPDATE = 26,
+            PSP_GAME_USRDIR_movie = 27,
             PSP_GAME_ICON0_PNG = 22560,
             PSP_GAME_PARAM_SFO = 22576,
             PSP_GAME_PIC0_PNG = 22416,
@@ -513,7 +587,9 @@ namespace PatcherLib.Iso
             PSP_GAME_SYSDIR_UPDATE_DATA_BIN = 6032,
             PSP_GAME_SYSDIR_UPDATE_EBOOT_BIN = 1936,
             PSP_GAME_SYSDIR_UPDATE_PARAM_SFO = 1920,
+            PSP_GAME_USRDIR = 25,
             PSP_GAME_USRDIR_fftpack_bin = 22592,
+            PSP_GAME_USRDIR_CHARMAP = 14006, 
             PSP_GAME_USRDIR_movie_001_HolyStone_pmf = 132368,
             PSP_GAME_USRDIR_movie_002_Opening_pmf = 190832,
             PSP_GAME_USRDIR_movie_003_Abduction_pmf = 198112,

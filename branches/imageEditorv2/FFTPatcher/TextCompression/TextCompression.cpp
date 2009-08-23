@@ -95,9 +95,9 @@ int ShouldSkip(unsigned char input)
         input == 0xFC ||
         input == 0xFF )
         return 1;
-    else if ((input & 0xF0) == 0xD0 ||
-             (input & 0xF0) == 0xE0)
-        return 2;
+    //else if ((input & 0xF0) == 0xD0 ||
+    //         (input & 0xF0) == 0xE0)
+    //    return 2;
     else
         return -1;
 }
@@ -108,9 +108,7 @@ int GetNeedleLength(unsigned char* buffer, int whereToStart, int whereToEnd)
     for(int i = whereToStart; i < whereToEnd; i++)
     {
         unsigned char b = buffer[i];
-        if (b > 0xCF &&
-             b != 0xFA &&
-             b != 0xF8)
+        if (b == 0xFE)
         {
              break;
         }
@@ -140,6 +138,15 @@ __declspec(dllexport) void CompressSection(unsigned char* input, int inputLength
         }
 
         int fe = i + GetNeedleLength(input, i, i+MIN(MAX_NEEDLE_LENGTH, inputLength-i)-1);
+            
+        while ( (input[fe-1] & 0xF0) == 0xE0 ||
+                (input[fe-1] & 0xF0) == 0xD0 ||
+                (input[fe-1] > 0xCF &&
+                  input[fe-1] != 0xFA &&
+                  input[fe-1] != 0xF8) )
+        {
+            fe -= 1;
+        }
 
         if (GetPositionOfMaxSubArray(
                output+MAX(0,*outputPosition-MAX_HAYSTACK_LENGTH),

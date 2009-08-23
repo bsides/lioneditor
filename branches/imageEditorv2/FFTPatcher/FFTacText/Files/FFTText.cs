@@ -24,6 +24,7 @@ using System.IO;
 using FFTPatcher.TextEditor.Files;
 using PatcherLib.Datatypes;
 using PatcherLib.Utilities;
+using PatcherLib.Iso;
 
 namespace FFTPatcher.TextEditor
 {
@@ -67,85 +68,114 @@ namespace FFTPatcher.TextEditor
 
         #region Methods (9)
 
-        public const string CharmapFileName = "CHARMAP;1";
+        private const string charmapBaseFileName = "CHARMAP";
+        public const string PspCharmapFileName = charmapBaseFileName;
+        public const string PsxCharmapFileName = charmapBaseFileName + ";1";
         public const string CharmapHeader = "FFTacText Custom Charmap";
-        public const int RootDirEntSector = 22;
-        public const int CharmapSector = 208;
+        public const int PsxRootDirEntSector = 22;
+        public const int PsxCharmapSector = (int)PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP;
 
-        private static IList<PatcherLib.Iso.PsxIso.DirectoryEntry> GetDefaultRootDirectoryEntry()
+        private static IList<PatcherLib.Iso.DirectoryEntry> GetDefaultPspRootDirectoryEntry()
         {
-            return new List<PatcherLib.Iso.PsxIso.DirectoryEntry> {
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x16, 0x0800,
+            return new List<DirectoryEntry>
+            {
+                new PatcherLib.Iso.DirectoryEntry( 0x19, 0x0800,
+                    new DateTime( 0x6B+1900, 0x07, 0x02, 0x0E, 0x00, 0x01 ), 0x24,
+                    new byte[] { 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 }, 
+                    "\0",
+                    new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
+                new PatcherLib.Iso.DirectoryEntry( 0x17, 0x0800,
+                    new DateTime( 0x6B+1900, 0x07, 0x02, 0x0E, 0x00, 0x01 ), 0x24,
+                    new byte[] { 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 }, 
+                    "\x01",
+                    new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
+                new PatcherLib.Iso.DirectoryEntry( 0x5840, 0x0D2B2000,
+                    new DateTime( 0x6B+1900, 0x07, 0x02, 0x0D, 0x36, 0x10 ), 0x24,
+                    new byte[] { 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
+                    "fftpack.bin",
+                    new byte[] { 0x00, 0x00, 0x00, 0x00, 0x0D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }),
+                new PatcherLib.Iso.DirectoryEntry( 0x1B, 0x0800,
+                    new DateTime( 0x6B+1900, 0x07, 0x02, 0x0E, 0x00, 0x01 ), 0x24,
+                    new byte[] { 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 }, 
+                    "movie",
+                    new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
+            };
+        }
+
+        private static IList<PatcherLib.Iso.DirectoryEntry> GetDefaultPsxRootDirectoryEntry()
+        {
+            return new List<PatcherLib.Iso.DirectoryEntry> {
+                new PatcherLib.Iso.DirectoryEntry( 0x16, 0x0800,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "\0",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x16, 0x0800,
+                new PatcherLib.Iso.DirectoryEntry( 0x16, 0x0800,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "\x01",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0xDC74, 0x3000,
+                new PatcherLib.Iso.DirectoryEntry( 0xDC74, 0x3000,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "BATTLE",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x03E8, 0x155168,
+                new PatcherLib.Iso.DirectoryEntry( 0x03E8, 0x155168,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x04 ), 0x24,
                     new byte[] { 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "BATTLE.BIN;1",
                     new byte[] { 0x2A, 0x00, 0x2A, 0x00, 0x08, 0x01, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x038270, 0x0800,
+                new PatcherLib.Iso.DirectoryEntry( 0x038270, 0x0800,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "DUMMY",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0xEC81, 0x7800,
+                new PatcherLib.Iso.DirectoryEntry( 0xEC81, 0x7800,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "EFFECT",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x693, 0x1000,
+                new PatcherLib.Iso.DirectoryEntry( 0x693, 0x1000,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "EVENT",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x2553, 0x017000,
+                new PatcherLib.Iso.DirectoryEntry( 0x2553, 0x017000,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "MAP",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x0115EF, 0x0800,
+                new PatcherLib.Iso.DirectoryEntry( 0x0115EF, 0x0800,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "MENU",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x14E0E, 0x0800,
+                new PatcherLib.Iso.DirectoryEntry( 0x14E0E, 0x0800,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "OPEN",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0xC6, 0x5000,
+                new PatcherLib.Iso.DirectoryEntry( 0xC6, 0x5000,
                     new DateTime( 0x61 + 1900, 0x09, 0x04, 0x0E, 0x36, 0x14 ), 0x24,
                     new byte[] { 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "SCEAP.DAT;1",
                     new byte[] { 0x2A, 0x00, 0x2A, 0x00, 0x08, 0x01, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x18, 0x057000,
+                new PatcherLib.Iso.DirectoryEntry( 0x18, 0x057000,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x04 ), 0x24,
                     new byte[] { 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "SCUS_942.21;1",
                     new byte[] { 0x2A, 0x00, 0x2A, 0x00, 0x08, 0x01, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x014B01, 0x2000,
+                new PatcherLib.Iso.DirectoryEntry( 0x014B01, 0x2000,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "SOUND",
                     new byte[] { 0x00, 0x00, 0x00, 0x00, 0x8D, 0x55, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x17, 0x44,
+                new PatcherLib.Iso.DirectoryEntry( 0x17, 0x44,
                     new DateTime( 0x61 + 1900, 0x09, 0x0C, 0x10, 0x17, 0x00 ), 0x24,
                     new byte[] { 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "SYSTEM.CNF;1",
                     new byte[] { 0x2A, 0x00, 0x2A, 0x00, 0x08, 0x01, 0x58, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } ),
-                new PatcherLib.Iso.PsxIso.DirectoryEntry( 0x011A83, 0x0800,
+                new PatcherLib.Iso.DirectoryEntry( 0x011A83, 0x0800,
                     new DateTime( 0x61 + 1900, 0x0A, 0x11, 0x12, 0x25, 0x15 ), 0x24,
                     new byte[] { 0x03, 0x00, 0x00, 0x01, 0x00, 0x00, 0x01 },
                     "WORLD",
@@ -154,19 +184,62 @@ namespace FFTPatcher.TextEditor
 
         }
 
-        private IList<PatchedByteArray> RemoveCharMapPatches()
+        private IList<PatchedByteArray> RemoveCharMapPatches( Stream iso, Context context )
         {
-            var rootDirPatches = PatcherLib.Iso.PsxIso.DirectoryEntry.GetDirectoryEntryPatches(
-                RootDirEntSector, 1, GetDefaultRootDirectoryEntry() );
-            rootDirPatches.Add( new PatchedByteArray( CharmapSector, 0,
-                new byte[System.Text.Encoding.UTF8.GetBytes( CharmapHeader ).Length] ) );
-            return rootDirPatches;
+            switch (context)
+            {
+                case Context.US_PSP:
+                    return RemovePspCharMapPatches(iso);
+                case Context.US_PSX:
+                    return RemovePsxCharMapPatches(iso);
+                default:
+                    return new PatchedByteArray[0];
+            }
         }
 
-        private IList<PatchedByteArray> GetCharMapPatches( GenericCharMap baseCharmap, IDictionary<byte, string> dteInfo )
+        private IList<PatchedByteArray> RemovePspCharMapPatches(Stream iso)
         {
-            var dirEnt = GetDefaultRootDirectoryEntry();
-            //PatcherLib.Iso.PsxIso.DirectoryEntry.GetDirectoryEntries( iso, rootDirEntSector, 1 ) );
+            PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo( iso );
+            //DirectoryEntry.GetPspDirectoryEntries( iso,
+            var usrDir = DirectoryEntry.GetPspDirectoryEntries( 
+                iso, 
+                info,
+                PspIso.Sectors.PSP_GAME_USRDIR,
+                1 );
+            List<PatchedByteArray> result = new List<PatchedByteArray>();
+
+            var charmapDirEntry = usrDir.Find( de => de.Filename == FFTText.PspCharmapFileName );
+            if (charmapDirEntry != null)
+            {
+                usrDir.Remove( charmapDirEntry );
+                result.Add( new PatchedByteArray( (int)PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP, 0,
+                    new byte[System.Text.Encoding.UTF8.GetBytes( CharmapHeader ).Length] ) );
+                DirectoryEntry.GetPspDirectoryEntryPatches(
+                    (int)PspIso.Sectors.PSP_GAME_USRDIR, 1, usrDir );
+            }
+
+            return result;
+        }
+
+        private IList<PatchedByteArray> RemovePsxCharMapPatches(Stream iso)
+        {
+            List<PatchedByteArray> result = new List<PatchedByteArray>();
+            var rootDirEntries = DirectoryEntry.GetPsxDirectoryEntries( iso, PsxRootDirEntSector, 1 );
+            var charmapENtry = rootDirEntries.Find( de => de.Filename == PsxCharmapFileName );
+            if (charmapENtry != null)
+            {
+                rootDirEntries.Remove( charmapENtry );
+                result.Add(new PatchedByteArray( PsxCharmapSector, 0,
+                    new byte[System.Text.Encoding.UTF8.GetBytes( CharmapHeader ).Length] ) );
+                result.AddRange( DirectoryEntry.GetPsxDirectoryEntryPatches( PsxRootDirEntSector, 1, rootDirEntries ) );
+            }
+
+            return result;
+        }
+
+        private IList<PatchedByteArray> GetPsxCharMapPatches( Stream iso, GenericCharMap baseCharmap, IDictionary<byte, string> dteInfo )
+        {
+            var dirEnt = DirectoryEntry.GetPsxDirectoryEntries( iso, PsxRootDirEntSector, 1 );
 
             var myDict = new Dictionary<int, string>( baseCharmap );
             dteInfo.ForEach( kvp => myDict[kvp.Key] = kvp.Value );
@@ -177,23 +250,82 @@ namespace FFTPatcher.TextEditor
             var bytes = System.Text.Encoding.UTF8.GetBytes( myString.ToString() );
 
             var baseDirEntry = dirEnt.Find( d => d.Filename == "SCEAP.DAT;1" );
-            var charmapDirEntry = new PatcherLib.Iso.PsxIso.DirectoryEntry(
-                CharmapSector, (uint)bytes.Length, DateTime.Now, baseDirEntry.GMTOffset,
-                baseDirEntry.MiddleBytes, CharmapFileName, baseDirEntry.ExtendedBytes );
+            var charmapDirEntry = new PatcherLib.Iso.DirectoryEntry(
+                PsxCharmapSector, (uint)bytes.Length, DateTime.Now, baseDirEntry.GMTOffset,
+                baseDirEntry.MiddleBytes, PsxCharmapFileName, baseDirEntry.ExtendedBytes );
             AddOrReplaceCharMapDirectoryEntry( dirEnt, charmapDirEntry );
 
-            var dirEntPatches = PatcherLib.Iso.PsxIso.DirectoryEntry.GetDirectoryEntryPatches(
-                RootDirEntSector, 1, dirEnt );
-            dirEntPatches.Add( new PatchedByteArray( CharmapSector, 0, bytes ) );
+            var dirEntPatches = PatcherLib.Iso.DirectoryEntry.GetPsxDirectoryEntryPatches(
+                PsxRootDirEntSector, 1, dirEnt );
+            dirEntPatches.Add( new PatchedByteArray( PsxCharmapSector, 0, bytes ) );
             return dirEntPatches;
         }
 
-        private void AddOrReplaceCharMapDirectoryEntry( IList<PatcherLib.Iso.PsxIso.DirectoryEntry> dir, PatcherLib.Iso.PsxIso.DirectoryEntry newDirEnt )
+        private int FindSectorToInsertPspCharmap( PspIso.PspIsoInfo info, int spaceNeeded )
         {
-            if (newDirEnt.Filename != CharmapFileName)
-                throw new ArgumentException( "Filename must be " + CharmapFileName, "newDirEnt" );
+            return info.GetSectorWithFreeSpace( spaceNeeded );
+        }
 
-            var currentCharmapIndex = dir.IndexOf( dir.Find( d => d.Filename == CharmapFileName ) );
+        private IList<PatchedByteArray> GetPspCharMapPatches( Stream iso, GenericCharMap baseCharmap, IDictionary<byte, string> dteInfo )
+        {
+            var pspIsoInfo = PspIso.PspIsoInfo.GetPspIsoInfo( iso );
+            var dirEnt = DirectoryEntry.GetPspDirectoryEntries( iso, pspIsoInfo, PspIso.Sectors.PSP_GAME_USRDIR, 1 );
+
+            var currentEntry = dirEnt.Find( de => de.Filename == PspCharmapFileName );
+            if (currentEntry != null)
+            {
+                dirEnt.Remove( currentEntry );
+            }
+            pspIsoInfo.RemoveFile( PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP );
+
+            var myDict = new Dictionary<int, string>( baseCharmap );
+            dteInfo.ForEach( kvp => myDict[kvp.Key] = kvp.Value );
+
+            System.Text.StringBuilder myString = new System.Text.StringBuilder();
+            myString.AppendLine( CharmapHeader );
+            myDict.ForEach( kvp => myString.AppendFormat( "{0:X4}\t{1}" + Environment.NewLine, kvp.Key, kvp.Value ) );
+            var bytes = System.Text.Encoding.UTF8.GetBytes( myString.ToString() );
+
+            int insertSector = FindSectorToInsertPspCharmap( pspIsoInfo, bytes.Length );
+            if (insertSector == -1)
+            {
+                throw new InvalidOperationException();
+            }
+
+            pspIsoInfo.AddFile( PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP, insertSector, bytes.Length );
+
+            var baseDirEntry = dirEnt.Find( d => d.Filename == "fftpack.bin" );
+            var charmapDirEntry = new PatcherLib.Iso.DirectoryEntry(
+                (uint)insertSector, (uint)bytes.Length, DateTime.Now, baseDirEntry.GMTOffset,
+                baseDirEntry.MiddleBytes, PspCharmapFileName, baseDirEntry.ExtendedBytes );
+
+            AddOrReplaceCharMapDirectoryEntry( dirEnt, charmapDirEntry );
+
+            var dirEntPatches = PatcherLib.Iso.DirectoryEntry.GetPspDirectoryEntryPatches(
+                (int)PspIso.Sectors.PSP_GAME_USRDIR, 1, dirEnt );
+            dirEntPatches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP, 0, bytes ) );
+
+            return dirEntPatches;
+
+        }
+
+        private IList<PatchedByteArray> GetCharMapPatches( Stream iso, Context context, GenericCharMap baseCharmap, IDictionary<byte, string> dteInfo )
+        {
+            if (context == Context.US_PSX)
+            {
+                return GetPsxCharMapPatches( iso, baseCharmap, dteInfo );
+            }
+            else if (context == Context.US_PSP)
+            {
+                return GetPspCharMapPatches( iso, baseCharmap, dteInfo );
+            }
+            else
+                return new PatchedByteArray[0];
+        }
+
+        private void AddOrReplaceCharMapDirectoryEntry( IList<PatcherLib.Iso.DirectoryEntry> dir, PatcherLib.Iso.DirectoryEntry newDirEnt )
+        {
+            var currentCharmapIndex = dir.IndexOf( dir.Find( d => d.Filename == newDirEnt.Filename ) );
             if (currentCharmapIndex != -1)
             {
                 dir[currentCharmapIndex] = newDirEnt;
@@ -411,11 +543,11 @@ namespace FFTPatcher.TextEditor
                         return;
                     }
                     patches.AddRange( dtePatches );
-                    patches.AddRange( GetCharMapPatches( CharMap, dteMap ) );
+                    patches.AddRange( GetCharMapPatches( stream, dteFiles[0].Context, CharMap, dteMap ) );
                 }
                 else
                 {
-                    patches.AddRange( RemoveCharMapPatches() );
+                    patches.AddRange( RemoveCharMapPatches( stream, files[0].Context ) );
                 }
 
                 foreach (var file in nonDteFiles)

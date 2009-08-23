@@ -120,8 +120,8 @@ namespace FFTPatcher.TextEditor
         public static bool DoesPsxIsoHaveDtePatches( System.IO.Stream iso )
         {
             var matchBytes = Encoding.UTF8.GetBytes( FFTText.CharmapHeader );
-            var isoBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.CharmapSector, 0,
-                matchBytes.Length ) );
+            var isoBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.PsxCharmapSector, 0,
+                matchBytes.Length ) ); 
             if (Utilities.CompareArrays( matchBytes, isoBytes ))
                 return true;
 

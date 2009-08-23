@@ -58,14 +58,7 @@ namespace ImageMaster
         {
             get
             {
-                if (this.IsDirectory)
-                {
-                    if (_size == 0)
-                        _size = GetSize(this, 0);
-                    return _size;
-                }
-                else
-                    return DataLength;
+               return DataLength;
             }
         }
 

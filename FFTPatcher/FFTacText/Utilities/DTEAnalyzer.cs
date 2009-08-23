@@ -20,12 +20,12 @@ namespace FFTPatcher.TextEditor
 
                 private static GenericCharMap BuildCharMapFromIso( Stream iso )
                 {
-                    var rootDirEnt = PsxIso.DirectoryEntry.GetDirectoryEntries( iso, FFTText.RootDirEntSector, 1 );
-                    var charMapEntry = rootDirEnt.Find( d => d.Filename == FFTText.CharmapFileName );
+                    var rootDirEnt = DirectoryEntry.GetPsxDirectoryEntries( iso, FFTText.PsxRootDirEntSector, 1 );
+                    var charMapEntry = rootDirEnt.Find( d => d.Filename == FFTText.PsxCharmapFileName );
 
-                    System.Diagnostics.Debug.Assert( charMapEntry.Sector == FFTText.CharmapSector );
-                    var charmapBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.CharmapSector, 0,
-                        (int)charMapEntry.Size ) );
+                    System.Diagnostics.Debug.Assert( charMapEntry.Sector == FFTText.PsxCharmapSector );
+                    var charmapBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.PsxCharmapSector, 0,
+                        (int)charMapEntry.Size ) ); 
                     Dictionary<int, string> myCharmap = new Dictionary<int, string>();
                     using (MemoryStream memStream = new MemoryStream( charmapBytes ))
                     using (TextReader reader = new StreamReader( memStream, Encoding.UTF8 ))
@@ -47,7 +47,7 @@ namespace FFTPatcher.TextEditor
                 public static GenericCharMap GetCharMap( Stream iso )
                 {
                     var matchBytes = Encoding.UTF8.GetBytes( FFTText.CharmapHeader );
-                    var isoBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.CharmapSector, 0,
+                    var isoBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.PsxCharmapSector, 0,
                         matchBytes.Length ) );
 
                     if (Utilities.CompareArrays( matchBytes, isoBytes ))
@@ -106,10 +106,47 @@ namespace FFTPatcher.TextEditor
 
                 public static GenericCharMap GetCharMap( Stream iso, PatcherLib.Iso.PspIso.PspIsoInfo info )
                 {
+                    var matchBytes = Encoding.UTF8.GetBytes( FFTText.CharmapHeader );
+                    if (info.ContainsKey( PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP ))
+                    {
+                        var isoBytes = PspIso.GetBlock( iso, info,
+                            new PspIso.KnownPosition( PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP, 0,
+                                matchBytes.Length ) );
+                        if (Utilities.CompareArrays( matchBytes, isoBytes ))
+                        {
+                            return BuildCharMapFromIso( iso, info );
+                        }
+                    }
+
                     IList<byte> fontBytes = PspIso.GetBlock( iso, info, DTE.PspFontSection[0] );
                     IList<byte> widthBytes = PspIso.GetBlock( iso, info, DTE.PspFontWidths[0] );
-
                     return GetCharMap( fontBytes, widthBytes, info );
+                }
+
+                private static GenericCharMap BuildCharMapFromIso( Stream iso, PspIso.PspIsoInfo info )
+                {
+                    var usrDirEnt = DirectoryEntry.GetPspDirectoryEntries( iso, info, PspIso.Sectors.PSP_GAME_USRDIR, 1 );
+                    var charMapEntry = usrDirEnt.Find( d => d.Filename == FFTText.PspCharmapFileName );
+                    System.Diagnostics.Debug.Assert( charMapEntry.Sector == info[PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP] );
+                    var charmapBytes = PspIso.GetBlock( iso, info, new PspIso.KnownPosition(
+                         PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP, 0, (int)charMapEntry.Size ) ).ToArray();
+
+                    Dictionary<int, string> myCharMap = new Dictionary<int, string>();
+                    using(MemoryStream memStream = new MemoryStream(charmapBytes))
+                    using (TextReader reader = new StreamReader( memStream, Encoding.UTF8 ))
+                    {
+                        reader.ReadLine();
+
+                        string currentLine = string.Empty;
+                        while ((currentLine = reader.ReadLine()) != null)
+                        {
+                            string[] cols = currentLine.Split( '\t' );
+                            int index = int.Parse( cols[0], System.Globalization.NumberStyles.HexNumber );
+                            myCharMap[index] = cols[1];
+                        }
+                    }
+
+                    return new NonDefaultCharMap( myCharMap );
                 }
 
                 private static Glyph DetermineSecondCharacter( IList<Glyph> glyphs, IList<byte> matchBytes, int totalWidth, int firstWidth )
@@ -181,8 +218,15 @@ mainloop: continue;
                             Glyph second = DetermineSecondCharacter( glyphs, bytes, widthBytes[i], first.Width );
                             if (second != null)
                             {
+
                                 int firstIndex = defaultFont.Glyphs.IndexOf( first );
                                 int secondIndex = defaultFont.Glyphs.IndexOf( second );
+
+                                firstIndex = firstIndex < 0xD0 ? firstIndex :
+                                    (firstIndex - 0xD0) % 0xD0 + 0xD100 + 0x100 * ((firstIndex - 0xD0) / 0xD0);
+                                secondIndex = secondIndex < 0xD0 ? secondIndex :
+                                    (secondIndex - 0xD0) % 0xD0 + 0xD100 + 0x100 * ((secondIndex - 0xD0) / 0xD0);
+
                                 myCharMap[i] = defaultMap[firstIndex] + defaultMap[secondIndex];
                             }
                         }

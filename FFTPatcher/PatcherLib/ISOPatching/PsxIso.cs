@@ -139,6 +139,16 @@ namespace PatcherLib.Iso
 
         public enum FrameBinType
         {
+            day,
+            Time,
+            Max,
+            Depth,
+            ExpNoDot,
+            Br,
+            Dot,
+            Fa,
+
+            Master,
             Unknown,
             Lv,
             Exp,

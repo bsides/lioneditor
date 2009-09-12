@@ -35,7 +35,7 @@ namespace PatcherLib.Datatypes
         public STRPatchedByteArray(PsxIso.Sectors sector, string filename)
             : base(sector, 0 )
         {
-            this.Filename = Path.GetFileName( filename );
+            this.Filename = filename;
         }
     }
 

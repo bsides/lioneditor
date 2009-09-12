@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\AbilityFormulas.xml" />
-    <Content Include="Resources\bg.gif" />
     <Content Include="Resources\digestTransform.xsl" />
     <Content Include="Resources\PSP\Abilities\Abilities.xml" />
     <Content Include="Resources\PSP\Abilities\Effects.xml" />

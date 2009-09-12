@@ -71,6 +71,15 @@ namespace PatcherLib
         static PSPResources()
         {
             Binaries.Propositions = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.Propositions].AsReadOnly();
+            var defaultProps = Resources.DefaultZipFileContents[Resources.Paths.PSP.Binaries.Propositions].AsReadOnly();
+            if (Binaries.Propositions.Count < defaultProps.Count)
+            {
+                List<byte> newProps = new List<byte>( defaultProps.Count );
+                newProps.AddRange( Binaries.Propositions );
+                newProps.AddRange(
+                    defaultProps.Sub( Binaries.Propositions.Count ) );
+                Binaries.Propositions = newProps.AsReadOnly();
+            }
             Binaries.StoreInventories = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.StoreInventories].AsReadOnly();
             Binaries.ENTD1 = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD1].AsReadOnly();
             Binaries.ENTD2 = Resources.ZipFileContents[Resources.Paths.PSP.Binaries.ENTD2].AsReadOnly();

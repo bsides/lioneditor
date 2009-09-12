@@ -59,5 +59,34 @@ namespace FFTPatcher.SpriteEditor
 
             return result;
         }
+
+        //public override void SaveImage( System.IO.Stream iso, System.IO.Stream output )
+        //{
+        //    Set<Color> colors = GetColors( iso );
+
+        //    Bitmap originalImage = GetImageFromIso( iso );
+        //    using (Bitmap bmp = new Bitmap( Width, Height, System.Drawing.Imaging.PixelFormat.Format4bppIndexed ))
+        //    {
+        //        var pal = bmp.Palette;
+        //        for (int i = 0; i < colors.Count; i++)
+        //        {
+        //            pal.Entries[i] = colors[i];
+        //        }
+
+        //        bmp.Palette = pal;
+
+        //        var bmd = bmp.LockBits(new Rectangle(0,0,Width,Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format4bppIndexed);
+        //        for (int x = 0; x < Width; x++)
+        //        {
+        //            for (int y = 0; y < Height; y++)
+        //            {
+        //                bmd.SetPixel4bpp( x, y, colors.IndexOf( originalImage.GetPixel( x, y ) ) );
+        //            }
+        //        }
+        //        bmp.UnlockBits( bmd );
+
+        //        bmp.Save( output, System.Drawing.Imaging.ImageFormat.Gif );
+        //    }
+        //}
     }
 }

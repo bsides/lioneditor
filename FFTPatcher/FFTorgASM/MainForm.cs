@@ -21,7 +21,7 @@ namespace FFTorgASM
             if ( patches == null || patches.Length == 0 )
             {
                 IList<AsmPatch> temp;
-                if ( PatchXmlReader.TryGetPatches( FFTorgASM.Properties.Resources.DefaultHacks, out temp ) )
+                if ( PatchXmlReader.TryGetPatches( FFTorgASM.Properties.Resources.DefaultHacks, Application.ExecutablePath, out temp ) )
                 {
                     LoadPatches( temp );
                 }
@@ -88,7 +88,7 @@ namespace FFTorgASM
             foreach ( string file in files )
             {
                 IList<AsmPatch> tryPatches;
-                if ( PatchXmlReader.TryGetPatches( File.ReadAllText( file, Encoding.UTF8 ), out tryPatches ) )
+                if ( PatchXmlReader.TryGetPatches( File.ReadAllText( file, Encoding.UTF8 ), file, out tryPatches ) )
                 {
                     result.AddRange( tryPatches );
                 }

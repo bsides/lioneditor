@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using PatcherLib.Datatypes;
 using System.IO;
+using PatcherLib;
 
 namespace FFTPatcher.SpriteEditor
 {
@@ -48,11 +49,25 @@ namespace FFTPatcher.SpriteEditor
                 Stream openedStream = File.Open( openFileDialog.FileName, FileMode.Open, FileAccess.ReadWrite );
                 if (openedStream != null)
                 {
-                    if (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0 ||
-                         (openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0 &&
-                          (AllSprites.DetectExpansionOfPsxIso( openedStream ) ||
-                            MessageBox.Show( this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.OKCancel ) == DialogResult.OK)))
+                    bool psx = openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0;
+                    bool psp = openedStream.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0;
+                    if (psp || psx)
                     {
+                        DialogResult result = DialogResult.None;
+                        bool expanded = psx && AllSprites.DetectExpansionOfPsxIso( openedStream );
+                        if (psx && !expanded &&
+                            (result = MyMessageBox.Show( this, "ISO needs to be restructured." + Environment.NewLine + "Restructure?", "Restructure ISO?", MessageBoxButtons.YesNoCancel ))
+                              == DialogResult.Yes)
+                        {
+                            AllSprites.ExpandPsxIso( openedStream );
+                        }
+                        else if (psx && !expanded && result == DialogResult.Cancel)
+                        {
+                            openedStream.Close();
+                            openedStream.Dispose();
+                            return;
+                        }
+
                         if (currentStream != null)
                         {
                             currentStream.Flush();
@@ -61,7 +76,8 @@ namespace FFTPatcher.SpriteEditor
                         }
                         currentStream = openedStream;
 
-                        AllSprites s = AllSprites.FromIso( currentStream );
+                        bool userRequestedExpansion = psx && !expanded && result == DialogResult.Yes;
+                        AllSprites s = AllSprites.FromIso( currentStream, userRequestedExpansion );
                         allSpritesEditor1.BindTo( s, currentStream );
                         tabControl1.Enabled = true;
                         spriteMenuItem.Enabled = true;
@@ -71,11 +87,6 @@ namespace FFTPatcher.SpriteEditor
                         allOtherImagesEditor1.BindTo( otherImages, currentStream );
 
                         Text = string.Format( titleFormatString, Path.GetFileName( openFileDialog.FileName ) );
-                    }
-                    else
-                    {
-                        openedStream.Close();
-                        openedStream.Dispose();
                     }
                 }
             }
@@ -108,7 +119,7 @@ namespace FFTPatcher.SpriteEditor
                 }
                 catch (SpriteTooLargeException ex)
                 {
-                    MessageBox.Show( this, ex.Message, "Error" );
+                    MyMessageBox.Show( this, ex.Message, "Error" );
                 }
             }
         }
@@ -280,7 +291,7 @@ namespace FFTPatcher.SpriteEditor
                         backgroundWorker1.RunWorkerCompleted -= completeHandler;
                         backgroundWorker1.ProgressChanged -= progressHandler;
                         backgroundWorker1.DoWork -= allOtherImagesEditor1.AllOtherImages.LoadAllImages;
-                        MessageBox.Show( this, string.Format( "{0} images imported", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
+                        MyMessageBox.Show( this, string.Format( "{0} images imported", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
                     };
                     if (InvokeRequired) Invoke( mi );
                     else mi();
@@ -336,7 +347,7 @@ namespace FFTPatcher.SpriteEditor
                         backgroundWorker1.RunWorkerCompleted -= completeHandler;
                         backgroundWorker1.ProgressChanged -= progressHandler;
                         backgroundWorker1.DoWork -= allOtherImagesEditor1.AllOtherImages.DumpAllImages;
-                        MessageBox.Show(this, string.Format( "{0} images saved", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
+                        MyMessageBox.Show(this, string.Format( "{0} images saved", result.ImagesProcessed ), result.DoWorkResult.ToString(), MessageBoxButtons.OK );
                     };
                     if (InvokeRequired) Invoke( mi );
                     else mi();

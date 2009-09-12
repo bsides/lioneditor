@@ -20,6 +20,10 @@
   <Patch name="No starting items">
     <Location file="SCUS_942_21"
               offset="3322c">
+	  <!--
+	  Old: 0x80042A2C   li $v0,0x05
+	  New: 0x80042A2C   j 0x80042AA8
+	  -->
       aa 0a 01 08
     </Location>
   </Patch>

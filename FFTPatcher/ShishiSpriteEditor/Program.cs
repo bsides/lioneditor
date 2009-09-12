@@ -74,7 +74,7 @@ namespace FFTPatcher.SpriteEditor
                 }
 
             }
-            MessageBox.Show( e.ToString(), "Error" );
+            PatcherLib.MyMessageBox.Show( e.ToString(), "Error" );
         }
 
         #endregion Methods

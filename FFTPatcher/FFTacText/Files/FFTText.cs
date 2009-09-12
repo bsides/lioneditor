@@ -570,6 +570,51 @@ namespace FFTPatcher.TextEditor
                     return;
                 }
 
+                if (customGlyphs != null)
+                {
+
+                    if (this.Filetype == Context.US_PSX)
+                    {
+                        const int battleBinOffset = 0xE7614;
+                        const int fontBinOffset = 0;
+                        const int worldBinOffset = 0x5B8f8;
+                        const int battleBinWidthOffset = 0xFF0FC;
+                        const int worldBinWidthOffset = 0x733E0;
+
+                        foreach (Glyph g in customGlyphs)
+                        {
+                            var glyphBytes = g.ToByteArray();
+                            byte[] widthBytes = new byte[] { g.Width };
+                            patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, battleBinOffset+g.Index*14*10/4, glyphBytes ) );
+                            patches.Add( new PatchedByteArray( PsxIso.Sectors.EVENT_FONT_BIN, fontBinOffset+g.Index*14*10/4, glyphBytes  ) );
+                            patches.Add( new PatchedByteArray( PsxIso.Sectors.WORLD_WORLD_BIN, worldBinOffset+g.Index*14*10/4, glyphBytes  ) );
+                            patches.Add( new PatchedByteArray( PsxIso.Sectors.BATTLE_BIN, battleBinWidthOffset+g.Index, widthBytes ) );
+                            patches.Add( new PatchedByteArray( PsxIso.Sectors.WORLD_WORLD_BIN, worldBinWidthOffset+g.Index, widthBytes ) );
+                        }
+                    }
+                    else
+                    {
+                        const int fontOffset1 = 0x27B80C;
+                        const int fontOffset2 = 0x2F73B8;
+                        const int widthOffset1 = 0x293F40;
+                        const int widthOffset2 = 0x30FAC0;
+
+                        foreach (Glyph g in customGlyphs)
+                        {
+                            var glyphBytes = g.ToByteArray();
+                            byte[] widthBytes = new byte[] { g.Width };
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, fontOffset1 + g.Index * 14 * 10 / 4, glyphBytes ) );
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, fontOffset2 + g.Index * 14 * 10 / 4, glyphBytes ) );
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, widthOffset1 + g.Index, widthBytes ) );
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, widthOffset2 + g.Index, widthBytes ) );
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, fontOffset1 + g.Index * 14 * 10 / 4, glyphBytes ) );
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, fontOffset2 + g.Index * 14 * 10 / 4, glyphBytes ) );
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, widthOffset1 + g.Index, widthBytes ) );
+                            patches.Add( new PatchedByteArray( PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, widthOffset2 + g.Index, widthBytes ) );
+                        }
+                    }
+                }
+
                 worker.ReportProgress( 0,
                     new ProgressForm.FileProgress { File = null, State = ProgressForm.TaskState.Starting, Task = ProgressForm.Task.ApplyingPatches } );
                 patchArgs.Patcher( stream, patches );
@@ -580,9 +625,11 @@ namespace FFTPatcher.TextEditor
         }
 
         public IList<IFile> Files { get; private set; }
+        private IList<Glyph> customGlyphs;
 
-        internal FFTText( Context context, IDictionary<Guid, ISerializableFile> files, QuickEdit quickEdit )
+        internal FFTText( Context context, IDictionary<Guid, ISerializableFile> files, IList<Glyph> customGlyphs, QuickEdit quickEdit )
         {
+            this.customGlyphs = customGlyphs;
             Filetype = context;
             List<IFile> filesList = new List<IFile>( files.Count + 1 );
             files.ForEach( kvp => filesList.Add( kvp.Value ) );

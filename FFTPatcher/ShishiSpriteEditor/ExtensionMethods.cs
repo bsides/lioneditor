@@ -144,6 +144,32 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        public static Bitmap CropImage( this Bitmap b, Rectangle cropRectangle )
+        {
+            Bitmap result = new Bitmap( b.Width, b.Height, b.PixelFormat );
+
+            int xOffset = cropRectangle.X;
+            int yOffset = cropRectangle.Y;
+            int width = cropRectangle.Width;
+            int height = cropRectangle.Height;
+
+            if (xOffset + width > b.Width)
+                throw new System.ArgumentException( "cropRectangle too wide", "cropRectangle" );
+            if (yOffset + height > b.Height)
+                throw new System.ArgumentException( "cropRectangle too tall", "cropRectangle" );
+
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    result.SetPixel( x, y, b.GetPixel( x + xOffset, y + yOffset ) );
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Draws a sprite.
         /// </summary>

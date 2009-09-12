@@ -118,7 +118,7 @@ namespace PatcherLib
             get; private set;
         }
 
-        private static IDictionary<string, IList<byte>> DefaultZipFileContents
+        public static IDictionary<string, IList<byte>> DefaultZipFileContents
         {
             get; set;
         }

@@ -29,17 +29,17 @@ namespace FFTPatcher.SpriteEditor
 
         public IDictionary<Sprite, IList<int>> SharedSPRs { get; private set; }
 
-        public static AllSprites FromIso( Stream iso )
+        public static AllSprites FromIso( Stream iso, bool expand )
         {
             if (iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0)
             {
                 // assume psx
-                return FromPsxIso( iso );
+                return FromPsxIso( iso, expand );
             }
             else if (iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0)
             {
                 // assume psp
-                return FromPspIso( iso );
+                return FromPspIso( iso, expand );
             }
             else
             {
@@ -47,9 +47,9 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
-        public static AllSprites FromPsxIso( Stream iso )
+        public static AllSprites FromPsxIso( Stream iso, bool expand )
         {
-            if (!DetectExpansionOfPsxIso( iso ))
+            if (expand && !DetectExpansionOfPsxIso( iso ))
             {
                 ExpandPsxIso( iso );
             }
@@ -63,7 +63,7 @@ namespace FFTPatcher.SpriteEditor
 
         }
 
-        public static AllSprites FromPspIso( Stream iso )
+        public static AllSprites FromPspIso( Stream iso, bool expand )
         {
             PatcherLib.Iso.PspIso.PspIsoInfo info = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
 
@@ -310,7 +310,7 @@ namespace FFTPatcher.SpriteEditor
                 "TYPE3.SEQ;1",                "TYPE4.SEQ;1",                "WEP.SPR;1",                "WEP1.SEQ;1",
                 "WEP1.SHP;1",                "WEP2.SEQ;1",                "WEP2.SHP;1",                "ZODIAC.BIN;1"} );
 
-            List<PatcherLib.Iso.PsxIso.DirectoryEntry> battleDir = new List<PatcherLib.Iso.PsxIso.DirectoryEntry>( PatcherLib.Iso.PsxIso.DirectoryEntry.GetBattleEntries( iso ) );
+            List<PatcherLib.Iso.DirectoryEntry> battleDir = new List<PatcherLib.Iso.DirectoryEntry>( PatcherLib.Iso.DirectoryEntry.GetPsxBattleEntries( iso ) );
             byte[] extBytes = battleDir[2].ExtendedBytes;
             System.Diagnostics.Debug.Assert( battleDir.Sub( 2 ).TrueForAll( ent => PatcherLib.Utilities.Utilities.CompareArrays( extBytes, ent.ExtendedBytes ) ) );
             byte[] midBytes = battleDir[2].MiddleBytes;
@@ -367,53 +367,53 @@ namespace FFTPatcher.SpriteEditor
                 posBytes.AddRange( sector.ToBytes() );
                 posBytes.AddRange( ((uint)realBytes.Length).ToBytes() );
 
-                battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry( sector, 65536, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
+                battleDir.Add( new PatcherLib.Iso.DirectoryEntry( sector, 65536, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                     string.Format( "{0:X2}.SPR;1", i ), battleDir[2].ExtendedBytes ) );
             }
 
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_ARLI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "8C.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_BIBU2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "95.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_BOM2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "87.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_BEHI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "92.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_DEMON2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "98.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_DORA22_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "94.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_HYOU2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "88.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON5_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "99_2.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON4_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "99_3.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "99_4.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_IRON3_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "99_5.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_MINOTA2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "90.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_MOL2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "91.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_TORI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "8D.SP2;1", battleDir[2].ExtendedBytes ) );
-            battleDir.Add( new PatcherLib.Iso.PsxIso.DirectoryEntry(
+            battleDir.Add( new PatcherLib.Iso.DirectoryEntry(
                 (uint)PatcherLib.Iso.PsxIso.Sectors.BATTLE_URI2_SP2, 32768, DateTime.Now, battleDir[2].GMTOffset, battleDir[2].MiddleBytes,
                 "8E.SP2;1", battleDir[2].ExtendedBytes ) );
 
@@ -436,18 +436,18 @@ namespace FFTPatcher.SpriteEditor
             battleDir.Sort( ( a, b ) => a.Filename.CompareTo( b.Filename ) );
 
             // Patch direntry
-            PatcherLib.Iso.PsxIso.DirectoryEntry.WriteDirectoryEntries(
+            PatcherLib.Iso.DirectoryEntry.WritePsxDirectoryEntries(
                 iso,
                 PatcherLib.Iso.PsxIso.BattleDirectoryEntrySector,
                 PatcherLib.Iso.PsxIso.BattleDirectoryEntryLength,
                 battleDir );
 
             // Erase the dummy directory, just to be sure
-            PatcherLib.Iso.PsxIso.DirectoryEntry.WriteDirectoryEntries(
+            PatcherLib.Iso.DirectoryEntry.WritePsxDirectoryEntries(
                 iso,
                 PatcherLib.Iso.PsxIso.DummyDirectoryEntrySector,
                 PatcherLib.Iso.PsxIso.DummyDirectoryEntryLength,
-                new PatcherLib.Iso.PsxIso.DirectoryEntry[0] );
+                new PatcherLib.Iso.DirectoryEntry[0] );
 
             // Update battle.bin
             PatcherLib.Iso.PsxIso.PatchPsxIso( iso, SpriteFileLocations.SpriteLocationsPosition.GetPatchedByteArray( posBytes.ToArray() ) );

@@ -46,8 +46,6 @@ namespace FFTPatcher.TextEditor
             saveMenuItem.Click += new EventHandler( saveMenuItem_Click );
             openMenuItem.Click += new EventHandler( openMenuItem_Click );
             menuItem2.Click += new EventHandler( menuItem2_Click );
-            importPspIsoCustomMenuItem.Click += new EventHandler( importPspIsoCustomMenuItem_Click );
-            importPsxIsoCustomMenuItem.Click += new EventHandler( importPsxIsoCustomMenuItem_Click );
             fileMenuItem.Popup += new EventHandler(menuItem_Popup);
             isoMenuItem.Popup += new EventHandler(menuItem_Popup);
         }
@@ -102,8 +100,6 @@ namespace FFTPatcher.TextEditor
         enum LoadType
         {
             Open,
-            PsxStreamAndTable,
-            PspStreamAndTable,
             PspFilename,
             PsxFilename
         }
@@ -173,12 +169,6 @@ namespace FFTPatcher.TextEditor
                         case LoadType.PsxFilename:
                             text = FFTText.ReadPSXIso( filename, worker );
                             break;
-                        case LoadType.PspStreamAndTable:
-                            text = FFTTextFactory.GetPspText( isoStream, tblStream, worker );
-                            break;
-                        case LoadType.PsxStreamAndTable:
-                            text = FFTTextFactory.GetPsxText( isoStream, tblStream, worker );
-                            break;
                     }
                     if ( text == null || worker.CancellationPending )
                     {
@@ -235,37 +225,6 @@ namespace FFTPatcher.TextEditor
                 FFTTextFactory.WriteXml( internalFile, saveFileDialog.FileName );
             }
         }
-
-        void importPsxIsoCustomMenuItem_Click( object sender, EventArgs e )
-        {
-            using ( ImportForm form = new ImportForm() )
-            {
-                if ( form.ShowDialog( this ) == DialogResult.OK )
-                {
-                    using ( Stream fileStream = File.OpenRead( form.IsoFileName ) )
-                    using ( Stream tblStream = File.OpenRead( form.TblFileName ) )
-                    {
-                        LoadFile( LoadType.PsxStreamAndTable, null, fileStream, tblStream );
-                    }
-                }
-            }
-        }
-
-        void importPspIsoCustomMenuItem_Click( object sender, EventArgs e )
-        {
-            using ( ImportForm form = new ImportForm() )
-            {
-                if ( form.ShowDialog( this ) == DialogResult.OK )
-                {
-                    using ( Stream fileStream = File.OpenRead( form.IsoFileName ) )
-                    using ( Stream tblStream = File.OpenRead( form.TblFileName ) )
-                    {
-                        LoadFile( LoadType.PspStreamAndTable, null, fileStream, tblStream );
-                    }
-                }
-            }
-        }
-
 
         void importPspIsoMenuItem_Click( object sender, EventArgs e )
         {

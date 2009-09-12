@@ -1,4 +1,5 @@
-﻿using PatcherLib.Datatypes;
+﻿#if FALSE
+using PatcherLib.Datatypes;
 using PatcherLib.Utilities;
 using System;
 using System.Collections.Generic;
@@ -8,32 +9,41 @@ using System.Drawing.Imaging;
 
 namespace FFTPatcher.SpriteEditor
 {
-    public class PalettedImage4bpp : AbstractImage
+    public class PartiallyVisiblePalettedImage4bpp : PalettedImage4bpp 
     {
-        public PalettedImage4bpp( 
+        public PartiallyVisiblePalettedImage4bpp( 
             string name, 
             int width, int height, 
             int numPalettes,
+            Rectangle visiblePortion,
             PatcherLib.Iso.KnownPosition imagePosition, 
             PatcherLib.Iso.KnownPosition palettePosition )
-            : this( name, width, height, numPalettes, Palette.ColorDepth._16bit, imagePosition, palettePosition )
+            : this( name, width, height, numPalettes, visiblePortion, Palette.ColorDepth._16bit, imagePosition, palettePosition )
         {
         }
 
-        protected PatcherLib.Iso.KnownPosition position;
+        private PatcherLib.Iso.KnownPosition position;
 
-        public PalettedImage4bpp(
+        private Size FullSize { get; set; }
+
+        public Rectangle VisiblePortion { get; private set; }
+
+        public PartiallyVisiblePalettedImage4bpp(
             string name,
             int width, int height,
             int numPalettes,
+            Rectangle visiblePortion,
             FFTPatcher.SpriteEditor.Palette.ColorDepth depth,
             PatcherLib.Iso.KnownPosition imagePosition,
             PatcherLib.Iso.KnownPosition palettePosition )
-            : base( name, width, height )
+            : base( name, visiblePortion.Width, visiblePortion.Height )
         {
+            VisiblePortion = visiblePortion;
+            FullSize = new Size( width, height );
             this.position = imagePosition;
             this.palettePosition = palettePosition;
             this.depth = depth;
+
             System.Diagnostics.Debug.Assert( palettePosition.Length == 8 * (int)depth * 2 );
             if ( position is PatcherLib.Iso.PsxIso.KnownPosition )
             {
@@ -68,11 +78,14 @@ namespace FFTPatcher.SpriteEditor
                 splitBytes.Add( b.GetUpperNibble() );
             }
 
-            Bitmap result = new Bitmap( Width, Height );
+            Bitmap result = new Bitmap( VisiblePortion.Width, VisiblePortion.Height );
 
-            for (int i = 0; i < Width * Height; i++)
+            for(int x = 0; x < VisiblePortion.Width; x++)
             {
-                result.SetPixel( i % Width, i / Width, p[splitBytes[i]] );
+                for (int y =0 ; y < VisiblePortion.Height; y++)
+                {
+                    result.SetPixel( x, y, p[splitBytes[(y + VisiblePortion.Y) * FullSize.Width + (x + VisiblePortion.X)]] );
+                }
             }
 
             return result;
@@ -121,13 +134,52 @@ namespace FFTPatcher.SpriteEditor
             }
         }
 
+        private Bitmap GetFullImageFromIso( System.IO.Stream iso )
+        {
+            Palette p = new Palette( palettePosition.ReadIso( iso ), depth );
+            IList<byte> bytes = position.ReadIso( iso );
+            IList<byte> splitBytes = new List<byte>( bytes.Count * 2 );
+            foreach (byte b in bytes.Sub( 0, Height * Width / 2 - 1 ))
+            {
+                splitBytes.Add( b.GetLowerNibble() );
+                splitBytes.Add( b.GetUpperNibble() );
+            }
+
+            Bitmap bmp = new Bitmap( FullSize.Width, FullSize.Height );
+            for (int x = 0; x < FullSize.Width; x++)
+            {
+                for (int y = 0; y > FullSize.Height; y++)
+                {
+                    bmp.SetPixel( x, y, p[splitBytes[y * FullSize.Width + x]] );
+                }
+            }
+            return bmp;
+        }
+
+        protected override Set<Color> GetColors( System.IO.Stream iso )
+        {
+            using (Bitmap fullImage = GetFullImageFromIso( iso ))
+            {
+                Set<Color> result = new Set<Color>( ( a, b ) => a.ToArgb() == b.ToArgb() ? 0 : 1 );
+
+                for (int x = 0; x < fullImage.Width; x++)
+                {
+                    for (int y = 0; y < fullImage.Height; y++)
+                    {
+                        result.Add( fullImage.GetPixel( x, y ) );
+                    }
+                }
+
+                return result.AsReadOnly();
+            }
+        }
+
         protected override void WriteImageToIsoInner( System.IO.Stream iso, System.Drawing.Image image )
         {
             using ( Bitmap bmp = new Bitmap( image ) )
             {
                 Set<Color> colors = GetColors( bmp );
-                IList<Color> myColors = new List<Color>( colors );
-                if ( myColors.Count > 16 )
+                if ( colors.Count > 16 )
                 {
                     ImageQuantization.OctreeQuantizer q = new ImageQuantization.OctreeQuantizer( 16, 8 );
                     using ( var newBmp = q.Quantize( bmp ) )
@@ -137,46 +189,27 @@ namespace FFTPatcher.SpriteEditor
                 }
                 else
                 {
-                    IEnumerable<Color> enumColors = myColors;
-                    var paletteBytes = GetPaletteBytes( ref enumColors );
-                    var imageBytes = GetImageBytes( bmp, new Set<Color>(enumColors) );
+                    var paletteBytes = GetPaletteBytes( colors );
+                    var imageBytes = GetImageBytes( bmp, colors );
                     position.PatchIso( iso, imageBytes );
                     palettePosition.PatchIso( iso, paletteBytes );
                 }
             }
         }
 
-        protected IList<byte> GetPaletteBytes( ref IEnumerable<Color> colors )
+        private IList<byte> GetPaletteBytes( Set<Color> colors )
         {
-            List<byte> result = new List<byte>( );
-            List<Color> realColors = new List<Color>( colors );
-
-            // This is a bit silly
-            // Sort the list by ARGB, and put the transparent one at the top
-            // Return the new collection by side effect
-            realColors.Sort( ( a, b ) => a.ToArgb().CompareTo( b.ToArgb() ) );
-
-            if (realColors.Exists( c => c.A == 0 ))
-            {
-                int transIndex = realColors.FindIndex( c => c.A == 0 );
-                Color trans = realColors[transIndex];
-                realColors.RemoveAt( transIndex );
-
-                realColors.Insert( 0, trans );
-
-                colors = realColors;
-            }
-
+            List<byte> result = new List<byte>( colors.Count * 2 );
             if (depth == Palette.ColorDepth._16bit)
             {
-                foreach (Color c in realColors)
+                foreach (Color c in colors)
                 {
                     result.AddRange( Palette.ColorToBytes( c ) );
                 }
             }
             else if (depth == Palette.ColorDepth._32bit)
             {
-                foreach (Color c in realColors)
+                foreach (Color c in colors)
                 {
                     result.AddRange( new byte[] { c.R, c.G, c.B, c.A } );
                 }
@@ -185,7 +218,7 @@ namespace FFTPatcher.SpriteEditor
             return result;
         }
 
-        protected IList<byte> GetImageBytes( Bitmap image, Set<Color> colors )
+        private IList<byte> GetImageBytes( Bitmap image, Set<Color> colors )
         {
             List<byte> result = new List<byte>( Width * Height );
             for ( int y = 0; y < Height; y++ )
@@ -206,3 +239,4 @@ namespace FFTPatcher.SpriteEditor
         }
     }
 }
+#endif

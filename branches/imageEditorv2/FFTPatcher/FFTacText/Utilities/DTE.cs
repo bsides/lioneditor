@@ -195,6 +195,7 @@ namespace FFTPatcher.TextEditor
 
             GenerateFontBinPatches( dteEncodings, font, charSet, out fontBytes, out widthBytes );
 
+            widthBytes = widthBytes.Sub( MinDteByte, MaxDteByte ).ToArray();
             fontBytes = fontBytes.Sub( MinDteByte * characterSize, (MaxDteByte + 1) * characterSize - 1 ).ToArray();
             var widths = PspFontWidths;
             var fontDteSection = PspFontDteSection;
@@ -202,12 +203,8 @@ namespace FFTPatcher.TextEditor
                 new PatchedByteArray[] {
                     fontDteSection[0].GetPatchedByteArray(fontBytes),
                     fontDteSection[1].GetPatchedByteArray(fontBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x27b80c+MinDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2f73b8+MinDteByte*characterSize, fontBytes),
                     widths[0].GetPatchedByteArray(widthBytes),
                     widths[1].GetPatchedByteArray(widthBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x293f40, widthBytes),
-                    new PatchedByteArray(PspIso.Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x30fac0, widthBytes)
                 };
         }
 
@@ -236,8 +233,8 @@ namespace FFTPatcher.TextEditor
             get
             {
                 return new PspIso.KnownPosition[] {
-                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40, 2200),
-                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x30FAC0, 2200) };
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x293F40+MinDteByte, MaxDteByte-MinDteByte+1),
+                    new PspIso.KnownPosition(PspIso.Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x30FAC0+MinDteByte, MaxDteByte-MinDteByte+1) };
 
             }
         }
@@ -261,6 +258,7 @@ namespace FFTPatcher.TextEditor
             GenerateFontBinPatches( dteEncodings, font, charSet, out fontBytes, out widthBytes );
 
             fontBytes = fontBytes.Sub( MinDteByte * characterSize, (MaxDteByte + 1) * characterSize - 1 ).ToArray();
+            widthBytes = widthBytes.Sub( MinDteByte, MaxDteByte ).ToArray();
             // widths:
             // 0x363234 => 1510 = BATTLE.BIN
             // 0xBD84908 => 84497 = WORLD.BIN
@@ -271,8 +269,8 @@ namespace FFTPatcher.TextEditor
                     new PatchedByteArray(PsxIso.Sectors.BATTLE_BIN, 0xE7614+MinDteByte*characterSize, fontBytes),
                     new PatchedByteArray(PsxIso.Sectors.EVENT_FONT_BIN, 0x00+MinDteByte*characterSize, fontBytes),
                     new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x5B8f8+MinDteByte*characterSize, fontBytes),
-                    new PatchedByteArray(PsxIso.Sectors.BATTLE_BIN, 0xFF0FC, widthBytes),
-                    new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x733E0, widthBytes),
+                    new PatchedByteArray(PsxIso.Sectors.BATTLE_BIN, 0xFF0FC+MinDteByte, widthBytes),
+                    new PatchedByteArray(PsxIso.Sectors.WORLD_WORLD_BIN, 0x733E0+MinDteByte, widthBytes),
                     PsxDteTable.GetPatchedByteArray(GeneratePsxLookupTable(dteEncodings, charSet).ToArray())
                 } );
 
@@ -369,7 +367,7 @@ namespace FFTPatcher.TextEditor
             IList<string> charSet = new List<string>( baseCharSet );
             charSet.Add( " " );
             var myGlyphs = new List<Glyph>( font.Glyphs );
-            myGlyphs.Add( new Glyph( 4, new byte[14 * 10 / 4] ) );
+            myGlyphs.Add( new Glyph( 0, 4, new byte[14 * 10 / 4] ) );
 
             foreach (var kvp in dteEncodings)
             {

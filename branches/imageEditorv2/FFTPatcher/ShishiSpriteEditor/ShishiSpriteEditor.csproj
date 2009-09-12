@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4017D65D-C72B-491E-B263-E12DB6537382}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -120,6 +120,8 @@
     <Compile Include="DataTypes\CharacterSprite.cs" />
     <Compile Include="DataTypes\OtherImages\AbstractImage.cs" />
     <Compile Include="DataTypes\OtherImages\AllOtherImages.cs" />
+    <Compile Include="DataTypes\OtherImages\Greyscale4bppImage.cs" />
+    <Compile Include="DataTypes\OtherImages\PartiallyVisiblePalettedImage4bpp.cs" />
     <Compile Include="DataTypes\OtherImages\StupidTM2Image4bpp.cs" />
     <Compile Include="DataTypes\OtherImages\PalettedImage4bpp.cs" />
     <Compile Include="DataTypes\OtherImages\PalettedImage8bpp.cs" />

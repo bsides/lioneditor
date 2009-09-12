@@ -78,7 +78,7 @@ namespace PatcherLib.Iso
 
         static PsxIso()
         {
-            Propositions = new KnownPosition( Sectors.WORLD_WLDCORE_BIN, 0x36380, 0xA54 );
+            Propositions = new KnownPosition( Sectors.WORLD_WLDCORE_BIN, 0x36380, 0xA7C );
             Abilities = new KnownPosition( Sectors.SCUS_942_21, 0x4F3F0, 9414 );
             AbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x14F3F0, 0x2E0 );
             ReactionAbilityEffects = new KnownPosition( Sectors.BATTLE_BIN, 0x014F73C, 0x40 );

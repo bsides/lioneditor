@@ -106,7 +106,7 @@ namespace PatcherLib.Datatypes
             Glyphs = new Glyph[2200];
             for( int i = 0; i < 2200; i++ )
             {
-                Glyphs[i] = new Glyph( widthBytes[i], bytes.Sub( i * 35, (i + 1) * 35 - 1 ) );
+                Glyphs[i] = new Glyph( i, widthBytes[i], bytes.Sub( i * 35, (i + 1) * 35 - 1 ) );
             }
 
 #if DEBUG

@@ -159,11 +159,131 @@ namespace FFTPatcher.SpriteEditor
                 //    new PatcherLib.Iso.PspIso.KnownPosition((PatcherLib.Iso.FFTPack.Files)770, 0xC, 0x200)),
 
             //} );
+
+            result.Add( new AbstractImage[] {
+                new Greyscale4bppImage("World map titles",256,256, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)900,0x00, 0x8000))
+            } );
+
+            result.Add( new AbstractImage[] {
+                new PalettedImage4bpp("New Game (Selected)", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x90, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x50, 0x40)),
+                new PalettedImage4bpp("New Game (Unselected)", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x4D0, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x490, 0x40)),
+                new PalettedImage4bpp("Continue (Selected)", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x910, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x8D0, 0x40)),
+                new PalettedImage4bpp("Continue (Unselected)", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0xD50, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0xD10, 0x40)),
+                new PalettedImage4bpp("Tutorial (Selected)", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x1190, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x1150, 0x40)),
+                new PalettedImage4bpp("Tutorial (Unselected)", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x15D0, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x1590, 0x40)),
+                new PalettedImage4bpp("Copyright", 512,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x1a10, 0x1000),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x19D0, 0x40)),
+                new PalettedImage8bpp("Title screen", 512,512, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x2e10, 512*512),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)936, 0x2A10, 0x400)),
+            } );
+            result.Add( new AbstractImage[] {
+                new PalettedImage4bpp("Hourglass", 256,64, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x1a0, 0x2000),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x160, 0x40)),
+                new PalettedImage4bpp("Some numbers", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x21e0, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x21a0, 0x40)),
+                new PalettedImage4bpp("Circle", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x2620, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x25e0, 0x40)),
+                new PalettedImage4bpp("Cross", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x2860, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x2820, 0x40)),
+                new PalettedImage4bpp("", 128,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x2aa0, 0x800),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x2a60, 0x40)),
+                new PalettedImage4bpp("Some other numbers", 256,64, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x32e0, 0x2000),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x32a0, 0x40)),
+                new PalettedImage4bpp("Red", 32,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5320, 0x100),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x52e0, 0x40)),
+                new PalettedImage4bpp("1P", 16,8, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x55A0, 0x40),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5560, 0x40)),
+                new PalettedImage4bpp("2P", 16,8, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5620, 0x40),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x55e0, 0x40)),
+                new PalettedImage4bpp("Red", 32,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x56a0, 0x100),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5660, 0x40)),
+                new PalettedImage4bpp("Blue", 32,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x57e0, 0x100),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x57a0, 0x40)),
+                new PalettedImage4bpp("TRAP", 64,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5920, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x58e0, 0x40)),
+                new PalettedImage4bpp("Death Sentence Trap", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5b60, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5b20, 0x40)),
+                new PalettedImage4bpp("Sleep Trap", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5da0, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5d60, 0x40)),
+                new PalettedImage4bpp("??", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5fe0, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x5fa0, 0x40)),
+                new PalettedImage4bpp("Bomb Trap", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6220, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x61e0, 0x40)),
+                new PalettedImage4bpp("Poison Trap", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6460, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6420, 0x40)),
+                new PalettedImage4bpp("Poison Trap", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6460, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6660, 0x40)),
+                new PalettedImage4bpp("??", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x68a0+0x40, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x68a0, 0x40)),
+                new PalettedImage4bpp("??", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6ae0+0x40, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6ae0, 0x40)),
+                new PalettedImage4bpp("??", 32,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6d20+0x40, 0x200),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6d20, 0x40)),
+
+                new PalettedImage4bpp("??", 64,32, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6f60+0x40, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x6f60, 0x40)),
+                new PalettedImage4bpp("Even more numbers", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x73a0+0x40, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x73a0, 0x40)),
+                new PalettedImage4bpp("Button symbols", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x77e0+0x40, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x77e0, 0x40)),
+                new PalettedImage4bpp("Button symbols", 128,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x7c20+0x40, 0x400),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x7c20, 0x40)),
+                new PalettedImage4bpp("Square", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8060+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8060, 0x40)),
+                new PalettedImage4bpp("Up", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8120+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8120, 0x40)),
+                new PalettedImage4bpp("Down", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x81e0+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x81e0, 0x40)),
+                new PalettedImage4bpp("Left", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x82a0+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x82a0, 0x40)),
+                new PalettedImage4bpp("Right", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8360+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8360, 0x40)),
+                new PalettedImage4bpp("Cross", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8420+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8420, 0x40)),
+                new PalettedImage4bpp("Circle", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x84e0+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x84e0, 0x40)),
+                new PalettedImage4bpp("Triangle", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x85a0+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x85a0, 0x40)),
+                new PalettedImage4bpp("Square", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8660+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8660, 0x40)),
+                new PalettedImage4bpp("Up", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8720+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8720, 0x40)),
+                new PalettedImage4bpp("Down", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x87e0+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x87e0, 0x40)),
+                new PalettedImage4bpp("Left", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x88a0+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x88a0, 0x40)),
+                new PalettedImage4bpp("Right", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8960+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8960, 0x40)),
+                new PalettedImage4bpp("Cross", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8a20+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8a20, 0x40)),
+                new PalettedImage4bpp("2P", 16,16, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8ae0+0x40, 0x80),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8ae0, 0x40)),
+
+                new PalettedImage4bpp("Dialogue box", 64,64, 1, Palette.ColorDepth._32bit, new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8ba0+0x40, 0x800),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)898, 0x8ba0, 0x40)),
+            } );
+
+            IList<AbstractImage> mapThumbnails = new AbstractImage[70];
+            IList<string> mapNames = PatcherLib.PSPResources.Lists.MapNames;
+            for (int i = 0; i < 70; i++)
+            {
+                mapThumbnails[i] = new PalettedImage8bpp( string.Format( "Thumbnail - {0}", mapNames[i] ), 128, 128, 1, Palette.ColorDepth._32bit,
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)899, 0x640 + 0x4400 * i, 128 * 128 ),
+                    new PatcherLib.Iso.PspIso.KnownPosition( (PatcherLib.Iso.FFTPack.Files)899, 0x240+0x4400*i, 256 * 4 ) );
+            }
+            result.Add( mapThumbnails.AsReadOnly() );
+
             IList<AbstractImage> bonusPics = new AbstractImage[71];
             for ( int i = 0; i < 71; i++ )
             {
-                bonusPics[i] = new PalettedImage4bpp( string.Format( "BONUS{0}", i ), 256, 50, 1,
-                    new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.EVENT_BONUS_BIN, 0x6800 * i + 135 * 256 / 2, 256 * 50 / 2 ),
+                bonusPics[i] = new PalettedImage4bpp( string.Format( "BONUS{0}", i ), 256, 200, 1,
+                    new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.EVENT_BONUS_BIN, 0x6800 * i, 256 * 200 / 2 ),
                     new PatcherLib.Iso.PspIso.KnownPosition( PatcherLib.Iso.FFTPack.Files.EVENT_BONUS_BIN, 0x6800 * i + 0x6400 + 0x20 * 2, 0x20 ) );
             }
             result.Add( bonusPics.AsReadOnly() );
@@ -321,8 +441,8 @@ namespace FFTPatcher.SpriteEditor
             }.AsReadOnly() );
 
 
-            var kvpList = new List<KeyValuePair<Shops, string>>( PatcherLib.PSPResources.Lists.ShopNames );
-            kvpList.RemoveAll( kvp => kvp.Key == Shops.None || kvp.Key == Shops.Empty );
+            var kvpList = new List<KeyValuePair<ShopsFlags, string>>( PatcherLib.PSPResources.Lists.ShopNames );
+            kvpList.RemoveAll( kvp => kvp.Key == ShopsFlags.None || kvp.Key == ShopsFlags.Empty );
             kvpList.Sort( ( a, b ) => ( (int)b.Key ).CompareTo( (int)a.Key ) );
             var townNamesList = new List<string>();
             kvpList.ForEach( kvp => townNamesList.Add( kvp.Value ) );
@@ -546,13 +666,14 @@ namespace FFTPatcher.SpriteEditor
 
 
             IList<AbstractImage> bonusPics = new AbstractImage[36];
-            for ( int i = 0; i < 36; i++ )
+            for (int i = 0; i < 36; i++)
             {
-                bonusPics[i] = new PalettedImage4bpp( string.Format("BONUS{0}",i), 256, 50, 1,
-                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_BONUS_BIN, 0x6800 * i + 135 * 256 / 2, 256 * 250 / 2 ),
+                bonusPics[i] = new PalettedImage4bpp( string.Format( "BONUS{0}", i ), 256, 200, 1,
+                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_BONUS_BIN, 0x6800 * i, 256 * 200 / 2 ),
                     new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_BONUS_BIN, 0x6800 * i + 0x6400 + 0x20 * 2, 0x20 ) );
             }
             result.Add( bonusPics.AsReadOnly() );
+
             result.Add( new AbstractImage[] {
                 new PalettedImage8bpp("OPNTEX1", 128,256, 1, Palette.ColorDepth._16bit,
                     new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 34816+0x220, 128*256),
@@ -560,12 +681,17 @@ namespace FFTPatcher.SpriteEditor
                 new PalettedImage8bpp("OPNTEX2", 256,256, 1, Palette.ColorDepth._16bit,
                     new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 69632+0x220, 256*256),
                     new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 69632+0x14, 256*2)),
-                new PalettedImage4bpp("OPNTEX3", 256, 256, 1, 
-                    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 137216+0x40, 256*256/2),
-                    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 137216+0x14, 16*2)),
-                new PalettedImage4bpp("OPNTEX4", 256, 256, 1, 
-                    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 172032+0x40, 256*256/2),
-                    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 172032+0x14, 16*2)),
+                //new PalettedImage4bpp("OPNTEX3", 256, 256, 1, 
+                //    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 137216+0x40, 256*256/2),
+                //    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 137216+0x14, 16*2)),
+                //new PalettedImage4bpp("OPNTEX4", 256, 256, 1, 
+                //    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 172032+0x40, 256*256/2),
+                //    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 172032+0x14, 16*2)),
+
+                new Greyscale4bppImage("OPNTEX3", 256, 256, 
+                    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 137216+0x40, 256*256/2)),
+                new Greyscale4bppImage("OPNTEX4", 256, 256, 
+                    new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 172032+0x40, 256*256/2)),
 
                 new PalettedImage8bpp("OPNTEX5", 256,180, 1, Palette.ColorDepth._16bit,
                     new PatcherLib.Iso.PsxIso.KnownPosition(PatcherLib.Iso.PsxIso.Sectors.OPEN_OPNTEX_BIN, 241664+0x220, 256*180),
@@ -701,8 +827,8 @@ namespace FFTPatcher.SpriteEditor
 
 
 
-            var kvpList = new List<KeyValuePair<Shops, string>>( PatcherLib.PSXResources.Lists.ShopNames );
-            kvpList.RemoveAll( kvp => kvp.Key == Shops.None || kvp.Key == Shops.Empty );
+            var kvpList = new List<KeyValuePair<ShopsFlags, string>>( PatcherLib.PSXResources.Lists.ShopNames );
+            kvpList.RemoveAll( kvp => kvp.Key == ShopsFlags.None || kvp.Key == ShopsFlags.Empty );
             kvpList.Sort( ( a, b ) => ( (int)b.Key ).CompareTo( (int)a.Key ) );
             var townNamesList = new List<string>();
             kvpList.ForEach( kvp => townNamesList.Add( kvp.Value ) );
@@ -784,7 +910,8 @@ namespace FFTPatcher.SpriteEditor
 
         public static AllOtherImages GetPsx()
         {
-            return new AllOtherImages( BuildPsxImages() );
+            var aoi = new AllOtherImages( BuildPsxImages() );
+            return aoi;
         }
 
         public static AllOtherImages GetPsp()
@@ -797,7 +924,44 @@ namespace FFTPatcher.SpriteEditor
             if ( iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode2Form1] == 0 )
             {
                 // assume psx
-                return GetPsx();
+                var aoi = GetPsx();
+#if STUPIDBONUSBIN
+                var bonus = aoi[1];
+                using (Image img = Image.FromFile( @"N:\My Dropbox\FFTC\Tests\bonus.psx.Complete.gif" ))
+                using (Bitmap bmp = new Bitmap( img ))
+                {
+                    System.Drawing.Imaging.ColorPalette pal = img.Palette;
+                    for (int i = 0; i < 36; i++)
+                    {
+                        List<byte> bytes = new List<byte>();
+                        int startY = i * 208;
+                        const int width = 256;
+                        const int height = 200;
+                        for (int y = 0; y < height; y++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                Color c = bmp.GetPixel( x, y + startY );
+                                int cIndex = pal.Entries.IndexOf( c );
+                                if (cIndex == -1 || cIndex >= 16) throw new Exception();
+
+                                bytes.Add( (byte)cIndex );
+                            }
+                        }
+
+                        List<byte> realBytes = new List<byte>();
+                        for (int j = 0; j < width * height; j += 2)
+                        {
+                            realBytes.Add( (byte)(((bytes[j + 1] & 0xF) << 4) | (bytes[j] & 0xF)) );
+                        }
+
+                        PatcherLib.Iso.PsxIso.PatchPsxIso(
+                            iso, new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.EVENT_BONUS_BIN,
+                                i * 0x6800, realBytes.ToArray() ) );
+                    }
+                }
+#endif
+                return aoi;
             }
             else if ( iso.Length % PatcherLib.Iso.IsoPatch.SectorSizes[PatcherLib.Iso.IsoPatch.IsoType.Mode1] == 0 )
             {

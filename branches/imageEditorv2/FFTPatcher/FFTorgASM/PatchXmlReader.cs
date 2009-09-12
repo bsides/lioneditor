@@ -11,13 +11,13 @@ namespace FFTorgASM
         public static readonly System.Text.RegularExpressions.Regex stripRegex = 
             new System.Text.RegularExpressions.Regex( @"\s" );
 
-        public static bool TryGetPatches( string xmlString, out IList<AsmPatch> patches )
+        public static bool TryGetPatches( string xmlString, string xmlFilename, out IList<AsmPatch> patches )
         {
             try
             {
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml( xmlString );
-                patches = GetPatches( doc.SelectSingleNode( "/Patches" ) );
+                patches = GetPatches( doc.SelectSingleNode( "/Patches" ), xmlFilename );
                 return true;
             }
             catch ( Exception )
@@ -39,7 +39,7 @@ namespace FFTorgASM
 
         }
 
-        private static void GetPatch( XmlNode node, out string name, out string description, out IList<PatchedByteArray> staticPatches )
+        private static void GetPatch( XmlNode node, string xmlFileName, out string name, out string description, out IList<PatchedByteArray> staticPatches )
         {
             GetPatchNameAndDesription( node, out name, out description );
 
@@ -49,7 +49,23 @@ namespace FFTorgASM
             foreach ( XmlNode location in currentLocs )
             {
                 UInt32 offset = UInt32.Parse( location.Attributes["offset"].InnerText, System.Globalization.NumberStyles.HexNumber );
-                PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), location.Attributes["file"].InnerText );
+                XmlAttribute fileAttribute = location.Attributes["file"];
+                XmlAttribute sectorAttribute = location.Attributes["sector"];
+                PsxIso.Sectors sector =  (PsxIso.Sectors)0;
+                if (fileAttribute != null)
+                {
+                    sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), fileAttribute.InnerText );
+                }
+                else if (sectorAttribute != null)
+                {
+                    sector = (PsxIso.Sectors)Int32.Parse( sectorAttribute.InnerText, System.Globalization.NumberStyles.HexNumber );
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                
                 byte[] bytes = GetBytes( location.InnerText );
                 patches.Add( new PatchedByteArray( sector, offset, bytes ) );
             }
@@ -57,8 +73,24 @@ namespace FFTorgASM
             currentLocs = node.SelectNodes("STRLocation");
             foreach (XmlNode location in currentLocs)
             {
-                PsxIso.Sectors sector = (PsxIso.Sectors)Enum.Parse(typeof(PsxIso.Sectors), location.Attributes["file"].InnerText);
+                XmlAttribute fileAttribute = location.Attributes["file"];
+                XmlAttribute sectorAttribute = location.Attributes["sector"];
+                PsxIso.Sectors sector = (PsxIso.Sectors)0;
+                if (fileAttribute != null)
+                {
+                    sector = (PsxIso.Sectors)Enum.Parse( typeof( PsxIso.Sectors ), fileAttribute.InnerText );
+                }
+                else if (sectorAttribute != null)
+                {
+                    sector = (PsxIso.Sectors)Int32.Parse( sectorAttribute.InnerText, System.Globalization.NumberStyles.HexNumber );
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
                 string filename = location.Attributes["input"].InnerText;
+                filename = System.IO.Path.Combine( System.IO.Path.GetDirectoryName( xmlFileName ), filename );
 
                 patches.Add(new STRPatchedByteArray(sector, filename));
             }
@@ -66,7 +98,7 @@ namespace FFTorgASM
             staticPatches = patches.AsReadOnly();
         }
 
-        public static IList<AsmPatch> GetPatches( XmlNode rootNode )
+        public static IList<AsmPatch> GetPatches( XmlNode rootNode, string xmlFilename )
         {
             XmlNodeList patchNodes = rootNode.SelectNodes( "Patch" );
             List<AsmPatch> result = new List<AsmPatch>( patchNodes.Count );
@@ -79,7 +111,7 @@ namespace FFTorgASM
                 string name;
                 string description;
                 IList<PatchedByteArray> staticPatches;
-                GetPatch( node, out name, out description, out staticPatches );
+                GetPatch( node, xmlFilename, out name, out description, out staticPatches );
                 List<KeyValuePair<string, PatchedByteArray>> variables = new List<KeyValuePair<string, PatchedByteArray>>();
                 foreach ( XmlNode varNode in node.SelectNodes( "Variable" ) )
                 {

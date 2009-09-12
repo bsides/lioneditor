@@ -51,12 +51,15 @@ namespace PatcherLib.Datatypes
 
         public byte Width { get; set; }
 
+        public int Index { get; private set; }
+
 		#endregion Public Properties 
 
 		#region Constructors (1) 
 
-        public Glyph( byte width, IList<byte> bytes )
+        public Glyph( int index, byte width, IList<byte> bytes )
         {
+            Index = index;
             Width = width;
             Pixels = new FontColor[14 * 10];
             for( int i = 0; i < bytes.Count; i++ )

@@ -498,8 +498,8 @@ namespace PatcherLib.Iso
         static PspIso()
         {
             Propositions = new KnownPosition[] {
-                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2E5688,0xA54),
-                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2E5688, 0xA54),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_BOOT_BIN, 0x2E5688,0xA7C),
+                new KnownPosition(Sectors.PSP_GAME_SYSDIR_EBOOT_BIN, 0x2E5688, 0xA7C),
             }.AsReadOnly();
 
             AbilityAnimations = new KnownPosition[] { 

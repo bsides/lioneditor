@@ -251,6 +251,7 @@ namespace FFTPatcher.Datatypes
         public BraveFaithNeutral BraveFaith { get; set; }
         public Town Town { get; set; }
         public PrereqType PrereqType { get; set; }
+        public bool EligibleForBonusCash { get; set; }
 
         public byte PrereqByte { get; set; }
 
@@ -281,11 +282,11 @@ namespace FFTPatcher.Datatypes
                     Reward != Default.Reward ||
                     Town != Default.Town ||
                     this.Type != Default.Type ||
-                    this.Unknown0x09 != Default.Unknown0x09 ||
-                    this.Unknown0x0B != Default.Unknown0x0B ||
-                    this.Unknown0x0C != Default.Unknown0x0C ||
+                    this.BaseSmallReward != Default.BaseSmallReward ||
+                    this.EligibleForBonusCash != Default.EligibleForBonusCash ||
+                    this.BaseLargeReward != Default.BaseLargeReward ||
                     this.Unknown0x0F != Default.Unknown0x0F ||
-                    this.Unknown0x14 != Default.Unknown0x14 ||
+                    this.RandomSuccessClass != Default.RandomSuccessClass ||
                     this.WhenUnlocked.ToByte() != Default.WhenUnlocked.ToByte());
             }
         }
@@ -330,15 +331,23 @@ namespace FFTPatcher.Datatypes
 
             idBytes[2] = bytes[8];
 
-            Unknown0x09 = bytes[9];
+            byte baseSmallRewardByte = bytes[9];
+            BaseSmallReward = baseSmallRewardByte >= (byte)BonusIndex.Nothing && baseSmallRewardByte <= (byte)BonusIndex._Eight ?
+                (BonusIndex)baseSmallRewardByte :
+                BonusIndex.Nothing;
 
             byte rewardByte = bytes[10];
             Reward = (Reward)rewardByte;
             //Reward = rewardByte >= minRewardByte && rewardByte <= maxRewardByte ?
             //    (Reward)rewardByte :
             //    Reward.Unknown;
-            Unknown0x0B = bytes[11];
-            Unknown0x0C = bytes[12];
+
+            EligibleForBonusCash = bytes[11] == 0x01;
+
+            byte baseLargeRewardByte = bytes[12];
+            BaseLargeReward = baseLargeRewardByte >= (byte)BonusIndex.Nothing && baseLargeRewardByte <= (byte)BonusIndex._Eight ?
+                (BonusIndex)baseLargeRewardByte :
+                BonusIndex.Nothing;
 
             idBytes[3] = bytes[13];
             idBytes[4] = bytes[14];
@@ -351,13 +360,17 @@ namespace FFTPatcher.Datatypes
             idBytes[5] = bytes[18];
             dontCareByte = bytes[19];
 
-            Unknown0x14 = bytes[20];
+            byte randomSuccessByte = bytes[20];
+            RandomSuccessClass = randomSuccessByte >= (byte)RandomSuccessClass.None && randomSuccessByte <= (byte)RandomSuccessClass.Mime ?
+                (RandomSuccessClass)randomSuccessByte :
+                RandomSuccessClass.None;
 
             WhenUnlocked = ShopAvailability.AllAvailabilities[bytes[21]];
 
             PrereqByte = bytes[22];
         }
 
+        public RandomSuccessClass RandomSuccessClass { get; set; }
         public ShopAvailability WhenUnlocked { get; set; }
 
         public IList<byte> ToByteArray()
@@ -372,10 +385,10 @@ namespace FFTPatcher.Datatypes
             result.Add( MinDays );
             result.Add( MaxDays );
             result.Add( idBytes[2] );
-            result.Add( Unknown0x09 );
+            result.Add( (byte)BaseSmallReward );
             result.Add( (byte)Reward );
-            result.Add( Unknown0x0B );
-            result.Add( Unknown0x0C );
+            result.Add( (byte)(EligibleForBonusCash ? 0x01 : 0x00) );
+            result.Add( (byte)BaseLargeReward );
             result.Add( idBytes[3] );
             result.Add( idBytes[4] );
             result.Add( Unknown0x0F );
@@ -383,7 +396,7 @@ namespace FFTPatcher.Datatypes
             result.Add( (byte)PrereqType );
             result.Add( idBytes[5] );
             result.Add( dontCareByte );
-            result.Add( Unknown0x14 );
+            result.Add( (byte)RandomSuccessClass );
             result.Add( WhenUnlocked.ToByte() );
             result.Add( PrereqByte );
 
@@ -392,11 +405,9 @@ namespace FFTPatcher.Datatypes
 
         public Reward Reward { get; set; }
 
-        public byte Unknown0x09 { get; set; }
-        public byte Unknown0x0B { get; set; }
-        public byte Unknown0x0C { get; set; }
+        public BonusIndex BaseSmallReward { get; set; }
+        public BonusIndex BaseLargeReward{ get; set; }
         public byte Unknown0x0F { get; set; }
-        public byte Unknown0x14 { get; set; }
 
         public byte MinDays { get; set; }
         public byte MaxDays { get; set; }

@@ -237,7 +237,9 @@ public string CustomICON0FileName
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.AbilityEffects, FFTPatch.Abilities.AllEffects.HasChanged);
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.StoreInventory, FFTPatch.StoreInventories.HasChanged);
             bootBinCheckedListBox.SetItemChecked((int)BootBinPatchable.AbilityAnimations, FFTPatch.AbilityAnimations.HasChanged);
+#if PROPOSITIONS
             bootBinCheckedListBox.SetItemChecked( (int)BootBinPatchable.Errands, FFTPatch.Propositions.HasChanged );
+#endif
 
             dontChangeIcon0RadioButton.Checked = true;
 

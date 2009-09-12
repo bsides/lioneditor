@@ -55,11 +55,23 @@
     <Compile Include="CharmapForm.Designer.cs">
       <DependentUpon>CharmapForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CharmapViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharmapViewer.Designer.cs">
+      <DependentUpon>CharmapViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\FileEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Editors\FileEditor.Designer.cs">
       <DependentUpon>FileEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\GlyphEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\GlyphEditor.Designer.cs">
+      <DependentUpon>GlyphEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\StringListEditor.cs">
       <SubType>UserControl</SubType>
@@ -117,6 +129,10 @@
       <DependentUpon>FileEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\GlyphEditor.resx">
+      <DependentUpon>GlyphEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\StringListEditor.resx">
       <DependentUpon>StringListEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -155,6 +171,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\bg.gif" />
     <Content Include="Files\PSP\FileContents.txt" />
     <Content Include="Files\PSX\FileContents.txt" />
     <Content Include="notes.txt" />

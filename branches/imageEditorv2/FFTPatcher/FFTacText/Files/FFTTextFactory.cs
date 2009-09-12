@@ -283,51 +283,43 @@ namespace FFTPatcher.TextEditor
 
         private static PatcherLib.Iso.PspIso.PspIsoInfo pspIsoInfo = null;
 
-        public static FFTText GetPspText( Stream iso, GenericCharMap charmap, BackgroundWorker worker )
+        public static FFTText GetPspText( Stream iso, GenericCharMap charmap, IList<Glyph> customGlyphs, BackgroundWorker worker )
         {
             pspIsoInfo = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
-            var result = GetText( iso, Context.US_PSP, Resources.PSP, BytesFromPspIso, charmap, worker );
+            var result = GetText( iso, Context.US_PSP, Resources.PSP, BytesFromPspIso, charmap, customGlyphs, worker );
             pspIsoInfo = null;
             return result;
-        }
-
-        public static FFTText GetPspText( Stream iso, Stream tblStream, BackgroundWorker worker )
-        {
-            return GetPspText( iso, DTE.GenerateCharMap( tblStream ), worker );
-        }
-
-        public static FFTText GetPsxText( Stream iso, Stream tblStream, BackgroundWorker worker )
-        {
-            return GetPsxText( iso, DTE.GenerateCharMap( tblStream ), worker );
         }
 
         public static FFTText GetPspText( Stream iso, BackgroundWorker worker )
         {
             GenericCharMap charmap = TextUtilities.PSPMap;
             pspIsoInfo = PatcherLib.Iso.PspIso.PspIsoInfo.GetPspIsoInfo( iso );
+            IList<Glyph> customGlyphs = null;
             if (DTE.DoesPspIsoHaveNonDefaultFont( iso, pspIsoInfo ))
             {
-                charmap = DTE.DTEAnalyzer.PSP.GetCharMap( iso, pspIsoInfo );
+                DTE.DTEAnalyzer.PSP.GetCharMap( iso, pspIsoInfo, out charmap, out customGlyphs );
             }
 
             pspIsoInfo = null;
-            return GetPspText( iso, charmap, worker );
+            return GetPspText( iso, charmap, customGlyphs, worker );
         }
 
-        public static FFTText GetPsxText( Stream iso, GenericCharMap charmap, BackgroundWorker worker )
+        public static FFTText GetPsxText( Stream iso, GenericCharMap charmap, IList<Glyph> customGlyphs, BackgroundWorker worker )
         {
-            return GetText( iso, Context.US_PSX, Resources.PSX, BytesFromPsxIso, charmap, worker );
+            return GetText( iso, Context.US_PSX, Resources.PSX, BytesFromPsxIso, charmap, customGlyphs, worker );
         }
 
         public static FFTText GetPsxText( Stream iso, BackgroundWorker worker )
         {
             GenericCharMap charmap = TextUtilities.PSXMap;
+            IList<Glyph> customGlyphs = null;
             if ( DTE.DoesPsxIsoHaveDtePatches( iso ) )
             {
-                charmap = DTE.DTEAnalyzer.PSX.GetCharMap( iso );
+                DTE.DTEAnalyzer.PSX.GetCharMap( iso, out charmap, out customGlyphs );
             }
 
-            return GetPsxText( iso, charmap, worker );
+            return GetPsxText( iso, charmap, customGlyphs, worker );
         }
 
 
@@ -375,7 +367,7 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        private static FFTText GetText( Stream iso, Context context, XmlNode doc, BytesFromIso reader, GenericCharMap charmap, BackgroundWorker worker )
+        private static FFTText GetText( Stream iso, Context context, XmlNode doc, BytesFromIso reader, GenericCharMap charmap, IList<Glyph> customGlyphs, BackgroundWorker worker )
         {
             IDictionary<Guid, ISerializableFile> files = GetFiles( iso, context, doc, reader, charmap, worker );
 
@@ -387,7 +379,7 @@ namespace FFTPatcher.TextEditor
             if ( quickEdit == null || worker.CancellationPending )
                 return null;
 
-            return new FFTText( context, files, quickEdit );
+            return new FFTText( context, files, customGlyphs, quickEdit );
         }
 
         private static Set<Guid> GetGuidsNeededForQuickEdit( XmlNode quickEditNode )
@@ -499,7 +491,7 @@ namespace FFTPatcher.TextEditor
                 }
             }
 
-            return new FFTText( context, result, quickEdit );
+            return new FFTText( context, result, null, quickEdit );
 
         }
 

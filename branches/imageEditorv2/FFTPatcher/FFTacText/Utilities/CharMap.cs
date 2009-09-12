@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using PatcherLib.Utilities;
+using PatcherLib.Datatypes;
 
 namespace FFTPatcher.TextEditor
 {
@@ -39,6 +40,9 @@ namespace FFTPatcher.TextEditor
         #region Fields (1)
 
         private Dictionary<string, int> reverse = null;
+
+        private IDictionary<int, PatcherLib.Datatypes.Glyph> customGlyphPatches =
+            new Dictionary<int, PatcherLib.Datatypes.Glyph>();
 
         #endregion Fields
 
@@ -215,11 +219,24 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
-        public GenericCharMap(IDictionary<int, string> dict)
-            : base(dict, true)
+        public GenericCharMap( IDictionary<int, string> dict )
+            : base( dict, true )
         {
         }
 
+        public GenericCharMap( IDictionary<int, string> dict, IDictionary<int, PatcherLib.Datatypes.Glyph> customGlyphPatches )
+            : base( dict )
+        {
+            this.customGlyphPatches = new Dictionary<int, PatcherLib.Datatypes.Glyph>( customGlyphPatches );
+        }
+
+        public void ModifyFontWithCustomPatches(FFTFont font)
+        {
+            foreach (var kvp in customGlyphPatches)
+            {
+                font.Glyphs[kvp.Key] = kvp.Value;
+            }
+        }
 
         public bool TryStringToByteArray( string s, byte terminator, out byte[] bytes )
         {

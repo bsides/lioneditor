@@ -118,7 +118,7 @@ namespace FFTPatcher.SpriteEditor
             return result.AsReadOnly();
         }
 
-        protected Set<Color> GetColors( System.IO.Stream iso )
+        protected virtual Set<Color> GetColors( System.IO.Stream iso )
         {
             Bitmap bmp = GetImageFromIso( iso );
             return GetColors( bmp );

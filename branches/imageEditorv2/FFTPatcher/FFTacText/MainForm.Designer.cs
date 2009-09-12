@@ -55,16 +55,14 @@ namespace FFTPatcher.TextEditor
             System.Windows.Forms.MenuItem separator3;
             System.Windows.Forms.MenuItem separator4;
             System.Windows.Forms.MenuItem separator5;
-            this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
+            this.mainMenu = new System.Windows.Forms.MainMenu( this.components );
             this.fileMenuItem = new System.Windows.Forms.MenuItem();
             this.openMenuItem = new System.Windows.Forms.MenuItem();
             this.saveMenuItem = new System.Windows.Forms.MenuItem();
             this.exitMenuItem = new System.Windows.Forms.MenuItem();
             this.isoMenuItem = new System.Windows.Forms.MenuItem();
             this.importPsxIsoMenuItem = new System.Windows.Forms.MenuItem();
-            this.importPsxIsoCustomMenuItem = new System.Windows.Forms.MenuItem();
             this.importPspIsoMenuItem = new System.Windows.Forms.MenuItem();
-            this.importPspIsoCustomMenuItem = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.textMenuItem = new System.Windows.Forms.MenuItem();
             this.helpMenuItem = new System.Windows.Forms.MenuItem();
@@ -93,30 +91,30 @@ namespace FFTPatcher.TextEditor
             // 
             // separator4
             // 
-            separator4.Index = 2;
+            separator4.Index = 1;
             separator4.Text = "-";
             // 
             // separator5
             // 
-            separator5.Index = 5;
+            separator5.Index = 3;
             separator5.Text = "-";
             // 
             // mainMenu
             // 
-            this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mainMenu.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.fileMenuItem,
             this.isoMenuItem,
             this.textMenuItem,
-            this.helpMenuItem});
+            this.helpMenuItem} );
             // 
             // fileMenuItem
             // 
             this.fileMenuItem.Index = 0;
-            this.fileMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.fileMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.openMenuItem,
             this.saveMenuItem,
             separator2,
-            this.exitMenuItem});
+            this.exitMenuItem} );
             this.fileMenuItem.Text = "File";
             // 
             // openMenuItem
@@ -138,14 +136,12 @@ namespace FFTPatcher.TextEditor
             // isoMenuItem
             // 
             this.isoMenuItem.Index = 1;
-            this.isoMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.isoMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.importPsxIsoMenuItem,
-            this.importPsxIsoCustomMenuItem,
             separator4,
             this.importPspIsoMenuItem,
-            this.importPspIsoCustomMenuItem,
             separator5,
-            this.menuItem2});
+            this.menuItem2} );
             this.isoMenuItem.Text = "ISO";
             // 
             // importPsxIsoMenuItem
@@ -153,27 +149,15 @@ namespace FFTPatcher.TextEditor
             this.importPsxIsoMenuItem.Index = 0;
             this.importPsxIsoMenuItem.Text = "Import PSX ISO...";
             // 
-            // importPsxIsoCustomMenuItem
-            // 
-            this.importPsxIsoCustomMenuItem.Index = 1;
-            this.importPsxIsoCustomMenuItem.Text = "Import PSX ISO (custom tbl)...";
-            this.importPsxIsoCustomMenuItem.Visible = false;
-            // 
             // importPspIsoMenuItem
             // 
-            this.importPspIsoMenuItem.Index = 3;
+            this.importPspIsoMenuItem.Index = 2;
             this.importPspIsoMenuItem.Text = "Import PSP ISO...";
-            // 
-            // importPspIsoCustomMenuItem
-            // 
-            this.importPspIsoCustomMenuItem.Index = 4;
-            this.importPspIsoCustomMenuItem.Text = "Import PSP ISO (custom tbl)...";
-            this.importPspIsoCustomMenuItem.Visible = false;
             // 
             // menuItem2
             // 
             this.menuItem2.Enabled = false;
-            this.menuItem2.Index = 6;
+            this.menuItem2.Index = 4;
             this.menuItem2.Text = "Patch ISO...";
             // 
             // textMenuItem
@@ -185,10 +169,10 @@ namespace FFTPatcher.TextEditor
             // helpMenuItem
             // 
             this.helpMenuItem.Index = 3;
-            this.helpMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.helpMenuItem.MenuItems.AddRange( new System.Windows.Forms.MenuItem[] {
             this.allowedSymbolsMenuItem,
             separator3,
-            this.aboutMenuItem});
+            this.aboutMenuItem} );
             this.helpMenuItem.Text = "Help";
             // 
             // allowedSymbolsMenuItem
@@ -213,9 +197,9 @@ namespace FFTPatcher.TextEditor
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.BackColor = System.Drawing.Color.White;
             this.progressBar.ForeColor = System.Drawing.Color.Blue;
-            this.progressBar.Location = new System.Drawing.Point(12, 451);
+            this.progressBar.Location = new System.Drawing.Point( 12, 451 );
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(754, 23);
+            this.progressBar.Size = new System.Drawing.Size( 754, 23 );
             this.progressBar.TabIndex = 3;
             this.progressBar.Visible = false;
             // 
@@ -224,22 +208,22 @@ namespace FFTPatcher.TextEditor
             this.fileEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.fileEditor1.Location = new System.Drawing.Point(13, 13);
+            this.fileEditor1.Location = new System.Drawing.Point( 13, 13 );
             this.fileEditor1.Name = "fileEditor1";
-            this.fileEditor1.Size = new System.Drawing.Size(753, 461);
+            this.fileEditor1.Size = new System.Drawing.Size( 753, 461 );
             this.fileEditor1.TabIndex = 4;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 486);
-            this.Controls.Add(this.fileEditor1);
-            this.Controls.Add(this.progressBar);
+            this.ClientSize = new System.Drawing.Size( 778, 486 );
+            this.Controls.Add( this.fileEditor1 );
+            this.Controls.Add( this.progressBar );
             this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "FFTacText Editor";
-            this.ResumeLayout(false);
+            this.ResumeLayout( false );
 
         }
 
@@ -263,8 +247,6 @@ namespace FFTPatcher.TextEditor
         private System.Windows.Forms.MenuItem importPsxIsoMenuItem;
         private System.Windows.Forms.MenuItem menuItem2;
         private System.Windows.Forms.MenuItem importPspIsoMenuItem;
-        private System.Windows.Forms.MenuItem importPsxIsoCustomMenuItem;
-        private System.Windows.Forms.MenuItem importPspIsoCustomMenuItem;
 
     }
 }

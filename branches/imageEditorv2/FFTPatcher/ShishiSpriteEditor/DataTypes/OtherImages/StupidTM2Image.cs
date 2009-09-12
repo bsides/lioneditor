@@ -28,6 +28,18 @@ namespace FFTPatcher.SpriteEditor
             pixelPositions.ForEach( kp => sum += kp.Length );
 
             PixelPositions = pixelPositions.AsReadOnly();
+
+            var position = firstPixelsPosition;
+            if (position is PatcherLib.Iso.PsxIso.KnownPosition)
+            {
+                var pos = position as PatcherLib.Iso.PsxIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.Sector, pos.StartLocation );
+            }
+            else if (position is PatcherLib.Iso.PspIso.KnownPosition)
+            {
+                var pos = position as PatcherLib.Iso.PspIso.KnownPosition;
+                saveFileName = string.Format( "{0}_{1}.png", pos.SectorEnum, pos.StartLocation );
+            }
         }
 
         protected IList<byte> GetAllPixelBytes(System.IO.Stream iso)
@@ -41,7 +53,28 @@ namespace FFTPatcher.SpriteEditor
         {
             return new Palette( PalettePosition.ReadIso( iso ) );
         }
-        
+
+        protected virtual IList<byte> GetPaletteBytes( Set<Color> colors )
+        {
+            List<byte> result = new List<byte>( colors.Count * 2 );
+            List<Color> colorList = new List<Color>( colors );
+            int transparentIndex = colorList.FindIndex( c => c.A == 0 );
+            if (transparentIndex != -1)
+            {
+                Color trans = colorList[transparentIndex];
+                trans = Color.FromArgb( 255, trans.R, trans.G, trans.B );
+                colorList.RemoveAt( transparentIndex );
+                colorList.Insert( 0, trans );
+            }
+
+            foreach (Color c in colorList)
+            {
+                result.AddRange( Palette.ColorToBytes( c ) );
+            }
+
+            return result.AsReadOnly();
+        }
+
         protected override System.Drawing.Bitmap GetImageFromIsoInner( System.IO.Stream iso )
         {
             var pixels = GetAllPixelBytes( iso );
@@ -57,10 +90,11 @@ namespace FFTPatcher.SpriteEditor
 
             return result;
         }
+        private string saveFileName;
 
         protected override string SaveFileName
         {
-            get { throw new NotImplementedException(); }
+            get { return saveFileName; }
         }
 
         protected virtual IList<byte> PixelsToBytes( IList<byte> pixels )
@@ -97,9 +131,21 @@ namespace FFTPatcher.SpriteEditor
                     int currentIndex = 0;
                     foreach ( var kp in PixelPositions )
                     {
-                        kp.PatchIso( iso, bytes.Sub( currentIndex, currentIndex + kp.Length - 1 ) );
+                        var bb = bytes.Sub( currentIndex, currentIndex + kp.Length - 1 );
+                        kp.PatchIso( iso, bb );
                         currentIndex += kp.Length;
+#if DEBUG
+                        Console.Out.WriteLine( "<Location file=\"WORLD_WLDTEX_TM2\" offset=\"{0:X}\">", (kp as PatcherLib.Iso.PsxIso.KnownPosition).StartLocation );
+                        foreach (byte b in bb)
+                        {
+                            Console.Out.Write( "{0:X2}", b );
+                        }
+                        Console.Out.WriteLine();
+                        Console.Out.WriteLine( "</Location>" );
+#endif
                     }
+
+                    PalettePosition.PatchIso( iso, GetPaletteBytes( colors ) );
                 }
             }
         }

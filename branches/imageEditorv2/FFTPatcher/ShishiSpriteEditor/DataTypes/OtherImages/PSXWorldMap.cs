@@ -348,7 +348,7 @@ namespace FFTPatcher.SpriteEditor
                 Set<System.Drawing.Color> colors = GetColors( sourceBitmap );
                 if ( colors.Count > 256 )
                 {
-                    ImageQuantization.OctreeQuantizer q = new ImageQuantization.OctreeQuantizer( 256, 8 );
+                    ImageQuantization.OctreeQuantizer q = new ImageQuantization.OctreeQuantizer( 255, 8 );
                     using ( var newBmp = q.Quantize( sourceBitmap ) )
                     {
                         WriteImageToIsoInner( iso, newBmp );
@@ -399,6 +399,9 @@ namespace FFTPatcher.SpriteEditor
                     isoPositions[i].ForEach( kp => bytes.AddRange( kp.ReadIso( iso ) ) );
                     WritePixelsToBitmap( palette, bytes, bmp );
                     CopyBitmapToBitmap( bmp, result, positions[i] );
+#if DEBUG
+                    bmp.Save( string.Format( "worldmap{0}.png", i ), System.Drawing.Imaging.ImageFormat.Png );
+#endif
                 }
             }
 

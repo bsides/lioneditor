@@ -18,7 +18,7 @@ namespace FFTPatcher.TextEditor
                 static FFTFont defaultFont = TextUtilities.PSXFont;
                 static GenericCharMap defaultMap = TextUtilities.PSXMap;
 
-                private static GenericCharMap BuildCharMapFromIso( Stream iso )
+                private static void BuildCharMapFromIso( Stream iso, out GenericCharMap outCharmap, out IList<Glyph> customGlyphs )
                 {
                     var rootDirEnt = DirectoryEntry.GetPsxDirectoryEntries( iso, FFTText.PsxRootDirEntSector, 1 );
                     var charMapEntry = rootDirEnt.Find( d => d.Filename == FFTText.PsxCharmapFileName );
@@ -41,10 +41,11 @@ namespace FFTPatcher.TextEditor
                         }
                     }
 
-                    return new NonDefaultCharMap( myCharmap );
+                    outCharmap = new NonDefaultCharMap( myCharmap );
+                    customGlyphs = null;
                 }
 
-                public static GenericCharMap GetCharMap( Stream iso )
+                public static void GetCharMap( Stream iso, out GenericCharMap outCharmap, out IList<Glyph> customGlyphs )
                 {
                     var matchBytes = Encoding.UTF8.GetBytes( FFTText.CharmapHeader );
                     var isoBytes = PsxIso.GetBlock( iso, new PsxIso.KnownPosition( (PsxIso.Sectors)FFTText.PsxCharmapSector, 0,
@@ -52,16 +53,17 @@ namespace FFTPatcher.TextEditor
 
                     if (Utilities.CompareArrays( matchBytes, isoBytes ))
                     {
-                        return BuildCharMapFromIso( iso );
+                        BuildCharMapFromIso( iso, out outCharmap, out customGlyphs);
                     }
                     else
                     {
                         IList<byte> dteBytes = PsxIso.ReadFile( iso, DTE.PsxDteTable );
-                        return GetCharMap( dteBytes );
+                        outCharmap = GetCharMap( dteBytes );
+                        customGlyphs = null;
                     }
                 }
 
-                public static GenericCharMap GetCharMap( IList<byte> dteTable )
+                private static GenericCharMap GetCharMap( IList<byte> dteTable )
                 {
                     Dictionary<int, string> myCharMap = new Dictionary<int, string>( defaultMap );
 
@@ -97,14 +99,14 @@ namespace FFTPatcher.TextEditor
                 static FFTFont defaultFont = TextUtilities.PSPFont;
                 static GenericCharMap defaultMap = TextUtilities.PSPMap;
 
-                public static GenericCharMap GetCharMap( Stream iso )
+                public static void GetCharMap( Stream iso, out GenericCharMap outCharmap, out IList<Glyph> customGlyphs )
                 {
                     PspIso.PspIsoInfo info = PspIso.PspIsoInfo.GetPspIsoInfo( iso );
 
-                    return GetCharMap( iso, info );
+                    GetCharMap( iso, info, out outCharmap, out customGlyphs );
                 }
 
-                public static GenericCharMap GetCharMap( Stream iso, PatcherLib.Iso.PspIso.PspIsoInfo info )
+                public static void GetCharMap( Stream iso, PatcherLib.Iso.PspIso.PspIsoInfo info, out GenericCharMap outCharmap, out IList<Glyph> customGlyphs )
                 {
                     var matchBytes = Encoding.UTF8.GetBytes( FFTText.CharmapHeader );
                     if (info.ContainsKey( PspIso.Sectors.PSP_GAME_USRDIR_CHARMAP ))
@@ -114,16 +116,18 @@ namespace FFTPatcher.TextEditor
                                 matchBytes.Length ) );
                         if (Utilities.CompareArrays( matchBytes, isoBytes ))
                         {
-                            return BuildCharMapFromIso( iso, info );
+                            BuildCharMapFromIso( iso, info , out outCharmap, out customGlyphs );
+                            return;
                         }
                     }
 
                     IList<byte> fontBytes = PspIso.GetBlock( iso, info, DTE.PspFontSection[0] );
                     IList<byte> widthBytes = PspIso.GetBlock( iso, info, DTE.PspFontWidths[0] );
-                    return GetCharMap( fontBytes, widthBytes, info );
+                    outCharmap = GetCharMap( fontBytes, widthBytes, info );
+                    customGlyphs = null;
                 }
 
-                private static GenericCharMap BuildCharMapFromIso( Stream iso, PspIso.PspIsoInfo info )
+                private static void BuildCharMapFromIso( Stream iso, PspIso.PspIsoInfo info, out GenericCharMap outCharmap, out IList<Glyph> customGlyphs )
                 {
                     var usrDirEnt = DirectoryEntry.GetPspDirectoryEntries( iso, info, PspIso.Sectors.PSP_GAME_USRDIR, 1 );
                     var charMapEntry = usrDirEnt.Find( d => d.Filename == FFTText.PspCharmapFileName );
@@ -146,12 +150,13 @@ namespace FFTPatcher.TextEditor
                         }
                     }
 
-                    return new NonDefaultCharMap( myCharMap );
+                    outCharmap = new NonDefaultCharMap( myCharMap );
+                    customGlyphs = null;
                 }
 
                 private static Glyph DetermineSecondCharacter( IList<Glyph> glyphs, IList<byte> matchBytes, int totalWidth, int firstWidth )
                 {
-                    Glyph newGlyph = new Glyph( (byte)totalWidth, matchBytes );
+                    Glyph newGlyph = new Glyph( 0, (byte)totalWidth, matchBytes );
                     foreach (Glyph g in glyphs)
                     {
                         if (g.Width > (totalWidth - firstWidth)) continue;
@@ -177,7 +182,7 @@ mainloop: continue;
 
                 private static Glyph DetermineFirstCharacter( IList<Glyph> glyphs, IList<byte> matchBytes, int width )
                 {
-                    Glyph newGlyph = new Glyph( (byte)width, matchBytes );
+                    Glyph newGlyph = new Glyph( 0, (byte)width, matchBytes );
                     foreach (Glyph g in glyphs)
                     {
                         if (g.Width > width) continue;
@@ -202,7 +207,7 @@ mainloop: continue;
                     return null;
                 }
 
-                public static GenericCharMap GetCharMap( IList<byte> fontBytes, IList<byte> widthBytes, PspIso.PspIsoInfo info )
+                private static GenericCharMap GetCharMap( IList<byte> fontBytes, IList<byte> widthBytes, PspIso.PspIsoInfo info )
                 {
                     Dictionary<int, string> myCharMap = new Dictionary<int, string>( defaultMap );
 

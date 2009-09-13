@@ -800,14 +800,10 @@ namespace FFTPatcher.SpriteEditor
             result.Add( wldbkImages.AsReadOnly() );
 
             result.Add( new AbstractImage[] {
-                new PalettedImage4bpp( "CHAPTER1", 256, 62, 1, new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER1_BIN, 0, 0x1FE0 ),
-                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER1_BIN, 0x1FE0, 32 ) ),
-                new PalettedImage4bpp( "CHAPTER2", 256, 62, 1, new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER2_BIN, 0, 0x1FE0 ),
-                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER2_BIN, 0x1FE0, 32 ) ),
-                new PalettedImage4bpp( "CHAPTER3", 256, 62, 1, new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER3_BIN, 0, 0x1FE0 ),
-                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER3_BIN, 0x1FE0, 32 ) ),
-                new PalettedImage4bpp( "CHAPTER4", 256, 62, 1, new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER4_BIN, 0, 0x1FE0 ),
-                    new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER4_BIN, 0x1FE0, 32 ) ),
+                new Greyscale4bppImage("CHAPTER1", 256, 62,new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER1_BIN, 0, 0x1FE0 )),
+                new Greyscale4bppImage("CHAPTER2", 256, 62,new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER2_BIN, 0, 0x1FE0 )),
+                new Greyscale4bppImage("CHAPTER3", 256, 62,new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER3_BIN, 0, 0x1FE0 )),
+                new Greyscale4bppImage("CHAPTER4", 256, 62,new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_CHAPTER4_BIN, 0, 0x1FE0 )),
             }.AsReadOnly() );
 
 
@@ -887,6 +883,9 @@ namespace FFTPatcher.SpriteEditor
                     new RawNybbleImage( mapTitleNames[i + 1], 256, 20,
                         new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.EVENT_MAPTITLE_BIN, i * (256 * 20 / 2), 256 * 20 / 2 ) ) );
             }
+            maptitles.Add(
+                new RawNybbleImage( "Orbonne dupe", 256, 20,
+                    new PatcherLib.Iso.PsxIso.KnownPosition( (PatcherLib.Iso.PsxIso.Sectors)6296, 0x680, 256 * 20 / 2 ) ) );
 
             result.Add( maptitles.AsReadOnly() );
 

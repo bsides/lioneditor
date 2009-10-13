@@ -12,6 +12,64 @@ namespace FFTPatcher.SpriteEditor
         protected IList<PatcherLib.Iso.KnownPosition> PixelPositions { get; private set; }
 
         protected virtual int NumColors { get { return 256; } }
+        public override string DescribeXml()
+        {
+
+            string sectorType = this.PalettePosition is PatcherLib.Iso.PsxIso.KnownPosition ? "Sector" :
+                                ((PatcherLib.Iso.PspIso.KnownPosition)PalettePosition).FFTPack.HasValue ?
+                                "FFTPack" : "Sector";
+            string sectorValue = this.PalettePosition is PatcherLib.Iso.PsxIso.KnownPosition ?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)PalettePosition).Sector.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)PalettePosition).FFTPack.HasValue ?
+                ((PatcherLib.Iso.PspIso.KnownPosition)PalettePosition).FFTPack.Value.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)PalettePosition).Sector.Value.ToString();
+            int paletteOffset = PalettePosition is PatcherLib.Iso.PsxIso.KnownPosition ?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)PalettePosition).StartLocation :
+                ((PatcherLib.Iso.PspIso.KnownPosition)PalettePosition).StartLocation;
+
+            string result = string.Format(
+@"<{0}>
+  <Name>{1}</Name>
+  <Width>{2}</Width>
+  <Height>{3}</Height>
+  <{4}>{5}</{4}>
+  <PalettePosition>
+    <Offset>{6}</Offset>
+    <Length>{7}</Length>
+  </PalettePosition>
+", this.GetType().Name, this.Name, this.Width, this.Height, sectorType, sectorValue, paletteOffset, PalettePosition.Length );
+
+            foreach (var pos in PixelPositions)
+            {
+                int offset = pos is PatcherLib.Iso.PsxIso.KnownPosition ?
+                    ((PatcherLib.Iso.PsxIso.KnownPosition)pos).StartLocation :
+                    ((PatcherLib.Iso.PspIso.KnownPosition)pos).StartLocation;
+                result += string.Format(
+@"  <Position>
+    <Offset>{0}</Offset>
+    <Length>{1}</Length>
+  </Position>
+", offset, pos.Length );
+            }
+            result += string.Format( "</{0}>", GetType().Name );
+            return result;
+        }
+
+        public static StupidTM2Image ConstructFromXml( System.Xml.XmlNode node )
+        {
+            ImageInfo info = GetImageInfo( node );
+            var palPos = GetPalettePositionFromImageNode( info.Sector, node );
+
+            var posNodes = node.SelectNodes( "Position" );
+            PatcherLib.Iso.KnownPosition firstPosition = ParsePositionNode(info.Sector, posNodes[0]);
+            PatcherLib.Iso.KnownPosition[] positions = new PatcherLib.Iso.KnownPosition[posNodes.Count-1];
+            for ( int i = 1; i < posNodes.Count; i++ )
+            {
+                positions[i-1] = ParsePositionNode(info.Sector, posNodes[i]);
+            }
+
+            return new StupidTM2Image( info.Name, info.Width, info.Height, palPos, firstPosition, positions );
+        }
 
         public StupidTM2Image( string name, int width, int height,
             PatcherLib.Iso.KnownPosition palettePosition,

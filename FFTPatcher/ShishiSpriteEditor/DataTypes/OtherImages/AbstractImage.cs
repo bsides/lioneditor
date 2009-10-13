@@ -4,11 +4,74 @@ using System.Text;
 using PatcherLib.Datatypes;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace FFTPatcher.SpriteEditor
 {
     public abstract class AbstractImage : IDisposable
     {
+
+        protected struct ImageInfo
+        {
+            public string Name;
+            public int Width;
+            public int Height;
+            public Enum Sector;
+        }
+
+        public abstract string DescribeXml();
+
+        protected static PatcherLib.Iso.KnownPosition ParsePositionNode( Enum sectorType, XmlNode node )
+        {
+            Int32 offset = Int32.Parse( node.SelectSingleNode( "Offset" ).InnerText );
+            Int32 length = Int32.Parse( node.SelectSingleNode( "Length" ).InnerText );
+            return PatcherLib.Iso.KnownPosition.ConstructKnownPosition( sectorType, offset, length );
+        }
+
+        protected static PatcherLib.Iso.KnownPosition GetPositionFromImageNode( Enum sectorType, XmlNode node )
+        {
+            return ParsePositionNode( sectorType, node.SelectSingleNode( "Position" ) );
+        }
+
+        protected static FFTPatcher.SpriteEditor.Palette.ColorDepth GetColorDepth( XmlNode node )
+        {
+            return (FFTPatcher.SpriteEditor.Palette.ColorDepth)Enum.Parse( typeof( FFTPatcher.SpriteEditor.Palette.ColorDepth ), node.SelectSingleNode( "ColorDepth" ).InnerText );
+        }
+
+        protected static PatcherLib.Iso.KnownPosition GetPalettePositionFromImageNode( Enum sectorType, XmlNode node )
+        {
+            return ParsePositionNode( sectorType, node.SelectSingleNode( "PalettePosition" ) );
+        }
+
+        protected static ImageInfo GetImageInfo( XmlNode node )
+        {
+            string name = node.SelectSingleNode( "Name" ).InnerText;
+            int width = Int32.Parse( node.SelectSingleNode( "Width" ).InnerText );
+            int height = Int32.Parse( node.SelectSingleNode( "Height" ).InnerText );
+            XmlNode sectorNode = node.SelectSingleNode( "Sector" );
+            XmlNode fftpackNode = node.SelectSingleNode( "FFTPack" );
+            XmlNode pspSector = node.SelectSingleNode( "PSPSector" );
+            if ( sectorNode != null )
+            {
+                return new ImageInfo { Name = name, Width = width, Height = height, 
+                    Sector = (PatcherLib.Iso.PsxIso.Sectors)Enum.Parse(typeof(PatcherLib.Iso.PsxIso.Sectors), sectorNode.InnerText) };
+            }
+            else if ( fftpackNode != null )
+            {
+                return new ImageInfo { Name = name, Width = width, Height = height, 
+                    Sector = (PatcherLib.Iso.FFTPack.Files)Enum.Parse(typeof(PatcherLib.Iso.FFTPack.Files), fftpackNode.InnerText) };
+            }
+            else if ( pspSector != null )
+            {
+                return new ImageInfo { Name = name, Width = width, Height = height, 
+                    Sector = (PatcherLib.Iso.PspIso.Sectors)Enum.Parse(typeof(PatcherLib.Iso.PspIso.Sectors), pspSector.InnerText) };
+            }
+            else
+            {
+                throw new Exception( "No valid Sector element found" );
+            }
+        }
+
         public int Width { get; private set; }
         public int Height { get; private set; }
         protected abstract System.Drawing.Bitmap GetImageFromIsoInner( System.IO.Stream iso );
@@ -118,7 +181,7 @@ namespace FFTPatcher.SpriteEditor
             return result.AsReadOnly();
         }
 
-        protected virtual Set<Color> GetColors( System.IO.Stream iso )
+        protected Set<Color> GetColors( System.IO.Stream iso )
         {
             Bitmap bmp = GetImageFromIso( iso );
             return GetColors( bmp );

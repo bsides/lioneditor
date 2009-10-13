@@ -8,9 +8,18 @@ namespace FFTPatcher.SpriteEditor
 {
     public class PSXWorldMap : AbstractImage
     {
+        public override string DescribeXml()
+        {
+            return string.Empty;
+        }
         public PSXWorldMap()
             : base( "World Map", 496, 368 )
         {
+        }
+
+        public static PSXWorldMap ConstructFromXml( System.Xml.XmlNode node )
+        {
+            return new PSXWorldMap();
         }
 
         private static IList<PatcherLib.Iso.PsxIso.KnownPosition> palettePositions = new PatcherLib.Iso.PsxIso.KnownPosition[] {

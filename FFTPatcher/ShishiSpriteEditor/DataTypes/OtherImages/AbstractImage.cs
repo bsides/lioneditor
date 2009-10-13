@@ -45,12 +45,39 @@ namespace FFTPatcher.SpriteEditor
 
         protected static ImageInfo GetImageInfo( XmlNode node )
         {
-            string name = node.SelectSingleNode( "Name" ).InnerText;
+            XmlNode nameNode = node.SelectSingleNode( "Name" );
             int width = Int32.Parse( node.SelectSingleNode( "Width" ).InnerText );
             int height = Int32.Parse( node.SelectSingleNode( "Height" ).InnerText );
             XmlNode sectorNode = node.SelectSingleNode( "Sector" );
             XmlNode fftpackNode = node.SelectSingleNode( "FFTPack" );
             XmlNode pspSector = node.SelectSingleNode( "PSPSector" );
+            string name = nameNode.InnerText;
+
+            XmlNode nameResourceNode = nameNode.SelectSingleNode( "Resource" );
+            if (nameResourceNode != null)
+            {
+                string resourceName = nameResourceNode.Attributes["file"].InnerText;
+                string context = nameResourceNode.Attributes["context"].InnerText;
+
+                Type resourcesClass = context == "PSP" ? typeof( PatcherLib.PSPResources.Lists ) : typeof( PatcherLib.PSXResources.Lists );
+                object strings = resourcesClass.GetProperty( resourceName ).GetValue( null, null ) ;
+                if (resourceName == "TownNames")
+                {
+                    var names = strings as IDictionary<Town, string>;
+                    name = names[(Town)Enum.Parse( typeof( Town ), nameResourceNode.InnerText )];
+                }
+                else if (resourceName == "ShopNames")
+                {
+                    var names = strings as IDictionary<ShopsFlags, string>;
+                    name = names[(ShopsFlags)Enum.Parse( typeof( ShopsFlags ), nameResourceNode.InnerText )];
+                }
+                else
+                {
+                    var names = strings as IList<string>;
+                    name = names[Int32.Parse( nameResourceNode.InnerText )];
+                }
+            }
+
             if ( sectorNode != null )
             {
                 return new ImageInfo { Name = name, Width = width, Height = height, 

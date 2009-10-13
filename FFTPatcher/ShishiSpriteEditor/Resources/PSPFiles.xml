@@ -5505,7 +5505,7 @@
     <Section>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Lesalia</Resource>
+                <Resource context="PSP" file="TownNames">Lesalia</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5522,7 +5522,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Riovanes</Resource>
+                <Resource context="PSP" file="TownNames">Riovanes</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5539,7 +5539,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Igros</Resource>
+                <Resource context="PSP" file="TownNames">Igros</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5556,7 +5556,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Lionel</Resource>
+                <Resource context="PSP" file="TownNames">Lionel</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5573,7 +5573,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Limberry</Resource>
+                <Resource context="PSP" file="TownNames">Limberry</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5590,7 +5590,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Zeltennia</Resource>
+                <Resource context="PSP" file="TownNames">Zeltennia</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5607,7 +5607,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Gariland</Resource>
+                <Resource context="PSP" file="TownNames">Gariland</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5624,7 +5624,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Yardrow</Resource>
+                <Resource context="PSP" file="TownNames">Yardrow</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5641,7 +5641,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Goland</Resource>
+                <Resource context="PSP" file="TownNames">Goland</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5658,7 +5658,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Dorter</Resource>
+                <Resource context="PSP" file="TownNames">Dorter</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5675,7 +5675,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Zaland</Resource>
+                <Resource context="PSP" file="TownNames">Zaland</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5692,7 +5692,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Goug</Resource>
+                <Resource context="PSP" file="TownNames">Goug</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5709,7 +5709,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Warjilis</Resource>
+                <Resource context="PSP" file="TownNames">Warjilis</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5726,7 +5726,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Bervenia</Resource>
+                <Resource context="PSP" file="TownNames">Bervenia</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -5743,7 +5743,7 @@
         </PalettedImage8bpp>
         <PalettedImage8bpp>
             <Name>
-                <Resource file="TownNames">Zarghidas</Resource>
+                <Resource context="PSP" file="TownNames">Zarghidas</Resource>
             </Name>
             <Width>120</Width>
             <Height>80</Height>
@@ -6824,7 +6824,7 @@
             </Position>
         </RawNybbleImage>
         <RawNybbleImage>
-            <Name>Citadel of Igros Castle</Name>
+            <Name>Citadel of Eagrose Castle</Name>
             <Width>256</Width>
             <Height>40</Height>
             <FFTPack>EVENT_MAPTITLE_BIN</FFTPack>
@@ -7654,7 +7654,7 @@
             </Position>
         </RawNybbleImage>
         <RawNybbleImage>
-            <Name>Igros·Beoulve residence</Name>
+            <Name>Eagrose·Beoulve residence</Name>
             <Width>256</Width>
             <Height>40</Height>
             <FFTPack>EVENT_MAPTITLE_BIN</FFTPack>

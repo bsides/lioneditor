@@ -2870,7 +2870,7 @@
   </Section>
   <Section>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Lesalia</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Lesalia</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2885,7 +2885,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Riovanes</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Riovanes</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2900,7 +2900,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Igros</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Igros</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2915,7 +2915,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Lionel</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Lionel</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2930,7 +2930,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Limberry</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Limberry</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2945,7 +2945,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Zeltennia</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Zeltennia</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2960,7 +2960,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Gariland</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Gariland</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2975,7 +2975,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Yardrow</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Yardrow</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -2990,7 +2990,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Goland</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Goland</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -3005,7 +3005,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Dorter</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Dorter</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -3020,7 +3020,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Zaland</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Zaland</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -3035,7 +3035,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Goug</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Goug</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -3050,7 +3050,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Warjilis</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Warjilis</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -3065,7 +3065,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Bervenia</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Bervenia</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>
@@ -3080,7 +3080,7 @@
       </Position>
     </PalettedImage8bpp>
     <PalettedImage8bpp>
-      <Name><Resource file="TownNames">Zarghidas</Resource></Name>
+      <Name><Resource context="PSX" file="TownNames">Zarghidas</Resource></Name>
       <Width>120</Width>
       <Height>80</Height>
       <Sector>WORLD_WLDPIC_BIN</Sector>

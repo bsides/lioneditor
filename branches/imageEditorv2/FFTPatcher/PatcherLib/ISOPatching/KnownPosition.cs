@@ -10,5 +10,27 @@ namespace PatcherLib.Iso
         public abstract IList<byte> ReadIso(System.IO.Stream iso);
         public abstract PatcherLib.Datatypes.PatchedByteArray GetPatchedByteArray(byte[] bytes);
         public abstract int Length { get; }
+
+        public static KnownPosition ConstructKnownPosition( Enum sector, int startLoction, int length )
+        {
+            Type type = sector.GetType();
+            if ( type == typeof( PsxIso.Sectors ) )
+            {
+                return new PsxIso.KnownPosition( (PsxIso.Sectors)sector, startLoction, length );
+            }
+            else if (type == typeof(PspIso.Sectors))
+            {
+                return new PspIso.KnownPosition( (PspIso.Sectors)sector, startLoction, length );
+            }
+            else if ( type == typeof( FFTPack.Files ) )
+            {
+                return new PspIso.KnownPosition( (FFTPack.Files)sector, startLoction, length );
+            }
+            else
+            {
+                throw new ArgumentException( "sector" );
+            }
+        }
+
     }
 }

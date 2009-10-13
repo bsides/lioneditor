@@ -3,11 +3,38 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using PatcherLib.Datatypes;
+using System.Xml;
 
 namespace FFTPatcher.SpriteEditor
 {
     public class Greyscale4bppImage : PalettedImage4bpp
     {
+        public override string DescribeXml()
+        {
+            string sectorType = this.position is PatcherLib.Iso.PsxIso.KnownPosition ? "Sector" :
+                                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.HasValue ?
+                                "FFTPack" : "Sector";
+            string sectorValue = this.position is PatcherLib.Iso.PsxIso.KnownPosition?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)position).Sector.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.HasValue ?
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.Value.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).Sector.Value.ToString();
+            int offset = this.position is PatcherLib.Iso.PsxIso.KnownPosition?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)position).StartLocation :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).StartLocation;
+            return string.Format( 
+@"<{0}>
+  <Name>{1}</Name>
+  <Width>{2}</Width>
+  <Height>{3}</Height>
+  <{4}>{5}</{4}>
+  <Position>
+    <Offset>{6}</Offset>
+    <Length>{7}</Length>
+  </Position>
+</{0}>", this.GetType().Name, this.Name, this.Width, this.Height, sectorType, sectorValue, offset, position.Length );
+        }
+
         static Color[] colors = new Color[] {
             Color.FromArgb(0,0,0), Color.FromArgb(0x10, 0x10, 0x10), Color.FromArgb(0x20,0x20,0x20), Color.FromArgb(0x30,0x30,0x30),
             Color.FromArgb(0x40,0x40,0x40), Color.FromArgb(0x50, 0x50, 0x50), Color.FromArgb(0x60,0x60,0x60), Color.FromArgb(0x70,0x70,0x70),
@@ -19,6 +46,14 @@ namespace FFTPatcher.SpriteEditor
             : base( name, width, height, 1, imagePosition, new FakeGreyscalePalettePosition() )
         {
         }
+
+        public static Greyscale4bppImage ConstructFromXml( XmlNode node )
+        {
+            ImageInfo info = GetImageInfo( node );
+            var pos = GetPositionFromImageNode( info.Sector, node );
+            return new Greyscale4bppImage( info.Name, info.Width, info.Height, pos );
+        }
+
 
         protected override void WriteImageToIsoInner( System.IO.Stream iso, Image image )
         {

@@ -5,11 +5,64 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Xml;
 
 namespace FFTPatcher.SpriteEditor
 {
     public class PalettedImage4bpp : AbstractImage
     {
+        public static PalettedImage4bpp ConstructFromXml( XmlNode node )
+        {
+            ImageInfo info = GetImageInfo( node );
+            var palPos = GetPalettePositionFromImageNode( info.Sector, node );
+            var pos = GetPositionFromImageNode( info.Sector, node );
+            FFTPatcher.SpriteEditor.Palette.ColorDepth depth = Palette.ColorDepth._16bit;
+
+            var cdNode = node.SelectSingleNode( "ColorDepth" );
+            if (cdNode != null)
+            {
+                depth = (Palette.ColorDepth)Enum.Parse( typeof( Palette.ColorDepth ), cdNode.InnerText );
+            }
+
+            return new PalettedImage4bpp( info.Name, info.Width, info.Height, 1, depth, pos, palPos );
+        }
+
+        public override string DescribeXml()
+        {
+            string sectorType = this.position is PatcherLib.Iso.PsxIso.KnownPosition ? "Sector" :
+                                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.HasValue ?
+                                "FFTPack" : "Sector";
+            string sectorValue = this.position is PatcherLib.Iso.PsxIso.KnownPosition ?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)position).Sector.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.HasValue ?
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.Value.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).Sector.Value.ToString();
+            int offset = this.position is PatcherLib.Iso.PsxIso.KnownPosition ?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)position).StartLocation :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).StartLocation;
+            int paletteOffset = palettePosition is PatcherLib.Iso.PsxIso.KnownPosition ?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)palettePosition).StartLocation :
+                ((PatcherLib.Iso.PspIso.KnownPosition)palettePosition).StartLocation;
+
+            return string.Format(
+@"<{0}>
+  <Name>{1}</Name>
+  <Width>{2}</Width>
+  <Height>{3}</Height>
+  <ColorDepth>{10}</ColorDepth>
+  <{4}>{5}</{4}>
+  <PalettePosition>
+    <Offset>{8}</Offset>
+    <Length>{9}</Length>
+  </PalettePosition>
+  <Position>
+    <Offset>{6}</Offset>
+    <Length>{7}</Length>
+  </Position>
+</{0}>", this.GetType().Name, this.Name, this.Width, this.Height, sectorType, sectorValue, offset, position.Length, paletteOffset, palettePosition.Length, depth );
+        }
+
+
         public PalettedImage4bpp( 
             string name, 
             int width, int height, 

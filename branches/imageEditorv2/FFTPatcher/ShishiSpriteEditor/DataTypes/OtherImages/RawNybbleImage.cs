@@ -8,6 +8,40 @@ namespace FFTPatcher.SpriteEditor
     class RawNybbleImage : AbstractImage
     {
         private PatcherLib.Iso.KnownPosition position;
+
+        public static RawNybbleImage ConstructFromXml( System.Xml.XmlNode node )
+        {
+            ImageInfo info = GetImageInfo( node );
+            var pos = GetPositionFromImageNode( info.Sector, node );
+            return new RawNybbleImage( info.Name, info.Width, info.Height, pos );
+        }
+        public override string DescribeXml()
+        {
+            string sectorType = this.position is PatcherLib.Iso.PsxIso.KnownPosition ? "Sector" :
+                                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.HasValue ?
+                                "FFTPack" : "Sector";
+            string sectorValue = this.position is PatcherLib.Iso.PsxIso.KnownPosition ?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)position).Sector.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.HasValue ?
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).FFTPack.Value.ToString() :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).Sector.Value.ToString();
+            int offset = this.position is PatcherLib.Iso.PsxIso.KnownPosition ?
+                ((PatcherLib.Iso.PsxIso.KnownPosition)position).StartLocation :
+                ((PatcherLib.Iso.PspIso.KnownPosition)position).StartLocation;
+
+            return string.Format(
+@"<{0}>
+  <Name>{1}</Name>
+  <Width>{2}</Width>
+  <Height>{3}</Height>
+  <{4}>{5}</{4}>
+  <Position>
+    <Offset>{6}</Offset>
+    <Length>{7}</Length>
+  </Position>
+</{0}>", this.GetType().Name, this.Name, this.Width, this.Height, sectorType, sectorValue, offset, position.Length);
+        }
+
         public RawNybbleImage( string name, int width, int height, PatcherLib.Iso.KnownPosition position )
             : base( name, width, height )
         {

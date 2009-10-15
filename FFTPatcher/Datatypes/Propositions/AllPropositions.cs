@@ -120,43 +120,44 @@ namespace FFTPatcher.Datatypes
         public IList<UInt16> LargeBonuses { get; private set; }
         public IList<UInt16> JPMultipliers { get; private set; }
         public IList<UInt16> GilMultipliers { get; private set; }
-        private IDictionary<PropositionType, IDictionary<PropositionClass, byte>> propTypeBonuses;
-        public IDictionary<PropositionType, IDictionary<PropositionClass, byte>> PropositionTypeBonuses { get { return propTypeBonuses; } }
 
-        private IDictionary<BraveFaithNeutral, IDictionary<PropositionClass, byte>> bfBonuses;
-        public IDictionary<BraveFaithNeutral, IDictionary<PropositionClass, byte>> BraveFaithBonuses { get { return bfBonuses; } }
+        private TupleDictionary<PropositionType, PropositionClass, byte> propTypeBonuses;
+        public TupleDictionary<PropositionType, PropositionClass, byte> PropositionTypeBonuses { get { return propTypeBonuses; } }
 
-        private IDictionary<BraveFaithNeutral, IDictionary<BraveFaithRange, byte>> braveBonuses;
-        public IDictionary<BraveFaithNeutral, IDictionary<BraveFaithRange, byte>> BraveStatBonuses { get { return braveBonuses; } }
+        private TupleDictionary<BraveFaithNeutral, PropositionClass, byte> bfBonuses;
+        public TupleDictionary<BraveFaithNeutral, PropositionClass, byte> BraveFaithBonuses { get { return bfBonuses; } }
 
-        private IDictionary<BraveFaithNeutral, IDictionary<BraveFaithRange, byte>> faithBonuses;
-        public IDictionary<BraveFaithNeutral, IDictionary<BraveFaithRange, byte>> FaithStatBonuses { get { return faithBonuses; } }
+        private TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte> braveBonuses;
+        public TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte> BraveStatBonuses { get { return braveBonuses; } }
 
-        private IDictionary<BraveFaithNeutral, IDictionary<LevelRange, byte>> levelBonuses;
-        public IDictionary<BraveFaithNeutral, IDictionary<LevelRange, byte>> LevelBonuses { get { return levelBonuses; } }
+        private TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte> faithBonuses;
+        public TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte> FaithStatBonuses { get { return faithBonuses; } }
+
+        private TupleDictionary<BraveFaithNeutral, LevelRange, byte> levelBonuses;
+        public TupleDictionary<BraveFaithNeutral, LevelRange, byte> LevelBonuses { get { return levelBonuses; } }
 
         private IDictionary<PropositionType, BonusIndex> treasureLandJpBonuses;
         public IDictionary<PropositionType, BonusIndex> TreasureLandJpBonuses { get { return treasureLandJpBonuses; } }
 
         private IDictionary<PropositionType, BonusIndex> treasureLandGilBonuses;
-        public IDictionary<PropositionType, BonusIndex> TrasureLandGilBonuses { get { return treasureLandGilBonuses; } }
+        public IDictionary<PropositionType, BonusIndex> TreasureLandGilBonuses { get { return treasureLandGilBonuses; } }
 
-        public IDictionary<PropositionType, IDictionary<BonusPercent, BonusIndex>> bonusCashGilBonuses;
-        public IDictionary<PropositionType, IDictionary<BonusPercent,BonusIndex>> BonusCashGilBonuses { get { return bonusCashGilBonuses; } }
+        private TupleDictionary<PropositionType, BonusPercent, BonusIndex> bonusCashGilBonuses;
+        public TupleDictionary<PropositionType, BonusPercent, BonusIndex> BonusCashGilBonuses { get { return bonusCashGilBonuses; } }
 
-        public IDictionary<PropositionType, IDictionary<BonusPercent, BonusIndex>> bonusCashJpBonuses;
-        public IDictionary<PropositionType, IDictionary<BonusPercent, BonusIndex>> BonusCashJpBonuses { get { return bonusCashJpBonuses; } }
+        private TupleDictionary<PropositionType, BonusPercent, BonusIndex> bonusCashJpBonuses;
+        public TupleDictionary<PropositionType, BonusPercent, BonusIndex> BonusCashJpBonuses { get { return bonusCashJpBonuses; } }
 
         IList<byte> realLevelBonusBytes;
 
         public void SetPropositionTypeBonus( PropositionType type, PropositionClass _class, byte value )
         {
-            propTypeBonuses[type][_class] = value;
+            propTypeBonuses[type, _class] = value;
         }
 
         public void SetBraveFaithBonus( BraveFaithNeutral bfn, PropositionClass _class, byte value )
         {
-            bfBonuses[bfn][_class] = value;
+            bfBonuses[bfn, _class] = value;
         }
 
         public AllPropositions Default { get; private set; }
@@ -191,75 +192,69 @@ namespace FFTPatcher.Datatypes
 
             unknownBytes = bytes.Sub( 0x8b2, 0x8bf ).ToArray();
 
-            propTypeBonuses = new Dictionary<PropositionType, IDictionary<PropositionClass, byte>>();
+            propTypeBonuses = new TupleDictionary<PropositionType, PropositionClass, byte>();
 
             foreach (PropositionType type in (PropositionType[])Enum.GetValues( typeof( PropositionType ) ))
             {
-                var thisDict = new Dictionary<PropositionClass, byte>();
                 foreach (PropositionClass _class in (PropositionClass[])Enum.GetValues( typeof( PropositionClass ) ))
                 {
-                    thisDict[_class] = bytes[0x8C0 + ((int)type - 1) * 22 + (int)_class];
+                    propTypeBonuses[type, _class] = bytes[0x8C0 + ((int)type - 1) * 22 + (int)_class];
                 }
-                propTypeBonuses[type] = thisDict;
             }
+            propTypeBonuses = new TupleDictionary<PropositionType, PropositionClass, byte>( propTypeBonuses, false, true );
 
-            bfBonuses = new Dictionary<BraveFaithNeutral, IDictionary<PropositionClass, byte>>();
+            bfBonuses = new TupleDictionary<BraveFaithNeutral, PropositionClass, byte>();
             foreach (BraveFaithNeutral bfn in (BraveFaithNeutral[])Enum.GetValues( typeof( BraveFaithNeutral ) ))
             {
-                var thisDict = new Dictionary<PropositionClass, byte>();
                 foreach (PropositionClass _class in (PropositionClass[])Enum.GetValues( typeof( PropositionClass ) ))
                 {
-                    thisDict[_class] = bytes[0x970 + ((int)bfn - 1) * 22 + (int)_class];
+                    bfBonuses[bfn, _class] = bytes[0x970 + ((int)bfn - 1) * 22 + (int)_class];
                 }
-                bfBonuses[bfn] = thisDict;
             }
+            bfBonuses = new TupleDictionary<BraveFaithNeutral, PropositionClass, byte>( bfBonuses, false, true );
 
-            braveBonuses = new Dictionary<BraveFaithNeutral, IDictionary<BraveFaithRange, byte>>();
-            faithBonuses = new Dictionary<BraveFaithNeutral, IDictionary<BraveFaithRange, byte>>();
-            levelBonuses = new Dictionary<BraveFaithNeutral, IDictionary<LevelRange, byte>>();
+            braveBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>();
+            faithBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>();
+            levelBonuses = new TupleDictionary<BraveFaithNeutral, LevelRange, byte>();
             foreach (BraveFaithNeutral bfn in (BraveFaithNeutral[])Enum.GetValues( typeof( BraveFaithNeutral ) ))
             {
-                var braveDict = new Dictionary<BraveFaithRange, byte>();
-                var faithDict = new Dictionary<BraveFaithRange, byte>();
                 foreach (BraveFaithRange range in (BraveFaithRange[])Enum.GetValues( typeof( BraveFaithRange ) ))
                 {
-                    braveDict[range] = bytes[0x9B4 + ((int)bfn - 1) * 5 + (int)range];
-                    faithDict[range] = bytes[0x9C4 + ((int)bfn - 1) * 5 + (int)range];
+                    braveBonuses[bfn, range] = bytes[0x9B4 + ((int)bfn - 1) * 5 + (int)range];
+                    faithBonuses[bfn, range] = bytes[0x9C4 + ((int)bfn - 1) * 5 + (int)range];
                 }
-                braveBonuses[bfn] = braveDict;
-                faithBonuses[bfn] = faithDict;
 
-                var levelDict = new Dictionary<LevelRange, byte>();
                 foreach (LevelRange range in (LevelRange[])Enum.GetValues( typeof( LevelRange ) ))
                 {
-                    levelDict[range] = bytes[0x9B4 + ((int)bfn - 1) * 10 + (int)range];
+                    levelBonuses[bfn, range] = bytes[0x9B4 + ((int)bfn - 1) * 10 + (int)range];
                 }
-                levelBonuses[bfn] = levelDict;
             }
+            braveBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>( braveBonuses, false, true );
+            faithBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>( faithBonuses, false, true );
+            levelBonuses = new TupleDictionary<BraveFaithNeutral, LevelRange, byte>( levelBonuses, false, true );
 
             realLevelBonusBytes = bytes.Sub( 0x9D4, 0x9D4 + 10 * 3 - 1 ).ToArray();
 
             treasureLandJpBonuses = new Dictionary<PropositionType, BonusIndex>();
             treasureLandGilBonuses = new Dictionary<PropositionType, BonusIndex>();
-            bonusCashGilBonuses = new Dictionary<PropositionType, IDictionary<BonusPercent, BonusIndex>>();
-            bonusCashJpBonuses = new Dictionary<PropositionType, IDictionary<BonusPercent, BonusIndex>>();
+            bonusCashGilBonuses = new TupleDictionary<PropositionType, BonusPercent, BonusIndex>();
+            bonusCashJpBonuses = new TupleDictionary<PropositionType, BonusPercent, BonusIndex>();
 
             foreach (PropositionType type in (PropositionType[])Enum.GetValues( typeof( PropositionType ) ))
             {
                 treasureLandGilBonuses[type] = (BonusIndex)bytes[0x9F4 + 2 * ((int)type - 1)];
                 treasureLandJpBonuses[type] = (BonusIndex)bytes[0x9F4 + 2 * ((int)type - 1) + 1];
 
-                var gilDict = new Dictionary<BonusPercent, BonusIndex> { 
-                    { BonusPercent._10Percent, (BonusIndex)bytes[0xA04+((int)type-1)*6 + 2 * 2 ] },
-                    { BonusPercent._40Percent, (BonusIndex)bytes[0xA04+((int)type-1)*6 + 2 * 1 ] },
-                    { BonusPercent._50Percent, (BonusIndex)bytes[0xA04+((int)type-1)*6 + 2 * 0 ] } };
-                var jpDict = new Dictionary<BonusPercent, BonusIndex>{ 
-                    { BonusPercent._10Percent, (BonusIndex)bytes[0xA04+((int)type-1)*6 + 2 * 2 + 1] },
-                    { BonusPercent._40Percent, (BonusIndex)bytes[0xA04+((int)type-1)*6 + 2 * 1 + 1] },
-                    { BonusPercent._50Percent, (BonusIndex)bytes[0xA04+((int)type-1)*6 + 2 * 0 + 1] } };
-                bonusCashGilBonuses[type] = gilDict;
-                bonusCashJpBonuses[type] = jpDict;
+                bonusCashGilBonuses[type, BonusPercent._10Percent] = (BonusIndex)bytes[0xA04 + ((int)type - 1) * 6 + 2 * 2];
+                bonusCashGilBonuses[type, BonusPercent._40Percent] = (BonusIndex)bytes[0xA04 + ((int)type - 1) * 6 + 2 * 1];
+                bonusCashGilBonuses[type, BonusPercent._50Percent] = (BonusIndex)bytes[0xA04 + ((int)type - 1) * 6 + 2 * 0];
+
+                bonusCashJpBonuses[type, BonusPercent._10Percent] = (BonusIndex)bytes[0xA04 + ((int)type - 1) * 6 + 2 * 2 + 1];
+                bonusCashJpBonuses[type, BonusPercent._40Percent] = (BonusIndex)bytes[0xA04 + ((int)type - 1) * 6 + 2 * 1 + 1];
+                bonusCashJpBonuses[type, BonusPercent._50Percent] = (BonusIndex)bytes[0xA04 + ((int)type - 1) * 6 + 2 * 0 + 1];
             }
+            bonusCashGilBonuses = new TupleDictionary<PropositionType, BonusPercent, BonusIndex>( bonusCashGilBonuses, false, true );
+            bonusCashJpBonuses = new TupleDictionary<PropositionType, BonusPercent, BonusIndex>( bonusCashJpBonuses, false, true );
 
             SmallBonuses = new UInt16[8];
             LargeBonuses = new UInt16[8];
@@ -328,7 +323,7 @@ namespace FFTPatcher.Datatypes
             {
                 foreach (PropositionClass _class in classes)
                 {
-                    result.Add( propTypeBonuses[type][_class] );
+                    result.Add( propTypeBonuses[type, _class] );
                 }
             }
             BraveFaithNeutral[] bfnVals = (BraveFaithNeutral[])Enum.GetValues( typeof( BraveFaithNeutral ) );
@@ -336,7 +331,7 @@ namespace FFTPatcher.Datatypes
             {
                 foreach (PropositionClass _class in classes)
                 {
-                    result.Add( bfBonuses[bfn][_class] );
+                    result.Add( bfBonuses[bfn, _class] );
                 }
             }
 
@@ -348,7 +343,7 @@ namespace FFTPatcher.Datatypes
             {
                 foreach (BraveFaithRange range in levelRanges)
                 {
-                    result.Add( braveBonuses[bfn][range] );
+                    result.Add( braveBonuses[bfn, range] );
                 }
             }
 
@@ -358,7 +353,7 @@ namespace FFTPatcher.Datatypes
             {
                 foreach (BraveFaithRange range in levelRanges)
                 {
-                    result.Add( faithBonuses[bfn][range] );
+                    result.Add( faithBonuses[bfn, range] );
                 }
             }
 
@@ -379,8 +374,8 @@ namespace FFTPatcher.Datatypes
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    result.Add( (byte)bonusCashGilBonuses[type][(BonusPercent)i] );
-                    result.Add( (byte)bonusCashJpBonuses[type][(BonusPercent)i] );
+                    result.Add( (byte)bonusCashGilBonuses[type, (BonusPercent)i] );
+                    result.Add( (byte)bonusCashJpBonuses[type, (BonusPercent)i] );
                 }
             }
 
@@ -417,7 +412,19 @@ namespace FFTPatcher.Datatypes
                 return
                     Default != null &&
                     (!Utilities.CompareArrays( Prices, Default.Prices ) ||
-                    //!Utilities.CompareArrays( Bonuses, Default.Bonuses ) ||
+                     !Utilities.CompareArrays( SmallBonuses, Default.SmallBonuses ) ||
+                     !Utilities.CompareArrays( LargeBonuses, Default.LargeBonuses ) ||
+                     !Utilities.CompareArrays(JPMultipliers, Default.JPMultipliers)||
+                     !Utilities.CompareArrays(GilMultipliers, Default.GilMultipliers)||
+                     !propTypeBonuses.Keys.TrueForAll( k => propTypeBonuses[k] == Default.propTypeBonuses[k] ) ||
+                     !bfBonuses.Keys.TrueForAll( k => bfBonuses[k] == Default.bfBonuses[k] ) ||
+                     !braveBonuses.Keys.TrueForAll( k => braveBonuses[k] == Default.braveBonuses[k] ) ||
+                     !faithBonuses.Keys.TrueForAll( k => faithBonuses[k] == Default.faithBonuses[k] ) ||
+                     !levelBonuses.Keys.TrueForAll( k => levelBonuses[k] == Default.levelBonuses[k] ) ||
+                     !treasureLandJpBonuses.Keys.TrueForAll( k => treasureLandJpBonuses[k] == Default.treasureLandJpBonuses[k] ) ||
+                     !treasureLandGilBonuses.Keys.TrueForAll( k => treasureLandGilBonuses[k] == Default.treasureLandGilBonuses[k] ) ||
+                     !bonusCashGilBonuses.Keys.TrueForAll( k => bonusCashGilBonuses[k] == Default.bonusCashGilBonuses[k] ) ||
+                     !bonusCashJpBonuses.Keys.TrueForAll( k => bonusCashJpBonuses[k] == Default.bonusCashJpBonuses[k] ) ||
                     !Propositions.TrueForAll( p => !p.HasChanged ));
             }
         }

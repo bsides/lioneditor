@@ -123,13 +123,11 @@ namespace FFTPatcher
                 patches.AddRange( FFTPatch.StoreInventories.GetPatches( context ) );
                 sendProgress( "Getting store inventories patches" );
             }
-#if PROPOSITIONS
             if (patchList.Propositions)
             {
                 patches.AddRange( FFTPatch.Propositions.GetPatches( context ) );
                 sendProgress( "Getting errands patches" );
             }
-#endif
 
             using ( FileStream stream = new FileStream( filename, FileMode.Open, FileAccess.ReadWrite ) )
             {

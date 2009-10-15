@@ -64,11 +64,24 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datatypes\Tuples\SystemUtil.cs" />
+    <Compile Include="Datatypes\Tuples\Tuple.3.cs" />
+    <Compile Include="Datatypes\Tuples\TupleDictionary.cs" />
+    <Compile Include="Datatypes\Tuples\Tuple.7.cs" />
+    <Compile Include="Datatypes\Tuples\Tuple.6.cs" />
+    <Compile Include="Datatypes\Tuples\Tuple.5.cs" />
+    <Compile Include="Datatypes\Tuples\Tuple.4.cs" />
+    <Compile Include="Datatypes\Tuples\Tuple.cs" />
+    <Compile Include="Datatypes\Tuples\Tuple.2.cs" />
     <None Include="zipResources.bat" />
     <Compile Include="Datatypes\Fonts\FFTFont.cs" />
     <Compile Include="Datatypes\Fonts\Glyph.cs" />
     <Compile Include="Datatypes\IChangeable.cs" />
     <Compile Include="Datatypes\IPatchableFile.cs" />
+    <Compile Include="Datatypes\Tuples\ExtendTuple.cs" />
+    <Compile Include="Datatypes\Tuples\Pair.cs" />
+    <Compile Include="Datatypes\Tuples\Quad.cs" />
+    <Compile Include="Datatypes\Tuples\Triple.cs" />
     <Compile Include="GZip.cs" />
     <Compile Include="DotNetZip\FolderBrowserDialogEx.cs">
       <SubType>Component</SubType>

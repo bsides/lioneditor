@@ -218,9 +218,7 @@ namespace FFTPatcher
             battleCheckedListBox.SetItemChecked((int)BATTLEPatchable.MoveFindItems, FFTPatch.MoveFind.HasChanged);
 
             storeInventoryCheckBox.Checked = FFTPatch.StoreInventories.HasChanged;
-#if PROPOSITIONS
             propositionsCheckBox.Checked = FFTPatch.Propositions.HasChanged;
-#endif
 
             dontChangeSceapRadioButton.Checked = true;
 

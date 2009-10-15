@@ -96,9 +96,7 @@ namespace FFTPatcher.Datatypes
 
         public static AllStoreInventories StoreInventories { get; private set; }
 
-#if PROPOSITIONS
         public static AllPropositions Propositions { get; private set; }
-#endif
 
 		#endregion Public Properties 
 
@@ -376,9 +374,7 @@ namespace FFTPatcher.Datatypes
                     ENTDs = new AllENTDs( PSPResources.Binaries.ENTD1, PSPResources.Binaries.ENTD2, PSPResources.Binaries.ENTD3, PSPResources.Binaries.ENTD4, PSPResources.Binaries.ENTD5 );
                     MoveFind = new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSPResources.Binaries.StoreInventories, PSPResources.Binaries.StoreInventories );
-#if PROPOSITIONS
                     Propositions = new AllPropositions( PSPResources.Binaries.Propositions, PSPResources.Binaries.Propositions );
-#endif
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( PSXResources.Binaries.Abilities, PSXResources.Binaries.AbilityEffects, PSXResources.Binaries.ReactionAbilityEffects );
@@ -398,9 +394,7 @@ namespace FFTPatcher.Datatypes
                     ENTDs = new AllENTDs( PSXResources.Binaries.ENTD1, PSXResources.Binaries.ENTD2, PSXResources.Binaries.ENTD3, PSXResources.Binaries.ENTD4 );
                     MoveFind = new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSXResources.Binaries.StoreInventories, PSXResources.Binaries.StoreInventories );
-#if PROPOSITIONS
                     Propositions = new AllPropositions( PSXResources.Binaries.Propositions, PSXResources.Binaries.Propositions );
-#endif
                     break;
                 default:
                     throw new ArgumentException();
@@ -499,10 +493,8 @@ namespace FFTPatcher.Datatypes
                 var ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
                 var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.Binaries.MoveFind : PSXResources.Binaries.MoveFind ) );
                 var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.Binaries.StoreInventories : PSXResources.Binaries.StoreInventories );
-#if PROPOSITIONS
                 var Propositions = new AllPropositions( propositions, psp ? PSPResources.Binaries.Propositions : PSXResources.Binaries.Propositions );
                 FFTPatch.Propositions = Propositions;
-#endif
 
                 FFTPatch.Abilities = Abilities;
                 FFTPatch.AbilityAnimations = AbilityAnimations;
@@ -652,9 +644,7 @@ namespace FFTPatcher.Datatypes
                 WriteFileToZip( stream, elementNames[ElementName.ENTD4], ENTDs.ENTDs[3].ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.MoveFindItems], MoveFind.ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.StoreInventories], StoreInventories.ToByteArray() );
-#if PROPOSITIONS
                 WriteFileToZip( stream, elementNames[ElementName.Propositions], Propositions.ToByteArray() );
-#endif
             }
         }
 

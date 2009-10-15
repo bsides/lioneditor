@@ -150,6 +150,13 @@ namespace PatcherLib.Utilities
         }
 
         [System.Diagnostics.DebuggerStepThrough]
+        public static TupleDictionary<TKey1, TKey2, TValue> AsReadOnly<TKey1, TKey2, TValue>( this IDictionary<Lokad.Tuple<TKey1, TKey2>, TValue> dict )
+        {
+            return new TupleDictionary<TKey1, TKey2, TValue>( dict, true, true );
+        }
+
+
+        [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {
             if ( list is ReadOnlyCollection<T> ) return list as ReadOnlyCollection<T>;

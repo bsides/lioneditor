@@ -81,6 +81,7 @@ namespace FFTPatcher.Editors
             this.inventoryTab = new System.Windows.Forms.TabPage();
             this.allStoreInventoryEditor1 = new FFTPatcher.Editors.Items.AllStoreInventoryEditor();
             this.propositionsTabPage = new System.Windows.Forms.TabPage();
+            this.allPropositionsEditor1 = new FFTPatcher.Editors.Propositions.AllPropositionsEditor();
             this.tabControl.SuspendLayout();
             this.abilitiesPage.SuspendLayout();
             this.abilityAnimationsTabPage.SuspendLayout();
@@ -438,6 +439,22 @@ namespace FFTPatcher.Editors
             this.allStoreInventoryEditor1.Size = new System.Drawing.Size( 786, 691 );
             this.allStoreInventoryEditor1.TabIndex = 0;
             // 
+            // propositionsTabPage
+            // 
+            this.propositionsTabPage.Controls.Add( this.allPropositionsEditor1 );
+            this.propositionsTabPage.Location = new System.Drawing.Point( 4, 40 );
+            this.propositionsTabPage.Name = "propositionsTabPage";
+            this.propositionsTabPage.Size = new System.Drawing.Size( 792, 697 );
+            this.propositionsTabPage.TabIndex = 17;
+            // 
+            // allPropositionsEditor1
+            // 
+            this.allPropositionsEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allPropositionsEditor1.Location = new System.Drawing.Point( 0, 0 );
+            this.allPropositionsEditor1.Name = "allPropositionsEditor1";
+            this.allPropositionsEditor1.Size = new System.Drawing.Size( 792, 697 );
+            this.allPropositionsEditor1.TabIndex = 0;
+            // 
             // FFTPatchEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -507,5 +524,6 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.TabPage abilityAnimationsTabPage;
         private AllAnimationsEditor allAnimationsEditor1;
         private System.Windows.Forms.TabPage propositionsTabPage;
+        private FFTPatcher.Editors.Propositions.AllPropositionsEditor allPropositionsEditor1;
     }
 }

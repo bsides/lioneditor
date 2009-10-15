@@ -189,14 +189,12 @@ namespace FFTPatcher
                 sendProgress( "Getting store inventories patches" );
                 sendProgress( "Getting store inventories patches" );
             }
-#if PROPOSITIONS
             if (patchList.Propositions)
             {
                 patches.AddRange( FFTPatch.Propositions.GetPatches( context ) );
                 sendProgress( "Getting errands patches" );
                 sendProgress( "Getting errands patches" );
             }
-#endif
 
             foreach ( PatchedByteArray patch in patches )
             {

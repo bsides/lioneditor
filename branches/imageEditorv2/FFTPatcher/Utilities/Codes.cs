@@ -85,9 +85,7 @@ namespace FFTPatcher
                 FFTPatch.MoveFind,
                 FFTPatch.AbilityAnimations,
                 FFTPatch.StoreInventories,
-#if PROPOSITIONS
                 FFTPatch.Propositions
-#endif
             };
             foreach ( var gen in generators )
             {

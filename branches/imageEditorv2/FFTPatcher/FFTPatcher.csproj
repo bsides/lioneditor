@@ -103,6 +103,18 @@
     <Compile Include="Editors\Propositions\AllPropositionsEditor.Designer.cs">
       <DependentUpon>AllPropositionsEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\Propositions\ClassBonusesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Propositions\ClassBonusesEditor.Designer.cs">
+      <DependentUpon>ClassBonusesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Propositions\StatLevelBonusesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\Propositions\StatLevelBonusesEditor.Designer.cs">
+      <DependentUpon>StatLevelBonusesEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -373,6 +385,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\Propositions\AllPropositionsEditor.resx">
       <DependentUpon>AllPropositionsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Propositions\ClassBonusesEditor.resx">
+      <DependentUpon>ClassBonusesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\Propositions\StatLevelBonusesEditor.resx">
+      <DependentUpon>StatLevelBonusesEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

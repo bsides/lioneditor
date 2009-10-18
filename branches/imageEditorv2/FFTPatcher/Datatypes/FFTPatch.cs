@@ -173,6 +173,15 @@ namespace FFTPatcher.Datatypes
 
                 fileList["pspItemAttributes"] = PSPResources.Binaries.NewItemAttributes.ToArray();
                 fileList["pspItems"] = PSPResources.Binaries.NewItems.ToArray();
+
+                if (!AllPropositions.CanFixBuggyLevelBonuses( Context.US_PSP ))
+                {
+                    fileList["BuggyPropositions"] = new byte[0];
+                }
+                else if (fileList.ContainsKey( "BuggyPropositions" ))
+                {
+                    fileList.Remove( "BuggyPropositions" );
+                }
             }
 
             using( FileStream outFile = new FileStream( filename, FileMode.Create, FileAccess.ReadWrite ) )
@@ -284,7 +293,9 @@ namespace FFTPatcher.Datatypes
                     null,
                     PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.MoveFindItems),
                     PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.StoreInventories),
-                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.Propositions));
+                    PatcherLib.Iso.PsxIso.GetBlock(stream, PatcherLib.Iso.PsxIso.Propositions),
+                    AllPropositions.IsoHasBuggyLevelBonuses(stream, Context.US_PSX)
+                    );
                 FireDataChangedEvent();
             }
         }
@@ -319,7 +330,8 @@ namespace FFTPatcher.Datatypes
                     PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.ENTD5 ),
                     PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.MoveFindItems[0] ),
                     PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.StoreInventories[0] ),
-                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.Propositions[0] ) );
+                    PatcherLib.Iso.PspIso.GetBlock( stream, info, PatcherLib.Iso.PspIso.Propositions[0] ),
+                    AllPropositions.IsoHasBuggyLevelBonuses(stream, Context.US_PSP)) ;
                 FireDataChangedEvent();
             }
         }
@@ -374,7 +386,7 @@ namespace FFTPatcher.Datatypes
                     ENTDs = new AllENTDs( PSPResources.Binaries.ENTD1, PSPResources.Binaries.ENTD2, PSPResources.Binaries.ENTD3, PSPResources.Binaries.ENTD4, PSPResources.Binaries.ENTD5 );
                     MoveFind = new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSPResources.Binaries.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSPResources.Binaries.StoreInventories, PSPResources.Binaries.StoreInventories );
-                    Propositions = new AllPropositions( PSPResources.Binaries.Propositions, PSPResources.Binaries.Propositions );
+                    Propositions = new AllPropositions( PSPResources.Binaries.Propositions, PSPResources.Binaries.Propositions, true );
                     break;
                 case Context.US_PSX:
                     Abilities = new AllAbilities( PSXResources.Binaries.Abilities, PSXResources.Binaries.AbilityEffects, PSXResources.Binaries.ReactionAbilityEffects );
@@ -394,7 +406,7 @@ namespace FFTPatcher.Datatypes
                     ENTDs = new AllENTDs( PSXResources.Binaries.ENTD1, PSXResources.Binaries.ENTD2, PSXResources.Binaries.ENTD3, PSXResources.Binaries.ENTD4 );
                     MoveFind = new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind, new AllMoveFindItems( Context, PSXResources.Binaries.MoveFind ) );
                     StoreInventories = new AllStoreInventories( Context, PSXResources.Binaries.StoreInventories, PSXResources.Binaries.StoreInventories );
-                    Propositions = new AllPropositions( PSXResources.Binaries.Propositions, PSXResources.Binaries.Propositions );
+                    Propositions = new AllPropositions( PSXResources.Binaries.Propositions, PSXResources.Binaries.Propositions, true );
                     break;
                 default:
                     throw new ArgumentException();
@@ -471,7 +483,7 @@ namespace FFTPatcher.Datatypes
             IList<byte> entd1, IList<byte> entd2, IList<byte> entd3, IList<byte> entd4, IList<byte> entd5,
             IList<byte> moveFind,
             IList<byte> inventories, 
-            IList<byte> propositions )
+            IList<byte> propositions, bool brokenLevelBonuses )
         {
             try
             {
@@ -493,7 +505,7 @@ namespace FFTPatcher.Datatypes
                 var ENTDs = psp ? new AllENTDs( entd1, entd2, entd3, entd4, entd5 ) : new AllENTDs( entd1, entd2, entd3, entd4 );
                 var MoveFind = new AllMoveFindItems( Context, moveFind, new AllMoveFindItems( Context, psp ? PSPResources.Binaries.MoveFind : PSXResources.Binaries.MoveFind ) );
                 var StoreInventories = new AllStoreInventories( Context, inventories, psp ? PSPResources.Binaries.StoreInventories : PSXResources.Binaries.StoreInventories );
-                var Propositions = new AllPropositions( propositions, psp ? PSPResources.Binaries.Propositions : PSXResources.Binaries.Propositions );
+                var Propositions = new AllPropositions( propositions, psp ? PSPResources.Binaries.Propositions : PSXResources.Binaries.Propositions, brokenLevelBonuses );
                 FFTPatch.Propositions = Propositions;
 
                 FFTPatch.Abilities = Abilities;
@@ -528,6 +540,9 @@ namespace FFTPatcher.Datatypes
 
                 IDictionary<ElementName, IList<byte>> defaults = psp ? DefaultPspElements : DefaultPsxElements;
 
+                var buggyzipEntry = GetZipEntry( file, "BuggyPropositions", false );
+                var propsZipEntry = GetZipEntry(file, elementNames[ElementName.Propositions], false);
+                bool buggy = (buggyzipEntry != null && propsZipEntry != null) || propsZipEntry == null;
                 LoadDataFromBytes(
                     GetZipEntry( file, elementNames[ElementName.Abilities], false ) ?? defaults[ElementName.Abilities],
                     GetZipEntry( file, elementNames[ElementName.AbilityEffects], false ) ?? defaults[ElementName.AbilityEffects],
@@ -552,7 +567,7 @@ namespace FFTPatcher.Datatypes
                     psp ? ( GetZipEntry( file, elementNames[ElementName.ENTD5], false ) ?? defaults[ElementName.ENTD5] ) : null,
                     GetZipEntry( file, elementNames[ElementName.MoveFindItems], false ) ?? defaults[ElementName.MoveFindItems],
                     GetZipEntry( file, elementNames[ElementName.StoreInventories], false ) ?? defaults[ElementName.StoreInventories],
-                    GetZipEntry( file, elementNames[ElementName.Propositions], false) ?? defaults[ElementName.Propositions] );
+                    propsZipEntry ?? defaults[ElementName.Propositions], buggy );
             }
         }
 
@@ -592,7 +607,7 @@ namespace FFTPatcher.Datatypes
                 oldItems, oldItemAttributes, newItems, newItemAttributes,
                 jobs, jobLevels, skillSets, monsterSkills, actionMenus, statusAttributes,
                 inflictStatuses, poach, entd1, entd2, entd3, entd4, entd5,
-                moveFind, inventories, propositions );
+                moveFind, inventories, propositions, true );
         }
 
         private static string ReadString( FileStream stream, int length )
@@ -645,6 +660,10 @@ namespace FFTPatcher.Datatypes
                 WriteFileToZip( stream, elementNames[ElementName.MoveFindItems], MoveFind.ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.StoreInventories], StoreInventories.ToByteArray() );
                 WriteFileToZip( stream, elementNames[ElementName.Propositions], Propositions.ToByteArray() );
+                if (!AllPropositions.CanFixBuggyLevelBonuses( destinationContext ))
+                {
+                    WriteFileToZip( stream, "BuggyPropositions", new byte[0] );
+                }
             }
         }
 

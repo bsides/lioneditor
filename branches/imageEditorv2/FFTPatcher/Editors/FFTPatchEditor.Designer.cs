@@ -81,7 +81,7 @@ namespace FFTPatcher.Editors
             this.inventoryTab = new System.Windows.Forms.TabPage();
             this.allStoreInventoryEditor1 = new FFTPatcher.Editors.Items.AllStoreInventoryEditor();
             this.propositionsTabPage = new System.Windows.Forms.TabPage();
-            this.allPropositionsEditor1 = new FFTPatcher.Editors.Propositions.AllPropositionsEditor();
+            this.allPropositionsEditor1 = new FFTPatcher.Editors.AllPropositionsEditor();
             this.tabControl.SuspendLayout();
             this.abilitiesPage.SuspendLayout();
             this.abilityAnimationsTabPage.SuspendLayout();
@@ -524,6 +524,6 @@ namespace FFTPatcher.Editors
         private System.Windows.Forms.TabPage abilityAnimationsTabPage;
         private AllAnimationsEditor allAnimationsEditor1;
         private System.Windows.Forms.TabPage propositionsTabPage;
-        private FFTPatcher.Editors.Propositions.AllPropositionsEditor allPropositionsEditor1;
+        private FFTPatcher.Editors.AllPropositionsEditor allPropositionsEditor1;
     }
 }

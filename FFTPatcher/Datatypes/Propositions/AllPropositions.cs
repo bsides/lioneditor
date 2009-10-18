@@ -4,6 +4,7 @@ using System.Text;
 using PatcherLib.Utilities;
 using PatcherLib.Datatypes;
 using PatcherLib;
+using Lokad;
 
 namespace FFTPatcher.Datatypes
 {
@@ -105,15 +106,17 @@ namespace FFTPatcher.Datatypes
         public const int NumPropositions = 96;
         public const int propLength = 23;
 
-        public AllPropositions( IList<byte> bytes )
-            : this( bytes, null as AllPropositions )
+        public AllPropositions( IList<byte> bytes, bool brokenLevelBonuses )
+            : this( bytes, null as AllPropositions, brokenLevelBonuses )
         {
         }
 
-        public AllPropositions( IList<byte> bytes, IList<byte> defaultBytes )
-            : this( bytes, new AllPropositions( defaultBytes ) )
+        public AllPropositions( IList<byte> bytes, IList<byte> defaultBytes, bool brokenLevelBonuses )
+            : this( bytes, new AllPropositions( defaultBytes, true ), brokenLevelBonuses )
         {
         }
+
+        public bool MirrorLevelRanges { get { return !CanFixBuggyLevelBonuses( FFTPatch.Context ); } }
 
         public IList<UInt16> Prices { get; private set; }
         public IList<UInt16> SmallBonuses { get; private set; }
@@ -162,7 +165,7 @@ namespace FFTPatcher.Datatypes
 
         public AllPropositions Default { get; private set; }
 
-        public AllPropositions( IList<byte> bytes, AllPropositions defaults )
+        public AllPropositions( IList<byte> bytes, AllPropositions defaults, bool brokenLevelBonuses )
         {
             Default = defaults;
             var names = FFTPatch.Context == Context.US_PSP ? PSPResources.Lists.Propositions : PSXResources.Lists.Propositions;
@@ -216,6 +219,8 @@ namespace FFTPatcher.Datatypes
             braveBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>();
             faithBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>();
             levelBonuses = new TupleDictionary<BraveFaithNeutral, LevelRange, byte>();
+
+            int levelBonusesOffset = brokenLevelBonuses ? 0x9B4 : 0x9D4;
             foreach (BraveFaithNeutral bfn in (BraveFaithNeutral[])Enum.GetValues( typeof( BraveFaithNeutral ) ))
             {
                 foreach (BraveFaithRange range in (BraveFaithRange[])Enum.GetValues( typeof( BraveFaithRange ) ))
@@ -226,14 +231,14 @@ namespace FFTPatcher.Datatypes
 
                 foreach (LevelRange range in (LevelRange[])Enum.GetValues( typeof( LevelRange ) ))
                 {
-                    levelBonuses[bfn, range] = bytes[0x9B4 + ((int)bfn - 1) * 10 + (int)range];
+                    levelBonuses[bfn, range] = bytes[levelBonusesOffset + ((int)bfn - 1) * 10 + (int)range];
                 }
             }
+
+
             braveBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>( braveBonuses, false, true );
             faithBonuses = new TupleDictionary<BraveFaithNeutral, BraveFaithRange, byte>( faithBonuses, false, true );
             levelBonuses = new TupleDictionary<BraveFaithNeutral, LevelRange, byte>( levelBonuses, false, true );
-
-            realLevelBonusBytes = bytes.Sub( 0x9D4, 0x9D4 + 10 * 3 - 1 ).ToArray();
 
             treasureLandJpBonuses = new Dictionary<PropositionType, BonusIndex>();
             treasureLandGilBonuses = new Dictionary<PropositionType, BonusIndex>();
@@ -337,11 +342,11 @@ namespace FFTPatcher.Datatypes
 
             result.Add( 0x00 );
             result.Add( 0x00 );
-            BraveFaithRange[] levelRanges = (BraveFaithRange[])Enum.GetValues( typeof( BraveFaithRange ) );
+            BraveFaithRange[] bfnRanges = (BraveFaithRange[])Enum.GetValues( typeof( BraveFaithRange ) );
 
             foreach (BraveFaithNeutral bfn in bfnVals)
             {
-                foreach (BraveFaithRange range in levelRanges)
+                foreach (BraveFaithRange range in bfnRanges)
                 {
                     result.Add( braveBonuses[bfn, range] );
                 }
@@ -351,7 +356,7 @@ namespace FFTPatcher.Datatypes
 
             foreach (BraveFaithNeutral bfn in bfnVals)
             {
-                foreach (BraveFaithRange range in levelRanges)
+                foreach (BraveFaithRange range in bfnRanges)
                 {
                     result.Add( faithBonuses[bfn, range] );
                 }
@@ -359,7 +364,14 @@ namespace FFTPatcher.Datatypes
 
             result.Add( 0x00 );
 
-            result.AddRange( realLevelBonusBytes );
+            LevelRange[] levelRanges = (LevelRange[])Enum.GetValues( typeof( LevelRange ) );
+            foreach (BraveFaithNeutral bfn in bfnVals)
+            {
+                foreach (LevelRange range in levelRanges)
+                {
+                    result.Add( levelBonuses[bfn, range] );
+                }
+            }
 
             result.Add( 0x00 );
             result.Add( 0x00 );
@@ -396,6 +408,11 @@ namespace FFTPatcher.Datatypes
             if (context == Context.US_PSX)
             {
                 result.Add( PatcherLib.Iso.PsxIso.Propositions.GetPatchedByteArray( bytes ) );
+                foreach (var good in goodPsxInstructions)
+                {
+                    result.Add( new PatchedByteArray( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDCORE_BIN,
+                        good.Item1, good.Item2.ToArray() ) );
+                }
             }
             else if (context == Context.US_PSP)
             {
@@ -426,6 +443,61 @@ namespace FFTPatcher.Datatypes
                      !bonusCashGilBonuses.Keys.TrueForAll( k => bonusCashGilBonuses[k] == Default.bonusCashGilBonuses[k] ) ||
                      !bonusCashJpBonuses.Keys.TrueForAll( k => bonusCashJpBonuses[k] == Default.bonusCashJpBonuses[k] ) ||
                     !Propositions.TrueForAll( p => !p.HasChanged ));
+            }
+        }
+
+        private static readonly IList<Tuple<int, IList<byte>>> badPsxInstructions = new List<Tuple<int, IList<byte>>> {
+            Tuple.From(0x128C0, (IList<byte>)(new byte[] { 0x21, 0xB0, 0x40, 0x00 }.AsReadOnly())), // 0x128C0 move $s6, $v0
+            Tuple.From(0x12A64, (IList<byte>)(new byte[] { 0x00, 0x00, 0x00, 0x00 }.AsReadOnly())), // 0x12A64 nop
+            Tuple.From(0x12A74, (IList<byte>)(new byte[] { 0x21, 0x10, 0x56, 0x00 }.AsReadOnly())), // 0x12A74 addu $v0,$s6
+            Tuple.From(0x1287C, (IList<byte>)(new byte[] { 0x00, 0x00, 0x00, 0x00 }.AsReadOnly())), // 0x1287C nop
+            Tuple.From(0x128C8, (IList<byte>)(new byte[] { 0x00, 0x00, 0x00, 0x00 }.AsReadOnly())), // 0x128C8 nop
+        }.AsReadOnly();
+
+        private static readonly IList<Tuple<int, IList<byte>>> goodPsxInstructions = new List<Tuple<int, IList<byte>>> {
+            Tuple.From(0x128C0, (IList<byte>)(new byte[] { 0x3C, 0x00, 0xA2, 0xAF }.AsReadOnly())), // 0x128C0 sw $v0, 0x68+var_2C($sp)
+            Tuple.From(0x12A64, (IList<byte>)(new byte[] { 0x3C, 0x00, 0xA5, 0x8F }.AsReadOnly())), // 0x12A64 lw $a1, 0x68+var_2C($sp)
+            Tuple.From(0x12A74, (IList<byte>)(new byte[] { 0x21, 0x10, 0x45, 0x00 }.AsReadOnly())), // 0x12A74 addu $v0,$a1
+            Tuple.From(0x1287C, (IList<byte>)(new byte[] { 0x0A, 0x80, 0x16, 0x3C }.AsReadOnly())), // 0x1287C lui $s6, 0x800a
+            Tuple.From(0x128C8, (IList<byte>)(new byte[] { 0x54, 0xDD, 0xD6, 0x26 }.AsReadOnly())), // 0x128C8 addiu $s6, 0xDD54
+        }.AsReadOnly();
+
+        public static bool CanFixBuggyLevelBonuses( Context context )
+        {
+            return context == Context.US_PSX;
+        }
+
+        public static bool IsoHasBuggyLevelBonuses( System.IO.Stream iso, Context context )
+        {
+            if (context == Context.US_PSP)
+            {
+                return true;
+            }
+            else
+            {
+                bool allBad = true;
+                foreach (var badInstruction in badPsxInstructions)
+                {
+                    var kp = new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDCORE_BIN, badInstruction.Item1, 4 );
+                    var bytes = kp.ReadIso( iso );
+                    allBad &= Utilities.CompareArrays( bytes, badInstruction.Item2 );
+                }
+
+                if (allBad)
+                    return true;
+
+                bool allGood = true;
+                foreach (var goodInstruction in goodPsxInstructions)
+                {
+                    var kp = new PatcherLib.Iso.PsxIso.KnownPosition( PatcherLib.Iso.PsxIso.Sectors.WORLD_WLDCORE_BIN, goodInstruction.Item1, 4 );
+                    var bytes = kp.ReadIso( iso );
+                    allGood &= Utilities.CompareArrays( bytes, goodInstruction.Item2 );
+                }
+
+                if (allGood)
+                    return false;
+
+                return true;
             }
         }
     }

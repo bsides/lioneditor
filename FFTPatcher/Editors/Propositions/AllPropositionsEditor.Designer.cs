@@ -1,4 +1,4 @@
-﻿namespace FFTPatcher.Editors.Propositions
+﻿namespace FFTPatcher.Editors
 {
     partial class AllPropositionsEditor
     {
@@ -116,7 +116,10 @@
             this.jpMultiplier0 = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.baseRewardsTabPage = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.classTypeRewardsPage = new System.Windows.Forms.TabPage();
+            this.classBonusesEditor1 = new FFTPatcher.Editors.ClassBonusesEditor();
+            this.statLevelBonusesTabPage = new System.Windows.Forms.TabPage();
+            this.statLevelBonusesEditor1 = new FFTPatcher.Editors.StatLevelBonusesEditor();
             groupBox1 = new System.Windows.Forms.GroupBox();
             jpLabel = new System.Windows.Forms.Label();
             l8 = new System.Windows.Forms.Label();
@@ -207,6 +210,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier0)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.baseRewardsTabPage.SuspendLayout();
+            this.classTypeRewardsPage.SuspendLayout();
+            this.statLevelBonusesTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -248,7 +253,7 @@
             groupBox1.Location = new System.Drawing.Point( 6, 6 );
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size( 308, 240 );
-            groupBox1.TabIndex = 1;
+            groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Base Rewards";
             // 
@@ -649,7 +654,7 @@
             extraDaysGroupBox.Location = new System.Drawing.Point( 320, 6 );
             extraDaysGroupBox.Name = "extraDaysGroupBox";
             extraDaysGroupBox.Size = new System.Drawing.Size( 242, 261 );
-            extraDaysGroupBox.TabIndex = 0;
+            extraDaysGroupBox.TabIndex = 1;
             extraDaysGroupBox.TabStop = false;
             extraDaysGroupBox.Text = "Extra Days Multipliers";
             // 
@@ -1161,9 +1166,11 @@
             // 
             this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tabControl1.Controls.Add( this.baseRewardsTabPage );
-            this.tabControl1.Controls.Add( this.tabPage2 );
+            this.tabControl1.Controls.Add( this.classTypeRewardsPage );
+            this.tabControl1.Controls.Add( this.statLevelBonusesTabPage );
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
+            this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size( 1206, 613 );
@@ -1182,15 +1189,43 @@
             this.baseRewardsTabPage.Text = "Base Reward Values";
             this.baseRewardsTabPage.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // classTypeRewardsPage
             // 
-            this.tabPage2.Location = new System.Drawing.Point( 4, 25 );
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding( 3 );
-            this.tabPage2.Size = new System.Drawing.Size( 1198, 584 );
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.classTypeRewardsPage.Controls.Add( this.classBonusesEditor1 );
+            this.classTypeRewardsPage.Location = new System.Drawing.Point( 4, 25 );
+            this.classTypeRewardsPage.Name = "classTypeRewardsPage";
+            this.classTypeRewardsPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.classTypeRewardsPage.Size = new System.Drawing.Size( 1198, 584 );
+            this.classTypeRewardsPage.TabIndex = 1;
+            this.classTypeRewardsPage.Text = "Class + Errand Type Rewards";
+            this.classTypeRewardsPage.UseVisualStyleBackColor = true;
+            // 
+            // classBonusesEditor1
+            // 
+            this.classBonusesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.classBonusesEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.classBonusesEditor1.Name = "classBonusesEditor1";
+            this.classBonusesEditor1.Size = new System.Drawing.Size( 1192, 578 );
+            this.classBonusesEditor1.TabIndex = 0;
+            // 
+            // statLevelBonusesTabPage
+            // 
+            this.statLevelBonusesTabPage.Controls.Add( this.statLevelBonusesEditor1 );
+            this.statLevelBonusesTabPage.Location = new System.Drawing.Point( 4, 25 );
+            this.statLevelBonusesTabPage.Name = "statLevelBonusesTabPage";
+            this.statLevelBonusesTabPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.statLevelBonusesTabPage.Size = new System.Drawing.Size( 1198, 584 );
+            this.statLevelBonusesTabPage.TabIndex = 2;
+            this.statLevelBonusesTabPage.Text = "Stat Level Rewards";
+            this.statLevelBonusesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // statLevelBonusesEditor1
+            // 
+            this.statLevelBonusesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statLevelBonusesEditor1.Location = new System.Drawing.Point( 3, 3 );
+            this.statLevelBonusesEditor1.Name = "statLevelBonusesEditor1";
+            this.statLevelBonusesEditor1.Size = new System.Drawing.Size( 1192, 578 );
+            this.statLevelBonusesEditor1.TabIndex = 0;
             // 
             // AllPropositionsEditor
             // 
@@ -1242,6 +1277,8 @@
             this.tabControl1.ResumeLayout( false );
             this.baseRewardsTabPage.ResumeLayout( false );
             this.baseRewardsTabPage.PerformLayout();
+            this.classTypeRewardsPage.ResumeLayout( false );
+            this.statLevelBonusesTabPage.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -1250,7 +1287,7 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage baseRewardsTabPage;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage classTypeRewardsPage;
         private FFTPatcher.Controls.NumericUpDownWithDefault jpMultiplier0;
         private FFTPatcher.Controls.NumericUpDownWithDefault gilReward8;
         private FFTPatcher.Controls.NumericUpDownWithDefault gilReward7;
@@ -1287,5 +1324,8 @@
         private FFTPatcher.Controls.NumericUpDownWithDefault jpMultiplier2;
         private FFTPatcher.Controls.NumericUpDownWithDefault jpMultiplier1;
         private FFTPatcher.Controls.NumericUpDownWithDefault gilReward6;
+        private ClassBonusesEditor classBonusesEditor1;
+        private System.Windows.Forms.TabPage statLevelBonusesTabPage;
+        private StatLevelBonusesEditor statLevelBonusesEditor1;
     }
 }

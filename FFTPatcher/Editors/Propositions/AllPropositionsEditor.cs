@@ -9,7 +9,7 @@ using FFTPatcher.Controls;
 using PatcherLib.Utilities;
 using FFTPatcher.Datatypes;
 
-namespace FFTPatcher.Editors.Propositions
+namespace FFTPatcher.Editors
 {
     public partial class AllPropositionsEditor : UserControl
     {
@@ -85,7 +85,8 @@ namespace FFTPatcher.Editors.Propositions
                 jpMultiplierSpinners[i].SetValueAndDefault( allProps.JPMultipliers[i], allProps.Default.JPMultipliers[i] );
                 gilMultiplierSpinners[i].SetValueAndDefault( allProps.GilMultipliers[i], allProps.Default.GilMultipliers[i] );
             }
-
+            classBonusesEditor1.UpdateView( allProps );
+            statLevelBonusesEditor1.UpdateView( allProps );
             ignoreChanges = false;
         }
 

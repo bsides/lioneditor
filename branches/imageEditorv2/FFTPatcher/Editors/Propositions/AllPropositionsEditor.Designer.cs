@@ -78,6 +78,12 @@
             System.Windows.Forms.Label l31;
             System.Windows.Forms.Label l30;
             System.Windows.Forms.Label l16;
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.baseRewardsTabPage = new System.Windows.Forms.TabPage();
+            this.classTypeRewardsPage = new System.Windows.Forms.TabPage();
+            this.statLevelBonusesTabPage = new System.Windows.Forms.TabPage();
+            this.additionalRewardsTabPage = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.jpReward1 = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.jpReward2 = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.gilReward8 = new FFTPatcher.Controls.NumericUpDownWithDefault();
@@ -114,12 +120,10 @@
             this.jpMultiplier1 = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.gilMultiplier5 = new FFTPatcher.Controls.NumericUpDownWithDefault();
             this.jpMultiplier0 = new FFTPatcher.Controls.NumericUpDownWithDefault();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.baseRewardsTabPage = new System.Windows.Forms.TabPage();
-            this.classTypeRewardsPage = new System.Windows.Forms.TabPage();
             this.classBonusesEditor1 = new FFTPatcher.Editors.ClassBonusesEditor();
-            this.statLevelBonusesTabPage = new System.Windows.Forms.TabPage();
             this.statLevelBonusesEditor1 = new FFTPatcher.Editors.StatLevelBonusesEditor();
+            this.additionalRewardsEditor1 = new FFTPatcher.Editors.AdditionalRewardsEditor();
+            this.allPropositionDetailsEditor1 = new FFTPatcher.Editors.AllPropositionDetailsEditor();
             groupBox1 = new System.Windows.Forms.GroupBox();
             jpLabel = new System.Windows.Forms.Label();
             l8 = new System.Windows.Forms.Label();
@@ -171,47 +175,13 @@
             l30 = new System.Windows.Forms.Label();
             l16 = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward1)).BeginInit();
             extraDaysGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier0)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.baseRewardsTabPage.SuspendLayout();
             this.classTypeRewardsPage.SuspendLayout();
             this.statLevelBonusesTabPage.SuspendLayout();
+            this.additionalRewardsTabPage.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -257,20 +227,6 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Base Rewards";
             // 
-            // jpReward1
-            // 
-            this.jpReward1.Location = new System.Drawing.Point( 6, 19 );
-            this.jpReward1.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward1.Name = "jpReward1";
-            this.jpReward1.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward1.TabIndex = 0;
-            this.jpReward1.Tag = "0";
-            this.jpReward1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // jpLabel
             // 
             jpLabel.AutoSize = true;
@@ -284,316 +240,136 @@
             // 
             l8.AutoSize = true;
             l8.Location = new System.Drawing.Point( 283, 205 );
+            l8.Name = "l8";
             l8.Size = new System.Drawing.Size( 19, 13 );
+            l8.TabIndex = 2;
             l8.Text = "Gil";
-            // 
-            // jpReward2
-            // 
-            this.jpReward2.Location = new System.Drawing.Point( 6, 45 );
-            this.jpReward2.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward2.Name = "jpReward2";
-            this.jpReward2.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward2.TabIndex = 1;
-            this.jpReward2.Tag = "1";
-            this.jpReward2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // gilReward8
-            // 
-            this.gilReward8.Location = new System.Drawing.Point( 157, 201 );
-            this.gilReward8.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward8.Name = "gilReward8";
-            this.gilReward8.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward8.TabIndex = 15;
-            this.gilReward8.Tag = "7";
-            this.gilReward8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // l1
             // 
             l1.AutoSize = true;
             l1.Location = new System.Drawing.Point( 132, 49 );
+            l1.Name = "l1";
             l1.Size = new System.Drawing.Size( 19, 13 );
+            l1.TabIndex = 16;
             l1.Text = "JP";
             // 
             // l9
             // 
             l9.AutoSize = true;
             l9.Location = new System.Drawing.Point( 283, 179 );
+            l9.Name = "l9";
             l9.Size = new System.Drawing.Size( 19, 13 );
+            l9.TabIndex = 17;
             l9.Text = "Gil";
-            // 
-            // jpReward3
-            // 
-            this.jpReward3.Location = new System.Drawing.Point( 6, 71 );
-            this.jpReward3.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward3.Name = "jpReward3";
-            this.jpReward3.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward3.TabIndex = 2;
-            this.jpReward3.Tag = "2";
-            this.jpReward3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // gilReward7
-            // 
-            this.gilReward7.Location = new System.Drawing.Point( 157, 175 );
-            this.gilReward7.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward7.Name = "gilReward7";
-            this.gilReward7.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward7.TabIndex = 14;
-            this.gilReward7.Tag = "6";
-            this.gilReward7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // l2
             // 
             l2.AutoSize = true;
             l2.Location = new System.Drawing.Point( 132, 75 );
+            l2.Name = "l2";
             l2.Size = new System.Drawing.Size( 19, 13 );
+            l2.TabIndex = 18;
             l2.Text = "JP";
             // 
             // l10
             // 
             l10.AutoSize = true;
             l10.Location = new System.Drawing.Point( 283, 153 );
+            l10.Name = "l10";
             l10.Size = new System.Drawing.Size( 19, 13 );
+            l10.TabIndex = 19;
             l10.Text = "Gil";
-            // 
-            // jpReward4
-            // 
-            this.jpReward4.Location = new System.Drawing.Point( 6, 97 );
-            this.jpReward4.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward4.Name = "jpReward4";
-            this.jpReward4.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward4.TabIndex = 3;
-            this.jpReward4.Tag = "3";
-            this.jpReward4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // gilReward6
-            // 
-            this.gilReward6.Location = new System.Drawing.Point( 157, 149 );
-            this.gilReward6.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward6.Name = "gilReward6";
-            this.gilReward6.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward6.TabIndex = 13;
-            this.gilReward6.Tag = "5";
-            this.gilReward6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // l3
             // 
             l3.AutoSize = true;
             l3.Location = new System.Drawing.Point( 132, 101 );
+            l3.Name = "l3";
             l3.Size = new System.Drawing.Size( 19, 13 );
+            l3.TabIndex = 20;
             l3.Text = "JP";
             // 
             // l11
             // 
             l11.AutoSize = true;
             l11.Location = new System.Drawing.Point( 283, 127 );
+            l11.Name = "l11";
             l11.Size = new System.Drawing.Size( 19, 13 );
+            l11.TabIndex = 21;
             l11.Text = "Gil";
-            // 
-            // jpReward5
-            // 
-            this.jpReward5.Location = new System.Drawing.Point( 6, 123 );
-            this.jpReward5.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward5.Name = "jpReward5";
-            this.jpReward5.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward5.TabIndex = 4;
-            this.jpReward5.Tag = "4";
-            this.jpReward5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // gilReward5
-            // 
-            this.gilReward5.Location = new System.Drawing.Point( 157, 123 );
-            this.gilReward5.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward5.Name = "gilReward5";
-            this.gilReward5.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward5.TabIndex = 12;
-            this.gilReward5.Tag = "4";
-            this.gilReward5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // l4
             // 
             l4.AutoSize = true;
             l4.Location = new System.Drawing.Point( 132, 127 );
+            l4.Name = "l4";
             l4.Size = new System.Drawing.Size( 19, 13 );
+            l4.TabIndex = 22;
             l4.Text = "JP";
             // 
             // l12
             // 
             l12.AutoSize = true;
             l12.Location = new System.Drawing.Point( 283, 101 );
+            l12.Name = "l12";
             l12.Size = new System.Drawing.Size( 19, 13 );
+            l12.TabIndex = 23;
             l12.Text = "Gil";
-            // 
-            // jpReward6
-            // 
-            this.jpReward6.Location = new System.Drawing.Point( 6, 149 );
-            this.jpReward6.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward6.Name = "jpReward6";
-            this.jpReward6.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward6.TabIndex = 5;
-            this.jpReward6.Tag = "5";
-            this.jpReward6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // gilReward4
-            // 
-            this.gilReward4.Location = new System.Drawing.Point( 157, 97 );
-            this.gilReward4.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward4.Name = "gilReward4";
-            this.gilReward4.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward4.TabIndex = 11;
-            this.gilReward4.Tag = "3";
-            this.gilReward4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // l5
             // 
             l5.AutoSize = true;
             l5.Location = new System.Drawing.Point( 132, 153 );
+            l5.Name = "l5";
             l5.Size = new System.Drawing.Size( 19, 13 );
+            l5.TabIndex = 24;
             l5.Text = "JP";
             // 
             // l13
             // 
             l13.AutoSize = true;
             l13.Location = new System.Drawing.Point( 283, 75 );
+            l13.Name = "l13";
             l13.Size = new System.Drawing.Size( 19, 13 );
+            l13.TabIndex = 25;
             l13.Text = "Gil";
-            // 
-            // jpReward7
-            // 
-            this.jpReward7.Location = new System.Drawing.Point( 6, 175 );
-            this.jpReward7.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward7.Name = "jpReward7";
-            this.jpReward7.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward7.TabIndex = 6;
-            this.jpReward7.Tag = "6";
-            this.jpReward7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // gilReward3
-            // 
-            this.gilReward3.Location = new System.Drawing.Point( 157, 71 );
-            this.gilReward3.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward3.Name = "gilReward3";
-            this.gilReward3.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward3.TabIndex = 10;
-            this.gilReward3.Tag = "2";
-            this.gilReward3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // l6
             // 
             l6.AutoSize = true;
             l6.Location = new System.Drawing.Point( 132, 179 );
+            l6.Name = "l6";
             l6.Size = new System.Drawing.Size( 19, 13 );
+            l6.TabIndex = 26;
             l6.Text = "JP";
             // 
             // l14
             // 
             l14.AutoSize = true;
             l14.Location = new System.Drawing.Point( 283, 49 );
+            l14.Name = "l14";
             l14.Size = new System.Drawing.Size( 19, 13 );
+            l14.TabIndex = 27;
             l14.Text = "Gil";
-            // 
-            // jpReward8
-            // 
-            this.jpReward8.Location = new System.Drawing.Point( 6, 201 );
-            this.jpReward8.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.jpReward8.Name = "jpReward8";
-            this.jpReward8.Size = new System.Drawing.Size( 120, 20 );
-            this.jpReward8.TabIndex = 7;
-            this.jpReward8.Tag = "7";
-            this.jpReward8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // gilReward2
-            // 
-            this.gilReward2.Location = new System.Drawing.Point( 157, 45 );
-            this.gilReward2.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward2.Name = "gilReward2";
-            this.gilReward2.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward2.TabIndex = 9;
-            this.gilReward2.Tag = "1";
-            this.gilReward2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // l7
             // 
             l7.AutoSize = true;
             l7.Location = new System.Drawing.Point( 132, 205 );
+            l7.Name = "l7";
             l7.Size = new System.Drawing.Size( 19, 13 );
+            l7.TabIndex = 28;
             l7.Text = "JP";
             // 
             // l15
             // 
             l15.AutoSize = true;
             l15.Location = new System.Drawing.Point( 283, 23 );
+            l15.Name = "l15";
             l15.Size = new System.Drawing.Size( 19, 13 );
+            l15.TabIndex = 29;
             l15.Text = "Gil";
-            // 
-            // gilReward1
-            // 
-            this.gilReward1.Location = new System.Drawing.Point( 157, 19 );
-            this.gilReward1.Maximum = new decimal( new int[] {
-            65535,
-            0,
-            0,
-            0} );
-            this.gilReward1.Name = "gilReward1";
-            this.gilReward1.Size = new System.Drawing.Size( 120, 20 );
-            this.gilReward1.TabIndex = 8;
-            this.gilReward1.Tag = "0";
-            this.gilReward1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // extraDaysGroupBox
             // 
@@ -662,85 +438,587 @@
             // 
             l47.AutoSize = true;
             l47.Location = new System.Drawing.Point( 9, 224 );
+            l47.Name = "l47";
             l47.Size = new System.Drawing.Size( 64, 13 );
+            l47.TabIndex = 0;
             l47.Text = "9 extra days";
             // 
             // l46
             // 
             l46.AutoSize = true;
             l46.Location = new System.Drawing.Point( 9, 204 );
+            l46.Name = "l46";
             l46.Size = new System.Drawing.Size( 64, 13 );
+            l46.TabIndex = 1;
             l46.Text = "8 extra days";
             // 
             // l45
             // 
             l45.AutoSize = true;
             l45.Location = new System.Drawing.Point( 9, 182 );
+            l45.Name = "l45";
             l45.Size = new System.Drawing.Size( 64, 13 );
+            l45.TabIndex = 2;
             l45.Text = "7 extra days";
             // 
             // l44
             // 
             l44.AutoSize = true;
             l44.Location = new System.Drawing.Point( 9, 161 );
+            l44.Name = "l44";
             l44.Size = new System.Drawing.Size( 64, 13 );
+            l44.TabIndex = 3;
             l44.Text = "6 extra days";
             // 
             // l43
             // 
             l43.AutoSize = true;
             l43.Location = new System.Drawing.Point( 9, 140 );
+            l43.Name = "l43";
             l43.Size = new System.Drawing.Size( 64, 13 );
+            l43.TabIndex = 4;
             l43.Text = "5 extra days";
             // 
             // l42
             // 
             l42.AutoSize = true;
             l42.Location = new System.Drawing.Point( 9, 119 );
+            l42.Name = "l42";
             l42.Size = new System.Drawing.Size( 64, 13 );
+            l42.TabIndex = 5;
             l42.Text = "4 extra days";
             // 
             // l41
             // 
             l41.AutoSize = true;
             l41.Location = new System.Drawing.Point( 9, 98 );
+            l41.Name = "l41";
             l41.Size = new System.Drawing.Size( 64, 13 );
+            l41.TabIndex = 6;
             l41.Text = "3 extra days";
             // 
             // l40
             // 
             l40.AutoSize = true;
             l40.Location = new System.Drawing.Point( 9, 77 );
+            l40.Name = "l40";
             l40.Size = new System.Drawing.Size( 64, 13 );
+            l40.TabIndex = 7;
             l40.Text = "2 extra days";
             // 
             // l39
             // 
             l39.AutoSize = true;
             l39.Location = new System.Drawing.Point( 9, 56 );
+            l39.Name = "l39";
             l39.Size = new System.Drawing.Size( 59, 13 );
+            l39.TabIndex = 8;
             l39.Text = "1 extra day";
             // 
             // l38
             // 
             l38.AutoSize = true;
             l38.Location = new System.Drawing.Point( 9, 37 );
+            l38.Name = "l38";
             l38.Size = new System.Drawing.Size( 64, 13 );
+            l38.TabIndex = 9;
             l38.Text = "0 extra days";
             // 
             // l37
             // 
             l37.AutoSize = true;
             l37.Location = new System.Drawing.Point( 98, 14 );
+            l37.Name = "l37";
             l37.Size = new System.Drawing.Size( 19, 13 );
+            l37.TabIndex = 10;
             l37.Text = "JP";
             // 
             // l36
             // 
             l36.AutoSize = true;
             l36.Location = new System.Drawing.Point( 188, 14 );
+            l36.Name = "l36";
             l36.Size = new System.Drawing.Size( 19, 13 );
+            l36.TabIndex = 11;
             l36.Text = "Gil";
+            // 
+            // l21
+            // 
+            l21.AutoSize = true;
+            l21.Location = new System.Drawing.Point( 136, 225 );
+            l21.Name = "l21";
+            l21.Size = new System.Drawing.Size( 15, 13 );
+            l21.TabIndex = 12;
+            l21.Text = "%";
+            // 
+            // l35
+            // 
+            l35.AutoSize = true;
+            l35.Location = new System.Drawing.Point( 221, 37 );
+            l35.Name = "l35";
+            l35.Size = new System.Drawing.Size( 15, 13 );
+            l35.TabIndex = 13;
+            l35.Text = "%";
+            // 
+            // l26
+            // 
+            l26.AutoSize = true;
+            l26.Location = new System.Drawing.Point( 221, 225 );
+            l26.Name = "l26";
+            l26.Size = new System.Drawing.Size( 15, 13 );
+            l26.TabIndex = 14;
+            l26.Text = "%";
+            // 
+            // l22
+            // 
+            l22.AutoSize = true;
+            l22.Location = new System.Drawing.Point( 136, 204 );
+            l22.Name = "l22";
+            l22.Size = new System.Drawing.Size( 15, 13 );
+            l22.TabIndex = 15;
+            l22.Text = "%";
+            // 
+            // l23
+            // 
+            l23.AutoSize = true;
+            l23.Location = new System.Drawing.Point( 136, 183 );
+            l23.Name = "l23";
+            l23.Size = new System.Drawing.Size( 15, 13 );
+            l23.TabIndex = 20;
+            l23.Text = "%";
+            // 
+            // l34
+            // 
+            l34.AutoSize = true;
+            l34.Location = new System.Drawing.Point( 221, 57 );
+            l34.Name = "l34";
+            l34.Size = new System.Drawing.Size( 15, 13 );
+            l34.TabIndex = 21;
+            l34.Text = "%";
+            // 
+            // l27
+            // 
+            l27.AutoSize = true;
+            l27.Location = new System.Drawing.Point( 221, 204 );
+            l27.Name = "l27";
+            l27.Size = new System.Drawing.Size( 15, 13 );
+            l27.TabIndex = 22;
+            l27.Text = "%";
+            // 
+            // l24
+            // 
+            l24.AutoSize = true;
+            l24.Location = new System.Drawing.Point( 136, 162 );
+            l24.Name = "l24";
+            l24.Size = new System.Drawing.Size( 15, 13 );
+            l24.TabIndex = 23;
+            l24.Text = "%";
+            // 
+            // l25
+            // 
+            l25.AutoSize = true;
+            l25.Location = new System.Drawing.Point( 136, 141 );
+            l25.Name = "l25";
+            l25.Size = new System.Drawing.Size( 15, 13 );
+            l25.TabIndex = 24;
+            l25.Text = "%";
+            // 
+            // l33
+            // 
+            l33.AutoSize = true;
+            l33.Location = new System.Drawing.Point( 221, 78 );
+            l33.Name = "l33";
+            l33.Size = new System.Drawing.Size( 15, 13 );
+            l33.TabIndex = 25;
+            l33.Text = "%";
+            // 
+            // l28
+            // 
+            l28.AutoSize = true;
+            l28.Location = new System.Drawing.Point( 221, 183 );
+            l28.Name = "l28";
+            l28.Size = new System.Drawing.Size( 15, 13 );
+            l28.TabIndex = 26;
+            l28.Text = "%";
+            // 
+            // l20
+            // 
+            l20.AutoSize = true;
+            l20.Location = new System.Drawing.Point( 136, 120 );
+            l20.Name = "l20";
+            l20.Size = new System.Drawing.Size( 15, 13 );
+            l20.TabIndex = 27;
+            l20.Text = "%";
+            // 
+            // l19
+            // 
+            l19.AutoSize = true;
+            l19.Location = new System.Drawing.Point( 136, 99 );
+            l19.Name = "l19";
+            l19.Size = new System.Drawing.Size( 15, 13 );
+            l19.TabIndex = 28;
+            l19.Text = "%";
+            // 
+            // l32
+            // 
+            l32.AutoSize = true;
+            l32.Location = new System.Drawing.Point( 221, 99 );
+            l32.Name = "l32";
+            l32.Size = new System.Drawing.Size( 15, 13 );
+            l32.TabIndex = 29;
+            l32.Text = "%";
+            // 
+            // l29
+            // 
+            l29.AutoSize = true;
+            l29.Location = new System.Drawing.Point( 221, 162 );
+            l29.Name = "l29";
+            l29.Size = new System.Drawing.Size( 15, 13 );
+            l29.TabIndex = 30;
+            l29.Text = "%";
+            // 
+            // l18
+            // 
+            l18.AutoSize = true;
+            l18.Location = new System.Drawing.Point( 136, 78 );
+            l18.Name = "l18";
+            l18.Size = new System.Drawing.Size( 15, 13 );
+            l18.TabIndex = 31;
+            l18.Text = "%";
+            // 
+            // l17
+            // 
+            l17.AutoSize = true;
+            l17.Location = new System.Drawing.Point( 136, 57 );
+            l17.Name = "l17";
+            l17.Size = new System.Drawing.Size( 15, 13 );
+            l17.TabIndex = 32;
+            l17.Text = "%";
+            // 
+            // l31
+            // 
+            l31.AutoSize = true;
+            l31.Location = new System.Drawing.Point( 221, 120 );
+            l31.Name = "l31";
+            l31.Size = new System.Drawing.Size( 15, 13 );
+            l31.TabIndex = 33;
+            l31.Text = "%";
+            // 
+            // l30
+            // 
+            l30.AutoSize = true;
+            l30.Location = new System.Drawing.Point( 221, 141 );
+            l30.Name = "l30";
+            l30.Size = new System.Drawing.Size( 15, 13 );
+            l30.TabIndex = 34;
+            l30.Text = "%";
+            // 
+            // l16
+            // 
+            l16.AutoSize = true;
+            l16.Location = new System.Drawing.Point( 136, 37 );
+            l16.Name = "l16";
+            l16.Size = new System.Drawing.Size( 15, 13 );
+            l16.TabIndex = 35;
+            l16.Text = "%";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
+            this.tabControl1.Controls.Add( this.baseRewardsTabPage );
+            this.tabControl1.Controls.Add( this.classTypeRewardsPage );
+            this.tabControl1.Controls.Add( this.statLevelBonusesTabPage );
+            this.tabControl1.Controls.Add( this.additionalRewardsTabPage );
+            this.tabControl1.Controls.Add( this.tabPage1 );
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
+            this.tabControl1.Multiline = true;
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size( 1206, 613 );
+            this.tabControl1.TabIndex = 0;
+            // 
+            // baseRewardsTabPage
+            // 
+            this.baseRewardsTabPage.AutoScroll = true;
+            this.baseRewardsTabPage.Controls.Add( groupBox1 );
+            this.baseRewardsTabPage.Controls.Add( extraDaysGroupBox );
+            this.baseRewardsTabPage.Location = new System.Drawing.Point( 4, 25 );
+            this.baseRewardsTabPage.Name = "baseRewardsTabPage";
+            this.baseRewardsTabPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.baseRewardsTabPage.Size = new System.Drawing.Size( 1198, 584 );
+            this.baseRewardsTabPage.TabIndex = 0;
+            this.baseRewardsTabPage.Text = "Base Reward Values";
+            this.baseRewardsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // classTypeRewardsPage
+            // 
+            this.classTypeRewardsPage.Controls.Add( this.classBonusesEditor1 );
+            this.classTypeRewardsPage.Location = new System.Drawing.Point( 4, 25 );
+            this.classTypeRewardsPage.Name = "classTypeRewardsPage";
+            this.classTypeRewardsPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.classTypeRewardsPage.Size = new System.Drawing.Size( 1198, 584 );
+            this.classTypeRewardsPage.TabIndex = 1;
+            this.classTypeRewardsPage.Text = "Class + Errand Type Rewards";
+            this.classTypeRewardsPage.UseVisualStyleBackColor = true;
+            // 
+            // statLevelBonusesTabPage
+            // 
+            this.statLevelBonusesTabPage.Controls.Add( this.statLevelBonusesEditor1 );
+            this.statLevelBonusesTabPage.Location = new System.Drawing.Point( 4, 25 );
+            this.statLevelBonusesTabPage.Name = "statLevelBonusesTabPage";
+            this.statLevelBonusesTabPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.statLevelBonusesTabPage.Size = new System.Drawing.Size( 1198, 584 );
+            this.statLevelBonusesTabPage.TabIndex = 2;
+            this.statLevelBonusesTabPage.Text = "Stat Level Rewards";
+            this.statLevelBonusesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // additionalRewardsTabPage
+            // 
+            this.additionalRewardsTabPage.AutoScroll = true;
+            this.additionalRewardsTabPage.Controls.Add( this.additionalRewardsEditor1 );
+            this.additionalRewardsTabPage.Location = new System.Drawing.Point( 4, 25 );
+            this.additionalRewardsTabPage.Name = "additionalRewardsTabPage";
+            this.additionalRewardsTabPage.Padding = new System.Windows.Forms.Padding( 3 );
+            this.additionalRewardsTabPage.Size = new System.Drawing.Size( 1198, 584 );
+            this.additionalRewardsTabPage.TabIndex = 3;
+            this.additionalRewardsTabPage.Text = "Additional Rewards";
+            this.additionalRewardsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add( this.allPropositionDetailsEditor1 );
+            this.tabPage1.Location = new System.Drawing.Point( 4, 25 );
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding( 3 );
+            this.tabPage1.Size = new System.Drawing.Size( 1198, 584 );
+            this.tabPage1.TabIndex = 4;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // jpReward1
+            // 
+            this.jpReward1.Location = new System.Drawing.Point( 6, 19 );
+            this.jpReward1.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward1.Name = "jpReward1";
+            this.jpReward1.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward1.TabIndex = 0;
+            this.jpReward1.Tag = "0";
+            this.jpReward1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // jpReward2
+            // 
+            this.jpReward2.Location = new System.Drawing.Point( 6, 45 );
+            this.jpReward2.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward2.Name = "jpReward2";
+            this.jpReward2.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward2.TabIndex = 1;
+            this.jpReward2.Tag = "1";
+            this.jpReward2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward8
+            // 
+            this.gilReward8.Location = new System.Drawing.Point( 157, 201 );
+            this.gilReward8.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward8.Name = "gilReward8";
+            this.gilReward8.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward8.TabIndex = 15;
+            this.gilReward8.Tag = "7";
+            this.gilReward8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // jpReward3
+            // 
+            this.jpReward3.Location = new System.Drawing.Point( 6, 71 );
+            this.jpReward3.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward3.Name = "jpReward3";
+            this.jpReward3.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward3.TabIndex = 2;
+            this.jpReward3.Tag = "2";
+            this.jpReward3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward7
+            // 
+            this.gilReward7.Location = new System.Drawing.Point( 157, 175 );
+            this.gilReward7.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward7.Name = "gilReward7";
+            this.gilReward7.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward7.TabIndex = 14;
+            this.gilReward7.Tag = "6";
+            this.gilReward7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // jpReward4
+            // 
+            this.jpReward4.Location = new System.Drawing.Point( 6, 97 );
+            this.jpReward4.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward4.Name = "jpReward4";
+            this.jpReward4.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward4.TabIndex = 3;
+            this.jpReward4.Tag = "3";
+            this.jpReward4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward6
+            // 
+            this.gilReward6.Location = new System.Drawing.Point( 157, 149 );
+            this.gilReward6.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward6.Name = "gilReward6";
+            this.gilReward6.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward6.TabIndex = 13;
+            this.gilReward6.Tag = "5";
+            this.gilReward6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // jpReward5
+            // 
+            this.jpReward5.Location = new System.Drawing.Point( 6, 123 );
+            this.jpReward5.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward5.Name = "jpReward5";
+            this.jpReward5.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward5.TabIndex = 4;
+            this.jpReward5.Tag = "4";
+            this.jpReward5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward5
+            // 
+            this.gilReward5.Location = new System.Drawing.Point( 157, 123 );
+            this.gilReward5.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward5.Name = "gilReward5";
+            this.gilReward5.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward5.TabIndex = 12;
+            this.gilReward5.Tag = "4";
+            this.gilReward5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // jpReward6
+            // 
+            this.jpReward6.Location = new System.Drawing.Point( 6, 149 );
+            this.jpReward6.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward6.Name = "jpReward6";
+            this.jpReward6.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward6.TabIndex = 5;
+            this.jpReward6.Tag = "5";
+            this.jpReward6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward4
+            // 
+            this.gilReward4.Location = new System.Drawing.Point( 157, 97 );
+            this.gilReward4.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward4.Name = "gilReward4";
+            this.gilReward4.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward4.TabIndex = 11;
+            this.gilReward4.Tag = "3";
+            this.gilReward4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // jpReward7
+            // 
+            this.jpReward7.Location = new System.Drawing.Point( 6, 175 );
+            this.jpReward7.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward7.Name = "jpReward7";
+            this.jpReward7.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward7.TabIndex = 6;
+            this.jpReward7.Tag = "6";
+            this.jpReward7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward3
+            // 
+            this.gilReward3.Location = new System.Drawing.Point( 157, 71 );
+            this.gilReward3.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward3.Name = "gilReward3";
+            this.gilReward3.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward3.TabIndex = 10;
+            this.gilReward3.Tag = "2";
+            this.gilReward3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // jpReward8
+            // 
+            this.jpReward8.Location = new System.Drawing.Point( 6, 201 );
+            this.jpReward8.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.jpReward8.Name = "jpReward8";
+            this.jpReward8.Size = new System.Drawing.Size( 120, 20 );
+            this.jpReward8.TabIndex = 7;
+            this.jpReward8.Tag = "7";
+            this.jpReward8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward2
+            // 
+            this.gilReward2.Location = new System.Drawing.Point( 157, 45 );
+            this.gilReward2.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward2.Name = "gilReward2";
+            this.gilReward2.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward2.TabIndex = 9;
+            this.gilReward2.Tag = "1";
+            this.gilReward2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // gilReward1
+            // 
+            this.gilReward1.Location = new System.Drawing.Point( 157, 19 );
+            this.gilReward1.Maximum = new decimal( new int[] {
+            65535,
+            0,
+            0,
+            0} );
+            this.gilReward1.Name = "gilReward1";
+            this.gilReward1.Size = new System.Drawing.Size( 120, 20 );
+            this.gilReward1.TabIndex = 8;
+            this.gilReward1.Tag = "0";
+            this.gilReward1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // gilMultiplier0
             // 
@@ -756,20 +1034,6 @@
             this.gilMultiplier0.Tag = "0";
             this.gilMultiplier0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // l21
-            // 
-            l21.AutoSize = true;
-            l21.Location = new System.Drawing.Point( 136, 225 );
-            l21.Size = new System.Drawing.Size( 15, 13 );
-            l21.Text = "%";
-            // 
-            // l35
-            // 
-            l35.AutoSize = true;
-            l35.Location = new System.Drawing.Point( 221, 37 );
-            l35.Size = new System.Drawing.Size( 15, 13 );
-            l35.Text = "%";
-            // 
             // jpMultiplier9
             // 
             this.jpMultiplier9.Location = new System.Drawing.Point( 79, 222 );
@@ -783,20 +1047,6 @@
             this.jpMultiplier9.TabIndex = 9;
             this.jpMultiplier9.Tag = "9";
             this.jpMultiplier9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // l26
-            // 
-            l26.AutoSize = true;
-            l26.Location = new System.Drawing.Point( 221, 225 );
-            l26.Size = new System.Drawing.Size( 15, 13 );
-            l26.Text = "%";
-            // 
-            // l22
-            // 
-            l22.AutoSize = true;
-            l22.Location = new System.Drawing.Point( 136, 204 );
-            l22.Size = new System.Drawing.Size( 15, 13 );
-            l22.Text = "%";
             // 
             // gilMultiplier1
             // 
@@ -840,20 +1090,6 @@
             this.gilMultiplier9.Tag = "9";
             this.gilMultiplier9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // l23
-            // 
-            l23.AutoSize = true;
-            l23.Location = new System.Drawing.Point( 136, 183 );
-            l23.Size = new System.Drawing.Size( 15, 13 );
-            l23.Text = "%";
-            // 
-            // l34
-            // 
-            l34.AutoSize = true;
-            l34.Location = new System.Drawing.Point( 221, 57 );
-            l34.Size = new System.Drawing.Size( 15, 13 );
-            l34.Text = "%";
-            // 
             // jpMultiplier7
             // 
             this.jpMultiplier7.Location = new System.Drawing.Point( 79, 180 );
@@ -867,20 +1103,6 @@
             this.jpMultiplier7.TabIndex = 7;
             this.jpMultiplier7.Tag = "7";
             this.jpMultiplier7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // l27
-            // 
-            l27.AutoSize = true;
-            l27.Location = new System.Drawing.Point( 221, 204 );
-            l27.Size = new System.Drawing.Size( 15, 13 );
-            l27.Text = "%";
-            // 
-            // l24
-            // 
-            l24.AutoSize = true;
-            l24.Location = new System.Drawing.Point( 136, 162 );
-            l24.Size = new System.Drawing.Size( 15, 13 );
-            l24.Text = "%";
             // 
             // gilMultiplier2
             // 
@@ -924,20 +1146,6 @@
             this.gilMultiplier8.Tag = "8";
             this.gilMultiplier8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // l25
-            // 
-            l25.AutoSize = true;
-            l25.Location = new System.Drawing.Point( 136, 141 );
-            l25.Size = new System.Drawing.Size( 15, 13 );
-            l25.Text = "%";
-            // 
-            // l33
-            // 
-            l33.AutoSize = true;
-            l33.Location = new System.Drawing.Point( 221, 78 );
-            l33.Size = new System.Drawing.Size( 15, 13 );
-            l33.Text = "%";
-            // 
             // jpMultiplier5
             // 
             this.jpMultiplier5.Location = new System.Drawing.Point( 79, 138 );
@@ -951,20 +1159,6 @@
             this.jpMultiplier5.TabIndex = 5;
             this.jpMultiplier5.Tag = "5";
             this.jpMultiplier5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // l28
-            // 
-            l28.AutoSize = true;
-            l28.Location = new System.Drawing.Point( 221, 183 );
-            l28.Size = new System.Drawing.Size( 15, 13 );
-            l28.Text = "%";
-            // 
-            // l20
-            // 
-            l20.AutoSize = true;
-            l20.Location = new System.Drawing.Point( 136, 120 );
-            l20.Size = new System.Drawing.Size( 15, 13 );
-            l20.Text = "%";
             // 
             // gilMultiplier3
             // 
@@ -1008,20 +1202,6 @@
             this.gilMultiplier7.Tag = "7";
             this.gilMultiplier7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // l19
-            // 
-            l19.AutoSize = true;
-            l19.Location = new System.Drawing.Point( 136, 99 );
-            l19.Size = new System.Drawing.Size( 15, 13 );
-            l19.Text = "%";
-            // 
-            // l32
-            // 
-            l32.AutoSize = true;
-            l32.Location = new System.Drawing.Point( 221, 99 );
-            l32.Size = new System.Drawing.Size( 15, 13 );
-            l32.Text = "%";
-            // 
             // jpMultiplier3
             // 
             this.jpMultiplier3.Location = new System.Drawing.Point( 79, 96 );
@@ -1035,20 +1215,6 @@
             this.jpMultiplier3.TabIndex = 3;
             this.jpMultiplier3.Tag = "3";
             this.jpMultiplier3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // l29
-            // 
-            l29.AutoSize = true;
-            l29.Location = new System.Drawing.Point( 221, 162 );
-            l29.Size = new System.Drawing.Size( 15, 13 );
-            l29.Text = "%";
-            // 
-            // l18
-            // 
-            l18.AutoSize = true;
-            l18.Location = new System.Drawing.Point( 136, 78 );
-            l18.Size = new System.Drawing.Size( 15, 13 );
-            l18.Text = "%";
             // 
             // gilMultiplier4
             // 
@@ -1092,20 +1258,6 @@
             this.gilMultiplier6.Tag = "6";
             this.gilMultiplier6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // l17
-            // 
-            l17.AutoSize = true;
-            l17.Location = new System.Drawing.Point( 136, 57 );
-            l17.Size = new System.Drawing.Size( 15, 13 );
-            l17.Text = "%";
-            // 
-            // l31
-            // 
-            l31.AutoSize = true;
-            l31.Location = new System.Drawing.Point( 221, 120 );
-            l31.Size = new System.Drawing.Size( 15, 13 );
-            l31.Text = "%";
-            // 
             // jpMultiplier1
             // 
             this.jpMultiplier1.Location = new System.Drawing.Point( 79, 54 );
@@ -1119,20 +1271,6 @@
             this.jpMultiplier1.TabIndex = 1;
             this.jpMultiplier1.Tag = "1";
             this.jpMultiplier1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // l30
-            // 
-            l30.AutoSize = true;
-            l30.Location = new System.Drawing.Point( 221, 141 );
-            l30.Size = new System.Drawing.Size( 15, 13 );
-            l30.Text = "%";
-            // 
-            // l16
-            // 
-            l16.AutoSize = true;
-            l16.Location = new System.Drawing.Point( 136, 37 );
-            l16.Size = new System.Drawing.Size( 15, 13 );
-            l16.Text = "%";
             // 
             // gilMultiplier5
             // 
@@ -1162,44 +1300,6 @@
             this.jpMultiplier0.Tag = "0";
             this.jpMultiplier0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.tabControl1.Controls.Add( this.baseRewardsTabPage );
-            this.tabControl1.Controls.Add( this.classTypeRewardsPage );
-            this.tabControl1.Controls.Add( this.statLevelBonusesTabPage );
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
-            this.tabControl1.Multiline = true;
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size( 1206, 613 );
-            this.tabControl1.TabIndex = 0;
-            // 
-            // baseRewardsTabPage
-            // 
-            this.baseRewardsTabPage.AutoScroll = true;
-            this.baseRewardsTabPage.Controls.Add( groupBox1 );
-            this.baseRewardsTabPage.Controls.Add( extraDaysGroupBox );
-            this.baseRewardsTabPage.Location = new System.Drawing.Point( 4, 25 );
-            this.baseRewardsTabPage.Name = "baseRewardsTabPage";
-            this.baseRewardsTabPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.baseRewardsTabPage.Size = new System.Drawing.Size( 1198, 584 );
-            this.baseRewardsTabPage.TabIndex = 0;
-            this.baseRewardsTabPage.Text = "Base Reward Values";
-            this.baseRewardsTabPage.UseVisualStyleBackColor = true;
-            // 
-            // classTypeRewardsPage
-            // 
-            this.classTypeRewardsPage.Controls.Add( this.classBonusesEditor1 );
-            this.classTypeRewardsPage.Location = new System.Drawing.Point( 4, 25 );
-            this.classTypeRewardsPage.Name = "classTypeRewardsPage";
-            this.classTypeRewardsPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.classTypeRewardsPage.Size = new System.Drawing.Size( 1198, 584 );
-            this.classTypeRewardsPage.TabIndex = 1;
-            this.classTypeRewardsPage.Text = "Class + Errand Type Rewards";
-            this.classTypeRewardsPage.UseVisualStyleBackColor = true;
-            // 
             // classBonusesEditor1
             // 
             this.classBonusesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1208,17 +1308,6 @@
             this.classBonusesEditor1.Size = new System.Drawing.Size( 1192, 578 );
             this.classBonusesEditor1.TabIndex = 0;
             // 
-            // statLevelBonusesTabPage
-            // 
-            this.statLevelBonusesTabPage.Controls.Add( this.statLevelBonusesEditor1 );
-            this.statLevelBonusesTabPage.Location = new System.Drawing.Point( 4, 25 );
-            this.statLevelBonusesTabPage.Name = "statLevelBonusesTabPage";
-            this.statLevelBonusesTabPage.Padding = new System.Windows.Forms.Padding( 3 );
-            this.statLevelBonusesTabPage.Size = new System.Drawing.Size( 1198, 584 );
-            this.statLevelBonusesTabPage.TabIndex = 2;
-            this.statLevelBonusesTabPage.Text = "Stat Level Rewards";
-            this.statLevelBonusesTabPage.UseVisualStyleBackColor = true;
-            // 
             // statLevelBonusesEditor1
             // 
             this.statLevelBonusesEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1226,6 +1315,25 @@
             this.statLevelBonusesEditor1.Name = "statLevelBonusesEditor1";
             this.statLevelBonusesEditor1.Size = new System.Drawing.Size( 1192, 578 );
             this.statLevelBonusesEditor1.TabIndex = 0;
+            // 
+            // additionalRewardsEditor1
+            // 
+            this.additionalRewardsEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.additionalRewardsEditor1.Location = new System.Drawing.Point( -1, 0 );
+            this.additionalRewardsEditor1.Name = "additionalRewardsEditor1";
+            this.additionalRewardsEditor1.Size = new System.Drawing.Size( 1166, 638 );
+            this.additionalRewardsEditor1.TabIndex = 0;
+            // 
+            // allPropositionDetailsEditor1
+            // 
+            this.allPropositionDetailsEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.allPropositionDetailsEditor1.Location = new System.Drawing.Point( -1, 0 );
+            this.allPropositionDetailsEditor1.Name = "allPropositionDetailsEditor1";
+            this.allPropositionDetailsEditor1.Size = new System.Drawing.Size( 1199, 584 );
+            this.allPropositionDetailsEditor1.TabIndex = 0;
             // 
             // AllPropositionsEditor
             // 
@@ -1236,49 +1344,15 @@
             this.Size = new System.Drawing.Size( 1206, 613 );
             groupBox1.ResumeLayout( false );
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpReward8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilReward1)).EndInit();
             extraDaysGroupBox.ResumeLayout( false );
             extraDaysGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gilMultiplier5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jpMultiplier0)).EndInit();
             this.tabControl1.ResumeLayout( false );
             this.baseRewardsTabPage.ResumeLayout( false );
             this.baseRewardsTabPage.PerformLayout();
             this.classTypeRewardsPage.ResumeLayout( false );
             this.statLevelBonusesTabPage.ResumeLayout( false );
+            this.additionalRewardsTabPage.ResumeLayout( false );
+            this.tabPage1.ResumeLayout( false );
             this.ResumeLayout( false );
 
         }
@@ -1327,5 +1401,9 @@
         private ClassBonusesEditor classBonusesEditor1;
         private System.Windows.Forms.TabPage statLevelBonusesTabPage;
         private StatLevelBonusesEditor statLevelBonusesEditor1;
+        private System.Windows.Forms.TabPage additionalRewardsTabPage;
+        private AdditionalRewardsEditor additionalRewardsEditor1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private AllPropositionDetailsEditor allPropositionDetailsEditor1;
     }
 }

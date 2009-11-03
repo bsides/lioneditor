@@ -1,8 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTPatcher", "FFTPatcher.csproj", "{48BE23D0-2943-44EF-A3A6-8537D7695B37}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0762D3C8-AAD4-4EF3-AF00-F2A2B0AD964D}"
 	ProjectSection(SolutionItems) = preProject
 		build.bat = build.bat
@@ -20,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fftpspext", "fftpspext", "{
 	ProjectSection(SolutionItems) = preProject
 		fftpspext\fftpspext.c = fftpspext\fftpspext.c
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTPatcher", "FFTPatcher.csproj", "{48BE23D0-2943-44EF-A3A6-8537D7695B37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShishiSpriteEditor", "ShishiSpriteEditor\ShishiSpriteEditor.csproj", "{4017D65D-C72B-491E-B263-E12DB6537382}"
 EndProject

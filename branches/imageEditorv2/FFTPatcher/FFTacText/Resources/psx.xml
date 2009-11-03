@@ -1,172 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PSX>
-  <!--
-
-Text - Units Leaving because of Low Brave or High Faith 1 - 24 Join.LZW (3)
-Generics
-
-Text - Units Leaving because of Low Brave 25-76 Join.LZW (3)
-1 Ramza
-2 Ramza
-3 Ramza
-4 Delita (Guest Delita)
-5 Delita (Guest Delita?)
-6 Delita
-7 Algus (Guest Algus)
-8 Zalbag
-9 Dycedarg
-A Larg
-B Goltana
-C Ovelia (Guest Ovelia)
-D Orlandu
-E Funeral
-F Reis
-10 Zalmo
-11 Gafgarion
-12 Malak
-13 Simon
-14 Alma
-15 Olan
-16 Mustadio
-17 Gafgarion (Guest Gafgarion)
-18 Draclau
-19 Rafa (Guest Rafa)
-1A Malak
-1B Elmdor
-1C Teta
-1D Barinten
-1E Agrias
-1F Beowulf (Guest Beowulf?)
-20 Wiegraf
-21 Balmafula
-22 Mustadio (Guest Mustadio)
-23 Rudvich
-24 Vormav
-25 Rofel
-26 Izlude
-27 Kletian
-28 Wiegraf
-29 Rafa
-2A Meliadoul
-2B Balk
-2C Alma (Guest Alma? "Graveyard of Airships")
-2D Celia
-2E Lede
-2F Meliadoul (Enemy Meliadoul)
-30 Alma (Guest Alma)
-31 Ajora
-32 Cloud
-33 Zombie Zalbag
-34 Agrias (Guest Agrias)
-
-Units Leaving because of High Faith 99-150 Join.LZW (3)
-1 Ramza
-2 Ramza
-3 Ramza
-4 Delita (Guest Delita)
-5 Delita (Guest Delita?)
-6 Delita
-7 Algus (Guest Algus)
-8 Zalbag
-9 Dycedarg
-A Larg
-B Goltana
-C Ovelia (Guest Ovelia)
-D Orlandu
-E Funeral
-F Reis
-10 Zalmo
-11 Gafgarion
-12 Malak
-13 Simon
-14 Alma
-15 Olan
-16 Mustadio
-17 Gafgarion (Guest Gafgarion)
-18 Draclau
-19 Rafa (Guest Rafa)
-1A Malak
-1B Elmdor
-1C Teta
-1D Barinten
-1E Agrias
-1F Beowulf (Both Beowulfs)
-20 Wiegraf
-21 Balmafula
-22 Mustadio (Guest Mustadio)
-23 Rudvich
-24 Vormav
-25 Rofel
-26 Izlude
-27 Kletian
-28 Wiegraf
-29 Rafa
-2A Meliadoul
-2B Balk
-2C Alma (Guest Alma? "Graveyard of Airships")
-2D Celia
-2E Lede
-2F Meliadoul (Enemy Meliadoul)
-30 Alma (Guest Alma)
-31 Ajora
-32 Cloud
-33 Zombie Zalbag
-34 Agrias (Guest Agrias)
-
-Unit Quotes 2-53 Wldhelp.LZW
-1 Ramza
-2 Ramza
-3 Ramza
-4 Delita (Guest Delita)
-5 Delita (Guest Delita?)
-6 Delita
-7 Algus (Guest Algus)
-8 Zalbag
-9 Dycedarg
-A Larg
-B Goltana
-C Ovelia (Guest Ovelia)
-D Orlandu
-E Funeral
-F Reis
-10 Zalmo
-11 Gafgarion
-12 Malak
-13 Simon
-14 Alma
-15 Olan
-16 Mustadio
-17 Gafgarion (Guest Gafgarion)
-18 Draclau
-19 Rafa (Guest Rafa)
-1A Malak
-1B Elmdor
-1C Teta
-1D Barinten
-1E Agrias
-1F Beowulf (Both Beowulfs)
-20 Wiegraf
-21 Balmafula
-22 Mustadio (Guest Mustadio)
-23 Rudvich
-24 Vormav
-25 Rofel
-26 Izlude
-27 Kletian
-28 Wiegraf
-29 Rafa
-2A Meliadoul
-2B Balk
-2C Alma (Guest Alma? "Graveyard of Airships")
-2D Celia
-2E Lede
-2F Meliadoul (Enemy Meliadoul)
-30 Alma (Guest Alma)
-31 Ajora
-32 Cloud
-33 Zombie Zalbag
-34 Agrias (Guest Agrias)
--->
 <QuickEdit>
     <JobDescriptions>
       <File>
@@ -377,7 +210,7 @@ F Reis
     </AbilityQuotes>
   </QuickEdit>
   <Files>
-    <SectionedFile>
+    <ATCHELP>
       <DisplayName>ATCHELP.LZW</DisplayName>
       <Guid>{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}</Guid>
       <Size>90325</Size>
@@ -686,7 +519,7 @@ F Reis
           <entry>264</entry>
         </Section>
       </DisallowedEntries>
-    </SectionedFile>
+    </ATCHELP>
     <SectionedFile>
       <DisplayName>ATTACK.OUT</DisplayName>
       <Guid>{4C29FBA2-B49B-4BA7-8880-E785A61743FB}</Guid>

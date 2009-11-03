@@ -224,6 +224,7 @@ namespace FFTPatcher.Datatypes
 
     public enum Reward
     {
+        Nothing = -1,
         Gil = 0,
         Treasure = 1,
         Land = 2,
@@ -242,7 +243,7 @@ namespace FFTPatcher.Datatypes
         private const byte minPropositionByte = (byte)PropositionType.Salvage;
         private const byte maxBraveFaithByte = (byte)BraveFaithNeutral.Neutral;
         private const byte minBraveFaithByte = (byte)BraveFaithNeutral.Brave;
-        private const byte minRewardByte = (byte)Reward.Gil;
+        private const int minRewardByte = (int)Reward.Nothing;
         private const byte maxRewardByte = (byte)Reward.Land;
         private const byte minTownByte = (byte)Town.Lesalia;
         private const byte maxTownByte = (byte)Town.Zarghidas;
@@ -251,7 +252,7 @@ namespace FFTPatcher.Datatypes
         public BraveFaithNeutral BraveFaith { get; set; }
         public Town Town { get; set; }
         public PrereqType PrereqType { get; set; }
-        public bool EligibleForBonusCash { get; set; }
+        private bool EligibleForBonusCash { get; set; }
 
         public byte PrereqByte { get; set; }
 
@@ -283,7 +284,7 @@ namespace FFTPatcher.Datatypes
                     Town != Default.Town ||
                     this.Type != Default.Type ||
                     this.BaseSmallReward != Default.BaseSmallReward ||
-                    this.EligibleForBonusCash != Default.EligibleForBonusCash ||
+                    //this.EligibleForBonusCash != Default.EligibleForBonusCash ||
                     this.BaseLargeReward != Default.BaseLargeReward ||
                     this.Unknown0x0F != Default.Unknown0x0F ||
                     this.RandomSuccessClass != Default.RandomSuccessClass ||
@@ -337,10 +338,10 @@ namespace FFTPatcher.Datatypes
                 BonusIndex.Nothing;
 
             byte rewardByte = bytes[10];
-            Reward = (Reward)rewardByte;
-            //Reward = rewardByte >= minRewardByte && rewardByte <= maxRewardByte ?
-            //    (Reward)rewardByte :
-            //    Reward.Unknown;
+            //Reward = (Reward)rewardByte;
+            internalReward = rewardByte >= minRewardByte && rewardByte <= maxRewardByte ?
+                (Reward)rewardByte :
+                Reward.Nothing;
 
             EligibleForBonusCash = bytes[11] == 0x01;
 
@@ -386,7 +387,7 @@ namespace FFTPatcher.Datatypes
             result.Add( MaxDays );
             result.Add( idBytes[2] );
             result.Add( (byte)BaseSmallReward );
-            result.Add( (byte)Reward );
+            result.Add( (byte)(internalReward == Reward.Nothing ? Reward.Gil : internalReward) );
             result.Add( (byte)(EligibleForBonusCash ? 0x01 : 0x00) );
             result.Add( (byte)BaseLargeReward );
             result.Add( idBytes[3] );
@@ -402,8 +403,32 @@ namespace FFTPatcher.Datatypes
 
             return result.AsReadOnly();
         }
-
-        public Reward Reward { get; set; }
+        private Reward internalReward;
+        public Reward Reward 
+        {
+            get
+            {
+                if (internalReward == Reward.Gil && !EligibleForBonusCash)
+                {
+                    return Reward.Nothing;
+                }
+                else
+                    return internalReward;
+            }
+            set
+            {
+                internalReward = value;
+                if (value == Reward.Nothing)
+                {
+                    internalReward = Reward.Gil;
+                    EligibleForBonusCash = false;
+                }
+                else if (value == Reward.Gil)
+                {
+                    EligibleForBonusCash = true;
+                }
+            }
+        }
 
         public BonusIndex BaseSmallReward { get; set; }
         public BonusIndex BaseLargeReward{ get; set; }

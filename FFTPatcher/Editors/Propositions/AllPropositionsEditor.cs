@@ -87,6 +87,8 @@ namespace FFTPatcher.Editors
             }
             classBonusesEditor1.UpdateView( allProps );
             statLevelBonusesEditor1.UpdateView( allProps );
+            additionalRewardsEditor1.UpdateView( allProps );
+            allPropositionDetailsEditor1.UpdateView( allProps );
             ignoreChanges = false;
         }
 

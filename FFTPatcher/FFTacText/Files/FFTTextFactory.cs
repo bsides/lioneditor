@@ -13,6 +13,8 @@ namespace FFTPatcher.TextEditor
 {
     enum FileType
     {
+        ATCHELP,
+        ATCHELP_PSX = FileType.ATCHELP,
         SectionedFile,
         CompressedFile,
         PartitionedFile,
@@ -78,6 +80,8 @@ namespace FFTPatcher.TextEditor
                 throw new ArgumentException();
             }
         }
+
+        private static readonly Guid ATCHELPGuid = new Guid("{8BF49EAB-6D21-44C6-B63F-F6315AAEFD9B}");
 
         private static FileInfo GetFileInfo( Context context, XmlNode node )
         {
@@ -212,6 +216,9 @@ namespace FFTPatcher.TextEditor
                 {
                     case FileType.CompressedFile:
                         files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count], true ) );
+                        break;
+                    case FileType.ATCHELP_PSX:
+                        files.Add( fi.Guid, new ATCHELP( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );
                         break;
                     case FileType.SectionedFile:
                         files.Add( fi.Guid, new SectionedFile( charmap, fi, bytes, string.Empty, new string[fi.SectionNames.Count] ) );

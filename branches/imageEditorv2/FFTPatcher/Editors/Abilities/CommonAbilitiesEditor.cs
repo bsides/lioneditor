@@ -33,13 +33,13 @@ namespace FFTPatcher.Editors
         private Ability ability;
         private static readonly string[] AIPropertyNames = new string[] {
             "AIHP", "AIMP", "AICancelStatus", "AIAddStatus", "AIStats", "AIUnequip", "AITargetEnemies", "AITargetAllies",
-            "AIIgnoreRange", "AIReflectable", "AIUndeadReverse", "AIUnknown1", "AIRandomHits", "AIUnknown2", "AIUnknown3", "AISilence",
-            "AIBlank", "AIDirectAttack", "AILineAttack", "AIVerticalIncrease", "AITripleAttack", "AITripleBracelet", "AIMagicDefenseUp", "AIDefenseUp" };
+            "AILineOfSight", "AIReflectable", "AIUndeadReverse", "AIUnknown1", "AIAllowRandomly", "AIUnknown2", "AIUnknown3", "AISilence",
+            "AIBlank", "AIUnknown4", "AIUnknown5", "AIUnknown6", "AIUnknown7", "AIUnknown8", "AIUnknown9", "AIUnknown10" };
         bool ignoreChanges = false;
         private Context ourContext = Context.Default;
         private static readonly string[] PropertiesNames = new string[] { 
-            "LearnWithJP", "Action", "LearnOnHit", "Blank1", 
-            "Unknown1", "Unknown2", "Unknown3", "Blank2", 
+            "LearnWithJP", "DisplayAbilityName", "LearnOnHit", "Blank1", 
+            "UsedByEnemies", "Unknown2", "Unknown3", "Blank2", 
             "Blank3", "Blank4", "Blank5", "Unknown4" };
 
 		#endregion Instance Variables 

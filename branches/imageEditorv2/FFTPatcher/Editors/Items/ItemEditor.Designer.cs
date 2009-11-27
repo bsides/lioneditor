@@ -486,7 +486,7 @@ namespace FFTPatcher.Editors
             "Arc",
             "2 Swords",
             "2 Hands",
-            "",
+            "Throwable",
             "Forced 2 Hands"});
             this.weaponAttributesCheckedListBox.Location = new System.Drawing.Point(103, 143);
             this.weaponAttributesCheckedListBox.Name = "weaponAttributesCheckedListBox";

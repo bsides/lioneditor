@@ -32,27 +32,27 @@ namespace FFTPatcher.Datatypes
         public bool AddStatus;
         public bool Blank;
         public bool CancelStatus;
-        public bool DefenseUp;
-        public bool DirectAttack;
+        public bool Unknown10;
+        public bool Unknown4;
         public bool HP;
-        public bool IgnoreRange;
-        public bool LineAttack;
-        public bool MagicDefenseUp;
+        public bool LineOfSight;
+        public bool Unknown5;
+        public bool Unknown9;
         public bool MP;
-        public bool RandomHits;
+        public bool AllowRandomly;
         public bool Reflectable;
         public bool Silence;
         public bool Stats;
         public bool TargetAllies;
         public bool TargetEnemies;
-        public bool TripleAttack;
-        public bool TripleBracelet;
+        public bool Unknown7;
+        public bool Unknown8;
         public bool UndeadReverse;
         public bool Unequip;
         public bool Unknown1;
         public bool Unknown2;
         public bool Unknown3;
-        public bool VerticalIncrease;
+        public bool Unknown6;
 
 		#endregion Instance Variables 
 
@@ -91,12 +91,12 @@ namespace FFTPatcher.Datatypes
                 ref HP, ref MP, ref CancelStatus, ref AddStatus, ref Stats, ref Unequip, ref TargetEnemies, ref TargetAllies );
 
             PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[1],
-                ref IgnoreRange, ref Reflectable, ref UndeadReverse, ref Unknown1, ref RandomHits, ref Unknown2, ref Unknown3, ref Silence );
+                ref LineOfSight, ref Reflectable, ref UndeadReverse, ref Unknown1, ref AllowRandomly, ref Unknown2, ref Unknown3, ref Silence );
             Silence = !Silence;
 
             PatcherLib.Utilities.Utilities.CopyByteToBooleans( bytes[2],
-                ref Blank, ref DirectAttack, ref LineAttack, ref VerticalIncrease, ref TripleAttack, ref TripleBracelet, ref MagicDefenseUp, ref DefenseUp );
-            VerticalIncrease = !VerticalIncrease;
+                ref Blank, ref Unknown4, ref Unknown5, ref Unknown6, ref Unknown7, ref Unknown8, ref Unknown9, ref Unknown10 );
+            Unknown6 = !Unknown6;
         }
 
 		#endregion Constructors 
@@ -108,27 +108,27 @@ namespace FFTPatcher.Datatypes
             destination.AddStatus = source.AddStatus;
             destination.Blank = source.Blank;
             destination.CancelStatus = source.CancelStatus;
-            destination.DefenseUp = source.DefenseUp;
-            destination.DirectAttack = source.DirectAttack;
+            destination.Unknown10 = source.Unknown10;
+            destination.Unknown4 = source.Unknown4;
             destination.HP = source.HP;
-            destination.IgnoreRange = source.IgnoreRange;
-            destination.LineAttack = source.LineAttack;
-            destination.MagicDefenseUp = source.MagicDefenseUp;
+            destination.LineOfSight = source.LineOfSight;
+            destination.Unknown5 = source.Unknown5;
+            destination.Unknown9 = source.Unknown9;
             destination.MP = source.MP;
-            destination.RandomHits = source.RandomHits;
+            destination.AllowRandomly = source.AllowRandomly;
             destination.Reflectable = source.Reflectable;
             destination.Silence = source.Silence;
             destination.Stats = source.Stats;
             destination.TargetAllies = source.TargetAllies;
             destination.TargetEnemies = source.TargetEnemies;
-            destination.TripleAttack = source.TripleAttack;
-            destination.TripleBracelet = source.TripleBracelet;
+            destination.Unknown7 = source.Unknown7;
+            destination.Unknown8 = source.Unknown8;
             destination.UndeadReverse = source.UndeadReverse;
             destination.Unequip = source.Unequip;
             destination.Unknown1 = source.Unknown1;
             destination.Unknown2 = source.Unknown2;
             destination.Unknown3 = source.Unknown3;
-            destination.VerticalIncrease = source.VerticalIncrease;
+            destination.Unknown6 = source.Unknown6;
         }
 
         public void CopyTo( AIFlags destination )
@@ -138,24 +138,24 @@ namespace FFTPatcher.Datatypes
 
         private static readonly string[] digestableProperties = new string[] {
             "HP","MP","CancelStatus","AddStatus","Stats","Unequip","TargetEnemies","TargetAllies",
-            "IgnoreRange","Reflectable","UndeadReverse","Unknown1","RandomHits","Unknown2","Unknown3",
-            "Silence","Blank","DirectAttack","LineAttack","VerticalIncrease","TripleAttack",
-            "TripleBracelet","MagicDefenseUp","DefenseUp" };
+            "LineOfSight","Reflectable","UndeadReverse","Unknown1","AllowRandomly","Unknown2","Unknown3",
+            "Silence","Blank","Unknown4","Unknown5","Unknown6","Unknown7",
+            "Unknown8","Unknown9","Unknown10" };
 
         public bool[] ToBoolArray()
         {
             return new bool[24] { 
                 HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies,
-                IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, Silence,
-                Blank, DirectAttack, LineAttack, VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp };
+                LineOfSight, Reflectable, UndeadReverse, Unknown1, AllowRandomly, Unknown2, Unknown3, Silence,
+                Blank, Unknown4, Unknown5, Unknown6, Unknown7, Unknown8, Unknown9, Unknown10 };
         }
 
         public byte[] ToByteArray()
         {
             byte[] result = new byte[3];
             result[0] = PatcherLib.Utilities.Utilities.ByteFromBooleans( HP, MP, CancelStatus, AddStatus, Stats, Unequip, TargetEnemies, TargetAllies );
-            result[1] = PatcherLib.Utilities.Utilities.ByteFromBooleans( IgnoreRange, Reflectable, UndeadReverse, Unknown1, RandomHits, Unknown2, Unknown3, !Silence );
-            result[2] = PatcherLib.Utilities.Utilities.ByteFromBooleans( Blank, DirectAttack, LineAttack, !VerticalIncrease, TripleAttack, TripleBracelet, MagicDefenseUp, DefenseUp );
+            result[1] = PatcherLib.Utilities.Utilities.ByteFromBooleans( LineOfSight, Reflectable, UndeadReverse, Unknown1, AllowRandomly, Unknown2, Unknown3, !Silence );
+            result[2] = PatcherLib.Utilities.Utilities.ByteFromBooleans( Blank, Unknown4, Unknown5, !Unknown6, Unknown7, Unknown8, Unknown9, Unknown10 );
             return result;
         }
 

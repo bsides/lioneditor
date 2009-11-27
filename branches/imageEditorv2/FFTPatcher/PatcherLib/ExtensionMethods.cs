@@ -67,18 +67,18 @@ namespace PatcherLib.Utilities
             writer.WriteEndElement();
         }
 
-        public static XmlDocument ToXmlDocument(this string s)
+        public static XmlDocument ToXmlDocument( this string s )
         {
             XmlDocument result = new XmlDocument();
-            result.LoadXml(s);
+            result.LoadXml( s );
             return result;
         }
 
-        public static int IndexOf<T>(this IList<T> list, T item)
+        public static int IndexOf<T>( this IList<T> list, T item )
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Equals(item)) return i;
+                if (list[i].Equals( item )) return i;
             }
             return -1;
         }
@@ -90,43 +90,43 @@ namespace PatcherLib.Utilities
 
         public static IList<T> ToList<T>( this IEnumerable<T> collection )
         {
-            if ( collection is IList<T> )
+            if (collection is IList<T>)
                 return new ReadOnlyCollection<T>( collection as IList<T> );
 
             return new List<T>( collection ).AsReadOnly();
         }
 
-        public static bool TrueForAll<T>(this IList<T> list, Predicate<T> condition)
+        public static bool TrueForAll<T>( this IList<T> list, Predicate<T> condition )
         {
-            if ( list == null ) throw new ArgumentNullException( "list" );
-            if ( condition == null ) throw new ArgumentNullException( "condition" );
-            for ( int i = 0; i < list.Count; i++ )
+            if (list == null) throw new ArgumentNullException( "list" );
+            if (condition == null) throw new ArgumentNullException( "condition" );
+            for (int i = 0; i < list.Count; i++)
             {
-                if ( !condition( list[i] ) ) return false;
+                if (!condition( list[i] )) return false;
             }
             return true;
         }
 
         public static bool TrueForAll<T>( this IEnumerable<T> list, Predicate<T> condition )
         {
-            if ( list == null ) throw new ArgumentNullException( "list" );
-            if ( condition == null ) throw new ArgumentNullException( "condition" );
-            foreach ( T item in list )
+            if (list == null) throw new ArgumentNullException( "list" );
+            if (condition == null) throw new ArgumentNullException( "condition" );
+            foreach (T item in list)
             {
-                if (!condition(item)) return false;
+                if (!condition( item )) return false;
             }
             return true;
         }
 
-        public static void Copy<T>(this IList<T> sourceList, int sourceIndex, IList<T> destinationList, int destinationIndex, int length)
+        public static void Copy<T>( this IList<T> sourceList, int sourceIndex, IList<T> destinationList, int destinationIndex, int length )
         {
-            if (sourceList == null) throw new ArgumentNullException("sourceList");
-            if (sourceList.Count <= sourceIndex) throw new ArgumentOutOfRangeException("sourceIndex");
-            if (sourceList.Count <= sourceIndex + length) throw new ArgumentOutOfRangeException("length");
-            if (destinationList == null) throw new ArgumentNullException("destinationList");
-            if (destinationList.Count <= destinationIndex) throw new ArgumentOutOfRangeException("destinationIndex");
-            if (destinationList.Count <= destinationIndex + length) throw new ArgumentOutOfRangeException("length");
-            if (destinationList.IsReadOnly) throw new InvalidOperationException("destinationList is readonly");
+            if (sourceList == null) throw new ArgumentNullException( "sourceList" );
+            if (sourceList.Count <= sourceIndex) throw new ArgumentOutOfRangeException( "sourceIndex" );
+            if (sourceList.Count <= sourceIndex + length) throw new ArgumentOutOfRangeException( "length" );
+            if (destinationList == null) throw new ArgumentNullException( "destinationList" );
+            if (destinationList.Count <= destinationIndex) throw new ArgumentOutOfRangeException( "destinationIndex" );
+            if (destinationList.Count <= destinationIndex + length) throw new ArgumentOutOfRangeException( "length" );
+            if (destinationList.IsReadOnly) throw new InvalidOperationException( "destinationList is readonly" );
             for (int i = 0; i < length; i++)
             {
                 destinationList[i + destinationIndex] = sourceList[i + sourceIndex];
@@ -135,7 +135,7 @@ namespace PatcherLib.Utilities
 
         public static IList<T> SetAll<T>( this IList<T> list, T value )
         {
-            for ( int i = 0; i < list.Count; i++ )
+            for (int i = 0; i < list.Count; i++)
             {
                 list[i] = value;
             }
@@ -159,7 +159,7 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static ReadOnlyCollection<T> AsReadOnly<T>( this IList<T> list )
         {
-            if ( list is ReadOnlyCollection<T> ) return list as ReadOnlyCollection<T>;
+            if (list is ReadOnlyCollection<T>) return list as ReadOnlyCollection<T>;
             else return new ReadOnlyCollection<T>( list );
         }
 
@@ -167,14 +167,14 @@ namespace PatcherLib.Utilities
         public static void RemoveAll<T, U>( this IDictionary<T, U> dict, Predicate<T> criteria )
         {
             Set<T> toRemove = new Set<T>();
-            foreach ( T key in dict.Keys )
+            foreach (T key in dict.Keys)
             {
-                if ( criteria( key ) )
+                if (criteria( key ))
                 {
                     toRemove.Add( key );
                 }
             }
-            foreach ( T key in toRemove.GetElements() )
+            foreach (T key in toRemove.GetElements())
             {
                 dict.Remove( key );
             }
@@ -215,7 +215,7 @@ namespace PatcherLib.Utilities
         public static int Sum( this IList<int> items )
         {
             int sum = 0;
-            foreach( int i in items )
+            foreach (int i in items)
             {
                 sum += i;
             }
@@ -225,9 +225,9 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static bool Exists<T>( this IList<T> list, Predicate<T> match )
         {
-            foreach ( T t in list )
+            foreach (T t in list)
             {
-                if ( match( t ) )
+                if (match( t ))
                 {
                     return true;
                 }
@@ -239,12 +239,12 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static void CopyTo<T>( this IList<T> list, IList<T> destination, int destinationIndex )
         {
-            if ( destination.Count - destinationIndex < list.Count )
+            if (destination.Count - destinationIndex < list.Count)
             {
                 throw new InvalidOperationException( "source list is larger than destination" );
             }
 
-            for ( int i = 0; i < list.Count; i++ )
+            for (int i = 0; i < list.Count; i++)
             {
                 destination[i + destinationIndex] = list[i];
             }
@@ -253,13 +253,13 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static void CopyTo<TKey, TValue>( this Dictionary<TKey, TValue>.ValueCollection list, IList<TValue> destination, int destinationIndex )
         {
-            if ( destination.Count - destinationIndex < list.Count )
+            if (destination.Count - destinationIndex < list.Count)
             {
                 throw new InvalidOperationException( "source list is larger than destination" );
             }
 
             int count = 0;
-            foreach ( TValue v in list )
+            foreach (TValue v in list)
             {
                 destination[destinationIndex + count++] = v;
             }
@@ -269,18 +269,31 @@ namespace PatcherLib.Utilities
         public static IList<T> FindAll<T>( this IList<T> list, Predicate<T> match )
         {
             List<T> result = new List<T>( list.Count );
-            for ( int i = 0; i < list.Count; i++ )
+            for (int i = 0; i < list.Count; i++)
             {
-                if ( match( list[i] ) )
+                if (match( list[i] ))
                     result.Add( list[i] );
             }
             return result.AsReadOnly();
         }
 
         [System.Diagnostics.DebuggerStepThrough]
+        public static IList<T> FindAll<T>( this ICollection<T> list, Predicate<T> match )
+        {
+            List<T> result = new List<T>( list.Count );
+            foreach (var item in list)
+            {
+                if (match( item ))
+                    result.Add( item );
+            }
+
+            return result.AsReadOnly();
+        }
+
+        [System.Diagnostics.DebuggerStepThrough]
         public static void InitializeElements<T>( this IList<T> list )
         {
-            for ( int i = 0; i < list.Count; i++ )
+            for (int i = 0; i < list.Count; i++)
             {
                 list[i] = default( T );
             }
@@ -295,9 +308,9 @@ namespace PatcherLib.Utilities
         public static IList<int> IndexOfEvery<T>( this IList<T> list, T item ) where T : IEquatable<T>
         {
             List<int> result = new List<int>();
-            for( int i = 0; i < list.Count; i++ )
+            for (int i = 0; i < list.Count; i++)
             {
-                if( list[i].Equals( item ) )
+                if (list[i].Equals( item ))
                 {
                     result.Add( i );
                 }
@@ -317,24 +330,24 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static void ForEach<T>( this IList<T> list, Action<T> action )
         {
-            if( action == null )
+            if (action == null)
             {
                 throw new ArgumentNullException( "action" );
             }
 
             int count = list.Count;
-            for( int i = 0; i < count; i++ ) action( list[i] );
+            for (int i = 0; i < count; i++) action( list[i] );
         }
 
         [System.Diagnostics.DebuggerStepThrough]
         public static void ForEach<T>( this IEnumerable<T> list, Action<T> action )
         {
-            if ( action == null )
+            if (action == null)
             {
                 throw new ArgumentNullException( "action" );
             }
 
-            foreach ( T item in list )
+            foreach (T item in list)
             {
                 action( item );
             }
@@ -356,9 +369,9 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static T Find<T>( this IList<T> list, Predicate<T> match ) where T : class
         {
-            foreach( T item in list )
+            foreach (T item in list)
             {
-                if( match( item ) )
+                if (match( item ))
                 {
                     return item;
                 }
@@ -374,7 +387,7 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static void AddRange<T>( this IList<T> list, IEnumerable<T> items )
         {
-            foreach( T item in items )
+            foreach (T item in items)
             {
                 list.Add( item );
             }
@@ -386,7 +399,7 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static void AppendLines( this StringBuilder sb, IEnumerable<string> lines )
         {
-            foreach( string line in lines )
+            foreach (string line in lines)
             {
                 sb.Append( line + "\n" );
             }
@@ -418,9 +431,9 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static int LastIndexOf<T>( this IList<T> list, T value ) where T : IEquatable<T>
         {
-            for( int i = list.Count - 1; i >= 0; i-- )
+            for (int i = list.Count - 1; i >= 0; i--)
             {
-                if( list[i].Equals( value ) )
+                if (list[i].Equals( value ))
                 {
                     return i;
                 }
@@ -436,7 +449,7 @@ namespace PatcherLib.Utilities
         public static T[] ToArray<T>( this IList<T> list )
         {
             T[] result = new T[list.Count];
-            if( list is T[] )
+            if (list is T[])
             {
                 T[] arr = list as T[];
                 arr.CopyTo( result, 0 );
@@ -457,7 +470,7 @@ namespace PatcherLib.Utilities
         public static byte[] ToByteArray( this string s )
         {
             byte[] result = new byte[s.Length];
-            for( int i = 0; i < s.Length; i++ )
+            for (int i = 0; i < s.Length; i++)
             {
                 result[i] = (byte)s[i];
             }
@@ -489,9 +502,9 @@ namespace PatcherLib.Utilities
         public static byte[] ToBytes( this long value )
         {
             byte[] result = new byte[8];
-            for( int i = 0; i < 8; i++ )
+            for (int i = 0; i < 8; i++)
             {
-                result[i] = (byte)( ( value >> ( i * 8 ) ) & 0xFF );
+                result[i] = (byte)((value >> (i * 8)) & 0xFF);
             }
             return result;
         }
@@ -517,7 +530,7 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static string ToUTF8String( this IList<byte> bytes )
         {
-            if( (bytes[0] == 0xef) && (bytes[1] == 0xbb) && (bytes[2] == 0xbf) )
+            if ((bytes[0] == 0xef) && (bytes[1] == 0xbb) && (bytes[2] == 0xbf))
             {
                 return Encoding.UTF8.GetString( bytes.ToArray(), 3, bytes.Count - 3 );
             }
@@ -549,7 +562,7 @@ namespace PatcherLib.Utilities
         [System.Diagnostics.DebuggerStepThrough]
         public static void WriteArrayToPositions( this Stream stream, byte[] array, params long[] positions )
         {
-            foreach( long position in positions )
+            foreach (long position in positions)
             {
                 stream.WriteArrayToPosition( array, position );
             }
@@ -557,6 +570,5 @@ namespace PatcherLib.Utilities
 
 
         #endregion Methods
-
     }
 }

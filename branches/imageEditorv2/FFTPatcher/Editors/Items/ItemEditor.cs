@@ -46,7 +46,7 @@ namespace FFTPatcher.Editors
         private List<NumericUpDownWithDefault> spinners = new List<NumericUpDownWithDefault>();
         private string[] weaponBools = new string[] {
             "Striking", "Lunging", "Direct", "Arc",
-            "TwoSwords", "TwoHands", "Blank", "Force2Hands" };
+            "TwoSwords", "TwoHands", "Throwable", "Force2Hands" };
         private static List<string> weaponCastSpellItems;
         private ShopsFlags[] shops = new ShopsFlags[16] { 
             ShopsFlags.None,

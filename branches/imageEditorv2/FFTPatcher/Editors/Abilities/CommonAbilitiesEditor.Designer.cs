@@ -148,10 +148,10 @@ namespace FFTPatcher.Editors
             this.propertiesCheckedListBox.FormattingEnabled = true;
             this.propertiesCheckedListBox.Items.AddRange( new object[] {
             "Learn with JP",
-            "Action?",
+            "Display Ability Name",
             "Learn on Hit",
             "",
-            "Unknown",
+            "Used by Enemies",
             "Unknown",
             "Unknown",
             "",

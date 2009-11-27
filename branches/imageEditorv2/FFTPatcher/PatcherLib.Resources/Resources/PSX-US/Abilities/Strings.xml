@@ -27,11 +27,11 @@
     <string value="5" name="Unequip"/>
     <string value="6" name="Target Enemies"/>
     <string value="7" name="Target Allies"/>
-    <string value="8" name="Ignore Range?"/>
+    <string value="8" name="Line of Site"/>
     <string value="9" name="Reflectable"/>
     <string value="10" name="Undead Reverse"/>
     <string value="11" name="Unknown"/>
-    <string value="12" name="Random Hits"/>
+    <string value="12" name="Allow randomly"/>
     <string value="13" name="Unknown"/>
     <string value="14" name="Unknown"/>
     <string value="15" name="Silence"/>
@@ -47,7 +47,7 @@
   <Attributes>
     <string value="0" name=""/>
     <string value="1" name=""/>
-    <string value="2" name="Ranged Weapon"/>
+    <string value="2" name="Weapon Range"/>
     <string value="3" name="Vertical Fixed"/>
     <string value="4" name="Vertical Tolerance"/>
     <string value="5" name="Weapon Strike"/>

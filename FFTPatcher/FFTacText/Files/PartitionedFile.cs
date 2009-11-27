@@ -144,6 +144,11 @@ namespace FFTPatcher.TextEditor
             return result;
         }
 
+        public override Set<KeyValuePair<string, byte>> GetPreferredDTEPairs( Set<string> replacements, Set<KeyValuePair<string, byte>> currentPairs, Stack<byte> dteBytes, System.ComponentModel.BackgroundWorker worker )
+        {
+            return GetPreferredDTEPairs( replacements, currentPairs, dteBytes );
+        }
+
         protected override IList<byte> ToByteArray()
         {
             List<byte> result = new List<byte>( Layout.Size );

@@ -54,8 +54,6 @@ namespace FFTPatcher.TextEditor
         #region Static Properties (3)
 
 
-        private static IDictionary<int, int> CompressionJumps { get; set; }
-
         /// <summary>
         /// Gets the PSP character map.
         /// </summary>
@@ -562,23 +560,9 @@ namespace FFTPatcher.TextEditor
         }
 
 
-
-        /// 
-        /// Compresses the section.
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
         [DllImport( "FFTTextCompression.dll" )]
         static extern void CompressSection( byte[] input, int inputLength, byte[] output, ref int outputPosition );
 
-        /// 
-        /// Compresses some bytes.
-        /// 
-        /// 
-        /// 
-        /// 
         private static void CompressSection( IList<byte> bytes, byte[] output, ref int outputPosition )
         {
             CompressSection( bytes.ToArray(), bytes.Count, output, ref outputPosition );
@@ -590,17 +574,6 @@ namespace FFTPatcher.TextEditor
             int j = ((bytes[1] & 0x1F) << 8) + bytes[2];
             jump = j - (j / 256) * 2;
         }
-
-        /// <summary>
-        /// Compresses the specified file.
-        /// </summary>
-        /// <typeparam name="T">Must be <see cref="IStringSectioned"/> and <see cref="ICompressed"/></typeparam>
-        /// <param name="file">The file to compress.</param>
-        /// <param name="callback">The progress callback.</param>
-        //public static CompressionResult Compress<T>( T file, ProgressCallback callback ) where T : IStringSectioned, ICompressed
-        //{
-        //    return Compress( file, null, callback );
-        //}
 
         /// <summary>
         /// Compresses the specified file.
@@ -640,6 +613,7 @@ namespace FFTPatcher.TextEditor
 
             return new CompressionResult( result.Sub( 0, pos - 1 ), lengths );
         }
+
         /// <summary>
         /// Decompresses the specified section.
         /// </summary>

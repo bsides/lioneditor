@@ -30,7 +30,13 @@ namespace FFTPatcher.Datatypes
 		#region Instance Variables (9) 
 
         public bool Arc;
-        public bool Blank;
+
+
+        public bool Throwable;
+
+        [Obsolete]
+        public bool Blank { get { return Throwable; } set { Throwable = value; } }
+
         public bool Direct;
         public bool Force2Hands;
         public bool Lunging;
@@ -95,7 +101,7 @@ namespace FFTPatcher.Datatypes
             weaponDigestableProperties = new List<string>( Item.digestableProperties );
             weaponDigestableProperties.AddRange( new string[] {
                 "Range", "Formula", "WeaponPower", "EvadePercentage", "InflictStatus",
-                "Striking", "Lunging", "Direct", "Arc", "TwoSwords", "TwoHands", "Blank",
+                "Striking", "Lunging", "Direct", "Arc", "TwoSwords", "TwoHands", "Throwable",
                 "Force2Hands", "Elements"} );
         }
 
@@ -108,7 +114,7 @@ namespace FFTPatcher.Datatypes
             : base( offset, itemBytes, defaults )
         {
             Range = weaponBytes[0];
-            PatcherLib.Utilities.Utilities.CopyByteToBooleans( weaponBytes[1], ref Striking, ref Lunging, ref Direct, ref Arc, ref TwoSwords, ref TwoHands, ref Blank, ref Force2Hands );
+            PatcherLib.Utilities.Utilities.CopyByteToBooleans( weaponBytes[1], ref Striking, ref Lunging, ref Direct, ref Arc, ref TwoSwords, ref TwoHands, ref Throwable, ref Force2Hands );
             Formula = AbilityFormula.PSPAbilityFormulaHash[weaponBytes[2]];
             Unknown = weaponBytes[3];
             WeaponPower = weaponBytes[4];
@@ -147,7 +153,7 @@ namespace FFTPatcher.Datatypes
             destination.Arc = source.Arc;
             destination.TwoSwords = source.TwoSwords;
             destination.TwoHands = source.TwoHands;
-            destination.Blank = source.Blank;
+            destination.Throwable = source.Throwable;
             destination.Force2Hands = source.Force2Hands;
             destination.Formula = source.Formula;
             destination.Unknown = source.Unknown;
@@ -181,14 +187,14 @@ namespace FFTPatcher.Datatypes
         public bool[] ToWeaponBoolArray()
         {
             return new bool[8] {
-                Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands };
+                Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Throwable, Force2Hands };
         }
 
         public byte[] ToWeaponByteArray()
         {
             byte[] result = new byte[8];
             result[0] = Range;
-            result[1] = PatcherLib.Utilities.Utilities.ByteFromBooleans( Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Blank, Force2Hands );
+            result[1] = PatcherLib.Utilities.Utilities.ByteFromBooleans( Striking, Lunging, Direct, Arc, TwoSwords, TwoHands, Throwable, Force2Hands );
             result[2] = Formula.Value;
             result[3] = Unknown;
             result[4] = WeaponPower;

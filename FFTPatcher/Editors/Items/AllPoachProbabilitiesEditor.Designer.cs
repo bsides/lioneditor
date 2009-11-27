@@ -87,14 +87,14 @@ namespace FFTPatcher.Editors
             // CommonItem
             // 
             this.CommonItem.DataPropertyName = "Common";
-            this.CommonItem.HeaderText = "Common Item (75%)";
+            this.CommonItem.HeaderText = "Common Item (90%)";
             this.CommonItem.Name = "CommonItem";
             this.CommonItem.Width = 72;
             // 
             // UncommonItem
             // 
             this.UncommonItem.DataPropertyName = "Uncommon";
-            this.UncommonItem.HeaderText = "Uncommon Item (25%)";
+            this.UncommonItem.HeaderText = "Uncommon Item (10%)";
             this.UncommonItem.Name = "UncommonItem";
             this.UncommonItem.Width = 84;
             // 

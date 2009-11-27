@@ -56,7 +56,7 @@ namespace FFTPatcher.Datatypes
     {
 		#region Instance Variables (13) 
 
-        private bool action;
+        private bool displayAbilityName;
         private bool blank1;
         private bool blank2;
         private bool blank3;
@@ -89,7 +89,7 @@ namespace FFTPatcher.Datatypes
             Strings.Blank2, Strings.Blank3, Strings.Blank4, Strings.Blank5, Strings.Unknown4};
         private bool learnOnHit;
         private bool learnWithJP;
-        private bool unknown1;
+        private bool usedByEnemies;
         private bool unknown2;
         private bool unknown3;
         private bool unknown4;
@@ -100,7 +100,10 @@ namespace FFTPatcher.Datatypes
 
         public AbilityType AbilityType { get; set; }
 
-        public bool Action { get { return action; } set { action = value; } }
+        public bool DisplayAbilityName { get { return displayAbilityName; } set { displayAbilityName = value; } }
+
+        [Obsolete]
+        public bool Action { get { return displayAbilityName; } set { displayAbilityName = value; } }
 
         public bool AIAddStatus { get { return AIFlags.AddStatus; } set { AIFlags.AddStatus = value; } }
 
@@ -108,23 +111,23 @@ namespace FFTPatcher.Datatypes
 
         public bool AICancelStatus { get { return AIFlags.CancelStatus; } set { AIFlags.CancelStatus = value; } }
 
-        public bool AIDefenseUp { get { return AIFlags.DefenseUp; } set { AIFlags.DefenseUp = value; } }
+        public bool AIUnknown10 { get { return AIFlags.Unknown10; } set { AIFlags.Unknown10 = value; } }
 
-        public bool AIDirectAttack { get { return AIFlags.DirectAttack; } set { AIFlags.DirectAttack = value; } }
+        public bool AIUnknown4 { get { return AIFlags.Unknown4; } set { AIFlags.Unknown4 = value; } }
 
         public AIFlags AIFlags { get; private set; }
 
         public bool AIHP { get { return AIFlags.HP; } set { AIFlags.HP = value; } }
 
-        public bool AIIgnoreRange { get { return AIFlags.IgnoreRange; } set { AIFlags.IgnoreRange = value; } }
+        public bool AILineOfSight { get { return AIFlags.LineOfSight; } set { AIFlags.LineOfSight = value; } }
 
-        public bool AILineAttack { get { return AIFlags.LineAttack; } set { AIFlags.LineAttack = value; } }
+        public bool AIUnknown5 { get { return AIFlags.Unknown5; } set { AIFlags.Unknown5 = value; } }
 
-        public bool AIMagicDefenseUp { get { return AIFlags.MagicDefenseUp; } set { AIFlags.MagicDefenseUp = value; } }
+        public bool AIUnknown9 { get { return AIFlags.Unknown9; } set { AIFlags.Unknown9 = value; } }
 
         public bool AIMP { get { return AIFlags.MP; } set { AIFlags.MP = value; } }
 
-        public bool AIRandomHits { get { return AIFlags.RandomHits; } set { AIFlags.RandomHits = value; } }
+        public bool AIAllowRandomly { get { return AIFlags.AllowRandomly; } set { AIFlags.AllowRandomly = value; } }
 
         public bool AIReflectable { get { return AIFlags.Reflectable; } set { AIFlags.Reflectable = value; } }
 
@@ -136,9 +139,9 @@ namespace FFTPatcher.Datatypes
 
         public bool AITargetEnemies { get { return AIFlags.TargetEnemies; } set { AIFlags.TargetEnemies = value; } }
 
-        public bool AITripleAttack { get { return AIFlags.TripleAttack; } set { AIFlags.TripleAttack = value; } }
+        public bool AIUnknown7 { get { return AIFlags.Unknown7; } set { AIFlags.Unknown7 = value; } }
 
-        public bool AITripleBracelet { get { return AIFlags.TripleBracelet; } set { AIFlags.TripleBracelet = value; } }
+        public bool AIUnknown8 { get { return AIFlags.Unknown8; } set { AIFlags.Unknown8 = value; } }
 
         public bool AIUndeadReverse { get { return AIFlags.UndeadReverse; } set { AIFlags.UndeadReverse = value; } }
 
@@ -150,7 +153,7 @@ namespace FFTPatcher.Datatypes
 
         public bool AIUnknown3 { get { return AIFlags.Unknown3; } set { AIFlags.Unknown3 = value; } }
 
-        public bool AIVerticalIncrease { get { return AIFlags.VerticalIncrease; } set { AIFlags.VerticalIncrease = value; } }
+        public bool AIUnknown6 { get { return AIFlags.Unknown6; } set { AIFlags.Unknown6 = value; } }
 
         [Hex]
         public byte ArithmetickSkill { get; set; }
@@ -194,27 +197,27 @@ namespace FFTPatcher.Datatypes
                     AIAddStatus != Default.AIAddStatus ||
                     AIBlank != Default.AIBlank ||
                     AICancelStatus != Default.AICancelStatus ||
-                    AIDefenseUp != Default.AIDefenseUp ||
-                    AIDirectAttack != Default.AIDirectAttack ||
+                    AIUnknown10 != Default.AIUnknown10 ||
+                    AIUnknown4 != Default.AIUnknown4 ||
                     AIHP != Default.AIHP ||
-                    AIIgnoreRange != Default.AIIgnoreRange ||
-                    AILineAttack != Default.AILineAttack ||
-                    AIMagicDefenseUp != Default.AIMagicDefenseUp ||
+                    AILineOfSight != Default.AILineOfSight ||
+                    AIUnknown5 != Default.AIUnknown5 ||
+                    AIUnknown9 != Default.AIUnknown9 ||
                     AIMP != Default.AIMP ||
-                    AIRandomHits != Default.AIRandomHits ||
+                    AIAllowRandomly != Default.AIAllowRandomly ||
                     AIReflectable != Default.AIReflectable ||
                     AISilence != Default.AISilence ||
                     AIStats != Default.AIStats ||
                     AITargetAllies != Default.AITargetAllies ||
                     AITargetEnemies != Default.AITargetEnemies ||
-                    AITripleAttack != Default.AITripleAttack ||
-                    AITripleBracelet != Default.AITripleBracelet ||
+                    AIUnknown7 != Default.AIUnknown7 ||
+                    AIUnknown8 != Default.AIUnknown8 ||
                     AIUndeadReverse != Default.AIUndeadReverse ||
                     AIUnequip != Default.AIUnequip ||
                     AIUnknown1 != Default.AIUnknown1 ||
                     AIUnknown2 != Default.AIUnknown2 ||
                     AIUnknown3 != Default.AIUnknown3 ||
-                    AIVerticalIncrease != Default.AIVerticalIncrease ||
+                    AIUnknown6 != Default.AIUnknown6 ||
                     Blank1 != Default.Blank1 ||
                     Blank2 != Default.Blank2 ||
                     Blank3 != Default.Blank3 ||
@@ -285,7 +288,10 @@ namespace FFTPatcher.Datatypes
 
         public ItemSubType Throwing { get; set; }
 
-        public bool Unknown1 { get { return unknown1; } set { unknown1 = value; } }
+        public bool UsedByEnemies { get { return usedByEnemies; } set { usedByEnemies = value; } }
+
+        [Obsolete]
+        public bool Unknown1 { get { return usedByEnemies; } set { usedByEnemies = value; } }
 
         public bool Unknown2 { get { return unknown2; } set { unknown2 = value; } }
 
@@ -312,7 +318,7 @@ namespace FFTPatcher.Datatypes
 
             bool dummy = false;
             PatcherLib.Utilities.Utilities.CopyByteToBooleans( first[3],
-                ref learnWithJP, ref action, ref learnOnHit, ref blank1, ref dummy, ref dummy, ref dummy, ref dummy );
+                ref learnWithJP, ref displayAbilityName, ref learnOnHit, ref blank1, ref dummy, ref dummy, ref dummy, ref dummy );
             learnWithJP = !learnWithJP;
 
             AbilityType = (AbilityType)(first[3] & 0x0F);
@@ -320,7 +326,7 @@ namespace FFTPatcher.Datatypes
             AIFlags = new AIFlags( first.Sub( 4, 6 ) );
 
             PatcherLib.Utilities.Utilities.CopyByteToBooleans( first[7],
-                ref unknown1, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
+                ref usedByEnemies, ref unknown2, ref unknown3, ref blank2, ref blank3, ref blank4, ref blank5, ref unknown4 );
         }
 
         public Ability( string name, UInt16 offset, IList<byte> first, IList<byte> second )
@@ -484,10 +490,10 @@ namespace FFTPatcher.Datatypes
             result[0] = (byte)(JPCost & 0xFF);
             result[1] = (byte)(JPCost >> 8);
             result[2] = LearnRate;
-            result[3] = PatcherLib.Utilities.Utilities.ByteFromBooleans( !learnWithJP, action, learnOnHit, blank1, false, false, false, false );
+            result[3] = PatcherLib.Utilities.Utilities.ByteFromBooleans( !learnWithJP, displayAbilityName, learnOnHit, blank1, false, false, false, false );
             result[3] |= (byte)AbilityType;
             Array.Copy( AIFlags.ToByteArray(), 0, result, 4, 3 );
-            result[7] = PatcherLib.Utilities.Utilities.ByteFromBooleans( unknown1, unknown2, unknown3, blank2, blank3, blank4, blank5, unknown4 );
+            result[7] = PatcherLib.Utilities.Utilities.ByteFromBooleans( usedByEnemies, unknown2, unknown3, blank2, blank3, blank4, blank5, unknown4 );
 
             return result;
         }

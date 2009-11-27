@@ -31,8 +31,8 @@ namespace FFTPatcher.Editors
 
         private bool ignoreChanges = false;
         private static readonly string[] PropertyNames = new string[] {
-            "FreezeCT", "Unknown1", "Unknown2", "Unknown3", "Unknown4", "Unknown5", "Unknown6", "KO",
-            "CanReact", "Blank", "IgnoreAttack", "Unknown7", "Unknown8", "Unknown9", "Unknown10", "Unknown11" };
+            "Unknown12", "Unknown1", "Unknown2", "Unknown3", "Unknown4", "Unknown5", "Unknown6", "Unknown13",
+            "Unknown14", "Blank", "Unknown15", "Unknown7", "Unknown8", "Unknown9", "CancelledByImmortal", "Unknown11" };
         private NumericUpDownWithDefault[] spinners;
         private StatusAttribute statusAttribute;
 

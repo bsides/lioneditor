@@ -119,7 +119,7 @@
             </td>
           </tr>
         </xsl:for-each>
-        <xsl:for-each select="AIFlags/HP|AIFlags/MP|AIFlags/CancelStatus|AIFlags/AddStatus|AIFlags/Stats|AIFlags/Unequip|AIFlags/TargetEnemies|AIFlags/TargetAllies|AIFlags/IgnoreRange|AIFlags/Reflectable|AIFlags/UndeadReverse|AIFlags/Unknown1|AIFlags/RandomHits|AIFlags/Unknown2|AIFlags/Unknown3|AIFlags/Silence|AIFlags/Blank|AIFlags/DirectAttack|AIFlags/LineAttack|AIFlags/VerticalIncrease|AIFlags/TripleAttack|AIFlags/TripleBracelet|AIFlags/MagicDefenseUp|AIFlags/DefenseUp">
+        <xsl:for-each select="AIFlags/HP|AIFlags/MP|AIFlags/CancelStatus|AIFlags/AddStatus|AIFlags/Stats|AIFlags/Unequip|AIFlags/TargetEnemies|AIFlags/TargetAllies|AIFlags/LineOfSight|AIFlags/Reflectable|AIFlags/UndeadReverse|AIFlags/Unknown1|AIFlags/AllowRandomly|AIFlags/Unknown2|AIFlags/Unknown3|AIFlags/Silence|AIFlags/Blank|AIFlags/Unknown4|AIFlags/Unknown5|AIFlags/Unknown6|AIFlags/Unknown7|AIFlags/Unknown8|AIFlags/Unknown9|AIFlags/Unknown10">
           <tr>
             <td>
               AI:
@@ -578,7 +578,7 @@
           <th>Default</th>
           <th>New value</th>
         </tr>
-        <xsl:for-each select="Blank1|Blank2|Order|CT|FreezeCT|Unknown1|Unknown2|Unknown3|Unknown4|Unknown5|Unknown6|KO|CanReact|Blank|IgnoreAttack|Unknown7|Unknown8|Unknown9|Unknown10|Unknown11">
+        <xsl:for-each select="Blank1|Blank2|Order|CT|Unknown12|Unknown1|Unknown2|Unknown3|Unknown4|Unknown5|Unknown6|Unknown13|Unknown14|Blank|Unknown15|Unknown7|Unknown8|Unknown9|CancelledByImmortal|Unknown11">
           <tr>
             <td>
               <xsl:value-of select="name(.)"/>

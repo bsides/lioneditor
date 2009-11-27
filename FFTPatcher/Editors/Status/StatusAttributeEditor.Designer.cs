@@ -220,21 +220,21 @@ namespace FFTPatcher.Editors
             // 
             this.checkedListBox.FormattingEnabled = true;
             this.checkedListBox.Items.AddRange( new object[] {
-            "Freeze CT",
             "",
             "",
             "",
             "",
             "",
             "",
-            "KO",
-            "Can React",
+            "",
+            "",
+            "",
             "Blank",
-            "Ignore Attacks",
             "",
             "",
             "",
             "",
+            "Cancelled by Immortal",
             ""} );
             this.checkedListBox.Location = new System.Drawing.Point( 232, 9 );
             this.checkedListBox.MultiColumn = true;

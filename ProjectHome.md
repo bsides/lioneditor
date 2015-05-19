@@ -1,0 +1,1 @@
+An editor for FFT: War of the Lions consisting of a desktop application to perform the editing and a kernel plugin to encrypt/decrypt saves on the fly.
